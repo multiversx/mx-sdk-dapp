@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export interface AppConfigStateType {
+export interface AccountSliceState {
   loggedIn: boolean;
 }
 
@@ -13,7 +13,7 @@ export const accountSlice = createSlice({
   initialState: initialState,
   reducers: {
     setLoggedIn: (
-      state: AppConfigStateType,
+      state: AccountSliceState,
       action: PayloadAction<boolean>
     ) => {
       state.loggedIn = action.payload;

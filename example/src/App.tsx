@@ -1,12 +1,13 @@
 import React from 'react';
+import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
-import { ReduxProvider } from 'dapp-core';
+import { DappProvider } from 'dapp-core';
 
 const App = () => {
   return (
-    <ReduxProvider>
-      <div>Dapp power!</div>
-    </ReduxProvider>
+    <DappProvider>
+      <div>Dapp!</div>
+    </DappProvider>
   );
 };
 
