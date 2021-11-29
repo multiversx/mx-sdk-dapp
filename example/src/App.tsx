@@ -1,10 +1,13 @@
-import React from 'react'
+import React from 'react';
 
-import { ExampleComponent } from 'dapp-core'
-import 'dapp-core/dist/index.css'
+import { ReduxProvider } from 'dapp-core';
 
 const App = () => {
-  return <ExampleComponent text="Create React Library Example 😄" />
-}
+  return (
+    <ReduxProvider>
+      <div>Dapp power!</div>
+    </ReduxProvider>
+  );
+};
 
-export default App
+export default App;
