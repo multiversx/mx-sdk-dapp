@@ -4,22 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="4764cc92-16d6-4c8a-a60e-cc8ab73194a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/redux/ReduxProvider.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/commonActions.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/accountSlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/slices/appConfigSlice.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/redux/store.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.eslintrc" beforeDir="false" afterPath="$PROJECT_DIR$/.eslintrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="4764cc92-16d6-4c8a-a60e-cc8ab73194a0" name="Changes" comment="add redux toolkit and appConfigSlice">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.prettierrc" beforeDir="false" afterPath="$PROJECT_DIR$/.prettierrc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/example/src/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/example/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/example/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/redux/slices/accountSlice.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/redux/slices/accountSlice.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,8 +66,16 @@
       <workItem from="1638181487679" duration="3178000" />
       <workItem from="1638184684920" duration="235000" />
       <workItem from="1638184929304" duration="3643000" />
-      <workItem from="1638191651635" duration="2559000" />
+      <workItem from="1638191651635" duration="2956000" />
     </task>
+    <task id="LOCAL-00001" summary="add redux toolkit and appConfigSlice">
+      <created>1638194337061</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1638194337061</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -96,6 +92,10 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add redux toolkit and appConfigSlice" />
+    <option name="LAST_COMMIT_MESSAGE" value="add redux toolkit and appConfigSlice" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
