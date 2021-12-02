@@ -1,3 +1,5 @@
+import { Nonce } from '@elrondnetwork/erdjs';
+
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
@@ -24,4 +26,11 @@ export interface NetworkConfigType {
   walletConnectBridge: string;
   walletConnectDeepLink: string;
   network: NetworkType;
+}
+
+export interface AccountType {
+  address: string;
+  balance: string;
+  nonce: Nonce;
+  code?: string;
 }

@@ -72,6 +72,7 @@
     "@fortawesome/free-solid-svg-icons": "5.15.3",
     "@fortawesome/react-fontawesome": "0.1.14",
     "@reduxjs/toolkit": "^1.6.2",
+    "immer": "^9.0.7",
     "lodash": "^4.17.21",
     "react-redux": "^7.2.6",
     "redux-persist": "^6.0.0",

@@ -12,16 +12,23 @@ interface LedgerLoginType {
   loginType: string;
 }
 
+interface TokenLoginType {
+  loginToken: string;
+  signature?: string;
+}
+
 export interface LoginInfoStateType {
   loginMethod: ProviderType | null;
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
+  tokenLogin: TokenLoginType | null;
 }
 
 const initialState = {
   loginMethod: null,
   walletConnectLogin: null,
-  ledgerLogin: null
+  ledgerLogin: null,
+  tokenLogin: null
 };
 
 export const loginInfoSlice = createSlice({
@@ -45,10 +52,21 @@ export const loginInfoSlice = createSlice({
       action: PayloadAction<LedgerLoginType>
     ) => {
       state.ledgerLogin = action.payload;
+    },
+    setTokenLogin: (
+      state: LoginInfoStateType,
+      action: PayloadAction<TokenLoginType>
+    ) => {
+      state.tokenLogin = action.payload;
     }
   }
 });
 
-export const { setLoginMethod } = loginInfoSlice.actions;
+export const {
+  setLoginMethod,
+  setWalletConnectLogin,
+  setLedgerLogin,
+  setTokenLogin
+} = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;
