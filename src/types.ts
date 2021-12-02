@@ -10,7 +10,7 @@ export interface RouteType {
   authenticatedRoute?: boolean;
 }
 
-export type NetworkType = {
+export interface NetworkType {
   id: string;
   egldLabel: string;
   name: string;
@@ -18,4 +18,10 @@ export type NetworkType = {
   apiAddress?: string;
   gatewayAddress?: string;
   explorerAddress?: string;
-};
+}
+
+export interface NetworkConfigType {
+  walletConnectBridge: string;
+  walletConnectDeepLink: string;
+  network: NetworkType;
+}

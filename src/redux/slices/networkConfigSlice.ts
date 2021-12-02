@@ -16,7 +16,6 @@ export interface InitializeNetworkConfigPayload {
   walletConnectBridge: string;
   walletConnectDeepLink: string;
   network: NetworkType;
-  chainID: ChainID;
 }
 
 export interface NetworkConfigStateType {
@@ -40,7 +39,14 @@ export const networkConfigSlice = createSlice({
       state: NetworkConfigStateType,
       action: PayloadAction<InitializeNetworkConfigPayload>
     ) => {
+      console.log('yo', action.payload);
       return { ...state, ...action.payload };
+    },
+    setChainID: (
+      state: NetworkConfigStateType,
+      action: PayloadAction<ChainID>
+    ) => {
+      state.chainID = action.payload;
     }
   }
 });

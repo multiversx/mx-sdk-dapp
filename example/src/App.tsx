@@ -5,7 +5,9 @@ import { DappProvider } from 'dapp-core';
 
 const App = () => {
   return (
-    <DappProvider>
+    <DappProvider
+      networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
+    >
       <div>Dapp!</div>
     </DappProvider>
   );

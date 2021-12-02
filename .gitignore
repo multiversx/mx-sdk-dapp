@@ -8,6 +8,7 @@ node_modules
 build
 dist
 .idea
+.idea/workspace.xml
 .rpt2_cache
 
 # misc
