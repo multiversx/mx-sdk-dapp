@@ -14,10 +14,10 @@ export interface NetworkType {
   id: string;
   egldLabel: string;
   name: string;
-  walletAddress?: string;
-  apiAddress?: string;
-  gatewayAddress?: string;
-  explorerAddress?: string;
+  walletAddress: string;
+  apiAddress: string;
+  gatewayAddress: string;
+  explorerAddress: string;
 }
 
 export interface NetworkConfigType {

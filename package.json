@@ -67,10 +67,10 @@
     "dist"
   ],
   "dependencies": {
+    "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
     "@fortawesome/fontawesome-svg-core": "1.2.35",
     "@fortawesome/free-solid-svg-icons": "5.15.3",
     "@fortawesome/react-fontawesome": "0.1.14",
-    "@elrondnetwork/erdjs": "^8.0.1-alpha.13",
     "@reduxjs/toolkit": "^1.6.2",
     "lodash": "^4.17.21",
     "react-redux": "^7.2.6",

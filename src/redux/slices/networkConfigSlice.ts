@@ -1,6 +1,14 @@
-import { ChainID } from '@elrondnetwork/erdjs';
+import {
+  IDappProvider,
+  IProvider,
+  IApiProvider,
+  ProxyProvider,
+  ApiProvider,
+  ChainID
+} from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NetworkType } from '../../types';
+import { emptyProvider } from '../../utils/provider';
 
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
@@ -21,6 +29,9 @@ export interface InitializeNetworkConfigPayload {
 export interface NetworkConfigStateType {
   walletConnectBridge: string;
   walletConnectDeepLink: string;
+  provider: IDappProvider;
+  proxy: IProvider;
+  apiProvider: IApiProvider;
   network?: NetworkType;
   chainID?: ChainID;
 }
@@ -28,7 +39,10 @@ export interface NetworkConfigStateType {
 const initialState = {
   walletConnectBridge: '',
   walletConnectDeepLink: '',
-  network: defaultNetwork
+  network: defaultNetwork,
+  proxy: new ProxyProvider(defaultNetwork.gatewayAddress, { timeout: 4000 }),
+  provider: emptyProvider,
+  apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 })
 };
 
 export const networkConfigSlice = createSlice({
@@ -39,10 +53,27 @@ export const networkConfigSlice = createSlice({
       state: NetworkConfigStateType,
       action: PayloadAction<InitializeNetworkConfigPayload>
     ) => {
-      console.log('yo', action.payload);
-      return { ...state, ...action.payload };
+      const { walletConnectBridge, walletConnectDeepLink, network } =
+        action.payload;
+      const proxy = new ProxyProvider(network.gatewayAddress, {
+        timeout: 4000
+      });
+      const apiProvider = new ApiProvider(network.apiAddress, {
+        timeout: 4000
+      });
+      state.walletConnectBridge = walletConnectBridge;
+      state.walletConnectDeepLink = walletConnectDeepLink;
+      state.network = network;
+      state.proxy = proxy;
+      state.apiProvider = apiProvider;
     },
     setChainID: (
+      state: NetworkConfigStateType,
+      action: PayloadAction<ChainID>
+    ) => {
+      state.chainID = action.payload;
+    },
+    setProvider: (
       state: NetworkConfigStateType,
       action: PayloadAction<ChainID>
     ) => {
