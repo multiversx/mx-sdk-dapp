@@ -1,3 +1,4 @@
+import { ChainID } from '@elrondnetwork/erdjs';
 import { createSelector } from 'reselect';
 import { RootState } from '../store';
 
@@ -11,6 +12,11 @@ export const proxySelector = createSelector(
 export const providerSelector = createSelector(
   networkConfigSelector,
   (state) => state.provider
+);
+
+export const chainIDSelector = createSelector(
+  networkConfigSelector,
+  (state) => new ChainID(state.chainID)
 );
 
 export const apiProviderSelector = createSelector(

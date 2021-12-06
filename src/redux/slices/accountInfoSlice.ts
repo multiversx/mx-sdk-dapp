@@ -4,10 +4,17 @@ import { Draft } from 'immer';
 import { AccountType } from '../../types';
 import { logoutAction } from '../commonActions';
 
+export interface LedgerAccountType {
+  index: number;
+  address: string;
+}
+
 export interface AccountInfoSliceType {
   address: string;
   shard?: number;
   account: Draft<AccountType>;
+  ledgerAccount: LedgerAccountType | null;
+  walletConnectAccount: string | null;
 }
 
 export const emptyAccount: AccountType = {
@@ -19,7 +26,9 @@ export const emptyAccount: AccountType = {
 const initialState = {
   address: '',
   account: emptyAccount,
-  shard: 0
+  shard: 0,
+  ledgerAccount: null,
+  walletConnectAccount: null
 };
 
 export const accountInfoSlice = createSlice({
@@ -49,6 +58,18 @@ export const accountInfoSlice = createSlice({
       action: PayloadAction<number>
     ) => {
       state.shard = action.payload;
+    },
+    setLedgerAccount: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<LedgerAccountType | null>
+    ) => {
+      state.ledgerAccount = action.payload;
+    },
+    setWalletConnectAccount: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<string | null>
+    ) => {
+      state.walletConnectAccount = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -58,7 +79,13 @@ export const accountInfoSlice = createSlice({
   }
 });
 
-export const { setAccount, setAddress, setAccountNonce, setAccountShard } =
-  accountInfoSlice.actions;
+export const {
+  setAccount,
+  setAddress,
+  setAccountNonce,
+  setAccountShard,
+  setLedgerAccount,
+  setWalletConnectAccount
+} = accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;

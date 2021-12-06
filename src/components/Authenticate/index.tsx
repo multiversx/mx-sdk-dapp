@@ -1,11 +1,33 @@
 import * as React from 'react';
 import { Address } from '@elrondnetwork/erdjs';
-import { matchPath, Redirect, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { matchPath, Navigate, useLocation } from 'react-router-dom';
 import Loader from 'UI/Loader';
-import { useGetNetworkConfig } from './helpers';
 import useSetProvider from './useSetProvider';
 import { RouteType } from '../../types';
-import { getAccount, newWalletProvider, getAddress } from '../../utils';
+import {
+  getAccount,
+  newWalletProvider,
+  getAddress,
+  getLatestNonce
+} from '../../utils';
+import {
+  addressSelector,
+  chainIDSelector,
+  isLoggedInSelector,
+  ledgerAccountSelector,
+  ledgerLoginSelector,
+  networkSelector,
+  providerSelector,
+  proxySelector,
+  walletLoginSelector
+} from '../../redux/selectors';
+import {
+  setChainID,
+  setLedgerAccount,
+  setProvider,
+  setWalletLogin
+} from '../../redux/slices';
 
 const Authenticate = ({
   children,
@@ -16,24 +38,32 @@ const Authenticate = ({
   routes: RouteType[];
   unlockRoute: string;
 }) => {
-  const { loggedIn, dapp, address, ledgerAccount, chainId, network } =
-    useContext();
-  const [autehnitcatedRoutes] = React.useState(
+  const isLoggedIn = useSelector(isLoggedInSelector);
+  const address = useSelector(addressSelector);
+  const ledgerAccount = useSelector(ledgerAccountSelector);
+  const ledgerLogin = useSelector(ledgerLoginSelector);
+  const chainId = useSelector(chainIDSelector);
+  const network = useSelector(networkSelector);
+  const provider = useSelector(providerSelector);
+  const proxy = useSelector(proxySelector);
+  const walletLogin = useSelector(walletLoginSelector);
+
+  const [authenticatedRoutes] = React.useState(
     routes.filter((route) => Boolean(route.authenticatedRoute))
   );
   const { pathname } = useLocation();
   const [loading, setLoading] = React.useState(false);
-  const getNetworkConfig = useGetNetworkConfig();
+  const dispatch = useDispatch();
   useSetProvider();
 
-  React.useEffect(() => {
-    if (getItem('walletLogin')) {
+  const tryAuthenticateUser = async () => {
+    if (walletLogin != null) {
       setLoading(true);
       const provider = newWalletProvider(network);
       getAddress()
         .then((address) => {
-          removeItem('walletLogin');
-          dispatch({ type: 'setProvider', provider });
+          dispatch(setWalletLogin(null));
+          dispatch(setProvider(provider));
           dispatch({ type: 'login', address, loginMethod: 'wallet' });
           getAccount(address)
             .then((account) => {
@@ -57,38 +87,38 @@ const Authenticate = ({
           setLoading(false);
         });
     }
-  }, [dapp.provider, dapp.proxy]);
-
-  const privateRoute = autehnitcatedRoutes.some(
-    ({ path }) =>
-      matchPath(pathname, {
-        path,
-        exact: true,
-        strict: false
-      }) !== null
-  );
-
-  const redirect = privateRoute && !loggedIn && !getItem('walletLogin');
+  };
 
   React.useEffect(() => {
+    tryAuthenticateUser();
+  }, [provider, proxy]);
+
+  const privateRoute = authenticatedRoutes.some(
+    ({ path }) => matchPath(pathname, path) !== null
+  );
+
+  const redirect = privateRoute && !isLoggedIn && walletLogin == null;
+
+  React.useEffect(() => {
+    refreshChainID();
+  }, [chainId.valueOf()]);
+
+  function refreshChainID() {
     if (chainId.valueOf() === '-1') {
-      getNetworkConfig()
+      proxy
+        .getNetworkConfig()
         .then((networkConfig) => {
-          dispatch({
-            type: 'setChainId',
-            chainId: networkConfig.ChainID
-          });
+          dispatch(setChainID(networkConfig.ChainID.valueOf()));
         })
         .catch((e) => {
           console.error('To do ', e);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId.valueOf()]);
+  }
 
   const fetchAccount = () => {
-    if (address && loggedIn) {
-      dapp.proxy
+    if (address && isLoggedIn) {
+      proxy
         .getAccount(new Address(address))
         .then((account) => {
           dispatch({
@@ -105,15 +135,13 @@ const Authenticate = ({
           setLoading(false);
         });
 
-      if (getItem('ledgerLogin') && !ledgerAccount) {
-        const ledgerLogin = getItem('ledgerLogin');
-        dispatch({
-          type: 'setLedgerAccount',
-          ledgerAccount: {
+      if (ledgerLogin != null && !ledgerAccount) {
+        dispatch(
+          setLedgerAccount({
             index: ledgerLogin.index,
             address
-          }
-        });
+          })
+        );
       }
     }
   };
@@ -122,10 +150,10 @@ const Authenticate = ({
   React.useEffect(fetchAccount, [address]);
 
   if (redirect) {
-    return <Redirect to={unlockRoute} />;
+    return <Navigate to={unlockRoute} />;
   }
 
-  if (loading && getItem('walletLogin')) {
+  if (loading && walletLogin) {
     return <Loader />;
   }
 

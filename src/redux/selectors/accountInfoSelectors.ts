@@ -21,3 +21,13 @@ export const shardSelector = createSelector(
   accountInfoSelector,
   (state) => state.shard
 );
+
+export const ledgerAccountSelector = createSelector(
+  accountInfoSelector,
+  (state) => state.ledgerAccount
+);
+
+export const walletConnectAccountSelector = createSelector(
+  accountInfoSelector,
+  (state) => state.walletConnectAccount
+);

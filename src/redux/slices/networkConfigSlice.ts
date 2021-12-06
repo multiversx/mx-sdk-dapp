@@ -3,12 +3,11 @@ import {
   IProvider,
   IApiProvider,
   ProxyProvider,
-  ApiProvider,
-  ChainID
+  ApiProvider
 } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NetworkType } from '../../types';
-import { emptyProvider } from '../../utils';
+import { emptyProvider } from '../../utils/provider';
 import { logoutAction } from '../commonActions';
 
 export const defaultNetwork: NetworkType = {
@@ -34,7 +33,7 @@ export interface NetworkConfigStateType {
   proxy: IProvider;
   apiProvider: IApiProvider;
   network?: NetworkType;
-  chainID?: ChainID;
+  chainID: string;
 }
 
 const initialState = {
@@ -43,7 +42,8 @@ const initialState = {
   network: defaultNetwork,
   proxy: new ProxyProvider(defaultNetwork.gatewayAddress, { timeout: 4000 }),
   provider: emptyProvider,
-  apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 })
+  apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
+  chainID: 'T'
 };
 
 export const networkConfigSlice = createSlice({
@@ -70,7 +70,7 @@ export const networkConfigSlice = createSlice({
     },
     setChainID: (
       state: NetworkConfigStateType,
-      action: PayloadAction<ChainID>
+      action: PayloadAction<string>
     ) => {
       state.chainID = action.payload;
     },

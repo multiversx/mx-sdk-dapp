@@ -53,18 +53,6 @@ export const loginInfoSlice = createSlice({
     ) => {
       state.loginMethod = action.payload;
     },
-    setWalletConnectLogin: (
-      state: LoginInfoStateType,
-      action: PayloadAction<WalletConnectLoginType>
-    ) => {
-      state.walletConnectLogin = action.payload;
-    },
-    setLedgerLogin: (
-      state: LoginInfoStateType,
-      action: PayloadAction<LedgerLoginType>
-    ) => {
-      state.ledgerLogin = action.payload;
-    },
     setTokenLogin: (
       state: LoginInfoStateType,
       action: PayloadAction<TokenLoginType>
@@ -73,15 +61,27 @@ export const loginInfoSlice = createSlice({
     },
     setWalletLogin: (
       state: LoginInfoStateType,
-      action: PayloadAction<LoginInfoType>
+      action: PayloadAction<LoginInfoType | null>
     ) => {
       state.walletLogin = action.payload;
     },
     setExtensionLogin: (
       state: LoginInfoStateType,
-      action: PayloadAction<LoginInfoType>
+      action: PayloadAction<LoginInfoType | null>
     ) => {
       state.extensionLogin = action.payload;
+    },
+    setWalletConnectLogin: (
+      state: LoginInfoStateType,
+      action: PayloadAction<WalletConnectLoginType | null>
+    ) => {
+      state.walletConnectLogin = action.payload;
+    },
+    setLedgerLogin: (
+      state: LoginInfoStateType,
+      action: PayloadAction<LedgerLoginType | null>
+    ) => {
+      state.ledgerLogin = action.payload;
     }
   },
   extraReducers: (builder) => {
