@@ -1,11 +1,11 @@
 import React from 'react';
-// @ts-ignore
-import { useContext, useDispatch } from 'context';
-import platform from 'platform';
 import QRCode from 'qrcode';
+// @ts-ignore
+import platform from 'platform';
+import { useContext, useDispatch } from 'context';
+import { ReactComponent as Lightning } from './lightning.svg';
 import storage from 'utils/storage';
 import useInitWalletConnect from 'hooks/useInitWalletConnect';
-import { ReactComponent as Lightning } from './lightning.svg';
 
 const WalletConnect = ({
   title = 'Maiar Login',

@@ -32,7 +32,7 @@ const Authenticate = ({
 
   const { getItem, removeItem } = storage.session;
 
-  React.useMemo(() => {
+  React.useEffect(() => {
     if (getItem('walletLogin')) {
       setLoading(true);
       const provider = newWalletProvider(network);

@@ -46,28 +46,22 @@ export default function useSetProvider() {
       });
   };
 
-  const setExtensionProvider = () => {
-    getAddress()
-      .then((address) => {
-        const provider = ExtensionProvider.getInstance().setAddress(address);
-        provider
-          .init()
-          .then((success: any) => {
-            if (success) {
-              dispatch({ type: 'setProvider', provider });
-            } else {
-              console.error(
-                'Could not initialise extension, make sure Elrond wallet extension is installed.'
-              );
-            }
-          })
-          .catch((err) => {
-            console.error('Unable to login to ExtensionProvider', err);
-          });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+  const setExtensionProvider = async () => {
+    try {
+      const address = await getAddress();
+      const provider = ExtensionProvider.getInstance().setAddress(address);
+      const success = await provider.init();
+
+      if (success) {
+        dispatch({ type: 'setProvider', provider });
+      } else {
+        console.error(
+          'Could not initialise extension, make sure Elrond wallet extension is installed.'
+        );
+      }
+    } catch (err) {
+      console.error('Unable to login to ExtensionProvider', err);
+    }
   };
 
   React.useEffect(() => {

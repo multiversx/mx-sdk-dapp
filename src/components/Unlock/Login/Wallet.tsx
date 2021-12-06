@@ -4,28 +4,28 @@ import { useDispatch, useSelector } from 'react-redux';
 import { newWalletProvider } from 'utils/provider';
 import { networkSelector } from '../../../redux/selectors/networkConfigSelectors';
 import { setWalletLogin } from '../../../redux/slices/loginInfoSlice';
+import { store } from '../../../redux/store';
 
-export const useWebWalletLogin = ({
+export const useWalletLogin = ({
   callbackRoute,
   token
 }: {
   callbackRoute: string;
   token?: string;
 }) => {
+  const appState = store.getState();
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
-  return () => {
-    const provider = newWalletProvider(network);
-    dispatch(
-      setWalletLogin({ data: {}, expires: moment().add(1, 'minutes').unix() })
-    );
-    provider.login({
-      callbackUrl: encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
-      ),
-      ...(token ? { token } : {})
-    });
-  };
+  const provider = newWalletProvider(network);
+  dispatch(
+    setWalletLogin({ data: {}, expires: moment().add(1, 'minutes').unix() })
+  );
+  provider.login({
+    callbackUrl: encodeURIComponent(
+      `${window.location.origin}${callbackRoute}`
+    ),
+    ...(token ? { token } : {})
+  });
 };
 
 const WalletLogin = ({
@@ -37,8 +37,6 @@ const WalletLogin = ({
   token?: string;
   webWalletButtonLabel: string;
 }) => {
-  const webWalletLogin = useWebWalletLogin({ callbackRoute, token });
-
   return (
     <button
       onClick={webWalletLogin}
