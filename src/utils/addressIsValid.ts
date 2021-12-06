@@ -9,7 +9,7 @@ function canTransformToPublicKey(address: string) {
   }
 }
 
-export default function addressIsValid(destinationAddress: string) {
+export function addressIsValid(destinationAddress: string) {
   const isValidBach =
     destinationAddress?.startsWith('erd') &&
     destinationAddress.length === 62 &&

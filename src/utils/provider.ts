@@ -9,7 +9,7 @@ import { LoginMethodsEnum, NetworkType } from '../types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
-const getProviderType = (
+export const getProviderType = (
   provider: IDappProvider | undefined
 ): LoginMethodsEnum => {
   switch (provider?.constructor) {
@@ -45,5 +45,3 @@ export const emptyProvider: IDappProvider = {
   signTransactions: notInitializedError('signTransactions'),
   signMessage: notInitializedError('signMessage')
 };
-
-export default getProviderType;

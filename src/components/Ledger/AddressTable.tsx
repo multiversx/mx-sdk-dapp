@@ -8,7 +8,7 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import PageState from 'UI/PageState';
-import ledgerErrorCodes from 'utils/ledgerErrorCodes';
+import { ledgerErrorCodes } from '../../constants';
 import { useContext, useDispatch } from 'context';
 import AddressRow from './AddressRow';
 

@@ -1,14 +1,14 @@
-import { addressSelector } from '../redux/selectors/accountInfoSelectors';
 import {
   isLoggedInSelector,
-  walletLoginSelector
-} from '../redux/selectors/loginInfoSelectors';
-import { providerSelector } from '../redux/selectors/networkConfigSelectors';
+  walletLoginSelector,
+  providerSelector,
+  addressSelector
+} from '../redux/selectors';
 import { store } from '../redux/store';
-import getProviderType from '../utils/provider';
-import addressIsValid from './addressIsValid';
+import { getProviderType } from './provider';
+import { addressIsValid } from './addressIsValid';
 
-export default function getAddress(): Promise<string> {
+export function getAddress(): Promise<string> {
   const { search } = window.location;
   const appState = store.getState();
   const provider = providerSelector(appState);

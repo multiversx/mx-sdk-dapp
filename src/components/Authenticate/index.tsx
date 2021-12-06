@@ -3,12 +3,9 @@ import { Address } from '@elrondnetwork/erdjs';
 import { matchPath, Redirect, useLocation } from 'react-router-dom';
 import Loader from 'UI/Loader';
 import { useGetNetworkConfig } from './helpers';
-import { useGetAddress } from 'hooks';
 import useSetProvider from './useSetProvider';
-import { newWalletProvider } from 'utils/provider';
-import { getLatestNonce } from 'utils';
-import { getAccount } from '../../utils/getAccount';
 import { RouteType } from '../../types';
+import { getAccount, newWalletProvider, getAddress } from '../../utils';
 
 const Authenticate = ({
   children,
@@ -26,11 +23,8 @@ const Authenticate = ({
   );
   const { pathname } = useLocation();
   const [loading, setLoading] = React.useState(false);
-  const getAddress = useGetAddress();
   const getNetworkConfig = useGetNetworkConfig();
   useSetProvider();
-
-  const { getItem, removeItem } = storage.session;
 
   React.useEffect(() => {
     if (getItem('walletLogin')) {

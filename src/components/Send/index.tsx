@@ -1,15 +1,14 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Transaction,
   IDappProvider,
   Address,
-  TransactionHash,
-} from "@elrondnetwork/erdjs";
-import { useContext } from "context";
-import SendModal from "./SendModal";
-import getProviderType from "utils/getProviderType";
-import {  useRefreshAccount } from "hooks";
-import {getLatestNonce, ledgerErrorCodes} from "utils";
+  TransactionHash
+} from '@elrondnetwork/erdjs';
+import { useContext } from 'context';
+import SendModal from './SendModal';
+import { getProviderType, refreshAccount, getLatestNonce } from '../../utils';
+import { ledgerErrorCodes } from '../../constants';
 
 interface SendTransactionType {
   transaction: Transaction;
@@ -20,14 +19,13 @@ export default function Send() {
   const [showSendModal, setShowSendModal] = React.useState(false);
   const [showStatus, setShowStatus] = React.useState(false);
   const [txHash, setTxHash] = React.useState<TransactionHash>(
-    new TransactionHash("")
+    new TransactionHash('')
   );
   const [newTransaction, setNewTransaction] = React.useState<Transaction>();
-  const [newCallbackRoute, setNewCallbackRoute] = React.useState("");
-  const [error, setError] = React.useState("");
+  const [newCallbackRoute, setNewCallbackRoute] = React.useState('');
+  const [error, setError] = React.useState('');
   const context = useContext();
   const { dapp, address } = context;
-  const refreshAccount = useRefreshAccount();
 
   const provider: IDappProvider = dapp.provider;
 
@@ -35,29 +33,29 @@ export default function Send() {
 
   const handleClose = () => {
     setNewTransaction(undefined);
-    setNewCallbackRoute("");
+    setNewCallbackRoute('');
     setShowStatus(false);
-    setError("");
+    setError('');
     setShowSendModal(false);
   };
 
   const send = (e: CustomEvent) => {
-    if (e.detail && "transaction" in e.detail && "callbackRoute" in e.detail) {
+    if (e.detail && 'transaction' in e.detail && 'callbackRoute' in e.detail) {
       const { transaction, callbackRoute } = e.detail;
       sendTransaction({ transaction, callbackRoute });
     }
   };
 
   React.useEffect(() => {
-    document.addEventListener("transaction", send);
+    document.addEventListener('transaction', send);
     return () => {
-      document.removeEventListener("transaction", send);
+      document.removeEventListener('transaction', send);
     };
   }, [context]);
 
   const sendTransaction = ({
     transaction,
-    callbackRoute,
+    callbackRoute
   }: SendTransactionType) => {
     const showError = (e: string) => {
       setShowSendModal(true);
@@ -66,7 +64,7 @@ export default function Send() {
 
     if (provider) {
       switch (providerType) {
-        case "wallet":
+        case 'wallet':
           dapp.proxy
             .getAccount(new Address(address))
             .then((account) => {
@@ -76,7 +74,7 @@ export default function Send() {
                 .sendTransaction(transaction, {
                   callbackUrl: encodeURIComponent(
                     `${window.location.origin}${callbackRoute}`
-                  ),
+                  )
                 })
                 .catch((e) => {
                   showError(e);
@@ -87,7 +85,7 @@ export default function Send() {
             });
           break;
 
-        case "ledger":
+        case 'ledger':
           setShowSendModal(true);
           setNewTransaction(transaction);
           dapp.proxy
@@ -107,9 +105,9 @@ export default function Send() {
                     const { message } = (ledgerErrorCodes as any)[e.statusCode];
                     showError(message);
                   } else if (
-                    e.message === "HWApp not initialised, call init() first"
+                    e.message === 'HWApp not initialised, call init() first'
                   ) {
-                    showError("Your session has expired. Please login again");
+                    showError('Your session has expired. Please login again');
                   } else {
                     showError(e.message);
                   }
@@ -120,7 +118,7 @@ export default function Send() {
             });
           break;
 
-        case "walletconnect":
+        case 'walletconnect':
           setShowSendModal(true);
           setNewTransaction(transaction);
           dapp.proxy
@@ -144,7 +142,7 @@ export default function Send() {
             });
           break;
 
-        case "extension":
+        case 'extension':
           setShowSendModal(true);
           setNewTransaction(transaction);
           dapp.proxy
@@ -171,7 +169,7 @@ export default function Send() {
     } else {
       setShowSendModal(true);
       setError(
-        "You need a singer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect"
+        'You need a singer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect'
       );
     }
   };
@@ -184,7 +182,7 @@ export default function Send() {
     providerType,
     txHash,
     callbackRoute: newCallbackRoute,
-    showStatus,
+    showStatus
   };
 
   return <SendModal {...sendProps} />;

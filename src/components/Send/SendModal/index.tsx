@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Transaction, TransactionHash } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
-import { ProviderType } from 'utils/getProviderType';
+import { ProviderType } from '../../utils';
 import PageState from 'UI/PageState';
 import TransactionStatus from './TransactionStatus';
 
@@ -42,7 +42,7 @@ const SendModal = ({
     >
       <div className='card container'>
         <div className='card-body'>
-          {showStatus === true ? (
+          {showStatus ? (
             <TransactionStatus
               txHash={txHash}
               callbackRoute={callbackRoute}

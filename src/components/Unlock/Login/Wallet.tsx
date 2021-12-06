@@ -1,9 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import { newWalletProvider } from 'utils/provider';
-import { networkSelector } from '../../../redux/selectors/networkConfigSelectors';
-import { setWalletLogin } from '../../../redux/slices/loginInfoSlice';
+import { newWalletProvider } from '../../../utils';
+import { networkSelector } from '../../../redux/selectors';
+import { setWalletLogin } from '../../../redux/slices';
 import { store } from '../../../redux/store';
 
 export const useWalletLogin = ({
