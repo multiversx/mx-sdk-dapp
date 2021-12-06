@@ -9,6 +9,7 @@ import {
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NetworkType } from '../../types';
 import { emptyProvider } from '../../utils/provider';
+import { logoutAction } from '../commonActions';
 
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
@@ -75,10 +76,15 @@ export const networkConfigSlice = createSlice({
     },
     setProvider: (
       state: NetworkConfigStateType,
-      action: PayloadAction<ChainID>
+      action: PayloadAction<IDappProvider>
     ) => {
-      state.chainID = action.payload;
+      state.provider = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logoutAction, () => {
+      return initialState;
+    });
   }
 });
 

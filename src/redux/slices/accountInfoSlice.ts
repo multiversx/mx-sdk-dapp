@@ -1,7 +1,8 @@
 import { Nonce } from '@elrondnetwork/erdjs';
-import { Draft } from 'immer';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Draft } from 'immer';
 import { AccountType } from '../../types';
+import { logoutAction } from '../commonActions';
 
 export interface AccountInfoSliceType {
   address: string;
@@ -37,12 +38,27 @@ export const accountInfoSlice = createSlice({
     ) => {
       state.account = action.payload;
     },
-    setShard: (state: AccountInfoSliceType, action: PayloadAction<number>) => {
+    setAccountNonce: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<number>
+    ) => {
+      state.account.nonce = new Nonce(action.payload);
+    },
+    setAccountShard: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<number>
+    ) => {
       state.shard = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logoutAction, () => {
+      return initialState;
+    });
   }
 });
 
-export const { setAccount, setAddress, setShard } = accountInfoSlice.actions;
+export const { setAccount, setAddress, setAccountNonce, setAccountShard } =
+  accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;

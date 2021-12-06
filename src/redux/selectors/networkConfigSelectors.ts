@@ -1,5 +1,5 @@
-import { RootState } from '../store';
 import { createSelector } from 'reselect';
+import { RootState } from '../store';
 
 export const networkConfigSelector = (state: RootState) => state.networkConfig;
 

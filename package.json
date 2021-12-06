@@ -74,7 +74,9 @@
     "@reduxjs/toolkit": "^1.6.2",
     "immer": "^9.0.7",
     "lodash": "^4.17.21",
+    "moment": "^2.29.1",
     "react-redux": "^7.2.6",
+    "react-router-dom": "^6.0.2",
     "redux-persist": "^6.0.0",
     "reselect": "4.0.0"
   }

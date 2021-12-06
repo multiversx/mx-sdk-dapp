@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ProviderType } from '../../utils/provider';
+import { LoginMethodsEnum } from '../../types';
+import { logoutAction } from '../commonActions';
 
 interface WalletConnectLoginType {
   loginType: string;
@@ -12,23 +13,34 @@ interface LedgerLoginType {
   loginType: string;
 }
 
+interface LoginInfoType {
+  data: any;
+  expires: number;
+}
+
 interface TokenLoginType {
   loginToken: string;
   signature?: string;
 }
 
 export interface LoginInfoStateType {
-  loginMethod: ProviderType | null;
+  loginMethod: LoginMethodsEnum;
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;
+  loginExpiresAt: number | null;
+  walletLogin: LoginInfoType | null;
+  extensionLogin: LoginInfoType | null;
 }
 
 const initialState = {
-  loginMethod: null,
+  loginMethod: LoginMethodsEnum.none,
   walletConnectLogin: null,
   ledgerLogin: null,
-  tokenLogin: null
+  tokenLogin: null,
+  loginExpiresAt: null,
+  walletLogin: null,
+  extensionLogin: null
 };
 
 export const loginInfoSlice = createSlice({
@@ -37,7 +49,7 @@ export const loginInfoSlice = createSlice({
   reducers: {
     setLoginMethod: (
       state: LoginInfoStateType,
-      action: PayloadAction<ProviderType>
+      action: PayloadAction<LoginMethodsEnum>
     ) => {
       state.loginMethod = action.payload;
     },
@@ -58,7 +70,24 @@ export const loginInfoSlice = createSlice({
       action: PayloadAction<TokenLoginType>
     ) => {
       state.tokenLogin = action.payload;
+    },
+    setWalletLogin: (
+      state: LoginInfoStateType,
+      action: PayloadAction<LoginInfoType>
+    ) => {
+      state.walletLogin = action.payload;
+    },
+    setExtensionLogin: (
+      state: LoginInfoStateType,
+      action: PayloadAction<LoginInfoType>
+    ) => {
+      state.extensionLogin = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logoutAction, () => {
+      return initialState;
+    });
   }
 });
 
@@ -66,7 +95,9 @@ export const {
   setLoginMethod,
   setWalletConnectLogin,
   setLedgerLogin,
-  setTokenLogin
+  setTokenLogin,
+  setWalletLogin,
+  setExtensionLogin
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;
