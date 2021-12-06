@@ -21,7 +21,7 @@ export const defaultNetwork: NetworkType = {
   explorerAddress: ''
 };
 
-export interface InitializeNetworkConfigPayload {
+export interface InitializeNetworkConfigPayloadType {
   walletConnectBridge: string;
   walletConnectDeepLink: string;
   network: NetworkType;
@@ -52,7 +52,7 @@ export const networkConfigSlice = createSlice({
   reducers: {
     initializeNetworkConfig: (
       state: NetworkConfigStateType,
-      action: PayloadAction<InitializeNetworkConfigPayload>
+      action: PayloadAction<InitializeNetworkConfigPayloadType>
     ) => {
       const { walletConnectBridge, walletConnectDeepLink, network } =
         action.payload;
