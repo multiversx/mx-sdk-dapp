@@ -3,7 +3,7 @@ import { Transaction, TransactionHash } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import { ProviderType } from 'utils/getProviderType';
-import PageState from 'components/PageState';
+import PageState from 'UI/PageState';
 import TransactionStatus from './TransactionStatus';
 
 export interface SendModalType {

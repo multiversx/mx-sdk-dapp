@@ -1,29 +1,29 @@
-import React from "react";
-import { HWProvider } from "@elrondnetwork/erdjs";
-import { useContext, useDispatch } from "context";
-import { useHistory } from "react-router-dom";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
-import AddressTable from "./AddressTable";
-import ConfirmAddress from "./ConfirmAddress";
-import LedgerConnect from "./LedgerConnect";
-import PageState from "components/PageState";
+import React from 'react';
+import { HWProvider } from '@elrondnetwork/erdjs';
+import { useContext, useDispatch } from 'context';
+import { useHistory } from 'react-router-dom';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import AddressTable from './AddressTable';
+import ConfirmAddress from './ConfirmAddress';
+import LedgerConnect from './LedgerConnect';
+import PageState from 'UI/PageState';
 
-const ledgerAppErrorText = "Check if Elrond app is open on Ledger";
+const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const failedInitializeErrorText =
-  "Could not initialise ledger app, make sure Elrond app is open";
-const ledgerWaitingText = "Waiting for device";
+  'Could not initialise ledger app, make sure Elrond app is open';
+const ledgerWaitingText = 'Waiting for device';
 
 const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
   const { dapp } = useContext();
   const dispatch = useDispatch();
   const history = useHistory();
   const { ledgerAccount } = useContext();
-  const [error, setError] = React.useState("");
+  const [error, setError] = React.useState('');
   const [showAddressTable, setShowAddressTable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
   const onClick = () => {
-    setError("");
+    setError('');
     if (ledgerAccount !== undefined) {
       const hwWalletP = new HWProvider(dapp.proxy);
       setLoading(true);
@@ -38,8 +38,8 @@ const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
           hwWalletP
             .login()
             .then((address) => {
-              dispatch({ type: "setProvider", provider: hwWalletP });
-              dispatch({ type: "login", address, loginMethod: "ledger" });
+              dispatch({ type: 'setProvider', provider: hwWalletP });
+              dispatch({ type: 'login', address, loginMethod: 'ledger' });
               setLoading(false);
               history.push(callbackRoute);
             })
@@ -50,7 +50,7 @@ const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
             });
         })
         .catch((error) => {
-          console.error("error ", error);
+          console.error('error ', error);
         });
     } else {
       setShowAddressTable(true);
@@ -62,7 +62,7 @@ const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
       return (
         <PageState
           icon={faCircleNotch}
-          iconClass="fa-spin text-primary"
+          iconClass='fa-spin text-primary'
           title={ledgerWaitingText}
         />
       );
@@ -78,7 +78,7 @@ const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
           failedInitializeErrorText={failedInitializeErrorText}
         />
       );
-    case error !== "":
+    case error !== '':
       return <LedgerConnect onClick={onClick} error={error} />;
     default:
       return <LedgerConnect onClick={onClick} error={error} />;

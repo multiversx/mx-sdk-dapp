@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { matchPath, Redirect, useLocation } from 'react-router-dom';
-import Loader from 'components/Loader';
+import Loader from 'UI/Loader';
 import { useGetNetworkConfig } from './helpers';
 import { useGetAddress } from 'hooks';
 import useSetProvider from './useSetProvider';
