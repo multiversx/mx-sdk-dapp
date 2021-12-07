@@ -1,24 +1,28 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LoginMethodsEnum } from '../../types';
-import { logoutAction } from '../commonActions';
+import {
+  loginAction,
+  logoutAction,
+  LoginActionPayloadType
+} from '../commonActions';
 
-interface WalletConnectLoginType {
+export interface WalletConnectLoginType {
   loginType: string;
   callbackRoute: string;
   logoutRoute: string;
 }
 
-interface LedgerLoginType {
+export interface LedgerLoginType {
   index: number;
   loginType: string;
 }
 
-interface LoginInfoType {
+export interface LoginInfoType {
   data: any;
   expires: number;
 }
 
-interface TokenLoginType {
+export interface TokenLoginType {
   loginToken: string;
   signature?: string;
 }
@@ -33,7 +37,7 @@ export interface LoginInfoStateType {
   extensionLogin: LoginInfoType | null;
 }
 
-const initialState = {
+const initialState: LoginInfoStateType = {
   loginMethod: LoginMethodsEnum.none,
   walletConnectLogin: null,
   ledgerLogin: null,
@@ -88,6 +92,15 @@ export const loginInfoSlice = createSlice({
     builder.addCase(logoutAction, () => {
       return initialState;
     });
+    builder.addCase(
+      loginAction,
+      (
+        state: LoginInfoStateType,
+        action: PayloadAction<LoginActionPayloadType>
+      ) => {
+        state.loginMethod = action.payload.loginMethod;
+      }
+    );
   }
 });
 

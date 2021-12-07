@@ -2,7 +2,11 @@ import { Nonce } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Draft } from 'immer';
 import { AccountType } from '../../types';
-import { logoutAction } from '../commonActions';
+import {
+  loginAction,
+  logoutAction,
+  LoginActionPayloadType
+} from '../commonActions';
 
 export interface LedgerAccountType {
   index: number;
@@ -23,7 +27,7 @@ export const emptyAccount: AccountType = {
   nonce: new Nonce(0)
 };
 
-const initialState = {
+const initialState: AccountInfoSliceType = {
   address: '',
   account: emptyAccount,
   shard: 0,
@@ -76,6 +80,15 @@ export const accountInfoSlice = createSlice({
     builder.addCase(logoutAction, () => {
       return initialState;
     });
+    builder.addCase(
+      loginAction,
+      (
+        state: AccountInfoSliceType,
+        action: PayloadAction<LoginActionPayloadType>
+      ) => {
+        state.address = action.payload.address;
+      }
+    );
   }
 });
 

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { matchPath, Navigate, useLocation } from 'react-router-dom';
 import Loader from 'UI/Loader';
 import useSetProvider from './useSetProvider';
-import { RouteType } from '../../types';
+import { LoginMethodsEnum, RouteType } from '../../types';
 import {
   getAccount,
   newWalletProvider,
@@ -23,11 +23,13 @@ import {
   walletLoginSelector
 } from '../../redux/selectors';
 import {
+  setAccount,
   setChainID,
   setLedgerAccount,
   setProvider,
   setWalletLogin
 } from '../../redux/slices';
+import { loginAction } from '../../redux/commonActions';
 
 const Authenticate = ({
   children,
@@ -57,35 +59,29 @@ const Authenticate = ({
   useSetProvider();
 
   const tryAuthenticateUser = async () => {
-    if (walletLogin != null) {
-      setLoading(true);
-      const provider = newWalletProvider(network);
-      getAddress()
-        .then((address) => {
-          dispatch(setWalletLogin(null));
-          dispatch(setProvider(provider));
-          dispatch({ type: 'login', address, loginMethod: 'wallet' });
-          getAccount(address)
-            .then((account) => {
-              dispatch({
-                type: 'setAccount',
-                account: {
-                  balance: account.balance.toString(),
-                  address,
-                  nonce: getLatestNonce(account)
-                }
-              });
-              setLoading(false);
-            })
-            .catch((e) => {
-              console.error('Failed getting account ', e);
-              setLoading(false);
-            });
-        })
-        .catch((e) => {
-          console.error('Failed getting address ', e);
-          setLoading(false);
-        });
+    try {
+      if (walletLogin != null && network != null) {
+        setLoading(true);
+        const provider = newWalletProvider(network);
+        const address = await getAddress();
+        dispatch(setWalletLogin(null));
+        dispatch(setProvider(provider));
+        dispatch(
+          loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+        );
+        const account = await getAccount(address);
+        dispatch(
+          setAccount({
+            balance: account.balance.toString(),
+            address,
+            nonce: getLatestNonce(account)
+          })
+        );
+        setLoading(false);
+      }
+    } catch (e) {
+      console.error('Failed authenticating user ', e);
+      setLoading(false);
     }
   };
 
@@ -116,38 +112,36 @@ const Authenticate = ({
     }
   }
 
-  const fetchAccount = () => {
-    if (address && isLoggedIn) {
-      proxy
-        .getAccount(new Address(address))
-        .then((account) => {
-          dispatch({
-            type: 'setAccount',
-            account: {
-              balance: account.balance.toString(),
-              address,
-              nonce: getLatestNonce(account)
-            }
-          });
-        })
-        .catch((e) => {
-          console.error('Failed getting account ', e);
-          setLoading(false);
-        });
-
-      if (ledgerLogin != null && !ledgerAccount) {
+  const fetchAccount = async () => {
+    try {
+      if (address != null && isLoggedIn) {
+        const account = await proxy.getAccount(new Address(address));
         dispatch(
-          setLedgerAccount({
-            index: ledgerLogin.index,
-            address
+          setAccount({
+            balance: account.balance.toString(),
+            address,
+            nonce: getLatestNonce(account)
           })
         );
+
+        if (ledgerAccount === null && ledgerLogin !== null) {
+          dispatch(
+            setLedgerAccount({
+              index: ledgerLogin.index,
+              address
+            })
+          );
+        }
       }
+    } catch (e) {
+      console.error('Failed getting account ', e);
+      setLoading(false);
     }
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  React.useEffect(fetchAccount, [address]);
+  React.useEffect(() => {
+    fetchAccount();
+  }, [address, ledgerLogin]);
 
   if (redirect) {
     return <Navigate to={unlockRoute} />;

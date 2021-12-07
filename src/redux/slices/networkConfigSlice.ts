@@ -36,7 +36,7 @@ export interface NetworkConfigStateType {
   chainID: string;
 }
 
-const initialState = {
+const initialState: NetworkConfigStateType = {
   walletConnectBridge: '',
   walletConnectDeepLink: '',
   network: defaultNetwork,
