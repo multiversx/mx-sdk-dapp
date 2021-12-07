@@ -1,8 +1,6 @@
 import * as React from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useInitWalletConnect } from './index';
-import { newWalletProvider } from '../utils';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
@@ -10,7 +8,8 @@ import {
   proxySelector
 } from '../redux/selectors';
 import { LoginMethodsEnum } from '../types';
-import { getAddress } from '../utils';
+import { newWalletProvider, getAddress } from '../utils';
+import { useInitWalletConnect } from './index';
 
 export default function useSetProvider() {
   const network = useSelector(networkSelector);
