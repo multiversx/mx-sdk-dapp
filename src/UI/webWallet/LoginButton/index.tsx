@@ -39,7 +39,7 @@ export const WebWalletLoginButton: (props: Props) => JSX.Element = ({
                 {loginButtonText}
             </span>
         </button>
-
+ 
     )
 
 }
