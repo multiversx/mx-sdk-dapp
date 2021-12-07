@@ -27,7 +27,7 @@ export const emptyAccount: AccountType = {
   nonce: new Nonce(0)
 };
 
-const initialState: AccountInfoSliceType = {
+const initialState = {
   address: '',
   account: emptyAccount,
   shard: 0,

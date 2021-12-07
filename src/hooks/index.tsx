@@ -1,11 +1,5 @@
-import useGetAccountShard from '../utils/getAccountShard';
 import useInitWalletConnect from './useInitWalletConnect';
-import useRefreshAccount from '../utils/refreshAccount';
 import useSendTransaction from './useSendTransaction';
+import useSetProvider from './useSetProvider';
 
-export {
-  useGetAccountShard,
-  useInitWalletConnect,
-  useRefreshAccount,
-  useSendTransaction
-};
+export { useInitWalletConnect, useSendTransaction, useSetProvider };

@@ -32,7 +32,7 @@ export interface NetworkConfigStateType {
   provider: IDappProvider;
   proxy: IProvider;
   apiProvider: IApiProvider;
-  network?: NetworkType;
+  network: NetworkType;
   chainID: string;
 }
 

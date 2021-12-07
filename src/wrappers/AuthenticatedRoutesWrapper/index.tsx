@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { matchPath, Navigate, useLocation } from 'react-router-dom';
+import { matchPath } from 'react-router-dom';
 import Loader from 'UI/Loader';
-import useSetProvider from './useSetProvider';
+import useSetProvider from '../../hooks/useSetProvider';
 import { LoginMethodsEnum, RouteType } from '../../types';
 import {
   getAccount,
@@ -31,7 +31,7 @@ import {
 } from '../../redux/slices';
 import { loginAction } from '../../redux/commonActions';
 
-const Authenticate = ({
+const AuthenticatedRoutesWrapper = ({
   children,
   routes,
   unlockRoute
@@ -50,7 +50,7 @@ const Authenticate = ({
   const proxy = useSelector(proxySelector);
   const walletLogin = useSelector(walletLoginSelector);
 
-  const { pathname } = useLocation();
+  const { pathname } = window.location;
   const dispatch = useDispatch();
 
   const authenticatedRoutesRef = React.useRef(
@@ -147,14 +147,15 @@ const Authenticate = ({
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
   if (shouldRedirect) {
-    return <Navigate to={unlockRoute} />;
+    window.location.href = unlockRoute;
+    return null;
   }
 
   if (loading && walletLogin) {
     return <Loader />;
   }
 
-  return children;
+  return <React.Fragment>{children}</React.Fragment>;
 };
 
-export default Authenticate;
+export default AuthenticatedRoutesWrapper;
