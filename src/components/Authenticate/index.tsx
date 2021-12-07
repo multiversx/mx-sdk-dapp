@@ -50,15 +50,29 @@ const Authenticate = ({
   const proxy = useSelector(proxySelector);
   const walletLogin = useSelector(walletLoginSelector);
 
-  const [authenticatedRoutes] = React.useState(
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  const authenticatedRoutesRef = React.useRef(
     routes.filter((route) => Boolean(route.authenticatedRoute))
   );
-  const { pathname } = useLocation();
   const [loading, setLoading] = React.useState(false);
-  const dispatch = useDispatch();
+
   useSetProvider();
 
-  const tryAuthenticateUser = async () => {
+  React.useEffect(() => {
+    tryAuthenticateUser();
+  }, [provider, proxy]);
+
+  React.useEffect(() => {
+    refreshChainID();
+  }, [chainId.valueOf()]);
+
+  React.useEffect(() => {
+    fetchAccount();
+  }, [address, ledgerLogin]);
+
+  async function tryAuthenticateUser() {
     try {
       if (walletLogin != null && network != null) {
         setLoading(true);
@@ -83,21 +97,7 @@ const Authenticate = ({
       console.error('Failed authenticating user ', e);
       setLoading(false);
     }
-  };
-
-  React.useEffect(() => {
-    tryAuthenticateUser();
-  }, [provider, proxy]);
-
-  const privateRoute = authenticatedRoutes.some(
-    ({ path }) => matchPath(pathname, path) !== null
-  );
-
-  const redirect = privateRoute && !isLoggedIn && walletLogin == null;
-
-  React.useEffect(() => {
-    refreshChainID();
-  }, [chainId.valueOf()]);
+  }
 
   function refreshChainID() {
     if (chainId.valueOf() === '-1') {
@@ -112,7 +112,7 @@ const Authenticate = ({
     }
   }
 
-  const fetchAccount = async () => {
+  async function fetchAccount() {
     try {
       if (address != null && isLoggedIn) {
         const account = await proxy.getAccount(new Address(address));
@@ -124,7 +124,7 @@ const Authenticate = ({
           })
         );
 
-        if (ledgerAccount === null && ledgerLogin !== null) {
+        if (ledgerAccount == null && ledgerLogin != null) {
           dispatch(
             setLedgerAccount({
               index: ledgerLogin.index,
@@ -137,13 +137,16 @@ const Authenticate = ({
       console.error('Failed getting account ', e);
       setLoading(false);
     }
-  };
+  }
 
-  React.useEffect(() => {
-    fetchAccount();
-  }, [address, ledgerLogin]);
+  const isOnAuthenticatedRoute = authenticatedRoutesRef.current.some(
+    ({ path }) => matchPath(pathname, path) !== null
+  );
 
-  if (redirect) {
+  const shouldRedirect =
+    isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
+
+  if (shouldRedirect) {
     return <Navigate to={unlockRoute} />;
   }
 
@@ -151,7 +154,7 @@ const Authenticate = ({
     return <Loader />;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return children;
 };
 
 export default Authenticate;
