@@ -1,12 +1,15 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
-import { useContext, useDispatch } from 'context';
-import { useHistory } from 'react-router-dom';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import PageState from 'UI/PageState';
+import { loginAction } from '../../redux/commonActions';
+import { ledgerAccountSelector, proxySelector } from '../../redux/selectors';
+import { setProvider } from '../../redux/slices';
+import { LoginMethodsEnum } from '../../types';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
-import PageState from 'UI/PageState';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const failedInitializeErrorText =
@@ -14,44 +17,40 @@ const failedInitializeErrorText =
 const ledgerWaitingText = 'Waiting for device';
 
 const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
-  const { dapp } = useContext();
+  const ledgerAccount = useSelector(ledgerAccountSelector);
+  const proxy = useSelector(proxySelector);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const { ledgerAccount } = useContext();
   const [error, setError] = React.useState('');
   const [showAddressTable, setShowAddressTable] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
 
-  const onClick = () => {
+  const onClick = async () => {
     setError('');
     if (ledgerAccount !== undefined) {
-      const hwWalletP = new HWProvider(dapp.proxy);
-      setLoading(true);
-      hwWalletP
-        .init()
-        .then((success: any) => {
-          if (!success) {
-            console.warn(failedInitializeErrorText);
-            setLoading(false);
-            return;
-          }
-          hwWalletP
-            .login()
-            .then((address) => {
-              dispatch({ type: 'setProvider', provider: hwWalletP });
-              dispatch({ type: 'login', address, loginMethod: 'ledger' });
-              setLoading(false);
-              history.push(callbackRoute);
-            })
-            .catch((err: any) => {
-              setLoading(false);
-              setError(ledgerAppErrorText);
-              console.warn(err);
-            });
-        })
-        .catch((error) => {
-          console.error('error ', error);
-        });
+      try {
+        const hwWalletP = new HWProvider(proxy);
+        setLoading(true);
+        const initialized = await hwWalletP.init();
+
+        if (!initialized) {
+          console.warn(failedInitializeErrorText);
+          setLoading(false);
+          return;
+        }
+
+        const address = await hwWalletP.login();
+
+        dispatch(setProvider(hwWalletP));
+        dispatch(
+          loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
+        );
+        setLoading(false);
+        window.history.pushState({}, document.title, callbackRoute);
+      } catch (error) {
+        console.error('error ', error);
+        console.warn(error);
+        setError(ledgerAppErrorText);
+      }
     } else {
       setShowAddressTable(true);
     }

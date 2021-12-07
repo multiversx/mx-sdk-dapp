@@ -7,6 +7,7 @@ import {
   networkSelector,
   proxySelector
 } from '../redux/selectors';
+import { setProvider } from '../redux/slices';
 import { LoginMethodsEnum } from '../types';
 import { newWalletProvider, getAddress } from '../utils';
 import { useInitWalletConnect } from './index';
@@ -36,7 +37,7 @@ export default function useSetProvider() {
           console.warn('Could not initialise ledger app');
           return;
         }
-        dispatch({ type: 'setProvider', provider: hwWalletP });
+        dispatch(setProvider(hwWalletP));
       })
       .catch((err) => {
         console.error('Could not initialise ledger app', err);
@@ -50,7 +51,7 @@ export default function useSetProvider() {
       const success = await provider.init();
 
       if (success) {
-        dispatch({ type: 'setProvider', provider });
+        dispatch(setProvider(provider));
       } else {
         console.error(
           'Could not initialise extension, make sure Elrond wallet extension is installed.'
@@ -77,7 +78,7 @@ export default function useSetProvider() {
       }
       case LoginMethodsEnum.wallet: {
         const provider = newWalletProvider(network);
-        dispatch({ type: 'setProvider', provider });
+        dispatch(setProvider(provider));
         break;
       }
 

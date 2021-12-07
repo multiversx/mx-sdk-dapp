@@ -1,13 +1,19 @@
 import React from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutAction } from '../redux/commonActions';
-import { isLoggedInSelector } from '../redux/selectors/loginInfoSelectors';
+import { loginAction, logoutAction } from '../redux/commonActions';
 import {
   providerSelector,
   proxySelector,
-  walletConnectBridgeSelector
-} from '../redux/selectors/networkConfigSelectors';
+  walletConnectBridgeSelector,
+  isLoggedInSelector
+} from '../redux/selectors';
+import {
+  setProvider,
+  setTokenLoginSignature,
+  setWalletConnectLogin
+} from '../redux/slices';
+import { LoginMethodsEnum } from '../types';
 
 interface InitWalletConnectType {
   callbackRoute: string;
@@ -39,7 +45,7 @@ export default function useInitWalletConnect({
 
   React.useEffect(() => {
     return () => {
-      if ('walletConnector' in provider && provider.walletConnector.connected) {
+      if (provider?.walletConnector?.connected) {
         window.addEventListener('storage', (e) => {
           if (e.key === 'walletconnect') {
             handleOnLogout();
@@ -50,7 +56,7 @@ export default function useInitWalletConnect({
   });
 
   const heartbeat = () => {
-    if ('walletConnector' in provider && provider.walletConnector.connected) {
+    if (provider?.walletConnector?.connected) {
       provider
         .sendCustomMessage({
           method: 'heartbeat',
@@ -63,46 +69,31 @@ export default function useInitWalletConnect({
     }
   };
 
-  const handleOnLogin = () => {
-    provider
-      .getAddress()
-      .then((address: string) => {
-        if (!isLoggedIn) {
-          window.history.pushState({}, document.title, callbackRoute);
-        }
-        provider.getSignature().then((signature: string) => {
-          if (signature) {
-            // const tokenLogin = storage.session.getItem('tokenLogin');
-            //TODO connect this to redux
-            const tokenLogin: any = {};
-            const loginToken =
-              tokenLogin && 'loginToken' in tokenLogin
-                ? tokenLogin.loginToken
-                : '';
+  const handleOnLogin = async () => {
+    try {
+      const address = await provider.getAddress();
+      if (!isLoggedIn) {
+        window.history.pushState({}, document.title, callbackRoute);
+      }
+      const signature = await provider.getSignature();
+      if (signature != null) {
+        dispatch(setTokenLoginSignature(signature));
+      }
+      dispatch(
+        setWalletConnectLogin({
+          loginType: 'walletConnect',
+          callbackRoute,
+          logoutRoute
+        })
+      );
 
-            dispatch({
-              type: 'setTokenLogin',
-              tokenLogin: {
-                loginToken,
-                signature
-              }
-            });
-          }
-        });
-        dispatch({
-          type: 'setWalletConnectLogin',
-          walletConnectLogin: {
-            loginType: 'walletConnect',
-            callbackRoute,
-            logoutRoute
-          }
-        });
-        dispatch({ type: 'login', address, loginMethod: 'walletconnect' });
-      })
-      .catch((e: any) => {
-        setError('Invalid address');
-        console.log(e);
-      });
+      dispatch(
+        loginAction({ address, loginMethod: LoginMethodsEnum.walletconnect })
+      );
+    } catch (err) {
+      setError('Invalid address');
+      console.log(err);
+    }
   };
 
   const handleOnLogout = () => {
@@ -117,7 +108,7 @@ export default function useInitWalletConnect({
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout
     });
-    dispatch({ type: 'setProvider', provider });
+    dispatch(setProvider(provider));
     provider = newProvider;
     setWalletConnect(provider);
   };

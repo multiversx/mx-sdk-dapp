@@ -4,13 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { matchPath } from 'react-router-dom';
 import Loader from 'UI/Loader';
 import useSetProvider from '../../hooks/useSetProvider';
-import { LoginMethodsEnum, RouteType } from '../../types';
-import {
-  getAccount,
-  newWalletProvider,
-  getAddress,
-  getLatestNonce
-} from '../../utils';
+import { loginAction } from '../../redux/commonActions';
 import {
   addressSelector,
   chainIDSelector,
@@ -29,7 +23,13 @@ import {
   setProvider,
   setWalletLogin
 } from '../../redux/slices';
-import { loginAction } from '../../redux/commonActions';
+import { LoginMethodsEnum, RouteType } from '../../types';
+import {
+  getAccount,
+  newWalletProvider,
+  getAddress,
+  getLatestNonce
+} from '../../utils';
 
 const AuthenticatedRoutesWrapper = ({
   children,

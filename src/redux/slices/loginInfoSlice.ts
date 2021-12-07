@@ -59,9 +59,19 @@ export const loginInfoSlice = createSlice({
     },
     setTokenLogin: (
       state: LoginInfoStateType,
-      action: PayloadAction<TokenLoginType>
+      action: PayloadAction<string>
     ) => {
-      state.tokenLogin = action.payload;
+      state.tokenLogin = {
+        loginToken: action.payload
+      };
+    },
+    setTokenLoginSignature: (
+      state: LoginInfoStateType,
+      action: PayloadAction<string>
+    ) => {
+      if (state?.tokenLogin != null) {
+        state.tokenLogin.signature = action.payload;
+      }
     },
     setWalletLogin: (
       state: LoginInfoStateType,
@@ -109,6 +119,7 @@ export const {
   setWalletConnectLogin,
   setLedgerLogin,
   setTokenLogin,
+  setTokenLoginSignature,
   setWalletLogin,
   setExtensionLogin
 } = loginInfoSlice.actions;
