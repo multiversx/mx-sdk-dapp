@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import NetworkConfigInitializer from 'components/NetworkConfigInitializer';
+import ProviderInitializer from 'components/ProviderInitializer';
 import { NetworkConfigType } from 'types';
 
 import { store, persistor } from './store';
@@ -19,6 +20,7 @@ export const DappProvider = ({
   <Provider store={store}>
     <PersistGate persistor={persistor} loading={null}>
       <NetworkConfigInitializer networkConfig={networkConfig} />
+      <ProviderInitializer />
       {children}
     </PersistGate>
   </Provider>

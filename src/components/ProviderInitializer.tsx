@@ -1,21 +1,29 @@
 import React from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
+import { useInitWalletConnect } from '../hooks';
+import { loginAction } from '../redux/commonActions';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
   networkSelector,
-  proxySelector
+  proxySelector,
+  walletLoginSelector
 } from '../redux/selectors';
-import { setProvider } from '../redux/slices';
+import { setAccount, setProvider, setWalletLogin } from '../redux/slices';
 import { LoginMethodsEnum } from '../types';
-import { newWalletProvider, getAddress } from '../utils';
-import { useInitWalletConnect } from './index';
+import {
+  newWalletProvider,
+  getAddress,
+  getAccount,
+  getLatestNonce
+} from '../utils';
 
-export default function useSetProvider() {
+export default function ProviderInitializer() {
   const network = useSelector(networkSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
+  const walletLogin = useSelector(walletLoginSelector);
   const proxy = useSelector(proxySelector);
   const dispatch = useDispatch();
 
@@ -28,7 +36,37 @@ export default function useSetProvider() {
     logoutRoute
   });
 
-  const setLedgerProvider = () => {
+  React.useEffect(() => {
+    initializeProvider();
+  }, [loginMethod]);
+
+  async function tryAuthenticateWalletUser() {
+    try {
+      if (walletLogin != null && network != null) {
+        const provider = newWalletProvider(network);
+        const address = await getAddress();
+        if (address) {
+          dispatch(setWalletLogin(null));
+          dispatch(setProvider(provider));
+          dispatch(
+            loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+          );
+          const account = await getAccount(address);
+          dispatch(
+            setAccount({
+              balance: account.balance.toString(),
+              address,
+              nonce: getLatestNonce(account)
+            })
+          );
+        }
+      }
+    } catch (e) {
+      console.error('Failed authenticating wallet user ', e);
+    }
+  }
+
+  function setLedgerProvider() {
     const hwWalletP = new HWProvider(proxy);
     hwWalletP
       .init()
@@ -42,9 +80,9 @@ export default function useSetProvider() {
       .catch((err) => {
         console.error('Could not initialise ledger app', err);
       });
-  };
+  }
 
-  const setExtensionProvider = async () => {
+  async function setExtensionProvider() {
     try {
       const address = await getAddress();
       const provider = ExtensionProvider.getInstance().setAddress(address);
@@ -60,9 +98,9 @@ export default function useSetProvider() {
     } catch (err) {
       console.error('Unable to login to ExtensionProvider', err);
     }
-  };
+  }
 
-  React.useEffect(() => {
+  function initializeProvider() {
     if (loginMethod == null) {
       return;
     }
@@ -86,8 +124,15 @@ export default function useSetProvider() {
         setExtensionProvider();
         break;
       }
+
+      case LoginMethodsEnum.none: {
+        tryAuthenticateWalletUser();
+        break;
+      }
       default:
         return;
     }
-  }, [loginMethod]);
+  }
+
+  return null;
 }

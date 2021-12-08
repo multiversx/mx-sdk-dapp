@@ -7,12 +7,11 @@ export default function AuthenticatedRoute() {
   const handleLogout = () => {
     logout(`${window.location.origin}/unlock`);
   };
-  console.log(userBalance);
 
   React.useEffect(() => {
-    getAddress().then((adr) => {
+    getAddress().then((adr: string) => {
       setUserAddress(adr);
-      getAccountBalance(adr, true).then((acc) => setUserBalance(acc));
+      getAccountBalance(adr, true).then((acc: string) => setUserBalance(acc));
     });
   }, []);
   return (

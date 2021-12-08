@@ -2,33 +2,18 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { matchPath } from 'react-router-dom';
 import Loader from 'UI/Loader';
-import useSetProvider from '../../hooks/useSetProvider';
-import { loginAction } from '../../redux/commonActions';
 import {
   addressSelector,
   chainIDSelector,
   isLoggedInSelector,
   ledgerAccountSelector,
   ledgerLoginSelector,
-  networkSelector,
-  providerSelector,
   proxySelector,
   walletLoginSelector
 } from '../../redux/selectors';
-import {
-  setAccount,
-  setChainID,
-  setLedgerAccount,
-  setProvider,
-  setWalletLogin
-} from '../../redux/slices';
-import { LoginMethodsEnum, RouteType } from '../../types';
-import {
-  getAccount,
-  newWalletProvider,
-  getAddress,
-  getLatestNonce
-} from '../../utils';
+import { setAccount, setChainID, setLedgerAccount } from '../../redux/slices';
+import { RouteType } from '../../types';
+import { getAccount, getLatestNonce } from '../../utils';
 
 const AuthenticatedRoutesWrapper = ({
   children,
@@ -44,8 +29,6 @@ const AuthenticatedRoutesWrapper = ({
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const chainId = useSelector(chainIDSelector);
-  const network = useSelector(networkSelector);
-  const provider = useSelector(providerSelector);
   const proxy = useSelector(proxySelector);
   const walletLogin = useSelector(walletLoginSelector);
 
@@ -57,12 +40,6 @@ const AuthenticatedRoutesWrapper = ({
   );
   const [loading, setLoading] = React.useState(false);
 
-  useSetProvider();
-
-  React.useEffect(() => {
-    tryAuthenticateUser();
-  }, [provider, proxy]);
-
   React.useEffect(() => {
     refreshChainID();
   }, [chainId.valueOf()]);
@@ -70,35 +47,6 @@ const AuthenticatedRoutesWrapper = ({
   React.useEffect(() => {
     fetchAccount();
   }, [address, ledgerLogin]);
-
-  async function tryAuthenticateUser() {
-    try {
-      if (walletLogin != null && network != null) {
-        setLoading(true);
-        const provider = newWalletProvider(network);
-        const address = await getAddress();
-        if (address) {
-          dispatch(setWalletLogin(null));
-          dispatch(setProvider(provider));
-          dispatch(
-            loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
-          );
-          const account = await getAccount(address);
-          dispatch(
-            setAccount({
-              balance: account.balance.toString(),
-              address,
-              nonce: getLatestNonce(account)
-            })
-          );
-          setLoading(false);
-        }
-      }
-    } catch (e) {
-      console.error('Failed authenticating user ', e);
-      setLoading(false);
-    }
-  }
 
   function refreshChainID() {
     if (chainId.valueOf() === '-1') {

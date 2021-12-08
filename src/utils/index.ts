@@ -7,5 +7,6 @@ export * from './setNonce';
 export * from './logout';
 export * from './getLatestNonce';
 export * from './getAccountBalance';
+export * from './getIsLoggedIn';
 
 export * from './refreshAccount';
