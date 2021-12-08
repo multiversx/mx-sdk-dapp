@@ -1,4 +1,4 @@
-import { Nonce } from '@elrondnetwork/erdjs';
+import { Nonce, Address } from '@elrondnetwork/erdjs';
 
 export interface WalletConnectSignatureType {
   id?: number;
@@ -41,4 +41,12 @@ export enum LoginMethodsEnum {
   wallet = 'wallet',
   extension = 'extension',
   none = ''
+}
+
+export interface TransactionParameter {
+  sender: Address;
+  receiver: Address;
+  functionName: string;
+  inputParameters: string[];
+  outputParameters: string[];
 }
