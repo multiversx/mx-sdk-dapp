@@ -10,7 +10,7 @@ export const UnlockRoute: () => JSX.Element = () => {
         <div className='card my-4 text-center'>
           <div className='card-body py-4 px-2 px-sm-2 mx-lg-4'>
             <h4 className='mb-4'>Login</h4>
-            <p className='mb-4'>pick</p>
+            <p className='mb-4'>pick a login method</p>
 
             <ExtensionLoginButton
               callbackRoute={'/home'}

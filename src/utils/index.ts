@@ -6,5 +6,6 @@ export * from './provider';
 export * from './setNonce';
 export * from './logout';
 export * from './getLatestNonce';
+export * from './getAccountBalance';
 
 export * from './refreshAccount';
