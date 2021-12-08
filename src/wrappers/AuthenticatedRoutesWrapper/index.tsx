@@ -77,21 +77,22 @@ const AuthenticatedRoutesWrapper = ({
         setLoading(true);
         const provider = newWalletProvider(network);
         const address = await getAddress();
-        console.log(address);
-        dispatch(setWalletLogin(null));
-        dispatch(setProvider(provider));
-        dispatch(
-          loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
-        );
-        const account = await getAccount(address);
-        dispatch(
-          setAccount({
-            balance: account.balance.toString(),
-            address,
-            nonce: getLatestNonce(account)
-          })
-        );
-        setLoading(false);
+        if (address) {
+          dispatch(setWalletLogin(null));
+          dispatch(setProvider(provider));
+          dispatch(
+            loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+          );
+          const account = await getAccount(address);
+          dispatch(
+            setAccount({
+              balance: account.balance.toString(),
+              address,
+              nonce: getLatestNonce(account)
+            })
+          );
+          setLoading(false);
+        }
       }
     } catch (e) {
       console.error('Failed authenticating user ', e);
@@ -114,7 +115,7 @@ const AuthenticatedRoutesWrapper = ({
 
   async function fetchAccount() {
     try {
-      if (address != null && isLoggedIn) {
+      if (address && isLoggedIn) {
         const account = await getAccount(address);
         dispatch(
           setAccount({
@@ -147,6 +148,7 @@ const AuthenticatedRoutesWrapper = ({
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
   if (shouldRedirect) {
+    return null;
     window.location.href = unlockRoute;
     return null;
   }
