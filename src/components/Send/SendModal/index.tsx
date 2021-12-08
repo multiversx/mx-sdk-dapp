@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
 import { Transaction, TransactionHash } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
-import { ProviderType } from '../../utils';
 import PageState from 'UI/PageState';
+import { ProviderType } from '../../utils';
 import TransactionStatus from './TransactionStatus';
 
 export interface SendModalType {

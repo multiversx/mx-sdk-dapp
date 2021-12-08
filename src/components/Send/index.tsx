@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import {
   Transaction,
   IDappProvider,
@@ -6,9 +6,9 @@ import {
   TransactionHash
 } from '@elrondnetwork/erdjs';
 import { useContext } from 'context';
-import SendModal from './SendModal';
-import { getProviderType, refreshAccount, getLatestNonce } from '../../utils';
 import { ledgerErrorCodes } from '../../constants';
+import { getProviderType, refreshAccount, getLatestNonce } from '../../utils';
+import SendModal from './SendModal';
 
 interface SendTransactionType {
   transaction: Transaction;

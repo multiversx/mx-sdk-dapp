@@ -1,15 +1,15 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useHistory } from 'react-router-dom';
-import * as React from 'react';
+import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import {
   faChevronLeft,
   faChevronRight,
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useContext, useDispatch } from 'context';
+import { useHistory } from 'react-router-dom';
 import PageState from 'UI/PageState';
 import { ledgerErrorCodes } from '../../constants';
-import { useContext, useDispatch } from 'context';
 import AddressRow from './AddressRow';
 
 const addressesPerPage = 5;
@@ -74,7 +74,6 @@ const AddressTable = ({
       });
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(fetchAccounts, [startIndex]);
 
   const goToNext = () => {

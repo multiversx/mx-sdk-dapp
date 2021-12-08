@@ -1,14 +1,14 @@
-import * as React from 'react';
-import { useHistory } from 'react-router-dom';
+import React from 'react';
 import { TransactionHash } from '@elrondnetwork/erdjs';
 import {
   faCheck,
   faTimes,
   faHourglass
 } from '@fortawesome/free-solid-svg-icons';
-import useLastTxStatus from './useFetchTxStatus';
-import StatusTxDetails from './StatusTxDetails';
+import { useHistory } from 'react-router-dom';
 import PageState from 'UI/PageState';
+import StatusTxDetails from './StatusTxDetails';
+import useLastTxStatus from './useFetchTxStatus';
 
 export interface TransactionStatusType {
   txHash: TransactionHash;

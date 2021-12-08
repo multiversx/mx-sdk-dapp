@@ -1,10 +1,10 @@
-import * as React from "react";
-import { ReactComponent as LedgerLogo } from "./assets/ledger-nano.svg";
+import React from 'react';
+import { ReactComponent as LedgerLogo } from './assets/ledger-nano.svg';
 
 const LedgerConnect = ({
   onClick,
   error,
-  connectPageContent,
+  connectPageContent
 }: {
   onClick: () => void;
   error: string;
@@ -12,16 +12,16 @@ const LedgerConnect = ({
 }) => {
   const [ledgerError] = React.useState(error);
   return (
-    <div className="m-auto login-container">
-      <div className="card my-4 text-center">
-        <div className="card-body p-4 mx-lg-4">
+    <div className='m-auto login-container'>
+      <div className='card my-4 text-center'>
+        <div className='card-body p-4 mx-lg-4'>
           {connectPageContent ? (
             <React.Fragment>{connectPageContent}</React.Fragment>
           ) : (
             <React.Fragment>
-              <LedgerLogo className=" mb-4" />
-              <h4 className="mb-4">Connect Ledger</h4>
-              <p className="lead mb-4">
+              <LedgerLogo className=' mb-4' />
+              <h4 className='mb-4'>Connect Ledger</h4>
+              <p className='lead mb-4'>
                 Unlock your device &amp; open the Elrond App.
               </p>
             </React.Fragment>
@@ -29,14 +29,14 @@ const LedgerConnect = ({
 
           <div>
             {ledgerError && (
-              <p className="text-danger d-flex justify-content-center align-items-center">
+              <p className='text-danger d-flex justify-content-center align-items-center'>
                 {ledgerError}
               </p>
             )}
             <button
-              className="btn btn-primary px-4"
+              className='btn btn-primary px-4'
               onClick={onClick}
-              data-testid="connectBtn"
+              data-testid='connectBtn'
             >
               Connect Ledger
             </button>

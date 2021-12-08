@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import {

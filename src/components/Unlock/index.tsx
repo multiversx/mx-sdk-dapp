@@ -1,10 +1,10 @@
-import * as React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React from 'react';
 import { faBan } from '@fortawesome/free-solid-svg-icons';
-import PageState from 'UI/PageState';
-import WalletLogin from './Login/Wallet';
 import { useContext } from 'context';
+import { Link, Redirect } from 'react-router-dom';
+import PageState from 'UI/PageState';
 import ExtensionLogin from './Login/Extension';
+import WalletLogin from './Login/Wallet';
 
 const Unlock = ({
   callbackRoute,

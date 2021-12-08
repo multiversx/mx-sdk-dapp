@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { matchPath } from 'react-router-dom';
 import Loader from 'UI/Loader';
@@ -148,7 +148,6 @@ const AuthenticatedRoutesWrapper = ({
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
   if (shouldRedirect) {
-    return null;
     window.location.href = unlockRoute;
     return null;
   }
