@@ -42,11 +42,10 @@ export default function ProviderInitializer() {
 
   async function tryAuthenticateWalletUser() {
     try {
-      if (walletLogin != null && network != null) {
+      if (walletLogin != null) {
         const provider = newWalletProvider(network);
         const address = await getAddress();
         if (address) {
-          dispatch(setWalletLogin(null));
           dispatch(setProvider(provider));
           dispatch(
             loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
@@ -59,6 +58,8 @@ export default function ProviderInitializer() {
               nonce: getLatestNonce(account)
             })
           );
+          console.log('dispatching');
+          dispatch(setWalletLogin(null));
         }
       }
     } catch (e) {
