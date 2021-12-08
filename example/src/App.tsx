@@ -3,7 +3,11 @@ import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
 import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
-import { DappProvider, AuthenticatedRoutesWrapper } from 'dapp-core';
+import {
+  DappProvider,
+  AuthenticatedRoutesWrapper,
+  getIsLoggedIn
+} from 'dapp-core';
 
 import AuthenticatedRoute from './pages/AuthenticatedRoute';
 import Unlock from './pages/UnlockRoute';
@@ -18,6 +22,10 @@ const routes = [
 ];
 
 const App = () => {
+  React.useEffect(() => {
+    console.log(getIsLoggedIn());
+  });
+
   return (
     <Router>
       <DappProvider
