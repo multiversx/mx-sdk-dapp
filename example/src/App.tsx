@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, BrowserRouter as Router, } from "react-router-dom";
+import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
 import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
@@ -19,25 +19,20 @@ const routes = [
 
 const App = () => {
   return (
-
     <Router>
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
       >
         <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
-
           <Routes>
+            <Route path='/' element={<Unlock />} />
 
-            <Route path="/" element={<div>Dapp!</div>} />
+            <Route path={'/home'} element={<AuthenticatedRoute />} />
 
-            <Route path={'home'} element={<AuthenticatedRoute />} />
+            <Route path={'/unlock'} element={<Unlock />} />
 
-            <Route path={'unlock'} element={<Unlock />} />
-
-            <Route path="*" element={<div>404</div>} />
-
+            <Route path='*' element={<div>404</div>} />
           </Routes>
-
         </AuthenticatedRoutesWrapper>
       </DappProvider>
     </Router>

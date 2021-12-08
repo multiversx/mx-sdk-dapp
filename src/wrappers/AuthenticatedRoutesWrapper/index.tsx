@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Address } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { matchPath } from 'react-router-dom';
 import Loader from 'UI/Loader';
@@ -78,6 +77,7 @@ const AuthenticatedRoutesWrapper = ({
         setLoading(true);
         const provider = newWalletProvider(network);
         const address = await getAddress();
+        console.log(address);
         dispatch(setWalletLogin(null));
         dispatch(setProvider(provider));
         dispatch(
@@ -115,7 +115,7 @@ const AuthenticatedRoutesWrapper = ({
   async function fetchAccount() {
     try {
       if (address != null && isLoggedIn) {
-        const account = await proxy.getAccount(new Address(address));
+        const account = await getAccount(address);
         dispatch(
           setAccount({
             balance: account.balance.toString(),

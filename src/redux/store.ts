@@ -16,7 +16,8 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   version: 1,
-  storage
+  storage,
+  blacklist: ['networkConfig']
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -26,7 +27,24 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+          'appConfig/setProvider',
+          'accountInfoSlice/setAccount',
+          'accountInfoSlice/setAccountNonce'
+        ],
+        ignoredPaths: [
+          'networkConfig.proxy',
+          'networkConfig.apiProvider',
+          'networkConfig.provider',
+          'payload.nonce',
+          'account.account.nonce'
+        ]
       }
     })
 });

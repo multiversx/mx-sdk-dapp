@@ -73,7 +73,7 @@ export default function useInitWalletConnect({
     try {
       const address = await provider.getAddress();
       if (!isLoggedIn) {
-        window.history.pushState({}, document.title, callbackRoute);
+        window.location.href = callbackRoute;
       }
       const signature = await provider.getSignature();
       if (signature != null) {

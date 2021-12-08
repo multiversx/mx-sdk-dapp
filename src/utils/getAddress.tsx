@@ -1,12 +1,13 @@
 import {
+  addressSelector,
   isLoggedInSelector,
-  walletLoginSelector,
   providerSelector,
-  addressSelector
+  walletLoginSelector
 } from '../redux/selectors';
 import { store } from '../redux/store';
-import { getProviderType } from './provider';
+import { LoginMethodsEnum } from '../types';
 import { addressIsValid } from './addressIsValid';
+import { getProviderType } from './provider';
 
 export function getAddress(): Promise<string> {
   const { search } = window.location;
@@ -17,7 +18,8 @@ export function getAddress(): Promise<string> {
   const walletLogin = walletLoginSelector(appState);
   const providerType = getProviderType(provider);
 
-  return providerType != null && providerType !== 'wallet'
+  return providerType != LoginMethodsEnum.none &&
+    providerType !== LoginMethodsEnum.wallet
     ? provider.getAddress()
     : new Promise((resolve) => {
         if (walletLogin != null) {

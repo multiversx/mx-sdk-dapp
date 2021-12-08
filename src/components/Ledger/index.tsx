@@ -45,7 +45,7 @@ const Ledger = ({ callbackRoute }: { callbackRoute: string }) => {
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
         setLoading(false);
-        window.history.pushState({}, document.title, callbackRoute);
+        window.location.href = callbackRoute;
       } catch (error) {
         console.error('error ', error);
         console.warn(error);
