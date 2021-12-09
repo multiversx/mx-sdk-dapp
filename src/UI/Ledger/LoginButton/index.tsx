@@ -8,9 +8,10 @@ export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
 ) => JSX.Element = ({
   token,
-  className = 'web-wallet-login',
   callbackRoute,
   loginButtonText,
+  className = 'ledger-login',
+  renderContentInsideModal = true,
   shouldRenderDefaultCss = true
 }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
@@ -32,16 +33,24 @@ export const LedgerLoginButton: (
     setShowLoginModal(false);
   }
 
+  const content = renderContentInsideModal ? (
+    <ModalContainer
+      title={'Login with ledger'}
+      className={className}
+      onClose={handleCloseModal}
+    >
+      <LedgerLoginContainer callbackRoute={callbackRoute} token={token} />
+    </ModalContainer>
+  ) : (
+    <LedgerLoginContainer callbackRoute={callbackRoute} token={token} />
+  );
+
   return (
     <React.Fragment>
       <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
         <span className={generatedClasses.loginText}>{loginButtonText}</span>
       </button>
-      {showLoginModal && (
-        <ModalContainer title={'Login with ledger'} onClose={handleCloseModal}>
-          <LedgerLoginContainer callbackRoute={callbackRoute} token={token} />
-        </ModalContainer>
-      )}
+      {showLoginModal && content}
     </React.Fragment>
   );
 };

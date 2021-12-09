@@ -59,7 +59,6 @@ export function LedgerLoginContainer({
     }
   };
 
-  console.log(showAddressTable, error, ledgerAccount);
   switch (true) {
     case loading:
       return (

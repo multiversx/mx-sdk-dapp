@@ -58,7 +58,6 @@ export default function ProviderInitializer() {
               nonce: getLatestNonce(account)
             })
           );
-          console.log('dispatching');
           dispatch(setWalletLogin(null));
         }
       }
