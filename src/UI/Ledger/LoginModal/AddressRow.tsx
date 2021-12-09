@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { networkSelector } from '../../redux/selectors';
-import { getAccount } from '../../utils';
+import { networkSelector } from '../../../redux/selectors';
+import { getAccount } from '../../../utils';
 
 interface AddressRowType {
   setSelectedAddress: React.Dispatch<React.SetStateAction<string>>;

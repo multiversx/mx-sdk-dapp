@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ledgerAccountSelector } from '../../redux/selectors';
+import { ledgerAccountSelector } from '../../../redux/selectors';
 
 const ConfirmAddress = ({
   token,

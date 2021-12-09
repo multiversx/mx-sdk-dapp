@@ -3,10 +3,10 @@ import { HWProvider } from '@elrondnetwork/erdjs';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import PageState from 'UI/PageState';
-import { loginAction } from '../../redux/commonActions';
-import { ledgerAccountSelector, proxySelector } from '../../redux/selectors';
-import { setProvider } from '../../redux/slices';
-import { LoginMethodsEnum } from '../../types';
+import { loginAction } from '../../../redux/commonActions';
+import { ledgerAccountSelector, proxySelector } from '../../../redux/selectors';
+import { setProvider } from '../../../redux/slices';
+import { LoginMethodsEnum } from '../../../types';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
@@ -16,13 +16,13 @@ const failedInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
 const ledgerWaitingText = 'Waiting for device';
 
-const Ledger = ({
+export function LedgerLoginContainer({
   callbackRoute,
   token
 }: {
   callbackRoute: string;
   token?: string;
-}) => {
+}) {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const proxy = useSelector(proxySelector);
   const dispatch = useDispatch();
@@ -32,20 +32,17 @@ const Ledger = ({
 
   const onClick = async () => {
     setError('');
-    if (ledgerAccount !== undefined) {
+    if (ledgerAccount != null) {
       try {
         const hwWalletP = new HWProvider(proxy);
         setLoading(true);
         const initialized = await hwWalletP.init();
-
         if (!initialized) {
           console.warn(failedInitializeErrorText);
           setLoading(false);
           return;
         }
-
         const address = await hwWalletP.login();
-
         dispatch(setProvider(hwWalletP));
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
@@ -62,6 +59,7 @@ const Ledger = ({
     }
   };
 
+  console.log(showAddressTable, error, ledgerAccount);
   switch (true) {
     case loading:
       return (
@@ -71,7 +69,7 @@ const Ledger = ({
           title={ledgerWaitingText}
         />
       );
-    case ledgerAccount !== undefined && !error:
+    case ledgerAccount != null && !error:
       return <ConfirmAddress token={token} />;
     case showAddressTable && !error:
       return (
@@ -85,10 +83,7 @@ const Ledger = ({
         />
       );
     case error !== '':
-      return <LedgerConnect onClick={onClick} error={error} />;
     default:
       return <LedgerConnect onClick={onClick} error={error} />;
   }
-};
-
-export default Ledger;
+}

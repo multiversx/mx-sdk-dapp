@@ -1,2 +1,3 @@
-export { ExtensionLoginButton } from './extension/LoginButton/index';
-export { WebWalletLoginButton } from './webWallet/LoginButton/index';
+export { ExtensionLoginButton } from './extension/LoginButton';
+export { WebWalletLoginButton } from './webWallet/LoginButton';
+export { LedgerLoginButton } from './Ledger';

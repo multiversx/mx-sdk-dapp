@@ -6,10 +6,18 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useContext, useDispatch } from 'context';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setProvider } from 'redux/slices/networkConfigSlice';
 import PageState from 'UI/PageState';
-import { ledgerErrorCodes } from '../../constants';
+import { ledgerErrorCodes } from '../../../constants';
+import { loginAction } from '../../../redux/commonActions';
+import { proxySelector } from '../../../redux/selectors';
+import {
+  setLedgerAccount,
+  setLedgerLogin,
+  setTokenLogin
+} from '../../../redux/slices';
+import { LoginMethodsEnum } from '../../../types';
 import AddressRow from './AddressRow';
 
 const addressesPerPage = 10;
@@ -31,64 +39,59 @@ const AddressTable = ({
   ledgerWaitingText?: string;
   token?: string;
 }) => {
-  const { dapp } = useContext();
   const dispatch = useDispatch();
+  const proxy = useSelector(proxySelector);
+  const hwWalletP = new HWProvider(proxy);
+
   const [startIndex, setStartIndex] = React.useState(0);
   const [accounts, setAccounts] = React.useState<string[]>([]);
   const [selectedAddress, setSelectedAddress] = React.useState('');
-  const [selectedIndex, setSelectedIndex] = React.useState<
-    number | undefined
-  >();
+  const [selectedIndex, setSelectedIndex] = React.useState<number>();
   const [loading, setLoading] = React.useState(true);
-  const hwWalletP = new HWProvider(dapp.proxy);
-  const history = useHistory();
 
-  const fetchAccounts = () => {
-    setLoading(true);
-
-    hwWalletP
-      .init()
-      .then((success: any) => {
-        if (!success) {
-          setLoading(false);
-          setError(failedInitializeErrorText);
-          console.warn(failedInitializeErrorText);
-          return;
-        }
-        hwWalletP
-          .getAccounts(startIndex, addressesPerPage)
-          .then((accounts) => {
-            setAccounts(accounts);
-            setLoading(false);
-          })
-          .catch((err) => {
-            setError(erdAppErrorText);
-            console.error('error', err);
-            setLoading(false);
-          });
-      })
-      .catch((err) => {
-        if (err.statusCode in ledgerErrorCodes) {
-          setError((ledgerErrorCodes as any)[err.statusCode].message);
-        }
-        console.error('error', err);
+  async function fetchAccounts() {
+    try {
+      setLoading(true);
+      const initialized = await hwWalletP.init();
+      if (!initialized) {
         setLoading(false);
-      });
-  };
+        setError(failedInitializeErrorText);
+        console.warn(failedInitializeErrorText);
+        return;
+      }
+      const accounts = await hwWalletP.getAccounts(
+        startIndex,
+        addressesPerPage
+      );
+      setAccounts(accounts);
+      setLoading(false);
+    } catch (err) {
+      if (err.statusCode in ledgerErrorCodes) {
+        setError((ledgerErrorCodes as any)[err.statusCode].message);
+      } else {
+        setError(erdAppErrorText);
+      }
+      console.error('error', err);
+    } finally {
+      setLoading(false);
+    }
+  }
 
-  React.useEffect(fetchAccounts, [startIndex]);
+  React.useEffect(() => {
+    fetchAccounts();
+  }, [startIndex]);
 
-  const goToNext = () => {
+  function goToNextPage() {
     setSelectedAddress('');
     setStartIndex((current) => current + 1);
-  };
+  }
 
-  const goToPrev = () => {
+  function goToPrevPage() {
     setSelectedAddress('');
     setStartIndex((current) => (current === 0 ? 0 : current - 1));
-  };
+  }
 
-  const login = ({
+  function login({
     provider,
     address,
     index,
@@ -98,53 +101,44 @@ const AddressTable = ({
     address: string;
     index: number;
     signature?: string;
-  }) => {
-    dispatch({ type: 'setProvider', provider });
+  }) {
+    dispatch(setProvider(provider));
 
-    dispatch({
-      type: 'ledgerLogin',
-      ledgerLogin: { index, loginType: 'ledger' }
-    });
+    dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
     if (signature) {
-      dispatch({
-        type: 'setTokenLogin',
-        tokenLogin: {
+      dispatch(
+        setTokenLogin({
           loginToken: String(token),
           signature
-        }
-      });
+        })
+      );
     }
-    dispatch({ type: 'login', address, loginMethod: 'ledger' });
+    dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
+    window.location.href = callbackRoute;
+  }
 
-    history.push(callbackRoute);
-  };
-
-  const loginFaield = (err: any, customMessage?: string) => {
+  const loginFailed = (err: any, customMessage?: string) => {
     if (err.statusCode in ledgerErrorCodes) {
       setError(
         (ledgerErrorCodes as any)[err.statusCode].message + customMessage
       );
-      dispatch({
-        type: 'setLedgerAccount',
-        ledgerAccount: undefined
-      });
+      dispatch(setLedgerAccount(null));
     }
     setLoading(false);
     console.warn(err);
   };
 
   const setAddress = () => {
-    if (selectedIndex !== undefined) {
-      dispatch({
-        type: 'setLedgerAccount',
-        ledgerAccount: {
+    if (selectedIndex != null) {
+      dispatch(
+        setLedgerAccount({
           index: selectedIndex,
           address: selectedAddress
-        }
-      });
+        })
+      );
       setLoading(true);
-      const hwWalletProvider = new HWProvider(dapp.proxy);
+      const hwWalletProvider = new HWProvider(proxy);
       hwWalletProvider
         .init()
         .then((success: any) => {
@@ -170,7 +164,7 @@ const AddressTable = ({
                 });
               })
               .catch((err) => {
-                loginFaield(err, '. Update Elrond App to continue.');
+                loginFailed(err, '. Update Elrond App to continue.');
               });
           } else {
             hwWalletProvider
@@ -183,7 +177,7 @@ const AddressTable = ({
                 });
               })
               .catch((err) => {
-                loginFaield(err);
+                loginFailed(err);
               });
           }
         })
@@ -245,7 +239,7 @@ const AddressTable = ({
                   <button
                     type='button'
                     className='btn btn-link mx-2'
-                    onClick={goToPrev}
+                    onClick={goToPrevPage}
                     data-testid='prevBtn'
                     disabled={startIndex === 0}
                   >
@@ -254,7 +248,7 @@ const AddressTable = ({
                   <button
                     type='button'
                     className='btn btn-link mx-2'
-                    onClick={goToNext}
+                    onClick={goToNextPage}
                     data-testid='nextBtn'
                   >
                     Next <FontAwesomeIcon size='sm' icon={faChevronRight} />

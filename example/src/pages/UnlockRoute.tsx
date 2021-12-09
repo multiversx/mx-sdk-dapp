@@ -2,7 +2,8 @@ import React from 'react';
 import { DappUI } from 'dapp-core';
 
 export const UnlockRoute: () => JSX.Element = () => {
-  const { ExtensionLoginButton, WebWalletLoginButton } = DappUI;
+  const { ExtensionLoginButton, WebWalletLoginButton, LedgerLoginButton } =
+    DappUI;
 
   return (
     <div className='home d-flex flex-fill align-items-center'>
@@ -19,6 +20,10 @@ export const UnlockRoute: () => JSX.Element = () => {
             <WebWalletLoginButton
               callbackRoute={'/home'}
               loginButtonText={'Web wallet'}
+            />
+            <LedgerLoginButton
+              loginButtonText={'Ledger'}
+              callbackRoute={'/home'}
             />
           </div>
         </div>

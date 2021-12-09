@@ -46,7 +46,7 @@ const AuthenticatedRoutesWrapper = ({
 
   React.useEffect(() => {
     fetchAccount();
-  }, [address, ledgerLogin]);
+  }, [address, ledgerLogin, isLoggedIn]);
 
   function refreshChainID() {
     if (chainId.valueOf() === '-1') {
@@ -64,6 +64,7 @@ const AuthenticatedRoutesWrapper = ({
   async function fetchAccount() {
     try {
       if (address && isLoggedIn) {
+        console.log('yey');
         const account = await getAccount(address);
         dispatch(
           setAccount({
@@ -72,8 +73,10 @@ const AuthenticatedRoutesWrapper = ({
             nonce: getLatestNonce(account)
           })
         );
-
+        console.log('yo');
         if (ledgerAccount == null && ledgerLogin != null) {
+          console.log('ysdfsjdfo');
+
           dispatch(
             setLedgerAccount({
               index: ledgerLogin.index,

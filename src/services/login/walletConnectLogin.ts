@@ -40,7 +40,7 @@ const walletConnectLogin = ({
       const walletConnectUri = await walletConnect.login();
       if (token != null) {
         setWcUri(`${walletConnectUri}&token=${token}`);
-        dispatch(setTokenLogin(token));
+        dispatch(setTokenLogin({ loginToken: token }));
       } else {
         setWcUri(walletConnectUri);
       }
