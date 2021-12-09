@@ -16,7 +16,7 @@ export const webWalletLogin = async ({
     const network = networkSelector(appState);
     const provider = newWalletProvider(network);
 
-    const expires = moment().add(1, 'minutes').unix();
+    const expires = moment().add(3, 'minutes').unix();
     const walletLoginData = {
       data: {},
       expires: expires

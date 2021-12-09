@@ -1,10 +1,10 @@
 import { ExtensionProvider } from '@elrondnetwork/erdjs/out';
 import moment from 'moment';
 import { loginAction } from 'redux/commonActions';
-import { setExtensionLogin } from '../../redux/slices/loginInfoSlice';
-import { setProvider } from '../../redux/slices/networkConfigSlice';
+import { setExtensionLogin, setProvider } from '../../redux/slices';
 import { store } from '../../redux/store';
 import { LoginMethodsEnum } from '../../types';
+import { buildUrlParams } from '../../utils';
 
 export const extensionLogin = async ({
   callbackRoute,
@@ -43,13 +43,16 @@ export const extensionLogin = async ({
 
     store.dispatch(setProvider(provider));
 
-    const account = provider.account;
-    const address = await provider.getAddress();
-    const loginTokenParam = `loginToken=${token}`;
-    const addressParam = `address=${account.address}`;
-    const signatureParam = `signature=${account.signature}`;
-    window.location.href = `${callbackRoute}?${addressParam}&${signatureParam}&${loginTokenParam}`;
+    const { signature, address } = provider.account;
+    const url = new URL(`${window.location.origin}${callbackRoute}`);
 
+    const { nextUrlParams } = buildUrlParams(url.search, {
+      address,
+      ...(signature ? { signature } : {}),
+      ...(token ? { loginToken: token } : {})
+    });
+
+    window.location.href = `${url.pathname}?${nextUrlParams}`;
     store.dispatch(
       loginAction({ address, loginMethod: LoginMethodsEnum.extension })
     );

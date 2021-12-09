@@ -12,7 +12,7 @@ import PageState from 'UI/PageState';
 import { ledgerErrorCodes } from '../../constants';
 import AddressRow from './AddressRow';
 
-const addressesPerPage = 5;
+const addressesPerPage = 10;
 
 const AddressTable = ({
   setShowAddressTable,
@@ -20,7 +20,8 @@ const AddressTable = ({
   callbackRoute,
   erdAppErrorText,
   failedInitializeErrorText,
-  ledgerWaitingText
+  ledgerWaitingText,
+  token
 }: {
   setShowAddressTable: React.Dispatch<React.SetStateAction<boolean>>;
   setError: (error: string) => void;
@@ -28,6 +29,7 @@ const AddressTable = ({
   erdAppErrorText: string;
   failedInitializeErrorText: string;
   ledgerWaitingText?: string;
+  token?: string;
 }) => {
   const { dapp } = useContext();
   const dispatch = useDispatch();
@@ -86,6 +88,52 @@ const AddressTable = ({
     setStartIndex((current) => (current === 0 ? 0 : current - 1));
   };
 
+  const login = ({
+    provider,
+    address,
+    index,
+    signature
+  }: {
+    provider: HWProvider;
+    address: string;
+    index: number;
+    signature?: string;
+  }) => {
+    dispatch({ type: 'setProvider', provider });
+
+    dispatch({
+      type: 'ledgerLogin',
+      ledgerLogin: { index, loginType: 'ledger' }
+    });
+
+    if (signature) {
+      dispatch({
+        type: 'setTokenLogin',
+        tokenLogin: {
+          loginToken: String(token),
+          signature
+        }
+      });
+    }
+    dispatch({ type: 'login', address, loginMethod: 'ledger' });
+
+    history.push(callbackRoute);
+  };
+
+  const loginFaield = (err: any, customMessage?: string) => {
+    if (err.statusCode in ledgerErrorCodes) {
+      setError(
+        (ledgerErrorCodes as any)[err.statusCode].message + customMessage
+      );
+      dispatch({
+        type: 'setLedgerAccount',
+        ledgerAccount: undefined
+      });
+    }
+    setLoading(false);
+    console.warn(err);
+  };
+
   const setAddress = () => {
     if (selectedIndex !== undefined) {
       dispatch({
@@ -107,32 +155,37 @@ const AddressTable = ({
             return;
           }
 
-          hwWalletProvider
-            .login({ addressIndex: selectedIndex })
-            .then((address) => {
-              dispatch({ type: 'setProvider', provider: hwWalletProvider });
-              dispatch({ type: 'login', address, loginMethod: 'ledger' });
-
-              dispatch({
-                type: 'ledgerLogin',
-                ledgerLogin: {
+          if (token) {
+            hwWalletProvider
+              .tokenLogin({
+                token: Buffer.from(`${token}{}`),
+                addressIndex: selectedIndex
+              })
+              .then(({ address, signature }) => {
+                login({
+                  address,
+                  provider: hwWalletProvider,
                   index: selectedIndex,
-                  loginType: 'ledger'
-                }
-              });
-              history.push(callbackRoute);
-            })
-            .catch((err: any) => {
-              if (err.statusCode in ledgerErrorCodes) {
-                setError((ledgerErrorCodes as any)[err.statusCode].message);
-                dispatch({
-                  type: 'setLedgerAccount',
-                  ledgerAccount: undefined
+                  signature: signature.hex()
                 });
-              }
-              setLoading(false);
-              console.warn(err);
-            });
+              })
+              .catch((err) => {
+                loginFaield(err, '. Update Elrond App to continue.');
+              });
+          } else {
+            hwWalletProvider
+              .login({ addressIndex: selectedIndex })
+              .then((address) => {
+                login({
+                  address,
+                  provider: hwWalletProvider,
+                  index: selectedIndex
+                });
+              })
+              .catch((err) => {
+                loginFaield(err);
+              });
+          }
         })
         .catch((err: any) => {
           if (err.statusCode in ledgerErrorCodes) {
@@ -176,10 +229,14 @@ const AddressTable = ({
                           index: index + startIndex * addressesPerPage,
                           selectedAddress,
                           setSelectedAddress,
-                          setSelectedIndex,
-                          key: index + startIndex * addressesPerPage
+                          setSelectedIndex
                         };
-                        return <AddressRow {...props} />;
+                        return (
+                          <AddressRow
+                            key={index + startIndex * addressesPerPage}
+                            {...props}
+                          />
+                        );
                       })}
                     </tbody>
                   </table>
@@ -187,7 +244,7 @@ const AddressTable = ({
                 <div className='d-flex justify-content-center pager mt-2'>
                   <button
                     type='button'
-                    className='btn btn-link px-2'
+                    className='btn btn-link mx-2'
                     onClick={goToPrev}
                     data-testid='prevBtn'
                     disabled={startIndex === 0}
@@ -196,7 +253,7 @@ const AddressTable = ({
                   </button>
                   <button
                     type='button'
-                    className='btn btn-link px-2'
+                    className='btn btn-link mx-2'
                     onClick={goToNext}
                     data-testid='nextBtn'
                   >
