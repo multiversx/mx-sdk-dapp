@@ -55,7 +55,7 @@ export function LedgerLoginContainer({
   }
 
   if (ledgerAccount != null && !error) {
-    return <ConfirmAddress className={className} token={token} />;
+    return <ConfirmAddress token={token} />;
   }
 
   if (showAddressList && !error) {
@@ -69,7 +69,6 @@ export function LedgerLoginContainer({
         startIndex={startIndex}
         selectedAddress={selectedAddress?.address}
         onConfirmSelectedAddress={onConfirmSelectedAddress}
-        className={className}
       />
     );
   }

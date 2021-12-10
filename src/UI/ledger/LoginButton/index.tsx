@@ -15,7 +15,6 @@ export const LedgerLoginButton: (
   shouldRenderDefaultCss = true
 }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
-
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,

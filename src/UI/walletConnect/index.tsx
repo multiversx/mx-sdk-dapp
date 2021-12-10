@@ -1,3 +1,1 @@
-import WalletConnectLoginModal from './WalletConnectLoginModal';
-
-export { WalletConnectLoginModal };
+export { WalletConnectLoginButton } from './WalletConnectLoginButton';
