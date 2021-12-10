@@ -1,5 +1,5 @@
 import React from 'react';
-import classNames from 'classnames';
+import { getGeneratedClasses } from '../../../utils';
 import ModalContainer from '../../ModalContainer';
 import { LedgerLoginContainer } from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
@@ -15,15 +15,11 @@ export const LedgerLoginButton: (
   shouldRenderDefaultCss = true
 }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
-  const generatedClasses = {
-    wrapper: classNames(className, {
-      'btn btn-primary px-sm-4 m-1 mx-sm-3': shouldRenderDefaultCss
-    }),
-
-    loginText: classNames(`${className}_login-text`, {
-      'text-left': shouldRenderDefaultCss
-    })
-  };
+  const generatedClasses = getGeneratedClasses(
+    className,
+    shouldRenderDefaultCss,
+    { wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3', loginText: 'text-left' }
+  );
 
   function handleOpenModal() {
     setShowLoginModal(true);
@@ -39,10 +35,20 @@ export const LedgerLoginButton: (
       className={className}
       onClose={handleCloseModal}
     >
-      <LedgerLoginContainer callbackRoute={callbackRoute} token={token} />
+      <LedgerLoginContainer
+        className={className}
+        shouldRenderDefaultCss={shouldRenderDefaultCss}
+        callbackRoute={callbackRoute}
+        token={token}
+      />
     </ModalContainer>
   ) : (
-    <LedgerLoginContainer callbackRoute={callbackRoute} token={token} />
+    <LedgerLoginContainer
+      className={className}
+      shouldRenderDefaultCss={shouldRenderDefaultCss}
+      callbackRoute={callbackRoute}
+      token={token}
+    />
   );
 
   return (

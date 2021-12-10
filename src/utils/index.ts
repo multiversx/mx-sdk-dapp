@@ -9,5 +9,6 @@ export * from './getLatestNonce';
 export * from './getAccountBalance';
 export * from './getIsLoggedIn';
 export * from './buildUrlParams';
+export * from './getGeneratedClasses';
 
 export * from './refreshAccount';

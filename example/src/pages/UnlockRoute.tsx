@@ -24,6 +24,7 @@ export const UnlockRoute: () => JSX.Element = () => {
             <LedgerLoginButton
               loginButtonText={'Ledger'}
               callbackRoute={'/home'}
+              className={'test-class_name'}
             />
           </div>
         </div>

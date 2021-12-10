@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import PageState from 'UI/PageState';
 import { ledgerAccountSelector } from '../../../redux/selectors';
 import { useLedgerLogin } from '../../../services/login/useLedgerLogin';
+import { getGeneratedClasses } from '../../../utils';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
@@ -12,11 +13,21 @@ const ledgerWaitingText = 'Waiting for device';
 
 export function LedgerLoginContainer({
   callbackRoute,
+  className = 'login-modal-content',
+  shouldRenderDefaultCss = true,
+
   token
 }: {
   callbackRoute: string;
+  className: string;
+  shouldRenderDefaultCss: boolean;
   token?: string;
 }) {
+  const generatedClasses = getGeneratedClasses(
+    className,
+    shouldRenderDefaultCss,
+    { spinner: 'fa-spin text-primary' }
+  );
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const [
     onStartLogin,
@@ -37,7 +48,7 @@ export function LedgerLoginContainer({
     return (
       <PageState
         icon={faCircleNotch}
-        iconClass='fa-spin text-primary'
+        iconClass={generatedClasses.spinner}
         title={ledgerWaitingText}
       />
     );
