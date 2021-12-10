@@ -1,3 +1,4 @@
+export { LedgerLoginButton } from './ledger';
 export { ExtensionLoginButton } from './extension/LoginButton';
 export { WebWalletLoginButton } from './webWallet/LoginButton';
-export { LedgerLoginButton } from './Ledger';
+export { WalletConnectLoginButton } from './walletConnect/index';

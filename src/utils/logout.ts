@@ -2,12 +2,19 @@ import { logoutAction } from '../redux/commonActions';
 import { providerSelector } from '../redux/selectors';
 import { store } from '../redux/store';
 
-export function logout(callbackUrl?: string) {
-  const provider = providerSelector(store.getState());
-  provider.logout({ callbackUrl }).then(() => {
+export async function logout(callbackUrl?: string) {
+  try {
+    const provider = providerSelector(store.getState());
+
+    if (!provider?.isInitialized()) {
+      await provider.init();
+    }
+    await provider.logout({ callbackUrl });
     if (callbackUrl != null && window.location.href != callbackUrl) {
       window.location.href = callbackUrl;
     }
     store.dispatch(logoutAction());
-  });
+  } catch (err) {
+    console.error('error logging out', err);
+  }
 }

@@ -1,10 +1,10 @@
 import React from 'react';
-import { DappUI } from 'dapp-core';
+import { DappUI, loginServices } from 'dapp-core';
 
 export const UnlockRoute: () => JSX.Element = () => {
-  const { ExtensionLoginButton, WebWalletLoginButton, LedgerLoginButton } =
+  const { ExtensionLoginButton, WebWalletLoginButton, LedgerLoginButton, WalletConnectLoginButton } =
     DappUI;
-
+    
   return (
     <div className='home d-flex flex-fill align-items-center'>
       <div className='m-auto' data-testid='unlockPage'>
@@ -25,6 +25,10 @@ export const UnlockRoute: () => JSX.Element = () => {
               loginButtonText={'Ledger'}
               callbackRoute={'/home'}
               className={'test-class_name'}
+            />
+            <WalletConnectLoginButton
+              callbackRoute={'/home'}
+              loginButtonText={'Maiar'}
             />
           </div>
         </div>

@@ -91,12 +91,14 @@ export const accountInfoSlice = createSlice({
       }
     );
     builder.addCase(REHYDRATE, (state, action: any) => {
-      const { account } = action.payload;
-      if (account != null) {
-        state.address = account.address;
-        state.shard = account.shard;
-        state.account = account.account;
+      if (!action.payload?.account) {
+        return;
       }
+
+      const { account } = action.payload;
+      state.address = account.address;
+      state.shard = account.shard;
+      state.account = account.account;
     });
   }
 });
