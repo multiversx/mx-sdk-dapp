@@ -1,35 +1,30 @@
 import React from 'react';
-import classNames from 'classnames';
-import webWalletLogin from '../../../services/login/webWalletLogin';
-import { Props } from './types';
+import { useWebWalletLogin } from '../../../services/login';
+import { getGeneratedClasses } from '../../../utils';
+import { UseWebWalletLoginPropType } from './types';
 
-export const WebWalletLoginButton: (props: Props) => JSX.Element = ({
+export const WebWalletLoginButton: (
+  props: UseWebWalletLoginPropType
+) => JSX.Element = ({
   token,
   className = 'web-wallet-login',
   callbackRoute,
   loginButtonText,
   shouldRenderDefaultCss = true
 }) => {
-  const generatedClasses = {
-    wrapper: classNames(className, {
-      'btn btn-primary px-sm-4 m-1 mx-sm-3': shouldRenderDefaultCss
-    }),
-
-    loginText: classNames(`${className}_login-text`, {
-      'text-left': shouldRenderDefaultCss
-    })
-  };
+  const [onTriggerLogin] = useWebWalletLogin({ callbackRoute, token });
+  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
+    wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3',
+    loginText: 'text-left'
+  });
 
   const handleLogin = () => {
-    webWalletLogin({
-      token,
-      callbackRoute
-    });
+    onTriggerLogin();
   };
 
   return (
-    <button onClick={handleLogin} className={generatedClasses.wrapper}>
-      <span className={generatedClasses.loginText}>{loginButtonText}</span>
+    <button onClick={handleLogin} className={classes.wrapper}>
+      <span className={classes.loginText}>{loginButtonText}</span>
     </button>
   );
 };

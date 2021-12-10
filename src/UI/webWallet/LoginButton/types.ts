@@ -1,7 +1,7 @@
-export interface Props {
-    token?: string;
-    className?: string,
-    callbackRoute: string;
-    loginButtonText: string;
-    shouldRenderDefaultCss?: boolean;
+export interface UseWebWalletLoginPropType {
+  token?: string;
+  className?: string;
+  callbackRoute: string;
+  loginButtonText: string;
+  shouldRenderDefaultCss?: boolean;
 }

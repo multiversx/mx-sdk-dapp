@@ -1,35 +1,28 @@
 import React from 'react';
-import classNames from 'classnames';
-import { extensionLogin } from '../../../services/login/extensionLogin';
+import { useExtensionLogin } from '../../../services/login';
+import { getGeneratedClasses } from '../../../utils';
 import { Props } from './types';
 
 export const ExtensionLoginButton: (props: Props) => JSX.Element = ({
   token,
-  className,
+  className = 'extension-login',
   callbackRoute,
   loginButtonText,
   shouldRenderDefaultCss = true
 }) => {
-  const generatedClasses = {
-    wrapper: classNames(className, {
-      'btn btn-primary px-sm-4 m-1 mx-sm-3': shouldRenderDefaultCss
-    }),
-
-    loginText: classNames(`${className}_login-text`, {
-      'text-left': shouldRenderDefaultCss
-    })
-  };
+  const [onTriggerLogin] = useExtensionLogin({ callbackRoute, token });
+  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
+    wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3',
+    loginText: 'text-left'
+  });
 
   const handleLogin = () => {
-    extensionLogin({
-      token,
-      callbackRoute
-    });
+    onTriggerLogin();
   };
 
   return (
-    <button onClick={handleLogin} className={generatedClasses.wrapper}>
-      <span className={generatedClasses.loginText}>{loginButtonText}</span>
+    <button onClick={handleLogin} className={classes.wrapper}>
+      <span className={classes.loginText}>{loginButtonText}</span>
     </button>
   );
 };
