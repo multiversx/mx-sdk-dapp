@@ -10,7 +10,6 @@ const LedgerConnect = ({
   error: string;
   connectPageContent?: React.ReactNode;
 }) => {
-  const [ledgerError] = React.useState(error);
   return (
     <div className='m-auto login-container'>
       <div className='card my-4 text-center'>
@@ -28,9 +27,9 @@ const LedgerConnect = ({
           )}
 
           <div>
-            {ledgerError && (
+            {error && (
               <p className='text-danger d-flex justify-content-center align-items-center'>
-                {ledgerError}
+                {error}
               </p>
             )}
             <button
