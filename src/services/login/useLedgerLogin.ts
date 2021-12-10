@@ -142,6 +142,7 @@ export function useLedgerLogin({
         });
       } catch (err) {
         loginFailed(err);
+        return false;
       }
     }
     return true;
@@ -167,6 +168,7 @@ export function useLedgerLogin({
         console.warn(failedInitializeErrorText);
         return false;
       }
+      setIsLoading(false);
       await loginUser(hwWalletProvider);
     } catch (err) {
       if (err.statusCode in ledgerErrorCodes) {

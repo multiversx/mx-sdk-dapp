@@ -1,6 +1,7 @@
 import { Nonce } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Draft } from 'immer';
+import { REHYDRATE } from 'redux-persist';
 import { AccountType } from '../../types';
 import {
   loginAction,
@@ -89,6 +90,14 @@ export const accountInfoSlice = createSlice({
         state.address = action.payload.address;
       }
     );
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      const { account } = action.payload;
+      if (account != null) {
+        state.address = account.address;
+        state.shard = account.shard;
+        state.account = account.account;
+      }
+    });
   }
 });
 
