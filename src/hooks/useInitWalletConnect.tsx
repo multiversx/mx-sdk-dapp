@@ -110,7 +110,7 @@ export const useInitWalletConnect = ({
     logout(callbackRoute);
   };
 
-  const walletConnectInit = () => {
+  const walletConnectInit = async () => {
     if (!walletConnectBridge || providerRef?.current?.isInitialized()) {
       return;
     }
@@ -124,6 +124,8 @@ export const useInitWalletConnect = ({
       walletConnectBridge,
       providerHandlers
     );
+
+    await newProvider.init();
 
     dispatch(setProvider(newProvider));
   };
