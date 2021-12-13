@@ -25,7 +25,7 @@ const App = () => {
       >
         <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
           <Routes>
-            <Route path='/' element={<p>home</p>} />
+            <Route path='/' element={<Unlock />} />
 
             <Route path={'/home'} element={<AuthenticatedRoute />} />
 

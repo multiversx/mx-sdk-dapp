@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { loginAction, logoutAction } from '../redux/commonActions';
+import { loginAction } from '../redux/commonActions';
 import {
   providerSelector,
   proxySelector,
@@ -107,10 +107,7 @@ export const useInitWalletConnect = ({
   };
 
   const handleOnLogout = () => {
-    dispatch(logoutAction());
-    logout(callbackRoute).then(() => {
-      window.location.href = logoutRoute;
-    });
+    logout(callbackRoute);
   };
 
   const walletConnectInit = () => {
