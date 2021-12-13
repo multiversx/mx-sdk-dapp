@@ -1,13 +1,14 @@
 import React from 'react';
-import {
-  Transaction,
-  IDappProvider,
-  Address,
-  TransactionHash
-} from '@elrondnetwork/erdjs';
-import { useContext } from 'context';
+import { Address, Transaction, TransactionHash } from '@elrondnetwork/erdjs';
+import { useSelector } from 'react-redux';
 import { ledgerErrorCodes } from '../../constants';
-import { getProviderType, refreshAccount, getLatestNonce } from '../../utils';
+import {
+  addressSelector,
+  providerSelector,
+  proxySelector
+} from '../../redux/selectors';
+import { LoginMethodsEnum } from '../../types';
+import { getLatestNonce, getProviderType, refreshAccount } from '../../utils';
 import SendModal from './SendModal';
 
 interface SendTransactionType {
@@ -24,10 +25,9 @@ export default function Send() {
   const [newTransaction, setNewTransaction] = React.useState<Transaction>();
   const [newCallbackRoute, setNewCallbackRoute] = React.useState('');
   const [error, setError] = React.useState('');
-  const context = useContext();
-  const { dapp, address } = context;
-
-  const provider: IDappProvider = dapp.provider;
+  const address = useSelector(addressSelector);
+  const provider = useSelector(providerSelector);
+  const proxy = useSelector(proxySelector);
 
   const providerType = getProviderType(provider);
 
@@ -39,8 +39,8 @@ export default function Send() {
     setShowSendModal(false);
   };
 
-  const send = (e: CustomEvent) => {
-    if (e.detail && 'transaction' in e.detail && 'callbackRoute' in e.detail) {
+  const send = (e: any) => {
+    if ('transaction' in e?.detail && 'callbackRoute' in e?.detail) {
       const { transaction, callbackRoute } = e.detail;
       sendTransaction({ transaction, callbackRoute });
     }
@@ -51,21 +51,21 @@ export default function Send() {
     return () => {
       document.removeEventListener('transaction', send);
     };
-  }, [context]);
+  }, []);
+
+  const showError = (e: string) => {
+    setShowSendModal(true);
+    setError(e);
+  };
 
   const sendTransaction = ({
     transaction,
     callbackRoute
   }: SendTransactionType) => {
-    const showError = (e: string) => {
-      setShowSendModal(true);
-      setError(e);
-    };
-
     if (provider) {
       switch (providerType) {
-        case 'wallet':
-          dapp.proxy
+        case LoginMethodsEnum.wallet:
+          proxy
             .getAccount(new Address(address))
             .then((account) => {
               transaction.setNonce(getLatestNonce(account));
@@ -85,10 +85,10 @@ export default function Send() {
             });
           break;
 
-        case 'ledger':
+        case LoginMethodsEnum.ledger:
           setShowSendModal(true);
           setNewTransaction(transaction);
-          dapp.proxy
+          proxy
             .getAccount(new Address(address))
             .then((account) => {
               transaction.setNonce(getLatestNonce(account));
@@ -118,10 +118,10 @@ export default function Send() {
             });
           break;
 
-        case 'walletconnect':
+        case LoginMethodsEnum.walletconnect:
           setShowSendModal(true);
           setNewTransaction(transaction);
-          dapp.proxy
+          proxy
             .getAccount(new Address(address))
             .then((account) => {
               transaction.setNonce(getLatestNonce(account));
@@ -142,10 +142,10 @@ export default function Send() {
             });
           break;
 
-        case 'extension':
+        case LoginMethodsEnum.extension:
           setShowSendModal(true);
           setNewTransaction(transaction);
-          dapp.proxy
+          proxy
             .getAccount(new Address(address))
             .then((account) => {
               transaction.setNonce(getLatestNonce(account));

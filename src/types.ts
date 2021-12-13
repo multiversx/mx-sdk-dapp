@@ -50,3 +50,40 @@ export interface TransactionParameter {
   inputParameters: string[];
   outputParameters: string[];
 }
+
+export interface RawTransactionType {
+  value: string;
+  receiver: string;
+  gasPrice: number;
+  gasLimit: number;
+  data: string;
+  chainID: string;
+  version: number;
+  options?: number;
+}
+
+export interface ScResultType {
+  callType: string;
+  gasLimit: number;
+  gasPrice: number;
+  nonce: number;
+  prevTxHash: string;
+  receiver?: string;
+  sender: string;
+  value: string;
+  data?: string;
+  returnMessage?: string;
+}
+
+export interface ApiTransactionType {
+  txHash: string;
+  nonce: number;
+  receiver: string;
+  sender: string;
+  status: string;
+  value: string;
+  fee: string;
+  timestamp: number;
+  data: string;
+  results?: ScResultType[];
+}

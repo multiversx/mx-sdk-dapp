@@ -13,6 +13,11 @@ export const accountSelector = createSelector(
   (state) => state.account
 );
 
+export const accountBalanceSelector = createSelector(
+  accountSelector,
+  (account) => account.balance
+);
+
 export const accountNonceSelector = createSelector(accountSelector, (state) =>
   state.nonce.valueOf()
 );

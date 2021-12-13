@@ -17,7 +17,14 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  blacklist: ['networkConfig']
+  whitelist: [
+    'account',
+    'loginInfo',
+    'toasts',
+    'transactionsInfo',
+    'transactions',
+    'modals'
+  ]
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

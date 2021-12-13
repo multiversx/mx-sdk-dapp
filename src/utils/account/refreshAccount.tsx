@@ -1,7 +1,7 @@
-import { providerSelector } from '../redux/selectors';
-import { setAccount } from '../redux/slices';
-import { store } from '../redux/store';
-import { getAccount, getAddress, getLatestNonce } from './index';
+import { providerSelector } from '../../redux/selectors';
+import { setAccount } from '../../redux/slices';
+import { store } from '../../redux/store';
+import { getAccount, getAddress, getLatestNonce } from '../index';
 
 const setNewAccount = () => {
   getAddress()

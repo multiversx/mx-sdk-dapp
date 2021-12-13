@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "downlevelIteration": true,
     "outDir": "build",
     "module": "esnext",
     "lib": [

@@ -3,11 +3,11 @@ import {
   isLoggedInSelector,
   providerSelector,
   walletLoginSelector
-} from '../redux/selectors';
-import { store } from '../redux/store';
-import { LoginMethodsEnum } from '../types';
+} from '../../redux/selectors';
+import { store } from '../../redux/store';
+import { LoginMethodsEnum } from '../../types';
+import { getProviderType } from '../provider';
 import { addressIsValid } from './addressIsValid';
-import { getProviderType } from './provider';
 
 export function getAddress(): Promise<string> {
   const { search } = window.location;

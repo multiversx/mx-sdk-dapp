@@ -6,6 +6,10 @@ export enum LoginMethodsEnum {
   none = ''
 }
 
+export const gasPriceModifier = '0.01';
+export const gasPerDataByte = '1500';
+export const gasLimit = '50000';
+
 export const ledgerErrorCodes = {
   0x9000: {
     code: 'codeSuccess',

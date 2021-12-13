@@ -1,4 +1,4 @@
 import useInitWalletConnect from './useInitWalletConnect';
-import useSendTransaction from './useSendTransaction';
+import useSendTransactions from './useSendTransactions';
 
-export { useInitWalletConnect, useSendTransaction };
+export { useInitWalletConnect, useSendTransactions };
