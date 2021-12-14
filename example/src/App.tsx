@@ -7,6 +7,7 @@ import { DappProvider, AuthenticatedRoutesWrapper } from 'dapp-core';
 
 import AuthenticatedRoute from './pages/AuthenticatedRoute';
 import Unlock from './pages/UnlockRoute';
+import PingPongPage from './pages/PingPong/index';
 
 const routes = [
   {
@@ -14,6 +15,12 @@ const routes = [
     title: 'Home',
     authenticatedRoute: true,
     component: AuthenticatedRoute
+  },
+  {
+    path: '/ping-pong',
+    title: 'Ping Pong Example',
+    authenticatedRoute: true,
+    component: PingPongPage
   }
 ];
 
@@ -26,6 +33,8 @@ const App = () => {
         <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
           <Routes>
             <Route path='/' element={<Unlock />} />
+
+            <Route path='/ping-pong' element={<PingPongPage />} />
 
             <Route path={'/home'} element={<AuthenticatedRoute />} />
 

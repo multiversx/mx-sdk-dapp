@@ -13,10 +13,11 @@ import { calcTotalFee } from './utils';
 
 const defaultMinGasLimit = 50000000;
 
-export function sendTransactions({
+export function sendTransactions ({
   transactionPayload,
   minGasLimit = defaultMinGasLimit
 }: SendTransactionsPropsType) {
+  const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(store.getState());
   const transactions = Array.isArray(transactionPayload)
     ? transactionPayload
@@ -25,27 +26,26 @@ export function sendTransactions({
   const bNbalance = new BigNumber(
     validation.stringIsFloat(accountBalance) ? accountBalance : '0'
   );
+  const hasSufficientFunds = bNbalance.minus(bNtotalFee).isGreaterThan(0);
 
-  if (bNbalance.minus(bNtotalFee).isGreaterThan(0)) {
-    const sessionId = Date.now().toString();
+  if (!hasSufficientFunds) {
+    const notificationPayload = {
+      icon: faExclamationTriangle,
+      iconClassName: 'text-warning',
+      title: 'Insufficient EGLD funds',
+      description: 'Current EGLD balance cannot cover the transaction fees.'
+    };
 
-    store.dispatch(
-      setTransactionsToSign({
-        transactions: transactions.map((tx) => tx.toPlainObject()),
-        sessionId,
-        callbackRoute: window.location.pathname
-      })
-    );
-  } else {
-    store.dispatch(
-      setNotificationModal({
-        title: 'Insufficient EGLD funds',
-        description: 'Current EGLD balance cannot cover the transaction fees.',
-        icon: faExclamationTriangle,
-        iconClassName: 'text-warning'
-      })
-    );
+    store.dispatch(setNotificationModal(notificationPayload));
+    return;
   }
+
+  const signTransactionsPayload = {
+    sessionId,
+    callbackRoute: window.location.pathname,
+    transactions: transactions.map((tx) => tx.toPlainObject())
+  };
+  store.dispatch(setTransactionsToSign(signTransactionsPayload));
 }
 
 export default sendTransactions;

@@ -6,7 +6,7 @@ import { getAccount, getLatestNonce } from '../../utils';
 import { sendTransactions } from './sendTransactions';
 import { SendSimpleTransactionPropsType } from './types';
 
-export async function sendSimpleTransactions({
+export async function sendSimpleTransactions ({
   transactions,
   minGasLimit
 }: SendSimpleTransactionPropsType) {
@@ -22,18 +22,18 @@ export async function sendSimpleTransactions({
       value,
       receiver,
       data = '',
-      gasPrice = defaultGasPrice,
-      gasLimit = defaultGasLimit,
       chainID,
       version,
-      options
+      options,
+      gasPrice = defaultGasPrice,
+      gasLimit = defaultGasLimit
     } = tx;
-    let transactionsChainId = chainID;
-    if (transactionsChainId == null) {
-      transactionsChainId = chainIDSelector(store.getState())
-        .valueOf()
-        .toString();
-    }
+
+    const storeChainId = chainIDSelector(store.getState())
+      .valueOf()
+      .toString();
+    const transactionsChainId = chainID || storeChainId;
+
     return newTransaction({
       value,
       receiver,
