@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export * as DappUI from './UI/index';
 export * as loginServices from './services/login';
+export * as transactionServices from './services/transactions';
 
 export * from './utils';
 

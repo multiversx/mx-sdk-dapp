@@ -5,7 +5,6 @@ import {
   faTimes,
   faHourglass
 } from '@fortawesome/free-solid-svg-icons';
-import { useHistory } from 'react-router-dom';
 import PageState from 'UI/PageState';
 import StatusTxDetails from './StatusTxDetails';
 import useLastTxStatus from './useFetchTxStatus';
@@ -44,7 +43,6 @@ const TransactionStatus = ({
   callbackRoute,
   handleClose
 }: TransactionStatusType) => {
-  const history = useHistory();
   const lastTxStatus = useLastTxStatus(txHash);
   let currentStatus: StatusDataType = 'pending';
   currentStatus = !lastTxStatus.isPending() ? 'failed' : currentStatus;
@@ -56,9 +54,7 @@ const TransactionStatus = ({
     if (!lastTxStatus.isPending()) {
       setTimeout(() => {
         handleClose();
-        history.push(
-          `${callbackRoute}?status=${lastTxStatus.status.toString()}&txHash=${txHash}`
-        );
+        window.location.href = `${callbackRoute}?status=${lastTxStatus.status.toString()}&txHash=${txHash}`;
       }, 1000);
     }
   }, [lastTxStatus]);

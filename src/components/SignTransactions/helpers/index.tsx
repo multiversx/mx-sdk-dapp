@@ -1,8 +1,8 @@
-import replyUrl from "./replyUrl";
-import useSearchTransactions from "./useSearchTransactions";
+import replyUrl from './replyUrl';
+import useParseSignedTransactions from './useParseSignedTransactions';
 
 export type HandleCloseType = {
   updateBatchStatus: boolean;
 };
 
-export { replyUrl, useSearchTransactions };
+export { replyUrl, useParseSignedTransactions };

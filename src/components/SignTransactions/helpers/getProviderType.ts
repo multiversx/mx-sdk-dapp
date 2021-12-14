@@ -1,51 +1,38 @@
-import { localstorage as dappLocalStorage } from "@elrondnetwork/dapp";
 import {
-  WalletProvider,
-  IDappProvider,
-  HWProvider,
-  WalletConnectProvider,
   ExtensionProvider,
-} from "@elrondnetwork/erdjs";
+  HWProvider,
+  IDappProvider,
+  WalletConnectProvider,
+  WalletProvider
+} from '@elrondnetwork/erdjs';
+import { loginMethodsEnum } from '../../../types/enums';
 
-import switchTrue from "helpers/switchTrue";
-
-export type ProviderType =
-  | "wallet"
-  | "ledger"
-  | "extension"
-  | "walletconnect"
-  | "";
-
-const getProviderType = (provider: IDappProvider | undefined): ProviderType => {
-  let providerType: ProviderType = "";
+const getProviderType = (
+  provider: IDappProvider | undefined
+): loginMethodsEnum => {
+  let providerType: loginMethodsEnum = loginMethodsEnum.none;
 
   providerType =
-    provider && provider.constructor === WalletProvider
-      ? "wallet"
+    provider?.constructor === WalletProvider
+      ? loginMethodsEnum.wallet
       : providerType;
 
   providerType =
-    provider && provider.constructor === WalletConnectProvider
-      ? "walletconnect"
+    provider?.constructor === WalletConnectProvider
+      ? loginMethodsEnum.walletconnect
       : providerType;
 
   providerType =
-    provider && provider.constructor === ExtensionProvider
-      ? "extension"
+    provider?.constructor === ExtensionProvider
+      ? loginMethodsEnum.extension
       : providerType;
 
   providerType =
-    provider && provider.constructor === HWProvider ? "ledger" : providerType;
+    provider?.constructor === HWProvider
+      ? loginMethodsEnum.ledger
+      : providerType;
 
-  return switchTrue({
-    [`${Boolean(providerType)}`]: providerType,
-    [`${dappLocalStorage.getItem("loginMethod") === "wallet"}`]: "wallet",
-    [`${dappLocalStorage.getItem("loginMethod") === "ledger"}`]: "ledger",
-    [`${dappLocalStorage.getItem("loginMethod") === "walletconnect"}`]:
-      "walletconnect",
-    [`${dappLocalStorage.getItem("loginMethod") === "extension"}`]: "extension",
-    default: providerType,
-  });
+  return providerType;
 };
 
 export default getProviderType;
