@@ -35,13 +35,6 @@ export default function SignTransactions () {
 
   const providerType = getProviderType(provider);
 
-  console.log('ere', {
-    provider,
-    providerType,
-    eus: providerType === loginMethodsEnum.extension,
-    transactionsToSign
-  });
-
   const handleClose = () => {
     setNewCallbackRoute('');
     setError('');
