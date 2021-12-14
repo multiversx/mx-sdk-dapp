@@ -5,4 +5,5 @@ export * from './getIsLoggedIn';
 export * from './buildUrlParams';
 export * from './switchTrue';
 export * from './getGeneratedClasses';
+export * from './plainObjects';
 export * from './account';

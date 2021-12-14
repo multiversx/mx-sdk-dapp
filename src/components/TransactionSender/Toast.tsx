@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   toastSignSessionsSelector,
   transactionToastsSelector
-} from 'redux/selectors/toastSelector';
+} from 'redux/selectors/toastSelectors';
 import {
   addToast,
   addToastSignSession,
@@ -66,7 +66,7 @@ const Toast = ({
 
   const successToast = {
     id: toastSignSession,
-    title: successMessage ?? 'Request was successful',
+    title: successMessage || 'Request was successful',
     descriptionProps,
     iconClassName: 'bg-success',
     icon: faCheck,
@@ -87,7 +87,7 @@ const Toast = ({
 
   const failedToast = {
     id: toastSignSession,
-    title: errorMessage ?? 'Something went wrong',
+    title: errorMessage || 'Something went wrong',
     descriptionProps,
     iconClassName: 'bg-danger',
     icon: faTimes,

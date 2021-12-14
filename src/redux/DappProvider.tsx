@@ -6,6 +6,8 @@ import NetworkConfigInitializer from 'components/NetworkConfigInitializer';
 import ProviderInitializer from 'components/ProviderInitializer';
 import { NetworkConfigType } from 'types';
 
+import SignTransactions from '../components/SignTransactions';
+import TransactionSender from '../components/TransactionSender';
 import { store, persistor } from './store';
 
 interface DappProviderPropsType {
@@ -21,6 +23,8 @@ export const DappProvider = ({
     <PersistGate persistor={persistor} loading={null}>
       <NetworkConfigInitializer networkConfig={networkConfig} />
       <ProviderInitializer />
+      <SignTransactions />
+      <TransactionSender />
       {children}
     </PersistGate>
   </Provider>

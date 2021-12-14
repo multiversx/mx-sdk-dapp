@@ -8,7 +8,7 @@ export interface SendTransactionsPropsType {
 export interface SimpleTransactionType {
   value: string;
   receiver: string;
-  data: string;
+  data?: string;
   gasPrice?: number;
   gasLimit?: number;
   chainID?: string;

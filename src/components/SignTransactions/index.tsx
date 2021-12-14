@@ -7,7 +7,7 @@ import {
   providerSelector,
   proxySelector
 } from 'redux/selectors';
-import { transactionsToSignSelector } from 'redux/selectors/transactionsSelector';
+import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
 import { updateSignStatus } from 'redux/slices/transactionsSlice';
 import newTransaction from '../../models/newTransaction';
 import { loginMethodsEnum, transactionStatuses } from '../../types/enums';

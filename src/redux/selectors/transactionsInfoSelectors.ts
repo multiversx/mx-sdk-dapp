@@ -1,4 +1,4 @@
 import { RootState } from '../store';
 
-export const transactionsInfoSelector = (state: RootState) =>
+export const transactionsInfoSelectors = (state: RootState) =>
   state.transactionsInfo.info;

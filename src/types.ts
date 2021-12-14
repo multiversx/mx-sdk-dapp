@@ -44,17 +44,17 @@ export interface TransactionParameter {
 }
 
 export interface RawTransactionType {
-  signature: string;
+  signature?: string;
   value: string;
   receiver: string;
   gasPrice: number;
   gasLimit: number;
-  data: string;
   sender: string;
   nonce: number;
+  data: string;
   chainID: string;
-  version: number;
-  options: number;
+  version?: number;
+  options?: number;
 }
 
 export interface ScResultType {

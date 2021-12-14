@@ -8,6 +8,7 @@ import {
   ChainID,
   TransactionVersion
 } from '@elrondnetwork/erdjs';
+import { TransactionOptions } from '@elrondnetwork/erdjs/out';
 import { RawTransactionType } from '../types';
 
 export default function newTransaction(rawTransaction: RawTransactionType) {
@@ -18,6 +19,11 @@ export default function newTransaction(rawTransaction: RawTransactionType) {
     gasLimit: new GasLimit(rawTransaction.gasLimit),
     gasPrice: new GasPrice(rawTransaction.gasPrice),
     chainID: new ChainID(rawTransaction.chainID),
-    version: new TransactionVersion(rawTransaction.version)
+    ...(rawTransaction.version
+      ? { version: new TransactionVersion(rawTransaction.version) }
+      : {}),
+    ...(rawTransaction.options
+      ? { options: new TransactionOptions(rawTransaction.options) }
+      : {})
   });
 }

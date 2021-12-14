@@ -1,27 +1,31 @@
 import { defaultGasLimit, defaultGasPrice } from '../../constants';
 import newTransaction from '../../models/newTransaction';
-import { chainIDSelector } from '../../redux/selectors';
+import { addressSelector, chainIDSelector } from '../../redux/selectors';
 import { store } from '../../redux/store';
+import { getAccount, getLatestNonce } from '../../utils';
 import { sendTransactions } from './sendTransactions';
 import { SendSimpleTransactionPropsType } from './types';
 
-export function sendSimpleTransactions({
+export async function sendSimpleTransactions({
   transactions,
   minGasLimit
 }: SendSimpleTransactionPropsType) {
   const transactionPayload = Array.isArray(transactions)
     ? transactions
     : [transactions];
+  const address = addressSelector(store.getState());
+  const account = await getAccount(address);
+  const nonce = getLatestNonce(account);
 
   const transformedTransactions = transactionPayload.map((tx) => {
     const {
       value,
       receiver,
-      data,
+      data = '',
       gasPrice = defaultGasPrice,
       gasLimit = defaultGasLimit,
       chainID,
-      version = 1,
+      version,
       options
     } = tx;
     let transactionsChainId = chainID;
@@ -36,6 +40,8 @@ export function sendSimpleTransactions({
       data,
       gasPrice,
       gasLimit,
+      nonce: Number(nonce.valueOf().toString()),
+      sender: address,
       chainID: transactionsChainId,
       version,
       options
@@ -46,3 +52,5 @@ export function sendSimpleTransactions({
     minGasLimit
   });
 }
+
+export default sendSimpleTransactions;

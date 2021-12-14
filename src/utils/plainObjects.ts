@@ -1,6 +1,6 @@
 import { TransactionStatus } from '@elrondnetwork/erdjs';
 
-export default function getPlainTransactionStatus(
+export function getPlainTransactionStatus(
   transactionStatus: TransactionStatus
 ) {
   return {

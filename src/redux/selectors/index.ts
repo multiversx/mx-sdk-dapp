@@ -2,5 +2,7 @@ export * from './accountInfoSelectors';
 export * from './networkConfigSelectors';
 export * from './loginInfoSelectors';
 
-export * from './transactionsSelector';
-export * from './transactionsInfoSelector';
+export * from './transactionsSelectors';
+export * from './transactionsInfoSelectors';
+export * from './toastSelectors';
+export * from './modalsSelectors';

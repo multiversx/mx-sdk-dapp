@@ -9,18 +9,20 @@ import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   toastSignSessionsSelector,
-  transactionToastsSelector
-} from 'redux/selectors/toastSelector';
-import { signStatusSelector } from 'redux/selectors/transactionsSelector';
-import { setTxSubmittedModal } from 'redux/slices/modalsSlice';
-import { addToast, setTransactionToasts } from 'redux/slices/toastsSlice';
-import { clearSignTransactions } from 'redux/slices/transactionsSlice';
+  transactionToastsSelector,
+  signStatusSelector
+} from 'redux/selectors';
+import {
+  addToast,
+  setTransactionToasts,
+  setTxSubmittedModal,
+  clearSignTransactions
+} from 'redux/slices';
 import { transactionStatuses } from 'types/enums';
 import { PlainTransactionStatus } from 'types/toasts';
 import newTransaction from '../../models/newTransaction';
 import { accountSelector, proxySelector } from '../../redux/selectors';
-import setNonce from '../../utils/account/setNonce';
-import getPlainTransactionStatus from '../../utils/plainObjects';
+import { setNonce, getPlainTransactionStatus } from '../../utils';
 import Toast from './Toast';
 
 const failedToast = {
@@ -66,7 +68,7 @@ const TransactionSender = () => {
             const transactionsPromises = transactions.map((t) => {
               const transactionObject = newTransaction(t);
               transactionObject.applySignature(
-                Signature.fromHex(t.signature),
+                Signature.fromHex(t.signature!),
                 new Address(t.sender)
               );
               return proxy.sendTransaction(transactionObject);
@@ -118,7 +120,7 @@ const TransactionSender = () => {
           dispatch(clearSignTransactions());
         }
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('Unable to send transactions', err);
       dispatch(addToast(failedToast));
       clearSignInfo();
@@ -151,7 +153,7 @@ const TransactionSender = () => {
 
   React.useEffect(addCancelToast, [signStatus, toastSignSessions]);
   return (
-    <>
+    <React.Fragment>
       {sending === false
         ? transactionToasts.map((props, i) => {
             const key = Object.values(props.transactions)
@@ -160,7 +162,7 @@ const TransactionSender = () => {
             return <Toast key={props.toastSignSession + key + i} {...props} />;
           })
         : null}
-    </>
+    </React.Fragment>
   );
 };
 

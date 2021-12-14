@@ -1,14 +1,13 @@
-import * as React from "react";
-import { useContext as useDappContext } from "@elrondnetwork/dapp";
-import { Transaction } from "@elrondnetwork/erdjs";
-import { faHourglass, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { Modal } from "react-bootstrap";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import PageState from "components/PageState";
-import { transactionStatuses } from "helpers/constants";
-import { updateSignStatus } from "redux/slices/transactionsSlice";
-import { HandleCloseType } from "../helpers";
+import * as React from 'react';
+import { Transaction } from '@elrondnetwork/erdjs';
+import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSignStatus } from 'redux/slices/transactionsSlice';
+import { providerSelector } from '../../../redux/selectors';
+import { transactionStatuses } from '../../../types/enums';
+import PageState from '../../../UI/PageState';
+import { HandleCloseType } from '../helpers';
 
 export interface SignModalType {
   show: boolean;
@@ -27,27 +26,23 @@ const SignWithWalletConnectModal = ({
   sessionId,
   setError,
   transactions,
-  callbackRoute,
+  callbackRoute
 }: SignModalType) => {
-  const history = useHistory();
   const dispatch = useDispatch();
 
-  const {
-    dapp: { provider },
-  } = useDappContext();
-
+  const provider = useSelector(providerSelector);
   const [signedTransactions, setSignedTransactions] =
     React.useState<Record<number, Transaction>>();
 
   const description =
     transactions && transactions.length > 1
-      ? "Check your phone to sign the transactions"
-      : "Check your phone to sign the transaction";
+      ? 'Check your phone to sign the transactions'
+      : 'Check your phone to sign the transaction';
 
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    history.push(callbackRoute);
+    window.location.href = callbackRoute;
   };
 
   React.useEffect(() => {
@@ -71,7 +66,6 @@ const SignWithWalletConnectModal = ({
           setError(e.message);
         });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [transactions]);
 
   React.useEffect(() => {
@@ -86,41 +80,40 @@ const SignWithWalletConnectModal = ({
           [sessionId]: {
             status: transactionStatuses.signed,
             transactions: Object.values(signedTransactions).map((tx) =>
-              tx.toPlainObject(),
-            ),
-          },
-        }),
+              tx.toPlainObject()
+            )
+          }
+        })
       );
       setSignedTransactions(undefined);
       handleClose({ updateBatchStatus: false });
-      history.push(callbackRoute);
+      window.location.href = callbackRoute;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [signedTransactions, transactions]);
 
   return (
     <Modal
       show={show}
-      backdrop="static"
+      backdrop='static'
       onHide={handleClose}
-      className="modal-container"
+      className='modal-container'
       animation={false}
       centered
     >
       <PageState
         icon={error ? faTimes : faHourglass}
-        iconClass="text-white"
-        iconBgClass={error ? "bg-danger" : "bg-warning"}
-        iconSize="3x"
-        title="Confirm on Maiar"
+        iconClass='text-white'
+        iconBgClass={error ? 'bg-danger' : 'bg-warning'}
+        iconSize='3x'
+        title='Confirm on Maiar'
         description={description}
         action={
           <a
-            href="/"
-            id="closeButton"
-            data-testid="closeButton"
+            href='/'
+            id='closeButton'
+            data-testid='closeButton'
             onClick={close}
-            className="btn btn-close-link mt-2"
+            className='btn btn-close-link mt-2'
           >
             Close
           </a>

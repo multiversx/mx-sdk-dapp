@@ -1,14 +1,14 @@
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
-export const transactionsSelector = (state: RootState) => state.transactions;
+export const transactionsSelectors = (state: RootState) => state.transactions;
 
 export const signStatusSelector = createDeepEqualSelector(
-  transactionsSelector,
+  transactionsSelectors,
   (state) => state.signStatus
 );
 
 export const transactionsToSignSelector = createDeepEqualSelector(
-  transactionsSelector,
+  transactionsSelectors,
   (state) => state.transactionsToSign
 );

@@ -47,3 +47,5 @@ export function sendTransactions({
     );
   }
 }
+
+export default sendTransactions;
