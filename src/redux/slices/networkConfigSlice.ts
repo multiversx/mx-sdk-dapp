@@ -6,8 +6,8 @@ import {
   ApiProvider
 } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NetworkType } from '../../types';
-import { emptyProvider } from '../../utils/provider';
+import { NetworkType } from 'types';
+import { emptyProvider } from 'utils';
 import { logoutAction } from '../commonActions';
 
 export const defaultNetwork: NetworkType = {

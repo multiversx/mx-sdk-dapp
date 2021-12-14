@@ -1,6 +1,6 @@
 import React from 'react';
+import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
-import ModalContainer from '../../ModalContainer';
 import { LedgerLoginContainer } from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
 

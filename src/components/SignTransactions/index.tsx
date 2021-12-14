@@ -9,7 +9,7 @@ import {
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
 import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { loginMethodsEnum, transactionStatuses } from '../../types/enums';
+import { loginMethodsEnum, transactionStatuses } from 'types/enums';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';
 

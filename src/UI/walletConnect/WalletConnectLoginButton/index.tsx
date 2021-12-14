@@ -1,8 +1,8 @@
 import React, { Fragment, useState } from 'react';
 import platform from 'platform';
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
+import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
-import ModalContainer from '../../ModalContainer';
 import { ReactComponent as Lightning } from './lightning.svg';
 import { LoginModalPropsType } from './types';
 

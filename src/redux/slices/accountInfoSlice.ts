@@ -2,7 +2,7 @@ import { Nonce } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Draft } from 'immer';
 import { REHYDRATE } from 'redux-persist';
-import { AccountType } from '../../types';
+import { AccountType } from 'types';
 import {
   loginAction,
   logoutAction,

@@ -1,8 +1,8 @@
+import newTransaction from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'redux/selectors';
 import { store } from 'redux/store';
-import { defaultGasLimit, defaultGasPrice } from '../../constants';
-import newTransaction from '../../models/newTransaction';
-import { getAccount, getLatestNonce } from '../../utils';
+import { getAccount, getLatestNonce } from 'utils';
+import { defaultGasPrice, defaultGasLimit } from '../../constants';
 import { sendTransactions } from './sendTransactions';
 import { SendSimpleTransactionPropsType } from './types';
 

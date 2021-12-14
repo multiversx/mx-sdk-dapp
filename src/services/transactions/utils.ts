@@ -1,7 +1,7 @@
+import { gasPerDataByte, gasPriceModifier } from 'constants';
 import { operations } from '@elrondnetwork/dapp-utils';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
-import { gasPerDataByte, gasPriceModifier } from '../../constants';
 
 export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
   let totalFee = new BigNumber(0);

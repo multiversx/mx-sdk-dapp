@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { loginMethodsEnum } from '../../types/enums';
+import { loginMethodsEnum } from 'types/enums';
 import { RootState } from '../store';
 
 export const loginInfoSelector = (state: RootState) => state.loginInfo;

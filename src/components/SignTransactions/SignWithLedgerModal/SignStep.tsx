@@ -4,8 +4,8 @@ import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector } from 'redux/selectors';
 import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { transactionStatuses } from '../../../types/enums';
-import PageState from '../../../UI/PageState';
+import { transactionStatuses } from 'types/enums';
+import PageState from 'UI/PageState';
 import { HandleCloseType } from '../helpers';
 
 export interface SignStepType {

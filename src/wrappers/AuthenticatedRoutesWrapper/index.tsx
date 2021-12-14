@@ -11,9 +11,9 @@ import {
   walletLoginSelector
 } from 'redux/selectors';
 import { setAccount, setChainID, setLedgerAccount } from 'redux/slices';
+import { RouteType } from 'types';
 import Loader from 'UI/Loader';
-import { RouteType } from '../../types';
-import { getAccount, getLatestNonce } from '../../utils';
+import { getAccount, getLatestNonce } from 'utils';
 
 const AuthenticatedRoutesWrapper = ({
   children,

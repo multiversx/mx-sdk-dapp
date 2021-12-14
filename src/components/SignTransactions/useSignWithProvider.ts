@@ -3,7 +3,7 @@ import { Transaction } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector, transactionsToSignSelector } from 'redux/selectors';
 import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { transactionStatuses } from '../../types/enums';
+import { transactionStatuses } from 'types/enums';
 import { HandleCloseType } from './helpers';
 
 export interface SignModalType {
