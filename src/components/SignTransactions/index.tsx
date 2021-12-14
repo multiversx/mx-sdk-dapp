@@ -116,7 +116,7 @@ export default function SignTransactions() {
     callbackRoute: newCallbackRoute
   };
 
-  return showSignModal ? (
+  return showSignModal && transactionsToSign?.transactions != null ? (
     <React.Fragment>
       {providerType === loginMethodsEnum.ledger && (
         <SignWithLedgerModal {...signProps} />
