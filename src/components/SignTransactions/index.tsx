@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Transaction, Address, Nonce } from '@elrondnetwork/erdjs';
+import { Address, Nonce } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   accountSelector,
@@ -9,7 +9,6 @@ import {
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
 import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import newTransaction from '../../models/newTransaction';
 import { loginMethodsEnum, transactionStatuses } from '../../types/enums';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';
@@ -19,15 +18,8 @@ import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
 
-interface SignTransactionsType {
-  transactions: Transaction[];
-  callbackRoute: string;
-  sessionId: string;
-}
-
 export default function SignTransactions() {
   const [showSignModal, setShowSignModal] = React.useState(false);
-  const [newTransactions, setNewTransactions] = React.useState<Transaction[]>();
   const [newCallbackRoute, setNewCallbackRoute] = React.useState('');
   const [newSessionId, setNewSessionId] = React.useState('');
   const [error, setError] = React.useState('');
@@ -44,18 +36,12 @@ export default function SignTransactions() {
   const providerType = getProviderType(provider);
 
   React.useEffect(() => {
-    if (transactionsToSign?.sessionId) {
-      signTransactions({
-        ...transactionsToSign,
-        transactions: transactionsToSign.transactions.map((tx) =>
-          newTransaction(tx)
-        )
-      });
+    if (transactionsToSign != null) {
+      signTransactions();
     }
   }, [transactionsToSign]);
 
   const handleClose = () => {
-    setNewTransactions(undefined);
     setNewCallbackRoute('');
     setError('');
     setShowSignModal(false);
@@ -66,11 +52,8 @@ export default function SignTransactions() {
     setError(e);
   };
 
-  const signTransactions = async ({
-    sessionId,
-    transactions,
-    callbackRoute
-  }: SignTransactionsType) => {
+  const signTransactions = async () => {
+    const { sessionId, transactions, callbackRoute } = transactionsToSign!;
     try {
       setNewCallbackRoute(callbackRoute);
       setNewSessionId(sessionId);
@@ -90,7 +73,7 @@ export default function SignTransactions() {
         account.nonce.valueOf()
       );
 
-      transactions.forEach((tx, i) => {
+      transactions?.forEach((tx, i) => {
         tx.setNonce(new Nonce(latestNonce + i));
       });
 
@@ -101,7 +84,7 @@ export default function SignTransactions() {
             urlParams: { [walletSignSession]: sessionId }
           });
 
-          provider.signTransactions(transactions, {
+          provider.signTransactions(transactions!, {
             callbackUrl: encodeURIComponent(callbackUrl)
           });
 
@@ -109,7 +92,6 @@ export default function SignTransactions() {
         case loginMethodsEnum.extension:
         case loginMethodsEnum.ledger:
         case loginMethodsEnum.walletconnect:
-          setNewTransactions(transactions);
           setShowSignModal(true);
           break;
       }
@@ -131,13 +113,11 @@ export default function SignTransactions() {
     error,
     setError,
     sessionId: newSessionId,
-    show: showSignModal,
-    transactions: newTransactions || [],
     providerType,
     callbackRoute: newCallbackRoute
   };
 
-  return (
+  return showSignModal ? (
     <React.Fragment>
       {providerType === loginMethodsEnum.ledger && (
         <SignWithLedgerModal {...signProps} />
@@ -149,5 +129,5 @@ export default function SignTransactions() {
         <SignWithExtensionModal {...signProps} />
       )}
     </React.Fragment>
-  );
+  ) : null;
 }

@@ -1,38 +1,25 @@
 import * as React from 'react';
-import { Transaction } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { providerSelector } from '../../../redux/selectors';
-import { transactionStatuses } from '../../../types/enums';
 import PageState from '../../../UI/PageState';
 import { HandleCloseType } from '../helpers';
+import useSignWithProvider from '../useSignWithProvider';
 
 export interface SignModalType {
-  show: boolean;
   handleClose: (props?: HandleCloseType) => void;
   error: string;
-  sessionId: string;
-  transactions: Transaction[];
   setError: (value: React.SetStateAction<string>) => void;
-  callbackRoute: string;
 }
 
 const SignWithExtensionModal = ({
-  show,
   handleClose,
   error,
-  sessionId,
-  setError,
-  transactions,
-  callbackRoute
+  setError
 }: SignModalType) => {
-  const provider = useSelector(providerSelector);
-  const dispatch = useDispatch();
-
-  const [signedTransactions, setSignedTransactions] =
-    React.useState<Transaction[]>();
+  const [callbackRoute, transactions] = useSignWithProvider({
+    handleClose,
+    setError
+  });
 
   const description =
     transactions && transactions.length > 1
@@ -45,43 +32,9 @@ const SignWithExtensionModal = ({
     window.location.href = callbackRoute;
   };
 
-  React.useEffect(() => {
-    if (transactions?.length > 0) {
-      provider
-        .signTransactions(transactions)
-        .then((signedTxs: Transaction[]) => {
-          setSignedTransactions(signedTxs);
-        })
-        .catch((e: any) => {
-          console.error(e);
-          setError(e.message);
-        });
-    }
-  }, [transactions]);
-
-  React.useEffect(() => {
-    const signingDisabled =
-      !signedTransactions ||
-      (signedTransactions && signedTransactions.length !== transactions.length);
-
-    if (!signingDisabled && signedTransactions) {
-      dispatch(
-        updateSignStatus({
-          [sessionId]: {
-            status: transactionStatuses.signed,
-            transactions: signedTransactions.map((tx) => tx.toPlainObject())
-          }
-        })
-      );
-      setSignedTransactions(undefined);
-      handleClose({ updateBatchStatus: false });
-      window.location.href = callbackRoute;
-    }
-  }, [signedTransactions, transactions]);
-
   return (
     <Modal
-      show={show}
+      show
       backdrop='static'
       onHide={handleClose}
       className='modal-container'

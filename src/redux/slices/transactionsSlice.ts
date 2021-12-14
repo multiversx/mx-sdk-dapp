@@ -17,12 +17,12 @@ export interface SignStatusType {
 
 export interface SignTransactionsStateType {
   signStatus: SignStatusType;
-  transactionsToSign?: Transactions;
+  transactionsToSign: Transactions | null;
 }
 
 const initialState: SignTransactionsStateType = {
   signStatus: {},
-  transactionsToSign: undefined
+  transactionsToSign: null
 };
 
 export const transactionsSlice = createSlice({
