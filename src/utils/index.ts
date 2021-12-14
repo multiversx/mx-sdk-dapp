@@ -3,5 +3,6 @@ export * from './provider';
 export * from './logout';
 export * from './getIsLoggedIn';
 export * from './buildUrlParams';
+export * from './switchTrue';
 export * from './getGeneratedClasses';
 export * from './account';
