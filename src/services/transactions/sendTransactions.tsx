@@ -2,18 +2,15 @@ import { validation } from '@elrondnetwork/dapp-utils';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
 
-import { accountBalanceSelector } from '../../redux/selectors';
-import {
-  setTransactionsToSign,
-  setNotificationModal
-} from '../../redux/slices';
-import { store } from '../../redux/store';
+import { accountBalanceSelector } from 'redux/selectors';
+import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
+import { store } from 'redux/store';
 import { SendTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
 
 const defaultMinGasLimit = 50000000;
 
-export function sendTransactions ({
+export function sendTransactions({
   transactionPayload,
   minGasLimit = defaultMinGasLimit
 }: SendTransactionsPropsType) {

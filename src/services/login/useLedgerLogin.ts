@@ -1,19 +1,19 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { ledgerErrorCodes } from '../../constants';
-import { loginAction } from '../../redux/commonActions';
+import { loginAction } from 'redux/commonActions';
 import {
   isLoggedInSelector,
   ledgerAccountSelector,
   proxySelector
-} from '../../redux/selectors';
+} from 'redux/selectors';
 import {
   setLedgerAccount,
   setLedgerLogin,
   setProvider,
   setTokenLogin
-} from '../../redux/slices';
+} from 'redux/slices';
+import { ledgerErrorCodes } from '../../constants';
 import { loginMethodsEnum } from '../../types/enums';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 

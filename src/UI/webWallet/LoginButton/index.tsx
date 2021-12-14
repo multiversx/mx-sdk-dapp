@@ -1,6 +1,6 @@
 import React from 'react';
-import { useWebWalletLogin } from '../../../services/login';
-import { getGeneratedClasses } from '../../../utils';
+import { useWebWalletLogin } from 'services/login';
+import { getGeneratedClasses } from 'utils';
 import { UseWebWalletLoginPropType } from './types';
 
 export const WebWalletLoginButton: (

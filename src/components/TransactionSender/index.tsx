@@ -12,6 +12,7 @@ import {
   transactionToastsSelector,
   signStatusSelector
 } from 'redux/selectors';
+import { accountSelector, proxySelector } from 'redux/selectors';
 import {
   addToast,
   setTransactionToasts,
@@ -21,7 +22,6 @@ import {
 import { transactionStatuses } from 'types/enums';
 import { PlainTransactionStatus } from 'types/toasts';
 import newTransaction from '../../models/newTransaction';
-import { accountSelector, proxySelector } from '../../redux/selectors';
 import { setNonce, getPlainTransactionStatus } from '../../utils';
 import Toast from './Toast';
 

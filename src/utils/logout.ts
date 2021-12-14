@@ -1,8 +1,8 @@
-import { logoutAction } from '../redux/commonActions';
-import { providerSelector } from '../redux/selectors';
-import { store } from '../redux/store';
+import { logoutAction } from 'redux/commonActions';
+import { providerSelector } from 'redux/selectors';
+import { store } from 'redux/store';
 
-export async function logout (callbackUrl?: string) {
+export async function logout(callbackUrl?: string) {
   try {
     const provider = providerSelector(store.getState());
 

@@ -7,8 +7,8 @@ import {
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { networkSelector } from '../../../redux/selectors';
-import { updateSignStatus } from '../../../redux/slices';
+import { networkSelector } from 'redux/selectors';
+import { updateSignStatus } from 'redux/slices';
 import { loginMethodsEnum, transactionStatuses } from '../../../types/enums';
 import { dappInitRoute, walletSignSession } from './constants';
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
-import { isLoggedInSelector, networkSelector } from '../../redux/selectors';
-import { setWalletLogin } from '../../redux/slices';
-import { store } from '../../redux/store';
+import { isLoggedInSelector, networkSelector } from 'redux/selectors';
+import { setWalletLogin } from 'redux/slices';
+import { store } from 'redux/store';
 import { newWalletProvider } from '../../utils';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RawTransactionType } from '../../types';
+import { RawTransactionType } from 'types';
 import { logoutAction } from '../commonActions';
 
 export interface Transactions {

@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import QRCode from 'qrcode';
 import { useDispatch, useSelector } from 'react-redux';
-import useInitWalletConnect from '../../hooks/useInitWalletConnect';
 import {
   walletConnectDeepLinkSelector,
   providerSelector,
   walletConnectBridgeSelector
-} from '../../redux/selectors';
-import { setTokenLogin } from '../../redux/slices';
+} from 'redux/selectors';
+import { setTokenLogin } from 'redux/slices';
+import useInitWalletConnect from '../../hooks/useInitWalletConnect';
 
 export const useWalletConnectLogin = ({
   token,

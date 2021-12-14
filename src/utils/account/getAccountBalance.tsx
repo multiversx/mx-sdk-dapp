@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { egldLabelSelector } from '../../redux/selectors';
-import { store } from '../../redux/store';
+import { egldLabelSelector } from 'redux/selectors';
+import { store } from 'redux/store';
 import { getAccount } from './getAccount';
 
 export async function getAccountBalance(address: string, withLabel = false) {

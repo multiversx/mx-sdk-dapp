@@ -1,10 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import platform from 'platform';
-import { getGeneratedClasses } from '../../../utils';
+import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
+import { getGeneratedClasses } from 'utils';
+import ModalContainer from '../../ModalContainer';
 import { ReactComponent as Lightning } from './lightning.svg';
 import { LoginModalPropsType } from './types';
-import ModalContainer from '../../ModalContainer';
-import { useWalletConnectLogin } from '../../../services/login/useWalletConnectLogin';
 
 export const WalletConnectLoginButton = ({
   callbackRoute,

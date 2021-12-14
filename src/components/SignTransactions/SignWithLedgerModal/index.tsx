@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import { transactionsToSignSelector } from '../../../redux/selectors';
+import { transactionsToSignSelector } from 'redux/selectors';
 import { HandleCloseType } from '../helpers';
 import SignStep, { SignStepType } from './SignStep';
 

@@ -1,16 +1,16 @@
 import React from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useInitWalletConnect } from '../hooks';
-import { loginAction } from '../redux/commonActions';
+import { loginAction } from 'redux/commonActions';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
   networkSelector,
   proxySelector,
   walletLoginSelector
-} from '../redux/selectors';
-import { setAccount, setProvider, setWalletLogin } from '../redux/slices';
+} from 'redux/selectors';
+import { setAccount, setProvider, setWalletLogin } from 'redux/slices';
+import { useInitWalletConnect } from '../hooks';
 import { loginMethodsEnum } from '../types/enums';
 import {
   newWalletProvider,

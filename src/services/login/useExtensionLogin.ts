@@ -3,11 +3,11 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import moment from 'moment';
 import { useSelector } from 'react-redux';
 import { loginAction } from 'redux/commonActions';
-import { isLoggedInSelector } from '../../redux/selectors';
-import { setExtensionLogin, setProvider } from '../../redux/slices';
-import { store } from '../../redux/store';
-import { loginMethodsEnum } from '../../types/enums';
-import { buildUrlParams } from '../../utils';
+import { isLoggedInSelector } from 'redux/selectors';
+import { setExtensionLogin, setProvider } from 'redux/slices';
+import { store } from 'redux/store';
+import { loginMethodsEnum } from 'types/enums';
+import { buildUrlParams } from 'utils';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 
 interface UseExtensionLoginPropsType {

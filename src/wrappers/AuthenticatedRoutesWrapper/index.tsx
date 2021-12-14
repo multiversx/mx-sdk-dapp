@@ -1,7 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { matchPath } from 'react-router-dom';
-import Loader from 'UI/Loader';
 import {
   addressSelector,
   chainIDSelector,
@@ -10,8 +9,9 @@ import {
   ledgerLoginSelector,
   proxySelector,
   walletLoginSelector
-} from '../../redux/selectors';
-import { setAccount, setChainID, setLedgerAccount } from '../../redux/slices';
+} from 'redux/selectors';
+import { setAccount, setChainID, setLedgerAccount } from 'redux/slices';
+import Loader from 'UI/Loader';
 import { RouteType } from '../../types';
 import { getAccount, getLatestNonce } from '../../utils';
 

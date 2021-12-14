@@ -1,5 +1,5 @@
 import React from 'react';
-import { getAccountBalance } from '../../../utils';
+import { getAccountBalance } from 'utils';
 
 interface AddressRowType {
   selectedAddress?: string;

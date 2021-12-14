@@ -1,10 +1,10 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'react-redux';
+import { ledgerAccountSelector } from 'redux/selectors';
+import { useLedgerLogin } from 'services/login/useLedgerLogin';
 import PageState from 'UI/PageState';
-import { ledgerAccountSelector } from '../../../redux/selectors';
-import { useLedgerLogin } from '../../../services/login/useLedgerLogin';
-import { getGeneratedClasses } from '../../../utils';
+import { getGeneratedClasses } from 'utils';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';

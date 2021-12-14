@@ -1,6 +1,6 @@
 import React from 'react';
-import { useExtensionLogin } from '../../../services/login';
-import { getGeneratedClasses } from '../../../utils';
+import { useExtensionLogin } from 'services/login';
+import { getGeneratedClasses } from 'utils';
 import { Props } from './types';
 
 export const ExtensionLoginButton: (props: Props) => JSX.Element = ({

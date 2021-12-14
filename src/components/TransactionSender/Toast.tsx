@@ -5,6 +5,7 @@ import { faHourglass } from '@fortawesome/free-solid-svg-icons/faHourglass';
 import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { useDispatch, useSelector } from 'react-redux';
 
+import { addressSelector, proxySelector } from 'redux/selectors';
 import {
   toastSignSessionsSelector,
   transactionToastsSelector
@@ -21,7 +22,6 @@ import {
   TransactionToastDescriptionType
 } from 'types/toasts';
 import { CustomToastDisplayType } from 'types/toasts';
-import { addressSelector, proxySelector } from '../../redux/selectors';
 import { setNonce, switchTrue } from '../../utils';
 
 const Toast = ({
