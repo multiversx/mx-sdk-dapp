@@ -11,7 +11,7 @@ import {
   walletLoginSelector
 } from '../redux/selectors';
 import { setAccount, setProvider, setWalletLogin } from '../redux/slices';
-import { LoginMethodsEnum } from '../types';
+import { loginMethodsEnum } from '../types/enums';
 import {
   newWalletProvider,
   getAddress,
@@ -48,7 +48,7 @@ export default function ProviderInitializer() {
         if (address) {
           dispatch(setProvider(provider));
           dispatch(
-            loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+            loginAction({ address, loginMethod: loginMethodsEnum.wallet })
           );
           const account = await getAccount(address);
           dispatch(
@@ -105,27 +105,27 @@ export default function ProviderInitializer() {
       return;
     }
     switch (loginMethod) {
-      case LoginMethodsEnum.ledger: {
+      case loginMethodsEnum.ledger: {
         setLedgerProvider();
         break;
       }
 
-      case LoginMethodsEnum.walletconnect: {
+      case loginMethodsEnum.walletconnect: {
         walletConnectInit();
         break;
       }
-      case LoginMethodsEnum.wallet: {
+      case loginMethodsEnum.wallet: {
         const provider = newWalletProvider(network);
         dispatch(setProvider(provider));
         break;
       }
 
-      case LoginMethodsEnum.extension: {
+      case loginMethodsEnum.extension: {
         setExtensionProvider();
         break;
       }
 
-      case LoginMethodsEnum.none: {
+      case loginMethodsEnum.none: {
         tryAuthenticateWalletUser();
         break;
       }

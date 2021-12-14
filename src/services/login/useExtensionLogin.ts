@@ -6,7 +6,7 @@ import { loginAction } from 'redux/commonActions';
 import { isLoggedInSelector } from '../../redux/selectors';
 import { setExtensionLogin, setProvider } from '../../redux/slices';
 import { store } from '../../redux/store';
-import { LoginMethodsEnum } from '../../types';
+import { loginMethodsEnum } from '../../types/enums';
 import { buildUrlParams } from '../../utils';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 
@@ -73,7 +73,7 @@ export const useExtensionLogin = ({
 
       window.location.href = `${url.pathname}?${nextUrlParams}`;
       store.dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.extension })
+        loginAction({ address, loginMethod: loginMethodsEnum.extension })
       );
     } catch (error) {
       console.error(error);

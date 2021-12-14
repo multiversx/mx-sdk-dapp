@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { LoginMethodsEnum } from '../../types';
+import { loginMethodsEnum } from '../../types/enums';
 import {
   loginAction,
   logoutAction,
@@ -28,7 +28,7 @@ export interface TokenLoginType {
 }
 
 export interface LoginInfoStateType {
-  loginMethod: LoginMethodsEnum;
+  loginMethod: loginMethodsEnum;
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;
@@ -38,7 +38,7 @@ export interface LoginInfoStateType {
 }
 
 const initialState: LoginInfoStateType = {
-  loginMethod: LoginMethodsEnum.none,
+  loginMethod: loginMethodsEnum.none,
   walletConnectLogin: null,
   ledgerLogin: null,
   tokenLogin: null,
@@ -53,7 +53,7 @@ export const loginInfoSlice = createSlice({
   reducers: {
     setLoginMethod: (
       state: LoginInfoStateType,
-      action: PayloadAction<LoginMethodsEnum>
+      action: PayloadAction<loginMethodsEnum>
     ) => {
       state.loginMethod = action.payload;
     },

@@ -7,7 +7,7 @@ import {
   providerSelector,
   proxySelector
 } from '../../redux/selectors';
-import { LoginMethodsEnum } from '../../types';
+import { loginMethodsEnum } from '../../types/enums';
 import { getLatestNonce, getProviderType, refreshAccount } from '../../utils';
 import SendModal from './SendModal';
 
@@ -64,7 +64,7 @@ export default function Send() {
   }: SendTransactionType) => {
     if (provider) {
       switch (providerType) {
-        case LoginMethodsEnum.wallet:
+        case loginMethodsEnum.wallet:
           proxy
             .getAccount(new Address(address))
             .then((account) => {
@@ -85,7 +85,7 @@ export default function Send() {
             });
           break;
 
-        case LoginMethodsEnum.ledger:
+        case loginMethodsEnum.ledger:
           setShowSendModal(true);
           setNewTransaction(transaction);
           proxy
@@ -118,7 +118,7 @@ export default function Send() {
             });
           break;
 
-        case LoginMethodsEnum.walletconnect:
+        case loginMethodsEnum.walletconnect:
           setShowSendModal(true);
           setNewTransaction(transaction);
           proxy
@@ -142,7 +142,7 @@ export default function Send() {
             });
           break;
 
-        case LoginMethodsEnum.extension:
+        case loginMethodsEnum.extension:
           setShowSendModal(true);
           setNewTransaction(transaction);
           proxy

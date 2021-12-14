@@ -5,7 +5,7 @@ import {
   walletLoginSelector
 } from '../../redux/selectors';
 import { store } from '../../redux/store';
-import { LoginMethodsEnum } from '../../types';
+import { loginMethodsEnum } from '../../types/enums';
 import { getProviderType } from '../provider';
 import { addressIsValid } from './addressIsValid';
 
@@ -18,8 +18,8 @@ export function getAddress(): Promise<string> {
   const walletLogin = walletLoginSelector(appState);
   const providerType = getProviderType(provider);
 
-  return providerType != LoginMethodsEnum.none &&
-    providerType !== LoginMethodsEnum.wallet
+  return providerType != loginMethodsEnum.none &&
+    providerType !== loginMethodsEnum.wallet
     ? provider.getAddress()
     : new Promise((resolve) => {
         if (walletLogin != null) {

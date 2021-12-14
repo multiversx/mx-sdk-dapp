@@ -1,11 +1,3 @@
-export enum LoginMethodsEnum {
-  ledger = 'ledger',
-  walletconnect = 'walletconnect',
-  wallet = 'wallet',
-  extension = 'extension',
-  none = ''
-}
-
 export const gasPriceModifier = '0.01';
 export const gasPerDataByte = '1500';
 export const gasLimit = '50000';

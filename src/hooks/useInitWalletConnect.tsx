@@ -14,7 +14,7 @@ import {
   setWalletConnectLogin
 } from '../redux/slices';
 
-import { LoginMethodsEnum } from '../types';
+import { loginMethodsEnum } from '../types/enums';
 import { logout } from '../utils';
 interface InitWalletConnectType {
   callbackRoute: string;
@@ -73,7 +73,7 @@ export const useInitWalletConnect = ({
       const hasSignature = Boolean(signature);
       const loginActionData = {
         address: address,
-        loginMethod: LoginMethodsEnum.walletconnect
+        loginMethod: loginMethodsEnum.walletconnect
       };
 
       const loginData = {

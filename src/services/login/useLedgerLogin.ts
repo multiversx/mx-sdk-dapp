@@ -14,7 +14,7 @@ import {
   setProvider,
   setTokenLogin
 } from '../../redux/slices';
-import { LoginMethodsEnum } from '../../types';
+import { loginMethodsEnum } from '../../types/enums';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
@@ -86,7 +86,7 @@ export function useLedgerLogin({
   }) {
     dispatch(setProvider(provider));
 
-    dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
+    dispatch(setLedgerLogin({ index, loginType: loginMethodsEnum.ledger }));
 
     if (signature) {
       dispatch(
@@ -96,7 +96,7 @@ export function useLedgerLogin({
         })
       );
     }
-    dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
+    dispatch(loginAction({ address, loginMethod: loginMethodsEnum.ledger }));
     window.location.href = callbackRoute;
   }
 
@@ -222,7 +222,7 @@ export function useLedgerLogin({
         const address = await hwWalletP.login();
         dispatch(setProvider(hwWalletP));
         dispatch(
-          loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
+          loginAction({ address, loginMethod: loginMethodsEnum.ledger })
         );
         window.location.href = callbackRoute;
       } else {
