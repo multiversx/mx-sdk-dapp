@@ -14,7 +14,7 @@ import {
   setWalletConnectLogin
 } from 'redux/slices';
 
-import { loginMethodsEnum } from '../types/enums';
+import { loginMethodsEnum } from 'types/enums';
 import { logout } from '../utils';
 interface InitWalletConnectType {
   callbackRoute: string;

@@ -5,8 +5,8 @@ import {
   WalletConnectProvider,
   WalletProvider
 } from '@elrondnetwork/erdjs';
-import { loginMethodsEnum} from '../types/enums';
-import {NetworkType} from "../types";
+import { loginMethodsEnum } from 'types/enums';
+import { NetworkType } from '../types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 

@@ -5,7 +5,7 @@ import {
   WalletConnectProvider,
   WalletProvider
 } from '@elrondnetwork/erdjs';
-import { loginMethodsEnum } from '../types/enums';
+import { loginMethodsEnum } from 'types/enums';
 
 const getProviderType = (
   provider: IDappProvider | undefined
