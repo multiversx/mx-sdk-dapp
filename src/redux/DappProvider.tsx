@@ -8,6 +8,7 @@ import { NetworkConfigType } from 'types';
 
 import SignTransactions from '../components/SignTransactions';
 import TransactionSender from '../components/TransactionSender';
+import NotificationModal from '../UI/NotificationModal';
 import { store, persistor } from './store';
 
 interface DappProviderPropsType {
@@ -25,6 +26,7 @@ export const DappProvider = ({
       <ProviderInitializer />
       <SignTransactions />
       <TransactionSender />
+      <NotificationModal />
       {children}
     </PersistGate>
   </Provider>

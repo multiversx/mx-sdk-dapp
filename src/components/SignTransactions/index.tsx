@@ -46,7 +46,6 @@ export default function SignTransactions() {
     setError('');
     setShowSignModal(false);
   };
-  console.log(transactionsToSign);
   const showError = (e: string) => {
     setShowSignModal(true);
     setError(e);
