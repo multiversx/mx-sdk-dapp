@@ -29,13 +29,11 @@ export const useInitWalletConnect = ({
   const heartbeatInterval = 15000;
 
   const [error, setError] = useState<string>('');
-  //   const [walletConnect, setWalletConnect] = useState<WalletConnectProvider>();
 
   const providerRef = useRef<any>();
 
   const proxy = useSelector(proxySelector);
   const provider: any = useSelector(providerSelector);
-  //   const loginMethod = useSelector(loginMethodSelector);
   const walletConnectBridge = useSelector(walletConnectBridgeSelector);
 
   let heartbeatDisconnectInterval: any;
@@ -44,9 +42,6 @@ export const useInitWalletConnect = ({
     const isProviderConnected = Boolean(
       providerRef.current?.walletConnector?.connected
     );
-    // const hasIosPeerMetaDescription = provider.walletConnector?.peerMeta?.description.match(
-    //   /(iPad|iPhone|iPod)/g
-    // );
 
     if (!isProviderConnected) {
       return;
@@ -114,6 +109,7 @@ export const useInitWalletConnect = ({
     if (!walletConnectBridge || providerRef?.current?.isInitialized()) {
       return;
     }
+    
     const providerHandlers = {
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout

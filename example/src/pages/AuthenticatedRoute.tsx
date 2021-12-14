@@ -1,5 +1,6 @@
 import React from 'react';
 import { logout, getAddress, getAccountBalance } from 'dapp-core';
+import PingPongPage from './PingPong';
 
 export default function AuthenticatedRoute() {
   const [userAddress, setUserAddress] = React.useState('');
@@ -22,6 +23,7 @@ export default function AuthenticatedRoute() {
             <p className='mb-4'>You are now authenticated </p>
             <p>{`address: ${userAddress}`}</p>
             {userBalance != null && <p>{`balance: ${userBalance}`}</p>}
+            <PingPongPage />
             <button onClick={handleLogout}>
               <span>logout</span>
             </button>

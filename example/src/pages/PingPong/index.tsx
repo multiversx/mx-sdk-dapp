@@ -16,16 +16,17 @@ export const PingPongPage: () => JSX.Element = () => {
     };
 
     sendSimpleTransactions({
-      minGasLimit: 5000,
+      minGasLimit: 10000000,
       transactions: pingTransaction
     });
   };
 
   return (
-    <div className='home d-flex flex-fill align-items-center'>
-      <div className='m-auto m-4'>
-        <button onClick={sendPingTransaction} className='btn btn-primary  mx-2'>Send</button>
-      </div>
+    <div className='m-auto p-4'>
+      <p className=''>
+          Ping Pong
+      </p>
+      <button onClick={sendPingTransaction} className='btn btn-primary  mx-2'>Send ping</button>
     </div>
   );
 };

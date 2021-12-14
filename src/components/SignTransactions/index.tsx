@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Address, Nonce } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -18,11 +18,11 @@ import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
 
-export default function SignTransactions() {
-  const [showSignModal, setShowSignModal] = React.useState(false);
-  const [newCallbackRoute, setNewCallbackRoute] = React.useState('');
-  const [newSessionId, setNewSessionId] = React.useState('');
-  const [error, setError] = React.useState('');
+export default function SignTransactions () {
+  const [showSignModal, setShowSignModal] = useState<boolean>(false);
+  const [newCallbackRoute, setNewCallbackRoute] = useState<string>('');
+  const [newSessionId, setNewSessionId] = useState<string>('');
+  const [error, setError] = useState<string>('');
 
   const provider = useSelector(providerSelector);
   const proxy = useSelector(proxySelector);
@@ -35,11 +35,12 @@ export default function SignTransactions() {
 
   const providerType = getProviderType(provider);
 
-  React.useEffect(() => {
-    if (transactionsToSign != null) {
-      signTransactions();
-    }
-  }, [transactionsToSign]);
+  console.log('ere', {
+    provider,
+    providerType,
+    eus: providerType === loginMethodsEnum.extension,
+    transactionsToSign
+  });
 
   const handleClose = () => {
     setNewCallbackRoute('');
@@ -115,6 +116,12 @@ export default function SignTransactions() {
     providerType,
     callbackRoute: newCallbackRoute
   };
+
+  useEffect(() => {
+    if (transactionsToSign) {
+      signTransactions();
+    }
+  }, [transactionsToSign]);
 
   return showSignModal && transactionsToSign?.transactions != null ? (
     <React.Fragment>
