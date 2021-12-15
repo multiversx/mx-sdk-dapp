@@ -18,7 +18,7 @@ import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
 
-export default function SignTransactions () {
+export default function SignTransactions() {
   const [showSignModal, setShowSignModal] = useState<boolean>(false);
   const [newCallbackRoute, setNewCallbackRoute] = useState<string>('');
   const [newSessionId, setNewSessionId] = useState<string>('');

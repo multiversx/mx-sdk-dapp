@@ -3,21 +3,17 @@ import { addressSelector, chainIDSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { getAccount, getLatestNonce } from 'utils';
 import { defaultGasPrice, defaultGasLimit } from '../../constants';
-import { sendTransactions } from './sendTransactions';
+import { signTransactions } from './signTransactions';
 import { SendSimpleTransactionPropsType } from './types';
 
-export async function sendSimpleTransactions({
+export async function transformAndSignTransactions({
   transactions,
   minGasLimit
 }: SendSimpleTransactionPropsType) {
-  const transactionPayload = Array.isArray(transactions)
-    ? transactions
-    : [transactions];
   const address = addressSelector(store.getState());
   const account = await getAccount(address);
   const nonce = getLatestNonce(account);
-
-  const transformedTransactions = transactionPayload.map((tx) => {
+  const transactionsPayload = transactions.map((tx) => {
     const {
       value,
       receiver,
@@ -45,10 +41,10 @@ export async function sendSimpleTransactions({
       options
     });
   });
-  sendTransactions({
-    transactionPayload: transformedTransactions,
+  signTransactions({
+    transactions: transactionsPayload,
     minGasLimit
   });
 }
 
-export default sendSimpleTransactions;
+export default transformAndSignTransactions;

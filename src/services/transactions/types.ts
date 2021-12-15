@@ -1,10 +1,5 @@
 import { Transaction } from '@elrondnetwork/erdjs';
 
-export interface SendTransactionsPropsType {
-  transactionPayload: Transaction[] | Transaction;
-  minGasLimit?: number;
-}
-
 export interface SimpleTransactionType {
   value: string;
   receiver: string;
@@ -17,6 +12,19 @@ export interface SimpleTransactionType {
 }
 
 export interface SendSimpleTransactionPropsType {
-  transactions: SimpleTransactionType | SimpleTransactionType[];
+  transactions: SimpleTransactionType[];
+  minGasLimit?: number;
+}
+
+export interface SendTransactionsPropsType {
+  transactions:
+    | Transaction
+    | SimpleTransactionType
+    | (Transaction | SimpleTransactionType)[];
+  minGasLimit?: number;
+}
+
+export interface SignTransactionsPropsType {
+  transactions: Transaction[] | Transaction;
   minGasLimit?: number;
 }

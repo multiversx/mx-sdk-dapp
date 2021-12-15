@@ -1,2 +1,2 @@
 export * from './sendTransactions';
-export * from './sendSimpleTransactions';
+export * from './signTransactions';

@@ -2,7 +2,7 @@ import React from 'react';
 import { transactionServices } from 'dapp-core';
 
 export const PingPongPage: () => JSX.Element = () => {
-  const { sendSimpleTransactions } = transactionServices;
+  const { sendTransactions } = transactionServices;
 
   const contractAddress =
     'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
@@ -11,22 +11,20 @@ export const PingPongPage: () => JSX.Element = () => {
     const pingTransaction = {
       value: '1',
       data: 'ping',
-      gasLimit: 10000000,
       receiver: contractAddress
     };
 
-    sendSimpleTransactions({
-      minGasLimit: 10000000,
+    sendTransactions({
       transactions: pingTransaction
     });
   };
 
   return (
     <div className='m-auto p-4'>
-      <p className=''>
-          Ping Pong
-      </p>
-      <button onClick={sendPingTransaction} className='btn btn-primary  mx-2'>Send ping</button>
+      <p className=''>Ping Pong</p>
+      <button onClick={sendPingTransaction} className='btn btn-primary  mx-2'>
+        Send ping
+      </button>
     </div>
   );
 };

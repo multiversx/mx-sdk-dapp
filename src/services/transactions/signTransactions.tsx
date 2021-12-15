@@ -5,21 +5,21 @@ import BigNumber from 'bignumber.js';
 import { accountBalanceSelector } from 'redux/selectors';
 import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
 import { store } from 'redux/store';
-import { SendTransactionsPropsType } from './types';
+import { SignTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
 
 const defaultMinGasLimit = 50000000;
 
-export function sendTransactions({
-  transactionPayload,
+export function signTransactions({
+  transactions,
   minGasLimit = defaultMinGasLimit
-}: SendTransactionsPropsType) {
+}: SignTransactionsPropsType) {
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(store.getState());
-  const transactions = Array.isArray(transactionPayload)
-    ? transactionPayload
-    : [transactionPayload];
-  const bNtotalFee = calcTotalFee(transactions, minGasLimit);
+  const transactionsPayload = Array.isArray(transactions)
+    ? transactions
+    : [transactions];
+  const bNtotalFee = calcTotalFee(transactionsPayload, minGasLimit);
   const bNbalance = new BigNumber(
     validation.stringIsFloat(accountBalance) ? accountBalance : '0'
   );
@@ -40,9 +40,9 @@ export function sendTransactions({
   const signTransactionsPayload = {
     sessionId,
     callbackRoute: window.location.pathname,
-    transactions: transactions.map((tx) => tx.toPlainObject())
+    transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
 }
 
-export default sendTransactions;
+export default signTransactions;
