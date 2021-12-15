@@ -1,6 +1,5 @@
 import { Nonce } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Draft } from 'immer';
 import { REHYDRATE } from 'redux-persist';
 import { AccountType } from 'types';
 import {
@@ -17,7 +16,7 @@ export interface LedgerAccountType {
 export interface AccountInfoSliceType {
   address: string;
   shard?: number;
-  account: Draft<AccountType>;
+  account: AccountType | any;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
 }

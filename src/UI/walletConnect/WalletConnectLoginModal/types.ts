@@ -1,4 +1,4 @@
-export interface LoginButtonPropsType {
+export interface LoginModalPropsType {
   lead?: string;
   title?: string;
   className?: string;
@@ -6,4 +6,5 @@ export interface LoginButtonPropsType {
   callbackRoute: string;
   loginButtonText: string;
   shouldRenderDefaultCss?: boolean;
+  onClose: () => void;
 }

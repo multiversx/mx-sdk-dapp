@@ -1,49 +1,106 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { WalletConnectProvider } from '@elrondnetwork/erdjs';
+import { IDappProvider } from '@elrondnetwork/erdjs/out';
 import QRCode from 'qrcode';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { useUpdateEffect } from 'hooks/useUpdateEffect';
+import { loginAction } from 'redux/commonActions';
 import {
-  walletConnectDeepLinkSelector,
+  isLoggedInSelector,
   providerSelector,
-  walletConnectBridgeSelector
+  proxySelector,
+  walletConnectBridgeSelector,
+  walletConnectDeepLinkSelector
 } from 'redux/selectors';
-import { setTokenLogin } from 'redux/slices';
-import useInitWalletConnect from '../../hooks/useInitWalletConnect';
+import {
+  setProvider,
+  setTokenLogin,
+  setTokenLoginSignature,
+  setWalletConnectLogin
+} from 'redux/slices';
+
+import { loginMethodsEnum } from 'types/enums';
+import { logout } from 'utils';
+import Timeout = NodeJS.Timeout;
+import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
+
+interface InitWalletConnectType {
+  callbackRoute: string;
+  logoutRoute: string;
+  token?: string;
+  shouldLoginUser?: boolean;
+}
+
+export interface WalletConnectLoginHookCustomStateType {
+  uriDeepLink: string | null;
+  qrCodeSvg: any;
+}
+
+export type WalletConnectLoginHookReturnType = [
+  LoginHookTriggerType,
+  LoginHookGenericStateType,
+  WalletConnectLoginHookCustomStateType
+];
 
 export const useWalletConnectLogin = ({
-  token,
+  callbackRoute,
   logoutRoute,
-  callbackRoute
-}: {
-  token?: string;
-  logoutRoute: string;
-  callbackRoute: string;
-}) => {
+  token,
+  shouldLoginUser = true
+}: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
+  const heartbeatInterval = 15000;
 
+  const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
 
-  const walletConnect: any = useSelector(providerSelector);
+  const providerRef = useRef<any>();
+
+  const proxy = useSelector(proxySelector);
+  const provider: any = useSelector(providerSelector);
   const walletConnectBridge = useSelector(walletConnectBridgeSelector);
+  const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
+  const isLoggedIn = useSelector(isLoggedInSelector);
 
-  const { error } = useInitWalletConnect({
-    logoutRoute,
-    callbackRoute
-  });
-
-  const walletConnectDeepLink: string = useSelector(
-    walletConnectDeepLinkSelector
-  );
+  let heartbeatDisconnectInterval: Timeout;
 
   const hasWcUri = Boolean(wcUri);
-  const loading = !hasWcUri;
+  const isLoading = !hasWcUri;
+  const uriDeepLink = hasWcUri
+    ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
+    : null;
 
-  const loginWithWalletConnect = async () => {
+  useEffect(() => {
+    handleHeartbeat();
+
+    const interval = setInterval(() => {
+      handleHeartbeat();
+    }, heartbeatInterval);
+
+    return () => clearInterval(interval);
+  }, [provider]);
+
+  useEffect(() => {
+    generateQRCode();
+  }, [wcUri]);
+
+  useUpdateEffect(() => {
+    generateWcUri();
+  }, [token]);
+
+  useUpdateEffect(() => {
+    providerRef.current = provider;
+  }, [provider]);
+
+  async function generateWcUri() {
     if (!walletConnectBridge) {
       return;
     }
 
-    const walletConnectUri: string | undefined = await walletConnect?.login();
+    const walletConnectUri: string | undefined =
+      await providerRef.current?.login();
     const hasUri = Boolean(walletConnectUri);
 
     if (!hasUri) {
@@ -59,7 +116,7 @@ export const useWalletConnectLogin = ({
 
     setWcUri(wcUriWithToken);
     dispatch(setTokenLogin({ loginToken: token }));
-  };
+  }
 
   const generateQRCode = async () => {
     if (!hasWcUri) {
@@ -73,26 +130,121 @@ export const useWalletConnectLogin = ({
     setQrCodeSvg(svg);
   };
 
-  useEffect(() => {
-    generateQRCode();
-  }, [wcUri]);
+  async function handleHeartbeat() {
+    const isProviderConnected = Boolean(
+      providerRef.current?.walletConnector?.connected
+    );
 
-  useEffect(() => {
-    loginWithWalletConnect();
-  }, [walletConnect, token]);
+    if (!isProviderConnected) {
+      return;
+    }
 
-  const uriDeepLink = `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(
-    wcUri
-  )}`;
+    const customMessage = {
+      method: 'heartbeat',
+      params: {}
+    };
 
-  const uri: string | null = hasWcUri ? uriDeepLink : null;
+    try {
+      await providerRef.current.sendCustomMessage(customMessage);
+    } catch (error) {
+      alert('lost');
+      console.error('Connection lost', error);
+      handleOnLogout();
+    }
+  }
 
-  return {
-    uri,
-    error,
-    loading,
-    qrCodeSvg
+  async function handleOnLogin() {
+    try {
+      const provider = providerRef.current;
+      if (provider == null) {
+        return;
+      }
+      const address = await provider.getAddress();
+      const signature = await provider.getSignature();
+      const hasSignature = Boolean(signature);
+      const loginActionData = {
+        address: address,
+        loginMethod: loginMethodsEnum.walletconnect
+      };
+
+      const loginData = {
+        logoutRoute: logoutRoute,
+        loginType: 'walletConnect',
+        callbackRoute: callbackRoute
+      };
+
+      if (hasSignature) {
+        dispatch(setWalletConnectLogin(loginData));
+        dispatch(setTokenLoginSignature(signature));
+      } else {
+        dispatch(setWalletConnectLogin(loginData));
+      }
+      dispatch(loginAction(loginActionData));
+
+      provider.walletConnector.on('heartbeat', () => {
+        clearInterval(heartbeatDisconnectInterval);
+        heartbeatDisconnectInterval = setInterval(() => {
+          console.log('Maiar Wallet Connection Lost');
+          handleOnLogout();
+          clearInterval(heartbeatDisconnectInterval);
+        }, 150000);
+      });
+      window.location.href = callbackRoute;
+    } catch (err) {
+      setError('Invalid address');
+      console.error(err);
+    }
+  }
+
+  const handleOnLogout = () => {
+    logout(callbackRoute);
   };
+
+  async function triggerWalletConnectSignIn() {
+    if (!walletConnectBridge) {
+      return;
+    }
+    const providerHandlers = {
+      onClientLogin: handleOnLogin,
+      onClientLogout: handleOnLogout
+    };
+
+    const newProvider = new WalletConnectProvider(
+      proxy,
+      walletConnectBridge,
+      providerHandlers
+    );
+
+    await newProvider.init();
+    dispatch(setProvider(newProvider));
+    providerRef.current = newProvider;
+    shouldLoginUser && loginUser(newProvider);
+  }
+
+  async function loginUser(provider: IDappProvider) {
+    const walletConnectUri: string | undefined = await provider?.login();
+    const hasUri = Boolean(walletConnectUri);
+
+    if (!hasUri) {
+      return;
+    }
+
+    if (!token) {
+      setWcUri(walletConnectUri as string);
+      return;
+    }
+
+    const wcUriWithToken = `${walletConnectUri}&token=${token}`;
+
+    setWcUri(wcUriWithToken);
+    dispatch(setTokenLogin({ loginToken: token! }));
+  }
+
+  return [
+    triggerWalletConnectSignIn,
+    { error, isLoading, isLoggedIn },
+    { uriDeepLink, qrCodeSvg }
+  ];
 };
 
 export default useWalletConnectLogin;

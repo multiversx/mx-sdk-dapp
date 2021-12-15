@@ -2,9 +2,9 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import NetworkConfigInitializer from 'components/NetworkConfigInitializer';
 import ProviderInitializer from 'components/ProviderInitializer';
 import { NetworkConfigType } from 'types';
+import AppInitializer from 'wrappers/AppInitializer';
 
 import SignTransactions from '../components/SignTransactions';
 import TransactionSender from '../components/TransactionSender';
@@ -22,12 +22,13 @@ export const DappProvider = ({
 }: DappProviderPropsType) => (
   <Provider store={store}>
     <PersistGate persistor={persistor} loading={null}>
-      <NetworkConfigInitializer networkConfig={networkConfig} />
-      <ProviderInitializer />
-      <SignTransactions />
-      <TransactionSender />
-      <NotificationModal />
-      {children}
+      <AppInitializer networkConfig={networkConfig}>
+        <ProviderInitializer />
+        <SignTransactions />
+        <TransactionSender />
+        <NotificationModal />
+        {children}
+      </AppInitializer>
     </PersistGate>
   </Provider>
 );

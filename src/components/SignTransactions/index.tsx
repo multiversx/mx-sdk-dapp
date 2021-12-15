@@ -60,10 +60,9 @@ export default function SignTransactions() {
       }
 
       const proxyAccount = await proxy.getAccount(new Address(address));
-
       const latestNonce = Math.max(
         proxyAccount.nonce.valueOf(),
-        account.nonce.valueOf()
+        account.nonce.value
       );
 
       transactions?.forEach((tx, i) => {
@@ -115,7 +114,6 @@ export default function SignTransactions() {
       signTransactions();
     }
   }, [transactionsToSign]);
-
   return showSignModal && transactionsToSign?.transactions != null ? (
     <React.Fragment>
       {providerType === loginMethodsEnum.ledger && (

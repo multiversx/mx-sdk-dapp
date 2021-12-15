@@ -25,12 +25,11 @@ export const SignWithWalletConnectModal = ({
     handleClose();
     window.location.href = callbackRoute;
   };
-
   return (
     <Modal
       show
       backdrop='static'
-      onHide={handleClose}
+      onHide={close}
       className='modal-container'
       animation={false}
       centered

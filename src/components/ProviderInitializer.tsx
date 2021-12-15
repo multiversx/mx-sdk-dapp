@@ -10,8 +10,8 @@ import {
   walletLoginSelector
 } from 'redux/selectors';
 import { setAccount, setProvider, setWalletLogin } from 'redux/slices';
+import { useWalletConnectLogin } from 'services/login';
 import { loginMethodsEnum } from 'types/enums';
-import { useInitWalletConnect } from '../hooks';
 import {
   newWalletProvider,
   getAddress,
@@ -31,9 +31,10 @@ export default function ProviderInitializer() {
     ? walletConnectLogin
     : { callbackRoute: '', logoutRoute: '' };
 
-  const { walletConnectInit } = useInitWalletConnect({
+  const [initWalletLoginProvider] = useWalletConnectLogin({
     callbackRoute,
-    logoutRoute
+    logoutRoute,
+    shouldLoginUser: false
   });
 
   React.useEffect(() => {
@@ -111,7 +112,7 @@ export default function ProviderInitializer() {
       }
 
       case loginMethodsEnum.walletconnect: {
-        walletConnectInit();
+        initWalletLoginProvider();
         break;
       }
       case loginMethodsEnum.wallet: {
