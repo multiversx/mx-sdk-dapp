@@ -15,7 +15,7 @@ export const PingPongPage: () => JSX.Element = () => {
     };
 
     sendTransactions({
-      transactions: pingTransaction
+      transactions: pingTransaction,
     });
   };
 

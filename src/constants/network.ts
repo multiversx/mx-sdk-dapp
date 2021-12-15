@@ -1,0 +1,1 @@
+export const DEFAULT_MIN_GAS_LIMIT = 50_000_000;

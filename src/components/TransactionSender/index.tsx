@@ -49,7 +49,7 @@ const TransactionSender = () => {
     setSending(false);
   };
 
-  async function handleSendTransactions() {
+  async function handleSendTransactions () {
     const [sessionId] = Object.keys(signStatus);
     try {
       if (
@@ -68,12 +68,13 @@ const TransactionSender = () => {
             const transactionsPromises = transactions.map((t) => {
               const transactionObject = newTransaction(t);
               transactionObject.applySignature(
-                Signature.fromHex(t.signature!),
+                new Signature(t.signature),
                 new Address(t.sender)
               );
               return proxy.sendTransaction(transactionObject);
             });
-            setNonce(account.nonce.valueOf() + transactions.length);
+
+            setNonce(account.nonce.value + transactions.length);
             const responseHashes = await Promise.all(transactionsPromises);
 
             const withoutCurrent = transactionToasts.filter(
@@ -83,8 +84,9 @@ const TransactionSender = () => {
             const newTransactions: {
               [hash: string]: PlainTransactionStatus;
             } = (responseHashes as TransactionHash[]).reduce((acc, tx) => {
-              acc[Buffer.from(tx.hash).toString('hex')] =
-                getPlainTransactionStatus(new TransactionStatus('pending'));
+              acc[
+                Buffer.from(tx.hash).toString('hex')
+              ] = getPlainTransactionStatus(new TransactionStatus('pending'));
               return acc;
             }, {} as any);
             const newToast = {
@@ -96,7 +98,9 @@ const TransactionSender = () => {
               submittedMessageShown: true,
               transactions: newTransactions,
               startTime: moment().unix(),
-              endTime: moment().add(10, 'seconds').unix()
+              endTime: moment()
+                .add(10, 'seconds')
+                .unix()
             };
             const newToasts = [...withoutCurrent, newToast];
             dispatch(

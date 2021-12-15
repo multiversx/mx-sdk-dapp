@@ -7,12 +7,11 @@ import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
 import { store } from 'redux/store';
 import { SignTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
-
-const defaultMinGasLimit = 50000000;
+import { networkConstants } from 'constants/index';
 
 export function signTransactions({
   transactions,
-  minGasLimit = defaultMinGasLimit
+  minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT
 }: SignTransactionsPropsType) {
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(store.getState());
