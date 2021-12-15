@@ -2,29 +2,23 @@ import * as React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import PageState from 'UI/PageState';
-import { HandleCloseType } from '../helpers';
 import useSignWithProvider from '../useSignWithProvider';
+import { SignModalType } from './types';
 
-export interface SignModalType {
-  handleClose: (props?: HandleCloseType) => void;
-  error: string;
-  setError: (value: React.SetStateAction<string>) => void;
-}
-
-const SignWithWalletConnectModal = ({
-  handleClose,
+export const SignWithWalletConnectModal = ({
   error,
-  setError
+  setError,
+  handleClose
 }: SignModalType) => {
   const [callbackRoute, transactions] = useSignWithProvider({
-    handleClose,
-    setError
+    setError,
+    handleClose
   });
 
-  const description =
-    transactions && transactions?.length > 1
-      ? 'Check your phone to sign the transactions'
-      : 'Check your phone to sign the transaction';
+  const hasMultipleTransactions = transactions && transactions?.length > 1;
+  const description = `Check your phone to sign the transaction${
+    hasMultipleTransactions ? 's' : ''
+  }`;
 
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
