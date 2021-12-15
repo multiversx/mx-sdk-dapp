@@ -51,81 +51,97 @@ const TransactionSender = () => {
 
   async function handleSendTransactions () {
     const [sessionId] = Object.keys(signStatus);
+
+    if (!sessionId) {
+      return;
+    }
+
     try {
-      if (
-        sessionId != null &&
-        signStatus[sessionId].status === transactionStatuses.signed &&
-        !sending
-      ) {
-        const { transactions } = signStatus[sessionId];
+      const isSessionIdSigned =
+        signStatus[sessionId].status === transactionStatuses.signed;
+      const shouldSendCurrentSession = isSessionIdSigned && !sending;
+      const shouldClearSignedTransations =
+        signStatus[sessionId].status === transactionStatuses.cancelled ||
+        signStatus[sessionId].status === transactionStatuses.failed;
 
-        const batchNotSent = transactionToasts.every(
-          ({ toastSignSession }) => String(toastSignSession) !== sessionId
-        );
-        if (batchNotSent) {
-          if (transactions != null) {
-            setSending(true);
-            const transactionsPromises = transactions.map((t) => {
-              const transactionObject = newTransaction(t);
-              transactionObject.applySignature(
-                new Signature(t.signature),
-                new Address(t.sender)
-              );
-              return proxy.sendTransaction(transactionObject);
-            });
-
-            setNonce(account.nonce.value + transactions.length);
-            const responseHashes = await Promise.all(transactionsPromises);
-
-            const withoutCurrent = transactionToasts.filter(
-              ({ toastSignSession }) => String(toastSignSession) !== sessionId
-            );
-
-            const newTransactions: {
-              [hash: string]: PlainTransactionStatus;
-            } = (responseHashes as TransactionHash[]).reduce((acc, tx) => {
-              acc[
-                Buffer.from(tx.hash).toString('hex')
-              ] = getPlainTransactionStatus(new TransactionStatus('pending'));
-              return acc;
-            }, {} as any);
-            const newToast = {
-              toastSignSession: sessionId,
-              processingMessage: 'Processing transaction',
-              successMessage: 'Transaction successful',
-              errorMessage: 'Transaction failed',
-              submittedMessage: 'Transaction submitted',
-              submittedMessageShown: true,
-              transactions: newTransactions,
-              startTime: moment().unix(),
-              endTime: moment()
-                .add(10, 'seconds')
-                .unix()
-            };
-            const newToasts = [...withoutCurrent, newToast];
-            dispatch(
-              setTxSubmittedModal({
-                sessionId,
-                submittedMessage: 'submitted'
-              })
-            );
-
-            dispatch(setTransactionToasts(newToasts));
-            clearSignInfo();
-            history.pushState({}, document.title, '?');
-          }
-        }
-      } else {
-        if (
-          sessionId &&
-          (signStatus[sessionId].status === transactionStatuses.cancelled ||
-            signStatus[sessionId].status === transactionStatuses.failed)
-        ) {
-          dispatch(clearSignTransactions());
-        }
+      if (shouldClearSignedTransations) {
+        dispatch(clearSignTransactions());
       }
-    } catch (err) {
-      console.error('Unable to send transactions', err);
+
+      if (!shouldSendCurrentSession) {
+        return;
+      }
+
+      const { transactions } = signStatus[sessionId];
+
+      const hasSentBatch = transactionToasts.some(
+        ({ toastSignSession }) => String(toastSignSession) === sessionId
+      );
+
+      if (hasSentBatch || !transactions) {
+        return;
+      }
+
+      setSending(true);
+
+      const transactionsPromises = transactions.map((tx) => {
+        const address = new Address(tx.sender);
+        const transactionObject = newTransaction(tx);
+        const signature = new Signature(tx.signature);
+
+        transactionObject.applySignature(signature, address);
+
+        return proxy.sendTransaction(transactionObject);
+      });
+
+      const responseHashes = await Promise.all(transactionsPromises);
+
+      setNonce(account.nonce.value + transactions.length);
+
+      const restToasts = transactionToasts.filter(
+        ({ toastSignSession }) => String(toastSignSession) !== sessionId
+      );
+
+      const newTransactions: {
+        [hash: string]: PlainTransactionStatus;
+      } = (responseHashes as TransactionHash[]).reduce((transactions, tx) => {
+        const status = getPlainTransactionStatus(
+          new TransactionStatus('pending')
+        );
+        const targetHash = Buffer.from(tx.hash).toString('hex');
+
+        transactions[targetHash] = status;
+
+        return transactions;
+      }, {});
+
+      const newToast = {
+        toastSignSession: sessionId,
+        processingMessage: 'Processing transaction',
+        successMessage: 'Transaction successful',
+        errorMessage: 'Transaction failed',
+        submittedMessage: 'Transaction submitted',
+        submittedMessageShown: true,
+        transactions: newTransactions,
+        startTime: moment().unix(),
+        endTime: moment()
+          .add(10, 'seconds')
+          .unix()
+      };
+
+      const newToasts = [...restToasts, newToast];
+      const submittedModalPayload = {
+        sessionId,
+        submittedMessage: 'submitted'
+      };
+
+      dispatch(setTxSubmittedModal(submittedModalPayload));
+      dispatch(setTransactionToasts(newToasts));
+      clearSignInfo();
+
+      history.pushState({}, document.title, '?');
+    } catch (error) {
+      console.error('Unable to send transactions', error);
       dispatch(addToast(failedToast));
       clearSignInfo();
     } finally {
