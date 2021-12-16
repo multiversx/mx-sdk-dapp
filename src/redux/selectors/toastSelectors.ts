@@ -35,3 +35,8 @@ export const transactionToastSelector = createDeepEqualSelector(
         ) || {}
       : {}
 );
+
+export const toastsProgressSelector = createDeepEqualSelector(
+  toastsSliceSelector,
+  (state) => state.toastProgress
+);

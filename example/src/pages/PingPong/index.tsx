@@ -5,8 +5,8 @@ export const PingPongPage: () => JSX.Element = () => {
   const { sendTransactions } = transactionServices;
 
   const [transactionId, setTransactionId] = React.useState<string | null>(null);
-  const transactionStatus =
-    transactionServices.useTrackTransactionStatus(transactionId);
+//   const transactionStatus =
+//     transactionServices.useTrackTransactionStatus(transactionId);
   const contractAddress =
     'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
 
