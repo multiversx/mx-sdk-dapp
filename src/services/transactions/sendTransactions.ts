@@ -3,10 +3,15 @@ import { signTransactions } from './signTransactions';
 import transformAndSignTransactions from './transformAndSignTransactions';
 import { SendTransactionsPropsType, SimpleTransactionType } from './types';
 
+export interface SendTransactionReturnType {
+  error?: string;
+  sessionId?: string;
+}
+
 export async function sendTransactions({
   transactions,
   minGasLimit
-}: SendTransactionsPropsType) {
+}: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
   const transactionsPayload = Array.isArray(transactions)
     ? transactions
     : [transactions];
@@ -15,7 +20,7 @@ export async function sendTransactions({
     (tx) => tx instanceof Transaction
   );
   if (!areComplexTransactions) {
-    return transformAndSignTransactions({
+    return await transformAndSignTransactions({
       transactions: transactionsPayload as SimpleTransactionType[],
       minGasLimit
     });

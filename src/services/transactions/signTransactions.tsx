@@ -6,13 +6,14 @@ import { networkConstants } from 'constants/index';
 import { accountBalanceSelector } from 'redux/selectors';
 import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
 import { store } from 'redux/store';
+import { SendTransactionReturnType } from './sendTransactions';
 import { SignTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
 
 export function signTransactions({
   transactions,
   minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT
-}: SignTransactionsPropsType) {
+}: SignTransactionsPropsType): SendTransactionReturnType {
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(store.getState());
   const transactionsPayload = Array.isArray(transactions)
@@ -33,7 +34,7 @@ export function signTransactions({
     };
 
     store.dispatch(setNotificationModal(notificationPayload));
-    return;
+    return { error: 'insufficient funds' };
   }
   const signTransactionsPayload = {
     sessionId,
@@ -41,6 +42,7 @@ export function signTransactions({
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
+  return { sessionId };
 }
 
 export default signTransactions;
