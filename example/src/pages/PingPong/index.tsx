@@ -10,8 +10,6 @@ export const PingPongPage: () => JSX.Element = () => {
   const contractAddress =
     'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
 
-  console.log(transactionStatus, 'txstatus');
-
   const sendPingTransaction = async () => {
     const pingTransaction = {
       value: '1',

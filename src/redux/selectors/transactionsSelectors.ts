@@ -37,5 +37,5 @@ export const transactionStatusSelector = createDeepEqualSelector(
   signStatusSelector,
   (_: RootState, transactionSessionId: string | null) => transactionSessionId,
   (signStatus: SignStatusType, transactionSessionId: string | null) =>
-    transactionSessionId != null ? signStatus?.[transactionSessionId] || [] : []
+    transactionSessionId != null ? signStatus?.[transactionSessionId] || {} : {}
 );

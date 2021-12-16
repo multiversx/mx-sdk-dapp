@@ -1,3 +1,4 @@
+import { TransactionToastType } from 'types/toasts';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
@@ -19,4 +20,18 @@ export const transactionToastsSelector = createDeepEqualSelector(
 export const refetchSelector = createDeepEqualSelector(
   toastsSliceSelector,
   (state) => state.refetch
+);
+
+export const transactionToastSelector = createDeepEqualSelector(
+  transactionToastsSelector,
+  (_: RootState, transactionSessionId: string | null) => transactionSessionId,
+  (
+    transactionToasts: TransactionToastType[],
+    transactionSessionId: string | null
+  ) =>
+    transactionSessionId != null
+      ? transactionToasts?.find(
+          (item) => item.toastSignSession === transactionSessionId
+        ) || {}
+      : {}
 );
