@@ -7,11 +7,20 @@ import {
 } from 'types/toasts';
 import { logoutAction } from '../commonActions';
 
+export type ExpiresType = number | false;
 export interface ToastsState {
   toasts: ToastType[];
   toastSignSessions: string[];
   transactionToasts: TransactionToastType[];
   refetch: number;
+  toastProgress: {
+    [key: string]: ToastProgressType;
+  };
+}
+export interface ToastProgressType {
+  progress: number;
+  data: any;
+  expires: ExpiresType;
 }
 
 export interface UpdateTransactionToastStatusPayload {
@@ -27,6 +36,7 @@ export interface UpdateTransactionToastErrorPayload {
 
 const initialState: ToastsState = {
   toasts: [],
+  toastProgress: {},
   toastSignSessions: [],
   transactionToasts: [],
   refetch: Date.now()
@@ -127,6 +137,21 @@ export const toastsSlice = createSlice({
     },
     updateToastsRefetch: (state: ToastsState) => {
       state.refetch = Date.now();
+    },
+    saveToastProgress: (state: ToastsState, action: PayloadAction<any>) => {
+      const { id, expires, data, progress } = action.payload;
+      state.toastProgress[id] = {
+        data,
+        expires,
+        progress,
+      };
+    },
+    removeToastProgress: (
+      state: ToastsState,
+      action: PayloadAction<string>
+    ) => {
+      const id = action.payload;
+      delete state.toastProgress[id];
     }
   },
   extraReducers: (builder) => {
@@ -157,10 +182,12 @@ export const {
   addToast,
   updateToast,
   removeToast,
-  setTransactionToasts,
-  removeTransactionToast,
+  saveToastProgress,
+  removeToastProgress,
   addToastSignSession,
   updateToastsRefetch,
+  setTransactionToasts,
+  removeTransactionToast,
   updateTransactionToastTransactionStatus,
   updateTransactionToastErrorMessage
 } = toastsSlice.actions;

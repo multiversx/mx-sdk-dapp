@@ -10,6 +10,7 @@ import SignTransactions from '../components/SignTransactions';
 import TransactionSender from '../components/TransactionSender';
 import NotificationModal from '../UI/NotificationModal';
 import { store, persistor } from './store';
+import ToastMessagesList from 'UI/ToastMessagesList';
 
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
@@ -27,6 +28,7 @@ export const DappProvider = ({
         <SignTransactions />
         <TransactionSender />
         <NotificationModal />
+        <ToastMessagesList />
         {children}
       </AppInitializer>
     </PersistGate>

@@ -7,3 +7,4 @@ export * from './switchTrue';
 export * from './getGeneratedClasses';
 export * from './plainObjects';
 export * from './account';
+export * from './math';

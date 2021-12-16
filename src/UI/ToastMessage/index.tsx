@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import { Toast } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import IconState from "components/IconState";
+import IconState from "UI/IconState";
 import { removeToast } from "redux/slices/toastsSlice";
 import { ToastType } from "types/toasts";
-import Progress from "./Progress";
+import Progress from "UI/Progress";
 import classNames from "classnames";
 
 const ToastMessage = ({ toast }: { toast: ToastType }) => {
@@ -65,6 +65,7 @@ const ToastMessage = ({ toast }: { toast: ToastType }) => {
         return () => clearTimeout(timer);
       }
     }
+    return;
   }, [isUpdate]);
 
   const toastClassNames = classNames({

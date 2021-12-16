@@ -46,13 +46,14 @@ export interface TransactionToastType {
   endTime: number;
 }
 
+export interface TransactionToastDescriptionProps {
+  pending: boolean;
+  transactions: TransactionToastTransactionsType[];
+  toastSignSession: string;
+}
 export interface TransactionToastDescriptionType {
   type: CustomToastDisplayType.TransactionToast;
-  props: {
-    pending: boolean;
-    transactions: TransactionToastTransactionsType[];
-    toastSignSession: string;
-  };
+  props: TransactionToastDescriptionProps;
 }
 
 export interface TransactionToastTransactionsType {
