@@ -12,9 +12,11 @@ import { Nonce, TransactionOptions } from '@elrondnetwork/erdjs/out';
 import { RawTransactionType } from '../types';
 
 export default function newTransaction(rawTransaction: RawTransactionType) {
+  const { data } = rawTransaction;
+  const parsedData = data ? atob(data) : '';
   return new Transaction({
     value: Balance.fromString(rawTransaction.value),
-    data: new TransactionPayload(atob(rawTransaction.data)),
+    data: new TransactionPayload(parsedData),
     nonce: new Nonce(rawTransaction.nonce),
     receiver: new Address(rawTransaction.receiver),
     gasLimit: new GasLimit(rawTransaction.gasLimit),
