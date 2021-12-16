@@ -49,7 +49,7 @@ const TransactionSender = () => {
     setSending(false);
   };
 
-  async function handleSendTransactions () {
+  async function handleSendTransactions() {
     const [sessionId] = Object.keys(signStatus);
 
     if (!sessionId) {
@@ -91,6 +91,8 @@ const TransactionSender = () => {
 
         transactionObject.applySignature(signature, address);
 
+        console.log('sending', transactionObject);
+        console.log('createdFrom', tx, 'signarture', tx.signature);
         return proxy.sendTransaction(transactionObject);
       });
 
@@ -124,9 +126,7 @@ const TransactionSender = () => {
         submittedMessageShown: true,
         transactions: newTransactions,
         startTime: moment().unix(),
-        endTime: moment()
-          .add(10, 'seconds')
-          .unix()
+        endTime: moment().add(10, 'seconds').unix()
       };
 
       const newToasts = [...restToasts, newToast];

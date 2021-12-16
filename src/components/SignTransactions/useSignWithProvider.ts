@@ -75,7 +75,8 @@ const useSignWithProvider = ({
       );
       setSignedTransactions(undefined);
       handleClose({ updateBatchStatus: false });
-      window.location.href = callbackRoute;
+      // window.location.href = callbackRoute;
+      console.log('signed', signedTransactions, 'but sent', transactions);
     }
   }, [signedTransactions, transactions]);
 
