@@ -6,3 +6,5 @@ export function getAccount(address: string) {
   const proxy = proxySelector(store.getState());
   return proxy.getAccount(new Address(address));
 }
+
+export default getAccount;

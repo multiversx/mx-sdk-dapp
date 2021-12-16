@@ -33,8 +33,7 @@ export default function ProviderInitializer() {
 
   const [initWalletLoginProvider] = useWalletConnectLogin({
     callbackRoute,
-    logoutRoute,
-    shouldLoginUser: false
+    logoutRoute
   });
 
   React.useEffect(() => {
@@ -112,7 +111,7 @@ export default function ProviderInitializer() {
       }
 
       case loginMethodsEnum.walletconnect: {
-        initWalletLoginProvider();
+        initWalletLoginProvider(false);
         break;
       }
       case loginMethodsEnum.wallet: {

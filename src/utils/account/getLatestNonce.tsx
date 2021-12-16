@@ -9,3 +9,5 @@ export function getLatestNonce(account: AccountOnNetwork) {
     ? new Nonce(Math.max(currentAccountNonce, account.nonce.valueOf()))
     : account.nonce;
 }
+
+export default getLatestNonce;

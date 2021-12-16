@@ -23,7 +23,7 @@ import {
 import { loginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import Timeout = NodeJS.Timeout;
-import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
+import { LoginHookGenericStateType } from '../types';
 
 interface InitWalletConnectType {
   callbackRoute: string;
@@ -38,7 +38,7 @@ export interface WalletConnectLoginHookCustomStateType {
 }
 
 export type WalletConnectLoginHookReturnType = [
-  LoginHookTriggerType,
+  (loginProvider?: boolean) => void,
   LoginHookGenericStateType,
   WalletConnectLoginHookCustomStateType
 ];
@@ -46,8 +46,7 @@ export type WalletConnectLoginHookReturnType = [
 export const useWalletConnectLogin = ({
   callbackRoute,
   logoutRoute,
-  token,
-  shouldLoginUser = true
+  token
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
@@ -203,7 +202,7 @@ export const useWalletConnectLogin = ({
     logout(callbackRoute);
   };
 
-  async function triggerWalletConnectSignIn() {
+  async function triggerWalletConnectSignIn(loginProvider = true) {
     if (!walletConnectBridge) {
       return;
     }
@@ -221,7 +220,7 @@ export const useWalletConnectLogin = ({
     await newProvider.init();
     dispatch(setProvider(newProvider));
     providerRef.current = newProvider;
-    shouldLoginUser && loginUser(newProvider);
+    loginProvider && loginUser(newProvider);
   }
 
   async function loginUser(provider: IDappProvider) {
