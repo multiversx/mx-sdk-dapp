@@ -63,7 +63,6 @@ const TransactionSender = () => {
       const shouldClearSignedTransations =
         signStatus[sessionId].status === transactionStatuses.cancelled ||
         signStatus[sessionId].status === transactionStatuses.failed;
-
       if (shouldClearSignedTransations) {
         dispatch(clearSignTransactions());
       }
@@ -90,9 +89,7 @@ const TransactionSender = () => {
         const signature = new Signature(tx.signature);
 
         transactionObject.applySignature(signature, address);
-
-        console.log('sending', transactionObject);
-        console.log('createdFrom', tx, 'signarture', tx.signature);
+        console.log('sending');
         return proxy.sendTransaction(transactionObject);
       });
 

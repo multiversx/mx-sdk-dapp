@@ -110,10 +110,10 @@ export default function SignTransactions() {
   };
 
   useEffect(() => {
-    if (transactionsToSign) {
+    if (transactionsToSign?.sessionId) {
       signTransactions();
     }
-  }, [transactionsToSign]);
+  }, [transactionsToSign?.sessionId]);
   return showSignModal && transactionsToSign?.transactions != null ? (
     <React.Fragment>
       {providerType === loginMethodsEnum.ledger && (

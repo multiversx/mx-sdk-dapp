@@ -40,11 +40,6 @@ export function signTransactions({
     callbackRoute: window.location.pathname,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
-  console.log(
-    'signing',
-    transactionsPayload,
-    signTransactionsPayload.transactions
-  );
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
 }
 

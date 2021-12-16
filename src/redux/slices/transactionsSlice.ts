@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RawTransactionType } from 'types';
 import { logoutAction } from '../commonActions';
 
-export interface Transactions {
+export interface TransactionsToSignType {
   transactions: RawTransactionType[];
   callbackRoute: string;
   sessionId: string;
@@ -17,7 +17,7 @@ export interface SignStatusType {
 
 export interface SignTransactionsStateType {
   signStatus: SignStatusType;
-  transactionsToSign: Transactions | null;
+  transactionsToSign: TransactionsToSignType | null;
 }
 
 const initialState: SignTransactionsStateType = {
@@ -38,7 +38,7 @@ export const transactionsSlice = createSlice({
 
     setTransactionsToSign: (
       state: SignTransactionsStateType,
-      action: PayloadAction<Transactions>
+      action: PayloadAction<TransactionsToSignType>
     ) => {
       state.transactionsToSign = action.payload;
     },
