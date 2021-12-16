@@ -2,12 +2,12 @@ import { validation } from '@elrondnetwork/dapp-utils';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
 
+import { networkConstants } from 'constants/index';
 import { accountBalanceSelector } from 'redux/selectors';
 import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
 import { store } from 'redux/store';
 import { SignTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
-import { networkConstants } from 'constants/index';
 
 export function signTransactions({
   transactions,
@@ -35,7 +35,6 @@ export function signTransactions({
     store.dispatch(setNotificationModal(notificationPayload));
     return;
   }
-
   const signTransactionsPayload = {
     sessionId,
     callbackRoute: window.location.pathname,

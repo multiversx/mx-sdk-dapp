@@ -15,6 +15,7 @@ export default function newTransaction(rawTransaction: RawTransactionType) {
   return new Transaction({
     value: Balance.fromString(rawTransaction.value),
     data: new TransactionPayload(atob(rawTransaction.data)),
+    sender: new Address(rawTransaction.sender),
     receiver: new Address(rawTransaction.receiver),
     gasLimit: new GasLimit(rawTransaction.gasLimit),
     gasPrice: new GasPrice(rawTransaction.gasPrice),
