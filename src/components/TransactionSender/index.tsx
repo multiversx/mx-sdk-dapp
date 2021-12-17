@@ -1,29 +1,21 @@
 import * as React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 
 import { useDispatch, useSelector } from 'react-redux';
 import newTransaction from 'models/newTransaction';
 import { signedTransactionsSelector } from 'redux/selectors';
 import { accountSelector, proxySelector } from 'redux/selectors';
 import {
-  addToast,
   setTxSubmittedModal,
   clearSignTransactions,
-  updateSignedTransactionStatus
+  updateSignedTransactions
 } from 'redux/slices';
-import { TransactionStatusesEnum } from 'types/enums';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionStatusesEnum
+} from 'types/enums';
 import { setNonce } from 'utils';
-
-const failedToast = {
-  id: 'batch-failed',
-  title: 'Unable to send',
-  description: 'Failed sending transactions. Please refresh the page.',
-  icon: faExclamationTriangle,
-  iconClassName: 'bg-warning',
-  expires: false
-};
 
 const TransactionSender = () => {
   const proxy = useSelector(proxySelector);
@@ -47,22 +39,8 @@ const TransactionSender = () => {
       try {
         const isSessionIdSigned =
           signedTransactions[sessionId].status ===
-          TransactionStatusesEnum.signed;
+          TransactionBatchStatusesEnum.signed;
         const shouldSendCurrentSession = isSessionIdSigned && !sending;
-        const shouldClearSignedTransactions =
-          signedTransactions[sessionId].status ===
-            TransactionStatusesEnum.cancelled ||
-          signedTransactions[sessionId].status ===
-            TransactionStatusesEnum.failed;
-        if (shouldClearSignedTransactions) {
-          dispatch(clearSignTransactions());
-        }
-        console.log(
-          shouldSendCurrentSession,
-          isSessionIdSigned,
-          sending,
-          signedTransactions[sessionId].status
-        );
 
         if (!shouldSendCurrentSession) {
           continue;
@@ -73,7 +51,6 @@ const TransactionSender = () => {
         if (!transactions) {
           continue;
         }
-
         setSending(true);
         const transactionsPromises = transactions.map((tx) => {
           const address = new Address(tx.sender);
@@ -105,9 +82,9 @@ const TransactionSender = () => {
 
         dispatch(setTxSubmittedModal(submittedModalPayload));
         dispatch(
-          updateSignedTransactionStatus({
+          updateSignedTransactions({
             sessionId,
-            status: TransactionStatusesEnum.sent,
+            status: TransactionBatchStatusesEnum.sent,
             transactions: newTransactions
           })
         );
@@ -116,7 +93,13 @@ const TransactionSender = () => {
         history.pushState({}, document.title, '?');
       } catch (error) {
         console.error('Unable to send transactions', error);
-        dispatch(addToast(failedToast));
+        dispatch(
+          updateSignedTransactions({
+            sessionId,
+            status: TransactionBatchStatusesEnum.failed,
+            errorMessage: error.message
+          })
+        );
         clearSignInfo();
       } finally {
         setSending(false);

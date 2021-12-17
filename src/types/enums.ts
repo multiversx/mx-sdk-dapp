@@ -1,12 +1,17 @@
 export enum TransactionStatusesEnum {
   'pending' = 'pending',
-  'signed' = 'signed',
   'failed' = 'failed',
-  'cancelled' = 'cancelled',
   'invalid' = 'invalid',
   'successful' = 'successful',
+  'executed' = 'executed'
+}
+
+export enum TransactionBatchStatusesEnum {
+  'signed' = 'signed',
+  'cancelled' = 'cancelled',
+  'successful' = 'successful',
   'sent' = 'sent',
-  'executed' = 'executed',
+  'failed' = 'failed',
   'timedOut' = 'timedOut'
 }
 

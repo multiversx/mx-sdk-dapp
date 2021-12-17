@@ -4,7 +4,7 @@ import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
-import { TransactionStatusesEnum } from 'types/enums';
+import { TransactionBatchStatusesEnum } from 'types/enums';
 import PageState from 'UI/PageState';
 import { HandleCloseType } from '../helpers';
 
@@ -65,7 +65,7 @@ const SignStep = ({
         dispatch(
           updateSignedTransaction({
             [sessionId]: {
-              status: TransactionStatusesEnum.signed,
+              status: TransactionBatchStatusesEnum.signed,
               transactions: Object.values(newSignedTransactions).map(
                 (txEntry) => txEntry.toPlainObject()
               )

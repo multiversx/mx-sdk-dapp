@@ -1,6 +1,6 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import newTransaction from 'models/newTransaction';
-import { TransactionStatusesEnum } from 'types/enums';
+import { TransactionBatchStatusesEnum } from 'types/enums';
 import { SignedTransactionsType } from 'types/transactions';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
@@ -23,8 +23,8 @@ export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (
-        txBody.status === TransactionStatusesEnum.sent ||
-        txBody.status === TransactionStatusesEnum.pending
+        txBody.status === TransactionBatchStatusesEnum.sent ||
+        txBody.status === TransactionBatchStatusesEnum.signed
       ) {
         acc[sessionId] = txBody;
       }

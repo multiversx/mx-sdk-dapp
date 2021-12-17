@@ -2,8 +2,14 @@ import { useEffect, useRef } from 'react';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
 import { useDispatch, useSelector } from 'react-redux';
 import { apiProviderSelector } from 'redux/selectors/networkConfigSelectors';
-import { updateSignedTransactionStatus } from 'redux/slices';
-import { TransactionStatusesEnum } from 'types/enums';
+import {
+  updateSignedTransactions,
+  updateSignedTransactionStatus
+} from 'redux/slices';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionStatusesEnum
+} from 'types/enums';
 import { SignedTransactionsBodyType } from 'types/transactions';
 import { getPlainTransactionStatus } from 'utils/index';
 
@@ -16,10 +22,7 @@ interface TransactionStatusTrackerPropsType {
   transactionPayload: SignedTransactionsBodyType;
 }
 
-const pendingStatuses = [
-  TransactionStatusesEnum.pending,
-  TransactionStatusesEnum.sent
-];
+const pendingStatuses = [TransactionBatchStatusesEnum.sent];
 
 export function TransactionStatusTracker({
   sessionId,
@@ -32,24 +35,23 @@ export function TransactionStatusTracker({
   const apiProvider = useSelector(apiProviderSelector);
 
   const isPending = sessionId != null && pendingStatuses.includes(status!);
-  console.log(isPending);
   const manageTimedOutTransactions = () => {
     dispatch(
-      updateSignedTransactionStatus({
+      updateSignedTransactions({
         sessionId,
-        status: TransactionStatusesEnum.timedOut
+        status: TransactionBatchStatusesEnum.timedOut
       })
     );
   };
+
   const checkTransactionStatus = async () => {
-    console.log('checking', isPending);
     try {
       if (!isPending) {
         return;
       }
       isFetchingStatusRef.current = true;
-      for (const { hash } of transactions!) {
-        if (hash == null) {
+      for (const { hash, status } of transactions!) {
+        if (hash == null || status != TransactionStatusesEnum.pending) {
           return;
         }
         try {
@@ -68,7 +70,8 @@ export function TransactionStatusTracker({
               dispatch(
                 updateSignedTransactionStatus({
                   sessionId,
-                  status
+                  status,
+                  transactionHash: hash
                 })
               );
 
@@ -79,10 +82,19 @@ export function TransactionStatusTracker({
                 const resultWithError = scResults.find(
                   (scResult) => scResult.getReturnMessage() !== ''
                 );
+
                 dispatch(
                   updateSignedTransactionStatus({
+                    transactionHash: hash,
                     sessionId,
                     status: TransactionStatusesEnum.failed,
+                    errorMessage: resultWithError?.getReturnMessage()
+                  })
+                );
+                dispatch(
+                  updateSignedTransactions({
+                    sessionId,
+                    status: TransactionBatchStatusesEnum.failed,
                     errorMessage: resultWithError?.getReturnMessage()
                   })
                 );

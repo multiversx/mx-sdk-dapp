@@ -9,7 +9,7 @@ import {
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
-import { LoginMethodsEnum, TransactionStatusesEnum } from 'types/enums';
+import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';
 
@@ -92,7 +92,7 @@ export default function SignTransactions() {
       dispatch(
         updateSignedTransaction({
           [sessionId]: {
-            status: TransactionStatusesEnum.cancelled
+            status: TransactionBatchStatusesEnum.cancelled
           }
         })
       );

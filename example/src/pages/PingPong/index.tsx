@@ -5,11 +5,24 @@ export const PingPongPage: () => JSX.Element = () => {
   const { sendTransactions } = transactionServices;
 
   const [transactionId, setTransactionId] = React.useState<string | null>(null);
-  const { isPending, isSuccessful, isFailed, isInvalid, transactions } =
+  const { isPending, isSuccessful, isFailed, isCancelled, errorMessage } =
     transactionServices.useTrackTransactionStatus(transactionId);
   const contractAddress =
     'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
 
+  console.log(
+    transactionId,
+    'isPending',
+    isPending,
+    'isSuccessful',
+    isSuccessful,
+    'isFailed',
+    isFailed,
+    'isCancelled',
+    isCancelled,
+    'errorMessage',
+    errorMessage
+  );
   const sendPingTransaction = async () => {
     const pingTransaction = {
       value: '1',
