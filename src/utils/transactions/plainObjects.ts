@@ -1,5 +1,5 @@
 import { TransactionStatus } from '@elrondnetwork/erdjs';
-import { TransactionServerStatusesEnum } from '../types/enums';
+import { TransactionServerStatusesEnum } from '../../types/enums';
 
 export function getPlainTransactionStatus(
   transactionStatus: TransactionStatus

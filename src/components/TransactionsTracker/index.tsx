@@ -5,11 +5,13 @@ import { SignedTransactionsBodyType } from 'types/transactions';
 import TransactionStatusTracker from './TransactionStatusTracker';
 
 export function TransactionsTracker() {
-  const signedTransactions = useSelector(pendingSignedTransactionsSelector);
+  const pendingSignedTransactions = useSelector(
+    pendingSignedTransactionsSelector
+  );
 
   return (
     <React.Fragment>
-      {Object.entries(signedTransactions).map(
+      {Object.entries(pendingSignedTransactions).map(
         ([sessionId, transactionPayload]) => (
           <TransactionStatusTracker
             key={sessionId}

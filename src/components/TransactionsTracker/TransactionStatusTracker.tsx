@@ -11,7 +11,7 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums';
 import { SignedTransactionsBodyType } from 'types/transactions';
-import { getPlainTransactionStatus } from 'utils/index';
+import { getIsTransactionPending, getPlainTransactionStatus } from 'utils';
 
 interface RetriesType {
   [hash: string]: number;
@@ -21,8 +21,6 @@ interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionPayload: SignedTransactionsBodyType;
 }
-
-const pendingStatuses = [TransactionBatchStatusesEnum.sent];
 
 export function TransactionStatusTracker({
   sessionId,
@@ -34,7 +32,7 @@ export function TransactionStatusTracker({
   const retriesRef = useRef<RetriesType>({});
   const apiProvider = useSelector(apiProviderSelector);
 
-  const isPending = sessionId != null && pendingStatuses.includes(status!);
+  const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
     dispatch(
       updateSignedTransactions({
@@ -46,12 +44,12 @@ export function TransactionStatusTracker({
 
   const checkTransactionStatus = async () => {
     try {
-      if (!isPending) {
+      if (!isPending || transactions == null) {
         return;
       }
       isFetchingStatusRef.current = true;
-      for (const { hash, status } of transactions!) {
-        if (hash == null || status != TransactionServerStatusesEnum.pending) {
+      for (const { hash, status } of transactions) {
+        if (hash == null || !getIsTransactionPending(status)) {
           return;
         }
         try {

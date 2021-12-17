@@ -10,6 +10,7 @@ import {
   SignedTransactionType,
   TransactionsToSignType
 } from 'types/transactions';
+import { getIsTransactionFailed, getIsTransactionSuccessful } from 'utils';
 import { logoutAction } from '../commonActions';
 
 export interface UpdateSignedTransactionsPayloadType {
@@ -35,15 +36,6 @@ const initialState: SignTransactionsStateType = {
   signedTransactions: {},
   transactionsToSign: null
 };
-
-const successStates = [
-  TransactionServerStatusesEnum.successful,
-  TransactionServerStatusesEnum.executed
-];
-const failureStates = [
-  TransactionServerStatusesEnum.failed,
-  TransactionServerStatusesEnum.invalid
-];
 
 export const transactionsSlice = createSlice({
   name: 'transactionsSlice',
@@ -97,12 +89,12 @@ export const transactionsSlice = createSlice({
         const areTransactionsSuccessful = state.signedTransactions[
           sessionId
         ]?.transactions?.every((transaction) =>
-          successStates.includes(transaction.status)
+          getIsTransactionSuccessful(transaction.status)
         );
         const areTransactionsFailed = state.signedTransactions[
           sessionId
         ]?.transactions?.every((transaction) =>
-          failureStates.includes(transaction.status)
+          getIsTransactionFailed(transaction.status)
         );
         if (areTransactionsSuccessful) {
           state.signedTransactions[sessionId].status =

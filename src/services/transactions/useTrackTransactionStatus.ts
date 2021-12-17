@@ -2,6 +2,11 @@ import { useSelector } from 'react-redux';
 import { transactionStatusSelector } from 'redux/selectors';
 import { RootState } from 'redux/store';
 import { TransactionBatchStatusesEnum } from 'types/enums';
+import {
+  getIsTransactionFailed,
+  getIsTransactionPending,
+  getIsTransactionSuccessful
+} from 'utils';
 
 export function useTrackTransactionStatus(transactionSessionId: string | null) {
   const transactionsBatch = useSelector((state: RootState) =>
@@ -13,19 +18,10 @@ export function useTrackTransactionStatus(transactionSessionId: string | null) {
   }
   const { status, transactions, errorMessage } = transactionsBatch;
 
-  const pendingStatuses = [
-    TransactionBatchStatusesEnum.sent,
-    TransactionBatchStatusesEnum.signed
-  ];
-
-  const failedStatuses = [
-    TransactionBatchStatusesEnum.failed || TransactionBatchStatusesEnum.timedOut
-  ];
-
-  const isPending = status != null && pendingStatuses.includes(status);
-  const isFailed = status != null && failedStatuses.includes(status);
+  const isPending = getIsTransactionPending(status);
+  const isFailed = getIsTransactionFailed(status);
+  const isSuccessful = getIsTransactionSuccessful(status);
   const isCancelled = status === TransactionBatchStatusesEnum.cancelled;
-  const isSuccessful = status === TransactionBatchStatusesEnum.successful;
 
   return {
     isPending,
