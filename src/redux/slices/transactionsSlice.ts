@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import moment from 'moment';
 import { REHYDRATE } from 'redux-persist';
 import {
   TransactionBatchStatusesEnum,
@@ -111,7 +112,6 @@ export const transactionsSlice = createSlice({
           state.signedTransactions[sessionId].status =
             TransactionBatchStatusesEnum.failed;
         }
-        console.log(state, areTransactionsFailed, areTransactionsSuccessful);
       }
     },
     setTransactionsToSign: (
@@ -133,9 +133,19 @@ export const transactionsSlice = createSlice({
         return;
       }
 
-      const { signedTransactions } = action.payload;
+      const { signedTransactions } = action.payload.transactions;
+      const parsedSignedTransactions = Object.entries(
+        signedTransactions
+      ).reduce((acc, [sessionId, transaction]) => {
+        const txTimestamp = moment(sessionId, 'unix');
+        const isExpired = txTimestamp.add(30, 'minutes').isBefore(moment());
+        if (!isExpired) {
+          acc[sessionId] = transaction;
+        }
+        return acc;
+      }, {});
       if (signedTransactions != null) {
-        state.signedTransactions = signedTransactions;
+        state.signedTransactions = parsedSignedTransactions;
       }
     });
   }
