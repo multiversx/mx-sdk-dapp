@@ -41,7 +41,9 @@ export default function useParseSignedTransactions() {
                     tx.options = TransactionOptions.withTxHashSignOptions();
                   }
                   //#endregion
-                  return tx.toPlainObject();
+                  const transaction = tx.toPlainObject();
+                  transaction.hash = tx.getHash().toString();
+                  return transaction;
                 })
               }
             })

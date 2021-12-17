@@ -9,7 +9,7 @@ import {
   TransactionVersion
 } from '@elrondnetwork/erdjs';
 import { Nonce, TransactionOptions } from '@elrondnetwork/erdjs/out';
-import { RawTransactionType } from '../types';
+import { RawTransactionType } from 'types/transactions';
 
 export default function newTransaction(rawTransaction: RawTransactionType) {
   const { data } = rawTransaction;

@@ -242,9 +242,16 @@ export const useWalletConnectLogin = ({
     dispatch(setTokenLogin({ loginToken: token! }));
   }
 
+  const isFailed = error != null;
+
   return [
     triggerWalletConnectSignIn,
-    { error, isLoading, isLoggedIn },
+    {
+      error,
+      isFailed,
+      isLoading: isLoading && !isFailed,
+      isLoggedIn: isLoggedIn && !isFailed
+    },
     { uriDeepLink, qrCodeSvg }
   ];
 };

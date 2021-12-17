@@ -1,8 +1,8 @@
 import React, { Fragment } from 'react';
 
-import TxDetails from 'UI/TxDetails';
 import { ToastType } from 'types/toasts';
 import ToastMessage from 'UI/ToastMessage';
+import TxDetails from 'UI/TxDetails';
 import TransactionToastStatusUpdate from '../CustomToasts';
 
 const TransactionToast = ({ toast }: { toast: ToastType }) => {
@@ -10,11 +10,8 @@ const TransactionToast = ({ toast }: { toast: ToastType }) => {
     return null;
   }
 
-  const {
-    pending,
-    transactions,
-    toastSignSession
-  } = toast.descriptionProps.props;
+  const { pending, transactions, toastSignSession } =
+    toast.descriptionProps.props;
 
   const newTitle = pending ? 'Processing' : toast.title;
 

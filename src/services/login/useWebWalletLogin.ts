@@ -57,7 +57,17 @@ export const useWebWalletLogin = ({
     }
   }
 
-  return [triggerFunction, { error, isLoading, isLoggedIn }];
+  const isFailed = error != null;
+
+  return [
+    triggerFunction,
+    {
+      error,
+      isFailed,
+      isLoading: isLoading && !isFailed,
+      isLoggedIn: isLoggedIn && !isFailed
+    }
+  ];
 };
 
 export default useWebWalletLogin;

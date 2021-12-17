@@ -1,24 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RawTransactionType } from 'types';
-import { TransactionStatusesEnum } from '../../types/enums';
+import { REHYDRATE } from 'redux-persist';
+import { TransactionStatusesEnum } from 'types/enums';
+import {
+  SignedTransactionsType,
+  SignedTransactionType,
+  TransactionsToSignType
+} from 'types/transactions';
 import { logoutAction } from '../commonActions';
-
-export interface TransactionsToSignType {
-  transactions: RawTransactionType[];
-  callbackRoute: string;
-  sessionId: string;
-}
-
-export interface SignedTransactionsType {
-  [sessionId: string]: {
-    transactions?: RawTransactionType[];
-    status?: TransactionStatusesEnum;
-  };
-}
 
 export interface UpdateSignedTransactionStatusPayloadType {
   sessionId: string;
   status: TransactionStatusesEnum;
+  errorMessage?: string;
+  transactions?: SignedTransactionType[];
 }
 
 export interface SignTransactionsStateType {
@@ -48,10 +42,16 @@ export const transactionsSlice = createSlice({
       state: SignTransactionsStateType,
       action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
     ) => {
-      const { sessionId, status } = action.payload;
+      const { sessionId, status, errorMessage, transactions } = action.payload;
       const transaction = state.signedTransactions[sessionId];
       if (transaction != null) {
         state.signedTransactions[sessionId].status = status;
+        if (errorMessage != null) {
+          state.signedTransactions[sessionId].errorMessage = errorMessage;
+        }
+        if (transactions != null) {
+          state.signedTransactions[sessionId].transactions = transactions;
+        }
       }
     },
     setTransactionsToSign: (
@@ -60,11 +60,23 @@ export const transactionsSlice = createSlice({
     ) => {
       state.transactionsToSign = action.payload;
     },
-    clearSignTransactions: () => initialState
+    clearSignTransactions: (state) => {
+      state.transactionsToSign = initialState.transactionsToSign;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
       return initialState;
+    });
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      if (!action.payload?.transactions) {
+        return;
+      }
+
+      const { signedTransactions } = action.payload;
+      if (signedTransactions != null) {
+        state.signedTransactions = signedTransactions;
+      }
     });
   }
 });

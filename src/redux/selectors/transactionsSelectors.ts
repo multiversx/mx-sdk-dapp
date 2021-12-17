@@ -1,6 +1,7 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import newTransaction from '../../models/newTransaction';
-import { SignedTransactionsType } from '../slices';
+import newTransaction from 'models/newTransaction';
+import { TransactionStatusesEnum } from 'types/enums';
+import { SignedTransactionsType } from 'types/transactions';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
@@ -15,6 +16,20 @@ export const transactionsSelectors = (state: RootState) => state.transactions;
 export const signedTransactionsSelector = createDeepEqualSelector(
   transactionsSelectors,
   (state) => state.signedTransactions
+);
+
+export const pendingSignedTransactionsSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (signedTransactions) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (
+        txBody.status === TransactionStatusesEnum.sent ||
+        txBody.status === TransactionStatusesEnum.pending
+      ) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {})
 );
 
 export const transactionsToSignSelector = createDeepEqualSelector(

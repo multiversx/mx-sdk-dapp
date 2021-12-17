@@ -253,12 +253,15 @@ export function useLedgerLogin({
   React.useEffect(() => {
     fetchAccounts();
   }, [startIndex]);
+
+  const isFailed = error != null;
   return [
     onStartLogin,
     {
-      isLoggedIn,
+      isFailed,
+      isLoggedIn: isLoggedIn && !isFailed,
       error,
-      isLoading
+      isLoading: isLoading && !isFailed
     },
     {
       accounts,

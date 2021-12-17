@@ -42,13 +42,16 @@ const useSignWithProvider = ({
                   transactions?.length);
 
             if (!signingDisabled && signedTransactions) {
-              console.log('dispatching');
               dispatch(
                 updateSignedTransaction({
                   [sessionId]: {
                     status: TransactionStatusesEnum.signed,
-                    transactions: Object.values(signedTransactions).map((tx) =>
-                      tx.toPlainObject()
+                    transactions: Object.values(signedTransactions).map(
+                      (tx) => {
+                        const transaction = tx.toPlainObject();
+                        transaction.hash = tx.getHash().toString();
+                        return transaction;
+                      }
                     )
                   }
                 })

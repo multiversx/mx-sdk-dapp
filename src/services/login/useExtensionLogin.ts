@@ -82,5 +82,15 @@ export const useExtensionLogin = ({
       setIsLoading(false);
     }
   }
-  return [triggerFunction, { error, isLoading, isLoggedIn }];
+
+  const isFailed = error != null;
+  return [
+    triggerFunction,
+    {
+      isFailed,
+      error,
+      isLoading: isLoading && !isFailed,
+      isLoggedIn: isLoggedIn && !isFailed
+    }
+  ];
 };
