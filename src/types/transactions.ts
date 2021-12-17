@@ -1,5 +1,8 @@
 import { Address } from '@elrondnetwork/erdjs';
-import { TransactionBatchStatusesEnum, TransactionStatusesEnum } from './enums';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from './enums';
 
 export interface TransactionsToSignType {
   transactions: RawTransactionType[];
@@ -41,6 +44,6 @@ export interface RawTransactionType {
 
 export interface SignedTransactionType extends RawTransactionType {
   hash: string;
-  status: TransactionStatusesEnum;
+  status: TransactionServerStatusesEnum;
   errorMessage?: string;
 }

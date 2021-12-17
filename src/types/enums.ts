@@ -1,4 +1,4 @@
-export enum TransactionStatusesEnum {
+export enum TransactionServerStatusesEnum {
   'pending' = 'pending',
   'failed' = 'failed',
   'invalid' = 'invalid',

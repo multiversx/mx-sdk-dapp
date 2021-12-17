@@ -1,20 +1,21 @@
 import { TransactionStatus } from '@elrondnetwork/erdjs';
-import { TransactionStatusesEnum } from '../types/enums';
+import { TransactionServerStatusesEnum } from '../types/enums';
 
 export function getPlainTransactionStatus(
   transactionStatus: TransactionStatus
 ): any {
   const statusObj = {
-    [TransactionStatusesEnum.pending]: transactionStatus.isPending(),
-    [TransactionStatusesEnum.successful]: transactionStatus.isSuccessful(),
-    [TransactionStatusesEnum.failed]: transactionStatus.isFailed(),
-    [TransactionStatusesEnum.executed]: transactionStatus.isExecuted(),
-    [TransactionStatusesEnum.invalid]: transactionStatus.isInvalid()
+    [TransactionServerStatusesEnum.pending]: transactionStatus.isPending(),
+    [TransactionServerStatusesEnum.successful]:
+      transactionStatus.isSuccessful(),
+    [TransactionServerStatusesEnum.failed]: transactionStatus.isFailed(),
+    [TransactionServerStatusesEnum.executed]: transactionStatus.isExecuted(),
+    [TransactionServerStatusesEnum.invalid]: transactionStatus.isInvalid()
   };
   return Object.entries(statusObj).reduce((prev, [key, value]) => {
     if (value) {
-      return key as TransactionStatusesEnum;
+      return key as TransactionServerStatusesEnum;
     }
     return prev;
-  }, TransactionStatusesEnum.pending);
+  }, TransactionServerStatusesEnum.pending);
 }

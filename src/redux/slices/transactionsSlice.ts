@@ -3,7 +3,7 @@ import moment from 'moment';
 import { REHYDRATE } from 'redux-persist';
 import {
   TransactionBatchStatusesEnum,
-  TransactionStatusesEnum
+  TransactionServerStatusesEnum
 } from 'types/enums';
 import {
   SignedTransactionsType,
@@ -22,7 +22,7 @@ export interface UpdateSignedTransactionsPayloadType {
 export interface UpdateSignedTransactionStatusPayloadType {
   sessionId: string;
   transactionHash: string;
-  status: TransactionStatusesEnum;
+  status: TransactionServerStatusesEnum;
   errorMessage?: string;
 }
 
@@ -37,12 +37,12 @@ const initialState: SignTransactionsStateType = {
 };
 
 const successStates = [
-  TransactionStatusesEnum.successful,
-  TransactionStatusesEnum.executed
+  TransactionServerStatusesEnum.successful,
+  TransactionServerStatusesEnum.executed
 ];
 const failureStates = [
-  TransactionStatusesEnum.failed,
-  TransactionStatusesEnum.invalid
+  TransactionServerStatusesEnum.failed,
+  TransactionServerStatusesEnum.invalid
 ];
 
 export const transactionsSlice = createSlice({

@@ -8,7 +8,7 @@ import {
 } from 'redux/slices';
 import {
   TransactionBatchStatusesEnum,
-  TransactionStatusesEnum
+  TransactionServerStatusesEnum
 } from 'types/enums';
 import { SignedTransactionsBodyType } from 'types/transactions';
 import { getPlainTransactionStatus } from 'utils/index';
@@ -51,7 +51,7 @@ export function TransactionStatusTracker({
       }
       isFetchingStatusRef.current = true;
       for (const { hash, status } of transactions!) {
-        if (hash == null || status != TransactionStatusesEnum.pending) {
+        if (hash == null || status != TransactionServerStatusesEnum.pending) {
           return;
         }
         try {
@@ -87,7 +87,7 @@ export function TransactionStatusTracker({
                   updateSignedTransactionStatus({
                     transactionHash: hash,
                     sessionId,
-                    status: TransactionStatusesEnum.failed,
+                    status: TransactionServerStatusesEnum.failed,
                     errorMessage: resultWithError?.getReturnMessage()
                   })
                 );

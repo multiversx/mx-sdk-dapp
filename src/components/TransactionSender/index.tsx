@@ -13,7 +13,7 @@ import {
 } from 'redux/slices';
 import {
   TransactionBatchStatusesEnum,
-  TransactionStatusesEnum
+  TransactionServerStatusesEnum
 } from 'types/enums';
 import { setNonce } from 'utils';
 
@@ -66,7 +66,7 @@ const TransactionSender = () => {
 
         setNonce(account.nonce.value + transactions.length);
 
-        const newStatus = TransactionStatusesEnum.pending;
+        const newStatus = TransactionServerStatusesEnum.pending;
         const newTransactions = transactions.map((transaction) => {
           if (responseHashes.includes(transaction.hash)) {
             return { ...transaction, status: newStatus };
