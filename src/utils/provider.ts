@@ -5,25 +5,25 @@ import {
   WalletConnectProvider,
   WalletProvider
 } from '@elrondnetwork/erdjs';
-import { loginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums';
 import { NetworkType } from '../types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
 export const getProviderType = (
   provider: IDappProvider | undefined
-): loginMethodsEnum => {
+): LoginMethodsEnum => {
   switch (provider?.constructor) {
     case WalletProvider:
-      return loginMethodsEnum.wallet;
+      return LoginMethodsEnum.wallet;
     case WalletConnectProvider:
-      return loginMethodsEnum.walletconnect;
+      return LoginMethodsEnum.walletconnect;
     case HWProvider:
-      return loginMethodsEnum.ledger;
+      return LoginMethodsEnum.ledger;
     case ExtensionProvider:
-      return loginMethodsEnum.extension;
+      return LoginMethodsEnum.extension;
     default:
-      return loginMethodsEnum.none;
+      return LoginMethodsEnum.none;
   }
 };
 

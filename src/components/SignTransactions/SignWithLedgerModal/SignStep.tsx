@@ -3,8 +3,8 @@ import { Transaction } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector } from 'redux/selectors';
-import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { transactionStatuses } from 'types/enums';
+import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { TransactionStatusesEnum } from 'types/enums';
 import PageState from 'UI/PageState';
 import { HandleCloseType } from '../helpers';
 
@@ -45,7 +45,7 @@ const SignStep = ({
     setCurrentStep(0);
     setSignedTransactions(undefined);
     setWaitingForDevice(false);
-    updateSignStatus({});
+    updateSignedTransaction({});
   };
 
   const sign = async () => {
@@ -63,9 +63,9 @@ const SignStep = ({
         handleClose({ updateBatchStatus: false });
 
         dispatch(
-          updateSignStatus({
+          updateSignedTransaction({
             [sessionId]: {
-              status: transactionStatuses.signed,
+              status: TransactionStatusesEnum.signed,
               transactions: Object.values(newSignedTransactions).map(
                 (txEntry) => txEntry.toPlainObject()
               )

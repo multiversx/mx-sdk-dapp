@@ -8,8 +8,8 @@ import {
   proxySelector
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
-import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { loginMethodsEnum, transactionStatuses } from 'types/enums';
+import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { LoginMethodsEnum, TransactionStatusesEnum } from 'types/enums';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';
 
@@ -70,7 +70,7 @@ export default function SignTransactions() {
       });
 
       switch (providerType) {
-        case loginMethodsEnum.wallet:
+        case LoginMethodsEnum.wallet:
           const callbackUrl = replyUrl({
             callbackUrl: `${window.location.origin}${callbackRoute}`,
             urlParams: { [walletSignSession]: sessionId }
@@ -81,18 +81,18 @@ export default function SignTransactions() {
           });
 
           break;
-        case loginMethodsEnum.extension:
-        case loginMethodsEnum.ledger:
-        case loginMethodsEnum.walletconnect:
+        case LoginMethodsEnum.extension:
+        case LoginMethodsEnum.ledger:
+        case LoginMethodsEnum.walletconnect:
           setShowSignModal(true);
           break;
       }
     } catch (err) {
       console.error('error when signing', err);
       dispatch(
-        updateSignStatus({
+        updateSignedTransaction({
           [sessionId]: {
-            status: transactionStatuses.cancelled
+            status: TransactionStatusesEnum.cancelled
           }
         })
       );
@@ -116,13 +116,13 @@ export default function SignTransactions() {
   }, [transactionsToSign?.sessionId]);
   return showSignModal && transactionsToSign?.transactions != null ? (
     <React.Fragment>
-      {providerType === loginMethodsEnum.ledger && (
+      {providerType === LoginMethodsEnum.ledger && (
         <SignWithLedgerModal {...signProps} />
       )}
-      {providerType === loginMethodsEnum.walletconnect && (
+      {providerType === LoginMethodsEnum.walletconnect && (
         <SignWithWalletConnectModal {...signProps} />
       )}
-      {providerType === loginMethodsEnum.extension && (
+      {providerType === LoginMethodsEnum.extension && (
         <SignWithExtensionModal {...signProps} />
       )}
     </React.Fragment>

@@ -8,8 +8,8 @@ import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { networkSelector } from 'redux/selectors';
-import { updateSignStatus } from 'redux/slices';
-import { loginMethodsEnum, transactionStatuses } from 'types/enums';
+import { updateSignedTransaction } from 'redux/slices';
+import { LoginMethodsEnum, TransactionStatusesEnum } from 'types/enums';
 import { dappInitRoute, walletSignSession } from './constants';
 
 export default function useParseSignedTransactions() {
@@ -30,13 +30,13 @@ export default function useParseSignedTransactions() {
 
         if (signedTransactions.length > 0) {
           dispatch(
-            updateSignStatus({
+            updateSignedTransaction({
               [signSessionId.toString()]: {
-                status: transactionStatuses.signed,
+                status: TransactionStatusesEnum.signed,
                 transactions: signedTransactions.map((tx) => {
                   // TODO: REMOVE
                   //#region REMOVE when options is available in erdjs getTransactionsFromWalletUrl
-                  if (searchData.signMethod === loginMethodsEnum.ledger) {
+                  if (searchData.signMethod === LoginMethodsEnum.ledger) {
                     tx.version = TransactionVersion.withTxHashSignVersion();
                     tx.options = TransactionOptions.withTxHashSignOptions();
                   }

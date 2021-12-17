@@ -5,31 +5,31 @@ import {
   WalletConnectProvider,
   WalletProvider
 } from '@elrondnetwork/erdjs';
-import { loginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums';
 
 const getProviderType = (
   provider: IDappProvider | undefined
-): loginMethodsEnum => {
-  let providerType: loginMethodsEnum = loginMethodsEnum.none;
+): LoginMethodsEnum => {
+  let providerType: LoginMethodsEnum = LoginMethodsEnum.none;
 
   providerType =
     provider?.constructor === WalletProvider
-      ? loginMethodsEnum.wallet
+      ? LoginMethodsEnum.wallet
       : providerType;
 
   providerType =
     provider?.constructor === WalletConnectProvider
-      ? loginMethodsEnum.walletconnect
+      ? LoginMethodsEnum.walletconnect
       : providerType;
 
   providerType =
     provider?.constructor === ExtensionProvider
-      ? loginMethodsEnum.extension
+      ? LoginMethodsEnum.extension
       : providerType;
 
   providerType =
     provider?.constructor === HWProvider
-      ? loginMethodsEnum.ledger
+      ? LoginMethodsEnum.ledger
       : providerType;
 
   return providerType;

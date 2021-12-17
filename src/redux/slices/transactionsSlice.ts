@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RawTransactionType } from 'types';
+import { TransactionStatusesEnum } from '../../types/enums';
 import { logoutAction } from '../commonActions';
 
 export interface TransactionsToSignType {
@@ -8,34 +9,51 @@ export interface TransactionsToSignType {
   sessionId: string;
 }
 
-export interface SignStatusType {
+export interface SignedTransactionsType {
   [sessionId: string]: {
     transactions?: RawTransactionType[];
-    status?: 'signed' | 'failed' | 'cancelled' | 'pending';
+    status?: TransactionStatusesEnum;
   };
 }
 
+export interface UpdateSignedTransactionStatusPayloadType {
+  sessionId: string;
+  status: TransactionStatusesEnum;
+}
+
 export interface SignTransactionsStateType {
-  signStatus: SignStatusType;
+  signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
 }
 
 const initialState: SignTransactionsStateType = {
-  signStatus: {},
+  signedTransactions: {},
   transactionsToSign: null
 };
 
 export const transactionsSlice = createSlice({
-  name: 'signTransactions',
+  name: 'transactionsSlice',
   initialState,
   reducers: {
-    updateSignStatus: (
+    updateSignedTransaction: (
       state: SignTransactionsStateType,
-      action: PayloadAction<SignStatusType>
+      action: PayloadAction<SignedTransactionsType>
     ) => {
-      state.signStatus = { ...state.signStatus, ...action.payload };
+      state.signedTransactions = {
+        ...state.signedTransactions,
+        ...action.payload
+      };
     },
-
+    updateSignedTransactionStatus: (
+      state: SignTransactionsStateType,
+      action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
+    ) => {
+      const { sessionId, status } = action.payload;
+      const transaction = state.signedTransactions[sessionId];
+      if (transaction != null) {
+        state.signedTransactions[sessionId].status = status;
+      }
+    },
     setTransactionsToSign: (
       state: SignTransactionsStateType,
       action: PayloadAction<TransactionsToSignType>
@@ -52,7 +70,8 @@ export const transactionsSlice = createSlice({
 });
 
 export const {
-  updateSignStatus,
+  updateSignedTransaction,
+  updateSignedTransactionStatus,
   setTransactionsToSign,
   clearSignTransactions
 } = transactionsSlice.actions;

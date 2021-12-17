@@ -2,8 +2,8 @@ import * as React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector, transactionsToSignSelector } from 'redux/selectors';
-import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { transactionStatuses } from 'types/enums';
+import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { TransactionStatusesEnum } from 'types/enums';
 import { HandleCloseType } from './helpers';
 
 export interface SignModalType {
@@ -44,9 +44,9 @@ const useSignWithProvider = ({
             if (!signingDisabled && signedTransactions) {
               console.log('dispatching');
               dispatch(
-                updateSignStatus({
+                updateSignedTransaction({
                   [sessionId]: {
-                    status: transactionStatuses.signed,
+                    status: TransactionStatusesEnum.signed,
                     transactions: Object.values(signedTransactions).map((tx) =>
                       tx.toPlainObject()
                     )

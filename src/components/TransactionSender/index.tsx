@@ -10,16 +10,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   toastSignSessionsSelector,
   transactionToastsSelector,
-  signStatusSelector
+  signedTransactionsSelector
 } from 'redux/selectors';
 import { accountSelector, proxySelector } from 'redux/selectors';
 import {
   addToast,
   setTransactionToasts,
   setTxSubmittedModal,
-  clearSignTransactions
+  clearSignTransactions,
+  updateSignedTransactionStatus
 } from 'redux/slices';
-import { transactionStatuses } from 'types/enums';
+import { TransactionStatusesEnum } from 'types/enums';
 import { PlainTransactionStatus } from 'types/toasts';
 import newTransaction from '../../models/newTransaction';
 import { setNonce, getPlainTransactionStatus } from '../../utils';
@@ -39,7 +40,7 @@ const TransactionSender = () => {
   const transactionToasts = useSelector(transactionToastsSelector);
   const proxy = useSelector(proxySelector);
   const account = useSelector(accountSelector);
-  const signStatus = useSelector(signStatusSelector);
+  const signedTransactions = useSelector(signedTransactionsSelector);
   const [sending, setSending] = React.useState<boolean>();
 
   const dispatch = useDispatch();
@@ -50,7 +51,7 @@ const TransactionSender = () => {
   };
 
   async function handleSendTransactions() {
-    const [sessionId] = Object.keys(signStatus);
+    const [sessionId] = Object.keys(signedTransactions);
 
     if (!sessionId) {
       return;
@@ -58,11 +59,12 @@ const TransactionSender = () => {
 
     try {
       const isSessionIdSigned =
-        signStatus[sessionId].status === transactionStatuses.signed;
+        signedTransactions[sessionId].status === TransactionStatusesEnum.signed;
       const shouldSendCurrentSession = isSessionIdSigned && !sending;
       const shouldClearSignedTransations =
-        signStatus[sessionId].status === transactionStatuses.cancelled ||
-        signStatus[sessionId].status === transactionStatuses.failed;
+        signedTransactions[sessionId].status ===
+          TransactionStatusesEnum.cancelled ||
+        signedTransactions[sessionId].status === TransactionStatusesEnum.failed;
       if (shouldClearSignedTransations) {
         dispatch(clearSignTransactions());
       }
@@ -71,7 +73,7 @@ const TransactionSender = () => {
         return;
       }
 
-      const { transactions } = signStatus[sessionId];
+      const { transactions } = signedTransactions[sessionId];
 
       const hasSentBatch = transactionToasts.some(
         ({ toastSignSession }) => String(toastSignSession) === sessionId
@@ -134,6 +136,12 @@ const TransactionSender = () => {
 
       dispatch(setTxSubmittedModal(submittedModalPayload));
       dispatch(setTransactionToasts(newToasts));
+      dispatch(
+        updateSignedTransactionStatus({
+          sessionId,
+          status: TransactionStatusesEnum.sent
+        })
+      );
       clearSignInfo();
 
       history.pushState({}, document.title, '?');
@@ -148,12 +156,12 @@ const TransactionSender = () => {
 
   React.useEffect(() => {
     handleSendTransactions();
-  }, [signStatus, account]);
+  }, [signedTransactions, account]);
 
   const addCancelToast = () => {
-    if (signStatus) {
-      const [sessionId] = Object.keys(signStatus);
-      if (signStatus.status === transactionStatuses.failed) {
+    if (signedTransactions) {
+      const [sessionId] = Object.keys(signedTransactions);
+      if (signedTransactions.status === TransactionStatusesEnum.failed) {
         dispatch(
           addToast({
             id: sessionId,
@@ -168,7 +176,7 @@ const TransactionSender = () => {
     }
   };
 
-  React.useEffect(addCancelToast, [signStatus, toastSignSessions]);
+  React.useEffect(addCancelToast, [signedTransactions, toastSignSessions]);
   return (
     <React.Fragment>
       {sending === false

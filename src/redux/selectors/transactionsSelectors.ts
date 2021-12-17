@@ -1,6 +1,6 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import newTransaction from '../../models/newTransaction';
-import { SignStatusType } from '../slices';
+import { SignedTransactionsType } from '../slices';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
@@ -12,9 +12,9 @@ interface TransactionsToSignReturnType {
 
 export const transactionsSelectors = (state: RootState) => state.transactions;
 
-export const signStatusSelector = createDeepEqualSelector(
+export const signedTransactionsSelector = createDeepEqualSelector(
   transactionsSelectors,
-  (state) => state.signStatus
+  (state) => state.signedTransactions
 );
 
 export const transactionsToSignSelector = createDeepEqualSelector(
@@ -34,8 +34,13 @@ export const transactionsToSignSelector = createDeepEqualSelector(
 );
 
 export const transactionStatusSelector = createDeepEqualSelector(
-  signStatusSelector,
+  signedTransactionsSelector,
   (_: RootState, transactionSessionId: string | null) => transactionSessionId,
-  (signStatus: SignStatusType, transactionSessionId: string | null) =>
-    transactionSessionId != null ? signStatus?.[transactionSessionId] || {} : {}
+  (
+    signedTransactions: SignedTransactionsType,
+    transactionSessionId: string | null
+  ) =>
+    transactionSessionId != null
+      ? signedTransactions?.[transactionSessionId] || {}
+      : {}
 );

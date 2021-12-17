@@ -69,16 +69,3 @@ export interface ScResultType {
   data?: string;
   returnMessage?: string;
 }
-
-export interface ApiTransactionType {
-  txHash: string;
-  nonce: number;
-  receiver: string;
-  sender: string;
-  status: string;
-  value: string;
-  fee: string;
-  timestamp: number;
-  data: string;
-  results?: ScResultType[];
-}
