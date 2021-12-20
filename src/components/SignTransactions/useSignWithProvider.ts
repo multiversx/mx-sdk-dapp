@@ -3,11 +3,9 @@ import { Transaction } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector, transactionsToSignSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
-import {
-  TransactionBatchStatusesEnum,
-  TransactionServerStatusesEnum
-} from 'types/enums';
+import { TransactionBatchStatusesEnum } from 'types/enums';
 import { HandleCloseType } from './helpers';
+import { parseTransactionAfterSigning } from './helpers/parseTransactionAfterSigning';
 
 export interface SignModalType {
   handleClose: (props?: HandleCloseType) => void;
@@ -49,14 +47,8 @@ const useSignWithProvider = ({
                 updateSignedTransaction({
                   [sessionId]: {
                     status: TransactionBatchStatusesEnum.signed,
-                    transactions: Object.values(signedTransactions).map(
-                      (tx) => {
-                        const transaction = tx.toPlainObject();
-                        transaction.hash = tx.getHash().toString();
-                        transaction.status =
-                          TransactionServerStatusesEnum.pending;
-                        return transaction;
-                      }
+                    transactions: Object.values(signedTransactions).map((tx) =>
+                      parseTransactionAfterSigning(tx)
                     )
                   }
                 })

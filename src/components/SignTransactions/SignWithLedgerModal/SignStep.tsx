@@ -7,6 +7,7 @@ import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import PageState from 'UI/PageState';
 import { HandleCloseType } from '../helpers';
+import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
 
 export interface SignStepType {
   handleClose: (props?: HandleCloseType) => void;
@@ -66,14 +67,16 @@ const SignStep = ({
           updateSignedTransaction({
             [sessionId]: {
               status: TransactionBatchStatusesEnum.signed,
-              transactions: Object.values(newSignedTransactions).map(
-                (txEntry) => txEntry.toPlainObject()
+              transactions: Object.values(newSignedTransactions).map((tx) =>
+                parseTransactionAfterSigning(tx, true)
               )
             }
           })
         );
         reset();
-        window.location.href = callbackRoute;
+        if (window.location.pathname != callbackRoute) {
+          window.location.href = callbackRoute;
+        }
       }
     } catch (err) {
       console.error(err, 'sign error');
