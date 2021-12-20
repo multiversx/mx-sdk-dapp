@@ -3,7 +3,10 @@ import { Transaction } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector, transactionsToSignSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
-import { TransactionBatchStatusesEnum } from 'types/enums';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums';
 import { HandleCloseType } from './helpers';
 
 export interface SignModalType {
@@ -50,6 +53,8 @@ const useSignWithProvider = ({
                       (tx) => {
                         const transaction = tx.toPlainObject();
                         transaction.hash = tx.getHash().toString();
+                        transaction.status =
+                          TransactionServerStatusesEnum.pending;
                         return transaction;
                       }
                     )

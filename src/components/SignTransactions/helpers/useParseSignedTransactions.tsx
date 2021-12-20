@@ -9,7 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { networkSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices';
-import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
+import {
+  LoginMethodsEnum,
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums';
 import { dappInitRoute, walletSignSession } from './constants';
 
 export default function useParseSignedTransactions() {
@@ -43,6 +47,7 @@ export default function useParseSignedTransactions() {
                   //#endregion
                   const transaction = tx.toPlainObject();
                   transaction.hash = tx.getHash().toString();
+                  transaction.status = TransactionServerStatusesEnum.pending;
                   return transaction;
                 })
               }
