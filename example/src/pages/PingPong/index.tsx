@@ -4,28 +4,16 @@ import { transactionServices } from 'dapp-core';
 export const PingPongPage: () => JSX.Element = () => {
   const { sendTransactions } = transactionServices;
 
-  const [transactionId, setTransactionId] = React.useState<string | null>(null);
-  const { isPending, isSuccessful, isFailed, isCancelled, errorMessage } =
-    transactionServices.useTrackTransactionStatus(transactionId);
+  const [transactionSessionId, setTransactionSessionId] = React.useState<
+    string | null
+  >(null);
+
   const contractAddress =
     'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
 
-  console.log(
-    transactionId,
-    'isPending',
-    isPending,
-    'isSuccessful',
-    isSuccessful,
-    'isFailed',
-    isFailed,
-    'isCancelled',
-    isCancelled,
-    'errorMessage',
-    errorMessage
-  );
   const sendPingTransaction = async () => {
     const pingTransaction = {
-      value: '1',
+      value: '1000000000000000000',
       data: 'ping',
       receiver: contractAddress
     };
@@ -34,7 +22,22 @@ export const PingPongPage: () => JSX.Element = () => {
       transactions: pingTransaction
     });
     if (sessionId != null) {
-      setTransactionId(sessionId);
+      setTransactionSessionId(sessionId);
+    }
+  };
+
+  const sendPongTransaction = async () => {
+    const pongTransaction = {
+      value: '0',
+      data: 'pong',
+      receiver: contractAddress
+    };
+
+    const { sessionId, error } = await sendTransactions({
+      transactions: pongTransaction
+    });
+    if (sessionId != null) {
+      setTransactionSessionId(sessionId);
     }
   };
 
@@ -43,6 +46,9 @@ export const PingPongPage: () => JSX.Element = () => {
       <p className=''>Ping Pong</p>
       <button onClick={sendPingTransaction} className='btn btn-primary  mx-2'>
         Send ping
+      </button>
+      <button onClick={sendPongTransaction} className='btn btn-primary  mx-2'>
+        Send pong
       </button>
     </div>
   );

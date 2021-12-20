@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
 import { NetworkConfigType } from 'types';
-import ToastMessagesList from 'UI/ToastMessagesList';
+import TrasanactionsToastList from 'UI/TrasanactionsToastList';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import SignTransactions from '../components/SignTransactions';
@@ -12,6 +12,8 @@ import TransactionSender from '../components/TransactionSender';
 import TransactionsTracker from '../components/TransactionsTracker';
 import NotificationModal from '../UI/NotificationModal';
 import { store, persistor } from './store';
+
+import '../assets/sass/main.scss';
 
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
@@ -30,7 +32,7 @@ export const DappProvider = ({
         <TransactionSender />
         <TransactionsTracker />
         <NotificationModal />
-        <ToastMessagesList />
+        <TrasanactionsToastList />
         {children}
       </AppInitializer>
     </PersistGate>
