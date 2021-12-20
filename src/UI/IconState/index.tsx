@@ -27,7 +27,7 @@ const IconState = ({
       <FontAwesomeIcon
         icon={icon}
         size={iconSize}
-        className={generatedClasses.wrapper}
+        className={generatedClasses.icon}
       />
     </span>
   );

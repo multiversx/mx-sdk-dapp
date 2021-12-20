@@ -8,3 +8,4 @@ export * from './getGeneratedClasses';
 export * from './transactions';
 export * from './account';
 export * from './math';
+export * from './session';

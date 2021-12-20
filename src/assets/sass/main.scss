@@ -1,0 +1,13 @@
+@import './themes/theme.scss';
+
+// Variables override
+@import "./variables/variables";
+
+@import "~bootstrap/scss/bootstrap";
+
+@import "~bootstrap/scss/reboot";
+
+@import './modules/trim/trim';
+@import './modules/modal/modal';
+@import './modules/icon-state/icon-state';
+@import './modules/toast-messages/toast-messages';

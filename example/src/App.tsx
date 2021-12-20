@@ -4,6 +4,7 @@ import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
 import { DappProvider, AuthenticatedRoutesWrapper } from 'dapp-core';
+import "dapp-core/build/index.css";
 
 import AuthenticatedRoute from './pages/AuthenticatedRoute';
 import Unlock from './pages/UnlockRoute';

@@ -1,16 +1,14 @@
 import * as React from 'react';
 import moment from 'moment';
+import storage from 'utils/session';
 import { ToastType } from 'types/toasts';
 import { logarithmicRest } from 'utils';
-import { useDispatch, useSelector } from 'react-redux';
-import { toastsProgressSelector } from 'redux/selectors';
-import { removeToastProgress, saveToastProgress } from 'redux/slices';
 
 const Progress = ({
+  id,
   children,
   progress,
-  done,
-  id
+  done
 }: {
   id: string;
   done: boolean;
@@ -19,49 +17,50 @@ const Progress = ({
 }) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
-  const dispatch = useDispatch();
 
-  const toastProgress = useSelector(toastsProgressSelector);
-
-  const removeFromSession = (id: string) => {
+  const removeFromSession = () => {
+    const toastProgress = storage.getItem('toastProgress');
     if (toastProgress && id in toastProgress) {
-      dispatch(removeToastProgress(id));
+      delete toastProgress[id];
+      storage.setItem({
+        key: 'toastProgress',
+        data: toastProgress,
+        expires: moment()
+          .add(10, 'minutes')
+          .unix()
+      });
     }
   };
 
-  const saveToSession = ({ id, value }: { id: string; value: number }) => {
-    dispatch(
-      saveToastProgress({
-        id,
-        expires: moment()
-          .add(10, 'minutes')
-          .unix(),
-        data: toastProgress,
-        progress: value
-      })
-    );
+  const saveToSession = ({ value }: { value: number }) => {
+    const toastProgress = storage.getItem('toastProgress') || {};
+    toastProgress[id] = value;
+    storage.setItem({
+      key: 'toastProgress',
+      data: toastProgress,
+      expires: moment()
+        .add(10, 'minutes')
+        .unix()
+    });
   };
 
   const getInitialData = ({
-    progress,
-    id
+    progress
   }: {
     progress: ToastType['progress'];
-    id: string;
   }) => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
+    const toastProgress = storage.getItem('toastProgress');
     const remaining = progress
       ? ((progress.endTime - moment().unix()) * 100) / totalSeconds
       : 0;
 
     const currentRemaining =
-      toastProgress && id in toastProgress
-        ? toastProgress[id].progress
-        : remaining;
+      toastProgress && id in toastProgress ? toastProgress[id] : remaining;
     return { currentRemaining, totalSeconds };
   };
 
-  const { totalSeconds, currentRemaining } = getInitialData({ id, progress });
+  const { totalSeconds, currentRemaining } = getInitialData({ progress });
 
   const [percentRemaining, setPercentRemaining] = React.useState<number>(
     currentRemaining
@@ -80,10 +79,10 @@ const Progress = ({
               const value = existing - 1;
               if (value <= 0) {
                 clearInterval(intervalRef.current);
-                removeFromSession(id);
+                removeFromSession();
                 return 0;
               } else {
-                saveToSession({ id, value });
+                saveToSession({ value });
                 return value;
               }
             });
@@ -96,7 +95,7 @@ const Progress = ({
               const decrement =
                 existing > 100 - maxPercent ? 1 : logarithmicRest(existing);
               const value = existing - decrement;
-              saveToSession({ id, value });
+              saveToSession({ value });
               return value;
             });
           }
