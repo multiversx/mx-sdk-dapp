@@ -1,22 +1,21 @@
-import moment from 'moment';
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { pendingSignedTransactionsSelector } from 'redux/selectors';
+import moment from 'moment';
+import { useGetPendingTransactions } from 'services/transactions';
 import TransactionToast from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'utils';
 
-import { Props } from './types';
+import { TransactionsToastListPropsType } from './types';
 
-const TransactionsToastList = ({
+const startTime = moment().unix();
+
+const endTime = moment().add(10, 'seconds').unix();
+export function TransactionsToastList({
   shouldRenderDefaultCss = true,
   className = 'transactions-toast-list'
-}: Props) => {
+}: TransactionsToastListPropsType) {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
-  const pendingSignedTransactions = useSelector(
-    pendingSignedTransactionsSelector
-  );
-
+  const { pendingTransactions } = useGetPendingTransactions();
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -28,12 +27,6 @@ const TransactionsToastList = ({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
-    const startTime = moment().unix();
-
-    const endTime = moment()
-      .add(10, 'seconds')
-      .unix();
-
     return (
       <TransactionToast
         key={toastId}
@@ -47,7 +40,7 @@ const TransactionsToastList = ({
   const mapPendingSignedTransactions = () => {
     const newToasts = [...toastsIds];
 
-    for (const sessionId in pendingSignedTransactions) {
+    for (const sessionId in pendingTransactions) {
       const hasToast = toastsIds.includes(sessionId);
 
       if (!hasToast) {
@@ -85,9 +78,9 @@ const TransactionsToastList = ({
 
   useEffect(() => {
     mapPendingSignedTransactions();
-  }, [pendingSignedTransactions]);
+  }, [pendingTransactions]);
 
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
-};
+}
 
 export default TransactionsToastList;

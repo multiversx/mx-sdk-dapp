@@ -19,9 +19,9 @@
     max-width: 28.875rem;
     transition: transform 0.3s ease-in-out;
     transform: translateX(120%);
-    background-color: $card-bg;
-    border-radius: $card-border-radius;
-    border-color: $border-color;
+    background-color: #fff;
+    border-radius: 0.25rem;
+    border-color: #dee2e6;
     // box-shadow: 0 0 0.2rem 0.2rem opacity($shadow-color, 0.1);
     &.clickable {
       cursor: pointer;
@@ -34,7 +34,7 @@
         font-size: inherit;
         line-height: inherit;
         .progress-bar {
-          background-color: rgba($secondary, 0.2);
+          background-color: #fff;
           .content-height {
             z-index: -1;
             visibility: hidden;

@@ -1,3 +1,4 @@
 export * from './sendTransactions';
 export * from './signTransactions';
-export * from './useTrackTransactionStatus';
+export * from './hooks/useTrackTransactionStatus';
+export * from './hooks/useGetPendingTransactions';

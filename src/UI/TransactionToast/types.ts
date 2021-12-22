@@ -1,4 +1,4 @@
-export interface Props {
+export interface TransactionToastPropsType {
   title?: string;
   toastId: string;
   endTime: number;

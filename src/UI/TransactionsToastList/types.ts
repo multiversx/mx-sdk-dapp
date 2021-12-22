@@ -1,4 +1,4 @@
-export interface Props {
+export interface TransactionsToastListPropsType {
   toastProps?: any;
   className?: string;
   shouldRenderDefaultCss?: boolean;

@@ -36,7 +36,7 @@ const CopyButton = ({ text, className = '' }: CopyButtonType) => {
     <a
       href='/#'
       onClick={handleCopyToClipboard}
-      className={`side-action text-secondary mx-2 ${className}`}
+      className={`side-action text-secondary ${className}`}
     >
       {copyResult.default || !copyResult.success ? (
         <FontAwesomeIcon icon={faCopy} />

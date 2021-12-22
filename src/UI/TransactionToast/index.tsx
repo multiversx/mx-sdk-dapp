@@ -1,19 +1,20 @@
 import React, { useRef, useState } from 'react';
-import { Toast } from 'react-bootstrap';
-import Progress from 'UI/Progress';
-
 import {
   faCheck,
   faHourglass,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import IconState from 'UI/IconState';
-import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
-import TxDetails from 'UI/TxDetails';
+import { Toast } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { signedTransactionsSelector } from 'redux/selectors';
-import { Props } from './types';
+import IconState from 'UI/IconState';
+import Progress from 'UI/Progress';
+
+import TxDetails from 'UI/TxDetails';
+
+import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
+import { TransactionToastPropsType } from './types';
 
 export const TransactionToast = ({
   endTime,
@@ -25,10 +26,9 @@ export const TransactionToast = ({
   errorMessage = 'Transaction failed',
   successMessage = 'Transaction successful',
   processingMessage = 'Processing transaction'
-}: Props) => {
+}: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
-
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -104,7 +104,11 @@ export const TransactionToast = ({
       <Progress id={toastId} progress={progress} done={!isPending}>
         <div className={generatedClasses.toastContainer}>
           <div className={generatedClasses.iconContainer}>
-            <IconState iconSize='2x' icon={toastDataState.icon} />
+            <IconState
+              iconSize='2x'
+              icon={toastDataState.icon}
+              className={toastDataState.iconClassName}
+            />
           </div>
           <div className={generatedClasses.details} style={{ minWidth: 0 }}>
             <div className={generatedClasses.toastHeader}>

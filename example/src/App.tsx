@@ -3,11 +3,12 @@ import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
 import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
-import { DappProvider, AuthenticatedRoutesWrapper } from 'dapp-core';
-import "dapp-core/build/index.css";
-
+import { DappProvider, AuthenticatedRoutesWrapper, DappUI } from 'dapp-core';
+import 'dapp-core/build/index.css';
 import AuthenticatedRoute from './pages/AuthenticatedRoute';
 import Unlock from './pages/UnlockRoute';
+
+const { TransactionsToastList } = DappUI;
 
 const routes = [
   {
@@ -15,7 +16,7 @@ const routes = [
     title: 'Home',
     authenticatedRoute: true,
     component: AuthenticatedRoute
-  },
+  }
 ];
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
       >
         <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
+          <TransactionsToastList />
           <Routes>
             <Route path='/' element={<Unlock />} />
 
