@@ -130,7 +130,7 @@ export const transactionsSlice = createSlice({
         signedTransactions
       ).reduce((acc, [sessionId, transaction]) => {
         const txTimestamp = moment(sessionId, 'unix');
-        const isExpired = txTimestamp.add(30, 'minutes').isBefore(moment());
+        const isExpired = txTimestamp.add(5, 'hour').isBefore(moment());
         if (!isExpired) {
           acc[sessionId] = transaction;
         }

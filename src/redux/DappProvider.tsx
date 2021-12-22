@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
 import { NetworkConfigType } from 'types';
-import TrasanactionsToastList from 'UI/TrasanactionsToastList';
+import TransactionsToastList from 'UI/TransactionsToastList';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import SignTransactions from '../components/SignTransactions';
@@ -32,7 +32,7 @@ export const DappProvider = ({
         <TransactionSender />
         <TransactionsTracker />
         <NotificationModal />
-        <TrasanactionsToastList />
+        <TransactionsToastList />
         {children}
       </AppInitializer>
     </PersistGate>

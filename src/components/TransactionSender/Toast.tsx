@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { faCheck } from '@fortawesome/free-solid-svg-icons/faCheck';
 import { faHourglass } from '@fortawesome/free-solid-svg-icons/faHourglass';

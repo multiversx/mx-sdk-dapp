@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { WalletProvider } from '@elrondnetwork/erdjs';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';

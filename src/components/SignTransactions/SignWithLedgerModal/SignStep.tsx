@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';

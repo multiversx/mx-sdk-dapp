@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import moment from 'moment';
 import storage from 'utils/session';
 import { ToastType } from 'types/toasts';
@@ -25,9 +25,7 @@ const Progress = ({
       storage.setItem({
         key: 'toastProgress',
         data: toastProgress,
-        expires: moment()
-          .add(10, 'minutes')
-          .unix()
+        expires: moment().add(10, 'minutes').unix()
       });
     }
   };
@@ -38,9 +36,7 @@ const Progress = ({
     storage.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment()
-        .add(10, 'minutes')
-        .unix()
+      expires: moment().add(10, 'minutes').unix()
     });
   };
 
@@ -62,9 +58,8 @@ const Progress = ({
 
   const { totalSeconds, currentRemaining } = getInitialData({ progress });
 
-  const [percentRemaining, setPercentRemaining] = React.useState<number>(
-    currentRemaining
-  );
+  const [percentRemaining, setPercentRemaining] =
+    React.useState<number>(currentRemaining);
 
   React.useEffect(() => {
     if (progress) {

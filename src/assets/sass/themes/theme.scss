@@ -9,7 +9,7 @@ $primary: #1b46c2;
 $light: #fafafa;
 $a: #1392ff;
 
-/* Do not move the imports from here. 
+/* Do not move the imports from here.
 Override Bootstrap variables only above.
 -------------------------------------------------- */
 
@@ -91,6 +91,16 @@ a,
 .btn {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04) !important;
 }
+
+.media {
+  display: flex;
+  align-items: flex-start;
+}
+
+.media-body {
+  flex: 1;
+}
+
 .connect-btns {
   .btn {
     display: flex;

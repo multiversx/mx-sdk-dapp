@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 

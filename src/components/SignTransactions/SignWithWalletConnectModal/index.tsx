@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import PageState from 'UI/PageState';

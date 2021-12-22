@@ -1,32 +1,31 @@
-import * as React from "react";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector } from "react-redux";
-import { explorerAddressSelector } from "redux/selectors";
+import React from 'react';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'react-redux';
+import { explorerAddressSelector } from 'redux/selectors';
 
 const ExplorerLink = ({
   page,
   text,
-  className,
+  className
 }: {
   page: string;
   text?: any;
   className?: string;
 }) => {
-
-  const explorerAddress = useSelector(explorerAddressSelector)
+  const explorerAddress = useSelector(explorerAddressSelector);
   return (
     <a
       href={`${explorerAddress}${page}`}
       {...{
-        target: "_blank",
+        target: '_blank'
       }}
       className={`link-style ${className}`}
     >
       {text ? (
         <React.Fragment>{text}</React.Fragment>
       ) : (
-        <FontAwesomeIcon icon={faSearch} className="text-secondary" />
+        <FontAwesomeIcon icon={faSearch} className='text-secondary' />
       )}
     </a>
   );

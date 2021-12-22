@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { faTimes, faSpinner, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
+import './txDetails.scss';
 
 const TxDetails = ({
   title,
@@ -70,9 +71,8 @@ const TxDetails = ({
             className={iconData[status].classNames}
           />
           <span
-            className='text-nowrap trim-fs-sm mr-3'
+            className='text-nowrap tx-details-text trim-fs-sm mr-3'
             data-testid='toastTxHash'
-            style={{ width: '10rem' }}
           >
             <Trim text={hash} />
           </span>
