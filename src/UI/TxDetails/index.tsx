@@ -5,26 +5,25 @@ import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
-import './txDetails.scss';
+import { Props } from './types';
 
 const TxDetails = ({
   title,
-  className = 'tx-details',
   transactions,
+  className = 'tx-details',
   shouldRenderDefaultCss = true
-}: {
-  className?: string;
-  title?: React.ReactNode;
-  shouldRenderDefaultCss?: boolean;
-  transactions: Array<any>;
-}) => {
+}: Props) => {
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
     {
+      title: 'mb-0',
+      statusTransactions: 'mb-2 mt-1',
       iconSuccess: 'mr-1 text-secondary',
       iconFailed: 'mr-1 text-secondary',
-      iconPending: 'mr-1 text-secondary fa-spin slow-spin'
+      trimContainer: 'text-nowrap trim-fs-sm mr-3',
+      iconPending: 'mr-1 text-secondary fa-spin slow-spin',
+      item: 'tx-description d-flex justify-content-start align-items-center'
     }
   );
 
@@ -53,8 +52,8 @@ const TxDetails = ({
 
   return (
     <React.Fragment>
-      {title && <div className='mb-0'>{title}</div>}
-      <div className='mb-2 mt-1'>
+      {title && <div className={generatedClasses.title}>{title}</div>}
+      <div className={generatedClasses.statusTransactions}>
         {
           transactions.filter((tx) => !isServerTransactionPending(tx.status))
             .length
@@ -62,17 +61,14 @@ const TxDetails = ({
         / {transactions.length} transactions processed
       </div>
       {transactions.map(({ hash, status }) => (
-        <div
-          className='tx-description d-flex justify-content-start align-items-center'
-          key={hash}
-        >
+        <div className={generatedClasses.item} key={hash}>
           <FontAwesomeIcon
             icon={iconData[status].icon}
             className={iconData[status].classNames}
           />
           <span
-            className='text-nowrap tx-details-text trim-fs-sm mr-3'
-            data-testid='toastTxHash'
+            className={generatedClasses.trimContainer}
+            style={{ width: '10rem' }}
           >
             <Trim text={hash} />
           </span>

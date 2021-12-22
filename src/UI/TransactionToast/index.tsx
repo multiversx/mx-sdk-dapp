@@ -1,41 +1,46 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Toast } from 'react-bootstrap';
 import Progress from 'UI/Progress';
 
-import { faCheck, faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faHourglass,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import IconState from 'UI/IconState';
-// import ToastMessage from 'UI/ToastMessage';
 import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
 import TxDetails from 'UI/TxDetails';
 import { useSelector } from 'react-redux';
 import { signedTransactionsSelector } from 'redux/selectors';
-// import TransactionToastStatusUpdate from '../CustomToasts';
+import { Props } from './types';
 
-// interface Props {
-//   data: any;
-//   className?: string;
-// }
-
-const TransactionToast = ({
+export const TransactionToast = ({
+  endTime,
   toastId,
   startTime,
-  endTime,
-  successMessage,
-  errorMessage,
-  processingMessage,
-  className = '',
-  title,
-  shouldRenderDefaultCss = true
-}: any) => {
-  const ref = React.useRef(null);
+  title = '',
+  shouldRenderDefaultCss = true,
+  className = 'transaction-toast',
+  errorMessage = 'Transaction failed',
+  successMessage = 'Transaction successful',
+  processingMessage = 'Processing transaction'
+}: Props) => {
+  const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
 
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: 'toast-visible clickable'
+      toastFooter: 'mb-0 text-break',
+      details: 'media-body flex-grow-1',
+      toastContainer: 'w-100 media p-2',
+      wrapper: 'toast-visible clickable',
+      toastHeader: 'd-flex justify-content-between mb-1',
+      iconContainer: 'align-self-center ml-2 mr-2 pr-1',
+      title: 'm-0 font-weight-normal text-nowrap text-truncate',
+      closeButton: 'close d-flex side-action align-items-center mx-2 outline-0'
     }
   );
 
@@ -49,28 +54,28 @@ const TransactionToast = ({
 
   const successToastData = {
     id: toastId,
-    title: successMessage,
-    iconClassName: 'bg-success',
     icon: faCheck,
     expires: 30000,
-    hasCloseButton: true
+    hasCloseButton: true,
+    title: successMessage,
+    iconClassName: 'bg-success'
   };
 
   const pendingToastData = {
     id: toastId,
-    title: processingMessage,
-    iconClassName: 'bg-warning',
-    icon: faHourglass,
     expires: false,
+    icon: faHourglass,
     hasCloseButton: false,
+    title: processingMessage,
+    iconClassName: 'bg-warning'
   };
 
   const failedToastData = {
     id: toastId,
-    title: errorMessage,
-    iconClassName: 'bg-danger',
     icon: faTimes,
-    hasCloseButton: true
+    title: errorMessage,
+    hasCloseButton: true,
+    iconClassName: 'bg-danger'
   };
 
   const isPending = isBatchTransactionPending(status);
@@ -81,46 +86,41 @@ const TransactionToast = ({
     successful: successToastData,
     sent: pendingToastData,
     failed: failedToastData,
-    timedOut: failedToastData,
+    timedOut: failedToastData
   };
 
   const toastDataState = toatsOptionsData[status];
-  
+
   const handleDeleteToast = () => {
     setShouldRender(false);
   };
 
-  if(!shouldRender){
+  if (!shouldRender) {
     return null;
   }
 
   return (
     <Toast ref={ref} className={generatedClasses.wrapper} key={toastId}>
       <Progress id={toastId} progress={progress} done={!isPending}>
-        <div className='w-100 media p-2'>
-          <div className='align-self-center ml-2 mr-2 pr-1'>
-            <IconState iconSize='2x' icon={toastDataState.icon} className={className} />
+        <div className={generatedClasses.toastContainer}>
+          <div className={generatedClasses.iconContainer}>
+            <IconState iconSize='2x' icon={toastDataState.icon} />
           </div>
-          <div className='media-body flex-grow-1' style={{ minWidth: 0 }}>
-            <div className='d-flex justify-content-between mb-1'>
-              <h5 className='m-0 font-weight-normal text-nowrap text-truncate'>
-                {toastDataState.title}
-              </h5>
+          <div className={generatedClasses.details} style={{ minWidth: 0 }}>
+            <div className={generatedClasses.toastHeader}>
+              <h5 className={generatedClasses.title}>{toastDataState.title}</h5>
               {!isPending && (
                 <button
                   type='button'
-                  className='close d-flex side-action align-items-center mx-2 outline-0'
+                  className={generatedClasses.closeButton}
                   onClick={handleDeleteToast}
                 >
                   <FontAwesomeIcon icon={faTimes} size='xs' />
                 </button>
               )}
             </div>
-            <div className='mb-0 text-break'>
-              <TxDetails
-                transactions={transactions}
-                title={title}
-              />
+            <div className={generatedClasses.toastFooter}>
+              <TxDetails transactions={transactions} title={title} />
             </div>
           </div>
         </div>

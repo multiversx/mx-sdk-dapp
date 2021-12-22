@@ -1,33 +1,33 @@
 import React from 'react';
 import moment from 'moment';
 import storage from 'utils/session';
-import { ToastType } from 'types/toasts';
 import { logarithmicRest } from 'utils';
 
-const Progress = ({
-  id,
-  children,
-  progress,
-  done
-}: {
-  id: string;
-  done: boolean;
-  children: React.ReactNode;
-  progress: ToastType['progress'];
-}) => {
+import { Props } from './type';
+
+const Progress = ({ id, children, progress, done }: Props) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
 
-  const removeFromSession = () => {
+  const removeTxFromSession = () => {
     const toastProgress = storage.getItem('toastProgress');
-    if (toastProgress && id in toastProgress) {
-      delete toastProgress[id];
-      storage.setItem({
-        key: 'toastProgress',
-        data: toastProgress,
-        expires: moment().add(10, 'minutes').unix()
-      });
+    const hasSessionStoredTx = Boolean(toastProgress[id]);
+
+    if (!hasSessionStoredTx) {
+      return;
     }
+
+    const expires = moment()
+      .add(10, 'minutes')
+      .unix();
+
+    delete toastProgress[id];
+
+    storage.setItem({
+      key: 'toastProgress',
+      data: toastProgress,
+      expires
+    });
   };
 
   const saveToSession = ({ value }: { value: number }) => {
@@ -40,11 +40,8 @@ const Progress = ({
     });
   };
 
-  const getInitialData = ({
-    progress
-  }: {
-    progress: ToastType['progress'];
-  }) => {
+  const getInitialData = () => {
+      
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
     const toastProgress = storage.getItem('toastProgress');
     const remaining = progress
@@ -56,7 +53,7 @@ const Progress = ({
     return { currentRemaining, totalSeconds };
   };
 
-  const { totalSeconds, currentRemaining } = getInitialData({ progress });
+  const { totalSeconds, currentRemaining } = getInitialData();
 
   const [percentRemaining, setPercentRemaining] =
     React.useState<number>(currentRemaining);
@@ -74,7 +71,7 @@ const Progress = ({
               const value = existing - 1;
               if (value <= 0) {
                 clearInterval(intervalRef.current);
-                removeFromSession();
+                removeTxFromSession();
                 return 0;
               } else {
                 saveToSession({ value });
@@ -102,7 +99,6 @@ const Progress = ({
       };
     }
     return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progress, done]);
 
   return progress ? (
