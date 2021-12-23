@@ -1,18 +1,18 @@
-import { useRef, useEffect } from "react";
-import { useContext as useDappContext } from "@elrondnetwork/dapp";
-import { TransactionHash } from "@elrondnetwork/erdjs/out";
-import { faExclamationTriangle } from "@fortawesome/pro-solid-svg-icons/faExclamationTriangle";
-import { useDispatch, useSelector } from "react-redux";
-import getPlainTransactionStatus from "helpers/plainObjects";
-import { transactionToastsSelector } from "redux/selectors/toastSelector";
+import { useRef, useEffect } from 'react';
+import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
+import { useDispatch, useSelector } from 'react-redux';
+import { apiProviderSelector } from 'redux/selectors/networkConfigSelectors';
+import { transactionToastsSelector } from 'redux/selectors/toastSelectors';
 import {
   addToast,
   removeToast,
   removeTransactionToast,
   updateTransactionToastErrorMessage,
-  updateTransactionToastTransactionStatus,
-} from "redux/slices/toastsSlice";
-import { TransactionToastTransactionsType } from "types/toasts";
+  updateTransactionToastTransactionStatus
+} from 'redux/slices/toastsSlice';
+import { TransactionToastTransactionsType } from 'types/toasts';
+import { getPlainTransactionStatus } from 'utils/index';
 
 interface TransactionToastStatusUpdatePropsType {
   transactions: TransactionToastTransactionsType[];
@@ -24,32 +24,30 @@ interface RetriesType {
   [hash: string]: number;
 }
 
-export default function TransactionToastStatusUpdate({
+export default function useTransactionToastStatusUpdate({
   transactions,
   pending,
-  toastSignSession,
+  toastSignSession
 }: TransactionToastStatusUpdatePropsType) {
+  const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
   const isFetchingStatusRef = useRef(false);
-  const dispatch = useDispatch();
-  const transactionToasts = useSelector(transactionToastsSelector);
   const retriesRef = useRef<RetriesType>({});
-  const {
-    dapp: { apiProvider },
-  } = useDappContext();
+  const transactionToasts = useSelector(transactionToastsSelector);
+  const apiProvider = useSelector(apiProviderSelector);
 
   const manageStuckToasts = () => {
     dispatch(removeTransactionToast(toastSignSession));
     dispatch(removeToast(toastSignSession));
 
     const txStuckToast = {
-      id: "batch-stuck",
-      title: "Pending transactions",
+      id: 'batch-stuck',
+      title: 'Pending transactions',
       description:
-        "Fetching the transactions status took too long. Please refresh the page.",
+        'Fetching the transactions status took too long. Please refresh the page.',
       icon: faExclamationTriangle,
-      iconClassName: "bg-warning",
-      expires: false,
+      iconClassName: 'bg-warning',
+      expires: false
     };
     dispatch(addToast(txStuckToast));
   };
@@ -60,7 +58,7 @@ export default function TransactionToastStatusUpdate({
         return;
       }
       const activeToast = transactionToasts.find(
-        (toast) => toast.toastSignSession === toastSignSession,
+        (toast) => toast.toastSignSession === toastSignSession
       );
 
       if (activeToast == null) {
@@ -76,7 +74,7 @@ export default function TransactionToastStatusUpdate({
             return;
           }
           const txOnNetwork = await apiProvider.getTransaction(
-            new TransactionHash(hash),
+            new TransactionHash(hash)
           );
           if (txOnNetwork != null) {
             if (!txOnNetwork.status.isPending()) {
@@ -85,8 +83,8 @@ export default function TransactionToastStatusUpdate({
                 updateTransactionToastTransactionStatus({
                   toastSignSession,
                   transactionHash: hash,
-                  status,
-                }),
+                  status
+                })
               );
 
               if (txOnNetwork.status.isFailed()) {
@@ -94,13 +92,13 @@ export default function TransactionToastStatusUpdate({
                   .getSmartContractResults()
                   .getAllResults();
                 const resultWithError = scResults.find(
-                  (scResult) => scResult.getReturnMessage() !== "",
+                  (scResult) => scResult.getReturnMessage() !== ''
                 );
                 dispatch(
                   updateTransactionToastErrorMessage({
                     toastSignSession,
-                    errorMessage: resultWithError?.getReturnMessage(),
-                  }),
+                    errorMessage: resultWithError?.getReturnMessage()
+                  })
                 );
               }
             } else {
@@ -134,7 +132,6 @@ export default function TransactionToastStatusUpdate({
     return () => {
       clearInterval(intervalRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pending]);
   return null;
 }

@@ -1,45 +1,26 @@
-import * as React from 'react';
-import { TransactionStatus } from '@elrondnetwork/erdjs';
-import { Address, TransactionHash } from '@elrondnetwork/erdjs/out';
+import React from 'react';
+import { Address } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 
-import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  toastSignSessionsSelector,
-  transactionToastsSelector,
-  signStatusSelector
-} from 'redux/selectors';
+import newTransaction from 'models/newTransaction';
+import { signedTransactionsSelector } from 'redux/selectors';
 import { accountSelector, proxySelector } from 'redux/selectors';
 import {
-  addToast,
-  setTransactionToasts,
   setTxSubmittedModal,
-  clearSignTransactions
+  clearSignTransactions,
+  updateSignedTransactions
 } from 'redux/slices';
-import { transactionStatuses } from 'types/enums';
-import { PlainTransactionStatus } from 'types/toasts';
-import newTransaction from '../../models/newTransaction';
-import { setNonce, getPlainTransactionStatus } from '../../utils';
-import Toast from './Toast';
-
-const failedToast = {
-  id: 'batch-failed',
-  title: 'Unable to send',
-  description: 'Failed sending transactions. Please refresh the page.',
-  icon: faExclamationTriangle,
-  iconClassName: 'bg-warning',
-  expires: false
-};
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums';
+import { setNonce } from 'utils';
 
 const TransactionSender = () => {
-  const toastSignSessions = useSelector(toastSignSessionsSelector);
-  const transactionToasts = useSelector(transactionToastsSelector);
   const proxy = useSelector(proxySelector);
   const account = useSelector(accountSelector);
-  const signStatus = useSelector(signStatusSelector);
+  const signedTransactions = useSelector(signedTransactionsSelector);
   const [sending, setSending] = React.useState<boolean>();
 
   const dispatch = useDispatch();
@@ -48,142 +29,89 @@ const TransactionSender = () => {
     dispatch(clearSignTransactions());
     setSending(false);
   };
-
-  async function handleSendTransactions () {
-    const [sessionId] = Object.keys(signStatus);
-
-    if (!sessionId) {
-      return;
-    }
-
-    try {
-      const isSessionIdSigned =
-        signStatus[sessionId].status === transactionStatuses.signed;
-      const shouldSendCurrentSession = isSessionIdSigned && !sending;
-      const shouldClearSignedTransations =
-        signStatus[sessionId].status === transactionStatuses.cancelled ||
-        signStatus[sessionId].status === transactionStatuses.failed;
-
-      if (shouldClearSignedTransations) {
-        dispatch(clearSignTransactions());
+  async function handleSendTransactions() {
+    const sessionIds = Object.keys(signedTransactions);
+    for (const sessionId of sessionIds) {
+      if (!sessionId) {
+        continue;
       }
 
-      if (!shouldSendCurrentSession) {
-        return;
-      }
+      try {
+        const isSessionIdSigned =
+          signedTransactions[sessionId].status ===
+          TransactionBatchStatusesEnum.signed;
+        const shouldSendCurrentSession = isSessionIdSigned && !sending;
 
-      const { transactions } = signStatus[sessionId];
+        if (!shouldSendCurrentSession) {
+          continue;
+        }
 
-      const hasSentBatch = transactionToasts.some(
-        ({ toastSignSession }) => String(toastSignSession) === sessionId
-      );
+        const { transactions } = signedTransactions[sessionId];
 
-      if (hasSentBatch || !transactions) {
-        return;
-      }
+        if (!transactions) {
+          continue;
+        }
+        setSending(true);
+        const transactionsPromises = transactions.map((tx) => {
+          const address = new Address(tx.sender);
+          const transactionObject = newTransaction(tx);
+          const signature = new Signature(tx.signature);
 
-      setSending(true);
-
-      const transactionsPromises = transactions.map((tx) => {
-        const address = new Address(tx.sender);
-        const transactionObject = newTransaction(tx);
-        const signature = new Signature(tx.signature);
-
-        transactionObject.applySignature(signature, address);
-
-        return proxy.sendTransaction(transactionObject);
-      });
-
-      const responseHashes = await Promise.all(transactionsPromises);
-
-      setNonce(account.nonce.value + transactions.length);
-
-      const restToasts = transactionToasts.filter(
-        ({ toastSignSession }) => String(toastSignSession) !== sessionId
-      );
-
-      const newTransactions: {
-        [hash: string]: PlainTransactionStatus;
-      } = (responseHashes as TransactionHash[]).reduce((transactions, tx) => {
-        const status = getPlainTransactionStatus(
-          new TransactionStatus('pending')
+          transactionObject.applySignature(signature, address);
+          return proxy.sendTransaction(transactionObject);
+        });
+        const responseHashes = (await Promise.all(transactionsPromises)).map(
+          (txHash) => Buffer.from(txHash.hash).toString('hex')
         );
-        const targetHash = Buffer.from(tx.hash).toString('hex');
 
-        transactions[targetHash] = status;
+        setNonce(account.nonce.value + transactions.length);
 
-        return transactions;
-      }, {});
+        const newStatus = TransactionServerStatusesEnum.pending;
+        const newTransactions = transactions.map((transaction) => {
+          if (responseHashes.includes(transaction.hash)) {
+            return { ...transaction, status: newStatus };
+          }
 
-      const newToast = {
-        toastSignSession: sessionId,
-        processingMessage: 'Processing transaction',
-        successMessage: 'Transaction successful',
-        errorMessage: 'Transaction failed',
-        submittedMessage: 'Transaction submitted',
-        submittedMessageShown: true,
-        transactions: newTransactions,
-        startTime: moment().unix(),
-        endTime: moment()
-          .add(10, 'seconds')
-          .unix()
-      };
+          return transaction;
+        });
 
-      const newToasts = [...restToasts, newToast];
-      const submittedModalPayload = {
-        sessionId,
-        submittedMessage: 'submitted'
-      };
+        const submittedModalPayload = {
+          sessionId,
+          submittedMessage: 'submitted'
+        };
 
-      dispatch(setTxSubmittedModal(submittedModalPayload));
-      dispatch(setTransactionToasts(newToasts));
-      clearSignInfo();
+        dispatch(setTxSubmittedModal(submittedModalPayload));
+        dispatch(
+          updateSignedTransactions({
+            sessionId,
+            status: TransactionBatchStatusesEnum.sent,
+            transactions: newTransactions
+          })
+        );
+        clearSignInfo();
 
-      history.pushState({}, document.title, '?');
-    } catch (error) {
-      console.error('Unable to send transactions', error);
-      dispatch(addToast(failedToast));
-      clearSignInfo();
-    } finally {
-      setSending(false);
+        history.pushState({}, document.title, '?');
+      } catch (error) {
+        console.error('Unable to send transactions', error);
+        dispatch(
+          updateSignedTransactions({
+            sessionId,
+            status: TransactionBatchStatusesEnum.failed,
+            errorMessage: error.message
+          })
+        );
+        clearSignInfo();
+      } finally {
+        setSending(false);
+      }
     }
   }
 
   React.useEffect(() => {
     handleSendTransactions();
-  }, [signStatus, account]);
+  }, [signedTransactions, account]);
 
-  const addCancelToast = () => {
-    if (signStatus) {
-      const [sessionId] = Object.keys(signStatus);
-      if (signStatus.status === transactionStatuses.failed) {
-        dispatch(
-          addToast({
-            id: sessionId,
-            title: 'Failed',
-            description: 'Request was not successful.',
-            iconClassName: 'bg-danger',
-            icon: faTimes,
-            expires: 6000
-          })
-        );
-      }
-    }
-  };
-
-  React.useEffect(addCancelToast, [signStatus, toastSignSessions]);
-  return (
-    <React.Fragment>
-      {sending === false
-        ? transactionToasts.map((props, i) => {
-            const key = Object.values(props.transactions)
-              .map((status) => status.toString())
-              .join('');
-            return <Toast key={props.toastSignSession + key + i} {...props} />;
-          })
-        : null}
-    </React.Fragment>
-  );
+  return null;
 };
 
 export default TransactionSender;

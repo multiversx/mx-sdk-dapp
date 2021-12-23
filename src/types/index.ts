@@ -1,4 +1,4 @@
-import { Nonce, Address } from '@elrondnetwork/erdjs';
+import { Nonce } from '@elrondnetwork/erdjs';
 
 export interface WalletConnectSignatureType {
   id?: number;
@@ -35,28 +35,6 @@ export interface AccountType {
   code?: string;
 }
 
-export interface TransactionParameter {
-  sender: Address;
-  receiver: Address;
-  functionName: string;
-  inputParameters: string[];
-  outputParameters: string[];
-}
-
-export interface RawTransactionType {
-  signature?: string;
-  value: string;
-  receiver: string;
-  gasPrice: number;
-  gasLimit: number;
-  sender: string;
-  nonce: number;
-  data: string;
-  chainID: string;
-  version?: number;
-  options?: number;
-}
-
 export interface ScResultType {
   callType: string;
   gasLimit: number;
@@ -68,17 +46,4 @@ export interface ScResultType {
   value: string;
   data?: string;
   returnMessage?: string;
-}
-
-export interface ApiTransactionType {
-  txHash: string;
-  nonce: number;
-  receiver: string;
-  sender: string;
-  status: string;
-  value: string;
-  fee: string;
-  timestamp: number;
-  data: string;
-  results?: ScResultType[];
 }

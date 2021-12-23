@@ -1,21 +1,18 @@
-import * as React from 'react';
+import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector, transactionsToSignSelector } from 'redux/selectors';
-import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { transactionStatuses } from 'types/enums';
+import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { TransactionBatchStatusesEnum } from 'types/enums';
 import { HandleCloseType } from './helpers';
+import { parseTransactionAfterSigning } from './helpers/parseTransactionAfterSigning';
 
 export interface SignModalType {
   handleClose: (props?: HandleCloseType) => void;
   setError: (value: React.SetStateAction<string>) => void;
 }
 
-export type UseSignWithProviderReturnType = [
-  string,
-  Transaction[] | undefined,
-  SignedTransactionType | undefined
-];
+export type UseSignWithProviderReturnType = [string, Transaction[] | undefined];
 
 export type SignedTransactionType = Record<number, Transaction>;
 
@@ -28,8 +25,6 @@ const useSignWithProvider = ({
   const { sessionId, transactions, callbackRoute } = transactionsToSign!;
 
   const provider = useSelector(providerSelector);
-  const [signedTransactions, setSignedTransactions] =
-    React.useState<SignedTransactionType>();
 
   async function signTransactions() {
     try {
@@ -40,8 +35,29 @@ const useSignWithProvider = ({
         }
         provider
           .signTransactions(transactions)
-          .then((txs: Transaction[]) => {
-            setSignedTransactions(txs);
+          .then((signedTransactions: Transaction[]) => {
+            const signingDisabled =
+              !signedTransactions ||
+              (signedTransactions &&
+                Object.keys(signedTransactions).length !==
+                  transactions?.length);
+
+            if (!signingDisabled && signedTransactions) {
+              dispatch(
+                updateSignedTransaction({
+                  [sessionId]: {
+                    status: TransactionBatchStatusesEnum.signed,
+                    transactions: Object.values(signedTransactions).map((tx) =>
+                      parseTransactionAfterSigning(tx)
+                    )
+                  }
+                })
+              );
+              handleClose({ updateBatchStatus: false });
+              if (window.location.pathname != callbackRoute) {
+                window.location.href = callbackRoute;
+              }
+            }
           })
           .catch(() => {
             handleClose();
@@ -54,32 +70,9 @@ const useSignWithProvider = ({
 
   React.useEffect(() => {
     signTransactions();
-  }, [transactions]);
+  }, []);
 
-  React.useEffect(() => {
-    const signingDisabled =
-      !signedTransactions ||
-      (signedTransactions &&
-        Object.keys(signedTransactions).length !== transactions?.length);
-
-    if (!signingDisabled && signedTransactions) {
-      dispatch(
-        updateSignStatus({
-          [sessionId]: {
-            status: transactionStatuses.signed,
-            transactions: Object.values(signedTransactions).map((tx) =>
-              tx.toPlainObject()
-            )
-          }
-        })
-      );
-      setSignedTransactions(undefined);
-      handleClose({ updateBatchStatus: false });
-      window.location.href = callbackRoute;
-    }
-  }, [signedTransactions, transactions]);
-
-  return [callbackRoute, transactions, signedTransactions];
+  return [callbackRoute, transactions];
 };
 
 export default useSignWithProvider;

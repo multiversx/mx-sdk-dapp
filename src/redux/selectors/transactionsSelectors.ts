@@ -1,5 +1,7 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
-import newTransaction from '../../models/newTransaction';
+import newTransaction from 'models/newTransaction';
+import { SignedTransactionsType } from 'types/transactions';
+import { getIsTransactionPending } from 'utils';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
@@ -11,9 +13,20 @@ interface TransactionsToSignReturnType {
 
 export const transactionsSelectors = (state: RootState) => state.transactions;
 
-export const signStatusSelector = createDeepEqualSelector(
+export const signedTransactionsSelector = createDeepEqualSelector(
   transactionsSelectors,
-  (state) => state.signStatus
+  (state) => state.signedTransactions
+);
+
+export const pendingSignedTransactionsSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (signedTransactions) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (getIsTransactionPending(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {})
 );
 
 export const transactionsToSignSelector = createDeepEqualSelector(
@@ -30,4 +43,16 @@ export const transactionsToSignSelector = createDeepEqualSelector(
         ) || []
     };
   }
+);
+
+export const transactionStatusSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (_: RootState, transactionSessionId: string | null) => transactionSessionId,
+  (
+    signedTransactions: SignedTransactionsType,
+    transactionSessionId: string | null
+  ) =>
+    transactionSessionId != null
+      ? signedTransactions?.[transactionSessionId] || {}
+      : {}
 );

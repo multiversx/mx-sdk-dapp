@@ -20,7 +20,7 @@ import {
   setWalletConnectLogin
 } from 'redux/slices';
 
-import { loginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType } from '../types';
@@ -166,7 +166,7 @@ export const useWalletConnectLogin = ({
       const hasSignature = Boolean(signature);
       const loginActionData = {
         address: address,
-        loginMethod: loginMethodsEnum.walletconnect
+        loginMethod: LoginMethodsEnum.walletconnect
       };
 
       const loginData = {
@@ -242,9 +242,16 @@ export const useWalletConnectLogin = ({
     dispatch(setTokenLogin({ loginToken: token! }));
   }
 
+  const isFailed = error != null;
+
   return [
     triggerWalletConnectSignIn,
-    { error, isLoading, isLoggedIn },
+    {
+      error,
+      isFailed,
+      isLoading: isLoading && !isFailed,
+      isLoggedIn: isLoggedIn && !isFailed
+    },
     { uriDeepLink, qrCodeSvg }
   ];
 };

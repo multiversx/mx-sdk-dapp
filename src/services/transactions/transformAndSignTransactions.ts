@@ -5,6 +5,7 @@ import { store } from 'redux/store';
 import { getAccount, getLatestNonce } from 'utils';
 import { defaultGasPrice, defaultGasLimit } from '../../constants';
 import { encodeToBase64, isStringBase64 } from '../../utils/base64Utils';
+import { SendTransactionReturnType } from './sendTransactions';
 import { signTransactions } from './signTransactions';
 import { SendSimpleTransactionPropsType } from './types';
 
@@ -16,7 +17,7 @@ enum ErrorCodesEnum {
 export async function transformAndSignTransactions({
   transactions,
   minGasLimit
-}: SendSimpleTransactionPropsType) {
+}: SendSimpleTransactionPropsType): Promise<SendTransactionReturnType> {
   const address = addressSelector(store.getState());
   const account = await getAccount(address);
   const nonce = getLatestNonce(account);
@@ -59,14 +60,13 @@ export async function transformAndSignTransactions({
       });
     });
 
-    signTransactions({
+    return signTransactions({
       transactions: transactionsPayload,
       minGasLimit
     });
-    return null;
   } catch (err) {
     console.error('error signing transaction', err.message);
-    return err.message;
+    return { error: err.message };
   }
 }
 

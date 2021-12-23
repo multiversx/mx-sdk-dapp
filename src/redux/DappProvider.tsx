@@ -8,8 +8,11 @@ import AppInitializer from 'wrappers/AppInitializer';
 
 import SignTransactions from '../components/SignTransactions';
 import TransactionSender from '../components/TransactionSender';
+import TransactionsTracker from '../components/TransactionsTracker';
 import NotificationModal from '../UI/NotificationModal';
 import { store, persistor } from './store';
+
+import '../assets/sass/main.scss';
 
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
@@ -26,6 +29,7 @@ export const DappProvider = ({
         <ProviderInitializer />
         <SignTransactions />
         <TransactionSender />
+        <TransactionsTracker />
         <NotificationModal />
         {children}
       </AppInitializer>

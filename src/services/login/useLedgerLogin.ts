@@ -13,7 +13,7 @@ import {
   setProvider,
   setTokenLogin
 } from 'redux/slices';
-import { loginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums';
 import { ledgerErrorCodes } from '../../constants';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 
@@ -86,7 +86,7 @@ export function useLedgerLogin({
   }) {
     dispatch(setProvider(provider));
 
-    dispatch(setLedgerLogin({ index, loginType: loginMethodsEnum.ledger }));
+    dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
     if (signature) {
       dispatch(
@@ -96,7 +96,7 @@ export function useLedgerLogin({
         })
       );
     }
-    dispatch(loginAction({ address, loginMethod: loginMethodsEnum.ledger }));
+    dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
     window.location.href = callbackRoute;
   }
 
@@ -222,7 +222,7 @@ export function useLedgerLogin({
         const address = await hwWalletP.login();
         dispatch(setProvider(hwWalletP));
         dispatch(
-          loginAction({ address, loginMethod: loginMethodsEnum.ledger })
+          loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
         window.location.href = callbackRoute;
       } else {
@@ -253,12 +253,15 @@ export function useLedgerLogin({
   React.useEffect(() => {
     fetchAccounts();
   }, [startIndex]);
+
+  const isFailed = error != null;
   return [
     onStartLogin,
     {
-      isLoggedIn,
+      isFailed,
+      isLoggedIn: isLoggedIn && !isFailed,
       error,
-      isLoading
+      isLoading: isLoading && !isFailed
     },
     {
       accounts,

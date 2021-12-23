@@ -1,58 +1,152 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RawTransactionType } from 'types';
+import moment from 'moment';
+import { REHYDRATE } from 'redux-persist';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums';
+import {
+  SignedTransactionsType,
+  SignedTransactionType,
+  TransactionsToSignType
+} from 'types/transactions';
+import { getIsTransactionFailed, getIsTransactionSuccessful } from 'utils';
 import { logoutAction } from '../commonActions';
 
-export interface Transactions {
-  transactions: RawTransactionType[];
-  callbackRoute: string;
+export interface UpdateSignedTransactionsPayloadType {
   sessionId: string;
+  status: TransactionBatchStatusesEnum;
+  errorMessage?: string;
+  transactions?: SignedTransactionType[];
 }
 
-export interface SignStatusType {
-  [sessionId: string]: {
-    transactions?: RawTransactionType[];
-    status?: 'signed' | 'failed' | 'cancelled' | 'pending';
-  };
+export interface UpdateSignedTransactionStatusPayloadType {
+  sessionId: string;
+  transactionHash: string;
+  status: TransactionServerStatusesEnum;
+  errorMessage?: string;
 }
 
 export interface SignTransactionsStateType {
-  signStatus: SignStatusType;
-  transactionsToSign: Transactions | null;
+  signedTransactions: SignedTransactionsType;
+  transactionsToSign: TransactionsToSignType | null;
 }
 
 const initialState: SignTransactionsStateType = {
-  signStatus: {},
+  signedTransactions: {},
   transactionsToSign: null
 };
 
 export const transactionsSlice = createSlice({
-  name: 'signTransactions',
+  name: 'transactionsSlice',
   initialState,
   reducers: {
-    updateSignStatus: (
+    updateSignedTransaction: (
       state: SignTransactionsStateType,
-      action: PayloadAction<SignStatusType>
+      action: PayloadAction<SignedTransactionsType>
     ) => {
-      state.signStatus = { ...state.signStatus, ...action.payload };
+      state.signedTransactions = {
+        ...state.signedTransactions,
+        ...action.payload
+      };
     },
-
+    updateSignedTransactions: (
+      state: SignTransactionsStateType,
+      action: PayloadAction<UpdateSignedTransactionsPayloadType>
+    ) => {
+      const { sessionId, status, errorMessage, transactions } = action.payload;
+      const transaction = state.signedTransactions[sessionId];
+      if (transaction != null) {
+        state.signedTransactions[sessionId].status = status;
+        if (errorMessage != null) {
+          state.signedTransactions[sessionId].errorMessage = errorMessage;
+        }
+        if (transactions != null) {
+          state.signedTransactions[sessionId].transactions = transactions;
+        }
+      }
+    },
+    updateSignedTransactionStatus: (
+      state: SignTransactionsStateType,
+      action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
+    ) => {
+      const { sessionId, status, errorMessage, transactionHash } =
+        action.payload;
+      const transactions = state.signedTransactions?.[sessionId]?.transactions;
+      if (transactions != null) {
+        state.signedTransactions[sessionId].transactions = transactions.map(
+          (transaction) => {
+            if (transaction.hash === transactionHash) {
+              return {
+                ...transaction,
+                status,
+                errorMessage
+              };
+            }
+            return transaction;
+          }
+        );
+        const areTransactionsSuccessful = state.signedTransactions[
+          sessionId
+        ]?.transactions?.every((transaction) =>
+          getIsTransactionSuccessful(transaction.status)
+        );
+        const areTransactionsFailed = state.signedTransactions[
+          sessionId
+        ]?.transactions?.every((transaction) =>
+          getIsTransactionFailed(transaction.status)
+        );
+        if (areTransactionsSuccessful) {
+          state.signedTransactions[sessionId].status =
+            TransactionBatchStatusesEnum.successful;
+        }
+        if (areTransactionsFailed) {
+          state.signedTransactions[sessionId].status =
+            TransactionBatchStatusesEnum.failed;
+        }
+      }
+    },
     setTransactionsToSign: (
       state: SignTransactionsStateType,
-      action: PayloadAction<Transactions>
+      action: PayloadAction<TransactionsToSignType>
     ) => {
       state.transactionsToSign = action.payload;
     },
-    clearSignTransactions: () => initialState
+    clearSignTransactions: (state) => {
+      state.transactionsToSign = initialState.transactionsToSign;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
       return initialState;
     });
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      if (!action.payload?.transactions) {
+        return;
+      }
+
+      const { signedTransactions } = action.payload.transactions;
+      const parsedSignedTransactions = Object.entries(
+        signedTransactions
+      ).reduce((acc, [sessionId, transaction]) => {
+        const txTimestamp = moment(sessionId, 'unix');
+        const isExpired = txTimestamp.add(5, 'hour').isBefore(moment());
+        if (!isExpired) {
+          acc[sessionId] = transaction;
+        }
+        return acc;
+      }, {});
+      if (signedTransactions != null) {
+        state.signedTransactions = parsedSignedTransactions;
+      }
+    });
   }
 });
 
 export const {
-  updateSignStatus,
+  updateSignedTransaction,
+  updateSignedTransactionStatus,
+  updateSignedTransactions,
   setTransactionsToSign,
   clearSignTransactions
 } = transactionsSlice.actions;

@@ -1,8 +1,7 @@
-import * as React from 'react';
-import classNames from 'classnames';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { getGeneratedClasses } from 'utils';
-import styles from './pageState.module.css';
 
 import { Props } from './types';
 
@@ -23,12 +22,10 @@ export const PageState = ({
     shouldRenderDefaultCss,
     {
       wrapper: 'state m-auto p-4 text-center',
-      iconContainer: classNames(`${styles.iconState} mx-auto`, {
+      iconContainer: classNames('icon-state mx-auto', {
         [`${iconBgClass}`]: Boolean(iconBgClass)
       }),
-      iconClass: classNames({
-        [`${iconClass}`]: Boolean(iconClass)
-      }),
+      iconClass: classNames(iconClass != null && iconClass),
       title: 'h4 my-4',
       description: 'mb-3'
     }

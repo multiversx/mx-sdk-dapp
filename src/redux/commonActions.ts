@@ -1,9 +1,9 @@
 import { createAction } from '@reduxjs/toolkit';
-import { loginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums';
 
 export interface LoginActionPayloadType {
   address: string;
-  loginMethod: loginMethodsEnum;
+  loginMethod: LoginMethodsEnum;
 }
 
 export const logoutAction = createAction('logout');

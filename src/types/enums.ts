@@ -1,11 +1,21 @@
-export enum transactionStatuses {
-  "pending" = "pending",
-  "signed" = "signed",
-  "failed" = "failed",
-  "cancelled" = "cancelled",
+export enum TransactionServerStatusesEnum {
+  'pending' = 'pending',
+  'failed' = 'failed',
+  'invalid' = 'invalid',
+  'successful' = 'successful',
+  'executed' = 'executed'
 }
 
-export enum loginMethodsEnum {
+export enum TransactionBatchStatusesEnum {
+  'signed' = 'signed',
+  'cancelled' = 'cancelled',
+  'successful' = 'successful',
+  'sent' = 'sent',
+  'failed' = 'failed',
+  'timedOut' = 'timedOut'
+}
+
+export enum LoginMethodsEnum {
   ledger = 'ledger',
   walletconnect = 'walletconnect',
   wallet = 'wallet',

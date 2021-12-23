@@ -1,18 +1,29 @@
 import { combineReducers } from '@reduxjs/toolkit';
+import { persistReducer } from 'redux-persist';
+import sessionStorage from 'redux-persist/lib/storage/session';
 import account from './slices/accountInfoSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
-import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
+
+const transactionsPersistConfig = {
+  key: 'transactions',
+  version: 1,
+  storage: sessionStorage
+};
+
+const transactionsReducer = persistReducer(
+  transactionsPersistConfig,
+  transactions
+);
 
 export default combineReducers({
   account,
   networkConfig,
   loginInfo,
-  toasts,
   transactionsInfo,
-  transactions,
+  transactions: transactionsReducer,
   modals
 });

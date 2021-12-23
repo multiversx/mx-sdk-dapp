@@ -1,12 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { providerSelector } from 'redux/selectors';
-import { updateSignStatus } from 'redux/slices/transactionsSlice';
-import { transactionStatuses } from 'types/enums';
+import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { TransactionBatchStatusesEnum } from 'types/enums';
 import PageState from 'UI/PageState';
 import { HandleCloseType } from '../helpers';
+import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
 
 export interface SignStepType {
   handleClose: (props?: HandleCloseType) => void;
@@ -45,7 +46,7 @@ const SignStep = ({
     setCurrentStep(0);
     setSignedTransactions(undefined);
     setWaitingForDevice(false);
-    updateSignStatus({});
+    updateSignedTransaction({});
   };
 
   const sign = async () => {
@@ -63,17 +64,19 @@ const SignStep = ({
         handleClose({ updateBatchStatus: false });
 
         dispatch(
-          updateSignStatus({
+          updateSignedTransaction({
             [sessionId]: {
-              status: transactionStatuses.signed,
-              transactions: Object.values(newSignedTransactions).map(
-                (txEntry) => txEntry.toPlainObject()
+              status: TransactionBatchStatusesEnum.signed,
+              transactions: Object.values(newSignedTransactions).map((tx) =>
+                parseTransactionAfterSigning(tx, true)
               )
             }
           })
         );
         reset();
-        window.location.href = callbackRoute;
+        if (window.location.pathname != callbackRoute) {
+          window.location.href = callbackRoute;
+        }
       }
     } catch (err) {
       console.error(err, 'sign error');

@@ -3,5 +3,4 @@ export * from './networkConfigSlice';
 export * from './accountInfoSlice';
 export * from './transactionsSlice';
 export * from './transactionsInfoSlice';
-export * from './toastsSlice';
 export * from './modalsSlice';

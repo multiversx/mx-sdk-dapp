@@ -1,10 +1,21 @@
 import React from 'react';
-import { DappUI, loginServices } from 'dapp-core';
+import { DappUI,  getIsLoggedIn } from 'dapp-core';
 
 export const UnlockRoute: () => JSX.Element = () => {
-  const { ExtensionLoginButton, WebWalletLoginButton, LedgerLoginButton, WalletConnectLoginButton } =
-    DappUI;
-    
+  const {
+    ExtensionLoginButton,
+    WebWalletLoginButton,
+    LedgerLoginButton,
+    WalletConnectLoginButton
+  } = DappUI;
+
+  React.useEffect(() => {
+    const isLoggedIn = getIsLoggedIn();
+    if (isLoggedIn) {
+      window.location.href = '/home';
+    }
+  }, []);
+
   return (
     <div className='home d-flex flex-fill align-items-center'>
       <div className='m-auto' data-testid='unlockPage'>

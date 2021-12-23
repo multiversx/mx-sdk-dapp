@@ -19,6 +19,7 @@
     "@types/react-dom": "file:../node_modules/@types/react-dom",
     "dapp-core": "file:..",
     "react": "file:../node_modules/react",
+    "node-sass": "file:../node_modules/node-sass",
     "react-dom": "file:../node_modules/react-dom",
     "react-scripts": "file:../node_modules/react-scripts",
     "typescript": "file:../node_modules/typescript"

@@ -1,0 +1,92 @@
+.modal-container {
+    .modal-dialog {
+      .modal-content {
+        border-radius: 12px !important;
+        border: none;
+        .card {
+          border: none;
+          background: none;
+          box-shadow: unset;
+        }
+        .card-body {
+          padding: 40px !important;
+        }
+        .btn-close-link {
+          width: 8rem;
+          background: #f3f9ff;
+          border: 1px solid #ddeeff;
+          box-sizing: border-box;
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+
+          &:hover {
+            background-image: linear-gradient(rgba(77, 169, 255, 0.1) 0 0);
+          }
+        }
+      }
+
+      .modal-card {
+        .modal-card-body {
+          border-radius: $card-border-radius;
+        }
+
+        @include media-breakpoint-up(sm) {
+          width: 39rem;
+        }
+
+        .card {
+          background-color: $card-bg;
+          border-radius: 0;
+          box-shadow: none !important;
+          border: none;
+          width: unset;
+          > .p-4 {
+            padding: 0 !important;
+          }
+          &.my-4 {
+            margin: 0 !important;
+          }
+        }
+      }
+    }
+    .modal-action-btns {
+      display: flex;
+      justify-content: center;
+      gap: 11px;
+      margin-top: 32px;
+
+      button {
+        flex: 1;
+        display: flex;
+        max-width: 236px;
+        height: 48px;
+        justify-content: center;
+        align-items: center;
+        background-color: #1392ff;
+        border: 1px solid #007ded !important;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.04);
+        border-radius: 6px;
+        gap: 12px;
+        &:hover,
+        &:active {
+          color: #fff;
+          background-image: linear-gradient(rgba(0, 0, 0, 0.1) 0 0);
+        }
+      }
+      .selectable-option {
+        max-width: 100% !important;
+      }
+      .btn-light {
+        color: #1392ff;
+        background: #f3f9ff;
+        border: 1px solid #ddeeff !important;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04);
+        border-radius: 6px;
+        &:hover,
+        &:active {
+          color: #1392ff;
+          background-image: linear-gradient(rgba(77, 169, 255, 0.1) 0 0);
+          background-color: unset;
+        }
+      }
+    }
+  }

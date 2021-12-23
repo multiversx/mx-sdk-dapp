@@ -8,14 +8,16 @@ import {
   ChainID,
   TransactionVersion
 } from '@elrondnetwork/erdjs';
-import { TransactionOptions } from '@elrondnetwork/erdjs/out';
-import { RawTransactionType } from '../types';
+import { Nonce, TransactionOptions } from '@elrondnetwork/erdjs/out';
+import { RawTransactionType } from 'types/transactions';
 
 export default function newTransaction(rawTransaction: RawTransactionType) {
+  const { data } = rawTransaction;
+  const parsedData = data ? atob(data) : '';
   return new Transaction({
     value: Balance.fromString(rawTransaction.value),
-    data: new TransactionPayload(atob(rawTransaction.data)),
-    sender: new Address(rawTransaction.sender),
+    data: new TransactionPayload(parsedData),
+    nonce: new Nonce(rawTransaction.nonce),
     receiver: new Address(rawTransaction.receiver),
     gasLimit: new GasLimit(rawTransaction.gasLimit),
     gasPrice: new GasPrice(rawTransaction.gasPrice),
