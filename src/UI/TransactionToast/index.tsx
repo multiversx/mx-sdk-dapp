@@ -101,7 +101,12 @@ export const TransactionToast = ({
 
   return (
     <Toast ref={ref} className={generatedClasses.wrapper} key={toastId}>
-      <Progress id={toastId} progress={progress} done={!isPending}>
+      <Progress
+        key={toastId}
+        id={toastId}
+        progress={progress}
+        done={!isPending}
+      >
         <div className={generatedClasses.toastContainer}>
           <div className={generatedClasses.iconContainer}>
             <IconState

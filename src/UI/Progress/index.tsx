@@ -1,14 +1,13 @@
 import React from 'react';
 import moment from 'moment';
-import storage from 'utils/session';
 import { logarithmicRest } from 'utils';
+import storage from 'utils/session';
 
 import { Props } from './type';
 
 const Progress = ({ id, children, progress, done }: Props) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
-
   const removeTxFromSession = () => {
     const toastProgress = storage.getItem('toastProgress');
     const hasSessionStoredTx = Boolean(toastProgress[id]);
@@ -17,9 +16,7 @@ const Progress = ({ id, children, progress, done }: Props) => {
       return;
     }
 
-    const expires = moment()
-      .add(10, 'minutes')
-      .unix();
+    const expires = moment().add(10, 'minutes').unix();
 
     delete toastProgress[id];
 
@@ -41,7 +38,6 @@ const Progress = ({ id, children, progress, done }: Props) => {
   };
 
   const getInitialData = () => {
-      
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
     const toastProgress = storage.getItem('toastProgress');
     const remaining = progress
@@ -100,7 +96,6 @@ const Progress = ({ id, children, progress, done }: Props) => {
     }
     return;
   }, [progress, done]);
-
   return progress ? (
     <div className='progress position-relative' ref={ref}>
       <div

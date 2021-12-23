@@ -6,9 +6,6 @@ import { getGeneratedClasses } from 'utils';
 
 import { TransactionsToastListPropsType } from './types';
 
-const startTime = moment().unix();
-
-const endTime = moment().add(10, 'seconds').unix();
 export function TransactionsToastList({
   shouldRenderDefaultCss = true,
   className = 'transactions-toast-list'
@@ -27,6 +24,8 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
+    const startTime = moment().unix();
+    const endTime = moment().add(10, 'seconds').unix();
     return (
       <TransactionToast
         key={toastId}

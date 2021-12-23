@@ -34,7 +34,7 @@
         font-size: inherit;
         line-height: inherit;
         .progress-bar {
-          background-color: #fff;
+          background-color: rgba($secondary, 0.2);
           .content-height {
             z-index: -1;
             visibility: hidden;
