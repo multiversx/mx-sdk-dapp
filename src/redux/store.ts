@@ -17,20 +17,13 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: [
-    'account',
-    'loginInfo',
-    'toasts',
-    'transactionsInfo',
-    'transactions',
-    'modals'
-  ]
+  whitelist: ['account', 'loginInfo', 'toasts', 'transactionsInfo', 'modals']
 };
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const localStorageReducers = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: localStorageReducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
