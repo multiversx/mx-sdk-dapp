@@ -1,21 +1,22 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { useGetPendingTransactions } from 'services/transactions';
-import TransactionToast from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'utils';
-
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
-} from '../../storage/session';
+} from 'storage/session';
+import TransactionToast from 'UI/TransactionToast';
+import { getGeneratedClasses } from 'utils';
+
 import { TransactionsToastListPropsType } from './types';
 
 export function TransactionsToastList({
   shouldRenderDefaultCss = true,
   className = 'transactions-toast-list'
 }: TransactionsToastListPropsType) {
-  const { pendingTransactions, hasPendingTransactions } =
-    useGetPendingTransactions();
+  const [toastsIds, setToastsIds] = useState<any>([]);
+
+  const { pendingTransactions } = useGetPendingTransactions();
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -26,43 +27,63 @@ export function TransactionsToastList({
     }
   );
 
-  const toastsList = useMemo(() => {
-    const toastsFromStorage = getToastsIdsFromStorage();
-    const renderedToasts = [...toastsFromStorage];
+  const mappedToastsList = toastsIds?.map((toastId: string) => {
+    const startTime = moment().unix();
+    const endTime = moment().add(10, 'seconds').unix();
+    return (
+      <TransactionToast
+        key={toastId}
+        toastId={toastId}
+        endTime={endTime}
+        startTime={startTime}
+      />
+    );
+  });
+
+  const mapPendingSignedTransactions = () => {
+    const newToasts = [...toastsIds];
+
     for (const sessionId in pendingTransactions) {
-      const hasToast = renderedToasts.includes(sessionId);
+      const hasToast = toastsIds.includes(sessionId);
 
       if (!hasToast) {
-        renderedToasts.push(sessionId);
+        newToasts.push(sessionId);
       }
     }
 
-    return renderedToasts?.map((toastId: string) => {
-      const startTime = moment().unix();
-      const endTime = moment().add(10, 'seconds').unix();
-      return (
-        <TransactionToast
-          key={toastId}
-          toastId={toastId}
-          endTime={endTime}
-          startTime={startTime}
-        />
-      );
-    });
-  }, [pendingTransactions]);
+    setToastsIds(newToasts);
+  };
+
+  const fetchSessionStorageToasts = () => {
+    const sessionStorageToastsIds = getToastsIdsFromStorage();
+
+    if (sessionStorageToastsIds) {
+      const newToasts = [...toastsIds, ...sessionStorageToastsIds];
+      setToastsIds(newToasts);
+    }
+  };
 
   const saveSessionStorageToasts = () => {
-    if (!hasPendingTransactions) {
+    const shouldSaveLocalToasts = Boolean(toastsIds.length);
+    if (!shouldSaveLocalToasts) {
       return;
     }
-    setToastsIdsToStorage(Object.keys(pendingTransactions));
+
+    setToastsIdsToStorage(toastsIds);
   };
 
   useEffect(() => {
-    window.addEventListener('beforeunload', () => saveSessionStorageToasts);
+    fetchSessionStorageToasts();
+    return () => {
+      saveSessionStorageToasts();
+    };
   }, []);
 
-  return <div className={generatedClasses.wrapper}>{toastsList}</div>;
+  useEffect(() => {
+    mapPendingSignedTransactions();
+  }, [pendingTransactions]);
+
+  return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }
 
 export default TransactionsToastList;
