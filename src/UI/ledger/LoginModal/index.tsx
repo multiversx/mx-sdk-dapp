@@ -53,7 +53,6 @@ export function LedgerLoginContainer({
       />
     );
   }
-
   if (ledgerAccount != null && !error) {
     return <ConfirmAddress token={token} />;
   }
