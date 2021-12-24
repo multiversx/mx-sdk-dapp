@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { TxDataTokenType, TxsDataTokensType } from 'types/transactions';
+import {
+  MultiSignTxType,
+  TxDataTokenType,
+  TxsDataTokensType
+} from 'types/transactions';
 import { getTokenFromData } from 'utils';
 import parseMultiEsdtTransferData from 'utils/transactions/parseMultiEsdtTransferData';
 
@@ -20,8 +24,9 @@ interface UseParseMultiEsdtTransferDataReturnType {
   parsedTransactionsByDataField: TxsDataTokensType;
   getTxInfoByDataField: (
     data: string,
-    multiTransactionData: string
+    multiTransactionData?: string
   ) => TxDataTokenType;
+  allTransactions: MultiSignTxType[];
 }
 
 export function useParseMultiEsdtTransferData({
@@ -29,6 +34,7 @@ export function useParseMultiEsdtTransferData({
 }: UseParseMultiEsdtTransferDataPropsType): UseParseMultiEsdtTransferDataReturnType {
   const [parsedTransactionsByDataField, setParsedTransactions] =
     useState<TxsDataTokensType>({});
+  const [allTransactions, setAllTransactions] = useState<MultiSignTxType[]>([]);
 
   function addTransactionDataToParsedInfo(
     data: string,
@@ -42,7 +48,7 @@ export function useParseMultiEsdtTransferData({
 
   function getTxInfoByDataField(
     data: string,
-    multiTransactionData: string
+    multiTransactionData?: string
   ): TxDataTokenType {
     if (parsedTransactionsByDataField == null) {
       return defaultTransactionInfo;
@@ -52,7 +58,10 @@ export function useParseMultiEsdtTransferData({
       return parsedTransactionsByDataField[data];
     }
 
-    if (String(multiTransactionData) in parsedTransactionsByDataField) {
+    if (
+      multiTransactionData != null &&
+      String(multiTransactionData) in parsedTransactionsByDataField
+    ) {
       return parsedTransactionsByDataField[multiTransactionData];
     }
 
@@ -61,13 +70,19 @@ export function useParseMultiEsdtTransferData({
 
   useEffect(() => {
     if (transactions && transactions.length > 0) {
-      transactions.forEach((transaction) => {
+      const allTransactions: MultiSignTxType[] = [];
+      transactions.forEach((transaction, transactionIndex) => {
         const multiTxs = parseMultiEsdtTransferData(
           transaction.getData().toString()
         );
 
         if (multiTxs.length > 0) {
-          multiTxs.forEach((trx) => {
+          multiTxs.forEach((trx, idx) => {
+            const newTx: MultiSignTxType = {
+              transaction,
+              multiTxData: trx.data,
+              transactionIndex: idx
+            };
             addTransactionDataToParsedInfo(trx.data, {
               tokenId: trx.token ? trx.token : '',
               amount: trx.amount ? trx.amount : '',
@@ -76,6 +91,7 @@ export function useParseMultiEsdtTransferData({
               multiTxData: trx.data,
               receiver: trx.receiver
             });
+            allTransactions.push(newTx);
           });
         } else {
           const { tokenId, amount } = getTokenFromData(
@@ -89,13 +105,16 @@ export function useParseMultiEsdtTransferData({
               receiver: transaction.getReceiver().bech32()
             });
           }
+          allTransactions.push({ transaction, transactionIndex });
         }
       });
+      setAllTransactions(allTransactions);
     }
   }, [transactions]);
 
   return {
     parsedTransactionsByDataField,
-    getTxInfoByDataField
+    getTxInfoByDataField,
+    allTransactions
   };
 }

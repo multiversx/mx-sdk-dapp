@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { transactionsToSignSelector } from 'redux/selectors';
+import { useParseMultiEsdtTransferData } from '../../../services/transactions/hooks/useParseMultiEsdtTransferData';
 import { HandleCloseType } from '../helpers';
 import SignStep, { SignStepType } from './SignStep';
 
@@ -16,6 +17,8 @@ const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
   const [currentStep, setCurrentStep] = React.useState(0);
   const [signedTransactions, setSignedTransactions] =
     React.useState<SignStepType['signedTransactions']>();
+  const { getTxInfoByDataField, allTransactions } =
+    useParseMultiEsdtTransferData({ transactions });
 
   return (
     <Modal
@@ -28,12 +31,12 @@ const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
     >
       <div className='card container'>
         <div className='card-body'>
-          {transactions?.map((transaction, index) => (
+          {allTransactions?.map((tx, index) => (
             <SignStep
-              key={transaction.getData().toString() + index}
+              key={tx.transaction.getData().toString() + index}
               {...{
                 index,
-                transaction,
+                transaction: tx.transaction,
                 handleClose,
                 error,
                 sessionId,
@@ -41,6 +44,10 @@ const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
                 setSignedTransactions,
                 signedTransactions,
                 currentStep,
+                txsDataToken: getTxInfoByDataField(
+                  tx.transaction.getData().toString(),
+                  tx.multiTxData
+                ),
                 setCurrentStep,
                 isLast: index === transactions.length - 1
               }}
