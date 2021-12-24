@@ -1,42 +1,24 @@
 import BigNumber from 'bignumber.js';
+import { MultiEsdtTxType, TransactionTypesEnum } from 'types/transactions';
 import { decodePart } from 'utils/decoders';
-
-interface MultiEsdtType {
-  type: 'esdtTransaction' | 'nftTransaction';
-  receiver: string;
-  token?: string;
-  nonce?: string;
-  amount?: string;
-  data: string;
-}
-
-interface MultiEsdtScCallType {
-  type: 'scCall';
-  receiver: string;
-  token?: string;
-  nonce?: string;
-  amount?: string;
-  data: string;
-}
-
-export type MultiEsdtTxType = MultiEsdtType | MultiEsdtScCallType;
-
-const allOccurences = (sourceStr: string, searchStr: string) =>
-  [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
+import { getAllStringOccurrences } from '../getAllStringOccurrences';
 
 export default function parseMultiEsdtTransferData(data?: string) {
   const transactions: MultiEsdtTxType[] = [];
   let contractCallDataIndex = 0;
   try {
-    if (data && data.startsWith('MultiESDTNFTTransfer') && data.includes('@')) {
-      const [, receiver, encodedTxCount, ...rest] = data.split('@');
+    if (
+      data?.startsWith(TransactionTypesEnum.MultiESDTNFTTransfer) &&
+      data?.includes('@')
+    ) {
+      const [, receiver, encodedTxCount, ...rest] = data?.split('@');
       if (receiver) {
         const txCount = new BigNumber(encodedTxCount, 16).toNumber();
 
         let itemIndex = 0;
         for (let txIndex = 0; txIndex < txCount; txIndex++) {
           const transaction: MultiEsdtTxType = {
-            type: 'nftTransaction',
+            type: TransactionTypesEnum.nftTransaction,
             data: '',
             receiver
           };
@@ -55,7 +37,7 @@ export default function parseMultiEsdtTransferData(data?: string) {
                 if (encodedNonce) {
                   transaction.nonce = encodedNonce;
                 } else {
-                  transaction.type = 'esdtTransaction';
+                  transaction.type = TransactionTypesEnum.esdtTransaction;
                 }
                 transaction.data = `${transaction.data}@${rest[itemIndex]}`;
                 break;
@@ -77,7 +59,9 @@ export default function parseMultiEsdtTransferData(data?: string) {
         }
         if (
           transactions.length !== txCount ||
-          transactions.some((tx) => allOccurences(tx.data, '@').length !== 2) ||
+          transactions.some(
+            (tx) => getAllStringOccurrences(tx.data, '@').length !== 2
+          ) ||
           transactions.some((tx) => tx.data.startsWith('@'))
         ) {
           return [];
@@ -88,7 +72,7 @@ export default function parseMultiEsdtTransferData(data?: string) {
             scCallData += '@' + rest[i];
           }
           transactions[txCount] = {
-            type: 'scCall',
+            type: TransactionTypesEnum.scCall,
             data: scCallData,
             receiver
           };

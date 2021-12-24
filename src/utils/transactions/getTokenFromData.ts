@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { TransactionTypesEnum } from '../../types/transactions';
 
 const noData = {
   tokenId: '',
@@ -9,10 +10,10 @@ export function getTokenFromData(data?: string): {
   tokenId: string;
   amount: string;
 } {
-  const tokenTransfer = data?.includes('ESDTTransfer');
-  const nftTransfer = data?.includes('ESDTNFTTransfer');
+  const tokenTransfer = data?.includes(TransactionTypesEnum.ESDTTransfer);
+  const nftTransfer = data?.includes(TransactionTypesEnum.ESDTNFTTransfer);
 
-  if (data && (tokenTransfer || nftTransfer)) {
+  if (data != null && (tokenTransfer || nftTransfer)) {
     try {
       const encodedToken = data.split('@')[1];
       const encodedAmount = data.split('@')[tokenTransfer ? 2 : 3];
