@@ -9,7 +9,7 @@ const setNewAccount = () => {
   getAddress()
     .then((address: string) => {
       getAccount(address)
-        .then((account) => {
+        .then((account) => {            
           store.dispatch(
             setAccount({
               balance: account.balance.toString(),

@@ -1,27 +1,32 @@
-import React from 'react';
-import { logout, getAddress, getAccountBalance } from 'dapp-core';
+import React, { useEffect, useState } from 'react';
+import { logout, getAccountBalance, useGetAccountInfo } from 'dapp-core';
 import PingPongPage from './PingPong';
 
-export default function AuthenticatedRoute() {
-  const [userAddress, setUserAddress] = React.useState('');
-  const [userBalance, setUserBalance] = React.useState<any>(null);
+export default function AuthenticatedRoute () {
+  const [userBalance, setUserBalance] = useState<any>(null);
   const handleLogout = () => {
     logout(`${window.location.origin}/unlock`);
   };
 
-  React.useEffect(() => {
-    getAddress().then((adr: string) => {
-      setUserAddress(adr);
-      getAccountBalance(adr, true).then((acc: string) => setUserBalance(acc));
-    });
-  }, []);
+  const account = useGetAccountInfo();
+
+  const updateUserDenominateBalance = async () => {
+    const denominateBalance = await getAccountBalance(account.address, true);
+
+    setUserBalance(denominateBalance);
+  };
+
+  useEffect(() => {
+    updateUserDenominateBalance();
+  }, [account]);
+
   return (
     <div className='home d-flex flex-fill align-items-center'>
       <div className='m-auto' data-testid='unlockPage'>
         <div className='card my-4 text-center'>
           <div className='card-body py-4 px-2 px-sm-2 mx-lg-4'>
             <p className='mb-4'>You are now authenticated </p>
-            <p>{`address: ${userAddress}`}</p>
+            <p>{`address: ${account.address}`}</p>
             {userBalance != null && <p>{`balance: ${userBalance}`}</p>}
             <PingPongPage />
             <button onClick={handleLogout}>
