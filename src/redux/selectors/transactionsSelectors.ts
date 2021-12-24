@@ -1,7 +1,7 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import newTransaction from 'models/newTransaction';
 import { SignedTransactionsType } from 'types/transactions';
-import { getIsTransactionPending } from 'utils';
+import { getIsTransactionPending } from 'utils/transactions';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 

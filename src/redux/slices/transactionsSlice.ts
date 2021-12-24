@@ -10,7 +10,10 @@ import {
   SignedTransactionType,
   TransactionsToSignType
 } from 'types/transactions';
-import { getIsTransactionFailed, getIsTransactionSuccessful } from 'utils';
+import {
+  getIsTransactionFailed,
+  getIsTransactionSuccessful
+} from 'utils/transactions';
 import { logoutAction } from '../commonActions';
 
 export interface UpdateSignedTransactionsPayloadType {
