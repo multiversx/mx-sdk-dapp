@@ -1,5 +1,5 @@
 {
-  "name": "dapp-core",
+  "name": "@elrondnetwork/dapp-core",
   "version": "0.0.1",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
