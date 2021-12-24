@@ -12,6 +12,7 @@ import {
 } from 'types/enums';
 import { SignedTransactionsBodyType } from 'types/transactions';
 import { getIsTransactionPending, getPlainTransactionStatus } from 'utils';
+import { refreshAccount } from 'utils/account';
 
 interface RetriesType {
   [hash: string]: number;
@@ -22,7 +23,7 @@ interface TransactionStatusTrackerPropsType {
   transactionPayload: SignedTransactionsBodyType;
 }
 
-export function TransactionStatusTracker({
+export function TransactionStatusTracker ({
   sessionId,
   transactionPayload: { transactions, status }
 }: TransactionStatusTrackerPropsType) {
@@ -72,6 +73,8 @@ export function TransactionStatusTracker({
                   transactionHash: hash
                 })
               );
+
+              refreshAccount();
 
               if (txOnNetwork.status.isFailed()) {
                 const scResults = txOnNetwork
