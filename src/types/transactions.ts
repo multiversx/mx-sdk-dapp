@@ -52,7 +52,7 @@ export interface TxDataTokenType {
   tokenId: string;
   amount: string;
   receiver: string;
-  type?: MultiEsdtTxType['type'];
+  type?: MultiEsdtTxType['type'] | '';
   nonce?: string;
   multiTxData?: string;
 }

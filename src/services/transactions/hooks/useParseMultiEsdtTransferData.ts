@@ -4,7 +4,7 @@ import { TxDataTokenType, TxsDataTokensType } from 'types/transactions';
 import { getTokenFromData } from 'utils';
 import parseMultiEsdtTransferData from 'utils/transactions/parseMultiEsdtTransferData';
 
-const defaultTransactionInfo = {
+const defaultTransactionInfo: TxDataTokenType = {
   tokenId: '',
   amount: '',
   type: '',
@@ -18,8 +18,10 @@ interface UseParseMultiEsdtTransferDataPropsType {
 
 interface UseParseMultiEsdtTransferDataReturnType {
   parsedTransactionsByDataField: TxsDataTokensType;
-  onPrev: () => void;
-  onNext: () => void;
+  getTxInfoByDataField: (
+    data: string,
+    multiTransactionData: string
+  ) => TxDataTokenType;
 }
 
 export function useParseMultiEsdtTransferData({
@@ -38,7 +40,10 @@ export function useParseMultiEsdtTransferData({
     }));
   }
 
-  function getTxInfoByDataField(data: string, multiTransactionData: string) {
+  function getTxInfoByDataField(
+    data: string,
+    multiTransactionData: string
+  ): TxDataTokenType {
     if (parsedTransactionsByDataField == null) {
       return defaultTransactionInfo;
     }
