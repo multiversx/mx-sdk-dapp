@@ -11,7 +11,11 @@ export default function AuthenticatedRoute () {
   const account = useGetAccountInfo();
 
   const updateUserDenominateBalance = async () => {
-    const denominateBalance = await getAccountBalance(account.address, true);
+    if (!account.address) {
+      return;
+    }
+    const { address } = account;
+    const denominateBalance = await getAccountBalance(address, true);
 
     setUserBalance(denominateBalance);
   };
