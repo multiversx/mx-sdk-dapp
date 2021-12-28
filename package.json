@@ -66,7 +66,7 @@
     "typescript": "4.1.2"
   },
   "files": [
-    "dist"
+    "build"
   ],
   "dependencies": {
     "@elrondnetwork/dapp-utils": "^0.0.15",
