@@ -91,8 +91,7 @@ const TransactionSender = () => {
         clearSignInfo();
 
         history.pushState({}, document.title, '?');
-        // TODO: if possible, provide error type. If not, any type is OK
-      } catch (error: any) {
+      } catch (error) {
         console.error('Unable to send transactions', error);
         dispatch(
           updateSignedTransactions({
