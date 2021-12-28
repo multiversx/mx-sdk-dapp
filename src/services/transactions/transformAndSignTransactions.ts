@@ -65,9 +65,9 @@ export async function transformAndSignTransactions({
       minGasLimit
     });
     // TODO: any or typed
-  } catch (err: any) {
-    console.error('error signing transaction', err.message);
-    return { error: err.message };
+  } catch (err) {
+    console.error('error signing transaction', (err as any).message);
+    return { error: (err as any).message };
   }
 }
 

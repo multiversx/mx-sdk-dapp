@@ -89,7 +89,7 @@ export default function SignTransactions() {
           setShowSignModal(true);
           break;
       }
-    } catch (err: any) {
+    } catch (err) {
       console.error('error when signing', err);
       dispatch(
         updateSignedTransaction({
@@ -99,7 +99,7 @@ export default function SignTransactions() {
         })
       );
       // TODO: if axios error then maybe use err.message ?
-      showError(err);
+      showError(err as any);
     }
   };
 

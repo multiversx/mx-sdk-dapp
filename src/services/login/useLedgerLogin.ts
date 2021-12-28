@@ -170,9 +170,9 @@ export function useLedgerLogin({
       }
       setIsLoading(false);
       await loginUser(hwWalletProvider);
-    } catch (err: any) {
-      if (err.statusCode in ledgerErrorCodes) {
-        setError((ledgerErrorCodes as any)[err.statusCode].message);
+    } catch (err) {
+      if ((err as any).statusCode in ledgerErrorCodes) {
+        setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
       }
       console.warn(failedInitializeErrorText, err);
     } finally {
@@ -196,9 +196,9 @@ export function useLedgerLogin({
         addressesPerPage
       );
       setAccounts(accounts);
-    } catch (err: any) {
-      if (err.statusCode in ledgerErrorCodes) {
-        setError((ledgerErrorCodes as any)[err.statusCode].message);
+    } catch (err) {
+      if ((err as any).statusCode in ledgerErrorCodes) {
+        setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
       } else {
         setError(ledgerAppErrorText);
       }

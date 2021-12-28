@@ -75,10 +75,10 @@ export const useExtensionLogin = ({
       store.dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-      // TODO: can be any or typed error
-    } catch (error: any) {
+    } catch (error) {
       console.error(error);
-      setError('error logging in' + error.message);
+      // TODO: can be any or typed error
+      setError('error logging in' + (error as any).message);
     } finally {
       setIsLoading(false);
     }

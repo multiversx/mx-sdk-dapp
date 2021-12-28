@@ -65,8 +65,8 @@ const useSignWithProvider = ({
           });
       }
       // TODO: if possible, provide error type. If not, any type is OK
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError((err as any).message);
     }
   }
 
