@@ -49,7 +49,8 @@ export const useWebWalletLogin = ({
       };
 
       await provider.login(loginData);
-    } catch (error) {
+      // TODO: any or typed error
+    } catch (error: any) {
       console.error(error);
       setError('error logging in' + error.message);
     } finally {

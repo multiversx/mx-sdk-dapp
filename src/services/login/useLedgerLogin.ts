@@ -170,7 +170,7 @@ export function useLedgerLogin({
       }
       setIsLoading(false);
       await loginUser(hwWalletProvider);
-    } catch (err) {
+    } catch (err: any) {
       if (err.statusCode in ledgerErrorCodes) {
         setError((ledgerErrorCodes as any)[err.statusCode].message);
       }
@@ -196,7 +196,7 @@ export function useLedgerLogin({
         addressesPerPage
       );
       setAccounts(accounts);
-    } catch (err) {
+    } catch (err: any) {
       if (err.statusCode in ledgerErrorCodes) {
         setError((ledgerErrorCodes as any)[err.statusCode].message);
       } else {

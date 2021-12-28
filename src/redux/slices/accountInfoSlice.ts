@@ -24,13 +24,13 @@ export interface AccountInfoSliceType {
 export const emptyAccount: AccountType = {
   balance: '...',
   address: '...',
-  nonce: new Nonce(0)
+  nonce: new Nonce(0) // TODO: a complex object is stored in state. Maybe better integer and selector returns erdjs Nonce object?
 };
 
 const initialState: AccountInfoSliceType = {
   address: '',
   account: emptyAccount,
-  shard: 0,
+  shard: 0, // TODO: start with undefined? Shard 0 is a false supposition
   ledgerAccount: null,
   walletConnectAccount: null
 };

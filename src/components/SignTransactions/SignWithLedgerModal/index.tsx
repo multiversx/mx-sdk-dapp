@@ -13,7 +13,7 @@ export interface SignModalType {
 
 const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
   const transactionsToSign = useSelector(transactionsToSignSelector);
-  const { sessionId, transactions, callbackRoute } = transactionsToSign!;
+  const { sessionId, transactions, callbackRoute } = transactionsToSign!; // TODO: eslint warning
   const [currentStep, setCurrentStep] = React.useState(0);
   const [signedTransactions, setSignedTransactions] =
     React.useState<SignStepType['signedTransactions']>();

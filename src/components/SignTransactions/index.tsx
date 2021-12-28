@@ -46,6 +46,7 @@ export default function SignTransactions() {
   };
 
   const signTransactions = async () => {
+    // TODO: eslint warning
     const { sessionId, transactions, callbackRoute } = transactionsToSign!;
     try {
       setNewCallbackRoute(callbackRoute);
@@ -76,6 +77,7 @@ export default function SignTransactions() {
             urlParams: { [walletSignSession]: sessionId }
           });
 
+          // TODO: eslint warning
           provider.signTransactions(transactions!, {
             callbackUrl: encodeURIComponent(callbackUrl)
           });
@@ -87,7 +89,7 @@ export default function SignTransactions() {
           setShowSignModal(true);
           break;
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error('error when signing', err);
       dispatch(
         updateSignedTransaction({
@@ -96,6 +98,7 @@ export default function SignTransactions() {
           }
         })
       );
+      // TODO: if axios error then maybe use err.message ?
       showError(err);
     }
   };

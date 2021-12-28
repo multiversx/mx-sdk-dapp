@@ -23,7 +23,7 @@ interface TransactionStatusTrackerPropsType {
   transactionPayload: SignedTransactionsBodyType;
 }
 
-export function TransactionStatusTracker ({
+export function TransactionStatusTracker({
   sessionId,
   transactionPayload: { transactions, status }
 }: TransactionStatusTrackerPropsType) {
@@ -56,7 +56,7 @@ export function TransactionStatusTracker ({
         try {
           const retriesForThisHash = retriesRef.current[hash];
           if (retriesForThisHash > 40) {
-            //consider transaction as stuck after 10 seconds
+            // consider transaction as stuck after 10 seconds
             manageTimedOutTransactions();
             return;
           }

@@ -75,7 +75,8 @@ export const useExtensionLogin = ({
       store.dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-    } catch (error) {
+      // TODO: can be any or typed error
+    } catch (error: any) {
       console.error(error);
       setError('error logging in' + error.message);
     } finally {

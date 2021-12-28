@@ -57,7 +57,7 @@ export const networkConfigSlice = createSlice({
       const { walletConnectBridge, walletConnectDeepLink, network } =
         action.payload;
       const proxy = new ProxyProvider(network.gatewayAddress, {
-        timeout: 4000
+        timeout: 4000 // TODO: timeout can be moved into global config
       });
       const apiProvider = new ApiProvider(network.apiAddress, {
         timeout: 4000
