@@ -22,6 +22,7 @@ const useSignWithProvider = ({
 }: SignModalType): UseSignWithProviderReturnType => {
   const dispatch = useDispatch();
   const transactionsToSign = useSelector(transactionsToSignSelector);
+  // TODO: eslint warning
   const { sessionId, transactions, callbackRoute } = transactionsToSign!;
 
   const provider = useSelector(providerSelector);
@@ -63,8 +64,9 @@ const useSignWithProvider = ({
             handleClose();
           });
       }
+      // TODO: if possible, provide error type. If not, any type is OK
     } catch (err) {
-      setError(err.message);
+      setError((err as any).message);
     }
   }
 

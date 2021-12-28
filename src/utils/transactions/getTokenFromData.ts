@@ -6,6 +6,7 @@ const noData = {
   amount: ''
 };
 
+// TODO: add tests
 export function getTokenFromData(data?: string): {
   tokenId: string;
   amount: string;

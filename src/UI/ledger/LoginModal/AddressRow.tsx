@@ -8,6 +8,7 @@ interface AddressRowType {
   onSelectAddress: (address: { address: string; index: number } | null) => void;
 }
 
+// TODO: why not use Trim component?
 const trimHash = (hash: string, keep = 10) => {
   const start = hash.substring(0, keep);
   const end = hash.substring(hash.length - keep);

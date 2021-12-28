@@ -30,7 +30,6 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
     };
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(addWindowResizeListener);
 
   React.useEffect(() => {

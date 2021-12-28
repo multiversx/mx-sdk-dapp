@@ -239,7 +239,7 @@ export const useWalletConnectLogin = ({
     const wcUriWithToken = `${walletConnectUri}&token=${token}`;
 
     setWcUri(wcUriWithToken);
-    dispatch(setTokenLogin({ loginToken: token! }));
+    dispatch(setTokenLogin({ loginToken: token! })); // TODO: eslint warning
   }
 
   const isFailed = error != null;

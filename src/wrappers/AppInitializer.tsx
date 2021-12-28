@@ -14,7 +14,7 @@ export default function AppInitializer({
   const dispatch = useDispatch();
 
   async function initializeApp() {
-    await dispatch(initializeNetworkConfig(networkConfig));
+    await dispatch(initializeNetworkConfig(networkConfig)); // TODO: maybe remove await?
     setInitialized(true);
   }
   useEffect(() => {

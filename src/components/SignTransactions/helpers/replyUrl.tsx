@@ -2,14 +2,14 @@ function buildUrlParams(
   search: string,
   urlParams: {
     [key: string]: string;
-  },
+  }
 ) {
   const urlSearchParams = new URLSearchParams(search);
   const params = Object.fromEntries(urlSearchParams as any);
 
   const nextUrlParams = new URLSearchParams({
     ...params,
-    ...urlParams,
+    ...urlParams
   }).toString();
 
   return { nextUrlParams, params };
@@ -22,7 +22,7 @@ interface ReplyUrlType {
 
 export default function replyUrl({
   callbackUrl,
-  urlParams = {},
+  urlParams = {}
 }: ReplyUrlType) {
   let url = callbackUrl;
   if (Object.entries(urlParams).length > 0) {

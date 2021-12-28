@@ -77,7 +77,8 @@ export const useExtensionLogin = ({
       );
     } catch (error) {
       console.error(error);
-      setError('error logging in' + error.message);
+      // TODO: can be any or typed error
+      setError('error logging in' + (error as any).message);
     } finally {
       setIsLoading(false);
     }

@@ -32,7 +32,7 @@ export interface LoginInfoStateType {
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;
-  loginExpiresAt: number | null;
+  loginExpiresAt: number | null; // TODO: seems unused in dapp. maybe removed?
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
 }
