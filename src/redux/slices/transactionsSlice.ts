@@ -8,6 +8,7 @@ import {
 import {
   SignedTransactionsType,
   SignedTransactionType,
+  TokenOptionType,
   TransactionsToSignType
 } from 'types/transactions';
 import {
@@ -30,14 +31,16 @@ export interface UpdateSignedTransactionStatusPayloadType {
   errorMessage?: string;
 }
 
-export interface SignTransactionsStateType {
+export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
+  tokenOptions: TokenOptionType[];
 }
 
-const initialState: SignTransactionsStateType = {
+const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
-  transactionsToSign: null
+  transactionsToSign: null,
+  tokenOptions: []
 };
 
 export const transactionsSlice = createSlice({
@@ -45,7 +48,7 @@ export const transactionsSlice = createSlice({
   initialState,
   reducers: {
     updateSignedTransaction: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<SignedTransactionsType>
     ) => {
       state.signedTransactions = {
@@ -54,7 +57,7 @@ export const transactionsSlice = createSlice({
       };
     },
     updateSignedTransactions: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionsPayloadType>
     ) => {
       const { sessionId, status, errorMessage, transactions } = action.payload;
@@ -70,7 +73,7 @@ export const transactionsSlice = createSlice({
       }
     },
     updateSignedTransactionStatus: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
     ) => {
       const { sessionId, status, errorMessage, transactionHash } =
@@ -110,13 +113,21 @@ export const transactionsSlice = createSlice({
       }
     },
     setTransactionsToSign: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<TransactionsToSignType>
     ) => {
       state.transactionsToSign = action.payload;
     },
     clearSignTransactions: (state) => {
       state.transactionsToSign = initialState.transactionsToSign;
+    },
+    setTokenOptions: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<TokenOptionType[]>
+    ) => {
+      if (Array.isArray(action.payload)) {
+        state.tokenOptions = action.payload;
+      }
     }
   },
   extraReducers: (builder) => {
@@ -151,7 +162,8 @@ export const {
   updateSignedTransactionStatus,
   updateSignedTransactions,
   setTransactionsToSign,
-  clearSignTransactions
+  clearSignTransactions,
+  setTokenOptions
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

@@ -18,6 +18,11 @@ export const signedTransactionsSelector = createDeepEqualSelector(
   (state) => state.signedTransactions
 );
 
+export const tokenOptionsSelector = createDeepEqualSelector(
+  transactionsSelectors,
+  (state) => state.tokenOptions
+);
+
 export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   (signedTransactions) =>

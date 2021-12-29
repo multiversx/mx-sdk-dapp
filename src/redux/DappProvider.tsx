@@ -3,12 +3,13 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
+import SignTransactions from 'components/SignTransactions';
+import TransactionSender from 'components/TransactionSender';
+import TransactionsTracker from 'components/TransactionsTracker';
 import { NetworkConfigType } from 'types';
+import { TokenOptionType } from 'types/transactions';
 import AppInitializer from 'wrappers/AppInitializer';
 
-import SignTransactions from '../components/SignTransactions';
-import TransactionSender from '../components/TransactionSender';
-import TransactionsTracker from '../components/TransactionsTracker';
 import NotificationModal from '../UI/NotificationModal';
 import { store, persistor } from './store';
 
@@ -17,15 +18,17 @@ import '../assets/sass/main.scss';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
+  tokenOptions?: TokenOptionType[];
 }
 
 export const DappProvider = ({
   children,
-  networkConfig
+  networkConfig,
+  tokenOptions
 }: DappProviderPropsType) => (
   <Provider store={store}>
     <PersistGate persistor={persistor} loading={null}>
-      <AppInitializer networkConfig={networkConfig}>
+      <AppInitializer networkConfig={networkConfig} tokenOptions={tokenOptions}>
         <ProviderInitializer />
         <SignTransactions />
         <TransactionSender />

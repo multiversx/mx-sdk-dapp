@@ -36,7 +36,7 @@ const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
               key={tx.transaction.getData().toString() + index}
               {...{
                 index,
-                transaction: tx.transaction,
+                tx,
                 handleClose,
                 error,
                 sessionId,
