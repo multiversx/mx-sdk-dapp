@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { logout, getAccountBalance, useGetAccountInfo } from 'dapp-core';
 import PingPongPage from './PingPong';
+import Transactions from './PingPong/Transactions';
 
-export default function AuthenticatedRoute () {
+export default function AuthenticatedRoute() {
   const [userBalance, setUserBalance] = useState<any>(null);
   const handleLogout = () => {
     logout(`${window.location.origin}/unlock`);
@@ -38,6 +39,7 @@ export default function AuthenticatedRoute () {
             </button>
           </div>
         </div>
+        <Transactions />
       </div>
     </div>
   );
