@@ -17,9 +17,10 @@
     "@types/node": "file:../node_modules/@types/node",
     "@types/react": "file:../node_modules/@types/react",
     "@types/react-dom": "file:../node_modules/@types/react-dom",
+    "axios": "^0.24.0",
     "dapp-core": "file:..",
-    "react": "file:../node_modules/react",
     "node-sass": "file:../node_modules/node-sass",
+    "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-scripts": "file:../node_modules/react-scripts",
     "typescript": "file:../node_modules/typescript"
