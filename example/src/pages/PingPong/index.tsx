@@ -1,21 +1,13 @@
 import React from 'react';
 import { transactionServices, useGetAccountInfo } from 'dapp-core';
-import { getTransactions } from 'apiRequests';
-import { network } from 'config';
-import { useDispatch } from 'context';
+import { contractAddress, network } from 'config';
 
 export const PingPongPage: () => JSX.Element = () => {
   const { sendTransactions } = transactionServices;
-  const { apiAddress } = network;
-  const account = useGetAccountInfo();
-  const dispatch = useDispatch();
 
   const [transactionSessionId, setTransactionSessionId] = React.useState<
     string | null
   >(null);
-
-  const contractAddress =
-    'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
 
   const sendPingTransaction = async () => {
     const pingTransaction = {
@@ -46,23 +38,6 @@ export const PingPongPage: () => JSX.Element = () => {
       setTransactionSessionId(sessionId);
     }
   };
-
-  const fetchData = () => {
-    getTransactions({
-      apiAddress,
-      address: account.address,
-      timeout: 3000,
-      contractAddress
-    }).then(({ data, success }) => {
-      dispatch({
-        type: 'setTransactions',
-        transactions: data,
-        transactionsFetched: success
-      });
-    });
-  };
-
-  React.useEffect(fetchData, []);
 
   return (
     <div className='m-auto p-4'>
