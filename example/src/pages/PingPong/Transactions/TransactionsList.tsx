@@ -1,10 +1,9 @@
 import React from 'react';
 import { Ui } from '@elrondnetwork/dapp-utils';
-import { useGetAccountInfo } from 'dapp-core';
+import { useGetAccountInfo, denominate } from 'dapp-core';
 import moment from 'moment';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';
-import BigNumber from 'bignumber.js';
 import { network } from 'config';
 import { TransactionType } from './types';
 
@@ -58,6 +57,7 @@ const TransactionList = ({
           <tbody data-testid='transactionsList'>
             {sortedTransactions.map((tx: TransactionType, i) => {
               const incomingTransaction = incoming(tx.sender);
+
               return (
                 <tr key={tx.txHash + i}>
                   <td>
@@ -91,7 +91,7 @@ const TransactionList = ({
                     ) : (
                       <>{tx.sender === account.address ? '-' : '+'}</>
                     )}
-                    {new BigNumber(tx.value).toFormat()}
+                    {denominate({ input: tx.value })}
                   </td>
                 </tr>
               );

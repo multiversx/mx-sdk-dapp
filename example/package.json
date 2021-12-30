@@ -20,7 +20,6 @@
     "axios": "^0.24.0",
     "dapp-core": "file:..",
     "node-sass": "file:../node_modules/node-sass",
-    "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-scripts": "file:../node_modules/react-scripts",
     "typescript": "file:../node_modules/typescript"

@@ -1,1 +1,3 @@
-export * from './amount';
+import denominate from './denominate';
+
+export { denominate };

@@ -8,4 +8,4 @@ export * as loginServices from './services/login';
 export { DappProvider } from './redux/DappProvider';
 export { AuthenticatedRoutesWrapper } from './wrappers';
 export * as transactionServices from './services/transactions';
-export { useGetAccountInfo, useSendTransactions } from 'hooks/index';
+export { useGetAccountInfo, useSendTransactions } from './hooks';
