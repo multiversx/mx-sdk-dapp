@@ -1,13 +1,12 @@
 import React from 'react';
 import { Ui } from '@elrondnetwork/dapp-utils';
-import { useGetAccountInfo, buildUrlParams } from 'dapp-core';
+import { useGetAccountInfo } from 'dapp-core';
 import moment from 'moment';
-import { TransactionType } from 'context/state';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';
 import BigNumber from 'bignumber.js';
 import { network } from 'config';
-import { Balance } from '@elrondnetwork/erdjs';
+import { TransactionType } from './types';
 
 function sortByDate(a: TransactionType, b: TransactionType) {
   if (a.timestamp < b.timestamp) {
