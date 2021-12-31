@@ -1,8 +1,8 @@
 import { validation } from '@elrondnetwork/dapp-utils';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
-
 import { networkConstants } from 'constants/index';
+
 import { accountBalanceSelector } from 'redux/selectors';
 import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
 import { store } from 'redux/store';

@@ -1,6 +1,7 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'react-redux';
+import { ledgerErrorCodes } from 'constants/index';
 import { loginAction } from 'redux/commonActions';
 import {
   isLoggedInSelector,
@@ -14,7 +15,6 @@ import {
   setTokenLogin
 } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
-import { ledgerErrorCodes } from '../../constants';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
