@@ -42,7 +42,8 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
     input: value,
     denomination,
     decimals,
-    showLastNonZeroDecimal
+    showLastNonZeroDecimal,
+    addCommas: true
   });
 
   const valueParts = denominatedValue.split('.');

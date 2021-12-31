@@ -22,6 +22,8 @@ export const extrasApi = 'https://devnet-extras-api.elrond.com';
 export const contractAddress =
   'erd1qqqqqqqqqqqqqpgquvt728n40ssd8n2qns9jrlqpwq2jc4rj4cysfuj3ad';
 
+export const dAppName = 'Dapp';
+
 export const network: NetworkType & {
   graphQlAddress: string;
 } = {

@@ -5,19 +5,13 @@ import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
 import { DappProvider, AuthenticatedRoutesWrapper, DappUI } from 'dapp-core';
 import 'dapp-core/build/index.css';
-import AuthenticatedRoute from './pages/AuthenticatedRoute';
-import Unlock from './pages/UnlockRoute';
+import Layout from 'components/Layout';
+import { routeNames } from 'routes';
+import UnlockPage from 'pages/UnlockPage';
+import PageNotFoud from 'pages/PageNotFoud';
+import routes from 'routes';
 
 const { TransactionsToastList } = DappUI;
-
-const routes = [
-  {
-    path: '/home',
-    title: 'Home',
-    authenticatedRoute: true,
-    component: AuthenticatedRoute
-  }
-];
 
 const App = () => {
   return (
@@ -25,17 +19,21 @@ const App = () => {
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
       >
-        <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
-          <TransactionsToastList />
-          <Routes>
-            <Route path='/' element={<Unlock />} />
-
-            <Route path={'/home'} element={<AuthenticatedRoute />} />
-
-            <Route path={'/unlock'} element={<Unlock />} />
-
-            <Route path='*' element={<div>404</div>} />
-          </Routes>
+        <AuthenticatedRoutesWrapper routes={routes} unlockRoute='unlock'>
+          <Layout>
+            <TransactionsToastList />
+            <Routes>
+              <Route path={routeNames.unlock} element={<UnlockPage />} />
+              {routes.map((route: any, index: number) => (
+                <Route
+                  path={route.path}
+                  key={'route-key-' + index}
+                  element={<route.component />}
+                />
+              ))}
+              <Route element={PageNotFoud} />
+            </Routes>
+          </Layout>
         </AuthenticatedRoutesWrapper>
       </DappProvider>
     </Router>
