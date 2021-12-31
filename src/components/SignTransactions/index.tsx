@@ -46,60 +46,61 @@ export default function SignTransactions() {
   };
 
   const signTransactions = async () => {
-    // TODO: eslint warning
-    const { sessionId, transactions, callbackRoute } = transactionsToSign!;
-    try {
-      setNewCallbackRoute(callbackRoute);
-      setNewSessionId(sessionId);
+    if (transactionsToSign) {
+      const { sessionId, transactions, callbackRoute } = transactionsToSign;
+      try {
+        setNewCallbackRoute(callbackRoute);
+        setNewSessionId(sessionId);
 
-      if (provider == null) {
-        setShowSignModal(true);
-        setError(
-          'You need a signer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect'
-        );
-        return;
-      }
-
-      const proxyAccount = await proxy.getAccount(new Address(address));
-      const latestNonce = Math.max(
-        proxyAccount.nonce.valueOf(),
-        account.nonce.value
-      );
-
-      transactions?.forEach((tx, i) => {
-        tx.setNonce(new Nonce(latestNonce + i));
-      });
-
-      switch (providerType) {
-        case LoginMethodsEnum.wallet:
-          const callbackUrl = replyUrl({
-            callbackUrl: `${window.location.origin}${callbackRoute}`,
-            urlParams: { [walletSignSession]: sessionId }
-          });
-
-          // TODO: eslint warning
-          provider.signTransactions(transactions!, {
-            callbackUrl: encodeURIComponent(callbackUrl)
-          });
-
-          break;
-        case LoginMethodsEnum.extension:
-        case LoginMethodsEnum.ledger:
-        case LoginMethodsEnum.walletconnect:
+        if (provider == null) {
           setShowSignModal(true);
-          break;
+          setError(
+            'You need a signer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect'
+          );
+          return;
+        }
+
+        const proxyAccount = await proxy.getAccount(new Address(address));
+        const latestNonce = Math.max(
+          proxyAccount.nonce.valueOf(),
+          account.nonce
+        );
+
+        transactions.forEach((tx, i) => {
+          tx.setNonce(new Nonce(latestNonce + i));
+        });
+
+        switch (providerType) {
+          case LoginMethodsEnum.wallet:
+            const callbackUrl = replyUrl({
+              callbackUrl: `${window.location.origin}${callbackRoute}`,
+              urlParams: { [walletSignSession]: sessionId }
+            });
+
+            // TODO: eslint warning
+            provider.signTransactions(transactions, {
+              callbackUrl: encodeURIComponent(callbackUrl)
+            });
+
+            break;
+          case LoginMethodsEnum.extension:
+          case LoginMethodsEnum.ledger:
+          case LoginMethodsEnum.walletconnect:
+            setShowSignModal(true);
+            break;
+        }
+      } catch (err) {
+        console.error('error when signing', err);
+        dispatch(
+          updateSignedTransaction({
+            [sessionId]: {
+              status: TransactionBatchStatusesEnum.cancelled
+            }
+          })
+        );
+        // TODO: if axios error then maybe use err.message ?
+        showError(err as any);
       }
-    } catch (err) {
-      console.error('error when signing', err);
-      dispatch(
-        updateSignedTransaction({
-          [sessionId]: {
-            status: TransactionBatchStatusesEnum.cancelled
-          }
-        })
-      );
-      // TODO: if axios error then maybe use err.message ?
-      showError(err as any);
     }
   };
 
