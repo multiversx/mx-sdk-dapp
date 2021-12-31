@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/DappProvider';
 import { ledgerAccountSelector } from 'redux/selectors';
 import { useLedgerLogin } from 'services/login/useLedgerLogin';
 import PageState from 'UI/PageState';

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { NetworkConfigType } from 'types';
+
+import { useDispatch } from 'redux/DappProvider';
 
 export default function AppInitializer({
   networkConfig,

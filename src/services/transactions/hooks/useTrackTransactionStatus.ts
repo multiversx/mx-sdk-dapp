@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/DappProvider';
 import { transactionStatusSelector } from 'redux/selectors';
 import { RootState } from 'redux/store';
 import { TransactionBatchStatusesEnum } from 'types/enums';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { createDispatchHook, createSelectorHook, createStoreHook, Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
@@ -19,11 +19,18 @@ interface DappProviderPropsType {
   networkConfig: NetworkConfigType;
 }
 
+const defaultContextValue : any  = null;
+const DappCoreContext = React.createContext(defaultContextValue);
+
+export const useStore = createStoreHook(DappCoreContext);
+export const useDispatch = createDispatchHook(DappCoreContext);
+export const useSelector = createSelectorHook(DappCoreContext);
+
 export const DappProvider = ({
   children,
   networkConfig
 }: DappProviderPropsType) => (
-  <Provider store={store}>
+  <Provider context={DappCoreContext} store={store}>
     <PersistGate persistor={persistor} loading={null}>
       <AppInitializer networkConfig={networkConfig}>
         <ProviderInitializer />

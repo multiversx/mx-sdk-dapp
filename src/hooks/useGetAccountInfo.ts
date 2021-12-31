@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/DappProvider';
 import { accountInfoSelector } from 'redux/selectors';
 import { AccountInfoSliceType } from 'redux/slices';
 
