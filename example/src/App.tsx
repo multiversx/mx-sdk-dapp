@@ -6,7 +6,6 @@ import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 import { DappProvider, AuthenticatedRoutesWrapper, DappUI } from 'dapp-core';
 import 'dapp-core/build/index.css';
 import AuthenticatedRoute from './pages/AuthenticatedRoute';
-import Unlock from './pages/UnlockRoute';
 
 const { TransactionsToastList, DappCorePages } = DappUI;
 const { UnlockPage } = DappCorePages;
