@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ui } from '@elrondnetwork/dapp-utils';
-import { useGetAccountInfo, denominate } from 'dapp-core';
+import { useGetAccountInfo, DappUI } from 'dapp-core';
 import moment from 'moment';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';
@@ -85,13 +85,13 @@ const TransactionList = ({
                   <td>
                     {moment.unix(tx.timestamp).format('MMMM Do YYYY, h:mm A')}
                   </td>
-                  <td>
+                  <td className='text-right'>
                     {tx.value === '0' ? (
                       ''
                     ) : (
                       <>{tx.sender === account.address ? '-' : '+'}</>
                     )}
-                    {denominate({ input: tx.value })}
+                    <DappUI.Denominate value={tx.value} />
                   </td>
                 </tr>
               );

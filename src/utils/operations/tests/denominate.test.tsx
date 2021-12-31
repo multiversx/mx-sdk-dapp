@@ -1,5 +1,4 @@
 import denominate from './../denominate';
-// file.only
 describe('denomination 4,4', () => {
   const numbers: { [key: string]: string } = {
     '9999999999999999999999990000': '999,999,999,999,999,999,999,999',
@@ -15,7 +14,8 @@ describe('denomination 4,4', () => {
         input,
         denomination,
         decimals,
-        showLastNonZeroDecimal: false
+        showLastNonZeroDecimal: false,
+        addCommas: true
       });
       expect(withCommas).toBe(output);
     });
@@ -38,7 +38,8 @@ describe('denomination 8,4', () => {
         input,
         denomination,
         decimals,
-        showLastNonZeroDecimal: false
+        showLastNonZeroDecimal: false,
+        addCommas: true
       });
       expect(withCommas).toBe(output);
     });
@@ -80,7 +81,8 @@ describe('denomination 4,8,true', () => {
         input,
         denomination,
         decimals,
-        showLastNonZeroDecimal: true
+        showLastNonZeroDecimal: true,
+        addCommas: true
       });
       expect(withCommas).toBe(output);
     });
@@ -157,9 +159,29 @@ describe('denomination negative', () => {
         input,
         denomination,
         decimals,
-        showLastNonZeroDecimal: true
+        showLastNonZeroDecimal: true,
+        addCommas: true
       });
       expect(withCommas).toBe(output);
     });
   }
+});
+
+describe('denomination single tests', () => {
+  it('should show less than if decimal amount is too low', () => {
+    const result = denominate({
+      input: (100_000_000_000_000).toString(),
+      decimals: 2,
+      showLastNonZeroDecimal: false
+    });
+    expect(result).toBe('<0.01');
+  });
+  it('should show zero decimals for integers with decimal amount too low', () => {
+    const result = denominate({
+      input: ['1', '000', '000', '001', '000', '000', '000', '000'].join(''),
+      decimals: 2,
+      showLastNonZeroDecimal: false
+    });
+    expect(result).toBe('1000.00');
+  });
 });

@@ -11,12 +11,14 @@ export default function pipe<ValueType>(previous: ValueType) {
         };
       } else {
         return {
-          then: (value: ValueType | ((prop: ValueType) => ValueType)) =>
-            // will not compile if value is not used
-            value ? pipe(previous) : pipe(previous)
+          then: () => pipe(previous)
         };
       }
     },
+
+    then: (newValue: ValueType | ((prop: ValueType) => ValueType)) =>
+      newValue instanceof Function ? pipe(newValue(previous)) : pipe(newValue),
+
     valueOf: function () {
       return previous;
     }
