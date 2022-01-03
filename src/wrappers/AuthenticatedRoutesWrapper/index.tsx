@@ -38,7 +38,7 @@ const AuthenticatedRoutesWrapper = ({
   const authenticatedRoutesRef = React.useRef(
     routes.filter((route) => Boolean(route.authenticatedRoute))
   );
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     refreshChainID();
