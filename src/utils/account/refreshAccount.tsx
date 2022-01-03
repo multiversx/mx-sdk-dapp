@@ -5,43 +5,42 @@ import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';
 
-const setNewAccount = () => {
-  getAddress()
-    .then((address: string) => {
-      getAccount(address)
-        .then((account) => {
-          store.dispatch(
-            setAccount({
-              balance: account.balance.toString(),
-              address,
-              nonce: getLatestNonce(account)
-            })
-          );
-        })
-        .catch((e) => {
-          console.error('Failed getting account ', e);
-        });
-    })
-    .catch((e) => {
-      console.error('Failed getting address ', e);
-    });
+const setNewAccount = async () => {
+  try {
+    const address = await getAddress();
+    try {
+      const account = await getAccount(address);
+      const accountData = {
+        balance: account.balance.toString(),
+        address,
+        nonce: getLatestNonce(account)
+      };
+      store.dispatch(setAccount(accountData));
+      return accountData;
+    } catch (e) {
+      console.error('Failed getting account ', e);
+    }
+  } catch (e) {
+    console.error('Failed getting address ', e);
+  }
+  return undefined;
 };
 
-export function refreshAccount() {
+export async function refreshAccount() {
   const provider = providerSelector(store.getState());
+
   if (provider.isInitialized()) {
-    setNewAccount();
+    return setNewAccount();
   } else {
-    provider
-      .init()
-      .then((initialised) => {
-        if (!initialised) {
-          return;
-        }
-        setNewAccount();
-      })
-      .catch((e) => {
-        console.error('Failed initializing provider ', e);
-      });
+    try {
+      const initialized = await provider.init();
+      if (!initialized) {
+        return;
+      }
+      return setNewAccount();
+    } catch (e) {
+      console.error('Failed initializing provider ', e);
+    }
   }
+  return undefined;
 }
