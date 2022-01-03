@@ -18,6 +18,9 @@ const Actions = () => {
 
   const [secondsLeft, setSecondsLeft] = React.useState<number>();
   const [hasPing, setHasPing] = React.useState<boolean>();
+  const [transactionSessionId, setTransactionSessionId] = React.useState<
+    string | null
+  >(null);
 
   const mount = () => {
     if (secondsLeft) {
@@ -71,13 +74,9 @@ const Actions = () => {
         console.error('Unable to call VM query', err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [transactionSessionId]);
 
   const { sendTransactions } = transactionServices;
-
-  const [transactionSessionId, setTransactionSessionId] = React.useState<
-    string | null
-  >(null);
 
   const sendPingTransaction = async () => {
     const pingTransaction = {
