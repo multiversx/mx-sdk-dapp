@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/DappProvider';
 import { isLoggedInSelector, networkSelector } from 'redux/selectors';
 import { setWalletLogin } from 'redux/slices';
 import { store } from 'redux/store';
@@ -51,7 +51,7 @@ export const useWebWalletLogin = ({
       await provider.login(loginData);
     } catch (error) {
       console.error(error);
-      setError('error logging in' + error.message);
+      setError('error logging in' + (error as any).message);
     } finally {
       setIsLoading(false);
     }

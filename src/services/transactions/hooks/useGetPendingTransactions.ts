@@ -1,4 +1,4 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/DappProvider';
 import { pendingSignedTransactionsSelector } from 'redux/selectors';
 import {
   SignedTransactionsType,

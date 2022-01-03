@@ -1,6 +1,6 @@
 import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import { providerSelector, transactionsToSignSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
 import { TransactionBatchStatusesEnum } from 'types/enums';
