@@ -23,7 +23,7 @@ const Home = () => {
 
               <Link
                 to={routeNames.unlock}
-                className='btn btn-primary mt-3'
+                className='btn btn-primary mt-3 text-white'
                 data-testid='loginBtn'
               >
                 Login
