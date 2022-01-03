@@ -1,5 +1,5 @@
-import { DappUI } from 'index';
 import React from 'react';
+import { DappUI } from 'index';
 import { getGeneratedClasses, getIsLoggedIn } from 'utils';
 import { Props } from './types';
 
@@ -12,7 +12,7 @@ export const UnlockPage = ({
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'Maiar',
   ExtensionloginButtonText = 'Extension',
-  WebWalletLoginButtonText = 'Web wallet',
+  WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
   const {
     ExtensionLoginButton,

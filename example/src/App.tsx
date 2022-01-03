@@ -5,18 +5,15 @@ import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
 import { DappProvider, AuthenticatedRoutesWrapper, DappUI } from 'dapp-core';
 import 'dapp-core/build/index.css';
-<<<<<<< HEAD
 import Layout from 'components/Layout';
 import { routeNames } from 'routes';
-import UnlockPage from 'pages/UnlockPage';
 import PageNotFoud from 'pages/PageNotFoud';
 import routes from 'routes';
-=======
-import AuthenticatedRoute from './pages/AuthenticatedRoute';
->>>>>>> master
 
-const { TransactionsToastList, DappCorePages } = DappUI;
-const { UnlockPage } = DappCorePages;
+const {
+  TransactionsToastList,
+  DappCorePages: { UnlockPage }
+} = DappUI;
 
 const App = () => {
   return (
@@ -24,12 +21,17 @@ const App = () => {
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
       >
-<<<<<<< HEAD
-        <AuthenticatedRoutesWrapper routes={routes} unlockRoute='unlock'>
+        <AuthenticatedRoutesWrapper
+          routes={routes}
+          unlockRoute={routeNames.unlock}
+        >
           <Layout>
             <TransactionsToastList />
             <Routes>
-              <Route path={routeNames.unlock} element={<UnlockPage />} />
+              <Route
+                path={routeNames.unlock}
+                element={<UnlockPage loginRoute={routeNames.dashboard} />}
+              />
               {routes.map((route: any, index: number) => (
                 <Route
                   path={route.path}
@@ -40,19 +42,6 @@ const App = () => {
               <Route element={PageNotFoud} />
             </Routes>
           </Layout>
-=======
-        <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
-          <TransactionsToastList />
-          <Routes>
-            <Route path='/' element={<UnlockPage loginRoute={'/home'} />} />
-
-            <Route path={'/home'} element={<AuthenticatedRoute />} />
-
-            <Route path={'/unlock'} element={<UnlockPage loginRoute={'/home'} />} />
-
-            <Route path='*' element={<div>404</div>} />
-          </Routes>
->>>>>>> master
         </AuthenticatedRoutesWrapper>
       </DappProvider>
     </Router>

@@ -1,28 +1,9 @@
 import * as React from 'react';
-import { DappUI, useGetAccountInfo, getAccountBalance } from 'dapp-core';
+import { DappUI, useGetAccountInfo } from 'dapp-core';
 import { contractAddress } from 'config';
-import { useEffect, useState } from 'react';
 
 const TopInfo = () => {
   const account = useGetAccountInfo();
-  // TODO: why keep local state ?
-  const [userBalance, setUserBalance] = useState<any>(null);
-
-  const updateUserDenominateBalance = async () => {
-    // TODO: must not be checked
-    if (!account.address) {
-      return;
-    }
-    const { address } = account;
-    // TODO: must work out of the box
-    const denominateBalance = await getAccountBalance(address);
-
-    setUserBalance(denominateBalance);
-  };
-
-  useEffect(() => {
-    updateUserDenominateBalance();
-  }, [account]);
 
   return (
     <div className='text-white' data-testid='topInfo'>
@@ -36,7 +17,10 @@ const TopInfo = () => {
       </div>
       <div>
         <h3 className='py-2'>
-          <DappUI.Denominate value={userBalance} data-testid='balance' />
+          <DappUI.Denominate
+            value={account.account.balance}
+            data-testid='balance'
+          />
         </h3>
       </div>
     </div>

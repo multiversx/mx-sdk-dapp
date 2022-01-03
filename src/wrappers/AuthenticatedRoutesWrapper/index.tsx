@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'redux/DappProvider';
 import { matchPath } from 'react-router-dom';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import {
   addressSelector,
   chainIDSelector,
