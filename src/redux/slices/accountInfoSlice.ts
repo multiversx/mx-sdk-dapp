@@ -1,12 +1,18 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
-import { AccountType } from 'types';
+
 import {
   loginAction,
   logoutAction,
   LoginActionPayloadType
 } from '../commonActions';
 
+export interface AccountType {
+  address: string;
+  balance: string;
+  nonce: number;
+  code?: string;
+}
 export interface LedgerAccountType {
   index: number;
   address: string;

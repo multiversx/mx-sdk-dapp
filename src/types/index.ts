@@ -26,13 +26,6 @@ export interface NetworkConfigType {
   network: NetworkType;
 }
 
-export interface AccountType {
-  address: string;
-  balance: string;
-  nonce: number;
-  code?: string;
-}
-
 export interface ScResultType {
   callType: string;
   gasLimit: number;

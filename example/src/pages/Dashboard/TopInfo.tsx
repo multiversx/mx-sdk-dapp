@@ -3,13 +3,13 @@ import { DappUI, useGetAccountInfo } from 'dapp-core';
 import { contractAddress } from 'config';
 
 const TopInfo = () => {
-  const account = useGetAccountInfo();
+  const { address, account } = useGetAccountInfo();
 
   return (
     <div className='text-white' data-testid='topInfo'>
       <div className='mb-1'>
         <span className='opacity-6 mr-1'>Your address:</span>
-        <span data-testid='accountAddress'> {account.address}</span>
+        <span data-testid='accountAddress'> {address}</span>
       </div>
       <div className='mb-4'>
         <span className='opacity-6 mr-1'>Contract address:</span>
@@ -17,10 +17,7 @@ const TopInfo = () => {
       </div>
       <div>
         <h3 className='py-2'>
-          <DappUI.Denominate
-            value={account.account.balance}
-            data-testid='balance'
-          />
+          <DappUI.Denominate value={account.balance} data-testid='balance' />
         </h3>
       </div>
     </div>
