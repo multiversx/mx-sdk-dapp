@@ -83,7 +83,7 @@ const TransactionList = ({
                     </a>
                   </td>
                   <td>
-                    {moment.unix(tx.timestamp).format('MMMM Do YYYY, h:mm A')}
+                    {moment.unix(tx.timestamp).format('MMM Do YYYY, h:mm A')}
                   </td>
                   <td className='text-right'>
                     {tx.value === '0' ? (
