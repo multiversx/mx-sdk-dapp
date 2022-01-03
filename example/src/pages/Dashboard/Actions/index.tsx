@@ -1,5 +1,10 @@
 import * as React from 'react';
-import { transactionServices, useGetAccountInfo } from 'dapp-core';
+import {
+  transactionServices,
+  useGetAccountInfo,
+  useGetPendingTransactions,
+  refreshAccount
+} from 'dapp-core';
 import { contractAddress, network } from 'config';
 import {
   Address,
@@ -14,6 +19,7 @@ import moment from 'moment';
 
 const Actions = () => {
   const account = useGetAccountInfo();
+  const { hasPendingTransactions } = useGetPendingTransactions();
   const { address } = account;
 
   const [secondsLeft, setSecondsLeft] = React.useState<number>();
@@ -74,7 +80,7 @@ const Actions = () => {
         console.error('Unable to call VM query', err);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [transactionSessionId]);
+  }, [hasPendingTransactions]);
 
   const { sendTransactions } = transactionServices;
 
@@ -84,6 +90,7 @@ const Actions = () => {
       data: 'ping',
       receiver: contractAddress
     };
+    await refreshAccount();
 
     const { sessionId, error } = await sendTransactions({
       transactions: pingTransaction
@@ -99,6 +106,7 @@ const Actions = () => {
       data: 'pong',
       receiver: contractAddress
     };
+    await refreshAccount();
 
     const { sessionId, error } = await sendTransactions({
       transactions: pongTransaction
@@ -108,7 +116,7 @@ const Actions = () => {
     }
   };
 
-  const pongAllowed = secondsLeft === 0;
+  const pongAllowed = secondsLeft === 0 && !hasPendingTransactions;
   const notAllowedClass = pongAllowed ? '' : 'not-allowed disabled';
 
   const timeRemaining = moment()
@@ -120,7 +128,7 @@ const Actions = () => {
     <div className='d-flex mt-4 justify-content-center'>
       {hasPing !== undefined && (
         <>
-          {hasPing ? (
+          {hasPing && !hasPendingTransactions ? (
             <div className='action-btn' onClick={sendPingTransaction}>
               <button className='btn'>
                 <FontAwesomeIcon icon={faArrowUp} className='text-primary' />
@@ -154,7 +162,7 @@ const Actions = () => {
                     )}
                   </span>
                 </div>
-                {!pongAllowed && (
+                {!pongAllowed && !hasPendingTransactions && (
                   <span className='opacity-6 text-white'>
                     {timeRemaining} until able to Pong
                   </span>
