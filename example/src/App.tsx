@@ -3,7 +3,7 @@ import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 
 import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 
-import { DappProvider, AuthenticatedRoutesWrapper, DappUI } from 'dapp-core';
+import { DappProvider, DappUI } from 'dapp-core';
 import 'dapp-core/build/index.css';
 import Layout from 'components/Layout';
 import { routeNames } from 'routes';
@@ -21,28 +21,23 @@ const App = () => {
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
       >
-        <AuthenticatedRoutesWrapper
-          routes={routes}
-          unlockRoute={routeNames.unlock}
-        >
-          <Layout>
-            <TransactionsToastList />
-            <Routes>
+        <Layout>
+          <TransactionsToastList />
+          <Routes>
+            <Route
+              path={routeNames.unlock}
+              element={<UnlockPage loginRoute={routeNames.dashboard} />}
+            />
+            {routes.map((route: any, index: number) => (
               <Route
-                path={routeNames.unlock}
-                element={<UnlockPage loginRoute={routeNames.dashboard} />}
+                path={route.path}
+                key={'route-key-' + index}
+                element={<route.component />}
               />
-              {routes.map((route: any, index: number) => (
-                <Route
-                  path={route.path}
-                  key={'route-key-' + index}
-                  element={<route.component />}
-                />
-              ))}
-              <Route element={PageNotFoud} />
-            </Routes>
-          </Layout>
-        </AuthenticatedRoutesWrapper>
+            ))}
+            <Route element={PageNotFoud} />
+          </Routes>
+        </Layout>
       </DappProvider>
     </Router>
   );
