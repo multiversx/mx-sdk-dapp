@@ -1,8 +1,8 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'react-redux';
 import { ledgerErrorCodes } from 'constants/index';
 import { loginAction } from 'redux/commonActions';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import {
   isLoggedInSelector,
   ledgerAccountSelector,
