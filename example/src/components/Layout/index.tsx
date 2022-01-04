@@ -1,17 +1,19 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
 import { AuthenticatedRoutesWrapper } from 'dapp-core';
+import routes, { routeNames } from 'routes';
 import Footer from './Footer';
 import Navbar from './Navbar';
-import routes, { routeNames } from 'routes';
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const { search } = useLocation();
   return (
     <div className='bg-light d-flex flex-column flex-fill wrapper'>
       <Navbar />
       <main className='d-flex flex-column flex-grow-1'>
         <AuthenticatedRoutesWrapper
           routes={routes}
-          unlockRoute={routeNames.unlock}
+          unlockRoute={`${routeNames.unlock}${search}`}
         >
           {children}
         </AuthenticatedRoutesWrapper>
