@@ -1,7 +1,7 @@
 import React from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'redux/DappProvider';
 import { loginAction } from 'redux/commonActions';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,

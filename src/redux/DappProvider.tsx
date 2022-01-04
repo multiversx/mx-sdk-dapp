@@ -34,17 +34,19 @@ export const useSelector = createSelectorHook(DappCoreContext);
 export const DappProvider = ({
   children,
   networkConfig
-}: DappProviderPropsType) => (
-  <Provider context={DappCoreContext} store={store}>
-    <PersistGate persistor={persistor} loading={null}>
-      <AppInitializer networkConfig={networkConfig}>
-        <ProviderInitializer />
-        <SignTransactions />
-        <TransactionSender />
-        <TransactionsTracker />
-        <NotificationModal />
-        {children}
-      </AppInitializer>
-    </PersistGate>
-  </Provider>
-);
+}: DappProviderPropsType) => {
+  return (
+    <Provider context={DappCoreContext} store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <AppInitializer networkConfig={networkConfig}>
+          <ProviderInitializer />
+          <SignTransactions />
+          <TransactionSender />
+          <TransactionsTracker />
+          <NotificationModal />
+          {children}
+        </AppInitializer>
+      </PersistGate>
+    </Provider>
+  );
+};
