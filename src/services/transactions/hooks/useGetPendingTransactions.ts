@@ -1,4 +1,4 @@
-import { useSelector } from 'redux/DappProvider';
+import { useSelector } from 'redux/store';
 import { pendingSignedTransactionsSelector } from 'redux/selectors';
 import {
   SignedTransactionsType,

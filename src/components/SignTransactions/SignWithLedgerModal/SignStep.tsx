@@ -1,7 +1,7 @@
 import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/store';
 import { providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
 import { TransactionBatchStatusesEnum } from 'types/enums';

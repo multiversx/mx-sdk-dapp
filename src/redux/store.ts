@@ -1,4 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { createContext } from 'react';
+import {
+  createDispatchHook,
+  createSelectorHook,
+  createStoreHook
+} from 'react-redux';
 import {
   persistStore,
   persistReducer,
@@ -48,6 +54,13 @@ export const store = configureStore({
       }
     })
 });
+
+export const defaultContextValue: any = null;
+export const DappCoreContext = createContext(defaultContextValue);
+
+export const useStore = createStoreHook(DappCoreContext);
+export const useDispatch = createDispatchHook(DappCoreContext);
+export const useSelector = createSelectorHook(DappCoreContext);
 
 export const persistor = persistStore(store);
 

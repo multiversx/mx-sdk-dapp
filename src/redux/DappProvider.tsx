@@ -1,5 +1,5 @@
 import React from 'react';
-import { createDispatchHook, createSelectorHook, createStoreHook, Provider } from 'react-redux';
+import {  Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
@@ -10,7 +10,7 @@ import SignTransactions from '../components/SignTransactions';
 import TransactionSender from '../components/TransactionSender';
 import TransactionsTracker from '../components/TransactionsTracker';
 import NotificationModal from '../UI/NotificationModal';
-import { store, persistor } from './store';
+import { store, persistor, DappCoreContext } from './store';
 
 import '../assets/sass/main.scss';
 
@@ -18,13 +18,6 @@ interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
 }
-
-const defaultContextValue : any  = null;
-const DappCoreContext = React.createContext(defaultContextValue);
-
-export const useStore = createStoreHook(DappCoreContext);
-export const useDispatch = createDispatchHook(DappCoreContext);
-export const useSelector = createSelectorHook(DappCoreContext);
 
 export const DappProvider = ({
   children,

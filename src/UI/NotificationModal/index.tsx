@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/store';
 
 import { clearNotificationModal } from 'redux/slices';
 import { notificationModalSelector } from '../../redux/selectors';

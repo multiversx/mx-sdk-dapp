@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/store';
 import { matchPath } from 'react-router-dom';
 import {
   addressSelector,

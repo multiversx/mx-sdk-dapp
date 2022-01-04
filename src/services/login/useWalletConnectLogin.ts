@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
 import { IDappProvider } from '@elrondnetwork/erdjs/out';
 import QRCode from 'qrcode';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/store';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { loginAction } from 'redux/commonActions';

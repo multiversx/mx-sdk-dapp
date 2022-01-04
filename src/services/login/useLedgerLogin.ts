@@ -1,6 +1,6 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/store';
 import { loginAction } from 'redux/commonActions';
 import {
   isLoggedInSelector,
