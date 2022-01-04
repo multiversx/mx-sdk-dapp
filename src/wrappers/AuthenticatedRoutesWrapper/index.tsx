@@ -83,8 +83,8 @@ const AuthenticatedRoutesWrapper = ({
       }
     } catch (e) {
       console.error('Failed getting account ', e);
-      setLoading(false);
     }
+    setLoading(false);
   }
 
   const isOnAuthenticatedRoute = authenticatedRoutesRef.current.some(
