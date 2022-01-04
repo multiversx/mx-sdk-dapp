@@ -4,8 +4,6 @@ import { dAppName } from 'config';
 import { routeNames } from 'routes';
 
 const Home = () => {
-  console.log(112);
-
   return (
     <div className='d-flex flex-fill align-items-center container'>
       <div className='row w-100'>
