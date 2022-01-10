@@ -1,8 +1,8 @@
 import React from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useSelector } from 'react-redux';
 import { explorerAddressSelector } from 'redux/selectors';
+import { useSelector } from 'redux/store';
 
 const ExplorerLink = ({
   page,

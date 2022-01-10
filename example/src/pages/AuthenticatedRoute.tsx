@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { logout, getAccountBalance, useGetAccountInfo } from 'dapp-core';
 import PingPongPage from './PingPong';
 
-export default function AuthenticatedRoute () {
+export default function AuthenticatedRoute() {
   const [userBalance, setUserBalance] = useState<any>(null);
   const handleLogout = () => {
     logout(`${window.location.origin}/unlock`);

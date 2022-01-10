@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import moment from 'moment';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'redux/store';
 import { loginAction } from 'redux/commonActions';
 import { isLoggedInSelector } from 'redux/selectors';
 import { setExtensionLogin, setProvider } from 'redux/slices';

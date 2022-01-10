@@ -2,7 +2,6 @@ import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
-import { useDispatch, useSelector } from 'react-redux';
 import newTransaction from 'models/newTransaction';
 import { signedTransactionsSelector } from 'redux/selectors';
 import { accountSelector, proxySelector } from 'redux/selectors';
@@ -11,6 +10,7 @@ import {
   clearSignTransactions,
   updateSignedTransactions
 } from 'redux/slices';
+import { useDispatch, useSelector } from 'redux/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum

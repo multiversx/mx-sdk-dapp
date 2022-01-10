@@ -6,9 +6,9 @@ import { network, walletConnectBridge, walletConnectDeepLink } from './config';
 import { DappProvider, AuthenticatedRoutesWrapper, DappUI } from 'dapp-core';
 import 'dapp-core/build/index.css';
 import AuthenticatedRoute from './pages/AuthenticatedRoute';
-import Unlock from './pages/UnlockRoute';
 
-const { TransactionsToastList } = DappUI;
+const { TransactionsToastList, DappCorePages } = DappUI;
+const { UnlockPage } = DappCorePages;
 
 const routes = [
   {
@@ -28,11 +28,14 @@ const App = () => {
         <AuthenticatedRoutesWrapper routes={routes} unlockRoute={'unlock'}>
           <TransactionsToastList />
           <Routes>
-            <Route path='/' element={<Unlock />} />
+            <Route path='/' element={<UnlockPage loginRoute={'/home'} />} />
 
             <Route path={'/home'} element={<AuthenticatedRoute />} />
 
-            <Route path={'/unlock'} element={<Unlock />} />
+            <Route
+              path={'/unlock'}
+              element={<UnlockPage loginRoute={'/home'} />}
+            />
 
             <Route path='*' element={<div>404</div>} />
           </Routes>

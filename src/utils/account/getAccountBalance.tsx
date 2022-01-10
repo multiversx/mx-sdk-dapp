@@ -11,5 +11,3 @@ export async function getAccountBalance(address: string, withLabel = false) {
   ).toFormat();
   return withLabel ? `${denominatedBalance} ${egldLabel}` : denominatedBalance;
 }
-
-

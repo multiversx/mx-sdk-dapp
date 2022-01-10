@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Nonce } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'redux/store';
 import {
   accountSelector,
   addressSelector,

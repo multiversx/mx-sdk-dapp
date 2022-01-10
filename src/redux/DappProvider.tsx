@@ -11,7 +11,7 @@ import { TokenOptionType } from 'types/transactions';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import NotificationModal from '../UI/NotificationModal';
-import { store, persistor } from './store';
+import { store, persistor, DappCoreContext } from './store';
 
 import '../assets/sass/main.scss';
 
@@ -26,7 +26,7 @@ export const DappProvider = ({
   networkConfig,
   tokenOptions
 }: DappProviderPropsType) => (
-  <Provider store={store}>
+  <Provider context={DappCoreContext} store={store}>
     <PersistGate persistor={persistor} loading={null}>
       <AppInitializer networkConfig={networkConfig} tokenOptions={tokenOptions}>
         <ProviderInitializer />

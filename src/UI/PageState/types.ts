@@ -11,5 +11,4 @@ export interface Props {
   action?: React.ReactNode;
   shouldRenderDefaultCss?: boolean;
   description?: string | React.ReactNode;
-
 }

@@ -1,11 +1,11 @@
 @import './themes/theme.scss';
 
 // Variables override
-@import "./variables/variables";
+@import './variables/variables';
 
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
-@import "~bootstrap/scss/reboot";
+@import '~bootstrap/scss/reboot';
 
 @import './modules/trim/trim';
 @import './modules/modal/modal';
@@ -14,4 +14,3 @@
 @import './modules/tx-details-text/tx-details-text';
 @import './modules/token-symbol/tokenSymbol';
 @import './modules/data/data';
-

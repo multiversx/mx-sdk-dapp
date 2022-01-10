@@ -2,7 +2,7 @@
 -------------------------------------------------- */
 // Fonts
 // @import "./fonts";
-@import "../variables/variables";
+@import '../variables/variables';
 
 $headings-font-weight: 300 !important;
 $primary: #1b46c2;
@@ -13,8 +13,7 @@ $a: #1392ff;
 Override Bootstrap variables only above.
 -------------------------------------------------- */
 
-
-@import "~bootstrap/scss/bootstrap.scss";
+@import '~bootstrap/scss/bootstrap.scss';
 
 // Progress bar
 // @import "./../../../node_modules/react-circular-progressbar/dist/styles.css";
@@ -144,7 +143,7 @@ a,
     color: #9ba5b4;
     margin-left: 1.6428571428571428rem;
     &:before {
-      content: "";
+      content: '';
       display: block;
       width: 1px;
       height: toRem(42);

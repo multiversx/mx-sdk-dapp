@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import { setTokenOptions } from 'redux/slices';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { NetworkConfigType } from 'types';
 import { TokenOptionType } from '../types/transactions';
+
+import { useDispatch } from 'redux/store';
 
 export default function AppInitializer({
   networkConfig,

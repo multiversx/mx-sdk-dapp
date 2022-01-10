@@ -1,7 +1,7 @@
 import React from 'react';
 import { WalletProvider } from '@elrondnetwork/erdjs';
 import qs from 'qs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'redux/store';
 import { networkSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums';
