@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Nonce } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'redux/store';
 import {
   accountSelector,
   addressSelector,
@@ -9,6 +8,7 @@ import {
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { useDispatch, useSelector } from 'redux/store';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';

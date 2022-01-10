@@ -47,7 +47,7 @@ const Data = ({
         output = (
           <React.Fragment>
             <span className='text-muted'>{start}</span>
-            {highlight}
+            <span className={'highlighted'}>{highlight}</span>
             <span className='text-muted'>{end}</span>
           </React.Fragment>
         );

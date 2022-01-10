@@ -8,7 +8,6 @@ import {
 import {
   SignedTransactionsType,
   SignedTransactionType,
-  TokenOptionType,
   TransactionsToSignType
 } from 'types/transactions';
 import {
@@ -34,13 +33,11 @@ export interface UpdateSignedTransactionStatusPayloadType {
 export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
-  tokenOptions: TokenOptionType[];
 }
 
 const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
-  transactionsToSign: null,
-  tokenOptions: []
+  transactionsToSign: null
 };
 
 export const transactionsSlice = createSlice({
@@ -120,14 +117,6 @@ export const transactionsSlice = createSlice({
     },
     clearSignTransactions: (state) => {
       state.transactionsToSign = initialState.transactionsToSign;
-    },
-    setTokenOptions: (
-      state: TransactionsSliceStateType,
-      action: PayloadAction<TokenOptionType[]>
-    ) => {
-      if (Array.isArray(action.payload)) {
-        state.tokenOptions = action.payload;
-      }
     }
   },
   extraReducers: (builder) => {
@@ -162,8 +151,7 @@ export const {
   updateSignedTransactionStatus,
   updateSignedTransactions,
   setTransactionsToSign,
-  clearSignTransactions,
-  setTokenOptions
+  clearSignTransactions
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

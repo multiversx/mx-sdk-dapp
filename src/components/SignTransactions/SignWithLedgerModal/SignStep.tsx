@@ -2,19 +2,16 @@ import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import {
-  egldLabelSelector,
-  providerSelector,
-  tokenOptionsSelector
-} from 'redux/selectors';
+import useGetTokenDetails from 'hooks/useGetTokenDetails';
+import { egldLabelSelector, providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import { useDispatch, useSelector } from 'redux/store';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { MultiSignTxType, TxDataTokenType } from 'types/transactions';
 import Data from 'UI/Data';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
-import { getTokenDetails, isTokenTransfer } from 'utils';
+import { isTokenTransfer } from 'utils';
 import { denominateAmount } from 'utils/form';
 import { defaultDenomination } from '../../../constants';
 import { HandleCloseType } from '../helpers';
@@ -53,10 +50,8 @@ const SignStep = ({
 }: SignStepType) => {
   const provider = useSelector(providerSelector);
   const egldLabel = useSelector(egldLabelSelector);
-  const tokenOptions = useSelector(tokenOptionsSelector);
   const [waitingForDevice, setWaitingForDevice] = React.useState(false);
   const dispatch = useDispatch();
-
   const transactionData = tx.transaction.getData().toString();
 
   const { tokenId, amount, type, multiTxData, receiver } = txsDataToken;
@@ -65,8 +60,7 @@ const SignStep = ({
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
   );
 
-  const { tokenDenomination } = getTokenDetails({
-    tokens: tokenOptions,
+  const { tokenDenomination } = useGetTokenDetails({
     tokenId
   });
 
@@ -85,11 +79,11 @@ const SignStep = ({
         ? { ...signedTransactions, ...newSignedTx }
         : newSignedTx;
       setSignedTransactions(newSignedTransactions);
+      console.log(isLast);
       if (!isLast) {
         setCurrentStep((exising) => exising + 1);
       } else if (newSignedTransactions) {
         handleClose({ updateBatchStatus: false });
-
         dispatch(
           updateSignedTransaction({
             [sessionId]: {
@@ -158,6 +152,12 @@ const SignStep = ({
   const isFirst = currentStep === 0;
   const isVisible = currentStep === index;
 
+  const denominatedAmount = denominateAmount({
+    amount: isTokenTransaction ? amount : tx.transaction.getValue().toString(),
+    denomination: isTokenTransaction ? tokenDenomination : defaultDenomination,
+    addCommas: true
+  });
+
   return isVisible ? (
     <PageState
       icon={error ? faTimes : faHourglass}
@@ -191,17 +191,7 @@ const SignStep = ({
                 <div>
                   <div className='text-secondary text-left'>Amount</div>
                   <div className='d-flex align-items-center'>
-                    <div className='mr-1'>
-                      {denominateAmount({
-                        amount: isTokenTransaction
-                          ? amount
-                          : tx.transaction.getValue().toString(),
-                        denomination: isTokenTransaction
-                          ? tokenDenomination
-                          : defaultDenomination,
-                        addCommas: true
-                      })}
-                    </div>
+                    <div className='mr-1'>{denominatedAmount}</div>
                     <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>
@@ -228,13 +218,13 @@ const SignStep = ({
         </React.Fragment>
       }
       action={
-        <div className='d-flex align-items-center mt-spacer'>
+        <div className='d-flex align-items-center justify-content-end mt-spacer'>
           <a
             href='/'
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
-            className='btn btn-dark btn-lg flex-even mr-2'
+            className='btn btn-dark text-white btn-lg flex-even mr-2'
           >
             {isFirst ? 'Cancel' : 'Back'}
           </a>

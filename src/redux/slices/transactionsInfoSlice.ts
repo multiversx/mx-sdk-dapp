@@ -1,13 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { logoutAction } from '../commonActions';
 
-export interface TransactionInfoSlice {
+export interface TransactionInfoSliceBody {
   processingMessage: string;
   errorMessage: string;
   successMessage: string;
   submittedMessage: string;
-  submittedMessageShown: string;
-  grouping: number[];
+  sessionId: string;
+}
+
+export interface TransactionInfoSlice {
+  [sessionId: string]: TransactionInfoSliceBody;
 }
 
 export interface StateType {

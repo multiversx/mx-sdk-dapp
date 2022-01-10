@@ -1,5 +1,6 @@
 .data-field {
   $font-size: 0.8125rem;
+  $highlighted-font-size: 1rem;
   .textarea {
     -moz-appearance: textfield-multiline;
     -webkit-appearance: textarea;
@@ -14,6 +15,10 @@
     resize: both;
     &:hover {
       border: 1px solid #000;
+    }
+
+    & .highlighted {
+      font-size: $highlighted-font-size;
     }
 
     &.sc-call {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { faGem } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Simple, Combined } from './TokenSymbol';
 
@@ -27,7 +27,7 @@ const getDetails = (token: string): TokenIconType => {
     symbol: token ? token.split('-')[0] : '',
     label: token,
     // eslint-disable-next-line react/display-name
-    icon: () => <FontAwesomeIcon icon={faStar} />
+    icon: () => <FontAwesomeIcon icon={faGem} />
   };
 };
 
