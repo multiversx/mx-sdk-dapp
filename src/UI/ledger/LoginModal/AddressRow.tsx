@@ -37,7 +37,7 @@ const AddressRow = ({
 
   const fetchBalance = async () => {
     try {
-      const balance = await getAccountBalance(address, true);
+      const balance = await getAccountBalance(address);
       setBalance(balance);
     } catch (err) {
       console.error('error fetching balance', balance);

@@ -6,7 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Toast } from 'react-bootstrap';
-import { useSelector } from 'redux/store';
+import { useSelector } from 'redux/DappProvider';
 import { signedTransactionsSelector } from 'redux/selectors';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';

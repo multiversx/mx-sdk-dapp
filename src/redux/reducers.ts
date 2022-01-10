@@ -19,7 +19,7 @@ const transactionsReducer = persistReducer(
   transactions
 );
 
-export default combineReducers({
+const rootReducer = combineReducers({
   account,
   networkConfig,
   loginInfo,
@@ -27,3 +27,5 @@ export default combineReducers({
   transactions: transactionsReducer,
   modals
 });
+
+export default rootReducer;

@@ -1,10 +1,10 @@
 import { Address } from '@elrondnetwork/erdjs/out';
+import { defaultGasPrice, defaultGasLimit } from 'constants/index';
 import newTransaction from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { getAccount, getLatestNonce } from 'utils';
 import { encodeToBase64, isStringBase64 } from 'utils/decoders/base64Utils';
-import { defaultGasPrice, defaultGasLimit } from '../../constants';
 import { SendTransactionReturnType } from './sendTransactions';
 import { signTransactions } from './signTransactions';
 import { SendSimpleTransactionPropsType } from './types';

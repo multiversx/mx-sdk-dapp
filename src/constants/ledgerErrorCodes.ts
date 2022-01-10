@@ -1,11 +1,4 @@
-export const gasPriceModifier = '0.01';
-export const gasPerDataByte = '1500';
-export const gasLimit = '50000';
-export const defaultDenomination = 18;
-export const defaultGasPrice = 1_000_000_000;
-export const defaultGasLimit = 60_000_000;
-
-export const ledgerErrorCodes = {
+const ledgerErrorCodes = {
   0x9000: {
     code: 'codeSuccess',
     message: 'Success'
@@ -92,3 +85,5 @@ export const ledgerErrorCodes = {
       'Regular transaction signing is deprecated in this version. Use hash signing.'
   }
 };
+
+export default ledgerErrorCodes;

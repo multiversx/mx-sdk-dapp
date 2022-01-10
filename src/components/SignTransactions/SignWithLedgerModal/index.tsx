@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
+import { useSelector } from 'redux/DappProvider';
 import { transactionsToSignSelector } from 'redux/selectors';
-import { useSelector } from 'redux/store';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { HandleCloseType } from '../helpers';
 import SignStep, { SignStepType } from './SignStep';

@@ -1,13 +1,18 @@
-import { Nonce } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
-import { AccountType } from 'types';
+
 import {
   loginAction,
   logoutAction,
   LoginActionPayloadType
 } from '../commonActions';
 
+export interface AccountType {
+  address: string;
+  balance: string;
+  nonce: number;
+  code?: string;
+}
 export interface LedgerAccountType {
   index: number;
   address: string;
@@ -16,7 +21,7 @@ export interface LedgerAccountType {
 export interface AccountInfoSliceType {
   address: string;
   shard?: number;
-  account: AccountType | any;
+  account: AccountType;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
 }
@@ -24,7 +29,7 @@ export interface AccountInfoSliceType {
 export const emptyAccount: AccountType = {
   balance: '...',
   address: '...',
-  nonce: new Nonce(0) // TODO: a complex object is stored in state. Maybe better integer and selector returns erdjs Nonce object?
+  nonce: 0
 };
 
 const initialState: AccountInfoSliceType = {
@@ -55,7 +60,7 @@ export const accountInfoSlice = createSlice({
       state: AccountInfoSliceType,
       action: PayloadAction<number>
     ) => {
-      state.account.nonce = new Nonce(action.payload);
+      state.account.nonce = action.payload;
     },
     setAccountShard: (
       state: AccountInfoSliceType,

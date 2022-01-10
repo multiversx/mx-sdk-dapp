@@ -1,5 +1,5 @@
+import { useSelector } from 'redux/DappProvider';
 import { pendingSignedTransactionsSelector } from 'redux/selectors';
-import { useSelector } from 'redux/store';
 import {
   SignedTransactionsType,
   SignedTransactionsBodyType

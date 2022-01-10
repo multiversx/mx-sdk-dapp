@@ -3,9 +3,9 @@ import { Transaction } from '@elrondnetwork/erdjs';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import useGetTokenDetails from 'hooks/useGetTokenDetails';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import { egldLabelSelector, providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
-import { useDispatch, useSelector } from 'redux/store';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { MultiSignTxType, TxDataTokenType } from 'types/transactions';
 import Data from 'UI/Data';
@@ -13,7 +13,7 @@ import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import { isTokenTransfer } from 'utils';
 import { denominateAmount } from 'utils/form';
-import { defaultDenomination } from '../../../constants';
+import { denomination } from '../../../constants';
 import { HandleCloseType } from '../helpers';
 import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
 
@@ -154,7 +154,7 @@ const SignStep = ({
 
   const denominatedAmount = denominateAmount({
     amount: isTokenTransaction ? amount : tx.transaction.getValue().toString(),
-    denomination: isTokenTransaction ? tokenDenomination : defaultDenomination,
+    denomination: isTokenTransaction ? tokenDenomination : denomination,
     addCommas: true
   });
 
@@ -224,14 +224,14 @@ const SignStep = ({
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
-            className='btn btn-dark text-white btn-lg flex-even mr-2'
+            className='btn btn-dark text-white flex-even mr-2'
           >
             {isFirst ? 'Cancel' : 'Back'}
           </a>
 
           <button
             type='button'
-            className='btn btn-primary btn-lg flex-even ml-2'
+            className='btn btn-primary flex-even ml-2'
             id='signBtn'
             data-testid='signBtn'
             onClick={onSignClick}

@@ -1,6 +1,6 @@
 import React from 'react';
-
 import { matchPath } from 'react-router-dom';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import {
   addressSelector,
   chainIDSelector,
@@ -11,7 +11,6 @@ import {
   walletLoginSelector
 } from 'redux/selectors';
 import { setAccount, setChainID, setLedgerAccount } from 'redux/slices';
-import { useDispatch, useSelector } from 'redux/store';
 import { RouteType } from 'types';
 import Loader from 'UI/Loader';
 import { getAccount, getLatestNonce } from 'utils';
@@ -39,7 +38,7 @@ const AuthenticatedRoutesWrapper = ({
   const authenticatedRoutesRef = React.useRef(
     routes.filter((route) => Boolean(route.authenticatedRoute))
   );
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     refreshChainID();
@@ -84,8 +83,8 @@ const AuthenticatedRoutesWrapper = ({
       }
     } catch (e) {
       console.error('Failed getting account ', e);
-      setLoading(false);
     }
+    setLoading(false);
   }
 
   const isOnAuthenticatedRoute = authenticatedRoutesRef.current.some(

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import ExtensionLoginButton from 'UI/extension/LoginButton';
 
 import LedgerLoginButton from 'UI/ledger/LoginButton';
@@ -16,7 +15,7 @@ export const UnlockPage = ({
   LedgerLoginButtonText = 'Ledger',
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'Maiar',
-  ExtensionloginButtonText = 'Extension',
+  ExtensionLoginButtonText = 'Extension',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
   const generatedClasses = getGeneratedClasses(
@@ -48,7 +47,7 @@ export const UnlockPage = ({
             <p className={generatedClasses.description}>{description}</p>
             <ExtensionLoginButton
               callbackRoute={loginRoute}
-              loginButtonText={ExtensionloginButtonText}
+              loginButtonText={ExtensionLoginButtonText}
             />
             <WebWalletLoginButton
               callbackRoute={loginRoute}

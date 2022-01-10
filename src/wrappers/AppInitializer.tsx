@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'redux/DappProvider';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
-import { useDispatch } from 'redux/store';
 import { NetworkConfigType } from 'types';
 
 export default function AppInitializer({
@@ -14,7 +14,7 @@ export default function AppInitializer({
   const dispatch = useDispatch();
 
   async function initializeApp() {
-    await dispatch(initializeNetworkConfig(networkConfig)); // TODO: maybe remove await?
+    dispatch(initializeNetworkConfig(networkConfig));
     setInitialized(true);
   }
   useEffect(() => {

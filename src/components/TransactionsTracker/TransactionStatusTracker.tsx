@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { TransactionHash } from '@elrondnetwork/erdjs/out';
-import { useDispatch, useSelector } from 'redux/store';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import { apiProviderSelector } from 'redux/selectors/networkConfigSelectors';
 import {
   updateSignedTransactions,

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'redux/DappProvider';
 import { clearNotificationModal } from 'redux/slices';
-import { useDispatch, useSelector } from 'redux/store';
 import { notificationModalSelector } from '../../redux/selectors';
 import PageState from '../PageState';
 

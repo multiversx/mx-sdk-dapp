@@ -1,7 +1,7 @@
 import useSwr from 'swr';
+import { useSelector } from 'redux/DappProvider';
 import { networkSelector } from 'redux/selectors';
-import { useSelector } from 'redux/store';
-import { defaultDenomination } from '../constants';
+import { denomination } from '../constants';
 
 interface TokenOptionType {
   tokenLabel: string;
@@ -32,7 +32,7 @@ export function useGetTokenDetails({
   const network = useSelector(networkSelector);
   if (!tokenId) {
     return {
-      tokenDenomination: defaultDenomination,
+      tokenDenomination: denomination,
       tokenLabel: '',
       tokenAvatar: ''
     };
@@ -47,7 +47,7 @@ export function useGetTokenDetails({
 
   const tokenDenomination = selectedToken
     ? selectedToken?.decimals
-    : defaultDenomination;
+    : denomination;
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken ? `${selectedToken?.assets?.svgUrl}` : '';
 
