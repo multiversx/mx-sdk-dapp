@@ -19,3 +19,5 @@ export async function getDenominatedAccountBalance(
   ).toFormat();
   return withLabel ? `${denominatedBalance} ${egldLabel}` : denominatedBalance;
 }
+
+export default getDenominatedAccountBalance;

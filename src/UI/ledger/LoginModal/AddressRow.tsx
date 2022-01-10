@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { getDenominatedAccountBalance } from 'utils/account/getDenominatedAccountBalance';
+import { getDenominatedAccountBalance } from 'utils';
 
 interface AddressRowType {
   selectedAddress?: string;
