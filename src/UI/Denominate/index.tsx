@@ -1,6 +1,5 @@
 import React from 'react';
 import { validation } from '@elrondnetwork/dapp-utils';
-import { operations } from '@elrondnetwork/dapp-utils';
 import {
   denomination as configDenomination,
   decimals as configDecimals
@@ -8,6 +7,7 @@ import {
 
 import { egldLabelSelector } from 'redux/selectors';
 import { store } from 'redux/store';
+import { denominate } from 'utils';
 
 export interface DenominateType {
   value: string;
@@ -38,7 +38,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   const denomination =
     props.denomination !== undefined ? props.denomination : configDenomination;
 
-  const denominatedValue = operations.denominate({
+  const denominatedValue = denominate({
     input: value,
     denomination,
     decimals,
