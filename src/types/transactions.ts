@@ -96,6 +96,45 @@ export interface TokenOptionType {
   avatar?: string;
 }
 
+export interface SimpleTransactionType {
+  value: string;
+  receiver: string;
+  data?: string;
+  gasPrice?: number;
+  gasLimit?: number;
+  chainID?: string;
+  version?: number;
+  options?: number;
+}
+
+export interface TransactionsDisplayInfoType {
+  errorMessage?: string;
+  successMessage?: string;
+  processingMessage?: string;
+  submittedMessage?: string;
+  transactionDuration?: number;
+}
+
+export interface SendSimpleTransactionPropsType {
+  transactions: SimpleTransactionType[];
+  minGasLimit?: number;
+}
+
+export interface SendTransactionsPropsType {
+  transactions:
+    | Transaction
+    | SimpleTransactionType
+    | (Transaction | SimpleTransactionType)[];
+  transactionsDisplayInfo: TransactionsDisplayInfoType;
+  minGasLimit?: number;
+}
+
+export interface SignTransactionsPropsType {
+  transactions: Transaction[] | Transaction;
+  minGasLimit?: number;
+  transactionsDisplayInfo: TransactionsDisplayInfoType;
+}
+
 export enum TransactionTypesEnum {
   MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTTransfer = 'ESDTTransfer',

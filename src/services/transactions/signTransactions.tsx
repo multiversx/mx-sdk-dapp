@@ -4,15 +4,20 @@ import BigNumber from 'bignumber.js';
 import { networkConstants } from 'constants/index';
 
 import { accountBalanceSelector } from 'redux/selectors';
-import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
+import {
+  setTransactionsToSign,
+  setNotificationModal,
+  setTransactionsDisplayInfo
+} from 'redux/slices';
 import { store } from 'redux/store';
+import { SignTransactionsPropsType } from 'types';
 import { SendTransactionReturnType } from './sendTransactions';
-import { SignTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
 
 export function signTransactions({
   transactions,
-  minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT
+  minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT,
+  transactionsDisplayInfo
 }: SignTransactionsPropsType): SendTransactionReturnType {
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(store.getState());
@@ -41,7 +46,12 @@ export function signTransactions({
     callbackRoute: window.location.pathname,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
+  console.log('yowtf');
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
+  store.dispatch(
+    setTransactionsDisplayInfo({ sessionId, transactionsDisplayInfo })
+  );
+  console.log('transactions', transactionsDisplayInfo);
   return { sessionId };
 }
 

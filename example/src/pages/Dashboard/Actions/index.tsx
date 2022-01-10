@@ -108,7 +108,12 @@ const Actions = () => {
     };
 
     const { sessionId, error } = await sendTransactions({
-      transactions: ESDTTransaction
+      transactions: ESDTTransaction,
+      transactionsDisplayInfo: {
+        processingMessage: 'Processing newest transaction',
+        errorMessage: 'This is a custom error',
+        transactionDuration: 20000
+      }
     });
     console.log(sessionId);
     if (sessionId != null) {
