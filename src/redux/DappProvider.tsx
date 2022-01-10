@@ -8,12 +8,12 @@ import {
 import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
+import SignTransactions from 'components/SignTransactions';
+import TransactionSender from 'components/TransactionSender';
+import TransactionsTracker from 'components/TransactionsTracker';
 import { NetworkConfigType } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
-import SignTransactions from '../components/SignTransactions';
-import TransactionSender from '../components/TransactionSender';
-import TransactionsTracker from '../components/TransactionsTracker';
 import NotificationModal from '../UI/NotificationModal';
 import { store, persistor } from './store';
 

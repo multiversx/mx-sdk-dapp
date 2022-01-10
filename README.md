@@ -13,14 +13,14 @@ npm install --save dapp-core
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import MyComponent from 'dapp-core'
-import 'dapp-core/dist/index.css'
+import MyComponent from 'dapp-core';
+import 'dapp-core/dist/index.css';
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <MyComponent />;
   }
 }
 ```

@@ -87,6 +87,15 @@ export type MultiSignTxType = {
   transaction: Transaction;
 };
 
+export interface TokenOptionType {
+  name: string;
+  identifier: string;
+  balance: string;
+  decimals: number;
+  collection?: string;
+  avatar?: string;
+}
+
 export enum TransactionTypesEnum {
   MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTTransfer = 'ESDTTransfer',

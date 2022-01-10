@@ -100,6 +100,22 @@ const Actions = () => {
     }
   };
 
+  const sendESDTTransaction = async () => {
+    const ESDTTransaction = {
+      value: '0',
+      data: 'MultiESDTNFTTransfer@0000000000000000050061506400f3e0c5ea560192716d0daefa0b9587017ceb@02@5745474c442d383836303061@@0de0b6b3a7640000@555344432d613332393036@@133d84b2@6164644c6971756964697479@0dbd2fc137a30000@130c435e',
+      receiver: contractAddress
+    };
+
+    const { sessionId, error } = await sendTransactions({
+      transactions: ESDTTransaction
+    });
+    console.log(sessionId);
+    if (sessionId != null) {
+      setTransactionSessionId(sessionId);
+    }
+  };
+
   const sendPongTransaction = async () => {
     const pongTransaction = {
       value: '0',
@@ -170,6 +186,14 @@ const Actions = () => {
               </div>
             </>
           )}
+          <div className='action-btn' onClick={sendESDTTransaction}>
+            <button className='btn'>
+              <FontAwesomeIcon icon={faArrowUp} className='text-primary' />
+            </button>
+            <a href='/' className='text-white text-decoration-none'>
+              ESDT Transaction
+            </a>
+          </div>
         </>
       )}
     </div>

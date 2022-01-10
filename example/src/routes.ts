@@ -1,11 +1,8 @@
-import React from 'react';
 import { dAppName } from 'config';
 import withPageTitle from './components/PageTitle';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Transaction from './pages/Transaction';
-
-// type RouteType = Dapp.RouteType & { title: string };
 
 export const routeNames = {
   home: '/',

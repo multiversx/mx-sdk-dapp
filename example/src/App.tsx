@@ -5,7 +5,7 @@ import { DappProvider, DappUI } from 'dapp-core';
 import 'dapp-core/build/index.css';
 import Layout from 'components/Layout';
 import { routeNames } from 'routes';
-import PageNotFoud from 'pages/PageNotFoud';
+import PageNotFound from 'pages/PageNotFound';
 import routes from 'routes';
 
 const {
@@ -33,7 +33,7 @@ const App = () => {
                 element={<route.component />}
               />
             ))}
-            <Route element={PageNotFoud} />
+            <Route element={PageNotFound} />
           </Routes>
         </Layout>
       </DappProvider>

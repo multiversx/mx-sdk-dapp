@@ -1,18 +1,26 @@
 import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
+import { Address } from '@elrondnetwork/erdjs/out';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import useGetTokenDetails from 'hooks/useGetTokenDetails';
 import { useDispatch, useSelector } from 'redux/DappProvider';
-import { providerSelector } from 'redux/selectors';
+import { egldLabelSelector, providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
 import { TransactionBatchStatusesEnum } from 'types/enums';
+import { MultiSignTxType, TxDataTokenType } from 'types/transactions';
+import Data from 'UI/Data';
 import PageState from 'UI/PageState';
+import TokenDetails from 'UI/TokenDetails';
+import { isTokenTransfer } from 'utils';
+import { denominateAmount } from 'utils/form';
+import { denomination } from '../../../constants';
 import { HandleCloseType } from '../helpers';
 import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
 
 export interface SignStepType {
   handleClose: (props?: HandleCloseType) => void;
   error: string;
-  transaction: Transaction;
+  tx: MultiSignTxType;
   callbackRoute: string;
   sessionId: string;
   index: number;
@@ -23,12 +31,13 @@ export interface SignStepType {
   setSignedTransactions: React.Dispatch<
     React.SetStateAction<Record<number, Transaction> | undefined>
   >;
+  txsDataToken: TxDataTokenType;
 }
 
 const SignStep = ({
   handleClose,
   error,
-  transaction,
+  tx,
   index,
   sessionId,
   isLast,
@@ -36,33 +45,45 @@ const SignStep = ({
   signedTransactions,
   currentStep,
   setCurrentStep,
-  callbackRoute
+  callbackRoute,
+  txsDataToken
 }: SignStepType) => {
+  const provider = useSelector(providerSelector);
+  const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = React.useState(false);
   const dispatch = useDispatch();
-  const provider = useSelector(providerSelector);
+  const transactionData = tx.transaction.getData().toString();
+
+  const { tokenId, amount, type, multiTxData, receiver } = txsDataToken;
+
+  const isTokenTransaction = Boolean(
+    tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
+  );
+
+  const { tokenDenomination } = useGetTokenDetails({
+    tokenId
+  });
 
   const reset = () => {
     setCurrentStep(0);
     setSignedTransactions(undefined);
     setWaitingForDevice(false);
-    updateSignedTransaction({});
   };
 
   const sign = async () => {
     try {
       setWaitingForDevice(true);
-      const tx = await provider.signTransaction(transaction);
-      const newSignedTx = { [index]: tx };
+      const signedTx = await provider.signTransaction(tx.transaction);
+      const newSignedTx = { [tx.transactionIndex]: signedTx };
       const newSignedTransactions = signedTransactions
         ? { ...signedTransactions, ...newSignedTx }
         : newSignedTx;
       setSignedTransactions(newSignedTransactions);
+      console.log(isLast);
       if (!isLast) {
         setCurrentStep((exising) => exising + 1);
       } else if (newSignedTransactions) {
         handleClose({ updateBatchStatus: false });
-
         dispatch(
           updateSignedTransaction({
             [sessionId]: {
@@ -85,13 +106,24 @@ const SignStep = ({
     }
   };
 
-  let signBtnLabel = 'Sign & Continue';
-  signBtnLabel = waitingForDevice ? 'Check your Ledger' : signBtnLabel;
-  signBtnLabel = isLast && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
+  const signTx = () => {
+    try {
+      const signature = tx.transaction.getSignature();
+      if (signature) {
+        if (!isLast) {
+          setCurrentStep((exising) => exising + 1);
+        }
+      } else {
+        // currently code doesn't reach here because getSignature throws error if none is found
+        sign();
+      }
+    } catch {
+      // the only way to check if tx has signature is with try catch
+      sign();
+    }
+  };
 
-  const isFirst = currentStep === 0;
-
-  const close = (e: React.MouseEvent) => {
+  const onCloseClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isFirst) {
       handleClose();
@@ -101,7 +133,30 @@ const SignStep = ({
     }
   };
 
+  const continueWithoutSigning =
+    type && multiTxData && !transactionData.endsWith(multiTxData);
+
+  const onSignClick = () => {
+    if (continueWithoutSigning) {
+      setCurrentStep((exising) => exising + 1);
+    } else {
+      signTx();
+    }
+  };
+
+  let signBtnLabel = 'Sign & Continue';
+  signBtnLabel = waitingForDevice ? 'Check your Ledger' : signBtnLabel;
+  signBtnLabel = isLast && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
+  signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
+
+  const isFirst = currentStep === 0;
   const isVisible = currentStep === index;
+
+  const denominatedAmount = denominateAmount({
+    amount: isTokenTransaction ? amount : tx.transaction.getValue().toString(),
+    denomination: isTokenTransaction ? tokenDenomination : denomination,
+    addCommas: true
+  });
 
   return isVisible ? (
     <PageState
@@ -111,55 +166,80 @@ const SignStep = ({
       iconSize='3x'
       title='Confirm on Ledger'
       description={
-        transaction && (
-          <React.Fragment>
-            <div
-              className='form-group text-left'
-              data-testid='transactionTitle'
-            >
-              <span className='form-label'>To: </span>
-              {transaction.getReceiver().toString()}
-            </div>
-            <div className='form-group text-left'>
-              <span className='form-label'> Data:</span>
-              {transaction.getData() != null && (
-                <textarea
-                  readOnly
-                  className='form-control overflow-x-hidden'
-                  value={transaction.getData().toString()}
-                />
-              )}
-            </div>
-            {error && (
-              <p className='text-danger d-flex justify-content-center align-items-center'>
-                {error}
-              </p>
-            )}
+        <React.Fragment>
+          {tx.transaction && (
+            <React.Fragment>
+              <div
+                className='form-group text-left'
+                data-testid='transactionTitle'
+              >
+                <div className='form-label text-secondary'>To: </div>
+                {tx.multiTxData
+                  ? new Address(receiver).bech32()
+                  : tx.transaction.getReceiver().toString()}
+              </div>
 
-            <div className='d-flex align-items-center flex-column mt-spacer'>
-              {error && <p className='text-danger'>{error}</p>}
-              <button
-                type='button'
-                className='btn btn-primary px-spacer'
-                id='signBtn'
-                data-testid='signBtn'
-                onClick={sign}
-                disabled={waitingForDevice}
-              >
-                {signBtnLabel}
-              </button>
-              <a
-                href='/'
-                id='closeButton'
-                data-testid='closeButton'
-                onClick={close}
-                className='btn btn-close-link mt-2'
-              >
-                {isFirst ? 'Cancel' : 'Back'}
-              </a>
-            </div>
-          </React.Fragment>
-        )
+              <div className='d-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3'>
+                <div className='mb-3 mb-md-0'>
+                  <div className='text-secondary text-left'>Token</div>
+                  <div className='d-flex align-items-center'>
+                    <TokenDetails.Icon token={tokenId || egldLabel} />
+                    <div className='mr-1'></div>
+                    <TokenDetails.Label token={tokenId || egldLabel} />
+                  </div>
+                </div>
+                <div>
+                  <div className='text-secondary text-left'>Amount</div>
+                  <div className='d-flex align-items-center'>
+                    <div className='mr-1'>{denominatedAmount}</div>
+                    <TokenDetails.Symbol token={tokenId || egldLabel} />
+                  </div>
+                </div>
+              </div>
+
+              <div className='form-group text-left'>
+                {tx.transaction.getData() && (
+                  <Data
+                    {...{
+                      data: tx.transaction.getData().toString(),
+                      highlight: multiTxData,
+                      isScCall: !tokenId
+                    }}
+                  />
+                )}
+              </div>
+              {error && (
+                <p className='text-danger d-flex justify-content-center align-items-center'>
+                  {error}
+                </p>
+              )}
+            </React.Fragment>
+          )}
+        </React.Fragment>
+      }
+      action={
+        <div className='d-flex align-items-center justify-content-end mt-spacer'>
+          <a
+            href='/'
+            id='closeButton'
+            data-testid='closeButton'
+            onClick={onCloseClick}
+            className='btn btn-dark text-white flex-even mr-2'
+          >
+            {isFirst ? 'Cancel' : 'Back'}
+          </a>
+
+          <button
+            type='button'
+            className='btn btn-primary flex-even ml-2'
+            id='signBtn'
+            data-testid='signBtn'
+            onClick={onSignClick}
+            disabled={waitingForDevice}
+          >
+            {signBtnLabel}
+          </button>
+        </div>
       }
     />
   ) : null;

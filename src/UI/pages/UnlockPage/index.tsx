@@ -1,5 +1,9 @@
 import React from 'react';
-import { DappUI } from 'index';
+import ExtensionLoginButton from 'UI/extension/LoginButton';
+
+import LedgerLoginButton from 'UI/ledger/LoginButton';
+import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
+import WebWalletLoginButton from 'UI/webWallet/LoginButton';
 import { getGeneratedClasses, getIsLoggedIn } from 'utils';
 import { Props } from './types';
 
@@ -11,16 +15,9 @@ export const UnlockPage = ({
   LedgerLoginButtonText = 'Ledger',
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'Maiar',
-  ExtensionloginButtonText = 'Extension',
+  ExtensionLoginButtonText = 'Extension',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
-  const {
-    ExtensionLoginButton,
-    WebWalletLoginButton,
-    LedgerLoginButton,
-    WalletConnectLoginButton
-  } = DappUI;
-
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -50,7 +47,7 @@ export const UnlockPage = ({
             <p className={generatedClasses.description}>{description}</p>
             <ExtensionLoginButton
               callbackRoute={loginRoute}
-              loginButtonText={ExtensionloginButtonText}
+              loginButtonText={ExtensionLoginButtonText}
             />
             <WebWalletLoginButton
               callbackRoute={loginRoute}

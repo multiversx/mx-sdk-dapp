@@ -30,12 +30,12 @@ export interface UpdateSignedTransactionStatusPayloadType {
   errorMessage?: string;
 }
 
-export interface SignTransactionsStateType {
+export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
 }
 
-const initialState: SignTransactionsStateType = {
+const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
   transactionsToSign: null
 };
@@ -45,7 +45,7 @@ export const transactionsSlice = createSlice({
   initialState,
   reducers: {
     updateSignedTransaction: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<SignedTransactionsType>
     ) => {
       state.signedTransactions = {
@@ -54,7 +54,7 @@ export const transactionsSlice = createSlice({
       };
     },
     updateSignedTransactions: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionsPayloadType>
     ) => {
       const { sessionId, status, errorMessage, transactions } = action.payload;
@@ -70,7 +70,7 @@ export const transactionsSlice = createSlice({
       }
     },
     updateSignedTransactionStatus: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
     ) => {
       const { sessionId, status, errorMessage, transactionHash } =
@@ -110,7 +110,7 @@ export const transactionsSlice = createSlice({
       }
     },
     setTransactionsToSign: (
-      state: SignTransactionsStateType,
+      state: TransactionsSliceStateType,
       action: PayloadAction<TransactionsToSignType>
     ) => {
       state.transactionsToSign = action.payload;

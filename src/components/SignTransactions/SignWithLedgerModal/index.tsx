@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal } from 'react-bootstrap';
 import { useSelector } from 'redux/DappProvider';
 import { transactionsToSignSelector } from 'redux/selectors';
-import { useParseMultiEsdtTransferData } from '../../../services/transactions/hooks/useParseMultiEsdtTransferData';
+import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { HandleCloseType } from '../helpers';
 import SignStep, { SignStepType } from './SignStep';
 
@@ -19,7 +19,6 @@ const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
     React.useState<SignStepType['signedTransactions']>();
   const { getTxInfoByDataField, allTransactions } =
     useParseMultiEsdtTransferData({ transactions });
-
   return (
     <Modal
       show
@@ -31,28 +30,30 @@ const SignWithLedgerModal = ({ handleClose, error }: SignModalType) => {
     >
       <div className='card container'>
         <div className='card-body'>
-          {allTransactions?.map((tx, index) => (
-            <SignStep
-              key={tx.transaction.getData().toString() + index}
-              {...{
-                index,
-                transaction: tx.transaction,
-                handleClose,
-                error,
-                sessionId,
-                callbackRoute,
-                setSignedTransactions,
-                signedTransactions,
-                currentStep,
-                txsDataToken: getTxInfoByDataField(
-                  tx.transaction.getData().toString(),
-                  tx.multiTxData
-                ),
-                setCurrentStep,
-                isLast: index === transactions.length - 1
-              }}
-            />
-          ))}
+          {allTransactions?.map((tx, index) => {
+            return (
+              <SignStep
+                key={tx.transaction.getData().toString() + index}
+                {...{
+                  index,
+                  tx,
+                  handleClose,
+                  error,
+                  sessionId,
+                  callbackRoute,
+                  setSignedTransactions,
+                  signedTransactions,
+                  currentStep,
+                  txsDataToken: getTxInfoByDataField(
+                    tx.transaction.getData().toString(),
+                    tx.multiTxData
+                  ),
+                  setCurrentStep,
+                  isLast: index === allTransactions.length - 1
+                }}
+              />
+            );
+          })}
         </div>
       </div>
     </Modal>

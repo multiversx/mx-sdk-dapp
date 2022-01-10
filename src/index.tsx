@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 export * from './utils';
 export * as types from './types';
-export * as DappUI from './UI/index';
+export * as DappUI from './UI';
 export * as loginServices from './services/login';
 export { useGetPendingTransactions } from './services/transactions';
 export { DappProvider } from './redux/DappProvider';

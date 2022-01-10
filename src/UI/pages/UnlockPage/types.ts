@@ -4,7 +4,7 @@ export interface Props {
   loginRoute: string;
   LedgerLoginButtonText?: string;
   shouldRenderDefaultCss?: boolean;
-  ExtensionloginButtonText?: string;
+  ExtensionLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   description?: string | React.ReactNode;
