@@ -110,7 +110,8 @@ const Actions = () => {
     const ESDTTransaction = {
       value: '0',
       data: 'MultiESDTNFTTransfer@0000000000000000050061506400f3e0c5ea560192716d0daefa0b9587017ceb@02@5745474c442d383836303061@@0de0b6b3a7640000@555344432d613332393036@@133d84b2@6164644c6971756964697479@0dbd2fc137a30000@130c435e',
-      receiver: contractAddress
+      receiver: contractAddress,
+      chainID: '1'
     };
 
     const { sessionId, error } = await sendTransactions({
