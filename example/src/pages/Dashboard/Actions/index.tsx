@@ -93,7 +93,13 @@ const Actions = () => {
     await refreshAccount();
 
     const { sessionId, error } = await sendTransactions({
-      transactions: pingTransaction
+      transactions: pingTransaction,
+      transactionsDisplayInfo: {
+        processingMessage: 'Processing Ping transaction',
+        errorMessage: 'An error has occured during Ping',
+        successMessage: 'Ping transaction successful',
+        transactionDuration: 10000
+      }
     });
     if (sessionId != null) {
       setTransactionSessionId(sessionId);
@@ -110,8 +116,9 @@ const Actions = () => {
     const { sessionId, error } = await sendTransactions({
       transactions: ESDTTransaction,
       transactionsDisplayInfo: {
-        processingMessage: 'Processing transactions',
+        processingMessage: 'Processing ESDT transactions',
         errorMessage: 'An error has occured',
+        successMessage: 'ESDT transaction successful',
         transactionDuration: 10000
       }
     });
@@ -129,7 +136,13 @@ const Actions = () => {
     await refreshAccount();
 
     const { sessionId, error } = await sendTransactions({
-      transactions: pongTransaction
+      transactions: pongTransaction,
+      transactionsDisplayInfo: {
+        processingMessage: 'Processing Pong transaction',
+        errorMessage: 'An error has occured during Pong',
+        successMessage: 'Pong transaction successful',
+        transactionDuration: 10000
+      }
     });
     if (sessionId != null) {
       setTransactionSessionId(sessionId);
