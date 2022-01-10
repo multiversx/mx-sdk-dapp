@@ -1,5 +1,6 @@
 import React from 'react';
-import { getAccountBalance } from 'utils';
+
+import { getDenominatedAccountBalance } from 'utils/account/getDenominatedAccountBalance';
 
 interface AddressRowType {
   selectedAddress?: string;
@@ -37,7 +38,7 @@ const AddressRow = ({
 
   const fetchBalance = async () => {
     try {
-      const balance = await getAccountBalance(address);
+      const balance = await getDenominatedAccountBalance(address);
       setBalance(balance);
     } catch (err) {
       console.error('error fetching balance', balance);

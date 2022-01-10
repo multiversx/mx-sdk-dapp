@@ -3,7 +3,11 @@ import { store } from 'redux/store';
 import { getAccount } from './getAccount';
 
 export async function getAccountBalance(address?: string) {
-  const { address: currentAddress } = accountSelector(store.getState());
-  const account = await getAccount(address ? address : currentAddress);
+  let accountAddress = address;
+  if (accountAddress == null) {
+    const account = accountSelector(store.getState());
+    accountAddress = account.address;
+  }
+  const account = await getAccount(accountAddress);
   return account.balance.toString();
 }
