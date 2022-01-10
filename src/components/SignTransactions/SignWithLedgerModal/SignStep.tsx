@@ -79,7 +79,6 @@ const SignStep = ({
         ? { ...signedTransactions, ...newSignedTx }
         : newSignedTx;
       setSignedTransactions(newSignedTransactions);
-      console.log(isLast);
       if (!isLast) {
         setCurrentStep((exising) => exising + 1);
       } else if (newSignedTransactions) {
