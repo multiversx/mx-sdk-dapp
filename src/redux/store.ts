@@ -1,4 +1,3 @@
-import { createContext } from 'react';
 import { configureStore } from '@reduxjs/toolkit';
 
 import {
@@ -50,9 +49,6 @@ export const store = configureStore({
       }
     })
 });
-
-export const defaultContextValue: any = null;
-export const DappCoreContext = createContext(defaultContextValue);
 
 export const persistor = persistStore(store);
 
