@@ -18,7 +18,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['account', 'loginInfo', 'toasts', 'transactionsInfo', 'modals']
+  whitelist: ['account', 'loginInfo', 'toasts', 'modals']
 };
 
 const localStorageReducers = persistReducer(persistConfig, rootReducer);

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import moment from 'moment';
 import { useGetPendingTransactions } from 'services/transactions';
 import {
   getToastsIdsFromStorage,
@@ -28,16 +27,7 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
-    const startTime = moment().unix();
-    const endTime = moment().add(10, 'seconds').unix();
-    return (
-      <TransactionToast
-        key={toastId}
-        toastId={toastId}
-        endTime={endTime}
-        startTime={startTime}
-      />
-    );
+    return <TransactionToast key={toastId} toastId={toastId} />;
   });
 
   const mapPendingSignedTransactions = () => {
