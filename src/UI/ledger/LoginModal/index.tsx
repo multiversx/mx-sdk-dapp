@@ -62,6 +62,8 @@ export function LedgerLoginContainer({
       <AddressTable
         accounts={accounts}
         loading={isLoading}
+        className={className}
+        shouldRenderDefaultCss={shouldRenderDefaultCss}
         onGoToNextPage={onGoToNextPage}
         onGoToPrevPage={onGoToPrevPage}
         onSelectAddress={onSelectAddress}

@@ -45,6 +45,7 @@ export const SignWithWalletConnectModal = ({
       <PageState
         icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
+        className={className}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}
         iconSize='3x'
         title='Confirm on Maiar'

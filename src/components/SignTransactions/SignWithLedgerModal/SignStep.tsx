@@ -184,6 +184,7 @@ const SignStep = ({
       iconClass={classes.icon}
       iconBgClass={error ? 'bg-danger' : 'bg-warning'}
       iconSize='3x'
+      className={className}
       title='Confirm on Ledger'
       description={
         <React.Fragment>

@@ -22,7 +22,7 @@ import '../assets/sass/main.scss';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
-  modalClassName: string | null;
+  modalClassName?: string;
 }
 
 const defaultContextValue: any = null;

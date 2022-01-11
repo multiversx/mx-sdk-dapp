@@ -227,7 +227,12 @@ export function useLedgerLogin({
         );
         window.location.href = callbackRoute;
       } else {
-        setShowAddressList(true);
+        if (accounts?.length > 0) {
+          setShowAddressList(true);
+        } else {
+          await fetchAccounts();
+          setShowAddressList(true);
+        }
       }
     } catch (error) {
       console.error('error ', error);
