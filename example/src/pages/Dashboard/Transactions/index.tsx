@@ -3,7 +3,7 @@ import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import TransactionsList from './TransactionsList';
 import { StateType } from './types';
 import { getTransactions } from 'apiRequests';
-import { useGetAccountInfo, DappUI } from 'dapp-core';
+import { useGetAccountInfo, DappUI } from '@elrondnetwork/dapp-core';
 import { contractAddress, network } from 'config';
 
 const Transactions = () => {

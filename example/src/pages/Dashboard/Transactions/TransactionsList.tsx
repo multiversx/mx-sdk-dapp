@@ -1,6 +1,6 @@
 import React from 'react';
 import { Ui } from '@elrondnetwork/dapp-utils';
-import { useGetAccountInfo, DappUI } from 'dapp-core';
+import { useGetAccountInfo, DappUI } from '@elrondnetwork/dapp-core';
 import moment from 'moment';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';

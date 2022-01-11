@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Address, Nonce } from '@elrondnetwork/erdjs';
-import isEqual from 'lodash/isEqual';
 import { useDispatch, useSelector } from 'redux/DappProvider';
 import {
   accountSelector,
   addressSelector,
-  chainIDSelector,
   providerSelector,
   proxySelector
 } from 'redux/selectors';
@@ -30,7 +28,6 @@ export default function SignTransactions() {
   const [error, setError] = useState<string>('');
 
   const provider = useSelector(providerSelector);
-  const storeChainId = useSelector(chainIDSelector);
   const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
   const account = useSelector(accountSelector);
@@ -64,14 +61,6 @@ export default function SignTransactions() {
             'You need a signer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect'
           );
           return;
-        }
-        const hasValidChainId = transactionsToSign?.transactions.every((tx) =>
-          isEqual(tx.getChainID(), storeChainId)
-        );
-
-        if (!hasValidChainId) {
-          setShowSignModal(true);
-          setError('The application tried to change the transaction network');
         }
 
         const proxyAccount = await proxy.getAccount(new Address(address));

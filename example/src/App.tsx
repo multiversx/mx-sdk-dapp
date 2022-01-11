@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import { network, walletConnectBridge, walletConnectDeepLink } from './config';
-import { DappProvider, DappUI } from 'dapp-core';
-import 'dapp-core/build/index.css';
+import { DappProvider, DappUI } from '@elrondnetwork/dapp-core';
+import '@elrondnetwork/dapp-core/build/index.css';
 import Layout from 'components/Layout';
 import { routeNames } from 'routes';
 import PageNotFound from 'pages/PageNotFound';
