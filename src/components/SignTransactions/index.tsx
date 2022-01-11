@@ -21,7 +21,11 @@ import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
 
-export default function SignTransactions() {
+export default function SignTransactions({
+  className
+}: {
+  className?: string;
+}) {
   const [showSignModal, setShowSignModal] = useState<boolean>(false);
   const [newCallbackRoute, setNewCallbackRoute] = useState<string>('');
   const [newSessionId, setNewSessionId] = useState<string>('');
@@ -113,7 +117,8 @@ export default function SignTransactions() {
     setError,
     sessionId: newSessionId,
     providerType,
-    callbackRoute: newCallbackRoute
+    callbackRoute: newCallbackRoute,
+    className
   };
 
   useEffect(() => {

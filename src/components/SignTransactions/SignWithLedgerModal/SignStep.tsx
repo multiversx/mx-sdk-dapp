@@ -12,7 +12,7 @@ import { MultiSignTxType, TxDataTokenType } from 'types/transactions';
 import Data from 'UI/Data';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
-import { isTokenTransfer } from 'utils';
+import { getGeneratedClasses, isTokenTransfer } from 'utils';
 import { denominateAmount } from 'utils/form';
 import { HandleCloseType } from '../helpers';
 import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
@@ -32,6 +32,7 @@ export interface SignStepType {
     React.SetStateAction<Record<number, Transaction> | undefined>
   >;
   txsDataToken: TxDataTokenType;
+  className: string;
 }
 
 const SignStep = ({
@@ -46,7 +47,8 @@ const SignStep = ({
   currentStep,
   setCurrentStep,
   callbackRoute,
-  txsDataToken
+  txsDataToken,
+  className
 }: SignStepType) => {
   const provider = useSelector(providerSelector);
   const egldLabel = useSelector(egldLabelSelector);
@@ -157,46 +159,63 @@ const SignStep = ({
     addCommas: true
   });
 
+  const classes = getGeneratedClasses(className, true, {
+    formGroup: 'form-group text-left',
+    formLabel: 'form-label text-secondary',
+    icon: 'text-white',
+    contentWrapper:
+      'd-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3',
+    tokenWrapper: 'mb-3 mb-md-0',
+    tokenLabel: 'text-secondary text-left',
+    tokenValue: 'd-flex align-items-center',
+    tokenAmountLabel: 'text-secondary text-left',
+    tokenAmountValue: 'd-flex align-items-center',
+    dataFormGroup: 'form-group text-left',
+    errorMessage:
+      'text-danger d-flex justify-content-center align-items-center',
+    buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
+    cancelButton: 'btn btn-dark text-white flex-even mr-2',
+    signButton: 'btn btn-primary flex-even ml-2'
+  });
+
   return isVisible ? (
     <PageState
       icon={error ? faTimes : faHourglass}
-      iconClass='text-white'
+      iconClass={classes.icon}
       iconBgClass={error ? 'bg-danger' : 'bg-warning'}
       iconSize='3x'
+      className={className}
       title='Confirm on Ledger'
       description={
         <React.Fragment>
           {tx.transaction && (
             <React.Fragment>
-              <div
-                className='form-group text-left'
-                data-testid='transactionTitle'
-              >
-                <div className='form-label text-secondary'>To: </div>
+              <div className={classes.formGroup} data-testid='transactionTitle'>
+                <div className={classes.formLabel}>To: </div>
                 {tx.multiTxData
                   ? new Address(receiver).bech32()
                   : tx.transaction.getReceiver().toString()}
               </div>
 
-              <div className='d-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3'>
-                <div className='mb-3 mb-md-0'>
-                  <div className='text-secondary text-left'>Token</div>
-                  <div className='d-flex align-items-center'>
+              <div className={classes.contentWrapper}>
+                <div className={classes.tokenWrapper}>
+                  <div className={classes.tokenlabel}>Token</div>
+                  <div className={classes.tokenValue}>
                     <TokenDetails.Icon token={tokenId || egldLabel} />
                     <div className='mr-1'></div>
                     <TokenDetails.Label token={tokenId || egldLabel} />
                   </div>
                 </div>
                 <div>
-                  <div className='text-secondary text-left'>Amount</div>
-                  <div className='d-flex align-items-center'>
+                  <div className={classes.tokenAmountLabel}>Amount</div>
+                  <div className={classes.tokenAmountValue}>
                     <div className='mr-1'>{denominatedAmount}</div>
                     <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>
               </div>
 
-              <div className='form-group text-left'>
+              <div className={classes.dataFormGroup}>
                 {tx.transaction.getData() && (
                   <Data
                     {...{
@@ -207,30 +226,26 @@ const SignStep = ({
                   />
                 )}
               </div>
-              {error && (
-                <p className='text-danger d-flex justify-content-center align-items-center'>
-                  {error}
-                </p>
-              )}
+              {error && <p className={classes.errorMessage}>{error}</p>}
             </React.Fragment>
           )}
         </React.Fragment>
       }
       action={
-        <div className='d-flex align-items-center justify-content-end mt-spacer'>
+        <div className={classes.buttonsWrapper}>
           <a
             href='/'
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
-            className='btn btn-dark text-white flex-even mr-2'
+            className={classes.cancelButton}
           >
             {isFirst ? 'Cancel' : 'Back'}
           </a>
 
           <button
             type='button'
-            className='btn btn-primary flex-even ml-2'
+            className={classes.signButton}
             id='signBtn'
             data-testid='signBtn'
             onClick={onSignClick}

@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageState from 'UI/PageState';
+import { getGeneratedClasses } from 'utils';
 import AddressRow from './AddressRow';
 
 const ledgerWaitingText = 'Waiting for device';
@@ -17,6 +18,8 @@ interface AddressTablePropsType {
   accounts: string[];
   startIndex: number;
   selectedAddress?: string;
+  className: string;
+  shouldRenderDefaultCss: boolean;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
@@ -31,12 +34,26 @@ const AddressTable = ({
   onGoToPrevPage,
   onGoToNextPage,
   onConfirmSelectedAddress,
-  onSelectAddress
+  onSelectAddress,
+  shouldRenderDefaultCss = true,
+  className = 'ledger-address-table'
 }: AddressTablePropsType) => {
+  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
+    wrapper: 'card my-4 text-center',
+    cardBody: 'card-body p-4 mx-lg-4',
+    tableWrapper: 'table-responsive',
+    tableContent: 'table m-0 border-bottom',
+    tableHeader: 'py-2 text-semibold border-bottom',
+    tableHeaderText: 'text-left border-0',
+    buttonsWrapper: 'd-flex justify-content-center pager mt-2',
+    arrowButton: 'btn btn-link mx-2',
+    confirmButton: 'btn btn-primary px-4 mt-4'
+  });
   switch (true) {
     case loading:
       return (
         <PageState
+          className={className}
           icon={faCircleNotch}
           iconClass='fa-spin text-primary'
           title={ledgerWaitingText}
@@ -46,15 +63,18 @@ const AddressTable = ({
       return (
         <React.Fragment>
           <div className='m-auto'>
-            <div className='card my-4 text-center'>
-              <div className='card-body p-4 mx-lg-4'>
-                <div className='table-responsive' data-testid='ledgerAddresses'>
-                  <table className='table m-0 border-bottom'>
-                    <thead className='py-2 text-semibold border-bottom'>
+            <div className={classes.wrapper}>
+              <div className={classes.cardBody}>
+                <div
+                  className={classes.tableWrapper}
+                  data-testid='ledgerAddresses'
+                >
+                  <table className={classes.tableContent}>
+                    <thead className={classes.tableHeader}>
                       <tr>
-                        <th className='text-left border-0'>Address</th>
-                        <th className='text-left border-0'>Balance</th>
-                        <th className='text-left border-0'>#</th>
+                        <th className={classes.tableHeaderText}>Address</th>
+                        <th className={classes.tableHeaderText}>Balance</th>
+                        <th className={classes.tableHeaderText}>#</th>
                       </tr>
                     </thead>
                     <tbody data-testid='addressesTable'>
@@ -73,10 +93,10 @@ const AddressTable = ({
                     </tbody>
                   </table>
                 </div>
-                <div className='d-flex justify-content-center pager mt-2'>
+                <div className={classes.buttonsWrapper}>
                   <button
                     type='button'
-                    className='btn btn-link mx-2'
+                    className={classes.arrowButton}
                     onClick={onGoToPrevPage}
                     data-testid='prevBtn'
                     disabled={startIndex === 0}
@@ -85,7 +105,7 @@ const AddressTable = ({
                   </button>
                   <button
                     type='button'
-                    className='btn btn-link mx-2'
+                    className={classes.arrowButton}
                     onClick={onGoToNextPage}
                     data-testid='nextBtn'
                   >
@@ -93,7 +113,7 @@ const AddressTable = ({
                   </button>
                 </div>
                 <button
-                  className='btn btn-primary px-4 mt-4'
+                  className={classes.confirmButton}
                   disabled={selectedAddress === ''}
                   onClick={onConfirmSelectedAddress}
                   data-testid='confirmBtn'

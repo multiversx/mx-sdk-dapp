@@ -18,18 +18,20 @@ import '../assets/sass/main.scss';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
+  modalClassName?: string;
 }
 
 export const DappProvider = ({
   children,
-  networkConfig
+  networkConfig,
+  modalClassName
 }: DappProviderPropsType) => {
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <AppInitializer networkConfig={networkConfig}>
           <ProviderInitializer />
-          <SignTransactions />
+          <SignTransactions className={modalClassName} />
           <TransactionSender />
           <TransactionsTracker />
           <NotificationModal />
