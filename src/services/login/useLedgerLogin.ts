@@ -189,6 +189,7 @@ export function useLedgerLogin({
       if (!initialized) {
         setError(failedInitializeErrorText);
         console.warn(failedInitializeErrorText);
+        setIsLoading(false);
         return;
       }
       const accounts = await hwWalletP.getAccounts(
@@ -196,6 +197,7 @@ export function useLedgerLogin({
         addressesPerPage
       );
       setAccounts(accounts);
+      setIsLoading(false);
     } catch (err) {
       if ((err as any).statusCode in ledgerErrorCodes) {
         setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
@@ -203,7 +205,6 @@ export function useLedgerLogin({
         setError(ledgerAppErrorText);
       }
       console.error('error', err);
-    } finally {
       setIsLoading(false);
     }
   }
@@ -253,8 +254,7 @@ export function useLedgerLogin({
   React.useEffect(() => {
     fetchAccounts();
   }, [startIndex]);
-
-  const isFailed = error != null;
+  const isFailed = Boolean(error);
   return [
     onStartLogin,
     {
