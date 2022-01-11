@@ -9,8 +9,4 @@ export { useGetPendingTransactions } from './services/transactions';
 export { DappProvider } from './redux/DappProvider';
 export { AuthenticatedRoutesWrapper } from './wrappers';
 export * as transactionServices from './services/transactions';
-export {
-  useGetAccountInfo,
-  useSendTransactions,
-  useGetLoginInfo
-} from './hooks';
+export * from './hooks';
