@@ -5,6 +5,4 @@ export * from './setNonce';
 export * from './getLatestNonce';
 export * from './getAccountBalance';
 export * from './getDenominatedAccountBalance';
-export * from './getAccountProvider';
-export * from './getAccountProviderType';
 export * from './refreshAccount';

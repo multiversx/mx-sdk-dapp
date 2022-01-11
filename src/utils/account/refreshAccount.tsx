@@ -28,7 +28,6 @@ const setNewAccount = async () => {
 
 export async function refreshAccount() {
   const provider = providerSelector(store.getState());
-
   if (provider.isInitialized()) {
     return setNewAccount();
   } else {
