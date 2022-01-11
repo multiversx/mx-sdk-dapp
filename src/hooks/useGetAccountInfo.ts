@@ -1,4 +1,4 @@
-import { useSelector } from 'redux/DappProvider';
+import { useSelector } from 'redux/DappProviderContext';
 import { accountInfoSelector } from 'redux/selectors';
 
 export const useGetAccountInfo = () => {

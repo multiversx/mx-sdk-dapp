@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'redux/DappProvider';
+import { useDispatch } from 'redux/DappProviderContext';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { NetworkConfigType } from 'types';
 

@@ -5,7 +5,7 @@ import QRCode from 'qrcode';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   isLoggedInSelector,
   providerSelector,

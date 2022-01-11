@@ -2,7 +2,7 @@ import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import { ledgerErrorCodes } from 'constants/index';
 import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   isLoggedInSelector,
   ledgerAccountSelector,
