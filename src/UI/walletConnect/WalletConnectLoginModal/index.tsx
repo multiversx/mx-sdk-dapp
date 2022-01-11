@@ -14,12 +14,14 @@ export function WalletConnectLoginModal({
   className = 'wallect-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
+  token,
   onClose
 }: LoginModalPropsType) {
   const [initLoginWithWalletConnect, { error }, { uriDeepLink, qrCodeSvg }] =
     useWalletConnectLogin({
       logoutRoute,
       callbackRoute,
+      token,
       shouldLoginUser: true
     });
   const isMobileDevice =
