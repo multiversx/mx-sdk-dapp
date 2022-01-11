@@ -2,8 +2,9 @@ import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { denomination } from 'constants/index';
 import useGetTokenDetails from 'hooks/useGetTokenDetails';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { egldLabelSelector, providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
 import { TransactionBatchStatusesEnum } from 'types/enums';
@@ -13,7 +14,6 @@ import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import { isTokenTransfer } from 'utils';
 import { denominateAmount } from 'utils/form';
-import { denomination } from '../../../constants';
 import { HandleCloseType } from '../helpers';
 import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'redux/DappProvider';
+import { useSelector } from 'redux/DappProviderContext';
 import { ledgerAccountSelector } from 'redux/selectors';
 
 const ConfirmAddress = ({

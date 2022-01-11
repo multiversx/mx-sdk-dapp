@@ -3,7 +3,7 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
 import newTransaction from 'models/newTransaction';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { signedTransactionsSelector } from 'redux/selectors';
 import { accountSelector, proxySelector } from 'redux/selectors';
 import {

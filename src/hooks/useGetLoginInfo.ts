@@ -1,4 +1,4 @@
-import { useSelector } from 'redux/DappProvider';
+import { useSelector } from 'redux/DappProviderContext';
 import { loginInfoSelector } from 'redux/selectors';
 
 export const useGetLoginInfo = () => {

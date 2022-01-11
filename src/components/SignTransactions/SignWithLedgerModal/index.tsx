@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from 'react-bootstrap';
-import { useSelector } from 'redux/DappProvider';
+import { useSelector } from 'redux/DappProviderContext';
 import { transactionsToSignSelector } from 'redux/selectors';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { HandleCloseType } from '../helpers';

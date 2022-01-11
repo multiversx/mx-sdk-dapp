@@ -1,7 +1,7 @@
 import React from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProvider';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
@@ -10,14 +10,14 @@ import {
   walletLoginSelector
 } from 'redux/selectors';
 import { setAccount, setProvider, setWalletLogin } from 'redux/slices';
-import { useWalletConnectLogin } from 'services/login';
+import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
 import {
   newWalletProvider,
   getAddress,
   getAccount,
   getLatestNonce
-} from '../utils';
+} from 'utils';
 
 export default function ProviderInitializer() {
   const network = useSelector(networkSelector);

@@ -1,5 +1,5 @@
 import useSwr from 'swr';
-import { useSelector } from 'redux/DappProvider';
+import { useSelector } from 'redux/DappProviderContext';
 import { networkSelector } from 'redux/selectors';
 import { denomination } from '../constants';
 
