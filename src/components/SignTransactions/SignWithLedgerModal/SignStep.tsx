@@ -228,18 +228,16 @@ const SignStep = ({
             {isFirst ? 'Cancel' : 'Back'}
           </a>
 
-          {!error && (
-            <button
-              type='button'
-              className='btn btn-primary flex-even ml-2'
-              id='signBtn'
-              data-testid='signBtn'
-              onClick={onSignClick}
-              disabled={waitingForDevice}
-            >
-              {signBtnLabel}
-            </button>
-          )}
+          <button
+            type='button'
+            className='btn btn-primary flex-even ml-2'
+            id='signBtn'
+            data-testid='signBtn'
+            onClick={onSignClick}
+            disabled={waitingForDevice}
+          >
+            {signBtnLabel}
+          </button>
         </div>
       }
     />
