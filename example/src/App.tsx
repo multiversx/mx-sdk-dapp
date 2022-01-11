@@ -18,6 +18,7 @@ const App = () => {
     <Router>
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
+        modalClassName={'custom-class-for-modals'}
       >
         <Layout>
           <TransactionsToastList />

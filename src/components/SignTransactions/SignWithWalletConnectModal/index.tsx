@@ -2,17 +2,25 @@ import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import PageState from 'UI/PageState';
+import { getGeneratedClasses } from 'utils';
 import useSignWithProvider from '../useSignWithProvider';
 import { SignModalType } from './types';
 
 export const SignWithWalletConnectModal = ({
   error,
   setError,
-  handleClose
+  handleClose,
+  className = 'wallet-connect-modal'
 }: SignModalType) => {
   const [callbackRoute, transactions] = useSignWithProvider({
     setError,
     handleClose
+  });
+
+  const classes = getGeneratedClasses(className, true, {
+    wrapper: 'modal-container wallet-connect',
+    icon: 'text-white',
+    closeBtn: 'btn btn-close-link mt-2'
   });
 
   const hasMultipleTransactions = transactions && transactions?.length > 1;
@@ -30,13 +38,13 @@ export const SignWithWalletConnectModal = ({
       show
       backdrop='static'
       onHide={close}
-      className='modal-container'
+      className={classes.wrapper}
       animation={false}
       centered
     >
       <PageState
         icon={error ? faTimes : faHourglass}
-        iconClass='text-white'
+        iconClass={classes.icon}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}
         iconSize='3x'
         title='Confirm on Maiar'
@@ -47,7 +55,7 @@ export const SignWithWalletConnectModal = ({
             id='closeButton'
             data-testid='closeButton'
             onClick={close}
-            className='btn btn-close-link mt-2'
+            className={classes.closeBtn}
           >
             Close
           </a>

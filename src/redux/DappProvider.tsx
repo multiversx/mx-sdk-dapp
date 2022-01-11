@@ -22,6 +22,7 @@ import '../assets/sass/main.scss';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
+  modalClassName: string | null;
 }
 
 const defaultContextValue: any = null;
@@ -33,14 +34,15 @@ export const useSelector = createSelectorHook(DappCoreContext);
 
 export const DappProvider = ({
   children,
-  networkConfig
+  networkConfig,
+  modalClassName
 }: DappProviderPropsType) => {
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <AppInitializer networkConfig={networkConfig}>
           <ProviderInitializer />
-          <SignTransactions />
+          <SignTransactions className={modalClassName} />
           <TransactionSender />
           <TransactionsTracker />
           <NotificationModal />
