@@ -8,7 +8,10 @@ import {
   proxySelector
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors/transactionsSelectors';
-import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
+import {
+  clearSignTransactions,
+  updateSignedTransaction
+} from 'redux/slices/transactionsSlice';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';
@@ -39,6 +42,7 @@ export default function SignTransactions() {
     setNewCallbackRoute('');
     setError('');
     setShowSignModal(false);
+    dispatch(clearSignTransactions());
   };
   const showError = (e: string) => {
     setShowSignModal(true);
@@ -51,7 +55,6 @@ export default function SignTransactions() {
       try {
         setNewCallbackRoute(callbackRoute);
         setNewSessionId(sessionId);
-
         if (provider == null) {
           setShowSignModal(true);
           setError(

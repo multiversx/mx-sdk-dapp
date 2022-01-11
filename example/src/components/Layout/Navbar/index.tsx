@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar as BsNavbar, NavItem, Nav } from 'react-bootstrap';
-import { logout, useGetAccountInfo } from 'dapp-core';
+import { logout, useGetAccountInfo } from '@elrondnetwork/dapp-core';
 import { Link } from 'react-router-dom';
 import { ReactComponent as ElrondLogo } from './../../../assets/img/elrond.svg';
 import { dAppName } from 'config';
