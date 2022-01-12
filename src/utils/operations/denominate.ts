@@ -9,7 +9,7 @@ import pipe from './pipe';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 
-export default function denominate({
+export function denominate({
   input,
   denomination = configDenomination,
   decimals = configDecimals,
@@ -99,3 +99,4 @@ export default function denominate({
       .valueOf()
   );
 }
+export default denominate;

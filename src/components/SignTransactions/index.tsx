@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Address, Nonce } from '@elrondnetwork/erdjs';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
-  accountSelector,
   addressSelector,
   providerSelector,
   proxySelector
@@ -13,6 +12,7 @@ import {
   updateSignedTransaction
 } from 'redux/slices/transactionsSlice';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
+import { getLatestNonce } from 'utils';
 import { replyUrl, useParseSignedTransactions } from './helpers';
 import { walletSignSession } from './helpers/constants';
 
@@ -34,7 +34,6 @@ export default function SignTransactions({
   const provider = useSelector(providerSelector);
   const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
-  const account = useSelector(accountSelector);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const dispatch = useDispatch();
 
@@ -68,10 +67,7 @@ export default function SignTransactions({
         }
 
         const proxyAccount = await proxy.getAccount(new Address(address));
-        const latestNonce = Math.max(
-          proxyAccount.nonce.valueOf(),
-          account.nonce
-        );
+        const latestNonce = getLatestNonce(proxyAccount);
 
         transactions.forEach((tx, i) => {
           tx.setNonce(new Nonce(latestNonce + i));
