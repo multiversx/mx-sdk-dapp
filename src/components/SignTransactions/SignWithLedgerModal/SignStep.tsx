@@ -2,18 +2,17 @@ import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { denomination } from 'constants/index';
+import { denomination, decimals } from 'constants/index';
 import useGetTokenDetails from 'hooks/useGetTokenDetails';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { egldLabelSelector, providerSelector } from 'redux/selectors';
 import { updateSignedTransaction } from 'redux/slices/transactionsSlice';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { MultiSignTxType, TxDataTokenType } from 'types/transactions';
-import Data from 'UI/Data';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
-import { getGeneratedClasses, isTokenTransfer } from 'utils';
-import { denominateAmount } from 'utils/form';
+import TransactionData from 'UI/TransactionData';
+import { denominate, getGeneratedClasses, isTokenTransfer } from 'utils';
 import { HandleCloseType } from '../helpers';
 import { parseTransactionAfterSigning } from '../helpers/parseTransactionAfterSigning';
 
@@ -153,9 +152,11 @@ const SignStep = ({
   const isFirst = currentStep === 0;
   const isVisible = currentStep === index;
 
-  const denominatedAmount = denominateAmount({
-    amount: isTokenTransaction ? amount : tx.transaction.getValue().toString(),
+  const denominatedAmount = denominate({
+    input: isTokenTransaction ? amount : tx.transaction.getValue().toString(),
     denomination: isTokenTransaction ? tokenDenomination : denomination,
+    decimals: decimals,
+    showLastNonZeroDecimal: false,
     addCommas: true
   });
 
@@ -217,7 +218,7 @@ const SignStep = ({
 
               <div className={classes.dataFormGroup}>
                 {tx.transaction.getData() && (
-                  <Data
+                  <TransactionData
                     {...{
                       data: tx.transaction.getData().toString(),
                       highlight: multiTxData,

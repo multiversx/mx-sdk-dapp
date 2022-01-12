@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
-import { network, walletConnectBridge, walletConnectDeepLink } from './config';
+import { network, walletConnectBridge, walletConnectDeepLink } from 'config';
 import { DappProvider, DappUI } from '@elrondnetwork/dapp-core';
 import '@elrondnetwork/dapp-core/build/index.css';
 import Layout from 'components/Layout';
@@ -18,7 +18,7 @@ const App = () => {
     <Router>
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
-        modalClassName={'custom-class-for-modals'}
+        modalClassName='custom-class-for-modals'
       >
         <Layout>
           <TransactionsToastList />

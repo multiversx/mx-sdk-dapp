@@ -1,3 +1,1 @@
-import denominate from './denominate';
-
-export { denominate };
+export * from './denominate';

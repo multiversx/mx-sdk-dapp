@@ -1,5 +1,4 @@
 import React from 'react';
-import { matchPath } from 'react-router-dom';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   addressSelector,
@@ -88,7 +87,7 @@ const AuthenticatedRoutesWrapper = ({
   }
 
   const isOnAuthenticatedRoute = authenticatedRoutesRef.current.some(
-    ({ path }) => matchPath(pathname, path) !== null
+    ({ path }) => pathname.includes(path)
   );
 
   const shouldRedirect =

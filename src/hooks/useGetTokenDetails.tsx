@@ -1,7 +1,8 @@
+import axios from 'axios';
 import useSwr from 'swr';
+import { denomination } from 'constants/index';
 import { useSelector } from 'redux/DappProviderContext';
 import { networkSelector } from 'redux/selectors';
-import { denomination } from '../constants';
 
 interface TokenOptionType {
   tokenLabel: string;
@@ -22,7 +23,7 @@ interface TokenInfoResponse {
   };
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export function useGetTokenDetails({
   tokenId
