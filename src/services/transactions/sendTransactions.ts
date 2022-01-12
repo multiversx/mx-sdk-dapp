@@ -5,7 +5,7 @@ import transformAndSignTransactions from './transformAndSignTransactions';
 
 export interface SendTransactionReturnType {
   error?: string;
-  sessionId?: string;
+  sessionId: string | null;
 }
 
 export async function sendTransactions({
@@ -35,7 +35,7 @@ export async function sendTransactions({
     });
   } catch (err) {
     console.error('error signing transaction', (err as any).message);
-    return { error: (err as any).message };
+    return { error: (err as any).message, sessionId: null };
   }
 }
 

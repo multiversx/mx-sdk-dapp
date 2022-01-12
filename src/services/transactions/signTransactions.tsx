@@ -43,7 +43,7 @@ export function signTransactions({
     };
 
     store.dispatch(setNotificationModal(notificationPayload));
-    return { error: 'insufficient funds' };
+    return { error: 'insufficient funds', sessionId: null };
   }
 
   const hasValidChainId = transactionsPayload?.every((tx) =>
@@ -58,7 +58,7 @@ export function signTransactions({
       description: 'The application tried to change the transaction network'
     };
     store.dispatch(setNotificationModal(notificationPayload));
-    return { error: 'Invalid ChainID' };
+    return { error: 'Invalid ChainID', sessionId: null };
   }
 
   const signTransactionsPayload = {
