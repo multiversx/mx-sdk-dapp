@@ -1,7 +1,8 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
-import { useDispatch, useSelector } from 'redux/store';
+import { ledgerErrorCodes } from 'constants/index';
 import { loginAction } from 'redux/commonActions';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   isLoggedInSelector,
   ledgerAccountSelector,
@@ -14,7 +15,6 @@ import {
   setTokenLogin
 } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
-import { ledgerErrorCodes } from '../../constants';
 import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
@@ -189,6 +189,7 @@ export function useLedgerLogin({
       if (!initialized) {
         setError(failedInitializeErrorText);
         console.warn(failedInitializeErrorText);
+        setIsLoading(false);
         return;
       }
       const accounts = await hwWalletP.getAccounts(
@@ -196,6 +197,7 @@ export function useLedgerLogin({
         addressesPerPage
       );
       setAccounts(accounts);
+      setIsLoading(false);
     } catch (err) {
       if ((err as any).statusCode in ledgerErrorCodes) {
         setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
@@ -203,7 +205,6 @@ export function useLedgerLogin({
         setError(ledgerAppErrorText);
       }
       console.error('error', err);
-    } finally {
       setIsLoading(false);
     }
   }
@@ -226,7 +227,12 @@ export function useLedgerLogin({
         );
         window.location.href = callbackRoute;
       } else {
-        setShowAddressList(true);
+        if (accounts?.length > 0) {
+          setShowAddressList(true);
+        } else {
+          await fetchAccounts();
+          setShowAddressList(true);
+        }
       }
     } catch (error) {
       console.error('error ', error);
@@ -253,8 +259,7 @@ export function useLedgerLogin({
   React.useEffect(() => {
     fetchAccounts();
   }, [startIndex]);
-
-  const isFailed = error != null;
+  const isFailed = Boolean(error);
   return [
     onStartLogin,
     {

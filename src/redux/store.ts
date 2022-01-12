@@ -1,10 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { createContext } from 'react';
-import {
-  createDispatchHook,
-  createSelectorHook,
-  createStoreHook
-} from 'react-redux';
+
 import {
   persistStore,
   persistReducer,
@@ -23,7 +18,7 @@ const persistConfig = {
   key: 'root',
   version: 1,
   storage,
-  whitelist: ['account', 'loginInfo', 'toasts', 'transactionsInfo', 'modals']
+  whitelist: ['account', 'loginInfo', 'toasts', 'modals']
 };
 
 const localStorageReducers = persistReducer(persistConfig, rootReducer);
@@ -54,13 +49,6 @@ export const store = configureStore({
       }
     })
 });
-
-export const defaultContextValue: any = null;
-export const DappCoreContext = createContext(defaultContextValue);
-
-export const useStore = createStoreHook(DappCoreContext);
-export const useDispatch = createDispatchHook(DappCoreContext);
-export const useSelector = createSelectorHook(DappCoreContext);
 
 export const persistor = persistStore(store);
 

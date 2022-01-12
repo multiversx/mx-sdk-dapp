@@ -68,7 +68,7 @@ export function useParseMultiEsdtTransferData({
     return defaultTransactionInfo;
   }
 
-  useEffect(() => {
+  function extractTransactionESDTData() {
     if (transactions && transactions.length > 0) {
       const allTransactions: MultiSignTxType[] = [];
       transactions.forEach((transaction, transactionIndex) => {
@@ -110,6 +110,10 @@ export function useParseMultiEsdtTransferData({
       });
       setAllTransactions(allTransactions);
     }
+  }
+
+  useEffect(() => {
+    extractTransactionESDTData();
   }, [transactions]);
 
   return {

@@ -1,32 +1,52 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TransactionsDisplayInfoType } from 'types/transactions';
 import { logoutAction } from '../commonActions';
 
-export interface TransactionInfoSlice {
-  processingMessage: string;
-  errorMessage: string;
-  successMessage: string;
-  submittedMessage: string;
-  submittedMessageShown: string;
-  grouping: number[];
-}
-
 export interface StateType {
-  info: TransactionInfoSlice | null;
+  [sessionId: string]: TransactionsDisplayInfoType;
 }
 
-const initialState: StateType = {
-  info: null
-};
+export interface SetTransactionsInfoPayloadType {
+  sessionId: string;
+  transactionsDisplayInfo: TransactionsDisplayInfoType;
+}
+
+export const defaultTransactionErrorMessage = 'Transaction failed';
+export const defaultTransactionSuccessMessage = 'Transaction successful';
+export const defaultTransactionProcessingMessage = 'Processing transaction';
+export const defaultTransactionSubmittedMessage = 'Transaction submitted';
+export const defaultTransactionDuration = 10000;
+
+const initialState: StateType = {};
 
 export const signTransactionsSlice = createSlice({
   name: 'transactionsInfo',
   initialState,
   reducers: {
-    setTransactionInfo(
+    setTransactionsDisplayInfo(
       state: StateType,
-      action: PayloadAction<TransactionInfoSlice>
+      action: PayloadAction<SetTransactionsInfoPayloadType>
     ) {
-      state.info = action.payload;
+      const { sessionId, transactionsDisplayInfo } = action.payload;
+      if (sessionId != null) {
+        state[sessionId] = {
+          errorMessage:
+            transactionsDisplayInfo?.errorMessage ||
+            defaultTransactionErrorMessage,
+          successMessage:
+            transactionsDisplayInfo?.successMessage ||
+            defaultTransactionSuccessMessage,
+          processingMessage:
+            transactionsDisplayInfo?.processingMessage ||
+            defaultTransactionProcessingMessage,
+          submittedMessage:
+            transactionsDisplayInfo?.submittedMessage ||
+            defaultTransactionSubmittedMessage,
+          transactionDuration:
+            transactionsDisplayInfo?.transactionDuration ||
+            defaultTransactionDuration
+        };
+      }
     },
     clearTransactionsInfo: () => initialState
   },
@@ -37,7 +57,7 @@ export const signTransactionsSlice = createSlice({
   }
 });
 
-export const { clearTransactionsInfo, setTransactionInfo } =
+export const { clearTransactionsInfo, setTransactionsDisplayInfo } =
   signTransactionsSlice.actions;
 
 export default signTransactionsSlice.reducer;

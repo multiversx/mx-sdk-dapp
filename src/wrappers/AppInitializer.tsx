@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from 'redux/DappProviderContext';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { NetworkConfigType } from 'types';
-
-import { useDispatch } from 'redux/store';
 
 export default function AppInitializer({
   networkConfig,
@@ -16,11 +14,12 @@ export default function AppInitializer({
   const dispatch = useDispatch();
 
   async function initializeApp() {
-    await dispatch(initializeNetworkConfig(networkConfig)); // TODO: maybe remove await?
+    dispatch(initializeNetworkConfig(networkConfig));
     setInitialized(true);
   }
   useEffect(() => {
     initializeApp();
-  }, []);
+  }, [networkConfig]);
+
   return initialized ? children : null;
 }

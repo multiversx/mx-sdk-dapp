@@ -1,8 +1,7 @@
-import { useSelector } from 'redux/store';
+import { useSelector } from 'redux/DappProviderContext';
 import { accountInfoSelector } from 'redux/selectors';
-import { AccountInfoSliceType } from 'redux/slices';
 
-export const useGetAccountInfo = (): AccountInfoSliceType => {
+export const useGetAccountInfo = () => {
   const accountInfo = useSelector(accountInfoSelector);
   return accountInfo;
 };

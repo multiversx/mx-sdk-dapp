@@ -1,6 +1,6 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { useSelector } from 'redux/store';
+import { useSelector } from 'redux/DappProviderContext';
 import { ledgerAccountSelector } from 'redux/selectors';
 import { useLedgerLogin } from 'services/login/useLedgerLogin';
 import PageState from 'UI/PageState';
@@ -62,6 +62,8 @@ export function LedgerLoginContainer({
       <AddressTable
         accounts={accounts}
         loading={isLoading}
+        className={className}
+        shouldRenderDefaultCss={shouldRenderDefaultCss}
         onGoToNextPage={onGoToNextPage}
         onGoToPrevPage={onGoToPrevPage}
         onSelectAddress={onSelectAddress}

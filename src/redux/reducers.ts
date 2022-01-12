@@ -19,11 +19,24 @@ const transactionsReducer = persistReducer(
   transactions
 );
 
-export default combineReducers({
+const transactionsInfoPersistConfig = {
+  key: 'transactionsInfo',
+  version: 1,
+  storage: sessionStorage
+};
+
+const transactionsInfoReducer = persistReducer(
+  transactionsInfoPersistConfig,
+  transactionsInfo
+);
+
+const rootReducer = combineReducers({
   account,
   networkConfig,
   loginInfo,
-  transactionsInfo,
+  transactionsInfo: transactionsInfoReducer,
   transactions: transactionsReducer,
   modals
 });
+
+export default rootReducer;

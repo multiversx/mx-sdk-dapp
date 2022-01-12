@@ -10,7 +10,8 @@ export const WalletConnectLoginButton = ({
   logoutRoute = '/unlock',
   shouldRenderDefaultCss = true,
   className = 'wallect-connect-login',
-  lead = 'Scan the QR code using Maiar'
+  lead = 'Scan the QR code using Maiar',
+  token
 }: LoginButtonPropsType) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -41,6 +42,7 @@ export const WalletConnectLoginButton = ({
           callbackRoute={callbackRoute}
           loginButtonText={loginButtonText}
           title={title}
+          token={token}
           className={className}
           logoutRoute={logoutRoute}
           lead={lead}

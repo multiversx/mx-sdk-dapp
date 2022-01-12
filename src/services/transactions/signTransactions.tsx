@@ -1,21 +1,30 @@
 import { validation } from '@elrondnetwork/dapp-utils';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
-
+import isEqual from 'lodash/isEqual';
 import { networkConstants } from 'constants/index';
-import { accountBalanceSelector } from 'redux/selectors';
-import { setTransactionsToSign, setNotificationModal } from 'redux/slices';
+
+import { accountBalanceSelector, chainIDSelector } from 'redux/selectors';
+import {
+  setTransactionsToSign,
+  setNotificationModal,
+  setTransactionsDisplayInfo
+} from 'redux/slices';
 import { store } from 'redux/store';
+import { SignTransactionsPropsType } from 'types';
 import { SendTransactionReturnType } from './sendTransactions';
-import { SignTransactionsPropsType } from './types';
 import { calcTotalFee } from './utils';
 
 export function signTransactions({
   transactions,
-  minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT
+  minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT,
+  transactionsDisplayInfo
 }: SignTransactionsPropsType): SendTransactionReturnType {
+  const appState = store.getState();
   const sessionId = Date.now().toString();
-  const accountBalance = accountBalanceSelector(store.getState());
+  const accountBalance = accountBalanceSelector(appState);
+  const storeChainId = chainIDSelector(appState);
+
   const transactionsPayload = Array.isArray(transactions)
     ? transactions
     : [transactions];
@@ -36,12 +45,31 @@ export function signTransactions({
     store.dispatch(setNotificationModal(notificationPayload));
     return { error: 'insufficient funds' };
   }
+
+  const hasValidChainId = transactionsPayload?.every((tx) =>
+    isEqual(tx.getChainID(), storeChainId)
+  );
+
+  if (!hasValidChainId) {
+    const notificationPayload = {
+      icon: faExclamationTriangle,
+      iconClassName: 'text-warning',
+      title: 'Network change detected',
+      description: 'The application tried to change the transaction network'
+    };
+    store.dispatch(setNotificationModal(notificationPayload));
+    return { error: 'Invalid ChainID' };
+  }
+
   const signTransactionsPayload = {
     sessionId,
     callbackRoute: window.location.pathname,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
+  store.dispatch(
+    setTransactionsDisplayInfo({ sessionId, transactionsDisplayInfo })
+  );
   return { sessionId };
 }
 

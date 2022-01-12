@@ -1,4 +1,6 @@
 import React from 'react';
+
+import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
 
 interface AddressRowType {
@@ -37,7 +39,7 @@ const AddressRow = ({
 
   const fetchBalance = async () => {
     try {
-      const balance = await getAccountBalance(address, true);
+      const balance = await getAccountBalance(address);
       setBalance(balance);
     } catch (err) {
       console.error('error fetching balance', balance);
@@ -71,7 +73,9 @@ const AddressRow = ({
           </label>
         </div>
       </td>
-      <td className='text-left'>{balance}</td>
+      <td className='text-left'>
+        <Denominate value={balance} />
+      </td>
       <td className='text-left'>{index}</td>
     </tr>
   );

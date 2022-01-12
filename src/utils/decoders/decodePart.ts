@@ -18,3 +18,5 @@ export function decodePart(part: string) {
 
   return decodedPart;
 }
+
+export default decodePart;

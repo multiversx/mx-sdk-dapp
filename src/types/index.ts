@@ -1,5 +1,3 @@
-import { Nonce } from '@elrondnetwork/erdjs';
-
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
@@ -28,13 +26,6 @@ export interface NetworkConfigType {
   network: NetworkType;
 }
 
-export interface AccountType {
-  address: string;
-  balance: string;
-  nonce: Nonce;
-  code?: string;
-}
-
 export interface ScResultType {
   callType: string;
   gasLimit: number;
@@ -47,3 +38,7 @@ export interface ScResultType {
   data?: string;
   returnMessage?: string;
 }
+
+export * from './transactions';
+export * from './toasts';
+export * from './enums';

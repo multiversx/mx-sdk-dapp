@@ -6,4 +6,5 @@ export interface LoginButtonPropsType {
   callbackRoute: string;
   loginButtonText: string;
   shouldRenderDefaultCss?: boolean;
+  token?: string;
 }

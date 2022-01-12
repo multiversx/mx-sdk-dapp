@@ -1,13 +1,18 @@
-import React, { useRef, useState } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import {
   faCheck,
   faHourglass,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
 import { Toast } from 'react-bootstrap';
-import { useSelector } from 'redux/store';
-import { signedTransactionsSelector } from 'redux/selectors';
+import { useSelector } from 'redux/DappProviderContext';
+import {
+  signedTransactionsSelector,
+  transactionDisplayInfoSelector
+} from 'redux/selectors';
+import { RootState } from 'redux/store';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 
@@ -17,18 +22,23 @@ import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
 import { TransactionToastPropsType } from './types';
 
 export const TransactionToast = ({
-  endTime,
   toastId,
-  startTime,
   title = '',
   shouldRenderDefaultCss = true,
-  className = 'transaction-toast',
-  errorMessage = 'Transaction failed',
-  successMessage = 'Transaction successful',
-  processingMessage = 'Processing transaction'
+  className = 'transaction-toast'
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
+  const transactionDisplayInfo = useSelector((state: RootState) =>
+    transactionDisplayInfoSelector(state, toastId)
+  );
+  const {
+    errorMessage = 'Transaction failed',
+    successMessage = 'Transaction successful',
+    processingMessage = 'Processing transaction',
+    transactionDuration = 10000
+  } = transactionDisplayInfo;
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -49,6 +59,14 @@ export const TransactionToast = ({
   const currentTx: any = signedTransactions[toastId];
 
   const { transactions, status } = currentTx;
+
+  const [startTime, endTime] = useMemo(() => {
+    const startTime = moment().unix();
+    const endTime = moment()
+      .add(Number(transactionDuration), 'milliseconds')
+      .unix();
+    return [startTime, endTime];
+  }, []);
 
   const progress = { startTime, endTime };
 

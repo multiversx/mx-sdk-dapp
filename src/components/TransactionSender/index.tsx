@@ -2,8 +2,8 @@ import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
-import { useDispatch, useSelector } from 'redux/store';
 import newTransaction from 'models/newTransaction';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { signedTransactionsSelector } from 'redux/selectors';
 import { accountSelector, proxySelector } from 'redux/selectors';
 import {
@@ -64,7 +64,7 @@ const TransactionSender = () => {
           (txHash) => Buffer.from(txHash.hash).toString('hex')
         );
 
-        setNonce(account.nonce.value + transactions.length);
+        setNonce(account.nonce + transactions.length);
 
         const newStatus = TransactionServerStatusesEnum.pending;
         const newTransactions = transactions.map((transaction) => {
@@ -97,7 +97,7 @@ const TransactionSender = () => {
           updateSignedTransactions({
             sessionId,
             status: TransactionBatchStatusesEnum.failed,
-            errorMessage: error.message
+            errorMessage: (error as any).message
           })
         );
         clearSignInfo();

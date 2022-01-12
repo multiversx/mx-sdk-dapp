@@ -1,15 +1,13 @@
-import BigNumber from 'bignumber.js';
-import { egldLabelSelector } from 'redux/selectors';
+import { accountSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { getAccount } from './getAccount';
 
-export async function getAccountBalance(address: string, withLabel = false) {
-  const egldLabel = egldLabelSelector(store.getState());
-  const account = await getAccount(address);
-  const denominatedBalance = new BigNumber(
-    account.balance.toDenominated()
-  ).toFormat();
-  return withLabel ? `${denominatedBalance} ${egldLabel}` : denominatedBalance;
+export async function getAccountBalance(address?: string) {
+  let accountAddress = address;
+  if (accountAddress == null) {
+    const account = accountSelector(store.getState());
+    accountAddress = account.address;
+  }
+  const account = await getAccount(accountAddress);
+  return account.balance.toString();
 }
-
-
