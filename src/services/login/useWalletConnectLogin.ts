@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
-import { IDappProvider } from '@elrondnetwork/erdjs/out';
 import QRCode from 'qrcode';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
@@ -92,30 +91,6 @@ export const useWalletConnectLogin = ({
   useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
-
-  async function generateWcUri() {
-    if (!walletConnectBridge) {
-      return;
-    }
-
-    const walletConnectUri: string | undefined =
-      await providerRef.current?.login();
-    const hasUri = Boolean(walletConnectUri);
-
-    if (!hasUri) {
-      return;
-    }
-
-    if (!token) {
-      setWcUri(walletConnectUri as string);
-      return;
-    }
-
-    const wcUriWithToken = `${walletConnectUri}&token=${token}`;
-
-    setWcUri(wcUriWithToken);
-    dispatch(setTokenLogin({ loginToken: token }));
-  }
 
   const generateQRCode = async () => {
     if (!hasWcUri) {
@@ -220,11 +195,18 @@ export const useWalletConnectLogin = ({
     await newProvider.init();
     dispatch(setProvider(newProvider));
     providerRef.current = newProvider;
-    loginProvider && loginUser(newProvider);
+    if (loginProvider) {
+      generateWcUri();
+    }
   }
 
-  async function loginUser(provider: IDappProvider) {
-    const walletConnectUri: string | undefined = await provider?.login();
+  async function generateWcUri() {
+    if (!walletConnectBridge) {
+      return;
+    }
+
+    const walletConnectUri: string | undefined =
+      await providerRef.current?.login();
     const hasUri = Boolean(walletConnectUri);
 
     if (!hasUri) {
@@ -239,7 +221,7 @@ export const useWalletConnectLogin = ({
     const wcUriWithToken = `${walletConnectUri}&token=${token}`;
 
     setWcUri(wcUriWithToken);
-    dispatch(setTokenLogin({ loginToken: token! })); // TODO: eslint warning
+    dispatch(setTokenLogin({ loginToken: token }));
   }
 
   const isFailed = error != null;
