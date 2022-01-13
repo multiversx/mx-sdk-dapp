@@ -1,7 +1,11 @@
-export interface Props {
+import { ReactNode } from 'react';
+
+export interface ExtensionLoginButtonPropsType {
   token?: string;
+  children?: ReactNode;
   className?: string;
+  buttonClassName?: string;
   callbackRoute: string;
-  loginButtonText: string;
+  loginButtonText?: string;
   shouldRenderDefaultCss?: boolean;
 }

@@ -1,7 +1,10 @@
-export interface UseWebWalletLoginPropType {
+import { ReactNode } from 'react';
+
+export interface WebWalletLoginButtonPropsType {
   token?: string;
   className?: string;
   callbackRoute: string;
-  loginButtonText: string;
+  children?: ReactNode;
+  loginButtonText?: string;
   shouldRenderDefaultCss?: boolean;
 }
