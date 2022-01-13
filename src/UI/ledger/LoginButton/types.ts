@@ -6,7 +6,7 @@ export interface LedgerLoginButtonPropsType {
   className?: string;
   buttonClassName?: string;
   callbackRoute: string;
-  loginButtonText: string;
+  loginButtonText?: string;
   renderContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
 }
