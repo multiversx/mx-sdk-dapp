@@ -21,7 +21,11 @@ export async function sendTransactions({
     const areComplexTransactions = transactionsPayload.every(
       (tx) => tx instanceof Transaction
     );
-    console.log(areComplexTransactions, transactionsPayload);
+    console.log(
+      areComplexTransactions,
+      transactionsPayload,
+      typeof transactionsPayload[0]
+    );
     let txToSign = transactionsPayload;
     if (!areComplexTransactions) {
       txToSign = await transformAndSignTransactions({
@@ -34,9 +38,9 @@ export async function sendTransactions({
       minGasLimit,
       transactionsDisplayInfo
     });
-  } catch (err: any) {
-    console.error('error signing transaction', err);
-    return { error: err, sessionId: null };
+  } catch (err) {
+    console.error('error signing transaction', err as any);
+    return { error: err as any, sessionId: null };
   }
 }
 
