@@ -1,15 +1,16 @@
 import React from 'react';
 import { useWebWalletLogin } from 'services/login';
 import { getGeneratedClasses } from 'utils';
-import { UseWebWalletLoginPropType } from './types';
+import { WebWalletLoginButtonPropsType } from './types';
 
 export const WebWalletLoginButton: (
-  props: UseWebWalletLoginPropType
+  props: WebWalletLoginButtonPropsType
 ) => JSX.Element = ({
+  children,
   token,
   className = 'web-wallet-login',
   callbackRoute,
-  loginButtonText,
+  loginButtonText = 'Elrond Web Wallet',
   shouldRenderDefaultCss = true
 }) => {
   const [onTriggerLogin] = useWebWalletLogin({ callbackRoute, token });
@@ -24,7 +25,7 @@ export const WebWalletLoginButton: (
 
   return (
     <button onClick={handleLogin} className={classes.wrapper}>
-      <span className={classes.loginText}>{loginButtonText}</span>
+      {children || <span className={classes.loginText}>{loginButtonText}</span>}
     </button>
   );
 };

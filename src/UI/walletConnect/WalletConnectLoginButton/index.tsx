@@ -1,25 +1,26 @@
 import React, { Fragment, useState } from 'react';
 import { getGeneratedClasses } from 'utils';
 import { WalletConnectLoginModal } from '../WalletConnectLoginModal';
-import { LoginButtonPropsType } from './types';
+import { WalletConnectLoginButtonPropsType } from './types';
 
 export const WalletConnectLoginButton = ({
+  children,
   callbackRoute,
-  loginButtonText,
+  loginButtonText = 'Maiar App',
   title = 'Maiar Login',
   logoutRoute = '/unlock',
   shouldRenderDefaultCss = true,
+  buttonClassName,
   className = 'wallect-connect-login',
   lead = 'Scan the QR code using Maiar',
   token
-}: LoginButtonPropsType) => {
+}: WalletConnectLoginButtonPropsType) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
-
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3',
+      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
       loginText: 'text-left'
     }
   );
@@ -35,7 +36,9 @@ export const WalletConnectLoginButton = ({
   return (
     <Fragment>
       <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
-        <span className={generatedClasses.loginText}>{loginButtonText}</span>
+        {children || (
+          <span className={generatedClasses.loginText}>{loginButtonText}</span>
+        )}
       </button>
       {showLoginModal && (
         <WalletConnectLoginModal

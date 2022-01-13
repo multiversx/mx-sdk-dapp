@@ -1,18 +1,22 @@
 import React from 'react';
 import { useExtensionLogin } from 'services/login';
 import { getGeneratedClasses } from 'utils';
-import { Props } from './types';
+import { ExtensionLoginButtonPropsType } from './types';
 
-export const ExtensionLoginButton: (props: Props) => JSX.Element = ({
+export const ExtensionLoginButton: (
+  props: ExtensionLoginButtonPropsType
+) => JSX.Element = ({
   token,
   className = 'extension-login',
+  children,
   callbackRoute,
-  loginButtonText,
+  buttonClassName,
+  loginButtonText = 'Maiar DeFi Wallet',
   shouldRenderDefaultCss = true
 }) => {
   const [onTriggerLogin] = useExtensionLogin({ callbackRoute, token });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3',
+    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
     loginText: 'text-left'
   });
 
@@ -22,7 +26,7 @@ export const ExtensionLoginButton: (props: Props) => JSX.Element = ({
 
   return (
     <button onClick={handleLogin} className={classes.wrapper}>
-      <span className={classes.loginText}>{loginButtonText}</span>
+      {children || <span className={classes.loginText}>{loginButtonText}</span>}
     </button>
   );
 };
