@@ -5,7 +5,7 @@ import transformAndSignTransactions from './transformAndSignTransactions';
 
 export interface SendTransactionReturnType {
   error?: string;
-  sessionId?: string;
+  sessionId: string | null;
 }
 
 export async function sendTransactions({
@@ -19,7 +19,7 @@ export async function sendTransactions({
       : [transactions];
 
     const areComplexTransactions = transactionsPayload.every(
-      (tx) => tx instanceof Transaction
+      (tx) => Object.getPrototypeOf(tx).toPlainObject != null
     );
     let txToSign = transactionsPayload;
     if (!areComplexTransactions) {
@@ -34,8 +34,8 @@ export async function sendTransactions({
       transactionsDisplayInfo
     });
   } catch (err) {
-    console.error('error signing transaction', (err as any).message);
-    return { error: (err as any).message };
+    console.error('error signing transaction', err as any);
+    return { error: err as any, sessionId: null };
   }
 }
 

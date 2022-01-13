@@ -15,7 +15,7 @@ import storage from 'redux-persist/lib/storage';
 import rootReducer from './reducers';
 
 const persistConfig = {
-  key: 'root',
+  key: 'dapp-core-store',
   version: 1,
   storage,
   whitelist: ['account', 'loginInfo', 'toasts', 'modals']

@@ -1,7 +1,6 @@
 import { validation } from '@elrondnetwork/dapp-utils';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
-import isEqual from 'lodash/isEqual';
 import { networkConstants } from 'constants/index';
 
 import { accountBalanceSelector, chainIDSelector } from 'redux/selectors';
@@ -43,13 +42,12 @@ export function signTransactions({
     };
 
     store.dispatch(setNotificationModal(notificationPayload));
-    return { error: 'insufficient funds' };
+    return { error: 'insufficient funds', sessionId: null };
   }
 
-  const hasValidChainId = transactionsPayload?.every((tx) =>
-    isEqual(tx.getChainID(), storeChainId)
+  const hasValidChainId = transactionsPayload?.every(
+    (tx) => tx.getChainID().valueOf() === storeChainId.valueOf()
   );
-
   if (!hasValidChainId) {
     const notificationPayload = {
       icon: faExclamationTriangle,
@@ -58,7 +56,7 @@ export function signTransactions({
       description: 'The application tried to change the transaction network'
     };
     store.dispatch(setNotificationModal(notificationPayload));
-    return { error: 'Invalid ChainID' };
+    return { error: 'Invalid ChainID', sessionId: null };
   }
 
   const signTransactionsPayload = {

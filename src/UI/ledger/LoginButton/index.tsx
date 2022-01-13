@@ -9,7 +9,9 @@ export const LedgerLoginButton: (
 ) => JSX.Element = ({
   token,
   callbackRoute,
-  loginButtonText,
+  children,
+  loginButtonText = 'Ledger',
+  buttonClassName,
   className = 'ledger-login',
   renderContentInsideModal = true,
   shouldRenderDefaultCss = true
@@ -18,7 +20,10 @@ export const LedgerLoginButton: (
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
-    { wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3', loginText: 'text-left' }
+    {
+      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
+      loginText: 'text-left'
+    }
   );
 
   function handleOpenModal() {
@@ -54,7 +59,9 @@ export const LedgerLoginButton: (
   return (
     <React.Fragment>
       <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
-        <span className={generatedClasses.loginText}>{loginButtonText}</span>
+        {children || (
+          <span className={generatedClasses.loginText}>{loginButtonText}</span>
+        )}
       </button>
       {showLoginModal && content}
     </React.Fragment>

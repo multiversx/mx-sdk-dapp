@@ -9,7 +9,7 @@ import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
 
 const transactionsPersistConfig = {
-  key: 'transactions',
+  key: 'dapp-core-transactions',
   version: 1,
   storage: sessionStorage
 };
@@ -20,7 +20,7 @@ const transactionsReducer = persistReducer(
 );
 
 const transactionsInfoPersistConfig = {
-  key: 'transactionsInfo',
+  key: 'dapp-core-transactionsInfo',
   version: 1,
   storage: sessionStorage
 };

@@ -18,8 +18,9 @@ export const accountBalanceSelector = createSelector(
   (account) => account.balance
 );
 
-export const accountNonceSelector = createSelector(accountSelector, (state) =>
-  state.nonce.valueOf()
+export const accountNonceSelector = createSelector(
+  accountSelector,
+  (state) => state?.nonce?.valueOf() || 0
 );
 
 export const shardSelector = createSelector(
