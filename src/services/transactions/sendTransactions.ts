@@ -34,8 +34,8 @@ export async function sendTransactions({
       transactionsDisplayInfo
     });
   } catch (err) {
-    console.error('error signing transaction', (err as any).message);
-    return { error: (err as any).message, sessionId: null };
+    console.error('error signing transaction', err);
+    return { error: err, sessionId: null };
   }
 }
 
