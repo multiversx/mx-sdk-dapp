@@ -166,7 +166,6 @@ export const useWalletConnectLogin = ({
           clearInterval(heartbeatDisconnectInterval);
         }, 150000);
       });
-      window.location.href = callbackRoute;
     } catch (err) {
       setError('Invalid address');
       console.error(err);
