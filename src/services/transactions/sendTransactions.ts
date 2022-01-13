@@ -19,12 +19,7 @@ export async function sendTransactions({
       : [transactions];
 
     const areComplexTransactions = transactionsPayload.every(
-      (tx) => tx instanceof Transaction
-    );
-    console.log(
-      areComplexTransactions,
-      transactionsPayload,
-      typeof transactionsPayload[0]
+      (tx) => Object.getPrototypeOf(tx).toPlainObject != null
     );
     let txToSign = transactionsPayload;
     if (!areComplexTransactions) {
