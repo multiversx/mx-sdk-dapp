@@ -1,7 +1,6 @@
 import { validation } from '@elrondnetwork/dapp-utils';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
-import isEqual from 'lodash/isEqual';
 import { networkConstants } from 'constants/index';
 
 import { accountBalanceSelector, chainIDSelector } from 'redux/selectors';
@@ -46,10 +45,9 @@ export function signTransactions({
     return { error: 'insufficient funds', sessionId: null };
   }
 
-  const hasValidChainId = transactionsPayload?.every((tx) =>
-    isEqual(tx.getChainID(), storeChainId)
+  const hasValidChainId = transactionsPayload?.every(
+    (tx) => tx.getChainID().valueOf() === storeChainId.valueOf()
   );
-
   if (!hasValidChainId) {
     const notificationPayload = {
       icon: faExclamationTriangle,
