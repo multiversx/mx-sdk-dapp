@@ -11,9 +11,9 @@ import {
 
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;
-  onSuccess?: (transactionId: string) => void;
-  onFailed?: (transactionId: string, errorMessage?: string) => void;
-  onCancelled?: (transactionId: string) => void;
+  onSuccess?: (transactionId: string | null) => void;
+  onFailed?: (transactionId: string | null, errorMessage?: string) => void;
+  onCancelled?: (transactionId: string | null) => void;
 }
 
 export function useTrackTransactionStatus({
@@ -22,16 +22,10 @@ export function useTrackTransactionStatus({
   onFailed,
   onCancelled
 }: UseTrackTransactionStatusArgsType) {
-  if (transactionId == null) {
-    return {};
-  }
   const transactionsBatch = useSelector((state: RootState) =>
     transactionStatusSelector(state, transactionId)
   );
 
-  if (transactionsBatch == null) {
-    return { errorMessage: 'No transaction to track' };
-  }
   const { status, transactions, errorMessage } = transactionsBatch;
 
   const isPending = getIsTransactionPending(status);
@@ -56,6 +50,14 @@ export function useTrackTransactionStatus({
       onCancelled(transactionId);
     }
   }, [isCancelled]);
+
+  if (transactionId == null) {
+    return {};
+  }
+
+  if (transactionsBatch == null) {
+    return { errorMessage: 'No transaction to track' };
+  }
 
   return {
     isPending,
