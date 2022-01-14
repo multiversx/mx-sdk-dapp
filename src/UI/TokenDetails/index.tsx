@@ -1,6 +1,9 @@
 import * as React from 'react';
 import { faGem } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { egldLabelSelector } from 'redux/selectors';
+import { store } from 'redux/store';
+import { ReactComponent as EgldIcon } from './../../assets/icons/EGLD.svg';
 import { Simple, Combined } from './TokenSymbol';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
@@ -22,12 +25,15 @@ type TokenIconType = TokenIconProps & {
 };
 
 const getDetails = (token: string): TokenIconType => {
+  const egldLabel = egldLabelSelector(store.getState());
+  const isEgldTransfer = token === egldLabel;
   return {
     token,
     symbol: token ? token.split('-')[0] : '',
     label: token,
     // eslint-disable-next-line react/display-name
-    icon: () => <FontAwesomeIcon icon={faGem} />
+    icon: () =>
+      isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faGem} />
   };
 };
 
