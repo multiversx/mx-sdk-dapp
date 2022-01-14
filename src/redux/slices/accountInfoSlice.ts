@@ -28,7 +28,7 @@ export interface AccountInfoSliceType {
 
 export const emptyAccount: AccountType = {
   balance: '...',
-  address: '...',
+  address: '',
   nonce: 0
 };
 

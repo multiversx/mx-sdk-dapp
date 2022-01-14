@@ -1,10 +1,11 @@
 import React from 'react';
+import { useGetLoginInfo } from 'hooks';
 import ExtensionLoginButton from 'UI/extension/LoginButton';
 
 import LedgerLoginButton from 'UI/ledger/LoginButton';
 import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
 import WebWalletLoginButton from 'UI/webWallet/LoginButton';
-import { getGeneratedClasses, getIsLoggedIn } from 'utils';
+import { getGeneratedClasses } from 'utils';
 import { Props } from './types';
 
 export const UnlockPage = ({
@@ -30,13 +31,15 @@ export const UnlockPage = ({
       cardBody: 'card-body py-4 px-2 px-sm-2 mx-lg-4'
     }
   );
+  const { isLoggedIn } = useGetLoginInfo();
 
   React.useEffect(() => {
-    const isLoggedIn = getIsLoggedIn();
+    console.log('\x1b[42m%s\x1b[0m', isLoggedIn);
+
     if (isLoggedIn) {
       window.location.href = loginRoute;
     }
-  }, []);
+  }, [isLoggedIn]);
 
   return (
     <div className={generatedClasses.wrapper}>

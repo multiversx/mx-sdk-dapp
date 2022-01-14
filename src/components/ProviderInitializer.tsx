@@ -58,8 +58,8 @@ export default function ProviderInitializer() {
               nonce: getLatestNonce(account)
             })
           );
-          dispatch(setWalletLogin(null));
         }
+        dispatch(setWalletLogin(null));
       }
     } catch (e) {
       console.error('Failed authenticating wallet user ', e);

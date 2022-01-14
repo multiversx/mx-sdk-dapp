@@ -92,13 +92,14 @@ const AuthenticatedRoutesWrapper = ({
 
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
+
+  if (loading || walletLogin) {
+    return <Loader />;
+  }
+
   if (shouldRedirect) {
     window.location.href = unlockRoute;
     return null;
-  }
-
-  if (loading && walletLogin) {
-    return <Loader />;
   }
 
   return <React.Fragment>{children}</React.Fragment>;
