@@ -5,7 +5,6 @@ import {
   useGetPendingTransactions,
   refreshAccount
 } from '@elrondnetwork/dapp-core';
-import { contractAddress, network } from 'config';
 import {
   Address,
   AddressValue,
@@ -16,6 +15,7 @@ import {
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
+import { contractAddress, network } from 'config';
 
 const Actions = () => {
   const account = useGetAccountInfo();
@@ -24,9 +24,9 @@ const Actions = () => {
 
   const [secondsLeft, setSecondsLeft] = React.useState<number>();
   const [hasPing, setHasPing] = React.useState<boolean>();
-  const [transactionSessionId, setTransactionSessionId] = React.useState<
-    string | null
-  >(null);
+  const /*transactionSessionId*/ [, setTransactionSessionId] = React.useState<
+      string | null
+    >(null);
 
   const mount = () => {
     if (secondsLeft) {
@@ -92,7 +92,7 @@ const Actions = () => {
     };
     await refreshAccount();
 
-    const { sessionId, error } = await sendTransactions({
+    const { sessionId /*, error*/ } = await sendTransactions({
       transactions: pingTransaction,
       transactionsDisplayInfo: {
         processingMessage: 'Processing Ping transaction',
@@ -114,7 +114,7 @@ const Actions = () => {
     };
     await refreshAccount();
 
-    const { sessionId, error } = await sendTransactions({
+    const { sessionId /*, error*/ } = await sendTransactions({
       transactions: pongTransaction,
       transactionsDisplayInfo: {
         processingMessage: 'Processing Pong transaction',

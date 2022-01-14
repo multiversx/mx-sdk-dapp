@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { DappUI } from '@elrondnetwork/dapp-core';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, Link } from 'react-router-dom';
-import { routeNames } from 'routes';
 import { network } from 'config';
+import { routeNames } from 'routes';
 
 const Transaction = () => {
   const { search } = useLocation();

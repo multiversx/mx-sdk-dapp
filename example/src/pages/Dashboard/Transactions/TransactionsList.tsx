@@ -1,10 +1,10 @@
 import React from 'react';
-import { Ui } from '@elrondnetwork/dapp-utils';
 import { useGetAccountInfo, DappUI } from '@elrondnetwork/dapp-core';
+import { Ui } from '@elrondnetwork/dapp-utils';
 import moment from 'moment';
+import { network } from 'config';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';
-import { network } from 'config';
 import { TransactionType } from './types';
 
 function sortByDate(a: TransactionType, b: TransactionType) {
