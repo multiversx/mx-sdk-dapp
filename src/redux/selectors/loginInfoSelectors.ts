@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect';
 import { LoginMethodsEnum } from 'types/enums';
 import { RootState } from '../store';
+import { addressSelector } from './accountInfoSelectors';
 
 export const loginInfoSelector = (state: RootState) => state.loginInfo;
 
@@ -11,7 +12,9 @@ export const loginMethodSelector = createSelector(
 
 export const isLoggedInSelector = createSelector(
   loginInfoSelector,
-  (state) => state.loginMethod != LoginMethodsEnum.none
+  addressSelector,
+  (state, address) =>
+    state.loginMethod != LoginMethodsEnum.none && Boolean(address)
 );
 
 export const walletConnectLoginSelector = createSelector(
