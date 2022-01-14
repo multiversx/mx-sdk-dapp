@@ -23,8 +23,7 @@
     "react-scripts": "file:../node_modules/react-scripts",
     "typescript": "file:../node_modules/typescript",
     "axios": "0.24.0",
-    "react-router-dom": "^6.2.1",
-    "react": "17.0.2"
+    "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "7.8.3"
