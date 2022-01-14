@@ -37,8 +37,9 @@ export interface NetworkConfigStateType {
 }
 
 const initialState: NetworkConfigStateType = {
-  walletConnectBridge: '',
-  walletConnectDeepLink: '',
+  walletConnectBridge: 'https://bridge.walletconnect.org',
+  walletConnectDeepLink:
+    'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=https://maiar.com/',
   network: defaultNetwork,
   proxy: new ProxyProvider(defaultNetwork.gatewayAddress, { timeout: 4000 }),
   provider: emptyProvider,
@@ -82,8 +83,8 @@ export const networkConfigSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(logoutAction, () => {
-      return initialState;
+    builder.addCase(logoutAction, (state) => {
+      state.provider = initialState.provider;
     });
   }
 });
