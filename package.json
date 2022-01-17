@@ -3,7 +3,7 @@
   "version": "0.2.0",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
-  "license": "MIT",
+  "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
   "main": "build/index.js",
   "module": "build/index.modern.js",
