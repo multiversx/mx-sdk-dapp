@@ -199,7 +199,7 @@ There are 2 ways of reading the user current state: hooks (to be used inside com
 
 ## Transactions
 
-The dapp-core library exposes a straight-foreward way of sending transactions and tracking their status, with a couple of handy UI components;
+The dapp-core library exposes a straight-forward way of sending transactions and tracking their status, with a couple of handy UI components;
 
 #### Sending Transactions
 
