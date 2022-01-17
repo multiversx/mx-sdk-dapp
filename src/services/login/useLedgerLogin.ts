@@ -15,7 +15,7 @@ import {
   setTokenLogin
 } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
-import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
+import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const failedInitializeErrorText =
@@ -47,7 +47,7 @@ export interface LedgerLoginHookCustomStateType {
 }
 
 export type LedgerLoginHookReturnType = [
-  LoginHookTriggerType,
+  InitiateLoginFunctionType,
   LoginHookGenericStateType,
   LedgerLoginHookCustomStateType
 ];

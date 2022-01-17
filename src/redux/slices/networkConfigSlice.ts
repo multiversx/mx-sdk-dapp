@@ -21,8 +21,8 @@ export const defaultNetwork: NetworkType = {
 };
 
 export interface InitializeNetworkConfigPayloadType {
-  walletConnectBridge: string;
-  walletConnectDeepLink: string;
+  walletConnectBridge?: string;
+  walletConnectDeepLink?: string;
   network: NetworkType;
 }
 
@@ -63,8 +63,10 @@ export const networkConfigSlice = createSlice({
       const apiProvider = new ApiProvider(network.apiAddress, {
         timeout: 4000
       });
-      state.walletConnectBridge = walletConnectBridge;
-      state.walletConnectDeepLink = walletConnectDeepLink;
+      state.walletConnectBridge =
+        walletConnectBridge || state.walletConnectBridge;
+      state.walletConnectDeepLink =
+        walletConnectDeepLink || state.walletConnectDeepLink;
       state.network = network;
       state.proxy = proxy;
       state.apiProvider = apiProvider;

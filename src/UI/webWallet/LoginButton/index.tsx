@@ -14,14 +14,14 @@ export const WebWalletLoginButton: (
   loginButtonText = 'Elrond Web Wallet',
   shouldRenderDefaultCss = true
 }) => {
-  const [onTriggerLogin] = useWebWalletLogin({ callbackRoute, token });
+  const [onInitiateLogin] = useWebWalletLogin({ callbackRoute, token });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
     wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
     loginText: 'text-left'
   });
 
   const handleLogin = () => {
-    onTriggerLogin();
+    onInitiateLogin();
   };
 
   return (
