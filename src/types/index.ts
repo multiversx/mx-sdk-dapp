@@ -21,8 +21,8 @@ export interface NetworkType {
 }
 
 export interface NetworkConfigType {
-  walletConnectBridge: string;
-  walletConnectDeepLink: string;
+  walletConnectBridge?: string;
+  walletConnectDeepLink?: string;
   network: NetworkType;
 }
 
