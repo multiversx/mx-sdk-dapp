@@ -292,9 +292,8 @@ One can contribute by creating _pull requests_, or by opening _issues_ for disco
 
 The [Elrond Team](https://elrond.com/team/).
 
-# License
-
-MIT © [](https://github.com/)
+## License
+GPL-3.0-or-later
 
 
 
