@@ -3,7 +3,7 @@
 
 > A library that holds the the core logic of a dapp on the Elrond Network
 
-[![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/dapp-core) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/@elrondnetwork/dapp-core) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 # Installation
 
