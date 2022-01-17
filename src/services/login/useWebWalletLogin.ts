@@ -5,7 +5,7 @@ import { isLoggedInSelector, networkSelector } from 'redux/selectors';
 import { setWalletLogin } from 'redux/slices';
 import { store } from 'redux/store';
 import { newWalletProvider } from 'utils';
-import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
+import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;
@@ -13,7 +13,7 @@ interface UseWebWalletLoginPropsType {
 }
 
 export type UseWebWalletLoginReturnType = [
-  LoginHookTriggerType,
+  InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
 
@@ -25,7 +25,7 @@ export const useWebWalletLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
 
-  async function triggerFunction() {
+  async function initiateLogin() {
     try {
       setIsLoading(true);
       const appState = store.getState();
@@ -60,7 +60,7 @@ export const useWebWalletLogin = ({
   const isFailed = error != null;
 
   return [
-    triggerFunction,
+    initiateLogin,
     {
       error,
       isFailed,

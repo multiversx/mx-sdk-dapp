@@ -176,7 +176,7 @@ export const useWalletConnectLogin = ({
     logout(callbackRoute);
   };
 
-  async function triggerWalletConnectSignIn(loginProvider = true) {
+  async function initiateLogin(loginProvider = true) {
     if (!walletConnectBridge) {
       return;
     }
@@ -226,7 +226,7 @@ export const useWalletConnectLogin = ({
   const isFailed = error != null;
 
   return [
-    triggerWalletConnectSignIn,
+    initiateLogin,
     {
       error,
       isFailed,
