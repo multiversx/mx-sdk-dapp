@@ -8,7 +8,7 @@ import { setExtensionLogin, setProvider } from 'redux/slices';
 import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { buildUrlParams } from 'utils';
-import { LoginHookGenericStateType, LoginHookTriggerType } from '../types';
+import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 interface UseExtensionLoginPropsType {
   callbackRoute: string;
@@ -16,7 +16,7 @@ interface UseExtensionLoginPropsType {
 }
 
 export type UseExtensionLoginReturnType = [
-  LoginHookTriggerType,
+  InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
 
@@ -28,7 +28,7 @@ export const useExtensionLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
 
-  async function triggerFunction() {
+  async function initiateLogin() {
     setIsLoading(true);
     const provider: ExtensionProvider = ExtensionProvider.getInstance();
 
@@ -86,7 +86,7 @@ export const useExtensionLogin = ({
 
   const isFailed = error != null;
   return [
-    triggerFunction,
+    initiateLogin,
     {
       isFailed,
       error,
