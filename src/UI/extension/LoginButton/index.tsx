@@ -14,14 +14,14 @@ export const ExtensionLoginButton: (
   loginButtonText = 'Maiar DeFi Wallet',
   shouldRenderDefaultCss = true
 }) => {
-  const [onTriggerLogin] = useExtensionLogin({ callbackRoute, token });
+  const [onInitiateLogin] = useExtensionLogin({ callbackRoute, token });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
     wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
     loginText: 'text-left'
   });
 
   const handleLogin = () => {
-    onTriggerLogin();
+    onInitiateLogin();
   };
 
   return (

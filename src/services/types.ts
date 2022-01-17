@@ -5,7 +5,7 @@ export interface LoginHookGenericStateType {
   isLoggedIn: boolean;
 }
 
-export type LoginHookTriggerType = () => void;
+export type InitiateLoginFunctionType = () => void;
 
 export type LoginHookReturnType = [
   LoginHookReturnType,

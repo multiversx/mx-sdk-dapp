@@ -47,9 +47,9 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 As you might have noticed, the DappProvider accepts a `networkConfig` object with a couple of keys. This allows using different APIs and different connection providers.
 
-- **walletConnectBridge (optional)** is a string which is used to establish the connection to walletConnect library.
+- **walletConnectBridge (optional)** is a string that is used to establish the connection to walletConnect library.
 - **walletConnectDeepLink (optional)** is a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
-- **network** is a required configuration object that contains the following information about the environment of the application:
+- **network** is a required configuration file that contains the following information about the environment of the application:
 
 ```
 {
