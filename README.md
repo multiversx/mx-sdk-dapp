@@ -19,7 +19,7 @@ yarn add @elrondnetwork/dapp-core
 
 dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the Elrond Network, allowing developers to easily get started with a new application or integrate dapp-core into an existing application, however complex.
 
-This library covers two main areas: **User Identity** and **Transactions**. The API for interacting with library's logic is exposed via hooks and methods that can be called for logging in the user, getting the status of the user or sending a transactions.
+This library covers two main areas: **User Identity** and **Transactions**. The API for interacting with library's logic is exposed via hooks and methods that can be called for logging in the user, getting the status of the user or sending transactions.
 
 However, to simplify usage even further, the library also comes with a default UI that already uses these hooks and methods under the hood. These UI elements can be easily customized with custom css classes.
 
@@ -92,7 +92,7 @@ They can also be used with children
 </DappUI.ExtensionLoginButton
 ```
 
-Also, for a quicker setup, the DappUI object exports an `DappUI.UnlockPage` component, which contains all 4 buttons.
+Also, for a quicker setup, the DappUI object exports a `DappUI.UnlockPage` component, which contains all 4 buttons.
 
 Another handly component is DappUI.AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
