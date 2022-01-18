@@ -29,11 +29,24 @@ The default UI is exposed via the `DappUI` object.
 
 More on this below.
 
+
 ## Prerequisites
 There are a couple of requirements that need to be met for the application to work properly.
 
+<details>
+  <summary>
+      React
+  </summary>
+
 ### React
+
 This library was built for applications that use React, it might not be suitable for usage with other libraries or frameworks.
+  </details>
+
+<details>
+  <summary>
+    DappProvider
+ </summary>
 
 ### DappProvider
 You need to wrap your application with the **DappProvider** component, which is exported by the library, as we need to create a global Context to be able to manipulate the data.
@@ -62,9 +75,16 @@ As you might have noticed, the DappProvider accepts a `networkConfig` object wit
   explorerAddress: string;
 }
 ```
+  </details>
 
 ## User Identity
 Dapp-core makes logging in and persisting user's session easy and hassle-free. The library exposes two ways in which a user can be logged in:
+
+
+  <details>
+    <summary>
+      Login UI
+  </summary>
 
 ### Login UI
 There are a couple of very handy React components that can be used to login the user and protect certain routes if the user is not logged in.
@@ -123,10 +143,13 @@ Use with routes:
 ```
 
 The important parts that makes this component work are the flag **authenticatedRoute: true** and the key **path**, which means that this route should be accessible only to authenticated users.
+</details>
 
+  <details><summary>
+Login hooks
+  </summary>
 
 ### Login hooks
-
 If needed, the Login UI can be bypassed using a custom UI, and opt in for the login hooks, which expose a trigger function and the login data, ready to be rendered.
 
 These hooks are exposed by the `loginServices` object, which can be imported from dapp-core:
@@ -186,9 +209,14 @@ const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLogi
 ```
 for useLedgerLogin;
 
+</details>
+
+  <details>
+<summary>
+Reading User State
+  </summary>
 
 ### Reading User State
-
 Once logged in, the user's session is persisted and can be read and deleted via a couple of handy functions.
 
 For logging out, the library exposes a simple function called **logout**, which can be called to clear the user data.
@@ -197,12 +225,19 @@ There are 2 ways of reading the user current state: hooks (to be used inside com
 - hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig`;
 - functions: `getAccount, getAccountBalance, getAccountShard, getAddress, getIsLoggedIn;`
 
+</details>
+
 ## Transactions
 
 The dapp-core library exposes a straight-forward way of sending transactions and tracking their status, with a couple of handy UI components;
 
-#### Sending Transactions
 
+
+<details><summary>
+Sending Transactions
+  </summary>
+
+### Sending Transactions
 The API for sending transactions is a function called **sendTransactions**:
 
 `import { sendTransactions } from "@elrondnetwork/dapp-core";`
@@ -225,8 +260,13 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 
 `sessionId` is the transaction's batch id which can be used to track a transaction's status and react to it.
 
-### Tracking a transaction
+</details>
 
+<details><summary>
+Tracking a transaction
+  </summary>
+
+### Tracking a transaction
 The library exposes a hook called useTrackTransactionStatus under the object `transactionServices`.
 
 ```
@@ -256,9 +296,13 @@ transactionStatus has the following information about the transaction:
 It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sent, the hook will just return an empty object.
 
 Also, one can use the hook `useGetPendingTransactions` to get a list of all pending transactions.
+</details>
+
+  <details><summary>
+Transaction Toasts UI
+  </summary>
 
 ### Transaction Toasts UI
-
 dapp-core also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
 
 The toasts list is exposed via **DappUI.TransactionsToastList** component and can be used just by rendering it inside the application.
@@ -271,6 +315,8 @@ The toasts list is exposed via **DappUI.TransactionsToastList** component and ca
 ```
 
 **Important**: This has to be inside the `<DappProvider/>` children.
+
+</details>
 
 ## Roadmap
 
