@@ -54,12 +54,6 @@ export const TransactionToast = ({
     }
   );
 
-  const signedTransactions = useSelector(signedTransactionsSelector);
-
-  const currentTx: any = signedTransactions[toastId];
-
-  const { transactions, status } = currentTx;
-
   const [startTime, endTime] = useMemo(() => {
     const startTime = moment().unix();
     const endTime = moment()
@@ -69,6 +63,15 @@ export const TransactionToast = ({
   }, []);
 
   const progress = { startTime, endTime };
+
+  const signedTransactions = useSelector(signedTransactionsSelector);
+
+  const currentTx: any = signedTransactions[toastId];
+  if (currentTx == null) {
+    return null;
+  }
+
+  const { transactions, status } = currentTx;
 
   const successToastData = {
     id: toastId,
