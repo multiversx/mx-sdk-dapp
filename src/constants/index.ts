@@ -10,3 +10,6 @@ export const defaultGasPrice = 1_000_000_000;
 export const defaultGasLimit = 60_000_000;
 export const denomination = 18;
 export const decimals = 4;
+
+export const dappInitRoute = '/dapp/init';
+export const walletSignSession = 'signSession';

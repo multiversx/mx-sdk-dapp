@@ -1,5 +1,5 @@
-import { faInfoCircle } from '@fortawesome/free-solid-svg-icons/faInfoCircle';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NotificationTypesEnum } from 'types';
 import { logoutAction } from '../commonActions';
 
 export interface TxSubmittedModal {
@@ -8,7 +8,7 @@ export interface TxSubmittedModal {
 }
 
 export interface NotificationModal {
-  icon: typeof faInfoCircle;
+  type: NotificationTypesEnum;
   iconClassName: string;
   title: string;
   description: string;

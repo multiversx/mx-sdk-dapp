@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs';
-import moment from 'moment';
 import { loginAction } from 'redux/commonActions';
 import { useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector } from 'redux/selectors';
@@ -41,8 +40,8 @@ export const useExtensionLogin = ({
         );
         return;
       }
-
-      const expires: number = moment().add(1, 'minutes').unix();
+      const now = new Date();
+      const expires: number = now.setMinutes(now.getMinutes() + 1) / 1000;
       const extensionLoginData = {
         data: {},
         expires: expires
