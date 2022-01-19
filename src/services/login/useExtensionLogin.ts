@@ -70,11 +70,12 @@ export const useExtensionLogin = ({
         ...(signature ? { signature } : {}),
         ...(token ? { loginToken: token } : {})
       });
-
-      window.location.href = `${url.pathname}?${nextUrlParams}`;
       store.dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
+      setTimeout(() => {
+        window.location.href = `${url.pathname}?${nextUrlParams}`;
+      }, 1000);
     } catch (error) {
       console.error(error);
       // TODO: can be any or typed error
