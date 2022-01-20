@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import moment from 'moment';
 import { REHYDRATE } from 'redux-persist';
 import {
   TransactionBatchStatusesEnum,
@@ -132,8 +131,10 @@ export const transactionsSlice = createSlice({
       const parsedSignedTransactions = Object.entries(
         signedTransactions
       ).reduce((acc, [sessionId, transaction]) => {
-        const txTimestamp = moment(sessionId, 'unix');
-        const isExpired = txTimestamp.add(5, 'hour').isBefore(moment());
+        const txTimestamp: any = new Date(sessionId);
+        const expiration: any = new Date();
+        expiration.setHours(expiration.getHours() + 5);
+        const isExpired = expiration - txTimestamp > 0;
         if (!isExpired) {
           acc[sessionId] = transaction;
         }

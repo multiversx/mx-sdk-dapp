@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   addressSelector,
@@ -11,7 +11,6 @@ import {
 } from 'redux/selectors';
 import { setAccount, setChainID, setLedgerAccount } from 'redux/slices';
 import { RouteType } from 'types';
-import Loader from 'UI/Loader';
 import { getAccount, getLatestNonce } from 'utils';
 
 const AuthenticatedRoutesWrapper = ({
@@ -34,16 +33,16 @@ const AuthenticatedRoutesWrapper = ({
   const { pathname } = window.location;
   const dispatch = useDispatch();
 
-  const authenticatedRoutesRef = React.useRef(
+  const authenticatedRoutesRef = useRef(
     routes.filter((route) => Boolean(route.authenticatedRoute))
   );
-  const [loading, setLoading] = React.useState(true);
+  const [loading, setLoading] = useState(true);
 
-  React.useEffect(() => {
+  useEffect(() => {
     refreshChainID();
   }, [chainId.valueOf()]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccount();
   }, [address, ledgerLogin, isLoggedIn]);
 
@@ -94,7 +93,7 @@ const AuthenticatedRoutesWrapper = ({
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
   if (loading || walletLogin) {
-    return <Loader />;
+    return null;
   }
 
   if (shouldRedirect) {
