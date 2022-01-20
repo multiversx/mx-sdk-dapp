@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import { loginAction } from 'redux/commonActions';
-import { useSelector } from 'redux/DappProviderContext';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector } from 'redux/selectors';
 import { setExtensionLogin, setProvider } from 'redux/slices';
-import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { buildUrlParams } from 'utils';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
@@ -26,7 +25,7 @@ export const useExtensionLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
-
+  const dispatch = useDispatch();
   async function initiateLogin() {
     setIsLoading(true);
     const provider: ExtensionProvider = ExtensionProvider.getInstance();
@@ -47,7 +46,7 @@ export const useExtensionLogin = ({
         expires: expires
       };
 
-      store.dispatch(setExtensionLogin(extensionLoginData));
+      dispatch(setExtensionLogin(extensionLoginData));
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`
@@ -59,7 +58,7 @@ export const useExtensionLogin = ({
 
       await provider.login(providerLoginData);
 
-      store.dispatch(setProvider(provider));
+      dispatch(setProvider(provider));
 
       const { signature, address } = provider.account;
       const url = new URL(`${window.location.origin}${callbackRoute}`);
@@ -70,9 +69,12 @@ export const useExtensionLogin = ({
         ...(token ? { loginToken: token } : {})
       });
 
-      window.location.href = `${url.pathname}?${nextUrlParams}`;
-      store.dispatch(
+      dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
+      );
+      setTimeout(
+        () => (window.location.href = `${url.pathname}?${nextUrlParams}`),
+        200
       );
     } catch (error) {
       console.error(error);

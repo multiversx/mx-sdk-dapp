@@ -112,6 +112,7 @@ export const useWalletConnectLogin = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
+      console.log('loggedin');
       if (isLoggedIn) {
         return;
       }
@@ -155,6 +156,7 @@ export const useWalletConnectLogin = ({
   }
 
   const handleOnLogout = () => {
+    console.log('logging out');
     logout(callbackRoute);
   };
 
@@ -166,6 +168,7 @@ export const useWalletConnectLogin = ({
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout
     };
+    console.log('called');
 
     const newProvider = new WalletConnectProvider(
       proxy,
@@ -206,7 +209,6 @@ export const useWalletConnectLogin = ({
   }
 
   const isFailed = error != null;
-
   return [
     initiateLogin,
     {
