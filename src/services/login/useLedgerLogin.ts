@@ -100,7 +100,7 @@ export function useLedgerLogin({
       if (!window.location.pathname.includes(callbackRoute)) {
         window.location.href = callbackRoute;
       }
-    }, 1000);
+    }, 200);
   }
 
   const loginFailed = (err: any, customMessage?: string) => {
@@ -232,7 +232,7 @@ export function useLedgerLogin({
           if (!window.location.pathname.includes(callbackRoute)) {
             window.location.href = callbackRoute;
           }
-        }, 1000);
+        }, 200);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);

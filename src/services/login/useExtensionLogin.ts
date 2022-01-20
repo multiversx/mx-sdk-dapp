@@ -73,11 +73,9 @@ export const useExtensionLogin = ({
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
       setTimeout(function () {
-        if (!window.location.pathname.includes(url?.pathname)) {
-          window.location.href =
-            window.location.href = `${url.pathname}?${nextUrlParams}`;
-        }
-      }, 1000);
+        window.location.href =
+          window.location.href = `${url.pathname}?${nextUrlParams}`;
+      }, 200);
     } catch (error) {
       console.error(error);
       // TODO: can be any or typed error

@@ -154,7 +154,7 @@ export const useWalletConnectLogin = ({
         if (!window.location.pathname.includes(callbackRoute)) {
           window.location.href = window.location.href = callbackRoute;
         }
-      }, 1000);
+      }, 200);
     } catch (err) {
       setError('Invalid address');
       console.error(err);
