@@ -16,7 +16,8 @@ import {
   newWalletProvider,
   getAddress,
   getAccount,
-  getLatestNonce
+  getLatestNonce,
+  logout
 } from 'utils';
 
 export default function ProviderInitializer() {
@@ -73,12 +74,14 @@ export default function ProviderInitializer() {
       .then((success: any) => {
         if (!success) {
           console.warn('Could not initialise ledger app');
+          logout();
           return;
         }
         dispatch(setProvider(hwWalletP));
       })
       .catch((err) => {
         console.error('Could not initialise ledger app', err);
+        logout();
       });
   }
 

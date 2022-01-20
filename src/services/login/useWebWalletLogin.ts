@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import moment from 'moment';
 import { useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'redux/selectors';
 import { setWalletLogin } from 'redux/slices';
@@ -32,7 +31,8 @@ export const useWebWalletLogin = ({
       const network = networkSelector(appState);
       const provider = newWalletProvider(network);
 
-      const expires = moment().add(3, 'minutes').unix();
+      const now = new Date();
+      const expires: number = now.setMinutes(now.getMinutes() + 3) / 1000;
       const walletLoginData = {
         data: {},
         expires: expires

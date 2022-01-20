@@ -143,3 +143,10 @@ export enum TransactionTypesEnum {
   nftTransaction = 'nftTransaction',
   scCall = 'scCall'
 }
+
+export interface ActiveLedgerTransactionType {
+  transaction: Transaction;
+  transactionTokenInfo: TxDataTokenType;
+  isTokenTransaction: boolean;
+  dataField: string;
+}

@@ -65,7 +65,6 @@ export function useLedgerLogin({
   const [isLoading, setIsLoading] = React.useState(false);
 
   const hwWalletP = new HWProvider(proxy);
-
   const [startIndex, setStartIndex] = React.useState(0);
   const [accounts, setAccounts] = React.useState<string[]>([]);
   const [selectedAddress, setSelectedAddress] =
