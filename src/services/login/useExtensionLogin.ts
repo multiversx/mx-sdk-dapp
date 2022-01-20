@@ -4,7 +4,7 @@ import moment from 'moment';
 import { loginAction } from 'redux/commonActions';
 import { useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector } from 'redux/selectors';
-import { setExtensionLogin, setProvider } from 'redux/slices';
+import { loginActions, setProvider } from 'redux/slices';
 import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { buildUrlParams } from 'utils';
@@ -48,7 +48,7 @@ export const useExtensionLogin = ({
         expires: expires
       };
 
-      store.dispatch(setExtensionLogin(extensionLoginData));
+      store.dispatch(loginActions.setExtensionLogin(extensionLoginData));
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`

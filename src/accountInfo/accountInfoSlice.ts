@@ -5,7 +5,7 @@ import {
   loginAction,
   logoutAction,
   LoginActionPayloadType
-} from '../commonActions';
+} from '../redux/commonActions';
 
 export interface AccountType {
   address: string;

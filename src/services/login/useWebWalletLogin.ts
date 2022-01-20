@@ -1,21 +1,13 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import moment from 'moment';
-import { useSelector } from 'redux/DappProviderContext';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'redux/selectors';
-import { setWalletLogin } from 'redux/slices';
-import { store } from 'redux/store';
+import { loginActions } from 'redux/slices';
 import { newWalletProvider } from 'utils';
-import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
-
-interface UseWebWalletLoginPropsType {
-  callbackRoute: string;
-  token?: string;
-}
-
-export type UseWebWalletLoginReturnType = [
-  InitiateLoginFunctionType,
-  LoginHookGenericStateType
-];
+import {
+  UseWebWalletLoginPropsType,
+  UseWebWalletLoginReturnType
+} from './types';
 
 export const useWebWalletLogin = ({
   callbackRoute,
@@ -24,38 +16,43 @@ export const useWebWalletLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const dispatch = useDispatch();
 
-  async function initiateLogin() {
-    try {
-      setIsLoading(true);
-      const appState = store.getState();
-      const network = networkSelector(appState);
-      const provider = newWalletProvider(network);
+  const initiateLogin = useCallback(() => {
+    async function init() {
+      try {
+        setIsLoading(true);
 
-      const expires = moment().add(3, 'minutes').unix();
-      const walletLoginData = {
-        data: {},
-        expires: expires
-      };
+        const network = useSelector(networkSelector);
+        const provider = newWalletProvider(network);
 
-      store.dispatch(setWalletLogin(walletLoginData));
+        const expires = moment().add(3, 'minutes').unix();
 
-      const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
-      );
-      const loginData = {
-        callbackUrl: callbackUrl,
-        ...(token && { token })
-      };
+        const walletLoginData = {
+          data: {},
+          expires: expires
+        };
 
-      await provider.login(loginData);
-    } catch (error) {
-      console.error(error);
-      setError('error logging in' + (error as any).message);
-    } finally {
-      setIsLoading(false);
+        dispatch(loginActions.setWalletLogin(walletLoginData));
+
+        const callbackUrl: string = encodeURIComponent(
+          `${window.location.origin}${callbackRoute}`
+        );
+
+        const loginData = {
+          callbackUrl: callbackUrl,
+          ...(token && { token })
+        };
+
+        await provider.login(loginData);
+      } catch (error) {
+        setError('error logging in' + (error as any).message);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  }
+    init();
+  }, [dispatch, isLoggedIn]);
 
   const isFailed = error != null;
 

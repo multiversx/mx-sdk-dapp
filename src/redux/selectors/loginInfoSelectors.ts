@@ -3,7 +3,7 @@ import { LoginMethodsEnum } from 'types/enums';
 import { RootState } from '../store';
 import { addressSelector } from './accountInfoSelectors';
 
-export const loginInfoSelector = (state: RootState) => state.loginInfo;
+export const loginInfoSelector = ({ loginInfo }: RootState) => loginInfo;
 
 export const loginMethodSelector = createSelector(
   loginInfoSelector,

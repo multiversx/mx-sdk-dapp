@@ -1,8 +1,8 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session';
-import account from './slices/accountInfoSlice';
-import loginInfo from './slices/loginInfoSlice';
+import account from '../accountInfo/accountInfoSlice';
+import loginInfo from '../loginInfo/slice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
