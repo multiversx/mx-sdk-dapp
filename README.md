@@ -1,9 +1,12 @@
 
 #  dapp-core
 
-> A library that holds the the core logic of a dapp on the Elrond Network
+> A library that holds the core functional logic of a dapp on the Elrond Network
 
 [![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/@elrondnetwork/dapp-core) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+
+
+The UI components have been moved to [@elrondnetwork/dapp-core-components](https://github.com/ElrondNetwork/dapp-core-components)
 
 # Installation
 
@@ -20,14 +23,6 @@ yarn add @elrondnetwork/dapp-core
 dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the Elrond Network, allowing developers to easily get started with a new application or integrate dapp-core into an existing application.
 
 This library covers two main areas: **User Identity** and **Transactions**. The API for interacting with library's logic is exposed via hooks and methods that can be called for logging in the user, getting the status of the user or sending transactions.
-
-However, to simplify usage even further, the library also comes with a default UI that already uses these hooks and methods under the hood. These UI elements can be easily customized with custom css classes.
-
-The default UI is exposed via the `DappUI` object.
-
-`import { DappUI } from "@elrondnetwork/dapp-core";`
-
-More on this below.
 
 
 ## Prerequisites
@@ -78,43 +73,11 @@ As you might have noticed, the DappProvider accepts a `networkConfig` object wit
   </details>
 
 ## User Identity
-Dapp-core makes logging in and persisting user's session easy and hassle-free. The library exposes two ways in which a user can be logged in:
+Dapp-core makes logging in and persisting user's session easy and hassle-free.
 
 
-  <details>
-    <summary>
-      Login UI
-  </summary>
 
-### Login UI
-There are a couple of very handy React components that can be used to login the user and protect certain routes if the user is not logged in.
-
-Under the `DappUI` object mentioned above, you can find 4 buttons (one for each provider) which abstract away all the logic of loggin in the user and render the default UI. These buttons can be easily customized with a custom css class.
-The exported buttons are:
-- DappUI.ExtensionLoginButton
-- DappUI.WalletConnectLoginButton
-- DappUI.LedgerLoginButton
-- DappUI.WebWalletLoginButton
-
-example:
-```
-<DappUI.ExtensionLoginButton callbackRoute="/dashboard" buttonClassName="extension-login" loginButtonText="Extension login" />
-```
-
-They can also be used with children
-
-```
-<DappUI.ExtensionLoginButton callbackRoute="/dashboard" buttonClassName="extension-login" loginButtonText="Extension login">
-  <>
-    <icon/>
-    <p>Login text</p>
-  <>
-</DappUI.ExtensionLoginButton
-```
-
-Also, for a quicker setup, the `DappUI` object exports an `DappUI.UnlockPage` component, which contains all 4 buttons.
-
-Another handly component is DappUI.AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
+A handy component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
 Import from dapp-core:
 ```
@@ -143,14 +106,13 @@ Use with routes:
 ```
 
 The important parts that makes this component work are the flag **authenticatedRoute: true** and the key **path**, which means that this route should be accessible only to authenticated users.
-</details>
 
   <details><summary>
 Login hooks
   </summary>
 
 ### Login hooks
-If needed, the Login UI can be bypassed using a custom UI, and opt in for the login hooks, which expose a trigger function and the login data, ready to be rendered.
+This area covers the login hooks, which expose a trigger function and the login data, ready to be rendered.
 
 These hooks are exposed by the `loginServices` object, which can be imported from dapp-core:
 
@@ -231,8 +193,6 @@ There are 2 ways of reading the user current state: hooks (to be used inside com
 
 The dapp-core library exposes a straight-forward way of sending transactions and tracking their status, with a couple of handy UI components;
 
-
-
 <details><summary>
 Sending Transactions
   </summary>
@@ -263,8 +223,43 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 </details>
 
 <details><summary>
+Transaction Signing Flow
+  </summary>
+
+
+### Transaction Signing Flow
+
+Once a transaction has been submitted,
+the user will be prompted in his provider (Extension, Maiar etc) to sign the transaction.
+
+We suggest displaying a message on the screen that confirms the transaction that needs to be signed.
+You may do this with `useSignTransactions` hook.
+
+```
+ const {
+    callbackRoute,
+    transactions,
+    error,
+    sessionId,
+    onAbort,
+    hasTransactions
+  } = useSignTransactions();
+```
+
+This hook will let you know if there are any transactions and you can programatically abort the signing process.
+
+You can also get the provider via
+```
+  const { providerType } = useGetAccountProvider();
+```
+and use that to display an appropriate message to the user.
+
+</details>
+
+<details><summary>
 Tracking a transaction
   </summary>
+
 
 ### Tracking a transaction
 The library exposes a hook called useTrackTransactionStatus under the object `transactionServices`.
@@ -298,25 +293,6 @@ It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sen
 Also, one can use the hook `useGetPendingTransactions` to get a list of all pending transactions.
 </details>
 
-  <details><summary>
-Transaction Toasts UI
-  </summary>
-
-### Transaction Toasts UI
-dapp-core also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
-
-The toasts list is exposed via **DappUI.TransactionsToastList** component and can be used just by rendering it inside the application.
-
-```
-<App>
-  <Router/>
-  <DappUI.TransactionsToastList />
-</App>
-```
-
-**Important**: This has to be inside the `<DappProvider/>` children.
-
-</details>
 
 ## Roadmap
 
