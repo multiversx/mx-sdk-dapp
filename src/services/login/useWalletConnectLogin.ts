@@ -168,7 +168,6 @@ export const useWalletConnectLogin = ({
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout
     };
-    console.log('called');
 
     const newProvider = new WalletConnectProvider(
       proxy,
