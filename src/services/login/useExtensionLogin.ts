@@ -77,7 +77,7 @@ export const useExtensionLogin = ({
           window.location.href =
             window.location.href = `${url.pathname}?${nextUrlParams}`;
         }
-      }, 1000);
+      }, 200);
     } catch (error) {
       console.error(error);
       // TODO: can be any or typed error
