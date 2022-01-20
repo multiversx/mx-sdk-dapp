@@ -10,7 +10,7 @@ import {
   walletLoginSelector
 } from 'redux/selectors';
 import { setAccount, setProvider, setWalletLogin } from 'redux/slices';
-import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
+import { useWalletConnectLogin } from 'services/login/walletConnect/hooks/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
 import {
   newWalletProvider,

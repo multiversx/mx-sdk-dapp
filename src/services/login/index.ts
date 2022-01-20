@@ -1,4 +1,4 @@
-export { useExtensionLogin } from './useExtensionLogin';
-export { useWebWalletLogin } from './useWebWalletLogin';
-export { useLedgerLogin } from './useLedgerLogin';
-export { useWalletConnectLogin } from './useWalletConnectLogin';
+export { useExtensionLogin } from './hooks/useExtensionLogin';
+export { useWebWalletLogin } from './hooks/useWebWalletLogin';
+export { useLedgerLogin } from './hooks/useLedgerLogin';
+export { useWalletConnectLogin } from './walletConnect/hooks/useWalletConnectLogin';

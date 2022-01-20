@@ -7,7 +7,7 @@ import { newWalletProvider } from 'utils';
 import {
   UseWebWalletLoginPropsType,
   UseWebWalletLoginReturnType
-} from './types';
+} from '../types';
 
 export const useWebWalletLogin = ({
   callbackRoute,

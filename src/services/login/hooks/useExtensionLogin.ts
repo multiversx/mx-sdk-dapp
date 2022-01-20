@@ -8,7 +8,7 @@ import { loginActions, setProvider } from 'redux/slices';
 import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { buildUrlParams } from 'utils';
-import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
+import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../../types';
 
 interface UseExtensionLoginPropsType {
   callbackRoute: string;

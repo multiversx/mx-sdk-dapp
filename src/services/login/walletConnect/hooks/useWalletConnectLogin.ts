@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
 import QRCode from 'qrcode';
 
@@ -12,35 +12,17 @@ import {
   walletConnectBridgeSelector,
   walletConnectDeepLinkSelector
 } from 'redux/selectors';
-import {
-  setProvider,
-  setTokenLogin,
-  setTokenLoginSignature,
-  setWalletConnectLogin
-} from 'redux/slices';
+
+import { setProvider, loginActions } from 'redux/slices';
 
 import { LoginMethodsEnum } from 'types/enums';
-import { logout } from 'utils';
-import Timeout = NodeJS.Timeout;
-import { LoginHookGenericStateType } from '../types';
-
-interface InitWalletConnectType {
-  callbackRoute: string;
-  logoutRoute: string;
-  token?: string;
-  shouldLoginUser?: boolean;
-}
-
-export interface WalletConnectLoginHookCustomStateType {
-  uriDeepLink: string | null;
-  qrCodeSvg: any;
-}
-
-export type WalletConnectLoginHookReturnType = [
-  (loginProvider?: boolean) => void,
-  LoginHookGenericStateType,
-  WalletConnectLoginHookCustomStateType
-];
+import { useInterval } from '../../hooks/use-interval';
+import {
+  InitWalletConnectType,
+  WalletConnectLoginHookReturnType
+} from '../../types';
+import { useHandleCallback } from './useHandleCallback';
+import { useOnLogoutCallback } from './useOnLogoutCallback';
 
 export const useWalletConnectLogin = ({
   callbackRoute,
@@ -48,13 +30,14 @@ export const useWalletConnectLogin = ({
   token
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
-  const heartbeatInterval = 15000;
 
+  //TODO:This should live inside reducers.
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
 
-  const providerRef = useRef<any>();
+  //TODO: All these subscriptions to state changes are not handled in hooks dependencies..
+  //TODO: all these async calls should be placed inside some callbacks!
 
   const proxy = useSelector(proxySelector);
   const provider: any = useSelector(providerSelector);
@@ -62,7 +45,7 @@ export const useWalletConnectLogin = ({
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
 
-  let heartbeatDisconnectInterval: Timeout;
+  const onLogout = useOnLogoutCallback(callbackRoute);
 
   const hasWcUri = Boolean(wcUri);
   const isLoading = !hasWcUri;
@@ -70,27 +53,15 @@ export const useWalletConnectLogin = ({
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
     : null;
 
-  useEffect(() => {
-    handleHeartbeat();
-
-    const interval = setInterval(() => {
-      handleHeartbeat();
-    }, heartbeatInterval);
-
-    return () => clearInterval(interval);
-  }, [provider]);
+  const heartbeatInterval = 15000;
+  const handleHeartbeat = useHandleCallback();
+  useInterval(handleHeartbeat, heartbeatInterval);
 
   useEffect(() => {
     generateQRCode();
   }, [wcUri]);
 
-  useUpdateEffect(() => {
-    generateWcUri();
-  }, [token]);
-
-  useUpdateEffect(() => {
-    providerRef.current = provider;
-  }, [provider]);
+  useUpdateEffect(() => generateWcUri(), [token]);
 
   const generateQRCode = async () => {
     if (!hasWcUri) {
@@ -104,32 +75,9 @@ export const useWalletConnectLogin = ({
     setQrCodeSvg(svg);
   };
 
-  async function handleHeartbeat() {
-    const isProviderConnected = Boolean(
-      providerRef.current?.walletConnector?.connected
-    );
-
-    if (!isProviderConnected) {
-      return;
-    }
-
-    const customMessage = {
-      method: 'heartbeat',
-      params: {}
-    };
-
-    try {
-      await providerRef.current.sendCustomMessage(customMessage);
-    } catch (error) {
-      alert('lost');
-      console.error('Connection lost', error);
-      handleOnLogout();
-    }
-  }
-
+  //TODO: This has to use useCallbacks with dependencies so we dont check for nuls on all store fields.
   async function handleOnLogin() {
     try {
-      const provider = providerRef.current;
       if (isLoggedIn) {
         return;
       }
@@ -151,30 +99,19 @@ export const useWalletConnectLogin = ({
       };
 
       if (hasSignature) {
-        dispatch(setWalletConnectLogin(loginData));
-        dispatch(setTokenLoginSignature(signature));
+        dispatch(loginActions.setWalletConnectLogin(loginData));
+        dispatch(loginActions.setTokenLoginSignature(signature));
       } else {
-        dispatch(setWalletConnectLogin(loginData));
+        dispatch(loginActions.setWalletConnectLogin(loginData));
       }
       dispatch(loginAction(loginActionData));
 
-      provider.walletConnector.on('heartbeat', () => {
-        clearInterval(heartbeatDisconnectInterval);
-        heartbeatDisconnectInterval = setInterval(() => {
-          console.log('Maiar Wallet Connection Lost');
-          handleOnLogout();
-          clearInterval(heartbeatDisconnectInterval);
-        }, 150000);
-      });
+      provider.walletConnector.on('heartbeat', onLogout);
     } catch (err) {
       setError('Invalid address');
       console.error(err);
     }
   }
-
-  const handleOnLogout = () => {
-    logout(callbackRoute);
-  };
 
   async function initiateLogin(loginProvider = true) {
     if (!walletConnectBridge) {
@@ -182,7 +119,7 @@ export const useWalletConnectLogin = ({
     }
     const providerHandlers = {
       onClientLogin: handleOnLogin,
-      onClientLogout: handleOnLogout
+      onClientLogout: onLogout
     };
 
     const newProvider = new WalletConnectProvider(
@@ -193,7 +130,7 @@ export const useWalletConnectLogin = ({
 
     await newProvider.init();
     dispatch(setProvider(newProvider));
-    providerRef.current = newProvider;
+
     if (loginProvider) {
       generateWcUri();
     }
@@ -204,8 +141,7 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    const walletConnectUri: string | undefined =
-      await providerRef.current?.login();
+    const walletConnectUri: string | undefined = await provider.login();
     const hasUri = Boolean(walletConnectUri);
 
     if (!hasUri) {
@@ -220,7 +156,7 @@ export const useWalletConnectLogin = ({
     const wcUriWithToken = `${walletConnectUri}&token=${token}`;
 
     setWcUri(wcUriWithToken);
-    dispatch(setTokenLogin({ loginToken: token }));
+    dispatch(loginActions.setTokenLogin({ loginToken: token }));
   }
 
   const isFailed = error != null;

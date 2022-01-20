@@ -2,7 +2,7 @@ import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { useSelector } from 'redux/DappProviderContext';
 import { ledgerAccountSelector } from 'redux/selectors';
-import { useLedgerLogin } from 'services/login/useLedgerLogin';
+import { useLedgerLogin } from 'services/login/hooks/useLedgerLogin';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import AddressTable from './AddressTable';
