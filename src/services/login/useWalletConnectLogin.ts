@@ -149,6 +149,12 @@ export const useWalletConnectLogin = ({
           clearInterval(heartbeatDisconnectInterval);
         }, 150000);
       });
+
+      setTimeout(function () {
+        if (!window.location.pathname.includes(callbackRoute)) {
+          window.location.href = window.location.href = callbackRoute;
+        }
+      }, 1000);
     } catch (err) {
       setError('Invalid address');
       console.error(err);
@@ -168,7 +174,6 @@ export const useWalletConnectLogin = ({
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout
     };
-    console.log('called');
 
     const newProvider = new WalletConnectProvider(
       proxy,
