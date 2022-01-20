@@ -96,7 +96,11 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    window.location.href = callbackRoute;
+    setTimeout(() => {
+      if (!window.location.pathname.includes(callbackRoute)) {
+        window.location.href = callbackRoute;
+      }
+    }, 500);
   }
 
   const loginFailed = (err: any, customMessage?: string) => {
@@ -104,10 +108,10 @@ export function useLedgerLogin({
       setError(
         (ledgerErrorCodes as any)[err.statusCode].message + customMessage
       );
-      dispatch(setLedgerAccount(null));
     }
     setIsLoading(false);
     console.warn(err);
+    dispatch(setLedgerAccount(null));
   };
 
   async function loginUser(hwWalletProvider: HWProvider) {
@@ -224,7 +228,11 @@ export function useLedgerLogin({
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
-        window.location.href = callbackRoute;
+        setTimeout(() => {
+          if (!window.location.pathname.includes(callbackRoute)) {
+            window.location.href = callbackRoute;
+          }
+        }, 500);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);
