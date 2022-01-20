@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
-import QRCode from 'qrcode';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { loginAction } from 'redux/commonActions';
@@ -33,7 +32,7 @@ interface InitWalletConnectType {
 
 export interface WalletConnectLoginHookCustomStateType {
   uriDeepLink: string | null;
-  qrCodeSvg: any;
+  walletConnectUri?: string;
 }
 
 export type WalletConnectLoginHookReturnType = [
@@ -52,7 +51,6 @@ export const useWalletConnectLogin = ({
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
-  const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
 
   const providerRef = useRef<any>();
 
@@ -80,10 +78,6 @@ export const useWalletConnectLogin = ({
     return () => clearInterval(interval);
   }, [provider]);
 
-  useEffect(() => {
-    generateQRCode();
-  }, [wcUri]);
-
   useUpdateEffect(() => {
     generateWcUri();
   }, [token]);
@@ -91,18 +85,6 @@ export const useWalletConnectLogin = ({
   useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
-
-  const generateQRCode = async () => {
-    if (!hasWcUri) {
-      return;
-    }
-
-    const svg = await QRCode.toString(wcUri, {
-      type: 'svg'
-    });
-
-    setQrCodeSvg(svg);
-  };
 
   async function handleHeartbeat() {
     const isProviderConnected = Boolean(
@@ -130,6 +112,7 @@ export const useWalletConnectLogin = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
+      console.log('loggedin');
       if (isLoggedIn) {
         return;
       }
@@ -173,6 +156,7 @@ export const useWalletConnectLogin = ({
   }
 
   const handleOnLogout = () => {
+    console.log('logging out');
     logout(callbackRoute);
   };
 
@@ -184,6 +168,7 @@ export const useWalletConnectLogin = ({
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout
     };
+    console.log('called');
 
     const newProvider = new WalletConnectProvider(
       proxy,
@@ -224,7 +209,6 @@ export const useWalletConnectLogin = ({
   }
 
   const isFailed = error != null;
-
   return [
     initiateLogin,
     {
@@ -233,7 +217,7 @@ export const useWalletConnectLogin = ({
       isLoading: isLoading && !isFailed,
       isLoggedIn: isLoggedIn && !isFailed
     },
-    { uriDeepLink, qrCodeSvg }
+    { uriDeepLink, walletConnectUri: wcUri }
   ];
 };
 

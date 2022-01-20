@@ -22,3 +22,9 @@ export enum LoginMethodsEnum {
   extension = 'extension',
   none = ''
 }
+
+export enum NotificationTypesEnum {
+  warning = 'warning',
+  error = 'error',
+  success = 'success'
+}

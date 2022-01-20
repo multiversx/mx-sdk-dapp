@@ -1,5 +1,4 @@
 import { validation } from '@elrondnetwork/dapp-utils';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons/faExclamationTriangle';
 import BigNumber from 'bignumber.js';
 import { networkConstants } from 'constants/index';
 
@@ -10,7 +9,7 @@ import {
   setTransactionsDisplayInfo
 } from 'redux/slices';
 import { store } from 'redux/store';
-import { SignTransactionsPropsType } from 'types';
+import { NotificationTypesEnum, SignTransactionsPropsType } from 'types';
 import { SendTransactionReturnType } from './sendTransactions';
 import { calcTotalFee } from './utils';
 
@@ -35,7 +34,7 @@ export function signTransactions({
 
   if (!hasSufficientFunds) {
     const notificationPayload = {
-      icon: faExclamationTriangle,
+      type: NotificationTypesEnum.warning,
       iconClassName: 'text-warning',
       title: 'Insufficient EGLD funds',
       description: 'Current EGLD balance cannot cover the transaction fees.'
@@ -50,7 +49,7 @@ export function signTransactions({
   );
   if (!hasValidChainId) {
     const notificationPayload = {
-      icon: faExclamationTriangle,
+      type: NotificationTypesEnum.warning,
       iconClassName: 'text-warning',
       title: 'Network change detected',
       description: 'The application tried to change the transaction network'

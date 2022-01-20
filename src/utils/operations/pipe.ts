@@ -1,4 +1,4 @@
-export default function pipe<ValueType>(previous: ValueType) {
+export function pipe<ValueType>(previous: ValueType) {
   return {
     if: function (condition: boolean) {
       if (condition) {
@@ -24,3 +24,4 @@ export default function pipe<ValueType>(previous: ValueType) {
     }
   };
 }
+export default pipe;

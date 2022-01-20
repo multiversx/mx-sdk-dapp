@@ -1,9 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-// import styles from './styles.module.css';
-
 export * from './utils';
 export * from './types';
-export * as DappUI from './UI';
 export * as loginServices from './services/login';
 export { useGetPendingTransactions } from './services/transactions';
 export { DappProvider } from './redux/DappProvider';

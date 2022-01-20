@@ -4,7 +4,7 @@ import { decodePart } from 'utils/decoders';
 import { getAllStringOccurrences } from '../getAllStringOccurrences';
 
 // TODO: add tests
-export default function parseMultiEsdtTransferData(data?: string) {
+export function parseMultiEsdtTransferData(data?: string) {
   const transactions: MultiEsdtTxType[] = [];
   let contractCallDataIndex = 0;
   try {
@@ -85,3 +85,5 @@ export default function parseMultiEsdtTransferData(data?: string) {
   }
   return transactions;
 }
+
+export default parseMultiEsdtTransferData;

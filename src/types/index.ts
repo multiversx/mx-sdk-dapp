@@ -40,5 +40,4 @@ export interface ScResultType {
 }
 
 export * from './transactions';
-export * from './toasts';
 export * from './enums';
