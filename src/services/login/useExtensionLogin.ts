@@ -3,9 +3,8 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector } from 'redux/selectors';
-import { setExtensionLogin, setProvider } from 'redux/slices';
+import { setExtensionLogin, setProvider, setTokenLogin } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
-import { buildUrlParams } from 'utils';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 interface UseExtensionLoginPropsType {
@@ -61,20 +60,21 @@ export const useExtensionLogin = ({
       dispatch(setProvider(provider));
 
       const { signature, address } = provider.account;
-      const url = new URL(`${window.location.origin}${callbackRoute}`);
-
-      const { nextUrlParams } = buildUrlParams(url.search, {
-        address,
-        ...(signature ? { signature } : {}),
-        ...(token ? { loginToken: token } : {})
-      });
-
+      if (signature) {
+        dispatch(
+          setTokenLogin({
+            loginToken: String(token),
+            signature
+          })
+        );
+      }
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
       setTimeout(function () {
-        window.location.href =
-          window.location.href = `${url.pathname}?${nextUrlParams}`;
+        if (!window.location.href.includes(callbackRoute)) {
+          window.location.href = window.location.href = callbackRoute;
+        }
       }, 200);
     } catch (error) {
       console.error(error);
