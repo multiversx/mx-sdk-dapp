@@ -13,6 +13,7 @@ import { logoutAction } from '../commonActions';
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
   name: 'NOT CONFIGURED',
+  chainID: "D",
   egldLabel: '',
   walletAddress: '',
   apiAddress: '',
@@ -69,6 +70,7 @@ export const networkConfigSlice = createSlice({
         walletConnectDeepLink || state.walletConnectDeepLink;
       state.network = network;
       state.proxy = proxy;
+      state.chainID = network.chainID || state.chainID;
       state.apiProvider = apiProvider;
     },
     setChainID: (

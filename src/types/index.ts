@@ -13,6 +13,7 @@ export interface RouteType {
 export interface NetworkType {
   id: string;
   egldLabel: string;
+  chainID: string;
   name: string;
   walletAddress: string;
   apiAddress: string;
