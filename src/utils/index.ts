@@ -9,3 +9,8 @@ export * from './math';
 export * from './operations';
 export * from './network';
 export * from './decoders';
+
+export * from './optionalImport';
+export * from './getGeneratedClasses';
+
+export * from './session';

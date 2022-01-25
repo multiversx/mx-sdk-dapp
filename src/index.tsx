@@ -8,3 +8,10 @@ export * as transactionServices from './services/transactions';
 export * from './hooks';
 
 export { sendTransactions } from './services/transactions';
+
+export let DappUI = null;
+
+try {
+  require('bootstrap');
+  DappUI = require('./UI');
+} catch (err) {}

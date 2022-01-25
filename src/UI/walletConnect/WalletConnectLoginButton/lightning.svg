@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 60" width="44" height="60">
+	<defs>
+		<image width="22" height="30" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAeCAYAAAAo5+5WAAAA6klEQVRIibXWURHCMBBFUSRUAhLqgEpAQh1QB1RCHVAJOAAHxQE4IA4uH2yYTCbQafexAk5eNpu0m80fCtiqwRqYgF6J9ryrVYExZQAaFRpTBqBWgDElwA2olCkBzm40SwkwqlP6T76QMijQPKXv5Asp48lvPWhHuS6rUYN/1R04AQdgtxTe22yGmUU+OwGOixayXrfAYD2eq2lph9LFGttRqR6r4QTPa8Rzta09zwSUXJgc9c32F3RwgYa22dYbNep/ewto5wYNjW/GDcW3zNBRMpsFNAB7CZigV/dsJmCF+rfI4F4ym1m9AOPnYuevr8exAAAAAElFTkSuQmCC"/>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+	</style>
+	<g id="Elrond Swap Landing Page – v2.2">
+		<g id="Group 424">
+			<g id="Group 421">
+				<use id="⚡️ " href="#img1" transform="matrix(2,0,0,2,0,0)"/>
+			</g>
+		</g>
+	</g>
+</svg>
