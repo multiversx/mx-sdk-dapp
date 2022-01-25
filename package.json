@@ -12,10 +12,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "microbundle-crl --no-compress --format modern,cjs --css-modules false ",
-    "start": "microbundle-crl watch --no-compress --format modern,cjs --css-modules false",
-    "start-dev": "npm run copy-dev & npm run start",
-    "start-prod": "npm run copy-prod & npm run start",
+    "build": "npm run copy-prod & microbundle-crl --no-compress --format modern,cjs --css-modules false ",
+    "start": "npm run copy-dev & microbundle-crl watch --no-compress --format modern,cjs --css-modules false",
     "prepare": "run-s build",
     "test": "run-s test:unit test:build",
     "test:build": "run-s build",
