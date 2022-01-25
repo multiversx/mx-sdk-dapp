@@ -1,10 +1,8 @@
 import React from 'react';
 import { useSignTransactionsWithLedger } from 'hooks';
-import { optionalImport } from 'lib';
+import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { getGeneratedClasses } from 'utils';
 import SignStep from './SignStep';
-
-const { Modal } = optionalImport('react-bootstrap');
 
 export interface SignModalType {
   handleClose: () => void;
@@ -36,7 +34,7 @@ const SignWithLedgerModal = ({
   });
   console.log(error);
   return (
-    <Modal
+    <ReactBootstrap.Modal
       show={currentTransaction != null}
       backdrop='static'
       onHide={handleClose}
@@ -64,7 +62,7 @@ const SignWithLedgerModal = ({
           />
         </div>
       </div>
-    </Modal>
+    </ReactBootstrap.Modal>
   );
 };
 

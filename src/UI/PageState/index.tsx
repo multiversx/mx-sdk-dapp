@@ -1,10 +1,8 @@
 import React from 'react';
-import { optionalImport } from 'lib';
+import classNames from 'classnames';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
 import { PageStateProps } from './types';
-
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-const classNames = optionalImport('classnames');
 
 export const PageState = ({
   icon,
@@ -36,7 +34,7 @@ export const PageState = ({
     <div className={generatedClasses.wrapper} data-testid={dataTestId}>
       {icon && (
         <span className={generatedClasses.iconContainer}>
-          <FontAwesomeIcon
+          <ReactFontawesome.FontAwesomeIcon
             icon={icon}
             className={generatedClasses.iconClass}
             size={iconSize}

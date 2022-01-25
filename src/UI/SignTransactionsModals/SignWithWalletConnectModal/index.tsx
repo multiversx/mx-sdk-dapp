@@ -1,11 +1,10 @@
 import React from 'react';
 
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import { SignModalType } from '../types';
-
-const { Modal } = optionalImport('react-bootstrap');
 
 const { faHourglass, faTimes } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
@@ -35,7 +34,7 @@ export const SignWithWalletConnectModal = ({
     window.location.href = callbackRoute;
   };
   return (
-    <Modal
+    <ReactBootstrap.Modal
       show
       backdrop='static'
       onHide={close}
@@ -63,7 +62,7 @@ export const SignWithWalletConnectModal = ({
           </a>
         }
       />
-    </Modal>
+    </ReactBootstrap.Modal>
   );
 };
 

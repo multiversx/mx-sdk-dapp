@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
-import AddressRow from './AddressRow';
 
+import AddressRow from './AddressRow';
 const { faChevronLeft, faChevronRight, faCircleNotch } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -102,7 +102,11 @@ const AddressTable = ({
                     data-testid='prevBtn'
                     disabled={startIndex === 0}
                   >
-                    <FontAwesomeIcon size='sm' icon={faChevronLeft} /> Prev
+                    <ReactFontawesome.FontAwesomeIcon
+                      size='sm'
+                      icon={faChevronLeft}
+                    />{' '}
+                    Prev
                   </button>
                   <button
                     type='button'
@@ -110,7 +114,11 @@ const AddressTable = ({
                     onClick={onGoToNextPage}
                     data-testid='nextBtn'
                   >
-                    Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
+                    Next{' '}
+                    <ReactFontawesome.FontAwesomeIcon
+                      size='sm'
+                      icon={faChevronRight}
+                    />
                   </button>
                 </div>
                 <button

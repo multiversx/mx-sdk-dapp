@@ -1,6 +1,6 @@
 import { denomination } from 'constants/index';
 import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
 
 const useSwr = optionalImport('swr');
 

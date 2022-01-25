@@ -1,10 +1,8 @@
 import React from 'react';
-import { optionalImport } from 'lib';
+import classnames from 'optionalPackages/classnames';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
 import { Props } from './types';
-
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-const classNames = optionalImport('classnames');
 
 const IconState = ({
   icon,
@@ -16,16 +14,16 @@ const IconState = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: classNames('icon-state mx-auto', className, {
+      wrapper: classnames('icon-state mx-auto', className, {
         half: iconSize === '2x'
       }),
-      icon: classNames('text-white', className)
+      icon: classnames('text-white', className)
     }
   );
 
   return (
     <span className={generatedClasses.wrapper}>
-      <FontAwesomeIcon
+      <ReactFontawesome.FontAwesomeIcon
         icon={icon}
         size={iconSize}
         className={generatedClasses.icon}

@@ -1,10 +1,8 @@
 import React from 'react';
-import { optionalImport } from 'lib';
+import moment from 'optionalPackages/moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/session';
 import { Props } from './type';
-
-const moment = optionalImport('moment');
 
 const Progress = ({ id, children, progress, done }: Props) => {
   const ref = React.useRef(null);

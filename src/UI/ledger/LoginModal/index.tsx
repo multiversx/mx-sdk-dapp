@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGetAccountInfo } from 'hooks';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
 import { useLedgerLogin } from 'services';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';

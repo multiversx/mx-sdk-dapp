@@ -1,6 +1,4 @@
-import { optionalImport } from 'lib';
-
-const moment = optionalImport('moment');
+import moment from 'optionalPackages/moment';
 
 export type SessionKeyType = 'address' | 'shard' | 'toasts' | 'toastProgress';
 type ExpiresType = number | false;

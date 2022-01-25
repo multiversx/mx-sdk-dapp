@@ -1,13 +1,9 @@
 import React from 'react';
-import { optionalImport } from 'lib';
-import ReactBootstrap from 'lib/react-bootstrap';
+import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
+import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import { SignModalType } from '../types';
-const { faHourglass, faTimes } = optionalImport(
-  '@fortawesome/free-solid-svg-icons'
-);
-// const { Modal } = optionalImport('react-bootstrap');
 
 const SignWithExtensionModal = ({
   handleClose,
@@ -43,7 +39,7 @@ const SignWithExtensionModal = ({
       centered
     >
       <PageState
-        icon={error ? faTimes : faHourglass}
+        icon={error ? freeSolidIcons.faTimes : freeSolidIcons.faHourglass}
         iconClass={classes.icon}
         className={className}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}

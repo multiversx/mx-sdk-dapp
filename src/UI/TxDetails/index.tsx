@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
 import { Props } from './types';
 
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faTimes, faSpinner, faCheck } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );
@@ -66,7 +66,7 @@ const TxDetails = ({
       </div>
       {transactions.map(({ hash, status }) => (
         <div className={generatedClasses.item} key={hash}>
-          <FontAwesomeIcon
+          <ReactFontawesome.FontAwesomeIcon
             icon={iconData[status].icon}
             className={iconData[status].classNames}
           />

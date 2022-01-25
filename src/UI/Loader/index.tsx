@@ -1,5 +1,5 @@
 import React from 'react';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
 import PageState from '../PageState';
 
 const { faCircleNotch } = optionalImport('@fortawesome/free-solid-svg-icons');

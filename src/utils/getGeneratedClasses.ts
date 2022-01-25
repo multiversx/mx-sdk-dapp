@@ -1,7 +1,4 @@
-let classNames: any = {};
-try {
-  classNames = require('classnames');
-} catch (err) {}
+import classNames from 'optionalPackages/classnames';
 
 export function getGeneratedClasses(
   className: string,

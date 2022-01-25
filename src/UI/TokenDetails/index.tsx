@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getEgldLabel } from 'utils';
 import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
 import { Simple, Combined } from './TokenSymbol';
 
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faGem } = optionalImport('@fortawesome/free-solid-svg-icons');
 
 const getIdentifierWithoutNonce = (identifier: string) => {
@@ -34,7 +34,11 @@ const getDetails = (token: string): TokenIconType => {
     label: token,
     // eslint-disable-next-line react/display-name
     icon: () =>
-      isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faGem} />
+      isEgldTransfer ? (
+        <EgldIcon />
+      ) : (
+        <ReactFontawesome.FontAwesomeIcon icon={faGem} />
+      )
   };
 };
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 
 const { faLock, faDollarSign } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
@@ -26,7 +26,7 @@ export const Wrapped = ({ children }: { children: React.ReactNode }) => (
   <div className='token-symbol-wrapped'>
     <div className='wrapped rounded-circle shadow'>
       <div className='locked-icon'>
-        <FontAwesomeIcon icon={faDollarSign} size='sm' />
+        <ReactFontawesome.FontAwesomeIcon icon={faDollarSign} size='sm' />
       </div>
       {children}
     </div>
@@ -52,7 +52,7 @@ export const Locked = ({ children }: { children: React.ReactNode }) => (
   <div className='token-symbol-locked'>
     <div className='locked rounded-circle shadow'>
       <div className='locked-icon'>
-        <FontAwesomeIcon icon={faLock} size='sm' />
+        <ReactFontawesome.FontAwesomeIcon icon={faLock} size='sm' />
       </div>
       {children}
     </div>

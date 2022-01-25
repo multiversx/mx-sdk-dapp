@@ -2,7 +2,7 @@ import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { denomination, decimals } from 'constants/index';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';

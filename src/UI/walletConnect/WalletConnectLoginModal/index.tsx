@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
 import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';

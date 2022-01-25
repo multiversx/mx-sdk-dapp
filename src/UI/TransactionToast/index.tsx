@@ -1,7 +1,10 @@
 import React, { useMemo, useRef, useState } from 'react';
 
 import { useGetSignedTransactions, useGetTransactionDisplayInfo } from 'hooks';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import moment from 'optionalPackages/moment';
+import ReactBootstrap from 'optionalPackages/react-bootstrap';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
@@ -9,12 +12,9 @@ import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
 
 import { TransactionToastPropsType } from './types';
 
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faCheck, faHourglass, faTimes } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );
-const moment = optionalImport('moment');
-const { Toast } = optionalImport('react-bootstrap');
 
 export const TransactionToast = ({
   toastId,
@@ -113,7 +113,11 @@ export const TransactionToast = ({
   }
 
   return (
-    <Toast ref={ref} className={generatedClasses.wrapper} key={toastId}>
+    <ReactBootstrap.Toast
+      ref={ref}
+      className={generatedClasses.wrapper}
+      key={toastId}
+    >
       <Progress
         key={toastId}
         id={toastId}
@@ -137,7 +141,7 @@ export const TransactionToast = ({
                   className={generatedClasses.closeButton}
                   onClick={handleDeleteToast}
                 >
-                  <FontAwesomeIcon icon={faTimes} size='xs' />
+                  <ReactFontawesome.FontAwesomeIcon icon={faTimes} size='xs' />
                 </button>
               )}
             </div>
@@ -147,7 +151,7 @@ export const TransactionToast = ({
           </div>
         </div>
       </Progress>
-    </Toast>
+    </ReactBootstrap.Toast>
   );
 };
 

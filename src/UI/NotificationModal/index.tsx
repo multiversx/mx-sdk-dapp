@@ -1,15 +1,15 @@
 import React from 'react';
 
 import { useGetNotification } from 'hooks';
-import { optionalImport } from 'lib';
+import { optionalImport } from 'optionalPackages';
+import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { NotificationTypesEnum } from 'types';
+
 import PageState from '../PageState';
 
 const { faExclamationTriangle } = optionalImport(
   '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
 );
-
-const { Modal } = optionalImport('react-bootstrap');
 
 const notificationTypesToIcons = {
   [NotificationTypesEnum.warning]: faExclamationTriangle
@@ -30,7 +30,7 @@ export function NotificationModal() {
 
   return notification ? (
     <React.Fragment>
-      <Modal
+      <ReactBootstrap.Modal
         show={showModal}
         backdrop={true}
         onHide={notification}
@@ -53,7 +53,7 @@ export function NotificationModal() {
             }
           />
         </div>
-      </Modal>
+      </ReactBootstrap.Modal>
     </React.Fragment>
   ) : null;
 }
