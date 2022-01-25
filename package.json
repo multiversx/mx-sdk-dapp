@@ -56,13 +56,15 @@
   "files": [
     "build"
   ],
+  "peerDependencies": {
+    "react": "17.0.2"
+  },
   "dependencies": {
     "@elrondnetwork/dapp-utils": "0.0.16",
     "@elrondnetwork/erdjs": "8.0.1-alpha.19",
     "@reduxjs/toolkit": "1.6.2",
     "bignumber.js": "9.0.2",
     "lodash": "4.17.21",
-    "react": "17.0.2",
     "react-redux": "7.2.6",
     "redux-persist": "6.0.0",
     "reselect": "4.0.0"
