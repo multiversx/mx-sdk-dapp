@@ -14,12 +14,16 @@
   "scripts": {
     "build": "microbundle-crl --no-compress --format modern,cjs --css-modules false ",
     "start": "microbundle-crl watch --no-compress --format modern,cjs --css-modules false",
+    "start-dev": "npm run copy-dev & npm run start",
+    "start-prod": "npm run copy-prod & npm run start",
     "prepare": "run-s build",
     "test": "run-s test:unit test:build",
     "test:build": "run-s build",
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && npm install && npm run build"
+    "predeploy": "cd example && npm install && npm run build",
+    "copy-dev": "cp ./src/lib/dev/* ./src/lib",
+    "copy-prod": "cp ./src/lib/prod/* ./src/lib"
   },
   "peerDependencies": {
     "react": "17.0.2"

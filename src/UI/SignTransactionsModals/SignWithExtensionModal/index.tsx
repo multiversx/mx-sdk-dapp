@@ -1,11 +1,12 @@
 import React from 'react';
+import { Modal } from 'lib/react-bootstrap';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, optionalImport } from 'utils';
 import { SignModalType } from '../types';
 const { faHourglass, faTimes } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );
-const { Modal } = optionalImport('react-bootstrap');
+// const { Modal } = optionalImport('react-bootstrap');
 
 const SignWithExtensionModal = ({
   handleClose,
