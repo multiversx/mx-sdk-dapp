@@ -1,8 +1,9 @@
 import React from 'react';
+import { optionalImport } from 'lib';
+const { Modal } = optionalImport('react-bootstrap');
+
 const { faTimes } = optionalImport('@fortawesome/free-solid-svg-icons/faTimes');
 const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-import { optionalImport } from 'utils';
-const { Modal } = optionalImport('react-bootstrap');
 
 const ModalContainer = ({
   children,

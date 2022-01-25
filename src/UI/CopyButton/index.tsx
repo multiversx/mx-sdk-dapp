@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { optionalImport } from 'utils';
+import { optionalImport } from 'lib';
 import copyTextToClipboard from './helpers/copyToClipboard';
 
 const { faCopy, faCheck } = optionalImport('@fortawesome/free-solid-svg-icons');

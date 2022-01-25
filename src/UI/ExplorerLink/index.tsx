@@ -1,8 +1,8 @@
 import React from 'react';
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 import { useGetNetworkConfig } from 'hooks';
-import { optionalImport } from 'utils';
+import { optionalImport } from 'lib';
 
+const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faSearch } = optionalImport('@fortawesome/free-solid-svg-icons');
 
 const ExplorerLink = ({

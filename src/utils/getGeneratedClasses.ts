@@ -1,6 +1,7 @@
-import { optionalImport } from 'utils/optionalImport';
-
-const classNames = optionalImport('classnames');
+let classNames: any = {};
+try {
+  classNames = require('classnames');
+} catch (err) {}
 
 export function getGeneratedClasses(
   className: string,
@@ -9,7 +10,7 @@ export function getGeneratedClasses(
 ) {
   return Object.entries(defaultStyles).reduce(
     (acc, [key, defaultClassNames]) => {
-      acc[key] = classNames(
+      acc[key] = classNames?.(
         `${className}_${key}`,
         shouldRenderDefaultCss && (defaultClassNames as string)
       );

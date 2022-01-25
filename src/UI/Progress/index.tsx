@@ -1,5 +1,6 @@
 import React from 'react';
-import { logarithmicRest, optionalImport } from 'utils';
+import { optionalImport } from 'lib';
+import { logarithmicRest } from 'utils';
 import storage from 'utils/session';
 import { Props } from './type';
 

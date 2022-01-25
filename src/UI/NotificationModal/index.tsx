@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useGetNotification } from 'hooks';
+import { optionalImport } from 'lib';
 import { NotificationTypesEnum } from 'types';
-import { optionalImport } from 'utils';
 import PageState from '../PageState';
 
 const { faExclamationTriangle } = optionalImport(

@@ -1,10 +1,10 @@
 import React from 'react';
-const classNames = optionalImport('classnames');
+import { optionalImport } from 'lib';
 import { getGeneratedClasses } from 'utils';
-import { optionalImport } from 'utils/optionalImport';
 import { Props } from './types';
 
 const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
+const classNames = optionalImport('classnames');
 
 const IconState = ({
   icon,

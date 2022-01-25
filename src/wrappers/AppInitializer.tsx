@@ -3,7 +3,7 @@ import { useDispatch } from 'redux/DappProviderContext';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { NetworkConfigType } from 'types';
 
-export default function AppInitializer({
+export function AppInitializer({
   networkConfig,
   children
 }: {
@@ -23,3 +23,5 @@ export default function AppInitializer({
 
   return initialized ? children : null;
 }
+
+export default AppInitializer;

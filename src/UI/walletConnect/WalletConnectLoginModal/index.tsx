@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { optionalImport } from 'lib';
 import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
-import { getGeneratedClasses, optionalImport } from 'utils';
+import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
 

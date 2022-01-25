@@ -1,4 +1,4 @@
-import { optionalImport } from 'utils/optionalImport';
+import { optionalImport } from 'lib';
 
 const moment = optionalImport('moment');
 

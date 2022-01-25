@@ -1,9 +1,10 @@
 import * as React from 'react';
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-import { getEgldLabel, optionalImport } from 'utils';
+import { optionalImport } from 'lib';
+import { getEgldLabel } from 'utils';
 import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
 import { Simple, Combined } from './TokenSymbol';
 
+const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faGem } = optionalImport('@fortawesome/free-solid-svg-icons');
 
 const getIdentifierWithoutNonce = (identifier: string) => {

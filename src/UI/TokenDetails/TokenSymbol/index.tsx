@@ -1,6 +1,6 @@
 import * as React from 'react';
 const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-import { optionalImport } from 'utils';
+import { optionalImport } from 'lib';
 
 const { faLock, faDollarSign } = optionalImport(
   '@fortawesome/free-solid-svg-icons'

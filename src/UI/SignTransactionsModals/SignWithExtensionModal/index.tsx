@@ -1,7 +1,8 @@
 import React from 'react';
-import { Modal } from 'lib/react-bootstrap';
+import { optionalImport } from 'lib';
+import ReactBootstrap from 'lib/react-bootstrap';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, optionalImport } from 'utils';
+import { getGeneratedClasses } from 'utils';
 import { SignModalType } from '../types';
 const { faHourglass, faTimes } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
@@ -33,7 +34,7 @@ const SignWithExtensionModal = ({
   };
 
   return (
-    <Modal
+    <ReactBootstrap.Modal
       show
       backdrop='static'
       onHide={handleClose}
@@ -61,7 +62,7 @@ const SignWithExtensionModal = ({
           </a>
         }
       />
-    </Modal>
+    </ReactBootstrap.Modal>
   );
 };
 

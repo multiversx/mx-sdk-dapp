@@ -1,22 +1,20 @@
 import React, { useMemo, useRef, useState } from 'react';
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
-const moment = optionalImport('moment');
-const { Toast } = optionalImport('react-bootstrap');
+
 import { useGetSignedTransactions, useGetTransactionDisplayInfo } from 'hooks';
+import { optionalImport } from 'lib';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
+import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
 
-import {
-  getGeneratedClasses,
-  isBatchTransactionPending,
-  optionalImport
-} from 'utils';
 import { TransactionToastPropsType } from './types';
 
+const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faCheck, faHourglass, faTimes } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );
+const moment = optionalImport('moment');
+const { Toast } = optionalImport('react-bootstrap');
 
 export const TransactionToast = ({
   toastId,

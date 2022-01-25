@@ -1,4 +1,4 @@
-import { optionalImport } from 'utils';
+import { optionalImport } from './optionalImport';
 function moduleExists(name: string) {
   try {
     return require.resolve(name);

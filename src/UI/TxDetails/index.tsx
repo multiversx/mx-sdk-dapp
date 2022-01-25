@@ -1,16 +1,13 @@
 import React from 'react';
 
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
+import { optionalImport } from 'lib';
 import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
-import {
-  getGeneratedClasses,
-  isServerTransactionPending,
-  optionalImport
-} from 'utils';
+import { getGeneratedClasses, isServerTransactionPending } from 'utils';
 import { Props } from './types';
 
+const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const { faTimes, faSpinner, faCheck } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );

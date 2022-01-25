@@ -1,13 +1,14 @@
 import React from 'react';
 
-const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
+import { optionalImport } from 'lib';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, optionalImport } from 'utils';
+import { getGeneratedClasses } from 'utils';
 import AddressRow from './AddressRow';
 
 const { faChevronLeft, faChevronRight, faCircleNotch } = optionalImport(
   '@fortawesome/free-solid-svg-icons'
 );
+const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 
 const ledgerWaitingText = 'Waiting for device';
 

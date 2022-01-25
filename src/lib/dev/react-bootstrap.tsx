@@ -1,1 +1,3 @@
-export * from 'react-bootstrap';
+import * as RB from 'react-bootstrap';
+
+export default RB;

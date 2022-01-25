@@ -1,9 +1,10 @@
 import React from 'react';
+import { optionalImport } from 'lib';
+import { getGeneratedClasses } from 'utils';
+import { PageStateProps } from './types';
+
 const { FontAwesomeIcon } = optionalImport('@fortawesome/react-fontawesome');
 const classNames = optionalImport('classnames');
-import { getGeneratedClasses, optionalImport } from 'utils';
-
-import { PageStateProps } from './types';
 
 export const PageState = ({
   icon,

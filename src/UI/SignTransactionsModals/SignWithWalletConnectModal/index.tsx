@@ -1,7 +1,8 @@
 import React from 'react';
 
+import { optionalImport } from 'lib';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, optionalImport } from 'utils';
+import { getGeneratedClasses } from 'utils';
 import { SignModalType } from '../types';
 
 const { Modal } = optionalImport('react-bootstrap');

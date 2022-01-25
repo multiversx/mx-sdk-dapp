@@ -1,7 +1,9 @@
 import React from 'react';
 import { useSignTransactionsWithLedger } from 'hooks';
-import { getGeneratedClasses, optionalImport } from 'utils';
+import { optionalImport } from 'lib';
+import { getGeneratedClasses } from 'utils';
 import SignStep from './SignStep';
+
 const { Modal } = optionalImport('react-bootstrap');
 
 export interface SignModalType {
