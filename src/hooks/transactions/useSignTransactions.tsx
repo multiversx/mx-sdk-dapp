@@ -61,6 +61,7 @@ export function useSignTransactions() {
               urlParams: { [walletSignSession]: sessionId }
             });
 
+            dispatch(clearSignTransactions());
             // TODO: eslint warning
             provider.signTransactions(transactions, {
               callbackUrl: encodeURIComponent(callbackUrl)

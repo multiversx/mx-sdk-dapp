@@ -7,11 +7,12 @@ import { network, walletConnectBridge, walletConnectDeepLink } from 'config';
 import PageNotFound from 'pages/PageNotFound';
 import { routeNames } from 'routes';
 import routes from 'routes';
-// import '@elrondnetwork/dapp-core/build/index.css';
+import '@elrondnetwork/dapp-core/build/index.css';
 
 const {
   TransactionsToastList,
   SignTransactionsModals,
+  NotificationModal,
   DappCorePages: { UnlockPage }
 } = DappUI;
 
@@ -24,6 +25,7 @@ const App = () => {
         <DappCoreUIWrapper>
           <Layout>
             <TransactionsToastList />
+            <NotificationModal />
             <SignTransactionsModals className='custom-class-for-modals' />
             <Routes>
               <Route
