@@ -34,8 +34,6 @@ export const UnlockPage = ({
   const { isLoggedIn } = useGetLoginInfo();
 
   React.useEffect(() => {
-    console.log('\x1b[42m%s\x1b[0m', isLoggedIn);
-
     if (isLoggedIn) {
       window.location.href = loginRoute;
     }
