@@ -1,14 +1,13 @@
 import React from 'react';
 import { useGetAccountInfo } from 'hooks';
-import { optionalImport } from 'optionalPackages';
+
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { useLedgerLogin } from 'services';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
-
-const { faCircleNotch } = optionalImport('@fortawesome/free-solid-svg-icons');
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -48,7 +47,7 @@ export function LedgerLoginContainer({
   if (isLoading) {
     return (
       <PageState
-        icon={faCircleNotch}
+        icon={icons.faCircleNotch}
         iconClass={generatedClasses.spinner}
         title={ledgerWaitingText}
       />

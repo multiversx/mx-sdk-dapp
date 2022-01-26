@@ -1,14 +1,11 @@
 import React from 'react';
 
-import { optionalImport } from 'optionalPackages';
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 
 import AddressRow from './AddressRow';
-const { faChevronLeft, faChevronRight, faCircleNotch } = optionalImport(
-  '@fortawesome/free-solid-svg-icons'
-);
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -55,7 +52,7 @@ const AddressTable = ({
       return (
         <PageState
           className={className}
-          icon={faCircleNotch}
+          icon={icons.faCircleNotch}
           iconClass='fa-spin text-primary'
           title={ledgerWaitingText}
         />
@@ -104,7 +101,7 @@ const AddressTable = ({
                   >
                     <ReactFontawesome.FontAwesomeIcon
                       size='sm'
-                      icon={faChevronLeft}
+                      icon={icons.faChevronLeft}
                     />{' '}
                     Prev
                   </button>
@@ -117,7 +114,7 @@ const AddressTable = ({
                     Next{' '}
                     <ReactFontawesome.FontAwesomeIcon
                       size='sm'
-                      icon={faChevronRight}
+                      icon={icons.faChevronRight}
                     />
                   </button>
                 </div>

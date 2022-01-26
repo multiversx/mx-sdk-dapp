@@ -1,7 +1,6 @@
 import React from 'react';
-import { optionalImport } from 'optionalPackages';
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
-const { faTimes } = optionalImport('@fortawesome/free-solid-svg-icons/faTimes');
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 
 const ModalContainer = ({
@@ -35,7 +34,10 @@ const ModalContainer = ({
               className='btn btn-light px-3 py-2'
               onClick={onClose}
             >
-              <ReactFontawesome.FontAwesomeIcon size='lg' icon={faTimes} />
+              <ReactFontawesome.FontAwesomeIcon
+                size='lg'
+                icon={icons.faTimes}
+              />
             </button>
           </div>
         </div>

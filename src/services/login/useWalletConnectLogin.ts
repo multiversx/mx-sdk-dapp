@@ -112,7 +112,6 @@ export const useWalletConnectLogin = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
-      console.log('loggedin');
       if (isLoggedIn) {
         return;
       }

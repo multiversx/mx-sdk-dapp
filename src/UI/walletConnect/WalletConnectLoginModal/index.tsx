@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { optionalImport } from 'optionalPackages';
+
+import platform from 'optionalPackages/platform';
+import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
-
-const platform = optionalImport('platform');
-const QRCode = optionalImport('qrcode');
 
 export function WalletConnectLoginModal({
   callbackRoute,

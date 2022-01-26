@@ -1,14 +1,10 @@
 import React from 'react';
 
-import { optionalImport } from 'optionalPackages';
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import { SignModalType } from '../types';
-
-const { faHourglass, faTimes } = optionalImport(
-  '@fortawesome/free-solid-svg-icons'
-);
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -43,7 +39,7 @@ export const SignWithWalletConnectModal = ({
       centered
     >
       <PageState
-        icon={error ? faTimes : faHourglass}
+        icon={error ? icons.faTimes : icons.faHourglass}
         iconClass={classes.icon}
         className={className}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}

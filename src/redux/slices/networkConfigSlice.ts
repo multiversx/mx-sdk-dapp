@@ -44,7 +44,7 @@ const initialState: NetworkConfigStateType = {
   proxy: new ProxyProvider(defaultNetwork.gatewayAddress, { timeout: 4000 }),
   provider: emptyProvider,
   apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
-  chainID: 'D'
+  chainID: '-1'
 };
 
 export const networkConfigSlice = createSlice({

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { optionalImport } from 'optionalPackages';
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
@@ -8,9 +8,6 @@ import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
 import { Props } from './types';
 
-const { faTimes, faSpinner, faCheck } = optionalImport(
-  '@fortawesome/free-solid-svg-icons'
-);
 const TxDetails = ({
   title,
   transactions,
@@ -32,17 +29,17 @@ const TxDetails = ({
   );
 
   const iconSuccessData = {
-    icon: faCheck,
+    icon: icons.faCheck,
     classNames: generatedClasses.iconSuccess
   };
 
   const iconFailedData = {
-    icon: faTimes,
+    icon: icons.faTimes,
     classNames: generatedClasses.iconSuccess
   };
 
   const iconPendingData = {
-    icon: faSpinner,
+    icon: icons.faSpinner,
     classNames: generatedClasses.iconPending
   };
 

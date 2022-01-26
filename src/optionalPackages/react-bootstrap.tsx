@@ -1,3 +1,3 @@
-import { optionalImport } from 'optionalPackages/helpers/optionalImport';
+import * as RB from 'react-bootstrap';
 
-export default optionalImport('react-bootstrap');
+export default RB;

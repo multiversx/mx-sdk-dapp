@@ -1,11 +1,10 @@
 import * as React from 'react';
-import { optionalImport } from 'optionalPackages';
+
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getEgldLabel } from 'utils';
 import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
 import { Simple, Combined } from './TokenSymbol';
-
-const { faGem } = optionalImport('@fortawesome/free-solid-svg-icons');
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');
@@ -37,7 +36,7 @@ const getDetails = (token: string): TokenIconType => {
       isEgldTransfer ? (
         <EgldIcon />
       ) : (
-        <ReactFontawesome.FontAwesomeIcon icon={faGem} />
+        <ReactFontawesome.FontAwesomeIcon icon={icons.faGem} />
       )
   };
 };
