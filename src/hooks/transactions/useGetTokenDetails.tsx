@@ -1,8 +1,7 @@
 import { denomination } from 'constants/index';
 import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
-import { optionalImport } from 'optionalPackages';
 
-const useSwr = optionalImport('swr');
+import useSwr from 'optionalPackages/swr';
 
 interface TokenOptionType {
   tokenLabel: string;

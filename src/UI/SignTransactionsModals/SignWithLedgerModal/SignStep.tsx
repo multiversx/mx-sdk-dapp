@@ -2,7 +2,8 @@ import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { denomination, decimals } from 'constants/index';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
-import { optionalImport } from 'optionalPackages';
+
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';
@@ -12,10 +13,6 @@ import {
   getGeneratedClasses,
   isTokenTransfer
 } from 'utils';
-
-const { faHourglass, faTimes } = optionalImport(
-  '@fortawesome/free-solid-svg-icons'
-);
 
 export interface SignStepType {
   onSignTransaction: () => void;
@@ -108,7 +105,7 @@ const SignStep = ({
 
   return (
     <PageState
-      icon={error ? faTimes : faHourglass}
+      icon={error ? icons.faTimes : icons.faHourglass}
       iconClass={classes.icon}
       iconBgClass={error ? 'bg-danger' : 'bg-warning'}
       iconSize='3x'

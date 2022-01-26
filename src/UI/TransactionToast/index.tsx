@@ -1,7 +1,8 @@
 import React, { useMemo, useRef, useState } from 'react';
 
 import { useGetSignedTransactions, useGetTransactionDisplayInfo } from 'hooks';
-import { optionalImport } from 'optionalPackages';
+
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import moment from 'optionalPackages/moment';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
@@ -11,10 +12,6 @@ import TxDetails from 'UI/TxDetails';
 import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
 
 import { TransactionToastPropsType } from './types';
-
-const { faCheck, faHourglass, faTimes } = optionalImport(
-  '@fortawesome/free-solid-svg-icons'
-);
 
 export const TransactionToast = ({
   toastId,
@@ -67,7 +64,7 @@ export const TransactionToast = ({
 
   const successToastData = {
     id: toastId,
-    icon: faCheck,
+    icon: icons.faCheck,
     expires: 30000,
     hasCloseButton: true,
     title: successMessage,
@@ -77,7 +74,7 @@ export const TransactionToast = ({
   const pendingToastData = {
     id: toastId,
     expires: false,
-    icon: faHourglass,
+    icon: icons.faHourglass,
     hasCloseButton: false,
     title: processingMessage,
     iconClassName: 'bg-warning'
@@ -85,7 +82,7 @@ export const TransactionToast = ({
 
   const failedToastData = {
     id: toastId,
-    icon: faTimes,
+    icon: icons.faTimes,
     title: errorMessage,
     hasCloseButton: true,
     iconClassName: 'bg-danger'
@@ -141,7 +138,10 @@ export const TransactionToast = ({
                   className={generatedClasses.closeButton}
                   onClick={handleDeleteToast}
                 >
-                  <ReactFontawesome.FontAwesomeIcon icon={faTimes} size='xs' />
+                  <ReactFontawesome.FontAwesomeIcon
+                    icon={icons.faTimes}
+                    size='xs'
+                  />
                 </button>
               )}
             </div>

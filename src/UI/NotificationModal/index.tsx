@@ -1,20 +1,17 @@
 import React from 'react';
 
 import { useGetNotification } from 'hooks';
-import { optionalImport } from 'optionalPackages';
+
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { NotificationTypesEnum } from 'types';
 
 import PageState from '../PageState';
 
-const { faExclamationTriangle } = optionalImport(
-  '@fortawesome/free-solid-svg-icons/faExclamationTriangle'
-);
-
 const notificationTypesToIcons = {
-  [NotificationTypesEnum.warning]: faExclamationTriangle
+  [NotificationTypesEnum.warning]: icons.faExclamationTriangle
 };
-const defaultIcon = faExclamationTriangle;
+const defaultIcon = icons.faExclamationTriangle;
 
 export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
