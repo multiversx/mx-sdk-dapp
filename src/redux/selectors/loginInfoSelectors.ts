@@ -31,8 +31,3 @@ export const walletLoginSelector = createSelector(
   loginInfoSelector,
   (state) => state.walletLogin
 );
-
-export const extensionLoginSelector = createSelector(
-  loginInfoSelector,
-  (state) => state.extensionLogin
-);

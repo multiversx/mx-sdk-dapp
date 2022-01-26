@@ -3,7 +3,7 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector } from 'redux/selectors';
-import { setExtensionLogin, setProvider, setTokenLogin } from 'redux/slices';
+import { setProvider, setTokenLogin } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
@@ -38,14 +38,6 @@ export const useExtensionLogin = ({
         );
         return;
       }
-      const now = new Date();
-      const expires: number = now.setMinutes(now.getMinutes() + 1) / 1000;
-      const extensionLoginData = {
-        data: {},
-        expires: expires
-      };
-
-      dispatch(setExtensionLogin(extensionLoginData));
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`
@@ -72,7 +64,7 @@ export const useExtensionLogin = ({
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
       setTimeout(function () {
-        if (!window.location.href.includes(callbackRoute)) {
+        if (!window.location.pathname.includes(callbackRoute)) {
           window.location.href = window.location.href = callbackRoute;
         }
       }, 200);

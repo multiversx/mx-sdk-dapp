@@ -141,7 +141,7 @@ export function useSignTransactions() {
     hasTransactions,
     transactions: transactionsToSign?.transactions,
     sessionId: transactionsToSign?.sessionId,
-    callbackRoute: transactionsToSign?.callbackRoute
+    callbackRoute: transactionsToSign?.callbackRoute || '/'
   };
 }
 

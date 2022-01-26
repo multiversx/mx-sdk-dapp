@@ -97,7 +97,7 @@ export function useLedgerLogin({
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
     setTimeout(() => {
-      if (!window.location.href.includes(callbackRoute)) {
+      if (!window.location.pathname.includes(callbackRoute)) {
         window.location.href = callbackRoute;
       }
     }, 200);
@@ -229,7 +229,7 @@ export function useLedgerLogin({
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
         setTimeout(() => {
-          if (!window.location.href.includes(callbackRoute)) {
+          if (!window.location.pathname.includes(callbackRoute)) {
             window.location.href = callbackRoute;
           }
         }, 200);
