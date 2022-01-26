@@ -61,6 +61,7 @@ export function useSignTransactions() {
               urlParams: { [walletSignSession]: sessionId }
             });
 
+            dispatch(clearSignTransactions());
             // TODO: eslint warning
             provider.signTransactions(transactions, {
               callbackUrl: encodeURIComponent(callbackUrl)
@@ -94,35 +95,33 @@ export function useSignTransactions() {
         if (!initialized) {
           return;
         }
-        provider
-          .signTransactions(transactions)
-          .then((signedTransactions: Transaction[]) => {
-            const signingDisabled =
-              !signedTransactions ||
-              (signedTransactions &&
-                Object.keys(signedTransactions).length !==
-                  transactions?.length);
+        try {
+          const signedTransactions: Transaction[] =
+            await provider.signTransactions(transactions);
+          const signingDisabled =
+            !signedTransactions ||
+            (signedTransactions &&
+              Object.keys(signedTransactions).length !== transactions?.length);
 
-            if (!signingDisabled && signedTransactions) {
-              dispatch(
-                updateSignedTransaction({
-                  [sessionId]: {
-                    status: TransactionBatchStatusesEnum.signed,
-                    transactions: Object.values(signedTransactions).map((tx) =>
-                      parseTransactionAfterSigning(tx)
-                    )
-                  }
-                })
-              );
-              if (window.location.pathname != callbackRoute) {
-                window.location.href = callbackRoute;
-              }
+          if (!signingDisabled && signedTransactions) {
+            dispatch(
+              updateSignedTransaction({
+                [sessionId]: {
+                  status: TransactionBatchStatusesEnum.signed,
+                  transactions: Object.values(signedTransactions).map((tx) =>
+                    parseTransactionAfterSigning(tx)
+                  )
+                }
+              })
+            );
+            if (window.location.pathname != callbackRoute) {
+              window.location.href = callbackRoute;
             }
-          })
-          .catch((err) => {
-            console.error('error signing transaction', err);
-            onCancel('error when signing');
-          });
+          }
+        } catch (err) {
+          console.error('error signing transaction', err);
+          onCancel('error when signing');
+        }
       }
     } catch (err) {
       console.error('error signing transaction', err);

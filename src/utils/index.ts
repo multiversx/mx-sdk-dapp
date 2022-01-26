@@ -9,3 +9,6 @@ export * from './math';
 export * from './operations';
 export * from './network';
 export * from './decoders';
+
+export * from './getGeneratedClasses';
+export * from './session';

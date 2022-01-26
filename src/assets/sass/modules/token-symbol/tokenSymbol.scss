@@ -1,0 +1,150 @@
+.token-symbol,
+.token-symbol-combined {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 50%;
+  svg {
+    #egld-token {
+      fill: #000;
+    }
+  }
+}
+
+.token-symbol-combined {
+  background-color: transparent;
+}
+
+.token-symbol {
+  border: 1px solid #000;
+  //box-shadow: $thumbnail-box-shadow;
+  width: 2rem;
+  height: 2rem;
+  svg {
+    width: 1.25rem;
+    height: 1.25rem;
+
+    &.expanded {
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+}
+
+.token-symbol-combined {
+  svg {
+    //filter: drop-shadow(0 0 0.25rem $shadow-color);
+    circle {
+      fill: $card-bg;
+    }
+  }
+  width: 4.5rem;
+  height: 4.5rem;
+
+  svg {
+    width: 4.25rem;
+    height: 4.25rem;
+  }
+  &.small {
+    width: 2.5rem;
+    min-width: 2.5rem;
+    height: 2.5rem;
+
+    svg {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
+}
+
+.token-icon-lg {
+  .token-symbol {
+    width: 3rem;
+    height: 3rem;
+    svg {
+      width: 2.25rem;
+      height: 2.25rem;
+    }
+  }
+}
+
+.token-icon-xl {
+  .token-symbol {
+    width: 4rem;
+    height: 4rem;
+
+    svg {
+      width: 2.3rem;
+      height: 2.3rem;
+    }
+  }
+}
+
+.pool-icon {
+  &.icon-xs {
+    .token-symbol + .token-symbol {
+      margin-left: 0.7rem;
+      margin-top: -0.325rem;
+    }
+
+    .token-symbol {
+      //box-shadow: 0 0 0 4px $card-inner-bg-light;
+      width: 1rem;
+      height: 1rem;
+      svg {
+        width: 0.625rem;
+        height: 0.625rem;
+      }
+    }
+  }
+
+  &.icon-md {
+    .token-symbol + .token-symbol {
+      margin-left: 1.2rem;
+      margin-top: -0.6rem;
+    }
+
+    .token-symbol {
+      width: 1.8rem;
+      height: 1.8rem;
+      svg {
+        width: 1.2rem;
+        height: 1.2rem;
+      }
+    }
+  }
+
+  &.icon-lg {
+    .token-symbol + .token-symbol {
+      margin-left: 1.3rem;
+      margin-top: -0.725rem;
+    }
+
+    .token-symbol {
+      width: 2.3rem;
+      height: 2.3rem;
+    }
+  }
+
+  &.icon-xl {
+    .token-symbol + .token-symbol {
+      margin-left: 2rem;
+      margin-top: -1rem;
+    }
+
+    .token-symbol {
+      width: 4rem;
+      height: 4rem;
+
+      svg {
+        width: 2.3rem;
+        height: 2.3rem;
+      }
+    }
+  }
+
+  .token-symbol {
+    //box-shadow: 0 0 0 6px $card-inner-bg-light;
+  }
+}

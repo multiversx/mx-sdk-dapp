@@ -8,34 +8,32 @@ import networkConfig from './slices/networkConfigSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
 
-const transactionsPersistConfig = {
-  key: 'dapp-core-transactions',
-  version: 1,
-  storage: sessionStorage
-};
-
-const transactionsReducer = persistReducer(
-  transactionsPersistConfig,
-  transactions
-);
-
+//#region custom reducers
 const transactionsInfoPersistConfig = {
   key: 'dapp-core-transactionsInfo',
   version: 1,
   storage: sessionStorage
 };
-
-const transactionsInfoReducer = persistReducer(
-  transactionsInfoPersistConfig,
-  transactionsInfo
-);
+const transactionsReducer = {
+  key: 'dapp-core-transactions',
+  version: 1,
+  storage: sessionStorage,
+  blacklist: ['transactionsToSign']
+};
+const customReducers = {
+  transactions: persistReducer(transactionsReducer, transactions),
+  transactionsInfo: persistReducer(
+    transactionsInfoPersistConfig,
+    transactionsInfo
+  )
+};
+//#endregion
 
 const rootReducer = combineReducers({
+  ...customReducers,
   account,
   networkConfig,
   loginInfo,
-  transactionsInfo: transactionsInfoReducer,
-  transactions: transactionsReducer,
   modals
 });
 
