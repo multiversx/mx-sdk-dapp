@@ -1,5 +1,6 @@
 {
   "env": {
+    "es2021": true,
     "node": true
   },
   "parser": "@typescript-eslint/parser",
@@ -70,7 +71,7 @@
     "react/prop-types": "off",
     "react/display-name": "off",
     "linebreak-style": ["error", "unix"],
-    "quotes": ["error", "single"],
+    "quotes": ["error", "double"],
     "semi": ["error", "always"],
     "object-curly-newline": "off",
     "arrow-body-style": "off",
