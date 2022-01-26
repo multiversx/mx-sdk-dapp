@@ -27,7 +27,9 @@ export const SignWithWalletConnectModal = ({
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    window.location.href = callbackRoute;
+    if (!window.location.pathname.includes(callbackRoute)) {
+      window.location.href = callbackRoute;
+    }
   };
   return (
     <ReactBootstrap.Modal
