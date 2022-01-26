@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Address, Nonce, Transaction } from '@elrondnetwork/erdjs';
 import { walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -20,6 +20,7 @@ export function useSignTransactions() {
   const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
   const transactionsToSign = useSelector(transactionsToSignSelector);
+  const savedCallback = useRef('/');
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
 
@@ -34,11 +35,14 @@ export function useSignTransactions() {
 
   function onAbort() {
     dispatch(clearSignTransactions());
+    setError(null);
   }
 
   const signTransactions = async () => {
     if (transactionsToSign) {
       const { sessionId, transactions, callbackRoute } = transactionsToSign;
+      //the callback will go to undefined if the transaction is cancelled, so we save the most recent one for a valid transaction
+      savedCallback.current = callbackRoute;
       try {
         if (provider == null) {
           console.error(
@@ -141,7 +145,7 @@ export function useSignTransactions() {
     hasTransactions,
     transactions: transactionsToSign?.transactions,
     sessionId: transactionsToSign?.sessionId,
-    callbackRoute: transactionsToSign?.callbackRoute || '/'
+    callbackRoute: savedCallback.current
   };
 }
 
