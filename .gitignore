@@ -12,13 +12,14 @@ dist
 .rpt2_cache
 
 # misc
-src/optionalPackages/react-bootstrap.tsx
 .DS_Store
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+src/optionalPackages/react-bootstrap.tsx
+
 
 npm-debug.log*
 yarn-debug.log*
