@@ -1,3 +1,6 @@
-import { optionalImport } from 'optionalPackages/helpers/optionalImport';
+let ReactBootstrap: any = {};
+try {
+  ReactBootstrap = require('react-bootstrap');
+} catch (err) {}
 
-export default optionalImport('react-bootstrap');
+export default ReactBootstrap;

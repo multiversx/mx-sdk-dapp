@@ -32,7 +32,6 @@ const SignWithLedgerModal = ({
     container: 'card container',
     cardBody: 'card-body'
   });
-  console.log(error);
   return (
     <ReactBootstrap.Modal
       show={currentTransaction != null}
