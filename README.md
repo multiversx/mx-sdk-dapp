@@ -153,7 +153,28 @@ when something happens inside the app:
 </App>
 ```
 
+</details>
 
+
+
+<details>
+  <summary>
+    UI css import
+ </summary>
+
+### UI css import
+
+To properly apply the default styles to Dapp Core Components, you need to import the bundled css into your App's entry point.
+
+```
+import ...
+
+import '@elrondnetwork/dapp-core/build/index.css';
+
+export default function App() {
+...
+
+```
 
 </details>
 
