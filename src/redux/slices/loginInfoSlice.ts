@@ -32,7 +32,6 @@ export interface LoginInfoStateType {
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;
-  loginExpiresAt: number | null; // TODO: seems unused in dapp. maybe removed?
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
 }
@@ -42,7 +41,6 @@ const initialState: LoginInfoStateType = {
   walletConnectLogin: null,
   ledgerLogin: null,
   tokenLogin: null,
-  loginExpiresAt: null,
   walletLogin: null,
   extensionLogin: null
 };
@@ -76,12 +74,6 @@ export const loginInfoSlice = createSlice({
       action: PayloadAction<LoginInfoType | null>
     ) => {
       state.walletLogin = action.payload;
-    },
-    setExtensionLogin: (
-      state: LoginInfoStateType,
-      action: PayloadAction<LoginInfoType | null>
-    ) => {
-      state.extensionLogin = action.payload;
     },
     setWalletConnectLogin: (
       state: LoginInfoStateType,
@@ -118,8 +110,7 @@ export const {
   setLedgerLogin,
   setTokenLogin,
   setTokenLoginSignature,
-  setWalletLogin,
-  setExtensionLogin
+  setWalletLogin
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;
