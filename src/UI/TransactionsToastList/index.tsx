@@ -27,7 +27,9 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
-    return <TransactionToast key={toastId} toastId={toastId} />;
+    return (
+      <TransactionToast className={className} key={toastId} toastId={toastId} />
+    );
   });
 
   const mapPendingSignedTransactions = () => {

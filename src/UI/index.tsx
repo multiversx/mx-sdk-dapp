@@ -7,7 +7,7 @@ export { ExtensionLoginButton } from './extension/LoginButton';
 export { WebWalletLoginButton } from './webWallet/LoginButton';
 export {
   WalletConnectLoginButton,
-  WalletConnectLoginModal
+  WalletConnectLoginContainer
 } from './walletConnect';
 export { TransactionsToastList } from './TransactionsToastList';
 export { SignTransactionsModals } from './SignTransactionsModals';

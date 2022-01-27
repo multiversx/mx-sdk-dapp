@@ -151,7 +151,7 @@ export const useWalletConnectLogin = ({
 
       setTimeout(function () {
         if (!window.location.pathname.includes(callbackRoute)) {
-          window.location.href = window.location.href = callbackRoute;
+          window.location.href = callbackRoute;
         }
       }, 200);
     } catch (err) {

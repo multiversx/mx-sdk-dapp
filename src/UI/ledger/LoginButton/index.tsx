@@ -1,5 +1,4 @@
 import React from 'react';
-import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
 import { LedgerLoginContainer } from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
@@ -34,28 +33,6 @@ export const LedgerLoginButton: (
     setShowLoginModal(false);
   }
 
-  const content = renderContentInsideModal ? (
-    <ModalContainer
-      title={'Login with ledger'}
-      className={className}
-      onClose={handleCloseModal}
-    >
-      <LedgerLoginContainer
-        className={className}
-        shouldRenderDefaultCss={shouldRenderDefaultCss}
-        callbackRoute={callbackRoute}
-        token={token}
-      />
-    </ModalContainer>
-  ) : (
-    <LedgerLoginContainer
-      className={className}
-      shouldRenderDefaultCss={shouldRenderDefaultCss}
-      callbackRoute={callbackRoute}
-      token={token}
-    />
-  );
-
   return (
     <React.Fragment>
       <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
@@ -63,7 +40,16 @@ export const LedgerLoginButton: (
           <span className={generatedClasses.loginText}>{loginButtonText}</span>
         )}
       </button>
-      {showLoginModal && content}
+      {showLoginModal && (
+        <LedgerLoginContainer
+          className={className}
+          shouldRenderDefaultCss={shouldRenderDefaultCss}
+          callbackRoute={callbackRoute}
+          token={token}
+          renderContentInsideModal={renderContentInsideModal}
+          onClose={handleCloseModal}
+        />
+      )}
     </React.Fragment>
   );
 };
