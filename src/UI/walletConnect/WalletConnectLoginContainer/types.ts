@@ -5,7 +5,8 @@ export interface LoginModalPropsType {
   logoutRoute?: string;
   callbackRoute: string;
   loginButtonText: string;
+  wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
   token?: string;
-  onClose: () => void;
+  onClose?: () => void;
 }

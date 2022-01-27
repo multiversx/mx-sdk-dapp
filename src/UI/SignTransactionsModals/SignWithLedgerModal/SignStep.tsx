@@ -90,9 +90,9 @@ const SignStep = ({
     icon: 'text-white',
     contentWrapper:
       'd-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3',
-    tokenWrapper: 'mb-3 mb-md-0',
+    tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
     tokenLabel: 'text-secondary text-left',
-    tokenValue: 'd-flex align-items-center',
+    tokenValue: 'd-flex align-items-center mt-1',
     tokenAmountLabel: 'text-secondary text-left',
     tokenAmountValue: 'd-flex align-items-center',
     dataFormGroup: 'form-group text-left',

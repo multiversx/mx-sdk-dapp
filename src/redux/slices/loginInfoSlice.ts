@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { LoginMethodsEnum } from 'types/enums';
+import { getNewLoginExpiresTimestamp } from 'utils/internal';
 import {
   loginAction,
   logoutAction,
@@ -34,6 +35,7 @@ export interface LoginInfoStateType {
   tokenLogin: TokenLoginType | null;
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
+  loginExpiresAt: number;
 }
 
 const initialState: LoginInfoStateType = {
@@ -42,7 +44,8 @@ const initialState: LoginInfoStateType = {
   ledgerLogin: null,
   tokenLogin: null,
   walletLogin: null,
-  extensionLogin: null
+  extensionLogin: null,
+  loginExpiresAt: getNewLoginExpiresTimestamp()
 };
 
 export const loginInfoSlice = createSlice({
@@ -86,6 +89,12 @@ export const loginInfoSlice = createSlice({
       action: PayloadAction<LedgerLoginType | null>
     ) => {
       state.ledgerLogin = action.payload;
+    },
+    setLoginExpiresAt: (
+      state: LoginInfoStateType,
+      action: PayloadAction<number>
+    ) => {
+      state.loginExpiresAt = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -99,6 +108,7 @@ export const loginInfoSlice = createSlice({
         action: PayloadAction<LoginActionPayloadType>
       ) => {
         state.loginMethod = action.payload.loginMethod;
+        state.loginExpiresAt = getNewLoginExpiresTimestamp();
       }
     );
   }
@@ -110,7 +120,8 @@ export const {
   setLedgerLogin,
   setTokenLogin,
   setTokenLoginSignature,
-  setWalletLogin
+  setWalletLogin,
+  setLoginExpiresAt
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;

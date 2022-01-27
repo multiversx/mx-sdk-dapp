@@ -11,4 +11,5 @@ export * from './network';
 export * from './decoders';
 
 export * from './getGeneratedClasses';
+export * from './getWrapperClassname';
 export * from './session';

@@ -20,6 +20,7 @@ import {
 
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
+import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType } from '../types';
 
@@ -28,6 +29,7 @@ interface InitWalletConnectType {
   logoutRoute: string;
   token?: string;
   shouldLoginUser?: boolean;
+  redirectAfterLogin?: boolean;
 }
 
 export interface WalletConnectLoginHookCustomStateType {
@@ -44,7 +46,8 @@ export type WalletConnectLoginHookReturnType = [
 export const useWalletConnectLogin = ({
   callbackRoute,
   logoutRoute,
-  token
+  token,
+  redirectAfterLogin = false
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
@@ -149,11 +152,7 @@ export const useWalletConnectLogin = ({
         }, 150000);
       });
 
-      setTimeout(function () {
-        if (!window.location.pathname.includes(callbackRoute)) {
-          window.location.href = window.location.href = callbackRoute;
-        }
-      }, 200);
+      optionalRedirect(callbackRoute, redirectAfterLogin);
     } catch (err) {
       setError('Invalid address');
       console.error(err);
