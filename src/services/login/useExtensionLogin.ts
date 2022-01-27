@@ -5,11 +5,13 @@ import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector } from 'redux/selectors';
 import { setProvider, setTokenLogin } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
+import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 interface UseExtensionLoginPropsType {
   callbackRoute: string;
   token?: string;
+  redirectAfterLogin?: boolean;
 }
 
 export type UseExtensionLoginReturnType = [
@@ -19,7 +21,8 @@ export type UseExtensionLoginReturnType = [
 
 export const useExtensionLogin = ({
   callbackRoute,
-  token
+  token,
+  redirectAfterLogin = false
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -63,11 +66,7 @@ export const useExtensionLogin = ({
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-      setTimeout(function () {
-        if (!window.location.pathname.includes(callbackRoute)) {
-          window.location.href = callbackRoute;
-        }
-      }, 200);
+      optionalRedirect(callbackRoute, redirectAfterLogin);
     } catch (error) {
       console.error(error);
       // TODO: can be any or typed error

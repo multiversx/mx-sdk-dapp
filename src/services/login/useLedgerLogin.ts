@@ -15,6 +15,7 @@ import {
   setTokenLogin
 } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
+import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
@@ -27,6 +28,7 @@ export interface UseLedgerLoginPropsType {
   callbackRoute: string;
   addressesPerPage?: number;
   token?: string;
+  redirectAfterLogin?: boolean;
 }
 
 export interface SelectedAddress {
@@ -54,8 +56,9 @@ export type LedgerLoginHookReturnType = [
 
 export function useLedgerLogin({
   callbackRoute,
+  token,
   addressesPerPage = defaultAddressesPerPage,
-  token
+  redirectAfterLogin = false
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -96,11 +99,7 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    setTimeout(() => {
-      if (!window.location.pathname.includes(callbackRoute)) {
-        window.location.href = callbackRoute;
-      }
-    }, 200);
+    optionalRedirect(callbackRoute, redirectAfterLogin);
   }
 
   const loginFailed = (err: any, customMessage?: string) => {
@@ -228,11 +227,7 @@ export function useLedgerLogin({
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
-        setTimeout(() => {
-          if (!window.location.pathname.includes(callbackRoute)) {
-            window.location.href = callbackRoute;
-          }
-        }, 200);
+        optionalRedirect(callbackRoute, redirectAfterLogin);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);

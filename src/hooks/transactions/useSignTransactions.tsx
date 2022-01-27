@@ -118,7 +118,7 @@ export function useSignTransactions() {
                 }
               })
             );
-            if (window.location.pathname != callbackRoute) {
+            if (!window.location.pathname.includes(callbackRoute)) {
               window.location.href = callbackRoute;
             }
           }
