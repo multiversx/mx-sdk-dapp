@@ -1,4 +1,5 @@
 import { Transaction } from '@elrondnetwork/erdjs';
+import { LoginMethodsEnum } from './enums';
 
 export interface WalletConnectSignatureType {
   id?: number;
@@ -43,7 +44,11 @@ export interface ScResultType {
 
 export interface ExtraActionsType {
   extraSignTransactions: (transactions: Transaction | Transaction[]) => void;
-  extraLog: (word: string) => void;
+  init: ({
+    onLogin
+  }: {
+    onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
+  }) => void;
 }
 
 export * from './transactions';

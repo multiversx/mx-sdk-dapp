@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
+// import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
-import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
+import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { ExtraActionsType, NetworkConfigType } from 'types';
 
 export function AppInitializer({
@@ -19,10 +20,17 @@ export function AppInitializer({
   useEffect(() => {
     dispatch(initializeNetworkConfig(networkConfig));
     if (extraActions !== undefined) {
+      extraActions.init({
+        onLogin: (address, loginMethod) => {
+          console.log(12, address, loginMethod);
+          // dispatch(loginAction({ address, loginMethod }));
+        }
+      });
+
       dispatch(initializeExtraActions(extraActions));
     }
     setInitialized(true);
-  }, [networkConfig, extraActions]);
+  }, [networkConfig]);
 
   return initialized ? children : null;
 }

@@ -1,26 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { ExtraActionsType } from 'types';
+// import { ExtraActionsType } from 'types';
 
-type ExtraActionsSliceState = ExtraActionsType;
+type ExtraActionsSliceState = any;
 
 const initialState: ExtraActionsSliceState = {
   extraSignTransactions: () => null,
-  extraLog: () => {
-    console.log('Extra LOG undefined');
-  }
+  init: () => null
 };
 
 export const extraActionsSlice = createSlice({
-  name: 'modalsSlice',
+  name: 'extraActionsSlice',
   initialState,
   reducers: {
-    initializeExtraActions: (
-      state: ExtraActionsType,
-      action: PayloadAction<ExtraActionsType>
-    ) => {
-      const { extraSignTransactions, extraLog } = action.payload;
+    initializeExtraActions: (state: any, action: PayloadAction<any>) => {
+      const { extraSignTransactions } = action.payload;
       state.extraSignTransactions = extraSignTransactions;
-      state.extraLog = extraLog;
+      // state.init = init;
     }
   }
 });
