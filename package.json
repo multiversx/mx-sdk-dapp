@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -76,7 +76,7 @@
     "swr": "1.1.2"
   },
   "dependencies": {
-    "@elrondnetwork/dapp-utils": "0.1.0",
+    "@elrondnetwork/dapp-utils": "0.1.2",
     "@elrondnetwork/erdjs": "8.0.1-alpha.20",
     "@reduxjs/toolkit": "1.6.2",
     "lodash": "4.17.21",

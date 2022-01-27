@@ -7,6 +7,7 @@ export interface LoginModalPropsType {
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
+  redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
 }

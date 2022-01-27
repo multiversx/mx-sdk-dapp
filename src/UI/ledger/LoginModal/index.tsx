@@ -18,6 +18,7 @@ interface LedgerLoginContainerPropsType {
   className?: string;
   shouldRenderDefaultCss?: boolean;
   wrapContentInsideModal?: boolean;
+  redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
 }
@@ -27,6 +28,7 @@ export function LedgerLoginContainer({
   className = 'login-modal-content',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
+  redirectAfterLogin,
   onClose,
   token
 }: LedgerLoginContainerPropsType) {
@@ -49,7 +51,7 @@ export function LedgerLoginContainer({
       startIndex,
       selectedAddress
     }
-  ] = useLedgerLogin({ callbackRoute, token });
+  ] = useLedgerLogin({ callbackRoute, token, redirectAfterLogin });
 
   function getContent() {
     if (isLoading) {
