@@ -5,6 +5,7 @@ import account from './slices/accountInfoSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
+import extraActions from './slices/extraActionsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
 
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   ...customReducers,
   account,
   networkConfig,
+  extraActions,
   loginInfo,
   modals
 });

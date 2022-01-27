@@ -6,7 +6,7 @@ import ProviderInitializer from 'components/ProviderInitializer';
 import TransactionSender from 'components/TransactionSender';
 import TransactionsTracker from 'components/TransactionsTracker';
 import { DappCoreContext } from 'redux/DappProviderContext';
-import { NetworkConfigType } from 'types';
+import { NetworkConfigType, ExtraActionsType } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import { store, persistor } from './store';
@@ -14,16 +14,21 @@ import { store, persistor } from './store';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
+  extraActions?: ExtraActionsType;
 }
 
 export const DappProvider = ({
   children,
-  networkConfig
+  networkConfig,
+  extraActions
 }: DappProviderPropsType) => {
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <AppInitializer networkConfig={networkConfig}>
+        <AppInitializer
+          networkConfig={networkConfig}
+          extraActions={extraActions}
+        >
           <ProviderInitializer />
           <TransactionSender />
           <TransactionsTracker />

@@ -1,3 +1,5 @@
+import { Transaction } from '@elrondnetwork/erdjs';
+
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
@@ -37,6 +39,11 @@ export interface ScResultType {
   value: string;
   data?: string;
   returnMessage?: string;
+}
+
+export interface ExtraActionsType {
+  extraSignTransactions: (transactions: Transaction | Transaction[]) => void;
+  extraLog: (word: string) => void;
 }
 
 export * from './transactions';
