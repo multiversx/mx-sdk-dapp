@@ -10,6 +10,6 @@ export interface WalletConnectLoginButtonPropsType {
   loginButtonText?: string;
   buttonClassName?: string;
   shouldRenderDefaultCss?: boolean;
-  renderContentInsideModal?: boolean;
+  wrapContentInsideModal?: boolean;
   token?: string;
 }

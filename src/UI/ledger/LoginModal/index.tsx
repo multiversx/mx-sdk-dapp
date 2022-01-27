@@ -17,7 +17,7 @@ interface LedgerLoginContainerPropsType {
   callbackRoute: string;
   className?: string;
   shouldRenderDefaultCss?: boolean;
-  renderContentInsideModal?: boolean;
+  wrapContentInsideModal?: boolean;
   token?: string;
   onClose?: () => void;
 }
@@ -26,7 +26,7 @@ export function LedgerLoginContainer({
   callbackRoute,
   className = 'login-modal-content',
   shouldRenderDefaultCss = true,
-  renderContentInsideModal = true,
+  wrapContentInsideModal = true,
   onClose,
   token
 }: LedgerLoginContainerPropsType) {
@@ -86,7 +86,7 @@ export function LedgerLoginContainer({
   }
   return (
     <React.Fragment>
-      {renderContentInsideModal ? (
+      {wrapContentInsideModal ? (
         <ModalContainer
           title={'Login with ledger'}
           className={className}

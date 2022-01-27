@@ -16,7 +16,7 @@ export function WalletConnectLoginContainer({
   className = 'wallect-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
-  renderContentInsideModal = true,
+  wrapContentInsideModal = true,
   token,
   onClose
 }: LoginModalPropsType) {
@@ -122,7 +122,7 @@ export function WalletConnectLoginContainer({
     </div>
   );
 
-  return renderContentInsideModal ? (
+  return wrapContentInsideModal ? (
     <ModalContainer
       title={'Login with Maiar'}
       className={className}

@@ -12,7 +12,7 @@ export const LedgerLoginButton: (
   loginButtonText = 'Ledger',
   buttonClassName,
   className = 'ledger-login',
-  renderContentInsideModal = true,
+  wrapContentInsideModal = true,
   shouldRenderDefaultCss = true
 }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
@@ -46,7 +46,7 @@ export const LedgerLoginButton: (
           shouldRenderDefaultCss={shouldRenderDefaultCss}
           callbackRoute={callbackRoute}
           token={token}
-          renderContentInsideModal={renderContentInsideModal}
+          wrapContentInsideModal={wrapContentInsideModal}
           onClose={handleCloseModal}
         />
       )}
