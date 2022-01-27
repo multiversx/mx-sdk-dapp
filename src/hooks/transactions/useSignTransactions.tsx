@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { Address, Nonce, Transaction } from '@elrondnetwork/erdjs';
+import {
+  Address,
+  Nonce,
+  Transaction,
+  ExtensionProvider
+} from '@elrondnetwork/erdjs';
 import { walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -36,6 +41,9 @@ export function useSignTransactions() {
   function onAbort() {
     dispatch(clearSignTransactions());
     setError(null);
+    if (provider instanceof ExtensionProvider) {
+      provider?.cancelAction?.();
+    }
   }
 
   const signTransactions = async () => {
