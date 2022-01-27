@@ -12,6 +12,7 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 
 const persistConfig = {
@@ -47,11 +48,12 @@ export const store = configureStore({
           'account.account.nonce'
         ]
       }
-    })
+    }).concat(loginSessionMiddleware)
 });
 
 export const persistor = persistStore(store);
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
+export type StoreType = typeof store;
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

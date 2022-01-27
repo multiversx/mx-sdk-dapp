@@ -153,6 +153,10 @@ when something happens inside the app:
 </App>
 ```
 
+
+This wrapper will wrap your content in an extra div.
+If, for some reason, you want to avoid this, you can use `getWrapperClassname` function to get the className and attach it to a "wrapping" element.
+
 </details>
 
 
