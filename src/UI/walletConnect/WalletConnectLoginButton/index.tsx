@@ -11,6 +11,7 @@ export const WalletConnectLoginButton = ({
   logoutRoute = '/unlock',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
+  redirectAfterLogin = false,
   buttonClassName,
   className = 'wallect-connect-login',
   lead = 'Scan the QR code using Maiar',
@@ -51,6 +52,7 @@ export const WalletConnectLoginButton = ({
           logoutRoute={logoutRoute}
           lead={lead}
           wrapContentInsideModal={wrapContentInsideModal}
+          redirectAfterLogin={redirectAfterLogin}
           onClose={handleCloseModal}
         />
       )}

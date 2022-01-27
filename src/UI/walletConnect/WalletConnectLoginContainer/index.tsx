@@ -17,6 +17,7 @@ export function WalletConnectLoginContainer({
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
+  redirectAfterLogin,
   token,
   onClose
 }: LoginModalPropsType) {
@@ -28,6 +29,7 @@ export function WalletConnectLoginContainer({
     logoutRoute,
     callbackRoute,
     token,
+    redirectAfterLogin,
     shouldLoginUser: true
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
