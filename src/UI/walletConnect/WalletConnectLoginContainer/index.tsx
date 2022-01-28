@@ -8,7 +8,7 @@ import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
 
-export function WalletConnectLoginModal({
+export function WalletConnectLoginContainer({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
@@ -16,6 +16,8 @@ export function WalletConnectLoginModal({
   className = 'wallect-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
+  wrapContentInsideModal = true,
+  redirectAfterLogin,
   token,
   onClose
 }: LoginModalPropsType) {
@@ -27,6 +29,7 @@ export function WalletConnectLoginModal({
     logoutRoute,
     callbackRoute,
     token,
+    redirectAfterLogin,
     shouldLoginUser: true
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
@@ -70,60 +73,66 @@ export function WalletConnectLoginModal({
     initLoginWithWalletConnect();
   }, []);
 
-  return (
+  const content = (
+    <div className={generatedClasses.container}>
+      <div className={generatedClasses.root}>
+        <div className={generatedClasses.card}>
+          <div className={generatedClasses.cardBody}>
+            <div
+              className={generatedClasses.qrCodeSvgContainer}
+              dangerouslySetInnerHTML={{
+                __html: qrCodeSvg
+              }}
+              style={{
+                width: '15rem',
+                height: '15rem'
+              }}
+            />
+            <h4 className={generatedClasses.title}>{title}</h4>
+            {isMobileDevice ? (
+              <React.Fragment>
+                <p className={generatedClasses.leadText}>{loginButtonText}</p>
+                <a
+                  id='accessWalletBtn'
+                  data-testid='accessWalletBtn'
+                  className={generatedClasses.mobileLoginButton}
+                  href={uriDeepLink || undefined}
+                  rel='noopener noreferrer nofollow'
+                  target='_blank'
+                >
+                  <Lighting
+                    className={generatedClasses.cardBody}
+                    style={{
+                      width: '0.7rem',
+                      height: '0.7rem'
+                    }}
+                  />
+                  {title}
+                </a>
+              </React.Fragment>
+            ) : (
+              <p className={generatedClasses.leadText}>{lead}</p>
+            )}
+            <div>
+              {error && (
+                <p className={generatedClasses.errorMessage}>{error}</p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  return wrapContentInsideModal ? (
     <ModalContainer
       title={'Login with Maiar'}
       className={className}
       onClose={onClose}
     >
-      <div className={generatedClasses.container}>
-        <div className={generatedClasses.root}>
-          <div className={generatedClasses.card}>
-            <div className={generatedClasses.cardBody}>
-              <div
-                className={generatedClasses.qrCodeSvgContainer}
-                dangerouslySetInnerHTML={{
-                  __html: qrCodeSvg
-                }}
-                style={{
-                  width: '15rem',
-                  height: '15rem'
-                }}
-              />
-              <h4 className={generatedClasses.title}>{title}</h4>
-              {isMobileDevice ? (
-                <React.Fragment>
-                  <p className={generatedClasses.leadText}>{loginButtonText}</p>
-                  <a
-                    id='accessWalletBtn'
-                    data-testid='accessWalletBtn'
-                    className={generatedClasses.mobileLoginButton}
-                    href={uriDeepLink || undefined}
-                    rel='noopener noreferrer nofollow'
-                    target='_blank'
-                  >
-                    <Lighting
-                      className={generatedClasses.cardBody}
-                      style={{
-                        width: '0.7rem',
-                        height: '0.7rem'
-                      }}
-                    />
-                    {title}
-                  </a>
-                </React.Fragment>
-              ) : (
-                <p className={generatedClasses.leadText}>{lead}</p>
-              )}
-              <div>
-                {error && (
-                  <p className={generatedClasses.errorMessage}>{error}</p>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      {content}
     </ModalContainer>
+  ) : (
+    content
   );
 }

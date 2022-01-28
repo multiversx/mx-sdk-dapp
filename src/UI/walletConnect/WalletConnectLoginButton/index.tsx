@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { getGeneratedClasses } from 'utils';
-import { WalletConnectLoginModal } from '../WalletConnectLoginModal';
+import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
 
 export const WalletConnectLoginButton = ({
@@ -10,6 +10,8 @@ export const WalletConnectLoginButton = ({
   title = 'Maiar Login',
   logoutRoute = '/unlock',
   shouldRenderDefaultCss = true,
+  wrapContentInsideModal = true,
+  redirectAfterLogin = false,
   buttonClassName,
   className = 'wallect-connect-login',
   lead = 'Scan the QR code using Maiar',
@@ -41,7 +43,7 @@ export const WalletConnectLoginButton = ({
         )}
       </button>
       {showLoginModal && (
-        <WalletConnectLoginModal
+        <WalletConnectLoginContainer
           callbackRoute={callbackRoute}
           loginButtonText={loginButtonText}
           title={title}
@@ -49,6 +51,8 @@ export const WalletConnectLoginButton = ({
           className={className}
           logoutRoute={logoutRoute}
           lead={lead}
+          wrapContentInsideModal={wrapContentInsideModal}
+          redirectAfterLogin={redirectAfterLogin}
           onClose={handleCloseModal}
         />
       )}

@@ -139,7 +139,7 @@ export function useSignTransactionsWithLedger({
           })
         );
         reset();
-        if (window.location.pathname != callbackRoute) {
+        if (!window.location.pathname.includes(callbackRoute)) {
           window.location.href = callbackRoute;
         }
       }

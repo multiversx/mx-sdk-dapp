@@ -1,55 +1,55 @@
 import { ChainID } from '@elrondnetwork/erdjs';
-import { createSelector } from 'reselect';
 import { RootState } from '../store';
+import { createDeepEqualSelector } from './helpers';
 
 export const networkConfigSelector = (state: RootState) => state.networkConfig;
 
-export const proxySelector = createSelector(
+export const proxySelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.proxy
 );
 
-export const providerSelector = createSelector(
+export const providerSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.provider
 );
 
-export const chainIDSelector = createSelector(
+export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => new ChainID(state.chainID)
 );
 
-export const apiProviderSelector = createSelector(
+export const apiProviderSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.apiProvider
 );
 
-export const walletConnectBridgeSelector = createSelector(
+export const walletConnectBridgeSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.walletConnectBridge
 );
 
-export const walletConnectDeepLinkSelector = createSelector(
+export const walletConnectDeepLinkSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.walletConnectDeepLink
 );
 
-export const networkSelector = createSelector(
+export const networkSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.network
 );
 
-export const apiNetworkSelector = createSelector(
+export const apiNetworkSelector = createDeepEqualSelector(
   networkSelector,
   (state) => state.apiAddress
 );
 
-export const explorerAddressSelector = createSelector(
+export const explorerAddressSelector = createDeepEqualSelector(
   networkSelector,
   (state) => state.explorerAddress
 );
 
-export const egldLabelSelector = createSelector(
+export const egldLabelSelector = createDeepEqualSelector(
   networkSelector,
   (state) => state.egldLabel
 );

@@ -86,7 +86,7 @@ const AuthenticatedRoutesWrapper = ({
   }
 
   const isOnAuthenticatedRoute = authenticatedRoutesRef.current.some(
-    ({ path }) => pathname.includes(path)
+    ({ path }) => pathname === path
   );
 
   const shouldRedirect =

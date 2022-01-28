@@ -1,7 +1,9 @@
 import React from 'react';
+import { getWrapperClassname } from 'utils';
 
 export function DappCoreUIWrapper({ children }: { children: any }) {
-  return <div className='dapp-core-wrapper'>{children}</div>;
+  const className = getWrapperClassname();
+  return <div className={className}>{children}</div>;
 }
 
 export default DappCoreUIWrapper;

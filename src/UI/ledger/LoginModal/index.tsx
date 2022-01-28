@@ -3,6 +3,8 @@ import { useGetAccountInfo } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { useLedgerLogin } from 'services';
+import ModalContainer from 'UI/ModalContainer';
+
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import AddressTable from './AddressTable';
@@ -11,17 +13,25 @@ import LedgerConnect from './LedgerConnect';
 
 const ledgerWaitingText = 'Waiting for device';
 
+interface LedgerLoginContainerPropsType {
+  callbackRoute: string;
+  className?: string;
+  shouldRenderDefaultCss?: boolean;
+  wrapContentInsideModal?: boolean;
+  redirectAfterLogin?: boolean;
+  token?: string;
+  onClose?: () => void;
+}
+
 export function LedgerLoginContainer({
   callbackRoute,
   className = 'login-modal-content',
   shouldRenderDefaultCss = true,
+  wrapContentInsideModal = true,
+  redirectAfterLogin,
+  onClose,
   token
-}: {
-  callbackRoute: string;
-  className?: string;
-  shouldRenderDefaultCss?: boolean;
-  token?: string;
-}) {
+}: LedgerLoginContainerPropsType) {
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -41,37 +51,54 @@ export function LedgerLoginContainer({
       startIndex,
       selectedAddress
     }
-  ] = useLedgerLogin({ callbackRoute, token });
+  ] = useLedgerLogin({ callbackRoute, token, redirectAfterLogin });
 
-  if (isLoading) {
-    return (
-      <PageState
-        icon={icons.faCircleNotch}
-        iconClass={generatedClasses.spinner}
-        title={ledgerWaitingText}
-      />
-    );
-  }
-  if (ledgerAccount != null && !error) {
-    return <ConfirmAddress token={token} />;
-  }
+  function getContent() {
+    if (isLoading) {
+      return (
+        <PageState
+          icon={icons.faCircleNotch}
+          iconClass={generatedClasses.spinner}
+          title={ledgerWaitingText}
+        />
+      );
+    }
+    if (ledgerAccount != null && !error) {
+      return <ConfirmAddress token={token} />;
+    }
 
-  if (showAddressList && !error) {
-    return (
-      <AddressTable
-        accounts={accounts}
-        loading={isLoading}
-        className={className}
-        shouldRenderDefaultCss={shouldRenderDefaultCss}
-        onGoToNextPage={onGoToNextPage}
-        onGoToPrevPage={onGoToPrevPage}
-        onSelectAddress={onSelectAddress}
-        startIndex={startIndex}
-        selectedAddress={selectedAddress?.address}
-        onConfirmSelectedAddress={onConfirmSelectedAddress}
-      />
-    );
-  }
+    if (showAddressList && !error) {
+      return (
+        <AddressTable
+          accounts={accounts}
+          loading={isLoading}
+          className={className}
+          shouldRenderDefaultCss={shouldRenderDefaultCss}
+          onGoToNextPage={onGoToNextPage}
+          onGoToPrevPage={onGoToPrevPage}
+          onSelectAddress={onSelectAddress}
+          startIndex={startIndex}
+          selectedAddress={selectedAddress?.address}
+          onConfirmSelectedAddress={onConfirmSelectedAddress}
+        />
+      );
+    }
 
-  return <LedgerConnect onClick={onStartLogin} error={error} />;
+    return <LedgerConnect onClick={onStartLogin} error={error} />;
+  }
+  return (
+    <React.Fragment>
+      {wrapContentInsideModal ? (
+        <ModalContainer
+          title={'Login with ledger'}
+          className={className}
+          onClose={onClose}
+        >
+          {getContent()}
+        </ModalContainer>
+      ) : (
+        getContent()
+      )}
+    </React.Fragment>
+  );
 }

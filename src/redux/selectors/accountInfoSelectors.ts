@@ -1,39 +1,39 @@
-import { createSelector } from 'reselect';
 import { RootState } from '../store';
+import { createDeepEqualSelector } from './helpers';
 
 export const accountInfoSelector = (state: RootState) => state.account;
 
-export const addressSelector = createSelector(
+export const addressSelector = createDeepEqualSelector(
   accountInfoSelector,
   (state) => state.address
 );
 
-export const accountSelector = createSelector(
+export const accountSelector = createDeepEqualSelector(
   accountInfoSelector,
   (state) => state.account
 );
 
-export const accountBalanceSelector = createSelector(
+export const accountBalanceSelector = createDeepEqualSelector(
   accountSelector,
   (account) => account.balance
 );
 
-export const accountNonceSelector = createSelector(
+export const accountNonceSelector = createDeepEqualSelector(
   accountSelector,
   (state) => state?.nonce?.valueOf() || 0
 );
 
-export const shardSelector = createSelector(
+export const shardSelector = createDeepEqualSelector(
   accountInfoSelector,
   (state) => state.shard
 );
 
-export const ledgerAccountSelector = createSelector(
+export const ledgerAccountSelector = createDeepEqualSelector(
   accountInfoSelector,
   (state) => state.ledgerAccount
 );
 
-export const walletConnectAccountSelector = createSelector(
+export const walletConnectAccountSelector = createDeepEqualSelector(
   accountInfoSelector,
   (state) => state.walletConnectAccount
 );
