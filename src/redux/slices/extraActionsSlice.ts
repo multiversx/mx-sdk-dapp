@@ -5,6 +5,7 @@ type ExtraActionsSliceState = ExtraActionsType;
 
 const initialState: ExtraActionsSliceState = {
   extraSignTransactions: () => null,
+  log: () => null,
   init: () => null
 };
 

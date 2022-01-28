@@ -50,6 +50,7 @@ export interface ExtraActionsInitType {
 
 export interface ExtraActionsType {
   extraSignTransactions: (transactions: Transaction | Transaction[]) => void;
+  log: (word: string) => void;
   init: (props: ExtraActionsInitType) => void;
 }
 

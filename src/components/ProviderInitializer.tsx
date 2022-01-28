@@ -9,6 +9,7 @@ import {
   proxySelector,
   walletLoginSelector
 } from 'redux/selectors';
+import { extraActionsSelector } from 'redux/selectors/extraActionsSelectors';
 import { setAccount, setProvider, setWalletLogin } from 'redux/slices';
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
@@ -25,6 +26,7 @@ export default function ProviderInitializer() {
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
+  const { log } = useSelector(extraActionsSelector);
   const proxy = useSelector(proxySelector);
   const dispatch = useDispatch();
 
@@ -129,8 +131,10 @@ export default function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.extra: {
-        //TODO: setting Provider here
-        console.log('Setting provider here');
+        // const provider = getExtraProvider(network);
+        const receivedMessage = log('ASD');
+        console.log('Received back: ', receivedMessage);
+        // dispatch(setProvider(provider));
 
         break;
       }
