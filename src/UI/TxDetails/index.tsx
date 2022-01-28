@@ -12,6 +12,7 @@ const TxDetails = ({
   title,
   transactions,
   className = 'tx-details',
+  isTimedOut = false,
   shouldRenderDefaultCss = true
 }: Props) => {
   const generatedClasses = getGeneratedClasses(
@@ -48,7 +49,8 @@ const TxDetails = ({
     success: iconSuccessData,
     executed: iconSuccessData,
     failed: iconFailedData,
-    invalid: iconFailedData
+    invalid: iconFailedData,
+    timedOut: iconFailedData
   };
 
   return (
@@ -63,10 +65,12 @@ const TxDetails = ({
       </div>
       {transactions.map(({ hash, status }) => (
         <div className={generatedClasses.item} key={hash}>
-          <ReactFontawesome.FontAwesomeIcon
-            icon={iconData[status].icon}
-            className={iconData[status].classNames}
-          />
+          {!isTimedOut && (
+            <ReactFontawesome.FontAwesomeIcon
+              icon={iconData[status].icon}
+              className={iconData[status].classNames}
+            />
+          )}
           <span
             className={generatedClasses.trimContainer}
             style={{ width: '10rem' }}
