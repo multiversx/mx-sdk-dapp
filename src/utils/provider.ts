@@ -22,6 +22,7 @@ export const getProviderType = (
       return LoginMethodsEnum.ledger;
     case ExtensionProvider:
       return LoginMethodsEnum.extension;
+    // TODO: ExtraProvider
     default:
       return LoginMethodsEnum.none;
   }

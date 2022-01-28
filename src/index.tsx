@@ -14,7 +14,3 @@ export * from './hooks';
 export { sendTransactions } from './services/transactions';
 
 export * as DappUI from './UI';
-
-// TODO undo
-import { ExtraActionsType as EaType } from './types';
-export type ExtraActionsType = EaType;

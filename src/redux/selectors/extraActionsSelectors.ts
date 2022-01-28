@@ -8,7 +8,7 @@ export const extraSignTransactionsSelector = createSelector(
   (state) => state.extraSignTransactions
 );
 
-export const extraLogSelector = createSelector(
+export const extraActionsInit = createSelector(
   extraActionsSelector,
-  (state) => state.extraLog
+  (state) => state.init
 );

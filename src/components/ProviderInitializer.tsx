@@ -128,6 +128,13 @@ export default function ProviderInitializer() {
         break;
       }
 
+      case LoginMethodsEnum.extra: {
+        //TODO: setting Provider here
+        console.log('Setting provider here');
+
+        break;
+      }
+
       case LoginMethodsEnum.none: {
         tryAuthenticateWalletUser();
         break;

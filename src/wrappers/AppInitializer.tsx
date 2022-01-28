@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-// import { loginAction } from 'redux/commonActions';
+import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
+// import { setProvider } from 'redux/slices';
 import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { ExtraActionsType, NetworkConfigType } from 'types';
@@ -22,8 +23,15 @@ export function AppInitializer({
     if (extraActions !== undefined) {
       extraActions.init({
         onLogin: (address, loginMethod) => {
-          console.log(12, address, loginMethod);
-          // dispatch(loginAction({ address, loginMethod }));
+          console.log('dapp login action', address, loginMethod);
+          dispatch(loginAction({ address, loginMethod }));
+        },
+        setProvider: (provider) => {
+          console.log('dapp setting provider', provider);
+          // dispatch(setProvider(provider));
+        },
+        log: (word) => {
+          console.log('dapp log: ', word);
         }
       });
 

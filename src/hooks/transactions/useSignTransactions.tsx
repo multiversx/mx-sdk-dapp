@@ -5,7 +5,6 @@ import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTra
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   addressSelector,
-  extraLogSelector,
   providerSelector,
   proxySelector
 } from 'redux/selectors';
@@ -22,7 +21,6 @@ export function useSignTransactions() {
   const address = useSelector(addressSelector);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const savedCallback = useRef('/');
-  const extraLog = useSelector(extraLogSelector);
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
 
@@ -42,8 +40,6 @@ export function useSignTransactions() {
 
   const signTransactions = async () => {
     if (transactionsToSign) {
-      debugger;
-      extraLog('Success');
       const { sessionId, transactions, callbackRoute } = transactionsToSign;
       //the callback will go to undefined if the transaction is cancelled, so we save the most recent one for a valid transaction
       savedCallback.current = callbackRoute;
