@@ -26,7 +26,7 @@ export default function ProviderInitializer() {
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
-  const { log } = useSelector(extraActionsSelector);
+  const { getProvider } = useSelector(extraActionsSelector);
   const proxy = useSelector(proxySelector);
   const dispatch = useDispatch();
 
@@ -131,11 +131,14 @@ export default function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.extra: {
-        // const provider = getExtraProvider(network);
-        const receivedMessage = log('ASD');
-        console.log('Received back: ', receivedMessage);
-        // dispatch(setProvider(provider));
+        const provider = getProvider();
+        console.log(
+          '\x1b[42m%s\x1b[0m',
+          'Setting provider after login',
+          provider
+        );
 
+        dispatch(setProvider(provider));
         break;
       }
 

@@ -28,6 +28,7 @@ export async function sendTransactions({
         minGasLimit
       });
     }
+
     return signTransactions({
       transactions: txToSign as Transaction[],
       minGasLimit,

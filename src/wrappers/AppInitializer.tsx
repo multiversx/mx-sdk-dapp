@@ -23,12 +23,7 @@ export function AppInitializer({
     if (extraActions !== undefined) {
       extraActions.init({
         onLogin: (address, loginMethod) => {
-          console.log('dapp login action', address, loginMethod);
           dispatch(loginAction({ address, loginMethod }));
-        },
-        setProvider: (provider) => {
-          console.log('dapp setting provider', provider);
-          // dispatch(setProvider(provider));
         },
         log: (word) => {
           console.log('dapp log: ', word);

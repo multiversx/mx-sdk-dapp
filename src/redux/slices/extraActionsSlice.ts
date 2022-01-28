@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ExtraActionsType } from 'types';
+import { emptyProvider } from 'utils/provider';
 
 type ExtraActionsSliceState = ExtraActionsType;
 
 const initialState: ExtraActionsSliceState = {
-  extraSignTransactions: () => null,
   log: () => null,
+  getProvider: () => emptyProvider,
   init: () => null
 };
 
