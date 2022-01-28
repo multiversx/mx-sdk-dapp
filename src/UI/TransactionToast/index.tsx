@@ -17,7 +17,8 @@ export const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
-  className = 'transaction-toast'
+  className = 'transaction-toast',
+  onClose
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
@@ -103,6 +104,7 @@ export const TransactionToast = ({
 
   const handleDeleteToast = () => {
     setShouldRender(false);
+    onClose?.(toastId);
   };
 
   if (!shouldRender) {

@@ -1,3 +1,5 @@
+import './assets/sass/main.scss';
+
 export * from './utils';
 export * from './types';
 export * as loginServices from './services/login';
