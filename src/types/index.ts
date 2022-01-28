@@ -42,17 +42,15 @@ export interface ScResultType {
   returnMessage?: string;
 }
 
+export interface ExtraActionsInitType {
+  onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
+  setProvider: (provider: IDappProvider) => void;
+  log: (word: string) => void;
+}
+
 export interface ExtraActionsType {
   extraSignTransactions: (transactions: Transaction | Transaction[]) => void;
-  init: ({
-    onLogin,
-    setProvider,
-    log
-  }: {
-    onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
-    setProvider: (provider: IDappProvider) => void;
-    log: (word: string) => void;
-  }) => void;
+  init: (props: ExtraActionsInitType) => void;
 }
 
 export * from './transactions';
