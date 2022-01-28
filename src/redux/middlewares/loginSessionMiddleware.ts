@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit';
+import throttle from 'lodash/throttle';
 import { isLoggedInSelector, loginExpiresAtSelector } from 'redux/selectors';
 import { setLoginExpiresAt } from 'redux/slices';
 import { StoreType } from 'redux/store';
@@ -6,6 +7,10 @@ import { getNewLoginExpiresTimestamp } from 'utils/internal';
 import { logout } from 'utils/logout';
 
 const whitelistedActions = ['loginInfoSlice/setLoginExpiresAt', 'logout'];
+
+const throttledSetNewToken = throttle((store: StoreType) => {
+  store.dispatch(setLoginExpiresAt(getNewLoginExpiresTimestamp()));
+}, 5000);
 
 export const loginSessionMiddleware: any =
   (store: StoreType) =>
@@ -28,7 +33,7 @@ export const loginSessionMiddleware: any =
     if (isExpired) {
       return setTimeout(logout, 1000);
     } else {
-      store.dispatch(setLoginExpiresAt(getNewLoginExpiresTimestamp()));
+      throttledSetNewToken(store);
     }
     return next(action);
   };
