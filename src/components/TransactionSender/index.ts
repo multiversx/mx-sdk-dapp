@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
@@ -21,13 +21,13 @@ const TransactionSender = () => {
   const proxy = useSelector(proxySelector);
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
-  const [sending, setSending] = React.useState<boolean>();
+  const sendingRef = useRef(false);
 
   const dispatch = useDispatch();
 
   const clearSignInfo = () => {
     dispatch(clearSignTransactions());
-    setSending(false);
+    sendingRef.current = false;
   };
   async function handleSendTransactions() {
     const sessionIds = Object.keys(signedTransactions);
@@ -40,18 +40,17 @@ const TransactionSender = () => {
         const isSessionIdSigned =
           signedTransactions[sessionId].status ===
           TransactionBatchStatusesEnum.signed;
-        const shouldSendCurrentSession = isSessionIdSigned && !sending;
-
+        const shouldSendCurrentSession =
+          isSessionIdSigned && !sendingRef.current;
         if (!shouldSendCurrentSession) {
           continue;
         }
-
         const { transactions } = signedTransactions[sessionId];
 
         if (!transactions) {
           continue;
         }
-        setSending(true);
+        sendingRef.current = true;
         const transactionsPromises = transactions.map((tx) => {
           const address = new Address(tx.sender);
           const transactionObject = newTransaction(tx);
@@ -63,8 +62,6 @@ const TransactionSender = () => {
         const responseHashes = (await Promise.all(transactionsPromises)).map(
           (txHash) => Buffer.from(txHash.hash).toString('hex')
         );
-
-        setNonce(account.nonce + transactions.length);
 
         const newStatus = TransactionServerStatusesEnum.pending;
         const newTransactions = transactions.map((transaction) => {
@@ -89,6 +86,7 @@ const TransactionSender = () => {
           })
         );
         clearSignInfo();
+        setNonce(account.nonce + transactions.length);
 
         history.pushState({}, document.title, '?');
       } catch (error) {
@@ -102,7 +100,7 @@ const TransactionSender = () => {
         );
         clearSignInfo();
       } finally {
-        setSending(false);
+        sendingRef.current = false;
       }
     }
   }
