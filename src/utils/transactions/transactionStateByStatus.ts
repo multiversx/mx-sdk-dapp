@@ -17,6 +17,10 @@ export const failedBatchTransactionsStates = [
   TransactionBatchStatusesEnum.timedOut
 ];
 
+export const timedOutBatchTransactionsStates = [
+  TransactionBatchStatusesEnum.timedOut
+];
+
 export const pendingServerTransactionsStatuses = [
   TransactionServerStatusesEnum.pending
 ];
@@ -61,6 +65,15 @@ export function getIsTransactionFailed(
   );
 }
 
+export function getIsTransactionTimedOut(
+  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum
+) {
+  return (
+    status != null &&
+    isBatchTransactionTimedOut(status as TransactionBatchStatusesEnum)
+  );
+}
+
 export function isBatchTransactionPending(
   status?: TransactionBatchStatusesEnum
 ) {
@@ -75,6 +88,12 @@ export function isBatchTransactionSuccessful(
 
 export function isBatchTransactionFailed(status: TransactionBatchStatusesEnum) {
   return status != null && failedBatchTransactionsStates.includes(status);
+}
+
+export function isBatchTransactionTimedOut(
+  status: TransactionBatchStatusesEnum
+) {
+  return status != null && timedOutBatchTransactionsStates.includes(status);
 }
 
 export function isServerTransactionPending(

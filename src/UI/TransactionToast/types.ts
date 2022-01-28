@@ -5,5 +5,7 @@ export interface TransactionToastPropsType {
   errorMessage?: string;
   successMessage?: string;
   processingMessage?: string;
+  withTxNonce?: boolean;
   shouldRenderDefaultCss?: boolean;
+  onClose?: (toastId: string) => void;
 }

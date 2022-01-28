@@ -11,6 +11,7 @@ import { TransactionsToastListPropsType } from './types';
 
 export function TransactionsToastList({
   shouldRenderDefaultCss = true,
+  withTxNonce = false,
   className = 'transactions-toast-list'
 }: TransactionsToastListPropsType) {
   const [toastsIds, setToastsIds] = useState<any>([]);
@@ -28,7 +29,12 @@ export function TransactionsToastList({
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
     return (
-      <TransactionToast className={className} key={toastId} toastId={toastId} />
+      <TransactionToast
+        className={className}
+        key={toastId}
+        toastId={toastId}
+        withTxNonce={withTxNonce}
+      />
     );
   });
 

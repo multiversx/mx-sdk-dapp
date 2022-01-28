@@ -14,7 +14,11 @@ import {
   proxySelector
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors';
-import { clearSignTransactions, updateSignedTransaction } from 'redux/slices';
+import {
+  clearSignTransactions,
+  clearTransactionsInfoForSessionId,
+  updateSignedTransaction
+} from 'redux/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getLatestNonce, getProviderType } from 'utils';
 import { buildReplyUrl } from 'utils';
@@ -33,17 +37,23 @@ export function useSignTransactions() {
 
   const providerType = getProviderType(provider);
 
-  function onCancel(e: string) {
-    setError(e);
+  function clearSignInfo(sessionId?: string) {
     dispatch(clearSignTransactions());
+    dispatch(clearTransactionsInfoForSessionId(sessionId));
+
+    if (provider instanceof ExtensionProvider) {
+      ExtensionProvider.getInstance()?.cancelAction?.();
+    }
   }
 
-  function onAbort() {
-    dispatch(clearSignTransactions());
+  function onCancel(e: string, sessionId?: string) {
+    setError(e);
+    clearSignInfo(sessionId);
+  }
+
+  function onAbort(sessionId?: string) {
     setError(null);
-    if (provider instanceof ExtensionProvider) {
-      provider?.cancelAction?.();
-    }
+    clearSignInfo(sessionId);
   }
 
   const signTransactions = async () => {
@@ -87,7 +97,7 @@ export function useSignTransactions() {
         }
       } catch (err) {
         console.error('error when signing', err);
-        onCancel('error when signing');
+        onCancel('error when signing', sessionId);
         dispatch(
           updateSignedTransaction({
             [sessionId]: {
@@ -132,7 +142,7 @@ export function useSignTransactions() {
           }
         } catch (err) {
           console.error('error signing transaction', err);
-          onCancel('error when signing');
+          onCancel('error when signing', sessionId);
         }
       }
     } catch (err) {

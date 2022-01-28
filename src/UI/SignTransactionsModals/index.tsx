@@ -19,8 +19,12 @@ export function SignTransactionsModals({ className }: { className?: string }) {
 
   const { providerType } = useGetAccountProvider();
 
+  const handleClose = () => {
+    onAbort(sessionId);
+  };
+
   const signProps = {
-    handleClose: onAbort,
+    handleClose,
     error,
     sessionId,
     transactions: transactions!,
