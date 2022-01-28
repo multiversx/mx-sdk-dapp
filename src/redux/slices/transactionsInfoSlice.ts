@@ -48,6 +48,14 @@ export const signTransactionsSlice = createSlice({
         };
       }
     },
+    clearTransactionsInfoForSessionId(
+      state: StateType,
+      action: PayloadAction<string | undefined>
+    ) {
+      if (action.payload != null) {
+        delete state[action.payload];
+      }
+    },
     clearTransactionsInfo: () => initialState
   },
   extraReducers: (builder) => {
@@ -57,7 +65,10 @@ export const signTransactionsSlice = createSlice({
   }
 });
 
-export const { clearTransactionsInfo, setTransactionsDisplayInfo } =
-  signTransactionsSlice.actions;
+export const {
+  clearTransactionsInfo,
+  setTransactionsDisplayInfo,
+  clearTransactionsInfoForSessionId
+} = signTransactionsSlice.actions;
 
 export default signTransactionsSlice.reducer;
