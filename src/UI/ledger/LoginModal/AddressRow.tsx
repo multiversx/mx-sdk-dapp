@@ -56,6 +56,7 @@ const AddressRow = ({
       <td className='text-left'>
         <div className='d-flex align-items-start text-left form-check'>
           <input
+            readOnly
             type='radio'
             id={`check_${index}`}
             data-testid={`check_${index}`}
