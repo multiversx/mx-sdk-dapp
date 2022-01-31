@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -39,7 +39,7 @@ export default function ProviderInitializer() {
     logoutRoute
   });
 
-  React.useEffect(() => {
+  useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
 

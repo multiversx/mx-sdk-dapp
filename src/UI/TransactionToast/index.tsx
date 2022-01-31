@@ -9,7 +9,11 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
-import { getGeneratedClasses, isBatchTransactionPending } from 'utils';
+import {
+  getGeneratedClasses,
+  isBatchTransactionPending,
+  isBatchTransactionTimedOut
+} from 'utils';
 
 import { TransactionToastPropsType } from './types';
 
@@ -17,7 +21,9 @@ export const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
-  className = 'transaction-toast'
+  className = 'transaction-toast',
+  withTxNonce = false,
+  onClose
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
@@ -25,6 +31,7 @@ export const TransactionToast = ({
   const signedTransactions = useGetSignedTransactions();
   const {
     errorMessage = 'Transaction failed',
+    timedOutMessage = 'Transaction timed out',
     successMessage = 'Transaction successful',
     processingMessage = 'Processing transaction',
     transactionDuration = 10000
@@ -88,7 +95,16 @@ export const TransactionToast = ({
     iconClassName: 'bg-danger'
   };
 
+  const timedOutToastData = {
+    id: toastId,
+    icon: icons.faTimes,
+    title: timedOutMessage,
+    hasCloseButton: true,
+    iconClassName: 'bg-warning'
+  };
+
   const isPending = isBatchTransactionPending(status);
+  const isTimedOut = isBatchTransactionTimedOut(status);
 
   const toatsOptionsData = {
     signed: pendingToastData,
@@ -96,13 +112,14 @@ export const TransactionToast = ({
     successful: successToastData,
     sent: pendingToastData,
     failed: failedToastData,
-    timedOut: failedToastData
+    timedOut: timedOutToastData
   };
 
   const toastDataState = toatsOptionsData[status];
 
   const handleDeleteToast = () => {
     setShouldRender(false);
+    onClose?.(toastId);
   };
 
   if (!shouldRender) {
@@ -119,7 +136,7 @@ export const TransactionToast = ({
         key={toastId}
         id={toastId}
         progress={progress}
-        done={!isPending}
+        done={!isPending || isTimedOut}
       >
         <div className={generatedClasses.toastContainer}>
           <div className={generatedClasses.iconContainer}>
@@ -128,6 +145,10 @@ export const TransactionToast = ({
               icon={toastDataState.icon}
               className={toastDataState.iconClassName}
             />
+            {withTxNonce &&
+              transactions.map((tx: any) => (
+                <p key={tx.nonce.valueOf()}>{tx.nonce.valueOf()}</p>
+              ))}
           </div>
           <div className={generatedClasses.details} style={{ minWidth: 0 }}>
             <div className={generatedClasses.toastHeader}>
@@ -146,7 +167,11 @@ export const TransactionToast = ({
               )}
             </div>
             <div className={generatedClasses.toastFooter}>
-              <TxDetails transactions={transactions} title={title} />
+              <TxDetails
+                transactions={transactions}
+                title={title}
+                isTimedOut={isTimedOut}
+              />
             </div>
           </div>
         </div>

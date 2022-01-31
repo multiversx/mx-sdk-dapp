@@ -34,14 +34,14 @@ html {
 // }
 a,
 .link-style {
-  color: #1392ff !important;
+  color: #1392ff;
 }
 .link-second-style {
-  color: #9dabbd !important;
+  color: #9dabbd ;
   &:hover {
-    color: #1392ff !important;
+    color: #1392ff;
     svg {
-      color: #1392ff !important;
+      color: #1392ff;
     }
   }
 }

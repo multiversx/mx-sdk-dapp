@@ -6,13 +6,15 @@ import { TransactionBatchStatusesEnum } from 'types/enums';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,
-  getIsTransactionSuccessful
+  getIsTransactionSuccessful,
+  getIsTransactionTimedOut
 } from 'utils';
 
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;
   onSuccess?: (transactionId: string | null) => void;
   onFailed?: (transactionId: string | null, errorMessage?: string) => void;
+  onTimedOut?: (transactionId: string | null) => void;
   onCancelled?: (transactionId: string | null) => void;
 }
 
@@ -20,7 +22,8 @@ export function useTrackTransactionStatus({
   transactionId,
   onSuccess,
   onFailed,
-  onCancelled
+  onCancelled,
+  onTimedOut
 }: UseTrackTransactionStatusArgsType) {
   const transactionsBatch = useSelector((state: RootState) =>
     transactionStatusSelector(state, transactionId)
@@ -30,6 +33,7 @@ export function useTrackTransactionStatus({
 
   const isPending = getIsTransactionPending(status);
   const isFailed = getIsTransactionFailed(status);
+  const isTimedOut = getIsTransactionTimedOut(status);
   const isSuccessful = getIsTransactionSuccessful(status);
   const isCancelled = status === TransactionBatchStatusesEnum.cancelled;
 
@@ -50,6 +54,16 @@ export function useTrackTransactionStatus({
       onCancelled(transactionId);
     }
   }, [isCancelled]);
+
+  useEffect(() => {
+    if (isTimedOut) {
+      if (onTimedOut) {
+        onTimedOut(transactionId);
+      } else {
+        onFailed?.(transactionId, 'timeout');
+      }
+    }
+  }, [isTimedOut]);
 
   if (transactionId == null) {
     return {};

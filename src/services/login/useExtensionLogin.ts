@@ -68,7 +68,7 @@ export const useExtensionLogin = ({
       );
       optionalRedirect(callbackRoute, redirectAfterLogin);
     } catch (error) {
-      console.error(error);
+      console.error('error loging in', error);
       // TODO: can be any or typed error
       setError('error logging in' + (error as any).message);
     } finally {

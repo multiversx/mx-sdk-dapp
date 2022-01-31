@@ -55,13 +55,13 @@ export const useWalletConnectLogin = ({
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
 
-  const providerRef = useRef<any>();
-
   const proxy = useSelector(proxySelector);
+
   const provider: any = useSelector(providerSelector);
   const walletConnectBridge = useSelector(walletConnectBridgeSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const providerRef = useRef<any>(provider);
 
   let heartbeatDisconnectInterval: Timeout;
 
@@ -93,7 +93,6 @@ export const useWalletConnectLogin = ({
     const isProviderConnected = Boolean(
       providerRef.current?.walletConnector?.connected
     );
-
     if (!isProviderConnected) {
       return;
     }
@@ -106,7 +105,6 @@ export const useWalletConnectLogin = ({
     try {
       await providerRef.current.sendCustomMessage(customMessage);
     } catch (error) {
-      alert('lost');
       console.error('Connection lost', error);
       handleOnLogout();
     }
@@ -160,14 +158,14 @@ export const useWalletConnectLogin = ({
   }
 
   const handleOnLogout = () => {
-    console.log('logging out');
     logout(callbackRoute);
   };
 
   async function initiateLogin(loginProvider = true) {
-    if (!walletConnectBridge) {
+    if (!walletConnectBridge || providerRef?.current?.isInitialized?.()) {
       return;
     }
+
     const providerHandlers = {
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout

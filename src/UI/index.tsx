@@ -10,6 +10,8 @@ export {
   WalletConnectLoginContainer
 } from './walletConnect';
 export { TransactionsToastList } from './TransactionsToastList';
+export { TransactionToast } from './TransactionToast';
+
 export { SignTransactionsModals } from './SignTransactionsModals';
 export { NotificationModal } from './NotificationModal';
 

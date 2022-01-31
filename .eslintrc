@@ -1,5 +1,6 @@
 {
   "env": {
+    "es2021": true,
     "node": true
   },
   "parser": "@typescript-eslint/parser",
@@ -33,10 +34,9 @@
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
-    "plugin:jsx-a11y/recommended",
     "plugin:prettier/recommended"
   ],
-  "plugins": ["react", "prettier", "jsx-a11y", "import"],
+  "plugins": ["react", "prettier", "import"],
   "rules": {
     "import/order": [
       "warn",
