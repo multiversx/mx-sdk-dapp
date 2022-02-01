@@ -9,11 +9,10 @@ export async function logout(callbackUrl?: string) {
   if (!isLoggedIn) {
     return;
   }
+  store.dispatch(logoutAction());
   try {
     await provider.logout({ callbackUrl });
-    store.dispatch(logoutAction());
   } catch (err) {
     console.error('error logging out', err);
-    store.dispatch(logoutAction());
   }
 }
