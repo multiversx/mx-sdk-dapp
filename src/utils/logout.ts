@@ -14,5 +14,6 @@ export async function logout(callbackUrl?: string) {
     store.dispatch(logoutAction());
   } catch (err) {
     console.error('error logging out', err);
+    store.dispatch(logoutAction());
   }
 }
