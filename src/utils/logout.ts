@@ -5,7 +5,7 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 
 export async function logout(
   callbackUrl?: string,
-  onRedirect?: (callbackUrl: string) => void
+  onRedirect?: (callbackUrl?: string) => void
 ) {
   const provider = providerSelector(store.getState());
   const isLoggedIn = getIsLoggedIn();

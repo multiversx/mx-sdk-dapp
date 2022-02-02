@@ -22,7 +22,7 @@ const AuthenticatedRoutesWrapper = ({
   children: React.ReactNode;
   routes: RouteType[];
   unlockRoute: string;
-  onRedirect?: (unlockRoute: string) => void;
+  onRedirect?: (unlockRoute?: string) => void;
 }) => {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const address = useSelector(addressSelector);
