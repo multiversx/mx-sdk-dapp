@@ -1,3 +1,4 @@
+import { Address } from '@elrondnetwork/erdjs/out';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 
@@ -22,6 +23,7 @@ export interface AccountInfoSliceType {
   address: string;
   shard?: number;
   account: AccountType;
+  publicKey: string;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
 }
@@ -37,6 +39,7 @@ const initialState: AccountInfoSliceType = {
   account: emptyAccount,
   shard: 0, // TODO: start with undefined? Shard 0 is a false supposition
   ledgerAccount: null,
+  publicKey: '',
   walletConnectAccount: null
 };
 
@@ -48,7 +51,9 @@ export const accountInfoSlice = createSlice({
       state: AccountInfoSliceType,
       action: PayloadAction<string>
     ) => {
-      state.address = action.payload;
+      const address = action.payload;
+      state.address = address;
+      state.publicKey = new Address(address).hex();
     },
     setAccount: (
       state: AccountInfoSliceType,
@@ -91,7 +96,9 @@ export const accountInfoSlice = createSlice({
         state: AccountInfoSliceType,
         action: PayloadAction<LoginActionPayloadType>
       ) => {
-        state.address = action.payload.address;
+        const { address } = action.payload;
+        state.address = address;
+        state.publicKey = new Address(address).hex();
       }
     );
     builder.addCase(REHYDRATE, (state, action: any) => {
@@ -99,10 +106,12 @@ export const accountInfoSlice = createSlice({
         return;
       }
 
-      const { account } = action.payload;
-      state.address = account.address;
-      state.shard = account.shard;
-      state.account = account.account;
+      const { account: accountInfo } = action.payload;
+      const { address, shard, account, publicKey } = accountInfo;
+      state.address = address;
+      state.shard = shard;
+      state.account = account;
+      state.publicKey = publicKey;
     });
   }
 });

@@ -1,9 +1,12 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import throttle from 'lodash/throttle';
 import { logoutAction } from 'redux/commonActions';
-import { isLoggedInSelector, loginExpiresAtSelector } from 'redux/selectors';
-import { providerSelector } from 'redux/selectors';
-import { setLoginExpiresAt } from 'redux/slices';
+import {
+  isLoggedInSelector,
+  loginExpiresAtSelector
+} from 'redux/selectors/loginInfoSelectors';
+import { providerSelector } from 'redux/selectors/networkConfigSelectors';
+import { setLoginExpiresAt } from 'redux/slices/loginInfoSlice';
 import { StoreType } from 'redux/store';
 import { getNewLoginExpiresTimestamp } from 'utils/internal';
 
