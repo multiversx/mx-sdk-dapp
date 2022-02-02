@@ -99,10 +99,10 @@ const AuthenticatedRoutesWrapper = ({
   }
 
   if (shouldRedirect) {
-    if (!onRedirect) {
-      window.location.href = unlockRoute;
-    } else {
+    if (onRedirect) {
       onRedirect(unlockRoute);
+    } else {
+      window.location.href = unlockRoute;
     }
     return null;
   }
