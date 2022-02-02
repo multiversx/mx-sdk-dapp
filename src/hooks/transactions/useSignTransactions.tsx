@@ -47,7 +47,10 @@ export function useSignTransactions() {
   }
 
   function onCancel(e: string, sessionId?: string) {
-    setError(e);
+    //this is triggered by abort action, so no need to show error again
+    if (e !== 'Transaction cancelled') {
+      setError(e);
+    }
     clearSignInfo(sessionId);
   }
 
@@ -125,7 +128,6 @@ export function useSignTransactions() {
             !signedTransactions ||
             (signedTransactions &&
               Object.keys(signedTransactions).length !== transactions?.length);
-
           if (!signingDisabled && signedTransactions) {
             dispatch(
               updateSignedTransaction({

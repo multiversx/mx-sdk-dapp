@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { Address } from '@elrondnetwork/erdjs/out';
+import { useGetAccountInfo } from 'hooks';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
 // import { setProvider } from 'redux/slices';
 import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { ExtraActionsType, NetworkConfigType } from 'types';
+import { logout } from 'utils';
 
 export function AppInitializer({
   networkConfig,
@@ -16,6 +19,8 @@ export function AppInitializer({
   extraActions?: ExtraActionsType;
 }) {
   const [initialized, setInitialized] = useState(false);
+  const account = useGetAccountInfo();
+  const { address, publicKey } = account;
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -34,6 +39,15 @@ export function AppInitializer({
     }
     setInitialized(true);
   }, [networkConfig]);
+
+  useEffect(() => {
+    if (address) {
+      const pubKey = new Address(address).hex();
+      if (pubKey !== publicKey) {
+        logout();
+      }
+    }
+  }, [address, publicKey]);
 
   return initialized ? children : null;
 }
