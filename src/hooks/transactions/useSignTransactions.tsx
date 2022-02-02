@@ -121,15 +121,12 @@ export function useSignTransactions() {
           return;
         }
         try {
-          console.log('start signing');
-
           const signedTransactions: Transaction[] =
             await provider.signTransactions(transactions);
           const signingDisabled =
             !signedTransactions ||
             (signedTransactions &&
               Object.keys(signedTransactions).length !== transactions?.length);
-          debugger;
           if (!signingDisabled && signedTransactions) {
             dispatch(
               updateSignedTransaction({
@@ -146,13 +143,11 @@ export function useSignTransactions() {
             }
           }
         } catch (err) {
-          debugger;
           console.error('error signing transaction', err);
           onCancel('error when signing', sessionId);
         }
       }
     } catch (err) {
-      debugger;
       console.error('error signing transaction', err);
       onCancel('error when signing');
     }
