@@ -1,5 +1,5 @@
 import { logoutAction } from 'redux/commonActions';
-import { providerSelector } from 'redux/selectors';
+import { providerSelector } from 'redux/selectors/networkConfigSelectors';
 import { store } from 'redux/store';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 
