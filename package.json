@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -58,6 +58,13 @@
   },
   "files": [
     "build"
+  ],
+  "keywords": [
+    "elrond",
+    "blockchain",
+    "dapp",
+    "smart-contract",
+    "transaction"
   ],
   "peerDependencies": {
     "react": "~17.0"
