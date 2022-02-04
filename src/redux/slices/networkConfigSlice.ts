@@ -42,8 +42,8 @@ const initialState: NetworkConfigStateType = {
     'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=https://maiar.com/',
   network: defaultNetwork,
   proxy: new ProxyProvider(defaultNetwork.gatewayAddress, { timeout: 4000 }),
-  provider: emptyProvider,
   apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
+  provider: emptyProvider,
   chainID: '-1'
 };
 
