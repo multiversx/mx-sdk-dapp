@@ -75,7 +75,7 @@ export function denominate({
           .if(addCommas)
           .then(formatted)
 
-          .if(Boolean(shownDecimalsAreZero))
+          .if(Boolean(shownDecimalsAreZero) && !showLastNonZeroDecimal)
           .then((current) => {
             const integerPartZero = new BigNumber(integerPart).isZero();
             const [numericPart] = current.split('.');
