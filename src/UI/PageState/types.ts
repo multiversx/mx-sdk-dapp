@@ -1,5 +1,5 @@
 export interface PageStateProps {
-  title?: string;
+  title?: React.ReactNode;
   icon?: any;
   iconClass?: string;
   className?: string;
