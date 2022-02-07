@@ -184,4 +184,12 @@ describe('denomination single tests', () => {
     });
     expect(result).toBe('1000.00');
   });
+  it('should show a valid number if showLastNonZeroDecimal is set', () => {
+    const result = denominate({
+      input: (1_000_000_000).toString(),
+      decimals: 4,
+      showLastNonZeroDecimal: true
+    });
+    expect(result).toBe('0.000000001');
+  });
 });
