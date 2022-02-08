@@ -4,6 +4,7 @@ import { transactionStatusSelector } from 'redux/selectors';
 import { RootState } from 'redux/store';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import {
+  getIsTransactionCompleted,
   getIsTransactionFailed,
   getIsTransactionPending,
   getIsTransactionSuccessful,
@@ -16,6 +17,7 @@ export interface UseTrackTransactionStatusArgsType {
   onFailed?: (transactionId: string | null, errorMessage?: string) => void;
   onTimedOut?: (transactionId: string | null) => void;
   onCancelled?: (transactionId: string | null) => void;
+  onCompleted?: (transactionId: string | null) => void;
 }
 
 export function useTrackTransactionStatus({
@@ -23,7 +25,8 @@ export function useTrackTransactionStatus({
   onSuccess,
   onFailed,
   onCancelled,
-  onTimedOut
+  onTimedOut,
+  onCompleted
 }: UseTrackTransactionStatusArgsType) {
   const transactionsBatch = useSelector((state: RootState) =>
     transactionStatusSelector(state, transactionId)
@@ -35,6 +38,8 @@ export function useTrackTransactionStatus({
   const isFailed = getIsTransactionFailed(status);
   const isTimedOut = getIsTransactionTimedOut(status);
   const isSuccessful = getIsTransactionSuccessful(status);
+  const isCompleted = getIsTransactionCompleted(status);
+
   const isCancelled = status === TransactionBatchStatusesEnum.cancelled;
 
   useEffect(() => {
@@ -42,6 +47,11 @@ export function useTrackTransactionStatus({
       onSuccess(transactionId);
     }
   }, [isSuccessful]);
+  useEffect(() => {
+    if (isCompleted && onCompleted) {
+      onCompleted(transactionId);
+    }
+  }, [isCompleted]);
 
   useEffect(() => {
     if (isFailed && onFailed) {
@@ -78,6 +88,7 @@ export function useTrackTransactionStatus({
     isSuccessful,
     isFailed,
     isCancelled,
+    isCompleted,
     errorMessage,
     status,
     transactions

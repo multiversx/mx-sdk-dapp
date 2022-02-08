@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { TransactionHash } from '@elrondnetwork/erdjs/out';
+import { TransactionHash } from '@elrondnetwork/erdjs';
+import { TypedResult } from '@elrondnetwork/erdjs/out/smartcontracts/smartContractResults';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { apiProviderSelector } from 'redux/selectors/networkConfigSelectors';
 import {
@@ -11,6 +12,7 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums';
 import { SignedTransactionsBodyType } from 'types/transactions';
+import { isContract, scCallsSuccess } from 'utils';
 import { getIsTransactionPending, getPlainTransactionStatus } from 'utils';
 import { refreshAccount } from 'utils/account';
 
@@ -49,13 +51,14 @@ export function TransactionStatusTracker({
         return;
       }
       isFetchingStatusRef.current = true;
-      for (const { hash, status } of transactions) {
-        if (hash == null || !getIsTransactionPending(status)) {
+      for (const { hash, status, receiver } of transactions) {
+        const isScCall = isContract(receiver);
+        if (hash == null || !getIsTransactionPending(status, isScCall)) {
           return;
         }
         try {
           const retriesForThisHash = retriesRef.current[hash];
-          if (retriesForThisHash > 40) {
+          if (retriesForThisHash > 20) {
             // consider transaction as stuck after 10 seconds
             manageTimedOutTransactions();
             return;
@@ -64,8 +67,28 @@ export function TransactionStatusTracker({
             new TransactionHash(hash)
           );
           if (txOnNetwork != null) {
-            if (!txOnNetwork.status.isPending()) {
-              const status = getPlainTransactionStatus(txOnNetwork.status);
+            if (
+              !getIsTransactionPending(
+                txOnNetwork.status.toString() as TransactionServerStatusesEnum,
+                isScCall
+              )
+            ) {
+              let status = getPlainTransactionStatus(txOnNetwork.status);
+
+              if (
+                isScCall &&
+                status != TransactionServerStatusesEnum.completed
+              ) {
+                const isScCallCompleted = scCallsSuccess(
+                  txOnNetwork
+                    ?.getSmartContractResults()
+                    ?.getAllResults() as TypedResult[]
+                );
+                if (isScCallCompleted) {
+                  status = TransactionServerStatusesEnum.completed;
+                }
+              }
+
               dispatch(
                 updateSignedTransactionStatus({
                   sessionId,
@@ -124,7 +147,7 @@ export function TransactionStatusTracker({
     if (isPending) {
       intervalRef.current = setInterval(() => {
         checkTransactionStatus();
-      }, 2000);
+      }, 4000);
     } else {
       clearInterval(intervalRef.current);
     }

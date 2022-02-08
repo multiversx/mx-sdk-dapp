@@ -13,6 +13,7 @@ export interface AccountType {
   balance: string;
   nonce: number;
   code?: string;
+  username?: string;
 }
 export interface LedgerAccountType {
   index: number;
@@ -37,7 +38,6 @@ export const emptyAccount: AccountType = {
 const initialState: AccountInfoSliceType = {
   address: '',
   account: emptyAccount,
-  shard: 0, // TODO: start with undefined? Shard 0 is a false supposition
   ledgerAccount: null,
   publicKey: '',
   walletConnectAccount: null
