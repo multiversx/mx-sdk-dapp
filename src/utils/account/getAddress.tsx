@@ -24,7 +24,8 @@ export function getAddress(): Promise<string> {
   }
 
   return !getIsProviderEqualTo(LoginMethodsEnum.none) &&
-    !getIsProviderEqualTo(LoginMethodsEnum.wallet)
+    !getIsProviderEqualTo(LoginMethodsEnum.wallet) &&
+    !getIsProviderEqualTo(LoginMethodsEnum.extra)
     ? // TODO: does not take into account ledger locked see link for details:
       // https://github.com/ElrondNetwork/dapp/blob/d5c57695a10055f20d387ba064b6843606789ee9/src/helpers/accountMethods.tsx#L21
       provider.getAddress()
