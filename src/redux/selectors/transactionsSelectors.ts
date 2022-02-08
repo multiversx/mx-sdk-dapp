@@ -1,13 +1,20 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import newTransaction from 'models/newTransaction';
 import { SignedTransactionsType } from 'types/transactions';
-import { getIsTransactionPending } from 'utils/transactions';
+import {
+  getIsTransactionCompleted,
+  getIsTransactionFailed,
+  getIsTransactionPending,
+  getIsTransactionSuccessful,
+  getIsTransactionTimedOut
+} from 'utils/transactions';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
 interface TransactionsToSignReturnType {
   callbackRoute: string;
   sessionId: string;
+  redirectAfterSign: boolean;
   transactions: Transaction[];
 }
 
@@ -23,6 +30,50 @@ export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (getIsTransactionPending(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {})
+);
+
+export const successfulTransactionsSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (signedTransactions) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (getIsTransactionSuccessful(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {})
+);
+
+export const completedTransactionsSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (signedTransactions) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (getIsTransactionCompleted(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {})
+);
+
+export const failedTransactionsSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (signedTransactions) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (getIsTransactionFailed(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {})
+);
+
+export const timedOutTransactionsSelector = createDeepEqualSelector(
+  signedTransactionsSelector,
+  (signedTransactions) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (getIsTransactionTimedOut(txBody.status)) {
         acc[sessionId] = txBody;
       }
       return acc;

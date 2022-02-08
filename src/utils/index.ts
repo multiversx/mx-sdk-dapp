@@ -10,6 +10,7 @@ export * from './operations';
 export * from './network';
 export * from './decoders';
 
+export * from './smartContracts';
 export * from './getGeneratedClasses';
 export * from './getWrapperClassname';
 export * from './session';
