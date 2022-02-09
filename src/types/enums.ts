@@ -31,6 +31,6 @@ export enum NotificationTypesEnum {
 }
 
 export enum TypesOfSmartContractCallsEnum {
-  multiESDTTransfer = 'MultiESDTNFTTransfer',
+  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTNFTTransfer = 'ESDTNFTTransfer'
 }
