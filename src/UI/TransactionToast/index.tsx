@@ -17,7 +17,7 @@ import {
 
 import { TransactionToastPropsType } from './types';
 
-const averageTxDuration = 6000;
+const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
 
 export const TransactionToast = ({
@@ -42,8 +42,8 @@ export const TransactionToast = ({
   } = transactionDisplayInfo;
 
   const shardAdjustedDuraton = isSameShard
-    ? averageTxDuration
-    : crossShardRounds * averageTxDuration;
+    ? averageTxDurationMs
+    : crossShardRounds * averageTxDurationMs;
 
   const transactionDuration =
     transactionDisplayInfo?.transactionDuration || shardAdjustedDuraton;
