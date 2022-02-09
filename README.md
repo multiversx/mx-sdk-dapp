@@ -92,7 +92,7 @@ As you might have noticed, the DappProvider accepts a `networkConfig` object wit
 ```
 
 An extra prop is provider for smart contract calls: **completedTransactionsDelay (optional)**;
-This will delay the transaction from entering the "completed" state, useful for smart contract calls.
+This will delay the transaction from entering the "completed" state, useful for refetching info after the smart contract call executes.
 
   </details>
 
