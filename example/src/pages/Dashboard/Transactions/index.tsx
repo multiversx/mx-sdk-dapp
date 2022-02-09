@@ -1,5 +1,10 @@
 import React from 'react';
-import { useGetAccountInfo, DappUI } from '@elrondnetwork/dapp-core';
+import {
+  useGetAccountInfo,
+  transactionServices,
+  DappUI,
+  refreshAccount
+} from '@elrondnetwork/dapp-core';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons';
 import { getTransactions } from 'apiRequests';
 import { contractAddress, network } from 'config';
@@ -8,6 +13,9 @@ import { StateType } from './types';
 
 const Transactions = () => {
   const { apiAddress } = network;
+
+  const successfulTransactions =
+    transactionServices.useGetSuccessfulTransactions();
 
   const [state, setState] = React.useState<StateType>({
     transactions: [],
@@ -22,6 +30,7 @@ const Transactions = () => {
       timeout: 3000,
       contractAddress
     }).then(({ data, success }) => {
+      refreshAccount();
       setState({
         transactions: data,
         transactionsFetched: success
@@ -29,7 +38,9 @@ const Transactions = () => {
     });
   };
 
-  React.useEffect(fetchData, []);
+  React.useEffect(fetchData, [
+    successfulTransactions.successfulTransactionsArray.length
+  ]);
 
   const { transactions } = state;
 

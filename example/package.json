@@ -17,10 +17,10 @@
     "@types/react": "file:../node_modules/@types/react",
     "@types/react-dom": "file:../node_modules/@types/react-dom",
     "axios": "0.24.0",
-    "react-router-dom": "6.2.1",
-    "react": "file:../node_modules/react",
     "bootstrap": "file:../node_modules/bootstrap",
+    "react": "^17.0.2",
     "react-dom": "file:../node_modules/react-dom",
+    "react-router-dom": "6.2.1",
     "react-scripts": "file:../node_modules/react-scripts",
     "typescript": "file:../node_modules/typescript"
   },
