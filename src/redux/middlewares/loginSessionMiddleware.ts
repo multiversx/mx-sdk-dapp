@@ -37,6 +37,7 @@ export const loginSessionMiddleware: any =
     if (isExpired) {
       return setTimeout(async () => {
         const provider = providerSelector(store.getState());
+        console.log('session expired');
         store.dispatch(logoutAction());
         try {
           await provider.logout({ callbackUrl: '/' });
