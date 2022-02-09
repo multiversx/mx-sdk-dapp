@@ -71,7 +71,12 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 - Wrap your application with this Provider.
 
-`<DappProvider networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }} completeTransactionsDelay={500}>`
+```
+<DappProvider
+networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
+completedTransactionsDelay={500}
+>
+```
 
 As you might have noticed, the DappProvider accepts a `networkConfig` object with a couple of keys. This allows using different APIs and different connection providers.
 
@@ -79,8 +84,6 @@ As you might have noticed, the DappProvider accepts a `networkConfig` object wit
 - **walletConnectDeepLink (optional)** is a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
 - **network** is a required configuration file that contains the following information about the environment of the application:
 
-An extra prop is provider for smart contract calls: **completeTransactionsDelay (optional)**;
-This will delay the transaction from entering the "completed" state, useful for smart contract calls.
 ```
 {
   id: string;
@@ -92,6 +95,12 @@ This will delay the transaction from entering the "completed" state, useful for 
   explorerAddress: string;
 }
 ```
+
+- **completedTransactionsDelay (optional)**;
+This is an extra prop is provider for smart contract calls.
+
+It will delay the transaction from entering the "completed" state, useful for refetching info after the smart contract call executes.
+
   </details>
 
 
