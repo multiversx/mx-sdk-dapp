@@ -126,6 +126,7 @@ export interface SendTransactionsPropsType {
     | Transaction
     | SimpleTransactionType
     | (Transaction | SimpleTransactionType)[];
+  redirectAfterSign?: boolean;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
 }
