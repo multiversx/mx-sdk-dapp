@@ -15,6 +15,8 @@ import { calcTotalFee } from './utils';
 
 export function signTransactions({
   transactions,
+  callbackRoute = window.location.pathname,
+  redirectAfterSign = true,
   minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT,
   transactionsDisplayInfo
 }: SignTransactionsPropsType): SendTransactionReturnType {
@@ -60,7 +62,8 @@ export function signTransactions({
 
   const signTransactionsPayload = {
     sessionId,
-    callbackRoute: window.location.pathname,
+    callbackRoute,
+    redirectAfterSign,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
 

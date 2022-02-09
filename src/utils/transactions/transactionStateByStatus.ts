@@ -1,7 +1,7 @@
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
-} from '../../types/enums';
+} from 'types/enums';
 
 export const pendingBatchTransactionsStates = [
   TransactionBatchStatusesEnum.sent,
@@ -26,8 +26,11 @@ export const pendingServerTransactionsStatuses = [
 ];
 
 export const successServerTransactionsStates = [
-  TransactionServerStatusesEnum.successful,
-  TransactionServerStatusesEnum.executed
+  TransactionServerStatusesEnum.successful
+];
+
+export const completedServerTransactionsStates = [
+  TransactionServerStatusesEnum.completed
 ];
 
 export const failedServerTransactionsStates = [
@@ -35,14 +38,27 @@ export const failedServerTransactionsStates = [
   TransactionServerStatusesEnum.invalid
 ];
 
-export function getIsTransactionPending(
+export function getIsTransactionCompleted(
   status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum
 ) {
-  return (
+  return completedServerTransactionsStates.includes(
+    status as TransactionServerStatusesEnum
+  );
+}
+
+export function getIsTransactionPending(
+  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum,
+  isScCall = false
+) {
+  const isPending =
     status != null &&
     (isBatchTransactionPending(status as TransactionBatchStatusesEnum) ||
-      isServerTransactionPending(status as TransactionServerStatusesEnum))
-  );
+      isServerTransactionPending(status as TransactionServerStatusesEnum));
+  return isScCall
+    ? isPending ||
+        (getIsTransactionSuccessful(status) &&
+          !getIsTransactionCompleted(status))
+    : isPending;
 }
 
 export function getIsTransactionSuccessful(

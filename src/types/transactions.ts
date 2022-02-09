@@ -7,6 +7,7 @@ import {
 export interface TransactionsToSignType {
   transactions: RawTransactionType[];
   callbackRoute: string;
+  redirectAfterSign: boolean;
   sessionId: string;
 }
 
@@ -132,6 +133,8 @@ export interface SendTransactionsPropsType {
 export interface SignTransactionsPropsType {
   transactions: Transaction[] | Transaction;
   minGasLimit?: number;
+  redirectAfterSign?: boolean;
+  callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
 }
 
