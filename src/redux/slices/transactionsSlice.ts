@@ -9,6 +9,7 @@ import {
   SignedTransactionType,
   TransactionsToSignType
 } from 'types/transactions';
+import { getIsTransactionCompleted, isContract } from 'utils';
 import {
   getIsTransactionFailed,
   getIsTransactionSuccessful
@@ -90,9 +91,13 @@ export const transactionsSlice = createSlice({
         );
         const areTransactionsSuccessful = state.signedTransactions[
           sessionId
-        ]?.transactions?.every((transaction) =>
-          getIsTransactionSuccessful(transaction.status)
-        );
+        ]?.transactions?.every((transaction) => {
+          const isScCall = isContract(transaction.receiver);
+          return isScCall
+            ? getIsTransactionCompleted(transaction.status)
+            : getIsTransactionSuccessful(transaction.status);
+        });
+
         const areTransactionsFailed = state.signedTransactions[
           sessionId
         ]?.transactions?.every((transaction) =>

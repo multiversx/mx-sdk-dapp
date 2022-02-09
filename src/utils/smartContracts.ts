@@ -4,7 +4,7 @@ import { addressIsValid } from 'utils/account';
 const okInHex = '6f6b';
 const numInitCharactersForScAddress = 13;
 
-export function scCallsSuccess(scResults?: TypedResult[]) {
+export function areScCallsSuccessful(scResults?: TypedResult[]) {
   if (!scResults) {
     return true;
   }
