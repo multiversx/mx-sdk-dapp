@@ -71,7 +71,12 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 - Wrap your application with this Provider.
 
-`<DappProvider networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }} completedTransactionsDelay={500}>`
+```
+<DappProvider
+networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
+completedTransactionsDelay={500}
+>
+```
 
 As you might have noticed, the DappProvider accepts a `networkConfig` object with a couple of keys. This allows using different APIs and different connection providers.
 
@@ -91,8 +96,10 @@ As you might have noticed, the DappProvider accepts a `networkConfig` object wit
 }
 ```
 
-An extra prop is provider for smart contract calls: **completedTransactionsDelay (optional)**;
-This will delay the transaction from entering the "completed" state, useful for refetching info after the smart contract call executes.
+- **completedTransactionsDelay (optional)**;
+This is an extra prop is provider for smart contract calls.
+
+It will delay the transaction from entering the "completed" state, useful for refetching info after the smart contract call executes.
 
   </details>
 
