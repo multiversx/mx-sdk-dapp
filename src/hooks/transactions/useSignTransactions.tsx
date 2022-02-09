@@ -114,7 +114,8 @@ export function useSignTransactions() {
 
   async function signTransactionsWithProvider() {
     try {
-      const { sessionId, transactions, callbackRoute } = transactionsToSign!;
+      const { sessionId, transactions, callbackRoute, redirectAfterSign } =
+        transactionsToSign!;
       if (transactions?.length) {
         const initialized = await provider.init();
         if (!initialized) {
@@ -139,7 +140,10 @@ export function useSignTransactions() {
                 }
               })
             );
-            if (!window.location.pathname.includes(callbackRoute)) {
+            if (
+              redirectAfterSign &&
+              !window.location.pathname.includes(callbackRoute)
+            ) {
               window.location.href = callbackRoute;
             }
           }

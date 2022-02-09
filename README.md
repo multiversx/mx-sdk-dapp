@@ -516,7 +516,8 @@ const transactionStatus = transactionServices.useTrackTransactionStatus({
   transactionId: sessionId,
   onSuccess,
   onFailed,
-  onCancelled
+  onCancelled,
+  onCompleted
 });
 ```
 
@@ -527,6 +528,7 @@ transactionStatus has the following information about the transaction:
   isSuccessful,
   isFailed,
   isCancelled,
+  isCompleted,
   errorMessage,
   status,
   transactions
@@ -535,7 +537,40 @@ transactionStatus has the following information about the transaction:
 
 It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sent, the hook will just return an empty object.
 
-Also, one can use the hook `useGetPendingTransactions` to get a list of all pending transactions.
+</details>
+
+
+<details><summary>
+Tracking transactions' statuses
+  </summary>
+
+
+### Tracking transactions' statuses
+
+Dapp-core also exposes a number of handy hooks for tracking all, pending, failed, successful, completed timed out transactions.
+
+Use:
+- `useGetPendingTransactions` to get a list of all pending transactions.
+- `useGetSuccessfulTransactions` to get a list of all successful transactions.
+- `useGetFailedTransactions` to get a list of all pending transactions.
+- `useGetCompletedTransactions` to get a list of smart contract call transactions that guarantee that the call was finished;
+
+An especially useful hook called `useGetActiveTransactionsStatus` will keep you updated with the status
+of all transactions at a certain point in time.
+
+it's return signature is
+
+```
+{
+  pending: boolean - at least one transaction is pending;
+  timedOut: boolean = there are no pending transactions and at least one has timed out;
+  failed: boolean - there are no pending and no timedOut transactions and at least one has failed;
+  successful: boolean - there are no pending, failed or timedOut transactions;
+  completed: boolean - all transactions are successful and all smart contract calls have been processed successfully;
+}
+```
+
+
 </details>
 
 

@@ -3,7 +3,8 @@ export enum TransactionServerStatusesEnum {
   'failed' = 'failed',
   'invalid' = 'invalid',
   'successful' = 'successful',
-  'executed' = 'executed'
+  'executed' = 'executed',
+  'completed' = 'completed'
 }
 
 export enum TransactionBatchStatusesEnum {
