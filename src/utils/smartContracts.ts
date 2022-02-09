@@ -1,5 +1,5 @@
 import { TypedResult } from '@elrondnetwork/erdjs';
-import { addressIsValid } from 'utils/account';
+import { addressIsValid } from 'utils/account/addressIsValid';
 
 const okInHex = '6f6b';
 const numInitCharactersForScAddress = 13;
