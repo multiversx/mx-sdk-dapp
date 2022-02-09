@@ -2,7 +2,7 @@ export enum TransactionServerStatusesEnum {
   'pending' = 'pending',
   'failed' = 'failed',
   'invalid' = 'invalid',
-  'successful' = 'successful',
+  'success' = 'success',
   'executed' = 'executed',
   'completed' = 'completed'
 }

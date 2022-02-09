@@ -26,7 +26,7 @@ export const pendingServerTransactionsStatuses = [
 ];
 
 export const successServerTransactionsStates = [
-  TransactionServerStatusesEnum.successful
+  TransactionServerStatusesEnum.success
 ];
 
 export const completedServerTransactionsStates = [
