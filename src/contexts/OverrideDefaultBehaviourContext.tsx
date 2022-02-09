@@ -3,14 +3,14 @@ import {
   getTransactionsByHashes,
   sendSignedTransactions
 } from 'APICalls/transactions';
-import { CustomBehaviourContextValueType } from './types';
+import { OverrideDefaultBehaviourContextValueType } from './types';
 
-const defaultValue: CustomBehaviourContextValueType = {
+const defaultValue: OverrideDefaultBehaviourContextValueType = {
   sendSignedTransactionsAsync: sendSignedTransactions,
   getTransactionsByHash: getTransactionsByHashes,
   completedTransactionsDelay: 0
 };
 
-const CustomBehaviourContext = React.createContext(defaultValue);
+const OverrideDefaultBehaviourContext = React.createContext(defaultValue);
 
-export default CustomBehaviourContext;
+export default OverrideDefaultBehaviourContext;

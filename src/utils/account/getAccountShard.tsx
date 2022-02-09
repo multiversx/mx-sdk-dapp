@@ -15,10 +15,10 @@ export default async function getAccountShard() {
 
   try {
     if (shard == null) {
-      const shard = await fetch(
+      const account = await fetch(
         `${network.apiAddress}/accounts/${address}`
       ).then((response) => response.json());
-      store.dispatch(setAccountShard(shard));
+      store.dispatch(setAccountShard(account.shard));
       return shard;
     } else {
       return shard;

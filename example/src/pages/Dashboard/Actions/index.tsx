@@ -97,8 +97,7 @@ const Actions = () => {
       transactionsDisplayInfo: {
         processingMessage: 'Processing Ping transaction',
         errorMessage: 'An error has occured during Ping',
-        successMessage: 'Ping transaction successful',
-        transactionDuration: 10000
+        successMessage: 'Ping transaction successful'
       }
     });
     if (sessionId != null) {
@@ -119,8 +118,7 @@ const Actions = () => {
       transactionsDisplayInfo: {
         processingMessage: 'Processing Pong transaction',
         errorMessage: 'An error has occured during Pong',
-        successMessage: 'Pong transaction successful',
-        transactionDuration: 10000
+        successMessage: 'Pong transaction successful'
       }
     });
     if (sessionId != null) {

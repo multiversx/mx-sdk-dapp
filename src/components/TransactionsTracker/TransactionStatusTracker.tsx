@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef } from 'react';
 import { TypedResult } from '@elrondnetwork/erdjs';
-import CustomBehaviourContext from 'contexts/CustomBehaviourContext';
+import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import { useDispatch } from 'redux/DappProviderContext';
 import {
   updateSignedTransactions,
@@ -39,7 +39,7 @@ export function TransactionStatusTracker({
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
   const { getTransactionsByHash, completedTransactionsDelay } = useContext(
-    CustomBehaviourContext
+    OverrideDefaultBehaviourContext
   );
 
   const isPending = sessionId != null && getIsTransactionPending(status);
@@ -62,9 +62,9 @@ export function TransactionStatusTracker({
       const pendingTransactions = transactions.reduce(
         (
           acc: { hash: string; previousStatus: string }[],
-          { receiver, status, hash }
+          { receiver, data, status, hash }
         ) => {
-          const isScCall = isContract(receiver);
+          const isScCall = isContract(receiver, data);
           if (
             hash != null &&
             !timeoutRefs.current.includes(hash) &&
@@ -90,10 +90,11 @@ export function TransactionStatusTracker({
         results,
         invalidTransaction,
         receiver,
+        data,
         hasStatusChanged
       } of serverTransactions) {
         try {
-          const isScCall = isContract(receiver);
+          const isScCall = isContract(receiver, data);
           const retriesForThisHash = retriesRef.current[hash];
           if (retriesForThisHash > 30) {
             // consider transaction as stuck after 1 minute
@@ -109,7 +110,6 @@ export function TransactionStatusTracker({
               ) {
                 const isScCallCompleted = areScCallsSuccessful(results);
                 if (isScCallCompleted) {
-                  console.log('entered', hash);
                   timeoutRefs.current.push(hash);
                   setTimeout(
                     () =>
@@ -124,7 +124,6 @@ export function TransactionStatusTracker({
                   );
                 }
               }
-              console.log(status, timeoutRefs.current);
 
               if (hasStatusChanged) {
                 dispatch(

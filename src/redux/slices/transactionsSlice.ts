@@ -93,7 +93,7 @@ export const transactionsSlice = createSlice({
         const areTransactionsSuccessful = state.signedTransactions[
           sessionId
         ]?.transactions?.every((transaction) => {
-          const isScCall = isContract(transaction.receiver);
+          const isScCall = isContract(transaction.receiver, transaction.data);
           return isScCall
             ? getIsTransactionCompleted(transaction.status)
             : getIsTransactionSuccessful(transaction.status);

@@ -10,6 +10,7 @@ export type GetTransactionsByHashesReturnType = {
   status: TransactionServerStatusesEnum;
   results: TypedResult[];
   receiver: string;
+  data: string;
   previousStatus: string;
   hasStatusChanged: boolean;
 }[];
@@ -35,6 +36,7 @@ export async function getTransactionsByHashes(
       results: txOnNetwork?.getSmartContractResults()?.getAllResults(),
       receiver: txOnNetwork?.receiver?.bech32(),
       previousStatus,
+      data: txOnNetwork.data.valueOf().toString(),
       hasStatusChanged: status !== previousStatus
     };
     responses.push(txResponse);

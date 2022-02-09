@@ -13,7 +13,7 @@ export type GetTransactionsByHashesType = (
   pendingTransactions: PendingTransactionsType
 ) => Promise<GetTransactionsByHashesReturnType>;
 
-export interface CustomBehaviourContextValueType {
+export interface OverrideDefaultBehaviourContextValueType {
   completedTransactionsDelay: number;
   sendSignedTransactionsAsync: SendSignedTransactionsAsyncType;
   getTransactionsByHash: GetTransactionsByHashesType;

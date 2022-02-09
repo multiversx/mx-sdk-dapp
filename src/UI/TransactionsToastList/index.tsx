@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
+import { useGetSignedTransactions } from 'hooks';
+import { useSelector } from 'redux/DappProviderContext';
+import { shardSelector } from 'redux/selectors';
 import { useGetPendingTransactions } from 'services';
+import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
+import { SignedTransactionType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'utils';
+import { getAddressFromDataField, getGeneratedClasses } from 'utils';
 
 import { TransactionsToastListPropsType } from './types';
 
@@ -17,6 +22,8 @@ export function TransactionsToastList({
   const [toastsIds, setToastsIds] = useState<any>([]);
 
   const { pendingTransactions } = useGetPendingTransactions();
+  const signedTransactions = useGetSignedTransactions();
+  const accountShard = useSelector(shardSelector);
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -28,10 +35,41 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
+    const currentTx: any = signedTransactions[toastId];
+    if (currentTx == null) {
+      return null;
+    }
+
+    const { transactions, status } = currentTx;
+    const isSameShard = transactions.reduce(
+      (
+        prevTxIsSameShard: boolean,
+        { receiver, data }: SignedTransactionType
+      ) => {
+        const receiverAddress = getAddressFromDataField({
+          receiver,
+          data
+        });
+        if (receiverAddress == null) {
+          return prevTxIsSameShard;
+        }
+        return (
+          prevTxIsSameShard &&
+          isCrossShardTransaction({
+            receiverAddress,
+            senderShard: accountShard
+          })
+        );
+      },
+      true
+    );
     return (
       <TransactionToast
         className={className}
         key={toastId}
+        isSameShard={isSameShard}
+        transactions={transactions}
+        status={status}
         toastId={toastId}
         withTxNonce={withTxNonce}
       />

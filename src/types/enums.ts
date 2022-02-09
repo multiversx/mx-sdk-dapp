@@ -29,3 +29,8 @@ export enum NotificationTypesEnum {
   error = 'error',
   success = 'success'
 }
+
+export enum TypesOfSmartContractCallsEnum {
+  multiESDTTransfer = 'MultiESDTNFTTransfer',
+  ESDTNFTTransfer = 'ESDTNFTTransfer'
+}

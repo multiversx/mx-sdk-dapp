@@ -9,7 +9,7 @@ import {
 import ProviderInitializer from 'components/ProviderInitializer';
 import TransactionSender from 'components/TransactionSender';
 import TransactionsTracker from 'components/TransactionsTracker';
-import CustomBehaviourContext from 'contexts/CustomBehaviourContext';
+import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import {
   GetTransactionsByHashesType,
   SendSignedTransactionsAsyncType
@@ -44,7 +44,7 @@ export const DappProvider = ({
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <CustomBehaviourContext.Provider
+        <OverrideDefaultBehaviourContext.Provider
           value={{
             sendSignedTransactionsAsync: memoizedSendSignedTransactionsAsync,
             getTransactionsByHash: memoizedGetTransactionsByHash,
@@ -57,7 +57,7 @@ export const DappProvider = ({
             <TransactionsTracker />
             {children}
           </AppInitializer>
-        </CustomBehaviourContext.Provider>
+        </OverrideDefaultBehaviourContext.Provider>
       </PersistGate>
     </Provider>
   );

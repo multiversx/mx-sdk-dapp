@@ -15,7 +15,6 @@ export const defaultTransactionErrorMessage = 'Transaction failed';
 export const defaultTransactionSuccessMessage = 'Transaction successful';
 export const defaultTransactionProcessingMessage = 'Processing transaction';
 export const defaultTransactionSubmittedMessage = 'Transaction submitted';
-export const defaultTransactionDuration = 10000;
 
 const initialState: StateType = {};
 
@@ -42,9 +41,7 @@ export const signTransactionsSlice = createSlice({
           submittedMessage:
             transactionsDisplayInfo?.submittedMessage ||
             defaultTransactionSubmittedMessage,
-          transactionDuration:
-            transactionsDisplayInfo?.transactionDuration ||
-            defaultTransactionDuration
+          transactionDuration: transactionsDisplayInfo?.transactionDuration
         };
       }
     },

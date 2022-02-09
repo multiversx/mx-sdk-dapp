@@ -2,7 +2,7 @@ import React, { useContext, useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
-import CustomBehaviourContext from 'contexts/CustomBehaviourContext';
+import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import newTransaction from 'models/newTransaction';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { signedTransactionsSelector } from 'redux/selectors';
@@ -21,7 +21,9 @@ import { setNonce } from 'utils';
 const TransactionSender = () => {
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
-  const { sendSignedTransactionsAsync } = useContext(CustomBehaviourContext);
+  const { sendSignedTransactionsAsync } = useContext(
+    OverrideDefaultBehaviourContext
+  );
   const sendingRef = useRef(false);
 
   const dispatch = useDispatch();

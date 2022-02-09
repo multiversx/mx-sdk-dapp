@@ -5,6 +5,7 @@ import { useDispatch } from 'redux/DappProviderContext';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { NetworkConfigType } from 'types';
 import { logout } from 'utils';
+import getAccountShard from 'utils/account/getAccountShard';
 
 export function AppInitializer({
   networkConfig,
@@ -21,6 +22,8 @@ export function AppInitializer({
   async function initializeApp() {
     dispatch(initializeNetworkConfig(networkConfig));
     setInitialized(true);
+    //sync redux with shardId from server
+    getAccountShard();
   }
 
   useEffect(() => {
