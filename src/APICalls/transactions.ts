@@ -10,14 +10,16 @@ interface GetTransactionsByHashesReturnType {
   status: TransactionServerStatusesEnum;
   results: TypedResult[];
   receiver: string;
+  previousStatus: string;
+  hasStatusChanged: boolean;
 }
 
 export async function getTransactionsByHashes(
-  txHashes: string[]
+  pendingTransactions: { hash: string; previousStatus: string }[]
 ): Promise<GetTransactionsByHashesReturnType[]> {
   const apiProvider = apiProviderSelector(store.getState());
   const responses = [];
-  for (const hash of txHashes) {
+  for (const { hash, previousStatus } of pendingTransactions) {
     const txOnNetwork = await apiProvider.getTransaction(
       new TransactionHash(hash)
     );
@@ -26,7 +28,9 @@ export async function getTransactionsByHashes(
       invalidTransaction: txOnNetwork == null,
       status: getPlainTransactionStatus(txOnNetwork.status),
       results: txOnNetwork?.getSmartContractResults()?.getAllResults(),
-      receiver: txOnNetwork?.receiver?.bech32()
+      receiver: txOnNetwork?.receiver?.bech32(),
+      previousStatus,
+      hasStatusChanged: status !== previousStatus
     };
     responses.push(txResponse);
   }

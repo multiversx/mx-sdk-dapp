@@ -9,8 +9,9 @@ import {
   SignedTransactionType,
   TransactionsToSignType
 } from 'types/transactions';
-import { getIsTransactionCompleted, isContract } from 'utils';
+import { isContract } from 'utils/smartContracts';
 import {
+  getIsTransactionCompleted,
   getIsTransactionFailed,
   getIsTransactionSuccessful
 } from 'utils/transactions';

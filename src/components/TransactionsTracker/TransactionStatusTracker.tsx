@@ -27,16 +27,19 @@ interface RetriesType {
 interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionPayload: SignedTransactionsBodyType;
+  completedTransactionsDelay: number;
 }
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status }
+  transactionPayload: { transactions, status },
+  completedTransactionsDelay
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
   const isFetchingStatusRef = useRef(false);
   const retriesRef = useRef<RetriesType>({});
+  const timeoutRefs = useRef<string[]>([]);
 
   const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
@@ -55,28 +58,38 @@ export function TransactionStatusTracker({
       }
       isFetchingStatusRef.current = true;
 
-      const pendingTxHashes = transactions.reduce(
-        (acc: string[], { receiver, status, hash }) => {
+      const pendingTransactions = transactions.reduce(
+        (
+          acc: { hash: string; previousStatus: string }[],
+          { receiver, status, hash }
+        ) => {
           const isScCall = isContract(receiver);
-          if (hash != null && getIsTransactionPending(status, isScCall)) {
-            acc.push(hash);
+          if (
+            hash != null &&
+            !timeoutRefs.current.includes(hash) &&
+            getIsTransactionPending(status, isScCall)
+          ) {
+            acc.push({ hash, previousStatus: status });
           }
           return acc;
         },
-        [] as string[]
+        []
       );
 
-      if (pendingTxHashes?.length === 0) {
+      if (pendingTransactions?.length === 0) {
         isFetchingStatusRef.current = false;
         return;
       }
-      const serverTransactions = await getTransactionsByHashes(pendingTxHashes);
+      const serverTransactions = await getTransactionsByHashes(
+        pendingTransactions
+      );
       for (const {
         hash,
         status,
         results,
         invalidTransaction,
-        receiver
+        receiver,
+        hasStatusChanged
       } of serverTransactions) {
         try {
           const isScCall = isContract(receiver);
@@ -86,7 +99,6 @@ export function TransactionStatusTracker({
             manageTimedOutTransactions();
             return;
           }
-          let newStatus = status;
           if (!invalidTransaction) {
             if (!getIsTransactionPending(status)) {
               if (
@@ -96,17 +108,32 @@ export function TransactionStatusTracker({
               ) {
                 const isScCallCompleted = areScCallsSuccessful(results);
                 if (isScCallCompleted) {
-                  newStatus = TransactionServerStatusesEnum.completed;
+                  console.log('entered', hash);
+                  timeoutRefs.current.push(hash);
+                  setTimeout(
+                    () =>
+                      dispatch(
+                        updateSignedTransactionStatus({
+                          sessionId,
+                          status: TransactionServerStatusesEnum.completed,
+                          transactionHash: hash
+                        })
+                      ),
+                    completedTransactionsDelay
+                  );
                 }
               }
+              console.log(status, timeoutRefs.current);
 
-              dispatch(
-                updateSignedTransactionStatus({
-                  sessionId,
-                  status: newStatus,
-                  transactionHash: hash
-                })
-              );
+              if (hasStatusChanged) {
+                dispatch(
+                  updateSignedTransactionStatus({
+                    sessionId,
+                    status,
+                    transactionHash: hash
+                  })
+                );
+              }
 
               refreshAccount();
 
