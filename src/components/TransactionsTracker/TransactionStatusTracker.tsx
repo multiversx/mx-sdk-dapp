@@ -89,7 +89,6 @@ export function TransactionStatusTracker({
           let newStatus = status;
           if (!invalidTransaction) {
             if (!getIsTransactionPending(status)) {
-              console.log(status, isScCall, receiver);
               if (
                 isScCall &&
                 getIsTransactionSuccessful(status) &&
