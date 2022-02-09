@@ -132,11 +132,6 @@ export default function ProviderInitializer() {
 
       case LoginMethodsEnum.extra: {
         const provider = getProvider();
-        console.log(
-          '\x1b[42m%s\x1b[0m',
-          'Setting provider after login',
-          provider
-        );
 
         dispatch(setProvider(provider));
         break;
