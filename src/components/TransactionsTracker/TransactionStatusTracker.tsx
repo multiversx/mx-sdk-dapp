@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { TypedResult } from '@elrondnetwork/erdjs';
-import { getTransactionsByHashes } from 'APICalls/transactions';
+import CustomBehaviourContext from 'contexts/CustomBehaviourContext';
 import { useDispatch } from 'redux/DappProviderContext';
 import {
   updateSignedTransactions,
@@ -27,19 +27,20 @@ interface RetriesType {
 interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionPayload: SignedTransactionsBodyType;
-  completedTransactionsDelay: number;
 }
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status },
-  completedTransactionsDelay
+  transactionPayload: { transactions, status }
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
   const isFetchingStatusRef = useRef(false);
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
+  const { getTransactionsByHash, completedTransactionsDelay } = useContext(
+    CustomBehaviourContext
+  );
 
   const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
@@ -80,7 +81,7 @@ export function TransactionStatusTracker({
         isFetchingStatusRef.current = false;
         return;
       }
-      const serverTransactions = await getTransactionsByHashes(
+      const serverTransactions = await getTransactionsByHash(
         pendingTransactions
       );
       for (const {
