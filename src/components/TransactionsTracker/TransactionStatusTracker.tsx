@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { TypedResult } from '@elrondnetwork/erdjs';
 import { getTransactionsByHashes } from 'APICalls/transactions';
 import { useDispatch } from 'redux/DappProviderContext';
 import {
@@ -112,7 +113,7 @@ export function TransactionStatusTracker({
 
               if (getIsTransactionFailed(status)) {
                 const resultWithError = results.find(
-                  (scResult) => scResult.getReturnMessage() !== ''
+                  (scResult: TypedResult) => scResult.getReturnMessage() !== ''
                 );
 
                 dispatch(
