@@ -50,7 +50,7 @@ export function getAddressFromDataField({
 }
 
 function getAddressIndex(data: string) {
-  return data.includes(TypesOfSmartContractCallsEnum.multiESDTTransfer)
+  return data.includes(TypesOfSmartContractCallsEnum.MultiESDTNFTTransfer)
     ? 1
     : data.includes(TypesOfSmartContractCallsEnum.ESDTNFTTransfer)
     ? 4

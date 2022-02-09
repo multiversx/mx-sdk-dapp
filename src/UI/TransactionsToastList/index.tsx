@@ -8,7 +8,7 @@ import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
-import { SignedTransactionType } from 'types';
+import { SignedTransactionsBodyType, SignedTransactionType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 import { getAddressFromDataField, getGeneratedClasses } from 'utils';
 
@@ -35,13 +35,13 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
-    const currentTx: any = signedTransactions[toastId];
+    const currentTx: SignedTransactionsBodyType = signedTransactions[toastId];
     if (currentTx == null) {
       return null;
     }
 
     const { transactions, status } = currentTx;
-    const isSameShard = transactions.reduce(
+    const isSameShard = transactions!.reduce(
       (
         prevTxIsSameShard: boolean,
         { receiver, data }: SignedTransactionType

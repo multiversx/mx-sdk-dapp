@@ -107,13 +107,13 @@ export function isBatchTransactionFailed(status: TransactionBatchStatusesEnum) {
 }
 
 export function isBatchTransactionTimedOut(
-  status: TransactionBatchStatusesEnum
+  status?: TransactionBatchStatusesEnum
 ) {
   return status != null && timedOutBatchTransactionsStates.includes(status);
 }
 
 export function isServerTransactionPending(
-  status: TransactionServerStatusesEnum
+  status?: TransactionServerStatusesEnum
 ) {
   return status != null && pendingServerTransactionsStatuses.includes(status);
 }

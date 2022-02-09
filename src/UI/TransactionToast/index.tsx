@@ -119,14 +119,14 @@ export const TransactionToast = ({
     timedOut: timedOutToastData
   };
 
-  const toastDataState = toatsOptionsData[status];
+  const toastDataState = toatsOptionsData[status!];
 
   const handleDeleteToast = () => {
     setShouldRender(false);
     onClose?.(toastId);
   };
 
-  if (!shouldRender) {
+  if (!shouldRender || transactions == null) {
     return null;
   }
 

@@ -1,4 +1,4 @@
-import { SignedTransactionsType, TransactionBatchStatusesEnum } from 'types';
+import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 
 export interface TransactionToastPropsType {
   title?: string;
@@ -10,7 +10,7 @@ export interface TransactionToastPropsType {
   isSameShard: boolean;
   withTxNonce?: boolean;
   shouldRenderDefaultCss?: boolean;
-  transactions: SignedTransactionsType[];
-  status: TransactionBatchStatusesEnum;
+  transactions?: SignedTransactionType[];
+  status?: TransactionBatchStatusesEnum;
   onClose?: (toastId: string) => void;
 }
