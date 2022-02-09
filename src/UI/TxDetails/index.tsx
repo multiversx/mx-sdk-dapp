@@ -47,7 +47,7 @@ const TxDetails = ({
   const iconData = {
     pending: iconPendingData,
     success: iconSuccessData,
-    executed: iconSuccessData,
+    completed: iconSuccessData,
     failed: iconFailedData,
     invalid: iconFailedData,
     timedOut: iconFailedData

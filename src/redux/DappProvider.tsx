@@ -14,11 +14,13 @@ import { store, persistor } from './store';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
+  completedTransactionsDelay?: number;
 }
 
 export const DappProvider = ({
   children,
-  networkConfig
+  networkConfig,
+  completedTransactionsDelay = 0
 }: DappProviderPropsType) => {
   return (
     <Provider context={DappCoreContext} store={store}>
@@ -26,7 +28,9 @@ export const DappProvider = ({
         <AppInitializer networkConfig={networkConfig}>
           <ProviderInitializer />
           <TransactionSender />
-          <TransactionsTracker />
+          <TransactionsTracker
+            completedTransactionsDelay={completedTransactionsDelay}
+          />
           {children}
         </AppInitializer>
       </PersistGate>
