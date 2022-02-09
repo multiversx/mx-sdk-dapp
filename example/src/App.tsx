@@ -24,6 +24,7 @@ const App = () => {
     <Router>
       <DappProvider
         networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
+        completedTransactionsDelay={200}
       >
         <DappCoreUIWrapper>
           <Layout>
