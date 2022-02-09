@@ -4,19 +4,25 @@ import { store } from 'redux/store';
 import { TransactionServerStatusesEnum } from 'types';
 import { getPlainTransactionStatus } from 'utils';
 
-interface GetTransactionsByHashesReturnType {
+export type GetTransactionsByHashesReturnType = {
   hash: string;
   invalidTransaction: boolean;
   status: TransactionServerStatusesEnum;
   results: TypedResult[];
   receiver: string;
+  data: string;
   previousStatus: string;
   hasStatusChanged: boolean;
-}
+}[];
+
+export type PendingTransactionsType = {
+  hash: string;
+  previousStatus: string;
+}[];
 
 export async function getTransactionsByHashes(
-  pendingTransactions: { hash: string; previousStatus: string }[]
-): Promise<GetTransactionsByHashesReturnType[]> {
+  pendingTransactions: PendingTransactionsType
+): Promise<GetTransactionsByHashesReturnType> {
   const apiProvider = apiProviderSelector(store.getState());
   const responses = [];
   for (const { hash, previousStatus } of pendingTransactions) {
@@ -30,6 +36,7 @@ export async function getTransactionsByHashes(
       results: txOnNetwork?.getSmartContractResults()?.getAllResults(),
       receiver: txOnNetwork?.receiver?.bech32(),
       previousStatus,
+      data: txOnNetwork.data.valueOf().toString(),
       hasStatusChanged: status !== previousStatus
     };
     responses.push(txResponse);

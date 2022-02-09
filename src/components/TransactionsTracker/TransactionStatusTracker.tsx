@@ -1,6 +1,6 @@
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { TypedResult } from '@elrondnetwork/erdjs';
-import { getTransactionsByHashes } from 'APICalls/transactions';
+import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import { useDispatch } from 'redux/DappProviderContext';
 import {
   updateSignedTransactions,
@@ -27,19 +27,20 @@ interface RetriesType {
 interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionPayload: SignedTransactionsBodyType;
-  completedTransactionsDelay: number;
 }
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status },
-  completedTransactionsDelay
+  transactionPayload: { transactions, status }
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
   const isFetchingStatusRef = useRef(false);
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
+  const { getTransactionsByHash, completedTransactionsDelay } = useContext(
+    OverrideDefaultBehaviourContext
+  );
 
   const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
@@ -61,9 +62,9 @@ export function TransactionStatusTracker({
       const pendingTransactions = transactions.reduce(
         (
           acc: { hash: string; previousStatus: string }[],
-          { receiver, status, hash }
+          { receiver, data, status, hash }
         ) => {
-          const isScCall = isContract(receiver);
+          const isScCall = isContract(receiver, data);
           if (
             hash != null &&
             !timeoutRefs.current.includes(hash) &&
@@ -80,7 +81,7 @@ export function TransactionStatusTracker({
         isFetchingStatusRef.current = false;
         return;
       }
-      const serverTransactions = await getTransactionsByHashes(
+      const serverTransactions = await getTransactionsByHash(
         pendingTransactions
       );
       for (const {
@@ -89,10 +90,11 @@ export function TransactionStatusTracker({
         results,
         invalidTransaction,
         receiver,
+        data,
         hasStatusChanged
       } of serverTransactions) {
         try {
-          const isScCall = isContract(receiver);
+          const isScCall = isContract(receiver, data);
           const retriesForThisHash = retriesRef.current[hash];
           if (retriesForThisHash > 30) {
             // consider transaction as stuck after 1 minute
@@ -108,7 +110,6 @@ export function TransactionStatusTracker({
               ) {
                 const isScCallCompleted = areScCallsSuccessful(results);
                 if (isScCallCompleted) {
-                  console.log('entered', hash);
                   timeoutRefs.current.push(hash);
                   setTimeout(
                     () =>
@@ -123,7 +124,6 @@ export function TransactionStatusTracker({
                   );
                 }
               }
-              console.log(status, timeoutRefs.current);
 
               if (hasStatusChanged) {
                 dispatch(

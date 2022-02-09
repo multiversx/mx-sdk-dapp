@@ -1,6 +1,5 @@
 import { createDeepEqualSelector } from 'redux/selectors/helpers';
 import {
-  defaultTransactionDuration,
   defaultTransactionErrorMessage,
   defaultTransactionProcessingMessage,
   defaultTransactionSuccessMessage
@@ -10,8 +9,7 @@ import { RootState } from '../store';
 const defaultTransactionInfo = {
   errorMessage: defaultTransactionErrorMessage,
   successMessage: defaultTransactionSuccessMessage,
-  processingMessage: defaultTransactionProcessingMessage,
-  transactionDuration: defaultTransactionDuration
+  processingMessage: defaultTransactionProcessingMessage
 };
 
 export const transactionsInfoSelectors = (state: RootState) =>

@@ -3,20 +3,13 @@ import { useGetPendingTransactions } from 'services/transactions';
 import { SignedTransactionsBodyType } from 'types/transactions';
 import TransactionStatusTracker from './TransactionStatusTracker';
 
-interface TransactionsTrackerPropsType {
-  completedTransactionsDelay: number;
-}
-
-export function TransactionsTracker({
-  completedTransactionsDelay
-}: TransactionsTrackerPropsType) {
+export function TransactionsTracker() {
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
   return (
     <React.Fragment>
       {pendingTransactionsArray.map(([sessionId, transactionPayload]) => (
         <TransactionStatusTracker
-          completedTransactionsDelay={completedTransactionsDelay}
           key={sessionId}
           sessionId={sessionId}
           transactionPayload={transactionPayload as SignedTransactionsBodyType}

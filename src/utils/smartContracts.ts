@@ -1,8 +1,7 @@
-import { TypedResult } from '@elrondnetwork/erdjs';
-import { addressIsValid } from 'utils/account';
+import { TypedResult, Address } from '@elrondnetwork/erdjs';
+import { TypesOfSmartContractCallsEnum } from 'types';
 
 const okInHex = '6f6b';
-const numInitCharactersForScAddress = 13;
 
 export function areScCallsSuccessful(scResults?: TypedResult[]) {
   if (!scResults) {
@@ -21,14 +20,41 @@ export function areScCallsSuccessful(scResults?: TypedResult[]) {
   });
   return success;
 }
-export function isContract(hash: string): boolean {
-  return Boolean(
-    hash &&
-      numInitCharactersForScAddress > 0 &&
-      addressIsValid(hash) &&
-      hash
-        .substr('erd1'.length)
-        .startsWith('q'.repeat(numInitCharactersForScAddress))
-  );
+
+export function isContract(receiver: string, data = ''): boolean {
+  try {
+    return new Address(
+      getAddressFromDataField({ receiver, data })
+    ).isContractAddress();
+  } catch (err) {
+    console.log('err', err);
+    return false;
+  }
 }
+
+export function getAddressFromDataField({
+  receiver,
+  data
+}: {
+  receiver: string;
+  data: string;
+}) {
+  try {
+    const addressIndex = getAddressIndex(data);
+    const parts = data.split('@');
+    return addressIndex > -1 ? parts[addressIndex] : receiver;
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+}
+
+function getAddressIndex(data: string) {
+  return data.includes(TypesOfSmartContractCallsEnum.multiESDTTransfer)
+    ? 1
+    : data.includes(TypesOfSmartContractCallsEnum.ESDTNFTTransfer)
+    ? 4
+    : -1;
+}
+
 export default isContract;
