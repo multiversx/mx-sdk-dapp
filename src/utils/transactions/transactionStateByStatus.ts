@@ -8,11 +8,11 @@ export const pendingBatchTransactionsStates = [
   TransactionBatchStatusesEnum.signed
 ];
 export const successBatchTransactionsStates = [
-  TransactionBatchStatusesEnum.successful
+  TransactionBatchStatusesEnum.success
 ];
 
 export const failedBatchTransactionsStates = [
-  TransactionBatchStatusesEnum.failed,
+  TransactionBatchStatusesEnum.fail,
   TransactionBatchStatusesEnum.cancelled,
   TransactionBatchStatusesEnum.timedOut
 ];
@@ -34,7 +34,7 @@ export const completedServerTransactionsStates = [
 ];
 
 export const failedServerTransactionsStates = [
-  TransactionServerStatusesEnum.failed,
+  TransactionServerStatusesEnum.fail,
   TransactionServerStatusesEnum.invalid
 ];
 

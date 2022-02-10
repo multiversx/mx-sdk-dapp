@@ -37,3 +37,13 @@ export const walletConnectAccountSelector = createDeepEqualSelector(
   accountInfoSelector,
   (state) => state.walletConnectAccount
 );
+
+export const isAccountLoadingSelector = createDeepEqualSelector(
+  accountInfoSelector,
+  (state) => state.isAccountLoading
+);
+
+export const isAccountLoadingErrorSelector = createDeepEqualSelector(
+  accountInfoSelector,
+  (state) => state.accountLoadingError
+);

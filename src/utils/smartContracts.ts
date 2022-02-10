@@ -1,9 +1,9 @@
-import { TypedResult, Address } from '@elrondnetwork/erdjs';
-import { TypesOfSmartContractCallsEnum } from 'types';
+import { Address } from '@elrondnetwork/erdjs';
+import { SmartContractResult, TypesOfSmartContractCallsEnum } from 'types';
 
 const okInHex = '6f6b';
 
-export function areScCallsSuccessful(scResults?: TypedResult[]) {
+export function areScCallsSuccessful(scResults?: SmartContractResult[]) {
   if (!scResults) {
     return true;
   }

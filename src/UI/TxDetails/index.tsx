@@ -48,11 +48,10 @@ const TxDetails = ({
     pending: iconPendingData,
     success: iconSuccessData,
     completed: iconSuccessData,
-    failed: iconFailedData,
+    fail: iconFailedData,
     invalid: iconFailedData,
     timedOut: iconFailedData
   };
-
   return (
     <React.Fragment>
       {title && <div className={generatedClasses.title}>{title}</div>}
@@ -63,26 +62,29 @@ const TxDetails = ({
         }{' '}
         / {transactions.length} transactions processed
       </div>
-      {transactions.map(({ hash, status }) => (
-        <div className={generatedClasses.item} key={hash}>
-          {!isTimedOut && (
-            <ReactFontawesome.FontAwesomeIcon
-              icon={iconData[status].icon}
-              className={iconData[status].classNames}
-            />
-          )}
-          <span
-            className={generatedClasses.trimContainer}
-            style={{ width: '10rem' }}
-          >
-            <Trim text={hash} />
-          </span>
-          <CopyButton text={hash} />
-          {!isServerTransactionPending(status) && (
-            <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
-          )}
-        </div>
-      ))}
+      {transactions.map(({ hash, status }) => {
+        const iconSrc = iconData[status];
+        return (
+          <div className={generatedClasses.item} key={hash}>
+            {!isTimedOut && iconSrc != null && (
+              <ReactFontawesome.FontAwesomeIcon
+                icon={iconSrc.icon}
+                className={iconSrc.classNames}
+              />
+            )}
+            <span
+              className={generatedClasses.trimContainer}
+              style={{ width: '10rem' }}
+            >
+              <Trim text={hash} />
+            </span>
+            <CopyButton text={hash} />
+            {!isServerTransactionPending(status) && (
+              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
+            )}
+          </div>
+        );
+      })}
     </React.Fragment>
   );
 };

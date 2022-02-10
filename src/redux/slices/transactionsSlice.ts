@@ -106,11 +106,11 @@ export const transactionsSlice = createSlice({
         );
         if (areTransactionsSuccessful) {
           state.signedTransactions[sessionId].status =
-            TransactionBatchStatusesEnum.successful;
+            TransactionBatchStatusesEnum.success;
         }
         if (areTransactionsFailed) {
           state.signedTransactions[sessionId].status =
-            TransactionBatchStatusesEnum.failed;
+            TransactionBatchStatusesEnum.fail;
         }
       }
     },
