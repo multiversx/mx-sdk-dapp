@@ -16,7 +16,6 @@ export interface NetworkType {
   name: string;
   walletAddress: string;
   apiAddress: string;
-  gatewayAddress: string;
   explorerAddress: string;
 }
 
