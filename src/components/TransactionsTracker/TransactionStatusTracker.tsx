@@ -100,7 +100,7 @@ export function TransactionStatusTracker({
             return;
           }
           if (!invalidTransaction) {
-            if (!getIsTransactionPending(status, isScCall)) {
+            if (!getIsTransactionPending(status)) {
               if (isScCall && !getIsTransactionCompleted(status)) {
                 const isScCallCompleted = areScCallsSuccessful(results);
                 if (isScCallCompleted) {
