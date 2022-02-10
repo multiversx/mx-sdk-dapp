@@ -573,6 +573,7 @@ it's return signature is
 
 ```
 {
+  hasActiveTransactions: boolean - the user has at least 1 active transactions in one of the states described below;
   pending: boolean - at least one transaction is pending;
   timedOut: boolean = there are no pending transactions and at least one has timed out;
   failed: boolean - there are no pending and no timedOut transactions and at least one has failed;
