@@ -22,6 +22,7 @@ const Transactions = () => {
   });
 
   const account = useGetAccountInfo();
+
   const fetchData = () => {
     if (successful || !hasActiveTransactions) {
       getTransactions({
@@ -39,7 +40,7 @@ const Transactions = () => {
     }
   };
 
-  React.useEffect(fetchData, [successful]);
+  React.useEffect(fetchData, [successful, hasActiveTransactions]);
 
   const { transactions } = state;
 
