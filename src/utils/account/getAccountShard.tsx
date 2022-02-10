@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   addressSelector,
   networkSelector,
@@ -14,10 +15,10 @@ export default async function getAccountShard() {
   const shard = shardSelector(appState);
 
   try {
-    if (shard == null) {
-      const account = await fetch(
+    if (shard == null && address != null) {
+      const { data: account } = await axios.get(
         `${network.apiAddress}/accounts/${address}`
-      ).then((response) => response.json());
+      );
       store.dispatch(setAccountShard(account.shard));
       return shard;
     } else {

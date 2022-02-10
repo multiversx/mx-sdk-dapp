@@ -112,10 +112,10 @@ export const TransactionToast = ({
   const toatsOptionsData = {
     signed: pendingToastData,
     cancelled: failedToastData,
-    successful: successToastData,
+    success: successToastData,
     completed: successToastData,
     sent: pendingToastData,
-    failed: failedToastData,
+    fail: failedToastData,
     timedOut: timedOutToastData
   };
 
