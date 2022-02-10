@@ -16,7 +16,6 @@ export const defaultNetwork: NetworkType = {
   egldLabel: '',
   walletAddress: '',
   apiAddress: '',
-  gatewayAddress: '',
   explorerAddress: ''
 };
 
@@ -41,7 +40,7 @@ const initialState: NetworkConfigStateType = {
   walletConnectDeepLink:
     'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=https://maiar.com/',
   network: defaultNetwork,
-  proxy: new ProxyProvider(defaultNetwork.gatewayAddress, { timeout: 4000 }),
+  proxy: new ProxyProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
   apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
   provider: emptyProvider,
   chainID: '-1'
@@ -57,7 +56,7 @@ export const networkConfigSlice = createSlice({
     ) => {
       const { walletConnectBridge, walletConnectDeepLink, network } =
         action.payload;
-      const proxy = new ProxyProvider(network.gatewayAddress, {
+      const proxy = new ProxyProvider(network.apiAddress, {
         timeout: 4000 // TODO: timeout can be moved into global config
       });
       const apiProvider = new ApiProvider(network.apiAddress, {
