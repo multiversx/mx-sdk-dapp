@@ -24,6 +24,7 @@ interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
   completedTransactionsDelay?: number;
+  signWithoutSending?: boolean;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
 }
@@ -32,6 +33,7 @@ export const DappProvider = ({
   children,
   networkConfig,
   completedTransactionsDelay = 0,
+  signWithoutSending = false,
   sendSignedTransactionsAsync = sendSignedTransactions,
   getTransactionsByHash = getTransactionsByHashes
 }: DappProviderPropsType) => {
@@ -53,7 +55,7 @@ export const DappProvider = ({
         >
           <AppInitializer networkConfig={networkConfig}>
             <ProviderInitializer />
-            <TransactionSender />
+            {!signWithoutSending && <TransactionSender />}
             <TransactionsTracker />
             {children}
           </AppInitializer>

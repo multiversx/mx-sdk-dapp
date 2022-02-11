@@ -1,29 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import { useGetSignedTransactions } from 'hooks';
-import { useSelector } from 'redux/DappProviderContext';
-import { shardSelector } from 'redux/selectors';
 import { useGetPendingTransactions } from 'services';
-import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
-import { SignedTransactionsBodyType, SignedTransactionType } from 'types';
+import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
-import { getAddressFromDataField, getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'utils';
 
 import { TransactionsToastListPropsType } from './types';
 
 export function TransactionsToastList({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
-  className = 'transactions-toast-list'
+  className = 'transactions-toast-list',
+  pendingTransactions,
+  signedTransactions
 }: TransactionsToastListPropsType) {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
-  const { pendingTransactions } = useGetPendingTransactions();
-  const signedTransactions = useGetSignedTransactions();
-  const accountShard = useSelector(shardSelector);
+  const pendingTransactionsFromStore =
+    useGetPendingTransactions().pendingTransactions;
+
+  const signedTransactionsFromStore = useGetSignedTransactions();
+
+  const pendingTransactionsToRender =
+    pendingTransactions || pendingTransactionsFromStore;
+
+  const signedTransactionsToRender =
+    signedTransactions || signedTransactionsFromStore;
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -35,39 +42,18 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
-    const currentTx: SignedTransactionsBodyType = signedTransactions[toastId];
+    const currentTx: SignedTransactionsBodyType =
+      signedTransactionsToRender[toastId];
     if (currentTx == null) {
       return null;
     }
 
     const { transactions, status } = currentTx;
-    const isSameShard = transactions!.reduce(
-      (
-        prevTxIsSameShard: boolean,
-        { receiver, data }: SignedTransactionType
-      ) => {
-        const receiverAddress = getAddressFromDataField({
-          receiver,
-          data
-        });
-        if (receiverAddress == null) {
-          return prevTxIsSameShard;
-        }
-        return (
-          prevTxIsSameShard &&
-          isCrossShardTransaction({
-            receiverAddress,
-            senderShard: accountShard
-          })
-        );
-      },
-      true
-    );
+
     return (
       <TransactionToast
         className={className}
         key={toastId}
-        isSameShard={isSameShard}
         transactions={transactions}
         status={status}
         toastId={toastId}
@@ -79,7 +65,7 @@ export function TransactionsToastList({
   const mapPendingSignedTransactions = () => {
     const newToasts = [...toastsIds];
 
-    for (const sessionId in pendingTransactions) {
+    for (const sessionId in pendingTransactionsToRender) {
       const hasToast = toastsIds.includes(sessionId);
 
       if (!hasToast) {
@@ -117,7 +103,7 @@ export function TransactionsToastList({
 
   useEffect(() => {
     mapPendingSignedTransactions();
-  }, [pendingTransactions]);
+  }, [pendingTransactionsToRender]);
 
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }

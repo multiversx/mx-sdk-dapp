@@ -6,13 +6,18 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import moment from 'optionalPackages/moment';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { useSelector } from 'redux/DappProviderContext';
+import { shardSelector } from 'redux/selectors';
+import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
+import { SignedTransactionType } from 'types';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
 import {
+  getAddressFromDataField,
   getGeneratedClasses,
-  isBatchTransactionPending,
-  isBatchTransactionTimedOut
+  getIsTransactionPending,
+  getIsTransactionTimedOut
 } from 'utils';
 
 import { TransactionToastPropsType } from './types';
@@ -27,13 +32,14 @@ export const TransactionToast = ({
   className = 'transaction-toast',
   withTxNonce = false,
   transactions,
-  isSameShard,
   status,
   onClose
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
+  const accountShard = useSelector(shardSelector);
+
   const {
     errorMessage = 'Transaction failed',
     timedOutMessage = 'Transaction timed out',
@@ -41,12 +47,39 @@ export const TransactionToast = ({
     processingMessage = 'Processing transaction'
   } = transactionDisplayInfo;
 
-  const shardAdjustedDuraton = isSameShard
+  const isSameShard = useMemo(
+    () =>
+      transactions!.reduce(
+        (
+          prevTxIsSameShard: boolean,
+          { receiver, data }: SignedTransactionType
+        ) => {
+          const receiverAddress = getAddressFromDataField({
+            receiver,
+            data
+          });
+          if (receiverAddress == null) {
+            return prevTxIsSameShard;
+          }
+          return (
+            prevTxIsSameShard &&
+            isCrossShardTransaction({
+              receiverAddress,
+              senderShard: accountShard
+            })
+          );
+        },
+        true
+      ),
+    [transactions, accountShard]
+  );
+
+  const shardAdjustedDuration = isSameShard
     ? averageTxDurationMs
     : crossShardRounds * averageTxDurationMs;
 
   const transactionDuration =
-    transactionDisplayInfo?.transactionDuration || shardAdjustedDuraton;
+    transactionDisplayInfo?.transactionDuration || shardAdjustedDuration;
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -106,15 +139,16 @@ export const TransactionToast = ({
     iconClassName: 'bg-warning'
   };
 
-  const isPending = isBatchTransactionPending(status);
-  const isTimedOut = isBatchTransactionTimedOut(status);
+  const isPending = getIsTransactionPending(status);
+  const isTimedOut = getIsTransactionTimedOut(status);
 
   const toatsOptionsData = {
     signed: pendingToastData,
-    cancelled: failedToastData,
+    sent: pendingToastData,
+    pending: pendingToastData,
     success: successToastData,
     completed: successToastData,
-    sent: pendingToastData,
+    cancelled: failedToastData,
     fail: failedToastData,
     timedOut: timedOutToastData
   };

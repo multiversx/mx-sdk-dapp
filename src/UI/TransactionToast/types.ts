@@ -7,7 +7,6 @@ export interface TransactionToastPropsType {
   errorMessage?: string;
   successMessage?: string;
   processingMessage?: string;
-  isSameShard: boolean;
   withTxNonce?: boolean;
   shouldRenderDefaultCss?: boolean;
   transactions?: SignedTransactionType[];
