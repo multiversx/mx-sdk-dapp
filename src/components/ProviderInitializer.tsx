@@ -60,10 +60,11 @@ export default function ProviderInitializer() {
   useEffect(() => {
     fetchAccount();
   }, [address, ledgerLogin, isLoggedIn]);
+
   async function fetchAccount() {
     try {
+      dispatch(setIsAccountLoading(true));
       if (address && isLoggedIn) {
-        dispatch(setIsAccountLoading(false));
         const account = await getAccount(address);
         dispatch(
           setAccount({
