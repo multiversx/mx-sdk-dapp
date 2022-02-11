@@ -38,9 +38,11 @@ export function AppInitializer({
 
       dispatch(initializeExtraActions(extraActions));
     }
-    setInitialized(true);
+
     //sync redux with shardId from server
     getAccountShard();
+
+    setInitialized(true);
   }, [networkConfig]);
 
   useEffect(() => {
