@@ -114,8 +114,13 @@ export function useSignTransactions() {
 
   async function signTransactionsWithProvider() {
     try {
-      const { sessionId, transactions, callbackRoute, redirectAfterSign } =
-        transactionsToSign!;
+      const {
+        sessionId,
+        transactions,
+        callbackRoute,
+        sessionInformation,
+        redirectAfterSign
+      } = transactionsToSign!;
       if (transactions?.length) {
         const initialized = await provider.init();
         if (!initialized) {
@@ -133,6 +138,7 @@ export function useSignTransactions() {
               updateSignedTransaction({
                 [sessionId]: {
                   status: TransactionBatchStatusesEnum.signed,
+                  sessionInformation,
                   transactions: Object.values(signedTransactions).map((tx) =>
                     parseTransactionAfterSigning(tx)
                   )
