@@ -62,9 +62,9 @@ export default function ProviderInitializer() {
   }, [address, ledgerLogin, isLoggedIn]);
 
   async function fetchAccount() {
-    try {
-      dispatch(setIsAccountLoading(true));
-      if (address && isLoggedIn) {
+    if (address && isLoggedIn) {
+      try {
+        dispatch(setIsAccountLoading(true));
         const account = await getAccount(address);
         dispatch(
           setAccount({
@@ -81,12 +81,12 @@ export default function ProviderInitializer() {
             })
           );
         }
+        dispatch(setIsAccountLoading(false));
+      } catch (e) {
+        dispatch(setAccountLoadingError('Failed getting account'));
+        console.error('Failed getting account ', e);
       }
-    } catch (e) {
-      dispatch(setAccountLoadingError('Failed getting account'));
-      console.error('Failed getting account ', e);
     }
-    dispatch(setIsAccountLoading(false));
   }
 
   async function tryAuthenticateWalletUser() {
