@@ -11,11 +11,15 @@ export function isCrossShardTransaction({
   senderShard,
   senderAddress
 }: IsCrossShardTransactionPropsType) {
-  const receiver = new Address(receiverAddress);
-  const receiverShard = getShardOfAddress(receiver.pubkey());
-  if (senderShard == null) {
-    const sender = new Address(senderAddress);
-    return getShardOfAddress(sender) === receiverShard;
+  try {
+    const receiver = new Address(receiverAddress);
+    const receiverShard = getShardOfAddress(receiver.pubkey());
+    if (senderShard == null && senderAddress != null) {
+      const sender = new Address(senderAddress);
+      return getShardOfAddress(sender) === receiverShard;
+    }
+    return receiverShard === senderShard;
+  } catch (err) {
+    return false;
   }
-  return receiverShard === senderShard;
 }
