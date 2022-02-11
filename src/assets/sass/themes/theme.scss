@@ -3,21 +3,12 @@
 // Fonts
 // @import "./fonts";
 
-@import '../variables/variables';
-
-
-$headings-font-weight: 300 !important;
-$primary: #1b46c2;
-$light: #fafafa;
-$a: #1392ff;
 
 /* Do not move the imports from here.
 Override Bootstrap variables only above.
 -------------------------------------------------- */
 
-@import '~bootstrap/scss/bootstrap.scss';
 
-.dapp-core-ui-wrapper{
   /* Base
   -------------------------------------------------- */
   html {
@@ -276,4 +267,3 @@ Override Bootstrap variables only above.
       }
     }
   }
-}

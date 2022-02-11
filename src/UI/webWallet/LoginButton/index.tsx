@@ -19,7 +19,9 @@ export const WebWalletLoginButton: (
     token
   });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
+    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+      buttonClassName != null ? buttonClassName : ''
+    }`,
     loginText: 'text-left'
   });
 
