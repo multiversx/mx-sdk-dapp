@@ -1,14 +1,14 @@
-import { TransactionHash, TypedResult } from '@elrondnetwork/erdjs';
-import { apiProviderSelector } from 'redux/selectors';
+import axios from 'axios';
+import { networkConfigSelector } from 'redux/selectors';
 import { store } from 'redux/store';
-import { TransactionServerStatusesEnum } from 'types';
-import { getPlainTransactionStatus } from 'utils';
+import { SmartContractResult, TransactionServerStatusesEnum } from 'types';
+import { decodeBase64 } from 'utils';
 
 export type GetTransactionsByHashesReturnType = {
   hash: string;
   invalidTransaction: boolean;
   status: TransactionServerStatusesEnum;
-  results: TypedResult[];
+  results: SmartContractResult[];
   receiver: string;
   data: string;
   previousStatus: string;
@@ -23,23 +23,34 @@ export type PendingTransactionsType = {
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType
 ): Promise<GetTransactionsByHashesReturnType> {
-  const apiProvider = apiProviderSelector(store.getState());
-  const responses = [];
-  for (const { hash, previousStatus } of pendingTransactions) {
-    const txOnNetwork = await apiProvider.getTransaction(
-      new TransactionHash(hash)
+  const networkConfig = networkConfigSelector(store.getState());
+  const hashes = pendingTransactions.map((tx) => tx.hash);
+  const { data: responseData } = await axios.get(
+    `${networkConfig.network.apiAddress}/transactions`,
+    {
+      params: {
+        hashes: hashes.join(','),
+        withScResults: true
+      }
+    }
+  );
+  return pendingTransactions.map(({ hash, previousStatus }) => {
+    const txOnNetwork = responseData.find(
+      (txResponse: any) => txResponse.txHash === hash
     );
-    const txResponse = {
+    let data = txOnNetwork?.data;
+    try {
+      data = decodeBase64(data);
+    } catch (err) {}
+    return {
       hash,
+      data,
       invalidTransaction: txOnNetwork == null,
-      status: getPlainTransactionStatus(txOnNetwork.status),
-      results: txOnNetwork?.getSmartContractResults()?.getAllResults(),
-      receiver: txOnNetwork?.receiver?.bech32(),
+      status: txOnNetwork.status,
+      results: txOnNetwork.results,
+      receiver: txOnNetwork?.receiver,
       previousStatus,
-      data: txOnNetwork.data.valueOf().toString(),
       hasStatusChanged: status !== previousStatus
     };
-    responses.push(txResponse);
-  }
-  return responses;
+  });
 }

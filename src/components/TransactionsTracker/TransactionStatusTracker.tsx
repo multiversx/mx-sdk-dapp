@@ -1,5 +1,4 @@
 import { useContext, useEffect, useRef } from 'react';
-import { TypedResult } from '@elrondnetwork/erdjs';
 import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import { useDispatch } from 'redux/DappProviderContext';
 import {
@@ -14,8 +13,7 @@ import { SignedTransactionsBodyType } from 'types/transactions';
 import {
   getIsTransactionCompleted,
   getIsTransactionFailed,
-  getIsTransactionPending,
-  getIsTransactionSuccessful
+  getIsTransactionPending
 } from 'utils';
 import { refreshAccount } from 'utils/account';
 import { isContract, areScCallsSuccessful } from 'utils/smartContracts';
@@ -103,11 +101,7 @@ export function TransactionStatusTracker({
           }
           if (!invalidTransaction) {
             if (!getIsTransactionPending(status)) {
-              if (
-                isScCall &&
-                getIsTransactionSuccessful(status) &&
-                !getIsTransactionCompleted(status)
-              ) {
+              if (isScCall && !getIsTransactionCompleted(status)) {
                 const isScCallCompleted = areScCallsSuccessful(results);
                 if (isScCallCompleted) {
                   timeoutRefs.current.push(hash);
@@ -139,22 +133,22 @@ export function TransactionStatusTracker({
 
               if (getIsTransactionFailed(status)) {
                 const resultWithError = results.find(
-                  (scResult: TypedResult) => scResult.getReturnMessage() !== ''
+                  (scResult) => scResult?.returnMessage !== ''
                 );
 
                 dispatch(
                   updateSignedTransactionStatus({
                     transactionHash: hash,
                     sessionId,
-                    status: TransactionServerStatusesEnum.failed,
-                    errorMessage: resultWithError?.getReturnMessage()
+                    status: TransactionServerStatusesEnum.fail,
+                    errorMessage: resultWithError?.returnMessage
                   })
                 );
                 dispatch(
                   updateSignedTransactions({
                     sessionId,
-                    status: TransactionBatchStatusesEnum.failed,
-                    errorMessage: resultWithError?.getReturnMessage()
+                    status: TransactionBatchStatusesEnum.fail,
+                    errorMessage: resultWithError?.returnMessage
                   })
                 );
               }

@@ -97,7 +97,7 @@ const TransactionSender = () => {
         dispatch(
           updateSignedTransactions({
             sessionId,
-            status: TransactionBatchStatusesEnum.failed,
+            status: TransactionBatchStatusesEnum.fail,
             errorMessage: (error as any).message
           })
         );

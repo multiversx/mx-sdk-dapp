@@ -29,7 +29,6 @@ export const network: NetworkType & {
   egldLabel: 'xEGLD',
   walletAddress: 'https://devnet-wallet.elrond.com',
   apiAddress: 'https://devnet-api.elrond.com',
-  gatewayAddress: 'https://devnet-gateway.elrond.com',
   explorerAddress: 'http://devnet-explorer.elrond.com',
   graphQlAddress: 'https://devnet-exchange-graph.elrond.com/graphql'
 };
