@@ -53,7 +53,7 @@ export const DappProvider = ({
           extraActions={extraActions}
         >
           <ProviderInitializer />
-          <TransactionSender />
+          {!signWithoutSending && <TransactionSender />}
           <TransactionsTracker />
           {children}
         </AppInitializer>
