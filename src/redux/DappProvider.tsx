@@ -48,15 +48,6 @@ export const DappProvider = ({
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <AppInitializer
-          networkConfig={networkConfig}
-          extraActions={extraActions}
-        >
-          <ProviderInitializer />
-          {!signWithoutSending && <TransactionSender />}
-          <TransactionsTracker />
-          {children}
-        </AppInitializer>
         <OverrideDefaultBehaviourContext.Provider
           value={{
             sendSignedTransactionsAsync: memoizedSendSignedTransactionsAsync,
@@ -64,7 +55,10 @@ export const DappProvider = ({
             completedTransactionsDelay
           }}
         >
-          <AppInitializer networkConfig={networkConfig}>
+          <AppInitializer
+            networkConfig={networkConfig}
+            extraActions={extraActions}
+          >
             <ProviderInitializer />
             {!signWithoutSending && <TransactionSender />}
             <TransactionsTracker />
