@@ -11,17 +11,21 @@ const isAddressOfMetachain = (pubKey: Buffer) => {
   return pubKey.equals(zeroAddress);
 };
 export const getShardOfAddress = (hexPubKey: any) => {
-  const numShards = 3;
-  const maskHigh = parseInt('11', 2);
-  const maskLow = parseInt('01', 2);
-  const pubKey = Buffer.from(hexPubKey, 'hex');
-  const lastByteOfPubKey = pubKey[31];
-  if (isAddressOfMetachain(pubKey)) {
-    return 4294967295;
+  try {
+    const numShards = 3;
+    const maskHigh = parseInt('11', 2);
+    const maskLow = parseInt('01', 2);
+    const pubKey = Buffer.from(hexPubKey, 'hex');
+    const lastByteOfPubKey = pubKey[31];
+    if (isAddressOfMetachain(pubKey)) {
+      return 4294967295;
+    }
+    let shard = lastByteOfPubKey & maskHigh;
+    if (shard > numShards - 1) {
+      shard = lastByteOfPubKey & maskLow;
+    }
+    return shard;
+  } catch (err) {
+    return -1;
   }
-  let shard = lastByteOfPubKey & maskHigh;
-  if (shard > numShards - 1) {
-    shard = lastByteOfPubKey & maskLow;
-  }
-  return shard;
 };
