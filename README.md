@@ -1,5 +1,4 @@
-
-#  dapp-core
+# dapp-core
 
 > A library that holds the core functional logic of a dapp on the Elrond Network
 
@@ -10,10 +9,13 @@ See [Dapp template](https://dapp-template.elrond.com/) for live demo or checkout
 # Installation
 
 The library can be installed via npm or yarn.
+
 ```bash
 npm install @elrondnetwork/dapp-core
 ```
+
 or
+
 ```bash
 yarn add @elrondnetwork/dapp-core
 ```
@@ -24,11 +26,12 @@ This will not install the packages needed for the optional UI components.
 ```bash
 npm install @elrondnetwork/dapp-core --no-optional
 ```
+
 or
+
 ```bash
 yarn add @elrondnetwork/dapp-core --no-optional
 ```
-
 
 # Usage
 
@@ -44,8 +47,8 @@ The default UI is exposed via the `DappUI` object.
 
 More on this below.
 
-
 ## Prerequisites
+
 There are a couple of requirements that need to be met for the application to work properly.
 
 <details>
@@ -56,6 +59,7 @@ There are a couple of requirements that need to be met for the application to wo
 ### React
 
 This library was built for applications that use React, it might not be suitable for usage with other libraries or frameworks.
+
   </details>
 
 <details>
@@ -64,7 +68,9 @@ This library was built for applications that use React, it might not be suitable
  </summary>
 
 ### DappProvider
+
 You need to wrap your application with the **DappProvider** component, which is exported by the library, as we need to create a global Context to be able to manipulate the data.
+
 - import the Provider:
 
 `import { DappProvider } from "@elrondnetwork/dapp-core";`
@@ -91,19 +97,16 @@ As you might have noticed, the DappProvider accepts a `networkConfig` object wit
   name: string;
   walletAddress: string;
   apiAddress: string;
-  gatewayAddress: string;
   explorerAddress: string;
 }
 ```
 
 - **completedTransactionsDelay (optional)**;
-This is an extra prop is provider for smart contract calls.
+  This is an extra prop is provider for smart contract calls.
 
 It will delay the transaction from entering the "completed" state, useful for refetching info after the smart contract call executes.
 
   </details>
-
-
 
 <details>
   <summary>
@@ -116,6 +119,7 @@ The library exposes a couple of Components that are connected to the redux store
 when something happens inside the app:
 
 - `TransactionsToastList` will display new transactions in nice toasts at the bottom of the screen. This component is fully customizable.
+
 ```
   import {DappUI} from "@elrondnetwork/dapp-core";
 
@@ -131,9 +135,8 @@ when something happens inside the app:
 
 ```
 
-
-
 - `SignTransactionsModals` will show a modal when a new transaction is submitted, prompting the user to verify and sign it.
+
 ```
   import {DappUI} from "@elrondnetwork/dapp-core";
 
@@ -142,6 +145,7 @@ when something happens inside the app:
   <Content/>
 </App>
 ```
+
 `NotificationModal` Will show a modal to the user with various warnings and errors.
 
 ```
@@ -166,13 +170,10 @@ when something happens inside the app:
 </App>
 ```
 
-
 This wrapper will wrap your content in an extra div.
 If, for some reason, you want to avoid this, you can use `getWrapperClassname` function to get the className and attach it to a "wrapping" element.
 
 </details>
-
-
 
 <details>
   <summary>
@@ -196,18 +197,19 @@ export default function App() {
 </details>
 
 ## User Identity
+
 Dapp-core makes logging in and persisting user's session easy and hassle-free.
-
-
 
 A handy component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
 Import from dapp-core:
+
 ```
 import { AuthenticatedRoutesWrapper} from "@elrondnetwork/dapp-core";
 ```
 
 Use with routes:
+
 ```
 <AuthenticatedRoutesWrapper
           routes={routes}
@@ -230,23 +232,25 @@ Use with routes:
 
 The important parts that makes this component work are the flag **authenticatedRoute: true** and the key **path**, which means that this route should be accessible only to authenticated users.
 
-
   <details>
     <summary>
       Login UI
   </summary>
 
 ### Login UI
+
 There are a couple of very handy React components that can be used to login the user and protect certain routes if the user is not logged in.
 
 Under the `DappUI` object mentioned above, you can find 4 buttons (one for each provider) which abstract away all the logic of loggin in the user and render the default UI. These buttons can be easily customized with a custom css class.
 The exported buttons are:
+
 - DappUI.ExtensionLoginButton
 - DappUI.WalletConnectLoginButton
 - DappUI.LedgerLoginButton
 - DappUI.WebWalletLoginButton
 
 example:
+
 ```
 <DappUI.ExtensionLoginButton
   callbackRoute="/dashboard"
@@ -270,10 +274,8 @@ They can also be used with children
 </DappUI.ExtensionLoginButton
 ```
 
-
 `WalletConnectLoginButton` and `LedgerLoginButton` will trigger a modal with a QR code and the ledger login UI, respectively.
 These are automatically triggered by the buttons.
-
 
 If, however, you want access to these containers without the buttons,
 you can easily import and use them.
@@ -287,18 +289,18 @@ you can easily import and use them.
   />
 ```
 
-
-
 Also, for a quicker setup, the `DappUI` object exports an `DappUI.UnlockPage` component, which contains all 4 buttons.
 
 Another handly component is DappUI.AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
 Import from dapp-core:
+
 ```
 import { AuthenticatedRoutesWrapper} from "@elrondnetwork/dapp-core";
 ```
 
 Use with routes:
+
 ```
 <AuthenticatedRoutesWrapper
     routes={routes}
@@ -320,6 +322,7 @@ Use with routes:
 ```
 
 The important parts that makes this component work are the flag **authenticatedRoute: true** and the key **path**, which means that this route should be accessible only to authenticated users.
+
 </details>
 
   <details><summary>
@@ -327,6 +330,7 @@ Login hooks
   </summary>
 
 ### Login hooks
+
 This area covers the login hooks, which expose a trigger function and the login data, ready to be rendered.
 
 These hooks are exposed by the `loginServices` object, which can be imported from dapp-core:
@@ -336,6 +340,7 @@ import {loginServices} from @elrondnetwork/dapp-core
 ```
 
 There are 4 available hooks:
+
 - useExtensionLogin
 - useWalletConnectLogin
 - useLedgerLogin
@@ -344,6 +349,7 @@ There are 4 available hooks:
 All hooks have the same respose signature:
 
 return type is as follows:
+
 ```
 const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLoginHook({
     callbackRoute,
@@ -369,9 +375,10 @@ const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLogi
 
   - null for useWebWalletConnect;
 
-  -  `{ uriDeepLink: string, qrCodeSvg: svgElement }` for useWalletConnectLogin;
+  - `{ uriDeepLink: string, qrCodeSvg: svgElement }` for useWalletConnectLogin;
 
   -
+
 ```
 {
   accounts: string[];
@@ -384,6 +391,7 @@ const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLogi
   onConfirmSelectedAddress: () => void;
 }
 ```
+
 for useLedgerLogin;
 
 </details>
@@ -394,11 +402,13 @@ Reading User State
   </summary>
 
 ### Reading User State
+
 Once logged in, the user's session is persisted and can be read and deleted via a couple of handy functions.
 
 For logging out, the library exposes a simple function called **logout**, which can be called to clear the user data.
 
 There are 2 ways of reading the user current state: hooks (to be used inside components and for reacting to changes in the data) and simple functions (for reading data outside of React components or inside handlers).
+
 - hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig`;
 - functions: `getAccount, getAccountBalance, getAccountShard, getAddress, getIsLoggedIn;`
 
@@ -413,6 +423,7 @@ Sending Transactions
   </summary>
 
 ### Sending Transactions
+
 The API for sending transactions is a function called **sendTransactions**:
 
 `import { sendTransactions } from "@elrondnetwork/dapp-core";`
@@ -441,7 +452,6 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 Transaction Signing Flow
   </summary>
 
-
 ### Transaction Signing Flow
 
 Once a transaction has been submitted,
@@ -464,9 +474,11 @@ You may do this with `useSignTransactions` hook.
 This hook will let you know if there are any transactions and you can programatically abort the signing process.
 
 You can also get the provider via
+
 ```
   const { providerType } = useGetAccountProvider();
 ```
+
 and use that to display an appropriate message to the user.
 
 For ledger, signing a transaction is simple if you're using the `SignTransactionsModal` component.
@@ -476,11 +488,13 @@ It is fully customizable and will take care of walking the user through the sign
 If, however, you want to implement a different experience, you will have to use the `useSignTransactionsWithLedger` hook.
 
 it accepts the following props:
+
 ```
 {
   onCancel: () => void;
 }
 ```
+
 and returns an object with the following keys:
 
 ```
@@ -516,8 +530,8 @@ and returns an object with the following keys:
 Tracking a transaction
   </summary>
 
-
 ### Tracking a transaction
+
 The library exposes a hook called useTrackTransactionStatus under the object `transactionServices`.
 
 ```
@@ -533,6 +547,7 @@ const transactionStatus = transactionServices.useTrackTransactionStatus({
 ```
 
 transactionStatus has the following information about the transaction:
+
 ```
 {
   isPending,
@@ -550,17 +565,16 @@ It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sen
 
 </details>
 
-
 <details><summary>
 Tracking transactions' statuses
   </summary>
-
 
 ### Tracking transactions' statuses
 
 Dapp-core also exposes a number of handy hooks for tracking all, pending, failed, successful, completed timed out transactions.
 
 Use:
+
 - `useGetPendingTransactions` to get a list of all pending transactions.
 - `useGetSuccessfulTransactions` to get a list of all successful transactions.
 - `useGetFailedTransactions` to get a list of all pending transactions.
@@ -573,6 +587,7 @@ it's return signature is
 
 ```
 {
+  hasActiveTransactions: boolean - the user has at least 1 active transactions in one of the states described below;
   pending: boolean - at least one transaction is pending;
   timedOut: boolean = there are no pending transactions and at least one has timed out;
   failed: boolean - there are no pending and no timedOut transactions and at least one has failed;
@@ -581,15 +596,14 @@ it's return signature is
 }
 ```
 
-
 </details>
-
 
   <details><summary>
 Transaction Toasts UI
   </summary>
 
 ### Transaction Toasts UI
+
 dapp-core also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
 
 The toasts list is exposed via **DappUI.TransactionsToastList** component and can be used just by rendering it inside the application.
@@ -604,8 +618,6 @@ The toasts list is exposed via **DappUI.TransactionsToastList** component and ca
 **Important**: This has to be inside the `<DappProvider/>` children.
 
 </details>
-
-
 
 ## Roadmap
 
@@ -628,8 +640,5 @@ One can contribute by creating _pull requests_, or by opening _issues_ for disco
 The [Elrond Team](https://elrond.com/team/).
 
 ## License
+
 GPL-3.0-or-later
-
-
-
-

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useGetSignedTransactions } from 'hooks';
 import { useGetPendingTransactions } from 'services';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
+import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'utils';
 
@@ -17,6 +19,7 @@ export function TransactionsToastList({
   const [toastsIds, setToastsIds] = useState<any>([]);
 
   const { pendingTransactions } = useGetPendingTransactions();
+  const signedTransactions = useGetSignedTransactions();
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -28,10 +31,18 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
+    const currentTx: SignedTransactionsBodyType = signedTransactions[toastId];
+    if (currentTx == null) {
+      return null;
+    }
+
+    const { transactions, status } = currentTx;
     return (
       <TransactionToast
         className={className}
         key={toastId}
+        transactions={transactions}
+        status={status}
         toastId={toastId}
         withTxNonce={withTxNonce}
       />

@@ -3,6 +3,7 @@ import {
   completedTransactionsSelector,
   failedTransactionsSelector,
   pendingSignedTransactionsSelector,
+  signedTransactionsSelector,
   successfulTransactionsSelector,
   timedOutTransactionsSelector
 } from 'redux/selectors';
@@ -13,10 +14,12 @@ interface useGetActiveTransactionsStatusReturnType {
   failed: boolean;
   successful: boolean;
   completed: boolean;
+  hasActiveTransactions: boolean;
 }
 
 //this is a hook to be able to take advantage of memoization offered by useSelector
 export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatusReturnType {
+  const signedTransactions = useSelector(signedTransactionsSelector);
   const timedOutTransactions = useSelector(timedOutTransactionsSelector);
   const failedTransactions = useSelector(failedTransactionsSelector);
   const successfulTransactions = useSelector(successfulTransactionsSelector);
@@ -41,11 +44,13 @@ export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatus
     !timedOut &&
     !failed &&
     Object.keys(completedTransactions).length > 0;
+  const hasActiveTransactions = Object.keys(signedTransactions).length > 0;
   return {
     pending,
     timedOut,
     failed,
     successful,
-    completed
+    completed,
+    hasActiveTransactions
   };
 }

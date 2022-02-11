@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
+import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import newTransaction from 'models/newTransaction';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { signedTransactionsSelector } from 'redux/selectors';
-import { accountSelector, proxySelector } from 'redux/selectors';
+import { accountSelector } from 'redux/selectors';
 import {
   setTxSubmittedModal,
   clearSignTransactions,
@@ -18,9 +19,11 @@ import {
 import { setNonce } from 'utils';
 
 const TransactionSender = () => {
-  const proxy = useSelector(proxySelector);
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
+  const { sendSignedTransactionsAsync } = useContext(
+    OverrideDefaultBehaviourContext
+  );
   const sendingRef = useRef(false);
 
   const dispatch = useDispatch();
@@ -51,16 +54,16 @@ const TransactionSender = () => {
           continue;
         }
         sendingRef.current = true;
-        const transactionsPromises = transactions.map((tx) => {
+        const transactionsToSend = transactions.map((tx) => {
           const address = new Address(tx.sender);
           const transactionObject = newTransaction(tx);
           const signature = new Signature(tx.signature);
 
           transactionObject.applySignature(signature, address);
-          return proxy.sendTransaction(transactionObject);
+          return transactionObject;
         });
-        const responseHashes = (await Promise.all(transactionsPromises)).map(
-          (txHash) => Buffer.from(txHash.hash).toString('hex')
+        const responseHashes = await sendSignedTransactionsAsync(
+          transactionsToSend
         );
 
         const newStatus = TransactionServerStatusesEnum.pending;
@@ -94,7 +97,7 @@ const TransactionSender = () => {
         dispatch(
           updateSignedTransactions({
             sessionId,
-            status: TransactionBatchStatusesEnum.failed,
+            status: TransactionBatchStatusesEnum.fail,
             errorMessage: (error as any).message
           })
         );

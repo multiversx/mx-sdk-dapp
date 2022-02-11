@@ -1,6 +1,6 @@
 export enum TransactionServerStatusesEnum {
   'pending' = 'pending',
-  'failed' = 'failed',
+  'fail' = 'fail',
   'invalid' = 'invalid',
   'success' = 'success',
   'executed' = 'executed',
@@ -10,9 +10,9 @@ export enum TransactionServerStatusesEnum {
 export enum TransactionBatchStatusesEnum {
   'signed' = 'signed',
   'cancelled' = 'cancelled',
-  'successful' = 'successful',
+  'success' = 'success',
   'sent' = 'sent',
-  'failed' = 'failed',
+  'fail' = 'fail',
   'timedOut' = 'timedOut'
 }
 
@@ -29,4 +29,9 @@ export enum NotificationTypesEnum {
   warning = 'warning',
   error = 'error',
   success = 'success'
+}
+
+export enum TypesOfSmartContractCallsEnum {
+  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
+  ESDTNFTTransfer = 'ESDTNFTTransfer'
 }

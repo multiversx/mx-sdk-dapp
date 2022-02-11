@@ -8,6 +8,7 @@ import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { ExtraActionsType, NetworkConfigType } from 'types';
 import { logout } from 'utils';
+import getAccountShard from 'utils/account/getAccountShard';
 
 export function AppInitializer({
   networkConfig,
@@ -38,6 +39,8 @@ export function AppInitializer({
       dispatch(initializeExtraActions(extraActions));
     }
     setInitialized(true);
+    //sync redux with shardId from server
+    getAccountShard();
   }, [networkConfig]);
 
   useEffect(() => {

@@ -7,10 +7,21 @@ import {
   walletConnectLoginSelector,
   networkSelector,
   proxySelector,
-  walletLoginSelector
+  walletLoginSelector,
+  addressSelector,
+  ledgerAccountSelector,
+  ledgerLoginSelector,
+  isLoggedInSelector
 } from 'redux/selectors';
 import { extraActionsSelector } from 'redux/selectors/extraActionsSelectors';
-import { setAccount, setProvider, setWalletLogin } from 'redux/slices';
+import {
+  setAccount,
+  setIsAccountLoading,
+  setAccountLoadingError,
+  setLedgerAccount,
+  setProvider,
+  setWalletLogin
+} from 'redux/slices';
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
 import {
@@ -27,6 +38,11 @@ export default function ProviderInitializer() {
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const { getProvider } = useSelector(extraActionsSelector);
+  const address = useSelector(addressSelector);
+  const ledgerAccount = useSelector(ledgerAccountSelector);
+  const ledgerLogin = useSelector(ledgerLoginSelector);
+  const isLoggedIn = useSelector(isLoggedInSelector);
+
   const proxy = useSelector(proxySelector);
   const dispatch = useDispatch();
 
@@ -42,6 +58,37 @@ export default function ProviderInitializer() {
   useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
+
+  useEffect(() => {
+    fetchAccount();
+  }, [address, ledgerLogin, isLoggedIn]);
+  async function fetchAccount() {
+    try {
+      if (address && isLoggedIn) {
+        dispatch(setIsAccountLoading(false));
+        const account = await getAccount(address);
+        dispatch(
+          setAccount({
+            balance: account.balance.toString(),
+            address,
+            nonce: getLatestNonce(account)
+          })
+        );
+        if (ledgerAccount == null && ledgerLogin != null) {
+          dispatch(
+            setLedgerAccount({
+              index: ledgerLogin.index,
+              address
+            })
+          );
+        }
+      }
+    } catch (e) {
+      dispatch(setAccountLoadingError('Failed getting account'));
+      console.error('Failed getting account ', e);
+    }
+    dispatch(setIsAccountLoading(false));
+  }
 
   async function tryAuthenticateWalletUser() {
     try {

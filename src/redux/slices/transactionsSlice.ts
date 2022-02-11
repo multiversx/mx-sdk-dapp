@@ -9,10 +9,11 @@ import {
   SignedTransactionType,
   TransactionsToSignType
 } from 'types/transactions';
-import { getIsTransactionCompleted, isContract } from 'utils';
+import { isContract } from 'utils/smartContracts';
 import {
   getIsTransactionFailed,
-  getIsTransactionSuccessful
+  getIsTransactionSuccessful,
+  getIsTransactionCompleted
 } from 'utils/transactions';
 import { logoutAction } from '../commonActions';
 
@@ -92,7 +93,7 @@ export const transactionsSlice = createSlice({
         const areTransactionsSuccessful = state.signedTransactions[
           sessionId
         ]?.transactions?.every((transaction) => {
-          const isScCall = isContract(transaction.receiver);
+          const isScCall = isContract(transaction.receiver, transaction.data);
           return isScCall
             ? getIsTransactionCompleted(transaction.status)
             : getIsTransactionSuccessful(transaction.status);
@@ -105,11 +106,11 @@ export const transactionsSlice = createSlice({
         );
         if (areTransactionsSuccessful) {
           state.signedTransactions[sessionId].status =
-            TransactionBatchStatusesEnum.successful;
+            TransactionBatchStatusesEnum.success;
         }
         if (areTransactionsFailed) {
           state.signedTransactions[sessionId].status =
-            TransactionBatchStatusesEnum.failed;
+            TransactionBatchStatusesEnum.fail;
         }
       }
     },

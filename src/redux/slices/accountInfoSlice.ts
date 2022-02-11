@@ -27,6 +27,8 @@ export interface AccountInfoSliceType {
   publicKey: string;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
+  isAccountLoading: boolean;
+  accountLoadingError: string | null;
 }
 
 export const emptyAccount: AccountType = {
@@ -40,7 +42,9 @@ const initialState: AccountInfoSliceType = {
   account: emptyAccount,
   ledgerAccount: null,
   publicKey: '',
-  walletConnectAccount: null
+  walletConnectAccount: null,
+  isAccountLoading: true,
+  accountLoadingError: null
 };
 
 export const accountInfoSlice = createSlice({
@@ -60,6 +64,8 @@ export const accountInfoSlice = createSlice({
       action: PayloadAction<AccountType>
     ) => {
       state.account = action.payload;
+      state.isAccountLoading = false;
+      state.accountLoadingError = null;
     },
     setAccountNonce: (
       state: AccountInfoSliceType,
@@ -84,6 +90,20 @@ export const accountInfoSlice = createSlice({
       action: PayloadAction<string | null>
     ) => {
       state.walletConnectAccount = action.payload;
+    },
+    setIsAccountLoading: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<boolean>
+    ) => {
+      state.isAccountLoading = action.payload;
+      state.accountLoadingError = null;
+    },
+    setAccountLoadingError: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<string | null>
+    ) => {
+      state.accountLoadingError = action.payload;
+      state.isAccountLoading = false;
     }
   },
   extraReducers: (builder) => {
@@ -122,7 +142,9 @@ export const {
   setAccountNonce,
   setAccountShard,
   setLedgerAccount,
-  setWalletConnectAccount
+  setWalletConnectAccount,
+  setIsAccountLoading,
+  setAccountLoadingError
 } = accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;

@@ -1,21 +1,29 @@
 import React, { useMemo, useRef, useState } from 'react';
 
-import { useGetSignedTransactions, useGetTransactionDisplayInfo } from 'hooks';
+import { useGetTransactionDisplayInfo } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import moment from 'optionalPackages/moment';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { useSelector } from 'redux/DappProviderContext';
+import { shardSelector } from 'redux/selectors';
+import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
+import { SignedTransactionType } from 'types';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
 import {
+  getAddressFromDataField,
   getGeneratedClasses,
-  isBatchTransactionPending,
-  isBatchTransactionTimedOut
+  getIsTransactionPending,
+  getIsTransactionTimedOut
 } from 'utils';
 
 import { TransactionToastPropsType } from './types';
+
+const averageTxDurationMs = 6000;
+const crossShardRounds = 5;
 
 export const TransactionToast = ({
   toastId,
@@ -23,20 +31,55 @@ export const TransactionToast = ({
   shouldRenderDefaultCss = true,
   className = 'transaction-toast',
   withTxNonce = false,
+  transactions,
+  status,
   onClose
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
-  const signedTransactions = useGetSignedTransactions();
+  const accountShard = useSelector(shardSelector);
+
   const {
     errorMessage = 'Transaction failed',
     timedOutMessage = 'Transaction timed out',
     successMessage = 'Transaction successful',
-    processingMessage = 'Processing transaction',
-    transactionDuration = 10000
+    processingMessage = 'Processing transaction'
   } = transactionDisplayInfo;
 
+  const isSameShard = useMemo(
+    () =>
+      transactions!.reduce(
+        (
+          prevTxIsSameShard: boolean,
+          { receiver, data }: SignedTransactionType
+        ) => {
+          const receiverAddress = getAddressFromDataField({
+            receiver,
+            data
+          });
+          if (receiverAddress == null) {
+            return prevTxIsSameShard;
+          }
+          return (
+            prevTxIsSameShard &&
+            isCrossShardTransaction({
+              receiverAddress,
+              senderShard: accountShard
+            })
+          );
+        },
+        true
+      ),
+    [transactions, accountShard]
+  );
+
+  const shardAdjustedDuration = isSameShard
+    ? averageTxDurationMs
+    : crossShardRounds * averageTxDurationMs;
+
+  const transactionDuration =
+    transactionDisplayInfo?.transactionDuration || shardAdjustedDuration;
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -61,13 +104,6 @@ export const TransactionToast = ({
   }, []);
 
   const progress = { startTime, endTime };
-
-  const currentTx: any = signedTransactions[toastId];
-  if (currentTx == null) {
-    return null;
-  }
-
-  const { transactions, status } = currentTx;
 
   const successToastData = {
     id: toastId,
@@ -103,27 +139,28 @@ export const TransactionToast = ({
     iconClassName: 'bg-warning'
   };
 
-  const isPending = isBatchTransactionPending(status);
-  const isTimedOut = isBatchTransactionTimedOut(status);
+  const isPending = getIsTransactionPending(status);
+  const isTimedOut = getIsTransactionTimedOut(status);
 
   const toatsOptionsData = {
     signed: pendingToastData,
-    cancelled: failedToastData,
-    successful: successToastData,
-    completed: successToastData,
     sent: pendingToastData,
-    failed: failedToastData,
+    pending: pendingToastData,
+    success: successToastData,
+    completed: successToastData,
+    cancelled: failedToastData,
+    fail: failedToastData,
     timedOut: timedOutToastData
   };
 
-  const toastDataState = toatsOptionsData[status];
+  const toastDataState = toatsOptionsData[status!];
 
   const handleDeleteToast = () => {
     setShouldRender(false);
     onClose?.(toastId);
   };
 
-  if (!shouldRender) {
+  if (!shouldRender || transactions == null) {
     return null;
   }
 

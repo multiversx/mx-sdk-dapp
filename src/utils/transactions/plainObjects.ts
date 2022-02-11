@@ -13,7 +13,7 @@ export function getPlainTransactionStatus(
   const statusObj = {
     [TransactionServerStatusesEnum.pending]: transactionStatus.isPending(),
     [TransactionServerStatusesEnum.success]: transactionStatus.isSuccessful(),
-    [TransactionServerStatusesEnum.failed]: transactionStatus.isFailed(),
+    [TransactionServerStatusesEnum.fail]: transactionStatus.isFailed(),
     [TransactionServerStatusesEnum.invalid]: transactionStatus.isInvalid()
   };
   return Object.entries(statusObj).reduce((prev, [key, value]) => {

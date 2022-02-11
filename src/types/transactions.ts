@@ -126,6 +126,7 @@ export interface SendTransactionsPropsType {
     | Transaction
     | SimpleTransactionType
     | (Transaction | SimpleTransactionType)[];
+  redirectAfterSign?: boolean;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
 }
@@ -152,4 +153,21 @@ export interface ActiveLedgerTransactionType {
   transactionTokenInfo: TxDataTokenType;
   isTokenTransaction: boolean;
   dataField: string;
+}
+
+export interface SmartContractResult {
+  hash: string;
+  timestamp: number;
+  nonce: number;
+  gasLimit: number;
+  gasPrice: number;
+  value: string;
+  sender: string;
+  receiver: string;
+  data: string;
+  prevTxHash: string;
+  originalTxHash: string;
+  callType: string;
+  miniBlockHash: string;
+  returnMessage: string;
 }
