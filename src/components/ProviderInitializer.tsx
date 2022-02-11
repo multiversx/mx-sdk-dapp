@@ -60,10 +60,11 @@ export default function ProviderInitializer() {
   useEffect(() => {
     fetchAccount();
   }, [address, ledgerLogin, isLoggedIn]);
+
   async function fetchAccount() {
-    try {
-      if (address && isLoggedIn) {
-        dispatch(setIsAccountLoading(false));
+    if (address && isLoggedIn) {
+      try {
+        dispatch(setIsAccountLoading(true));
         const account = await getAccount(address);
         dispatch(
           setAccount({
@@ -80,12 +81,12 @@ export default function ProviderInitializer() {
             })
           );
         }
+        dispatch(setIsAccountLoading(false));
+      } catch (e) {
+        dispatch(setAccountLoadingError('Failed getting account'));
+        console.error('Failed getting account ', e);
       }
-    } catch (e) {
-      dispatch(setAccountLoadingError('Failed getting account'));
-      console.error('Failed getting account ', e);
     }
-    dispatch(setIsAccountLoading(false));
   }
 
   async function tryAuthenticateWalletUser() {
