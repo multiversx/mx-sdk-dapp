@@ -20,7 +20,7 @@ export default async function getAccountShard() {
         `${network.apiAddress}/accounts/${address}`
       );
       store.dispatch(setAccountShard(account.shard));
-      return shard;
+      return account.shard;
     } else {
       return shard;
     }
