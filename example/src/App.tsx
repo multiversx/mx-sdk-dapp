@@ -11,6 +11,7 @@ import PageNotFound from 'pages/PageNotFound';
 import { routeNames } from 'routes';
 import routes from 'routes';
 import '@elrondnetwork/dapp-core/build/index.css';
+import './assets/sass/theme.scss';
 
 const {
   TransactionsToastList,
