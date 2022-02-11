@@ -14,12 +14,23 @@ import { TransactionsToastListPropsType } from './types';
 export function TransactionsToastList({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
-  className = 'transactions-toast-list'
+  className = 'transactions-toast-list',
+  pendingTransactions,
+  signedTransactions
 }: TransactionsToastListPropsType) {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
-  const { pendingTransactions } = useGetPendingTransactions();
-  const signedTransactions = useGetSignedTransactions();
+  const pendingTransactionsFromStore =
+    useGetPendingTransactions().pendingTransactions;
+
+  const signedTransactionsFromStore = useGetSignedTransactions();
+
+  const pendingTransactionsToRender =
+    pendingTransactions || pendingTransactionsFromStore;
+
+  const signedTransactionsToRender =
+    signedTransactions || signedTransactionsFromStore;
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -31,7 +42,8 @@ export function TransactionsToastList({
   );
 
   const mappedToastsList = toastsIds?.map((toastId: string) => {
-    const currentTx: SignedTransactionsBodyType = signedTransactions[toastId];
+    const currentTx: SignedTransactionsBodyType =
+      signedTransactionsToRender[toastId];
     if (currentTx == null) {
       return null;
     }
@@ -52,7 +64,7 @@ export function TransactionsToastList({
   const mapPendingSignedTransactions = () => {
     const newToasts = [...toastsIds];
 
-    for (const sessionId in pendingTransactions) {
+    for (const sessionId in pendingTransactionsToRender) {
       const hasToast = toastsIds.includes(sessionId);
 
       if (!hasToast) {
@@ -90,7 +102,7 @@ export function TransactionsToastList({
 
   useEffect(() => {
     mapPendingSignedTransactions();
-  }, [pendingTransactions]);
+  }, [pendingTransactionsToRender]);
 
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }
