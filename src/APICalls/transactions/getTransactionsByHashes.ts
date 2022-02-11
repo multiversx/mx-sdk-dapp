@@ -2,6 +2,7 @@ import axios from 'axios';
 import { networkConfigSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { SmartContractResult, TransactionServerStatusesEnum } from 'types';
+import { decodeBase64 } from 'utils';
 
 export type GetTransactionsByHashesReturnType = {
   hash: string;
@@ -24,7 +25,7 @@ export async function getTransactionsByHashes(
 ): Promise<GetTransactionsByHashesReturnType> {
   const networkConfig = networkConfigSelector(store.getState());
   const hashes = pendingTransactions.map((tx) => tx.hash);
-  const { data } = await axios.get(
+  const { data: responseData } = await axios.get(
     `${networkConfig.network.apiAddress}/transactions`,
     {
       params: {
@@ -34,17 +35,21 @@ export async function getTransactionsByHashes(
     }
   );
   return pendingTransactions.map(({ hash, previousStatus }) => {
-    const txOnNetwork = data.find(
+    const txOnNetwork = responseData.find(
       (txResponse: any) => txResponse.txHash === hash
     );
+    let data = txOnNetwork?.data;
+    try {
+      data = decodeBase64(data);
+    } catch (err) {}
     return {
       hash,
+      data,
       invalidTransaction: txOnNetwork == null,
       status: txOnNetwork.status,
       results: txOnNetwork.results,
       receiver: txOnNetwork?.receiver,
       previousStatus,
-      data: txOnNetwork.data,
       hasStatusChanged: status !== previousStatus
     };
   });

@@ -11,6 +11,7 @@ export {
   AppInitializer
 } from './wrappers';
 export * as transactionServices from './services/transactions';
+export * as models from './models';
 export * from './hooks';
 
 export { sendTransactions } from './services/transactions';
