@@ -11,6 +11,7 @@ import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
 import {
   getGeneratedClasses,
+    getIsTransactionPending,
   isBatchTransactionPending,
   isBatchTransactionTimedOut
 } from 'utils';
@@ -106,7 +107,7 @@ export const TransactionToast = ({
     iconClassName: 'bg-warning'
   };
 
-  const isPending = isBatchTransactionPending(status);
+  const isPending = getIsTransactionPending(status);
   const isTimedOut = isBatchTransactionTimedOut(status);
 
   const toatsOptionsData = {
@@ -116,7 +117,8 @@ export const TransactionToast = ({
     completed: successToastData,
     sent: pendingToastData,
     fail: failedToastData,
-    timedOut: timedOutToastData
+    timedOut: timedOutToastData,
+    pending: pendingToastData,
   };
 
   const toastDataState = toatsOptionsData[status!];
