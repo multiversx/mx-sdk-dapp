@@ -11,7 +11,8 @@ import {
   addressSelector,
   ledgerAccountSelector,
   ledgerLoginSelector,
-  isLoggedInSelector
+  isLoggedInSelector,
+  chainIDSelector
 } from 'redux/selectors';
 import {
   setAccount,
@@ -19,7 +20,8 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setProvider,
-  setWalletLogin
+  setWalletLogin,
+  setChainID
 } from 'redux/slices';
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
@@ -53,6 +55,12 @@ export default function ProviderInitializer() {
     logoutRoute
   });
 
+  const chainId = useSelector(chainIDSelector);
+
+  useEffect(() => {
+    refreshChainID();
+  }, [chainId.valueOf(), network]);
+
   useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
@@ -60,6 +68,17 @@ export default function ProviderInitializer() {
   useEffect(() => {
     fetchAccount();
   }, [address, ledgerLogin, isLoggedIn]);
+
+  function refreshChainID() {
+    proxy
+      .getNetworkConfig()
+      .then((networkConfig) => {
+        dispatch(setChainID(networkConfig.ChainID.valueOf()));
+      })
+      .catch((e) => {
+        console.error('To do ', e);
+      });
+  }
 
   async function fetchAccount() {
     dispatch(setIsAccountLoading(true));
