@@ -16,6 +16,7 @@ interface TransactionsToSignReturnType {
   sessionId: string;
   redirectAfterSign: boolean;
   transactions: Transaction[];
+  sessionInformation?: any;
 }
 
 export const transactionsSelectors = (state: RootState) => state.transactions;

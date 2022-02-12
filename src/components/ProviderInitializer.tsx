@@ -19,7 +19,8 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setProvider,
-  setWalletLogin
+  setWalletLogin,
+  setChainID
 } from 'redux/slices';
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
@@ -54,16 +55,32 @@ export default function ProviderInitializer() {
   });
 
   useEffect(() => {
+    refreshChainID();
+  }, [network]);
+
+  useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
 
   useEffect(() => {
     fetchAccount();
   }, [address, ledgerLogin, isLoggedIn]);
+
+  function refreshChainID() {
+    proxy
+      .getNetworkConfig()
+      .then((networkConfig) => {
+        dispatch(setChainID(networkConfig.ChainID.valueOf()));
+      })
+      .catch((e) => {
+        console.error('To do ', e);
+      });
+  }
+
   async function fetchAccount() {
-    try {
-      if (address && isLoggedIn) {
-        dispatch(setIsAccountLoading(false));
+    dispatch(setIsAccountLoading(true));
+    if (address && isLoggedIn) {
+      try {
         const account = await getAccount(address);
         dispatch(
           setAccount({
@@ -80,10 +97,10 @@ export default function ProviderInitializer() {
             })
           );
         }
+      } catch (e) {
+        dispatch(setAccountLoadingError('Failed getting account'));
+        console.error('Failed getting account ', e);
       }
-    } catch (e) {
-      dispatch(setAccountLoadingError('Failed getting account'));
-      console.error('Failed getting account ', e);
     }
     dispatch(setIsAccountLoading(false));
   }
