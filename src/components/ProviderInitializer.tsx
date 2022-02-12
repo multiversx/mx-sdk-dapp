@@ -11,8 +11,7 @@ import {
   addressSelector,
   ledgerAccountSelector,
   ledgerLoginSelector,
-  isLoggedInSelector,
-  chainIDSelector
+  isLoggedInSelector
 } from 'redux/selectors';
 import {
   setAccount,
@@ -55,11 +54,9 @@ export default function ProviderInitializer() {
     logoutRoute
   });
 
-  const chainId = useSelector(chainIDSelector);
-
   useEffect(() => {
     refreshChainID();
-  }, [chainId.valueOf(), network]);
+  }, [network]);
 
   useEffect(() => {
     initializeProvider();
