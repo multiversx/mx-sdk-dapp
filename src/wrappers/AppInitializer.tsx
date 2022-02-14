@@ -26,16 +26,19 @@ export function AppInitializer({
   useEffect(() => {
     dispatch(initializeNetworkConfig(networkConfig));
     if (extraActions != null) {
-      extraActions?.init({
-        onLogin: (address, loginMethod) => {
-          dispatch(loginAction({ address, loginMethod }));
-        },
-        log: (word) => {
-          console.log('dapp log: ', word);
-        }
-      });
-
-      dispatch(initializeExtraActions(extraActions));
+      try {
+        extraActions?.init({
+          onLogin: (address, loginMethod) => {
+            dispatch(loginAction({ address, loginMethod }));
+          },
+          log: (word) => {
+            console.log('dapp log: ', word);
+          }
+        });
+        dispatch(initializeExtraActions(extraActions));
+      } catch (err) {
+        console.error('Unable to initalize extraActions', err);
+      }
     }
 
     //sync redux with shardId from server
