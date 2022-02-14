@@ -43,11 +43,11 @@ export interface ScResultType {
 
 export interface ExtraActionsInitType {
   onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
-  log: (word: string) => void;
+  log?: (word: string) => void;
 }
 
 export interface ExtraActionsType {
-  log: (word: string) => void;
+  log?: (word: string) => void;
   getProvider: () => IDappProvider;
   init: (props: ExtraActionsInitType) => void;
 }

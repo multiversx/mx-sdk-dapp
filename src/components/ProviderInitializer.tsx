@@ -196,7 +196,6 @@ export default function ProviderInitializer() {
 
       case LoginMethodsEnum.extra: {
         const provider = getProvider();
-
         dispatch(setProvider(provider));
         break;
       }

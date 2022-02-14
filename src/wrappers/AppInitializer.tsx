@@ -3,7 +3,6 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import { useGetAccountInfo } from 'hooks';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
-// import { setProvider } from 'redux/slices';
 import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { ExtraActionsType, NetworkConfigType } from 'types';

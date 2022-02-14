@@ -48,9 +48,9 @@ export const store = configureStore({
           'payload.nonce',
           'account.account.nonce',
           // extra actions
-          'extraActions.log', // TODO: remove
-          'payload.log', // TODO: remove
-          'payload.onLogin', // TODO: remove
+          'extraActions.log',
+          'payload.log',
+          'payload.onLogin',
 
           'extraActions.getProvider',
           'extraActions.init'
