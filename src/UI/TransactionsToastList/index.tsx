@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { WithWrapperClassName } from 'HOCs/WithWrapperClassName';
 import { useGetSignedTransactions } from 'hooks';
 import { useGetPendingTransactions } from 'services';
 import {
@@ -44,7 +45,11 @@ export function TransactionsToastList({
   const mappedToastsList = toastsIds?.map((toastId: string) => {
     const currentTx: SignedTransactionsBodyType =
       signedTransactionsToRender[toastId];
-    if (currentTx == null) {
+    if (
+      currentTx == null ||
+      currentTx?.transactions == null ||
+      currentTx?.status == null
+    ) {
       return null;
     }
 
@@ -107,4 +112,4 @@ export function TransactionsToastList({
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }
 
-export default TransactionsToastList;
+export default WithWrapperClassName(TransactionsToastList);
