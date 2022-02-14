@@ -6,7 +6,6 @@ import LedgerLoginContainer from './ledger/LoginModal';
 
 import NotificationModal from './NotificationModal';
 import PageState from './PageState';
-
 import SignTransactionsModals from './SignTransactionsModals';
 import TransactionsToastList from './TransactionsToastList';
 import TransactionToast from './TransactionToast';

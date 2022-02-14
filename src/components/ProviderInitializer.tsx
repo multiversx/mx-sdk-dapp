@@ -13,6 +13,7 @@ import {
   ledgerLoginSelector,
   isLoggedInSelector
 } from 'redux/selectors';
+import { extraActionsSelector } from 'redux/selectors/extraActionsSelectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -37,6 +38,7 @@ export default function ProviderInitializer() {
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
+  const { getProvider } = useSelector(extraActionsSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
@@ -189,6 +191,12 @@ export default function ProviderInitializer() {
 
       case LoginMethodsEnum.extension: {
         setExtensionProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.extra: {
+        const provider = getProvider();
+        dispatch(setProvider(provider));
         break;
       }
 

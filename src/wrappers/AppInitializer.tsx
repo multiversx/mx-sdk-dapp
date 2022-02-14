@@ -1,30 +1,51 @@
 import { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { useGetAccountInfo } from 'hooks';
+import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
+import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
-import { NetworkConfigType } from 'types';
+import { ExtraActionsType, NetworkConfigType } from 'types';
 import { logout } from 'utils';
 import getAccountShard from 'utils/account/getAccountShard';
 
 export function AppInitializer({
   networkConfig,
+  extraActions,
   children
 }: {
   networkConfig: NetworkConfigType;
   children: any;
+  extraActions?: ExtraActionsType;
 }) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
   const { address, publicKey } = account;
   const dispatch = useDispatch();
 
-  async function initializeApp() {
+  useEffect(() => {
     dispatch(initializeNetworkConfig(networkConfig));
-    setInitialized(true);
+    if (extraActions != null) {
+      try {
+        extraActions?.init({
+          onLogin: (address, loginMethod) => {
+            dispatch(loginAction({ address, loginMethod }));
+          },
+          log: (word) => {
+            console.log('dapp log: ', word);
+          }
+        });
+        dispatch(initializeExtraActions(extraActions));
+      } catch (err) {
+        console.error('Unable to initalize extraActions', err);
+      }
+    }
+
     //sync redux with shardId from server
     getAccountShard();
-  }
+
+    setInitialized(true);
+  }, [networkConfig]);
 
   useEffect(() => {
     if (address) {
@@ -34,10 +55,6 @@ export function AppInitializer({
       }
     }
   }, [address, publicKey]);
-
-  useEffect(() => {
-    initializeApp();
-  }, [networkConfig]);
 
   return initialized ? children : null;
 }

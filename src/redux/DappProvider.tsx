@@ -15,7 +15,7 @@ import {
   SendSignedTransactionsAsyncType
 } from 'contexts/types';
 import { DappCoreContext } from 'redux/DappProviderContext';
-import { NetworkConfigType } from 'types';
+import { NetworkConfigType, ExtraActionsType } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import { store, persistor } from './store';
@@ -23,6 +23,7 @@ import { store, persistor } from './store';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   networkConfig: NetworkConfigType;
+  extraActions?: ExtraActionsType;
   completedTransactionsDelay?: number;
   signWithoutSending?: boolean;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
@@ -32,6 +33,7 @@ interface DappProviderPropsType {
 export const DappProvider = ({
   children,
   networkConfig,
+  extraActions,
   completedTransactionsDelay = 0,
   signWithoutSending = false,
   sendSignedTransactionsAsync = sendSignedTransactions,
@@ -53,7 +55,10 @@ export const DappProvider = ({
             completedTransactionsDelay
           }}
         >
-          <AppInitializer networkConfig={networkConfig}>
+          <AppInitializer
+            networkConfig={networkConfig}
+            extraActions={extraActions}
+          >
             <ProviderInitializer />
             {!signWithoutSending && <TransactionSender />}
             <TransactionsTracker />

@@ -14,3 +14,5 @@ export function nominate(input: string, customDenomination?: number) {
   );
   return balance(input).toString();
 }
+
+export default nominate;

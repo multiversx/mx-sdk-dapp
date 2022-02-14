@@ -87,7 +87,6 @@ export function useSignTransactions() {
             });
 
             dispatch(clearSignTransactions());
-            // TODO: eslint warning
             provider.signTransactions(transactions, {
               callbackUrl: encodeURIComponent(callbackUrl)
             });
@@ -95,6 +94,7 @@ export function useSignTransactions() {
             break;
           case LoginMethodsEnum.extension:
           case LoginMethodsEnum.walletconnect:
+          case LoginMethodsEnum.extra:
             signTransactionsWithProvider();
             break;
         }
@@ -129,6 +129,7 @@ export function useSignTransactions() {
         try {
           const signedTransactions: Transaction[] =
             await provider.signTransactions(transactions);
+
           const signingDisabled =
             !signedTransactions ||
             (signedTransactions &&
