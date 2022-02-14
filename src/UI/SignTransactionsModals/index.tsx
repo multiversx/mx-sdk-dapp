@@ -3,11 +3,12 @@ import React from 'react';
 import { useGetAccountProvider, useSignTransactions } from 'hooks';
 import { LoginMethodsEnum } from 'types';
 import { getIsProviderEqualTo } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
 
-export function SignTransactionsModals({ className }: { className?: string }) {
+function SignTransactionsModals({ className }: { className?: string }) {
   const {
     callbackRoute,
     transactions,
@@ -48,4 +49,4 @@ export function SignTransactionsModals({ className }: { className?: string }) {
   ) : null;
 }
 
-export default SignTransactionsModals;
+export default withClassNameWrapper(SignTransactionsModals);

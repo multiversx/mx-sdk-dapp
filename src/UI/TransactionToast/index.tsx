@@ -20,12 +20,13 @@ import {
   getIsTransactionTimedOut
 } from 'utils';
 
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { TransactionToastPropsType } from './types';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
 
-export const TransactionToast = ({
+const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
@@ -218,4 +219,4 @@ export const TransactionToast = ({
   );
 };
 
-export default TransactionToast;
+export default withClassNameWrapper(TransactionToast);

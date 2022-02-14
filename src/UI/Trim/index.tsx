@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCallback } from 'react';
 import debounce from 'lodash/debounce';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 interface TrimType {
   text: string;
@@ -65,4 +66,4 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   );
 };
 
-export default Trim;
+export default withClassNameWrapper(Trim);

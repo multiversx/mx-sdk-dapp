@@ -12,7 +12,7 @@ import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 import { TransactionsToastListPropsType } from './types';
 
-export function TransactionsToastList({
+function TransactionsToastList({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
   className = 'transactions-toast-list',
