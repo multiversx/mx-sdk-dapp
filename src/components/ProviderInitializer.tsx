@@ -88,7 +88,7 @@ export default function ProviderInitializer() {
           setAccount({
             balance: account.balance.toString(),
             address,
-            nonce: getLatestNonce(account)
+            nonce: account.nonce.valueOf()
           })
         );
         if (ledgerAccount == null && ledgerLogin != null) {
