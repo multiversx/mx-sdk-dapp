@@ -2,6 +2,7 @@ import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { wrapperClassName } from 'utils';
 
 const ModalContainer = ({
   children,
@@ -21,7 +22,9 @@ const ModalContainer = ({
       show
       backdrop='static'
       onHide={onClose}
-      className={`modal-container ${className ? className : ''}`}
+      className={`modal-container ${
+        className ? className : ''
+      } ${wrapperClassName}`}
       animation={false}
       centered
     >

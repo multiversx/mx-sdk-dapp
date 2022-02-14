@@ -1,8 +1,9 @@
 import React from 'react';
+import classNames from 'optionalPackages/classnames';
 import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses, wrapperClassName } from 'utils';
 import { SignModalType } from '../types';
 
 const SignWithExtensionModal = ({
@@ -37,7 +38,7 @@ const SignWithExtensionModal = ({
       show
       backdrop='static'
       onHide={handleClose}
-      className={classes.wrapper}
+      className={classNames(classes.wrapper, wrapperClassName)}
       animation={false}
       centered
     >

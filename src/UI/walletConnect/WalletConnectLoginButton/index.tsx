@@ -1,9 +1,10 @@
 import React, { Fragment, useState } from 'react';
 import { getGeneratedClasses } from 'utils';
-import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
+import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
 
-export const WalletConnectLoginButton = ({
+const WalletConnectLoginButton = ({
   children,
   callbackRoute,
   loginButtonText = 'Maiar App',
@@ -22,7 +23,9 @@ export const WalletConnectLoginButton = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
+      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+        buttonClassName != null ? buttonClassName : ''
+      }`,
       loginText: 'text-left'
     }
   );
@@ -60,4 +63,4 @@ export const WalletConnectLoginButton = ({
   );
 };
 
-export default WalletConnectLoginButton;
+export default withClassNameWrapper(WalletConnectLoginButton);

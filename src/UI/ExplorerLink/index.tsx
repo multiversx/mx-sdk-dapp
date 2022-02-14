@@ -3,6 +3,7 @@ import { useGetNetworkConfig } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 const ExplorerLink = ({
   page,
@@ -36,4 +37,4 @@ const ExplorerLink = ({
   );
 };
 
-export default ExplorerLink;
+export default withClassNameWrapper(ExplorerLink);

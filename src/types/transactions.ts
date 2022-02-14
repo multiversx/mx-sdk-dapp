@@ -9,12 +9,14 @@ export interface TransactionsToSignType {
   callbackRoute: string;
   redirectAfterSign: boolean;
   sessionId: string;
+  sessionInformation?: any;
 }
 
 export interface SignedTransactionsBodyType {
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
   errorMessage?: string;
+  sessionInformation?: any;
 }
 
 export interface SignedTransactionsType {
@@ -129,6 +131,7 @@ export interface SendTransactionsPropsType {
   redirectAfterSign?: boolean;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
+  sessionInformation?: any;
 }
 
 export interface SignTransactionsPropsType {
@@ -137,6 +140,7 @@ export interface SignTransactionsPropsType {
   redirectAfterSign?: boolean;
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
+  sessionInformation?: any;
 }
 
 export enum TransactionTypesEnum {

@@ -12,5 +12,5 @@ export * from './decoders';
 
 export * from './smartContracts';
 export * from './getGeneratedClasses';
-export * from './getWrapperClassname';
+export * from './wrapperClassName';
 export * from './session';

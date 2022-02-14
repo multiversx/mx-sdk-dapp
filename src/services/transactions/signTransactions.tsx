@@ -17,6 +17,7 @@ export function signTransactions({
   transactions,
   callbackRoute = window.location.pathname,
   redirectAfterSign = true,
+  sessionInformation,
   minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT,
   transactionsDisplayInfo
 }: SignTransactionsPropsType): SendTransactionReturnType {
@@ -64,6 +65,7 @@ export function signTransactions({
     sessionId,
     callbackRoute,
     redirectAfterSign,
+    sessionInformation,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
 

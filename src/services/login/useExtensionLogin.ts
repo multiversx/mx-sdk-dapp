@@ -76,7 +76,7 @@ export const useExtensionLogin = ({
     }
   }
 
-  const isFailed = error != null;
+  const isFailed = Boolean(error);
   return [
     initiateLogin,
     {

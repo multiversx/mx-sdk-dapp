@@ -23,7 +23,7 @@ const setNewAccount = async () => {
   } catch (e) {
     console.error('Failed getting address ', e);
   }
-  return undefined;
+  return null;
 };
 
 export async function refreshAccount() {

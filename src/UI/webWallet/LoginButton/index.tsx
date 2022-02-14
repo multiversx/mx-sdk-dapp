@@ -1,9 +1,10 @@
 import React from 'react';
 import { useWebWalletLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { WebWalletLoginButtonPropsType } from './types';
 
-export const WebWalletLoginButton: (
+const WebWalletLoginButton: (
   props: WebWalletLoginButtonPropsType
 ) => JSX.Element = ({
   children,
@@ -19,7 +20,9 @@ export const WebWalletLoginButton: (
     token
   });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
+    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+      buttonClassName != null ? buttonClassName : ''
+    }`,
     loginText: 'text-left'
   });
 
@@ -34,4 +37,4 @@ export const WebWalletLoginButton: (
   );
 };
 
-export default WebWalletLoginButton;
+export default withClassNameWrapper(WebWalletLoginButton);

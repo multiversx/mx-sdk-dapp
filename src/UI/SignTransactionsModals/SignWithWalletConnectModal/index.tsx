@@ -1,9 +1,10 @@
 import React from 'react';
 
+import classNames from 'optionalPackages/classnames';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses, wrapperClassName } from 'utils';
 import { SignModalType } from '../types';
 
 export const SignWithWalletConnectModal = ({
@@ -36,7 +37,7 @@ export const SignWithWalletConnectModal = ({
       show
       backdrop='static'
       onHide={close}
-      className={classes.wrapper}
+      className={classNames(classes.wrapper, wrapperClassName)}
       animation={false}
       centered
     >

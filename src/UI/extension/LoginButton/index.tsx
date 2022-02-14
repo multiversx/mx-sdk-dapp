@@ -2,9 +2,10 @@ import React from 'react';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { ExtensionLoginButtonPropsType } from './types';
 
-export const ExtensionLoginButton: (
+const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
   token,
@@ -22,7 +23,9 @@ export const ExtensionLoginButton: (
     redirectAfterLogin
   });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
+    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+      buttonClassName != null ? buttonClassName : ''
+    }`,
     loginText: 'text-left',
     noExtensionButtonWrapper: 'btn btn-unlock d-inline-block',
     noExtensionButtonContent:
@@ -57,4 +60,4 @@ export const ExtensionLoginButton: (
   );
 };
 
-export default ExtensionLoginButton;
+export default withClassNameWrapper(ExtensionLoginButton);

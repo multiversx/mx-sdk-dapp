@@ -12,6 +12,7 @@ export async function sendTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
+  sessionInformation,
   minGasLimit
 }: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
   try {
@@ -34,6 +35,7 @@ export async function sendTransactions({
       transactions: txToSign as Transaction[],
       minGasLimit,
       redirectAfterSign,
+      sessionInformation,
       transactionsDisplayInfo
     });
   } catch (err) {

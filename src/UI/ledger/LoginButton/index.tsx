@@ -1,11 +1,10 @@
 import React from 'react';
-import { getGeneratedClasses } from 'utils';
-import { LedgerLoginContainer } from '../LoginModal';
+import { getGeneratedClasses, wrapperClassName } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
+import LedgerLoginContainer from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
 
-export const LedgerLoginButton: (
-  props: LedgerLoginButtonPropsType
-) => JSX.Element = ({
+const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   token,
   callbackRoute,
   children,
@@ -21,7 +20,9 @@ export const LedgerLoginButton: (
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${buttonClassName}`,
+      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+        buttonClassName != null ? buttonClassName : ''
+      }`,
       loginText: 'text-left'
     }
   );
@@ -35,7 +36,7 @@ export const LedgerLoginButton: (
   }
 
   return (
-    <React.Fragment>
+    <span className={wrapperClassName}>
       <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
         {children || (
           <span className={generatedClasses.loginText}>{loginButtonText}</span>
@@ -52,8 +53,8 @@ export const LedgerLoginButton: (
           onClose={handleCloseModal}
         />
       )}
-    </React.Fragment>
+    </span>
   );
 };
 
-export default LedgerLoginButton;
+export default withClassNameWrapper(LedgerLoginButton);

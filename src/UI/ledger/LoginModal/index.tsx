@@ -7,6 +7,7 @@ import ModalContainer from 'UI/ModalContainer';
 
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
@@ -23,7 +24,7 @@ interface LedgerLoginContainerPropsType {
   onClose?: () => void;
 }
 
-export function LedgerLoginContainer({
+function LedgerLoginContainer({
   callbackRoute,
   className = 'login-modal-content',
   shouldRenderDefaultCss = true,
@@ -86,19 +87,17 @@ export function LedgerLoginContainer({
 
     return <LedgerConnect onClick={onStartLogin} error={error} />;
   }
-  return (
-    <React.Fragment>
-      {wrapContentInsideModal ? (
-        <ModalContainer
-          title={'Login with ledger'}
-          className={className}
-          onClose={onClose}
-        >
-          {getContent()}
-        </ModalContainer>
-      ) : (
-        getContent()
-      )}
-    </React.Fragment>
+  return wrapContentInsideModal ? (
+    <ModalContainer
+      title={'Login with ledger'}
+      className={className}
+      onClose={onClose}
+    >
+      {getContent()}
+    </ModalContainer>
+  ) : (
+    getContent()
   );
 }
+
+export default withClassNameWrapper(LedgerLoginContainer);
