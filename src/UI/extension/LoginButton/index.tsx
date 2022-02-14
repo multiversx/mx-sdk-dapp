@@ -5,7 +5,7 @@ import { getGeneratedClasses } from 'utils';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { ExtensionLoginButtonPropsType } from './types';
 
-export const ExtensionLoginButton: (
+const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
   token,

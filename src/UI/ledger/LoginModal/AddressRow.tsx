@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Denominate } from 'UI/Denominate';
+import Denominate from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
 
 interface AddressRowType {

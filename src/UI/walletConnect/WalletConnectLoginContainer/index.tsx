@@ -5,10 +5,11 @@ import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
 
-export function WalletConnectLoginContainer({
+function WalletConnectLoginContainer({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
@@ -136,3 +137,5 @@ export function WalletConnectLoginContainer({
     content
   );
 }
+
+export default withClassNameWrapper(WalletConnectLoginContainer);

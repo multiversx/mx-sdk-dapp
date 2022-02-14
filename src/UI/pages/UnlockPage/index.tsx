@@ -5,10 +5,11 @@ import ExtensionLoginButton from 'UI/extension/LoginButton';
 import LedgerLoginButton from 'UI/ledger/LoginButton';
 import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
 import WebWalletLoginButton from 'UI/webWallet/LoginButton';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses, wrapperClassName } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './types';
 
-export const UnlockPage = ({
+const UnlockPage = ({
   loginRoute,
   title = 'Login',
   className = 'unlock-page',
@@ -23,7 +24,7 @@ export const UnlockPage = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: 'home d-flex flex-fill align-items-center',
+      wrapper: `home d-flex flex-fill align-items-center ${wrapperClassName}`,
       title: 'mb-4',
       description: 'mb-4',
       cardContainer: 'm-auto',
@@ -69,4 +70,4 @@ export const UnlockPage = ({
   );
 };
 
-export default UnlockPage;
+export default withClassNameWrapper(UnlockPage);
