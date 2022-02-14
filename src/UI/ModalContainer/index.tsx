@@ -2,6 +2,7 @@ import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 const ModalContainer = ({
   children,
@@ -54,4 +55,4 @@ const ModalContainer = ({
   );
 };
 
-export default ModalContainer;
+export default withClassNameWrapper(ModalContainer);

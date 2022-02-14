@@ -3,7 +3,7 @@ import classNames from 'optionalPackages/classnames';
 import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, getWrapperClassname } from 'utils';
+import { getGeneratedClasses, wrapperClassName } from 'utils';
 import { SignModalType } from '../types';
 
 const SignWithExtensionModal = ({
@@ -38,7 +38,7 @@ const SignWithExtensionModal = ({
       show
       backdrop='static'
       onHide={handleClose}
-      className={classNames(classes.wrapper, getWrapperClassname())}
+      className={classNames(classes.wrapper, wrapperClassName)}
       animation={false}
       centered
     >

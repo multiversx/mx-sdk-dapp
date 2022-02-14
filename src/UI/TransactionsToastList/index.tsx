@@ -8,6 +8,7 @@ import {
 import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 import { TransactionsToastListPropsType } from './types';
 
@@ -44,7 +45,11 @@ export function TransactionsToastList({
   const mappedToastsList = toastsIds?.map((toastId: string) => {
     const currentTx: SignedTransactionsBodyType =
       signedTransactionsToRender[toastId];
-    if (currentTx == null) {
+    if (
+      currentTx == null ||
+      currentTx?.transactions == null ||
+      currentTx?.status == null
+    ) {
       return null;
     }
 
@@ -107,4 +112,4 @@ export function TransactionsToastList({
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }
 
-export default TransactionsToastList;
+export default withClassNameWrapper(TransactionsToastList);
