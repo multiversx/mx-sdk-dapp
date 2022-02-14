@@ -25,7 +25,7 @@ export function AppInitializer({
 
   useEffect(() => {
     dispatch(initializeNetworkConfig(networkConfig));
-    if (extraActions !== undefined) {
+    if (extraActions != null) {
       extraActions.init({
         onLogin: (address, loginMethod) => {
           dispatch(loginAction({ address, loginMethod }));
