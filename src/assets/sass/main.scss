@@ -1,28 +1,27 @@
 
-.dapp-core-ui-wrapper{
-
-  $headings-font-weight: 300 !important;
-  $primary: #1b46c2;
-  $light: #fafafa;
-  $a: #1392ff;
-
-
-  @import '~bootstrap/scss/bootstrap';
-
-  @import './themes/theme.scss';
-
-  // Variables override
-  @import './variables/variables';
+.dapp-core-ui-component {
+    $headings-font-weight: 300 !important;
+    $primary: #1b46c2;
+    $light: #fafafa;
+    $a: #1392ff;
 
 
-  @import '~bootstrap/scss/reboot';
+    @import '~bootstrap/scss/bootstrap';
 
-  @import './modules/trim/trim';
-  @import './modules/modal/modal';
-  @import './modules/icon-state/icon-state';
-  @import './modules/toast-messages/toast-messages';
-  @import './modules/tx-details-text/tx-details-text';
-  @import './modules/token-symbol/tokenSymbol';
-  @import './modules/data/data';
+    @import './themes/theme.scss';
 
-}
+    // Variables override
+    @import './variables/variables';
+
+
+    @import '~bootstrap/scss/reboot';
+
+    @import './modules/trim/trim';
+    @import './modules/modal/modal';
+    @import './modules/icon-state/icon-state';
+    @import './modules/toast-messages/toast-messages';
+    @import './modules/tx-details-text/tx-details-text';
+    @import './modules/token-symbol/tokenSymbol';
+    @import './modules/data/data';
+  }
+

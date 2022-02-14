@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { WithWrapperClassName } from 'HOCs/WithWrapperClassName';
 import { useGetSignedTransactions } from 'hooks';
 import { useGetPendingTransactions } from 'services';
 import {
@@ -9,6 +8,7 @@ import {
 import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 import { TransactionsToastListPropsType } from './types';
 
@@ -112,4 +112,4 @@ export function TransactionsToastList({
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }
 
-export default WithWrapperClassName(TransactionsToastList);
+export default withClassNameWrapper(TransactionsToastList);
