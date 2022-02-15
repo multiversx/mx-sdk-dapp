@@ -3,7 +3,8 @@ import {
   transactionServices,
   useGetAccountInfo,
   useGetPendingTransactions,
-  refreshAccount
+  refreshAccount,
+  useGetNetworkConfig
 } from '@elrondnetwork/dapp-core';
 import {
   Address,
@@ -15,11 +16,12 @@ import {
 import { faArrowUp, faArrowDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
-import { contractAddress, network } from 'config';
+import { contractAddress } from 'config';
 
 const Actions = () => {
   const account = useGetAccountInfo();
   const { hasPendingTransactions } = useGetPendingTransactions();
+  const { network } = useGetNetworkConfig();
   const { address } = account;
 
   const [secondsLeft, setSecondsLeft] = React.useState<number>();

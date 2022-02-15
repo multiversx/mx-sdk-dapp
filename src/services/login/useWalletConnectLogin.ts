@@ -8,7 +8,7 @@ import {
   isLoggedInSelector,
   providerSelector,
   proxySelector,
-  walletConnectBridgeSelector,
+  walletConnectBridgeAddressSelector,
   walletConnectDeepLinkSelector
 } from 'redux/selectors';
 import {
@@ -58,7 +58,9 @@ export const useWalletConnectLogin = ({
   const proxy = useSelector(proxySelector);
 
   const provider: any = useSelector(providerSelector);
-  const walletConnectBridge = useSelector(walletConnectBridgeSelector);
+  const walletConnectBridgeAddress = useSelector(
+    walletConnectBridgeAddressSelector
+  );
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const providerRef = useRef<any>(provider);
@@ -162,7 +164,10 @@ export const useWalletConnectLogin = ({
   };
 
   async function initiateLogin(loginProvider = true) {
-    if (!walletConnectBridge || providerRef?.current?.isInitialized?.()) {
+    if (
+      !walletConnectBridgeAddress ||
+      providerRef?.current?.isInitialized?.()
+    ) {
       return;
     }
 
@@ -173,7 +178,7 @@ export const useWalletConnectLogin = ({
 
     const newProvider = new WalletConnectProvider(
       proxy,
-      walletConnectBridge,
+      walletConnectBridgeAddress,
       providerHandlers
     );
 
@@ -186,7 +191,7 @@ export const useWalletConnectLogin = ({
   }
 
   async function generateWcUri() {
-    if (!walletConnectBridge) {
+    if (!walletConnectBridgeAddress) {
       return;
     }
 

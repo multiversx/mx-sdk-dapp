@@ -15,17 +15,31 @@ export interface RouteType {
 
 export interface NetworkType {
   id: string;
-  egldLabel: string;
   name: string;
+  EGLDLabel: string;
+  EGLDdenomination: string;
+  decimals: string;
+  gasPerDataByte: string;
+  walletConnectDeepLink: string;
+  walletConnectBridgeAddresses: string;
   walletAddress: string;
   apiAddress: string;
   explorerAddress: string;
+  apiTimeout: 4000;
 }
 
-export interface NetworkConfigType {
-  walletConnectBridge?: string;
+export interface CustomNetworkType {
+  id?: string;
+  name?: string;
+  EGLDLabel?: string;
+  EGLDdenomination?: string;
+  decimals?: string;
+  gasPerDataByte?: string;
   walletConnectDeepLink?: string;
-  network: NetworkType;
+  walletConnectBridgeAddresses?: string;
+  walletAddress?: string;
+  apiAddress?: string;
+  explorerAddress?: string;
 }
 
 export interface ScResultType {

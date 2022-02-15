@@ -13,21 +13,19 @@ import { logoutAction } from '../commonActions';
 export const defaultNetwork: NetworkType = {
   id: 'not-configured',
   name: 'NOT CONFIGURED',
-  egldLabel: '',
+  EGLDLabel: '',
+  EGLDdenomination: '18',
+  decimals: '4',
+  gasPerDataByte: '1500',
+  walletConnectDeepLink: '',
+  walletConnectBridgeAddresses: '',
   walletAddress: '',
   apiAddress: '',
-  explorerAddress: ''
+  explorerAddress: '',
+  apiTimeout: 4000
 };
 
-export interface InitializeNetworkConfigPayloadType {
-  walletConnectBridge?: string;
-  walletConnectDeepLink?: string;
-  network: NetworkType;
-}
-
 export interface NetworkConfigStateType {
-  walletConnectBridge: string;
-  walletConnectDeepLink: string;
   provider: IDappProvider;
   proxy: IProvider;
   apiProvider: IApiProvider;
@@ -36,9 +34,6 @@ export interface NetworkConfigStateType {
 }
 
 const initialState: NetworkConfigStateType = {
-  walletConnectBridge: 'https://bridge.walletconnect.org',
-  walletConnectDeepLink:
-    'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=https://maiar.com/',
   network: defaultNetwork,
   proxy: new ProxyProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
   apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
@@ -52,23 +47,23 @@ export const networkConfigSlice = createSlice({
   reducers: {
     initializeNetworkConfig: (
       state: NetworkConfigStateType,
-      action: PayloadAction<InitializeNetworkConfigPayloadType>
+      action: PayloadAction<NetworkType>
     ) => {
-      const { walletConnectBridge, walletConnectDeepLink, network } =
-        action.payload;
-      const proxy = new ProxyProvider(network.apiAddress, {
-        timeout: 4000 // TODO: timeout can be moved into global config
-      });
-      const apiProvider = new ApiProvider(network.apiAddress, {
-        timeout: 4000
-      });
-      state.walletConnectBridge =
-        walletConnectBridge || state.walletConnectBridge;
-      state.walletConnectDeepLink =
-        walletConnectDeepLink || state.walletConnectDeepLink;
-      state.network = network;
-      state.proxy = proxy;
-      state.apiProvider = apiProvider;
+      const network = action.payload;
+      const { apiAddress } = network;
+
+      if (apiAddress) {
+        state.proxy = new ProxyProvider(apiAddress, {
+          timeout: network.apiTimeout || defaultNetwork.apiTimeout
+        });
+        state.apiProvider = new ApiProvider(apiAddress, {
+          timeout: network.apiTimeout || defaultNetwork.apiTimeout
+        });
+      }
+      state.network = {
+        ...state.network,
+        ...action.payload
+      };
     },
     setChainID: (
       state: NetworkConfigStateType,

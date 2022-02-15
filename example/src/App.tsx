@@ -2,7 +2,6 @@ import React from 'react';
 import { DappUI, DappProvider } from '@elrondnetwork/dapp-core';
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom';
 import Layout from 'components/Layout';
-import { network, walletConnectBridge, walletConnectDeepLink } from 'config';
 import PageNotFound from 'pages/PageNotFound';
 import { routeNames } from 'routes';
 import routes from 'routes';
@@ -20,7 +19,8 @@ const App = () => {
   return (
     <Router>
       <DappProvider
-        networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
+        environment='devnet'
+        customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
         completedTransactionsDelay={200}
       >
         <Layout>
