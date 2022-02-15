@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'optionalPackages/classnames';
 import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
+import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, wrapperClassName } from 'utils';
-import { SignModalType } from '../types';
 
 const SignWithExtensionModal = ({
   handleClose,
@@ -12,7 +12,7 @@ const SignWithExtensionModal = ({
   callbackRoute,
   transactions,
   className = 'extension-modal'
-}: SignModalType) => {
+}: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
     wrapper: 'modal-container extension',
     icon: 'text-white',
@@ -51,15 +51,14 @@ const SignWithExtensionModal = ({
         title='Confirm on Maiar DeFi Wallet'
         description={description}
         action={
-          <a
-            href='/'
+          <button
             id='closeButton'
             data-testid='closeButton'
             onClick={close}
             className={classes.closeBtn}
           >
             Close
-          </a>
+          </button>
         }
       />
     </ReactBootstrap.Modal>

@@ -175,3 +175,11 @@ export interface SmartContractResult {
   miniBlockHash: string;
   returnMessage: string;
 }
+
+export interface SignModalPropsType {
+  handleClose: () => void;
+  error: string | null;
+  callbackRoute?: string;
+  transactions: Transaction[];
+  className?: string;
+}

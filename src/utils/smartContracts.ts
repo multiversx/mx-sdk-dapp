@@ -23,9 +23,11 @@ export function areScCallsSuccessful(scResults?: SmartContractResult[]) {
 
 export function isContract(receiver: string, data = ''): boolean {
   try {
-    return new Address(
-      getAddressFromDataField({ receiver, data })
-    ).isContractAddress();
+    const extractedAddress = getAddressFromDataField({ receiver, data });
+    if (!extractedAddress) {
+      return false;
+    }
+    return new Address(extractedAddress).isContractAddress();
   } catch (err) {
     console.log('err', err);
     return false;
@@ -40,6 +42,9 @@ export function getAddressFromDataField({
   data: string;
 }) {
   try {
+    if (!data) {
+      return receiver;
+    }
     const addressIndex = getAddressIndex(data);
     const parts = data.split('@');
     return addressIndex > -1 ? parts[addressIndex] : receiver;
