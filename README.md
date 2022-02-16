@@ -638,6 +638,24 @@ The toasts list is exposed via **DappUI.TransactionsToastList** component and ca
 
 </details>
 
+  <details><summary>
+Removing transactions manually
+  </summary>
+
+### Removing transactions manually
+Dapp-core takes care to change transactions' statuses and removes them when needed,
+but if you need to do this manually, you can use the exposed functions for this:
+
+```
+transactionServices.removeTransactionsToSign(sessionId);
+transactionServices.removeSignedTransaction(sessionId);
+transactionServices.removeAllTransactionsToSign();
+transactionServices.removeAllSignedTransactions();
+
+```
+
+</details>
+
 ## Roadmap
 
 See the [open issues](https://github.com/ElrondNetwork/dapp-core/issues) for a list of proposed features (and known issues).
