@@ -35,18 +35,18 @@ export function useTrackTransactionStatus({
   const { status, transactions, errorMessage } = transactionsBatch;
 
   const isPending = getIsTransactionPending(status);
-  const isFail = getIsTransactionFailed(status);
+  const isFailed = getIsTransactionFailed(status);
   const isTimedOut = getIsTransactionTimedOut(status);
-  const isSuccess = getIsTransactionSuccessful(status);
+  const isSuccessful = getIsTransactionSuccessful(status);
   const isCompleted = getIsTransactionCompleted(status);
 
   const isCancelled = status === TransactionBatchStatusesEnum.cancelled;
 
   useEffect(() => {
-    if (isSuccess && onSuccess) {
+    if (isSuccessful && onSuccess) {
       onSuccess(transactionId);
     }
-  }, [isSuccess]);
+  }, [isSuccessful]);
   useEffect(() => {
     if (isCompleted && onCompleted) {
       onCompleted(transactionId);
@@ -54,10 +54,10 @@ export function useTrackTransactionStatus({
   }, [isCompleted]);
 
   useEffect(() => {
-    if (isFail && onFail) {
+    if (isFailed && onFail) {
       onFail(transactionId, errorMessage);
     }
-  }, [isFail]);
+  }, [isFailed]);
 
   useEffect(() => {
     if (isCancelled && onCancelled) {
@@ -85,8 +85,8 @@ export function useTrackTransactionStatus({
 
   return {
     isPending,
-    isSuccess,
-    isFail,
+    isSuccessful,
+    isFailed,
     isCancelled,
     isCompleted,
     errorMessage,

@@ -42,7 +42,7 @@ export const pendingSignedTransactionsSelector = createDeepEqualSelector(
     }, {})
 );
 
-export const successTransactionsSelector = createDeepEqualSelector(
+export const successfulTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
@@ -64,7 +64,7 @@ export const completedTransactionsSelector = createDeepEqualSelector(
     }, {})
 );
 
-export const failTransactionsSelector = createDeepEqualSelector(
+export const failedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {

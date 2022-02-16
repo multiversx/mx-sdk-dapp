@@ -564,8 +564,8 @@ transactionStatus has the following information about the transaction:
 ```
 {
   isPending,
-  isSuccess,
-  isFail,
+  isSuccessful,
+  isFailed,
   isCancelled,
   isCompleted,
   errorMessage,

@@ -1,25 +1,25 @@
 import { useSelector } from 'redux/DappProviderContext';
-import { successTransactionsSelector } from 'redux/selectors';
+import { successfulTransactionsSelector } from 'redux/selectors';
 import {
   SignedTransactionsType,
   SignedTransactionsBodyType
 } from 'types/transactions';
 
 interface useGetSuccessfulTransactionsReturnType {
-  successTransactions: SignedTransactionsType;
-  successTransactionsArray: [string, SignedTransactionsBodyType][];
+  successfulTransactions: SignedTransactionsType;
+  successfulTransactionsArray: [string, SignedTransactionsBodyType][];
   hasSuccessfulTransactions: boolean;
 }
 
 //this is a hook to be able to take advantage of memoization offered by useSelector
 export function useGetSuccessfulTransactions(): useGetSuccessfulTransactionsReturnType {
-  const successTransactions = useSelector(successTransactionsSelector);
-  const successTransactionsArray: [string, SignedTransactionsBodyType][] =
-    Object.entries(successTransactions);
-  const hasSuccessfulTransactions = successTransactionsArray?.length > 0;
+  const successfulTransactions = useSelector(successfulTransactionsSelector);
+  const successfulTransactionsArray: [string, SignedTransactionsBodyType][] =
+    Object.entries(successfulTransactions);
+  const hasSuccessfulTransactions = successfulTransactionsArray?.length > 0;
   return {
-    successTransactions,
-    successTransactionsArray,
+    successfulTransactions,
+    successfulTransactionsArray,
     hasSuccessfulTransactions
   };
 }
