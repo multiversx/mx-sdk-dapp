@@ -15,9 +15,9 @@ import {
 } from 'redux/selectors';
 import { transactionsToSignSelector } from 'redux/selectors';
 import {
-  clearSignTransactions,
+  clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
-  updateSignedTransaction
+  moveTransactionsToSignedState
 } from 'redux/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getLatestNonce, getProviderType } from 'utils';
@@ -38,7 +38,7 @@ export function useSignTransactions() {
   const providerType = getProviderType(provider);
 
   function clearSignInfo(sessionId?: string) {
-    dispatch(clearSignTransactions());
+    dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
     if (provider instanceof ExtensionProvider) {
@@ -86,7 +86,6 @@ export function useSignTransactions() {
               urlParams: { [walletSignSession]: sessionId }
             });
 
-            dispatch(clearSignTransactions());
             provider.signTransactions(transactions, {
               callbackUrl: encodeURIComponent(callbackUrl)
             });
@@ -103,10 +102,9 @@ export function useSignTransactions() {
         console.error(errMessage, err);
         onCancel(err?.message || errMessage, sessionId);
         dispatch(
-          updateSignedTransaction({
-            [sessionId]: {
-              status: TransactionBatchStatusesEnum.cancelled
-            }
+          moveTransactionsToSignedState({
+            sessionId,
+            status: TransactionBatchStatusesEnum.cancelled
           })
         );
       }
@@ -115,13 +113,8 @@ export function useSignTransactions() {
 
   async function signTransactionsWithProvider() {
     try {
-      const {
-        sessionId,
-        transactions,
-        callbackRoute,
-        sessionInformation,
-        redirectAfterSign
-      } = transactionsToSign!;
+      const { sessionId, transactions, callbackRoute, redirectAfterSign } =
+        transactionsToSign!;
       if (transactions?.length) {
         const initialized = await provider.init();
         if (!initialized) {
@@ -137,16 +130,15 @@ export function useSignTransactions() {
               Object.keys(signedTransactions).length !== transactions?.length);
           if (!signingDisabled && signedTransactions) {
             dispatch(
-              updateSignedTransaction({
-                [sessionId]: {
-                  status: TransactionBatchStatusesEnum.signed,
-                  sessionInformation,
-                  transactions: Object.values(signedTransactions).map((tx) =>
-                    parseTransactionAfterSigning(tx)
-                  )
-                }
+              moveTransactionsToSignedState({
+                sessionId,
+                status: TransactionBatchStatusesEnum.signed,
+                transactions: Object.values(signedTransactions).map((tx) =>
+                  parseTransactionAfterSigning(tx)
+                )
               })
             );
+
             if (
               redirectAfterSign &&
               !window.location.pathname.includes(callbackRoute)

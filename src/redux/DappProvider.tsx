@@ -25,7 +25,6 @@ interface DappProviderPropsType {
   customNetworkConfig?: CustomNetworkType;
   extraActions?: ExtraActionsType;
   completedTransactionsDelay?: number;
-  signWithoutSending?: boolean;
   environment: 'testnet' | 'mainnet' | 'devnet';
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
@@ -36,7 +35,6 @@ export const DappProvider = ({
   customNetworkConfig = {},
   extraActions,
   completedTransactionsDelay = 0,
-  signWithoutSending = false,
   environment,
   sendSignedTransactionsAsync = sendSignedTransactions,
   getTransactionsByHash = getTransactionsByHashes
@@ -63,7 +61,7 @@ export const DappProvider = ({
             extraActions={extraActions}
           >
             <ProviderInitializer />
-            {!signWithoutSending && <TransactionSender />}
+            <TransactionSender />
             <TransactionsTracker />
             {children}
           </AppInitializer>

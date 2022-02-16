@@ -12,6 +12,8 @@ export async function sendTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
+  callbackRoute = window.location.pathname,
+  signWithoutSending,
   sessionInformation,
   minGasLimit
 }: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
@@ -36,6 +38,8 @@ export async function sendTransactions({
       minGasLimit,
       redirectAfterSign,
       sessionInformation,
+      callbackRoute,
+      signWithoutSending,
       transactionsDisplayInfo
     });
   } catch (err) {

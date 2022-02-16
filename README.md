@@ -452,6 +452,12 @@ const { sessionId, error } = await sendTransactions({
           receiver: contractAddress
         },
       ],
+    callbackRoute?: string // (optional, defaults to window.location.pathname) the route to be redirected to after signing. Will not redirect if the user is already on the specified route;
+    transactionsDisplayInfo: TransactionsDisplayInfoType // (optional, default to null) custom message for toasts texts;
+    minGasLimit?: number (optional, defaults to 50_000);
+    sessionInformation?: any (optional, defaults to null) extra sessionInformation that will be passed back to you via getSignedTransactions hook;
+    signWithoutSending?: boolean // (optional, defaults to false), the transaction will be signed without being sent to the blockchain;
+    redirectAfterSigning?: boolean // (optional, defaults to true), whether to redirect to the provided callbackRoute;
     });
 ```
 
