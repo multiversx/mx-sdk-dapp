@@ -86,7 +86,7 @@ You need to wrap your application with the **DappProvider** component, which is 
     completedTransactionsDelay={500}
 >
 ```
-`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet`;
+`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet`
 
 DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
 This allows using different APIs and different connection providers to configure your network configuration.
@@ -145,16 +145,16 @@ when something happens inside the app:
 ```
 
 - `SignTransactionsModals` will show a modal when a new transaction is submitted, prompting the user to verify and sign it.
--
-**Important! This is required** to make transactions work, except when you use hooks to sign the transactions (more on this below).
+
+**Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
 
 ```
   import {DappUI} from "@elrondnetwork/dapp-core";
 
-<App>
-  <DappUI.SignTransactionsModals />
-  <Content/>
-</App>
+  <App>
+    <DappUI.SignTransactionsModals />
+    <Content/>
+  </App>
 ```
 
 `NotificationModal` Will show a modal to the user with various warnings and errors.
@@ -166,11 +166,9 @@ when something happens inside the app:
     <DappUI.NotificationModal />
     <Content/>
   </App>
-
 ```
 
-This wrapper will wrap your content in an extra div.
-If, for some reason, you want to avoid this, you can use `getWrapperClassname` function to get the className and attach it to a "wrapping" element.
+If you want to custom notifications, you can use the `useGetNotification` hook to get the notifications (like insufficient funds, errors etc).
 
 </details>
 
@@ -210,12 +208,12 @@ import { AuthenticatedRoutesWrapper} from "@elrondnetwork/dapp-core";
 Use with routes:
 
 ```
-<AuthenticatedRoutesWrapper
-          routes={routes}
-          unlockRoute={routeNames.unlock}
-        >
-          {appContent}
-        </AuthenticatedRoutesWrapper>
+  <AuthenticatedRoutesWrapper
+    routes={routes}
+    unlockRoute={routeNames.unlock}
+  >
+    {appContent}
+  </AuthenticatedRoutesWrapper>
 ```
 
 **routes** should be an array with objects with a signature similar to this:
