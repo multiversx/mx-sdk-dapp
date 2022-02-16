@@ -1,6 +1,6 @@
 export interface LoginHookGenericStateType {
   error: string;
-  isFailed: boolean;
+  loginFailed: boolean;
   isLoading: boolean;
   isLoggedIn: boolean;
 }

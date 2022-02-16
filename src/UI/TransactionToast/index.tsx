@@ -42,9 +42,9 @@ const TransactionToast = ({
   const accountShard = useSelector(shardSelector);
 
   const {
-    errorMessage = 'Transaction failed',
+    errorMessage = 'Transaction fail',
     timedOutMessage = 'Transaction timed out',
-    successMessage = 'Transaction successful',
+    successMessage = 'Transaction success',
     processingMessage = 'Processing transaction'
   } = transactionDisplayInfo;
 
@@ -124,7 +124,7 @@ const TransactionToast = ({
     iconClassName: 'bg-warning'
   };
 
-  const failedToastData = {
+  const failToastData = {
     id: toastId,
     icon: icons.faTimes,
     title: errorMessage,
@@ -149,8 +149,8 @@ const TransactionToast = ({
     pending: pendingToastData,
     success: successToastData,
     completed: successToastData,
-    cancelled: failedToastData,
-    fail: failedToastData,
+    cancelled: failToastData,
+    fail: failToastData,
     timedOut: timedOutToastData
   };
 

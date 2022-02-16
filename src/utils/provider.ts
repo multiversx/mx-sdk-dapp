@@ -7,7 +7,6 @@ import {
   WalletConnectProvider,
   WalletProvider
 } from '@elrondnetwork/erdjs';
-import { NetworkType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
@@ -31,8 +30,8 @@ export const getProviderType = (
   }
 };
 
-export const newWalletProvider = (network: NetworkType) =>
-  new WalletProvider(`${network.walletAddress}${DAPP_INIT_ROUTE}`);
+export const newWalletProvider = (walletAddress: string) =>
+  new WalletProvider(`${walletAddress}${DAPP_INIT_ROUTE}`);
 
 const notInitializedError = (caller: string) => {
   return `Unable to perform ${caller}, Provider not initialized`;

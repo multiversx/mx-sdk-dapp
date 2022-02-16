@@ -14,7 +14,7 @@ import {
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;
   onSuccess?: (transactionId: string | null) => void;
-  onFailed?: (transactionId: string | null, errorMessage?: string) => void;
+  onFail?: (transactionId: string | null, errorMessage?: string) => void;
   onTimedOut?: (transactionId: string | null) => void;
   onCancelled?: (transactionId: string | null) => void;
   onCompleted?: (transactionId: string | null) => void;
@@ -23,7 +23,7 @@ export interface UseTrackTransactionStatusArgsType {
 export function useTrackTransactionStatus({
   transactionId,
   onSuccess,
-  onFailed,
+  onFail,
   onCancelled,
   onTimedOut,
   onCompleted
@@ -35,18 +35,18 @@ export function useTrackTransactionStatus({
   const { status, transactions, errorMessage } = transactionsBatch;
 
   const isPending = getIsTransactionPending(status);
-  const isFailed = getIsTransactionFailed(status);
+  const isFail = getIsTransactionFailed(status);
   const isTimedOut = getIsTransactionTimedOut(status);
-  const isSuccessful = getIsTransactionSuccessful(status);
+  const isSuccess = getIsTransactionSuccessful(status);
   const isCompleted = getIsTransactionCompleted(status);
 
   const isCancelled = status === TransactionBatchStatusesEnum.cancelled;
 
   useEffect(() => {
-    if (isSuccessful && onSuccess) {
+    if (isSuccess && onSuccess) {
       onSuccess(transactionId);
     }
-  }, [isSuccessful]);
+  }, [isSuccess]);
   useEffect(() => {
     if (isCompleted && onCompleted) {
       onCompleted(transactionId);
@@ -54,10 +54,10 @@ export function useTrackTransactionStatus({
   }, [isCompleted]);
 
   useEffect(() => {
-    if (isFailed && onFailed) {
-      onFailed(transactionId, errorMessage);
+    if (isFail && onFail) {
+      onFail(transactionId, errorMessage);
     }
-  }, [isFailed]);
+  }, [isFail]);
 
   useEffect(() => {
     if (isCancelled && onCancelled) {
@@ -70,7 +70,7 @@ export function useTrackTransactionStatus({
       if (onTimedOut) {
         onTimedOut(transactionId);
       } else {
-        onFailed?.(transactionId, 'timeout');
+        onFail?.(transactionId, 'timeout');
       }
     }
   }, [isTimedOut]);
@@ -85,8 +85,8 @@ export function useTrackTransactionStatus({
 
   return {
     isPending,
-    isSuccessful,
-    isFailed,
+    isSuccess,
+    isFail,
     isCancelled,
     isCompleted,
     errorMessage,

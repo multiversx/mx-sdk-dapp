@@ -3,9 +3,9 @@ import React from 'react';
 import classNames from 'optionalPackages/classnames';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
+import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, wrapperClassName } from 'utils';
-import { SignModalType } from '../types';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -13,7 +13,7 @@ export const SignWithWalletConnectModal = ({
   callbackRoute,
   transactions,
   className = 'wallet-connect-modal'
-}: SignModalType) => {
+}: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
     wrapper: 'modal-container wallet-connect',
     icon: 'text-white',
@@ -28,7 +28,10 @@ export const SignWithWalletConnectModal = ({
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    if (!window.location.pathname.includes(callbackRoute)) {
+    if (
+      callbackRoute != null &&
+      !window.location.pathname.includes(callbackRoute)
+    ) {
       window.location.href = callbackRoute;
     }
   };
@@ -50,15 +53,14 @@ export const SignWithWalletConnectModal = ({
         title='Confirm on Maiar'
         description={description}
         action={
-          <a
-            href='/'
+          <button
             id='closeButton'
             data-testid='closeButton'
             onClick={close}
             className={classes.closeBtn}
           >
             Close
-          </a>
+          </button>
         }
       />
     </ReactBootstrap.Modal>

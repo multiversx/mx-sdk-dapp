@@ -11,7 +11,7 @@ import {
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
-interface TransactionsToSignReturnType {
+export interface TransactionsToSignReturnType {
   callbackRoute: string;
   sessionId: string;
   redirectAfterSign: boolean;
@@ -26,6 +26,11 @@ export const signedTransactionsSelector = createDeepEqualSelector(
   (state) => state.signedTransactions
 );
 
+export const signTransactionsErrorSelector = createDeepEqualSelector(
+  transactionsSelectors,
+  (state) => state.signTransactionsError
+);
+
 export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   (signedTransactions) =>
@@ -37,7 +42,7 @@ export const pendingSignedTransactionsSelector = createDeepEqualSelector(
     }, {})
 );
 
-export const successfulTransactionsSelector = createDeepEqualSelector(
+export const successTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
@@ -59,7 +64,7 @@ export const completedTransactionsSelector = createDeepEqualSelector(
     }, {})
 );
 
-export const failedTransactionsSelector = createDeepEqualSelector(
+export const failTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {

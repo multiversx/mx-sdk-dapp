@@ -27,6 +27,7 @@
       cursor: pointer;
     }
     &.toast-visible {
+      margin-bottom: 0.3rem;
       transform: translateX(0);
       .progress {
         background-color: transparent;

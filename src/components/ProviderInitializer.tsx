@@ -110,7 +110,7 @@ export default function ProviderInitializer() {
   async function tryAuthenticateWalletUser() {
     try {
       if (walletLogin != null) {
-        const provider = newWalletProvider(network);
+        const provider = newWalletProvider(network.walletAddress);
         const address = await getAddress();
         if (address) {
           dispatch(setProvider(provider));
@@ -184,7 +184,7 @@ export default function ProviderInitializer() {
         break;
       }
       case LoginMethodsEnum.wallet: {
-        const provider = newWalletProvider(network);
+        const provider = newWalletProvider(network.walletAddress);
         dispatch(setProvider(provider));
         break;
       }

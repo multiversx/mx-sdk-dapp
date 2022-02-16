@@ -1,7 +1,11 @@
 import React from 'react';
 
 import { Transaction } from '@elrondnetwork/erdjs';
-import { useGetAccountProvider, useSignTransactions } from 'hooks';
+import {
+  useGetAccountProvider,
+  useGetSignTransactionsError,
+  useSignTransactions
+} from 'hooks';
 import { LoginMethodsEnum } from 'types';
 import { getIsProviderEqualTo } from 'utils';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
@@ -23,6 +27,7 @@ interface CustomConfirmScreensType {
   Ledger: (signProps: SignPropsType) => React.ReactNode;
   Extension: (signProps: SignPropsType) => React.ReactNode;
   WalletConnect: (signProps: SignPropsType) => React.ReactNode;
+  Extra: (signProps: SignPropsType) => React.ReactNode;
 }
 
 interface SignTransactionsPropsType {
@@ -44,22 +49,24 @@ function SignTransactionsModals({
   } = useSignTransactions();
 
   const { providerType } = useGetAccountProvider();
+  const signTransactionsError = useGetSignTransactionsError();
 
   const handleClose = () => {
     onAbort(sessionId);
   };
 
+  const signError = error || signTransactionsError;
+
   const signProps: SignPropsType = {
     handleClose,
-    error,
+    error: signError,
     sessionId,
     transactions: transactions!,
     providerType,
     callbackRoute: callbackRoute!,
     className
   };
-
-  return error || hasTransactions ? (
+  return signError || hasTransactions ? (
     <React.Fragment>
       {getIsProviderEqualTo(LoginMethodsEnum.ledger) &&
         (CustomConfirmScreens?.Ledger?.(signProps) || (
@@ -73,6 +80,8 @@ function SignTransactionsModals({
         (CustomConfirmScreens?.Extension?.(signProps) || (
           <SignWithExtensionModal {...signProps} />
         ))}
+      {getIsProviderEqualTo(LoginMethodsEnum.extra) &&
+        CustomConfirmScreens?.Extra?.(signProps)}
     </React.Fragment>
   ) : null;
 }

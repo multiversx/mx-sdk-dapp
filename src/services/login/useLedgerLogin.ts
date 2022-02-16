@@ -19,7 +19,7 @@ import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
-const failedInitializeErrorText =
+const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
 
 const defaultAddressesPerPage = 10;
@@ -102,7 +102,7 @@ export function useLedgerLogin({
     optionalRedirect(callbackRoute, redirectAfterLogin);
   }
 
-  const loginFailed = (err: any, customMessage?: string) => {
+  const onLoginFailed = (err: any, customMessage?: string) => {
     if (err.statusCode in ledgerErrorCodes) {
       setError(
         (ledgerErrorCodes as any)[err.statusCode].message + customMessage
@@ -132,7 +132,7 @@ export function useLedgerLogin({
           signature: loginInfo.signature.hex()
         });
       } catch (err) {
-        loginFailed(err, '. Update Elrond App to continue.');
+        onLoginFailed(err, '. Update Elrond App to continue.');
       }
     } else {
       try {
@@ -143,7 +143,7 @@ export function useLedgerLogin({
           index
         });
       } catch (err) {
-        loginFailed(err);
+        onLoginFailed(err);
         return false;
       }
     }
@@ -166,8 +166,8 @@ export function useLedgerLogin({
       const hwWalletProvider = new HWProvider(proxy);
       const initialized = await hwWalletProvider.init();
       if (!initialized) {
-        setError(failedInitializeErrorText);
-        console.warn(failedInitializeErrorText);
+        setError(failInitializeErrorText);
+        console.warn(failInitializeErrorText);
         return false;
       }
       setIsLoading(false);
@@ -176,7 +176,7 @@ export function useLedgerLogin({
       if ((err as any).statusCode in ledgerErrorCodes) {
         setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
       }
-      console.warn(failedInitializeErrorText, err);
+      console.warn(failInitializeErrorText, err);
     } finally {
       setIsLoading(false);
     }
@@ -189,8 +189,8 @@ export function useLedgerLogin({
       setIsLoading(true);
       const initialized = await hwWalletP.init();
       if (!initialized) {
-        setError(failedInitializeErrorText);
-        console.warn(failedInitializeErrorText);
+        setError(failInitializeErrorText);
+        console.warn(failInitializeErrorText);
         setIsLoading(false);
         return;
       }
@@ -219,7 +219,7 @@ export function useLedgerLogin({
         const hwWalletP = new HWProvider(proxy);
         const initialized = await hwWalletP.init();
         if (!initialized) {
-          console.warn(failedInitializeErrorText);
+          console.warn(failInitializeErrorText);
           return;
         }
         const address = await hwWalletP.login();
@@ -261,14 +261,14 @@ export function useLedgerLogin({
   React.useEffect(() => {
     fetchAccounts();
   }, [startIndex]);
-  const isFailed = Boolean(error);
+  const loginFailed = Boolean(error);
   return [
     onStartLogin,
     {
-      isFailed,
-      isLoggedIn: isLoggedIn && !isFailed,
+      loginFailed,
+      isLoggedIn: isLoggedIn && !loginFailed,
       error,
-      isLoading: isLoading && !isFailed
+      isLoading: isLoading && !loginFailed
     },
     {
       accounts,

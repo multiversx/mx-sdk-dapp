@@ -1,8 +1,11 @@
 import React from 'react';
-import { useGetAccountInfo, DappUI } from '@elrondnetwork/dapp-core';
+import {
+  useGetAccountInfo,
+  DappUI,
+  useGetNetworkConfig
+} from '@elrondnetwork/dapp-core';
 import { Ui } from '@elrondnetwork/dapp-utils';
 import moment from 'moment';
-import { network } from 'config';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';
 import { TransactionType } from './types';
@@ -25,6 +28,7 @@ const TransactionList = ({
 }: {
   transactions: TransactionType[];
 }) => {
+  const { network } = useGetNetworkConfig();
   const account = useGetAccountInfo();
   const incoming = (sender: string) =>
     sender === account.address && sender !== fakeSender;

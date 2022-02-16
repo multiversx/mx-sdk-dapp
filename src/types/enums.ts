@@ -35,3 +35,9 @@ export enum TypesOfSmartContractCallsEnum {
   MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTNFTTransfer = 'ESDTNFTTransfer'
 }
+
+export enum EnvironmentsEnum {
+  testnet = 'testnet',
+  devnet = 'devnet',
+  mainnet = 'mainnet'
+}

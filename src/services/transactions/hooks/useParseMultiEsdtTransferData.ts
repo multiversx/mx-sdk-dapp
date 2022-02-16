@@ -17,7 +17,7 @@ const defaultTransactionInfo: TxDataTokenType = {
 };
 
 interface UseParseMultiEsdtTransferDataPropsType {
-  transactions: Transaction[];
+  transactions?: Transaction[];
 }
 
 interface UseParseMultiEsdtTransferDataReturnType {

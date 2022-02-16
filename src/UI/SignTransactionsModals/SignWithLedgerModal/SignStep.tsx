@@ -20,7 +20,7 @@ export interface SignStepType {
   handleClose: () => void;
   waitingForDevice: boolean;
   error: string | null;
-  callbackRoute: string;
+  callbackRoute?: string;
   currentStep: number;
   currentTransaction: any;
   isLastTransaction: boolean;
@@ -53,7 +53,9 @@ const SignStep = ({
     e.preventDefault();
     if (isFirst) {
       handleClose();
-      window.location.href = callbackRoute;
+      if (callbackRoute != null) {
+        window.location.href = callbackRoute;
+      }
     } else {
       onPrev();
     }
@@ -158,15 +160,14 @@ const SignStep = ({
       }
       action={
         <div className={classes.buttonsWrapper}>
-          <a
-            href='/'
+          <button
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
             className={classes.cancelButton}
           >
             {isFirst ? 'Cancel' : 'Back'}
-          </a>
+          </button>
 
           <button
             type='button'

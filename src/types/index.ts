@@ -13,19 +13,40 @@ export interface RouteType {
   authenticatedRoute?: boolean;
 }
 
-export interface NetworkType {
+export interface BaseNetworkType {
   id: string;
-  egldLabel: string;
   name: string;
+  egldLabel: string;
+  egldDenomination: string;
+  decimals: string;
+  gasPerDataByte: string;
+  walletConnectDeepLink: string;
   walletAddress: string;
   apiAddress: string;
   explorerAddress: string;
+  apiTimeout: string;
 }
 
-export interface NetworkConfigType {
-  walletConnectBridge?: string;
+export interface AccountInfoSliceNetworkType extends BaseNetworkType {
+  walletConnectBridgeAddress: string;
+}
+
+export interface NetworkType extends BaseNetworkType {
+  walletConnectBridgeAddresses: string[];
+}
+
+export interface CustomNetworkType {
+  id?: string;
+  name?: string;
+  egldLabel?: string;
+  egldDenomination?: string;
+  decimals?: string;
+  gasPerDataByte?: string;
   walletConnectDeepLink?: string;
-  network: NetworkType;
+  walletConnectBridgeAddresses?: string[];
+  walletAddress?: string;
+  apiAddress?: string;
+  explorerAddress?: string;
 }
 
 export interface ScResultType {

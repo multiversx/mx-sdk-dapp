@@ -34,11 +34,13 @@ export interface UpdateSignedTransactionStatusPayloadType {
 export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
+  signTransactionsError: string | null;
 }
 
 const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
-  transactionsToSign: null
+  transactionsToSign: null,
+  signTransactionsError: null
 };
 
 export const transactionsSlice = createSlice({
@@ -119,9 +121,14 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<TransactionsToSignType>
     ) => {
       state.transactionsToSign = action.payload;
+      state.signTransactionsError = null;
     },
     clearSignTransactions: (state) => {
       state.transactionsToSign = initialState.transactionsToSign;
+      state.signTransactionsError = null;
+    },
+    setSignTransactionsError: (state, action: PayloadAction<string | null>) => {
+      state.signTransactionsError = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -158,7 +165,8 @@ export const {
   updateSignedTransactionStatus,
   updateSignedTransactions,
   setTransactionsToSign,
-  clearSignTransactions
+  clearSignTransactions,
+  setSignTransactionsError
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
