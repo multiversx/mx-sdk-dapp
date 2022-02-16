@@ -10,7 +10,7 @@ export const successBatchTransactionsStates = [
   TransactionBatchStatusesEnum.success
 ];
 
-export const failedBatchTransactionsStates = [
+export const failBatchTransactionsStates = [
   TransactionBatchStatusesEnum.fail,
   TransactionBatchStatusesEnum.cancelled,
   TransactionBatchStatusesEnum.timedOut
@@ -32,7 +32,7 @@ export const completedServerTransactionsStates = [
   TransactionServerStatusesEnum.completed
 ];
 
-export const failedServerTransactionsStates = [
+export const failServerTransactionsStates = [
   TransactionServerStatusesEnum.fail,
   TransactionServerStatusesEnum.invalid
 ];
@@ -102,7 +102,7 @@ export function isBatchTransactionSuccessful(
 }
 
 export function isBatchTransactionFailed(status: TransactionBatchStatusesEnum) {
-  return status != null && failedBatchTransactionsStates.includes(status);
+  return status != null && failBatchTransactionsStates.includes(status);
 }
 
 export function isBatchTransactionTimedOut(
@@ -125,5 +125,5 @@ export function isServerTransactionSuccessful(
 export function isServerTransactionFailed(
   status: TransactionServerStatusesEnum
 ) {
-  return status != null && failedServerTransactionsStates.includes(status);
+  return status != null && failServerTransactionsStates.includes(status);
 }

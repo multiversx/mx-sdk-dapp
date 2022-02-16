@@ -378,7 +378,7 @@ const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLogi
 ```
 {
   error: string,
-  isFailed: boolean,
+  loginFailed: boolean,
   isLoading: boolean,
   isLoggedIn: boolean
 }
@@ -555,7 +555,7 @@ import {transactionServices} from @elrondnetwork/dapp-core;
 const transactionStatus = transactionServices.useTrackTransactionStatus({
   transactionId: sessionId,
   onSuccess,
-  onFailed,
+  onFail,
   onCancelled,
   onCompleted
 });
@@ -566,8 +566,8 @@ transactionStatus has the following information about the transaction:
 ```
 {
   isPending,
-  isSuccessful,
-  isFailed,
+  isSuccess,
+  isFail,
   isCancelled,
   isCompleted,
   errorMessage,
@@ -605,8 +605,8 @@ it's return signature is
   hasActiveTransactions: boolean - the user has at least 1 active transactions in one of the states described below;
   pending: boolean - at least one transaction is pending;
   timedOut: boolean = there are no pending transactions and at least one has timed out;
-  failed: boolean - there are no pending and no timedOut transactions and at least one has failed;
-  successful: boolean - there are no pending, failed or timedOut transactions;
+  fail: boolean - there are no pending and no timedOut transactions and at least one has failed;
+  success: boolean - there are no pending, failed or timedOut transactions;
   completed: boolean - all transactions are successful and all smart contract calls have been processed successfully;
 }
 ```

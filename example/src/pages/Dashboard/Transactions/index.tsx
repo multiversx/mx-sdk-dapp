@@ -16,7 +16,7 @@ const Transactions = () => {
   const {
     network: { apiAddress }
   } = useGetNetworkConfig();
-  const { successful, failed, hasActiveTransactions } =
+  const { success, fail, hasActiveTransactions } =
     transactionServices.useGetActiveTransactionsStatus();
 
   const [state, setState] = React.useState<StateType>({
@@ -26,23 +26,23 @@ const Transactions = () => {
   const account = useGetAccountInfo();
 
   const fetchData = () => {
-    if (successful || failed || !hasActiveTransactions) {
+    if (success || fail || !hasActiveTransactions) {
       getTransactions({
         apiAddress,
         address: account.address,
         timeout: 3000,
         contractAddress
-      }).then(({ data, success }) => {
+      }).then(({ data, success: transactionsFetched }) => {
         refreshAccount();
         setState({
           transactions: data,
-          transactionsFetched: success
+          transactionsFetched
         });
       });
     }
   };
 
-  React.useEffect(fetchData, [successful, failed, hasActiveTransactions]);
+  React.useEffect(fetchData, [success, fail, hasActiveTransactions]);
 
   const { transactions } = state;
 

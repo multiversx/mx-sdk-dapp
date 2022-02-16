@@ -1,18 +1,18 @@
 import { useSelector } from 'redux/DappProviderContext';
 import {
   completedTransactionsSelector,
-  failedTransactionsSelector,
+  failTransactionsSelector,
   pendingSignedTransactionsSelector,
   signedTransactionsSelector,
-  successfulTransactionsSelector,
+  successTransactionsSelector,
   timedOutTransactionsSelector
 } from 'redux/selectors';
 
 interface useGetActiveTransactionsStatusReturnType {
   pending: boolean;
   timedOut: boolean;
-  failed: boolean;
-  successful: boolean;
+  fail: boolean;
+  success: boolean;
   completed: boolean;
   hasActiveTransactions: boolean;
 }
@@ -21,8 +21,8 @@ interface useGetActiveTransactionsStatusReturnType {
 export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatusReturnType {
   const signedTransactions = useSelector(signedTransactionsSelector);
   const timedOutTransactions = useSelector(timedOutTransactionsSelector);
-  const failedTransactions = useSelector(failedTransactionsSelector);
-  const successfulTransactions = useSelector(successfulTransactionsSelector);
+  const failTransactions = useSelector(failTransactionsSelector);
+  const successTransactions = useSelector(successTransactionsSelector);
   const pendingTransactions = useSelector(pendingSignedTransactionsSelector);
   const completedTransactions = useSelector(completedTransactionsSelector);
 
@@ -30,26 +30,26 @@ export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatus
 
   const timedOut = !pending && Object.keys(timedOutTransactions)?.length > 0;
 
-  const failed =
-    !pending && !timedOut && Object.keys(failedTransactions)?.length > 0;
+  const fail =
+    !pending && !timedOut && Object.keys(failTransactions)?.length > 0;
 
-  const successful =
+  const success =
     !pending &&
     !timedOut &&
-    !failed &&
-    Object.keys(successfulTransactions).length > 0;
+    !fail &&
+    Object.keys(successTransactions).length > 0;
 
   const completed =
     !pending &&
     !timedOut &&
-    !failed &&
+    !fail &&
     Object.keys(completedTransactions).length > 0;
   const hasActiveTransactions = Object.keys(signedTransactions).length > 0;
   return {
     pending,
     timedOut,
-    failed,
-    successful,
+    fail,
+    success,
     completed,
     hasActiveTransactions
   };

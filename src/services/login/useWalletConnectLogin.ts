@@ -214,14 +214,14 @@ export const useWalletConnectLogin = ({
     dispatch(setTokenLogin({ loginToken: token }));
   }
 
-  const isFailed = error != null;
+  const loginFailed = error != null;
   return [
     initiateLogin,
     {
       error,
-      isFailed,
-      isLoading: isLoading && !isFailed,
-      isLoggedIn: isLoggedIn && !isFailed
+      loginFailed,
+      isLoading: isLoading && !loginFailed,
+      isLoggedIn: isLoggedIn && !loginFailed
     },
     { uriDeepLink, walletConnectUri: wcUri }
   ];
