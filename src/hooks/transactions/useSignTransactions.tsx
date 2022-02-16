@@ -99,8 +99,9 @@ export function useSignTransactions() {
             break;
         }
       } catch (err) {
-        console.error('error when signing', err);
-        onCancel('error when signing', sessionId);
+        const errMessage = 'error when signing';
+        console.error(errMessage, err);
+        onCancel(err?.message || errMessage, sessionId);
         dispatch(
           updateSignedTransaction({
             [sessionId]: {
@@ -155,12 +156,12 @@ export function useSignTransactions() {
           }
         } catch (err) {
           console.error('error signing transaction', err);
-          onCancel('error when signing', sessionId);
+          onCancel(err.message, sessionId);
         }
       }
     } catch (err) {
       console.error('error signing transaction', err);
-      onCancel('error when signing');
+      onCancel(err.message);
     }
   }
 

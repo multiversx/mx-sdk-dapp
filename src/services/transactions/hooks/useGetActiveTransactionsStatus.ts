@@ -1,10 +1,10 @@
 import { useSelector } from 'redux/DappProviderContext';
 import {
   completedTransactionsSelector,
-  failTransactionsSelector,
+  failedTransactionsSelector,
   pendingSignedTransactionsSelector,
   signedTransactionsSelector,
-  successTransactionsSelector,
+  successfulTransactionsSelector,
   timedOutTransactionsSelector
 } from 'redux/selectors';
 
@@ -21,8 +21,8 @@ interface useGetActiveTransactionsStatusReturnType {
 export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatusReturnType {
   const signedTransactions = useSelector(signedTransactionsSelector);
   const timedOutTransactions = useSelector(timedOutTransactionsSelector);
-  const failTransactions = useSelector(failTransactionsSelector);
-  const successTransactions = useSelector(successTransactionsSelector);
+  const failedTransactions = useSelector(failedTransactionsSelector);
+  const successfulTransactions = useSelector(successfulTransactionsSelector);
   const pendingTransactions = useSelector(pendingSignedTransactionsSelector);
   const completedTransactions = useSelector(completedTransactionsSelector);
 
@@ -31,13 +31,13 @@ export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatus
   const timedOut = !pending && Object.keys(timedOutTransactions)?.length > 0;
 
   const fail =
-    !pending && !timedOut && Object.keys(failTransactions)?.length > 0;
+    !pending && !timedOut && Object.keys(failedTransactions)?.length > 0;
 
   const success =
     !pending &&
     !timedOut &&
     !fail &&
-    Object.keys(successTransactions).length > 0;
+    Object.keys(successfulTransactions).length > 0;
 
   const completed =
     !pending &&

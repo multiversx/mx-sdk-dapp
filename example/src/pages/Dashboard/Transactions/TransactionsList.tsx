@@ -4,7 +4,6 @@ import {
   DappUI,
   useGetNetworkConfig
 } from '@elrondnetwork/dapp-core';
-import { Ui } from '@elrondnetwork/dapp-utils';
 import moment from 'moment';
 import StatusIcon from './StatusIcon';
 import txStatus from './txStatus';
@@ -83,7 +82,7 @@ const TransactionList = ({
                       }}
                       title='View in Explorer'
                     >
-                      <Ui.Trim data-testid='txHash' text={tx.txHash} />
+                      <DappUI.Trim data-testid='txHash' text={tx.txHash} />
                     </a>
                   </td>
                   <td>

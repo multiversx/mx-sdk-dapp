@@ -42,9 +42,9 @@ const TransactionToast = ({
   const accountShard = useSelector(shardSelector);
 
   const {
-    errorMessage = 'Transaction fail',
+    errorMessage = 'Transaction failed',
     timedOutMessage = 'Transaction timed out',
-    successMessage = 'Transaction success',
+    successMessage = 'Transaction successful',
     processingMessage = 'Processing transaction'
   } = transactionDisplayInfo;
 
