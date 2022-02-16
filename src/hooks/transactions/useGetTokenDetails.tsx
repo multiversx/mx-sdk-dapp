@@ -1,4 +1,3 @@
-import { denomination } from 'constants/index';
 import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
 
 import useSwr from 'optionalPackages/swr';
@@ -32,7 +31,7 @@ export function useGetTokenDetails({
   const { network } = useGetNetworkConfig();
   if (!tokenId) {
     return {
-      tokenDenomination: denomination,
+      tokenDenomination: Number(network.egldDenomination),
       tokenLabel: '',
       tokenAvatar: ''
     };
@@ -47,7 +46,7 @@ export function useGetTokenDetails({
 
   const tokenDenomination = selectedToken
     ? selectedToken?.decimals
-    : denomination;
+    : Number(network.egldDenomination);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken ? `${selectedToken?.assets?.svgUrl}` : '';
 

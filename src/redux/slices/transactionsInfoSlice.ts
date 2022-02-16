@@ -11,8 +11,8 @@ export interface SetTransactionsInfoPayloadType {
   transactionsDisplayInfo: TransactionsDisplayInfoType;
 }
 
-export const defaultTransactionErrorMessage = 'Transaction fail';
-export const defaultTransactionSuccessMessage = 'Transaction success';
+export const defaultTransactionErrorMessage = 'Transaction failed';
+export const defaultTransactionSuccessMessage = 'Transaction successful';
 export const defaultTransactionProcessingMessage = 'Processing transaction';
 export const defaultTransactionSubmittedMessage = 'Transaction submitted';
 
