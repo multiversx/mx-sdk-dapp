@@ -28,7 +28,10 @@ const SignWithExtensionModal = ({
     e.preventDefault();
     handleClose();
 
-    if (!window.location.pathname.includes(callbackRoute)) {
+    if (
+      callbackRoute != null &&
+      !window.location.pathname.includes(callbackRoute)
+    ) {
       window.location.href = callbackRoute;
     }
   };

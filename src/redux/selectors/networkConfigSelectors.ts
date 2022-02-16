@@ -26,7 +26,7 @@ export const apiProviderSelector = createDeepEqualSelector(
 
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.walletConnectBridgeAddresses
+  (state) => state.network.walletConnectBridgeAddress
 );
 
 export const walletConnectDeepLinkSelector = createDeepEqualSelector(
@@ -51,5 +51,5 @@ export const explorerAddressSelector = createDeepEqualSelector(
 
 export const egldLabelSelector = createDeepEqualSelector(
   networkSelector,
-  (state) => state.EGLDLabel
+  (state) => state.egldLabel
 );

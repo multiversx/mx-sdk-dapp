@@ -97,8 +97,8 @@ This allows using different APIs and different connection providers to configure
 {
   id?: string;
   name?: string;
-  EGLDLabel?: string;
-  EGLDdenomination?: string;
+  egldLabel?: string;
+  egldDenomination?: string;
   decimals?: string;
   gasPerDataByte?: string;
   walletConnectDeepLink?: string; - a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.

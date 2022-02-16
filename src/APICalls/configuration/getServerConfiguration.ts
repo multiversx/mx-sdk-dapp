@@ -3,7 +3,7 @@ import { configEndpoint } from 'constants/network';
 
 export async function getServerConfiguration(environment: string) {
   try {
-    const { data } = await axios.get(`${configEndpoint}?env=${environment}`);
+    const { data } = await axios.get(configEndpoint[environment]);
     if (data != null) {
       return data;
     }

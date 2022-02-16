@@ -13,30 +13,37 @@ export interface RouteType {
   authenticatedRoute?: boolean;
 }
 
-export interface NetworkType {
+export interface BaseNetworkType {
   id: string;
   name: string;
-  EGLDLabel: string;
-  EGLDdenomination: string;
+  egldLabel: string;
+  egldDenomination: string;
   decimals: string;
   gasPerDataByte: string;
   walletConnectDeepLink: string;
-  walletConnectBridgeAddresses: string;
   walletAddress: string;
   apiAddress: string;
   explorerAddress: string;
-  apiTimeout: 4000;
+  apiTimeout: string;
+}
+
+export interface AccountInfoSliceNetworkType extends BaseNetworkType {
+  walletConnectBridgeAddress: string;
+}
+
+export interface NetworkType extends BaseNetworkType {
+  walletConnectBridgeAddresses: string[];
 }
 
 export interface CustomNetworkType {
   id?: string;
   name?: string;
-  EGLDLabel?: string;
-  EGLDdenomination?: string;
+  egldLabel?: string;
+  egldDenomination?: string;
   decimals?: string;
   gasPerDataByte?: string;
   walletConnectDeepLink?: string;
-  walletConnectBridgeAddresses?: string;
+  walletConnectBridgeAddresses?: string[];
   walletAddress?: string;
   apiAddress?: string;
   explorerAddress?: string;

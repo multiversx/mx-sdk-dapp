@@ -29,7 +29,7 @@ export const useWebWalletLogin = ({
       setIsLoading(true);
       const appState = store.getState();
       const network = networkSelector(appState);
-      const provider = newWalletProvider(network);
+      const provider = newWalletProvider(network.walletAddress);
 
       const now = new Date();
       const expires: number = now.setMinutes(now.getMinutes() + 3) / 1000;
