@@ -14,6 +14,7 @@ import { createDeepEqualSelector } from './helpers';
 export interface TransactionsToSignReturnType {
   callbackRoute: string;
   sessionId: string;
+  signWithoutSending: boolean;
   redirectAfterSign: boolean;
   transactions: Transaction[];
   sessionInformation?: any;

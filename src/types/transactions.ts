@@ -6,8 +6,9 @@ import {
 
 export interface TransactionsToSignType {
   transactions: RawTransactionType[];
-  callbackRoute: string;
+  callbackRoute?: string;
   redirectAfterSign: boolean;
+  signWithoutSending: boolean;
   sessionId: string;
   sessionInformation?: any;
 }
@@ -16,6 +17,7 @@ export interface SignedTransactionsBodyType {
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
   errorMessage?: string;
+  signWithoutSending?: boolean;
   sessionInformation?: any;
 }
 
@@ -129,6 +131,8 @@ export interface SendTransactionsPropsType {
     | SimpleTransactionType
     | (Transaction | SimpleTransactionType)[];
   redirectAfterSign?: boolean;
+  signWithoutSending: boolean;
+  callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
   sessionInformation?: any;
@@ -139,6 +143,7 @@ export interface SignTransactionsPropsType {
   minGasLimit?: number;
   redirectAfterSign?: boolean;
   callbackRoute?: string;
+  signWithoutSending: boolean;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   sessionInformation?: any;
 }

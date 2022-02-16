@@ -4,7 +4,7 @@ import qs from 'qs';
 import { dappInitRoute, walletSignSession } from 'constants/index';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { networkSelector } from 'redux/selectors';
-import { updateSignedTransaction } from 'redux/slices';
+import { moveTransactionsToSignedState } from 'redux/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { parseTransactionAfterSigning } from 'utils';
 
@@ -19,19 +19,17 @@ export function useParseSignedTransactions() {
 
       if (searchData && walletSignSession in searchData) {
         const signSessionId: number = (searchData as any)[walletSignSession];
-
         const signedTransactions = new WalletProvider(
           `${network.walletAddress}${dappInitRoute}`
         ).getTransactionsFromWalletUrl();
         if (signedTransactions.length > 0) {
           dispatch(
-            updateSignedTransaction({
-              [signSessionId.toString()]: {
-                status: TransactionBatchStatusesEnum.signed,
-                transactions: signedTransactions.map((tx) =>
-                  parseTransactionAfterSigning(tx)
-                )
-              }
+            moveTransactionsToSignedState({
+              sessionId: signSessionId.toString(),
+              status: TransactionBatchStatusesEnum.signed,
+              transactions: signedTransactions.map((tx) =>
+                parseTransactionAfterSigning(tx)
+              )
             })
           );
         }
