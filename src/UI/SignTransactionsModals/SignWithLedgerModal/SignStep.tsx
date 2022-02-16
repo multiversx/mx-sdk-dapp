@@ -36,7 +36,6 @@ const SignStep = ({
   error,
   isLastTransaction,
   currentStep,
-  callbackRoute,
   className
 }: SignStepType) => {
   const egldLabel = getEgldLabel();
@@ -53,9 +52,6 @@ const SignStep = ({
     e.preventDefault();
     if (isFirst) {
       handleClose();
-      if (callbackRoute != null) {
-        window.location.href = callbackRoute;
-      }
     } else {
       onPrev();
     }

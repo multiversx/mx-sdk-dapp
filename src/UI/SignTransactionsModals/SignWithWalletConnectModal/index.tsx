@@ -21,9 +21,11 @@ export const SignWithWalletConnectModal = ({
   });
 
   const hasMultipleTransactions = transactions && transactions?.length > 1;
-  const description = `Check your phone to sign the transaction${
-    hasMultipleTransactions ? 's' : ''
-  }`;
+  const description = error
+    ? error
+    : `Check your phone to sign the transaction${
+        hasMultipleTransactions ? 's' : ''
+      }`;
 
   const close = (e: React.MouseEvent) => {
     e.preventDefault();

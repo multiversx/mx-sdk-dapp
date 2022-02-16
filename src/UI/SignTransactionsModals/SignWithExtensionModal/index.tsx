@@ -18,16 +18,15 @@ const SignWithExtensionModal = ({
     icon: 'text-white',
     closeBtn: 'btn btn-close-link mt-2'
   });
-
-  const description =
-    transactions && transactions.length > 1
-      ? 'Check your Elrond Wallet Extension to sign the transactions'
-      : 'Check your Elrond Wallet Extension to sign the transaction';
+  const description = error
+    ? error
+    : transactions && transactions.length > 1
+    ? 'Check your Elrond Wallet Extension to sign the transactions'
+    : 'Check your Elrond Wallet Extension to sign the transaction';
 
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-
     if (
       callbackRoute != null &&
       !window.location.pathname.includes(callbackRoute)
