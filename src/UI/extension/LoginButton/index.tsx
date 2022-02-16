@@ -2,9 +2,10 @@ import React from 'react';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { ExtensionLoginButtonPropsType } from './types';
 
-export const ExtensionLoginButton: (
+const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
   token,
@@ -59,4 +60,4 @@ export const ExtensionLoginButton: (
   );
 };
 
-export default ExtensionLoginButton;
+export default withClassNameWrapper(ExtensionLoginButton);

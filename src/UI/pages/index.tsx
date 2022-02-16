@@ -1,1 +1,2 @@
-export { UnlockPage } from './UnlockPage';
+import UnlockPage from './UnlockPage';
+export { UnlockPage };

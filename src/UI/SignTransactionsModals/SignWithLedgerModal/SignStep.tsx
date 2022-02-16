@@ -1,6 +1,6 @@
 import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { denomination, decimals } from 'constants/index';
+import { useGetNetworkConfig } from 'hooks';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
@@ -20,7 +20,7 @@ export interface SignStepType {
   handleClose: () => void;
   waitingForDevice: boolean;
   error: string | null;
-  callbackRoute: string;
+  callbackRoute?: string;
   currentStep: number;
   currentTransaction: any;
   isLastTransaction: boolean;
@@ -36,11 +36,11 @@ const SignStep = ({
   error,
   isLastTransaction,
   currentStep,
-  callbackRoute,
   className
 }: SignStepType) => {
   const egldLabel = getEgldLabel();
   const transactionData = currentTransaction.transaction.getData().toString();
+  const { network } = useGetNetworkConfig();
 
   const { tokenId, amount, type, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
@@ -53,7 +53,6 @@ const SignStep = ({
     e.preventDefault();
     if (isFirst) {
       handleClose();
-      window.location.href = callbackRoute;
     } else {
       onPrev();
     }
@@ -78,8 +77,10 @@ const SignStep = ({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
-    denomination: isTokenTransaction ? tokenDenomination : denomination,
-    decimals: decimals,
+    denomination: isTokenTransaction
+      ? tokenDenomination
+      : Number(network.egldDenomination),
+    decimals: Number(network.decimals),
     showLastNonZeroDecimal: false,
     addCommas: true
   });
@@ -158,15 +159,14 @@ const SignStep = ({
       }
       action={
         <div className={classes.buttonsWrapper}>
-          <a
-            href='/'
+          <button
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
             className={classes.cancelButton}
           >
             {isFirst ? 'Cancel' : 'Back'}
-          </a>
+          </button>
 
           <button
             type='button'

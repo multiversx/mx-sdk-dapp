@@ -5,6 +5,7 @@ import {
   decimals as configDecimals
 } from 'constants/index';
 import { denominate, getEgldLabel } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 export interface DenominateType {
   value: string;
@@ -76,7 +77,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   );
 };
 
-export const Denominate = (props: DenominateType & { egldLabel?: string }) => {
+const Denominate = (props: DenominateType & { egldLabel?: string }) => {
   const { value } = props;
 
   return !validation.stringIsInteger(value)
@@ -90,4 +91,4 @@ const DenominateWrapper = (props: DenominateType) => {
   return <Denominate {...denominateProps} />;
 };
 
-export default DenominateWrapper;
+export default withClassNameWrapper(DenominateWrapper);

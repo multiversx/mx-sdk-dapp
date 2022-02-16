@@ -24,14 +24,14 @@ export const apiProviderSelector = createDeepEqualSelector(
   (state) => state.apiProvider
 );
 
-export const walletConnectBridgeSelector = createDeepEqualSelector(
+export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.walletConnectBridge
+  (state) => state.network.walletConnectBridgeAddress
 );
 
 export const walletConnectDeepLinkSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.walletConnectDeepLink
+  (state) => state.network.walletConnectDeepLink
 );
 
 export const networkSelector = createDeepEqualSelector(

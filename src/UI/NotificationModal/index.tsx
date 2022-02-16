@@ -6,6 +6,7 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { NotificationTypesEnum } from 'types';
 
+import { wrapperClassName } from 'utils';
 import PageState from '../PageState';
 
 const notificationTypesToIcons = {
@@ -26,32 +27,30 @@ export function NotificationModal() {
     : null;
 
   return notification ? (
-    <React.Fragment>
-      <ReactBootstrap.Modal
-        show={showModal}
-        backdrop={true}
-        onHide={notification}
-        className='modal-container'
-        animation={false}
-        centered
-      >
-        <div className='card w-100 notification-modal'>
-          <PageState
-            icon={icon}
-            iconClass={notification.iconClassName}
-            iconBgClass='p-4 rounded-bg-circle'
-            iconSize='3x'
-            title={notification.title}
-            description={notification.description}
-            action={
-              <button className='btn btn-primary' onClick={onDone}>
-                Done
-              </button>
-            }
-          />
-        </div>
-      </ReactBootstrap.Modal>
-    </React.Fragment>
+    <ReactBootstrap.Modal
+      show={showModal}
+      backdrop={true}
+      onHide={notification}
+      className={`modal-container ${wrapperClassName}`}
+      animation={false}
+      centered
+    >
+      <div className='card w-100 notification-modal'>
+        <PageState
+          icon={icon}
+          iconClass={notification.iconClassName}
+          iconBgClass='p-4 rounded-bg-circle'
+          iconSize='3x'
+          title={notification.title}
+          description={notification.description}
+          action={
+            <button className='btn btn-primary' onClick={onDone}>
+              Done
+            </button>
+          }
+        />
+      </div>
+    </ReactBootstrap.Modal>
   ) : null;
 }
 

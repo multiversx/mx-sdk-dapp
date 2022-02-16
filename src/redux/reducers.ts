@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session';
 import account from './slices/accountInfoSlice';
+import extraActions from './slices/extraActionsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
@@ -33,6 +34,7 @@ const rootReducer = combineReducers({
   ...customReducers,
   account,
   networkConfig,
+  extraActions,
   loginInfo,
   modals
 });

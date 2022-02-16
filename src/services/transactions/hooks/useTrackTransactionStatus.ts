@@ -14,7 +14,7 @@ import {
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;
   onSuccess?: (transactionId: string | null) => void;
-  onFailed?: (transactionId: string | null, errorMessage?: string) => void;
+  onFail?: (transactionId: string | null, errorMessage?: string) => void;
   onTimedOut?: (transactionId: string | null) => void;
   onCancelled?: (transactionId: string | null) => void;
   onCompleted?: (transactionId: string | null) => void;
@@ -23,7 +23,7 @@ export interface UseTrackTransactionStatusArgsType {
 export function useTrackTransactionStatus({
   transactionId,
   onSuccess,
-  onFailed,
+  onFail,
   onCancelled,
   onTimedOut,
   onCompleted
@@ -54,8 +54,8 @@ export function useTrackTransactionStatus({
   }, [isCompleted]);
 
   useEffect(() => {
-    if (isFailed && onFailed) {
-      onFailed(transactionId, errorMessage);
+    if (isFailed && onFail) {
+      onFail(transactionId, errorMessage);
     }
   }, [isFailed]);
 
@@ -70,7 +70,7 @@ export function useTrackTransactionStatus({
       if (onTimedOut) {
         onTimedOut(transactionId);
       } else {
-        onFailed?.(transactionId, 'timeout');
+        onFail?.(transactionId, 'timeout');
       }
     }
   }, [isTimedOut]);

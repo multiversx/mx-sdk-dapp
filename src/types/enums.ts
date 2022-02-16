@@ -21,6 +21,7 @@ export enum LoginMethodsEnum {
   walletconnect = 'walletconnect',
   wallet = 'wallet',
   extension = 'extension',
+  extra = 'extra',
   none = ''
 }
 
@@ -33,4 +34,10 @@ export enum NotificationTypesEnum {
 export enum TypesOfSmartContractCallsEnum {
   MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTNFTTransfer = 'ESDTNFTTransfer'
+}
+
+export enum EnvironmentsEnum {
+  testnet = 'testnet',
+  devnet = 'devnet',
+  mainnet = 'mainnet'
 }

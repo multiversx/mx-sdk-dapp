@@ -76,14 +76,14 @@ export const useExtensionLogin = ({
     }
   }
 
-  const isFailed = error != null;
+  const loginFailed = Boolean(error);
   return [
     initiateLogin,
     {
-      isFailed,
+      loginFailed,
       error,
-      isLoading: isLoading && !isFailed,
-      isLoggedIn: isLoggedIn && !isFailed
+      isLoading: isLoading && !loginFailed,
+      isLoggedIn: isLoggedIn && !loginFailed
     }
   ];
 };

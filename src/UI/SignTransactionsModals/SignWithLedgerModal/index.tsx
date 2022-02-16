@@ -2,20 +2,15 @@ import React from 'react';
 import { useSignTransactionsWithLedger } from 'hooks';
 import classNames from 'optionalPackages/classnames';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
-import { getGeneratedClasses, getWrapperClassname } from 'utils';
+import { SignModalPropsType } from 'types';
+import { getGeneratedClasses, wrapperClassName } from 'utils';
 import SignStep from './SignStep';
-
-export interface SignModalType {
-  handleClose: () => void;
-  error: string | null;
-  className?: string;
-}
 
 const SignWithLedgerModal = ({
   handleClose,
   error,
   className = 'ledger-modal'
-}: SignModalType) => {
+}: SignModalPropsType) => {
   const {
     onSignTransaction,
     onNext,
@@ -38,7 +33,7 @@ const SignWithLedgerModal = ({
       show={currentTransaction != null}
       backdrop='static'
       onHide={handleClose}
-      className={classNames(classes.wrapper, getWrapperClassname())}
+      className={classNames(classes.wrapper, wrapperClassName)}
       animation={false}
       centered
     >

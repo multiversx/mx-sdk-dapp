@@ -1,13 +1,44 @@
 import React from 'react';
 
-import { useGetAccountProvider, useSignTransactions } from 'hooks';
+import { Transaction } from '@elrondnetwork/erdjs';
+import {
+  useGetAccountProvider,
+  useGetSignTransactionsError,
+  useSignTransactions
+} from 'hooks';
 import { LoginMethodsEnum } from 'types';
 import { getIsProviderEqualTo } from 'utils';
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
 
-export function SignTransactionsModals({ className }: { className?: string }) {
+interface SignPropsType {
+  handleClose: () => void;
+  error: string | null;
+  sessionId?: string;
+  transactions: Transaction[];
+  providerType: LoginMethodsEnum;
+  callbackRoute: string;
+  className?: string;
+}
+
+interface CustomConfirmScreensType {
+  Ledger: (signProps: SignPropsType) => React.ReactNode;
+  Extension: (signProps: SignPropsType) => React.ReactNode;
+  WalletConnect: (signProps: SignPropsType) => React.ReactNode;
+  Extra: (signProps: SignPropsType) => React.ReactNode;
+}
+
+interface SignTransactionsPropsType {
+  className?: string;
+  CustomConfirmScreens?: CustomConfirmScreensType;
+}
+
+function SignTransactionsModals({
+  className,
+  CustomConfirmScreens
+}: SignTransactionsPropsType) {
   const {
     callbackRoute,
     transactions,
@@ -18,34 +49,41 @@ export function SignTransactionsModals({ className }: { className?: string }) {
   } = useSignTransactions();
 
   const { providerType } = useGetAccountProvider();
+  const signTransactionsError = useGetSignTransactionsError();
 
   const handleClose = () => {
     onAbort(sessionId);
   };
 
-  const signProps = {
+  const signError = error || signTransactionsError;
+
+  const signProps: SignPropsType = {
     handleClose,
-    error,
+    error: signError,
     sessionId,
     transactions: transactions!,
     providerType,
-    callbackRoute: callbackRoute!,
+    callbackRoute,
     className
   };
-
-  return error || hasTransactions ? (
+  return signError || hasTransactions ? (
     <React.Fragment>
-      {getIsProviderEqualTo(LoginMethodsEnum.ledger) && (
-        <SignWithLedgerModal {...signProps} />
-      )}
-      {getIsProviderEqualTo(LoginMethodsEnum.walletconnect) && (
-        <SignWithWalletConnectModal {...signProps} />
-      )}
-      {getIsProviderEqualTo(LoginMethodsEnum.extension) && (
-        <SignWithExtensionModal {...signProps} />
-      )}
+      {getIsProviderEqualTo(LoginMethodsEnum.ledger) &&
+        (CustomConfirmScreens?.Ledger?.(signProps) || (
+          <SignWithLedgerModal {...signProps} />
+        ))}
+      {getIsProviderEqualTo(LoginMethodsEnum.walletconnect) &&
+        (CustomConfirmScreens?.WalletConnect?.(signProps) || (
+          <SignWithWalletConnectModal {...signProps} />
+        ))}
+      {getIsProviderEqualTo(LoginMethodsEnum.extension) &&
+        (CustomConfirmScreens?.Extension?.(signProps) || (
+          <SignWithExtensionModal {...signProps} />
+        ))}
+      {getIsProviderEqualTo(LoginMethodsEnum.extra) &&
+        CustomConfirmScreens?.Extra?.(signProps)}
     </React.Fragment>
   ) : null;
 }
 
-export default SignTransactionsModals;
+export default withClassNameWrapper(SignTransactionsModals);

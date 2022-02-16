@@ -68,6 +68,7 @@ export function signTransactions({
     sessionInformation,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
+
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
   store.dispatch(
     setTransactionsDisplayInfo({ sessionId, transactionsDisplayInfo })

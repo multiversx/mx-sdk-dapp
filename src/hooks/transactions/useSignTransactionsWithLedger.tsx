@@ -8,12 +8,13 @@ import {
 } from 'redux/selectors';
 import {
   clearSignTransactions,
+  setSignTransactionsError,
   updateSignedTransaction
 } from 'redux/slices/transactionsSlice';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
-import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
-import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
+import { TransactionBatchStatusesEnum } from 'types/enums';
+import { isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
 
 interface UseSignTransactionsWithLedgerPropsType {
@@ -21,8 +22,6 @@ interface UseSignTransactionsWithLedgerPropsType {
 }
 
 type LedgerSignedTransactions = Record<number, Transaction>;
-
-const dummyCallback = () => null;
 
 interface UseSignTransactionsWithLedgerReturnType {
   allTransactions: MultiSignTxType[];
@@ -33,7 +32,7 @@ interface UseSignTransactionsWithLedgerReturnType {
   waitingForDevice: boolean;
   isLastTransaction: boolean;
   currentStep: number;
-  callbackRoute: string;
+  callbackRoute?: string;
   signedTransactions?: LedgerSignedTransactions;
   currentTransaction: ActiveLedgerTransactionType | null;
 }
@@ -42,25 +41,9 @@ export function useSignTransactionsWithLedger({
   onCancel
 }: UseSignTransactionsWithLedgerPropsType): UseSignTransactionsWithLedgerReturnType {
   const transactionsToSign = useSelector(transactionsToSignSelector);
-  if (
-    transactionsToSign == null ||
-    !getIsProviderEqualTo(LoginMethodsEnum.ledger)
-  ) {
-    return {
-      onSignTransaction: dummyCallback,
-      onNext: dummyCallback,
-      onPrev: dummyCallback,
-      onAbort: dummyCallback,
-      callbackRoute: '/',
-      waitingForDevice: false,
-      isLastTransaction: false,
-      currentStep: 0,
-      currentTransaction: null,
-      allTransactions: []
-    };
-  }
 
-  const { sessionId, transactions, callbackRoute } = transactionsToSign;
+  const { sessionId, transactions, callbackRoute, redirectAfterSign } =
+    transactionsToSign || {};
   const [currentStep, setCurrentStep] = useState(0);
   const [signedTransactions, setSignedTransactions] =
     useState<LedgerSignedTransactions>();
@@ -112,7 +95,7 @@ export function useSignTransactionsWithLedger({
 
   async function sign() {
     try {
-      if (currentTransaction == null) {
+      if (currentTransaction == null || sessionId == null) {
         return;
       }
       setWaitingForDevice(true);
@@ -139,14 +122,18 @@ export function useSignTransactionsWithLedger({
           })
         );
         reset();
-        if (!window.location.pathname.includes(callbackRoute)) {
+        if (
+          callbackRoute != null &&
+          redirectAfterSign &&
+          !window.location.pathname.includes(callbackRoute)
+        ) {
           window.location.href = callbackRoute;
         }
       }
     } catch (err) {
       console.error(err, 'sign error');
       reset();
-      dispatch(clearSignTransactions());
+      dispatch(setSignTransactionsError(err.message));
     }
   }
 
@@ -173,7 +160,9 @@ export function useSignTransactionsWithLedger({
   function onAbort() {
     if (isFirst) {
       dispatch(clearSignTransactions());
-      window.location.href = callbackRoute;
+      if (callbackRoute != null && redirectAfterSign) {
+        window.location.href = callbackRoute;
+      }
     } else {
       setCurrentStep((existing) => existing - 1);
     }

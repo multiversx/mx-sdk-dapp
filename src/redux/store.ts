@@ -38,14 +38,22 @@ export const store = configureStore({
           REGISTER,
           'appConfig/setProvider',
           'accountInfoSlice/setAccount',
-          'accountInfoSlice/setAccountNonce'
+          'accountInfoSlice/setAccountNonce',
+          'extraActionsSlice/initializeExtraActions'
         ],
         ignoredPaths: [
           'networkConfig.proxy',
           'networkConfig.apiProvider',
           'networkConfig.provider',
           'payload.nonce',
-          'account.account.nonce'
+          'account.account.nonce',
+          // extra actions
+          'extraActions.log',
+          'payload.log',
+          'payload.onLogin',
+
+          'extraActions.getProvider',
+          'extraActions.init'
         ]
       }
     }).concat(loginSessionMiddleware)

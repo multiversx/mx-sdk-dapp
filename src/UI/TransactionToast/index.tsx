@@ -20,12 +20,13 @@ import {
   getIsTransactionTimedOut
 } from 'utils';
 
+import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { TransactionToastPropsType } from './types';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
 
-export const TransactionToast = ({
+const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
@@ -123,7 +124,7 @@ export const TransactionToast = ({
     iconClassName: 'bg-warning'
   };
 
-  const failedToastData = {
+  const failToastData = {
     id: toastId,
     icon: icons.faTimes,
     title: errorMessage,
@@ -148,8 +149,8 @@ export const TransactionToast = ({
     pending: pendingToastData,
     success: successToastData,
     completed: successToastData,
-    cancelled: failedToastData,
-    fail: failedToastData,
+    cancelled: failToastData,
+    fail: failToastData,
     timedOut: timedOutToastData
   };
 
@@ -218,4 +219,4 @@ export const TransactionToast = ({
   );
 };
 
-export default TransactionToast;
+export default withClassNameWrapper(TransactionToast);

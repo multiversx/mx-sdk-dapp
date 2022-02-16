@@ -87,7 +87,6 @@ export function useSignTransactions() {
             });
 
             dispatch(clearSignTransactions());
-            // TODO: eslint warning
             provider.signTransactions(transactions, {
               callbackUrl: encodeURIComponent(callbackUrl)
             });
@@ -95,12 +94,14 @@ export function useSignTransactions() {
             break;
           case LoginMethodsEnum.extension:
           case LoginMethodsEnum.walletconnect:
+          case LoginMethodsEnum.extra:
             signTransactionsWithProvider();
             break;
         }
       } catch (err) {
-        console.error('error when signing', err);
-        onCancel('error when signing', sessionId);
+        const errMessage = 'error when signing';
+        console.error(errMessage, err);
+        onCancel(err?.message || errMessage, sessionId);
         dispatch(
           updateSignedTransaction({
             [sessionId]: {
@@ -129,6 +130,7 @@ export function useSignTransactions() {
         try {
           const signedTransactions: Transaction[] =
             await provider.signTransactions(transactions);
+
           const signingDisabled =
             !signedTransactions ||
             (signedTransactions &&
@@ -154,12 +156,12 @@ export function useSignTransactions() {
           }
         } catch (err) {
           console.error('error signing transaction', err);
-          onCancel('error when signing', sessionId);
+          onCancel(err.message, sessionId);
         }
       }
     } catch (err) {
       console.error('error signing transaction', err);
-      onCancel('error when signing');
+      onCancel(err.message);
     }
   }
 

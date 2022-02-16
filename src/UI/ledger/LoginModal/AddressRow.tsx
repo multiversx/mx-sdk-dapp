@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Denominate } from 'UI/Denominate';
+import Denominate from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
 
 interface AddressRowType {
@@ -25,16 +25,12 @@ const AddressRow = ({
   selectedAddress,
   onSelectAddress
 }: AddressRowType) => {
-  const ref = React.useRef(null);
   const [balance, setBalance] = React.useState(noBalance);
-  const isAddressSelected = selectedAddress === address;
-  const handleChange = () => {
-    const isCurrentlySelected = selectedAddress === address;
-    const isSelected = !isCurrentlySelected;
-    if (isSelected) {
+
+  const handleChange = (e: React.SyntheticEvent) => {
+    const { checked } = e.target as HTMLInputElement;
+    if (checked) {
       onSelectAddress({ address, index });
-    } else if (isAddressSelected && !isSelected) {
-      onSelectAddress(null);
     }
   };
 
@@ -52,21 +48,23 @@ const AddressRow = ({
   }, []);
 
   return (
-    <tr onClick={handleChange} role='button' ref={ref}>
+    <tr>
       <td className='text-left'>
         <div className='d-flex align-items-start text-left form-check'>
           <input
-            readOnly
             type='radio'
             id={`check_${index}`}
             data-testid={`check_${index}`}
+            onChange={handleChange}
+            role='button'
             checked={selectedAddress === address}
-            className='form-check-input mr-1 cursor-pointer'
+            className='form-check-input mr-1'
           />
           <label
             htmlFor={`check_${index}`}
+            role='button'
             data-testid={`label_${index}`}
-            className='form-check-label text-nowrap trim-size-xl cursor-pointer m-0'
+            className='form-check-label text-nowrap trim-size-xl m-0'
           >
             <div className='d-flex align-items-center text-nowrap trim'>
               <span>{trimHash(address)}</span>

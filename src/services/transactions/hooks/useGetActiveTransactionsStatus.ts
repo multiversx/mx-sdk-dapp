@@ -11,8 +11,8 @@ import {
 interface useGetActiveTransactionsStatusReturnType {
   pending: boolean;
   timedOut: boolean;
-  failed: boolean;
-  successful: boolean;
+  fail: boolean;
+  success: boolean;
   completed: boolean;
   hasActiveTransactions: boolean;
 }
@@ -30,26 +30,26 @@ export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatus
 
   const timedOut = !pending && Object.keys(timedOutTransactions)?.length > 0;
 
-  const failed =
+  const fail =
     !pending && !timedOut && Object.keys(failedTransactions)?.length > 0;
 
-  const successful =
+  const success =
     !pending &&
     !timedOut &&
-    !failed &&
+    !fail &&
     Object.keys(successfulTransactions).length > 0;
 
   const completed =
     !pending &&
     !timedOut &&
-    !failed &&
+    !fail &&
     Object.keys(completedTransactions).length > 0;
   const hasActiveTransactions = Object.keys(signedTransactions).length > 0;
   return {
     pending,
     timedOut,
-    failed,
-    successful,
+    fail,
+    success,
     completed,
     hasActiveTransactions
   };

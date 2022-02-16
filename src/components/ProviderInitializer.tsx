@@ -13,6 +13,7 @@ import {
   ledgerLoginSelector,
   isLoggedInSelector
 } from 'redux/selectors';
+import { extraActionsSelector } from 'redux/selectors/extraActionsSelectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -37,6 +38,7 @@ export default function ProviderInitializer() {
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
+  const { getProvider } = useSelector(extraActionsSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
@@ -86,7 +88,7 @@ export default function ProviderInitializer() {
           setAccount({
             balance: account.balance.toString(),
             address,
-            nonce: getLatestNonce(account)
+            nonce: account.nonce.valueOf()
           })
         );
         if (ledgerAccount == null && ledgerLogin != null) {
@@ -108,7 +110,7 @@ export default function ProviderInitializer() {
   async function tryAuthenticateWalletUser() {
     try {
       if (walletLogin != null) {
-        const provider = newWalletProvider(network);
+        const provider = newWalletProvider(network.walletAddress);
         const address = await getAddress();
         if (address) {
           dispatch(setProvider(provider));
@@ -182,13 +184,19 @@ export default function ProviderInitializer() {
         break;
       }
       case LoginMethodsEnum.wallet: {
-        const provider = newWalletProvider(network);
+        const provider = newWalletProvider(network.walletAddress);
         dispatch(setProvider(provider));
         break;
       }
 
       case LoginMethodsEnum.extension: {
         setExtensionProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.extra: {
+        const provider = getProvider();
+        dispatch(setProvider(provider));
         break;
       }
 

@@ -6,42 +6,48 @@ import {
   ApiProvider
 } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NetworkType } from 'types';
+import omit from 'lodash/omit';
+import {
+  AccountInfoSliceNetworkType,
+  BaseNetworkType,
+  NetworkType
+} from 'types';
+import { getBridgeAddressFromNetwork } from 'utils/internal';
 import { emptyProvider } from 'utils/provider';
 import { logoutAction } from '../commonActions';
 
-export const defaultNetwork: NetworkType = {
+export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
   name: 'NOT CONFIGURED',
   egldLabel: '',
+  egldDenomination: '18',
+  decimals: '4',
+  gasPerDataByte: '1500',
+  walletConnectDeepLink: '',
+  walletConnectBridgeAddress: '',
   walletAddress: '',
+
   apiAddress: '',
-  explorerAddress: ''
+  explorerAddress: '',
+  apiTimeout: '4000'
 };
 
-export interface InitializeNetworkConfigPayloadType {
-  walletConnectBridge?: string;
-  walletConnectDeepLink?: string;
-  network: NetworkType;
-}
-
 export interface NetworkConfigStateType {
-  walletConnectBridge: string;
-  walletConnectDeepLink: string;
   provider: IDappProvider;
   proxy: IProvider;
   apiProvider: IApiProvider;
-  network: NetworkType;
+  network: AccountInfoSliceNetworkType;
   chainID: string;
 }
 
 const initialState: NetworkConfigStateType = {
-  walletConnectBridge: 'https://bridge.walletconnect.org',
-  walletConnectDeepLink:
-    'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet.dev&link=https://maiar.com/',
   network: defaultNetwork,
-  proxy: new ProxyProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
-  apiProvider: new ApiProvider(defaultNetwork.apiAddress, { timeout: 4000 }),
+  proxy: new ProxyProvider(defaultNetwork.apiAddress, {
+    timeout: Number(defaultNetwork.apiTimeout)
+  }),
+  apiProvider: new ApiProvider(defaultNetwork.apiAddress, {
+    timeout: Number(defaultNetwork.apiTimeout)
+  }),
   provider: emptyProvider,
   chainID: '-1'
 };
@@ -52,23 +58,30 @@ export const networkConfigSlice = createSlice({
   reducers: {
     initializeNetworkConfig: (
       state: NetworkConfigStateType,
-      action: PayloadAction<InitializeNetworkConfigPayloadType>
+      action: PayloadAction<NetworkType>
     ) => {
-      const { walletConnectBridge, walletConnectDeepLink, network } =
-        action.payload;
-      const proxy = new ProxyProvider(network.apiAddress, {
-        timeout: 4000 // TODO: timeout can be moved into global config
-      });
-      const apiProvider = new ApiProvider(network.apiAddress, {
-        timeout: 4000
-      });
-      state.walletConnectBridge =
-        walletConnectBridge || state.walletConnectBridge;
-      state.walletConnectDeepLink =
-        walletConnectDeepLink || state.walletConnectDeepLink;
-      state.network = network;
-      state.proxy = proxy;
-      state.apiProvider = apiProvider;
+      const walletConnectBridgeAddress = getBridgeAddressFromNetwork(
+        action.payload.walletConnectBridgeAddresses
+      );
+      const network: BaseNetworkType = omit(
+        action.payload,
+        'walletConnectBridgeAddresses'
+      );
+      const { apiAddress } = network;
+
+      if (apiAddress) {
+        state.proxy = new ProxyProvider(apiAddress, {
+          timeout: Number(network.apiTimeout || defaultNetwork.apiTimeout)
+        });
+        state.apiProvider = new ApiProvider(apiAddress, {
+          timeout: Number(network.apiTimeout || defaultNetwork.apiTimeout)
+        });
+      }
+      state.network = {
+        ...state.network,
+        ...network,
+        walletConnectBridgeAddress
+      };
     },
     setChainID: (
       state: NetworkConfigStateType,

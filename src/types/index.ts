@@ -1,3 +1,6 @@
+import { IDappProvider } from '@elrondnetwork/erdjs';
+import { LoginMethodsEnum } from './enums';
+
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
@@ -10,19 +13,40 @@ export interface RouteType {
   authenticatedRoute?: boolean;
 }
 
-export interface NetworkType {
+export interface BaseNetworkType {
   id: string;
-  egldLabel: string;
   name: string;
+  egldLabel: string;
+  egldDenomination: string;
+  decimals: string;
+  gasPerDataByte: string;
+  walletConnectDeepLink: string;
   walletAddress: string;
   apiAddress: string;
   explorerAddress: string;
+  apiTimeout: string;
 }
 
-export interface NetworkConfigType {
-  walletConnectBridge?: string;
+export interface AccountInfoSliceNetworkType extends BaseNetworkType {
+  walletConnectBridgeAddress: string;
+}
+
+export interface NetworkType extends BaseNetworkType {
+  walletConnectBridgeAddresses: string[];
+}
+
+export interface CustomNetworkType {
+  id?: string;
+  name?: string;
+  egldLabel?: string;
+  egldDenomination?: string;
+  decimals?: string;
+  gasPerDataByte?: string;
   walletConnectDeepLink?: string;
-  network: NetworkType;
+  walletConnectBridgeAddresses?: string[];
+  walletAddress?: string;
+  apiAddress?: string;
+  explorerAddress?: string;
 }
 
 export interface ScResultType {
@@ -36,6 +60,17 @@ export interface ScResultType {
   value: string;
   data?: string;
   returnMessage?: string;
+}
+
+export interface ExtraActionsInitType {
+  onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
+  log?: (word: string) => void;
+}
+
+export interface ExtraActionsType {
+  log?: (word: string) => void;
+  getProvider: () => IDappProvider;
+  init: (props: ExtraActionsInitType) => void;
 }
 
 export * from './transactions';

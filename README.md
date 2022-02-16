@@ -51,6 +51,8 @@ More on this below.
 
 There are a couple of requirements that need to be met for the application to work properly.
 
+***If you experience bugs, please make sure that you read these, before opening an issue***
+
 <details>
   <summary>
       React
@@ -79,25 +81,32 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 ```
 <DappProvider
-networkConfig={{ network, walletConnectBridge, walletConnectDeepLink }}
-completedTransactionsDelay={500}
+    environment="devnet"
+    customNetworkConfig={customNetworkConfig}
+    completedTransactionsDelay={500}
 >
 ```
+`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet`
 
-As you might have noticed, the DappProvider accepts a `networkConfig` object with a couple of keys. This allows using different APIs and different connection providers.
+DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
+This allows using different APIs and different connection providers to configure your network configuration.
 
-- **walletConnectBridge (optional)** is a string that is used to establish the connection to walletConnect library.
-- **walletConnectDeepLink (optional)** is a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
-- **network** is a required configuration file that contains the following information about the environment of the application:
+**All keys are optional**
 
 ```
 {
-  id: string;
-  egldLabel: string;
-  name: string;
-  walletAddress: string;
-  apiAddress: string;
-  explorerAddress: string;
+  id?: string;
+  name?: string;
+  egldLabel?: string;
+  egldDenomination?: string;
+  decimals?: string;
+  gasPerDataByte?: string;
+  walletConnectDeepLink?: string; - a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
+  walletConnectBridgeAddresses?: string; - a string that is used to establish the connection to walletConnect library;
+  walletAddress?: string;
+  apiAddress?: string;
+  explorerAddress?: string;
+  apiTimeout?: 4000;
 }
 ```
 
@@ -137,13 +146,15 @@ when something happens inside the app:
 
 - `SignTransactionsModals` will show a modal when a new transaction is submitted, prompting the user to verify and sign it.
 
+**Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
+
 ```
   import {DappUI} from "@elrondnetwork/dapp-core";
 
-<App>
-  <DappUI.SignTransactionsModals />
-  <Content/>
-</App>
+  <App>
+    <DappUI.SignTransactionsModals />
+    <Content/>
+  </App>
 ```
 
 `NotificationModal` Will show a modal to the user with various warnings and errors.
@@ -151,27 +162,13 @@ when something happens inside the app:
 ```
   import {DappUI} from "@elrondnetwork/dapp-core";
 
-<App>
-  <DappUI.NotificationModal />
-  <Content/>
-</App>
-
+  <App>
+    <DappUI.NotificationModal />
+    <Content/>
+  </App>
 ```
 
-- `DappCoreUIWrapper` is a wrapper that needs to be wrapped around the whole tree to namespace the styles inside dapp-core Components.
-
-```
-  import {DappCoreUIWrapper} from "@elrondnetwork/dapp-core";
-
-<App>
-  <DappCoreUIWrapper>
-  <Content/>
-  </DappCoreUIWrapper>
-</App>
-```
-
-This wrapper will wrap your content in an extra div.
-If, for some reason, you want to avoid this, you can use `getWrapperClassname` function to get the className and attach it to a "wrapping" element.
+If you want to custom notifications, you can use the `useGetNotification` hook to get the notifications (like insufficient funds, errors etc).
 
 </details>
 
@@ -211,12 +208,12 @@ import { AuthenticatedRoutesWrapper} from "@elrondnetwork/dapp-core";
 Use with routes:
 
 ```
-<AuthenticatedRoutesWrapper
-          routes={routes}
-          unlockRoute={routeNames.unlock}
-        >
-          {appContent}
-        </AuthenticatedRoutesWrapper>
+  <AuthenticatedRoutesWrapper
+    routes={routes}
+    unlockRoute={routeNames.unlock}
+  >
+    {appContent}
+  </AuthenticatedRoutesWrapper>
 ```
 
 **routes** should be an array with objects with a signature similar to this:
@@ -279,6 +276,22 @@ These are automatically triggered by the buttons.
 
 If, however, you want access to these containers without the buttons,
 you can easily import and use them.
+
+```
+<DappUI.WalletConnectLoginContainer
+  callbackRoute={callbackRoute}
+  loginButtonText="Login with Maiar"
+  title = 'Maiar Login',
+  logoutRoute = '/unlock',
+  className = 'wallect-connect-login-modal',
+  lead = 'Scan the QR code using Maiar',
+  shouldRenderDefaultCss={shouldRenderDefaultCss}
+  wrapContentInsideModal={wrapContentInsideModal}
+  redirectAfterLogin={redirectAfterLogin}
+  token={token}
+  onClose={onClose}
+  />
+```
 
 ```
 <DappUI.LedgerLoginContainer
@@ -363,7 +376,7 @@ const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLogi
 ```
 {
   error: string,
-  isFailed: boolean,
+  loginFailed: boolean,
   isLoading: boolean,
   isLoggedIn: boolean
 }
@@ -540,7 +553,7 @@ import {transactionServices} from @elrondnetwork/dapp-core;
 const transactionStatus = transactionServices.useTrackTransactionStatus({
   transactionId: sessionId,
   onSuccess,
-  onFailed,
+  onFail,
   onCancelled,
   onCompleted
 });
@@ -590,8 +603,8 @@ it's return signature is
   hasActiveTransactions: boolean - the user has at least 1 active transactions in one of the states described below;
   pending: boolean - at least one transaction is pending;
   timedOut: boolean = there are no pending transactions and at least one has timed out;
-  failed: boolean - there are no pending and no timedOut transactions and at least one has failed;
-  successful: boolean - there are no pending, failed or timedOut transactions;
+  fail: boolean - there are no pending and no timedOut transactions and at least one has failed;
+  success: boolean - there are no pending, failed or timedOut transactions;
   completed: boolean - all transactions are successful and all smart contract calls have been processed successfully;
 }
 ```
