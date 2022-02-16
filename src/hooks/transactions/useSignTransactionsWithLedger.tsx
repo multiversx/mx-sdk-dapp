@@ -160,7 +160,7 @@ export function useSignTransactionsWithLedger({
   function onAbort() {
     if (isFirst) {
       dispatch(clearSignTransactions());
-      if (callbackRoute != null) {
+      if (callbackRoute != null && redirectAfterSign) {
         window.location.href = callbackRoute;
       }
     } else {

@@ -100,7 +100,8 @@ const Actions = () => {
         processingMessage: 'Processing Ping transaction',
         errorMessage: 'An error has occured during Ping',
         successMessage: 'Ping transaction successful'
-      }
+      },
+      redirectAfterSign: false
     });
     if (sessionId != null) {
       setTransactionSessionId(sessionId);
@@ -121,7 +122,8 @@ const Actions = () => {
         processingMessage: 'Processing Pong transaction',
         errorMessage: 'An error has occured during Pong',
         successMessage: 'Pong transaction successful'
-      }
+      },
+      redirectAfterSign: false
     });
     if (sessionId != null) {
       setTransactionSessionId(sessionId);

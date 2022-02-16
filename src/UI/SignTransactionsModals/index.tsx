@@ -63,7 +63,7 @@ function SignTransactionsModals({
     sessionId,
     transactions: transactions!,
     providerType,
-    callbackRoute: callbackRoute!,
+    callbackRoute,
     className
   };
   return signError || hasTransactions ? (
