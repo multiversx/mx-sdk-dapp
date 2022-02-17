@@ -29,7 +29,7 @@ export function useSignTransactions() {
   const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
   const transactionsToSign = useSelector(transactionsToSignSelector);
-  const savedCallback = useRef('/');
+  const savedCallback = useRef<string | undefined>('/');
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
 
@@ -63,7 +63,7 @@ export function useSignTransactions() {
     if (transactionsToSign) {
       const { sessionId, transactions, callbackRoute } = transactionsToSign;
       //the callback will go to undefined if the transaction is cancelled, so we save the most recent one for a valid transaction
-      savedCallback.current = callbackRoute ?? window.location.pathname;
+      savedCallback.current = callbackRoute;
       try {
         if (provider == null) {
           console.error(
@@ -115,7 +115,7 @@ export function useSignTransactions() {
     try {
       const { sessionId, transactions, callbackRoute, redirectAfterSign } =
         transactionsToSign!;
-      const redirectRoute = callbackRoute ?? window.location.pathname;
+
       if (transactions?.length) {
         const initialized = await provider.init();
         if (!initialized) {
@@ -142,9 +142,10 @@ export function useSignTransactions() {
 
             if (
               redirectAfterSign &&
-              !window.location.pathname.includes(redirectRoute)
+              callbackRoute != null &&
+              !window.location.pathname.includes(callbackRoute)
             ) {
-              window.location.href = redirectRoute;
+              window.location.href = callbackRoute;
             }
           }
         } catch (err) {
