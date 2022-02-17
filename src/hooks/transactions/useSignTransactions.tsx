@@ -63,7 +63,7 @@ export function useSignTransactions() {
     if (transactionsToSign) {
       const { sessionId, transactions, callbackRoute } = transactionsToSign;
       //the callback will go to undefined if the transaction is cancelled, so we save the most recent one for a valid transaction
-      savedCallback.current = callbackRoute;
+      savedCallback.current = callbackRoute ?? window.location.pathname;
       try {
         if (provider == null) {
           console.error(
@@ -100,7 +100,7 @@ export function useSignTransactions() {
       } catch (err) {
         const errMessage = 'error when signing';
         console.error(errMessage, err);
-        onCancel(err?.message || errMessage, sessionId);
+        onCancel((error as unknown as Error)?.message || errMessage, sessionId);
         dispatch(
           moveTransactionsToSignedState({
             sessionId,
@@ -115,6 +115,7 @@ export function useSignTransactions() {
     try {
       const { sessionId, transactions, callbackRoute, redirectAfterSign } =
         transactionsToSign!;
+      const redirectRoute = callbackRoute ?? window.location.pathname;
       if (transactions?.length) {
         const initialized = await provider.init();
         if (!initialized) {
@@ -141,19 +142,19 @@ export function useSignTransactions() {
 
             if (
               redirectAfterSign &&
-              !window.location.pathname.includes(callbackRoute)
+              !window.location.pathname.includes(redirectRoute)
             ) {
-              window.location.href = callbackRoute;
+              window.location.href = redirectRoute;
             }
           }
         } catch (err) {
           console.error('error signing transaction', err);
-          onCancel(err.message, sessionId);
+          onCancel((error as unknown as Error).message, sessionId);
         }
       }
     } catch (err) {
       console.error('error signing transaction', err);
-      onCancel(err.message);
+      onCancel((error as unknown as Error).message);
     }
   }
 
