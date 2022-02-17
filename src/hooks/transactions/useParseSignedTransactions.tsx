@@ -32,6 +32,7 @@ export function useParseSignedTransactions() {
               )
             })
           );
+          history.pushState({}, document.title, '?');
         }
       }
     }
