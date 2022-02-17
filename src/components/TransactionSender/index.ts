@@ -90,6 +90,8 @@ const TransactionSender = () => {
         );
         clearSignInfo();
         setNonce(account.nonce + transactions.length);
+
+        history.pushState({}, document.title, '?');
       } catch (error) {
         console.error('Unable to send transactions', error);
         dispatch(
