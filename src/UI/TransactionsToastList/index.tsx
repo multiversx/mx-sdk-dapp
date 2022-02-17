@@ -24,7 +24,8 @@ function TransactionsToastList({
   const pendingTransactionsFromStore =
     useGetPendingTransactions().pendingTransactions;
 
-  const signedTransactionsFromStore = useGetSignedTransactions();
+  const signedTransactionsFromStore =
+    useGetSignedTransactions().signedTransactions;
 
   const pendingTransactionsToRender =
     pendingTransactions || pendingTransactionsFromStore;
