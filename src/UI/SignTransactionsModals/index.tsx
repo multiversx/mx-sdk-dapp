@@ -24,10 +24,10 @@ interface SignPropsType {
 }
 
 interface CustomConfirmScreensType {
-  Ledger: (signProps: SignPropsType) => React.ReactNode;
-  Extension: (signProps: SignPropsType) => React.ReactNode;
-  WalletConnect: (signProps: SignPropsType) => React.ReactNode;
-  Extra: (signProps: SignPropsType) => React.ReactNode;
+  Ledger: (signProps: SignPropsType) => JSX.Element;
+  Extension: (signProps: SignPropsType) => JSX.Element;
+  WalletConnect: (signProps: SignPropsType) => JSX.Element;
+  Extra: (signProps: SignPropsType) => JSX.Element;
 }
 
 interface SignTransactionsPropsType {
@@ -66,22 +66,35 @@ function SignTransactionsModals({
     callbackRoute,
     className
   };
+
+  const LedgerConfirm = CustomConfirmScreens?.Ledger ? (
+    <CustomConfirmScreens.Ledger {...signProps} />
+  ) : (
+    <SignWithLedgerModal {...signProps} />
+  );
+  const WalletconnectConfirm = CustomConfirmScreens?.WalletConnect ? (
+    <CustomConfirmScreens.WalletConnect {...signProps} />
+  ) : (
+    <SignWithWalletConnectModal {...signProps} />
+  );
+  const ExtensionConfirm = CustomConfirmScreens?.Extension ? (
+    <CustomConfirmScreens.Extension {...signProps} />
+  ) : (
+    <SignWithExtensionModal {...signProps} />
+  );
+
   return signError || hasTransactions ? (
     <React.Fragment>
-      {getIsProviderEqualTo(LoginMethodsEnum.ledger) &&
-        (CustomConfirmScreens?.Ledger?.(signProps) || (
-          <SignWithLedgerModal {...signProps} />
-        ))}
+      {getIsProviderEqualTo(LoginMethodsEnum.ledger) && LedgerConfirm}
+
       {getIsProviderEqualTo(LoginMethodsEnum.walletconnect) &&
-        (CustomConfirmScreens?.WalletConnect?.(signProps) || (
-          <SignWithWalletConnectModal {...signProps} />
-        ))}
-      {getIsProviderEqualTo(LoginMethodsEnum.extension) &&
-        (CustomConfirmScreens?.Extension?.(signProps) || (
-          <SignWithExtensionModal {...signProps} />
-        ))}
-      {getIsProviderEqualTo(LoginMethodsEnum.extra) &&
-        CustomConfirmScreens?.Extra?.(signProps)}
+        WalletconnectConfirm}
+
+      {getIsProviderEqualTo(LoginMethodsEnum.extension) && ExtensionConfirm}
+
+      {getIsProviderEqualTo(LoginMethodsEnum.extra) && CustomConfirmScreens && (
+        <CustomConfirmScreens.Extra {...signProps} />
+      )}
     </React.Fragment>
   ) : null;
 }
