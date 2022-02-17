@@ -13,8 +13,8 @@ import {
 } from 'redux/slices/transactionsSlice';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
-import { TransactionBatchStatusesEnum } from 'types/enums';
-import { isTokenTransfer } from 'utils';
+import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
+import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
 
 interface UseSignTransactionsWithLedgerPropsType {
@@ -98,7 +98,10 @@ export function useSignTransactionsWithLedger({
       if (currentTransaction == null || sessionId == null) {
         return;
       }
-      setWaitingForDevice(true);
+
+      const ledgerWaiting = getIsProviderEqualTo(LoginMethodsEnum.ledger);
+      setWaitingForDevice(ledgerWaiting);
+
       const signedTx = await provider.signTransaction(
         currentTransaction.transaction
       );
@@ -115,7 +118,10 @@ export function useSignTransactionsWithLedger({
             sessionId,
             status: TransactionBatchStatusesEnum.signed,
             transactions: Object.values(newSignedTransactions).map((tx) =>
-              parseTransactionAfterSigning(tx as Transaction, true)
+              parseTransactionAfterSigning(
+                tx as Transaction,
+                getIsProviderEqualTo(LoginMethodsEnum.ledger)
+              )
             )
           })
         );
