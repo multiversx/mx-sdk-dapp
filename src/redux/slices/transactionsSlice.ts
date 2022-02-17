@@ -41,12 +41,24 @@ export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
   signTransactionsError: string | null;
+  transactionSessionInformation: {
+    [sessionId: string]: {
+      signWithoutSending: boolean;
+      sessionInformation: any;
+    };
+  };
 }
 
 const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
   transactionsToSign: null,
-  signTransactionsError: null
+  signTransactionsError: null,
+  transactionSessionInformation: {}
+};
+
+const defaultSessionInformation = {
+  signWithoutSending: false,
+  sessionInformation: null
 };
 
 export const transactionsSlice = createSlice({
@@ -58,19 +70,17 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<MoveTransactionsToSignedStatePayloadType>
     ) => {
       const { sessionId, transactions, errorMessage, status } = action.payload;
-      const isCurrentTxSigned =
-        sessionId != null && state?.transactionsToSign?.sessionId === sessionId;
-      if (isCurrentTxSigned) {
-        const { signWithoutSending, sessionInformation } =
-          state.transactionsToSign!;
-        //this moves a transaction from a "toSign" status to "signed" status
-        state.signedTransactions[sessionId] = {
-          signWithoutSending,
-          sessionInformation,
-          transactions,
-          status,
-          errorMessage
-        };
+      const { signWithoutSending, sessionInformation } =
+        state.transactionSessionInformation?.[sessionId] ||
+        defaultSessionInformation;
+      state.signedTransactions[sessionId] = {
+        signWithoutSending,
+        sessionInformation,
+        transactions,
+        status,
+        errorMessage
+      };
+      if (state?.transactionsToSign?.sessionId === sessionId) {
         state.transactionsToSign = initialState.transactionsToSign;
       }
     },
@@ -165,6 +175,14 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<TransactionsToSignType>
     ) => {
       state.transactionsToSign = action.payload;
+
+      const { sessionId, signWithoutSending, sessionInformation } =
+        action.payload;
+      state.transactionSessionInformation[sessionId] = {
+        signWithoutSending,
+        sessionInformation
+      };
+
       state.signTransactionsError = null;
     },
     clearAllTransactionsToSign: (state) => {
@@ -187,7 +205,8 @@ export const transactionsSlice = createSlice({
         return;
       }
 
-      const { signedTransactions } = action.payload.transactions;
+      const { signedTransactions, transactionSessionInformation } =
+        action.payload.transactions;
       const parsedSignedTransactions = Object.entries(
         signedTransactions
       ).reduce((acc, [sessionId, transaction]) => {
@@ -200,6 +219,9 @@ export const transactionsSlice = createSlice({
         }
         return acc;
       }, {});
+      if (transactionSessionInformation != null) {
+        state.transactionSessionInformation = transactionSessionInformation;
+      }
       if (signedTransactions != null) {
         state.signedTransactions = parsedSignedTransactions;
       }

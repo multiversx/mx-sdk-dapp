@@ -63,7 +63,7 @@ export function useSignTransactions() {
     if (transactionsToSign) {
       const { sessionId, transactions, callbackRoute } = transactionsToSign;
       //the callback will go to undefined if the transaction is cancelled, so we save the most recent one for a valid transaction
-      savedCallback.current = callbackRoute ?? window.location.pathname;
+      savedCallback.current = callbackRoute || window.location.pathname;
       try {
         if (provider == null) {
           console.error(
@@ -115,7 +115,7 @@ export function useSignTransactions() {
     try {
       const { sessionId, transactions, callbackRoute, redirectAfterSign } =
         transactionsToSign!;
-      const redirectRoute = callbackRoute ?? window.location.pathname;
+      const redirectRoute = callbackRoute || window.location.pathname;
       if (transactions?.length) {
         const initialized = await provider.init();
         if (!initialized) {
