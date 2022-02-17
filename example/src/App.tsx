@@ -19,7 +19,7 @@ const App = () => {
   return (
     <Router>
       <DappProvider
-        environment='testnet'
+        environment='devnet'
         customNetworkConfig={{ name: 'customConfig', apiTimeout: 6000 }}
         completedTransactionsDelay={200}
       >
