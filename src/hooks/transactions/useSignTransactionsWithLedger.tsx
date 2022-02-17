@@ -132,7 +132,7 @@ export function useSignTransactionsWithLedger({
     } catch (err) {
       console.error(err, 'sign error');
       reset();
-      dispatch(setSignTransactionsError(err.message));
+      dispatch(setSignTransactionsError((err as unknown as Error).message));
     }
   }
 
