@@ -12,8 +12,9 @@ import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
 export interface TransactionsToSignReturnType {
-  callbackRoute: string;
+  callbackRoute?: string;
   sessionId: string;
+  signWithoutSending: boolean;
   redirectAfterSign: boolean;
   transactions: Transaction[];
   sessionInformation?: any;

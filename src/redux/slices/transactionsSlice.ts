@@ -5,6 +5,7 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums';
 import {
+  SignedTransactionsBodyType,
   SignedTransactionsType,
   SignedTransactionType,
   TransactionsToSignType
@@ -22,6 +23,11 @@ export interface UpdateSignedTransactionsPayloadType {
   status: TransactionBatchStatusesEnum;
   errorMessage?: string;
   transactions?: SignedTransactionType[];
+}
+
+export interface MoveTransactionsToSignedStatePayloadType
+  extends SignedTransactionsBodyType {
+  sessionId: string;
 }
 
 export interface UpdateSignedTransactionStatusPayloadType {
@@ -47,6 +53,44 @@ export const transactionsSlice = createSlice({
   name: 'transactionsSlice',
   initialState,
   reducers: {
+    moveTransactionsToSignedState: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<MoveTransactionsToSignedStatePayloadType>
+    ) => {
+      const { sessionId, transactions, errorMessage, status } = action.payload;
+      const isCurrentTxSigned =
+        sessionId != null && state?.transactionsToSign?.sessionId === sessionId;
+      if (isCurrentTxSigned) {
+        const { signWithoutSending, sessionInformation } =
+          state.transactionsToSign!;
+        //this moves a transaction from a "toSign" status to "signed" status
+        state.signedTransactions[sessionId] = {
+          signWithoutSending,
+          sessionInformation,
+          transactions,
+          status,
+          errorMessage
+        };
+        state.transactionsToSign = initialState.transactionsToSign;
+      }
+    },
+
+    clearSignedTransaction: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<string>
+    ) => {
+      if (state.signedTransactions[action.payload]) {
+        delete state.signedTransactions[action.payload];
+      }
+    },
+    clearTransactionToSign: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<string>
+    ) => {
+      if (state?.transactionsToSign?.[action.payload]) {
+        delete state.transactionsToSign[action.payload];
+      }
+    },
     updateSignedTransaction: (
       state: TransactionsSliceStateType,
       action: PayloadAction<SignedTransactionsType>
@@ -123,9 +167,12 @@ export const transactionsSlice = createSlice({
       state.transactionsToSign = action.payload;
       state.signTransactionsError = null;
     },
-    clearSignTransactions: (state) => {
+    clearAllTransactionsToSign: (state) => {
       state.transactionsToSign = initialState.transactionsToSign;
       state.signTransactionsError = null;
+    },
+    clearAllSignedTransactions: (state) => {
+      state.signedTransactions = initialState.signedTransactions;
     },
     setSignTransactionsError: (state, action: PayloadAction<string | null>) => {
       state.signTransactionsError = action.payload;
@@ -161,12 +208,15 @@ export const transactionsSlice = createSlice({
 });
 
 export const {
-  updateSignedTransaction,
   updateSignedTransactionStatus,
   updateSignedTransactions,
   setTransactionsToSign,
-  clearSignTransactions,
-  setSignTransactionsError
+  clearAllTransactionsToSign,
+  clearAllSignedTransactions,
+  clearSignedTransaction,
+  clearTransactionToSign,
+  setSignTransactionsError,
+  moveTransactionsToSignedState
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

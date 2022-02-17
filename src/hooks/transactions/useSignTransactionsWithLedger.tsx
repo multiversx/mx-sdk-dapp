@@ -7,9 +7,9 @@ import {
   transactionsToSignSelector
 } from 'redux/selectors';
 import {
-  clearSignTransactions,
-  setSignTransactionsError,
-  updateSignedTransaction
+  clearAllTransactionsToSign,
+  moveTransactionsToSignedState,
+  setSignTransactionsError
 } from 'redux/slices/transactionsSlice';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
@@ -110,17 +110,16 @@ export function useSignTransactionsWithLedger({
       if (!isLastTransaction) {
         setCurrentStep((exising) => exising + 1);
       } else if (newSignedTransactions) {
-        dispatch(clearSignTransactions());
         dispatch(
-          updateSignedTransaction({
-            [sessionId]: {
-              status: TransactionBatchStatusesEnum.signed,
-              transactions: Object.values(newSignedTransactions).map((tx) =>
-                parseTransactionAfterSigning(tx as Transaction, true)
-              )
-            }
+          moveTransactionsToSignedState({
+            sessionId,
+            status: TransactionBatchStatusesEnum.signed,
+            transactions: Object.values(newSignedTransactions).map((tx) =>
+              parseTransactionAfterSigning(tx as Transaction, true)
+            )
           })
         );
+
         reset();
         if (
           callbackRoute != null &&
@@ -159,7 +158,7 @@ export function useSignTransactionsWithLedger({
 
   function onAbort() {
     if (isFirst) {
-      dispatch(clearSignTransactions());
+      dispatch(clearAllTransactionsToSign());
       if (callbackRoute != null && redirectAfterSign) {
         window.location.href = callbackRoute;
       }

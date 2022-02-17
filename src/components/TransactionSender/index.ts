@@ -9,7 +9,7 @@ import { signedTransactionsSelector } from 'redux/selectors';
 import { accountSelector } from 'redux/selectors';
 import {
   setTxSubmittedModal,
-  clearSignTransactions,
+  clearAllTransactionsToSign,
   updateSignedTransactions
 } from 'redux/slices';
 import {
@@ -29,13 +29,13 @@ const TransactionSender = () => {
   const dispatch = useDispatch();
 
   const clearSignInfo = () => {
-    dispatch(clearSignTransactions());
+    dispatch(clearAllTransactionsToSign());
     sendingRef.current = false;
   };
   async function handleSendTransactions() {
     const sessionIds = Object.keys(signedTransactions);
     for (const sessionId of sessionIds) {
-      if (!sessionId) {
+      if (!sessionId || signedTransactions?.[sessionId]?.signWithoutSending) {
         continue;
       }
 

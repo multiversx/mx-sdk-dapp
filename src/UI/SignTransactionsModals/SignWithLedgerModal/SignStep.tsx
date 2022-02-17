@@ -21,6 +21,7 @@ export interface SignStepType {
   waitingForDevice: boolean;
   error: string | null;
   callbackRoute?: string;
+  title?: string;
   currentStep: number;
   currentTransaction: any;
   isLastTransaction: boolean;
@@ -31,6 +32,7 @@ const SignStep = ({
   onSignTransaction,
   handleClose,
   onPrev,
+  title = 'Confirm on Ledger',
   waitingForDevice,
   currentTransaction,
   error,
@@ -111,7 +113,7 @@ const SignStep = ({
       iconBgClass={error ? 'bg-danger' : 'bg-warning'}
       iconSize='3x'
       className={className}
-      title='Confirm on Ledger'
+      title={title}
       description={
         <React.Fragment>
           {currentTransaction.transaction && (

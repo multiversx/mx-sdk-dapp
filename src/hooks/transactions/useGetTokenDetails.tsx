@@ -1,3 +1,4 @@
+import axios from 'axios';
 import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
 
 import useSwr from 'optionalPackages/swr';
@@ -21,7 +22,8 @@ interface TokenInfoResponse {
   };
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) =>
+  axios.get(url).then((response) => response.data);
 
 export function useGetTokenDetails({
   tokenId
