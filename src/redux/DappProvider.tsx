@@ -44,6 +44,10 @@ export const DappProvider = ({
     []
   );
 
+  if (!environment) {
+    //throw if the user tries to initialize the app without a valid environment
+    throw new Error('missing environment flag');
+  }
   const memoizedGetTransactionsByHash = useCallback(getTransactionsByHash, []);
   return (
     <Provider context={DappCoreContext} store={store}>

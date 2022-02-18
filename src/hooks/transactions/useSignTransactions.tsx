@@ -93,7 +93,6 @@ export function useSignTransactions() {
             break;
           case LoginMethodsEnum.extension:
           case LoginMethodsEnum.walletconnect:
-          case LoginMethodsEnum.extra:
             signTransactionsWithProvider();
             break;
         }
@@ -148,13 +147,22 @@ export function useSignTransactions() {
             }
           }
         } catch (err) {
-          console.error('error signing transaction', err);
-          onCancel((error as unknown as Error).message, sessionId);
+          const errorMessage =
+            (error as unknown as Error)?.message ||
+            (error as string) ||
+            'error signing transaction';
+
+          console.error('error signing transaction', errorMessage);
+          onCancel(errorMessage, sessionId);
         }
       }
     } catch (err) {
-      console.error('error signing transaction', err);
-      onCancel((error as unknown as Error).message);
+      const errorMessage =
+        (error as unknown as Error)?.message ||
+        (error as string) ||
+        'error signing transaction';
+      console.error('error signing transaction', errorMessage);
+      onCancel(errorMessage);
     }
   }
 
