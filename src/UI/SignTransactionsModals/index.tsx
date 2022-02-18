@@ -8,7 +8,6 @@ import {
 } from 'hooks';
 import useGetLoginInfo from 'hooks/useGetLoginInfo';
 import { LoginMethodsEnum } from 'types';
-import { getIsProviderEqualTo } from 'utils';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
