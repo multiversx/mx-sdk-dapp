@@ -466,7 +466,7 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 `sessionId` is the transaction's batch id which can be used to track a transaction's status and react to it.
 
 **Important! For the transaction to be signed, you will have to use either  `SignTransactionsModals` defined above, in the `Prerequisites` section,
-or the `useSignTransactions` hook defined below. If you don't use one of these, there will be no signing of transactions**
+or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
 
 </details>
 
