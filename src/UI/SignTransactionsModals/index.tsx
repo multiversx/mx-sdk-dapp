@@ -6,6 +6,7 @@ import {
   useGetSignTransactionsError,
   useSignTransactions
 } from 'hooks';
+import useGetLoginInfo from 'hooks/useGetLoginInfo';
 import { LoginMethodsEnum } from 'types';
 import { getIsProviderEqualTo } from 'utils';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
@@ -50,6 +51,7 @@ function SignTransactionsModals({
 
   const { providerType } = useGetAccountProvider();
   const signTransactionsError = useGetSignTransactionsError();
+  const { loginMethod } = useGetLoginInfo();
 
   const handleClose = () => {
     onAbort(sessionId);
@@ -67,38 +69,33 @@ function SignTransactionsModals({
     className
   };
 
-  const ready = signError || hasTransactions;
+  if (signError || hasTransactions) {
+    switch (loginMethod) {
+      case LoginMethodsEnum.ledger:
+        return CustomConfirmScreens?.Ledger ? (
+          <CustomConfirmScreens.Ledger {...signProps} />
+        ) : (
+          <SignWithLedgerModal {...signProps} />
+        );
 
-  if (ready) {
-    if (getIsProviderEqualTo(LoginMethodsEnum.ledger)) {
-      return CustomConfirmScreens?.Ledger ? (
-        <CustomConfirmScreens.Ledger {...signProps} />
-      ) : (
-        <SignWithLedgerModal {...signProps} />
-      );
-    }
+      case LoginMethodsEnum.walletconnect:
+        return CustomConfirmScreens?.WalletConnect ? (
+          <CustomConfirmScreens.WalletConnect {...signProps} />
+        ) : (
+          <SignWithWalletConnectModal {...signProps} />
+        );
 
-    if (getIsProviderEqualTo(LoginMethodsEnum.walletconnect)) {
-      return CustomConfirmScreens?.WalletConnect ? (
-        <CustomConfirmScreens.WalletConnect {...signProps} />
-      ) : (
-        <SignWithWalletConnectModal {...signProps} />
-      );
-    }
+      case LoginMethodsEnum.extension:
+        return CustomConfirmScreens?.Extension ? (
+          <CustomConfirmScreens.Extension {...signProps} />
+        ) : (
+          <SignWithExtensionModal {...signProps} />
+        );
 
-    if (getIsProviderEqualTo(LoginMethodsEnum.extension)) {
-      return CustomConfirmScreens?.Extension ? (
-        <CustomConfirmScreens.Extension {...signProps} />
-      ) : (
-        <SignWithExtensionModal {...signProps} />
-      );
-    }
-
-    if (
-      getIsProviderEqualTo(LoginMethodsEnum.extra) &&
-      CustomConfirmScreens?.Extra
-    ) {
-      return <CustomConfirmScreens.Extra {...signProps} />;
+      case LoginMethodsEnum.extra:
+        return CustomConfirmScreens?.Extra ? (
+          <CustomConfirmScreens.Extra {...signProps} />
+        ) : null;
     }
   }
 
