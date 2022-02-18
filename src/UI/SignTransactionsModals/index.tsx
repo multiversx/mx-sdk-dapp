@@ -96,6 +96,9 @@ function SignTransactionsModals({
         return CustomConfirmScreens?.Extra ? (
           <CustomConfirmScreens.Extra {...signProps} />
         ) : null;
+
+      default:
+        return null;
     }
   }
 
