@@ -67,36 +67,42 @@ function SignTransactionsModals({
     className
   };
 
-  const LedgerConfirm = CustomConfirmScreens?.Ledger ? (
-    <CustomConfirmScreens.Ledger {...signProps} />
-  ) : (
-    <SignWithLedgerModal {...signProps} />
-  );
-  const WalletconnectConfirm = CustomConfirmScreens?.WalletConnect ? (
-    <CustomConfirmScreens.WalletConnect {...signProps} />
-  ) : (
-    <SignWithWalletConnectModal {...signProps} />
-  );
-  const ExtensionConfirm = CustomConfirmScreens?.Extension ? (
-    <CustomConfirmScreens.Extension {...signProps} />
-  ) : (
-    <SignWithExtensionModal {...signProps} />
-  );
+  const ready = signError || hasTransactions;
 
-  return signError || hasTransactions ? (
-    <React.Fragment>
-      {getIsProviderEqualTo(LoginMethodsEnum.ledger) && LedgerConfirm}
+  if (ready) {
+    if (getIsProviderEqualTo(LoginMethodsEnum.ledger)) {
+      return CustomConfirmScreens?.Ledger ? (
+        <CustomConfirmScreens.Ledger {...signProps} />
+      ) : (
+        <SignWithLedgerModal {...signProps} />
+      );
+    }
 
-      {getIsProviderEqualTo(LoginMethodsEnum.walletconnect) &&
-        WalletconnectConfirm}
+    if (getIsProviderEqualTo(LoginMethodsEnum.walletconnect)) {
+      return CustomConfirmScreens?.WalletConnect ? (
+        <CustomConfirmScreens.WalletConnect {...signProps} />
+      ) : (
+        <SignWithWalletConnectModal {...signProps} />
+      );
+    }
 
-      {getIsProviderEqualTo(LoginMethodsEnum.extension) && ExtensionConfirm}
+    if (getIsProviderEqualTo(LoginMethodsEnum.extension)) {
+      return CustomConfirmScreens?.Extension ? (
+        <CustomConfirmScreens.Extension {...signProps} />
+      ) : (
+        <SignWithExtensionModal {...signProps} />
+      );
+    }
 
-      {getIsProviderEqualTo(LoginMethodsEnum.extra) && CustomConfirmScreens && (
-        <CustomConfirmScreens.Extra {...signProps} />
-      )}
-    </React.Fragment>
-  ) : null;
+    if (
+      getIsProviderEqualTo(LoginMethodsEnum.extra) &&
+      CustomConfirmScreens?.Extra
+    ) {
+      return <CustomConfirmScreens.Extra {...signProps} />;
+    }
+  }
+
+  return null;
 }
 
 export default withClassNameWrapper(SignTransactionsModals);

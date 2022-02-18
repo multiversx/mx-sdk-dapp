@@ -99,8 +99,8 @@ export function useSignTransactionsWithLedger({
         return;
       }
 
-      const ledgerWaiting = getIsProviderEqualTo(LoginMethodsEnum.ledger);
-      setWaitingForDevice(ledgerWaiting);
+      const trueForLedger = getIsProviderEqualTo(LoginMethodsEnum.ledger);
+      setWaitingForDevice(trueForLedger);
 
       const signedTx = await provider.signTransaction(
         currentTransaction.transaction
@@ -118,10 +118,7 @@ export function useSignTransactionsWithLedger({
             sessionId,
             status: TransactionBatchStatusesEnum.signed,
             transactions: Object.values(newSignedTransactions).map((tx) =>
-              parseTransactionAfterSigning(
-                tx as Transaction,
-                getIsProviderEqualTo(LoginMethodsEnum.ledger)
-              )
+              parseTransactionAfterSigning(tx as Transaction, trueForLedger)
             )
           })
         );
