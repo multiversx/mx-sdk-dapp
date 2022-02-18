@@ -465,6 +465,9 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 
 `sessionId` is the transaction's batch id which can be used to track a transaction's status and react to it.
 
+**Important! For the transaction to be signed, you will have to use either  `SignTransactionsModals` defined above, in the `Prerequisites` section,
+or the `useSignTransactions` hook defined below. If you don't use one of these, there will be no signing of transactions**
+
 </details>
 
 <details><summary>
@@ -473,11 +476,11 @@ Transaction Signing Flow
 
 ### Transaction Signing Flow
 
-Once a transaction has been submitted,
-the user will be prompted in his provider (Extension, Maiar etc) to sign the transaction.
+Once a transaction has been submitted, you have to use either the `SignTransactionsModals` or the `useSignTransactions` hook,
+for the user to be prompted in his provider (Extension, Maiar etc) to sign the transaction.
 
-We suggest displaying a message on the screen that confirms the transaction that needs to be signed.
-You may do this with `useSignTransactions` hook.
+If you don't want to use the default modals that appear for the user when the signing process happens,
+you have to use the `useSignTransactions` hook to sign those transactions.
 
 ```
  const {
@@ -490,7 +493,9 @@ You may do this with `useSignTransactions` hook.
   } = useSignTransactions();
 ```
 
-This hook will let you know if there are any transactions and you can programatically abort the signing process.
+This hook will let you know if there are any transactions and you can programmatically abort the signing process.
+
+We suggest displaying a message on the screen that confirms the transaction that needs to be signed.
 
 You can also get the provider via
 
