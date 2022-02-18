@@ -31,6 +31,15 @@ export function useGetTokenDetails({
   tokenId: string;
 }): TokenOptionType {
   const { network } = useGetNetworkConfig();
+
+  const {
+    data: selectedToken,
+    error
+  }: { data?: TokenInfoResponse; error?: string } = useSwr(
+    Boolean(tokenId) ? `${network.apiAddress}/tokens/${tokenId}` : null,
+    fetcher
+  );
+
   if (!tokenId) {
     return {
       tokenDenomination: Number(network.egldDenomination),
@@ -38,13 +47,6 @@ export function useGetTokenDetails({
       tokenAvatar: ''
     };
   }
-  const {
-    data: selectedToken,
-    error
-  }: { data?: TokenInfoResponse; error?: string } = useSwr(
-    `${network.apiAddress}/tokens/${tokenId}`,
-    fetcher
-  );
 
   const tokenDenomination = selectedToken
     ? selectedToken?.decimals

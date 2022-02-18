@@ -93,7 +93,6 @@ export function useSignTransactions() {
             break;
           case LoginMethodsEnum.extension:
           case LoginMethodsEnum.walletconnect:
-          case LoginMethodsEnum.extra:
             signTransactionsWithProvider();
             break;
         }
