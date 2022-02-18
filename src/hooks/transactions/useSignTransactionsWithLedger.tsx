@@ -112,6 +112,7 @@ export function useSignTransactionsWithLedger({
       setSignedTransactions(newSignedTransactions);
       if (!isLastTransaction) {
         setCurrentStep((exising) => exising + 1);
+        setWaitingForDevice(false);
       } else if (newSignedTransactions) {
         dispatch(
           moveTransactionsToSignedState({
@@ -162,6 +163,7 @@ export function useSignTransactionsWithLedger({
   function onAbort() {
     if (isFirst) {
       dispatch(clearAllTransactionsToSign());
+      onCancel();
       if (callbackRoute != null && redirectAfterSign) {
         window.location.href = callbackRoute;
       }
@@ -196,9 +198,6 @@ export function useSignTransactionsWithLedger({
   }
 
   function onPrev() {
-    if (currentStep === 0) {
-      onCancel();
-    }
     setCurrentStep((current) => {
       const nextStep = current - 1;
       if (nextStep < 0) {
