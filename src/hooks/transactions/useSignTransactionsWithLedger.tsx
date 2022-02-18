@@ -112,6 +112,7 @@ export function useSignTransactionsWithLedger({
       setSignedTransactions(newSignedTransactions);
       if (!isLastTransaction) {
         setCurrentStep((exising) => exising + 1);
+        setWaitingForDevice(false);
       } else if (newSignedTransactions) {
         dispatch(
           moveTransactionsToSignedState({
