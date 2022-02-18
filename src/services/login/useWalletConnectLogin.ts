@@ -164,9 +164,10 @@ export const useWalletConnectLogin = ({
   };
 
   async function initiateLogin(loginProvider = true) {
+    const shouldGenerateWcUri = loginProvider && !wcUri;
     if (
       !walletConnectBridgeAddress ||
-      providerRef?.current?.isInitialized?.()
+      (providerRef?.current?.isInitialized?.() && !shouldGenerateWcUri)
     ) {
       return;
     }
