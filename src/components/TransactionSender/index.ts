@@ -35,7 +35,11 @@ const TransactionSender = () => {
   async function handleSendTransactions() {
     const sessionIds = Object.keys(signedTransactions);
     for (const sessionId of sessionIds) {
-      if (!sessionId || signedTransactions?.[sessionId]?.signWithoutSending) {
+      const skipSending =
+        signedTransactions?.[sessionId]?.customTransactionInformation
+          ?.signWithoutSending;
+
+      if (!sessionId || skipSending) {
         continue;
       }
 

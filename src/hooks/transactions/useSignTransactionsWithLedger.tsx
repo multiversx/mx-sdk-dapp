@@ -42,8 +42,12 @@ export function useSignTransactionsWithLedger({
 }: UseSignTransactionsWithLedgerPropsType): UseSignTransactionsWithLedgerReturnType {
   const transactionsToSign = useSelector(transactionsToSignSelector);
 
-  const { sessionId, transactions, callbackRoute, redirectAfterSign } =
-    transactionsToSign || {};
+  const {
+    sessionId,
+    transactions,
+    callbackRoute,
+    customTransactionInformation
+  } = transactionsToSign || {};
   const [currentStep, setCurrentStep] = useState(0);
   const [signedTransactions, setSignedTransactions] =
     useState<LedgerSignedTransactions>();
@@ -127,7 +131,7 @@ export function useSignTransactionsWithLedger({
         reset();
         if (
           callbackRoute != null &&
-          redirectAfterSign &&
+          customTransactionInformation?.redirectAfterSign &&
           !window.location.pathname.includes(callbackRoute)
         ) {
           window.location.href = callbackRoute;
@@ -164,7 +168,10 @@ export function useSignTransactionsWithLedger({
     if (isFirst) {
       dispatch(clearAllTransactionsToSign());
       onCancel();
-      if (callbackRoute != null && redirectAfterSign) {
+      if (
+        callbackRoute != null &&
+        customTransactionInformation?.redirectAfterSign
+      ) {
         window.location.href = callbackRoute;
       }
     } else {
