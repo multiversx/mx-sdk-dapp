@@ -4,22 +4,24 @@ import { decodeBase64 } from 'utils/decoders';
 
 const okInHex = '6f6b';
 
-export function areScCallsSuccessful(scResults?: SmartContractResult[]) {
+export function areScCallsSuccessful(
+  scResults?: SmartContractResult[],
+  completedThreshold = 1
+) {
   if (!scResults) {
     return true;
   }
-  let success = false;
+  let numberOfOkParts = 0;
   scResults.forEach((result) => {
     if (result?.data) {
       const decoded = Buffer.from(result.data, 'base64').toString().split('@');
       const hasOkPart = Boolean(decoded.find((part) => part === okInHex));
       if (hasOkPart) {
-        success = true;
-        return;
+        numberOfOkParts++;
       }
     }
   });
-  return success;
+  return numberOfOkParts >= completedThreshold;
 }
 
 export function isContract(receiver: string, data = ''): boolean {

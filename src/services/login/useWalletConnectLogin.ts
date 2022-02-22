@@ -160,13 +160,14 @@ export const useWalletConnectLogin = ({
   }
 
   const handleOnLogout = () => {
-    logout(callbackRoute);
+    logout(logoutRoute);
   };
 
   async function initiateLogin(loginProvider = true) {
+    const shouldGenerateWcUri = loginProvider && !wcUri;
     if (
       !walletConnectBridgeAddress ||
-      providerRef?.current?.isInitialized?.()
+      (providerRef?.current?.isInitialized?.() && !shouldGenerateWcUri)
     ) {
       return;
     }

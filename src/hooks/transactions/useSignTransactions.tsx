@@ -112,8 +112,12 @@ export function useSignTransactions() {
 
   async function signTransactionsWithProvider() {
     try {
-      const { sessionId, transactions, callbackRoute, redirectAfterSign } =
-        transactionsToSign!;
+      const {
+        sessionId,
+        transactions,
+        callbackRoute,
+        customTransactionInformation: { redirectAfterSign }
+      } = transactionsToSign!;
       const redirectRoute = callbackRoute || window.location.pathname;
       if (transactions?.length) {
         const initialized = await provider.init();
