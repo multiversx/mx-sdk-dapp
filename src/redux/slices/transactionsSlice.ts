@@ -5,6 +5,7 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums';
 import {
+  CustomTransactionInformation,
   SignedTransactionsBodyType,
   SignedTransactionsType,
   SignedTransactionType,
@@ -41,11 +42,8 @@ export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
   signTransactionsError: string | null;
-  transactionSessionInformation: {
-    [sessionId: string]: {
-      signWithoutSending: boolean;
-      sessionInformation: any;
-    };
+  customTransactionInformationForSessionId: {
+    [sessionId: string]: CustomTransactionInformation;
   };
 }
 
@@ -53,12 +51,14 @@ const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
   transactionsToSign: null,
   signTransactionsError: null,
-  transactionSessionInformation: {}
+  customTransactionInformationForSessionId: {}
 };
 
-const defaultSessionInformation = {
+const defaultCustomInformation: CustomTransactionInformation = {
   signWithoutSending: false,
-  sessionInformation: null
+  sessionInformation: null,
+  redirectAfterSign: false,
+  completedThreshold: 1
 };
 
 export const transactionsSlice = createSlice({
@@ -70,15 +70,14 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<MoveTransactionsToSignedStatePayloadType>
     ) => {
       const { sessionId, transactions, errorMessage, status } = action.payload;
-      const { signWithoutSending, sessionInformation } =
-        state.transactionSessionInformation?.[sessionId] ||
-        defaultSessionInformation;
+      const customTransactionInformation =
+        state.customTransactionInformationForSessionId?.[sessionId] ||
+        defaultCustomInformation;
       state.signedTransactions[sessionId] = {
-        signWithoutSending,
-        sessionInformation,
         transactions,
         status,
-        errorMessage
+        errorMessage,
+        customTransactionInformation
       };
       if (state?.transactionsToSign?.sessionId === sessionId) {
         state.transactionsToSign = initialState.transactionsToSign;
@@ -176,12 +175,9 @@ export const transactionsSlice = createSlice({
     ) => {
       state.transactionsToSign = action.payload;
 
-      const { sessionId, signWithoutSending, sessionInformation } =
-        action.payload;
-      state.transactionSessionInformation[sessionId] = {
-        signWithoutSending,
-        sessionInformation
-      };
+      const { sessionId, customTransactionInformation } = action.payload;
+      state.customTransactionInformationForSessionId[sessionId] =
+        customTransactionInformation;
 
       state.signTransactionsError = null;
     },
@@ -205,7 +201,7 @@ export const transactionsSlice = createSlice({
         return;
       }
 
-      const { signedTransactions, transactionSessionInformation } =
+      const { signedTransactions, customTransactionInformationForSessionId } =
         action.payload.transactions;
       const parsedSignedTransactions = Object.entries(
         signedTransactions
@@ -219,8 +215,9 @@ export const transactionsSlice = createSlice({
         }
         return acc;
       }, {});
-      if (transactionSessionInformation != null) {
-        state.transactionSessionInformation = transactionSessionInformation;
+      if (customTransactionInformationForSessionId != null) {
+        state.customTransactionInformationForSessionId =
+          customTransactionInformationForSessionId;
       }
       if (signedTransactions != null) {
         state.signedTransactions = parsedSignedTransactions;

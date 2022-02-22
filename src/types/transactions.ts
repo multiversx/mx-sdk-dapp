@@ -7,18 +7,15 @@ import {
 export interface TransactionsToSignType {
   transactions: RawTransactionType[];
   callbackRoute?: string;
-  redirectAfterSign: boolean;
-  signWithoutSending: boolean;
   sessionId: string;
-  sessionInformation?: any;
+  customTransactionInformation: CustomTransactionInformation;
 }
 
 export interface SignedTransactionsBodyType {
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
   errorMessage?: string;
-  signWithoutSending?: boolean;
-  sessionInformation?: any;
+  customTransactionInformation?: CustomTransactionInformation;
 }
 
 export interface SignedTransactionsType {
@@ -135,17 +132,16 @@ export interface SendTransactionsPropsType {
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
+  completedThreshold?: number;
   sessionInformation?: any;
 }
 
 export interface SignTransactionsPropsType {
   transactions: Transaction[] | Transaction;
   minGasLimit?: number;
-  redirectAfterSign?: boolean;
   callbackRoute?: string;
-  signWithoutSending: boolean;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
-  sessionInformation?: any;
+  customTransactionInformation: CustomTransactionInformation;
 }
 
 export enum TransactionTypesEnum {
@@ -187,4 +183,11 @@ export interface SignModalPropsType {
   callbackRoute?: string;
   transactions: Transaction[];
   className?: string;
+}
+
+export interface CustomTransactionInformation {
+  redirectAfterSign: boolean;
+  sessionInformation: any;
+  signWithoutSending: boolean;
+  completedThreshold: number;
 }

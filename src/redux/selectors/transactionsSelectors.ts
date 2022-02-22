@@ -1,6 +1,9 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import newTransaction from 'models/newTransaction';
-import { SignedTransactionsType } from 'types/transactions';
+import {
+  CustomTransactionInformation,
+  SignedTransactionsType
+} from 'types/transactions';
 import {
   getIsTransactionCompleted,
   getIsTransactionFailed,
@@ -14,10 +17,8 @@ import { createDeepEqualSelector } from './helpers';
 export interface TransactionsToSignReturnType {
   callbackRoute?: string;
   sessionId: string;
-  signWithoutSending: boolean;
-  redirectAfterSign: boolean;
   transactions: Transaction[];
-  sessionInformation?: any;
+  customTransactionInformation: CustomTransactionInformation;
 }
 
 export const transactionsSelectors = (state: RootState) => state.transactions;
