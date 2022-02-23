@@ -133,22 +133,25 @@ export default function ProviderInitializer() {
     }
   }
 
-  function setLedgerProvider() {
-    const hwWalletP = new HWProvider(proxy);
-    hwWalletP
-      .init()
-      .then((success: any) => {
-        if (!success) {
-          console.warn('Could not initialise ledger app');
-          logout();
-          return;
-        }
-        dispatch(setProvider(hwWalletP));
-      })
-      .catch((err) => {
-        console.error('Could not initialise ledger app', err);
+  async function setLedgerProvider() {
+    try {
+      const hwWalletP = new HWProvider(proxy);
+
+      const isInitializationSuccessful = await hwWalletP.init();
+      if (ledgerLogin?.index != null) {
+        hwWalletP.addressIndex = ledgerLogin.index;
+      }
+      if (!isInitializationSuccessful) {
+        console.warn('Could not initialise ledger app');
         logout();
-      });
+        return;
+      }
+
+      dispatch(setProvider(hwWalletP));
+    } catch (err) {
+      console.error('Could not initialise ledger app', err);
+      logout();
+    }
   }
 
   async function setExtensionProvider() {

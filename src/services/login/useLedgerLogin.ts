@@ -222,7 +222,9 @@ export function useLedgerLogin({
           console.warn(failInitializeErrorText);
           return;
         }
-        const address = await hwWalletP.login();
+        const address = await hwWalletP.login({
+          addressIndex: selectedAddress?.index
+        });
         dispatch(setProvider(hwWalletP));
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
