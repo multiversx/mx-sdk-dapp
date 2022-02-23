@@ -4,6 +4,20 @@ import { decodeBase64 } from 'utils/decoders';
 
 const okInHex = '6f6b';
 
+export const ESDTTransferTypes = [
+  'ESDTNFTTransfer',
+  'ESDTNFTBurn',
+  'ESDTNFTAddQuantity',
+  'ESDTNFTCreate',
+  'MultiESDTNFTTransfer',
+  'ESDTTransfer',
+  'ESDTBurn',
+  'ESDTLocalMint',
+  'ESDTLocalBurn',
+  'ESDTWipe',
+  'ESDTFreeze'
+];
+
 export function areScCallsSuccessful(
   scResults?: SmartContractResult[],
   completedThreshold = 1
@@ -42,20 +56,6 @@ export function isContract(
   }
 }
 
-export const ESDTTransferTypes = [
-  'ESDTNFTTransfer',
-  'ESDTNFTBurn',
-  'ESDTNFTAddQuantity',
-  'ESDTNFTCreate',
-  'MultiESDTNFTTransfer',
-  'ESDTTransfer',
-  'ESDTBurn',
-  'ESDTLocalMint',
-  'ESDTLocalBurn',
-  'ESDTWipe',
-  'ESDTFreeze'
-];
-
 const isHexValidCharacters = (str: string) => {
   return str.toLowerCase().match(/[0-9a-f]/g);
 };
@@ -73,15 +73,13 @@ export function isSelfESDTContract(
     return false;
   }
   const [type, ...restParts] = parts;
-  return (
-    sender != null &&
-    receiver != null &&
-    receiver === sender &&
-    ESDTTransferTypes.includes(type) &&
-    restParts.every(
-      (part) => isHexValidCharacters(part) && isHexValidLength(part)
-    )
+  const isSelfTransaction =
+    sender != null && receiver != null && receiver === sender;
+  const isCorrectESDTType = ESDTTransferTypes.includes(type);
+  const areDataPartsValid = restParts.every(
+    (part) => isHexValidCharacters(part) && isHexValidLength(part)
   );
+  return isSelfTransaction && isCorrectESDTType && areDataPartsValid;
 }
 
 export function getAddressFromDataField({
