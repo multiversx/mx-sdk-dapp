@@ -20,7 +20,7 @@ interface ReplyUrlType {
   urlParams?: { [key: string]: string };
 }
 
-export function buildReplyUrl({ callbackUrl, urlParams = {} }: ReplyUrlType) {
+export function builtCallbackUrl({ callbackUrl, urlParams = {} }: ReplyUrlType) {
   let url = callbackUrl;
   if (Object.entries(urlParams).length > 0) {
     const { search, origin, pathname } = new URL(callbackUrl);
@@ -30,4 +30,4 @@ export function buildReplyUrl({ callbackUrl, urlParams = {} }: ReplyUrlType) {
   return url;
 }
 
-export default buildReplyUrl;
+export default builtCallbackUrl;

@@ -5,185 +5,228 @@ import {
   Transaction,
   ExtensionProvider
 } from '@elrondnetwork/erdjs';
-import { walletSignSession } from 'constants/index';
+
+import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   addressSelector,
   providerSelector,
-  proxySelector
+  proxySelector,
+  transactionsToSignSelector
 } from 'redux/selectors';
-import { transactionsToSignSelector } from 'redux/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState
 } from 'redux/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
-import { getLatestNonce, getProviderType } from 'utils';
-import { buildReplyUrl } from 'utils';
-import { parseTransactionAfterSigning } from 'utils';
+import {
+  getLatestNonce,
+  getProviderType,
+  builtCallbackUrl,
+  parseTransactionAfterSigning
+} from 'utils';
 
-export function useSignTransactions() {
-  const provider = useSelector(providerSelector);
+export const useSignTransactions = () => {
+  const dispatch = useDispatch();
+  const savedCallback = useRef('/');
   const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
-  const transactionsToSign = useSelector(transactionsToSignSelector);
-  const savedCallback = useRef('/');
-  const dispatch = useDispatch();
+  const provider = useSelector(providerSelector);
+  const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
+  const transactionsToSign = useSelector(transactionsToSignSelector);
+  const hasTransactions = Boolean(transactionsToSign?.transactions);
 
   useParseSignedTransactions();
 
-  const providerType = getProviderType(provider);
+  const onAbort = (sessionId?: string) => {
+    setError(null);
+    clearSignInfo(sessionId);
+  };
 
-  function clearSignInfo(sessionId?: string) {
+  const clearSignInfo = (sessionId?: string) => {
+    const isExtensionProvider = provider instanceof ExtensionProvider;
+
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
-    if (provider instanceof ExtensionProvider) {
-      ExtensionProvider.getInstance()?.cancelAction?.();
+    if (!isExtensionProvider) {
+      return;
     }
-  }
 
-  function onCancel(e: string, sessionId?: string) {
-    //this is triggered by abort action, so no need to show error again
-    if (e !== 'Transaction cancelled') {
-      setError(e);
-    }
-    clearSignInfo(sessionId);
-  }
-
-  function onAbort(sessionId?: string) {
-    setError(null);
-    clearSignInfo(sessionId);
-  }
-
-  const signTransactions = async () => {
-    if (transactionsToSign) {
-      const { sessionId, transactions, callbackRoute } = transactionsToSign;
-      //the callback will go to undefined if the transaction is cancelled, so we save the most recent one for a valid transaction
-      savedCallback.current = callbackRoute || window.location.pathname;
-      try {
-        if (provider == null) {
-          console.error(
-            'You need a signer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect'
-          );
-          return;
-        }
-
-        const proxyAccount = await proxy.getAccount(new Address(address));
-        const latestNonce = getLatestNonce(proxyAccount);
-
-        transactions.forEach((tx: Transaction, i: number) => {
-          tx.setNonce(new Nonce(latestNonce + i));
-        });
-
-        switch (providerType) {
-          case LoginMethodsEnum.wallet:
-            const callbackUrl = buildReplyUrl({
-              callbackUrl: `${window.location.origin}${callbackRoute}`,
-              urlParams: { [walletSignSession]: sessionId }
-            });
-
-            provider.signTransactions(transactions, {
-              callbackUrl: encodeURIComponent(callbackUrl)
-            });
-
-            break;
-          case LoginMethodsEnum.extension:
-          case LoginMethodsEnum.walletconnect:
-            signTransactionsWithProvider();
-            break;
-        }
-      } catch (err) {
-        const errMessage = 'error when signing';
-        console.error(errMessage, err);
-        onCancel((error as unknown as Error)?.message || errMessage, sessionId);
-        dispatch(
-          moveTransactionsToSignedState({
-            sessionId,
-            status: TransactionBatchStatusesEnum.cancelled
-          })
-        );
-      }
-    }
+    ExtensionProvider.getInstance()?.cancelAction?.();
   };
 
-  async function signTransactionsWithProvider() {
+  const onCancel = (errorMessage: string, sessionId?: string) => {
+    const isTxCancelled = errorMessage !== errorsMessages.TRANSACTION_CANCELLED;
+
+    clearSignInfo(sessionId);
+
+    /*
+     * this is triggered by abort action,
+     * so no need to show error again
+     */
+    if (!isTxCancelled) {
+      return;
+    }
+
+    setError(errorMessage);
+  };
+
+  const signWithWallet = (
+    transactions: Array<Transaction>,
+    sessionId: string,
+    callbackRoute = ''
+  ) => {
+    const urlParams = { [walletSignSession]: sessionId };
+    const callbackUrl = `${window.location.origin}${callbackRoute}`;
+    const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
+
+    provider.signTransactions(transactions, {
+      callbackUrl: encodeURIComponent(buildedCallbackUrl)
+    });
+  };
+
+  const signTransactionsWithProvider = async () => {
+    const {
+      sessionId,
+      transactions,
+      callbackRoute,
+      customTransactionInformation
+    } = transactionsToSign!;
+    const { redirectAfterSign } = customTransactionInformation;
+    const redirectRoute = callbackRoute || window.location.pathname;
+    const isCurrentRoute = window.location.pathname.includes(redirectRoute);
+    const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
+
     try {
-      const {
-        sessionId,
-        transactions,
-        callbackRoute,
-        customTransactionInformation: { redirectAfterSign }
-      } = transactionsToSign!;
-      const redirectRoute = callbackRoute || window.location.pathname;
-      if (transactions?.length) {
-        const initialized = await provider.init();
-        if (!initialized) {
-          return;
-        }
-        try {
-          const signedTransactions: Transaction[] =
-            await provider.signTransactions(transactions);
+      const isProviderInitialized = await provider.init();
 
-          const signingDisabled =
-            !signedTransactions ||
-            (signedTransactions &&
-              Object.keys(signedTransactions).length !== transactions?.length);
-          if (!signingDisabled && signedTransactions) {
-            dispatch(
-              moveTransactionsToSignedState({
-                sessionId,
-                status: TransactionBatchStatusesEnum.signed,
-                transactions: Object.values(signedTransactions).map((tx) =>
-                  parseTransactionAfterSigning(tx)
-                )
-              })
-            );
+      if (!isProviderInitialized) {
+        return;
+      }
+    } catch (error) {
+      const errorMessage =
+        (error as unknown as Error)?.message ||
+        (error as string) ||
+        errorsMessages.PROVIDER_NOT_INTIALIZED;
+      console.error(errorsMessages.PROVIDER_NOT_INTIALIZED, errorMessage);
+      onCancel(errorMessage);
+      return;
+    }
 
-            if (
-              redirectAfterSign &&
-              !window.location.pathname.includes(redirectRoute)
-            ) {
-              window.location.href = redirectRoute;
-            }
-          }
-        } catch (err) {
-          const errorMessage =
-            (error as unknown as Error)?.message ||
-            (error as string) ||
-            'error signing transaction';
+    try {
+      const signedTransactions = await provider.signTransactions(transactions);
+      const hasSameTransactions =
+        Object.keys(signedTransactions).length === transactions.length;
+      const hasAllTransactionsSigned =
+        signedTransactions && hasSameTransactions;
+      const shouldMoveTransactionsToSignedState =
+        signedTransactions && hasAllTransactionsSigned;
 
-          console.error('error signing transaction', errorMessage);
-          onCancel(errorMessage, sessionId);
-        }
+      if (!shouldMoveTransactionsToSignedState) {
+        return;
+      }
+
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx: any) => parseTransactionAfterSigning(tx)
+      );
+
+      dispatch(
+        moveTransactionsToSignedState({
+          sessionId,
+          transactions: signedTransactionsArray,
+          status: TransactionBatchStatusesEnum.signed
+        })
+      );
+
+      if (shouldRedirectAfterSign) {
+        window.location.href = redirectRoute;
       }
     } catch (err) {
       const errorMessage =
         (error as unknown as Error)?.message ||
         (error as string) ||
-        'error signing transaction';
-      console.error('error signing transaction', errorMessage);
-      onCancel(errorMessage);
+        errorsMessages.ERROR_SIGNING_TX;
+      console.error(errorsMessages.ERROR_SIGNING_TX, errorMessage);
+      onCancel(errorMessage, sessionId);
     }
-  }
+  };
+
+  const signTransactions = async () => {
+    if (!transactionsToSign) {
+      return;
+    }
+
+    const { sessionId, transactions, callbackRoute } = transactionsToSign;
+
+    if (!provider) {
+      console.error(errorsMessages.MISSING_PROVIDER_MESSAGE);
+      return;
+    }
+
+    /*
+     * if the transaction is cancelled
+     * the callback will go to undefined,
+     * we save the most recent one for a valid transaction
+     */
+    savedCallback.current = callbackRoute || window.location.pathname;
+
+    const setTransactionNonces = (
+      latestNonce: number,
+      transactions: Array<Transaction>
+    ): Array<Transaction> => {
+      return transactions.map((tx: Transaction, index: number) => {
+        tx.setNonce(new Nonce(latestNonce + index));
+
+        return tx;
+      });
+    };
+
+    try {
+      const proxyAccount = await proxy.getAccount(new Address(address));
+      const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
+      const latestNonce = getLatestNonce(proxyAccount);
+      const mappedTransactions = setTransactionNonces(
+        latestNonce,
+        transactions
+      );
+
+      if (isSigningWithWebWallet) {
+        signWithWallet(mappedTransactions, sessionId, callbackRoute);
+      } else {
+        signTransactionsWithProvider();
+      }
+    } catch (err) {
+      const defaultErrorMessage = (error as unknown as Error)?.message;
+      const errorMessage = defaultErrorMessage || errorsMessages.ERROR_SIGNING;
+      onCancel(errorMessage, sessionId);
+
+      dispatch(
+        moveTransactionsToSignedState({
+          sessionId,
+          status: TransactionBatchStatusesEnum.cancelled
+        })
+      );
+
+      console.error(errorMessage, err);
+    }
+  };
 
   useEffect(() => {
-    if (transactionsToSign?.sessionId) {
-      signTransactions();
-    }
-  }, [transactionsToSign?.sessionId]);
-  const hasTransactions = transactionsToSign?.transactions;
+    signTransactions();
+  }, [transactionsToSign]);
+
   return {
-    onAbort,
     error,
+    onAbort,
     hasTransactions,
-    transactions: transactionsToSign?.transactions,
+    callbackRoute: savedCallback.current,
     sessionId: transactionsToSign?.sessionId,
-    callbackRoute: savedCallback.current
+    transactions: transactionsToSign?.transactions
   };
-}
+};
 
 export default useSignTransactions;

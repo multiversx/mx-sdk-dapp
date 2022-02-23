@@ -6,17 +6,17 @@ import TransactionStatusTracker from './TransactionStatusTracker';
 export function TransactionsTracker() {
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
-  return (
-    <React.Fragment>
-      {pendingTransactionsArray.map(([sessionId, transactionPayload]) => (
-        <TransactionStatusTracker
-          key={sessionId}
-          sessionId={sessionId}
-          transactionPayload={transactionPayload as SignedTransactionsBodyType}
-        />
-      ))}
-    </React.Fragment>
+  const mappedPendingTransactionsTrackers = pendingTransactionsArray.map(
+    ([sessionId, transactionPayload]) => (
+      <TransactionStatusTracker
+        key={sessionId}
+        sessionId={sessionId}
+        transactionPayload={transactionPayload as SignedTransactionsBodyType}
+      />
+    )
   );
+
+  return <React.Fragment>{mappedPendingTransactionsTrackers}</React.Fragment>;
 }
 
 export default TransactionsTracker;

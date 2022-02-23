@@ -3,5 +3,5 @@ export * from './parseMultiEsdtTransferData';
 export * from './getTokenFromData';
 export * from './isTokenTransfer';
 
-export * from './buildReplyUrl';
+export * from './builtCallbackUrl';
 export * from './parseTransactionAfterSigning';
