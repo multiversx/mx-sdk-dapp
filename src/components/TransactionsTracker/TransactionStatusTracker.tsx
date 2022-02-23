@@ -60,9 +60,9 @@ export function TransactionStatusTracker({
       const pendingTransactions = transactions.reduce(
         (
           acc: { hash: string; previousStatus: string }[],
-          { receiver, data, status, hash }
+          { receiver, sender, data, status, hash }
         ) => {
-          const isScCall = isContract(receiver, data);
+          const isScCall = isContract(receiver, sender, data);
           if (
             hash != null &&
             !timeoutRefs.current.includes(hash) &&
@@ -88,11 +88,12 @@ export function TransactionStatusTracker({
         results,
         invalidTransaction,
         receiver,
+        sender,
         data,
         hasStatusChanged
       } of serverTransactions) {
         try {
-          const isScCall = isContract(receiver, data);
+          const isScCall = isContract(receiver, sender, data);
           const retriesForThisHash = retriesRef.current[hash];
           if (retriesForThisHash > 30) {
             // consider transaction as stuck after 1 minute

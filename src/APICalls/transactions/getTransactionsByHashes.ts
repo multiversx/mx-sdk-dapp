@@ -9,6 +9,7 @@ export type GetTransactionsByHashesReturnType = {
   invalidTransaction: boolean;
   status: TransactionServerStatusesEnum;
   results: SmartContractResult[];
+  sender: string;
   receiver: string;
   data: string;
   previousStatus: string;
@@ -48,6 +49,7 @@ export async function getTransactionsByHashes(
       invalidTransaction: txOnNetwork == null,
       status: txOnNetwork.status,
       results: txOnNetwork.results,
+      sender: txOnNetwork.sender,
       receiver: txOnNetwork?.receiver,
       previousStatus,
       hasStatusChanged: status !== previousStatus
