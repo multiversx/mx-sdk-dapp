@@ -25,7 +25,7 @@ interface DappProviderPropsType {
   customNetworkConfig?: CustomNetworkType;
   extraActions?: ExtraActionsType;
   completedTransactionsDelay?: number;
-  environment: 'testnet' | 'mainnet' | 'devnet';
+  environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
 }
