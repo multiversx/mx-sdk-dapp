@@ -8,7 +8,7 @@ export const configEndpoint: Record<EnvironmentsEnum, string> = {
   devnet: 'https://devnet-api.elrond.com/dapp/config'
 };
 
-export const fallbackConfigurations: Record<string, NetworkType> = {
+export const fallbackNetworkConfigurations: Record<string, NetworkType> = {
   devnet: {
     id: 'devnet',
     name: 'Devnet',
