@@ -1,6 +1,6 @@
 import { Address } from '@elrondnetwork/erdjs';
 import { SmartContractResult, TypesOfSmartContractCallsEnum } from 'types';
-import { decodeBase64 } from 'utils/decoders';
+import { decodeBase64, isStringBase64 } from 'utils/decoders';
 
 const okInHex = '6f6b';
 
@@ -93,10 +93,7 @@ export function getAddressFromDataField({
     if (!data) {
       return receiver;
     }
-    let parsedData = data;
-    try {
-      parsedData = decodeBase64(data);
-    } catch (err) {}
+    const parsedData = isStringBase64(data) ? decodeBase64(data) : data;
     const addressIndex = getAddressIndex(parsedData);
     const parts = parsedData.split('@');
     return addressIndex > -1 ? parts[addressIndex] : receiver;
