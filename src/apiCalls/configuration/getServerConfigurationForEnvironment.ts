@@ -1,7 +1,10 @@
 import axios from 'axios';
 import { configEndpoint } from 'constants/network';
+import { EnvironmentsEnum } from 'types';
 
-export async function getServerConfiguration(environment: string) {
+export async function getServerConfigurationForEnvironment(
+  environment: EnvironmentsEnum
+) {
   try {
     const { data } = await axios.get(configEndpoint[environment]);
     if (data != null) {

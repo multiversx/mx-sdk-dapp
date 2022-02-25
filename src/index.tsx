@@ -11,8 +11,11 @@ export { DappProvider } from './redux/DappProvider';
 export { AuthenticatedRoutesWrapper, AppInitializer } from './wrappers';
 export * as transactionServices from './services/transactions';
 export * as models from './models';
+export * as apiCalls from './apiCalls';
 export * from './hooks';
 
 export { sendTransactions } from './services/transactions';
 
 export * as DappUI from './UI';
+
+export { fallbackNetworkConfigurations } from './constants/network';

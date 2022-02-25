@@ -1,7 +1,7 @@
 import axios from 'axios';
 import {
   addressSelector,
-  networkSelector,
+  apiNetworkSelector,
   shardSelector
 } from 'redux/selectors';
 
@@ -10,14 +10,14 @@ import { store } from 'redux/store';
 
 export default async function getAccountShard() {
   const appState = store.getState();
-  const network = networkSelector(appState);
+  const apiAddress = apiNetworkSelector(appState);
   const address = addressSelector(appState);
   const shard = shardSelector(appState);
 
   try {
     if (shard == null && address) {
       const { data: account } = await axios.get(
-        `${network.apiAddress}/accounts/${address}`
+        `${apiAddress}/accounts/${address}`
       );
       store.dispatch(setAccountShard(account.shard));
       return account.shard;

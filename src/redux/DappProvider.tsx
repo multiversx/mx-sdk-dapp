@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import {
   getTransactionsByHashes,
   sendSignedTransactions
-} from 'APICalls/transactions';
+} from 'apiCalls/transactions';
 import ProviderInitializer from 'components/ProviderInitializer';
 import TransactionSender from 'components/TransactionSender';
 import TransactionsTracker from 'components/TransactionsTracker';

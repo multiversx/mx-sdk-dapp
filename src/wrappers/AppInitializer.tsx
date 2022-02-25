@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { getServerConfiguration } from 'APICalls/configuration/getServerConfiguration';
-import { fallbackConfigurations } from 'constants/network';
+import { getServerConfigurationForEnvironment } from 'apiCalls';
+import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
@@ -30,13 +30,15 @@ export function AppInitializer({
   const dispatch = useDispatch();
 
   async function initializeNetwork() {
-    const fallbackConfig = fallbackConfigurations[environment];
+    const fallbackConfig = fallbackNetworkConfigurations[environment];
     if (fallbackConfig != null) {
       dispatch(
         initializeNetworkConfig({ ...fallbackConfig, ...customNetworkConfig })
       );
     }
-    const serverConfig = await getServerConfiguration(environment);
+    const serverConfig = await getServerConfigurationForEnvironment(
+      environment
+    );
     if (serverConfig != null) {
       dispatch(
         initializeNetworkConfig({ ...serverConfig, ...customNetworkConfig })
