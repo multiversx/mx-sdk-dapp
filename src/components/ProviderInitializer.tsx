@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
+import { NetworkConfig } from '@elrondnetwork/erdjs/out/networkConfig';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
@@ -71,10 +72,10 @@ export default function ProviderInitializer() {
   function refreshChainID() {
     proxy
       .getNetworkConfig()
-      .then((networkConfig) => {
+      .then((networkConfig: NetworkConfig) => {
         dispatch(setChainID(networkConfig.ChainID.valueOf()));
       })
-      .catch((e) => {
+      .catch((e: any) => {
         console.error('To do ', e);
       });
   }
