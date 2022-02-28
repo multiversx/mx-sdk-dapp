@@ -1,5 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
+import { Reducer } from 'redux';
+
 import {
   persistStore,
   persistReducer,
@@ -10,19 +12,24 @@ import {
   PURGE,
   REGISTER
 } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
 
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 
-const persistConfig = {
-  key: 'dapp-core-store',
-  version: 1,
-  storage,
-  whitelist: ['account', 'loginInfo', 'toasts', 'modals']
-};
+let localStorageReducers: Partial<Reducer> = rootReducer;
 
-const localStorageReducers = persistReducer(persistConfig, rootReducer);
+//This allows for this library to be used on other platforms than web, like React Native
+//without this condition, redux-persist 6+ will throw an error if persist storage fails
+if (window?.localStorage != null) {
+  const storage = require('redux-persist/lib/storage').default;
+  const persistConfig = {
+    key: 'dapp-core-store',
+    version: 1,
+    storage,
+    whitelist: ['account', 'loginInfo', 'toasts', 'modals']
+  };
+  localStorageReducers = persistReducer(persistConfig, rootReducer);
+}
 
 export const store = configureStore({
   reducer: localStorageReducers,

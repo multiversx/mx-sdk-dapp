@@ -1,7 +1,6 @@
-import * as ledgerErrorCodes from './ledgerErrorCodes';
-import * as networkConstants from './network';
-
-export { networkConstants, ledgerErrorCodes };
+export * as errorsMessages from './errorsMessages';
+export * as networkConstants from './network';
+export * as ledgerErrorCodes from './ledgerErrorCodes';
 
 export const gasPriceModifier = '0.01';
 export const gasPerDataByte = '1500';

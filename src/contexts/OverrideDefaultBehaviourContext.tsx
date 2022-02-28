@@ -2,7 +2,7 @@ import React from 'react';
 import {
   getTransactionsByHashes,
   sendSignedTransactions
-} from 'APICalls/transactions';
+} from 'apiCalls/transactions';
 import { OverrideDefaultBehaviourContextValueType } from './types';
 
 const defaultValue: OverrideDefaultBehaviourContextValueType = {

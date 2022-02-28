@@ -3,7 +3,7 @@ import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType,
   SendSignedTransactionsReturnType
-} from 'APICalls/transactions';
+} from 'apiCalls/transactions';
 
 export type SendSignedTransactionsAsyncType = (
   signedTransactions: Transaction[]

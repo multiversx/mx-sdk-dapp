@@ -1,7 +1,8 @@
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@elrondnetwork/erdjs';
 import newTransaction from 'models/newTransaction';
 import {
   CustomTransactionInformation,
+  RawTransactionType,
   SignedTransactionsType
 } from 'types/transactions';
 import {
@@ -25,7 +26,7 @@ export const transactionsSelectors = (state: RootState) => state.transactions;
 
 export const signedTransactionsSelector = createDeepEqualSelector(
   transactionsSelectors,
-  (state) => state.signedTransactions
+  (state) => state.signedTransactions as SignedTransactionsType
 );
 
 export const signTransactionsErrorSelector = createDeepEqualSelector(
@@ -97,7 +98,7 @@ export const transactionsToSignSelector = createDeepEqualSelector(
     return {
       ...state.transactionsToSign,
       transactions:
-        state?.transactionsToSign?.transactions.map((tx) =>
+        state?.transactionsToSign?.transactions.map((tx: RawTransactionType) =>
           newTransaction(tx)
         ) || []
     };
