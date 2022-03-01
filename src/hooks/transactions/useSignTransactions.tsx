@@ -190,8 +190,8 @@ export const useSignTransactions = () => {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
       const isSigningWithProvider =
-        provider === LoginMethodsEnum.extension ||
-        provider === LoginMethodsEnum.walletconnect;
+        providerType === LoginMethodsEnum.extension ||
+        providerType === LoginMethodsEnum.walletconnect;
 
       const latestNonce = getLatestNonce(proxyAccount);
       const mappedTransactions = setTransactionNonces(
