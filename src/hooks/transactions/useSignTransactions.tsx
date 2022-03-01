@@ -188,6 +188,11 @@ export const useSignTransactions = () => {
     try {
       const proxyAccount = await proxy.getAccount(new Address(address));
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
+
+      const isSigningWithProvider =
+        provider === LoginMethodsEnum.extension ||
+        provider === LoginMethodsEnum.walletconnect;
+
       const latestNonce = getLatestNonce(proxyAccount);
       const mappedTransactions = setTransactionNonces(
         latestNonce,
@@ -196,7 +201,8 @@ export const useSignTransactions = () => {
 
       if (isSigningWithWebWallet) {
         signWithWallet(mappedTransactions, sessionId, callbackRoute);
-      } else {
+      }
+      if (isSigningWithProvider) {
         signTransactionsWithProvider();
       }
     } catch (err) {
