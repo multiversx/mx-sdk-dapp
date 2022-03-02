@@ -1,11 +1,14 @@
-import { Address, Transaction } from '@elrondnetwork/erdjs/out';
+import {
+  Address,
+  Transaction,
+  TransactionPayload
+} from '@elrondnetwork/erdjs/out';
 import { defaultGasPrice, defaultGasLimit } from 'constants/index';
 import newTransaction from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { SendSimpleTransactionPropsType } from 'types';
 import { getAccount, getLatestNonce } from 'utils';
-import { encodeToBase64, isStringBase64 } from 'utils/decoders/base64Utils';
 
 enum ErrorCodesEnum {
   'invalidReceiver' = 'Invalid Receiver address',
@@ -43,7 +46,7 @@ export async function transformAndSignTransactions({
     return newTransaction({
       value,
       receiver: validatedReceiver,
-      data: isStringBase64(data) ? data : encodeToBase64(data),
+      data: new TransactionPayload(data).toString(),
       gasPrice,
       gasLimit,
       nonce: Number(nonce.valueOf().toString()),
