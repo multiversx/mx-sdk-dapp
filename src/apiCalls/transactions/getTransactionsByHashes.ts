@@ -1,8 +1,8 @@
+import { TransactionPayload } from '@elrondnetwork/erdjs/out';
 import axios from 'axios';
 import { networkConfigSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { SmartContractResult, TransactionServerStatusesEnum } from 'types';
-import { decodeBase64 } from 'utils';
 
 export type GetTransactionsByHashesReturnType = {
   hash: string;
@@ -39,10 +39,8 @@ export async function getTransactionsByHashes(
     const txOnNetwork = responseData.find(
       (txResponse: any) => txResponse.txHash === hash
     );
-    let data = txOnNetwork?.data;
-    try {
-      data = decodeBase64(data);
-    } catch (err) {}
+    const data = TransactionPayload.fromEncoded(txOnNetwork?.data).toString();
+
     return {
       hash,
       data,
