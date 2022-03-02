@@ -7,6 +7,7 @@ import LedgerLoginContainer from './ledger/LoginModal';
 import NotificationModal from './NotificationModal';
 import PageState from './PageState';
 import SignTransactionsModals from './SignTransactionsModals';
+import SignWithExtensionModal from './SignTransactionsModals/SignWithExtensionModal';
 import SignWithLedgerModal from './SignTransactionsModals/SignWithLedgerModal';
 import TransactionsToastList from './TransactionsToastList';
 import TransactionToast from './TransactionToast';
@@ -25,6 +26,7 @@ export {
   NotificationModal,
   SignTransactionsModals,
   SignWithLedgerModal,
+  SignWithExtensionModal,
   TransactionsToastList,
   TransactionToast,
   WalletConnectLoginButton,
