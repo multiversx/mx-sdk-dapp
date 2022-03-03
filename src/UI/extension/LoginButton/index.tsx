@@ -45,13 +45,17 @@ const ExtensionLoginButton: (
       target='_blank'
       className={classes.noExtensionButtonWrapper}
     >
-      <div className={classes.noExtensionButtonContent}>
-        <div className={classes.noExtensionButtonTitle}>Maiar DeFi Wallet</div>
-        <ReactFontawesome.FontAwesomeIcon
-          className={classes.noExtensionButtonIcon}
-          icon={ReactFontawesome.faArrowRight}
-        />
-      </div>
+      {children || (
+        <div className={classes.noExtensionButtonContent}>
+          <div className={classes.noExtensionButtonTitle}>
+            Maiar DeFi Wallet
+          </div>
+          <ReactFontawesome.FontAwesomeIcon
+            className={classes.noExtensionButtonIcon}
+            icon={ReactFontawesome.faArrowRight}
+          />
+        </div>
+      )}
     </a>
   ) : (
     <button onClick={handleLogin} className={classes.wrapper}>
