@@ -12,7 +12,7 @@ const LedgerConnect = ({
 }) => {
   return (
     <div className='m-auto login-container'>
-      <div className='card my-4 text-center'>
+      <div className='card my-4 text-center border-0'>
         <div className='card-body p-4 mx-lg-4'>
           {connectPageContent ? (
             <React.Fragment>{connectPageContent}</React.Fragment>

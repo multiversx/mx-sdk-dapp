@@ -37,7 +37,7 @@ const AddressTable = ({
   className = 'ledger-address-table'
 }: AddressTablePropsType) => {
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: 'card my-4 text-center',
+    wrapper: 'card my-4 text-center border-0',
     cardBody: 'card-body p-4 mx-lg-4',
     tableWrapper: 'table-responsive',
     tableContent: 'table m-0 border-bottom',

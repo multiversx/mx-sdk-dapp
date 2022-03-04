@@ -22,6 +22,8 @@ const ExtensionLoginButton: (
     token,
     redirectAfterLogin
   });
+
+  const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
     wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
       buttonClassName != null ? buttonClassName : ''
@@ -41,17 +43,25 @@ const ExtensionLoginButton: (
   return !window.elrondWallet ? (
     <a
       rel='noreferrer'
-      href='https://chrome.google.com/webstore/detail/dngmlblcodfobpdpecaadgfbcggfjfnm?authuser=0&hl=en'
+      href={
+        isFirefox
+          ? 'https://addons.mozilla.org/en-US/firefox/addon/maiar-defi-wallet/'
+          : 'https://chrome.google.com/webstore/detail/dngmlblcodfobpdpecaadgfbcggfjfnm?authuser=0&hl=en'
+      }
       target='_blank'
       className={classes.noExtensionButtonWrapper}
     >
-      <div className={classes.noExtensionButtonContent}>
-        <div className={classes.noExtensionButtonTitle}>Maiar DeFi Wallet</div>
-        <ReactFontawesome.FontAwesomeIcon
-          className={classes.noExtensionButtonIcon}
-          icon={ReactFontawesome.faArrowRight}
-        />
-      </div>
+      {children || (
+        <div className={classes.noExtensionButtonContent}>
+          <div className={classes.noExtensionButtonTitle}>
+            Maiar DeFi Wallet
+          </div>
+          <ReactFontawesome.FontAwesomeIcon
+            className={classes.noExtensionButtonIcon}
+            icon={ReactFontawesome.faArrowRight}
+          />
+        </div>
+      )}
     </a>
   ) : (
     <button onClick={handleLogin} className={classes.wrapper}>
