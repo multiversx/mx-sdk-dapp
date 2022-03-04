@@ -9,17 +9,19 @@ export async function logout(
 ) {
   const provider = providerSelector(store.getState());
   const isLoggedIn = getIsLoggedIn();
+
   if (!isLoggedIn) {
     return;
   }
+
   store.dispatch(logoutAction());
+
   try {
     await provider.logout({ callbackUrl });
+
     if (callbackUrl) {
       if (onRedirect) {
         onRedirect(callbackUrl);
-      } else {
-        window.location.href = callbackUrl;
       }
     }
   } catch (err) {
