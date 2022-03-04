@@ -1,8 +1,9 @@
 import { logoutAction } from 'redux/commonActions';
 import { providerSelector } from 'redux/selectors/networkConfigSelectors';
 import { store } from 'redux/store';
+import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
-import { getProviderType } from 'utils/provider';
+import { getIsProviderEqualTo } from 'utils/network';
 
 export async function logout(
   callbackUrl?: string,
@@ -23,7 +24,7 @@ export async function logout(
     if (callbackUrl) {
       if (onRedirect) {
         onRedirect(callbackUrl);
-      } else if (getProviderType(provider) !== 'wallet') {
+      } else if (!getIsProviderEqualTo(LoginMethodsEnum.wallet)) {
         window.location.href = callbackUrl;
       }
     }
