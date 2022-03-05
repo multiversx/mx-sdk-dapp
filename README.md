@@ -1,3 +1,4 @@
+
 # dapp-core
 
 > A library that holds the core functional logic of a dapp on the Elrond Network
@@ -419,6 +420,12 @@ Reading User State
 Once logged in, the user's session is persisted and can be read and deleted via a couple of handy functions.
 
 For logging out, the library exposes a simple function called **logout**, which can be called to clear the user data.
+
+the function accepts 2 arguments:
+- `callbackUrl: string (optional)` the url to redirect the user to after logging him out
+- `onRedirect: (callbackUrl: string) => void (optional)` a function that will be called instead of redirecting the user.
+This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
+*Important* this function will not be called for web wallet logout
 
 There are 2 ways of reading the user current state: hooks (to be used inside components and for reacting to changes in the data) and simple functions (for reading data outside of React components or inside handlers).
 
