@@ -21,10 +21,10 @@ export async function logout(
   try {
     await provider.logout({ callbackUrl });
 
-    if (callbackUrl) {
-      if (onRedirect) {
+    if (callbackUrl && !getIsProviderEqualTo(LoginMethodsEnum.wallet)) {
+      if (typeof onRedirect === 'function') {
         onRedirect(callbackUrl);
-      } else if (!getIsProviderEqualTo(LoginMethodsEnum.wallet)) {
+      } else {
         window.location.href = callbackUrl;
       }
     }
