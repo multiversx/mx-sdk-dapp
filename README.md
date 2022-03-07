@@ -296,12 +296,19 @@ you can easily import and use them.
 
 ```
 <DappUI.LedgerLoginContainer
-    className={className}
-    shouldRenderDefaultCss={shouldRenderDefaultCss}
-    callbackRoute={callbackRoute}
-    token={token}
+  callbackRoute: string;
+  className?: string;
+  shouldRenderDefaultCss?: boolean;
+  wrapContentInsideModal?: boolean;
+  redirectAfterLogin?: boolean;
+  token?: string;
+  onClose?: () => void;
   />
 ```
+
+All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
+The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
+
 
 Also, for a quicker setup, the `DappUI` object exports an `DappUI.UnlockPage` component, which contains all 4 buttons.
 
@@ -360,7 +367,7 @@ There are 4 available hooks:
 - useLedgerLogin
 - useWebWalletLogin
 
-All hooks have the same respose signature:
+All hooks have the same response signature:
 
 return type is as follows:
 
