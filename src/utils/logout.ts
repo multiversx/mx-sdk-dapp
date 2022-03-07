@@ -3,15 +3,15 @@ import { providerSelector } from 'redux/selectors/networkConfigSelectors';
 import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
-import { getIsProviderEqualTo } from 'utils/network';
+import { getProviderType } from 'utils/provider';
 
 export async function logout(
   callbackUrl?: string,
   onRedirect?: (callbackUrl?: string) => void
 ) {
   const provider = providerSelector(store.getState());
+  const providerType = getProviderType(provider);
   const isLoggedIn = getIsLoggedIn();
-
   if (!isLoggedIn) {
     return;
   }
@@ -20,8 +20,7 @@ export async function logout(
 
   try {
     await provider.logout({ callbackUrl });
-
-    if (callbackUrl && !getIsProviderEqualTo(LoginMethodsEnum.wallet)) {
+    if (callbackUrl && providerType !== LoginMethodsEnum.wallet) {
       if (typeof onRedirect === 'function') {
         onRedirect(callbackUrl);
       } else {
