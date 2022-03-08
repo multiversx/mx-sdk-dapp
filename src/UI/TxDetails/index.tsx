@@ -81,7 +81,7 @@ const TxDetails = ({
             </span>
             <CopyButton text={hash} />
             {!isServerTransactionPending(status) && (
-              <ExplorerLink page={`transactions/${hash}`} className='ml-2' />
+              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
             )}
           </div>
         );
