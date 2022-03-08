@@ -43,12 +43,21 @@ export function isContract(
   data = ''
 ): boolean {
   try {
+    const isContract = new Address(receiver).isContractAddress();
+    if (isContract) {
+      return true;
+    }
     const extractedAddress = getAddressFromDataField({ receiver, data });
     if (!extractedAddress) {
       return false;
     }
-    const isContract = new Address(extractedAddress).isContractAddress();
-    return isContract || isSelfESDTContract(receiver, sender, data);
+    const isExtractedAddressContractCall = new Address(
+      extractedAddress
+    ).isContractAddress();
+    return (
+      isExtractedAddressContractCall ||
+      isSelfESDTContract(receiver, sender, data)
+    );
   } catch (err) {
     console.log('err', err);
     return false;
