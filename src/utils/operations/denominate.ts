@@ -14,11 +14,13 @@ export function denominate({
   denomination = configDenomination,
   decimals = configDecimals,
   showLastNonZeroDecimal = true,
+  showIsLessThanDecimalsLabel = false,
   addCommas = false
 }: {
   input: string | Balance;
   denomination?: number;
   decimals?: number;
+  showIsLessThanDecimalsLabel?: boolean;
   showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
 }) {
@@ -75,20 +77,36 @@ export function denominate({
           .if(addCommas)
           .then(formatted)
 
-          .if(Boolean(shownDecimalsAreZero) && !showLastNonZeroDecimal)
+          .if(Boolean(shownDecimalsAreZero))
           .then((current) => {
             const integerPartZero = new BigNumber(integerPart).isZero();
-            const [numericPart] = current.split('.');
+            const [numericPart, decimalSide] = current.split('.');
 
             const zeroPlaceholders = new Array(decimals - 1).fill(0);
             const zeros = [...zeroPlaceholders, 0].join('');
             const minAmount = [...zeroPlaceholders, 1].join(''); // 00..1
 
-            if (integerPartZero) {
-              return `<${numericPart}.${minAmount}`;
-            } else {
+            if (!integerPartZero) {
               return `${numericPart}.${zeros}`;
             }
+
+            if (showIsLessThanDecimalsLabel) {
+              return `<${numericPart}.${minAmount}`;
+            }
+
+            return `${numericPart}.${decimalSide}`;
+          })
+
+          .if(Boolean(!shownDecimalsAreZero && decimalPart))
+          .then((current) => {
+            if (showLastNonZeroDecimal) {
+              return current;
+            }
+
+            const [numericPart] = current.split('.');
+            const decimalSide = decimalPart.substring(0, decimalPlaces);
+
+            return `${numericPart}.${decimalSide}`;
           })
 
           .valueOf();
