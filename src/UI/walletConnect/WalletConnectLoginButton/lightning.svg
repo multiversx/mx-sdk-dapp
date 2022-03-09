@@ -1,15 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44 60" width="44" height="60">
-	<defs>
-		<image width="22" height="30" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAeCAYAAAAo5+5WAAAA6klEQVRIibXWURHCMBBFUSRUAhLqgEpAQh1QB1RCHVAJOAAHxQE4IA4uH2yYTCbQafexAk5eNpu0m80fCtiqwRqYgF6J9ryrVYExZQAaFRpTBqBWgDElwA2olCkBzm40SwkwqlP6T76QMijQPKXv5Asp48lvPWhHuS6rUYN/1R04AQdgtxTe22yGmUU+OwGOixayXrfAYD2eq2lph9LFGttRqR6r4QTPa8Rzta09zwSUXJgc9c32F3RwgYa22dYbNep/ewto5wYNjW/GDcW3zNBRMpsFNAB7CZigV/dsJmCF+rfI4F4ym1m9AOPnYuevr8exAAAAAElFTkSuQmCC"/>
-	</defs>
-	<style>
-		tspan { white-space:pre }
-	</style>
-	<g id="Elrond Swap Landing Page – v2.2">
-		<g id="Group 424">
-			<g id="Group 421">
-				<use id="⚡️ " href="#img1" transform="matrix(2,0,0,2,0,0)"/>
-			</g>
-		</g>
-	</g>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 31.114 44.981" >
+  <g id="Group_1331" data-name="Group 1331" transform="translate(-47.168 -21.519)">
+    <g id="Group_1321" data-name="Group 1321" transform="translate(-247.872 -130.693)">
+      <path id="Path_1838" data-name="Path 1838" d="M355.676,152.213l-3.832,17.8h-9.661Z" transform="translate(-40.089 1)" fill-rule="evenodd" fill="currentColor"/>
+      <path id="Path_1839" data-name="Path 1839" d="M326.45,271.184l-7.053,9.379H295.04l7.054-9.379Z" transform="translate(0 -101.17)" fill-rule="evenodd" fill="currentColor"/>
+      <path id="Path_1840" data-name="Path 1840" d="M381.139,333.864l-13.493,17.8,3.832-17.8Z" transform="translate(-61.742 -155.472)" fill-rule="evenodd" fill="currentColor"/>
+    </g>
+  </g>
 </svg>
