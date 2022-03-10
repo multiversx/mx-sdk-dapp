@@ -48,7 +48,9 @@ function WalletConnectLoginContainer({
       qrCodeSvgContainer: 'mx-auto mb-3',
       title: 'mb-3',
       leadText: 'lead mb-0',
-      mobileLoginButton: 'btn btn-primary px-4 mt-4',
+      mobileLoginButton:
+        'btn btn-primary d-inline-flex align-items-center px-4 mt-4',
+      mobileLoginButtonIcon: 'mr-2',
       errorMessage:
         'text-danger d-flex justify-content-center align-items-center'
     }
@@ -102,10 +104,10 @@ function WalletConnectLoginContainer({
                   target='_blank'
                 >
                   <Lighting
-                    className={generatedClasses.cardBody}
+                    className={generatedClasses.mobileLoginButtonIcon}
                     style={{
-                      width: '0.7rem',
-                      height: '0.7rem'
+                      width: '0.9rem',
+                      height: '0.9rem'
                     }}
                   />
                   {title}

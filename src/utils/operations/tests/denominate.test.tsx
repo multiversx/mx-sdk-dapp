@@ -172,6 +172,7 @@ describe('denomination single tests', () => {
     const result = denominate({
       input: (100_000_000_000_000).toString(),
       decimals: 2,
+      showIsLessThanDecimalsLabel: true,
       showLastNonZeroDecimal: false
     });
     expect(result).toBe('<0.01');
@@ -191,5 +192,15 @@ describe('denomination single tests', () => {
       showLastNonZeroDecimal: true
     });
     expect(result).toBe('0.000000001');
+  });
+
+  it('should show remove decimals and not add commas', () => {
+    const result = denominate({
+      input: '369884288127092846270928',
+      decimals: 4,
+      showLastNonZeroDecimal: false,
+      addCommas: false
+    });
+    expect(result).toBe('369884.2881');
   });
 });
