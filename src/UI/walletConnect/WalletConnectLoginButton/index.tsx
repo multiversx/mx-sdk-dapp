@@ -7,6 +7,8 @@ import { WalletConnectLoginButtonPropsType } from './types';
 const WalletConnectLoginButton = ({
   children,
   callbackRoute,
+  onModalOpens,
+  onModalCloses,
   loginButtonText = 'Maiar App',
   title = 'Maiar Login',
   logoutRoute = '/unlock',
@@ -32,10 +34,12 @@ const WalletConnectLoginButton = ({
 
   const handleOpenModal = () => {
     setShowLoginModal(true);
+    onModalOpens?.();
   };
 
   const handleCloseModal = () => {
     setShowLoginModal(false);
+    onModalCloses?.();
   };
 
   return (

@@ -1,6 +1,8 @@
 import { ReactNode } from 'react';
 
 export interface WalletConnectLoginButtonPropsType {
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
   children?: ReactNode;
   lead?: string;
   title?: string;
