@@ -6,11 +6,12 @@ import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './type';
 
 const Progress = ({ id, children, progress, done }: Props) => {
+
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
   const removeTxFromSession = () => {
     const toastProgress = storage.getItem('toastProgress');
-    const hasSessionStoredTx = Boolean(toastProgress[id]);
+    const hasSessionStoredTx = Boolean(toastProgress?.[id]);
 
     if (!hasSessionStoredTx) {
       return;
