@@ -2,6 +2,8 @@ import { ReactNode } from 'react';
 
 export interface LedgerLoginButtonPropsType {
   token?: string;
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
   children?: ReactNode;
   className?: string;
   buttonClassName?: string;

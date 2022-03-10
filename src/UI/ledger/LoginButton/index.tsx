@@ -8,6 +8,8 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   token,
   callbackRoute,
   children,
+  onModalOpens,
+  onModalCloses,
   loginButtonText = 'Ledger',
   buttonClassName,
   className = 'ledger-login',
@@ -29,10 +31,12 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
 
   function handleOpenModal() {
     setShowLoginModal(true);
+    onModalOpens?.();
   }
 
   function handleCloseModal() {
     setShowLoginModal(false);
+    onModalCloses?.();
   }
 
   return (
