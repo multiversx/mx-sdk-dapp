@@ -12,4 +12,5 @@ export interface LedgerLoginButtonPropsType {
   redirectAfterLogin?: boolean;
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
+  hideButtonWhenModalOpens?: boolean;
 }

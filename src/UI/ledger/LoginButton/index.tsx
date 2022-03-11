@@ -15,7 +15,8 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   className = 'ledger-login',
   redirectAfterLogin = false,
   wrapContentInsideModal = true,
-  shouldRenderDefaultCss = true
+  shouldRenderDefaultCss = true,
+  hideButtonWhenModalOpens = false
 }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
   const generatedClasses = getGeneratedClasses(
@@ -39,13 +40,19 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     onModalCloses?.();
   }
 
+  const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
+
   return (
     <span className={wrapperClassName}>
-      <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
-        {children || (
-          <span className={generatedClasses.loginText}>{loginButtonText}</span>
-        )}
-      </button>
+      {shouldRenderButton && (
+        <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
+          {children || (
+            <span className={generatedClasses.loginText}>
+              {loginButtonText}
+            </span>
+          )}
+        </button>
+      )}
       {showLoginModal && (
         <LedgerLoginContainer
           className={className}
