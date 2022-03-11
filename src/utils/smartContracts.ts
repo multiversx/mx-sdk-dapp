@@ -1,7 +1,5 @@
 import { Address, TransactionPayload } from '@elrondnetwork/erdjs';
-import { SmartContractResult, TypesOfSmartContractCallsEnum } from 'types';
-
-const okInHex = '6f6b';
+import { TypesOfSmartContractCallsEnum } from 'types';
 
 export const ESDTTransferTypes = [
   'ESDTNFTTransfer',
@@ -16,26 +14,6 @@ export const ESDTTransferTypes = [
   'ESDTWipe',
   'ESDTFreeze'
 ];
-
-export function areScCallsSuccessful(
-  scResults?: SmartContractResult[],
-  completedThreshold = 1
-) {
-  if (!scResults) {
-    return true;
-  }
-  let numberOfOkParts = 0;
-  scResults.forEach((result) => {
-    if (result?.data) {
-      const decoded = Buffer.from(result.data, 'base64').toString().split('@');
-      const hasOkPart = Boolean(decoded.find((part) => part === okInHex));
-      if (hasOkPart) {
-        numberOfOkParts++;
-      }
-    }
-  });
-  return numberOfOkParts >= completedThreshold;
-}
 
 export function isContract(
   receiver: string,

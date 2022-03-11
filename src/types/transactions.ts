@@ -132,7 +132,6 @@ export interface SendTransactionsPropsType {
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
-  completedThreshold?: number;
   sessionInformation?: any;
 }
 
@@ -189,5 +188,4 @@ export interface CustomTransactionInformation {
   redirectAfterSign: boolean;
   sessionInformation: any;
   signWithoutSending: boolean;
-  completedThreshold: number;
 }
