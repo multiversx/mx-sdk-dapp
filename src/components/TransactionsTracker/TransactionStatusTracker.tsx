@@ -16,7 +16,7 @@ import {
   getIsTransactionPending
 } from 'utils';
 import { refreshAccount } from 'utils/account';
-import { isContract, areScCallsSuccessful } from 'utils/smartContracts';
+import { isContract } from 'utils/smartContracts';
 
 interface RetriesType {
   [hash: string]: number;
@@ -29,7 +29,7 @@ interface TransactionStatusTrackerPropsType {
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status, customTransactionInformation }
+  transactionPayload: { transactions, status }
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
@@ -87,6 +87,7 @@ export function TransactionStatusTracker({
         status,
         results,
         invalidTransaction,
+        pendingResults,
         receiver,
         sender,
         data,
@@ -103,11 +104,7 @@ export function TransactionStatusTracker({
           if (!invalidTransaction) {
             if (!getIsTransactionPending(status)) {
               if (isScCall && !getIsTransactionCompleted(status)) {
-                const isScCallCompleted = areScCallsSuccessful(
-                  results,
-                  customTransactionInformation?.completedThreshold
-                );
-                if (isScCallCompleted) {
+                if (!pendingResults) {
                   timeoutRefs.current.push(hash);
                   setTimeout(
                     () =>
