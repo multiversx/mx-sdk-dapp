@@ -1,8 +1,4 @@
-import {
-  Address,
-  Transaction,
-  TransactionPayload
-} from '@elrondnetwork/erdjs/out';
+import { Address, Transaction } from '@elrondnetwork/erdjs';
 import { defaultGasPrice, defaultGasLimit } from 'constants/index';
 import newTransaction from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'redux/selectors';
@@ -46,7 +42,7 @@ export async function transformAndSignTransactions({
     return newTransaction({
       value,
       receiver: validatedReceiver,
-      data: new TransactionPayload(data).toString(),
+      data,
       gasPrice,
       gasLimit,
       nonce: Number(nonce.valueOf().toString()),

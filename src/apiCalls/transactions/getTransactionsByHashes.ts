@@ -12,6 +12,7 @@ export type GetTransactionsByHashesReturnType = {
   sender: string;
   receiver: string;
   data: string;
+  pendingResults?: boolean;
   previousStatus: string;
   hasStatusChanged: boolean;
 }[];
@@ -49,6 +50,7 @@ export async function getTransactionsByHashes(
       results: txOnNetwork.results,
       sender: txOnNetwork.sender,
       receiver: txOnNetwork?.receiver,
+      pendingResults: txOnNetwork.pendingResults,
       previousStatus,
       hasStatusChanged: status !== previousStatus
     };

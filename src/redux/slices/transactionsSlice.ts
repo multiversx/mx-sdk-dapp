@@ -57,8 +57,7 @@ const initialState: TransactionsSliceStateType = {
 const defaultCustomInformation: CustomTransactionInformation = {
   signWithoutSending: false,
   sessionInformation: null,
-  redirectAfterSign: false,
-  completedThreshold: 1
+  redirectAfterSign: false
 };
 
 export const transactionsSlice = createSlice({
