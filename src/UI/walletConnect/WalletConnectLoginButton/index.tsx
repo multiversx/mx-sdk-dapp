@@ -18,7 +18,8 @@ const WalletConnectLoginButton = ({
   buttonClassName,
   className = 'wallect-connect-login',
   lead = 'Scan the QR code using Maiar',
-  token
+  token,
+  hideButtonWhenModalOpens = false
 }: WalletConnectLoginButtonPropsType) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const generatedClasses = getGeneratedClasses(
@@ -42,13 +43,18 @@ const WalletConnectLoginButton = ({
     onModalCloses?.();
   };
 
+  const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
   return (
     <Fragment>
-      <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
-        {children || (
-          <span className={generatedClasses.loginText}>{loginButtonText}</span>
-        )}
-      </button>
+      {shouldRenderButton && (
+        <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
+          {children || (
+            <span className={generatedClasses.loginText}>
+              {loginButtonText}
+            </span>
+          )}
+        </button>
+      )}
       {showLoginModal && (
         <WalletConnectLoginContainer
           callbackRoute={callbackRoute}
