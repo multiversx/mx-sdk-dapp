@@ -19,7 +19,7 @@ const reducers = {
   transactionsInfo
 };
 
-if (window?.localStorage != null) {
+if (typeof window !== "undefined" && window.localStorage != null) {
   //This allows for this library to be used on other platforms than web, like React Native
   //without this condition, redux-persist 6+ will throw an error if persist storage fails
   const sessionStorage = require('redux-persist/lib/storage/session').default;
