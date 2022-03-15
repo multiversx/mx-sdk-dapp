@@ -17,7 +17,6 @@ import {
 export interface SignStepType {
   onSignTransaction: () => void;
   onPrev: () => void;
-  onDebugInfo?: (info: any) => void;
   handleClose: () => void;
   waitingForDevice: boolean;
   error: string | null;
@@ -31,7 +30,6 @@ export interface SignStepType {
 
 const SignStep = ({
   onSignTransaction,
-  onDebugInfo,
   handleClose,
   onPrev,
   title = 'Confirm on Ledger',
@@ -88,16 +86,6 @@ const SignStep = ({
     showLastNonZeroDecimal: false,
     addCommas: true
   });
-  onDebugInfo?.({
-    denominatedAmount,
-    input: isTokenTransaction
-      ? amount
-      : currentTransaction.transaction.getValue().toString(),
-    denomination: isTokenTransaction
-      ? tokenDenomination
-      : Number(network.egldDenomination),
-    decimals: Number(network.decimals)
-  });
 
   const classes = getGeneratedClasses(className, true, {
     formGroup: 'form-group text-left',
@@ -116,11 +104,6 @@ const SignStep = ({
     buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
     cancelButton: 'btn btn-dark text-white flex-even mr-2',
     signButton: 'btn btn-primary flex-even ml-2'
-  });
-
-  onDebugInfo?.({
-    tokenId,
-    egldLabel
   });
 
   return (
@@ -148,20 +131,14 @@ const SignStep = ({
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon token={tokenId || egldLabel} />
                     <div className='mr-1'></div>
-                    <TokenDetails.Label
-                      onDebugInfo={onDebugInfo}
-                      token={tokenId || egldLabel}
-                    />
+                    <TokenDetails.Label token={tokenId || egldLabel} />
                   </div>
                 </div>
                 <div>
                   <div className={classes.tokenAmountLabel}>Amount</div>
                   <div className={classes.tokenAmountValue}>
                     <div className='mr-1'>{denominatedAmount}</div>
-                    <TokenDetails.Symbol
-                      onDebugInfo={onDebugInfo}
-                      token={tokenId || egldLabel}
-                    />
+                    <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>
               </div>
