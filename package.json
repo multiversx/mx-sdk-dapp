@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -89,7 +89,7 @@
     "@elrondnetwork/erdjs": "9.1.0",
     "@reduxjs/toolkit": "1.6.2",
     "@testing-library/jest-dom": "^5.16.2",
-    "axios": "0.21.4",
+    "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash": "4.17.21",
     "qs": "6.10.3",
