@@ -203,4 +203,14 @@ describe('denomination single tests', () => {
     });
     expect(result).toBe('369884.2881');
   });
+
+  it('should not add . at the end for 0 decimals', () => {
+    const result = denominate({
+      input: '369884288127092846270928',
+      decimals: 0,
+      showLastNonZeroDecimal: false,
+      addCommas: false
+    });
+    expect(result).toBe('369884');
+  });
 });

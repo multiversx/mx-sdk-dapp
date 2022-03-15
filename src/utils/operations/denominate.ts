@@ -106,6 +106,10 @@ export function denominate({
             const [numericPart] = current.split('.');
             const decimalSide = decimalPart.substring(0, decimalPlaces);
 
+            if (!decimalSide) {
+              return numericPart;
+            }
+
             return `${numericPart}.${decimalSide}`;
           })
 
