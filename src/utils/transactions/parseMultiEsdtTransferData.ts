@@ -81,6 +81,7 @@ export function parseMultiEsdtTransferData(data?: string) {
       }
     }
   } catch (err) {
+    console.error('failed parsing tx', err);
     return transactions;
   }
   return transactions;
