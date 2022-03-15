@@ -180,6 +180,7 @@ export interface SignModalPropsType {
   handleClose: () => void;
   error: string | null;
   callbackRoute?: string;
+  onDebugInfo?: (info: any) => void;
   transactions: Transaction[];
   className?: string;
 }

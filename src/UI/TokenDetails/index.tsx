@@ -17,6 +17,7 @@ type TokenIconProps = {
   token: string;
   combined?: boolean | undefined;
   small?: boolean | undefined;
+  onDebugInfo?: (info: any) => void;
 };
 type TokenIconType = TokenIconProps & {
   symbol: string;
@@ -45,16 +46,34 @@ export default class TokenDetails extends React.Component {
   static Token = (props: TokenIconProps) => (
     <React.Fragment>{props.token}</React.Fragment>
   );
-  static Symbol = (props: TokenIconProps) => (
-    <React.Fragment>
-      {getDetails(getIdentifierWithoutNonce(props.token)).symbol}
-    </React.Fragment>
-  );
-  static Label = (props: TokenIconProps) => (
-    <React.Fragment>
-      {getDetails(getIdentifierWithoutNonce(props.token)).label}
-    </React.Fragment>
-  );
+  static Symbol = (props: TokenIconProps) => {
+    props.onDebugInfo?.({
+      symbol: true,
+      value: getDetails(getIdentifierWithoutNonce(props.token)).label,
+      1: getIdentifierWithoutNonce(props.token),
+      2: getDetails(getIdentifierWithoutNonce(props.token)),
+      3: props.token
+    });
+    return (
+      <React.Fragment>
+        {getDetails(getIdentifierWithoutNonce(props.token)).symbol}
+      </React.Fragment>
+    );
+  };
+  static Label = (props: TokenIconProps) => {
+    props.onDebugInfo?.({
+      label: true,
+      value: getDetails(getIdentifierWithoutNonce(props.token)).label,
+      1: getIdentifierWithoutNonce(props.token),
+      2: getDetails(getIdentifierWithoutNonce(props.token)),
+      3: props.token
+    });
+    return (
+      <React.Fragment>
+        {getDetails(getIdentifierWithoutNonce(props.token)).label}
+      </React.Fragment>
+    );
+  };
   static Icon = (props: TokenIconProps) => {
     const Component: any =
       process.env.NODE_ENV !== 'test'

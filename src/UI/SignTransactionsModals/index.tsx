@@ -33,11 +33,13 @@ interface CustomConfirmScreensType {
 interface SignTransactionsPropsType {
   className?: string;
   CustomConfirmScreens?: CustomConfirmScreensType;
+  onDebugInfo?: (info: any) => void;
 }
 
 function SignTransactionsModals({
   className,
-  CustomConfirmScreens
+  CustomConfirmScreens,
+  onDebugInfo
 }: SignTransactionsPropsType) {
   const {
     callbackRoute,
@@ -74,7 +76,7 @@ function SignTransactionsModals({
         return CustomConfirmScreens?.Ledger ? (
           <CustomConfirmScreens.Ledger {...signProps} />
         ) : (
-          <SignWithLedgerModal {...signProps} />
+          <SignWithLedgerModal {...signProps} onDebugInfo={onDebugInfo} />
         );
 
       case LoginMethodsEnum.walletconnect:

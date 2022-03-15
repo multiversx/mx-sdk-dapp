@@ -9,6 +9,7 @@ import SignStep from './SignStep';
 const SignWithLedgerModal = ({
   handleClose,
   error,
+  onDebugInfo,
   className = 'ledger-modal'
 }: SignModalPropsType) => {
   const {
@@ -42,6 +43,7 @@ const SignWithLedgerModal = ({
           <SignStep
             {...{
               onSignTransaction,
+              onDebugInfo,
               onNext,
               onPrev,
               allTransactions,
