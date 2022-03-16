@@ -58,12 +58,19 @@ export function parseMultiEsdtTransferData(data?: string) {
           }
           transactions[txIndex] = transaction;
         }
+
+        const isDifferentFromTxCount = transactions.length !== txCount;
+        const invalidNoOfAdSigns = transactions.some((tx) => {
+          const adSignOccurences = getAllStringOccurrences(tx.data, '@').length;
+          return adSignOccurences !== 2;
+        });
+        const someStartWithAdSign = transactions.some((tx) =>
+          tx.data.startsWith('@')
+        );
         if (
-          transactions.length !== txCount ||
-          transactions.some(
-            (tx) => getAllStringOccurrences(tx.data, '@').length !== 2
-          ) ||
-          transactions.some((tx) => tx.data.startsWith('@'))
+          isDifferentFromTxCount ||
+          invalidNoOfAdSigns ||
+          someStartWithAdSign
         ) {
           return [];
         }
