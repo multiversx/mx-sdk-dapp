@@ -1,5 +1,4 @@
-import * as React from 'react';
-
+import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getEgldLabel, wrapperClassName } from 'utils';
@@ -17,6 +16,7 @@ type TokenIconProps = {
   token: string;
   combined?: boolean | undefined;
   small?: boolean | undefined;
+  tokenAvatar?: string;
 };
 type TokenIconType = TokenIconProps & {
   symbol: string;
@@ -24,20 +24,27 @@ type TokenIconType = TokenIconProps & {
   icon: React.ReactNode;
 };
 
-const getDetails = (token: string): TokenIconType => {
+function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
+  if (tokenAvatar) {
+    return <img className='token-symbol-custom-token' src={tokenAvatar} />;
+  }
+  return isEgldTransfer ? (
+    <EgldIcon />
+  ) : (
+    <ReactFontawesome.FontAwesomeIcon icon={icons.faGem} />
+  );
+}
+
+const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
   const egldLabel = getEgldLabel();
   const isEgldTransfer = token === egldLabel;
+
   return {
     token,
     symbol: token ? token.split('-')[0] : '',
     label: token,
     // eslint-disable-next-line react/display-name
-    icon: () =>
-      isEgldTransfer ? (
-        <EgldIcon />
-      ) : (
-        <ReactFontawesome.FontAwesomeIcon icon={icons.faGem} />
-      )
+    icon: () => getIcon(isEgldTransfer, tokenAvatar)
   };
 };
 
@@ -47,18 +54,25 @@ export default class TokenDetails extends React.Component {
   );
   static Symbol = (props: TokenIconProps) => (
     <React.Fragment>
-      {getDetails(getIdentifierWithoutNonce(props.token)).symbol}
+      {
+        getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
+          .symbol
+      }
     </React.Fragment>
   );
   static Label = (props: TokenIconProps) => (
     <React.Fragment>
-      {getDetails(getIdentifierWithoutNonce(props.token)).label}
+      {
+        getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
+          .label
+      }
     </React.Fragment>
   );
   static Icon = (props: TokenIconProps) => {
     const Component: any =
       process.env.NODE_ENV !== 'test'
-        ? getDetails(getIdentifierWithoutNonce(props.token)).icon
+        ? getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
+            .icon
         : () => null;
 
     return (
