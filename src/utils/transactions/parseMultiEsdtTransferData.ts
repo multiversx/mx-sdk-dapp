@@ -60,18 +60,12 @@ export function parseMultiEsdtTransferData(data?: string) {
         }
 
         const isDifferentFromTxCount = transactions.length !== txCount;
-        const invalidNoOfAdSigns = transactions.some((tx) => {
+        const hasInvalidNoOfAdSigns = transactions.some((tx) => {
           const adSignOccurences = getAllStringOccurrences(tx.data, '@').length;
           return adSignOccurences !== 2;
         });
-        const someStartWithAdSign = transactions.some((tx) =>
-          tx.data.startsWith('@')
-        );
-        if (
-          isDifferentFromTxCount ||
-          invalidNoOfAdSigns ||
-          someStartWithAdSign
-        ) {
+        const hasAdStart = transactions.some((tx) => tx.data.startsWith('@'));
+        if (isDifferentFromTxCount || hasInvalidNoOfAdSigns || hasAdStart) {
           return [];
         }
         if (rest[contractCallDataIndex]) {
