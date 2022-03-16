@@ -70,11 +70,10 @@ export function useParseMultiEsdtTransferData({
 
   function extractTransactionESDTData() {
     if (transactions && transactions.length > 0) {
-      const allTransactions: MultiSignTxType[] = [];
+      const allTxs: MultiSignTxType[] = [];
       transactions.forEach((transaction, transactionIndex) => {
-        const multiTxs = parseMultiEsdtTransferData(
-          transaction.getData().toString()
-        );
+        const txData = transaction.getData().toString();
+        const multiTxs = parseMultiEsdtTransferData(txData);
 
         if (multiTxs.length > 0) {
           multiTxs.forEach((trx, idx) => {
@@ -91,7 +90,7 @@ export function useParseMultiEsdtTransferData({
               multiTxData: trx.data,
               receiver: trx.receiver
             });
-            allTransactions.push(newTx);
+            allTxs.push(newTx);
           });
         } else {
           const { tokenId, amount } = getTokenFromData(
@@ -105,10 +104,10 @@ export function useParseMultiEsdtTransferData({
               receiver: transaction.getReceiver().bech32()
             });
           }
-          allTransactions.push({ transaction, transactionIndex });
+          allTxs.push({ transaction, transactionIndex });
         }
       });
-      setAllTransactions(allTransactions);
+      setAllTransactions(allTxs);
     }
   }
 
