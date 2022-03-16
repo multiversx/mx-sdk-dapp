@@ -71,7 +71,7 @@ const SignStep = ({
 
   const isFirst = currentStep === 0;
 
-  const { tokenDenomination } = useGetTokenDetails({
+  const { tokenDenomination, tokenAvatar } = useGetTokenDetails({
     tokenId: currentTransaction.transactionTokenInfo.tokenId
   });
 
@@ -129,7 +129,10 @@ const SignStep = ({
                 <div className={classes.tokenWrapper}>
                   <div className={classes.tokenlabel}>Token</div>
                   <div className={classes.tokenValue}>
-                    <TokenDetails.Icon token={tokenId || egldLabel} />
+                    <TokenDetails.Icon
+                      tokenAvatar={tokenAvatar}
+                      token={tokenId || egldLabel}
+                    />
                     <div className='mr-1'></div>
                     <TokenDetails.Label token={tokenId || egldLabel} />
                   </div>
