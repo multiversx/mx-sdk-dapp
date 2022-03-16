@@ -58,13 +58,14 @@ export function parseMultiEsdtTransferData(data?: string) {
           }
           transactions[txIndex] = transaction;
         }
-        if (
-          transactions.length !== txCount ||
-          transactions.some(
-            (tx) => getAllStringOccurrences(tx.data, '@').length !== 2
-          ) ||
-          transactions.some((tx) => tx.data.startsWith('@'))
-        ) {
+
+        const isDifferentFromTxCount = transactions.length !== txCount;
+        const hasInvalidNoOfAdSigns = transactions.some((tx) => {
+          const adSignOccurences = getAllStringOccurrences(tx.data, '@').length;
+          return adSignOccurences !== 2;
+        });
+        const hasAdStart = transactions.some((tx) => tx.data.startsWith('@'));
+        if (isDifferentFromTxCount || hasInvalidNoOfAdSigns || hasAdStart) {
           return [];
         }
         if (rest[contractCallDataIndex]) {
