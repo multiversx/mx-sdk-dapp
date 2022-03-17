@@ -16,6 +16,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   redirectAfterLogin = false,
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
+  shouldRenderDefaultModalCss = true,
   hideButtonWhenModalOpens = false
 }) => {
   const [showLoginModal, setShowLoginModal] = React.useState(false);
@@ -39,7 +40,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     setShowLoginModal(false);
     onModalCloses?.();
   }
-
+  
   const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
 
   return (
@@ -56,7 +57,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
       {showLoginModal && (
         <LedgerLoginContainer
           className={className}
-          shouldRenderDefaultCss={shouldRenderDefaultCss}
+          shouldRenderDefaultCss={shouldRenderDefaultModalCss}
           callbackRoute={callbackRoute}
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}
