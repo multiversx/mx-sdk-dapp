@@ -6,11 +6,12 @@ import {
   TransactionPayload,
   Balance,
   ChainID,
+  Nonce,
+  TransactionOptions,
   TransactionVersion
 } from '@elrondnetwork/erdjs';
-import { Nonce, TransactionOptions } from '@elrondnetwork/erdjs/out';
 import { RawTransactionType } from 'types/transactions';
-import { isStringBase64 } from 'utils';
+import { isStringBase64 } from 'utils/decoders/base64Utils';
 
 export default function newTransaction(rawTransaction: RawTransactionType) {
   const { data } = rawTransaction;
