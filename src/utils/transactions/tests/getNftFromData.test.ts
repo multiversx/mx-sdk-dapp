@@ -1,5 +1,4 @@
 import getTokenFromData from '../getTokenFromData';
-// file.only
 
 describe('getTokenFromData tests', () => {
   test('get nft test', () => {
