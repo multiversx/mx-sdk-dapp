@@ -17,3 +17,5 @@ export function addressIsValid(destinationAddress: string) {
 
   return isValidBach && canTransformToPublicKey(destinationAddress);
 }
+
+export default addressIsValid;
