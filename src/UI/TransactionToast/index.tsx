@@ -34,7 +34,9 @@ const TransactionToast = ({
   withTxNonce = false,
   transactions,
   status,
-  onClose
+  onClose,
+  startTimeProgress,
+  endTimeProgress
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
@@ -97,10 +99,10 @@ const TransactionToast = ({
   );
 
   const [startTime, endTime] = useMemo(() => {
-    const startTime = moment().unix();
-    const endTime = moment()
-      .add(Number(transactionDuration), 'milliseconds')
-      .unix();
+    const startTime = startTimeProgress || moment().unix();
+    const endTime =
+      endTimeProgress ||
+      moment().add(Number(transactionDuration), 'milliseconds').unix();
     return [startTime, endTime];
   }, []);
 
