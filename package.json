@@ -73,9 +73,9 @@
     "react": "~17.0"
   },
   "optionalDependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.36",
-    "@fortawesome/free-solid-svg-icons": "5.15.3",
-    "@fortawesome/react-fontawesome": "0.1.14",
+    "@fortawesome/fontawesome-svg-core": "^1.2.36",
+    "@fortawesome/free-solid-svg-icons": "^6.1.0",
+    "@fortawesome/react-fontawesome": "^0.1.18",
     "bootstrap": "4.6.0",
     "classnames": "2.3.1",
     "moment": "2.29.1",
