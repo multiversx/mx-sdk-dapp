@@ -1,4 +1,3 @@
-import { TransactionPayload } from '@elrondnetwork/erdjs/out';
 import axios from 'axios';
 import { networkConfigSelector } from 'redux/selectors';
 import { store } from 'redux/store';
@@ -38,13 +37,12 @@ export async function getTransactionsByHashes(
   );
   return pendingTransactions.map(({ hash, previousStatus }) => {
     const txOnNetwork = responseData.find(
-      (txResponse: any) => txResponse.txHash === hash
+      (txResponse: any) => txResponse?.txHash === hash
     );
-    const data = TransactionPayload.fromEncoded(txOnNetwork?.data).toString();
 
     return {
       hash,
-      data,
+      data: txOnNetwork.data,
       invalidTransaction: txOnNetwork == null,
       status: txOnNetwork.status,
       results: txOnNetwork.results,

@@ -1,4 +1,6 @@
 import React from 'react';
+
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
@@ -58,7 +60,7 @@ const ExtensionLoginButton: (
           </div>
           <ReactFontawesome.FontAwesomeIcon
             className={classes.noExtensionButtonIcon}
-            icon={ReactFontawesome.faArrowRight}
+            icon={icons.faArrowRight}
           />
         </div>
       )}
