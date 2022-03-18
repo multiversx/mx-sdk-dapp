@@ -28,6 +28,7 @@ export const useExtensionLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
+
   async function initiateLogin() {
     setIsLoading(true);
     const provider: ExtensionProvider = ExtensionProvider.getInstance();

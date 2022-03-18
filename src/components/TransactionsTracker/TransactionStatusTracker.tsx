@@ -102,7 +102,7 @@ export function TransactionStatusTracker({
             return;
           }
           if (!invalidTransaction) {
-            if (!getIsTransactionPending(status)) {
+            if (!getIsTransactionPending(status, isScCall)) {
               if (isScCall && !getIsTransactionCompleted(status)) {
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
