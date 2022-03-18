@@ -46,18 +46,13 @@ export function getIsTransactionCompleted(
 }
 
 export function getIsTransactionPending(
-  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum,
-  isScCall = false
+  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum
 ) {
-  const isPending =
+  return (
     status != null &&
     (isBatchTransactionPending(status as TransactionBatchStatusesEnum) ||
-      isServerTransactionPending(status as TransactionServerStatusesEnum));
-  return isScCall
-    ? isPending ||
-        (getIsTransactionSuccessful(status) &&
-          !getIsTransactionCompleted(status))
-    : isPending;
+      isServerTransactionPending(status as TransactionServerStatusesEnum))
+  );
 }
 
 export function getIsTransactionSuccessful(

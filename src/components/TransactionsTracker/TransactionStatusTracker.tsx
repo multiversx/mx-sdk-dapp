@@ -16,7 +16,6 @@ import {
   getIsTransactionPending
 } from 'utils';
 import { refreshAccount } from 'utils/account';
-import { isContract } from 'utils/smartContracts';
 
 interface RetriesType {
   [hash: string]: number;
@@ -58,15 +57,11 @@ export function TransactionStatusTracker({
       isFetchingStatusRef.current = true;
 
       const pendingTransactions = transactions.reduce(
-        (
-          acc: { hash: string; previousStatus: string }[],
-          { receiver, sender, data, status, hash }
-        ) => {
-          const isScCall = isContract(receiver, sender, data);
+        (acc: { hash: string; previousStatus: string }[], { status, hash }) => {
           if (
             hash != null &&
             !timeoutRefs.current.includes(hash) &&
-            getIsTransactionPending(status, isScCall)
+            getIsTransactionPending(status)
           ) {
             acc.push({ hash, previousStatus: status });
           }
@@ -88,13 +83,9 @@ export function TransactionStatusTracker({
         results,
         invalidTransaction,
         pendingResults,
-        receiver,
-        sender,
-        data,
         hasStatusChanged
       } of serverTransactions) {
         try {
-          const isScCall = isContract(receiver, sender, data);
           const retriesForThisHash = retriesRef.current[hash];
           if (retriesForThisHash > 30) {
             // consider transaction as stuck after 1 minute
@@ -103,7 +94,7 @@ export function TransactionStatusTracker({
           }
           if (!invalidTransaction) {
             if (!getIsTransactionPending(status)) {
-              if (isScCall && !getIsTransactionCompleted(status)) {
+              if (!getIsTransactionCompleted(status)) {
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
                   setTimeout(
