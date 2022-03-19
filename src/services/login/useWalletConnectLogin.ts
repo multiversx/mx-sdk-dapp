@@ -84,9 +84,7 @@ export const useWalletConnectLogin = ({
   }, [provider]);
 
   useUpdateEffect(() => {
-    if (token) {
-      generateWcUri();
-    }
+    generateWcUri();
   }, [token]);
 
   useUpdateEffect(() => {
