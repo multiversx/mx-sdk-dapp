@@ -9,11 +9,6 @@ export const proxySelector = createDeepEqualSelector(
   (state) => state.proxy
 );
 
-export const providerSelector = createDeepEqualSelector(
-  networkConfigSelector,
-  (state) => state.provider
-);
-
 export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => new ChainID(state.chainID)

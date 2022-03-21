@@ -1,4 +1,4 @@
-import { providerSelector } from 'redux/selectors';
+import { getAccountProvider } from 'providers/accountProvider';
 import { setAccount } from 'redux/slices';
 import { store } from 'redux/store';
 import getAccount from './getAccount';
@@ -29,7 +29,10 @@ const setNewAccount = async () => {
 };
 
 export async function refreshAccount() {
-  const provider = providerSelector(store.getState());
+  const provider = getAccountProvider();
+  if (provider == null) {
+    throw 'Provider not initialized';
+  }
   if (provider.isInitialized()) {
     return setNewAccount();
   } else {

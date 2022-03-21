@@ -43,13 +43,11 @@ export const store = configureStore({
           PERSIST,
           PURGE,
           REGISTER,
-          'appConfig/setProvider',
           'accountInfoSlice/setAccount',
           'accountInfoSlice/setAccountNonce',
           'extraActionsSlice/initializeExtraActions'
         ],
         ignoredPaths: [
-          'networkConfig.provider',
           'payload.nonce',
           'account.account.nonce',
           // extra actions

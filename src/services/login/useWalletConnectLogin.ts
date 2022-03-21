@@ -2,17 +2,19 @@ import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
+import {
+  getAccountProvider,
+  setAccountProvider
+} from 'providers/accountProvider';
 import { getProxyProvider } from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   isLoggedInSelector,
-  providerSelector,
   walletConnectBridgeAddressSelector,
   walletConnectDeepLinkSelector
 } from 'redux/selectors';
 import {
-  setProvider,
   setTokenLogin,
   setTokenLoginSignature,
   setWalletConnectLogin
@@ -57,7 +59,7 @@ export const useWalletConnectLogin = ({
 
   const proxy = getProxyProvider();
 
-  const provider: any = useSelector(providerSelector);
+  const provider = getAccountProvider();
   const walletConnectBridgeAddress = useSelector(
     walletConnectBridgeAddressSelector
   );
@@ -184,7 +186,7 @@ export const useWalletConnectLogin = ({
     );
 
     await newProvider.init();
-    dispatch(setProvider(newProvider));
+    setAccountProvider(newProvider);
     providerRef.current = newProvider;
     if (loginProvider) {
       generateWcUri();

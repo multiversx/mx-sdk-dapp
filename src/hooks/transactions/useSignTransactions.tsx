@@ -3,13 +3,11 @@ import { Nonce, Transaction, ExtensionProvider } from '@elrondnetwork/erdjs';
 
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { getAccountProvider } from 'providers/accountProvider';
 import { getAccountFromProxyProvider } from 'providers/proxyProvider';
+import { getProviderType } from 'providers/utils';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import {
-  addressSelector,
-  providerSelector,
-  transactionsToSignSelector
-} from 'redux/selectors';
+import { addressSelector, transactionsToSignSelector } from 'redux/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
@@ -18,7 +16,6 @@ import {
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   getLatestNonce,
-  getProviderType,
   builtCallbackUrl,
   parseTransactionAfterSigning
 } from 'utils';
@@ -27,7 +24,7 @@ export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
-  const provider = useSelector(providerSelector);
+  const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);

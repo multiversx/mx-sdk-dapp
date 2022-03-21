@@ -1,16 +1,12 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import { ledgerErrorCodes } from 'constants/index';
+import { setAccountProvider } from 'providers/accountProvider';
 import { getProxyProvider } from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector, ledgerAccountSelector } from 'redux/selectors';
-import {
-  setLedgerAccount,
-  setLedgerLogin,
-  setProvider,
-  setTokenLogin
-} from 'redux/slices';
+import { setLedgerAccount, setLedgerLogin, setTokenLogin } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
@@ -83,7 +79,7 @@ export function useLedgerLogin({
     index: number;
     signature?: string;
   }) {
-    dispatch(setProvider(provider));
+    setAccountProvider(provider);
 
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
@@ -222,7 +218,7 @@ export function useLedgerLogin({
         const address = await hwWalletP.login({
           addressIndex: selectedAddress?.index
         });
-        dispatch(setProvider(hwWalletP));
+        setAccountProvider(hwWalletP);
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
