@@ -31,7 +31,7 @@ function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
   return isEgldTransfer ? (
     <EgldIcon />
   ) : (
-    <ReactFontawesome.FontAwesomeIcon icon={icons.faGem} />
+    <ReactFontawesome.FontAwesomeIcon icon={icons.faDiamond} />
   );
 }
 
