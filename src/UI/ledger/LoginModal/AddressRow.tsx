@@ -39,7 +39,7 @@ const AddressRow = ({
       const balance = await getAccountBalance(address);
       setBalance(balance);
     } catch (err) {
-      console.error('error fetching balance', balance);
+      console.error('error fetching balance', err, balance);
     }
   };
 

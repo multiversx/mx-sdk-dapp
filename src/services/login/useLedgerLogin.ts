@@ -1,13 +1,10 @@
 import React from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import { ledgerErrorCodes } from 'constants/index';
+import { getProxyProvider } from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import {
-  isLoggedInSelector,
-  ledgerAccountSelector,
-  proxySelector
-} from 'redux/selectors';
+import { isLoggedInSelector, ledgerAccountSelector } from 'redux/selectors';
 import {
   setLedgerAccount,
   setLedgerLogin,
@@ -62,7 +59,7 @@ export function useLedgerLogin({
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const proxy = useSelector(proxySelector);
+  const proxy = getProxyProvider();
   const dispatch = useDispatch();
   const [error, setError] = React.useState('');
   const [isLoading, setIsLoading] = React.useState(false);

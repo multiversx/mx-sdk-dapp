@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
-import { NetworkConfig } from '@elrondnetwork/erdjs/out/networkConfig';
+import {
+  getNetworkConfigFromProxyProvider,
+  getProxyProvider
+} from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
   networkSelector,
-  proxySelector,
   walletLoginSelector,
   addressSelector,
   ledgerAccountSelector,
@@ -45,7 +47,7 @@ export default function ProviderInitializer() {
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
 
-  const proxy = useSelector(proxySelector);
+  const proxy = getProxyProvider();
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -70,10 +72,11 @@ export default function ProviderInitializer() {
   }, [address, ledgerLogin, isLoggedIn]);
 
   function refreshChainID() {
-    proxy
-      .getNetworkConfig()
-      .then((networkConfig: NetworkConfig) => {
-        dispatch(setChainID(networkConfig.ChainID.valueOf()));
+    getNetworkConfigFromProxyProvider()
+      .then((networkConfig) => {
+        if (networkConfig) {
+          dispatch(setChainID(networkConfig.ChainID.valueOf()));
+        }
       })
       .catch((e: any) => {
         console.error('To do ', e);
@@ -85,13 +88,15 @@ export default function ProviderInitializer() {
     if (address && isLoggedIn) {
       try {
         const account = await getAccount(address);
-        dispatch(
-          setAccount({
-            balance: account.balance.toString(),
-            address,
-            nonce: account.nonce.valueOf()
-          })
-        );
+        if (account) {
+          dispatch(
+            setAccount({
+              balance: account.balance.toString(),
+              address,
+              nonce: account.nonce.valueOf()
+            })
+          );
+        }
         if (ledgerAccount == null && ledgerLogin != null) {
           dispatch(
             setLedgerAccount({
@@ -119,13 +124,15 @@ export default function ProviderInitializer() {
             loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
           );
           const account = await getAccount(address);
-          dispatch(
-            setAccount({
-              balance: account.balance.toString(),
-              address,
-              nonce: getLatestNonce(account)
-            })
-          );
+          if (account) {
+            dispatch(
+              setAccount({
+                balance: account.balance.toString(),
+                address,
+                nonce: getLatestNonce(account)
+              })
+            );
+          }
         }
         dispatch(setWalletLogin(null));
       }

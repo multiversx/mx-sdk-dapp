@@ -1,18 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Address,
-  Nonce,
-  Transaction,
-  ExtensionProvider
-} from '@elrondnetwork/erdjs';
+import { Nonce, Transaction, ExtensionProvider } from '@elrondnetwork/erdjs';
 
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { getAccountFromProxyProvider } from 'providers/proxyProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   addressSelector,
   providerSelector,
-  proxySelector,
   transactionsToSignSelector
 } from 'redux/selectors';
 import {
@@ -31,7 +26,6 @@ import {
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
-  const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
   const provider = useSelector(providerSelector);
   const providerType = getProviderType(provider);
@@ -186,7 +180,10 @@ export const useSignTransactions = () => {
     };
 
     try {
-      const proxyAccount = await proxy.getAccount(new Address(address));
+      const proxyAccount = await getAccountFromProxyProvider(address);
+      if (proxyAccount == null) {
+        return;
+      }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
       const isSigningWithProvider =

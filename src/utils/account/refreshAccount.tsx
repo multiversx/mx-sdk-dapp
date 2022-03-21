@@ -10,13 +10,15 @@ const setNewAccount = async () => {
     const address = await getAddress();
     try {
       const account = await getAccount(address);
-      const accountData = {
-        balance: account.balance.toString(),
-        address,
-        nonce: getLatestNonce(account)
-      };
-      store.dispatch(setAccount(accountData));
-      return accountData;
+      if (account != null) {
+        const accountData = {
+          balance: account.balance.toString(),
+          address,
+          nonce: getLatestNonce(account)
+        };
+        store.dispatch(setAccount(accountData));
+        return accountData;
+      }
     } catch (e) {
       console.error('Failed getting account ', e);
     }

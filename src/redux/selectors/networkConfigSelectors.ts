@@ -19,11 +19,6 @@ export const chainIDSelector = createDeepEqualSelector(
   (state) => new ChainID(state.chainID)
 );
 
-export const apiProviderSelector = createDeepEqualSelector(
-  networkConfigSelector,
-  (state) => state.apiProvider
-);
-
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.network.walletConnectBridgeAddress
