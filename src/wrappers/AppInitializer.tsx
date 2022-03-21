@@ -3,11 +3,17 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import { getServerConfigurationForEnvironment } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks';
+import { initializeProxyProvider } from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch } from 'redux/DappProviderContext';
 import { initializeExtraActions } from 'redux/slices/extraActionsSlice';
 import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
-import { CustomNetworkType, EnvironmentsEnum, ExtraActionsType } from 'types';
+import {
+  CustomNetworkType,
+  EnvironmentsEnum,
+  ExtraActionsType,
+  NetworkType
+} from 'types';
 import { logout } from 'utils';
 import getAccountShard from 'utils/account/getAccountShard';
 
@@ -32,18 +38,24 @@ export function AppInitializer({
   async function initializeNetwork() {
     const fallbackConfig = fallbackNetworkConfigurations[environment];
     if (fallbackConfig != null) {
-      dispatch(
-        initializeNetworkConfig({ ...fallbackConfig, ...customNetworkConfig })
-      );
+      const newNetworkConfig = { ...fallbackConfig, ...customNetworkConfig };
+      dispatch(initializeNetworkConfig(newNetworkConfig));
+      initializeProviders(newNetworkConfig);
     }
     const serverConfig = await getServerConfigurationForEnvironment(
       environment
     );
     if (serverConfig != null) {
+      const configFromServer = { ...fallbackConfig, ...customNetworkConfig };
       dispatch(
         initializeNetworkConfig({ ...serverConfig, ...customNetworkConfig })
       );
+      initializeProviders(configFromServer);
     }
+  }
+
+  function initializeProviders(networkConfig: NetworkType) {
+    initializeProxyProvider(networkConfig);
   }
 
   function initializeCustomExtraActions() {

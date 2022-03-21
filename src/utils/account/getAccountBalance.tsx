@@ -9,5 +9,5 @@ export async function getAccountBalance(address?: string) {
     accountAddress = account.address;
   }
   const account = await getAccount(accountAddress);
-  return account.balance.toString();
+  return account?.balance?.toString() || '...';
 }

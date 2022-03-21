@@ -1,11 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
+import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import {
-  egldLabelSelector,
-  providerSelector,
-  transactionsToSignSelector
-} from 'redux/selectors';
+import { egldLabelSelector, transactionsToSignSelector } from 'redux/selectors';
 import {
   clearAllTransactionsToSign,
   moveTransactionsToSignedState,
@@ -55,7 +52,7 @@ export function useSignTransactionsWithLedger({
     useParseMultiEsdtTransferData({ transactions });
   const [currentTransaction, setCurrentTransaction] =
     useState<ActiveLedgerTransactionType | null>(null);
-  const provider = useSelector(providerSelector);
+  const provider = getAccountProvider();
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const dispatch = useDispatch();

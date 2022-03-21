@@ -1,4 +1,4 @@
-import { providerSelector } from 'redux/selectors';
+import { getAccountProvider } from 'providers/accountProvider';
 import { setAccount } from 'redux/slices';
 import { store } from 'redux/store';
 import getAccount from './getAccount';
@@ -10,13 +10,15 @@ const setNewAccount = async () => {
     const address = await getAddress();
     try {
       const account = await getAccount(address);
-      const accountData = {
-        balance: account.balance.toString(),
-        address,
-        nonce: getLatestNonce(account)
-      };
-      store.dispatch(setAccount(accountData));
-      return accountData;
+      if (account != null) {
+        const accountData = {
+          balance: account.balance.toString(),
+          address,
+          nonce: getLatestNonce(account)
+        };
+        store.dispatch(setAccount(accountData));
+        return accountData;
+      }
     } catch (e) {
       console.error('Failed getting account ', e);
     }
@@ -27,7 +29,10 @@ const setNewAccount = async () => {
 };
 
 export async function refreshAccount() {
-  const provider = providerSelector(store.getState());
+  const provider = getAccountProvider();
+  if (provider == null) {
+    throw 'Provider not initialized';
+  }
   if (provider.isInitialized()) {
     return setNewAccount();
   } else {

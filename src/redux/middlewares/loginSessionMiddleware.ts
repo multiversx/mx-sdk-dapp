@@ -1,11 +1,11 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import throttle from 'lodash/throttle';
+import { getAccountProvider } from 'providers/accountProvider';
 import { logoutAction } from 'redux/commonActions';
 import {
   isLoggedInSelector,
   loginExpiresAtSelector
 } from 'redux/selectors/loginInfoSelectors';
-import { providerSelector } from 'redux/selectors/networkConfigSelectors';
 import { setLoginExpiresAt } from 'redux/slices/loginInfoSlice';
 import { StoreType } from 'redux/store';
 import { getNewLoginExpiresTimestamp } from 'utils/internal';
@@ -36,11 +36,11 @@ export const loginSessionMiddleware: any =
     const isExpired = loginTimestamp - now < 0;
     if (isExpired) {
       return setTimeout(async () => {
-        const provider = providerSelector(store.getState());
+        const provider = getAccountProvider();
         console.log('session expired');
         store.dispatch(logoutAction());
         try {
-          await provider.logout({ callbackUrl: '/' });
+          await provider?.logout({ callbackUrl: '/' });
         } catch (err) {
           console.error('error logging out', err);
         }
