@@ -20,7 +20,7 @@ let localStorageReducers: Partial<Reducer> = rootReducer;
 
 //This allows for this library to be used on other platforms than web, like React Native
 //without this condition, redux-persist 6+ will throw an error if persist storage fails
-if (typeof window !== "undefined" && window?.localStorage != null) {
+if (typeof window !== 'undefined' && window?.localStorage != null) {
   const storage = require('redux-persist/lib/storage').default;
   const persistConfig = {
     key: 'dapp-core-store',
@@ -43,15 +43,11 @@ export const store = configureStore({
           PERSIST,
           PURGE,
           REGISTER,
-          'appConfig/setProvider',
           'accountInfoSlice/setAccount',
           'accountInfoSlice/setAccountNonce',
           'extraActionsSlice/initializeExtraActions'
         ],
         ignoredPaths: [
-          'networkConfig.proxy',
-          'networkConfig.apiProvider',
-          'networkConfig.provider',
           'payload.nonce',
           'account.account.nonce',
           // extra actions

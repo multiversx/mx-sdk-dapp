@@ -1,20 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Address,
-  Nonce,
-  Transaction,
-  ExtensionProvider
-} from '@elrondnetwork/erdjs';
+import { Nonce, Transaction, ExtensionProvider } from '@elrondnetwork/erdjs';
 
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { getAccountProvider } from 'providers/accountProvider';
+import { getAccountFromProxyProvider } from 'providers/proxyProvider';
+import { getProviderType } from 'providers/utils';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import {
-  addressSelector,
-  providerSelector,
-  proxySelector,
-  transactionsToSignSelector
-} from 'redux/selectors';
+import { addressSelector, transactionsToSignSelector } from 'redux/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
@@ -23,7 +16,6 @@ import {
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   getLatestNonce,
-  getProviderType,
   builtCallbackUrl,
   parseTransactionAfterSigning
 } from 'utils';
@@ -31,9 +23,8 @@ import {
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
-  const proxy = useSelector(proxySelector);
   const address = useSelector(addressSelector);
-  const provider = useSelector(providerSelector);
+  const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
@@ -186,7 +177,10 @@ export const useSignTransactions = () => {
     };
 
     try {
-      const proxyAccount = await proxy.getAccount(new Address(address));
+      const proxyAccount = await getAccountFromProxyProvider(address);
+      if (proxyAccount == null) {
+        return;
+      }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
       const isSigningWithProvider =

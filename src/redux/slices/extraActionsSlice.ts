@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { emptyProvider } from 'providers/utils';
 import { ExtraActionsType } from 'types';
-import { emptyProvider } from 'utils/provider';
 
 type ExtraActionsSliceState = ExtraActionsType;
 

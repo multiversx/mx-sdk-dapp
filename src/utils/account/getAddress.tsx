@@ -1,7 +1,7 @@
+import { getAccountProvider } from 'providers/accountProvider';
 import {
   addressSelector,
   isLoggedInSelector,
-  providerSelector,
   walletLoginSelector
 } from 'redux/selectors';
 import { store } from 'redux/store';
@@ -12,10 +12,14 @@ import { addressIsValid } from './addressIsValid';
 export function getAddress(): Promise<string> {
   const { search } = window.location;
   const appState = store.getState();
-  const provider = providerSelector(appState);
+  const provider = getAccountProvider();
   const address = addressSelector(appState);
   const loggedIn = isLoggedInSelector(appState);
   const walletLogin = walletLoginSelector(appState);
+
+  if (!provider) {
+    throw 'provider not initialized';
+  }
 
   if (getIsProviderEqualTo(LoginMethodsEnum.ledger) && loggedIn) {
     return new Promise((resolve) => {

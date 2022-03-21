@@ -9,19 +9,9 @@ export const proxySelector = createDeepEqualSelector(
   (state) => state.proxy
 );
 
-export const providerSelector = createDeepEqualSelector(
-  networkConfigSelector,
-  (state) => state.provider
-);
-
 export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => new ChainID(state.chainID)
-);
-
-export const apiProviderSelector = createDeepEqualSelector(
-  networkConfigSelector,
-  (state) => state.apiProvider
 );
 
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
