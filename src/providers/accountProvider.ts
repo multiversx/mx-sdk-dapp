@@ -8,8 +8,5 @@ export function setAccountProvider(provider: IDappProvider) {
 }
 
 export function getAccountProvider() {
-  if (accountProvider == null) {
-    return emptyProvider;
-  }
-  return accountProvider;
+  return accountProvider || emptyProvider;
 }
