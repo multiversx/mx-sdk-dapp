@@ -22,7 +22,6 @@ let localStorageReducers: Partial<Reducer> = rootReducer;
 
 const migrations = {
   2: (state: RootState) => {
-    // migration to keep only device state
     return {
       ...state,
       networkConfig: defaultNetwork
