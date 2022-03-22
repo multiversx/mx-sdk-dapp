@@ -1,10 +1,3 @@
-import {
-  IDappProvider,
-  IProvider,
-  IApiProvider,
-  ProxyProvider,
-  ApiProvider
-} from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import omit from 'lodash/omit';
 import {
@@ -13,8 +6,6 @@ import {
   NetworkType
 } from 'types';
 import { getBridgeAddressFromNetwork } from 'utils/internal';
-import { emptyProvider } from 'utils/provider';
-import { logoutAction } from '../commonActions';
 
 export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
@@ -33,22 +24,12 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
 };
 
 export interface NetworkConfigStateType {
-  provider: IDappProvider;
-  proxy: IProvider;
-  apiProvider: IApiProvider;
   network: AccountInfoSliceNetworkType;
   chainID: string;
 }
 
 const initialState: NetworkConfigStateType = {
   network: defaultNetwork,
-  proxy: new ProxyProvider(defaultNetwork.apiAddress, {
-    timeout: Number(defaultNetwork.apiTimeout)
-  }),
-  apiProvider: new ApiProvider(defaultNetwork.apiAddress, {
-    timeout: Number(defaultNetwork.apiTimeout)
-  }),
-  provider: emptyProvider,
   chainID: '-1'
 };
 
@@ -67,16 +48,6 @@ export const networkConfigSlice = createSlice({
         action.payload,
         'walletConnectBridgeAddresses'
       );
-      const { apiAddress } = network;
-
-      if (apiAddress) {
-        state.proxy = new ProxyProvider(apiAddress, {
-          timeout: Number(network.apiTimeout || defaultNetwork.apiTimeout)
-        });
-        state.apiProvider = new ApiProvider(apiAddress, {
-          timeout: Number(network.apiTimeout || defaultNetwork.apiTimeout)
-        });
-      }
       state.network = {
         ...state.network,
         ...network,
@@ -88,22 +59,11 @@ export const networkConfigSlice = createSlice({
       action: PayloadAction<string>
     ) => {
       state.chainID = action.payload;
-    },
-    setProvider: (
-      state: NetworkConfigStateType,
-      action: PayloadAction<IDappProvider>
-    ) => {
-      state.provider = action.payload;
     }
-  },
-  extraReducers: (builder) => {
-    builder.addCase(logoutAction, (state) => {
-      state.provider = initialState.provider;
-    });
   }
 });
 
-export const { initializeNetworkConfig, setChainID, setProvider } =
+export const { initializeNetworkConfig, setChainID } =
   networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

@@ -1,10 +1,7 @@
-import { Address } from '@elrondnetwork/erdjs';
-import { proxySelector } from 'redux/selectors';
-import { store } from 'redux/store';
+import { getAccountFromProxyProvider } from 'providers/proxyProvider';
 
 export function getAccount(address?: string) {
-  const proxy = proxySelector(store.getState());
-  return proxy.getAccount(new Address(address));
+  return getAccountFromProxyProvider(address);
 }
 
 export default getAccount;

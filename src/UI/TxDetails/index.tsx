@@ -41,7 +41,7 @@ const TxDetails = ({
   };
 
   const iconPendingData = {
-    icon: icons.faSpinner,
+    icon: icons.faCircleNotch,
     classNames: generatedClasses.iconPending
   };
 

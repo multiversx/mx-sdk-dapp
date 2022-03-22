@@ -12,7 +12,7 @@ import { LoginMethodsEnum } from 'types/enums';
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
 export const getProviderType = (
-  provider: IDappProvider | undefined
+  provider?: IDappProvider | null
 ): LoginMethodsEnum => {
   switch (provider?.constructor) {
     case WalletProvider:

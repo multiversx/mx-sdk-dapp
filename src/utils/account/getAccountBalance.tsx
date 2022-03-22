@@ -9,5 +9,8 @@ export async function getAccountBalance(address?: string) {
     accountAddress = account.address;
   }
   const account = await getAccount(accountAddress);
-  return account.balance.toString();
+  if (account == null) {
+    throw 'Could not read account, user not logged in';
+  }
+  return account?.balance?.toString();
 }
