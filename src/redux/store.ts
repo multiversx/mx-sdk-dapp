@@ -10,13 +10,25 @@ import {
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER
+  REGISTER,
+  createMigrate
 } from 'redux-persist';
 
+import { defaultNetwork } from 'redux/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 
 let localStorageReducers: Partial<Reducer> = rootReducer;
+
+const migrations = {
+  2: (state: RootState) => {
+    // migration to keep only device state
+    return {
+      ...state,
+      networkConfig: defaultNetwork
+    };
+  }
+};
 
 //This allows for this library to be used on other platforms than web, like React Native
 //without this condition, redux-persist 6+ will throw an error if persist storage fails
@@ -24,9 +36,10 @@ if (typeof window !== 'undefined' && window?.localStorage != null) {
   const storage = require('redux-persist/lib/storage').default;
   const persistConfig = {
     key: 'dapp-core-store',
-    version: 1,
+    version: 2,
     storage,
-    whitelist: ['account', 'loginInfo', 'toasts', 'modals']
+    whitelist: ['account', 'loginInfo', 'toasts', 'modals', 'networkConfig'],
+    migrate: createMigrate(migrations, { debug: false })
   };
   localStorageReducers = persistReducer(persistConfig, rootReducer);
 }
