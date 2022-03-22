@@ -1,5 +1,7 @@
 import { Address, TransactionPayload } from '@elrondnetwork/erdjs';
 import { TypesOfSmartContractCallsEnum } from 'types';
+import { addressIsValid } from './account';
+import { isStringBase64 } from './decoders';
 
 export const ESDTTransferTypes = [
   'ESDTNFTTransfer',
@@ -20,26 +22,31 @@ export function isContract(
   sender?: string,
   data = ''
 ): boolean {
-  try {
-    const isContract = new Address(receiver).isContractAddress();
-    if (isContract) {
-      return true;
-    }
-    const extractedAddress = getAddressFromDataField({ receiver, data });
-    if (!extractedAddress) {
-      return false;
-    }
-    const isExtractedAddressContractCall = new Address(
-      extractedAddress
-    ).isContractAddress();
-    return (
-      isExtractedAddressContractCall ||
-      isSelfESDTContract(receiver, sender, data)
-    );
-  } catch (err) {
-    console.log('err', err);
+  const isValid = addressIsValid(receiver);
+
+  if (!isValid) {
     return false;
   }
+
+  const isContract = new Address(receiver).isContractAddress();
+
+  if (isContract) {
+    return true;
+  }
+
+  const extractedAddress = getAddressFromDataField({ receiver, data });
+
+  if (!extractedAddress) {
+    return false;
+  }
+
+  const isExtractedAddressContractCall = new Address(
+    extractedAddress
+  ).isContractAddress();
+
+  return (
+    isExtractedAddressContractCall || isSelfESDTContract(receiver, sender, data)
+  );
 }
 
 const isHexValidCharacters = (str: string) => {
@@ -79,8 +86,12 @@ export function getAddressFromDataField({
     if (!data) {
       return receiver;
     }
-    const parsedData = TransactionPayload.fromEncoded(data).toString();
+    const parsedData = isStringBase64(data)
+      ? TransactionPayload.fromEncoded(data).toString()
+      : data;
+
     const addressIndex = getAddressIndex(parsedData);
+
     const parts = parsedData.split('@');
     return addressIndex > -1 ? parts[addressIndex] : receiver;
   } catch (err) {
@@ -90,11 +101,13 @@ export function getAddressFromDataField({
 }
 
 function getAddressIndex(data: string) {
-  return data.includes(TypesOfSmartContractCallsEnum.MultiESDTNFTTransfer)
-    ? 1
-    : data.includes(TypesOfSmartContractCallsEnum.ESDTNFTTransfer)
-    ? 4
-    : -1;
+  if (data.includes(TypesOfSmartContractCallsEnum.MultiESDTNFTTransfer)) {
+    return 1;
+  }
+  if (data.includes(TypesOfSmartContractCallsEnum.ESDTNFTTransfer)) {
+    return 4;
+  }
+  return -1;
 }
 
 export default isContract;
