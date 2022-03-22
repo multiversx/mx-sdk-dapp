@@ -13,5 +13,6 @@ export interface TransactionToastPropsType {
     shouldRenderDefaultCss?: boolean;
     transactions: SignedTransactionType[];
     status: TransactionBatchStatusesEnum;
+    lifetimeAfterSuccess?: number;
     onClose?: (toastId: string) => void;
 }
