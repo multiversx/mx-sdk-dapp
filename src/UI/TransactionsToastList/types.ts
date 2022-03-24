@@ -7,4 +7,5 @@ export interface TransactionsToastListPropsType {
   shouldRenderDefaultCss?: boolean;
   pendingTransactions?: SignedTransactionsType;
   signedTransactions?: SignedTransactionsType;
+  successfulToastLifetime?: number;
 }

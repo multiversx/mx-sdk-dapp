@@ -17,7 +17,8 @@ function TransactionsToastList({
   withTxNonce = false,
   className = 'transactions-toast-list',
   pendingTransactions,
-  signedTransactions
+  signedTransactions,
+  successfulToastLifetime
 }: TransactionsToastListPropsType) {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
@@ -63,6 +64,7 @@ function TransactionsToastList({
         status={status}
         toastId={toastId}
         withTxNonce={withTxNonce}
+        lifetimeAfterSuccess={successfulToastLifetime}
       />
     );
   });
