@@ -1,12 +1,12 @@
 import React from 'react';
 
 import { Transaction } from '@elrondnetwork/erdjs';
+import { useGetLoginInfo } from 'hooks';
 import {
   useGetAccountProvider,
   useGetSignTransactionsError,
   useSignTransactions
 } from 'hooks';
-import useGetLoginInfo from 'hooks/useGetLoginInfo';
 import { LoginMethodsEnum } from 'types';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import SignWithExtensionModal from './SignWithExtensionModal';
