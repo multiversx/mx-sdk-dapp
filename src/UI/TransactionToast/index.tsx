@@ -36,7 +36,8 @@ const TransactionToast = ({
   status,
   onClose,
   startTimeProgress,
-  endTimeProgress
+  endTimeProgress,
+  lifetimeAfterSuccess
 }: TransactionToastPropsType) => {
   const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
@@ -177,6 +178,7 @@ const TransactionToast = ({
         key={toastId}
         id={toastId}
         progress={progress}
+        expiresIn={lifetimeAfterSuccess}
         done={!isPending || isTimedOut}
       >
         <div className={generatedClasses.toastContainer}>

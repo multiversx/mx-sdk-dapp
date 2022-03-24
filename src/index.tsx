@@ -22,3 +22,5 @@ export { fallbackNetworkConfigurations } from './constants/network';
 export { getApiProvider } from 'providers/apiProvider';
 export { getProxyProvider } from 'providers/proxyProvider';
 export { getAccountProvider } from 'providers/accountProvider';
+
+export { getMnemonicWords } from 'constants/mnemonicWords';

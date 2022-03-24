@@ -5,7 +5,7 @@ import storage from 'utils/session';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './type';
 
-const Progress = ({ id, children, progress, done }: Props) => {
+const Progress = ({ id, children, progress, done, expiresIn = 10 * 60, }: Props) => {
 
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
@@ -17,7 +17,7 @@ const Progress = ({ id, children, progress, done }: Props) => {
       return;
     }
 
-    const expires = moment().add(10, 'minutes').unix();
+    const expires = moment().add(expiresIn, 'seconds').unix();
 
     delete toastProgress[id];
 
@@ -34,7 +34,7 @@ const Progress = ({ id, children, progress, done }: Props) => {
     storage.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment().add(10, 'minutes').unix()
+      expires: moment().add(expiresIn, 'seconds').unix()
     });
   };
 
