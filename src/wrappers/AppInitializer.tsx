@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { getServerConfigurationForEnvironment } from 'apiCalls';
+import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks';
 import { initializeProxyProvider } from 'providers/proxyProvider';
@@ -42,9 +42,14 @@ export function AppInitializer({
       dispatch(initializeNetworkConfig(newNetworkConfig));
       initializeProviders(newNetworkConfig);
     }
-    const serverConfig = await getServerConfigurationForEnvironment(
-      environment
+
+    const customNetworkApiAddress = customNetworkConfig?.apiAddress;
+    const fallbackApiAddress = fallbackConfig?.apiAddress;
+
+    const serverConfig = await getServerConfiguration(
+      customNetworkApiAddress || fallbackApiAddress
     );
+
     if (serverConfig != null) {
       const configFromServer = { ...fallbackConfig, ...customNetworkConfig };
       dispatch(
