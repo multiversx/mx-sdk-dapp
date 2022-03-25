@@ -1,4 +1,4 @@
-import Denominate, { DenominateEgld } from './Denominate';
+import Denominate from './Denominate';
 import ExplorerLink from './ExplorerLink';
 import ExtensionLoginButton from './extension/LoginButton';
 import LedgerLoginButton from './ledger/LoginButton';
@@ -19,7 +19,6 @@ import WebWalletLoginButton from './webWallet/LoginButton';
 export {
   ExplorerLink,
   Denominate,
-  DenominateEgld,
   PageState,
   ExtensionLoginButton,
   LedgerLoginButton,

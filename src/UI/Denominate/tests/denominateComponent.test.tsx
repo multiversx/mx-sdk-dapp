@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { DenominateEgld, DenominateType } from '../index';
+import Denominate, { DenominateType } from '../index';
 
 const renderComponent = (props: DenominateType) => {
-  const methods = render(<DenominateEgld {...props} egldLabel='EGLD' />);
+  const methods = render(<Denominate {...props} egldLabel='EGLD' />);
 
   return methods.getByTestId('denominateComponent');
 };
