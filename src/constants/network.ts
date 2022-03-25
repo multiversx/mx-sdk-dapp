@@ -1,12 +1,8 @@
-import { EnvironmentsEnum, NetworkType } from 'types';
+import { NetworkType } from 'types';
 
 export const DEFAULT_MIN_GAS_LIMIT = 50_000;
 
-export const configEndpoint: Record<EnvironmentsEnum, string> = {
-  mainnet: 'https://api.elrond.com/dapp/config',
-  testnet: 'https://testnet-api.elrond.com/dapp/config',
-  devnet: 'https://devnet-api.elrond.com/dapp/config'
-};
+export const configEndpoint = 'dapp/config';
 
 export const fallbackNetworkConfigurations: Record<string, NetworkType> = {
   devnet: {
