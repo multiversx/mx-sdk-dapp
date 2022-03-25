@@ -5,8 +5,13 @@ import storage from 'utils/session';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './type';
 
-const Progress = ({ id, children, progress, done, expiresIn = 10 * 60, }: Props) => {
-
+const Progress = ({
+  id,
+  children,
+  progress,
+  done,
+  expiresIn = 10 * 60
+}: Props) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
   const removeTxFromSession = () => {

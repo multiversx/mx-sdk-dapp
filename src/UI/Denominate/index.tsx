@@ -14,6 +14,7 @@ export interface DenominateType {
   token?: string;
   decimals?: number;
   denomination?: number;
+  egldLabel?: string;
   'data-testid'?: string;
 }
 
@@ -77,7 +78,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   );
 };
 
-const Denominate = (props: DenominateType & { egldLabel?: string }) => {
+const Denominate = (props: DenominateType) => {
   const { value } = props;
 
   return !validation.stringIsInteger(value)
@@ -86,7 +87,7 @@ const Denominate = (props: DenominateType & { egldLabel?: string }) => {
 };
 
 const DenominateWrapper = (props: DenominateType) => {
-  const egldLabel = getEgldLabel();
+  const egldLabel = props.egldLabel || getEgldLabel();
   const denominateProps = { ...props, egldLabel };
   return <Denominate {...denominateProps} />;
 };
