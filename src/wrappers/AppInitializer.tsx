@@ -54,7 +54,7 @@ export function AppInitializer({
 
       if (serverConfig != null) {
         const apiConfig = {
-          ...(fallbackConfig ? { ...fallbackConfig } : {}),
+          ...fallbackConfig,
           ...serverConfig,
           ...customNetworkConfig
         };
