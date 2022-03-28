@@ -46,16 +46,18 @@ export function AppInitializer({
     const customNetworkApiAddress = customNetworkConfig?.apiAddress;
     const fallbackApiAddress = fallbackConfig?.apiAddress;
 
-    const serverConfig = await getServerConfiguration(
-      customNetworkApiAddress || fallbackApiAddress
-    );
-
-    if (serverConfig != null) {
-      const configFromServer = { ...fallbackConfig, ...customNetworkConfig };
-      dispatch(
-        initializeNetworkConfig({ ...serverConfig, ...customNetworkConfig })
+    if (!customNetworkConfig?.skipFetchFromServer) {
+      const serverConfig = await getServerConfiguration(
+        customNetworkApiAddress || fallbackApiAddress
       );
-      initializeProviders(configFromServer);
+
+      if (serverConfig != null) {
+        const configFromServer = { ...fallbackConfig, ...customNetworkConfig };
+        dispatch(
+          initializeNetworkConfig({ ...serverConfig, ...customNetworkConfig })
+        );
+        initializeProviders(configFromServer);
+      }
     }
   }
 

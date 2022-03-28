@@ -47,6 +47,7 @@ export interface CustomNetworkType {
   walletAddress?: string;
   apiAddress?: string;
   explorerAddress?: string;
+  skipFetchFromServer?: boolean;
 }
 
 export interface ScResultType {
