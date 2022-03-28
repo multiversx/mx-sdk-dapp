@@ -15,6 +15,7 @@ export interface RouteType {
 
 export interface BaseNetworkType {
   id: string;
+  chainId: string;
   name: string;
   egldLabel: string;
   egldDenomination: string;
@@ -37,6 +38,7 @@ export interface NetworkType extends BaseNetworkType {
 
 export interface CustomNetworkType {
   id?: string;
+  chainId?: string;
   name?: string;
   egldLabel?: string;
   egldDenomination?: string;
@@ -47,6 +49,8 @@ export interface CustomNetworkType {
   walletAddress?: string;
   apiAddress?: string;
   explorerAddress?: string;
+  skipFetchFromServer?: boolean;
+  apiTimeout?: string;
 }
 
 export interface ScResultType {

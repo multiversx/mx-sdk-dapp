@@ -9,6 +9,7 @@ import { getBridgeAddressFromNetwork } from 'utils/internal';
 
 export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
+  chainId: '',
   name: 'NOT CONFIGURED',
   egldLabel: '',
   egldDenomination: '18',
