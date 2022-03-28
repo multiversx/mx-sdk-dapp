@@ -38,7 +38,7 @@ export function AppInitializer({
   async function initializeNetwork() {
     const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
     const customNetworkApiAddress = customNetworkConfig?.apiAddress;
-    const fallbackConfig = fallbackNetworkConfigurations[environment];
+    const fallbackConfig = fallbackNetworkConfigurations[environment] || {};
 
     const localConfig = {
       ...fallbackConfig,
