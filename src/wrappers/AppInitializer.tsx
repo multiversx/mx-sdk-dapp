@@ -95,9 +95,16 @@ export function AppInitializer({
     await initializeNetwork();
     setInitialized(true);
 
-    //sync redux with shardId from server
     getAccountShard();
   }
+
+  useEffect(() => {
+    if (!address) {
+      return;
+    }
+
+    getAccountShard();
+  }, [address]);
 
   useEffect(() => {
     if (address) {
