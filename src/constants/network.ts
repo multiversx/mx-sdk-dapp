@@ -7,6 +7,7 @@ export const configEndpoint = 'dapp/config';
 export const fallbackNetworkConfigurations: Record<string, NetworkType> = {
   devnet: {
     id: 'devnet',
+    chainId: 'D',
     name: 'Devnet',
     egldLabel: 'xEGLD',
     egldDenomination: '18',
@@ -22,6 +23,7 @@ export const fallbackNetworkConfigurations: Record<string, NetworkType> = {
   },
   testnet: {
     id: 'testnet',
+    chainId: 'T',
     name: 'Testnet',
     egldLabel: 'xEGLD',
     egldDenomination: '18',
@@ -37,6 +39,7 @@ export const fallbackNetworkConfigurations: Record<string, NetworkType> = {
   },
   mainnet: {
     id: 'mainnet',
+    chainId: '1',
     name: 'Mainnet',
     egldLabel: 'xEGLD',
     egldDenomination: '18',

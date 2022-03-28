@@ -36,29 +36,36 @@ export function AppInitializer({
   const dispatch = useDispatch();
 
   async function initializeNetwork() {
-    const fallbackConfig = fallbackNetworkConfigurations[environment];
-    if (fallbackConfig != null) {
-      const newNetworkConfig = { ...fallbackConfig, ...customNetworkConfig };
-      dispatch(initializeNetworkConfig(newNetworkConfig));
-      initializeProviders(newNetworkConfig);
-    }
-
+    const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
     const customNetworkApiAddress = customNetworkConfig?.apiAddress;
-    const fallbackApiAddress = fallbackConfig?.apiAddress;
+    const fallbackConfig = fallbackNetworkConfigurations[environment];
 
-    if (!customNetworkConfig?.skipFetchFromServer) {
+    const localConfig = {
+      ...fallbackConfig,
+      ...customNetworkConfig
+    };
+
+    if (fetchConfigFromServer) {
+      const fallbackApiAddress = fallbackConfig?.apiAddress;
+
       const serverConfig = await getServerConfiguration(
         customNetworkApiAddress || fallbackApiAddress
       );
 
       if (serverConfig != null) {
-        const configFromServer = { ...fallbackConfig, ...customNetworkConfig };
-        dispatch(
-          initializeNetworkConfig({ ...serverConfig, ...customNetworkConfig })
-        );
-        initializeProviders(configFromServer);
+        const apiConfig = {
+          ...(fallbackConfig ? { ...fallbackConfig } : {}),
+          ...serverConfig,
+          ...customNetworkConfig
+        };
+        dispatch(initializeNetworkConfig(apiConfig));
+        initializeProviders(apiConfig);
+        return;
       }
     }
+
+    dispatch(initializeNetworkConfig(localConfig));
+    initializeProviders(localConfig);
   }
 
   function initializeProviders(networkConfig: NetworkType) {
