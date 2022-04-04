@@ -31,8 +31,3 @@ export const walletLoginSelector = createDeepEqualSelector(
   loginInfoSelector,
   (state) => state.walletLogin
 );
-
-export const loginExpiresAtSelector = createDeepEqualSelector(
-  loginInfoSelector,
-  (state) => state.loginExpiresAt
-);

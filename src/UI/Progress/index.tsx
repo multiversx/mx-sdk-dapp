@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'optionalPackages/moment';
 import { logarithmicRest } from 'utils';
-import storage from 'utils/session';
+import storage from 'utils/storage';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './type';
 
@@ -15,7 +15,7 @@ const Progress = ({
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
   const removeTxFromSession = () => {
-    const toastProgress = storage.getItem('toastProgress');
+    const toastProgress = storage.session.getItem('toastProgress');
     const hasSessionStoredTx = Boolean(toastProgress?.[id]);
 
     if (!hasSessionStoredTx) {
@@ -26,7 +26,7 @@ const Progress = ({
 
     delete toastProgress[id];
 
-    storage.setItem({
+    storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
       expires
@@ -34,9 +34,9 @@ const Progress = ({
   };
 
   const saveToSession = ({ value }: { value: number }) => {
-    const toastProgress = storage.getItem('toastProgress') || {};
+    const toastProgress = storage.session.getItem('toastProgress') || {};
     toastProgress[id] = value;
-    storage.setItem({
+    storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
       expires: moment().add(expiresIn, 'seconds').unix()
@@ -45,7 +45,7 @@ const Progress = ({
 
   const getInitialData = () => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
-    const toastProgress = storage.getItem('toastProgress');
+    const toastProgress = storage.session.getItem('toastProgress');
     const remaining = progress
       ? ((progress.endTime - moment().unix()) * 100) / totalSeconds
       : 0;

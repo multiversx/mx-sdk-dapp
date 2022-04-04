@@ -12,4 +12,4 @@ export * from './decoders';
 export * from './smartContracts';
 export * from './getGeneratedClasses';
 export * from './wrapperClassName';
-export * from './session';
+export * from './storage';
