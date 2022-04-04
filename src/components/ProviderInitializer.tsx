@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
+import {
+  HWProvider,
+  ExtensionProvider,
+  IHWElrondApp
+} from '@elrondnetwork/erdjs';
+import { ledgerContractDataEnabledValue } from 'constants/index';
 import { setAccountProvider } from 'providers/accountProvider';
 import {
   getNetworkConfigFromProxyProvider,
@@ -93,10 +98,17 @@ export default function ProviderInitializer() {
           );
         }
         if (ledgerAccount == null && ledgerLogin != null) {
+          const initializedHwWalletP = await getInitializedHwWalletProvider();
+          const hwApp: IHWElrondApp = (initializedHwWalletP as any).hwApp;
+          const { contractData, version } = await hwApp.getAppConfiguration();
+          const dataEnabled = contractData === ledgerContractDataEnabledValue;
+
           dispatch(
             setLedgerAccount({
               index: ledgerLogin.index,
-              address
+              address,
+              hasContractDataEnabled: dataEnabled,
+              version
             })
           );
         }
@@ -136,20 +148,29 @@ export default function ProviderInitializer() {
     }
   }
 
+  async function getInitializedHwWalletProvider() {
+    const hwWalletP = new HWProvider(proxy);
+    let isInitialized = hwWalletP.isInitialized();
+    if (!isInitialized) {
+      isInitialized = await hwWalletP.init();
+    }
+    if (!isInitialized) {
+      console.warn('Could not initialise ledger app');
+      logout();
+      return;
+    }
+    if (ledgerLogin?.index != null) {
+      hwWalletP.addressIndex = ledgerLogin.index;
+    }
+    return hwWalletP;
+  }
+
   async function setLedgerProvider() {
     try {
-      const hwWalletP = new HWProvider(proxy);
-
-      const isInitializationSuccessful = await hwWalletP.init();
-      if (ledgerLogin?.index != null) {
-        hwWalletP.addressIndex = ledgerLogin.index;
-      }
-      if (!isInitializationSuccessful) {
-        console.warn('Could not initialise ledger app');
-        logout();
+      const hwWalletP = await getInitializedHwWalletProvider();
+      if (!hwWalletP) {
         return;
       }
-
       setAccountProvider(hwWalletP);
     } catch (err) {
       console.error('Could not initialise ledger app', err);
