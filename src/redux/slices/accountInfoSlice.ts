@@ -2,7 +2,7 @@ import { Address } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 import storage from 'utils/storage';
-import { LocalKey } from 'utils/storage/local';
+import { localStorageKeys } from 'utils/storage/local';
 
 import {
   loginAction,
@@ -110,7 +110,7 @@ export const accountInfoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
-      storage.local.removeItem(LocalKey.LoginExpiresAt);
+      storage.local.removeItem(localStorageKeys.loginExpiresAt);
       return initialState;
     });
     builder.addCase(

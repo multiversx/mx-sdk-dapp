@@ -6,11 +6,11 @@ import { isLoggedInSelector } from 'redux/selectors/loginInfoSelectors';
 import { StoreType } from 'redux/store';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import storage from 'utils/storage';
-import { LocalKey } from 'utils/storage/local';
+import { localStorageKeys } from 'utils/storage/local';
 
 const whitelistedActions = ['logout'];
 
-const throttledSetNewExpiery = throttle(() => {
+const throttledSetNewExpires = throttle(() => {
   setLoginExpiresAt(getNewLoginExpiresTimestamp());
 }, 5000);
 
@@ -22,7 +22,9 @@ export const loginSessionMiddleware: any =
       return next(action);
     }
     const appState = store.getState();
-    const loginTimestamp = storage.local.getItem(LocalKey.LoginExpiresAt);
+    const loginTimestamp = storage.local.getItem(
+      localStorageKeys.loginExpiresAt
+    );
     const isLoggedIn = isLoggedInSelector(appState);
     if (!isLoggedIn) {
       return next(action);
@@ -44,7 +46,7 @@ export const loginSessionMiddleware: any =
         }
       }, 1000);
     } else {
-      throttledSetNewExpiery();
+      throttledSetNewExpires();
     }
     return next(action);
   };
