@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'redux/commonActions';
@@ -26,12 +26,11 @@ export const useExtensionLogin = ({
   redirectAfterLogin = false
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const isLoadingRef = useRef(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
 
   async function initiateLogin() {
-    setIsLoading(true);
     const provider: ExtensionProvider = ExtensionProvider.getInstance();
 
     try {
@@ -74,7 +73,7 @@ export const useExtensionLogin = ({
       // TODO: can be any or typed error
       setError('error logging in' + (error as any).message);
     } finally {
-      setIsLoading(false);
+      isLoadingRef.current = false;
     }
   }
 
@@ -84,7 +83,7 @@ export const useExtensionLogin = ({
     {
       loginFailed,
       error,
-      isLoading: isLoading && !loginFailed,
+      isLoading: isLoadingRef.current && !loginFailed,
       isLoggedIn: isLoggedIn && !loginFailed
     }
   ];
