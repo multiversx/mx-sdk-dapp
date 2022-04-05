@@ -94,6 +94,8 @@ const SignStep = ({
     addCommas: true
   });
 
+  const scamReport = currentTransaction.receiverScamInfo;
+
   const classes = getGeneratedClasses(className, true, {
     formGroup: 'form-group text-left',
     formLabel: 'form-label text-secondary',
@@ -112,10 +114,10 @@ const SignStep = ({
       'text-danger d-flex justify-content-center align-items-center',
     buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
     cancelButton: 'btn btn-dark text-white flex-even mr-2',
-    signButton: 'btn btn-primary flex-even ml-2'
+    signButton: `btn ${
+      scamReport ? 'btn-warning' : 'btn-primary'
+    } flex-even ml-2`
   });
-
-  const scamReport = currentTransaction.receiverScamInfo;
 
   return (
     <PageState
