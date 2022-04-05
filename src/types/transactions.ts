@@ -157,6 +157,7 @@ export interface ActiveLedgerTransactionType {
   transactionTokenInfo: TxDataTokenType;
   isTokenTransaction: boolean;
   dataField: string;
+  receiverScamInfo: string | null;
 }
 
 export interface SmartContractResult {
