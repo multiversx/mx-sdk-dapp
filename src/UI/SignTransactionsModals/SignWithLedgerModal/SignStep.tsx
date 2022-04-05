@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { useGetAccountInfo, useGetNetworkConfig } from 'hooks';
+import { useGetNetworkConfig } from 'hooks';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
-import useVerifyScamAddress from 'hooks/useVerifyScamAddress';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { ActiveLedgerTransactionType } from 'types';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';
@@ -25,7 +25,7 @@ export interface SignStepType {
   callbackRoute?: string;
   title?: string;
   currentStep: number;
-  currentTransaction: any;
+  currentTransaction: ActiveLedgerTransactionType | null;
   isLastTransaction: boolean;
   className: string;
 }
@@ -43,26 +43,16 @@ const SignStep = ({
   className
 }: SignStepType) => {
   const egldLabel = getEgldLabel();
+
+  if (!currentTransaction) {
+    return null;
+  }
+
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
-  const {
-    account: { address }
-  } = useGetAccountInfo();
 
   const { tokenId, amount, type, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
-
-  const { verifiedAddresses, verifyScamAddress } = useVerifyScamAddress();
-  const scamReport = verifiedAddresses[receiver]?.info;
-
-  useEffect(() => {
-    if (receiver) {
-      verifyScamAddress({
-        address,
-        addressToVerify: receiver
-      });
-    }
-  }, [receiver]);
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -124,6 +114,8 @@ const SignStep = ({
     cancelButton: 'btn btn-dark text-white flex-even mr-2',
     signButton: 'btn btn-primary flex-even ml-2'
   });
+
+  const scamReport = currentTransaction.receiverScamInfo;
 
   return (
     <PageState
