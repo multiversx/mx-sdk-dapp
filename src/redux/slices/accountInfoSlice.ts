@@ -20,6 +20,8 @@ export interface AccountType {
 export interface LedgerAccountType {
   index: number;
   address: string;
+  hasContractDataEnabled: boolean;
+  version: string;
 }
 
 export interface AccountInfoSliceType {
