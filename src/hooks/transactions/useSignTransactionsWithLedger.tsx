@@ -18,6 +18,7 @@ import { parseTransactionAfterSigning } from 'utils';
 
 interface UseSignTransactionsWithLedgerPropsType {
   onCancel: () => void;
+  verifyReceiverScam?: boolean;
 }
 
 interface VerifiedAddressesType {
@@ -42,7 +43,8 @@ interface UseSignTransactionsWithLedgerReturnType {
 }
 
 export function useSignTransactionsWithLedger({
-  onCancel
+  onCancel,
+  verifyReceiverScam = true
 }: UseSignTransactionsWithLedgerPropsType): UseSignTransactionsWithLedgerReturnType {
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const {
@@ -89,7 +91,7 @@ export function useSignTransactionsWithLedger({
     const notSender = address !== receiver;
     const verified = receiver in verifiedAddresses;
 
-    if (notSender && !verified) {
+    if (notSender && !verified && verifyReceiverScam) {
       const data = await getScamAddressData(receiver);
       verifiedAddresses = {
         ...verifiedAddresses,
