@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
-import { useGetNetworkConfig } from 'hooks';
+import { useGetAccountInfo, useGetNetworkConfig } from 'hooks';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
+import useVerifyScamAddress from 'hooks/useVerifyScamAddress';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';
@@ -43,9 +45,24 @@ const SignStep = ({
   const egldLabel = getEgldLabel();
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
+  const {
+    account: { address }
+  } = useGetAccountInfo();
 
   const { tokenId, amount, type, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
+
+  const { verifiedAddresses, verifyScamAddress } = useVerifyScamAddress();
+  const scamReport = verifiedAddresses[receiver]?.info;
+
+  useEffect(() => {
+    if (receiver) {
+      verifyScamAddress({
+        address,
+        addressToVerify: receiver
+      });
+    }
+  }, [receiver]);
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -96,6 +113,8 @@ const SignStep = ({
     tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
     tokenLabel: 'text-secondary text-left',
     tokenValue: 'd-flex align-items-center mt-1',
+    scamReport: 'text-warning',
+    scamReportIcon: 'text-warning mr-1',
     tokenAmountLabel: 'text-secondary text-left',
     tokenAmountValue: 'd-flex align-items-center',
     dataFormGroup: 'form-group text-left',
@@ -123,6 +142,17 @@ const SignStep = ({
                 {multiTxData
                   ? new Address(receiver).bech32()
                   : currentTransaction.transaction.getReceiver().toString()}
+                {scamReport && (
+                  <div className={classes.scamReport}>
+                    <span>
+                      <ReactFontawesome.FontAwesomeIcon
+                        icon={icons.faExclamationTriangle}
+                        className={classes.scamReportIcon}
+                      />
+                      <small>{scamReport}</small>
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className={classes.contentWrapper}>
