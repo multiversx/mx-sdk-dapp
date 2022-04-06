@@ -4,6 +4,8 @@ import { useGetNetworkConfig } from 'hooks';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { ActiveLedgerTransactionType } from 'types';
 import PageState from 'UI/PageState';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';
@@ -23,7 +25,7 @@ export interface SignStepType {
   callbackRoute?: string;
   title?: string;
   currentStep: number;
-  currentTransaction: any;
+  currentTransaction: ActiveLedgerTransactionType | null;
   isLastTransaction: boolean;
   className: string;
 }
@@ -41,6 +43,11 @@ const SignStep = ({
   className
 }: SignStepType) => {
   const egldLabel = getEgldLabel();
+
+  if (!currentTransaction) {
+    return null;
+  }
+
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
 
@@ -87,6 +94,8 @@ const SignStep = ({
     addCommas: true
   });
 
+  const scamReport = currentTransaction.receiverScamInfo;
+
   const classes = getGeneratedClasses(className, true, {
     formGroup: 'form-group text-left',
     formLabel: 'form-label text-secondary',
@@ -96,6 +105,8 @@ const SignStep = ({
     tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
     tokenLabel: 'text-secondary text-left',
     tokenValue: 'd-flex align-items-center mt-1',
+    scamReport: 'text-warning',
+    scamReportIcon: 'text-warning mr-1',
     tokenAmountLabel: 'text-secondary text-left',
     tokenAmountValue: 'd-flex align-items-center',
     dataFormGroup: 'form-group text-left',
@@ -103,7 +114,9 @@ const SignStep = ({
       'text-danger d-flex justify-content-center align-items-center',
     buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
     cancelButton: 'btn btn-dark text-white flex-even mr-2',
-    signButton: 'btn btn-primary flex-even ml-2'
+    signButton: `btn ${
+      scamReport ? 'btn-warning' : 'btn-primary'
+    } flex-even ml-2`
   });
 
   return (
@@ -123,6 +136,17 @@ const SignStep = ({
                 {multiTxData
                   ? new Address(receiver).bech32()
                   : currentTransaction.transaction.getReceiver().toString()}
+                {scamReport && (
+                  <div className={classes.scamReport}>
+                    <span>
+                      <ReactFontawesome.FontAwesomeIcon
+                        icon={icons.faExclamationTriangle}
+                        className={classes.scamReportIcon}
+                      />
+                      <small>{scamReport}</small>
+                    </span>
+                  </div>
+                )}
               </div>
 
               <div className={classes.contentWrapper}>

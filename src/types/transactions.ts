@@ -157,6 +157,7 @@ export interface ActiveLedgerTransactionType {
   transactionTokenInfo: TxDataTokenType;
   isTokenTransaction: boolean;
   dataField: string;
+  receiverScamInfo: string | null;
 }
 
 export interface SmartContractResult {
@@ -182,6 +183,7 @@ export interface SignModalPropsType {
   callbackRoute?: string;
   transactions: Transaction[];
   className?: string;
+  verifyReceiverScam?: boolean;
 }
 
 export interface CustomTransactionInformation {

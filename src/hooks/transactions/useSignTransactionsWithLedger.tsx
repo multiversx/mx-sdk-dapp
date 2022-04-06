@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
+import { getScamAddressData } from 'apiCalls';
+import { useGetAccountInfo } from 'hooks';
 import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { egldLabelSelector, transactionsToSignSelector } from 'redux/selectors';
@@ -16,7 +18,13 @@ import { parseTransactionAfterSigning } from 'utils';
 
 interface UseSignTransactionsWithLedgerPropsType {
   onCancel: () => void;
+  verifyReceiverScam?: boolean;
 }
+
+interface VerifiedAddressesType {
+  [address: string]: { type: string; info: string };
+}
+let verifiedAddresses: VerifiedAddressesType = {};
 
 type LedgerSignedTransactions = Record<number, Transaction>;
 
@@ -35,9 +43,13 @@ interface UseSignTransactionsWithLedgerReturnType {
 }
 
 export function useSignTransactionsWithLedger({
-  onCancel
+  onCancel,
+  verifyReceiverScam = true
 }: UseSignTransactionsWithLedgerPropsType): UseSignTransactionsWithLedgerReturnType {
   const transactionsToSign = useSelector(transactionsToSignSelector);
+  const {
+    account: { address }
+  } = useGetAccountInfo();
 
   const {
     sessionId,
@@ -63,7 +75,7 @@ export function useSignTransactionsWithLedger({
     extractTransactionsInfo();
   }, [currentStep, allTransactions]);
 
-  function extractTransactionsInfo() {
+  async function extractTransactionsInfo() {
     const tx = allTransactions[currentStep];
     if (tx == null) {
       return;
@@ -75,6 +87,17 @@ export function useSignTransactionsWithLedger({
       multiTxData
     );
     const { tokenId } = transactionTokenInfo;
+    const receiver = transaction.getReceiver().toString();
+    const notSender = address !== receiver;
+    const verified = receiver in verifiedAddresses;
+
+    if (notSender && !verified && verifyReceiverScam) {
+      const data = await getScamAddressData(receiver);
+      verifiedAddresses = {
+        ...verifiedAddresses,
+        ...(data.scamInfo ? { [receiver]: data.scamInfo } : {})
+      };
+    }
 
     const isTokenTransaction = Boolean(
       tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -82,6 +105,7 @@ export function useSignTransactionsWithLedger({
 
     setCurrentTransaction({
       transaction,
+      receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
       dataField
