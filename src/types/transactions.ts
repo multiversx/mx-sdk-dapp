@@ -1,3 +1,4 @@
+import React from 'react';
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import {
   TransactionBatchStatusesEnum,
@@ -184,6 +185,7 @@ export interface SignModalPropsType {
   transactions: Transaction[];
   className?: string;
   verifyReceiverScam?: boolean;
+  title?: React.ReactNode;
 }
 
 export interface CustomTransactionInformation {

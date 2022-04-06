@@ -10,7 +10,8 @@ const SignWithLedgerModal = ({
   handleClose,
   error,
   className = 'ledger-modal',
-  verifyReceiverScam = true
+  verifyReceiverScam = true,
+  title = 'Confirm on Ledger'
 }: SignModalPropsType) => {
   const {
     onSignTransaction,
@@ -56,7 +57,8 @@ const SignWithLedgerModal = ({
               currentTransaction,
               handleClose: onAbort,
               className,
-              error
+              error,
+              title
             }}
           />
         </div>

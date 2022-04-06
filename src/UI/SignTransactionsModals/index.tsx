@@ -34,7 +34,7 @@ interface CustomConfirmScreensType {
 interface SignTransactionsPropsType {
   className?: string;
   CustomConfirmScreens?: CustomConfirmScreensType;
-  verifyReceiverScam?: boolean;
+  verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
 }
 
 function SignTransactionsModals({
