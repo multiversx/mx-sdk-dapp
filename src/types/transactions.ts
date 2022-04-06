@@ -183,6 +183,7 @@ export interface SignModalPropsType {
   callbackRoute?: string;
   transactions: Transaction[];
   className?: string;
+  verifyReceiverScam?: boolean;
 }
 
 export interface CustomTransactionInformation {

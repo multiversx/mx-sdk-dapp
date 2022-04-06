@@ -21,6 +21,7 @@ interface SignPropsType {
   providerType: LoginMethodsEnum;
   callbackRoute: string;
   className?: string;
+  verifyReceiverScam?: boolean;
 }
 
 interface CustomConfirmScreensType {
@@ -33,11 +34,13 @@ interface CustomConfirmScreensType {
 interface SignTransactionsPropsType {
   className?: string;
   CustomConfirmScreens?: CustomConfirmScreensType;
+  verifyReceiverScam?: boolean;
 }
 
 function SignTransactionsModals({
   className,
-  CustomConfirmScreens
+  CustomConfirmScreens,
+  verifyReceiverScam = true
 }: SignTransactionsPropsType) {
   const {
     callbackRoute,
@@ -65,7 +68,8 @@ function SignTransactionsModals({
     transactions: transactions!,
     providerType,
     callbackRoute,
-    className
+    className,
+    verifyReceiverScam
   };
 
   if (signError || hasTransactions) {

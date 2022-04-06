@@ -9,7 +9,8 @@ import SignStep from './SignStep';
 const SignWithLedgerModal = ({
   handleClose,
   error,
-  className = 'ledger-modal'
+  className = 'ledger-modal',
+  verifyReceiverScam = true
 }: SignModalPropsType) => {
   const {
     onSignTransaction,
@@ -22,7 +23,10 @@ const SignWithLedgerModal = ({
     currentStep,
     callbackRoute,
     currentTransaction
-  } = useSignTransactionsWithLedger({ onCancel: handleClose });
+  } = useSignTransactionsWithLedger({
+    onCancel: handleClose,
+    verifyReceiverScam
+  });
   const classes = getGeneratedClasses(className, true, {
     wrapper: 'modal-container wallet-connect',
     container: 'card container',
