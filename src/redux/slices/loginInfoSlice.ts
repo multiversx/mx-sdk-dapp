@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setLoginExpiresAt, getNewLoginExpiresTimestamp } from 'storage/local';
+import { TokenLoginType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import {
   loginAction,
@@ -21,11 +22,6 @@ export interface LedgerLoginType {
 export interface LoginInfoType {
   data: any;
   expires: number;
-}
-
-export interface TokenLoginType {
-  loginToken: string;
-  signature?: string;
 }
 
 export interface LoginInfoStateType {

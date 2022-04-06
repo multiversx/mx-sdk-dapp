@@ -39,7 +39,7 @@ export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (getIsTransactionPending(txBody.status)) {
-        acc[sessionId] = txBody;
+        (acc as any)[sessionId] = txBody;
       }
       return acc;
     }, {})
@@ -50,7 +50,7 @@ export const successfulTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (getIsTransactionSuccessful(txBody.status)) {
-        acc[sessionId] = txBody;
+        (acc as any)[sessionId] = txBody;
       }
       return acc;
     }, {})
@@ -61,7 +61,7 @@ export const completedTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (getIsTransactionCompleted(txBody.status)) {
-        acc[sessionId] = txBody;
+        (acc as any)[sessionId] = txBody;
       }
       return acc;
     }, {})
@@ -72,7 +72,7 @@ export const failedTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (getIsTransactionFailed(txBody.status)) {
-        acc[sessionId] = txBody;
+        (acc as any)[sessionId] = txBody;
       }
       return acc;
     }, {})
@@ -83,7 +83,7 @@ export const timedOutTransactionsSelector = createDeepEqualSelector(
   (signedTransactions) =>
     Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
       if (getIsTransactionTimedOut(txBody.status)) {
-        acc[sessionId] = txBody;
+        (acc as any)[sessionId] = txBody;
       }
       return acc;
     }, {})

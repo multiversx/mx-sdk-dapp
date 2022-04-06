@@ -93,8 +93,9 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<string>
     ) => {
-      if (state?.transactionsToSign?.[action.payload]) {
-        delete state.transactionsToSign[action.payload];
+      const hasData = (state?.transactionsToSign as any)?.[action.payload];
+      if (hasData) {
+        delete (state?.transactionsToSign as any)?.[action.payload];
       }
     },
     updateSignedTransaction: (
@@ -126,8 +127,12 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
     ) => {
-      const { sessionId, status, errorMessage, transactionHash } =
-        action.payload;
+      const {
+        sessionId,
+        status,
+        errorMessage,
+        transactionHash
+      } = action.payload;
       const transactions = state.signedTransactions?.[sessionId]?.transactions;
       if (transactions != null) {
         state.signedTransactions[sessionId].transactions = transactions.map(
@@ -170,8 +175,9 @@ export const transactionsSlice = createSlice({
       state.transactionsToSign = action.payload;
 
       const { sessionId, customTransactionInformation } = action.payload;
-      state.customTransactionInformationForSessionId[sessionId] =
-        customTransactionInformation;
+      state.customTransactionInformationForSessionId[
+        sessionId
+      ] = customTransactionInformation;
 
       state.signTransactionsError = null;
     },
@@ -195,8 +201,10 @@ export const transactionsSlice = createSlice({
         return;
       }
 
-      const { signedTransactions, customTransactionInformationForSessionId } =
-        action.payload.transactions;
+      const {
+        signedTransactions,
+        customTransactionInformationForSessionId
+      } = action.payload.transactions;
       const parsedSignedTransactions = Object.entries(
         signedTransactions
       ).reduce((acc, [sessionId, transaction]) => {
@@ -208,10 +216,9 @@ export const transactionsSlice = createSlice({
           acc[sessionId] = transaction;
         }
         return acc;
-      }, {});
+      }, {} as { [key: string]: any });
       if (customTransactionInformationForSessionId != null) {
-        state.customTransactionInformationForSessionId =
-          customTransactionInformationForSessionId;
+        state.customTransactionInformationForSessionId = customTransactionInformationForSessionId;
       }
       if (signedTransactions != null) {
         state.signedTransactions = parsedSignedTransactions;

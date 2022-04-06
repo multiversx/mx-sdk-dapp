@@ -9,10 +9,12 @@ import { NotificationTypesEnum } from 'types';
 import { wrapperClassName } from 'utils';
 import PageState from '../PageState';
 
+const typedIcons: any = icons;
+
 const notificationTypesToIcons = {
-  [NotificationTypesEnum.warning]: icons.faExclamationTriangle
+  [NotificationTypesEnum.warning]: typedIcons.faExclamationTriangle
 };
-const defaultIcon = icons.faExclamationTriangle;
+const defaultIcon = typedIcons.faExclamationTriangle;
 
 export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
@@ -23,7 +25,7 @@ export function NotificationModal() {
   };
 
   const icon = notification
-    ? notificationTypesToIcons[notification?.type] || defaultIcon
+    ? (notificationTypesToIcons as any)[notification?.type] || defaultIcon
     : null;
 
   return notification ? (

@@ -77,5 +77,10 @@ export interface ExtraActionsType {
   init: (props: ExtraActionsInitType) => void;
 }
 
+export interface TokenLoginType {
+  loginToken: string;
+  signature?: string;
+}
+
 export * from './transactions';
 export * from './enums';

@@ -5,38 +5,35 @@
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
-  "main": "build/index.js",
-  "module": "build/index.modern.js",
-  "source": "src/index.tsx",
+  "main": "dist/index.js",
+  "module": "dist/dapp-core.esm.js",
+  "typings": "dist/index.d.ts",
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "build": "npm run copy-prod & microbundle-crl --no-compress --format modern,cjs --css-modules false ",
-    "start": "npm run copy-dev & microbundle-crl watch --no-compress --format modern,cjs --css-modules false",
-    "prepare": "run-s build",
-    "test": "run-s test:unit test:build",
-    "test:build": "run-s build",
-    "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
-    "test:watch": "react-scripts test --env=jsdom",
-    "predeploy": "cd example && npm install && npm run build",
+    "start": "npm run copy-dev & tsdx watch",
+    "build": "npm run copy-prod & tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
     "copy-dev": "cp src/optionalPackages/dev/* src/optionalPackages",
     "copy-prod": "cp src/optionalPackages/prod/* src/optionalPackages"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "7.16.5",
-    "@testing-library/jest-dom": "5.16.2",
-    "@testing-library/react": "9.5.0",
-    "@testing-library/user-event": "7.2.1",
-    "@types/jest": "27.4.0",
-    "@types/lodash": "4.14.178",
-    "@types/node": "14.14.44",
-    "@types/platform": "1.3.4",
-    "@types/qrcode": "1.4.2",
-    "@types/qs": "6.9.7",
-    "@typescript-eslint/eslint-plugin": "4.22.1",
-    "@typescript-eslint/parser": "4.22.1",
-    "cross-env": "7.0.3",
+    "@babel/core": "7.17.8",
+    "@size-limit/preset-small-lib": "7.0.8",
+    "@svgr/rollup": "6.2.1",
+    "@types/lodash": "4.14.181",
+    "@types/qs": "^6.9.7",
+    "@types/react": "17.0.43",
+    "@types/react-dom": "17.0.0",
+    "babel-loader": "8.2.4",
+    "babel-plugin-module-resolver": "^4.1.0",
     "eslint-config-prettier": "8.3.0",
     "eslint-config-react": "1.1.7",
     "eslint-config-react-app": "6.0.0",
@@ -50,17 +47,20 @@
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-react": "7.22.0",
     "eslint-plugin-react-hooks": "4.2.0",
-    "microbundle-crl": "0.13.11",
-    "node-sass": "^6.0.1",
-    "npm-run-all": "4.1.5",
-    "prettier": "2.3.2",
+    "husky": "7.0.4",
     "react-dom": "17.0.2",
-    "react-scripts": "4.0.3",
-    "run-script-os": "1.1.5",
-    "typescript": "4.1.2"
+    "react-is": "18.0.0",
+    "rollup-plugin-scss": "3.0.0",
+    "rollup-plugin-svg-import": "1.6.0",
+    "sass": "1.32",
+    "size-limit": "7.0.8",
+    "tsdx": "0.14.1",
+    "tslib": "2.3.1",
+    "typescript": "4.6.3"
   },
   "files": [
-    "build"
+    "dist",
+    "src"
   ],
   "keywords": [
     "elrond",
@@ -75,7 +75,7 @@
   "optionalDependencies": {
     "@fortawesome/fontawesome-svg-core": "6.1.0",
     "@fortawesome/free-solid-svg-icons": "6.1.0",
-    "@fortawesome/react-fontawesome": "^0.1.18",
+    "@fortawesome/react-fontawesome": "0.1.18",
     "bootstrap": "4.6.0",
     "classnames": "2.3.1",
     "moment": "2.29.1",
@@ -84,11 +84,26 @@
     "react-bootstrap": "2.0.3",
     "swr": "1.1.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "size-limit": [
+    {
+      "path": "dist/dapp-core.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/dapp-core.esm.js",
+      "limit": "10 KB"
+    }
+  ],
   "dependencies": {
     "@elrondnetwork/dapp-utils": "0.1.3",
     "@elrondnetwork/erdjs": "9.1.0",
     "@reduxjs/toolkit": "1.6.2",
-    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/jest-dom": "5.16.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash": "4.17.21",
