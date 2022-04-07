@@ -45,7 +45,7 @@ const TxDetails = ({
     classNames: generatedClasses.iconPending
   };
 
-  const iconData = {
+  const iconData: Record<string, typeof iconPendingData> = {
     pending: iconPendingData,
     success: iconSuccessData,
     completed: iconSuccessData,
