@@ -18,6 +18,9 @@ export const setItem = ({
   data: any;
   expires: ExpiresType;
 }) => {
+  if (typeof localStorage === 'undefined') {
+    return;
+  }
   localStorage.setItem(
     String(key),
     JSON.stringify({
@@ -28,6 +31,9 @@ export const setItem = ({
 };
 
 export const getItem = (key: LocalKeyType): any => {
+  if (typeof localStorage === 'undefined') {
+    return;
+  }
   const item = localStorage.getItem(String(key));
   if (!item) {
     return null;
@@ -54,5 +60,9 @@ export const getItem = (key: LocalKeyType): any => {
   return deserializedItem.data;
 };
 
-export const removeItem = (key: LocalKeyType) =>
+export const removeItem = (key: LocalKeyType) => {
+  if (typeof localStorage === 'undefined') {
+    return;
+  }
   localStorage.removeItem(String(key));
+};
