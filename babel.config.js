@@ -10,6 +10,7 @@ const resolveAlias = readdirSync('./src', { withFileTypes: true })
     { '*': ['src/*', 'node_modules/*'] }
   );
 
+// resolve absolute imports
 module.exports = function(api) {
   api.cache(true);
 

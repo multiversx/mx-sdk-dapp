@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls';
-import { useGetAccountInfo } from 'hooks';
 import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { egldLabelSelector, transactionsToSignSelector } from 'redux/selectors';
@@ -15,6 +14,7 @@ import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
+import { useGetAccountInfo } from 'hooks/account';
 
 interface UseSignTransactionsWithLedgerPropsType {
   onCancel: () => void;
@@ -58,12 +58,17 @@ export function useSignTransactionsWithLedger({
     customTransactionInformation
   } = transactionsToSign || {};
   const [currentStep, setCurrentStep] = useState(0);
-  const [signedTransactions, setSignedTransactions] =
-    useState<LedgerSignedTransactions>();
-  const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions });
-  const [currentTransaction, setCurrentTransaction] =
-    useState<ActiveLedgerTransactionType | null>(null);
+  const [signedTransactions, setSignedTransactions] = useState<
+    LedgerSignedTransactions
+  >();
+  const {
+    getTxInfoByDataField,
+    allTransactions
+  } = useParseMultiEsdtTransferData({ transactions });
+  const [
+    currentTransaction,
+    setCurrentTransaction
+  ] = useState<ActiveLedgerTransactionType | null>(null);
   const provider = getAccountProvider();
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);
@@ -161,7 +166,7 @@ export function useSignTransactionsWithLedger({
     } catch (err) {
       console.error(err, 'sign error');
       reset();
-      dispatch(setSignTransactionsError((err as unknown as Error).message));
+      dispatch(setSignTransactionsError(((err as unknown) as Error).message));
     }
   }
 
