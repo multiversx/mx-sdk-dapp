@@ -4,11 +4,6 @@ import { createDeepEqualSelector } from './helpers';
 
 export const networkConfigSelector = (state: RootState) => state.networkConfig;
 
-export const proxySelector = createDeepEqualSelector(
-  networkConfigSelector,
-  (state) => state.proxy
-);
-
 export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => new ChainID(state.chainID)

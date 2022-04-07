@@ -1,4 +1,3 @@
-import { validation } from '@elrondnetwork/dapp-utils';
 import BigNumber from 'bignumber.js';
 import { networkConstants } from 'constants/index';
 
@@ -12,6 +11,7 @@ import { store } from 'redux/store';
 import { NotificationTypesEnum, SignTransactionsPropsType } from 'types';
 import { SendTransactionReturnType } from './sendTransactions';
 import { calcTotalFee } from './utils';
+import { stringIsFloat } from 'utils';
 
 export function signTransactions({
   transactions,
@@ -30,7 +30,7 @@ export function signTransactions({
     : [transactions];
   const bNtotalFee = calcTotalFee(transactionsPayload, minGasLimit);
   const bNbalance = new BigNumber(
-    validation.stringIsFloat(accountBalance) ? accountBalance : '0'
+    stringIsFloat(accountBalance) ? accountBalance : '0'
   );
   const hasSufficientFunds = bNbalance.minus(bNtotalFee).isGreaterThan(0);
 
