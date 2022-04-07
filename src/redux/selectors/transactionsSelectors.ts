@@ -34,59 +34,39 @@ export const signTransactionsErrorSelector = createDeepEqualSelector(
   (state) => state.signTransactionsError
 );
 
+const selectTxByStatus = (txStatusVerifier: typeof getIsTransactionPending) => (
+  signedTransactions: SignedTransactionsType
+) =>
+  Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+    if (txStatusVerifier(txBody.status)) {
+      acc[sessionId] = txBody;
+    }
+    return acc;
+  }, {} as SignedTransactionsType);
+
 export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
-  (signedTransactions) =>
-    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
-      if (getIsTransactionPending(txBody.status)) {
-        (acc as any)[sessionId] = txBody;
-      }
-      return acc;
-    }, {})
+  selectTxByStatus(getIsTransactionPending)
 );
 
 export const successfulTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
-  (signedTransactions) =>
-    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
-      if (getIsTransactionSuccessful(txBody.status)) {
-        (acc as any)[sessionId] = txBody;
-      }
-      return acc;
-    }, {})
+  selectTxByStatus(getIsTransactionSuccessful)
 );
 
 export const completedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
-  (signedTransactions) =>
-    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
-      if (getIsTransactionCompleted(txBody.status)) {
-        (acc as any)[sessionId] = txBody;
-      }
-      return acc;
-    }, {})
+  selectTxByStatus(getIsTransactionCompleted)
 );
 
 export const failedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
-  (signedTransactions) =>
-    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
-      if (getIsTransactionFailed(txBody.status)) {
-        (acc as any)[sessionId] = txBody;
-      }
-      return acc;
-    }, {})
+  selectTxByStatus(getIsTransactionFailed)
 );
 
 export const timedOutTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
-  (signedTransactions) =>
-    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
-      if (getIsTransactionTimedOut(txBody.status)) {
-        (acc as any)[sessionId] = txBody;
-      }
-      return acc;
-    }, {})
+  selectTxByStatus(getIsTransactionTimedOut)
 );
 
 export const transactionsToSignSelector = createDeepEqualSelector(

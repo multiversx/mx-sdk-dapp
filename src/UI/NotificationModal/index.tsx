@@ -24,8 +24,10 @@ export function NotificationModal() {
     clearNotification();
   };
 
+  const type = notification?.type as NotificationTypesEnum.warning;
+
   const icon = notification
-    ? (notificationTypesToIcons as any)[notification?.type] || defaultIcon
+    ? notificationTypesToIcons[type] || defaultIcon
     : null;
 
   return notification ? (

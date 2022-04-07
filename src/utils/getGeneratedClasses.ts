@@ -7,12 +7,12 @@ export function getGeneratedClasses(
 ) {
   return Object.entries(defaultStyles).reduce(
     (acc, [key, defaultClassNames]) => {
-      (acc as any)[key] = classNames?.(
+      acc[key] = classNames?.(
         `${className}_${key}`,
         shouldRenderDefaultCss && (defaultClassNames as string)
       );
       return acc;
     },
-    {}
-  ) as any;
+    {} as Record<string, string>
+  );
 }

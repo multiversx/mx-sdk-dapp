@@ -89,13 +89,9 @@ export const transactionsSlice = createSlice({
         delete state.signedTransactions[action.payload];
       }
     },
-    clearTransactionToSign: (
-      state: TransactionsSliceStateType,
-      action: PayloadAction<string>
-    ) => {
-      const hasData = (state?.transactionsToSign as any)?.[action.payload];
-      if (hasData) {
-        delete (state?.transactionsToSign as any)?.[action.payload];
+    clearTransactionToSign: (state: TransactionsSliceStateType) => {
+      if (state?.transactionsToSign) {
+        state.transactionsToSign = null;
       }
     },
     updateSignedTransaction: (
