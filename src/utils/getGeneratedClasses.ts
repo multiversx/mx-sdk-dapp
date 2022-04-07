@@ -13,6 +13,6 @@ export function getGeneratedClasses(
       );
       return acc;
     },
-    {}
-  ) as any;
+    {} as Record<string, string>
+  );
 }

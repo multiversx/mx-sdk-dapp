@@ -18,7 +18,7 @@ export async function getScamAddressData(addressToVerify: string) {
     `/accounts/${addressToVerify}`,
     {
       baseURL: apiAddress,
-      timeout: apiTimeout
+      timeout: Number(apiTimeout)
     }
   );
 

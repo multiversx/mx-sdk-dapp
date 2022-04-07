@@ -21,7 +21,7 @@ import rootReducer from './reducers';
 let localStorageReducers: Partial<Reducer> = rootReducer;
 
 const migrations = {
-  2: (state: RootState) => {
+  2: (state: PestistedRootState) => {
     return {
       ...state,
       networkConfig: defaultNetwork
@@ -76,7 +76,10 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
+const storeType = configureStore({ reducer: rootReducer });
+type PestistedRootState = ReturnType<typeof store.getState>;
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type StoreType = typeof store;
-export type RootState = ReturnType<typeof store.getState>;
+export type StoreType = typeof storeType;
+export type RootState = ReturnType<typeof storeType.getState>;
 export type AppDispatch = typeof store.dispatch;
