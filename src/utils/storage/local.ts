@@ -9,6 +9,8 @@ type LocalKeyType = typeof localStorageKeys[LocalValueType];
 
 type ExpiresType = number | false;
 
+const hasLocalStorage = typeof localStorage !== 'undefined';
+
 export const setItem = ({
   key,
   data,
@@ -18,7 +20,7 @@ export const setItem = ({
   data: any;
   expires: ExpiresType;
 }) => {
-  if (typeof localStorage === 'undefined') {
+  if (!hasLocalStorage) {
     return;
   }
   localStorage.setItem(
@@ -31,7 +33,7 @@ export const setItem = ({
 };
 
 export const getItem = (key: LocalKeyType): any => {
-  if (typeof localStorage === 'undefined') {
+  if (!hasLocalStorage) {
     return;
   }
   const item = localStorage.getItem(String(key));
@@ -61,7 +63,7 @@ export const getItem = (key: LocalKeyType): any => {
 };
 
 export const removeItem = (key: LocalKeyType) => {
-  if (typeof localStorage === 'undefined') {
+  if (!hasLocalStorage) {
     return;
   }
   localStorage.removeItem(String(key));
