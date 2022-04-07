@@ -1,10 +1,10 @@
-import { validation } from '@elrondnetwork/dapp-utils';
 import { Balance, Token } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
   denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
+import { stringIsInteger } from 'utils/validation';
 import pipe from './pipe';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
@@ -26,7 +26,7 @@ export function denominate({
 }) {
   const token = new Token({ decimals: denomination });
 
-  if (typeof input === 'string' && !validation.stringIsInteger(input, false)) {
+  if (typeof input === 'string' && !stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
 

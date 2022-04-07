@@ -6,7 +6,12 @@ import { getProxyProvider } from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector, ledgerAccountSelector } from 'redux/selectors';
-import { setLedgerAccount, setLedgerLogin, setTokenLogin } from 'redux/slices';
+import {
+  updateLedgerAccount,
+  setLedgerLogin,
+  setTokenLogin,
+  setLedgerAccount
+} from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
@@ -63,8 +68,10 @@ export function useLedgerLogin({
   const hwWalletP = new HWProvider(proxy);
   const [startIndex, setStartIndex] = React.useState(0);
   const [accounts, setAccounts] = React.useState<string[]>([]);
-  const [selectedAddress, setSelectedAddress] =
-    React.useState<SelectedAddress | null>(null);
+  const [
+    selectedAddress,
+    setSelectedAddress
+  ] = React.useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = React.useState(false);
 
@@ -151,7 +158,7 @@ export function useLedgerLogin({
       }
       const { address, index } = selectedAddress;
       dispatch(
-        setLedgerAccount({
+        updateLedgerAccount({
           index,
           address
         })
