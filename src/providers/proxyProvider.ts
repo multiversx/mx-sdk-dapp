@@ -8,7 +8,7 @@ let proxyProvider: ProxyProvider | null = null;
 
 export function initializeProxyProvider(networkConfig?: NetworkType) {
   const initializationNetworkConfig =
-    networkConfig || networkConfigSelector(store.getState());
+    networkConfig || networkConfigSelector(store.getState()).network;
   proxyProvider = new ProxyProvider(initializationNetworkConfig.apiAddress, {
     timeout: Number(initializationNetworkConfig.apiTimeout)
   });
