@@ -10,5 +10,7 @@ export const defaultGasLimit = 60_000_000;
 export const denomination = 18;
 export const decimals = 4;
 
+export const ledgerContractDataEnabledValue = 1;
+
 export const dappInitRoute = '/dapp/init';
 export const walletSignSession = 'signSession';
