@@ -1,10 +1,9 @@
 import React from 'react';
-import { validation } from '@elrondnetwork/dapp-utils';
 import {
   denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
-import { denominate, getEgldLabel } from 'utils';
+import { denominate, getEgldLabel, stringIsInteger } from 'utils';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 export interface DenominateType {
@@ -81,7 +80,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
 const Denominate = (props: DenominateType) => {
   const { value } = props;
 
-  return !validation.stringIsInteger(value)
+  return !stringIsInteger(value)
     ? denominateInvalid(props)
     : denominateValid(props, props.egldLabel || '');
 };

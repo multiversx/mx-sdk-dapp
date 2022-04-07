@@ -12,6 +12,7 @@ import SignWithLedgerModal from './SignTransactionsModals/SignWithLedgerModal';
 import TransactionsToastList from './TransactionsToastList';
 import TransactionToast from './TransactionToast';
 import Trim from './Trim';
+import UsdValue from './UsdValue';
 import WalletConnectLoginButton from './walletConnect/WalletConnectLoginButton';
 import WalletConnectLoginContainer from './walletConnect/WalletConnectLoginContainer';
 import WebWalletLoginButton from './webWallet/LoginButton';
@@ -32,6 +33,7 @@ export {
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
   WebWalletLoginButton,
-  Trim
+  Trim,
+  UsdValue
 };
 export * as DappCorePages from './pages';

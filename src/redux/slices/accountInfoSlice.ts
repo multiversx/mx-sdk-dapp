@@ -24,6 +24,11 @@ export interface LedgerAccountType {
   version: string;
 }
 
+export interface UpdateLedgerAccountPayloadType {
+  index: number;
+  address: string;
+}
+
 export interface AccountInfoSliceType {
   address: string;
   shard?: number;
@@ -89,6 +94,15 @@ export const accountInfoSlice = createSlice({
     ) => {
       state.ledgerAccount = action.payload;
     },
+    updateLedgerAccount: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<UpdateLedgerAccountPayloadType>
+    ) => {
+      if (state.ledgerAccount != null) {
+        state.ledgerAccount.index = action.payload.index;
+        state.ledgerAccount.address = action.payload.address;
+      }
+    },
     setWalletConnectAccount: (
       state: AccountInfoSliceType,
       action: PayloadAction<string | null>
@@ -147,6 +161,7 @@ export const {
   setAccountNonce,
   setAccountShard,
   setLedgerAccount,
+  updateLedgerAccount,
   setWalletConnectAccount,
   setIsAccountLoading,
   setAccountLoadingError
