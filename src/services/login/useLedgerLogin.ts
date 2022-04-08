@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
 import { ledgerErrorCodes } from 'constants/index';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -15,6 +15,7 @@ import {
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
+import { getLedgerConfiguration } from 'providers/utils';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const failInitializeErrorText =
@@ -39,6 +40,8 @@ export interface LedgerLoginHookCustomStateType {
   showAddressList: boolean;
   startIndex: number;
   selectedAddress: SelectedAddress | null;
+  version: string;
+  contractDataEnabled: boolean;
 
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
@@ -62,18 +65,20 @@ export function useLedgerLogin({
   const isLoggedIn = useSelector(isLoggedInSelector);
   const proxy = getProxyProvider();
   const dispatch = useDispatch();
-  const [error, setError] = React.useState('');
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const hwWalletP = new HWProvider(proxy);
-  const [startIndex, setStartIndex] = React.useState(0);
-  const [accounts, setAccounts] = React.useState<string[]>([]);
+  const [startIndex, setStartIndex] = useState(0);
+  const [accounts, setAccounts] = useState<string[]>([]);
+  const [version, setVersion] = useState('');
+  const [contractDataEnabled, setContractDataEnabled] = useState(false);
   const [
     selectedAddress,
     setSelectedAddress
-  ] = React.useState<SelectedAddress | null>(null);
+  ] = useState<SelectedAddress | null>(null);
 
-  const [showAddressList, setShowAddressList] = React.useState(false);
+  const [showAddressList, setShowAddressList] = useState(false);
 
   function dispatchLoginActions({
     provider,
@@ -156,13 +161,18 @@ export function useLedgerLogin({
       if (selectedAddress == null) {
         return false;
       }
-      const { address, index } = selectedAddress;
-      dispatch(
-        updateLedgerAccount({
-          index,
-          address
-        })
-      );
+      if (ledgerAccount) {
+        dispatch(updateLedgerAccount(selectedAddress));
+      } else {
+        dispatch(
+          setLedgerAccount({
+            ...selectedAddress,
+            version,
+            hasContractDataEnabled: contractDataEnabled
+          })
+        );
+      }
+
       const hwWalletProvider = new HWProvider(proxy);
       const initialized = await hwWalletProvider.init();
       if (!initialized) {
@@ -198,6 +208,9 @@ export function useLedgerLogin({
         startIndex,
         addressesPerPage
       );
+      const ledgerData = await getLedgerConfiguration(hwWalletP);
+      setVersion(ledgerData.version);
+      setContractDataEnabled(ledgerData.dataEnabled);
       setAccounts(accounts);
       setIsLoading(false);
     } catch (err) {
@@ -260,10 +273,12 @@ export function useLedgerLogin({
     setStartIndex((current) => (current === 0 ? 0 : current - 1));
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchAccounts();
   }, [startIndex]);
+
   const loginFailed = Boolean(error);
+
   return [
     onStartLogin,
     {
@@ -277,6 +292,8 @@ export function useLedgerLogin({
       showAddressList,
       startIndex,
       selectedAddress,
+      version,
+      contractDataEnabled,
 
       onGoToPrevPage,
       onGoToNextPage,

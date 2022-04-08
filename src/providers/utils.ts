@@ -2,11 +2,13 @@ import {
   ExtensionProvider,
   HWProvider,
   IDappProvider,
+  IHWElrondApp,
   SignableMessage,
   Transaction,
   WalletConnectProvider,
   WalletProvider
 } from '@elrondnetwork/erdjs';
+import { ledgerContractDataEnabledValue } from 'constants/index';
 import { LoginMethodsEnum } from 'types/enums';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
@@ -32,6 +34,18 @@ export const getProviderType = (
 
 export const newWalletProvider = (walletAddress: string) =>
   new WalletProvider(`${walletAddress}${DAPP_INIT_ROUTE}`);
+
+export const getLedgerConfiguration = async (
+  initializedHwWalletP: HWProvider
+) => {
+  if (!initializedHwWalletP.isInitialized()) {
+    throw new Error('Unable to get version. Provider not initialized');
+  }
+  const hwApp: IHWElrondApp = (initializedHwWalletP as any).hwApp;
+  const { contractData, version } = await hwApp.getAppConfiguration();
+  const dataEnabled = contractData === ledgerContractDataEnabledValue;
+  return { version, dataEnabled };
+};
 
 const notInitializedError = (caller: string) => {
   return `Unable to perform ${caller}, Provider not initialized`;
