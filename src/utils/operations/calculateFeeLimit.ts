@@ -62,7 +62,6 @@ export function calculateFeeLimit({
     const fee = bNfee.toString(10);
     return fee;
   } catch (err) {
-    console.error('Unable to calculate fee limit', err);
     return '0';
   }
 }
