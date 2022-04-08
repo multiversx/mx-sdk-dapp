@@ -1,16 +1,11 @@
 import { useEffect } from 'react';
-import {
-  HWProvider,
-  ExtensionProvider,
-  IHWElrondApp
-} from '@elrondnetwork/erdjs';
-import { ledgerContractDataEnabledValue } from 'constants/index';
+import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { setAccountProvider } from 'providers/accountProvider';
 import {
   getNetworkConfigFromProxyProvider,
   getProxyProvider
 } from 'providers/proxyProvider';
-import { newWalletProvider } from 'providers/utils';
+import { getLedgerConfiguration, newWalletProvider } from 'providers/utils';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
@@ -99,9 +94,12 @@ export default function ProviderInitializer() {
         }
         if (ledgerAccount == null && ledgerLogin != null) {
           const initializedHwWalletP = await getInitializedHwWalletProvider();
-          const hwApp: IHWElrondApp = (initializedHwWalletP as any).hwApp;
-          const { contractData, version } = await hwApp.getAppConfiguration();
-          const dataEnabled = contractData === ledgerContractDataEnabledValue;
+          if (!initializedHwWalletP) {
+            return;
+          }
+          const { version, dataEnabled } = await getLedgerConfiguration(
+            initializedHwWalletP
+          );
 
           dispatch(
             setLedgerAccount({
