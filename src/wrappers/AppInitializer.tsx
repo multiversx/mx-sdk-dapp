@@ -35,6 +35,10 @@ export function AppInitializer({
   const { address, publicKey } = account;
   const dispatch = useDispatch();
 
+  function initializeProviders(networkConfig: NetworkType) {
+    initializeProxyProvider(networkConfig);
+  }
+
   async function initializeNetwork() {
     const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
     const customNetworkApiAddress = customNetworkConfig?.apiAddress;
@@ -66,10 +70,6 @@ export function AppInitializer({
 
     dispatch(initializeNetworkConfig(localConfig));
     initializeProviders(localConfig);
-  }
-
-  function initializeProviders(networkConfig: NetworkType) {
-    initializeProxyProvider(networkConfig);
   }
 
   function initializeCustomExtraActions() {

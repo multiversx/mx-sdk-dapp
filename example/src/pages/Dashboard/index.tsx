@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Actions from './Actions';
 import TopInfo from './TopInfo';
 import Transactions from './Transactions';

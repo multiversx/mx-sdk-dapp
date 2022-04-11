@@ -16,8 +16,11 @@ const Transactions = () => {
   const {
     network: { apiAddress }
   } = useGetNetworkConfig();
-  const { success, fail, hasActiveTransactions } =
-    transactionServices.useGetActiveTransactionsStatus();
+  const {
+    success,
+    fail,
+    hasActiveTransactions
+  } = transactionServices.useGetActiveTransactionsStatus();
 
   const [state, setState] = React.useState<StateType>({
     transactions: [],

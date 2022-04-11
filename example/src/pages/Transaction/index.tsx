@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { DappUI, useGetNetworkConfig } from '@elrondnetwork/dapp-core';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, Link } from 'react-router-dom';

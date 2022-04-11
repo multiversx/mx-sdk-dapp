@@ -1,6 +1,6 @@
 import React from 'react';
 import { useCallback } from 'react';
-import debounce from 'lodash/debounce';
+import debounce from 'lodash.debounce';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 interface TrimType {

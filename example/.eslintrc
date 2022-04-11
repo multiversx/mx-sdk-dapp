@@ -31,12 +31,13 @@
   },
   "extends": [
     "plugin:react/recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "prettier",
     "plugin:prettier/recommended",
     "plugin:react-hooks/recommended"
   ],
-  "plugins": ["react", "prettier", "import"],
+  "plugins": ["react", "prettier", "import", "@typescript-eslint"],
   "rules": {
     "import/order": [
       "warn",
@@ -86,7 +87,10 @@
     "react/jsx-wrap-multilines": "off",
     "react/destructuring-assignment": "off",
     "no-shadow": "off",
-    "@typescript-eslint/no-shadow": ["warn"],
-    "react/no-array-index-key": "off"
+    "@typescript-eslint/no-unused-vars": "error",
+    "no-unused-vars": "off",
+    "react/no-array-index-key": "off",
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }
