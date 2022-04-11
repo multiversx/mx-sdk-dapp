@@ -152,7 +152,7 @@ export default function ProviderInitializer() {
     if (!isInitialized) {
       isInitialized = await hwWalletP.init();
     }
-    if (!isInitialized) {
+    if (!isInitialized && isLoggedIn) {
       console.warn('Could not initialise ledger app');
       logout();
       return;
