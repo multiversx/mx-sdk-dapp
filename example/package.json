@@ -18,15 +18,17 @@
     "@types/react-dom": "file:../node_modules/@types/react-dom",
     "axios": "file:../node_modules/axios",
     "bootstrap": "file:../node_modules/bootstrap",
+    "lodash": "^4.17.21",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
     "react-router-dom": "6.2.1",
     "react-scripts": "file:../node_modules/react-scripts",
-    "typescript": "file:../node_modules/typescript"
+    "typescript": "file:../node_modules/typesctipt"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "7.8.3",
-    "react-error-overlay": "^6.0.9"
+    "@typescript-eslint/eslint-plugin": "5.18.0",
+    "@typescript-eslint/parser": "5.18.0"
   },
   "eslintConfig": {
     "extends": "react-app"

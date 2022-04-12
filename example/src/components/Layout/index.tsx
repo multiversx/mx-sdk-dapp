@@ -1,4 +1,3 @@
-import React from 'react';
 import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core';
 import { useLocation } from 'react-router-dom';
 import routes, { routeNames } from 'routes';

@@ -3,6 +3,7 @@ import { HWProvider } from '@elrondnetwork/erdjs';
 import { ledgerErrorCodes } from 'constants/index';
 import { setAccountProvider } from 'providers/accountProvider';
 import { getProxyProvider } from 'providers/proxyProvider';
+import { getLedgerConfiguration } from 'providers/utils';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { isLoggedInSelector, ledgerAccountSelector } from 'redux/selectors';
@@ -15,7 +16,6 @@ import {
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
-import { getLedgerConfiguration } from 'providers/utils';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const failInitializeErrorText =

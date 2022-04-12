@@ -1,4 +1,3 @@
-import React from 'react';
 import { ReactComponent as HeartIcon } from '../../../assets/img/heart.svg';
 
 const Footer = () => {
