@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import { setAccountProvider } from 'providers/accountProvider';
 import {
@@ -41,6 +41,10 @@ export default function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const [ledgerData, setLedgerData] = useState<{
+    version: string;
+    dataEnabled: boolean;
+  }>();
 
   const proxy = getProxyProvider();
   const dispatch = useDispatch();
@@ -64,7 +68,11 @@ export default function ProviderInitializer() {
 
   useEffect(() => {
     fetchAccount();
-  }, [address, ledgerLogin, isLoggedIn]);
+  }, [address, isLoggedIn]);
+
+  useEffect(() => {
+    setLedgerAccountInfo();
+  }, [ledgerAccount, isLoggedIn, ledgerData]);
 
   function refreshChainID() {
     getNetworkConfigFromProxyProvider()
@@ -78,6 +86,19 @@ export default function ProviderInitializer() {
       });
   }
 
+  function setLedgerAccountInfo() {
+    if (ledgerAccount == null && ledgerLogin != null && ledgerData) {
+      dispatch(
+        setLedgerAccount({
+          index: ledgerLogin.index,
+          address,
+          hasContractDataEnabled: ledgerData.dataEnabled,
+          version: ledgerData.version
+        })
+      );
+    }
+  }
+
   async function fetchAccount() {
     dispatch(setIsAccountLoading(true));
     if (address && isLoggedIn) {
@@ -89,24 +110,6 @@ export default function ProviderInitializer() {
               balance: account.balance.toString(),
               address,
               nonce: account.nonce.valueOf()
-            })
-          );
-        }
-        if (ledgerAccount == null && ledgerLogin != null) {
-          const initializedHwWalletP = await getInitializedHwWalletProvider();
-          if (!initializedHwWalletP) {
-            return;
-          }
-          const { version, dataEnabled } = await getLedgerConfiguration(
-            initializedHwWalletP
-          );
-
-          dispatch(
-            setLedgerAccount({
-              index: ledgerLogin.index,
-              address,
-              hasContractDataEnabled: dataEnabled,
-              version
             })
           );
         }
@@ -169,7 +172,9 @@ export default function ProviderInitializer() {
       if (!hwWalletP) {
         return;
       }
+      const ledgerConfig = await getLedgerConfiguration(hwWalletP);
       setAccountProvider(hwWalletP);
+      setLedgerData(ledgerConfig);
     } catch (err) {
       console.error('Could not initialise ledger app', err);
       logout();
