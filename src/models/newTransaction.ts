@@ -11,8 +11,8 @@ import {
   TransactionVersion
 } from '@elrondnetwork/erdjs';
 import {
-  defaultGasLimit,
-  defaultGasPrice,
+  gasLimit as defaultGasLimit,
+  gasPrice,
   version as defaultVersion
 } from 'constants/index';
 import { RawTransactionType } from 'types/transactions';
@@ -29,7 +29,7 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     nonce: new Nonce(rawTransaction.nonce),
     receiver: new Address(rawTransaction.receiver),
     gasLimit: new GasLimit(rawTransaction.gasLimit ?? defaultGasLimit),
-    gasPrice: new GasPrice(rawTransaction.gasPrice ?? defaultGasPrice),
+    gasPrice: new GasPrice(rawTransaction.gasPrice ?? gasPrice),
     chainID: new ChainID(rawTransaction.chainID),
     version: new TransactionVersion(rawTransaction.version ?? defaultVersion),
     ...(rawTransaction.options

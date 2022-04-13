@@ -1,5 +1,8 @@
 import { Address, Transaction } from '@elrondnetwork/erdjs';
-import { defaultGasPrice, defaultGasLimit } from 'constants/index';
+import {
+  gasPrice as configGasPrice,
+  gasLimit as configGasLimit
+} from 'constants/index';
 import newTransaction from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'redux/selectors';
 import { store } from 'redux/store';
@@ -25,8 +28,8 @@ export async function transformAndSignTransactions({
       chainID,
       version,
       options,
-      gasPrice = defaultGasPrice,
-      gasLimit = defaultGasLimit
+      gasPrice = configGasPrice,
+      gasLimit = Number(configGasLimit)
     } = tx;
     let validatedReceiver = receiver;
 
@@ -37,7 +40,9 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
+    const storeChainId = chainIDSelector(store.getState())
+      .valueOf()
+      .toString();
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
       value,
