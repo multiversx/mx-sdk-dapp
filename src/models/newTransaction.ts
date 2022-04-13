@@ -18,7 +18,7 @@ import {
 import { RawTransactionType } from 'types/transactions';
 import { isStringBase64 } from 'utils/decoders/base64Utils';
 
-export default function newTransaction(rawTransaction: RawTransactionType) {
+export function newTransaction(rawTransaction: RawTransactionType) {
   const { data } = rawTransaction;
   const dataPayload = isStringBase64(data)
     ? TransactionPayload.fromEncoded(data)
@@ -37,3 +37,5 @@ export default function newTransaction(rawTransaction: RawTransactionType) {
       : {})
   });
 }
+
+export default newTransaction;
