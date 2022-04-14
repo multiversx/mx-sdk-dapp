@@ -1,11 +1,11 @@
-import { NetworkType } from 'types';
+import { EnvironmentsEnum, NetworkType } from 'types';
 
 export const DEFAULT_MIN_GAS_LIMIT = 50_000;
 
 export const configEndpoint = 'dapp/config';
 
 export const fallbackNetworkConfigurations: Record<
-  'mainnet' | 'testnet' | 'devnet',
+  keyof typeof EnvironmentsEnum,
   NetworkType
 > = {
   devnet: {
