@@ -6,3 +6,4 @@ export * from './getLatestNonce';
 export * from './getAccountBalance';
 export * from './refreshAccount';
 export * from './getShardOfAddress';
+export * from './signMessage';
