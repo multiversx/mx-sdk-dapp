@@ -108,8 +108,6 @@
     "@elrondnetwork/erdjs": "9.1.0",
     "@reduxjs/toolkit": "1.6.2",
     "@testing-library/jest-dom": "5.16.2",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash.debounce": "4.0.8",
