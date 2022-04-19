@@ -1,7 +1,9 @@
 import { Address, Transaction } from '@elrondnetwork/erdjs';
+import BigNumber from 'bignumber.js';
 import {
   gasPrice as configGasPrice,
-  gasLimit as configGasLimit
+  gasLimit as configGasLimit,
+  gasPerDataByte
 } from 'constants/index';
 import newTransaction from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'redux/selectors';
@@ -12,6 +14,18 @@ import { getAccount, getLatestNonce } from 'utils';
 enum ErrorCodesEnum {
   'invalidReceiver' = 'Invalid Receiver address',
   'unknownError' = 'Unknown Error. Please check the transactions and try again'
+}
+
+// TODO: replace with new erdjs function
+function calculateGasLimit(data?: string) {
+  const bNconfigGasLimit = new BigNumber(configGasLimit);
+  const bNgasPerDataByte = new BigNumber(gasPerDataByte);
+  const bNgasValue = data
+    ? bNgasPerDataByte.times(Buffer.from(data).length)
+    : 0;
+  const bNgasLimit = bNconfigGasLimit.plus(bNgasValue);
+  const gasLimit = bNgasLimit.toString(10);
+  return gasLimit;
 }
 
 export async function transformAndSignTransactions({
@@ -29,7 +43,7 @@ export async function transformAndSignTransactions({
       version,
       options,
       gasPrice = configGasPrice,
-      gasLimit = Number(configGasLimit)
+      gasLimit = calculateGasLimit(tx.data)
     } = tx;
     let validatedReceiver = receiver;
 
@@ -49,7 +63,7 @@ export async function transformAndSignTransactions({
       receiver: validatedReceiver,
       data,
       gasPrice,
-      gasLimit,
+      gasLimit: Number(gasLimit),
       nonce: Number(nonce.valueOf().toString()),
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
