@@ -9,10 +9,7 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums';
-import {
-  CustomTransactionInformation,
-  SignedTransactionsBodyType
-} from 'types/transactions';
+import { SignedTransactionsBodyType } from 'types/transactions';
 import {
   getIsTransactionCompleted,
   getIsTransactionFailed,
@@ -61,9 +58,8 @@ export function TransactionStatusTracker({
           acc: {
             hash: string;
             previousStatus: string;
-            customTransactionInformation?: CustomTransactionInformation;
           }[],
-          { status, hash, customTransactionInformation }
+          { status, hash }
         ) => {
           if (
             hash != null &&
@@ -72,8 +68,7 @@ export function TransactionStatusTracker({
           ) {
             acc.push({
               hash,
-              previousStatus: status,
-              customTransactionInformation
+              previousStatus: status
             });
           }
           return acc;
@@ -109,7 +104,7 @@ export function TransactionStatusTracker({
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
 
-                  const txStatusChangeDelay =
+                  const transitionToCompletedDelay =
                     customTransactionInformation?.completedTransactionsDelay ||
                     0;
                   setTimeout(
@@ -121,7 +116,7 @@ export function TransactionStatusTracker({
                           transactionHash: hash
                         })
                       ),
-                    txStatusChangeDelay
+                    transitionToCompletedDelay
                   );
                 }
               }
