@@ -101,7 +101,8 @@ const Actions = () => {
         errorMessage: 'An error has occured during Ping',
         successMessage: 'Ping transaction successful'
       },
-      redirectAfterSign: false
+      redirectAfterSign: false,
+      completedTransactionsDelay: 500
     });
     if (sessionId != null) {
       setTransactionSessionId(sessionId);

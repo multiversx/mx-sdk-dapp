@@ -19,7 +19,6 @@ import {
   getIsTransactionPending
 } from 'utils';
 import { refreshAccount } from 'utils/account';
-
 interface RetriesType {
   [hash: string]: number;
 }
@@ -31,7 +30,7 @@ interface TransactionStatusTrackerPropsType {
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status }
+  transactionPayload: { transactions, status, customTransactionInformation }
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
@@ -109,12 +108,10 @@ export function TransactionStatusTracker({
               if (!getIsTransactionCompleted(status)) {
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
-                  const transactionInformation = transactions.find(
-                    (tx) => tx.hash === hash
-                  );
+
                   const txStatusChangeDelay =
-                    transactionInformation?.customTransactionInformation
-                      ?.completedTransactionsDelay || 0;
+                    customTransactionInformation?.completedTransactionsDelay ||
+                    0;
                   setTimeout(
                     () =>
                       dispatch(
