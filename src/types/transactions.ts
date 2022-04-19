@@ -49,6 +49,7 @@ export interface SignedTransactionType extends RawTransactionType {
   hash: string;
   status: TransactionServerStatusesEnum;
   errorMessage?: string;
+  customTransactionInformation?: CustomTransactionInformation;
 }
 
 export interface TxDataTokenType {
@@ -130,6 +131,7 @@ export interface SendTransactionsPropsType {
     | (Transaction | SimpleTransactionType)[];
   redirectAfterSign?: boolean;
   signWithoutSending: boolean;
+  completedTransactionsDelay?: number;
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
@@ -191,5 +193,6 @@ export interface SignModalPropsType {
 export interface CustomTransactionInformation {
   redirectAfterSign: boolean;
   sessionInformation: any;
+  completedTransactionsDelay?: number;
   signWithoutSending: boolean;
 }

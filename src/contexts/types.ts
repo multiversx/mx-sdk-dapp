@@ -14,7 +14,6 @@ export type GetTransactionsByHashesType = (
 ) => Promise<GetTransactionsByHashesReturnType>;
 
 export interface OverrideDefaultBehaviourContextValueType {
-  completedTransactionsDelay: number;
   sendSignedTransactionsAsync: SendSignedTransactionsAsyncType;
   getTransactionsByHash: GetTransactionsByHashesType;
 }
