@@ -24,7 +24,6 @@ interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
   extraActions?: ExtraActionsType;
-  completedTransactionsDelay?: number;
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
@@ -34,7 +33,6 @@ export const DappProvider = ({
   children,
   customNetworkConfig = {},
   extraActions,
-  completedTransactionsDelay = 0,
   environment,
   sendSignedTransactionsAsync = sendSignedTransactions,
   getTransactionsByHash = getTransactionsByHashes
@@ -55,8 +53,7 @@ export const DappProvider = ({
         <OverrideDefaultBehaviourContext.Provider
           value={{
             sendSignedTransactionsAsync: memoizedSendSignedTransactionsAsync,
-            getTransactionsByHash: memoizedGetTransactionsByHash,
-            completedTransactionsDelay
+            getTransactionsByHash: memoizedGetTransactionsByHash
           }}
         >
           <AppInitializer

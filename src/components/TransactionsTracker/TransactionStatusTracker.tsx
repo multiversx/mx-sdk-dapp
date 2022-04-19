@@ -9,7 +9,10 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums';
-import { SignedTransactionsBodyType } from 'types/transactions';
+import {
+  CustomTransactionInformation,
+  SignedTransactionsBodyType
+} from 'types/transactions';
 import {
   getIsTransactionCompleted,
   getIsTransactionFailed,
@@ -35,9 +38,7 @@ export function TransactionStatusTracker({
   const isFetchingStatusRef = useRef(false);
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
-  const { getTransactionsByHash, completedTransactionsDelay } = useContext(
-    OverrideDefaultBehaviourContext
-  );
+  const { getTransactionsByHash } = useContext(OverrideDefaultBehaviourContext);
 
   const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
@@ -57,13 +58,24 @@ export function TransactionStatusTracker({
       isFetchingStatusRef.current = true;
 
       const pendingTransactions = transactions.reduce(
-        (acc: { hash: string; previousStatus: string }[], { status, hash }) => {
+        (
+          acc: {
+            hash: string;
+            previousStatus: string;
+            customTransactionInformation?: CustomTransactionInformation;
+          }[],
+          { status, hash, customTransactionInformation }
+        ) => {
           if (
             hash != null &&
             !timeoutRefs.current.includes(hash) &&
             getIsTransactionPending(status)
           ) {
-            acc.push({ hash, previousStatus: status });
+            acc.push({
+              hash,
+              previousStatus: status,
+              customTransactionInformation
+            });
           }
           return acc;
         },
@@ -97,6 +109,12 @@ export function TransactionStatusTracker({
               if (!getIsTransactionCompleted(status)) {
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
+                  const transactionInformation = transactions.find(
+                    (tx) => tx.hash === hash
+                  );
+                  const txStatusChangeDelay =
+                    transactionInformation?.customTransactionInformation
+                      ?.completedTransactionsDelay || 0;
                   setTimeout(
                     () =>
                       dispatch(
@@ -106,7 +124,7 @@ export function TransactionStatusTracker({
                           transactionHash: hash
                         })
                       ),
-                    completedTransactionsDelay
+                    txStatusChangeDelay
                   );
                 }
               }
