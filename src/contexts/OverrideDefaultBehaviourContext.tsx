@@ -7,8 +7,7 @@ import { OverrideDefaultBehaviourContextValueType } from './types';
 
 const defaultValue: OverrideDefaultBehaviourContextValueType = {
   sendSignedTransactionsAsync: sendSignedTransactions,
-  getTransactionsByHash: getTransactionsByHashes,
-  completedTransactionsDelay: 0
+  getTransactionsByHash: getTransactionsByHashes
 };
 
 const OverrideDefaultBehaviourContext = React.createContext(defaultValue);

@@ -16,7 +16,6 @@ import {
   getIsTransactionPending
 } from 'utils';
 import { refreshAccount } from 'utils/account';
-
 interface RetriesType {
   [hash: string]: number;
 }
@@ -28,16 +27,14 @@ interface TransactionStatusTrackerPropsType {
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status }
+  transactionPayload: { transactions, status, customTransactionInformation }
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
   const isFetchingStatusRef = useRef(false);
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
-  const { getTransactionsByHash, completedTransactionsDelay } = useContext(
-    OverrideDefaultBehaviourContext
-  );
+  const { getTransactionsByHash } = useContext(OverrideDefaultBehaviourContext);
 
   const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
@@ -57,13 +54,22 @@ export function TransactionStatusTracker({
       isFetchingStatusRef.current = true;
 
       const pendingTransactions = transactions.reduce(
-        (acc: { hash: string; previousStatus: string }[], { status, hash }) => {
+        (
+          acc: {
+            hash: string;
+            previousStatus: string;
+          }[],
+          { status, hash }
+        ) => {
           if (
             hash != null &&
             !timeoutRefs.current.includes(hash) &&
             getIsTransactionPending(status)
           ) {
-            acc.push({ hash, previousStatus: status });
+            acc.push({
+              hash,
+              previousStatus: status
+            });
           }
           return acc;
         },
@@ -97,6 +103,10 @@ export function TransactionStatusTracker({
               if (!getIsTransactionCompleted(status)) {
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
+
+                  const transitionToCompletedDelay =
+                    customTransactionInformation?.completedTransactionsDelay ||
+                    0;
                   setTimeout(
                     () =>
                       dispatch(
@@ -106,7 +116,7 @@ export function TransactionStatusTracker({
                           transactionHash: hash
                         })
                       ),
-                    completedTransactionsDelay
+                    transitionToCompletedDelay
                   );
                 }
               }

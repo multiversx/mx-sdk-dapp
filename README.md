@@ -84,7 +84,6 @@ You need to wrap your application with the **DappProvider** component, which is 
 <DappProvider
     environment="devnet"
     customNetworkConfig={customNetworkConfig}
-    completedTransactionsDelay={500}
 >
 ```
 `environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet`
@@ -111,10 +110,6 @@ This allows using different APIs and different connection providers to configure
 }
 ```
 
-- **completedTransactionsDelay (optional)**;
-  This is an extra prop is provider for smart contract calls.
-
-It will delay the transaction from entering the "completed" state, useful for refetching info after the smart contract call executes.
 
   </details>
 
@@ -169,7 +164,7 @@ when something happens inside the app:
   </App>
 ```
 
-If you want to custom notifications, you can use the `useGetNotification` hook to get the notifications (like insufficient funds, errors etc).
+If you want to show custom notifications, you can use the `useGetNotification` hook to get the notifications (like insufficient funds, errors etc).
 
 </details>
 
@@ -471,6 +466,7 @@ const { sessionId, error } = await sendTransactions({
     minGasLimit?: number (optional, defaults to 50_000);
     sessionInformation?: any (optional, defaults to null) extra sessionInformation that will be passed back to you via getSignedTransactions hook;
     signWithoutSending?: boolean // (optional, defaults to false), the transaction will be signed without being sent to the blockchain;
+    completedTransactionsDelay?: number // delay the transaction status from going into "completed" state;
     redirectAfterSigning?: boolean // (optional, defaults to true), whether to redirect to the provided callbackRoute;
     });
 ```
