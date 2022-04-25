@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { getScamAddressData } from 'apiCalls';
+// import { getScamAddressData } from 'apiCalls';
+import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { egldLabelSelector, transactionsToSignSelector } from 'redux/selectors';
@@ -14,7 +15,6 @@ import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
-import { useGetAccountInfo } from 'hooks/account';
 
 interface UseSignTransactionsWithLedgerPropsType {
   onCancel: () => void;
@@ -97,10 +97,10 @@ export function useSignTransactionsWithLedger({
     const verified = receiver in verifiedAddresses;
 
     if (notSender && !verified && verifyReceiverScam) {
-      const data = await getScamAddressData(receiver);
+      // const data = await getScamAddressData(receiver);
       verifiedAddresses = {
-        ...verifiedAddresses,
-        ...(data.scamInfo ? { [receiver]: data.scamInfo } : {})
+        ...verifiedAddresses
+        // ...(data.scamInfo ? { [receiver]: data.scamInfo } : {})
       };
     }
 
@@ -190,6 +190,8 @@ export function useSignTransactionsWithLedger({
     }
   }
 
+  const isFirst = currentStep === 0;
+
   function onAbort() {
     if (isFirst) {
       dispatch(clearAllTransactionsToSign());
@@ -239,8 +241,6 @@ export function useSignTransactionsWithLedger({
       return nextStep;
     });
   }
-
-  const isFirst = currentStep === 0;
 
   return {
     allTransactions,
