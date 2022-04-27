@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-// import { getScamAddressData } from 'apiCalls';
+import { getScamAddressData } from 'apiCalls';
 import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -97,10 +97,10 @@ export function useSignTransactionsWithLedger({
     const verified = receiver in verifiedAddresses;
 
     if (notSender && !verified && verifyReceiverScam) {
-      // const data = await getScamAddressData(receiver);
+      const data = await getScamAddressData(receiver);
       verifiedAddresses = {
-        ...verifiedAddresses
-        // ...(data.scamInfo ? { [receiver]: data.scamInfo } : {})
+        ...verifiedAddresses,
+        ...(data.scamInfo ? { [receiver]: data.scamInfo } : {})
       };
     }
 
