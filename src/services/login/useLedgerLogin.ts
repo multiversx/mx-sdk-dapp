@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
-import { ledgerErrorCodes } from 'constants/index';
+import ledgerErrorCodes from 'constants/ledgerErrorCodes';
 import { setAccountProvider } from 'providers/accountProvider';
 import { getProxyProvider } from 'providers/proxyProvider';
 import { getLedgerConfiguration } from 'providers/utils';
@@ -73,10 +73,8 @@ export function useLedgerLogin({
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [
-    selectedAddress,
-    setSelectedAddress
-  ] = useState<SelectedAddress | null>(null);
+  const [selectedAddress, setSelectedAddress] =
+    useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = useState(false);
 
