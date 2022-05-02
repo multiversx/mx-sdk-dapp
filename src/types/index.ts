@@ -1,5 +1,3 @@
-import { LoginMethodsEnum } from './enums';
-
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
