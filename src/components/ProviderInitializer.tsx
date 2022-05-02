@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
 import {
-  loginWithExternalProvider,
+  setExternalProviderAsAccountProvider,
   setAccountProvider
 } from 'providers/accountProvider';
 import {
@@ -227,7 +227,7 @@ export default function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.extra: {
-        loginWithExternalProvider();
+        setExternalProviderAsAccountProvider();
         break;
       }
 

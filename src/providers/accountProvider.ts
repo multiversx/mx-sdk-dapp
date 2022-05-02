@@ -13,7 +13,7 @@ export function setExternalProvider(provider: IDappProvider) {
   externalProvider = provider;
 }
 
-export function loginWithExternalProvider() {
+export function setExternalProviderAsAccountProvider() {
   if (externalProvider != null) {
     accountProvider = externalProvider;
   }
