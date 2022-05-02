@@ -52,11 +52,6 @@ export interface CustomNetworkType {
   apiTimeout?: string;
 }
 
-export interface ExternalProviderInitType {
-  onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
-  log?: (word: string) => void;
-}
-
 export interface TokenLoginType {
   loginToken: string;
   signature?: string;

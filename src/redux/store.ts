@@ -58,13 +58,7 @@ export const store = configureStore({
           'accountInfoSlice/setAccount',
           'accountInfoSlice/setAccountNonce'
         ],
-        ignoredPaths: [
-          'payload.nonce',
-          'account.account.nonce',
-          // extra actions
-          'payload.log',
-          'payload.onLogin'
-        ]
+        ignoredPaths: ['payload.nonce', 'account.account.nonce']
       }
     }).concat(loginSessionMiddleware)
 });
