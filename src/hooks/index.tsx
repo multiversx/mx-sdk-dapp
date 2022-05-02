@@ -4,5 +4,3 @@ export * from './useGetNotification';
 export * from './transactions';
 export * from './account';
 export * from './useDebounce';
-
-export * from 'hooks/useInitializeExternalProvider';

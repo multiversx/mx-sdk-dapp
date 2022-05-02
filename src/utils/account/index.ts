@@ -7,3 +7,4 @@ export * from './getAccountBalance';
 export * from './refreshAccount';
 export * from './getShardOfAddress';
 export * from './signMessage';
+export * from './loginUserProgramatically';

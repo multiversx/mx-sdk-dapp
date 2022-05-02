@@ -10,7 +10,7 @@ export function setAccountProvider(provider: IDappProvider) {
   accountProvider = provider;
 }
 
-export function setExternalAccountProvider(provider: ExternalProviderType) {
+export function setExternalProvider(provider: ExternalProviderType) {
   externalProvider = provider;
 }
 
@@ -22,4 +22,8 @@ export function loginWithExternalProvider() {
 
 export function getAccountProvider() {
   return accountProvider || emptyProvider;
+}
+
+export function getExternalProvider() {
+  return externalProvider;
 }

@@ -14,7 +14,7 @@ import {
   GetTransactionsByHashesType,
   SendSignedTransactionsAsyncType
 } from 'contexts/types';
-import { useInitializeExternalProvider } from 'hooks';
+import { setExternalProvider } from 'providers/accountProvider';
 import { DappCoreContext } from 'redux/DappProviderContext';
 import {
   CustomNetworkType,
@@ -52,7 +52,9 @@ export const DappProvider = ({
     throw new Error('missing environment flag');
   }
 
-  useInitializeExternalProvider(externalProvider);
+  if (externalProvider != null) {
+    setExternalProvider(externalProvider);
+  }
 
   const memoizedGetTransactionsByHash = useCallback(getTransactionsByHash, []);
   return (
