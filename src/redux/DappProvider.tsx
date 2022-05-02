@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { IDappProvider } from '@elrondnetwork/erdjs/out';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -14,8 +15,9 @@ import {
   GetTransactionsByHashesType,
   SendSignedTransactionsAsyncType
 } from 'contexts/types';
+import { setExternalProvider } from 'providers/accountProvider';
 import { DappCoreContext } from 'redux/DappProviderContext';
-import { CustomNetworkType, EnvironmentsEnum, ExtraActionsType } from 'types';
+import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import { store, persistor } from './store';
@@ -23,7 +25,7 @@ import { store, persistor } from './store';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
-  extraActions?: ExtraActionsType;
+  externalProvider?: IDappProvider;
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
@@ -32,7 +34,7 @@ interface DappProviderPropsType {
 export const DappProvider = ({
   children,
   customNetworkConfig = {},
-  extraActions,
+  externalProvider,
   environment,
   sendSignedTransactionsAsync = sendSignedTransactions,
   getTransactionsByHash = getTransactionsByHashes
@@ -46,6 +48,11 @@ export const DappProvider = ({
     //throw if the user tries to initialize the app without a valid environment
     throw new Error('missing environment flag');
   }
+
+  if (externalProvider != null) {
+    setExternalProvider(externalProvider);
+  }
+
   const memoizedGetTransactionsByHash = useCallback(getTransactionsByHash, []);
   return (
     <Provider context={DappCoreContext} store={store}>
@@ -59,7 +66,6 @@ export const DappProvider = ({
           <AppInitializer
             environment={environment as EnvironmentsEnum}
             customNetworkConfig={customNetworkConfig}
-            extraActions={extraActions}
           >
             <ProviderInitializer />
             <TransactionSender />

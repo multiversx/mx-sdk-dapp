@@ -1,6 +1,3 @@
-import { IDappProvider } from '@elrondnetwork/erdjs';
-import { LoginMethodsEnum } from './enums';
-
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
@@ -51,30 +48,6 @@ export interface CustomNetworkType {
   explorerAddress?: string;
   skipFetchFromServer?: boolean;
   apiTimeout?: string;
-}
-
-export interface ScResultType {
-  callType: string;
-  gasLimit: number;
-  gasPrice: number;
-  nonce: number;
-  prevTxHash: string;
-  receiver?: string;
-  sender: string;
-  value: string;
-  data?: string;
-  returnMessage?: string;
-}
-
-export interface ExtraActionsInitType {
-  onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
-  log?: (word: string) => void;
-}
-
-export interface ExtraActionsType {
-  log?: (word: string) => void;
-  getProvider: () => IDappProvider;
-  init: (props: ExtraActionsInitType) => void;
 }
 
 export interface TokenLoginType {
