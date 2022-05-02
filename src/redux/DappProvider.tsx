@@ -14,8 +14,13 @@ import {
   GetTransactionsByHashesType,
   SendSignedTransactionsAsyncType
 } from 'contexts/types';
+import { useInitializeExternalProvider } from 'hooks';
 import { DappCoreContext } from 'redux/DappProviderContext';
-import { CustomNetworkType, EnvironmentsEnum, ExtraActionsType } from 'types';
+import {
+  CustomNetworkType,
+  EnvironmentsEnum,
+  ExternalProviderType
+} from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import { store, persistor } from './store';
@@ -23,7 +28,7 @@ import { store, persistor } from './store';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
-  extraActions?: ExtraActionsType;
+  externalProvider?: ExternalProviderType;
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
@@ -32,7 +37,7 @@ interface DappProviderPropsType {
 export const DappProvider = ({
   children,
   customNetworkConfig = {},
-  extraActions,
+  externalProvider,
   environment,
   sendSignedTransactionsAsync = sendSignedTransactions,
   getTransactionsByHash = getTransactionsByHashes
@@ -46,6 +51,9 @@ export const DappProvider = ({
     //throw if the user tries to initialize the app without a valid environment
     throw new Error('missing environment flag');
   }
+
+  useInitializeExternalProvider(externalProvider);
+
   const memoizedGetTransactionsByHash = useCallback(getTransactionsByHash, []);
   return (
     <Provider context={DappCoreContext} store={store}>
@@ -59,7 +67,6 @@ export const DappProvider = ({
           <AppInitializer
             environment={environment as EnvironmentsEnum}
             customNetworkConfig={customNetworkConfig}
-            extraActions={extraActions}
           >
             <ProviderInitializer />
             <TransactionSender />

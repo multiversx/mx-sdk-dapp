@@ -4,4 +4,3 @@ export * from './accountInfoSlice';
 export * from './transactionsSlice';
 export * from './transactionsInfoSlice';
 export * from './modalsSlice';
-export * from './extraActionsSlice';

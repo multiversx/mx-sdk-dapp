@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
-import { setAccountProvider } from 'providers/accountProvider';
+import {
+  loginWithExternalProvider,
+  setAccountProvider
+} from 'providers/accountProvider';
 import {
   getNetworkConfigFromProxyProvider,
   getProxyProvider
@@ -18,7 +21,6 @@ import {
   ledgerLoginSelector,
   isLoggedInSelector
 } from 'redux/selectors';
-import { extraActionsSelector } from 'redux/selectors/extraActionsSelectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -36,7 +38,6 @@ export default function ProviderInitializer() {
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
-  const { getProvider } = useSelector(extraActionsSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
@@ -226,8 +227,7 @@ export default function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.extra: {
-        const provider = getProvider();
-        setAccountProvider(provider);
+        loginWithExternalProvider();
         break;
       }
 

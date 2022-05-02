@@ -2,7 +2,6 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 
 import account from './slices/accountInfoSlice';
-import extraActions from './slices/extraActionsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
@@ -12,7 +11,6 @@ import transactions from './slices/transactionsSlice';
 const reducers = {
   account,
   networkConfig,
-  extraActions,
   loginInfo,
   modals,
   transactions,

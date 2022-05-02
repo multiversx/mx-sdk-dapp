@@ -53,28 +53,15 @@ export interface CustomNetworkType {
   apiTimeout?: string;
 }
 
-export interface ScResultType {
-  callType: string;
-  gasLimit: number;
-  gasPrice: number;
-  nonce: number;
-  prevTxHash: string;
-  receiver?: string;
-  sender: string;
-  value: string;
-  data?: string;
-  returnMessage?: string;
-}
-
-export interface ExtraActionsInitType {
+export interface ExternalProviderInitType {
   onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
   log?: (word: string) => void;
 }
 
-export interface ExtraActionsType {
+export interface ExternalProviderType {
   log?: (word: string) => void;
   getProvider: () => IDappProvider;
-  init: (props: ExtraActionsInitType) => void;
+  init: (props: ExternalProviderInitType) => void;
 }
 
 export interface TokenLoginType {
