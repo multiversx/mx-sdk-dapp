@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { IDappProvider } from '@elrondnetwork/erdjs/out';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -16,11 +17,7 @@ import {
 } from 'contexts/types';
 import { setExternalProvider } from 'providers/accountProvider';
 import { DappCoreContext } from 'redux/DappProviderContext';
-import {
-  CustomNetworkType,
-  EnvironmentsEnum,
-  ExternalProviderType
-} from 'types';
+import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import { store, persistor } from './store';
@@ -28,7 +25,7 @@ import { store, persistor } from './store';
 interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
-  externalProvider?: ExternalProviderType;
+  externalProvider?: IDappProvider;
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;

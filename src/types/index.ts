@@ -1,4 +1,3 @@
-import { IDappProvider } from '@elrondnetwork/erdjs';
 import { LoginMethodsEnum } from './enums';
 
 export interface WalletConnectSignatureType {
@@ -56,12 +55,6 @@ export interface CustomNetworkType {
 export interface ExternalProviderInitType {
   onLogin: (address: string, loginMethod: LoginMethodsEnum) => void;
   log?: (word: string) => void;
-}
-
-export interface ExternalProviderType {
-  log?: (word: string) => void;
-  getProvider: () => IDappProvider;
-  init: (props: ExternalProviderInitType) => void;
 }
 
 export interface TokenLoginType {

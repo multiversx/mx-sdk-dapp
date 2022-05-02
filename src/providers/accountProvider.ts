@@ -1,22 +1,21 @@
 import { IDappProvider } from '@elrondnetwork/erdjs';
-import { ExternalProviderType } from 'types';
 import { emptyProvider } from './utils';
 
 let accountProvider: IDappProvider = emptyProvider;
 
-let externalProvider: ExternalProviderType | null = null;
+let externalProvider: IDappProvider | null = null;
 
 export function setAccountProvider(provider: IDappProvider) {
   accountProvider = provider;
 }
 
-export function setExternalProvider(provider: ExternalProviderType) {
+export function setExternalProvider(provider: IDappProvider) {
   externalProvider = provider;
 }
 
 export function loginWithExternalProvider() {
   if (externalProvider != null) {
-    accountProvider = externalProvider.getProvider();
+    accountProvider = externalProvider;
   }
 }
 
