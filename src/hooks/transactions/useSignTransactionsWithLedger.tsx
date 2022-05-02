@@ -162,19 +162,14 @@ export function useSignTransactionsWithLedger({
     } catch (err) {
       console.error(err, 'sign error');
       const { message, statusCode } = err as any;
-      const isLedgerLogin = getIsProviderEqualTo(LoginMethodsEnum.ledger);
-      const translateLedgerErrorCode =
-        isLedgerLogin && statusCode in ledgerErrorCodes;
+
+      const errMessage =
+        statusCode in ledgerErrorCodes
+          ? (ledgerErrorCodes as any)[statusCode].message
+          : message;
 
       reset();
-
-      dispatch(
-        setSignTransactionsError(
-          translateLedgerErrorCode
-            ? (ledgerErrorCodes as any)[statusCode].message
-            : message
-        )
-      );
+      dispatch(setSignTransactionsError(errMessage));
     }
   }
 
