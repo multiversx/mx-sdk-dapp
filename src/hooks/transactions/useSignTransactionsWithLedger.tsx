@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls';
+import ledgerErrorCodes from 'constants/ledgerErrorCodes';
 import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -58,17 +59,12 @@ export function useSignTransactionsWithLedger({
     customTransactionInformation
   } = transactionsToSign || {};
   const [currentStep, setCurrentStep] = useState(0);
-  const [signedTransactions, setSignedTransactions] = useState<
-    LedgerSignedTransactions
-  >();
-  const {
-    getTxInfoByDataField,
-    allTransactions
-  } = useParseMultiEsdtTransferData({ transactions });
-  const [
-    currentTransaction,
-    setCurrentTransaction
-  ] = useState<ActiveLedgerTransactionType | null>(null);
+  const [signedTransactions, setSignedTransactions] =
+    useState<LedgerSignedTransactions>();
+  const { getTxInfoByDataField, allTransactions } =
+    useParseMultiEsdtTransferData({ transactions });
+  const [currentTransaction, setCurrentTransaction] =
+    useState<ActiveLedgerTransactionType | null>(null);
   const provider = getAccountProvider();
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);
@@ -165,8 +161,20 @@ export function useSignTransactionsWithLedger({
       }
     } catch (err) {
       console.error(err, 'sign error');
+      const { message, statusCode } = err as any;
+      const isLedgerLogin = getIsProviderEqualTo(LoginMethodsEnum.ledger);
+      const translateLedgerErrorCode =
+        isLedgerLogin && statusCode in ledgerErrorCodes;
+
       reset();
-      dispatch(setSignTransactionsError(((err as unknown) as Error).message));
+
+      dispatch(
+        setSignTransactionsError(
+          translateLedgerErrorCode
+            ? (ledgerErrorCodes as any)[statusCode].message
+            : message
+        )
+      );
     }
   }
 
