@@ -1,5 +1,4 @@
 import React from 'react';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 const Dot = ({
   color,
@@ -10,4 +9,4 @@ const Dot = ({
 }) => {
   return <span className={`dot ${color}`} data-testid={dataTestId} />;
 };
-export default withClassNameWrapper(Dot);
+export default Dot;
