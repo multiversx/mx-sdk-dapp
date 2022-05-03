@@ -5,8 +5,9 @@ import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { ActiveLedgerTransactionType } from 'types';
+import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import PageState from 'UI/PageState';
+import ProgressSteps from 'UI/ProgressSteps';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';
 import {
@@ -26,6 +27,7 @@ export interface SignStepType {
   title?: React.ReactNode;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
+  allTransactions: MultiSignTxType[];
   isLastTransaction: boolean;
   className: string;
 }
@@ -38,6 +40,7 @@ const SignStep = ({
   waitingForDevice,
   currentTransaction,
   error,
+  allTransactions,
   isLastTransaction,
   currentStep,
   className
@@ -58,6 +61,8 @@ const SignStep = ({
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
   );
 
+  const isFirst = currentStep === 0;
+
   const onCloseClick = (e: React.MouseEvent) => {
     e.preventDefault();
     if (isFirst) {
@@ -75,8 +80,6 @@ const SignStep = ({
   signBtnLabel =
     isLastTransaction && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
-
-  const isFirst = currentStep === 0;
 
   const { tokenDenomination, tokenAvatar } = useGetTokenDetails({
     tokenId: currentTransaction.transactionTokenInfo.tokenId
@@ -131,6 +134,12 @@ const SignStep = ({
         <React.Fragment>
           {currentTransaction.transaction && (
             <React.Fragment>
+              <ProgressSteps
+                totalSteps={allTransactions.length}
+                currentStep={currentStep + 1}
+                className='mb-4'
+              />
+
               <div className={classes.formGroup} data-testid='transactionTitle'>
                 <div className={classes.formLabel}>To: </div>
                 {multiTxData

@@ -1,0 +1,24 @@
+.progress-steps {
+  .steps {
+    hr {
+      border-color: $border-color;
+      z-index: 2;
+    }
+
+    .led {
+      height: 0.625rem;
+      width: 0.625rem;
+      border-radius: 50%;
+      margin: 0 1rem;
+      z-index: 5;
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+
+      &:last-of-type {
+        margin-right: 0;
+      }
+    }
+  }
+}
