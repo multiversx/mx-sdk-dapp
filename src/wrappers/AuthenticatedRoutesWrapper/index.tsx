@@ -7,6 +7,7 @@ import {
 } from 'redux/selectors';
 
 import { RouteType } from 'types';
+import IdleTimer from './IdleTimer';
 
 const AuthenticatedRoutesWrapper = ({
   children,
@@ -50,7 +51,11 @@ const AuthenticatedRoutesWrapper = ({
     return null;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return (
+    <React.Fragment>
+      <IdleTimer>{children}</IdleTimer>
+    </React.Fragment>
+  );
 };
 
 export default AuthenticatedRoutesWrapper;
