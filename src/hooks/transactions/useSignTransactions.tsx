@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Nonce, Transaction, ExtensionProvider } from '@elrondnetwork/erdjs';
+import { ExtensionProvider, Nonce, Transaction } from '@elrondnetwork/erdjs';
 
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -15,8 +15,8 @@ import {
 } from 'redux/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
-  getLatestNonce,
   builtCallbackUrl,
+  getLatestNonce,
   parseTransactionAfterSigning
 } from 'utils';
 
@@ -183,9 +183,10 @@ export const useSignTransactions = () => {
       }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const isSigningWithProvider =
-        providerType === LoginMethodsEnum.extension ||
-        providerType === LoginMethodsEnum.walletconnect;
+      const isSigningWithProvider = ![
+        LoginMethodsEnum.wallet,
+        LoginMethodsEnum.ledger
+      ].includes(providerType);
 
       const latestNonce = getLatestNonce(proxyAccount);
       const mappedTransactions = setTransactionNonces(

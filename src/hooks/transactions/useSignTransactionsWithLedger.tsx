@@ -59,12 +59,17 @@ export function useSignTransactionsWithLedger({
     customTransactionInformation
   } = transactionsToSign || {};
   const [currentStep, setCurrentStep] = useState(0);
-  const [signedTransactions, setSignedTransactions] =
-    useState<LedgerSignedTransactions>();
-  const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions });
-  const [currentTransaction, setCurrentTransaction] =
-    useState<ActiveLedgerTransactionType | null>(null);
+  const [signedTransactions, setSignedTransactions] = useState<
+    LedgerSignedTransactions
+  >();
+  const {
+    getTxInfoByDataField,
+    allTransactions
+  } = useParseMultiEsdtTransferData({ transactions });
+  const [
+    currentTransaction,
+    setCurrentTransaction
+  ] = useState<ActiveLedgerTransactionType | null>(null);
   const provider = getAccountProvider();
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);

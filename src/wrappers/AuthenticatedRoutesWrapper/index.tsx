@@ -50,7 +50,7 @@ const AuthenticatedRoutesWrapper = ({
     return null;
   }
 
-  return <React.Fragment>{children}</React.Fragment>;
+  return children;
 };
 
 export default AuthenticatedRoutesWrapper;
