@@ -6,6 +6,7 @@ import LedgerLoginContainer from './ledger/LoginModal';
 
 import NotificationModal from './NotificationModal';
 import PageState from './PageState';
+import ProgressSteps from './ProgressSteps';
 import SignTransactionsModals from './SignTransactionsModals';
 import SignWithExtensionModal from './SignTransactionsModals/SignWithExtensionModal';
 import SignWithLedgerModal from './SignTransactionsModals/SignWithLedgerModal';
@@ -34,6 +35,7 @@ export {
   WalletConnectLoginContainer,
   WebWalletLoginButton,
   Trim,
-  UsdValue
+  UsdValue,
+  ProgressSteps
 };
 export * as DappCorePages from './pages';
