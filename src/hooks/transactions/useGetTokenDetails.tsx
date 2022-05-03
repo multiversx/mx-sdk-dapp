@@ -2,6 +2,7 @@ import axios from 'axios';
 import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
 
 import useSwr from 'optionalPackages/swr';
+import { getIdentifierType } from 'utils';
 
 interface TokenOptionType {
   tokenLabel: string;
@@ -32,11 +33,16 @@ export function useGetTokenDetails({
 }): TokenOptionType {
   const { network } = useGetNetworkConfig();
 
+  const { isEsdt } = getIdentifierType(tokenId);
+  const tokenUrl = `${network.apiAddress}/${
+    isEsdt ? 'tokens' : 'nfts'
+  }/${tokenId}`;
+
   const {
     data: selectedToken,
     error
   }: { data?: TokenInfoResponse; error?: string } = useSwr(
-    Boolean(tokenId) ? `${network.apiAddress}/tokens/${tokenId}` : null,
+    Boolean(tokenId) ? tokenUrl : null,
     fetcher
   );
 

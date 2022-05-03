@@ -134,11 +134,13 @@ const SignStep = ({
         <React.Fragment>
           {currentTransaction.transaction && (
             <React.Fragment>
-              <ProgressSteps
-                totalSteps={allTransactions.length}
-                currentStep={currentStep + 1}
-                className='mb-4'
-              />
+              {allTransactions.length > 1 && (
+                <ProgressSteps
+                  totalSteps={allTransactions.length}
+                  currentStep={currentStep + 1}
+                  className='mb-4'
+                />
+              )}
 
               <div className={classes.formGroup} data-testid='transactionTitle'>
                 <div className={classes.formLabel}>To: </div>
