@@ -98,6 +98,7 @@ const SignStep = ({
   });
 
   const scamReport = currentTransaction.receiverScamInfo;
+  const showProgressSteps = allTransactions.length > 1;
 
   const classes = getGeneratedClasses(className, true, {
     formGroup: 'form-group text-left',
@@ -134,10 +135,10 @@ const SignStep = ({
         <React.Fragment>
           {currentTransaction.transaction && (
             <React.Fragment>
-              {allTransactions.length > 1 && (
+              {showProgressSteps && (
                 <ProgressSteps
                   totalSteps={allTransactions.length}
-                  currentStep={currentStep + 1}
+                  currentStep={currentStep + 1} // currentStep starts at 0
                   className='mb-4'
                 />
               )}
