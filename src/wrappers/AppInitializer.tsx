@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
@@ -9,6 +9,7 @@ import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, NetworkType } from 'types';
 import { logout } from 'utils';
 import getAccountShard from 'utils/account/getAccountShard';
+import IdleTimer from './helpers/IdleTimer';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -91,7 +92,7 @@ export function AppInitializer({
     initializeApp();
   }, [customNetworkConfig, environment]);
 
-  return initialized ? children : null;
+  return initialized ? <IdleTimer>{children}</IdleTimer> : null;
 }
 
 export default AppInitializer;

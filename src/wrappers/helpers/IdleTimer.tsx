@@ -1,13 +1,11 @@
 import React from 'react';
 import { useIdleTimer } from 'react-idle-timer';
-import { useSelector } from 'react-redux';
-import { isLoggedInSelector } from 'redux/selectors';
-import { logout } from 'utils';
+import { getIsLoggedIn, logout } from 'utils';
 
 const minutes = 10;
 
 const IdleTimer = ({ children }: { children: React.ReactNode }) => {
-  const isLoggedIn = useSelector(isLoggedInSelector);
+  const isLoggedIn = getIsLoggedIn();
 
   const handleOnIdle = () => {
     if (isLoggedIn) {

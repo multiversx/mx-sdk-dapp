@@ -1,6 +1,6 @@
 import { SignableMessage, Address } from '@elrondnetwork/erdjs';
 import { getAccountProvider } from 'providers/accountProvider';
-import { getAddress } from 'utils';
+import { getAddress } from 'utils/account/getAddress';
 
 interface SignMessageType {
   message: string;
