@@ -21,7 +21,7 @@ const ProgressSteps = ({
 
     dots.push(
       <Dot
-        dataTestId={`step${i}${isCurrentStep ? 'active' : ''}`}
+        data-testid={`step${i}${isCurrentStep ? 'active' : ''}`}
         key={i}
         color={color}
       />

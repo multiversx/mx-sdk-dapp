@@ -1,7 +1,7 @@
 const esdtParts = 2;
 const nftParts = 3;
 
-const result = {
+const defaultResult = {
   isEsdt: false,
   isNft: false,
   isEgld: false
@@ -16,18 +16,18 @@ export function getIdentifierType(identifier?: string): {
 
   if (parts === esdtParts) {
     return {
-      ...result,
+      ...defaultResult,
       isEsdt: true
     };
   }
   if (parts === nftParts) {
     return {
-      ...result,
+      ...defaultResult,
       isNft: true
     };
   }
   return {
-    ...result,
+    ...defaultResult,
     isEgld: true
   };
 }
