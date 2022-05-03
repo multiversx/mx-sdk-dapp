@@ -17,14 +17,11 @@ const IdleTimer = ({ children }: { children: React.ReactNode }) => {
 
   const { isIdle } = useIdleTimer({ timeout, onIdle, debounce });
 
-  const userIsActive = !isIdle();
-  const userIsOnPublicRoute = !isLoggedIn;
-
-  if (userIsActive || userIsOnPublicRoute) {
-    return <>{children}</>;
+  if (isIdle() && isLoggedIn) {
+    return null;
   }
 
-  return null;
+  return <>{children}</>;
 };
 
 export default IdleTimer;
