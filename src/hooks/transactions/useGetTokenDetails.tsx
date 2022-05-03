@@ -34,15 +34,15 @@ export function useGetTokenDetails({
   const { network } = useGetNetworkConfig();
 
   const { isEsdt } = getIdentifierType(tokenId);
-  const tokenUrl = `${network.apiAddress}/${
-    isEsdt ? 'tokens' : 'nfts'
-  }/${tokenId}`;
+  const tokenEndpoint = isEsdt ? 'tokens' : 'nfts';
 
   const {
     data: selectedToken,
     error
   }: { data?: TokenInfoResponse; error?: string } = useSwr(
-    Boolean(tokenId) ? tokenUrl : null,
+    Boolean(tokenId)
+      ? `${network.apiAddress}/${tokenEndpoint}/${tokenId}`
+      : null,
     fetcher
   );
 

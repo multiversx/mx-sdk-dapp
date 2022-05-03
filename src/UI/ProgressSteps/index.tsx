@@ -16,12 +16,14 @@ const ProgressSteps = ({
 
   for (let i = 1; i <= totalSteps; i += 1) {
     const isCurrentStep = currentStep === i;
+    const color =
+      isCurrentStep || i < currentStep ? 'bg-primary' : 'bg-secondary';
 
     dots.push(
       <Dot
         data-testid={`step${i}${isCurrentStep ? 'active' : ''}`}
         key={i}
-        color={isCurrentStep || i < currentStep ? 'bg-primary' : 'bg-secondary'}
+        color={color}
       />
     );
   }
