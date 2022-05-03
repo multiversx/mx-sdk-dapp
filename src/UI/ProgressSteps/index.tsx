@@ -1,5 +1,5 @@
 import React from 'react';
-import Led from './Led';
+import Dot from './Dot';
 
 interface ProgressStepsType {
   totalSteps: number;
@@ -16,7 +16,7 @@ const ProgressSteps = ({
 
   for (let i = 1; i <= totalSteps; i += 1) {
     dots.push(
-      <Led
+      <Dot
         data-testid={`step${i}${currentStep === i ? 'active' : ''}`}
         key={i}
         color={
