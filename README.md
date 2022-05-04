@@ -429,6 +429,8 @@ the function accepts 2 arguments:
 This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
 *Important* this function will not be called for web wallet logout
 
+You can opt-in for using the `useIdleTimer` hook, which logs out the user after a period of inactivity (default set to 10 minutes). Optionally it accepts an `onLogout` function that fulfills your dapp's specific logout business logic. Make sure to call the above `logout` function inside this `onLogout` callback.
+
 There are 2 ways of reading the user current state: hooks (to be used inside components and for reacting to changes in the data) and simple functions (for reading data outside of React components or inside handlers).
 
 - hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig`;
