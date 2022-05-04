@@ -1,7 +1,6 @@
 import Denominate from './Denominate';
 import ExplorerLink from './ExplorerLink';
 import ExtensionLoginButton from './extension/LoginButton';
-import IdleTimer from './IdleTimer';
 import LedgerLoginButton from './ledger/LoginButton';
 import LedgerLoginContainer from './ledger/LoginModal';
 
@@ -38,6 +37,5 @@ export {
   Trim,
   UsdValue,
   ProgressSteps,
-  IdleTimer
 };
 export * as DappCorePages from './pages';
