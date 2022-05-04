@@ -36,6 +36,6 @@ export {
   WebWalletLoginButton,
   Trim,
   UsdValue,
-  ProgressSteps
+  ProgressSteps,
 };
 export * as DappCorePages from './pages';

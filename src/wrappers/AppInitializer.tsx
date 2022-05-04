@@ -9,7 +9,6 @@ import { initializeNetworkConfig } from 'redux/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, NetworkType } from 'types';
 import { logout } from 'utils';
 import getAccountShard from 'utils/account/getAccountShard';
-import IdleTimer from './helpers/IdleTimer';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -92,7 +91,7 @@ export function AppInitializer({
     initializeApp();
   }, [customNetworkConfig, environment]);
 
-  return initialized ? <IdleTimer>{children}</IdleTimer> : null;
+  return initialized ? <>{children}</> : null;
 }
 
 export default AppInitializer;
