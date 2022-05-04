@@ -8,6 +8,7 @@ import NotificationModal from './NotificationModal';
 import PageState from './PageState';
 import ProgressSteps from './ProgressSteps';
 import SignTransactionsModals from './SignTransactionsModals';
+import SignWithDeviceModal from './SignTransactionsModals/SignWithDeviceModal';
 import SignWithExtensionModal from './SignTransactionsModals/SignWithExtensionModal';
 import SignWithLedgerModal from './SignTransactionsModals/SignWithLedgerModal';
 import TransactionsToastList from './TransactionsToastList';
@@ -28,6 +29,7 @@ export {
   NotificationModal,
   SignTransactionsModals,
   SignWithLedgerModal,
+  SignWithDeviceModal,
   SignWithExtensionModal,
   TransactionsToastList,
   TransactionToast,

@@ -54,8 +54,13 @@ const SignStep = ({
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
 
-  const { tokenId, amount, type, multiTxData, receiver } =
-    currentTransaction.transactionTokenInfo;
+  const {
+    tokenId,
+    amount,
+    type,
+    multiTxData,
+    receiver
+  } = currentTransaction.transactionTokenInfo;
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
