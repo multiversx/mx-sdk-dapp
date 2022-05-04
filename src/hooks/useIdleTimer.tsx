@@ -12,7 +12,7 @@ interface IdleTimerType {
 export const useIdleTimer = ({ minutes = 10, onLogout }: IdleTimerType) => {
   const isLoggedIn = getIsLoggedIn();
   const defaultLogout = () => dappLogout();
-  const logout = onLogout ? onLogout : defaultLogout;
+  const logout = onLogout || defaultLogout;
   const timeout = getTimeout(minutes);
 
   const onIdle = () => {
