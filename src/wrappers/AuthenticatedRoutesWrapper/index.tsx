@@ -50,7 +50,7 @@ const AuthenticatedRoutesWrapper = ({
     return null;
   }
 
-  return children;
+  return <>{children}</>;
 };
 
 export default AuthenticatedRoutesWrapper;
