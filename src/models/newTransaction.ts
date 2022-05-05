@@ -28,6 +28,7 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     data: dataPayload,
     nonce: new Nonce(rawTransaction.nonce),
     receiver: new Address(rawTransaction.receiver),
+    sender: new Address(rawTransaction.sender),
     gasLimit: new GasLimit(rawTransaction.gasLimit ?? defaultGasLimit),
     gasPrice: new GasPrice(rawTransaction.gasPrice ?? gasPrice),
     chainID: new ChainID(rawTransaction.chainID),
