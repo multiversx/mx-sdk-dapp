@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs';
-import ledgerErrorCodes from 'constants/ledgerErrorCodes';
 import { setAccountProvider } from 'providers/accountProvider';
 import { getProxyProvider } from 'providers/proxyProvider';
 import { getLedgerConfiguration } from 'providers/utils';
@@ -14,10 +13,9 @@ import {
   setLedgerAccount
 } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
-import { optionalRedirect } from 'utils/internal';
+import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
-const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
 
@@ -73,8 +71,10 @@ export function useLedgerLogin({
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [selectedAddress, setSelectedAddress] =
-    useState<SelectedAddress | null>(null);
+  const [
+    selectedAddress,
+    setSelectedAddress
+  ] = useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = useState(false);
 
@@ -106,10 +106,10 @@ export function useLedgerLogin({
   }
 
   const onLoginFailed = (err: any, customMessage?: string) => {
-    if (err.statusCode in ledgerErrorCodes) {
-      setError(
-        (ledgerErrorCodes as any)[err.statusCode].message + customMessage
-      );
+    const { errorMessage } = getLedgerErrorCodes(err);
+
+    if (errorMessage) {
+      setError(errorMessage + customMessage);
     }
     setIsLoading(false);
     console.warn(err);
@@ -181,8 +181,9 @@ export function useLedgerLogin({
       setIsLoading(false);
       await loginUser(hwWalletProvider);
     } catch (err) {
-      if ((err as any).statusCode in ledgerErrorCodes) {
-        setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
+      const { errorMessage } = getLedgerErrorCodes(err);
+      if (errorMessage) {
+        setError(errorMessage);
       }
       console.warn(failInitializeErrorText, err);
     } finally {
@@ -212,11 +213,8 @@ export function useLedgerLogin({
       setAccounts(accounts);
       setIsLoading(false);
     } catch (err) {
-      if ((err as any).statusCode in ledgerErrorCodes) {
-        setError((ledgerErrorCodes as any)[(err as any).statusCode].message);
-      } else {
-        setError(ledgerAppErrorText);
-      }
+      const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
+      setError(errorMessage ?? defaultErrorMessage);
       console.error('error', err);
       setIsLoading(false);
     }
@@ -251,7 +249,8 @@ export function useLedgerLogin({
       }
     } catch (error) {
       console.error('error ', error);
-      setError(ledgerAppErrorText);
+      const { defaultErrorMessage } = getLedgerErrorCodes();
+      setError(defaultErrorMessage);
     } finally {
       setIsLoading(false);
     }
