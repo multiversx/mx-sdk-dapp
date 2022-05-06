@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls';
-import ledgerErrorCodes from 'constants/ledgerErrorCodes';
 import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -16,6 +15,7 @@ import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
+import { getLedgerErrorCodes } from 'utils/internal';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -166,15 +166,13 @@ export function useSignTransactionsWithDevice({
       }
     } catch (err) {
       console.error(err, 'sign error');
-      const { message, statusCode } = err as any;
-
-      const errMessage =
-        isLedger && statusCode in ledgerErrorCodes
-          ? (ledgerErrorCodes as any)[statusCode].message
-          : message;
+      const { message } = err as any;
+      const errorMessage = isLedger
+        ? getLedgerErrorCodes(err).errorMessage
+        : null;
 
       reset();
-      dispatch(setSignTransactionsError(errMessage));
+      dispatch(setSignTransactionsError(errorMessage ?? message));
     }
   }
 
