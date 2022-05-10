@@ -100,7 +100,10 @@ export function TransactionStatusTracker({
           }
           if (!invalidTransaction) {
             if (!getIsTransactionPending(status)) {
-              if (!getIsTransactionCompleted(status)) {
+              if (
+                !getIsTransactionCompleted(status) &&
+                !getIsTransactionFailed(status)
+              ) {
                 if (!pendingResults) {
                   timeoutRefs.current.push(hash);
 

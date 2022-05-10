@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "1.1.19",
+  "version": "1.1.20",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -12,12 +12,13 @@
     "node": ">=10"
   },
   "scripts": {
-    "start": "npm run copy-dev & tsdx watch",
-    "build": "npm run copy-prod & tsdx build",
+    "start": "yarn copy-dev & tsdx watch",
+    "build": "yarn copy-prod & tsdx build",
     "test": "tsdx test --passWithNoTests",
     "lint": "tsdx lint",
     "prepare": "tsdx build",
     "size": "size-limit",
+    "postinstall": "yarn copy-dev",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
