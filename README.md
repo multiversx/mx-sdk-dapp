@@ -180,7 +180,7 @@ To properly apply the default styles to Dapp Core Components, you need to import
 ```
 import ...
 
-import '@elrondnetwork/dapp-core/build/index.css';
+import '@elrondnetwork/dapp-core/dist/index.css';
 
 export default function App() {
 ...
