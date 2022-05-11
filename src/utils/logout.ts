@@ -19,7 +19,11 @@ export async function logout(
   store.dispatch(logoutAction());
 
   try {
-    await provider.logout({ callbackUrl });
+    const isWalletProvider = providerType === LoginMethodsEnum.wallet;
+    const needsCallbackUrl = isWalletProvider && !callbackUrl;
+    const url = needsCallbackUrl ? window.location.origin : callbackUrl;
+
+    await provider.logout({ callbackUrl: url });
     if (callbackUrl && providerType !== LoginMethodsEnum.wallet) {
       if (typeof onRedirect === 'function') {
         onRedirect(callbackUrl);
