@@ -114,7 +114,8 @@ const Actions = () => {
     const pongTransaction = {
       value: '0',
       data: 'pong',
-      receiver: contractAddress
+      receiver: contractAddress,
+      gasLimit: '6000000'
     };
     await refreshAccount();
 
