@@ -21,19 +21,16 @@ import { setNonce } from 'utils';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
-  value?: number;
 }
 
 export const TransactionSender = ({
-  sendSignedTransactionsAsync: customSendTxAsync,
-  value
+  sendSignedTransactionsAsync: customSendTxAsync
 }: TransactionSenderType) => {
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
   const { sendSignedTransactionsAsync: defaultSendTxAsync } = useContext(
     OverrideDefaultBehaviourContext
   );
-  console.log('\x1b[42m%s\x1b[0m', value, 'asdasd');
 
   const sendSignedTransactionsAsync = customSendTxAsync ?? defaultSendTxAsync;
   const sendingRef = useRef(false);
