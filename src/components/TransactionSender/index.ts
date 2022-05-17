@@ -3,6 +3,7 @@ import { Address } from '@elrondnetwork/erdjs';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
 import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
+import { SendSignedTransactionsAsyncType } from 'contexts/types';
 import newTransaction from 'models/newTransaction';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import { signedTransactionsSelector } from 'redux/selectors';
@@ -18,12 +19,23 @@ import {
 } from 'types/enums';
 import { setNonce } from 'utils';
 
-const TransactionSender = () => {
+export interface TransactionSenderType {
+  sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
+  value?: number;
+}
+
+export const TransactionSender = ({
+  sendSignedTransactionsAsync: customSendTxAsync,
+  value
+}: TransactionSenderType) => {
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
-  const { sendSignedTransactionsAsync } = useContext(
+  const { sendSignedTransactionsAsync: defaultSendTxAsync } = useContext(
     OverrideDefaultBehaviourContext
   );
+  console.log('\x1b[42m%s\x1b[0m', value, 'asdasd');
+
+  const sendSignedTransactionsAsync = customSendTxAsync ?? defaultSendTxAsync;
   const sendingRef = useRef(false);
 
   const dispatch = useDispatch();

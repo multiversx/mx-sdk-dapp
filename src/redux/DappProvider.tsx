@@ -7,9 +7,8 @@ import {
   getTransactionsByHashes,
   sendSignedTransactions
 } from 'apiCalls/transactions';
+import { InternalComponents as DefaultInternalComponents } from 'components';
 import ProviderInitializer from 'components/ProviderInitializer';
-import TransactionSender from 'components/TransactionSender';
-import TransactionsTracker from 'components/TransactionsTracker';
 import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import {
   GetTransactionsByHashesType,
@@ -29,6 +28,7 @@ interface DappProviderPropsType {
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
+  InternalComponents?: typeof DefaultInternalComponents;
 }
 
 export const DappProvider = ({
@@ -37,7 +37,8 @@ export const DappProvider = ({
   externalProvider,
   environment,
   sendSignedTransactionsAsync = sendSignedTransactions,
-  getTransactionsByHash = getTransactionsByHashes
+  getTransactionsByHash = getTransactionsByHashes,
+  InternalComponents = DefaultInternalComponents
 }: DappProviderPropsType) => {
   const memoizedSendSignedTransactionsAsync = useCallback(
     sendSignedTransactionsAsync,
@@ -54,6 +55,7 @@ export const DappProvider = ({
   }
 
   const memoizedGetTransactionsByHash = useCallback(getTransactionsByHash, []);
+
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
@@ -68,8 +70,7 @@ export const DappProvider = ({
             customNetworkConfig={customNetworkConfig}
           >
             <ProviderInitializer />
-            <TransactionSender />
-            <TransactionsTracker />
+            <InternalComponents />
             {children}
           </AppInitializer>
         </OverrideDefaultBehaviourContext.Provider>

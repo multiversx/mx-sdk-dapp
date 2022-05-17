@@ -12,6 +12,7 @@ export { AuthenticatedRoutesWrapper, AppInitializer } from './wrappers';
 export * as transactionServices from './services/transactions';
 export * as constants from './constants/index';
 export * as models from './models';
+export * as DappComponents from './components';
 export * as apiCalls from './apiCalls';
 export * from './hooks';
 

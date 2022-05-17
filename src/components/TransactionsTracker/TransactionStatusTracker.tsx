@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef } from 'react';
-import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
+import { useEffect, useRef } from 'react';
+import { GetTransactionsByHashesType } from 'contexts/types';
 import { useDispatch } from 'redux/DappProviderContext';
 import {
   updateSignedTransactions,
@@ -22,21 +22,22 @@ interface RetriesType {
 
 interface TransactionStatusTrackerPropsType {
   sessionId: string;
-  refetchTimestamp?: number;
   transactionBatch: SignedTransactionsBodyType;
+  getTransactionsByHash: GetTransactionsByHashesType;
+  refetchTimestamp?: number;
 }
 
 export function TransactionStatusTracker({
   sessionId,
   transactionBatch: { transactions, status, customTransactionInformation },
-  refetchTimestamp
+  refetchTimestamp,
+  getTransactionsByHash
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
   const isFetchingStatusRef = useRef(false);
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
-  const { getTransactionsByHash } = useContext(OverrideDefaultBehaviourContext);
 
   const isPending = sessionId != null && getIsTransactionPending(status);
   const manageTimedOutTransactions = () => {
