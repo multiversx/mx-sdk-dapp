@@ -3,15 +3,20 @@ import { useGetPendingTransactions } from 'services/transactions';
 import { SignedTransactionsBodyType } from 'types/transactions';
 import TransactionStatusTracker from './TransactionStatusTracker';
 
-export function TransactionsTracker() {
+export function TransactionsTracker({
+  refetchTimestamp
+}: {
+  refetchTimestamp?: number;
+}) {
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
   const mappedPendingTransactionsTrackers = pendingTransactionsArray.map(
-    ([sessionId, transactionPayload]) => (
+    ([sessionId, transactionBatch]) => (
       <TransactionStatusTracker
         key={sessionId}
         sessionId={sessionId}
-        transactionPayload={transactionPayload as SignedTransactionsBodyType}
+        refetchTimestamp={refetchTimestamp}
+        transactionBatch={transactionBatch as SignedTransactionsBodyType}
       />
     )
   );

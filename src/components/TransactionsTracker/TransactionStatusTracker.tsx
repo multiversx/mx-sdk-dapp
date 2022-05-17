@@ -22,12 +22,14 @@ interface RetriesType {
 
 interface TransactionStatusTrackerPropsType {
   sessionId: string;
-  transactionPayload: SignedTransactionsBodyType;
+  refetchTimestamp?: number;
+  transactionBatch: SignedTransactionsBodyType;
 }
 
 export function TransactionStatusTracker({
   sessionId,
-  transactionPayload: { transactions, status, customTransactionInformation }
+  transactionBatch: { transactions, status, customTransactionInformation },
+  refetchTimestamp
 }: TransactionStatusTrackerPropsType) {
   const dispatch = useDispatch();
   const intervalRef = useRef<any>(null);
@@ -177,7 +179,7 @@ export function TransactionStatusTracker({
     }
   };
 
-  useEffect(() => {
+  function enableChckInterval() {
     if (isPending) {
       intervalRef.current = setInterval(() => {
         checkTransactionStatus();
@@ -188,7 +190,16 @@ export function TransactionStatusTracker({
     return () => {
       clearInterval(intervalRef.current);
     };
-  }, [isPending]);
+  }
+
+  useEffect(() => {
+    if (refetchTimestamp) {
+      checkTransactionStatus();
+    } else {
+      enableChckInterval();
+    }
+  }, [isPending, refetchTimestamp]);
+
   return null;
 }
 

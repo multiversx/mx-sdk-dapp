@@ -50,7 +50,7 @@ export async function getTransactionsByHashes(
       receiver: txOnNetwork?.receiver,
       pendingResults: txOnNetwork.pendingResults,
       previousStatus,
-      hasStatusChanged: status !== previousStatus
+      hasStatusChanged: txOnNetwork.status !== previousStatus
     };
   });
 }
