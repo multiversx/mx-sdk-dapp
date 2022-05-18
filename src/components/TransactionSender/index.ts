@@ -1,8 +1,8 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
-import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
+import { sendSignedTransactions as defaultSendSignedTxs } from 'apiCalls/transactions';
 import { SendSignedTransactionsAsyncType } from 'contexts/types';
 import newTransaction from 'models/newTransaction';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -28,11 +28,8 @@ export const TransactionSender = ({
 }: TransactionSenderType) => {
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
-  const { sendSignedTransactionsAsync: defaultSendTxAsync } = useContext(
-    OverrideDefaultBehaviourContext
-  );
 
-  const sendSignedTransactionsAsync = customSendTxAsync ?? defaultSendTxAsync;
+  const sendSignedTransactionsAsync = customSendTxAsync ?? defaultSendSignedTxs;
   const sendingRef = useRef(false);
 
   const dispatch = useDispatch();

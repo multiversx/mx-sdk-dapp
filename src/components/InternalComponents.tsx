@@ -1,21 +1,19 @@
-import React from 'react';
-import TransactionSender, { TransactionSenderType } from './TransactionSender';
-import TransactionsTracker, {
-  TransactionsTrackerType
-} from './TransactionsTracker';
+import React, { Component } from 'react';
+import TransactionSender from './TransactionSender';
+import TransactionsTracker from './TransactionsTracker';
 
-interface InternalComponentsType {
-  txSenderProps?: TransactionSenderType;
-  txTrackerProps?: TransactionsTrackerType;
+export class InternalComponents extends Component {
+  static TransactionSender = TransactionSender;
+  static TransactionsTracker = TransactionsTracker;
+
+  render() {
+    return (
+      <>
+        <TransactionSender />
+        <TransactionsTracker />
+      </>
+    );
+  }
 }
-
-export const InternalComponents = (props: InternalComponentsType) => {
-  return (
-    <>
-      <TransactionSender {...props?.txSenderProps} />
-      <TransactionsTracker {...props?.txTrackerProps} />
-    </>
-  );
-};
 
 export default InternalComponents;
