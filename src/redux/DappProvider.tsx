@@ -23,7 +23,7 @@ interface DappProviderPropsType {
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
-  InternalComponents?: typeof DefaultInternalComponents | null;
+  InternalComponents?: typeof DefaultInternalComponents;
 }
 
 export const DappProvider = ({
@@ -42,8 +42,6 @@ export const DappProvider = ({
     setExternalProvider(externalProvider);
   }
 
-  const CustomComponents = InternalComponents ? InternalComponents : () => null;
-
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
@@ -52,7 +50,7 @@ export const DappProvider = ({
           customNetworkConfig={customNetworkConfig}
         >
           <ProviderInitializer />
-          <CustomComponents />
+          <InternalComponents />
           {children}
         </AppInitializer>
       </PersistGate>
