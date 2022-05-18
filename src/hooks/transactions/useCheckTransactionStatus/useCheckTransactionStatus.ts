@@ -93,7 +93,6 @@ export function useCheckTransactionStatus() {
         return isPending;
       }
     );
-    console.log(pendingBatches);
     if (pendingBatches.length > 0) {
       pendingBatches.forEach(([sessionId, transactionBatch]) => {
         checkBatch({
