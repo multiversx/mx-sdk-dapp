@@ -1,6 +1,6 @@
 import { GetTransactionsByHashesType } from 'contexts/types';
+import { useGetPendingTransactions } from 'services/transactions/hooks';
 import { getIsTransactionPending, refreshAccount } from 'utils';
-import { useGetPendingTransactions } from '../../../services/transactions/hooks';
 import checkBatch from './checkBatch';
 
 export function useCheckTransactionStatus() {
