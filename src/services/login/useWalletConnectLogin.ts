@@ -198,8 +198,9 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    const walletConnectUri: string | undefined =
-      await providerRef.current?.login();
+    const walletConnectUri:
+      | string
+      | undefined = await providerRef.current?.login();
     const hasUri = Boolean(walletConnectUri);
 
     if (!hasUri) {
