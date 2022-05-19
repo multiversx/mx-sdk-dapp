@@ -8,7 +8,7 @@ export function useCheckTransactionStatus() {
 
   async function checkTransactionStatus(props: {
     getTransactionsByHash?: GetTransactionsByHashesType;
-    shouldRefrehsBalance?: boolean;
+    shouldRefreshBalance?: boolean;
   }) {
     const pendingBatches = pendingTransactionsArray.filter(
       ([sessionId, transactionBatch]) => {
@@ -26,7 +26,7 @@ export function useCheckTransactionStatus() {
         });
       }
     }
-    if (props.shouldRefrehsBalance) {
+    if (props.shouldRefreshBalance) {
       refreshAccount();
     }
   }
