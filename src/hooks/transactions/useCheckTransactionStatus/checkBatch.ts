@@ -10,7 +10,11 @@ import {
   CustomTransactionInformation,
   SignedTransactionsBodyType
 } from 'types/transactions';
-import { getIsTransactionFailed, getIsTransactionPending } from 'utils';
+import {
+  getIsTransactionFailed,
+  getIsTransactionPending,
+  getIsTransactionSuccessful
+} from 'utils';
 import { refreshAccount } from 'utils/account';
 import getPendingTransactions from './getPendingTransactions';
 import manageFailedTransactions from './manageFailedTransactions';
@@ -48,10 +52,13 @@ function manageTransaction({
     status,
     results,
     invalidTransaction,
-    pendingResults,
     hasStatusChanged
   } = serverTransaction;
   try {
+    if (timeouts.includes(hash)) {
+      return;
+    }
+
     const retriesForThisHash = retries[hash];
     if (retriesForThisHash > 30) {
       // consider transaction as stuck after 1 minute
@@ -63,33 +70,35 @@ function manageTransaction({
       retries[hash] = retries[hash] ? retries[hash] + 1 : 1;
       return;
     }
-
-    if (!pendingResults) {
-      timeouts.push(hash);
-
-      const transitionToCompletedDelay =
-        customTransactionInformation?.completedTransactionsDelay || 0;
-      setTimeout(
-        () =>
-          store.dispatch(
-            updateSignedTransactionStatus({
-              sessionId,
-              status: TransactionServerStatusesEnum.completed,
-              transactionHash: hash
-            })
-          ),
-        transitionToCompletedDelay
-      );
-    }
-
     if (hasStatusChanged) {
-      store.dispatch(
-        updateSignedTransactionStatus({
-          sessionId,
-          status,
-          transactionHash: hash
-        })
-      );
+      if (
+        getIsTransactionSuccessful(status) &&
+        customTransactionInformation?.completedTransactionsDelay != null
+      ) {
+        //if the transaction is successful and the success status should be updated with a delay
+        //it will enter a timeout and then change the status
+        timeouts.push(hash);
+        setTimeout(
+          () =>
+            store.dispatch(
+              updateSignedTransactionStatus({
+                sessionId,
+                status: TransactionServerStatusesEnum.completed,
+                transactionHash: hash
+              })
+            ),
+          customTransactionInformation?.completedTransactionsDelay
+        );
+      } else {
+        //otherwise, it will just trigger the change of status
+        store.dispatch(
+          updateSignedTransactionStatus({
+            sessionId,
+            status,
+            transactionHash: hash
+          })
+        );
+      }
     }
 
     // if set to true will trigger a balance refresh after each iteration
