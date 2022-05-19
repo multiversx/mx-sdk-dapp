@@ -16,7 +16,7 @@ import AppInitializer from 'wrappers/AppInitializer';
 import { store, persistor } from '../store';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
-interface DappProviderPropsType {
+export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
