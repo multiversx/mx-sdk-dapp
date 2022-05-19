@@ -1,17 +1,10 @@
-import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
-import { GetTransactionsByHashesType } from 'contexts/types';
-
-import useTransactionsTracker from './useTransactionsTracker';
-
-export interface TransactionsTrackerType {
-  refetchTimestamp?: number;
-  getTransactionsByHash?: GetTransactionsByHashesType;
-}
+import useTransactionsTracker, {
+  TransactionsTrackerType
+} from './useTransactionsTracker';
 
 export function TransactionsTracker({
-  getTransactionsByHash: getTxByHash
+  getTransactionsByHash
 }: TransactionsTrackerType) {
-  const getTransactionsByHash = getTxByHash ?? defaultGetTxByHash;
   useTransactionsTracker({ getTransactionsByHash });
   return null;
 }

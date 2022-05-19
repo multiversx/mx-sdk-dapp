@@ -6,6 +6,7 @@ import {
   updateSignedTransactions,
   updateSignedTransactionStatus
 } from 'redux/slices';
+import { store } from 'redux/store';
 import { useGetPendingTransactions } from 'services';
 import {
   TransactionBatchStatusesEnum,
@@ -23,64 +24,55 @@ interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionBatch: SignedTransactionsBodyType;
   getTransactionsByHash?: GetTransactionsByHashesType;
-  refetchTimestamp?: number;
 }
 
 interface RetriesType {
   [hash: string]: number;
 }
 
-function useManageFailed() {
-  const dispatch = useDispatch();
-  return ({
-    results,
-    hash,
-    sessionId
-  }: {
-    results: SmartContractResult[];
-    hash: string;
-    sessionId: string;
-  }) => {
-    const resultWithError = results.find(
-      (scResult) => scResult?.returnMessage !== ''
-    );
+function manageFailedTransactions({
+  results,
+  hash,
+  sessionId
+}: {
+  results: SmartContractResult[];
+  hash: string;
+  sessionId: string;
+}) {
+  const resultWithError = results.find(
+    (scResult) => scResult?.returnMessage !== ''
+  );
 
-    dispatch(
-      updateSignedTransactionStatus({
-        transactionHash: hash,
-        sessionId,
-        status: TransactionServerStatusesEnum.fail,
-        errorMessage: resultWithError?.returnMessage
-      })
-    );
-    dispatch(
-      updateSignedTransactions({
-        sessionId,
-        status: TransactionBatchStatusesEnum.fail,
-        errorMessage: resultWithError?.returnMessage
-      })
-    );
-  };
+  store.dispatch(
+    updateSignedTransactionStatus({
+      transactionHash: hash,
+      sessionId,
+      status: TransactionServerStatusesEnum.fail,
+      errorMessage: resultWithError?.returnMessage
+    })
+  );
+  store.dispatch(
+    updateSignedTransactions({
+      sessionId,
+      status: TransactionBatchStatusesEnum.fail,
+      errorMessage: resultWithError?.returnMessage
+    })
+  );
 }
 
-function useManageFailedTransactions() {
-  const dispatch = useDispatch();
-  return (sessionId: string) => {
-    dispatch(
-      updateSignedTransactions({
-        sessionId,
-        status: TransactionBatchStatusesEnum.timedOut
-      })
-    );
-  };
+function manageTimedOutTransactions(sessionId: string) {
+  store.dispatch(
+    updateSignedTransactions({
+      sessionId,
+      status: TransactionBatchStatusesEnum.timedOut
+    })
+  );
 }
 
 export function useCheckTransactionStatus() {
   const dispatch = useDispatch();
   const retriesRef = useRef<RetriesType>({});
   const timeoutRefs = useRef<string[]>([]);
-  const manageFailedTransactions = useManageFailed();
-  const manageTimedOutTransactions = useManageFailedTransactions();
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
   function checkTransactionStatus(
@@ -109,9 +101,9 @@ export function useCheckTransactionStatus() {
     transactionBatch: { transactions, status, customTransactionInformation },
     getTransactionsByHash = defaultGetTxByHash
   }: TransactionStatusTrackerPropsType) {
-    const isPending = sessionId != null && getIsTransactionPending(status);
+    const isBatchPending = sessionId != null && getIsTransactionPending(status);
     try {
-      if (!isPending || transactions == null) {
+      if (!isBatchPending || transactions == null) {
         return;
       }
 
