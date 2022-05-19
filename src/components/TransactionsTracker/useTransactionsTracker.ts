@@ -29,7 +29,7 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
   useEffect(() => {
     if (pendingBatches.length > 0) {
       intervalRef.current = setInterval(() => {
-        checkTransactionStatus(getTransactionsByHash);
+        checkTransactionStatus({ getTransactionsByHash });
       }, 2000);
     } else {
       clearInterval(intervalRef.current);

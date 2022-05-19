@@ -20,6 +20,7 @@ interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionBatch: SignedTransactionsBodyType;
   getTransactionsByHash?: GetTransactionsByHashesType;
+  shouldRefrehsBalance?: boolean;
 }
 
 interface RetriesType {
@@ -33,12 +34,14 @@ interface ManageTransactionType {
   serverTransaction: GetTransactionsByHashesReturnType[0];
   sessionId: string;
   customTransactionInformation?: CustomTransactionInformation;
+  shouldRefrehsBalance?: boolean;
 }
 
 function manageTransaction({
   serverTransaction,
   sessionId,
-  customTransactionInformation
+  customTransactionInformation,
+  shouldRefrehsBalance
 }: ManageTransactionType) {
   const {
     hash,
@@ -89,7 +92,10 @@ function manageTransaction({
       );
     }
 
-    refreshAccount();
+    // if set to true will trigger a balance refresh after each iteration
+    if (!shouldRefrehsBalance) {
+      refreshAccount();
+    }
 
     if (getIsTransactionFailed(status)) {
       manageFailedTransactions({ sessionId, hash, results });
@@ -103,7 +109,8 @@ function manageTransaction({
 export async function checkBatch({
   sessionId,
   transactionBatch: { transactions, status, customTransactionInformation },
-  getTransactionsByHash = defaultGetTxByHash
+  getTransactionsByHash = defaultGetTxByHash,
+  shouldRefrehsBalance
 }: TransactionStatusTrackerPropsType) {
   const isBatchPending = sessionId != null && getIsTransactionPending(status);
   try {
@@ -122,7 +129,8 @@ export async function checkBatch({
       manageTransaction({
         serverTransaction,
         sessionId,
-        customTransactionInformation
+        customTransactionInformation,
+        shouldRefrehsBalance
       });
     }
   } catch (error) {

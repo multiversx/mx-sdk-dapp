@@ -1,14 +1,15 @@
 import { GetTransactionsByHashesType } from 'contexts/types';
-import { getIsTransactionPending } from 'utils';
+import { getIsTransactionPending, refreshAccount } from 'utils';
 import { useGetPendingTransactions } from '../../../services/transactions/hooks';
 import checkBatch from './checkBatch';
 
 export function useCheckTransactionStatus() {
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
-  function checkTransactionStatus(
-    getTransactionsByHash?: GetTransactionsByHashesType
-  ) {
+  async function checkTransactionStatus(props: {
+    getTransactionsByHash?: GetTransactionsByHashesType;
+    shouldRefrehsBalance?: boolean;
+  }) {
     const pendingBatches = pendingTransactionsArray.filter(
       ([sessionId, transactionBatch]) => {
         const isPending =
@@ -17,13 +18,16 @@ export function useCheckTransactionStatus() {
       }
     );
     if (pendingBatches.length > 0) {
-      pendingBatches.forEach(([sessionId, transactionBatch]) => {
-        checkBatch({
+      for (const [sessionId, transactionBatch] of pendingBatches) {
+        await checkBatch({
           sessionId,
           transactionBatch,
-          getTransactionsByHash
+          ...props
         });
-      });
+      }
+    }
+    if (props.shouldRefrehsBalance) {
+      refreshAccount();
     }
   }
 
