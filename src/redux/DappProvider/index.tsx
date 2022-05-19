@@ -1,16 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { IDappProvider } from '@elrondnetwork/erdjs/out';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import {
-  getTransactionsByHashes,
-  sendSignedTransactions
-} from 'apiCalls/transactions';
 import ProviderInitializer from 'components/ProviderInitializer';
-import TransactionSender from 'components/TransactionSender';
-import TransactionsTracker from 'components/TransactionsTracker';
-import OverrideDefaultBehaviourContext from 'contexts/OverrideDefaultBehaviourContext';
 import {
   GetTransactionsByHashesType,
   SendSignedTransactionsAsyncType
@@ -20,15 +13,17 @@ import { DappCoreContext } from 'redux/DappProviderContext';
 import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
-import { store, persistor } from './store';
+import { store, persistor } from '../store';
+import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
-interface DappProviderPropsType {
+export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
   getTransactionsByHash?: GetTransactionsByHashesType;
+  customComponents?: CustomComponentsType;
 }
 
 export const DappProvider = ({
@@ -36,14 +31,8 @@ export const DappProvider = ({
   customNetworkConfig = {},
   externalProvider,
   environment,
-  sendSignedTransactionsAsync = sendSignedTransactions,
-  getTransactionsByHash = getTransactionsByHashes
+  customComponents
 }: DappProviderPropsType) => {
-  const memoizedSendSignedTransactionsAsync = useCallback(
-    sendSignedTransactionsAsync,
-    []
-  );
-
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
     throw new Error('missing environment flag');
@@ -53,26 +42,17 @@ export const DappProvider = ({
     setExternalProvider(externalProvider);
   }
 
-  const memoizedGetTransactionsByHash = useCallback(getTransactionsByHash, []);
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <OverrideDefaultBehaviourContext.Provider
-          value={{
-            sendSignedTransactionsAsync: memoizedSendSignedTransactionsAsync,
-            getTransactionsByHash: memoizedGetTransactionsByHash
-          }}
+        <AppInitializer
+          environment={environment as EnvironmentsEnum}
+          customNetworkConfig={customNetworkConfig}
         >
-          <AppInitializer
-            environment={environment as EnvironmentsEnum}
-            customNetworkConfig={customNetworkConfig}
-          >
-            <ProviderInitializer />
-            <TransactionSender />
-            <TransactionsTracker />
-            {children}
-          </AppInitializer>
-        </OverrideDefaultBehaviourContext.Provider>
+          <ProviderInitializer />
+          <CustomComponents customComponents={customComponents} />
+          {children}
+        </AppInitializer>
       </PersistGate>
     </Provider>
   );
