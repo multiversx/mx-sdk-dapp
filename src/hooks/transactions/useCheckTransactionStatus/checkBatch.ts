@@ -128,9 +128,6 @@ export async function checkBatch({
 
     const pendingTransactions = getPendingTransactions(transactions, timeouts);
 
-    if (pendingTransactions?.length === 0) {
-      return;
-    }
     const serverTransactions = await getTransactionsByHash(pendingTransactions);
 
     for (const serverTransaction of serverTransactions) {
