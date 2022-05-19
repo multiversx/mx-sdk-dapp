@@ -117,13 +117,12 @@ function manageTransaction({
 
 export async function checkBatch({
   sessionId,
-  transactionBatch: { transactions, status, customTransactionInformation },
+  transactionBatch: { transactions, customTransactionInformation },
   getTransactionsByHash = defaultGetTxByHash,
   shouldRefreshBalance
 }: TransactionStatusTrackerPropsType) {
-  const isBatchPending = sessionId != null && getIsTransactionPending(status);
   try {
-    if (!isBatchPending || transactions == null) {
+    if (transactions == null) {
       return;
     }
 
