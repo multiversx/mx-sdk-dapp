@@ -1,22 +1,12 @@
-import React from 'react';
-import { useGetPendingTransactions } from 'services/transactions';
-import { SignedTransactionsBodyType } from 'types/transactions';
-import TransactionStatusTracker from './TransactionStatusTracker';
+import useTransactionsTracker, {
+  TransactionsTrackerType
+} from './useTransactionsTracker';
 
-export function TransactionsTracker() {
-  const { pendingTransactionsArray } = useGetPendingTransactions();
-
-  const mappedPendingTransactionsTrackers = pendingTransactionsArray.map(
-    ([sessionId, transactionPayload]) => (
-      <TransactionStatusTracker
-        key={sessionId}
-        sessionId={sessionId}
-        transactionPayload={transactionPayload as SignedTransactionsBodyType}
-      />
-    )
-  );
-
-  return <React.Fragment>{mappedPendingTransactionsTrackers}</React.Fragment>;
+export function TransactionsTracker({
+  getTransactionsByHash
+}: TransactionsTrackerType) {
+  useTransactionsTracker({ getTransactionsByHash });
+  return null;
 }
 
 export default TransactionsTracker;

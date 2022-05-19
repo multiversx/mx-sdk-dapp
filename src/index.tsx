@@ -7,7 +7,7 @@ export {
   useGetPendingTransactions,
   useParseMultiEsdtTransferData
 } from './services/transactions';
-export { DappProvider } from './redux/DappProvider';
+export * from './redux/DappProvider';
 export { AuthenticatedRoutesWrapper, AppInitializer } from './wrappers';
 export * as transactionServices from './services/transactions';
 export * as constants from './constants/index';
