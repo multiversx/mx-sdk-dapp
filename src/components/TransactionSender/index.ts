@@ -24,12 +24,11 @@ export interface TransactionSenderType {
 }
 
 export const TransactionSender = ({
-  sendSignedTransactionsAsync: customSendTxAsync
+  sendSignedTransactionsAsync = defaultSendSignedTxs
 }: TransactionSenderType) => {
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
 
-  const sendSignedTransactionsAsync = customSendTxAsync ?? defaultSendSignedTxs;
   const sendingRef = useRef(false);
 
   const dispatch = useDispatch();
