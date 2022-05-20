@@ -22,8 +22,8 @@
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "copy-dev": "cp src/optionalPackages/dev/* src/optionalPackages",
-    "copy-prod": "cp src/optionalPackages/prod/* src/optionalPackages"
+    "copy-dev": "shx cp src/optionalPackages/dev/* src/optionalPackages",
+    "copy-prod": "shx cp src/optionalPackages/prod/* src/optionalPackages"
   },
   "devDependencies": {
     "@babel/core": "7.17.8",
@@ -59,6 +59,7 @@
     "rollup-plugin-scss": "3.0.0",
     "rollup-plugin-svg-import": "1.6.0",
     "sass": "1.32",
+    "shx": "0.3.4",
     "size-limit": "7.0.8",
     "tsdx": "0.14.1",
     "tslib": "2.3.1",
