@@ -142,6 +142,12 @@ export const useSignTransactions = () => {
         (error as string) ||
         errorsMessages.ERROR_SIGNING_TX;
       console.error(errorsMessages.ERROR_SIGNING_TX, errorMessage);
+      dispatch(
+        moveTransactionsToSignedState({
+          sessionId,
+          status: TransactionBatchStatusesEnum.cancelled
+        })
+      );
       onCancel(errorMessage, sessionId);
     }
   };
