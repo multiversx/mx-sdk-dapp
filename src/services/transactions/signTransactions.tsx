@@ -9,9 +9,9 @@ import {
 } from 'redux/slices';
 import { store } from 'redux/store';
 import { NotificationTypesEnum, SignTransactionsPropsType } from 'types';
+import { stringIsFloat } from 'utils';
 import { SendTransactionReturnType } from './sendTransactions';
 import { calcTotalFee } from './utils';
-import { stringIsFloat } from 'utils';
 
 export function signTransactions({
   transactions,
