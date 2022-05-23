@@ -4,13 +4,17 @@ import { logout } from 'utils';
 import { localStorageKeys } from 'utils/storage/local';
 
 const { logoutEvent } = localStorageKeys;
+const storageKey = 'storage';
 
 const LogoutListener = () => {
   const { address } = useGetAccountInfo();
 
   useEffect(() => {
     const receiveMessage = (ev: StorageEvent) => {
-      if (ev.key !== logoutEvent || !ev.newValue) return;
+      if (ev.key !== logoutEvent || !ev.newValue) {
+        return;
+      }
+
       try {
         const { data } = JSON.parse(ev.newValue);
 
@@ -22,9 +26,9 @@ const LogoutListener = () => {
       }
     };
 
-    window.addEventListener('storage', receiveMessage);
+    window.addEventListener(storageKey, receiveMessage);
     return () => {
-      window.removeEventListener('storage', receiveMessage);
+      window.removeEventListener(storageKey, receiveMessage);
     };
   }, [address]);
 
