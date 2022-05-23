@@ -4,6 +4,18 @@ import { logoutAction } from 'redux/commonActions';
 import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
+import { getAddress } from './account';
+import storage from './storage';
+import { localStorageKeys } from './storage/local';
+
+const broadcastLogoutAcrossTabs = (address: string) => {
+  storage.local.setItem({
+    key: localStorageKeys.logoutEvent,
+    data: address,
+    expires: 0
+  });
+  storage.local.removeItem(localStorageKeys.logoutEvent);
+};
 
 export async function logout(
   callbackUrl?: string,
@@ -14,6 +26,13 @@ export async function logout(
   const isLoggedIn = getIsLoggedIn();
   if (!isLoggedIn || !provider) {
     return;
+  }
+
+  try {
+    const address = await getAddress();
+    broadcastLogoutAcrossTabs(address);
+  } catch (err) {
+    console.error('error fetching logout address', err);
   }
 
   store.dispatch(logoutAction());
