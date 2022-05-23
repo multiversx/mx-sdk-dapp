@@ -1,4 +1,5 @@
 import React from 'react';
+import LogoutListener from 'components/LogoutListener';
 import TransactionSender, {
   TransactionSenderType
 } from 'components/TransactionSender';
@@ -31,6 +32,7 @@ export function CustomComponents({
     <>
       <TxSender {...transactionSender?.props} />
       <TxTracker {...transactionTracker?.props} />
+      <LogoutListener />
     </>
   );
 }

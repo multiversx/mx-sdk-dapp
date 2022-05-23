@@ -1,7 +1,8 @@
 import moment from 'moment';
 
 export const localStorageKeys = {
-  loginExpiresAt: 'dapp-core-login-expires-at'
+  loginExpiresAt: 'dapp-core-login-expires-at',
+  logoutEvent: 'dapp-core-logout-event'
 } as const;
 
 type LocalValueType = keyof typeof localStorageKeys;
