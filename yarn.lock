@@ -1081,13 +1081,6 @@
     core-js-pure "^3.20.2"
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@7.11.2":
-  version "7.11.2"
-  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.11.2.tgz#f549c13c754cc40b87644b9fa9f09a6a95fe0736"
-  integrity sha512-TeWkU52so0mPtDcaCTxNBI/IHiz0pZgr8VEFqXFtZWpYD08ZB6FaSwVAS8MKRQAP3bYKiVjwysOJgMFY28o6Tw==
-  dependencies:
-    regenerator-runtime "^0.13.4"
-
 "@babel/runtime@^7.10.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.13.16", "@babel/runtime@^7.14.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.3", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.2", "@babel/runtime@^7.6.3", "@babel/runtime@^7.7.2", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.18.0"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.18.0.tgz#6d77142a19cb6088f0af662af1ada37a604d34ae"
@@ -1159,35 +1152,77 @@
     assert "^2.0.0"
     perf_hooks "0.0.1"
 
-"@elrondnetwork/erdjs@9.1.0":
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-9.1.0.tgz#142a828d59e0ea20d1790e7d54ae5077c0a2dfab"
-  integrity sha512-KFW0x7j4kYMWdydtwy0p6FTsh3rdCSbGekC5NVDLWLgvTZYbQdbaDSwQUGD7lt8OFUxWJDiYaWU9jUS7a+UAEg==
+"@elrondnetwork/erdjs-extension-provider@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-extension-provider/-/erdjs-extension-provider-2.0.1.tgz#34c550540b940dd00dbe11eccaa7b27ac1802661"
+  integrity sha512-RGfVNF9i9U5Bo6ayr9M5o7KvKLjtIQoTJdyN1T1e8IwXL13k3LPcaGGWRbwmFR2Wn07V3fq8GRAheSCVvx+i8A==
+
+"@elrondnetwork/erdjs-hw-provider@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-hw-provider/-/erdjs-hw-provider-2.0.1.tgz#4f746f2abf7dfd26446b4cefb3d74e6010a5a99d"
+  integrity sha512-copXBQEh6OUPr/U7rwwONmGQMeBx28qEBdCK01AvL1vWs3E2YLeB0gcA2fS6eWJwI2bOruCwSdvjq2aPZ9gvlg==
   dependencies:
-    "@babel/runtime" "7.11.2"
-    "@elrondnetwork/bls-wasm" "0.3.3"
     "@elrondnetwork/hw-app-elrond" "0.3.2"
-    "@ledgerhq/hw-transport-u2f" "^5.36.0-deprecated"
-    "@ledgerhq/hw-transport-webhid" "^6.11.2"
+    "@ledgerhq/hw-transport-u2f" "5.36.0-deprecated"
+    "@ledgerhq/hw-transport-webhid" "6.11.2"
     "@ledgerhq/hw-transport-webusb" "6.11.2"
-    "@walletconnect/client" "1.6.5"
-    abort-controller "3.0.0"
+    buffer "6.0.3"
+    platform "1.3.6"
+
+"@elrondnetwork/erdjs-network-providers@0.1.5":
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-network-providers/-/erdjs-network-providers-0.1.5.tgz#dbee664c0c17120c0e53bd33f540588dc59e2351"
+  integrity sha512-7NGoU2rBZk1NkxaO2hIs/4eN8ZYEOWYOkDCpTc35diEOoHjkk13Ov+6qtNjkyKbWn5bnEjdtwMKddc6ilwwR9Q==
+  dependencies:
     axios "0.24.0"
     bech32 "1.1.4"
     bignumber.js "9.0.1"
+    buffer "6.0.3"
+    json-bigint "1.0.0"
+
+"@elrondnetwork/erdjs-wallet-connect-provider@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.0.1.tgz#3df2bc475c99ca290155471ac495c73ae30ae900"
+  integrity sha512-Knqa62jBsgrRJfzBESQ51uDfau4NHYx4wnukYOV/TqYp6EJzHHnZn/ME4dlBICVQMiHUaALTTjD1c8Hi+28bDA==
+  dependencies:
+    "@walletconnect/client" "1.6.5"
+    bech32 "1.1.4"
+
+"@elrondnetwork/erdjs-walletcore@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-walletcore/-/erdjs-walletcore-1.0.0.tgz#19444ed54cf7c3d892edf85a73573c0336c31d03"
+  integrity sha512-I+N7rwBs4p9bX6d2Rd9Ck6uwCOsgafDzL9aAaFqwh3NnmEI7JGrXPvFoZxDTOQ9pyd2J9jk4dXS6GAImjd3R8g==
+  dependencies:
+    "@elrondnetwork/bls-wasm" "0.3.3"
+    bech32 "1.1.4"
     bip39 "3.0.2"
     blake2b "2.1.3"
-    buffer "6.0.3"
     ed25519-hd-key "1.1.2"
-    json-bigint "1.0.0"
-    json-duplicate-key-handle "1.0.0"
-    keccak "^3.0.1"
-    platform "1.3.6"
-    protobufjs "6.10.2"
-    qs "6.10.1"
+    keccak "3.0.1"
     scryptsy "2.1.0"
     tweetnacl "1.0.3"
     uuid "8.3.2"
+
+"@elrondnetwork/erdjs-web-wallet-provider@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.0.0.tgz#8d498c31f10f5f34acc784b7639319fe1ed38e7c"
+  integrity sha512-XEneC4KpTHR7aj1T62x9k5B4ei3Mn2SLkOaMblHgWkk8nCEgXoLkHxOppzLvUeZv46KihKzkEpfIZ0jthvavnw==
+  dependencies:
+    qs "6.10.1"
+
+"@elrondnetwork/erdjs@10.2.5":
+  version "10.2.5"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-10.2.5.tgz#b85fb1aba0230e29681002f0d60da71d19707a64"
+  integrity sha512-4FfcQ0OjPmLSvkuuUm3NXKrdmn+wlvBnZsNVhbFtuqIIgN+l6yTYrA/WNKfq4bPBkQZ5OaCEkEU75zA2s1586w==
+  dependencies:
+    "@elrondnetwork/transaction-decoder" "0.1.0"
+    bech32 "1.1.4"
+    bignumber.js "9.0.1"
+    blake2b "2.1.3"
+    buffer "6.0.3"
+    json-duplicate-key-handle "1.0.0"
+    keccak "3.0.1"
+    protobufjs "6.10.2"
 
 "@elrondnetwork/hw-app-elrond@0.3.2":
   version "0.3.2"
@@ -1199,6 +1234,13 @@
     bip32-path "^0.4.2"
     flow-copy-source "^2.0.9"
     flow-typed "^3.2.1"
+
+"@elrondnetwork/transaction-decoder@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/transaction-decoder/-/transaction-decoder-0.1.0.tgz#a2502a4dc50885242c1b167cc9a6394062ec7423"
+  integrity sha512-R9YSiJCAgdlSzTKBy7/KjohFghmUhZIGDqWt6NGXrf33EN24QB15Q0LgHEW7lXsqsDSF5GpRYetsS7V3jYZQOg==
+  dependencies:
+    bech32 "^2.0.0"
 
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
@@ -1742,7 +1784,7 @@
     node-hid "2.1.1"
     usb "^1.7.0"
 
-"@ledgerhq/hw-transport-u2f@^5.36.0-deprecated":
+"@ledgerhq/hw-transport-u2f@5.36.0-deprecated":
   version "5.36.0-deprecated"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-u2f/-/hw-transport-u2f-5.36.0-deprecated.tgz#66e3ed399a117a1c0110871a055dd54f5fe707fd"
   integrity sha512-T/+mGHIiUK/ZQATad6DMDmobCMZ1mVST952009jKzhaE1Et2Uy2secU+QhRkx3BfEAkvwa0zSRSYCL9d20Iqjg==
@@ -1752,14 +1794,14 @@
     "@ledgerhq/logs" "^5.30.0"
     u2f-api "0.2.7"
 
-"@ledgerhq/hw-transport-webhid@^6.11.2":
-  version "6.27.1"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-6.27.1.tgz#8fd1710d23b6bd7cbe2382dd02054dfabe788447"
-  integrity sha512-u74rBYlibpbyGblSn74fRs2pMM19gEAkYhfVibq0RE1GNFjxDMFC1n7Sb+93Jqmz8flyfB4UFJsxs8/l1tm2Kw==
+"@ledgerhq/hw-transport-webhid@6.11.2":
+  version "6.11.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-webhid/-/hw-transport-webhid-6.11.2.tgz#db2e513f139ae4f3e9a1d79e4671726c650d5751"
+  integrity sha512-y/Cv2oRDXy0wsGQsSrNi6e8DziGRNbgTiW7dgXcenI/1RfsCN+2hPfNMr8a9s2zPJ8Tfv2Sm5VubbspWDhPUCQ==
   dependencies:
-    "@ledgerhq/devices" "^6.27.1"
+    "@ledgerhq/devices" "^6.11.2"
     "@ledgerhq/errors" "^6.10.0"
-    "@ledgerhq/hw-transport" "^6.27.1"
+    "@ledgerhq/hw-transport" "^6.11.2"
     "@ledgerhq/logs" "^6.10.0"
 
 "@ledgerhq/hw-transport-webusb@6.11.2":
@@ -1781,7 +1823,7 @@
     "@ledgerhq/errors" "^5.50.0"
     events "^3.3.0"
 
-"@ledgerhq/hw-transport@^6.11.2", "@ledgerhq/hw-transport@^6.27.1":
+"@ledgerhq/hw-transport@^6.11.2":
   version "6.27.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.27.1.tgz#88072278f69c279cb6569352acd4ae2fec33ace3"
   integrity sha512-hnE4/Fq1YzQI4PA1W0H8tCkI99R3UWDb3pJeZd6/Xs4Qw/q1uiQO+vNLC6KIPPhK0IajUfuI/P2jk0qWcMsuAQ==
@@ -3303,13 +3345,6 @@ abab@^2.0.0, abab@^2.0.3, abab@^2.0.5:
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.6.tgz#41b80f2c871d19686216b82309231cfd3cb3d291"
   integrity sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==
 
-abort-controller@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/abort-controller/-/abort-controller-3.0.0.tgz#eaf54d53b62bae4138e809ca225c8439a6efb392"
-  integrity sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==
-  dependencies:
-    event-target-shim "^5.0.0"
-
 accepts@~1.3.4, accepts@~1.3.5, accepts@~1.3.8:
   version "1.3.8"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.8.tgz#0bf0be125b67014adcb0b0921e62db7bffe16b2e"
@@ -4137,6 +4172,11 @@ bech32@1.1.4:
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
   integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
 
+bech32@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/bech32/-/bech32-2.0.0.tgz#078d3686535075c8c79709f054b1b226a133b355"
+  integrity sha512-LcknSilhIGatDAsY1ak2I8VtGaHNhgMSYVxFrGLXv+xLHytaKZKcaUJJUE7qmBr7h33o5YQwP55pMI0xmkpJwg==
+
 before-after-hook@^2.2.0:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.2.2.tgz#a6e8ca41028d90ee2c24222f201c90956091613e"
@@ -4239,9 +4279,9 @@ bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.9:
   integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
 
 bn.js@^5.0.0, bn.js@^5.1.1:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.0.tgz#358860674396c6997771a9d051fcc1b57d4ae002"
-  integrity sha512-D7iWRBvnZE8ecXiLj/9wbxH7Tk79fAh8IHaTNq1RWRixsS02W+5qS+iE9yq6RYl0asXx5tw0bLhmT5pIfbSquw==
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-5.2.1.tgz#0bc527a6a0d18d0aa8d5b0538ce4a77dccfa7b70"
+  integrity sha512-eXRvHzWyYPBuB4NBy0cmYQjGitUrtqwbvlzP3G6VFnNRbsZQIxQ10PbKKHt8gZ/HW/D/747aDl+QkDqg3KQLMQ==
 
 body-parser@1.20.0:
   version "1.20.0"
@@ -6851,11 +6891,6 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
-
-event-target-shim@^5.0.0:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
-  integrity sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==
 
 eventemitter3@^4.0.0:
   version "4.0.7"
@@ -9821,14 +9856,13 @@ jsprim@^1.2.2:
     array-includes "^3.1.4"
     object.assign "^4.1.2"
 
-keccak@^3.0.1:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.2.tgz#4c2c6e8c54e04f2670ee49fa734eb9da152206e0"
-  integrity sha512-PyKKjkH53wDMLGrvmRGSNWgmSxZOUqbnXwKL9tmgbFYA1iAYqW21kfR7mZXV0MlESiefxQQE9X9fTa3X+2MPDQ==
+keccak@3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.1.tgz#ae30a0e94dbe43414f741375cff6d64c8bea0bff"
+  integrity sha512-epq90L9jlFWCW7+pQa6JOnKn2Xgl2mtI664seYR6MHskvI9agt7AnDqmAlp9TqU4/caMYbA08Hi5DMZAl5zdkA==
   dependencies:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
-    readable-stream "^3.6.0"
 
 kefir@^3.7.3:
   version "3.8.8"
@@ -10716,9 +10750,9 @@ node-releases@^1.1.61:
   integrity sha512-rB1DUFUNAN4Gn9keO2K1efO35IDK7yKHCdCaIMvFO7yUYmmZYeDjnGKle26G4rwj+LKRQpjyUUvMkPglwGCYNQ==
 
 node-releases@^2.0.3:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.4.tgz#f38252370c43854dc48aa431c766c6c398f40476"
-  integrity sha512-gbMzqQtTtDz/00jQzZ21PQzdI9PyLYqUSvD0p3naOhX4odFji0ZxYdnVwPTxmSwkmxhcFImpozceidSG+AgoPQ==
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/node-releases/-/node-releases-2.0.5.tgz#280ed5bc3eba0d96ce44897d8aee478bfb3d9666"
+  integrity sha512-U9h1NLROZTq9uE1SNffn6WuPDg8icmi3ns4rEl/oTfIle4iLjTliCzgTsbaIFMq/Xn078/lfY/BL0GWZ+psK4Q==
 
 node-stream-zip@^1.15.0:
   version "1.15.0"

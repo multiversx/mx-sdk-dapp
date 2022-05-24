@@ -1,21 +1,22 @@
-import { ApiProvider } from '@elrondnetwork/erdjs';
 import { networkSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { NetworkType } from 'types';
+import { ProxyNetworkProvider } from "@elrondnetwork/erdjs-network-providers";
+import { INetworkProvider } from '@elrondnetwork/erdjs-network-providers/out/interface';
 
-let apiProvider: ApiProvider | null = null;
+let apiProvider: INetworkProvider | null = null;
 
 export function initializeApiProvider(networkConfig?: NetworkType) {
   const initializationNetworkConfig =
     networkConfig || networkSelector(store.getState());
-  apiProvider = new ApiProvider(initializationNetworkConfig.apiAddress, {
+    apiProvider = new ProxyNetworkProvider(initializationNetworkConfig.apiAddress, {
     timeout: Number(initializationNetworkConfig.apiTimeout)
   });
 
   return apiProvider;
 }
 
-export function getApiProvider(): ApiProvider {
+export function getApiProvider(): INetworkProvider {
   if (apiProvider == null) {
     return initializeApiProvider();
   } else {

@@ -4,9 +4,10 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from './enums';
+import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
 
 export interface TransactionsToSignType {
-  transactions: RawTransactionType[];
+  transactions: IPlainTransactionObject[];
   callbackRoute?: string;
   sessionId: string;
   customTransactionInformation: CustomTransactionInformation;
@@ -31,19 +32,9 @@ export interface TransactionParameter {
   outputParameters: string[];
 }
 
-export interface RawTransactionType {
-  signature?: string;
-  value: string;
-  receiver: string;
-  gasPrice: number;
-  gasLimit: number;
-  sender: string;
-  nonce: number;
-  data: string;
-  chainID: string;
-  version?: number;
-  options?: number;
-}
+export interface RawTransactionType extends IPlainTransactionObject {
+
+};
 
 export interface SignedTransactionType extends RawTransactionType {
   hash: string;

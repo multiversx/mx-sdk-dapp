@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { ExtensionProvider } from '@elrondnetwork/erdjs';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -8,6 +7,7 @@ import { setTokenLogin } from 'redux/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 
 interface UseExtensionLoginPropsType {
   callbackRoute: string;

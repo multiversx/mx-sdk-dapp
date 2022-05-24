@@ -60,7 +60,7 @@ const TransactionToast = ({
         ) => {
           const receiverAddress = getAddressFromDataField({
             receiver,
-            data
+            data: data ?? ''
           });
           if (receiverAddress == null) {
             return prevTxIsSameShard;

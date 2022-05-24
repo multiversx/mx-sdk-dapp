@@ -1,12 +1,7 @@
 import {
   Transaction,
-  GasLimit,
-  GasPrice,
   Address,
   TransactionPayload,
-  Balance,
-  ChainID,
-  Nonce,
   TransactionOptions,
   TransactionVersion
 } from '@elrondnetwork/erdjs';
@@ -20,18 +15,18 @@ import { isStringBase64 } from 'utils/decoders/base64Utils';
 
 export function newTransaction(rawTransaction: RawTransactionType) {
   const { data } = rawTransaction;
-  const dataPayload = isStringBase64(data)
+  const dataPayload = isStringBase64(data ?? '')
     ? TransactionPayload.fromEncoded(data)
     : new TransactionPayload(data);
   return new Transaction({
-    value: Balance.fromString(rawTransaction.value),
+    value: rawTransaction.value.valueOf(),
     data: dataPayload,
-    nonce: new Nonce(rawTransaction.nonce),
+    nonce: rawTransaction.nonce.valueOf(),
     receiver: new Address(rawTransaction.receiver),
     sender: new Address(rawTransaction.sender),
-    gasLimit: new GasLimit(rawTransaction.gasLimit ?? defaultGasLimit),
-    gasPrice: new GasPrice(rawTransaction.gasPrice ?? gasPrice),
-    chainID: new ChainID(rawTransaction.chainID),
+    gasLimit: rawTransaction.gasLimit.valueOf() ?? defaultGasLimit,
+    gasPrice: rawTransaction.gasPrice.valueOf() ?? gasPrice,
+    chainID: rawTransaction.chainID.valueOf(),
     version: new TransactionVersion(rawTransaction.version ?? defaultVersion),
     ...(rawTransaction.options
       ? { options: new TransactionOptions(rawTransaction.options) }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { IDappProvider } from '@elrondnetwork/erdjs/out';
+import { IDappProvider } from 'types';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 

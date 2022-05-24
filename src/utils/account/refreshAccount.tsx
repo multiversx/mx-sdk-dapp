@@ -4,6 +4,7 @@ import { store } from 'redux/store';
 import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';
+import { IDappProvider } from '../../types';
 
 const setNewAccount = async () => {
   try {
@@ -29,7 +30,7 @@ const setNewAccount = async () => {
 };
 
 export async function refreshAccount() {
-  const provider = getAccountProvider();
+  const provider = getAccountProvider() as IDappProvider;
   if (provider == null) {
     throw 'Provider not initialized';
   }
@@ -37,6 +38,10 @@ export async function refreshAccount() {
     return setNewAccount();
   } else {
     try {
+      if (!provider.init) {
+        throw 'Provider has missing init() function';
+      }
+
       const initialized = await provider.init();
       if (!initialized) {
         return;

@@ -1,20 +1,20 @@
 import {
-  ExtensionProvider,
-  HWProvider,
-  IDappProvider,
-  IHWElrondApp,
   SignableMessage,
   Transaction,
-  WalletConnectProvider,
-  WalletProvider
 } from '@elrondnetwork/erdjs';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
+import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { ledgerContractDataEnabledValue } from 'constants/index';
 import { LoginMethodsEnum } from 'types/enums';
+import { IDappProvider } from 'types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
-export const getProviderType = (
-  provider?: IDappProvider | null
+export const getProviderType = <TProvider extends Object>(
+  provider?: TProvider | null
 ): LoginMethodsEnum => {
   switch (provider?.constructor) {
     case WalletProvider:
@@ -52,55 +52,55 @@ const notInitializedError = (caller: string) => {
 };
 
 export class EmptyProvider implements IDappProvider {
-  async init() {
-    return false;
+  init(): Promise<boolean> {
+    return Promise.resolve(false);
   }
-  login(options?: { callbackUrl?: string; token?: string }): Promise<string> {
+
+  login<TOptions = { callbackUrl?: string } | undefined, TResponse = string>(options?: TOptions): Promise<TResponse> {
     throw new Error(notInitializedError(`login with options: ${options}`));
   }
-  async logout(options?: { callbackUrl?: string }): Promise<boolean> {
+
+  logout<TOptions = { callbackUrl?: string }, TResponse = boolean>(options?: TOptions): Promise<TResponse> {
     throw new Error(notInitializedError(`logout with options: ${options}`));
   }
-  async getAddress(): Promise<string> {
+
+  getAddress(): Promise<string> {
     throw new Error(notInitializedError('getAddress'));
   }
+
   isInitialized(): boolean {
     return false;
   }
-  async isConnected(): Promise<boolean> {
-    return false;
+
+  isConnected(): Promise<boolean> {
+    return Promise.resolve(false);
   }
-  async sendTransaction(
-    transaction: Transaction,
-    options?: { callbackUrl?: string }
-  ): Promise<Transaction> {
+
+  sendTransaction?<TOptions = { callbackUrl?: string }, TResponse = Transaction>(transaction: Transaction, options?: TOptions): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `sendTransaction with transactions: ${transaction} options: ${options}`
       )
     );
   }
-  async signTransaction(
-    transaction: Transaction,
-    options?: { callbackUrl?: string }
-  ): Promise<Transaction> {
+
+  signTransaction?<TOptions = { callbackUrl?: string }, TResponse = Transaction>(transaction: Transaction, options?: TOptions): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `signTransaction with transactions: ${transaction} options: ${options}`
       )
     );
   }
-  async signTransactions(
-    transactions: Transaction[],
-    options?: { callbackUrl?: string }
-  ): Promise<Transaction[]> {
+
+  signTransactions<TOptions = { callbackUrl?: string }, TResponse = []>(transactions: [], options?: TOptions): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `signTransactions with transactions: ${transactions} options: ${options}`
       )
     );
   }
-  async signMessage(message: SignableMessage): Promise<SignableMessage> {
+
+  signMessage(message: SignableMessage): Promise<SignableMessage> {
     throw new Error(notInitializedError(`signTransactions with ${message}`));
   }
 }
