@@ -100,8 +100,8 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  signMessage(message: SignableMessage): Promise<SignableMessage> {
-    throw new Error(notInitializedError(`signTransactions with ${message}`));
+  signMessage<T extends SignableMessage, TOptions = { callbackUrl?: string }>(message: T, options: TOptions): Promise<T> {
+    throw new Error(notInitializedError(`signTransactions with ${message} and options ${options}`));
   }
 }
 

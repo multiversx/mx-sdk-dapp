@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls';
 import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
@@ -11,11 +10,12 @@ import {
   setSignTransactionsError
 } from 'redux/slices/transactionsSlice';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
-import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
+import { ActiveLedgerTransactionType, IDappProvider, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
 import { getLedgerErrorCodes } from 'utils/internal';
+import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -27,7 +27,7 @@ interface VerifiedAddressesType {
 }
 let verifiedAddresses: VerifiedAddressesType = {};
 
-type DeviceSignedTransactions = Record<number, Transaction>;
+type DeviceSignedTransactions = Record<number, PlainSignedTransaction>;
 
 export interface UseSignTransactionsWithDeviceReturnType {
   allTransactions: MultiSignTxType[];
@@ -70,7 +70,7 @@ export function useSignTransactionsWithDevice({
     currentTransaction,
     setCurrentTransaction
   ] = useState<ActiveLedgerTransactionType | null>(null);
-  const provider = getAccountProvider();
+  const provider = getAccountProvider() as IDappProvider;
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const dispatch = useDispatch();
@@ -133,11 +133,15 @@ export function useSignTransactionsWithDevice({
 
       setWaitingForDevice(isLedger);
 
+      if(!provider.signTransaction) {
+        return;
+      }
+
       const signedTx = await provider.signTransaction(
         currentTransaction.transaction
       );
       const newSignedTx = { [currentStep]: signedTx };
-      const newSignedTransactions: any = signedTransactions
+      const newSignedTransactions = signedTransactions
         ? { ...signedTransactions, ...newSignedTx }
         : newSignedTx;
       setSignedTransactions(newSignedTransactions);
@@ -150,7 +154,7 @@ export function useSignTransactionsWithDevice({
             sessionId,
             status: TransactionBatchStatusesEnum.signed,
             transactions: Object.values(newSignedTransactions).map((tx) =>
-              parseTransactionAfterSigning(tx as Transaction, isLedger)
+              parseTransactionAfterSigning(tx)
             )
           })
         );

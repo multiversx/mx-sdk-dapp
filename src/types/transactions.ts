@@ -32,9 +32,7 @@ export interface TransactionParameter {
   outputParameters: string[];
 }
 
-export interface RawTransactionType extends IPlainTransactionObject {
-
-};
+export interface RawTransactionType extends IPlainTransactionObject {};
 
 export interface SignedTransactionType extends RawTransactionType {
   hash: string;

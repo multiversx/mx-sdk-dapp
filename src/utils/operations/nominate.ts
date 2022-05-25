@@ -1,18 +1,10 @@
 import {
-  createBalanceBuilder,
-  Token,
-  TokenType
+  TokenPayment,
 } from '@elrondnetwork/erdjs/out';
 import { denomination as configDenomination } from 'constants/index';
 
-export function nominate(input: string, customDenomination?: number) {
-  const balance = createBalanceBuilder(
-    new Token({
-      decimals: customDenomination || configDenomination,
-      type: TokenType.Fungible
-    })
-  );
-  return balance(input).toString();
+export function nominate(input: string, customDenomination: number = configDenomination) {
+  return TokenPayment.fungibleFromAmount("", input, customDenomination).toString();
 }
 
 export default nominate;

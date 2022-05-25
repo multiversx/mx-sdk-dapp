@@ -1,31 +1,27 @@
-import { Balance, Token } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
-  denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
 import { stringIsInteger } from 'utils/validation';
 import pipe from './pipe';
+import { TokenPayment } from '@elrondnetwork/erdjs/out';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 
 export function denominate({
   input,
-  denomination = configDenomination,
   decimals = configDecimals,
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
   addCommas = false
 }: {
-  input: string | Balance;
+  input: string;
   denomination?: number;
   decimals?: number;
   showIsLessThanDecimalsLabel?: boolean;
   showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
 }) {
-  const token = new Token({ decimals: denomination });
-
   if (typeof input === 'string' && !stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
@@ -35,11 +31,9 @@ export function denominate({
       // denominate
       .if(typeof input === 'string')
       .then(() =>
-        new Balance(token, 0, new BigNumber(input as string)).toDenominated()
+        TokenPayment.fungibleFromBigInteger("", new BigNumber(input as string), decimals).toString()
+        // new Balance(token, 0, new BigNumber(input as string)).toDenominated()
       )
-
-      .if(input.constructor === Balance)
-      .then(() => (input as Balance).toDenominated())
 
       // format
       .then((current) => {

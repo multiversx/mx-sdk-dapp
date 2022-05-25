@@ -1,6 +1,6 @@
-import { AccountOnNetwork } from '@elrondnetwork/erdjs';
 import { accountNonceSelector } from 'redux/selectors';
 import { store } from 'redux/store';
+import { AccountOnNetwork } from '@elrondnetwork/erdjs-network-providers/out';
 
 export function getLatestNonce(account: AccountOnNetwork | null) {
   const appState = store.getState();

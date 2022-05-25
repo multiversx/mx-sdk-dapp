@@ -111,9 +111,9 @@
   ],
   "dependencies": {
     "@elrondnetwork/erdjs": "10.2.5",
-    "@elrondnetwork/erdjs-network-providers": "0.1.5",
     "@elrondnetwork/erdjs-extension-provider": "2.0.1",
     "@elrondnetwork/erdjs-hw-provider": "2.0.1",
+    "@elrondnetwork/erdjs-network-providers": "0.1.5",
     "@elrondnetwork/erdjs-wallet-connect-provider": "2.0.1",
     "@elrondnetwork/erdjs-walletcore": "1.0.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.0.0",

@@ -1,17 +1,12 @@
 import {
   Transaction,
-  Nonce,
-  Balance,
-  GasPrice,
-  GasLimit,
   TransactionPayload,
-  ChainID,
   TransactionVersion,
   Address,
-  NetworkConfig,
-  GasPriceModifier
 } from '@elrondnetwork/erdjs';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
+import { TokenPayment } from '@elrondnetwork/erdjs/out';
+import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers/out';
 
 interface CalculateFeeLimitType {
   gasLimit: string;
@@ -41,22 +36,20 @@ export function calculateFeeLimit({
   const validGasLimit = stringIsInteger(gasLimit) ? gasLimit : minGasLimit;
   const validGasPrice = stringIsFloat(gasPrice) ? gasPrice : defaultGasPrice;
   const transaction = new Transaction({
-    nonce: new Nonce(0),
-    value: Balance.Zero(),
+    nonce: 0,
+    value: TokenPayment.egldFromAmount("0"),
     receiver: new Address(placeholderData.to),
-    gasPrice: new GasPrice(parseInt(validGasPrice)),
-    gasLimit: new GasLimit(parseInt(validGasLimit)),
+    gasPrice: parseInt(validGasPrice),
+    gasLimit: parseInt(validGasLimit),
     data: new TransactionPayload(data.trim()),
-    chainID: new ChainID(chainId),
+    chainID: chainId,
     version: new TransactionVersion(1)
   });
 
   const networkConfig = new NetworkConfig();
-  networkConfig.MinGasLimit = new GasLimit(parseInt(minGasLimit));
+  networkConfig.MinGasLimit = parseInt(minGasLimit);
   networkConfig.GasPerDataByte = parseInt(gasPerDataByte);
-  networkConfig.GasPriceModifier = new GasPriceModifier(
-    parseFloat(gasPriceModifier)
-  );
+  networkConfig.GasPriceModifier = parseFloat(gasPriceModifier);
   try {
     const bNfee = transaction.computeFee(networkConfig);
     const fee = bNfee.toString(10);

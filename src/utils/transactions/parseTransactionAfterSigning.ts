@@ -1,24 +1,18 @@
-import {
-  Transaction,
-  TransactionOptions,
-  TransactionVersion
-} from '@elrondnetwork/erdjs';
 import { TransactionServerStatusesEnum } from 'types/enums';
+import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
+import { SignedTransactionType } from '../../types';
+import { newTransaction } from '../../models';
 
 export function parseTransactionAfterSigning(
-  transaction: Transaction,
-  isLedger = false
+  signedTransaction: PlainSignedTransaction
 ) {
-  // TODO: REMOVE
-  //#region REMOVE when options is available in erdjs getTransactionsFromWalletUrl
-  if (isLedger) {
-    transaction.version = TransactionVersion.withTxHashSignVersion();
-    transaction.options = TransactionOptions.withTxHashSignOptions();
-  }
-  //#endregion
-  const parsedTransaction = transaction.toPlainObject();
-  parsedTransaction.hash = transaction.getHash().toString();
-  parsedTransaction.status = TransactionServerStatusesEnum.pending;
+  const transaction = newTransaction(signedTransaction);
+
+  const parsedTransaction: SignedTransactionType = {
+    ...transaction.toPlainObject(),
+    hash: transaction.getHash().hex(),
+    status: TransactionServerStatusesEnum.pending
+  };
   return parsedTransaction;
 }
 

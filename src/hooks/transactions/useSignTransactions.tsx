@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExtensionProvider, Nonce, Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@elrondnetwork/erdjs';
 
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -19,12 +19,14 @@ import {
   getLatestNonce,
   parseTransactionAfterSigning
 } from 'utils';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { IDappProvider } from '../../types';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
-  const provider = getAccountProvider();
+  const provider = getAccountProvider() as IDappProvider;
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
@@ -75,6 +77,10 @@ export const useSignTransactions = () => {
     const callbackUrl = `${window.location.origin}${callbackRoute}`;
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
+    if(!provider.signTransactions) {
+      return;
+    }
+
     provider.signTransactions(transactions, {
       callbackUrl: encodeURIComponent(buildedCallbackUrl)
     });
@@ -93,6 +99,10 @@ export const useSignTransactions = () => {
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {
+      if(!provider.init) {
+        return;
+      }
+
       const isProviderInitialized = await provider.init();
 
       if (!isProviderInitialized) {
@@ -109,6 +119,10 @@ export const useSignTransactions = () => {
     }
 
     try {
+      if(!provider.signTransactions) {
+        return;
+      }
+
       const signedTransactions = await provider.signTransactions(transactions);
       const hasSameTransactions =
         Object.keys(signedTransactions).length === transactions.length;
@@ -123,7 +137,7 @@ export const useSignTransactions = () => {
 
       const signedTransactionsArray = Object.values(
         signedTransactions
-      ).map((tx: any) => parseTransactionAfterSigning(tx));
+      ).map((tx) => parseTransactionAfterSigning(tx));
 
       dispatch(
         moveTransactionsToSignedState({
@@ -176,7 +190,7 @@ export const useSignTransactions = () => {
       transactions: Array<Transaction>
     ): Array<Transaction> => {
       return transactions.map((tx: Transaction, index: number) => {
-        tx.setNonce(new Nonce(latestNonce + index));
+        tx.setNonce(latestNonce + index);
 
         return tx;
       });

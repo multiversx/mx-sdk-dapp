@@ -1,4 +1,3 @@
-import { ChainID } from '@elrondnetwork/erdjs';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
@@ -6,7 +5,7 @@ export const networkConfigSelector = (state: RootState) => state.networkConfig;
 
 export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => new ChainID(state.chainID)
+  (state) => state.chainID
 );
 
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
