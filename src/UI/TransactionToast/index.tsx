@@ -103,7 +103,9 @@ const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment().add(Number(transactionDuration), 'milliseconds').unix();
+      moment()
+        .add(Number(transactionDuration), 'milliseconds')
+        .unix();
     return [startTime, endTime];
   }, []);
 
@@ -151,7 +153,6 @@ const TransactionToast = ({
     sent: pendingToastData,
     pending: pendingToastData,
     success: successToastData,
-    completed: successToastData,
     cancelled: failToastData,
     fail: failToastData,
     timedOut: timedOutToastData

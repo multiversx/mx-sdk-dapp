@@ -83,7 +83,7 @@ function manageTransaction({
             store.dispatch(
               updateSignedTransactionStatus({
                 sessionId,
-                status: TransactionServerStatusesEnum.completed,
+                status: TransactionServerStatusesEnum.success,
                 transactionHash: hash
               })
             ),
