@@ -48,7 +48,6 @@ const TxDetails = ({
   const iconData: Record<string, typeof iconPendingData> = {
     pending: iconPendingData,
     success: iconSuccessData,
-    completed: iconSuccessData,
     fail: iconFailedData,
     invalid: iconFailedData,
     timedOut: iconFailedData

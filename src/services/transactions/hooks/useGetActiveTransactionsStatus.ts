@@ -1,6 +1,5 @@
 import { useSelector } from 'redux/DappProviderContext';
 import {
-  completedTransactionsSelector,
   failedTransactionsSelector,
   pendingSignedTransactionsSelector,
   signedTransactionsSelector,
@@ -8,23 +7,21 @@ import {
   timedOutTransactionsSelector
 } from 'redux/selectors';
 
-interface useGetActiveTransactionsStatusReturnType {
+interface UseGetActiveTransactionsStatusReturnType {
   pending: boolean;
   timedOut: boolean;
   fail: boolean;
   success: boolean;
-  completed: boolean;
   hasActiveTransactions: boolean;
 }
 
 //this is a hook to be able to take advantage of memoization offered by useSelector
-export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatusReturnType {
+export function useGetActiveTransactionsStatus(): UseGetActiveTransactionsStatusReturnType {
   const signedTransactions = useSelector(signedTransactionsSelector);
   const timedOutTransactions = useSelector(timedOutTransactionsSelector);
   const failedTransactions = useSelector(failedTransactionsSelector);
   const successfulTransactions = useSelector(successfulTransactionsSelector);
   const pendingTransactions = useSelector(pendingSignedTransactionsSelector);
-  const completedTransactions = useSelector(completedTransactionsSelector);
 
   const pending = Object.keys(pendingTransactions)?.length > 0;
 
@@ -39,18 +36,12 @@ export function useGetActiveTransactionsStatus(): useGetActiveTransactionsStatus
     !fail &&
     Object.keys(successfulTransactions).length > 0;
 
-  const completed =
-    !pending &&
-    !timedOut &&
-    !fail &&
-    Object.keys(completedTransactions).length > 0;
   const hasActiveTransactions = Object.keys(signedTransactions).length > 0;
   return {
     pending,
     timedOut,
     fail,
     success,
-    completed,
     hasActiveTransactions
   };
 }

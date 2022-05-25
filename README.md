@@ -468,7 +468,7 @@ const { sessionId, error } = await sendTransactions({
     minGasLimit?: number (optional, defaults to 50_000);
     sessionInformation?: any (optional, defaults to null) extra sessionInformation that will be passed back to you via getSignedTransactions hook;
     signWithoutSending?: boolean // (optional, defaults to false), the transaction will be signed without being sent to the blockchain;
-    completedTransactionsDelay?: number // delay the transaction status from going into "completed" state;
+    completedTransactionsDelay?: number // delay the transaction status from going into "successful" state;
     redirectAfterSigning?: boolean // (optional, defaults to true), whether to redirect to the provided callbackRoute;
     });
 ```
@@ -578,7 +578,6 @@ const transactionStatus = transactionServices.useTrackTransactionStatus({
   onSuccess,
   onFail,
   onCancelled,
-  onCompleted
 });
 ```
 
@@ -590,7 +589,6 @@ transactionStatus has the following information about the transaction:
   isSuccessful,
   isFailed,
   isCancelled,
-  isCompleted,
   errorMessage,
   status,
   transactions
@@ -607,14 +605,13 @@ Tracking transactions' statuses
 
 ### Tracking transactions' statuses
 
-Dapp-core also exposes a number of handy hooks for tracking all, pending, failed, successful, completed timed out transactions.
+Dapp-core also exposes a number of handy hooks for tracking all, pending, failed, successful and timed out transactions.
 
 Use:
 
 - `useGetPendingTransactions` to get a list of all pending transactions.
 - `useGetSuccessfulTransactions` to get a list of all successful transactions.
 - `useGetFailedTransactions` to get a list of all pending transactions.
-- `useGetCompletedTransactions` to get a list of smart contract call transactions that guarantee that the call was finished;
 
 An especially useful hook called `useGetActiveTransactionsStatus` will keep you updated with the status
 of all transactions at a certain point in time.
@@ -627,8 +624,7 @@ it's return signature is
   pending: boolean - at least one transaction is pending;
   timedOut: boolean = there are no pending transactions and at least one has timed out;
   fail: boolean - there are no pending and no timedOut transactions and at least one has failed;
-  success: boolean - there are no pending, failed or timedOut transactions;
-  completed: boolean - all transactions are successful and all smart contract calls have been processed successfully;
+  success: boolean - all transactions are successful and all smart contract calls have been processed successfully;
 }
 ```
 
