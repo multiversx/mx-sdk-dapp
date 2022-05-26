@@ -1,10 +1,10 @@
 import { getAccountProvider } from 'providers/accountProvider';
 import { setAccount } from 'redux/slices';
 import { store } from 'redux/store';
+import { IDappProvider } from '../../types';
 import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';
-import { IDappProvider } from '../../types';
 
 const setNewAccount = async () => {
   try {
@@ -13,7 +13,7 @@ const setNewAccount = async () => {
       const account = await getAccount(address);
       if (account != null) {
         const accountData = {
-          balance: account.balance.toString(),
+          balance: account.balance.toFixed(),
           address,
           nonce: getLatestNonce(account)
         };

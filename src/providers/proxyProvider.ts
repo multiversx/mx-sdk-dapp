@@ -9,9 +9,12 @@ let proxyProvider: ProxyNetworkProvider | null = null;
 export function initializeProxyProvider(networkConfig?: NetworkType) {
   const initializationNetworkConfig =
     networkConfig || networkSelector(store.getState());
-  proxyProvider = new ProxyNetworkProvider(initializationNetworkConfig.apiAddress, {
-    timeout: Number(initializationNetworkConfig.apiTimeout)
-  });
+  proxyProvider = new ProxyNetworkProvider(
+    initializationNetworkConfig.apiAddress,
+    {
+      timeout: Number(initializationNetworkConfig.apiTimeout)
+    }
+  );
   return proxyProvider;
 }
 

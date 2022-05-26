@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
@@ -19,7 +20,6 @@ import {
   getLatestNonce,
   parseTransactionAfterSigning
 } from 'utils';
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { IDappProvider } from '../../types';
 
 export const useSignTransactions = () => {
@@ -77,7 +77,7 @@ export const useSignTransactions = () => {
     const callbackUrl = `${window.location.origin}${callbackRoute}`;
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
-    if(!provider.signTransactions) {
+    if (!provider.signTransactions) {
       return;
     }
 
@@ -99,7 +99,7 @@ export const useSignTransactions = () => {
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {
-      if(!provider.init) {
+      if (!provider.init) {
         return;
       }
 
@@ -119,7 +119,7 @@ export const useSignTransactions = () => {
     }
 
     try {
-      if(!provider.signTransactions) {
+      if (!provider.signTransactions) {
         return;
       }
 
@@ -150,7 +150,7 @@ export const useSignTransactions = () => {
       if (shouldRedirectAfterSign) {
         window.location.href = redirectRoute;
       }
-    } catch (err) {
+    } catch (error) {
       const errorMessage =
         ((error as unknown) as Error)?.message ||
         (error as string) ||

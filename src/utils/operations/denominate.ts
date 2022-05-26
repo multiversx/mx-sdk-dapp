@@ -1,10 +1,8 @@
+import { TokenPayment } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
-import {
-  decimals as configDecimals
-} from 'constants/index';
+import { decimals as configDecimals } from 'constants/index';
 import { stringIsInteger } from 'utils/validation';
 import pipe from './pipe';
-import { TokenPayment } from '@elrondnetwork/erdjs/out';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 
@@ -13,7 +11,8 @@ export function denominate({
   decimals = configDecimals,
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
-  addCommas = false
+  addCommas = false,
+  denomination
 }: {
   input: string;
   denomination?: number;
@@ -30,10 +29,15 @@ export function denominate({
     pipe(input as string)
       // denominate
       .if(typeof input === 'string')
-      .then(() =>
-        TokenPayment.fungibleFromBigInteger("", new BigNumber(input as string), decimals).toString()
-        // new Balance(token, 0, new BigNumber(input as string)).toDenominated()
-      )
+      .then(() => {
+        const val = TokenPayment.fungibleFromBigInteger(
+          '',
+          input as string,
+          denomination
+        ).toRationalNumber();
+        console.log(val);
+        return val;
+      })
 
       // format
       .then((current) => {
