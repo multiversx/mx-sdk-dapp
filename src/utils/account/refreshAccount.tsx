@@ -1,7 +1,6 @@
 import { getAccountProvider } from 'providers/accountProvider';
 import { setAccount } from 'redux/slices';
 import { store } from 'redux/store';
-import { IDappProvider } from '../../types';
 import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';
@@ -30,7 +29,7 @@ const setNewAccount = async () => {
 };
 
 export async function refreshAccount() {
-  const provider = getAccountProvider() as IDappProvider;
+  const provider = getAccountProvider();
   if (provider == null) {
     throw 'Provider not initialized';
   }

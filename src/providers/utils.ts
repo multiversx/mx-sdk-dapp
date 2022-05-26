@@ -1,15 +1,12 @@
-import {
-  SignableMessage,
-  Transaction,
-} from '@elrondnetwork/erdjs';
+import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { ledgerContractDataEnabledValue } from 'constants/index';
-import { LoginMethodsEnum } from 'types/enums';
 import { IDappProvider } from 'types';
+import { LoginMethodsEnum } from 'types/enums';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
@@ -56,11 +53,15 @@ export class EmptyProvider implements IDappProvider {
     return Promise.resolve(false);
   }
 
-  login<TOptions = { callbackUrl?: string } | undefined, TResponse = string>(options?: TOptions): Promise<TResponse> {
+  login<TOptions = { callbackUrl?: string } | undefined, TResponse = string>(
+    options?: TOptions
+  ): Promise<TResponse> {
     throw new Error(notInitializedError(`login with options: ${options}`));
   }
 
-  logout<TOptions = { callbackUrl?: string }, TResponse = boolean>(options?: TOptions): Promise<TResponse> {
+  logout<TOptions = { callbackUrl?: string }, TResponse = boolean>(
+    options?: TOptions
+  ): Promise<TResponse> {
     throw new Error(notInitializedError(`logout with options: ${options}`));
   }
 
@@ -76,7 +77,10 @@ export class EmptyProvider implements IDappProvider {
     return Promise.resolve(false);
   }
 
-  sendTransaction?<TOptions = { callbackUrl?: string }, TResponse = Transaction>(transaction: Transaction, options?: TOptions): Promise<TResponse> {
+  sendTransaction?<
+    TOptions = { callbackUrl?: string },
+    TResponse = Transaction
+  >(transaction: Transaction, options?: TOptions): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `sendTransaction with transactions: ${transaction} options: ${options}`
@@ -84,7 +88,10 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  signTransaction?<TOptions = { callbackUrl?: string }, TResponse = Transaction>(transaction: Transaction, options?: TOptions): Promise<TResponse> {
+  signTransaction?<
+    TOptions = { callbackUrl?: string },
+    TResponse = Transaction
+  >(transaction: Transaction, options?: TOptions): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `signTransaction with transactions: ${transaction} options: ${options}`
@@ -92,7 +99,10 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  signTransactions<TOptions = { callbackUrl?: string }, TResponse = []>(transactions: [], options?: TOptions): Promise<TResponse> {
+  signTransactions<TOptions = { callbackUrl?: string }, TResponse = []>(
+    transactions: [],
+    options?: TOptions
+  ): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `signTransactions with transactions: ${transactions} options: ${options}`
@@ -100,8 +110,15 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  signMessage<T extends SignableMessage, TOptions = { callbackUrl?: string }>(message: T, options: TOptions): Promise<T> {
-    throw new Error(notInitializedError(`signTransactions with ${message} and options ${options}`));
+  signMessage<T extends SignableMessage, TOptions = { callbackUrl?: string }>(
+    message: T,
+    options: TOptions
+  ): Promise<T> {
+    throw new Error(
+      notInitializedError(
+        `signTransactions with ${message} and options ${options}`
+      )
+    );
   }
 }
 

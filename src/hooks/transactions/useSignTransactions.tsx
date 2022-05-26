@@ -20,13 +20,12 @@ import {
   getLatestNonce,
   parseTransactionAfterSigning
 } from 'utils';
-import { IDappProvider } from '../../types';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
-  const provider = getAccountProvider() as IDappProvider;
+  const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);

@@ -8,12 +8,11 @@ import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { getIsProviderEqualTo } from 'utils/network';
 import { addressIsValid } from './addressIsValid';
-import { IDappProvider } from '../../types';
 
 export function getAddress(): Promise<string> {
   const { search } = window.location;
   const appState = store.getState();
-  const provider = getAccountProvider() as IDappProvider;
+  const provider = getAccountProvider();
   const address = addressSelector(appState);
   const loggedIn = isLoggedInSelector(appState);
   const walletLogin = walletLoginSelector(appState);

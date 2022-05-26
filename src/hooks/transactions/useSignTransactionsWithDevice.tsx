@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 import { getScamAddressData } from 'apiCalls';
 import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
@@ -10,12 +11,11 @@ import {
   setSignTransactionsError
 } from 'redux/slices/transactionsSlice';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
-import { ActiveLedgerTransactionType, IDappProvider, MultiSignTxType } from 'types';
+import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
 import { getLedgerErrorCodes } from 'utils/internal';
-import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -70,7 +70,7 @@ export function useSignTransactionsWithDevice({
     currentTransaction,
     setCurrentTransaction
   ] = useState<ActiveLedgerTransactionType | null>(null);
-  const provider = getAccountProvider() as IDappProvider;
+  const provider = getAccountProvider();
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const dispatch = useDispatch();
@@ -133,7 +133,7 @@ export function useSignTransactionsWithDevice({
 
       setWaitingForDevice(isLedger);
 
-      if(!provider.signTransaction) {
+      if (!provider.signTransaction) {
         return;
       }
 

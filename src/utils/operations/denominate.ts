@@ -29,15 +29,13 @@ export function denominate({
     pipe(input as string)
       // denominate
       .if(typeof input === 'string')
-      .then(() => {
-        const val = TokenPayment.fungibleFromBigInteger(
+      .then(() =>
+        TokenPayment.fungibleFromBigInteger(
           '',
           input as string,
           denomination
-        ).toRationalNumber();
-        console.log(val);
-        return val;
-      })
+        ).toRationalNumber()
+      )
 
       // format
       .then((current) => {
