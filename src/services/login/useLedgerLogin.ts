@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { getLedgerConfiguration } from 'providers/utils';
 import { loginAction } from 'redux/commonActions';
@@ -13,7 +14,6 @@ import {
 import { LoginMethodsEnum } from 'types/enums';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';

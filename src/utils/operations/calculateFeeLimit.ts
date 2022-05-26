@@ -2,11 +2,11 @@ import {
   Transaction,
   TransactionPayload,
   TransactionVersion,
-  Address,
+  Address
 } from '@elrondnetwork/erdjs';
+import { TokenPayment } from '@elrondnetwork/erdjs';
+import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
-import { TokenPayment } from '@elrondnetwork/erdjs/out';
-import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers/out';
 
 interface CalculateFeeLimitType {
   gasLimit: string;
@@ -37,7 +37,7 @@ export function calculateFeeLimit({
   const validGasPrice = stringIsFloat(gasPrice) ? gasPrice : defaultGasPrice;
   const transaction = new Transaction({
     nonce: 0,
-    value: TokenPayment.egldFromAmount("0"),
+    value: TokenPayment.egldFromAmount('0'),
     receiver: new Address(placeholderData.to),
     gasPrice: parseInt(validGasPrice),
     gasLimit: parseInt(validGasLimit),

@@ -1,4 +1,4 @@
-import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers/out';
+import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { networkSelector } from 'redux/selectors';
 import { store } from 'redux/store';

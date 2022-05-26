@@ -16,8 +16,8 @@ let accountProvider: ProvidersType = emptyProvider;
 
 let externalProvider: IDappProvider | null = null;
 
-export function setAccountProvider<TProvide extends ProvidersType>(
-  provider: TProvide
+export function setAccountProvider<TProvider extends ProvidersType>(
+  provider: TProvider
 ) {
   accountProvider = provider;
 }

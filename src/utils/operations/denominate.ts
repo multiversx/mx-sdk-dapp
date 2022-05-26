@@ -1,4 +1,4 @@
-import { TokenPayment } from '@elrondnetwork/erdjs/out';
+import { TokenPayment } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import { decimals as configDecimals } from 'constants/index';
 import { stringIsInteger } from 'utils/validation';
@@ -21,14 +21,13 @@ export function denominate({
   showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
 }) {
-  if (typeof input === 'string' && !stringIsInteger(input, false)) {
+  if (!stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
 
   return (
     pipe(input as string)
       // denominate
-      .if(typeof input === 'string')
       .then(() =>
         TokenPayment.fungibleFromBigInteger(
           '',

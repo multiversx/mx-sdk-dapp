@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls';
 import { useGetAccountInfo } from 'hooks/account';
 import { getAccountProvider } from 'providers/accountProvider';
@@ -19,7 +20,6 @@ import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
 import { parseTransactionAfterSigning } from 'utils';
 import { getLedgerErrorCodes } from 'utils/internal';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;

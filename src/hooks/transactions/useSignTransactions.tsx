@@ -99,11 +99,7 @@ export const useSignTransactions = () => {
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {
-      if (!provider.init) {
-        return;
-      }
-
-      const isProviderInitialized = await provider.init();
+      const isProviderInitialized = await provider?.init?.();
 
       if (!isProviderInitialized) {
         return;
