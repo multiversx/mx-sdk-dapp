@@ -38,7 +38,7 @@ export async function refreshAccount() {
   } else {
     try {
       if (!provider.init) {
-        throw 'Provider has missing init() function';
+        throw 'Current provider does not have init() function';
       }
 
       const initialized = await provider.init();
