@@ -28,22 +28,10 @@ export const successServerTransactionsStates = [
   TransactionServerStatusesEnum.success
 ];
 
-export const completedServerTransactionsStates = [
-  TransactionServerStatusesEnum.completed
-];
-
 export const failServerTransactionsStates = [
   TransactionServerStatusesEnum.fail,
   TransactionServerStatusesEnum.invalid
 ];
-
-export function getIsTransactionCompleted(
-  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum
-) {
-  return completedServerTransactionsStates.includes(
-    status as TransactionServerStatusesEnum
-  );
-}
 
 export function getIsTransactionPending(
   status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum

@@ -6,7 +6,6 @@ import {
   SignedTransactionsType
 } from 'types/transactions';
 import {
-  getIsTransactionCompleted,
   getIsTransactionFailed,
   getIsTransactionPending,
   getIsTransactionSuccessful,
@@ -52,11 +51,6 @@ export const pendingSignedTransactionsSelector = createDeepEqualSelector(
 export const successfulTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
   selectTxByStatus(getIsTransactionSuccessful)
-);
-
-export const completedTransactionsSelector = createDeepEqualSelector(
-  signedTransactionsSelector,
-  selectTxByStatus(getIsTransactionCompleted)
 );
 
 export const failedTransactionsSelector = createDeepEqualSelector(

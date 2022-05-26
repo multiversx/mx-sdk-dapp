@@ -13,7 +13,7 @@ import {
 } from 'types/transactions';
 import {
   getIsTransactionFailed,
-  getIsTransactionCompleted
+  getIsTransactionSuccessful
 } from 'utils/transactions';
 import { logoutAction } from '../commonActions';
 
@@ -146,7 +146,7 @@ export const transactionsSlice = createSlice({
         const areTransactionsSuccessful = state.signedTransactions[
           sessionId
         ]?.transactions?.every((transaction) => {
-          return getIsTransactionCompleted(transaction.status);
+          return getIsTransactionSuccessful(transaction.status);
         });
 
         const areTransactionsFailed = state.signedTransactions[
