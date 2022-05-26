@@ -1,4 +1,5 @@
 import React from 'react';
+import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import qs from 'qs';
 import { dappInitRoute, walletSignSession } from 'constants/index';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -6,7 +7,6 @@ import { networkSelector } from 'redux/selectors';
 import { moveTransactionsToSignedState } from 'redux/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { parseTransactionAfterSigning } from 'utils';
-import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider/out';
 
 export function useParseSignedTransactions() {
   const { search } = window.location;

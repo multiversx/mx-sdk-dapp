@@ -14,6 +14,7 @@ import {
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState
 } from 'redux/slices';
+import { IDappProvider } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   builtCallbackUrl,
@@ -25,7 +26,7 @@ export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
-  const provider = getAccountProvider();
+  const provider = getAccountProvider() as IDappProvider;
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);

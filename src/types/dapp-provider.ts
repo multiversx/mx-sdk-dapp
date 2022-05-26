@@ -1,5 +1,4 @@
 import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
-import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 
 export interface IDappProvider {
   init?(): Promise<boolean>;
@@ -20,14 +19,14 @@ export interface IDappProvider {
     options?: TOptions
   ): Promise<TResponse>;
   signTransaction?<
-    TResponse = PlainSignedTransaction,
+    TResponse = Transaction,
     TOptions = { callbackUrl?: string }
   >(
     transaction: Transaction,
     options?: TOptions
   ): Promise<TResponse>;
   signTransactions?<
-    TResponse = PlainSignedTransaction,
+    TResponse = Transaction[],
     TOptions = { callbackUrl?: string }
   >(
     transactions: Transaction[],

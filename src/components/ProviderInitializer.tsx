@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import {
   setExternalProviderAsAccountProvider,
   setAccountProvider
 } from 'providers/accountProvider';
-import {
-  getNetworkConfigFromProxyProvider,
-} from 'providers/proxyProvider';
+import { getNetworkConfigFromProxyProvider } from 'providers/proxyProvider';
 import { getLedgerConfiguration, newWalletProvider } from 'providers/utils';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -30,8 +30,6 @@ import {
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
 import { getAddress, getAccount, getLatestNonce, logout } from 'utils';
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider/out';
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider/out';
 
 export default function ProviderInitializer() {
   const network = useSelector(networkSelector);
