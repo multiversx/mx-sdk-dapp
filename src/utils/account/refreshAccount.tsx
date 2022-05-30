@@ -34,7 +34,7 @@ export async function refreshAccount() {
   if (provider == null) {
     throw 'Provider not initialized';
   }
-  if (provider.isInitialized()) {
+  if (!provider.isInitialized || provider.isInitialized()) {
     return setNewAccount();
   } else {
     try {
