@@ -12,5 +12,5 @@ export async function getAccountBalance(address?: string) {
   if (account == null) {
     throw 'Could not read account, user not logged in';
   }
-  return account?.balance?.toString();
+  return account?.balance?.toFixed();
 }

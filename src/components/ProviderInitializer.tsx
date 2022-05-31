@@ -106,7 +106,7 @@ export default function ProviderInitializer() {
         if (account) {
           dispatch(
             setAccount({
-              balance: account.balance.toString(),
+              balance: account.balance.toFixed(),
               address,
               nonce: account.nonce.valueOf()
             })
@@ -134,7 +134,7 @@ export default function ProviderInitializer() {
           if (account) {
             dispatch(
               setAccount({
-                balance: account.balance.toString(),
+                balance: account.balance.toFixed(),
                 address,
                 nonce: getLatestNonce(account)
               })

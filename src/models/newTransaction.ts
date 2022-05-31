@@ -18,7 +18,8 @@ export function newTransaction(rawTransaction: RawTransactionType) {
   const dataPayload = isStringBase64(data ?? '')
     ? TransactionPayload.fromEncoded(data)
     : new TransactionPayload(data);
-  return new Transaction({
+
+  const transaction = new Transaction({
     value: rawTransaction.value.valueOf(),
     data: dataPayload,
     nonce: rawTransaction.nonce.valueOf(),
@@ -32,6 +33,15 @@ export function newTransaction(rawTransaction: RawTransactionType) {
       ? { options: new TransactionOptions(rawTransaction.options) }
       : {})
   });
+
+  transaction.applySignature(
+    {
+      hex: () => rawTransaction.signature || ''
+    },
+    new Address(rawTransaction.sender)
+  );
+
+  return transaction;
 }
 
 export default newTransaction;
