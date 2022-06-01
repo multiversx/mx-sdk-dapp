@@ -218,7 +218,7 @@ export const useWalletConnectLogin = ({
     dispatch(setTokenLogin({ loginToken: token }));
   }
 
-  const loginFailed = error != null;
+  const loginFailed = Boolean(error);
   return [
     initiateLogin,
     {
