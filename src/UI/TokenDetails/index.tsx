@@ -21,7 +21,7 @@ type TokenIconProps = {
 type TokenIconType = TokenIconProps & {
   symbol: string;
   label: string;
-  icon: React.ReactNode;
+  icon: () => JSX.Element;
 };
 
 function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
@@ -43,7 +43,8 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
     token,
     symbol: token ? token.split('-')[0] : '',
     label: token,
-    icon: getIcon(isEgldTransfer, tokenAvatar)
+    // eslint-disable-next-line react/display-name
+    icon: () => getIcon(isEgldTransfer, tokenAvatar)
   };
 };
 
