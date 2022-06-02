@@ -7,10 +7,10 @@ import { SignedTransactionType } from '../../types';
 export function parseTransactionAfterSigning(
   signedTransaction: Transaction | PlainSignedTransaction
 ) {
-  const isComplexTransactions =
+  const isComplexTransaction =
     Object.getPrototypeOf(signedTransaction).toPlainObject != null;
 
-  const transaction = isComplexTransactions
+  const transaction = isComplexTransaction
     ? (signedTransaction as Transaction)
     : newTransaction(signedTransaction as PlainSignedTransaction);
 
