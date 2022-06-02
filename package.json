@@ -35,8 +35,8 @@
     "@types/lodash.omit": "4.5.6",
     "@types/lodash.throttle": "4.1.6",
     "@types/qs": "^6.9.7",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2",
+    "@types/react": "18.0.10",
+    "@types/react-dom": "18.0.5",
     "babel-loader": "8.2.4",
     "babel-plugin-module-resolver": "^4.1.0",
     "eslint-config-prettier": "8.3.0",
@@ -53,8 +53,8 @@
     "eslint-plugin-react": "7.22.0",
     "eslint-plugin-react-hooks": "4.2.0",
     "husky": "7.0.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-is": "18.0.0",
     "rollup-plugin-scss": "3.0.0",
     "rollup-plugin-svg-import": "1.6.0",
@@ -79,8 +79,8 @@
     "react": ">=17"
   },
   "resolutions": {
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2"
+    "@types/react": "18.0.10",
+    "@types/react-dom": "18.0.5"
   },
   "optionalDependencies": {
     "@fortawesome/fontawesome-svg-core": "6.1.0",
@@ -129,7 +129,7 @@
     "qs": "6.10.3",
     "react-error-overlay": "6.0.9",
     "react-idle-timer": "5.0.0",
-    "react-redux": "7.2.6",
+    "react-redux": "^8.0.2",
     "react-scripts": "4.0.3",
     "redux-persist": "6.0.0",
     "reselect": "4.0.0",

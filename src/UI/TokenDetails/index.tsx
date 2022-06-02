@@ -43,8 +43,7 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
     token,
     symbol: token ? token.split('-')[0] : '',
     label: token,
-    // eslint-disable-next-line react/display-name
-    icon: () => getIcon(isEgldTransfer, tokenAvatar)
+    icon: getIcon(isEgldTransfer, tokenAvatar)
   };
 };
 
