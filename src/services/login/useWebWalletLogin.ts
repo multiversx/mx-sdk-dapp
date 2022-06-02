@@ -57,7 +57,7 @@ export const useWebWalletLogin = ({
     }
   }
 
-  const loginFailed = error != null;
+  const loginFailed = Boolean(error);
 
   return [
     initiateLogin,
