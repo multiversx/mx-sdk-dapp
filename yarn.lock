@@ -1178,10 +1178,10 @@
     buffer "6.0.3"
     json-bigint "1.0.0"
 
-"@elrondnetwork/erdjs-wallet-connect-provider@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.0.1.tgz#3df2bc475c99ca290155471ac495c73ae30ae900"
-  integrity sha512-Knqa62jBsgrRJfzBESQ51uDfau4NHYx4wnukYOV/TqYp6EJzHHnZn/ME4dlBICVQMiHUaALTTjD1c8Hi+28bDA==
+"@elrondnetwork/erdjs-wallet-connect-provider@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.0.2.tgz#91733b3d6161c8957119c7a33e189c9b36461344"
+  integrity sha512-CtMNp+YOv98WdAWUC2i1wpcXr9vcm0TeYTCYSLhDWh6AXw1H9/UYpKTHm/o3NKwSzlZ0JC/01YfBqUxhAKpilg==
   dependencies:
     "@walletconnect/client" "1.6.5"
     bech32 "1.1.4"

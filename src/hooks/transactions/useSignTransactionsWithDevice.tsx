@@ -190,7 +190,7 @@ export function useSignTransactionsWithDevice({
         return;
       }
       const signature = currentTransaction.transaction.getSignature();
-      if (signature) {
+      if (signature.hex()) {
         if (!isLastTransaction) {
           setCurrentStep((exising) => exising + 1);
         }
