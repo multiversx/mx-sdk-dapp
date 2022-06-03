@@ -34,15 +34,16 @@ export function useTrackTransactionStatus({
   const { signedTransactionsArray } = useGetSignedTransactions();
   const isWalletProvider = getIsProviderEqualTo(LoginMethodsEnum.wallet);
 
-  const [sessionId] =
+  const [lastSessionId] =
     signedTransactionsArray.length > 0
       ? signedTransactionsArray[signedTransactionsArray.length - 1]
       : [];
 
   /**
-   * Web wallet restores sessionId
+   * Web wallet restores sessionId, which is lost when redirecting,
+   * so we extract it from signedTransactions
    */
-  const walletSessionId = txId ?? sessionId ?? null;
+  const walletSessionId = txId ?? lastSessionId ?? null;
 
   const transactionId = isWalletProvider ? walletSessionId : txId;
 
@@ -59,6 +60,12 @@ export function useTrackTransactionStatus({
 
   const isCancelled = status === TransactionBatchStatusesEnum.cancelled;
 
+  /**
+   * Because wallet restores the session upon return,
+   * we make sure to execute the callback actions
+   * once, and then clear all transactions from store to
+   * prevent re-execution
+   */
   function preventWalletDoubleCallback() {
     if (isWalletProvider) {
       removeAllSignedTransactions();
