@@ -111,7 +111,8 @@ export default function ProviderInitializer() {
             setAccount({
               balance: account.balance.toString(),
               address,
-              nonce: account.nonce.valueOf()
+              nonce: account.nonce.valueOf(),
+              username: account.userName
             })
           );
         }
@@ -139,7 +140,8 @@ export default function ProviderInitializer() {
               setAccount({
                 balance: account.balance.toString(),
                 address,
-                nonce: getLatestNonce(account)
+                nonce: getLatestNonce(account),
+                username: account.userName
               })
             );
           }
