@@ -19,7 +19,8 @@ import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   builtCallbackUrl,
   getLatestNonce,
-  parseTransactionAfterSigning
+  parseTransactionAfterSigning,
+  safeRedirect
 } from 'utils';
 
 export const useSignTransactions = () => {
@@ -144,7 +145,7 @@ export const useSignTransactions = () => {
       );
 
       if (shouldRedirectAfterSign) {
-        window.location.href = redirectRoute;
+        safeRedirect(redirectRoute);
       }
     } catch (error) {
       const errorMessage =

@@ -17,8 +17,12 @@ import {
   MultiSignTxType
 } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
-import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
-import { parseTransactionAfterSigning } from 'utils';
+import {
+  getIsProviderEqualTo,
+  isTokenTransfer,
+  parseTransactionAfterSigning,
+  safeRedirect
+} from 'utils';
 import { getLedgerErrorCodes } from 'utils/internal';
 
 export interface UseSignTransactionsWithDevicePropsType {
@@ -169,7 +173,7 @@ export function useSignTransactionsWithDevice({
           customTransactionInformation?.redirectAfterSign &&
           !window.location.pathname.includes(callbackRoute)
         ) {
-          window.location.href = callbackRoute;
+          safeRedirect(callbackRoute);
         }
       }
     } catch (err) {
@@ -214,7 +218,7 @@ export function useSignTransactionsWithDevice({
         callbackRoute != null &&
         customTransactionInformation?.redirectAfterSign
       ) {
-        window.location.href = callbackRoute;
+        safeRedirect(callbackRoute);
       }
     } else {
       setCurrentStep((existing) => existing - 1);

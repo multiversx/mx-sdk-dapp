@@ -1,6 +1,7 @@
 import React from 'react';
 import { DappUI, useGetLoginInfo } from '@elrondnetwork/dapp-core';
 import { routeNames } from 'routes';
+import { safeRedirect } from '../../../../src/utils';
 
 export const UnlockRoute: () => JSX.Element = () => {
   const {
@@ -13,7 +14,7 @@ export const UnlockRoute: () => JSX.Element = () => {
 
   React.useEffect(() => {
     if (isLoggedIn) {
-      window.location.href = routeNames.dashboard;
+      safeRedirect(routeNames.dashboard);
     }
   }, [isLoggedIn]);
 

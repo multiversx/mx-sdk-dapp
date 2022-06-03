@@ -4,7 +4,7 @@ import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, wrapperClassName } from 'utils';
+import { getGeneratedClasses, wrapperClassName, safeRedirect } from 'utils';
 
 const SignWithExtensionModal = ({
   handleClose,
@@ -31,7 +31,7 @@ const SignWithExtensionModal = ({
       callbackRoute != null &&
       !window.location.pathname.includes(callbackRoute)
     ) {
-      window.location.href = callbackRoute;
+      safeRedirect(callbackRoute);
     }
   };
 
