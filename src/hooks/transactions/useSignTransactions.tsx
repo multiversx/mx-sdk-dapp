@@ -79,6 +79,9 @@ export const useSignTransactions = () => {
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
     if (!provider.signTransactions) {
+      console.error(
+        'Can not sign the transaction. The provider does not contains signTransaction method'
+      );
       return;
     }
 
@@ -117,6 +120,9 @@ export const useSignTransactions = () => {
 
     try {
       if (!provider.signTransactions) {
+        console.error(
+          'Can not sign the transaction. The provider does not contains signTransaction method'
+        );
         return;
       }
 

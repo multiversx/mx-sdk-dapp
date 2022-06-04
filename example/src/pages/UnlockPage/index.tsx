@@ -1,7 +1,10 @@
 import React from 'react';
-import { DappUI, useGetLoginInfo } from '@elrondnetwork/dapp-core';
+import {
+  DappUI,
+  useGetLoginInfo,
+  safeRedirect
+} from '@elrondnetwork/dapp-core';
 import { routeNames } from 'routes';
-import { safeRedirect } from '../../../../src/utils';
 
 export const UnlockRoute: () => JSX.Element = () => {
   const {

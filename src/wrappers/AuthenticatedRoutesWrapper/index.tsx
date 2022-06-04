@@ -46,7 +46,6 @@ const AuthenticatedRoutesWrapper = ({
     if (onRedirect) {
       onRedirect(unlockRoute);
     } else {
-      console.log('AuthRoutesWrapper = ', unlockRoute);
       safeRedirect(unlockRoute);
     }
     return null;
