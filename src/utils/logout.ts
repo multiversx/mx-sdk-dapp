@@ -36,7 +36,10 @@ export async function logout(
     console.error('error fetching logout address', err);
   }
 
-  preventRedirects();
+  if (providerType === LoginMethodsEnum.wallet) {
+    preventRedirects();
+  }
+
   store.dispatch(logoutAction());
 
   try {
