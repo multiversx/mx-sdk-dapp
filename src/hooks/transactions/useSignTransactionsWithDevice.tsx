@@ -11,11 +11,7 @@ import {
   setSignTransactionsError
 } from 'redux/slices/transactionsSlice';
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
-import {
-  ActiveLedgerTransactionType,
-  IDappProvider,
-  MultiSignTxType
-} from 'types';
+import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   getIsProviderEqualTo,
@@ -78,7 +74,7 @@ export function useSignTransactionsWithDevice({
     currentTransaction,
     setCurrentTransaction
   ] = useState<ActiveLedgerTransactionType | null>(null);
-  const provider = getAccountProvider() as IDappProvider;
+  const provider = getAccountProvider();
   const egldLabel = useSelector(egldLabelSelector);
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const dispatch = useDispatch();

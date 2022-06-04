@@ -1,6 +1,5 @@
 import { SignableMessage, Address } from '@elrondnetwork/erdjs';
 import { getAccountProvider } from 'providers/accountProvider';
-import { IDappProvider } from 'types';
 import { getAddress } from 'utils/account/getAddress';
 
 interface SignMessageType {
@@ -10,7 +9,7 @@ interface SignMessageType {
 
 export async function signMessage({ message, callbackRoute }: SignMessageType) {
   const address = await getAddress();
-  const provider = getAccountProvider() as IDappProvider;
+  const provider = getAccountProvider();
 
   const callbackUrl = `${window.location.origin}${callbackRoute}`;
   const signableMessage = new SignableMessage({
