@@ -32,8 +32,8 @@ export function setExternalProviderAsAccountProvider() {
   }
 }
 
-export function getAccountProvider() {
-  return accountProvider || emptyProvider;
+export function getAccountProvider(): IDappProvider {
+  return (accountProvider as IDappProvider) || emptyProvider;
 }
 
 export function getExternalProvider() {
