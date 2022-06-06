@@ -77,13 +77,6 @@ export const useSignTransactions = () => {
     const callbackUrl = `${window.location.origin}${callbackRoute}`;
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
-    if (!provider.signTransactions) {
-      console.error(
-        'Can not sign the transaction. The provider does not contains signTransaction method'
-      );
-      return;
-    }
-
     provider.signTransactions(transactions, {
       callbackUrl: encodeURIComponent(buildedCallbackUrl)
     });
@@ -118,13 +111,6 @@ export const useSignTransactions = () => {
     }
 
     try {
-      if (!provider.signTransactions) {
-        console.error(
-          'Can not sign the transaction. The provider does not contains signTransaction method'
-        );
-        return;
-      }
-
       const signedTransactions = await provider.signTransactions(transactions);
       const hasSameTransactions =
         Object.keys(signedTransactions).length === transactions.length;

@@ -18,14 +18,11 @@ export interface IDappProvider {
     transaction: Transaction,
     options?: TOptions
   ): Promise<TResponse>;
-  signTransaction?<
-    TResponse = Transaction,
-    TOptions = { callbackUrl?: string }
-  >(
+  signTransaction<TResponse = Transaction, TOptions = { callbackUrl?: string }>(
     transaction: Transaction,
     options?: TOptions
   ): Promise<TResponse>;
-  signTransactions?<
+  signTransactions<
     TResponse = Transaction[],
     TOptions = { callbackUrl?: string }
   >(

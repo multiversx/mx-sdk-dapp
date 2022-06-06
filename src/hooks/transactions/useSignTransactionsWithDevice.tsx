@@ -137,13 +137,6 @@ export function useSignTransactionsWithDevice({
 
       setWaitingForDevice(isLedger);
 
-      if (!provider.signTransaction) {
-        console.error(
-          'Can not sign the transaction. The provider does not contains signTransaction method'
-        );
-        return;
-      }
-
       const signedTx = await provider.signTransaction(
         currentTransaction.transaction
       );

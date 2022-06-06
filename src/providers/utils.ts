@@ -88,10 +88,10 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  signTransaction?<
-    TOptions = { callbackUrl?: string },
-    TResponse = Transaction
-  >(transaction: Transaction, options?: TOptions): Promise<TResponse> {
+  signTransaction<TOptions = { callbackUrl?: string }, TResponse = Transaction>(
+    transaction: Transaction,
+    options?: TOptions
+  ): Promise<TResponse> {
     throw new Error(
       notInitializedError(
         `signTransaction with transactions: ${transaction} options: ${options}`
