@@ -5,7 +5,7 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, wrapperClassName } from 'utils';
+import { getGeneratedClasses, wrapperClassName, safeRedirect } from 'utils';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -34,7 +34,7 @@ export const SignWithWalletConnectModal = ({
       callbackRoute != null &&
       !window.location.pathname.includes(callbackRoute)
     ) {
-      window.location.href = callbackRoute;
+      safeRedirect(callbackRoute);
     }
   };
   return (

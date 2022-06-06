@@ -1,13 +1,11 @@
 import { useEffect, useState } from 'react';
-import { HWProvider, ExtensionProvider } from '@elrondnetwork/erdjs';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import {
   setExternalProviderAsAccountProvider,
   setAccountProvider
 } from 'providers/accountProvider';
-import {
-  getNetworkConfigFromProxyProvider,
-  getProxyProvider
-} from 'providers/proxyProvider';
+import { getNetworkConfigFromProxyProvider } from 'providers/proxyProvider';
 import { getLedgerConfiguration, newWalletProvider } from 'providers/utils';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -47,7 +45,6 @@ export default function ProviderInitializer() {
     dataEnabled: boolean;
   }>();
 
-  const proxy = getProxyProvider();
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -109,7 +106,7 @@ export default function ProviderInitializer() {
         if (account) {
           dispatch(
             setAccount({
-              balance: account.balance.toString(),
+              balance: account.balance.toFixed(),
               address,
               nonce: account.nonce.valueOf()
             })
@@ -137,7 +134,7 @@ export default function ProviderInitializer() {
           if (account) {
             dispatch(
               setAccount({
-                balance: account.balance.toString(),
+                balance: account.balance.toFixed(),
                 address,
                 nonce: getLatestNonce(account)
               })
@@ -152,7 +149,7 @@ export default function ProviderInitializer() {
   }
 
   async function getInitializedHwWalletProvider() {
-    const hwWalletP = new HWProvider(proxy);
+    const hwWalletP = new HWProvider();
     let isInitialized = hwWalletP.isInitialized();
     if (!isInitialized) {
       isInitialized = await hwWalletP.init();

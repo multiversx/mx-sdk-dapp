@@ -67,8 +67,8 @@ export async function transformAndSignTransactions({
       nonce: Number(nonce.valueOf().toString()),
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
-      version,
-      options
+      version: version ?? 1,
+      options,
     });
   });
 }

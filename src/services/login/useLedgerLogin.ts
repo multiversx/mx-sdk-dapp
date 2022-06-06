@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { HWProvider } from '@elrondnetwork/erdjs';
+import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { setAccountProvider } from 'providers/accountProvider';
-import { getProxyProvider } from 'providers/proxyProvider';
 import { getLedgerConfiguration } from 'providers/utils';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
@@ -61,12 +60,11 @@ export function useLedgerLogin({
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const proxy = getProxyProvider();
   const dispatch = useDispatch();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const hwWalletP = new HWProvider(proxy);
+  const hwWalletP = new HWProvider();
   const [startIndex, setStartIndex] = useState(0);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
@@ -171,7 +169,7 @@ export function useLedgerLogin({
         );
       }
 
-      const hwWalletProvider = new HWProvider(proxy);
+      const hwWalletProvider = new HWProvider();
       const initialized = await hwWalletProvider.init();
       if (!initialized) {
         setError(failInitializeErrorText);
@@ -225,14 +223,15 @@ export function useLedgerLogin({
     try {
       setIsLoading(true);
       if (ledgerAccount != null) {
-        const hwWalletP = new HWProvider(proxy);
+        const hwWalletP = new HWProvider();
         const initialized = await hwWalletP.init();
-        if (!initialized) {
+        if (!initialized || !selectedAddress) {
           console.warn(failInitializeErrorText);
           return;
         }
+
         const address = await hwWalletP.login({
-          addressIndex: selectedAddress?.index
+          addressIndex: selectedAddress.index.valueOf()
         });
         setAccountProvider(hwWalletP);
         dispatch(

@@ -1,21 +1,24 @@
-import { ProxyProvider } from '@elrondnetwork/erdjs';
+import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { networkSelector } from 'redux/selectors';
 import { store } from 'redux/store';
 import { NetworkType } from 'types';
 
-let proxyProvider: ProxyProvider | null = null;
+let proxyProvider: ProxyNetworkProvider | null = null;
 
 export function initializeProxyProvider(networkConfig?: NetworkType) {
   const initializationNetworkConfig =
     networkConfig || networkSelector(store.getState());
-  proxyProvider = new ProxyProvider(initializationNetworkConfig.apiAddress, {
-    timeout: Number(initializationNetworkConfig.apiTimeout)
-  });
+  proxyProvider = new ProxyNetworkProvider(
+    initializationNetworkConfig.apiAddress,
+    {
+      timeout: Number(initializationNetworkConfig.apiTimeout)
+    }
+  );
   return proxyProvider;
 }
 
-export function getProxyProvider(): ProxyProvider {
+export function getProxyProvider(): ProxyNetworkProvider {
   if (proxyProvider == null) {
     return initializeProxyProvider();
   } else {

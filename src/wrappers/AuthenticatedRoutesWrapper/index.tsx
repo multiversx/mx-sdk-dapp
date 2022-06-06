@@ -7,6 +7,7 @@ import {
 } from 'redux/selectors';
 
 import { RouteType } from 'types';
+import { safeRedirect } from '../../utils';
 
 const AuthenticatedRoutesWrapper = ({
   children,
@@ -45,7 +46,7 @@ const AuthenticatedRoutesWrapper = ({
     if (onRedirect) {
       onRedirect(unlockRoute);
     } else {
-      window.location.href = unlockRoute;
+      safeRedirect(unlockRoute);
     }
     return null;
   }

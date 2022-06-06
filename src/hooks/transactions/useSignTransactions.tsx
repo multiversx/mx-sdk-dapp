@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExtensionProvider, Nonce, Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@elrondnetwork/erdjs';
 
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { errorsMessages, walletSignSession } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
@@ -17,7 +18,8 @@ import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   builtCallbackUrl,
   getLatestNonce,
-  parseTransactionAfterSigning
+  parseTransactionAfterSigning,
+  safeRedirect
 } from 'utils';
 
 export const useSignTransactions = () => {
@@ -93,7 +95,7 @@ export const useSignTransactions = () => {
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {
-      const isProviderInitialized = await provider.init();
+      const isProviderInitialized = await provider?.init?.();
 
       if (!isProviderInitialized) {
         return;
@@ -123,7 +125,7 @@ export const useSignTransactions = () => {
 
       const signedTransactionsArray = Object.values(
         signedTransactions
-      ).map((tx: any) => parseTransactionAfterSigning(tx));
+      ).map((tx) => parseTransactionAfterSigning(tx));
 
       dispatch(
         moveTransactionsToSignedState({
@@ -134,9 +136,9 @@ export const useSignTransactions = () => {
       );
 
       if (shouldRedirectAfterSign) {
-        window.location.href = redirectRoute;
+        safeRedirect(redirectRoute);
       }
-    } catch (err) {
+    } catch (error) {
       const errorMessage =
         ((error as unknown) as Error)?.message ||
         (error as string) ||
@@ -176,7 +178,7 @@ export const useSignTransactions = () => {
       transactions: Array<Transaction>
     ): Array<Transaction> => {
       return transactions.map((tx: Transaction, index: number) => {
-        tx.setNonce(new Nonce(latestNonce + index));
+        tx.setNonce(latestNonce + index);
 
         return tx;
       });

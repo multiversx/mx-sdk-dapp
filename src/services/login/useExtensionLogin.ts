@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExtensionProvider } from '@elrondnetwork/erdjs';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
