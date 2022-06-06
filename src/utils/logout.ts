@@ -25,6 +25,8 @@ export async function logout(
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isLoggedIn = getIsLoggedIn();
+  const isWalletProvider = providerType === LoginMethodsEnum.wallet;
+
   if (!isLoggedIn || !provider) {
     return;
   }
@@ -36,14 +38,13 @@ export async function logout(
     console.error('error fetching logout address', err);
   }
 
-  if (providerType === LoginMethodsEnum.wallet) {
+  if (isWalletProvider) {
     preventRedirects();
   }
 
   store.dispatch(logoutAction());
 
   try {
-    const isWalletProvider = providerType === LoginMethodsEnum.wallet;
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
     const url = needsCallbackUrl ? window.location.origin : callbackUrl;
 
