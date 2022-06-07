@@ -11,11 +11,11 @@ BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 
 export function denominate({
   input,
+  denomination = configDenomination,
   decimals = configDecimals,
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
-  addCommas = false,
-  denomination = configDenomination
+  addCommas = false
 }: {
   input: string;
   denomination?: number;
@@ -28,13 +28,21 @@ export function denominate({
     throw new Error('Invalid input');
   }
 
+  const isNegative = new BigNumber(input).isNegative();
+  let modInput = input;
+
+  if (isNegative) {
+    // remove - at start of input
+    modInput = input.substring(1);
+  }
+
   return (
-    pipe(input as string)
+    pipe(modInput as string)
       // denominate
       .then(() =>
         TokenPayment.fungibleFromBigInteger(
           '',
-          input as string,
+          modInput as string,
           denomination
         ).toRationalNumber()
       )
@@ -115,6 +123,8 @@ export function denominate({
 
         return formattedBalance;
       })
+      .if(isNegative)
+      .then((current) => `-${current}`)
 
       .valueOf()
   );

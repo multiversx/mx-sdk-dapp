@@ -1,5 +1,4 @@
 import { isContract } from './../smartContracts';
-// file.only
 
 const userAddress =
   'erd1a07ey0xj28u90mtk8858zsavs0cj7s3cy74ufgxdmcq3nslr0y2st2aaax';
