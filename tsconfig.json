@@ -3,8 +3,15 @@
   "extends": "@tsconfig/create-react-app/tsconfig.json",
   "include": ["src", "types"],
   "compilerOptions": {
+    "module": "esnext",
+    "lib": ["dom", "esnext"],
     "baseUrl": "./src",
     "importHelpers": true,
+    // output .d.ts declaration files for consumers
+    "declaration": true,
+    // output .js.map sourcemap files for consumers
+    "sourceMap": true,
+    // match output dir to input dir. e.g. dist/index instead of dist/src/index
     "rootDir": "./src",
     // stricter type-checking for stronger correctness. Recommended by TS
     "strict": true,
