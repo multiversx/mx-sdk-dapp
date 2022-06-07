@@ -1,5 +1,4 @@
 import nominate from './../nominate';
-// file.only
 
 describe('nominate tests', () => {
   it('adds 18 zeros', () => {
