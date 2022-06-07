@@ -100,6 +100,10 @@ export function denominate({
               return `<${numericPart}.${minAmount}`;
             }
 
+            if (!showLastNonZeroDecimal) {
+              return numericPart;
+            }
+
             return `${numericPart}.${decimalSide}`;
           })
 

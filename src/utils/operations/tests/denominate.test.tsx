@@ -178,6 +178,14 @@ describe('denomination single tests', () => {
     });
     expect(result).toBe('<0.01');
   });
+  it('should not show decimals when result is below 1', () => {
+    const result = denominate({
+      input: (100_000_000_000_000).toString(),
+      showLastNonZeroDecimal: false,
+      decimals: 2
+    });
+    expect(result).toBe('0');
+  });
   it('should show zero decimals for integers with decimal amount too low', () => {
     const result = denominate({
       input: ['1', '000', '000', '001', '000', '000', '000', '000'].join(''),
