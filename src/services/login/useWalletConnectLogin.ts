@@ -1,12 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { WalletConnectProvider } from '@elrondnetwork/erdjs';
-
+import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
   getAccountProvider,
   setAccountProvider
 } from 'providers/accountProvider';
-import { getProxyProvider } from 'providers/proxyProvider';
 import { loginAction } from 'redux/commonActions';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
@@ -19,7 +17,6 @@ import {
   setTokenLoginSignature,
   setWalletConnectLogin
 } from 'redux/slices';
-
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
@@ -57,8 +54,6 @@ export const useWalletConnectLogin = ({
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
 
-  const proxy = getProxyProvider();
-
   const provider = getAccountProvider();
   const walletConnectBridgeAddress = useSelector(
     walletConnectBridgeAddressSelector
@@ -92,6 +87,10 @@ export const useWalletConnectLogin = ({
   useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
+
+  const handleOnLogout = () => {
+    logout(logoutRoute);
+  };
 
   async function handleHeartbeat() {
     const isProviderConnected = Boolean(
@@ -161,10 +160,6 @@ export const useWalletConnectLogin = ({
     }
   }
 
-  const handleOnLogout = () => {
-    logout(logoutRoute);
-  };
-
   async function initiateLogin(loginProvider = true) {
     const shouldGenerateWcUri = loginProvider && !wcUri;
     if (
@@ -180,7 +175,6 @@ export const useWalletConnectLogin = ({
     };
 
     const newProvider = new WalletConnectProvider(
-      proxy,
       walletConnectBridgeAddress,
       providerHandlers
     );

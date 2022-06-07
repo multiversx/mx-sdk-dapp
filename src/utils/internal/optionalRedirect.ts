@@ -1,3 +1,5 @@
+import { safeRedirect } from '../redirect';
+
 export function optionalRedirect(
   callbackUrl?: string,
   shouldRedirect?: boolean
@@ -5,7 +7,7 @@ export function optionalRedirect(
   if (shouldRedirect && callbackUrl != null) {
     setTimeout(() => {
       if (!window.location.pathname.includes(callbackUrl)) {
-        window.location.href = callbackUrl;
+        safeRedirect(callbackUrl);
       }
     }, 200);
   }

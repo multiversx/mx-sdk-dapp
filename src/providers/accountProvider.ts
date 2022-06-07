@@ -1,11 +1,24 @@
-import { IDappProvider } from '@elrondnetwork/erdjs';
+import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
+import { IDappProvider } from 'types';
 import { emptyProvider } from './utils';
 
-let accountProvider: IDappProvider = emptyProvider;
+type ProvidersType =
+  | IDappProvider
+  | ExtensionProvider
+  | WalletProvider
+  | HWProvider
+  | WalletConnectProvider;
+
+let accountProvider: ProvidersType = emptyProvider;
 
 let externalProvider: IDappProvider | null = null;
 
-export function setAccountProvider(provider: IDappProvider) {
+export function setAccountProvider<TProvider extends ProvidersType>(
+  provider: TProvider
+) {
   accountProvider = provider;
 }
 
@@ -19,8 +32,8 @@ export function setExternalProviderAsAccountProvider() {
   }
 }
 
-export function getAccountProvider() {
-  return accountProvider || emptyProvider;
+export function getAccountProvider(): IDappProvider {
+  return (accountProvider as IDappProvider) || emptyProvider;
 }
 
 export function getExternalProvider() {

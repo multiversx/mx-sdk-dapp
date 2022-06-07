@@ -1,5 +1,5 @@
 import React from 'react';
-import { WalletProvider } from '@elrondnetwork/erdjs';
+import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import qs from 'qs';
 import { dappInitRoute, walletSignSession } from 'constants/index';
 import { useDispatch, useSelector } from 'redux/DappProviderContext';

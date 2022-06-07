@@ -12,7 +12,7 @@ const setNewAccount = async () => {
       const account = await getAccount(address);
       if (account != null) {
         const accountData = {
-          balance: account.balance.toString(),
+          balance: account.balance.toFixed(),
           address,
           nonce: getLatestNonce(account)
         };
@@ -33,10 +33,14 @@ export async function refreshAccount() {
   if (provider == null) {
     throw 'Provider not initialized';
   }
-  if (provider.isInitialized()) {
+  if (!provider.isInitialized || provider.isInitialized()) {
     return setNewAccount();
   } else {
     try {
+      if (!provider.init) {
+        throw 'Current provider does not have init() function';
+      }
+
       const initialized = await provider.init();
       if (!initialized) {
         return;

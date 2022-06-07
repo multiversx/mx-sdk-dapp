@@ -21,7 +21,7 @@ type TokenIconProps = {
 type TokenIconType = TokenIconProps & {
   symbol: string;
   label: string;
-  icon: React.ReactNode;
+  icon: () => JSX.Element;
 };
 
 function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {

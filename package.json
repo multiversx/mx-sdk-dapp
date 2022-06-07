@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "1.2.8",
+  "version": "2.0.0-alpha.0",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -9,14 +9,14 @@
   "module": "dist/dapp-core.esm.js",
   "typings": "dist/index.d.ts",
   "engines": {
-    "node": ">=10"
+    "node": ">=16"
   },
   "scripts": {
-    "start": "yarn copy-dev & tsdx watch",
-    "build": "yarn copy-prod & tsdx build",
-    "test": "tsdx test --passWithNoTests",
-    "lint": "tsdx lint",
-    "prepare": "tsdx build",
+    "start": "yarn copy-dev & dts watch",
+    "build": "yarn copy-prod & dts build",
+    "test": "dts test --passWithNoTests",
+    "lint": "dts lint",
+    "prepare": "dts build",
     "size": "size-limit",
     "postinstall": "yarn copy-dev",
     "analyze": "size-limit --why",
@@ -29,40 +29,46 @@
     "@babel/core": "7.17.8",
     "@size-limit/preset-small-lib": "7.0.8",
     "@svgr/rollup": "6.2.1",
+    "@testing-library/jest-dom": "5.16.2",
+    "@tsconfig/create-react-app": "^1.0.2",
+    "@tsconfig/recommended": "^1.0.1",
     "@types/lodash": "4.14.181",
     "@types/lodash.debounce": "4.0.6",
     "@types/lodash.isequal": "4.5.5",
     "@types/lodash.omit": "4.5.6",
     "@types/lodash.throttle": "4.1.6",
     "@types/qs": "^6.9.7",
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2",
+    "@types/react": "18.0.10",
+    "@types/react-dom": "18.0.5",
     "babel-loader": "8.2.4",
     "babel-plugin-module-resolver": "^4.1.0",
-    "eslint-config-prettier": "8.3.0",
+    "dts-cli": "^1.5.1",
+    "@typescript-eslint/parser": "5.14.0",
+    "eslint-plugin-react-hooks": "4.5.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-config-react-app": "7.0.1",
+    "@typescript-eslint/eslint-plugin": "5.0.0",
     "eslint-config-react": "1.1.7",
-    "eslint-config-react-app": "6.0.0",
-    "eslint-config-standard": "16.0.2",
+    "eslint-config-standard": "17.0.0",
     "eslint-config-standard-react": "9.2.0",
     "eslint-import-resolver-alias": "1.1.2",
     "eslint-import-resolver-typescript": "2.4.0",
-    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-import": "2.26.0",
     "eslint-plugin-node": "11.1.0",
     "eslint-plugin-prettier": "3.4.0",
-    "eslint-plugin-promise": "4.2.1",
-    "eslint-plugin-react": "7.22.0",
-    "eslint-plugin-react-hooks": "4.2.0",
-    "husky": "7.0.4",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
+    "eslint-plugin-promise": "6.0.0",
+    "eslint-plugin-react": "7.30.0",
+    "husky": "8.0.1",
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "react-is": "18.0.0",
     "rollup-plugin-scss": "3.0.0",
     "rollup-plugin-svg-import": "1.6.0",
     "sass": "1.32",
     "size-limit": "7.0.8",
     "tsdx": "0.14.1",
-    "tslib": "2.3.1",
-    "typescript": "4.6.3"
+    "tslib": "2.4.0",
+    "typescript": "4.7.3"
   },
   "files": [
     "dist",
@@ -76,11 +82,11 @@
     "transaction"
   ],
   "peerDependencies": {
-    "react": ">=17"
+    "react": ">=18"
   },
   "resolutions": {
-    "@types/react": "17.0.2",
-    "@types/react-dom": "17.0.2"
+    "@types/react": "18.0.10",
+    "@types/react-dom": "18.0.5"
   },
   "optionalDependencies": {
     "@fortawesome/fontawesome-svg-core": "6.1.0",
@@ -96,7 +102,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "tsdx lint"
+      "pre-commit": "dts lint"
     }
   },
   "size-limit": [
@@ -110,10 +116,14 @@
     }
   ],
   "dependencies": {
-    "@elrondnetwork/erdjs": "9.1.0",
-    "@reduxjs/toolkit": "1.6.2",
-    "@testing-library/jest-dom": "5.16.2",
-    "@typescript-eslint/parser": "5.22.0",
+    "@elrondnetwork/erdjs": "10.2.5",
+    "@elrondnetwork/erdjs-extension-provider": "2.0.1",
+    "@elrondnetwork/erdjs-hw-provider": "2.0.1",
+    "@elrondnetwork/erdjs-network-providers": "0.1.5",
+    "@elrondnetwork/erdjs-wallet-connect-provider": "2.0.2",
+    "@elrondnetwork/erdjs-walletcore": "1.0.0",
+    "@elrondnetwork/erdjs-web-wallet-provider": "2.1.0",
+    "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash.debounce": "4.0.8",
@@ -123,10 +133,12 @@
     "qs": "6.10.3",
     "react-error-overlay": "6.0.9",
     "react-idle-timer": "5.0.0",
-    "react-redux": "7.2.6",
-    "react-scripts": "4.0.3",
+    "react-redux": "8.0.2",
     "redux-persist": "6.0.0",
     "reselect": "4.0.0",
     "shx": "0.3.4"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   }
 }

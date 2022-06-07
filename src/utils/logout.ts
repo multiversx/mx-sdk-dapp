@@ -5,6 +5,7 @@ import { store } from 'redux/store';
 import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getAddress } from './account';
+import { preventRedirects, safeRedirect } from './redirect';
 import storage from './storage';
 import { localStorageKeys } from './storage/local';
 
@@ -24,6 +25,8 @@ export async function logout(
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isLoggedIn = getIsLoggedIn();
+  const isWalletProvider = providerType === LoginMethodsEnum.wallet;
+
   if (!isLoggedIn || !provider) {
     return;
   }
@@ -35,10 +38,13 @@ export async function logout(
     console.error('error fetching logout address', err);
   }
 
+  if (isWalletProvider) {
+    preventRedirects();
+  }
+
   store.dispatch(logoutAction());
 
   try {
-    const isWalletProvider = providerType === LoginMethodsEnum.wallet;
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
     const url = needsCallbackUrl ? window.location.origin : callbackUrl;
 
@@ -47,7 +53,7 @@ export async function logout(
       if (typeof onRedirect === 'function') {
         onRedirect(callbackUrl);
       } else {
-        window.location.href = callbackUrl;
+        safeRedirect(callbackUrl);
       }
     }
   } catch (err) {

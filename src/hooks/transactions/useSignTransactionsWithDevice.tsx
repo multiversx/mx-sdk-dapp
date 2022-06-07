@@ -13,8 +13,12 @@ import {
 import { useParseMultiEsdtTransferData } from 'services/transactions/hooks/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
-import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
-import { parseTransactionAfterSigning } from 'utils';
+import {
+  getIsProviderEqualTo,
+  isTokenTransfer,
+  parseTransactionAfterSigning,
+  safeRedirect
+} from 'utils';
 import { getLedgerErrorCodes } from 'utils/internal';
 
 export interface UseSignTransactionsWithDevicePropsType {
@@ -137,7 +141,7 @@ export function useSignTransactionsWithDevice({
         currentTransaction.transaction
       );
       const newSignedTx = { [currentStep]: signedTx };
-      const newSignedTransactions: any = signedTransactions
+      const newSignedTransactions = signedTransactions
         ? { ...signedTransactions, ...newSignedTx }
         : newSignedTx;
       setSignedTransactions(newSignedTransactions);
@@ -150,7 +154,7 @@ export function useSignTransactionsWithDevice({
             sessionId,
             status: TransactionBatchStatusesEnum.signed,
             transactions: Object.values(newSignedTransactions).map((tx) =>
-              parseTransactionAfterSigning(tx as Transaction, isLedger)
+              parseTransactionAfterSigning(tx)
             )
           })
         );
@@ -161,7 +165,7 @@ export function useSignTransactionsWithDevice({
           customTransactionInformation?.redirectAfterSign &&
           !window.location.pathname.includes(callbackRoute)
         ) {
-          window.location.href = callbackRoute;
+          safeRedirect(callbackRoute);
         }
       }
     } catch (err) {
@@ -182,7 +186,7 @@ export function useSignTransactionsWithDevice({
         return;
       }
       const signature = currentTransaction.transaction.getSignature();
-      if (signature) {
+      if (signature.hex()) {
         if (!isLastTransaction) {
           setCurrentStep((exising) => exising + 1);
         }
@@ -206,7 +210,7 @@ export function useSignTransactionsWithDevice({
         callbackRoute != null &&
         customTransactionInformation?.redirectAfterSign
       ) {
-        window.location.href = callbackRoute;
+        safeRedirect(callbackRoute);
       }
     } else {
       setCurrentStep((existing) => existing - 1);
