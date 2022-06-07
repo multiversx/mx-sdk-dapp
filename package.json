@@ -9,7 +9,7 @@
   "module": "dist/dapp-core.esm.js",
   "typings": "dist/index.d.ts",
   "engines": {
-    "node": ">=12"
+    "node": ">=16"
   },
   "scripts": {
     "start": "yarn copy-dev & dts watch",
@@ -29,6 +29,7 @@
     "@babel/core": "7.17.8",
     "@size-limit/preset-small-lib": "7.0.8",
     "@svgr/rollup": "6.2.1",
+    "@testing-library/jest-dom": "5.16.2",
     "@tsconfig/create-react-app": "^1.0.2",
     "@tsconfig/recommended": "^1.0.1",
     "@types/lodash": "4.14.181",
@@ -123,7 +124,6 @@
     "@elrondnetwork/erdjs-walletcore": "1.0.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.0",
     "@reduxjs/toolkit": "1.8.2",
-    "@testing-library/jest-dom": "5.16.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash.debounce": "4.0.8",
@@ -137,12 +137,6 @@
     "redux-persist": "6.0.0",
     "reselect": "4.0.0",
     "shx": "0.3.4"
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
   },
   "jest": {
     "testEnvironment": "jsdom"
