@@ -1,6 +1,9 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
-import { decimals as configDecimals } from 'constants/index';
+import {
+  decimals as configDecimals,
+  denomination as configDenomination
+} from 'constants/index';
 import { stringIsInteger } from 'utils/validation';
 import pipe from './pipe';
 
@@ -12,7 +15,7 @@ export function denominate({
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
   addCommas = false,
-  denomination
+  denomination = configDenomination
 }: {
   input: string;
   denomination?: number;
