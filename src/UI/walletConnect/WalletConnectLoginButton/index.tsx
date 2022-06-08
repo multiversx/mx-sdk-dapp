@@ -3,6 +3,7 @@ import { getGeneratedClasses } from 'utils';
 import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
+import useAwesomeModal from '../../AwesomeModal/hooks/useAwesomeModal';
 
 const WalletConnectLoginButton = ({
   children,
@@ -21,6 +22,8 @@ const WalletConnectLoginButton = ({
   token,
   hideButtonWhenModalOpens = false
 }: WalletConnectLoginButtonPropsType) => {
+  const { toggle } = useAwesomeModal();
+
   const [showLoginModal, setShowLoginModal] = useState(false);
   const generatedClasses = getGeneratedClasses(
     className,
@@ -35,11 +38,13 @@ const WalletConnectLoginButton = ({
 
   const handleOpenModal = () => {
     setShowLoginModal(true);
+    toggle(true);
     onModalOpens?.();
   };
 
   const handleCloseModal = () => {
     setShowLoginModal(false);
+    toggle(false);
     onModalCloses?.();
   };
 
