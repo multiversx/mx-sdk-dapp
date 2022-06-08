@@ -7,6 +7,7 @@ import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
+import awesomeModals from './slices/awesomeModalsSlice';
 
 const reducers = {
   account,
@@ -14,7 +15,8 @@ const reducers = {
   loginInfo,
   modals,
   transactions,
-  transactionsInfo
+  transactionsInfo,
+  awesomeModals
 };
 
 if (typeof window !== 'undefined' && window.localStorage != null) {
