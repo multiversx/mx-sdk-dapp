@@ -7,12 +7,14 @@ type AwesomeModalProps = {
   visible: boolean;
   toggle: () => void;
   parentElement?: Element;
+  children?: React.ReactNode;
 };
 
 const AwesomeModal: React.FC<AwesomeModalProps> = ({
   visible,
   toggle,
-  parentElement
+  parentElement,
+  children
 }) =>
   visible
     ? ReactDOM.createPortal(
@@ -22,12 +24,7 @@ const AwesomeModal: React.FC<AwesomeModalProps> = ({
             role='dialog'
             aria-modal='true'
           >
-            <h3>Hello World</h3>
-            <p>
-              Et sit saepe velit tenetur et consequatur in. Nihil doloribus
-              nulla nulla rem. Soluta illo et asperiores numquam earum nesciunt.
-              Vero odio voluptatem sunt sunt laboriosam.
-            </p>
+            {children}
             <button type='button' onClick={toggle}>
               Close
             </button>
