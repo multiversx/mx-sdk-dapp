@@ -32,12 +32,12 @@ export const useSignTransactions = () => {
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const hasTransactions = Boolean(transactionsToSign?.transactions);
 
-  useParseSignedTransactions();
-
   const onAbort = (sessionId?: string) => {
     setError(null);
     clearSignInfo(sessionId);
   };
+
+  useParseSignedTransactions(onAbort);
 
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
