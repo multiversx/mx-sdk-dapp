@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from '../styles/awesome-modal.module.css';
+import styles from '../styles/awesome-modal.scss';
 
 console.log(styles);
 
@@ -31,7 +31,9 @@ const AwesomeModal: React.FC<AwesomeModalProps> = ({
               Close
             </button>
           </div>
-          <div className={styles.awesomeModalOverlay}></div>
+          <div className={styles.awesomeModalOverlay}>
+            <div>TEST</div>
+          </div>
         </div>,
         parentElement ?? document.body
       )
