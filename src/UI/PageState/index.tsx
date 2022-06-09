@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { PageStateProps } from './types';
 
 export const PageState = ({
@@ -51,4 +50,4 @@ export const PageState = ({
   );
 };
 
-export default withClassNameWrapper(PageState);
+export default PageState;

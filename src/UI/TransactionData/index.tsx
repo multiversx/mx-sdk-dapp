@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { decodePart } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
@@ -85,4 +84,4 @@ const TransactionData = ({
   );
 };
 
-export default withClassNameWrapper(TransactionData);
+export default TransactionData;

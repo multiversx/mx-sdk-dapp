@@ -4,7 +4,6 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { ExtensionLoginButtonPropsType } from './types';
 
 const ExtensionLoginButton: (
@@ -72,4 +71,4 @@ const ExtensionLoginButton: (
   );
 };
 
-export default withClassNameWrapper(ExtensionLoginButton);
+export default ExtensionLoginButton;

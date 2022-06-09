@@ -2,7 +2,6 @@ import React from 'react';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import copyTextToClipboard from './helpers/copyToClipboard';
 
 interface CopyButtonType {
@@ -52,4 +51,4 @@ const CopyButton = ({ text, className = '' }: CopyButtonType) => {
   );
 };
 
-export default withClassNameWrapper(CopyButton);
+export default CopyButton;

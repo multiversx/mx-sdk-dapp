@@ -7,7 +7,6 @@ import ModalContainer from 'UI/ModalContainer';
 
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
@@ -100,4 +99,4 @@ function LedgerLoginContainer({
   );
 }
 
-export default withClassNameWrapper(LedgerLoginContainer);
+export default LedgerLoginContainer;

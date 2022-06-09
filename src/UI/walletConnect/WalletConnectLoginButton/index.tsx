@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
 
@@ -73,4 +72,4 @@ const WalletConnectLoginButton = ({
   );
 };
 
-export default withClassNameWrapper(WalletConnectLoginButton);
+export default WalletConnectLoginButton;
