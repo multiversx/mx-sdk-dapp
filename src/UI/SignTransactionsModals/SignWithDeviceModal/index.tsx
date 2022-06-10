@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSignTransactionsWithDevice } from 'hooks';
-import classNames from 'optionalPackages/classnames';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
-import { getGeneratedClasses, wrapperClassName } from 'utils';
+import { getGeneratedClasses } from 'utils';
 import SignStep from './SignStep';
 
 const SignWithDeviceModal = ({
@@ -38,7 +37,7 @@ const SignWithDeviceModal = ({
       show={currentTransaction != null}
       backdrop='static'
       onHide={handleClose}
-      className={classNames(classes.wrapper, wrapperClassName)}
+      className={classes.wrapper}
       animation={false}
       centered
     >

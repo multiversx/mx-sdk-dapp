@@ -1,7 +1,7 @@
 import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { getEgldLabel, wrapperClassName } from 'utils';
+import { getEgldLabel } from 'utils';
 import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
 import { Simple, Combined } from './TokenSymbol';
 
@@ -76,7 +76,7 @@ export default class TokenDetails extends React.Component {
         : () => null;
 
     return (
-      <span className={wrapperClassName}>
+      <div>
         {props.combined ? (
           <Combined small={props.small}>
             <Component />
@@ -86,7 +86,7 @@ export default class TokenDetails extends React.Component {
             <Component />
           </Simple>
         )}
-      </span>
+      </div>
     );
   };
   render() {

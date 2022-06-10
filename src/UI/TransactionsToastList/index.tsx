@@ -8,7 +8,6 @@ import {
 import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 import { TransactionsToastListPropsType } from './types';
 
@@ -115,4 +114,4 @@ function TransactionsToastList({
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 }
 
-export default withClassNameWrapper(TransactionsToastList);
+export default TransactionsToastList;

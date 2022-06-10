@@ -20,7 +20,6 @@ import {
   getIsTransactionTimedOut
 } from 'utils';
 
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { TransactionToastPropsType } from './types';
 
 const averageTxDurationMs = 6000;
@@ -103,9 +102,7 @@ const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment()
-        .add(Number(transactionDuration), 'milliseconds')
-        .unix();
+      moment().add(Number(transactionDuration), 'milliseconds').unix();
     return [startTime, endTime];
   }, []);
 
@@ -224,4 +221,4 @@ const TransactionToast = ({
   );
 };
 
-export default withClassNameWrapper(TransactionToast);
+export default TransactionToast;

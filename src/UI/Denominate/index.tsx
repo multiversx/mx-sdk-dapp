@@ -4,7 +4,6 @@ import {
   decimals as configDecimals
 } from 'constants/index';
 import { denominate, getEgldLabel, stringIsInteger } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
 export interface DenominateType {
   value: string;
@@ -91,4 +90,4 @@ const DenominateWrapper = (props: DenominateType) => {
   return <Denominate {...denominateProps} />;
 };
 
-export default withClassNameWrapper(DenominateWrapper);
+export default DenominateWrapper;

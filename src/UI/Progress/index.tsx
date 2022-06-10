@@ -2,7 +2,6 @@ import React from 'react';
 import moment from 'optionalPackages/moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './type';
 
 const Progress = ({
@@ -121,4 +120,4 @@ const Progress = ({
   );
 };
 
-export default withClassNameWrapper(Progress);
+export default Progress;

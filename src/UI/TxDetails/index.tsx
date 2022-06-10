@@ -6,7 +6,6 @@ import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './types';
 
 const TxDetails = ({
@@ -89,4 +88,4 @@ const TxDetails = ({
   );
 };
 
-export default withClassNameWrapper(TxDetails);
+export default TxDetails;

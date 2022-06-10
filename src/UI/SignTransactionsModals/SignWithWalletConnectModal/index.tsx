@@ -1,11 +1,9 @@
 import React from 'react';
-
-import classNames from 'optionalPackages/classnames';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, wrapperClassName, safeRedirect } from 'utils';
+import { getGeneratedClasses, safeRedirect } from 'utils';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -42,7 +40,7 @@ export const SignWithWalletConnectModal = ({
       show
       backdrop='static'
       onHide={close}
-      className={classNames(classes.wrapper, wrapperClassName)}
+      className={classes.wrapper}
       animation={false}
       centered
     >
