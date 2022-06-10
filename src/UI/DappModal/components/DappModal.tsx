@@ -37,39 +37,37 @@ const DappModal: React.FC<AwesomeModalProps> = ({
           className={`${styles.dappModal} ${modalDialogClassName}`}
           onClick={onHide}
         >
-          <div className='modal-dialog modal-dialog-centered'>
-            <div
-              className={`${styles.dappModalContent} ${modalContentClassName}`}
-            >
-              {showHeader && (
-                <div
-                  className={`${styles.dappModalHeader} ${modalHeaderClassName}`}
+          <div
+            className={`${styles.dappModalContent} ${modalContentClassName}`}
+          >
+            {showHeader && (
+              <div
+                className={`${styles.dappModalHeader} ${modalHeaderClassName}`}
+              >
+                <div style={{ padding: '0 1rem' }}>{headerText}</div>
+                <button
+                  className={`${styles.dappModalCloseButton} ${modalCloseButtonClassName}`}
+                  onClick={onHide}
                 >
-                  <div style={{ padding: '0 1rem' }}>{headerText}</div>
-                  <button
-                    className={`${styles.dappModalCloseButton} ${modalCloseButtonClassName}`}
-                    onClick={onHide}
-                  >
-                    <ReactFontawesome.FontAwesomeIcon
-                      size='lg'
-                      icon={icons.faTimes}
-                    />
-                  </button>
-                </div>
-              )}
-
-              <div className={`${styles.dappModalBody} ${modalBodyClassName}`}>
-                {children}
+                  <ReactFontawesome.FontAwesomeIcon
+                    size='lg'
+                    icon={icons.faTimes}
+                  />
+                </button>
               </div>
+            )}
 
-              {showFooter && (
-                <div
-                  className={`${styles.dappModalFooter} ${modalFooterClassName}`}
-                >
-                  <div>{footerText}</div>
-                </div>
-              )}
+            <div className={`${styles.dappModalBody} ${modalBodyClassName}`}>
+              {children}
             </div>
+
+            {showFooter && (
+              <div
+                className={`${styles.dappModalFooter} ${modalFooterClassName}`}
+              >
+                <div>{footerText}</div>
+              </div>
+            )}
           </div>
         </div>,
         parentElement ?? document.body
