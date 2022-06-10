@@ -32,6 +32,7 @@ export interface UseSignTransactionsWithDeviceReturnType {
   onAbort: () => void;
   waitingForDevice: boolean;
   isLastTransaction: boolean;
+  callbackRoute?: string;
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
   currentTransaction: ActiveLedgerTransactionType | null;
@@ -40,7 +41,7 @@ export interface UseSignTransactionsWithDeviceReturnType {
 export function useSignTransactionsWithDevice({
   onCancel,
   verifyReceiverScam = true
-}: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType | null {
+}: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType {
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const egldLabel = useSelector(egldLabelSelector);
   const {
@@ -48,37 +49,37 @@ export function useSignTransactionsWithDevice({
   } = useGetAccountInfo();
   const provider = getAccountProvider();
   const dispatch = useDispatch();
-  if (transactionsToSign == null) {
-    return null;
-  }
+
   const {
     transactions,
     sessionId,
     callbackRoute,
     customTransactionInformation
-  } = transactionsToSign;
+  } = transactionsToSign || {};
 
   function handleTransactionSignError(errorMessage: string) {
     dispatch(setSignTransactionsError(errorMessage));
   }
 
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
-    dispatch(
-      moveTransactionsToSignedState({
-        sessionId: sessionId,
-        status: TransactionBatchStatusesEnum.signed,
-        transactions: newSignedTransactions.map((tx) =>
-          parseTransactionAfterSigning(tx)
-        )
-      })
-    );
+    if (sessionId) {
+      dispatch(
+        moveTransactionsToSignedState({
+          sessionId: sessionId,
+          status: TransactionBatchStatusesEnum.signed,
+          transactions: newSignedTransactions.map((tx) =>
+            parseTransactionAfterSigning(tx)
+          )
+        })
+      );
 
-    if (
-      callbackRoute != null &&
-      customTransactionInformation?.redirectAfterSign &&
-      !window.location.pathname.includes(callbackRoute)
-    ) {
-      safeRedirect(callbackRoute);
+      if (
+        callbackRoute != null &&
+        customTransactionInformation?.redirectAfterSign &&
+        !window.location.pathname.includes(callbackRoute)
+      ) {
+        safeRedirect(callbackRoute);
+      }
     }
   }
 
@@ -97,7 +98,7 @@ export function useSignTransactionsWithDevice({
     return await provider.signTransaction(transaction);
   }
 
-  return useSignMultipleTransactions({
+  const signMultipleTxReturnValues = useSignMultipleTransactions({
     verifyReceiverScam,
     address,
     egldLabel,
@@ -107,6 +108,7 @@ export function useSignTransactionsWithDevice({
     onTransactionsSignError: handleTransactionSignError,
     onTransactionsSignSuccess: handleTransactionsSignSuccess
   });
+  return { ...signMultipleTxReturnValues, callbackRoute };
 }
 
 export default useSignTransactionsWithDevice;
