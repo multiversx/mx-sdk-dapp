@@ -60,6 +60,7 @@
     "eslint-plugin-react-hooks": "4.5.0",
     "husky": "8.0.1",
     "jest": "28.1.1",
+    "node-sass": "7.0.1",
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-is": "18.0.0",
@@ -79,6 +80,7 @@
   "keywords": [
     "elrond",
     "blockchain",
+
     "dapp",
     "smart-contract",
     "transaction"

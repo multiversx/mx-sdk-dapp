@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import { wrapperClassName } from 'utils';
-const wrapperClassName = '';
+import styles from '../styles/awesome-modal.module.css';
+
+console.log(styles);
 
 type AwesomeModalProps = {
   visible: boolean;
@@ -15,12 +16,13 @@ const AwesomeModal: React.FC<AwesomeModalProps> = ({
   toggle,
   parentElement,
   children
-}) =>
-  visible
+}) => {
+  console.log(styles);
+  return visible
     ? ReactDOM.createPortal(
-        <div className={`${wrapperClassName} awesome-modal`}>
+        <div className={styles.awesomeModal}>
           <div
-            className={`${wrapperClassName} awesome-modal-pop`}
+            className={styles.awesomeModalPop}
             role='dialog'
             aria-modal='true'
           >
@@ -29,10 +31,11 @@ const AwesomeModal: React.FC<AwesomeModalProps> = ({
               Close
             </button>
           </div>
-          <div className={`${wrapperClassName} awesome-modal-overlay`}></div>
+          <div className={styles.awesomeModalOverlay}></div>
         </div>,
         parentElement ?? document.body
       )
     : null;
+};
 
 export default AwesomeModal;
