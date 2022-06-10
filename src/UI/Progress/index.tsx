@@ -2,7 +2,8 @@ import React from 'react';
 import moment from 'optionalPackages/moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
+
+import styles from './styles.scss';
 import { Props } from './type';
 
 const Progress = ({
@@ -102,23 +103,22 @@ const Progress = ({
     }
     return;
   }, [progress, done]);
+
   return progress ? (
-    <div className='progress position-relative' ref={ref}>
+    <div ref={ref} className={styles.progress}>
       <div
-        className='progress-bar'
         role='progressbar'
         style={{ width: `${percentRemaining}%` }}
         aria-valuenow={percentRemaining}
         aria-valuemin={0}
         aria-valuemax={100}
-      >
-        <div className='content-height'>{children}</div>
-      </div>
-      <div className='d-flex position-absolute w-100'>{children}</div>
+        className={styles.bar}
+      />
+      {children}
     </div>
   ) : (
     <React.Fragment>{children}</React.Fragment>
   );
 };
 
-export default withClassNameWrapper(Progress);
+export default Progress;

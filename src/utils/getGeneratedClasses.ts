@@ -8,8 +8,8 @@ export function getGeneratedClasses(
   return Object.entries(defaultStyles).reduce(
     (acc, [key, defaultClassNames]) => {
       acc[key] = classNames?.(
-        `${className}_${key}`,
-        shouldRenderDefaultCss && (defaultClassNames as string)
+        shouldRenderDefaultCss && (defaultClassNames as string),
+        { [`${className}_${key}`]: Boolean(className) }
       );
       return acc;
     },

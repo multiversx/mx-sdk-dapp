@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { createPortal } from 'react-dom';
+
 import { useGetSignedTransactions } from 'hooks';
 import { useGetPendingTransactions } from 'services';
 import {
@@ -7,19 +9,21 @@ import {
 } from 'storage/session';
 import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 
+import { getGeneratedClasses } from 'utils';
+
+import styles from './styles.scss';
 import { TransactionsToastListPropsType } from './types';
 
-function TransactionsToastList({
+const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
-  className = 'transactions-toast-list',
+  className = '',
   pendingTransactions,
   signedTransactions,
-  successfulToastLifetime
-}: TransactionsToastListPropsType) {
+  successfulToastLifetime,
+  parentElement
+}: TransactionsToastListPropsType) => {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
   const pendingTransactionsFromStore =
@@ -34,16 +38,6 @@ function TransactionsToastList({
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
 
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper:
-        'toast-messages d-flex flex-column align-items-center justify-content-sm-end',
-      toast: ''
-    }
-  );
-
   const mappedToastsList = toastsIds?.map((toastId: string) => {
     const currentTx: SignedTransactionsBodyType =
       signedTransactionsToRender[toastId];
@@ -56,6 +50,7 @@ function TransactionsToastList({
     }
 
     const { transactions, status } = currentTx;
+
     return (
       <TransactionToast
         className={className}
@@ -112,7 +107,14 @@ function TransactionsToastList({
     mapPendingSignedTransactions();
   }, [pendingTransactionsToRender]);
 
-  return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
-}
+  const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
+    ...styles
+  });
 
-export default withClassNameWrapper(TransactionsToastList);
+  return createPortal(
+    <div className={style.toasts}>{mappedToastsList}</div>,
+    parentElement || document.body
+  );
+};
+
+export default TransactionsToastList;

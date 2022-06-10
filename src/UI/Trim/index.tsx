@@ -1,7 +1,8 @@
 import React from 'react';
 import { useCallback } from 'react';
 import debounce from 'lodash.debounce';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
+
+import styles from './styles.scss';
 
 interface TrimType {
   text: string;
@@ -26,6 +27,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
 
   const addWindowResizeListener = () => {
     window.addEventListener('resize', listener);
+
     return () => {
       window.removeEventListener('resize', listener);
     };
@@ -38,24 +40,22 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   }, []);
 
   return (
-    <span
-      ref={trimRef}
-      className={`trim ${overflow ? 'overflow' : ''}`}
-      data-testid={dataTestId}
-    >
-      <span ref={hiddenTextRef} className='hidden-text-ref'>
+    <span ref={trimRef} className={styles.trim} data-testid={dataTestId}>
+      <span ref={hiddenTextRef} className={styles.hidden}>
         {text}
       </span>
 
       {overflow ? (
         <React.Fragment>
-          <span className='left'>
+          <span className={styles.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
             </span>
           </span>
-          <span className='ellipsis'>...</span>
-          <span className='right'>
+
+          <span className={styles.ellipsis}>...</span>
+
+          <span className={styles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
         </React.Fragment>
@@ -66,4 +66,4 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   );
 };
 
-export default withClassNameWrapper(Trim);
+export default Trim;
