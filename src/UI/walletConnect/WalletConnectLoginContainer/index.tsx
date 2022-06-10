@@ -3,8 +3,9 @@ import React, { useEffect, useState } from 'react';
 import platform from 'optionalPackages/platform';
 import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
+import DappModal from '../../DappModal/components/DappModal';
+import useDappModal from '../../DappModal/hooks/useDappModal';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
 
@@ -54,6 +55,7 @@ function WalletConnectLoginContainer({
         'text-danger d-flex justify-content-center align-items-center'
     }
   );
+  const { hide: onHide, visible } = useDappModal();
 
   const generateQRCode = async () => {
     if (!walletConnectUri) {
@@ -127,13 +129,18 @@ function WalletConnectLoginContainer({
   );
 
   return wrapContentInsideModal ? (
-    <ModalContainer
-      title={'Login with Maiar'}
+    <DappModal
+      onHide={() => {
+        onHide();
+        onClose?.();
+      }}
+      visible={visible}
+      headerText={'Login with Maiar'}
+      showHeader={true}
       className={className}
-      onClose={onClose}
     >
       {content}
-    </ModalContainer>
+    </DappModal>
   ) : (
     content
   );
