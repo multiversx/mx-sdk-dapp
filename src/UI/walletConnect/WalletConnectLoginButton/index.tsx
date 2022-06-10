@@ -1,8 +1,8 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import { getGeneratedClasses } from 'utils';
+import useDappModal from '../../DappModal/hooks/useDappModal';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
-import useAwesomeModal from '../../AwesomeModal/hooks/useAwesomeModal';
 
 const WalletConnectLoginButton = ({
   children,
@@ -21,9 +21,13 @@ const WalletConnectLoginButton = ({
   token,
   hideButtonWhenModalOpens = false
 }: WalletConnectLoginButtonPropsType) => {
-  const { toggle } = useAwesomeModal();
+  const {
+    show: showModal,
+    hide: hideModal,
+    setModalConfig,
+    visible
+  } = useDappModal();
 
-  const [showLoginModal, setShowLoginModal] = useState(false);
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -36,18 +40,23 @@ const WalletConnectLoginButton = ({
   );
 
   const handleOpenModal = () => {
-    setShowLoginModal(true);
-    toggle(true);
+    showModal();
     onModalOpens?.();
   };
 
   const handleCloseModal = () => {
-    setShowLoginModal(false);
-    toggle(false);
+    hideModal();
     onModalCloses?.();
   };
 
-  const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
+  const shouldRenderButton = !hideButtonWhenModalOpens || !visible;
+
+  useEffect(() => {
+    setModalConfig({
+      showHeader: false
+    });
+  }, [setModalConfig]);
+
   return (
     <Fragment>
       {shouldRenderButton && (
@@ -59,20 +68,18 @@ const WalletConnectLoginButton = ({
           )}
         </button>
       )}
-      {showLoginModal && (
-        <WalletConnectLoginContainer
-          callbackRoute={callbackRoute}
-          loginButtonText={loginButtonText}
-          title={title}
-          token={token}
-          className={className}
-          logoutRoute={logoutRoute}
-          lead={lead}
-          wrapContentInsideModal={wrapContentInsideModal}
-          redirectAfterLogin={redirectAfterLogin}
-          onClose={handleCloseModal}
-        />
-      )}
+      <WalletConnectLoginContainer
+        callbackRoute={callbackRoute}
+        loginButtonText={loginButtonText}
+        title={title}
+        token={token}
+        className={className}
+        logoutRoute={logoutRoute}
+        lead={lead}
+        wrapContentInsideModal={wrapContentInsideModal}
+        redirectAfterLogin={redirectAfterLogin}
+        onClose={handleCloseModal}
+      />
     </Fragment>
   );
 };
