@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useState } from 'react';
 import { getGeneratedClasses } from 'utils';
 import useDappModal from '../../DappModal/hooks/useDappModal';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
@@ -21,12 +21,8 @@ const WalletConnectLoginButton = ({
   token,
   hideButtonWhenModalOpens = false
 }: WalletConnectLoginButtonPropsType) => {
-  const {
-    show: showModal,
-    hide: hideModal,
-    setModalConfig,
-    visible
-  } = useDappModal();
+  const [canShowLoginModal, setCanShowLoginModal] = useState(false);
+  const { show: showModal, hide: hideModal } = useDappModal();
 
   const generatedClasses = getGeneratedClasses(
     className,
@@ -40,23 +36,18 @@ const WalletConnectLoginButton = ({
   );
 
   const handleOpenModal = () => {
+    setCanShowLoginModal(true);
     showModal();
     onModalOpens?.();
   };
 
   const handleCloseModal = () => {
+    setCanShowLoginModal(false);
     hideModal();
     onModalCloses?.();
   };
 
-  const shouldRenderButton = !hideButtonWhenModalOpens || !visible;
-
-  useEffect(() => {
-    setModalConfig({
-      showHeader: false
-    });
-  }, [setModalConfig]);
-
+  const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
   return (
     <Fragment>
       {shouldRenderButton && (
@@ -68,18 +59,20 @@ const WalletConnectLoginButton = ({
           )}
         </button>
       )}
-      <WalletConnectLoginContainer
-        callbackRoute={callbackRoute}
-        loginButtonText={loginButtonText}
-        title={title}
-        token={token}
-        className={className}
-        logoutRoute={logoutRoute}
-        lead={lead}
-        wrapContentInsideModal={wrapContentInsideModal}
-        redirectAfterLogin={redirectAfterLogin}
-        onClose={handleCloseModal}
-      />
+      {canShowLoginModal && (
+        <WalletConnectLoginContainer
+          callbackRoute={callbackRoute}
+          loginButtonText={loginButtonText}
+          title={title}
+          token={token}
+          className={className}
+          logoutRoute={logoutRoute}
+          lead={lead}
+          wrapContentInsideModal={wrapContentInsideModal}
+          redirectAfterLogin={redirectAfterLogin}
+          onClose={handleCloseModal}
+        />
+      )}
     </Fragment>
   );
 };

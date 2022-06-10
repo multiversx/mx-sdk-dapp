@@ -10,20 +10,25 @@ export const dappModalVisibilitySelector = createDeepEqualSelector(
 
 export const dappModalHeaderVisibilitySelector = createDeepEqualSelector(
   modalsSliceSelector,
-  (state) => state.showHeader
+  (state) => state.modal.showHeader
 );
 
 export const dappModalFooterVisibilitySelector = createDeepEqualSelector(
   modalsSliceSelector,
-  (state) => state.showFooter
+  (state) => state.modal.showFooter
 );
 
 export const dappModalHeaderTextSelector = createDeepEqualSelector(
   modalsSliceSelector,
-  (state) => state.headerText
+  (state) => state.modal.headerText
 );
 
 export const dappModalFooterTextSelector = createDeepEqualSelector(
   modalsSliceSelector,
-  (state) => state.footerText
+  (state) => state.modal.footerText
+);
+
+export const dappModalConfigSelector = createDeepEqualSelector(
+  modalsSliceSelector,
+  (state) => state.modal
 );

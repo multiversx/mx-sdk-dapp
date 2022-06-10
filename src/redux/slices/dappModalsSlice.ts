@@ -1,17 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { logoutAction } from '../commonActions';
 import { DappModalConfig } from '../../UI/DappModal/types';
+import { logoutAction } from '../commonActions';
 
-export interface ModalsSliceState extends DappModalConfig {
+export interface ModalsSliceState {
   visible: boolean;
+  modal: DappModalConfig;
 }
 
 const initialState: ModalsSliceState = {
   visible: false,
-  showHeader: true,
-  showFooter: false,
-  headerText: '',
-  footerText: ''
+  modal: {
+    showHeader: true,
+    showFooter: false,
+    headerText: '',
+    footerText: ''
+  }
 };
 
 export const dappModalsSlice = createSlice({
@@ -28,25 +31,33 @@ export const dappModalsSlice = createSlice({
       state: ModalsSliceState,
       action: PayloadAction<boolean>
     ) => {
-      state.showHeader = action.payload;
+      state.modal.showHeader = action.payload;
     },
     setDappModalFooterVisibility: (
       state: ModalsSliceState,
       action: PayloadAction<boolean>
     ) => {
-      state.showFooter = action.payload;
+      state.modal.showFooter = action.payload;
     },
     setDappModalHeaderText: (
       state: ModalsSliceState,
       action: PayloadAction<string>
     ) => {
-      state.headerText = action.payload;
+      state.modal.headerText = action.payload;
     },
     setDappModalFooterText: (
       state: ModalsSliceState,
       action: PayloadAction<string>
     ) => {
-      state.footerText = action.payload;
+      state.modal.footerText = action.payload;
+    },
+    setDappModalConfig: (
+      state: ModalsSliceState,
+      action: PayloadAction<DappModalConfig>
+    ) => {
+      state.modal = {
+        ...action.payload
+      };
     }
   },
 
@@ -62,7 +73,8 @@ export const {
   setDappModalHeaderVisibility,
   setDappModalFooterVisibility,
   setDappModalHeaderText,
-  setDappModalFooterText
+  setDappModalFooterText,
+  setDappModalConfig
 } = dappModalsSlice.actions;
 
 export default dappModalsSlice.reducer;
