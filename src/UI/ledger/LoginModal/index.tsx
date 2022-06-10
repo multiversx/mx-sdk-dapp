@@ -88,9 +88,12 @@ function LedgerLoginContainer({
   }
   return wrapContentInsideModal ? (
     <ModalContainer
-      title={'Login with ledger'}
-      className={className}
       onClose={onClose}
+      modalConfig={{
+        headerText: 'Login with ledger',
+        showHeader: true,
+        modalDialogClassName: className
+      }}
     >
       {getContent()}
     </ModalContainer>

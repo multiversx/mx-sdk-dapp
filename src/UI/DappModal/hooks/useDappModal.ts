@@ -1,23 +1,19 @@
+import { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from '../../../redux/DappProviderContext';
 import {
-  dappModalFooterTextSelector,
-  dappModalFooterVisibilitySelector,
-  dappModalHeaderTextSelector,
-  dappModalHeaderVisibilitySelector,
+  dappModalConfigSelector,
   dappModalVisibilitySelector
 } from '../../../redux/selectors/dappModalsSelectors';
 import {
-  setDappModalFooterText,
-  setDappModalFooterVisibility,
-  setDappModalHeaderText,
-  setDappModalHeaderVisibility,
+  setDappModalConfig,
   setDappModalVisibility
 } from '../../../redux/slices/dappModalsSlice';
 import { DappModalConfig } from '../types';
 
-const useDappModal = () => {
+const useDappModal = (config?: DappModalConfig) => {
   const dispatch = useDispatch();
   const visible = useSelector(dappModalVisibilitySelector);
+  const modalConfig = useSelector(dappModalConfigSelector);
 
   const show = () => {
     dispatch(setDappModalVisibility(true));
@@ -27,33 +23,22 @@ const useDappModal = () => {
     dispatch(setDappModalVisibility(false));
   };
 
-  const setModalConfig = (config: DappModalConfig) => {
-    dispatch(setDappModalHeaderVisibility(config.showHeader ?? true));
-    dispatch(setDappModalFooterVisibility(config.showFooter ?? false));
-    dispatch(setDappModalHeaderText(config.headerText ?? ''));
-    dispatch(setDappModalFooterText(config.footerText ?? ''));
-  };
+  const setModalConfig = useCallback((config: DappModalConfig) => {
+    dispatch(setDappModalConfig(config));
+  }, []);
 
-  const getConfig = () => {
-    const showHeader = useSelector(dappModalHeaderVisibilitySelector);
-    const showFooter = useSelector(dappModalFooterVisibilitySelector);
-    const headerText = useSelector(dappModalHeaderTextSelector);
-    const footerText = useSelector(dappModalFooterTextSelector);
-
-    return {
-      showHeader,
-      showFooter,
-      headerText,
-      footerText
-    };
-  };
+  useEffect(() => {
+    if (config) {
+      setModalConfig(config);
+    }
+  }, []);
 
   return {
     show,
     hide,
     setModalConfig,
     visible,
-    config: getConfig()
+    config: modalConfig
   };
 };
 
