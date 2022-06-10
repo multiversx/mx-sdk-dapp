@@ -126,6 +126,7 @@
     "@elrondnetwork/erdjs-walletcore": "1.0.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.0",
     "@reduxjs/toolkit": "1.8.2",
+    "autoprefixer": "9.8.8",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash.debounce": "4.0.8",
@@ -138,6 +139,8 @@
     "react-redux": "8.0.2",
     "redux-persist": "6.0.0",
     "reselect": "4.0.0",
+    "rollup-plugin-peer-deps-external": "2.2.4",
+    "rollup-plugin-postcss-modules": "2.0.2",
     "shx": "0.3.4"
   }
 }
