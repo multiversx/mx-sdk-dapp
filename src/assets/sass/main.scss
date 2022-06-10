@@ -12,7 +12,7 @@ $a: #1392ff;
 @import './variables/variables';
 
 
-@import './../../../node_modules/bootstrap/scss/reboot';
+    @import './../../../node_modules/bootstrap/scss/reboot';
 
 @import './modules/trim/trim';
 @import './modules/modal/modal';
@@ -22,3 +22,4 @@ $a: #1392ff;
 @import './modules/token-symbol/tokenSymbol';
 @import './modules/data/data';
 @import './modules/progress-steps/progress-steps';
+@import './modules/awesome-modal/awesome-modal';
