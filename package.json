@@ -72,10 +72,7 @@
     "tslib": "2.4.0",
     "typescript": "4.7.3"
   },
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": ["dist/*.js", "dist/**/*.js"],
   "keywords": [
     "elrond",
     "blockchain",
