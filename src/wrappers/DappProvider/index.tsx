@@ -8,13 +8,14 @@ import {
   SendSignedTransactionsAsyncType
 } from 'contexts/types';
 import { setExternalProvider } from 'providers/accountProvider';
-import { DappCoreContext } from 'reduxStore/DappProviderContext';
+import { persistor, store } from 'reduxStore/store';
 import { IDappProvider } from 'types';
 import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
-import { store, persistor } from 'reduxStore/store';
+
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
+import { DappCoreContext } from './DappProviderContext';
 
 export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
