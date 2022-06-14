@@ -13,7 +13,7 @@ import { IDappProvider } from 'types';
 import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
-import { store, persistor } from '../store';
+import { store, persistor } from 'reduxStore/store';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export interface DappProviderPropsType {
