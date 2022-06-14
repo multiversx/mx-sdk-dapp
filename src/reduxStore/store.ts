@@ -43,7 +43,7 @@ if (typeof window !== 'undefined' && window?.localStorage != null) {
   localStorageReducers = persistReducer(persistConfig, rootReducer);
 }
 
-export const store: any = configureStore({
+export const store = configureStore({
   reducer: localStorageReducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -65,7 +65,7 @@ export const store: any = configureStore({
 
 export const persistor = persistStore(store);
 
-const storeType: any = configureStore({ reducer: rootReducer });
+const storeType = configureStore({ reducer: rootReducer });
 type PestistedRootState = ReturnType<typeof store.getState>;
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
