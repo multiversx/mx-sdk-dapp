@@ -3,6 +3,10 @@ import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransac
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { transactionStatusSelector } from 'reduxStore/selectors';
 import { RootState } from 'reduxStore/store';
+import {
+  removeAllSignedTransactions,
+  removeAllTransactionsToSign
+} from 'services';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   getIsProviderEqualTo,
@@ -11,10 +15,6 @@ import {
   getIsTransactionSuccessful,
   getIsTransactionTimedOut
 } from 'utils';
-import {
-  removeAllSignedTransactions,
-  removeAllTransactionsToSign
-} from '../clearTransactions';
 
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;
