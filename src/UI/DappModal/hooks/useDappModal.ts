@@ -31,7 +31,7 @@ const useDappModal = (config?: DappModalConfig) => {
     if (config) {
       setModalConfig(config);
     }
-  }, []);
+  }, [config]);
 
   return {
     show,

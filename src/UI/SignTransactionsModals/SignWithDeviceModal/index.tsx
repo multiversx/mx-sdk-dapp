@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSignTransactionsWithDevice } from 'hooks';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
 import { getGeneratedClasses } from 'utils';
+import useDappModal from '../../DappModal/hooks/useDappModal';
+import ModalContainer from '../../ModalContainer';
 import SignStep from './SignStep';
 
 const SignWithDeviceModal = ({
@@ -32,14 +33,24 @@ const SignWithDeviceModal = ({
     container: 'card container',
     cardBody: 'card-body'
   });
+  const { show, hide } = useDappModal();
+
+  useEffect(() => {
+    if (currentTransaction != null) {
+      show();
+    } else {
+      hide();
+    }
+
+    return () => hide();
+  }, [currentTransaction]);
+
   return (
-    <ReactBootstrap.Modal
-      show={currentTransaction != null}
-      backdrop='static'
-      onHide={handleClose}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={handleClose}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
     >
       <div className={classes.container}>
         <div className={classes.cardBody}>
@@ -62,7 +73,7 @@ const SignWithDeviceModal = ({
           />
         </div>
       </div>
-    </ReactBootstrap.Modal>
+    </ModalContainer>
   );
 };
 

@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, safeRedirect } from 'utils';
+import useDappModal from '../../DappModal/hooks/useDappModal';
+import ModalContainer from '../../ModalContainer';
 
 const SignWithExtensionModal = ({
   handleClose,
@@ -17,6 +18,15 @@ const SignWithExtensionModal = ({
     icon: 'text-white',
     closeBtn: 'btn btn-close-link mt-2'
   });
+
+  const { show, hide } = useDappModal();
+
+  useEffect(() => {
+    show();
+
+    return () => hide();
+  }, []);
+
   const description = error
     ? error
     : transactions && transactions.length > 1
@@ -35,13 +45,11 @@ const SignWithExtensionModal = ({
   };
 
   return (
-    <ReactBootstrap.Modal
-      show
-      backdrop='static'
-      onHide={handleClose}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={handleClose}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
     >
       <PageState
         icon={error ? freeSolidIcons.faTimes : freeSolidIcons.faHourglass}
@@ -62,7 +70,7 @@ const SignWithExtensionModal = ({
           </button>
         }
       />
-    </ReactBootstrap.Modal>
+    </ModalContainer>
   );
 };
 

@@ -86,6 +86,7 @@ function LedgerLoginContainer({
 
     return <LedgerConnect onClick={onStartLogin} error={error} />;
   }
+
   return wrapContentInsideModal ? (
     <ModalContainer
       onClose={onClose}
