@@ -2,7 +2,6 @@ import React from 'react';
 import classnames from 'optionalPackages/classnames';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { Props } from './types';
 
 const IconState = ({
@@ -33,4 +32,4 @@ const IconState = ({
   );
 };
 
-export default withClassNameWrapper(IconState);
+export default IconState;

@@ -14,7 +14,8 @@ const setNewAccount = async () => {
         const accountData = {
           balance: account.balance.toFixed(),
           address,
-          nonce: getLatestNonce(account)
+          nonce: getLatestNonce(account),
+          username: account.userName
         };
         store.dispatch(setAccount(accountData));
         return accountData;

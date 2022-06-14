@@ -4,6 +4,7 @@ export * from './useSignTransactions';
 export * from './useGetSignedTransactions';
 export * from './useGetTokenDetails';
 export * from './useSignTransactionsWithDevice';
+export * from './useSignMultipleTransactions';
 export * from './useSignTransactionsWithLedger';
 export * from './useGetSignTransactionsError';
 export * from './useCheckTransactionStatus';

@@ -8,7 +8,9 @@ import { moveTransactionsToSignedState } from 'redux/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { parseTransactionAfterSigning } from 'utils';
 
-export function useParseSignedTransactions() {
+export function useParseSignedTransactions(
+  onAbort: (sessionId?: string) => void
+) {
   const { search } = window.location;
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
@@ -18,14 +20,26 @@ export function useParseSignedTransactions() {
       const searchData = qs.parse(search.replace('?', ''));
 
       if (searchData && walletSignSession in searchData) {
-        const signSessionId: number = (searchData as any)[walletSignSession];
+        const sessionId = String((searchData as any)[walletSignSession]);
         const signedTransactions = new WalletProvider(
           `${network.walletAddress}${dappInitRoute}`
         ).getTransactionsFromWalletUrl();
+
+        if (searchData.status === TransactionBatchStatusesEnum.cancelled) {
+          dispatch(
+            moveTransactionsToSignedState({
+              sessionId,
+              status: TransactionBatchStatusesEnum.cancelled
+            })
+          );
+          onAbort();
+          history.pushState({}, document.title, '?');
+          return;
+        }
         if (signedTransactions.length > 0) {
           dispatch(
             moveTransactionsToSignedState({
-              sessionId: signSessionId.toString(),
+              sessionId,
               status: TransactionBatchStatusesEnum.signed,
               transactions: signedTransactions.map((tx) =>
                 parseTransactionAfterSigning(tx)

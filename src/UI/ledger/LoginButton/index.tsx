@@ -1,6 +1,5 @@
 import React from 'react';
-import { getGeneratedClasses, wrapperClassName } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
+import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
 
@@ -40,11 +39,11 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     setShowLoginModal(false);
     onModalCloses?.();
   }
-  
+
   const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
 
   return (
-    <span className={wrapperClassName}>
+    <>
       {shouldRenderButton && (
         <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
           {children || (
@@ -65,8 +64,8 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
           onClose={handleCloseModal}
         />
       )}
-    </span>
+    </>
   );
 };
 
-export default withClassNameWrapper(LedgerLoginButton);
+export default LedgerLoginButton;

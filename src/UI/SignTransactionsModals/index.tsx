@@ -8,7 +8,6 @@ import {
   useSignTransactions
 } from 'hooks';
 import { LoginMethodsEnum } from 'types';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import SignWithExtensionModal from './SignWithExtensionModal';
 import SignWithLedgerModal from './SignWithLedgerModal';
 import SignWithWalletConnectModal from './SignWithWalletConnectModal';
@@ -108,4 +107,4 @@ function SignTransactionsModals({
   return null;
 }
 
-export default withClassNameWrapper(SignTransactionsModals);
+export default SignTransactionsModals;

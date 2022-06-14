@@ -1,7 +1,6 @@
 import React from 'react';
 import { useWebWalletLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
 import { WebWalletLoginButtonPropsType } from './types';
 
 const WebWalletLoginButton: (
@@ -37,4 +36,4 @@ const WebWalletLoginButton: (
   );
 };
 
-export default withClassNameWrapper(WebWalletLoginButton);
+export default WebWalletLoginButton;

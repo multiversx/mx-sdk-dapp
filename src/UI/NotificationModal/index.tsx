@@ -6,7 +6,6 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { NotificationTypesEnum } from 'types';
 
-import { wrapperClassName } from 'utils';
 import PageState from '../PageState';
 
 const typedIcons: any = icons;
@@ -35,7 +34,7 @@ export function NotificationModal() {
       show={showModal}
       backdrop={true}
       onHide={notification}
-      className={`modal-container ${wrapperClassName}`}
+      className={`modal-container`}
       animation={false}
       centered
     >
