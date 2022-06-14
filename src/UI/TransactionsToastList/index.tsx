@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGetSignedTransactions } from 'hooks';
-import { useGetPendingTransactions } from 'services';
+import { useGetSignedTransactions, useGetPendingTransactions } from 'hooks';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
