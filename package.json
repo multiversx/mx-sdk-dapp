@@ -13,7 +13,7 @@
   },
   "scripts": {
     "start": "yarn copy-dev & dts watch",
-    "build": "yarn copy-prod & dts build",
+    "build": "yarn copy-prod & dts build --entry src/apiCalls/*.tsx --entry src/components/*.tsx --entry src/constants/*.tsx --entry src/hooks/*.tsx  --entry src/models/*.tsx --entry src/providers/*.tsx --entry src/providers/*.tsx --entry src/utils/*.tsx --entry src/wrappers/*.tsx",
     "test": "dts test --passWithNoTests",
     "lint": "dts lint",
     "prepare": "dts build",
