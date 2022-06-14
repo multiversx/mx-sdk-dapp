@@ -1,13 +1,13 @@
 import BigNumber from 'bignumber.js';
 import { networkConstants } from 'constants/index';
 
-import { accountBalanceSelector, chainIDSelector } from 'redux/selectors';
+import { accountBalanceSelector, chainIDSelector } from 'reduxStore/selectors';
 import {
   setTransactionsToSign,
   setNotificationModal,
   setTransactionsDisplayInfo
-} from 'redux/slices';
-import { store } from 'redux/store';
+} from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import { NotificationTypesEnum, SignTransactionsPropsType } from 'types';
 import { stringIsFloat } from 'utils';
 import { SendTransactionReturnType } from './sendTransactions';

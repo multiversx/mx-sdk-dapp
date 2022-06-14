@@ -1,5 +1,5 @@
-import { useSelector } from 'redux/DappProviderContext';
-import { signedTransactionsSelector } from 'redux/selectors';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { signedTransactionsSelector } from 'reduxStore/selectors';
 
 import {
   SignedTransactionsType,

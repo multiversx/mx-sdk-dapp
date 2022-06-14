@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { setAccountProvider } from 'providers/accountProvider';
-import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { isLoggedInSelector } from 'redux/selectors';
-import { setTokenLogin } from 'redux/slices';
+import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { isLoggedInSelector } from 'reduxStore/selectors';
+import { setTokenLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';

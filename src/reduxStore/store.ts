@@ -14,7 +14,7 @@ import {
   createMigrate
 } from 'redux-persist';
 
-import { defaultNetwork } from 'redux/slices';
+import { defaultNetwork } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 
@@ -43,7 +43,7 @@ if (typeof window !== 'undefined' && window?.localStorage != null) {
   localStorageReducers = persistReducer(persistConfig, rootReducer);
 }
 
-export const store = configureStore({
+export const store: any = configureStore({
   reducer: localStorageReducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -65,7 +65,7 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-const storeType = configureStore({ reducer: rootReducer });
+const storeType: any = configureStore({ reducer: rootReducer });
 type PestistedRootState = ReturnType<typeof store.getState>;
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

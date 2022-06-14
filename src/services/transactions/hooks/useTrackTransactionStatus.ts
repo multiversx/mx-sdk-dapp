@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
-import { useSelector } from 'redux/DappProviderContext';
-import { transactionStatusSelector } from 'redux/selectors';
-import { RootState } from 'redux/store';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { transactionStatusSelector } from 'reduxStore/selectors';
+import { RootState } from 'reduxStore/store';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   getIsProviderEqualTo,

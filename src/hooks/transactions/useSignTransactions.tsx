@@ -7,13 +7,16 @@ import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTra
 import { getAccountProvider } from 'providers/accountProvider';
 import { getAccountFromProxyProvider } from 'providers/proxyProvider';
 import { getProviderType } from 'providers/utils';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { addressSelector, transactionsToSignSelector } from 'redux/selectors';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import {
+  addressSelector,
+  transactionsToSignSelector
+} from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   builtCallbackUrl,
@@ -102,7 +105,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as unknown as Error)?.message ||
         (error as string) ||
         errorsMessages.PROVIDER_NOT_INTIALIZED;
       console.error(errorsMessages.PROVIDER_NOT_INTIALIZED, errorMessage);
@@ -123,9 +126,9 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(
-        signedTransactions
-      ).map((tx) => parseTransactionAfterSigning(tx));
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       dispatch(
         moveTransactionsToSignedState({
@@ -140,7 +143,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as unknown as Error)?.message ||
         (error as string) ||
         errorsMessages.ERROR_SIGNING_TX;
       console.error(errorsMessages.ERROR_SIGNING_TX, errorMessage);
@@ -209,7 +212,7 @@ export const useSignTransactions = () => {
         signTransactionsWithProvider();
       }
     } catch (err) {
-      const defaultErrorMessage = ((error as unknown) as Error)?.message;
+      const defaultErrorMessage = (error as unknown as Error)?.message;
       const errorMessage = defaultErrorMessage || errorsMessages.ERROR_SIGNING;
       onCancel(errorMessage, sessionId);
 

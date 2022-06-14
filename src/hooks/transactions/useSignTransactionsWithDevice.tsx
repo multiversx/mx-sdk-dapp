@@ -3,13 +3,16 @@ import { useDispatch } from 'react-redux';
 import { useGetAccountInfo } from 'hooks/account';
 import useSignMultipleTransactions from 'hooks/transactions/useSignMultipleTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
-import { useSelector } from 'redux/DappProviderContext';
-import { egldLabelSelector, transactionsToSignSelector } from 'redux/selectors';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import {
+  egldLabelSelector,
+  transactionsToSignSelector
+} from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   moveTransactionsToSignedState,
   setSignTransactionsError
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import {
   ActiveLedgerTransactionType,
   MultiSignTxType,

@@ -1,11 +1,11 @@
-import { useSelector } from 'redux/DappProviderContext';
+import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   failedTransactionsSelector,
   pendingSignedTransactionsSelector,
   signedTransactionsSelector,
   successfulTransactionsSelector,
   timedOutTransactionsSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors';
 
 interface UseGetActiveTransactionsStatusReturnType {
   pending: boolean;

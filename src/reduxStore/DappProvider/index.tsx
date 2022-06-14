@@ -8,7 +8,7 @@ import {
   SendSignedTransactionsAsyncType
 } from 'contexts/types';
 import { setExternalProvider } from 'providers/accountProvider';
-import { DappCoreContext } from 'redux/DappProviderContext';
+import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { IDappProvider } from 'types';
 import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';

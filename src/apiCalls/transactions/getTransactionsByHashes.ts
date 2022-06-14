@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { networkConfigSelector } from 'redux/selectors';
-import { store } from 'redux/store';
+import { networkConfigSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { SmartContractResult, TransactionServerStatusesEnum } from 'types';
 
 export type GetTransactionsByHashesReturnType = {

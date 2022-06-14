@@ -1,8 +1,8 @@
 import {
   updateSignedTransactions,
   updateSignedTransactionStatus
-} from 'redux/slices';
-import { store } from 'redux/store';
+} from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum

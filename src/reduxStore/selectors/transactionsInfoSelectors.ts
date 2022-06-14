@@ -1,9 +1,9 @@
-import { createDeepEqualSelector } from 'redux/selectors/helpers';
+import { createDeepEqualSelector } from 'reduxStore/selectors/helpers';
 import {
   defaultTransactionErrorMessage,
   defaultTransactionProcessingMessage,
   defaultTransactionSuccessMessage
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import { RootState } from '../store';
 
 const defaultTransactionInfo = {
