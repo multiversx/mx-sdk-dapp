@@ -6,8 +6,7 @@
   "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
   "main": "dist/index.js",
-  "module": "dist/dapp-core.esm.js",
-  "typings": "dist/index.d.ts",
+  "typings": "dist/hooks/index.d.ts",
   "engines": {
     "node": ">=16"
   },
@@ -80,7 +79,9 @@
   },
   "files": [
     "dist/*.js",
-    "dist/**/*.js"
+    "dist/**/*.js",
+    "dist/*.d.ts",
+    "dist/**/*.d.ts"
   ],
   "keywords": [
     "elrond",

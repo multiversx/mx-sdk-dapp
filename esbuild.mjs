@@ -14,11 +14,6 @@ const entryPoints = fs.readdirSync("src").filter(files => !files.includes(".")).
   return `src/${folder}/${files[index]}`
 }).filter(folder => folder != null);
 
-<<<<<<< HEAD
-=======
-
->>>>>>> c346938a305847fbe1f3a60833c632852c94596c
-
 esbuild.build({
   entryPoints: entryPoints,
   outdir: "dist",

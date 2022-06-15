@@ -40,5 +40,6 @@ export default {
   Trim,
   UsdValue,
   ProgressSteps,
-  DappCorePages
-} as any;
+  DappCorePages,
+
+};
