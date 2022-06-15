@@ -5,6 +5,7 @@ import LedgerLoginButton from './ledger/LoginButton';
 import LedgerLoginContainer from './ledger/LoginModal';
 
 import NotificationModal from './NotificationModal';
+import { UnlockPage } from './pages';
 import PageState from './PageState';
 import ProgressSteps from './ProgressSteps';
 import SignTransactionsModals from './SignTransactionsModals';
@@ -38,5 +39,6 @@ export default {
   WebWalletLoginButton,
   Trim,
   UsdValue,
-  ProgressSteps
+  ProgressSteps,
+  UnlockPage
 };
