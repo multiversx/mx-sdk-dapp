@@ -1,6 +1,7 @@
 export * as errorsMessages from './errorsMessages';
 export * as networkConstants from './network';
 export * as ledgerErrorCodes from './ledgerErrorCodes';
+export * from './mnemonicWords';
 
 export const gasPriceModifier = '0.01';
 export const gasPerDataByte = '1500';
