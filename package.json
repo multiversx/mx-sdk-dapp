@@ -12,12 +12,12 @@
     "node": ">=16"
   },
   "scripts": {
-    "start": "yarn copy-dev & dts watch",
+    "start": "npm run copy-dev & dts watch",
     "build:types": "tsc --project tsconfig.json",
     "build": "yarn copy-prod & rimraf dist & node esbuild.mjs & yarn build:types",
     "test": "dts test --passWithNoTests",
     "lint": "dts lint",
-    "prepare": "dts build",
+    "prepare": "npm run build",
     "size": "size-limit",
     "postinstall": "yarn copy-dev",
     "analyze": "size-limit --why",

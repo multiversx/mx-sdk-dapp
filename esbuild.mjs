@@ -14,7 +14,6 @@ const entryPoints = fs.readdirSync("src").filter(files => !files.includes(".")).
   return `src/${folder}/${files[index]}`
 }).filter(folder => folder != null);
 
-console.log(entryPoints)
 
 
 esbuild.build({
@@ -25,7 +24,7 @@ esbuild.build({
   minify: true,
   splitting: false,
   format: "esm",
-  target: "esnext",
+  target: ['chrome58', 'chrome79','firefox57'],
   plugins: [nodeExternalsPlugin(), svgrPlugin()],
 }).catch(() => process.exit(1));
 

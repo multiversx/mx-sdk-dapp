@@ -5,6 +5,7 @@ import LedgerLoginButton from './ledger/LoginButton';
 import LedgerLoginContainer from './ledger/LoginModal';
 
 import NotificationModal from './NotificationModal';
+import * as DappCorePages from './pages';
 import PageState from './PageState';
 import ProgressSteps from './ProgressSteps';
 import SignTransactionsModals from './SignTransactionsModals';
@@ -19,7 +20,7 @@ import WalletConnectLoginButton from './walletConnect/WalletConnectLoginButton';
 import WalletConnectLoginContainer from './walletConnect/WalletConnectLoginContainer';
 import WebWalletLoginButton from './webWallet/LoginButton';
 
-export {
+export default {
   ExplorerLink,
   Denominate,
   PageState,
@@ -39,5 +40,5 @@ export {
   Trim,
   UsdValue,
   ProgressSteps,
-};
-export * as DappCorePages from './pages';
+  DappCorePages
+} as any;
