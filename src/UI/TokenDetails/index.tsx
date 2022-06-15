@@ -2,7 +2,7 @@ import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getEgldLabel } from 'utils';
-import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
+import EgldIcon from '../../assets/icons/EGLD.svg';
 import { Simple, Combined } from './TokenSymbol';
 
 const getIdentifierWithoutNonce = (identifier: string) => {

@@ -5,7 +5,7 @@ import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
-import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
+import Lighting from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
 
 function WalletConnectLoginContainer({
