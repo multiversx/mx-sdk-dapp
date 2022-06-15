@@ -15,6 +15,7 @@
     "start": "yarn copy-dev & dts watch",
     "build:types": "tsc --project tsconfig.json",
     "build": "yarn copy-prod & rimraf dist & node esbuild.mjs & yarn build:types",
+    "watch": "yarn copy-prod & rimraf dist & yarn build:types & node esbuild-watch.mjs",
     "test": "dts test --passWithNoTests",
     "lint": "dts lint",
     "prepare": "dts build",

@@ -25,5 +25,8 @@ esbuild.build({
   format: "esm",
   target: "esnext",
   plugins: [nodeExternalsPlugin(), svgrPlugin()],
-}).catch(() => process.exit(1));
+  watch: true
+}).then(result => {
+  console.log('watching...')
+})
 
