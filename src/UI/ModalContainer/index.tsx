@@ -12,7 +12,11 @@ const ModalContainer = ({
   onClose?: () => void;
   modalConfig?: DappModalConfig;
 }) => {
-  const { hide: onHide, visible, config } = useDappModal(modalConfig);
+  const {
+    handleHideModal: onHide,
+    visible,
+    config
+  } = useDappModal(modalConfig);
 
   return (
     <DappModal

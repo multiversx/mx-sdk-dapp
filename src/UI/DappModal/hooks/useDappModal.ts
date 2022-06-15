@@ -1,13 +1,13 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from '../../../redux/DappProviderContext';
+import { useDispatch, useSelector } from 'redux/DappProviderContext';
 import {
   dappModalConfigSelector,
   dappModalVisibilitySelector
-} from '../../../redux/selectors/dappModalsSelectors';
+} from 'redux/selectors/dappModalsSelectors';
 import {
   setDappModalConfig,
   setDappModalVisibility
-} from '../../../redux/slices/dappModalsSlice';
+} from 'redux/slices/dappModalsSlice';
 import { DappModalConfig } from '../types';
 
 const useDappModal = (config?: DappModalConfig) => {
@@ -15,11 +15,11 @@ const useDappModal = (config?: DappModalConfig) => {
   const visible = useSelector(dappModalVisibilitySelector);
   const modalConfig = useSelector(dappModalConfigSelector);
 
-  const show = () => {
+  const handleShowModal = () => {
     dispatch(setDappModalVisibility(true));
   };
 
-  const hide = () => {
+  const handleHideModal = () => {
     dispatch(setDappModalVisibility(false));
   };
 
@@ -33,9 +33,16 @@ const useDappModal = (config?: DappModalConfig) => {
     }
   }, [config]);
 
+  useEffect(() => {
+    return () => {
+      console.log('UNMOUNT');
+      handleHideModal();
+    };
+  }, []);
+
   return {
-    show,
-    hide,
+    handleShowModal,
+    handleHideModal,
     setModalConfig,
     visible,
     config: modalConfig

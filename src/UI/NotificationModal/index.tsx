@@ -18,15 +18,13 @@ const defaultIcon = typedIcons.faExclamationTriangle;
 
 export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
-  const { show, hide } = useDappModal();
+  const { handleShowModal } = useDappModal();
 
   useEffect(() => {
     const showModal = Boolean(notification);
     if (showModal) {
-      show();
+      handleShowModal();
     }
-
-    return () => hide();
   }, [notification]);
 
   const onDone = () => {

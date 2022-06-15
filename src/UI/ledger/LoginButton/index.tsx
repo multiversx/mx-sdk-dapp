@@ -20,7 +20,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   hideButtonWhenModalOpens = false
 }) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
-  const { show: showLoginModal, hide: hideLoginModal } = useDappModal();
+  const { handleShowModal, handleHideModal } = useDappModal();
 
   const generatedClasses = getGeneratedClasses(
     className,
@@ -35,13 +35,13 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
 
   function handleOpenModal() {
     setCanShowLoginModal(true);
-    showLoginModal();
+    handleShowModal();
     onModalOpens?.();
   }
 
   function handleCloseModal() {
     setCanShowLoginModal(false);
-    hideLoginModal();
+    handleHideModal();
     onModalCloses?.();
   }
 

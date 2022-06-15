@@ -19,12 +19,10 @@ const SignWithExtensionModal = ({
     closeBtn: 'btn btn-close-link mt-2'
   });
 
-  const { show, hide } = useDappModal();
+  const { handleShowModal } = useDappModal();
 
   useEffect(() => {
-    show();
-
-    return () => hide();
+    handleShowModal();
   }, []);
 
   const description = error

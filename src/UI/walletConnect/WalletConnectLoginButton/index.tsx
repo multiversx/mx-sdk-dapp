@@ -22,7 +22,7 @@ const WalletConnectLoginButton = ({
   hideButtonWhenModalOpens = false
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
-  const { show: showModal, hide: hideModal } = useDappModal();
+  const { handleShowModal, handleHideModal } = useDappModal();
 
   const generatedClasses = getGeneratedClasses(
     className,
@@ -37,13 +37,13 @@ const WalletConnectLoginButton = ({
 
   const handleOpenModal = () => {
     setCanShowLoginModal(true);
-    showModal();
+    handleShowModal();
     onModalOpens?.();
   };
 
   const handleCloseModal = () => {
     setCanShowLoginModal(false);
-    hideModal();
+    handleHideModal();
     onModalCloses?.();
   };
 

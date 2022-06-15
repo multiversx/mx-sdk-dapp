@@ -33,16 +33,14 @@ const SignWithDeviceModal = ({
     container: 'card container',
     cardBody: 'card-body'
   });
-  const { show, hide } = useDappModal();
+  const { handleShowModal, handleHideModal } = useDappModal();
 
   useEffect(() => {
     if (currentTransaction != null) {
-      show();
+      handleShowModal();
     } else {
-      hide();
+      handleHideModal();
     }
-
-    return () => hide();
   }, [currentTransaction]);
 
   return (

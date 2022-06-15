@@ -36,14 +36,12 @@ export const SignWithWalletConnectModal = ({
     }
   };
 
-  const { show, hide } = useDappModal({
+  const { handleShowModal } = useDappModal({
     modalDialogClassName: classes.wrapper
   });
 
   useEffect(() => {
-    show();
-
-    return () => hide();
+    handleShowModal();
   }, []);
 
   return (

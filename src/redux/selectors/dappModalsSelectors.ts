@@ -8,27 +8,27 @@ export const dappModalVisibilitySelector = createDeepEqualSelector(
   (state) => state.visible
 );
 
-export const dappModalHeaderVisibilitySelector = createDeepEqualSelector(
-  modalsSliceSelector,
-  (state) => state.modal.showHeader
-);
-
-export const dappModalFooterVisibilitySelector = createDeepEqualSelector(
-  modalsSliceSelector,
-  (state) => state.modal.showFooter
-);
-
-export const dappModalHeaderTextSelector = createDeepEqualSelector(
-  modalsSliceSelector,
-  (state) => state.modal.headerText
-);
-
-export const dappModalFooterTextSelector = createDeepEqualSelector(
-  modalsSliceSelector,
-  (state) => state.modal.footerText
-);
-
 export const dappModalConfigSelector = createDeepEqualSelector(
   modalsSliceSelector,
   (state) => state.modal
+);
+
+export const dappModalHeaderVisibilitySelector = createDeepEqualSelector(
+  dappModalConfigSelector,
+  (state) => state.showHeader
+);
+
+export const dappModalFooterVisibilitySelector = createDeepEqualSelector(
+  dappModalConfigSelector,
+  (state) => state.showFooter
+);
+
+export const dappModalHeaderTextSelector = createDeepEqualSelector(
+  dappModalConfigSelector,
+  (state) => state.headerText
+);
+
+export const dappModalFooterTextSelector = createDeepEqualSelector(
+  dappModalConfigSelector,
+  (state) => state.footerText
 );
