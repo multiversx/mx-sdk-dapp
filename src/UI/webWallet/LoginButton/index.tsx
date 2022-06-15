@@ -1,7 +1,16 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
-import { WebWalletLoginButtonPropsType } from './types';
+
+export interface WebWalletLoginButtonPropsType {
+  token?: string;
+  className?: string;
+  callbackRoute: string;
+  buttonClassName?: string;
+  children?: ReactNode;
+  loginButtonText?: string;
+  shouldRenderDefaultCss?: boolean;
+}
 
 const WebWalletLoginButton: (
   props: WebWalletLoginButtonPropsType

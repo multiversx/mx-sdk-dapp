@@ -3,8 +3,8 @@ import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
+import { ExtensionLoginButtonPropsType } from 'types';
 import { getGeneratedClasses } from 'utils';
-import { ExtensionLoginButtonPropsType } from './types';
 
 const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType

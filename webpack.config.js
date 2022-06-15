@@ -23,8 +23,6 @@ const entryPoints = fs
     return acc;
   }, {});
 
-console.log(entryPoints);
-
 module.exports = {
   entry: entryPoints,
   output: {

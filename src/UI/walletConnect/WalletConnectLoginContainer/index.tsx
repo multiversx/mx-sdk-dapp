@@ -6,7 +6,20 @@ import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
 import Lighting from '../WalletConnectLoginButton/lightning.svg';
-import { LoginModalPropsType } from './types';
+
+export interface WalletConnectLoginModalPropsType {
+  lead?: string;
+  title?: string;
+  className?: string;
+  logoutRoute?: string;
+  callbackRoute: string;
+  loginButtonText: string;
+  wrapContentInsideModal?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  redirectAfterLogin?: boolean;
+  token?: string;
+  onClose?: () => void;
+}
 
 function WalletConnectLoginContainer({
   callbackRoute,
@@ -20,7 +33,7 @@ function WalletConnectLoginContainer({
   redirectAfterLogin,
   token,
   onClose
-}: LoginModalPropsType) {
+}: WalletConnectLoginModalPropsType) {
   const [
     initLoginWithWalletConnect,
     { error },

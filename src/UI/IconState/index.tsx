@@ -2,14 +2,20 @@ import React from 'react';
 import classnames from 'optionalPackages/classnames';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
-import { Props } from './types';
+
+export interface IconStateProps {
+  icon: any;
+  className?: string;
+  iconSize?: '2x' | '3x' | '5x';
+  shouldRenderDefaultCss?: boolean;
+}
 
 const IconState = ({
   icon,
   iconSize = '3x',
   className = 'icon-state',
   shouldRenderDefaultCss = true
-}: Props) => {
+}: IconStateProps) => {
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,

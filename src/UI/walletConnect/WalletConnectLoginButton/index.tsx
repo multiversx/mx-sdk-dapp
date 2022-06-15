@@ -1,7 +1,24 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, ReactNode, useState } from 'react';
 import { getGeneratedClasses } from 'utils';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
-import { WalletConnectLoginButtonPropsType } from './types';
+
+export interface WalletConnectLoginButtonPropsType {
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  lead?: string;
+  title?: string;
+  className?: string;
+  logoutRoute?: string;
+  callbackRoute: string;
+  loginButtonText?: string;
+  buttonClassName?: string;
+  shouldRenderDefaultCss?: boolean;
+  wrapContentInsideModal?: boolean;
+  redirectAfterLogin?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  token?: string;
+}
 
 const WalletConnectLoginButton = ({
   children,

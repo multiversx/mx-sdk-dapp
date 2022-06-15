@@ -9,7 +9,7 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
-import { SignedTransactionType } from 'types';
+import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
@@ -20,10 +20,25 @@ import {
   getIsTransactionTimedOut
 } from 'utils';
 
-import { TransactionToastPropsType } from './types';
-
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
+
+export interface TransactionToastPropsType {
+  title?: string;
+  toastId: string;
+  className?: string;
+  errorMessage?: string;
+  withTxNonce?: boolean;
+  successMessage?: string;
+  endTimeProgress?: number;
+  processingMessage?: string;
+  startTimeProgress?: number;
+  shouldRenderDefaultCss?: boolean;
+  transactions: SignedTransactionType[];
+  status: TransactionBatchStatusesEnum;
+  lifetimeAfterSuccess?: number;
+  onClose?: (toastId: string) => void;
+}
 
 const TransactionToast = ({
   toastId,

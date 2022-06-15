@@ -2,7 +2,32 @@ import React from 'react';
 import classNames from 'classnames';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
-import { PageStateProps } from './types';
+
+export interface PageStateProps {
+  title?: React.ReactNode;
+  icon?: any;
+  iconClass?: string;
+  className?: string;
+  dataTestId?: string;
+  iconSize?:
+    | 'xs'
+    | 'lg'
+    | 'sm'
+    | '1x'
+    | '2x'
+    | '3x'
+    | '4x'
+    | '5x'
+    | '6x'
+    | '7x'
+    | '8x'
+    | '9x'
+    | '10x';
+  iconBgClass?: string;
+  action?: React.ReactNode;
+  shouldRenderDefaultCss?: boolean;
+  description?: string | React.ReactNode;
+}
 
 export const PageState = ({
   icon,

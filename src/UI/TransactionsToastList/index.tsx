@@ -4,11 +4,19 @@ import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
-import { SignedTransactionsBodyType } from 'types';
+import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'utils';
 
-import { TransactionsToastListPropsType } from './types';
+export interface TransactionsToastListPropsType {
+  toastProps?: any;
+  className?: string;
+  withTxNonce?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  pendingTransactions?: SignedTransactionsType;
+  signedTransactions?: SignedTransactionsType;
+  successfulToastLifetime?: number;
+}
 
 function TransactionsToastList({
   shouldRenderDefaultCss = true,

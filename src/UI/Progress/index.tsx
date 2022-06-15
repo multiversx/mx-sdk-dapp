@@ -2,7 +2,17 @@ import React from 'react';
 import moment from 'optionalPackages/moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
-import { Props } from './type';
+
+export interface ProgressProps {
+  id: string;
+  done: boolean;
+  children: React.ReactNode;
+  expiresIn?: number;
+  progress: {
+    startTime: number;
+    endTime: number;
+  };
+}
 
 const Progress = ({
   id,
@@ -10,7 +20,7 @@ const Progress = ({
   progress,
   done,
   expiresIn = 10 * 60
-}: Props) => {
+}: ProgressProps) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
   const removeTxFromSession = () => {
