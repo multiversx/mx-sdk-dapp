@@ -3,7 +3,6 @@ import throttle from 'lodash.throttle';
 import { getAccountProvider } from 'providers/accountProvider';
 import { logoutAction } from 'reduxStore/commonActions';
 import { isLoggedInSelector } from 'reduxStore/selectors/loginInfoSelectors';
-import { StoreType } from 'reduxStore/store';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import storage from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
@@ -15,7 +14,7 @@ const throttledSetNewExpires = throttle(() => {
 }, 5000);
 
 export const loginSessionMiddleware: any =
-  (store: StoreType) =>
+  (store: any) =>
   (next: (action: PayloadAction) => void) =>
   (action: PayloadAction) => {
     if (whitelistedActions.includes(action.type)) {

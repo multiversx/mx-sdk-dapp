@@ -1,9 +1,8 @@
 import { LoginMethodsEnum } from 'types/enums';
-import { RootState } from '../store';
 import { addressSelector } from './accountInfoSelectors';
 import { createDeepEqualSelector } from './helpers';
 
-export const loginInfoSelector = (state: RootState) => state.loginInfo;
+export const loginInfoSelector = (state: any) => state.loginInfo;
 
 export const loginMethodSelector = createDeepEqualSelector(
   loginInfoSelector,

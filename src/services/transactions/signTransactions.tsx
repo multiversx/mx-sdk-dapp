@@ -1,16 +1,20 @@
 import BigNumber from 'bignumber.js';
 import { DEFAULT_MIN_GAS_LIMIT } from 'constants/index';
 
-import { accountBalanceSelector, chainIDSelector } from 'reduxStore/selectors';
+import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
+import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setTransactionsToSign,
   setNotificationModal,
   setTransactionsDisplayInfo
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
-import { NotificationTypesEnum, SignTransactionsPropsType } from 'types';
+import {
+  NotificationTypesEnum,
+  SendTransactionReturnType,
+  SignTransactionsPropsType
+} from 'types';
 import { stringIsFloat } from 'utils';
-import { SendTransactionReturnType } from './sendTransactions';
 import { calcTotalFee } from './utils';
 
 export function signTransactions({
