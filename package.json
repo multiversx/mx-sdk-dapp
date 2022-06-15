@@ -19,7 +19,7 @@
     "lint": "dts lint",
     "prepare": "npm run build",
     "size": "size-limit",
-    "postinstall": "yarn copy-dev",
+    "postinstall": "yarn copy-prod",
     "analyze": "size-limit --why",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
