@@ -13,7 +13,7 @@
   "scripts": {
     "start": "npm run watch",
     "build:types": "tsc --project tsconfig.json",
-    "build": "rimraf dist & node esbuild.mjs & yarn build:types",
+    "build": "rimraf dist & node esbuild.js & yarn build:types",
     "watch": "rimraf dist & yarn build:types & node esbuild-watch.mjs",
     "test": "dts test --passWithNoTests",
     "lint": "dts lint",
