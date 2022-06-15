@@ -13,7 +13,6 @@ import { IDappProvider } from 'types';
 import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
-
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 import { DappCoreContext } from './DappProviderContext';
 
@@ -58,3 +57,5 @@ export const DappProvider = ({
     </Provider>
   );
 };
+
+export default DappProvider;

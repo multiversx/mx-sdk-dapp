@@ -3,18 +3,8 @@ import {
   denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
+import { DenominateType } from 'types/UI';
 import { denominate, getEgldLabel, stringIsInteger } from 'utils';
-
-export interface DenominateType {
-  value: string;
-  showLastNonZeroDecimal?: boolean;
-  showLabel?: boolean;
-  token?: string;
-  decimals?: number;
-  denomination?: number;
-  egldLabel?: string;
-  'data-testid'?: string;
-}
 
 const denominateInvalid = (props: DenominateType) => {
   return (

@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { networkConstants } from 'constants/index';
+import { DEFAULT_MIN_GAS_LIMIT } from 'constants/index';
 
 import { accountBalanceSelector, chainIDSelector } from 'reduxStore/selectors';
 import {
@@ -16,7 +16,7 @@ import { calcTotalFee } from './utils';
 export function signTransactions({
   transactions,
   callbackRoute,
-  minGasLimit = networkConstants.DEFAULT_MIN_GAS_LIMIT,
+  minGasLimit = DEFAULT_MIN_GAS_LIMIT,
   customTransactionInformation,
   transactionsDisplayInfo
 }: SignTransactionsPropsType): SendTransactionReturnType {

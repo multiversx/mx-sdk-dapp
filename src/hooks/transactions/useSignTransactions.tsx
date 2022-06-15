@@ -2,7 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { errorsMessages, walletSignSession } from 'constants/index';
+import {
+  ERROR_SIGNING,
+  ERROR_SIGNING_TX,
+  MISSING_PROVIDER_MESSAGE,
+  PROVIDER_NOT_INTIALIZED,
+  TRANSACTION_CANCELLED,
+  walletSignSession
+} from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
 import { getAccountFromProxyProvider } from 'providers/proxyProvider';
@@ -56,7 +63,7 @@ export const useSignTransactions = () => {
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
-    const isTxCancelled = errorMessage !== errorsMessages.TRANSACTION_CANCELLED;
+    const isTxCancelled = errorMessage !== TRANSACTION_CANCELLED;
 
     clearSignInfo(sessionId);
 
@@ -107,8 +114,7 @@ export const useSignTransactions = () => {
       const errorMessage =
         (error as unknown as Error)?.message ||
         (error as string) ||
-        errorsMessages.PROVIDER_NOT_INTIALIZED;
-      console.error(errorsMessages.PROVIDER_NOT_INTIALIZED, errorMessage);
+        PROVIDER_NOT_INTIALIZED;
       onCancel(errorMessage);
       return;
     }
@@ -145,8 +151,7 @@ export const useSignTransactions = () => {
       const errorMessage =
         (error as unknown as Error)?.message ||
         (error as string) ||
-        errorsMessages.ERROR_SIGNING_TX;
-      console.error(errorsMessages.ERROR_SIGNING_TX, errorMessage);
+        ERROR_SIGNING_TX;
       dispatch(
         moveTransactionsToSignedState({
           sessionId,
@@ -165,7 +170,7 @@ export const useSignTransactions = () => {
     const { sessionId, transactions, callbackRoute } = transactionsToSign;
 
     if (!provider) {
-      console.error(errorsMessages.MISSING_PROVIDER_MESSAGE);
+      console.error(MISSING_PROVIDER_MESSAGE);
       return;
     }
 
@@ -213,7 +218,7 @@ export const useSignTransactions = () => {
       }
     } catch (err) {
       const defaultErrorMessage = (error as unknown as Error)?.message;
-      const errorMessage = defaultErrorMessage || errorsMessages.ERROR_SIGNING;
+      const errorMessage = defaultErrorMessage || ERROR_SIGNING;
       onCancel(errorMessage, sessionId);
 
       dispatch(
