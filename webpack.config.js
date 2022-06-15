@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const entryPoints = fs
   .readdirSync('src')
@@ -28,8 +29,13 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist')
   },
+  plugins: [new MiniCssExtractPlugin()],
   module: {
     rules: [
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
       {
         test: /\.tsx?$/,
         use: ['babel-loader', 'ts-loader'],
