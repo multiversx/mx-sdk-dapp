@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import classNames from 'classnames';
 
 import { useGetTransactionDisplayInfo } from 'hooks';
@@ -40,7 +40,6 @@ const TransactionToast = ({
   endTimeProgress,
   lifetimeAfterSuccess
 }: TransactionToastPropsType) => {
-  const ref = useRef(null);
   const [shouldRender, setShouldRender] = useState(true);
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
@@ -158,59 +157,55 @@ const TransactionToast = ({
   }
 
   return (
-    <div ref={ref} className={style.toast} key={toastId}>
-      <Progress
-        key={toastId}
-        id={toastId}
-        progress={progress}
-        expiresIn={lifetimeAfterSuccess}
-        done={!isPending || isTimedOut}
-      >
-        <div className={style.content}>
-          <div className={style.left}>
-            <div
-              className={classNames(style.icon, toastDataState.iconClassName)}
-            >
-              <ReactFontawesome.FontAwesomeIcon
-                iconSize='5x'
-                icon={toastDataState.icon}
-                className={style.svg}
-              />
-            </div>
-
-            {withTxNonce &&
-              transactions.map((tx: any) => (
-                <p className={style.nonce} key={tx.nonce.valueOf()}>
-                  {tx.nonce.valueOf()}
-                </p>
-              ))}
+    <Progress
+      key={toastId}
+      id={toastId}
+      progress={progress}
+      expiresIn={lifetimeAfterSuccess}
+      done={!isPending || isTimedOut}
+    >
+      <div className={style.content}>
+        <div className={style.left}>
+          <div className={classNames(style.icon, toastDataState.iconClassName)}>
+            <ReactFontawesome.FontAwesomeIcon
+              size='5x'
+              icon={toastDataState.icon}
+              className={style.svg}
+            />
           </div>
 
-          <div className={style.right}>
-            <div className={style.heading}>
-              <h5 className={style.title}>{toastDataState.title}</h5>
+          {withTxNonce &&
+            transactions.map((tx: any) => (
+              <p className={style.nonce} key={tx.nonce.valueOf()}>
+                {tx.nonce.valueOf()}
+              </p>
+            ))}
+        </div>
 
-              {true && (
-                <button
-                  type='button'
-                  className={style.close}
-                  onClick={handleDeleteToast}
-                >
-                  <ReactFontawesome.FontAwesomeIcon
-                    icon={icons.faTimes}
-                    size='xs'
-                  />
-                </button>
-              )}
-            </div>
+        <div className={style.right}>
+          <div className={style.heading}>
+            <h5 className={style.title}>{toastDataState.title}</h5>
 
-            <div className={style.footer}>
-              <TxDetails {...{ transactions, title, isTimedOut }} />
-            </div>
+            {!isPending && (
+              <button
+                type='button'
+                className={style.close}
+                onClick={handleDeleteToast}
+              >
+                <ReactFontawesome.FontAwesomeIcon
+                  icon={icons.faTimes}
+                  size='xs'
+                />
+              </button>
+            )}
+          </div>
+
+          <div className={style.footer}>
+            <TxDetails {...{ transactions, title, isTimedOut }} />
           </div>
         </div>
-      </Progress>
-    </div>
+      </div>
+    </Progress>
   );
 };
 

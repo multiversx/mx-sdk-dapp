@@ -5,6 +5,7 @@ import account from './slices/accountInfoSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
+import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
 
@@ -13,6 +14,7 @@ const reducers = {
   networkConfig,
   loginInfo,
   modals,
+  toasts,
   transactions,
   transactionsInfo
 };

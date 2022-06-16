@@ -4,9 +4,10 @@
   .bar {
     position: absolute;
     pointer-events: none;
-    height: 100%;
-    top: 0;
-    left: 0;
+    left: -0.5rem;
+    right: -0.5rem;
+    bottom: -0.5rem;
+    top: -0.5rem;
     background-color: rgba(108, 117, 125, 0.2);
     transition: width 0.6s ease;
   }
