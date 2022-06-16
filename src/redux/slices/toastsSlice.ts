@@ -5,6 +5,7 @@ export interface CustomToastType {
   toastId: string;
   message: string;
   duration?: number;
+  type: string;
 }
 
 export interface ToastsSliceState {

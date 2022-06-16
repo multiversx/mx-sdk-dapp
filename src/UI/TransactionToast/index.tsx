@@ -6,6 +6,7 @@ import { useGetTransactionDisplayInfo } from 'hooks';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import moment from 'optionalPackages/moment';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+
 import { useSelector } from 'redux/DappProviderContext';
 import { shardSelector } from 'redux/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
@@ -21,6 +22,7 @@ import {
   getGeneratedClasses
 } from 'utils';
 
+import Close from './components/Close';
 import styles from './styles.scss';
 import { TransactionToastPropsType } from './types';
 
@@ -32,7 +34,6 @@ const TransactionToast = ({
   title = '',
   shouldRenderDefaultCss = true,
   className = '',
-  withTxNonce = false,
   transactions,
   status,
   onClose,
@@ -173,31 +174,13 @@ const TransactionToast = ({
               className={style.svg}
             />
           </div>
-
-          {withTxNonce &&
-            transactions.map((tx: any) => (
-              <p className={style.nonce} key={tx.nonce.valueOf()}>
-                {tx.nonce.valueOf()}
-              </p>
-            ))}
         </div>
 
         <div className={style.right}>
           <div className={style.heading}>
             <h5 className={style.title}>{toastDataState.title}</h5>
 
-            {!isPending && (
-              <button
-                type='button'
-                className={style.close}
-                onClick={handleDeleteToast}
-              >
-                <ReactFontawesome.FontAwesomeIcon
-                  icon={icons.faTimes}
-                  size='xs'
-                />
-              </button>
-            )}
+            <Close {...{ style, isPending, onDelete: handleDeleteToast }} />
           </div>
 
           <div className={style.footer}>
