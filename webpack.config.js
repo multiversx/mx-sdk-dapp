@@ -27,7 +27,8 @@ const entryPoints = fs
 module.exports = {
   entry: entryPoints,
   output: {
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
+    libraryTarget: 'commonjs'
   },
   plugins: [new MiniCssExtractPlugin()],
   module: {
@@ -57,6 +58,7 @@ module.exports = {
     },
     fallback: {
       stream: require.resolve('stream-browserify')
+      // react: require.resolve('react')
     }
   }
 };
