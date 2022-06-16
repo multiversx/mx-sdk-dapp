@@ -1,8 +1,9 @@
 import React from 'react';
-
+import theme from 'assets/sass/themes/theme.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import copyTextToClipboard from './helpers/copyToClipboard';
+import styles from './styles/copy-button.scss';
 
 interface CopyButtonType {
   text: string;
@@ -37,14 +38,14 @@ const CopyButton = ({ text, className = '' }: CopyButtonType) => {
     <a
       href='/#'
       onClick={handleCopyToClipboard}
-      className={`side-action text-secondary ${className}`}
+      className={`${styles.sideAction} ${theme.linkSecondStyle} ${className}`}
     >
       {copyResult.default || !copyResult.success ? (
         <ReactFontawesome.FontAwesomeIcon icon={icons.faCopy} />
       ) : (
         <ReactFontawesome.FontAwesomeIcon
           icon={icons.faCheck}
-          className='text-primary-highlight'
+          className={theme.textPrimaryHighlight}
         />
       )}
     </a>

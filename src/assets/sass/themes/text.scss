@@ -1,0 +1,100 @@
+@import "./mixins/text-truncate";
+
+.text {
+  color: #9dabbd;
+}
+
+.text-white {
+  color: $white;
+}
+
+.text-monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+}
+
+.text-justify {
+  text-align: justify !important;
+}
+
+.text-wrap {
+  white-space: normal !important;
+}
+
+.text-nowrap {
+  white-space: nowrap !important;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-left {
+  text-align: left !important;
+}
+
+.text-right {
+  text-align: right !important;
+}
+
+.text-center {
+  text-align: center !important;
+}
+
+.text-secondary {
+  color: $secondary;
+}
+
+.text-primary-highlight {
+  color: $primary;
+}
+
+.text-muted {
+  color: $text-muted !important;
+}
+
+
+// Alignment
+.text-justify  { text-align: justify !important; }
+.text-wrap     { white-space: normal !important; }
+.text-nowrap   { white-space: nowrap !important; }
+.text-truncate { @include text-truncate(); }
+
+
+.text-body { color: $body-color !important; }
+.text-muted { color: $text-muted !important; }
+
+.text-black-50 { color: rgba($black, .5) !important; }
+.text-white-50 { color: rgba($white, .5) !important; }
+
+// Misc
+
+.text-hide {
+  font: 0/0 a;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+}
+
+.text-decoration-none { text-decoration: none !important; }
+
+.text-break {
+  word-break: break-word !important; // Deprecated, but avoids issues with flex containers
+  word-wrap: break-word !important; // Used instead of `overflow-wrap` for IE & Edge Legacy
+}
+
+// Reset
+
+.text-reset { color: inherit !important; }
+
+// Transformation
+
+.text-lowercase  { text-transform: lowercase !important; }
+.text-uppercase  { text-transform: uppercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+.text-danger {
+  color: $danger;
+}

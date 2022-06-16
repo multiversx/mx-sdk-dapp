@@ -1,6 +1,7 @@
 import React from 'react';
 import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
+import styles from '../styles/ledger.scss';
 import { LedgerLoginButtonPropsType } from './types';
 
 const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
@@ -11,7 +12,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   onModalCloses,
   loginButtonText = 'Ledger',
   buttonClassName,
-  className = 'ledger-login',
+  className = styles.ledgerLogin,
   redirectAfterLogin = false,
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
@@ -23,10 +24,10 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+      wrapper: `${styles.wrapper} ${
         buttonClassName != null ? buttonClassName : ''
       }`,
-      loginText: 'text-left'
+      loginText: styles.loginText
     }
   );
 

@@ -1,10 +1,5 @@
-$headings-font-weight: 300 !important;
-$primary: #1b46c2;
-$light: #fafafa;
-$a: #1392ff;
 
-
-@import './../../../node_modules/bootstrap/scss/bootstrap';
+//@import './../../../node_modules/bootstrap/scss/bootstrap';
 
 @import './themes/theme.scss';
 
@@ -12,10 +7,9 @@ $a: #1392ff;
 @import './variables/variables';
 
 
-@import './../../../node_modules/bootstrap/scss/reboot';
+//@import './../../../node_modules/bootstrap/scss/reboot';
 
 @import './modules/trim/trim';
-@import './modules/modal/modal';
 @import './modules/icon-state/icon-state';
 @import './modules/toast-messages/toast-messages';
 @import './modules/tx-details-text/tx-details-text';

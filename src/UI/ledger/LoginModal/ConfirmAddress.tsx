@@ -1,4 +1,5 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
 
 const ConfirmAddress = ({
@@ -10,10 +11,16 @@ const ConfirmAddress = ({
 }) => {
   const { ledgerAccount } = useGetAccountInfo();
   return (
-    <div className='m-auto'>
-      <div className={`card my-4 text-center ${noBorder ? 'border-0' : ''}`}>
-        <div className='card-body p-4 mx-lg-4'>
-          <h4 className='mb-4'>Confirm Ledger Address</h4>
+    <div className={globalStyles.mAuto}>
+      <div
+        className={`${globalStyles.card} ${globalStyles.my4} ${
+          globalStyles.textCenter
+        } ${noBorder ? globalStyles.border0 : ''}`}
+      >
+        <div
+          className={`${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`}
+        >
+          <h4 className={globalStyles.mb4}>Confirm Ledger Address</h4>
           <p>For security, please confirm that your address: </p>
           <p className='lead border rounded p-2'>
             {ledgerAccount ? ledgerAccount.address : ''}
@@ -24,7 +31,7 @@ const ConfirmAddress = ({
               <p className='lead border rounded p-2'>{`${token}{}`}</p>
             </React.Fragment>
           )}
-          <p className='m-0'>
+          <p className={globalStyles.m0}>
             {token
               ? 'are the one shown on your Ledger device screen now.'
               : 'is the one shown on your Ledger device screen now.'}

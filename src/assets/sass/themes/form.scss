@@ -1,0 +1,23 @@
+.form-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  padding-left: 0;
+}
+
+.form-check-label {
+  margin-bottom: 0; // Override default `<label>` bottom margin
+}
+
+.form-check-input {
+  position: absolute;
+  margin-top: $form-check-input-margin-y;
+  margin-left: -$form-check-input-gutter;
+
+  // Use [disabled] and :disabled for workaround https://github.com/twbs/bootstrap/issues/28247
+  &[disabled] ~ .form-check-label,
+  &:disabled ~ .form-check-label {
+    color: $text-muted;
+  }
+}

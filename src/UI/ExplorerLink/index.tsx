@@ -1,6 +1,6 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
-
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 
@@ -22,14 +22,14 @@ const ExplorerLink = ({
       {...{
         target: '_blank'
       }}
-      className={`link-style ${className}`}
+      className={`${globalStyles.linkStyle} ${className}`}
     >
       {text ? (
         <React.Fragment>{text}</React.Fragment>
       ) : (
         <ReactFontawesome.FontAwesomeIcon
           icon={icons.faSearch}
-          className='text-secondary'
+          className={globalStyles.textSecondary}
         />
       )}
     </a>

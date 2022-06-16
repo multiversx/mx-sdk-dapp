@@ -1,6 +1,7 @@
 import React from 'react';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
+import globalStyles from '../../assets/sass/main.scss';
 import PageState from '../PageState';
 
 const Loader = ({
@@ -13,7 +14,7 @@ const Loader = ({
   return (
     <PageState
       title={noText ? '' : 'Loading...'}
-      iconClass='text-primary fa-spin'
+      iconClass={`fa-spin ${globalStyles.textPrimary}`}
       dataTestId={dataTestId}
       icon={icons.faCircleNotch}
     />

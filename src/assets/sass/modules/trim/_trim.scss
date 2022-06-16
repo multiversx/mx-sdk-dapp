@@ -94,9 +94,9 @@ a > .trim span,
 .table .trim-only-sm .trim {
   max-width: none;
 
-  @include media-breakpoint-down(sm) {
-    max-width: 13rem;
-  }
+  //@include media-breakpoint-down(sm) {
+  //  max-width: 13rem;
+  //}
 }
 
 .trim-fs-sm .trim {
@@ -108,7 +108,7 @@ a > .trim span,
 }
 
 .table .trim-size-xl .trim {
-  @include media-breakpoint-up(md) {
-    max-width: 13rem;
-  }
+  //@include media-breakpoint-up(md) {
+  //  max-width: 13rem;
+  //}
 }
