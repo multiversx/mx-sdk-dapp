@@ -113,7 +113,7 @@ export function useParseMultiEsdtTransferData({
 
   useEffect(() => {
     extractTransactionESDTData();
-  }, [transactions]);
+  }, [transactions?.length]);
 
   return {
     parsedTransactionsByDataField,
