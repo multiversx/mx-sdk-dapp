@@ -3,7 +3,7 @@ import { getGeneratedClasses } from 'utils';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
 
-const WalletConnectLoginButton = ({
+export const WalletConnectLoginButton = ({
   children,
   callbackRoute,
   onModalOpens,

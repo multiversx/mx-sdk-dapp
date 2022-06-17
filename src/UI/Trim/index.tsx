@@ -2,7 +2,7 @@ import React from 'react';
 import { useCallback } from 'react';
 import debounce from 'lodash.debounce';
 
-interface TrimType {
+export interface TrimType {
   text: string;
   dataTestId?: string;
 }
