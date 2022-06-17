@@ -1,7 +1,7 @@
 import React from 'react';
 
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import globalStyles from '../../assets/sass/main.scss';
 import PageState from '../PageState';
 
 const Loader = ({
