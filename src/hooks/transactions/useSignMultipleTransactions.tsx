@@ -33,11 +33,8 @@ export interface UseSignMultipleTransactionsReturnType {
   onAbort: () => void;
   waitingForDevice: boolean;
   isLastTransaction: boolean;
-  isFirstTransaction: boolean;
-  hasMultipleTransactions: boolean;
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
-  shouldContinueWithoutSigning: boolean;
   currentTransaction: ActiveLedgerTransactionType | null;
 }
 
@@ -175,16 +172,15 @@ export function useSignMultipleTransactions({
     }
   }
 
-  const shouldContinueWithoutSigning = Boolean(
+  const continueWithoutSigning =
     currentTransaction?.transactionTokenInfo?.type &&
-      currentTransaction?.transactionTokenInfo?.multiTxData &&
-      !currentTransaction?.dataField.endsWith(
-        currentTransaction?.transactionTokenInfo?.multiTxData
-      )
-  );
+    currentTransaction?.transactionTokenInfo?.multiTxData &&
+    !currentTransaction?.dataField.endsWith(
+      currentTransaction?.transactionTokenInfo?.multiTxData
+    );
 
   function handleSignTransaction() {
-    if (shouldContinueWithoutSigning) {
+    if (continueWithoutSigning) {
       setCurrentStep((exising) => exising + 1);
     } else {
       signTx();
@@ -221,10 +217,7 @@ export function useSignMultipleTransactions({
     isLastTransaction,
     currentStep,
     signedTransactions,
-    currentTransaction,
-    isFirstTransaction: currentStep == 0,
-    hasMultipleTransactions: allTransactions.length > 1,
-    shouldContinueWithoutSigning
+    currentTransaction
   };
 }
 
