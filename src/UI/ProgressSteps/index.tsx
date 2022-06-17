@@ -1,7 +1,7 @@
 import React from 'react';
 import Dot from './Dot';
 
-interface ProgressStepsType {
+export interface ProgressStepsType {
   totalSteps: number;
   currentStep: number;
   className?: string;

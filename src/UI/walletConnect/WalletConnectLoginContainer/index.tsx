@@ -8,7 +8,7 @@ import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
 
-function WalletConnectLoginContainer({
+export function WalletConnectLoginContainer({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
