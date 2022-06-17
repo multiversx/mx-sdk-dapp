@@ -13,6 +13,7 @@ import {
   setToastsIdsToStorage
 } from 'storage/session';
 
+import { SignedTransactionsType } from 'types';
 import { getGeneratedClasses } from 'utils';
 
 import CustomToastComponent from './components/CustomToastComponent';
@@ -20,9 +21,9 @@ import TransactionToastComponent from './components/TransactionToastComponent';
 
 import styles from './styles.scss';
 import { TransactionsToastListPropsType } from './types';
-import { SignedTransactionsType } from 'types';
+import removeToastDuplicates from './utils/removeToastDuplicates';
 
-interface ToastsType {
+export interface ToastsType {
   toastId: string;
   type: string;
   duration?: number | undefined;
@@ -64,44 +65,34 @@ const TransactionsToastList = ({
 
   const mappedToastsList = toastsIds?.map(
     ({ toastId, type, message, duration }: ToastsType) => {
-      if (type === 'custom') {
-        return (
-          <CustomToastComponent
-            {...{
-              message: message || '',
-              duration,
-              onDelete: () => handleDeleteCustomToast(toastId)
-            }}
-          />
-        );
-      }
+      switch (type) {
+        case 'custom':
+          return (
+            <CustomToastComponent
+              {...{
+                message: message || '',
+                duration,
+                onDelete: () => handleDeleteCustomToast(toastId)
+              }}
+            />
+          );
 
-      if (type === 'transaction') {
-        return (
-          <TransactionToastComponent
-            {...{
-              toastId,
-              signedTransactionsToRender,
-              lifetimeAfterSuccess: successfulToastLifetime
-            }}
-          />
-        );
-      }
+        case 'transaction':
+          return (
+            <TransactionToastComponent
+              {...{
+                toastId,
+                signedTransactionsToRender,
+                lifetimeAfterSuccess: successfulToastLifetime
+              }}
+            />
+          );
 
-      return null;
+        default:
+          return null;
+      }
     }
   );
-
-  const removeToastDuplicates = (
-    total: ToastsType[],
-    toast: CustomToastType
-  ): ToastsType[] => {
-    if (total.find((item: ToastsType) => item.toastId === toast.toastId)) {
-      return total;
-    } else {
-      return [...total, toast];
-    }
-  };
 
   const mapPendingSignedTransactions = (): void => {
     const newToasts = [...toastsIds];
@@ -161,9 +152,10 @@ const TransactionsToastList = ({
       return;
     }
 
-    setToastsIds((toastsIds: ToastsType[]): ToastsType[] =>
-      customToastsFromStore.reduce(removeToastDuplicates, toastsIds)
-    );
+    const newToasts = (toastsIds: ToastsType[]): ToastsType[] =>
+      customToastsFromStore.reduce(removeToastDuplicates, toastsIds);
+
+    setToastsIds(newToasts);
   }, [customToastsFromStore?.length]);
 
   const style = getGeneratedClasses(className, shouldRenderDefaultCss, {

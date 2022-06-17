@@ -40,3 +40,8 @@ export enum EnvironmentsEnum {
   devnet = 'devnet',
   mainnet = 'mainnet'
 }
+
+export enum ToastsEnum {
+  custom = 'custom',
+  transaction = 'transaction'
+}

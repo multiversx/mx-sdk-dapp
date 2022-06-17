@@ -22,9 +22,7 @@ const TransactionToastComponent = ({
     signedTransactionsToRender[toastId];
 
   const invalidCurrentTx =
-    currentTx == null ||
-    currentTx?.transactions == null ||
-    currentTx?.status == null;
+    currentTx?.transactions == null || currentTx?.status == null;
 
   if (invalidCurrentTx) {
     return null;
