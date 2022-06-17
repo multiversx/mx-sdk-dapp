@@ -1,36 +1,28 @@
 import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
 
+export type DappOptions = { callbackUrl?: string };
+
 export interface IDappProvider {
   init?(): Promise<boolean>;
-  login?<TResponse = string, TOptions = { callbackUrl?: string } | undefined>(
-    options?: TOptions
-  ): Promise<TResponse>;
-  logout<TResponse = boolean, TOptions = { callbackUrl?: string }>(
-    options?: TOptions
-  ): Promise<TResponse>;
+  login?(options?: DappOptions): Promise<string>;
+  logout(options?: DappOptions): Promise<boolean>;
   getAddress(): Promise<string>;
   isInitialized(): boolean;
   isConnected(): Promise<boolean>;
-  sendTransaction?<
-    TResponse = Transaction,
-    TOptions = { callbackUrl?: string }
-  >(
+  sendTransaction?(
     transaction: Transaction,
-    options?: TOptions
-  ): Promise<TResponse>;
-  signTransaction<TResponse = Transaction, TOptions = { callbackUrl?: string }>(
+    options?: DappOptions
+  ): Promise<Transaction | void>;
+  signTransaction(
     transaction: Transaction,
-    options?: TOptions
-  ): Promise<TResponse>;
-  signTransactions<
-    TResponse = Transaction[],
-    TOptions = { callbackUrl?: string }
-  >(
+    options?: DappOptions
+  ): Promise<Transaction>;
+  signTransactions(
     transactions: Transaction[],
-    options?: TOptions
-  ): Promise<TResponse>;
-  signMessage<T extends SignableMessage, TOptions = { callbackUrl?: string }>(
+    options?: DappOptions
+  ): Promise<Transaction[]>;
+  signMessage<T extends SignableMessage>(
     message: T,
-    options: TOptions
+    options: DappOptions
   ): Promise<T>;
 }
