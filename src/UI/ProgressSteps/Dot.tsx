@@ -1,4 +1,5 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 
 const Dot = ({
   color,
@@ -7,6 +8,8 @@ const Dot = ({
   color: string;
   'data-testid'?: string;
 }) => {
-  return <span className={`dot ${color}`} data-testid={dataTestId} />;
+  return (
+    <span className={`${globalStyles.dot} ${color}`} data-testid={dataTestId} />
+  );
 };
 export default Dot;
