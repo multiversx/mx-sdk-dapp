@@ -6,33 +6,47 @@ import styles from '../styles/dapp-modal.scss';
 import { DappModalConfig } from '../types';
 
 type DappModalProps = {
+  id?: string;
   visible: boolean;
   onHide?: () => void;
   parentElement?: Element;
   children?: React.ReactNode;
-} & DappModalConfig;
+  config?: DappModalConfig;
+};
+
+const defaultConfig: DappModalConfig = {
+  showHeader: true,
+  showFooter: false,
+  headerText: '',
+  footerText: ''
+};
 
 const DappModal: React.FC<DappModalProps> = ({
+  id,
   visible,
   onHide,
-  showHeader,
-  showFooter,
-  headerText,
-  footerText,
-  modalDialogClassName,
-  modalContentClassName,
-  modalHeaderClassName,
-  modalCloseButtonClassName,
-  modalBodyClassName,
-  modalFooterClassName,
   parentElement,
-  customModalHeader,
-  customModalFooter,
+  config = defaultConfig,
   children
 }) => {
   if (!visible) {
     return null;
   }
+
+  const {
+    showHeader,
+    showFooter,
+    headerText,
+    footerText,
+    modalDialogClassName,
+    modalContentClassName,
+    modalHeaderClassName,
+    modalCloseButtonClassName,
+    modalBodyClassName,
+    modalFooterClassName,
+    customModalHeader,
+    customModalFooter
+  } = config;
 
   const Header = customModalHeader ?? (
     <div className={`${styles.dappModalHeader} ${modalHeaderClassName}`}>
@@ -60,7 +74,7 @@ const DappModal: React.FC<DappModalProps> = ({
 
   return ReactDOM.createPortal(
     <div
-      id='dapp-modal'
+      id={id ?? 'dapp-modal'}
       role='dialog'
       aria-modal='true'
       className={`${styles.dappModal} ${modalDialogClassName}`}
