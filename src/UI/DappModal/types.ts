@@ -9,4 +9,6 @@ export type DappModalConfig = {
   modalCloseButtonClassName?: string;
   modalBodyClassName?: string;
   modalFooterClassName?: string;
+  customModalHeader?: JSX.Element;
+  customModalFooter?: JSX.Element;
 };

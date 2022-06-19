@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
-import useDappModal from '../../DappModal/hooks/useDappModal';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
 

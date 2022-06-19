@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { SignModalPropsType } from 'types';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, safeRedirect } from 'utils';
-import useDappModal from '../../DappModal/hooks/useDappModal';
 import ModalContainer from '../../ModalContainer';
 
 const SignWithExtensionModal = ({

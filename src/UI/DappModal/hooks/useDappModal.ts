@@ -35,7 +35,6 @@ const useDappModal = (config?: DappModalConfig) => {
 
   useEffect(() => {
     return () => {
-      console.log('UNMOUNT');
       handleHideModal();
     };
   }, []);

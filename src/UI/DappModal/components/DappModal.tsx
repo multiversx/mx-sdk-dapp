@@ -5,14 +5,14 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import styles from '../styles/dapp-modal.scss';
 import { DappModalConfig } from '../types';
 
-type AwesomeModalProps = {
+type DappModalProps = {
   visible: boolean;
-  onHide: () => void;
+  onHide?: () => void;
   parentElement?: Element;
   children?: React.ReactNode;
 } & DappModalConfig;
 
-const DappModal: React.FC<AwesomeModalProps> = ({
+const DappModal: React.FC<DappModalProps> = ({
   visible,
   onHide,
   showHeader,
@@ -26,13 +26,15 @@ const DappModal: React.FC<AwesomeModalProps> = ({
   modalBodyClassName,
   modalFooterClassName,
   parentElement,
+  customModalHeader,
+  customModalFooter,
   children
 }) => {
   if (!visible) {
     return null;
   }
 
-  const Header = (
+  const Header = customModalHeader ?? (
     <div className={`${styles.dappModalHeader} ${modalHeaderClassName}`}>
       <div className={styles.dappModalHeaderText}>{headerText}</div>
       <button
@@ -50,12 +52,10 @@ const DappModal: React.FC<AwesomeModalProps> = ({
     </div>
   );
 
-  const Footer = (
-    <>
-      <div className={`${styles.dappModalFooter} ${modalFooterClassName}`}>
-        <div>{footerText}</div>
-      </div>
-    </>
+  const Footer = customModalFooter ?? (
+    <div className={`${styles.dappModalFooter} ${modalFooterClassName}`}>
+      <div>{footerText}</div>
+    </div>
   );
 
   return ReactDOM.createPortal(

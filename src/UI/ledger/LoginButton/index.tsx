@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
-import useDappModal from '../../DappModal/hooks/useDappModal';
 import LedgerLoginContainer from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
 
