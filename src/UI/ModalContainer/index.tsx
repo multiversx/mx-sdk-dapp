@@ -18,15 +18,13 @@ const ModalContainer = ({
     config
   } = useDappModal(modalConfig);
 
+  const hideModalHandler = () => {
+    onHide();
+    onClose?.();
+  };
+
   return (
-    <DappModal
-      onHide={() => {
-        onHide();
-        onClose?.();
-      }}
-      visible={visible}
-      {...config}
-    >
+    <DappModal onHide={hideModalHandler} visible={visible} {...config}>
       {children}
     </DappModal>
   );
