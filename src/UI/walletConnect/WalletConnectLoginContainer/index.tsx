@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import platform from 'optionalPackages/platform';
 import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';

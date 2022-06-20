@@ -6,7 +6,7 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { NotificationTypesEnum } from 'types';
 
 import useDappModal from '../DappModal/hooks/useDappModal';
-import ModalContainer from '../ModalContainer';
+import ModalContainer from '../ModalContainer/ModalContainer';
 import PageState from '../PageState';
 
 const typedIcons: any = icons;

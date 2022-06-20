@@ -4,7 +4,7 @@ import { SignModalPropsType } from 'types';
 import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, safeRedirect } from 'utils';
-import ModalContainer from '../../ModalContainer';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 
 const SignWithExtensionModal = ({
   handleClose,

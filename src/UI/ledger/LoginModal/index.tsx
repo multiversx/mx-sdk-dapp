@@ -3,7 +3,7 @@ import { useGetAccountInfo } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { useLedgerLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';

@@ -3,7 +3,7 @@ import { useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
-import ModalContainer from '../../ModalContainer';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 import SignStep from './SignStep';
 
 const SignWithDeviceModal = ({

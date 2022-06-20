@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import styles from '../styles/dapp-modal.scss';
 import { DappModalConfig } from '../types';
+import DappModalBody from './DappModalBody';
+import DappModalFooter from './DappModalFooter';
+import DappModalHeader from './DappModalHeader';
 
 type DappModalProps = {
   id?: string;
@@ -22,7 +23,7 @@ const defaultConfig: DappModalConfig = {
 };
 
 const DappModal: React.FC<DappModalProps> = ({
-  id,
+  id = 'dapp-modal',
   visible,
   onHide,
   parentElement,
@@ -48,42 +49,34 @@ const DappModal: React.FC<DappModalProps> = ({
     customModalFooter
   } = config;
 
-  const Header = customModalHeader ?? (
-    <div className={`${styles.dappModalHeader} ${modalHeaderClassName}`}>
-      <div className={styles.dappModalHeaderText}>{headerText}</div>
-      <button
-        className={`${styles.dappModalCloseButton} ${modalCloseButtonClassName}`}
-        onClick={onHide}
-      >
-        <ReactFontawesome.FontAwesomeIcon size='lg' icon={icons.faTimes} />
-      </button>
-    </div>
-  );
-
-  const Body = (
-    <div className={`${styles.dappModalBody} ${modalBodyClassName}`}>
-      {children}
-    </div>
-  );
-
-  const Footer = customModalFooter ?? (
-    <div className={`${styles.dappModalFooter} ${modalFooterClassName}`}>
-      <div>{footerText}</div>
-    </div>
-  );
-
   return ReactDOM.createPortal(
     <div
-      id={id ?? 'dapp-modal'}
+      id={id}
       role='dialog'
       aria-modal='true'
       className={`${styles.dappModal} ${modalDialogClassName}`}
       onClick={onHide}
     >
       <div className={`${styles.dappModalContent} ${modalContentClassName}`}>
-        {showHeader && Header}
-        {Body}
-        {showFooter && Footer}
+        <DappModalHeader
+          visible={showHeader}
+          headerText={headerText}
+          customHeader={customModalHeader}
+          headerClassName={modalHeaderClassName}
+          closeButtonClassName={modalCloseButtonClassName}
+          onHide={onHide}
+        />
+
+        <DappModalBody bodyClassName={modalBodyClassName}>
+          {children}
+        </DappModalBody>
+
+        <DappModalFooter
+          visible={showFooter}
+          customFooter={customModalFooter}
+          footerText={footerText}
+          footerClassName={modalFooterClassName}
+        />
       </div>
     </div>,
     parentElement ?? document.body
