@@ -13,7 +13,7 @@
   "scripts": {
     "start": "npm run watch",
     "build:types": "tsc --project tsconfig.json",
-    "build": "webpack",
+    "build": "rimraf dist & node esbuild.js & yarn build:types",
     "test": "dts test --passWithNoTests",
     "lint": "dts lint",
     "prepare": "npm run build",
@@ -46,6 +46,7 @@
     "dts-cli": "^1.5.1",
     "esbuild": "^0.14.43",
     "esbuild-node-externals": "^1.4.1",
+    "esbuild-plugin-alias": "^0.2.1",
     "esbuild-plugin-svgr": "^1.0.1",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-react": "1.1.7",
@@ -95,9 +96,12 @@
     "transaction"
   ],
   "peerDependencies": {
-    "react": ">=18"
+    "react": "18.1.0",
+    "react-dom": "18.1.0"
   },
   "resolutions": {
+    "react": "18.1.0",
+    "react-dom": "18.1.0",
     "@types/react": "18.0.10",
     "@types/react-dom": "18.0.5"
   },
