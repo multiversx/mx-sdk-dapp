@@ -1,17 +1,18 @@
 import React from 'react';
-
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
+import styles from './tx-details.scss';
 import { Props } from './types';
 
 const TxDetails = ({
   title,
   transactions,
-  className = 'tx-details',
+  className = styles.txDetails,
   isTimedOut = false,
   shouldRenderDefaultCss = true
 }: Props) => {
@@ -19,13 +20,13 @@ const TxDetails = ({
     className,
     shouldRenderDefaultCss,
     {
-      title: 'mb-0',
-      statusTransactions: 'mb-2 mt-1',
-      iconSuccess: 'mr-1 text-secondary',
-      iconFailed: 'mr-1 text-secondary',
-      trimContainer: 'text-nowrap trim-fs-sm mr-3',
-      iconPending: 'mr-1 text-secondary fa-spin slow-spin',
-      item: 'tx-description d-flex justify-content-start align-items-center'
+      title: globalStyles.mb0,
+      statusTransactions: `${globalStyles.mb2} ${globalStyles.mt1}`,
+      iconSuccess: `${globalStyles.mr1} ${globalStyles.textSecondary}`,
+      iconFailed: `${globalStyles.mr1} ${globalStyles.textSecondary}`,
+      trimContainer: `${globalStyles.textNowrap} ${globalStyles.trimFsSm} ${globalStyles.mr3}`,
+      iconPending: `${globalStyles.mr1} ${globalStyles.textSecondary} fa-spin slow-spin`,
+      item: `${globalStyles.toastMessages} ${globalStyles.dFlex} ${globalStyles.justifyContentStart} ${globalStyles.alignItemsCenter}`
     }
   );
 
@@ -79,7 +80,10 @@ const TxDetails = ({
             </span>
             <CopyButton text={hash} />
             {!isServerTransactionPending(status) && (
-              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
+              <ExplorerLink
+                page={`/transactions/${hash}`}
+                className={globalStyles.ml2}
+              />
             )}
           </div>
         );

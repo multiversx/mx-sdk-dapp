@@ -1,3 +1,5 @@
+@import "src/assets/sass/variables/variables";
+
 .token-symbol,
 .token-symbol-combined {
   display: flex;
@@ -153,4 +155,24 @@
   .token-symbol {
     //box-shadow: 0 0 0 6px $card-inner-bg-light;
   }
+}
+
+.token-symbol-wrapped {
+  color: inherit;
+}
+
+.token-symbol-pool {
+  color: inherit;
+}
+
+.pool {
+  color: inherit;
+}
+
+.token-symbol-locked {
+  color: inherit;
+}
+
+.locked {
+  color: inherit;
 }

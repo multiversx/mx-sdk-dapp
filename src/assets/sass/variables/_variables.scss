@@ -107,6 +107,8 @@ $form-check-input-gutter:               1.25rem !default;
 $form-check-input-margin-y:             .3rem !default;
 $form-check-input-margin-x:             .25rem !default;
 
+$rounded-pill:                50rem !default;
+
 // Body
 //
 // Settings for the `<body>` element.
@@ -149,3 +151,11 @@ $card-columns-margin:               $card-spacer-y !default;
 $font-size-base:              1rem !default; // Assumes the browser default, typically `16px`
 $lead-font-size:              $font-size-base * 1.25 !default;
 $lead-font-weight:            300 !default;
+
+
+$box-shadow-sm:               0 .125rem .25rem rgba($black, .075) !default;
+$box-shadow:                  0 .5rem 1rem rgba($black, .15) !default;
+$box-shadow-lg:               0 1rem 3rem rgba($black, .175) !default;
+
+$form-group-margin-bottom:              1rem !default;
+$form-text-margin-top:                  .25rem !default;
