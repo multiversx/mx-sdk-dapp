@@ -23,7 +23,7 @@ interface LedgerLoginContainerPropsType {
   onClose?: () => void;
 }
 
-function LedgerLoginContainer({
+export const LedgerLoginContainer = ({
   callbackRoute,
   className = 'login-modal-content',
   shouldRenderDefaultCss = true,
@@ -31,7 +31,7 @@ function LedgerLoginContainer({
   redirectAfterLogin,
   onClose,
   token
-}: LedgerLoginContainerPropsType) {
+}: LedgerLoginContainerPropsType) => {
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -97,6 +97,6 @@ function LedgerLoginContainer({
   ) : (
     getContent()
   );
-}
+};
 
 export default LedgerLoginContainer;

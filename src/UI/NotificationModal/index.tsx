@@ -12,7 +12,7 @@ const notificationTypesToIcons = {
 };
 const defaultIcon = faExclamationTriangle;
 
-export function NotificationModal() {
+export const NotificationModal = () => {
   const { notification, clearNotification } = useGetNotification();
 
   const showModal = Boolean(notification);
@@ -52,6 +52,6 @@ export function NotificationModal() {
       </div>
     </Modal>
   ) : null;
-}
+};
 
 export default NotificationModal;

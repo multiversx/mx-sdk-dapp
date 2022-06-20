@@ -43,7 +43,7 @@ export interface TransactionToastPropsType {
   onClose?: (toastId: string) => void;
 }
 
-const TransactionToast = ({
+export const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,

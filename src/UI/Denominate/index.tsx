@@ -66,7 +66,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   );
 };
 
-const Denominate = (props: DenominateType) => {
+const DenominateComponent = (props: DenominateType) => {
   const { value } = props;
 
   return !stringIsInteger(value)
@@ -74,10 +74,10 @@ const Denominate = (props: DenominateType) => {
     : denominateValid(props, props.egldLabel || '');
 };
 
-const DenominateWrapper = (props: DenominateType) => {
+export const Denominate = (props: DenominateType) => {
   const egldLabel = props.egldLabel || getEgldLabel();
   const denominateProps = { ...props, egldLabel };
-  return <Denominate {...denominateProps} />;
+  return <DenominateComponent {...denominateProps} />;
 };
 
-export default DenominateWrapper;
+export default Denominate;

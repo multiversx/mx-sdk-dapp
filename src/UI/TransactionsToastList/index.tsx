@@ -18,14 +18,14 @@ export interface TransactionsToastListPropsType {
   successfulToastLifetime?: number;
 }
 
-function TransactionsToastList({
+export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
   className = 'transactions-toast-list',
   pendingTransactions,
   signedTransactions,
   successfulToastLifetime
-}: TransactionsToastListPropsType) {
+}: TransactionsToastListPropsType) => {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
   const pendingTransactionsFromStore =
@@ -119,6 +119,6 @@ function TransactionsToastList({
   }, [pendingTransactionsToRender]);
 
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
-}
+};
 
 export default TransactionsToastList;

@@ -7,7 +7,7 @@ export interface TrimType {
   dataTestId?: string;
 }
 
-const Trim = ({ text, dataTestId = '' }: TrimType) => {
+export const Trim = ({ text, dataTestId = '' }: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
   const hiddenTextRef = React.useRef(document.createElement('span'));

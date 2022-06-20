@@ -12,7 +12,7 @@ export interface WebWalletLoginButtonPropsType {
   shouldRenderDefaultCss?: boolean;
 }
 
-const WebWalletLoginButton: (
+export const WebWalletLoginButton: (
   props: WebWalletLoginButtonPropsType
 ) => JSX.Element = ({
   children,

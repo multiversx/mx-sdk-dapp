@@ -5,7 +5,7 @@ import { SignModalPropsType } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
 import SignStep from './SignStep';
 
-const SignWithDeviceModal = ({
+export const SignWithDeviceModal = ({
   handleClose,
   error,
   className = 'device-modal',

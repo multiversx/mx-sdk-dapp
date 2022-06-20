@@ -4,7 +4,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetNetworkConfig } from 'hooks';
 
-const ExplorerLink = ({
+export const ExplorerLink = ({
   page,
   text,
   className

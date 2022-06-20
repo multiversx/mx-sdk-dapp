@@ -3,7 +3,9 @@ import { getGeneratedClasses } from 'UI/utils';
 import LedgerLoginContainer from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
 
-const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
+export const LedgerLoginButton: (
+  props: LedgerLoginButtonPropsType
+) => JSX.Element = ({
   token,
   callbackRoute,
   children,

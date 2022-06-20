@@ -21,7 +21,7 @@ export interface WalletConnectLoginModalPropsType {
   onClose?: () => void;
 }
 
-export function WalletConnectLoginContainer({
+export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
@@ -33,7 +33,7 @@ export function WalletConnectLoginContainer({
   redirectAfterLogin,
   token,
   onClose
-}: WalletConnectLoginModalPropsType) {
+}: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnect,
     { error },
@@ -150,6 +150,6 @@ export function WalletConnectLoginContainer({
   ) : (
     content
   );
-}
+};
 
 export default WalletConnectLoginContainer;

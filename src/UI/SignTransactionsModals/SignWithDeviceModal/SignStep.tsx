@@ -32,7 +32,7 @@ export interface SignStepType {
   className: string;
 }
 
-const SignStep = ({
+export const SignStep = ({
   onSignTransaction,
   handleClose,
   onPrev,

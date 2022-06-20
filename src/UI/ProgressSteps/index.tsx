@@ -7,7 +7,7 @@ export interface ProgressStepsType {
   className?: string;
 }
 
-const ProgressSteps = ({
+export const ProgressSteps = ({
   totalSteps,
   currentStep,
   className

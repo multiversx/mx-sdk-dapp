@@ -6,7 +6,7 @@ import { useExtensionLogin } from 'services';
 import { ExtensionLoginButtonPropsType } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
 
-const ExtensionLoginButton: (
+export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
   token,

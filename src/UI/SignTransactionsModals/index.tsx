@@ -36,11 +36,11 @@ interface SignTransactionsPropsType {
   verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
 }
 
-function SignTransactionsModals({
+export const SignTransactionsModals = ({
   className,
   CustomConfirmScreens,
   verifyReceiverScam = true
-}: SignTransactionsPropsType) {
+}: SignTransactionsPropsType) => {
   const {
     callbackRoute,
     transactions,
@@ -105,6 +105,6 @@ function SignTransactionsModals({
   }
 
   return null;
-}
+};
 
 export default SignTransactionsModals;

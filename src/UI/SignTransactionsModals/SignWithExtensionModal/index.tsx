@@ -6,7 +6,7 @@ import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
 
-const SignWithExtensionModal = ({
+export const SignWithExtensionModal = ({
   handleClose,
   error,
   callbackRoute,
