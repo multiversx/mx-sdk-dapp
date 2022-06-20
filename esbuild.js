@@ -4,7 +4,6 @@ const plugin = require('node-stdlib-browser/helpers/esbuild/plugin');
 const stdLibBrowser = require('node-stdlib-browser');
 const { nodeExternalsPlugin } = require('esbuild-node-externals');
 const fs = require('fs');
-const alias = require('esbuild-plugin-alias');
 
 const entryPoints = fs
   .readdirSync('src')

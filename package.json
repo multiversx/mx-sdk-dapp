@@ -26,8 +26,6 @@
     "@babel/core": "7.17.8",
     "@esbuild-kit/esm-loader": "^2.2.1",
     "@size-limit/preset-small-lib": "7.0.8",
-    "@svgr/rollup": "6.2.1",
-    "@svgr/webpack": "^6.2.1",
     "@testing-library/jest-dom": "5.16.2",
     "@testing-library/react": "^13.3.0",
     "@tsconfig/create-react-app": "^1.0.2",
@@ -47,9 +45,6 @@
     "dts-cli": "^1.5.1",
     "esbuild": "^0.14.43",
     "esbuild-node-externals": "^1.4.1",
-    "esbuild-plugin-alias": "^0.2.1",
-    "esbuild-plugin-alias-path": "^1.1.1",
-    "esbuild-plugin-babel": "^0.2.3",
     "esbuild-plugin-svgr": "^1.0.1",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-react": "1.1.7",
@@ -72,19 +67,12 @@
     "react-dom": "18.1.0",
     "react-is": "18.0.0",
     "rimraf": "^3.0.2",
-    "rollup-plugin-scss": "3.0.0",
-    "rollup-plugin-svg-import": "1.6.0",
     "sass": "1.32",
     "size-limit": "7.0.8",
     "stream-browserify": "^3.0.0",
     "ts-jest": "28.0.4",
     "ts-loader": "^9.3.0",
-    "tscpaths": "^0.0.9",
-    "tsdx": "0.14.1",
-    "tslib": "2.4.0",
-    "typescript": "4.7.3",
-    "webpack": "^5.73.0",
-    "webpack-cli": "^4.10.0"
+    "typescript": "4.7.3"
   },
   "keywords": [
     "elrond",
@@ -135,6 +123,12 @@
       "limit": "10 KB"
     }
   ],
+  "files": [
+    "dist/*.js",
+    "dist/**/*.js",
+    "dist/*.d.ts",
+    "dist/**/*.d.ts"
+  ],
   "dependencies": {
     "@elrondnetwork/erdjs": "10.2.5",
     "@elrondnetwork/erdjs-extension-provider": "2.0.1",
@@ -157,8 +151,6 @@
     "react-redux": "^8.0.0-beta.1",
     "redux-persist": "6.0.0",
     "reselect": "4.0.0",
-    "rollup-plugin-peer-deps-external": "2.2.4",
-    "rollup-plugin-postcss-modules": "2.0.2",
     "shx": "0.3.4"
   }
 }
