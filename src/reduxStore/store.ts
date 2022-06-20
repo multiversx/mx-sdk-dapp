@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { createSubscription } from 'react-redux/es/utils/Subscription';
 
 import {
   persistStore,
@@ -55,6 +56,8 @@ export const store = configureStore({
       }
     }).concat(loginSessionMiddleware)
 });
+
+export const subscription = createSubscription(store);
 
 export const persistor = persistStore(store);
 

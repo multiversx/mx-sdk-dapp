@@ -1,9 +1,8 @@
 import { Transaction } from '@elrondnetwork/erdjs';
-import { useDispatch } from 'react-redux';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import useSignMultipleTransactions from 'hooks/transactions/useSignMultipleTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
-import { useSelector } from 'reduxStore/DappProviderContext';
+import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import {
   egldLabelSelector,
   transactionsToSignSelector

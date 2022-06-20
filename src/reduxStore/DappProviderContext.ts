@@ -2,10 +2,16 @@ import React from 'react';
 import {
   createDispatchHook,
   createSelectorHook,
-  createStoreHook
+  createStoreHook,
+  ReactReduxContextValue
 } from 'react-redux';
+import { store, subscription } from './store';
 
-const defaultContextValue: any = null;
+const defaultContextValue: ReactReduxContextValue = {
+  store,
+  subscription
+};
+
 export const DappCoreContext = React.createContext(defaultContextValue);
 
 export const useStore = createStoreHook(DappCoreContext);
