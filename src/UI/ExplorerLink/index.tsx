@@ -25,7 +25,7 @@ export const ExplorerLink = ({
       className={`link-style ${className}`}
     >
       {text ? (
-        <React.Fragment>{text}</React.Fragment>
+        <>{text}</>
       ) : (
         <FontAwesomeIcon icon={faSearch} className='text-secondary' />
       )}

@@ -45,24 +45,22 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
 };
 
 export default class TokenDetails extends React.Component {
-  static Token = (props: TokenIconProps) => (
-    <React.Fragment>{props.token}</React.Fragment>
-  );
+  static Token = (props: TokenIconProps) => <>{props.token}</>;
   static Symbol = (props: TokenIconProps) => (
-    <React.Fragment>
+    <>
       {
         getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
           .symbol
       }
-    </React.Fragment>
+    </>
   );
   static Label = (props: TokenIconProps) => (
-    <React.Fragment>
+    <>
       {
         getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
           .label
       }
-    </React.Fragment>
+    </>
   );
   static Icon = (props: TokenIconProps) => {
     const Component: any =

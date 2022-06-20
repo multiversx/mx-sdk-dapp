@@ -15,15 +15,15 @@ const LedgerConnect = ({
       <div className='card my-4 text-center border-0'>
         <div className='card-body p-4 mx-lg-4'>
           {connectPageContent ? (
-            <React.Fragment>{connectPageContent}</React.Fragment>
+            <>{connectPageContent}</>
           ) : (
-            <React.Fragment>
+            <>
               <LedgerLogo className='mb-4' />
               <h4 className='mb-4'>Connect Ledger</h4>
               <p className='lead mb-4'>
                 Unlock your device &amp; open the Elrond App.
               </p>
-            </React.Fragment>
+            </>
           )}
 
           <div>

@@ -57,7 +57,7 @@ const TxDetails = ({
     timedOut: iconFailedData
   };
   return (
-    <React.Fragment>
+    <>
       {title && <div className={generatedClasses.title}>{title}</div>}
       <div className={generatedClasses.statusTransactions}>
         {
@@ -89,7 +89,7 @@ const TxDetails = ({
           </div>
         );
       })}
-    </React.Fragment>
+    </>
   );
 };
 

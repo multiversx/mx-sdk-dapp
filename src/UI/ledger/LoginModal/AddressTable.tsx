@@ -63,7 +63,7 @@ const AddressTable = ({
       );
     default:
       return (
-        <React.Fragment>
+        <>
           <div className='m-auto'>
             <div className={classes.wrapper}>
               <div className={classes.cardBody}>
@@ -125,7 +125,7 @@ const AddressTable = ({
               </div>
             </div>
           </div>
-        </React.Fragment>
+        </>
       );
   }
 };

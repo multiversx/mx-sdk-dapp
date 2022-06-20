@@ -70,7 +70,7 @@ export const PageState = ({
       {description && (
         <div className={generatedClasses.description}>{description}</div>
       )}
-      {action && <React.Fragment>{action}</React.Fragment>}
+      {action && <>{action}</>}
     </div>
   );
 };

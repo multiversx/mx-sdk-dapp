@@ -3,7 +3,6 @@ export * from './ExplorerLink';
 export * from './extension/LoginButton';
 export * from './ledger/LoginButton';
 export * from './ledger/LoginModal';
-
 export * from './NotificationModal';
 export * from './PageState';
 export * from './ProgressSteps';

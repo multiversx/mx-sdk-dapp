@@ -105,7 +105,7 @@ export const WalletConnectLoginContainer = ({
             />
             <h4 className={generatedClasses.title}>{title}</h4>
             {isMobileDevice ? (
-              <React.Fragment>
+              <>
                 <p className={generatedClasses.leadText}>{loginButtonText}</p>
                 <a
                   id='accessWalletBtn'
@@ -124,7 +124,7 @@ export const WalletConnectLoginContainer = ({
                   />
                   {title}
                 </a>
-              </React.Fragment>
+              </>
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}

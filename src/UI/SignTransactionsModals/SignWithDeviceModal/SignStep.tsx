@@ -132,9 +132,9 @@ export const SignStep = ({
       className={className}
       title={title || 'Confirm on Ledger'}
       description={
-        <React.Fragment>
+        <>
           {currentTransaction.transaction && (
-            <React.Fragment>
+            <>
               {showProgressSteps && (
                 <ProgressSteps
                   totalSteps={allTransactions.length}
@@ -194,9 +194,9 @@ export const SignStep = ({
                 )}
               </div>
               {error && <p className={classes.errorMessage}>{error}</p>}
-            </React.Fragment>
+            </>
           )}
-        </React.Fragment>
+        </>
       }
       action={
         <div className={classes.buttonsWrapper}>

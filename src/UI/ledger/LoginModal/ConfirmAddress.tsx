@@ -19,10 +19,10 @@ const ConfirmAddress = ({
             {ledgerAccount ? ledgerAccount.address : ''}
           </p>
           {token && (
-            <React.Fragment>
+            <>
               <p>and Auth Token</p>
               <p className='lead border rounded p-2'>{`${token}{}`}</p>
-            </React.Fragment>
+            </>
           )}
           <p className='m-0'>
             {token

@@ -47,7 +47,7 @@ export const Trim = ({ text, dataTestId = '' }: TrimType) => {
       </span>
 
       {overflow ? (
-        <React.Fragment>
+        <>
           <span className='left'>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
@@ -57,7 +57,7 @@ export const Trim = ({ text, dataTestId = '' }: TrimType) => {
           <span className='right'>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
-        </React.Fragment>
+        </>
       ) : (
         <span>{text}</span>
       )}

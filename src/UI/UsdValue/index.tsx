@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { getUsdValue } from 'utils/operations';
 
 export const UsdValue = (props: {

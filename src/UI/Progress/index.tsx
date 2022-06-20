@@ -126,7 +126,7 @@ const Progress = ({
       <div className='d-flex position-absolute w-100'>{children}</div>
     </div>
   ) : (
-    <React.Fragment>{children}</React.Fragment>
+    <>{children}</>
   );
 };
 
