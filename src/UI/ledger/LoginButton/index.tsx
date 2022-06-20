@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
