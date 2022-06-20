@@ -28,6 +28,7 @@ esbuild
     entryPoints,
     outdir: 'dist',
     bundle: true,
+    treeShaking: true,
     minify: true,
     sourcemap: true,
     format: 'esm',
