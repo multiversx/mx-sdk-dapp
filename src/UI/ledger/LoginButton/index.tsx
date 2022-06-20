@@ -1,4 +1,5 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
 import styles from '../styles/ledger.scss';
@@ -24,7 +25,9 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `${styles.wrapper} ${
+      wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${
+        globalStyles.px4
+      } ${globalStyles.m1} ${globalStyles.mx3} ${
         buttonClassName != null ? buttonClassName : ''
       }`,
       loginText: styles.loginText

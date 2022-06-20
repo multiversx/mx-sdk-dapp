@@ -4,6 +4,7 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import styles from '../styles/ledger.scss';
+import globalStyles from 'assets/sass/main.scss';
 import AddressRow from './AddressRow';
 
 const ledgerWaitingText = 'Waiting for device';
@@ -36,15 +37,15 @@ const AddressTable = ({
   className = styles.ledgerAddressTable
 }: AddressTablePropsType) => {
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: styles.wrapper,
-    cardBody: styles.cardBody,
-    tableWrapper: styles.tableWrapper,
-    tableContent: styles.tableContent,
-    tableHeader: styles.tableHeader,
-    tableHeaderText: styles.tableHeaderText,
-    buttonsWrapper: styles.buttonsWrapper,
-    arrowButton: styles.arrowButton,
-    confirmButton: styles.confirmButton
+    wrapper: `${globalStyles.card} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+    cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+    tableWrapper: globalStyles.tableResponsive,
+    tableContent: `${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
+    tableHeader: `${globalStyles.py2} ${globalStyles.textBlack50} ${globalStyles.borderBottom}`,
+    tableHeaderText: `${globalStyles.textLeft} ${globalStyles.border0}`,
+    buttonsWrapper: `${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.mt2}`,
+    arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
+    confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px2} ${globalStyles.mt4}`
   });
   switch (true) {
     case loading:

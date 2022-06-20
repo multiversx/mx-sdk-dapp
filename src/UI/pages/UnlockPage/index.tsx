@@ -24,7 +24,7 @@ const UnlockPage = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: styles.wrapper,
+      wrapper: `${styles.home} ${globalStyles.dFlex} ${globalStyles.flexFill} ${globalStyles.alignItemsCenter}`,
       title: globalStyles.mb4,
       description: globalStyles.mb4,
       cardContainer: globalStyles.mAuto,

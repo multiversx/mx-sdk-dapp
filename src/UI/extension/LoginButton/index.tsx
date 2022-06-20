@@ -1,5 +1,5 @@
 import React from 'react';
-
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
@@ -27,7 +27,9 @@ const ExtensionLoginButton: (
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `${styles.wrapper} ${
+    wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${
+      globalStyles.px4
+    } ${globalStyles.m1} ${globalStyles.mx3} ${
       buttonClassName != null ? buttonClassName : ''
     }`,
     loginText: styles.loginText,

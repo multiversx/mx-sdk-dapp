@@ -22,7 +22,7 @@ export const PageState = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: styles.wrapper,
+      wrapper: `${styles.state} ${globalStyles.mAuto} ${globalStyles.p4} ${globalStyles.textCenter}`,
       iconContainer: classNames(
         `${globalStyles.iconState} ${globalStyles.mxAuto}`,
         {
