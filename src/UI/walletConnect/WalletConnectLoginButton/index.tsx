@@ -20,7 +20,7 @@ export interface WalletConnectLoginButtonPropsType {
   token?: string;
 }
 
-const WalletConnectLoginButton = ({
+export const WalletConnectLoginButton = ({
   children,
   callbackRoute,
   onModalOpens,

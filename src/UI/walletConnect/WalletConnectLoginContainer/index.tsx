@@ -21,7 +21,7 @@ export interface WalletConnectLoginModalPropsType {
   onClose?: () => void;
 }
 
-function WalletConnectLoginContainer({
+export function WalletConnectLoginContainer({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
