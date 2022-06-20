@@ -10,6 +10,7 @@ const entryPoints = fs
   .filter((files) => !files.includes('.'))
   .map((folder) => {
     const files = fs.readdirSync(`src/${folder}`);
+
     const index = files.findIndex(
       (file) => file.includes('index.ts') || file.includes('index.tsx')
     );
@@ -22,9 +23,13 @@ const entryPoints = fs
   })
   .filter((folder) => folder != null);
 
+const optionalPackages = fs
+  .readdirSync('src/optionalPackages')
+  .map((file) => `src/optionalPackages/${file}`);
+
 esbuild
   .build({
-    entryPoints: entryPoints,
+    entryPoints: [...entryPoints, ...optionalPackages],
     outdir: 'dist',
     bundle: true,
     minify: true,
