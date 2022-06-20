@@ -1,8 +1,12 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
+
 import { useGetNetworkConfig } from 'hooks';
+
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+
+import styles from './styles.scss';
 
 const ExplorerLink = ({
   page,
@@ -19,17 +23,15 @@ const ExplorerLink = ({
   return (
     <a
       href={`${explorerAddress}${page}`}
-      {...{
-        target: '_blank'
-      }}
-      className={`${globalStyles.linkStyle} ${className}`}
+      target='_blank'
+      className={classNames(styles.link, className)}
     >
       {text ? (
         <React.Fragment>{text}</React.Fragment>
       ) : (
         <ReactFontawesome.FontAwesomeIcon
           icon={icons.faSearch}
-          className={globalStyles.textSecondary}
+          className={styles.search}
         />
       )}
     </a>

@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useGetNotification } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { NotificationTypesEnum } from 'types';
 
+import useDappModal from '../DappModal/hooks/useDappModal';
+import ModalContainer from '../ModalContainer/ModalContainer';
 import PageState from '../PageState';
 
 const typedIcons: any = icons;
@@ -17,8 +18,15 @@ const defaultIcon = typedIcons.faExclamationTriangle;
 
 export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
+  const { handleShowModal } = useDappModal();
 
-  const showModal = Boolean(notification);
+  useEffect(() => {
+    const showModal = Boolean(notification);
+    if (showModal) {
+      handleShowModal();
+    }
+  }, [notification]);
+
   const onDone = () => {
     clearNotification();
   };
@@ -30,14 +38,7 @@ export function NotificationModal() {
     : null;
 
   return notification ? (
-    <ReactBootstrap.Modal
-      show={showModal}
-      backdrop={true}
-      onHide={notification}
-      className={`modal-container`}
-      animation={false}
-      centered
-    >
+    <ModalContainer>
       <div className='card w-100 notification-modal'>
         <PageState
           icon={icon}
@@ -53,7 +54,7 @@ export function NotificationModal() {
           }
         />
       </div>
-    </ReactBootstrap.Modal>
+    </ModalContainer>
   ) : null;
 }
 

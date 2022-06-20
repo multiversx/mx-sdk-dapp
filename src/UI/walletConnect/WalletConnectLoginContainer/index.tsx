@@ -3,7 +3,7 @@ import globalStyles from 'assets/sass/main.scss';
 import platform from 'optionalPackages/platform';
 import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
 import { LoginModalPropsType } from './types';
@@ -127,9 +127,12 @@ export function WalletConnectLoginContainer({
 
   return wrapContentInsideModal ? (
     <ModalContainer
-      title={'Login with Maiar'}
-      className={className}
       onClose={onClose}
+      modalConfig={{
+        headerText: 'Login with Maiar',
+        showHeader: true,
+        modalDialogClassName: className
+      }}
     >
       {content}
     </ModalContainer>

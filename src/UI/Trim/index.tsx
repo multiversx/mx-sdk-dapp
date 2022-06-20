@@ -3,6 +3,8 @@ import { useCallback } from 'react';
 import debounce from 'lodash.debounce';
 import globalStyles from 'assets/sass/main.scss';
 
+import styles from './styles.scss';
+
 interface TrimType {
   text: string;
   dataTestId?: string;
@@ -26,6 +28,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
 
   const addWindowResizeListener = () => {
     window.addEventListener('resize', listener);
+
     return () => {
       window.removeEventListener('resize', listener);
     };
@@ -51,7 +54,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
 
       {overflow ? (
         <React.Fragment>
-          <span className={globalStyles.left}>
+          <span className={styles.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
             </span>

@@ -1,5 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import globalStyles from 'assets/sass/main.scss';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
@@ -22,7 +23,9 @@ export const WalletConnectLoginButton = ({
   token,
   hideButtonWhenModalOpens = false
 }: WalletConnectLoginButtonPropsType) => {
-  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [canShowLoginModal, setCanShowLoginModal] = useState(false);
+  const { handleShowModal, handleHideModal } = useDappModal();
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -37,16 +40,18 @@ export const WalletConnectLoginButton = ({
   );
 
   const handleOpenModal = () => {
-    setShowLoginModal(true);
+    setCanShowLoginModal(true);
+    handleShowModal();
     onModalOpens?.();
   };
 
   const handleCloseModal = () => {
-    setShowLoginModal(false);
+    setCanShowLoginModal(false);
+    handleHideModal();
     onModalCloses?.();
   };
 
-  const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
+  const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
   return (
     <Fragment>
       {shouldRenderButton && (
@@ -58,7 +63,7 @@ export const WalletConnectLoginButton = ({
           )}
         </button>
       )}
-      {showLoginModal && (
+      {canShowLoginModal && (
         <WalletConnectLoginContainer
           callbackRoute={callbackRoute}
           loginButtonText={loginButtonText}

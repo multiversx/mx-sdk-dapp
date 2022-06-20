@@ -1,0 +1,35 @@
+.trim {
+  display: flex;
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+  white-space: nowrap;
+
+  .hidden {
+    position: absolute;
+    display: block;
+    color: transparent;
+  }
+
+  .left,
+  .right {
+    flex-shrink: 1;
+    font-size: 1px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    span {
+      font-size: 0.875rem;
+    }
+  }
+
+  .ellipsis {
+    font-size: 0.875rem;
+    display: block;
+  }
+
+  .right {
+    white-space: nowrap;
+    direction: rtl;
+  }
+}

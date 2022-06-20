@@ -1,0 +1,13 @@
+.progress {
+  position: relative;
+
+  .bar {
+    position: absolute;
+    pointer-events: none;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(108, 117, 125, 0.2);
+    transition: width 0.6s ease;
+  }
+}

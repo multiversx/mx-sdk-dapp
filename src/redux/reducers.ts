@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 
 import account from './slices/accountInfoSlice';
+import dappModal from './slices/dappModalsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
@@ -14,7 +15,8 @@ const reducers = {
   loginInfo,
   modals,
   transactions,
-  transactionsInfo
+  transactionsInfo,
+  dappModal
 };
 
 if (typeof window !== 'undefined' && window.localStorage != null) {
