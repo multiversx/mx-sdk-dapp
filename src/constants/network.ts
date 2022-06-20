@@ -19,6 +19,7 @@ export const fallbackNetworkConfigurations: Record<
     walletConnectDeepLink:
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
+    walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
     walletAddress: 'https://devnet-wallet.elrond.com',
     apiAddress: 'https://devnet-api.elrond.com',
     explorerAddress: 'http://devnet-explorer.elrond.com',
@@ -35,6 +36,7 @@ export const fallbackNetworkConfigurations: Record<
     walletConnectDeepLink:
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
+    walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
     walletAddress: 'https://testnet-wallet.elrond.com',
     apiAddress: 'https://testnet-api.elrond.com',
     explorerAddress: 'http://testnet-explorer.elrond.com',
@@ -51,6 +53,7 @@ export const fallbackNetworkConfigurations: Record<
     walletConnectDeepLink:
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
+    walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
     walletAddress: 'https://wallet.elrond.com',
     apiAddress: 'https://api.elrond.com',
     explorerAddress: 'https://explorer.elrond.com',

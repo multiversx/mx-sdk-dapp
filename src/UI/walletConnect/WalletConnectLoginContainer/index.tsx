@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 
 import platform from 'optionalPackages/platform';
 import QRCode from 'optionalPackages/qrcode';
-import { useWalletConnectLogin } from 'services';
+import { useWalletConnectLogin, useWalletConnectV2Login } from 'services';
+import CopyButton from 'UI/CopyButton';
+import Loader from 'UI/Loader';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
 import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
@@ -19,13 +21,30 @@ function WalletConnectLoginContainer({
   wrapContentInsideModal = true,
   redirectAfterLogin,
   token,
-  onClose
+  onClose,
+  isWalletConnectV2 = false
 }: LoginModalPropsType) {
   const [
     initLoginWithWalletConnect,
     { error },
     { uriDeepLink, walletConnectUri }
   ] = useWalletConnectLogin({
+    logoutRoute,
+    callbackRoute,
+    token,
+    redirectAfterLogin,
+    shouldLoginUser: true
+  });
+  const [
+    initLoginWithWalletConnectV2,
+    connectExisting,
+    { error: walletConnectErrorV2 },
+    {
+      uriDeepLink: walletConnectDeepLinkV2,
+      walletConnectUri: walletConnectUriV2,
+      wcPairings
+    }
+  ] = useWalletConnectV2Login({
     logoutRoute,
     callbackRoute,
     token,
@@ -56,23 +75,36 @@ function WalletConnectLoginContainer({
   );
 
   const generateQRCode = async () => {
-    if (!walletConnectUri) {
-      return;
+    if (isWalletConnectV2) {
+      if (!walletConnectUriV2) {
+        return;
+      }
+    } else {
+      if (!walletConnectUri) {
+        return;
+      }
     }
 
-    const svg = await QRCode.toString(walletConnectUri, {
-      type: 'svg'
-    });
+    const svg = await QRCode.toString(
+      isWalletConnectV2 ? walletConnectUriV2 : walletConnectUri,
+      {
+        type: 'svg'
+      }
+    );
 
     setQrCodeSvg(svg);
   };
 
   useEffect(() => {
     generateQRCode();
-  }, [walletConnectUri]);
+  }, [walletConnectUri, walletConnectUriV2]);
 
   useEffect(() => {
-    initLoginWithWalletConnect();
+    if (isWalletConnectV2) {
+      initLoginWithWalletConnectV2();
+    } else {
+      initLoginWithWalletConnect();
+    }
   }, []);
 
   const content = (
@@ -80,16 +112,31 @@ function WalletConnectLoginContainer({
       <div className={generatedClasses.root}>
         <div className={generatedClasses.card}>
           <div className={generatedClasses.cardBody}>
-            <div
-              className={generatedClasses.qrCodeSvgContainer}
-              dangerouslySetInnerHTML={{
-                __html: qrCodeSvg
-              }}
-              style={{
-                width: '15rem',
-                height: '15rem'
-              }}
-            />
+            {(walletConnectUriV2 || walletConnectUri) && (
+              <span>
+                URI:{' '}
+                {walletConnectUri && <CopyButton text={walletConnectUri} />}
+                {isWalletConnectV2 && walletConnectUriV2 && (
+                  <CopyButton text={walletConnectUriV2} />
+                )}
+              </span>
+            )}
+
+            {qrCodeSvg ? (
+              <div
+                className={generatedClasses.qrCodeSvgContainer}
+                dangerouslySetInnerHTML={{
+                  __html: qrCodeSvg
+                }}
+                style={{
+                  width: '15rem',
+                  height: '15rem'
+                }}
+              />
+            ) : (
+              <Loader />
+            )}
+
             <h4 className={generatedClasses.title}>{title}</h4>
             {isMobileDevice ? (
               <React.Fragment>
@@ -98,7 +145,7 @@ function WalletConnectLoginContainer({
                   id='accessWalletBtn'
                   data-testid='accessWalletBtn'
                   className={generatedClasses.mobileLoginButton}
-                  href={uriDeepLink || undefined}
+                  href={uriDeepLink || walletConnectDeepLinkV2 || undefined}
                   rel='noopener noreferrer nofollow'
                   target='_blank'
                 >
@@ -115,9 +162,52 @@ function WalletConnectLoginContainer({
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}
+            {isWalletConnectV2 && wcPairings && wcPairings?.length > 0 && (
+              <React.Fragment>
+                <p className={generatedClasses.leadText}>
+                  or choose an existing pairing:
+                </p>
+                {wcPairings
+                  .filter((pairing) => !!pairing.active)
+                  .map((pairing) => (
+                    <button
+                      type='button'
+                      key={pairing.topic}
+                      onClick={() => connectExisting(pairing)}
+                      className='btn d-flex flex-row  w-100 border align-items-center rounded mb-2'
+                    >
+                      {pairing.peerMetadata ? (
+                        <>
+                          <img
+                            src={pairing.peerMetadata.icons[0]}
+                            alt={pairing.peerMetadata.name}
+                            className='img-thumbnail ml-3'
+                            style={{ height: '48px' }}
+                          />
+                          <div className='d-flex flex-column align-items-start ml-3'>
+                            <strong>{pairing.peerMetadata.name}</strong>
+                            <span>{pairing.peerMetadata.description}</span>
+                            <span>{pairing.peerMetadata.url}</span>
+                          </div>
+                        </>
+                      ) : (
+                        <div className='text-left' style={{ width: '400px' }}>
+                          no metadata: debug pairing details:{' '}
+                          <code>{JSON.stringify(pairing)}</code>
+                        </div>
+                      )}
+                    </button>
+                  ))}
+              </React.Fragment>
+            )}
             <div>
               {error && (
                 <p className={generatedClasses.errorMessage}>{error}</p>
+              )}
+              {walletConnectErrorV2 && (
+                <p className={generatedClasses.errorMessage}>
+                  {walletConnectErrorV2}
+                </p>
               )}
             </div>
           </div>

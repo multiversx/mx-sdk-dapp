@@ -23,14 +23,17 @@ export interface BaseNetworkType {
   apiAddress: string;
   explorerAddress: string;
   apiTimeout: string;
+  walletConnectV2ProjectId?: string;
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {
   walletConnectBridgeAddress: string;
+  walletConnectV2RelayAddress: string;
 }
 
 export interface NetworkType extends BaseNetworkType {
   walletConnectBridgeAddresses: string[];
+  walletConnectV2RelayAddresses: string[];
 }
 
 export interface CustomNetworkType {
@@ -43,6 +46,8 @@ export interface CustomNetworkType {
   gasPerDataByte?: string;
   walletConnectDeepLink?: string;
   walletConnectBridgeAddresses?: string[];
+  walletConnectV2RelayAddresses?: string[];
+  walletConnectV2ProjectId?: string;
   walletAddress?: string;
   apiAddress?: string;
   explorerAddress?: string;

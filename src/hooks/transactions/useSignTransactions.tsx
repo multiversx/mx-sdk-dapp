@@ -102,7 +102,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as unknown as Error)?.message ||
         (error as string) ||
         errorsMessages.PROVIDER_NOT_INTIALIZED;
       console.error(errorsMessages.PROVIDER_NOT_INTIALIZED, errorMessage);
@@ -123,9 +123,9 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(
-        signedTransactions
-      ).map((tx) => parseTransactionAfterSigning(tx));
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       dispatch(
         moveTransactionsToSignedState({
@@ -140,7 +140,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as unknown as Error)?.message ||
         (error as string) ||
         errorsMessages.ERROR_SIGNING_TX;
       console.error(errorsMessages.ERROR_SIGNING_TX, errorMessage);
@@ -209,7 +209,7 @@ export const useSignTransactions = () => {
         signTransactionsWithProvider();
       }
     } catch (err) {
-      const defaultErrorMessage = ((error as unknown) as Error)?.message;
+      const defaultErrorMessage = (error as unknown as Error)?.message;
       const errorMessage = defaultErrorMessage || errorsMessages.ERROR_SIGNING;
       onCancel(errorMessage, sessionId);
 

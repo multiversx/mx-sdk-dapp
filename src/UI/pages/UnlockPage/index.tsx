@@ -16,6 +16,7 @@ const UnlockPage = ({
   LedgerLoginButtonText = 'Ledger',
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'Maiar',
+  WalletConnectV2LoginButtonText = 'WalletConnect 2',
   ExtensionLoginButtonText = 'Extension',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
@@ -61,6 +62,11 @@ const UnlockPage = ({
             <WalletConnectLoginButton
               callbackRoute={loginRoute}
               loginButtonText={WalletConnectLoginButtonText}
+            />
+            <WalletConnectLoginButton
+              callbackRoute={loginRoute}
+              loginButtonText={WalletConnectV2LoginButtonText}
+              isWalletConnectV2={true}
             />
           </div>
         </div>

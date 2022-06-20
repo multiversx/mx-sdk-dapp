@@ -28,6 +28,7 @@ import {
   setChainID
 } from 'redux/slices';
 import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
+import { useWalletConnectV2Login } from 'services/login/useWalletConnectV2Login';
 import { LoginMethodsEnum } from 'types/enums';
 import { getAddress, getAccount, getLatestNonce, logout } from 'utils';
 
@@ -52,6 +53,11 @@ export default function ProviderInitializer() {
     : { callbackRoute: '', logoutRoute: '' };
 
   const [initWalletLoginProvider] = useWalletConnectLogin({
+    callbackRoute,
+    logoutRoute
+  });
+
+  const [initWalletConnectV2LoginProvider] = useWalletConnectV2Login({
     callbackRoute,
     logoutRoute
   });
@@ -212,6 +218,10 @@ export default function ProviderInitializer() {
 
       case LoginMethodsEnum.walletconnect: {
         initWalletLoginProvider(false);
+        break;
+      }
+      case LoginMethodsEnum.walletconnectv2: {
+        initWalletConnectV2LoginProvider(false);
         break;
       }
       case LoginMethodsEnum.wallet: {

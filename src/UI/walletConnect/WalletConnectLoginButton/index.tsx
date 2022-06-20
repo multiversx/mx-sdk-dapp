@@ -14,6 +14,7 @@ const WalletConnectLoginButton = ({
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin = false,
+  isWalletConnectV2 = false,
   buttonClassName,
   className = 'wallect-connect-login',
   lead = 'Scan the QR code using Maiar',
@@ -65,6 +66,7 @@ const WalletConnectLoginButton = ({
           lead={lead}
           wrapContentInsideModal={wrapContentInsideModal}
           redirectAfterLogin={redirectAfterLogin}
+          isWalletConnectV2={isWalletConnectV2}
           onClose={handleCloseModal}
         />
       )}

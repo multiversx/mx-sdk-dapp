@@ -7,5 +7,6 @@ export interface Props {
   ExtensionLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
+  WalletConnectV2LoginButtonText?: string;
   description?: string | React.ReactNode;
 }

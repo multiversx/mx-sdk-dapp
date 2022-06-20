@@ -8,6 +8,7 @@ export interface LoginModalPropsType {
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
   redirectAfterLogin?: boolean;
+  isWalletConnectV2?: boolean;
   token?: string;
   onClose?: () => void;
 }

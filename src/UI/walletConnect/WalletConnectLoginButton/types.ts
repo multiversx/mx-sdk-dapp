@@ -15,5 +15,6 @@ export interface WalletConnectLoginButtonPropsType {
   wrapContentInsideModal?: boolean;
   redirectAfterLogin?: boolean;
   hideButtonWhenModalOpens?: boolean;
+  isWalletConnectV2?: boolean;
   token?: string;
 }
