@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ToastsEnum } from 'types';
 import { logoutAction } from '../commonActions';
 
 export interface CustomToastType {
@@ -9,10 +10,12 @@ export interface CustomToastType {
 }
 
 export interface ToastsSliceState {
-  customToasts?: CustomToastType[] | undefined;
+  customToasts: CustomToastType[];
 }
 
-const initialState: ToastsSliceState = {};
+const initialState: ToastsSliceState = {
+  customToasts: []
+};
 
 export const toastsSlice = createSlice({
   name: 'toastsSlice',
@@ -22,10 +25,10 @@ export const toastsSlice = createSlice({
       state: ToastsSliceState,
       action: PayloadAction<CustomToastType>
     ) => {
-      state.customToasts = [...(state.customToasts || []), action.payload].map(
+      state.customToasts = [...state.customToasts, action.payload].map(
         (toast, index) => ({
           ...toast,
-          type: 'custom',
+          type: ToastsEnum.custom,
           toastId: toast.toastId || `custom-toast-${index}`
         })
       );
@@ -34,7 +37,7 @@ export const toastsSlice = createSlice({
       state: ToastsSliceState,
       action: PayloadAction<string>
     ) => {
-      state.customToasts = (state.customToasts || []).filter(
+      state.customToasts = state.customToasts.filter(
         (toast) => toast.toastId !== action.payload
       );
     }

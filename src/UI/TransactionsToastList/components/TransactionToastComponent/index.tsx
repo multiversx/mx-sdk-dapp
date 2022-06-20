@@ -15,7 +15,7 @@ interface TransactionToastComponentType {
 const TransactionToastComponent = ({
   signedTransactionsToRender,
   toastId,
-  ...props
+  ...transactionToastProps
 }: TransactionToastComponentType) => {
   const [shouldRender, setShouldRender] = useState(true);
   const currentTx: SignedTransactionsBodyType =
@@ -38,7 +38,7 @@ const TransactionToastComponent = ({
     <div className={styles.toast}>
       <TransactionToast
         {...{
-          ...props,
+          ...transactionToastProps,
           status,
           transactions,
           toastId,
