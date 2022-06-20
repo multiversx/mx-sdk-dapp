@@ -69,10 +69,8 @@ export function useLedgerLogin({
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [
-    selectedAddress,
-    setSelectedAddress
-  ] = useState<SelectedAddress | null>(null);
+  const [selectedAddress, setSelectedAddress] =
+    useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = useState(false);
 

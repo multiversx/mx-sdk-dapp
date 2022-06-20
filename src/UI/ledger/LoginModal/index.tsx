@@ -3,7 +3,7 @@ import { useGetAccountInfo } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { useLedgerLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
@@ -86,11 +86,15 @@ function LedgerLoginContainer({
 
     return <LedgerConnect onClick={onStartLogin} error={error} />;
   }
+
   return wrapContentInsideModal ? (
     <ModalContainer
-      title={'Login with ledger'}
-      className={className}
       onClose={onClose}
+      modalConfig={{
+        headerText: 'Login with ledger',
+        showHeader: true,
+        modalDialogClassName: className
+      }}
     >
       {getContent()}
     </ModalContainer>

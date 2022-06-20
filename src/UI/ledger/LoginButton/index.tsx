@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
 import { LedgerLoginButtonPropsType } from './types';
@@ -18,7 +19,9 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   shouldRenderDefaultModalCss = true,
   hideButtonWhenModalOpens = false
 }) => {
-  const [showLoginModal, setShowLoginModal] = React.useState(false);
+  const [canShowLoginModal, setCanShowLoginModal] = useState(false);
+  const { handleShowModal, handleHideModal } = useDappModal();
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -31,16 +34,18 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   );
 
   function handleOpenModal() {
-    setShowLoginModal(true);
+    setCanShowLoginModal(true);
+    handleShowModal();
     onModalOpens?.();
   }
 
   function handleCloseModal() {
-    setShowLoginModal(false);
+    setCanShowLoginModal(false);
+    handleHideModal();
     onModalCloses?.();
   }
 
-  const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
+  const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
 
   return (
     <>
@@ -53,7 +58,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
           )}
         </button>
       )}
-      {showLoginModal && (
+      {canShowLoginModal && (
         <LedgerLoginContainer
           className={className}
           shouldRenderDefaultCss={shouldRenderDefaultModalCss}
