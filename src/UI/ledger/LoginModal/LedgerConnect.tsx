@@ -1,5 +1,5 @@
 import React from 'react';
-import LedgerLogo from '../assets/ledger-nano.svg';
+import LedgerLogo from 'assets/icons/ledger-nano.svg';
 
 const LedgerConnect = ({
   onClick,

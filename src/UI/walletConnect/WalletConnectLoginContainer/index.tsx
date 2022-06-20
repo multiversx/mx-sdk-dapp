@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+import Lighting from 'assets/icons/lightning.svg';
 import platform from 'optionalPackages/platform';
 import QRCode from 'optionalPackages/qrcode';
 import { useWalletConnectLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'utils';
-import Lighting from '../WalletConnectLoginButton/lightning.svg';
 
 export interface WalletConnectLoginModalPropsType {
   lead?: string;
