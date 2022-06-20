@@ -8,4 +8,5 @@ export interface TransactionsToastListPropsType {
   pendingTransactions?: SignedTransactionsType;
   signedTransactions?: SignedTransactionsType;
   successfulToastLifetime?: number;
+  parentElement?: Element | DocumentFragment;
 }

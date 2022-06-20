@@ -1,0 +1,15 @@
+.toasts {
+  position: fixed;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  z-index: 9999;
+  font-family: 'Helvetica', sans-serif;
+
+  @media (min-width: 768px) {
+    right: 2rem;
+    bottom: 2rem;
+    width: 22.5rem;
+    left: auto;
+  }
+}
