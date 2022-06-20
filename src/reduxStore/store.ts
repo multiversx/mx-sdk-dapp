@@ -1,7 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { Reducer } from 'redux';
-
 import {
   persistStore,
   persistReducer,
@@ -14,13 +12,12 @@ import {
   createMigrate
 } from 'redux-persist';
 
+import storage from 'redux-persist/lib/storage';
 import { defaultNetwork } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 
-let localStorageReducers: Partial<Reducer> = rootReducer;
-
-const migrations = {
+const migrations: any = {
   2: (state: PestistedRootState) => {
     return {
       ...state,
@@ -29,22 +26,18 @@ const migrations = {
   }
 };
 
-//This allows for this library to be used on other platforms than web, like React Native
-//without this condition, redux-persist 6+ will throw an error if persist storage fails
-if (typeof window !== 'undefined' && window?.localStorage != null) {
-  const storage = require('redux-persist/lib/storage').default;
-  const persistConfig = {
-    key: 'dapp-core-store',
-    version: 2,
-    storage,
-    whitelist: ['account', 'loginInfo', 'toasts', 'modals', 'networkConfig'],
-    migrate: createMigrate(migrations, { debug: false })
-  };
-  localStorageReducers = persistReducer(persistConfig, rootReducer);
-}
+const persistConfig: any = {
+  key: 'dapp-core-store',
+  version: 2,
+  storage,
+  whitelist: ['account', 'loginInfo', 'toasts', 'modals', 'networkConfig'],
+  migrate: createMigrate(migrations, { debug: false })
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: localStorageReducers,
+  reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {

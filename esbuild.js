@@ -1,8 +1,8 @@
 const svgrPlugin = require('esbuild-plugin-svgr');
-const path = require('path');
 const esbuild = require('esbuild');
 const plugin = require('node-stdlib-browser/helpers/esbuild/plugin');
 const stdLibBrowser = require('node-stdlib-browser');
+const { nodeExternalsPlugin } = require('esbuild-node-externals');
 const fs = require('fs');
 const alias = require('esbuild-plugin-alias');
 
@@ -28,13 +28,13 @@ esbuild
     entryPoints: entryPoints,
     outdir: 'dist',
     bundle: true,
+    minify: true,
     sourcemap: true,
-    // minify: true,
-    splitting: false,
     format: 'esm',
     target: ['es2015'],
     tsconfig: './tsconfig.json',
     // platform: 'browser',
+    platform: 'node',
     inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
     define: {
       global: 'global',
@@ -42,13 +42,6 @@ esbuild
       Buffer: 'Buffer',
       'process.env.NODE_ENV': `"production"`
     },
-    plugins: [
-      svgrPlugin(),
-      plugin(stdLibBrowser),
-      alias({
-        react: require.resolve('react'),
-        'react-dom': require.resolve('react-dom')
-      })
-    ]
+    plugins: [svgrPlugin(), plugin(stdLibBrowser), nodeExternalsPlugin()]
   })
   .catch(() => process.exit(1));

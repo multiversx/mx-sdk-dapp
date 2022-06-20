@@ -13,6 +13,7 @@ dist
 .idea
 .idea/workspace.xml
 .rpt2_cache
+.yalc
 
 # misc
 .DS_Store

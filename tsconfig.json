@@ -14,10 +14,20 @@
     "rootDir": "./src",
     "baseUrl": "./src",
     "moduleResolution": "node",
-    "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "emitDeclarationOnly": true,
+    "resolveJsonModule": true
   },
-  "include": ["./src"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }
