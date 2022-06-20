@@ -1,4 +1,4 @@
-import classNames from 'optionalPackages/classnames';
+import classNames from 'classnames';
 
 export function getGeneratedClasses(
   className: string,

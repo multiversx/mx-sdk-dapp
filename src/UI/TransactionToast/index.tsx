@@ -1,11 +1,14 @@
 import React, { useMemo, useRef, useState } from 'react';
 
+import {
+  faCheck,
+  faHourglass,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
+import { Toast } from 'react-bootstrap';
 import { useGetTransactionDisplayInfo } from 'hooks';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import moment from 'optionalPackages/moment';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
@@ -13,9 +16,9 @@ import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import IconState from 'UI/IconState';
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
+import { getGeneratedClasses } from 'UI/utils';
 import {
   getAddressFromDataField,
-  getGeneratedClasses,
   getIsTransactionPending,
   getIsTransactionTimedOut
 } from 'utils';
@@ -125,7 +128,7 @@ const TransactionToast = ({
 
   const successToastData = {
     id: toastId,
-    icon: icons.faCheck,
+    icon: faCheck,
     expires: 30000,
     hasCloseButton: true,
     title: successMessage,
@@ -135,7 +138,7 @@ const TransactionToast = ({
   const pendingToastData = {
     id: toastId,
     expires: false,
-    icon: icons.faHourglass,
+    icon: faHourglass,
     hasCloseButton: false,
     title: processingMessage,
     iconClassName: 'bg-warning'
@@ -143,7 +146,7 @@ const TransactionToast = ({
 
   const failToastData = {
     id: toastId,
-    icon: icons.faTimes,
+    icon: faTimes,
     title: errorMessage,
     hasCloseButton: true,
     iconClassName: 'bg-danger'
@@ -151,7 +154,7 @@ const TransactionToast = ({
 
   const timedOutToastData = {
     id: toastId,
-    icon: icons.faTimes,
+    icon: faTimes,
     title: timedOutMessage,
     hasCloseButton: true,
     iconClassName: 'bg-warning'
@@ -182,11 +185,7 @@ const TransactionToast = ({
   }
 
   return (
-    <ReactBootstrap.Toast
-      ref={ref}
-      className={generatedClasses.wrapper}
-      key={toastId}
-    >
+    <Toast ref={ref} className={generatedClasses.wrapper} key={toastId}>
       <Progress
         key={toastId}
         id={toastId}
@@ -215,10 +214,7 @@ const TransactionToast = ({
                   className={generatedClasses.closeButton}
                   onClick={handleDeleteToast}
                 >
-                  <ReactFontawesome.FontAwesomeIcon
-                    icon={icons.faTimes}
-                    size='xs'
-                  />
+                  <FontAwesomeIcon icon={faTimes} size='xs' />
                 </button>
               )}
             </div>
@@ -232,7 +228,7 @@ const TransactionToast = ({
           </div>
         </div>
       </Progress>
-    </ReactBootstrap.Toast>
+    </Toast>
   );
 };
 

@@ -1,9 +1,10 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
+import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from 'react-bootstrap';
 import { SignModalPropsType } from 'types';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses, safeRedirect } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
+import { safeRedirect } from 'utils';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -36,7 +37,7 @@ export const SignWithWalletConnectModal = ({
     }
   };
   return (
-    <ReactBootstrap.Modal
+    <Modal
       show
       backdrop='static'
       onHide={close}
@@ -45,7 +46,7 @@ export const SignWithWalletConnectModal = ({
       centered
     >
       <PageState
-        icon={error ? icons.faTimes : icons.faHourglass}
+        icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
         className={className}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}
@@ -63,7 +64,7 @@ export const SignWithWalletConnectModal = ({
           </button>
         }
       />
-    </ReactBootstrap.Modal>
+    </Modal>
   );
 };
 

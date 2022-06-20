@@ -1,5 +1,3 @@
-import moment from 'optionalPackages/moment';
-
 export type SessionKeyType = 'address' | 'shard' | 'toasts' | 'toastProgress';
 type ExpiresType = number | false;
 
@@ -39,7 +37,7 @@ export const getItem = (key: SessionKeyType): any => {
     return null;
   }
 
-  const expired = moment().unix() >= deserializedItem.expires;
+  const expired = Date.now() >= deserializedItem.expires;
   if (expired) {
     sessionStorage.removeItem(String(key));
     return null;

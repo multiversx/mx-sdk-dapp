@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'services';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
 
 export interface WebWalletLoginButtonPropsType {
   token?: string;

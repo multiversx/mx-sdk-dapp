@@ -1,5 +1,5 @@
 import React, { Fragment, ReactNode, useState } from 'react';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 
 export interface WalletConnectLoginButtonPropsType {

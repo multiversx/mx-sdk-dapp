@@ -1,8 +1,8 @@
 import React from 'react';
-import { useGetNetworkConfig } from 'hooks';
 
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useGetNetworkConfig } from 'hooks';
 
 const ExplorerLink = ({
   page,
@@ -27,10 +27,7 @@ const ExplorerLink = ({
       {text ? (
         <React.Fragment>{text}</React.Fragment>
       ) : (
-        <ReactFontawesome.FontAwesomeIcon
-          icon={icons.faSearch}
-          className='text-secondary'
-        />
+        <FontAwesomeIcon icon={faSearch} className='text-secondary' />
       )}
     </a>
   );

@@ -1,9 +1,13 @@
 import React from 'react';
 
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faCircleNotch
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import PageState from 'UI/PageState';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
 
 import AddressRow from './AddressRow';
 
@@ -52,7 +56,7 @@ const AddressTable = ({
       return (
         <PageState
           className={className}
-          icon={icons.faCircleNotch}
+          icon={faCircleNotch}
           iconClass='fa-spin text-primary'
           title={ledgerWaitingText}
         />
@@ -99,11 +103,7 @@ const AddressTable = ({
                     data-testid='prevBtn'
                     disabled={startIndex === 0}
                   >
-                    <ReactFontawesome.FontAwesomeIcon
-                      size='sm'
-                      icon={icons.faChevronLeft}
-                    />{' '}
-                    Prev
+                    <FontAwesomeIcon size='sm' icon={faChevronLeft} /> Prev
                   </button>
                   <button
                     type='button'
@@ -111,11 +111,7 @@ const AddressTable = ({
                     onClick={onGoToNextPage}
                     data-testid='nextBtn'
                   >
-                    Next{' '}
-                    <ReactFontawesome.FontAwesomeIcon
-                      size='sm'
-                      icon={icons.faChevronRight}
-                    />
+                    Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
                   </button>
                 </div>
                 <button

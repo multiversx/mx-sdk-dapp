@@ -1,19 +1,16 @@
 import React from 'react';
 
+import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
+import { Modal } from 'react-bootstrap';
 import { useGetNotification } from 'hooks';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { NotificationTypesEnum } from 'types';
 
 import PageState from '../PageState';
 
-const typedIcons: any = icons;
-
 const notificationTypesToIcons = {
-  [NotificationTypesEnum.warning]: typedIcons.faExclamationTriangle
+  [NotificationTypesEnum.warning]: faExclamationTriangle
 };
-const defaultIcon = typedIcons.faExclamationTriangle;
+const defaultIcon = faExclamationTriangle;
 
 export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
@@ -30,11 +27,11 @@ export function NotificationModal() {
     : null;
 
   return notification ? (
-    <ReactBootstrap.Modal
+    <Modal
       show={showModal}
       backdrop={true}
       onHide={notification}
-      className={`modal-container`}
+      className={'modal-container'}
       animation={false}
       centered
     >
@@ -53,7 +50,7 @@ export function NotificationModal() {
           }
         />
       </div>
-    </ReactBootstrap.Modal>
+    </Modal>
   ) : null;
 }
 

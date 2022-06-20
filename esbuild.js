@@ -23,13 +23,9 @@ const entryPoints = fs
   })
   .filter((folder) => folder != null);
 
-const optionalPackages = fs
-  .readdirSync('src/optionalPackages')
-  .map((file) => `src/optionalPackages/${file}`);
-
 esbuild
   .build({
-    entryPoints: [...entryPoints, ...optionalPackages],
+    entryPoints,
     outdir: 'dist',
     bundle: true,
     minify: true,

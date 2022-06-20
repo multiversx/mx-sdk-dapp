@@ -1,7 +1,7 @@
 import React from 'react';
-import classnames from 'optionalPackages/classnames';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { getGeneratedClasses } from 'utils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classnames from 'classnames';
+import { getGeneratedClasses } from 'UI/utils';
 
 export interface IconStateProps {
   icon: any;
@@ -29,7 +29,7 @@ const IconState = ({
 
   return (
     <span className={generatedClasses.wrapper}>
-      <ReactFontawesome.FontAwesomeIcon
+      <FontAwesomeIcon
         icon={icon}
         size={iconSize}
         className={generatedClasses.icon}

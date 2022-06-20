@@ -6,7 +6,7 @@ import {
 } from 'storage/session';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
 
 export interface TransactionsToastListPropsType {
   toastProps?: any;

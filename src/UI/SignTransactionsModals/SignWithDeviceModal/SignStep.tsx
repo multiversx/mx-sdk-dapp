@@ -1,21 +1,21 @@
 import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
+import {
+  faExclamationTriangle,
+  faHourglass,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetNetworkConfig } from 'hooks';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
 
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import PageState from 'UI/PageState';
 import ProgressSteps from 'UI/ProgressSteps';
 import TokenDetails from 'UI/TokenDetails';
 import TransactionData from 'UI/TransactionData';
-import {
-  denominate,
-  getEgldLabel,
-  getGeneratedClasses,
-  isTokenTransfer
-} from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
+import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 
 export interface SignStepType {
   onSignTransaction: () => void;
@@ -54,13 +54,8 @@ const SignStep = ({
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
 
-  const {
-    tokenId,
-    amount,
-    type,
-    multiTxData,
-    receiver
-  } = currentTransaction.transactionTokenInfo;
+  const { tokenId, amount, type, multiTxData, receiver } =
+    currentTransaction.transactionTokenInfo;
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -130,7 +125,7 @@ const SignStep = ({
 
   return (
     <PageState
-      icon={error ? icons.faTimes : icons.faHourglass}
+      icon={error ? faTimes : faHourglass}
       iconClass={classes.icon}
       iconBgClass={error ? 'bg-danger' : 'bg-warning'}
       iconSize='3x'
@@ -156,8 +151,8 @@ const SignStep = ({
                 {scamReport && (
                   <div className={classes.scamReport}>
                     <span>
-                      <ReactFontawesome.FontAwesomeIcon
-                        icon={icons.faExclamationTriangle}
+                      <FontAwesomeIcon
+                        icon={faExclamationTriangle}
                         className={classes.scamReportIcon}
                       />
                       <small>{scamReport}</small>

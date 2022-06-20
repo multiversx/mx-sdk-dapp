@@ -3,9 +3,9 @@ import { useGetLoginInfo } from 'hooks';
 import ExtensionLoginButton from 'UI/extension/LoginButton';
 
 import LedgerLoginButton from 'UI/ledger/LoginButton';
+import { getGeneratedClasses } from 'UI/utils';
 import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
 import WebWalletLoginButton from 'UI/webWallet/LoginButton';
-import { getGeneratedClasses } from 'utils';
 import { Props } from './types';
 
 const UnlockPage = ({

@@ -1,5 +1,5 @@
 import React from 'react';
-import moment from 'optionalPackages/moment';
+import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
 

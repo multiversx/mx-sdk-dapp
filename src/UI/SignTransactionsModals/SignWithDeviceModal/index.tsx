@@ -1,8 +1,8 @@
 import React from 'react';
+import { Modal } from 'react-bootstrap';
 import { useSignTransactionsWithDevice } from 'hooks';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
 import SignStep from './SignStep';
 
 const SignWithDeviceModal = ({
@@ -33,7 +33,7 @@ const SignWithDeviceModal = ({
     cardBody: 'card-body'
   });
   return (
-    <ReactBootstrap.Modal
+    <Modal
       show={currentTransaction != null}
       backdrop='static'
       onHide={handleClose}
@@ -62,7 +62,7 @@ const SignWithDeviceModal = ({
           />
         </div>
       </div>
-    </ReactBootstrap.Modal>
+    </Modal>
   );
 };
 

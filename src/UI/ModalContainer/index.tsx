@@ -1,7 +1,7 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Modal } from 'react-bootstrap';
 
 const ModalContainer = ({
   children,
@@ -17,7 +17,7 @@ const ModalContainer = ({
   onClose?: () => void;
 }) => {
   return (
-    <ReactBootstrap.Modal
+    <Modal
       show
       backdrop='static'
       onHide={onClose}
@@ -34,10 +34,7 @@ const ModalContainer = ({
               className='btn btn-light px-3 py-2'
               onClick={onClose}
             >
-              <ReactFontawesome.FontAwesomeIcon
-                size='lg'
-                icon={icons.faTimes}
-              />
+              <FontAwesomeIcon size='lg' icon={faTimes} />
             </button>
           </div>
         </div>
@@ -50,7 +47,7 @@ const ModalContainer = ({
           {children}
         </div>
       </div>
-    </ReactBootstrap.Modal>
+    </Modal>
   );
 };
 

@@ -1,7 +1,7 @@
 import React from 'react';
+import { faDiamond } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EgldIcon from 'assets/icons/EGLD.svg';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getEgldLabel } from 'utils';
 import { Simple, Combined } from './TokenSymbol';
 
@@ -28,11 +28,7 @@ function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
   if (tokenAvatar) {
     return <img className='token-symbol-custom-token' src={tokenAvatar} />;
   }
-  return isEgldTransfer ? (
-    <EgldIcon />
-  ) : (
-    <ReactFontawesome.FontAwesomeIcon icon={icons.faDiamond} />
-  );
+  return isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faDiamond} />;
 }
 
 const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
