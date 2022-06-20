@@ -1,6 +1,6 @@
 let classnames: any = {};
 try {
-  classnames = require('classnames');
+  classnames = import('classnames');
 } catch (err) {}
 
 export default classnames;

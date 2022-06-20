@@ -1,6 +1,6 @@
 let moment: any = {};
 try {
-  moment = require('moment');
+  moment = import('moment');
 } catch (err) {}
 
 export default moment;

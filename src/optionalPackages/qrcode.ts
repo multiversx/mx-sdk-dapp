@@ -1,6 +1,6 @@
 let qrcode: any = {};
 try {
-  qrcode = require('qrcode');
+  qrcode = import('qrcode');
 } catch (err) {}
 
 export default qrcode;

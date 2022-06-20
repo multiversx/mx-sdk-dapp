@@ -1,6 +1,6 @@
 let platform: any = {};
 try {
-  platform = require('platform');
+  platform = import('platform');
 } catch (err) {}
 
 export default platform;

@@ -1,6 +1,6 @@
 let swr: any = {};
 try {
-  swr = require('swr').default;
+  swr = import('swr');
 } catch (err) {}
 
 export default swr;
