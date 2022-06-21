@@ -14,7 +14,6 @@ const defaultIcon = faExclamationTriangle;
 
 export const NotificationModal = () => {
   const { notification, clearNotification } = useGetNotification();
-
   const showModal = Boolean(notification);
   const onDone = () => {
     clearNotification();
@@ -30,7 +29,7 @@ export const NotificationModal = () => {
     <Modal
       show={showModal}
       backdrop={true}
-      onHide={notification}
+      onHide={onDone}
       className={'modal-container'}
       animation={false}
       centered
