@@ -4,7 +4,7 @@ import {
   defaultTransactionProcessingMessage,
   defaultTransactionSuccessMessage
 } from 'reduxStore/slices';
-import { RootState } from '../store';
+import { RootState } from 'reduxStore/store';
 
 const defaultTransactionInfo = {
   errorMessage: defaultTransactionErrorMessage,

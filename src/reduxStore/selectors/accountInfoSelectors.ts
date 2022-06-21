@@ -1,6 +1,7 @@
 import { createDeepEqualSelector } from './helpers';
+import { RootState } from 'reduxStore/store';
 
-export const accountInfoSelector = (state: any) => state.account;
+export const accountInfoSelector = (state: RootState) => state.account;
 
 export const addressSelector = createDeepEqualSelector(
   accountInfoSelector,
