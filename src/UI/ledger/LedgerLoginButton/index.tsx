@@ -1,6 +1,6 @@
 import React from 'react';
 import { getGeneratedClasses } from 'UI/utils';
-import LedgerLoginContainer from '../LoginModal';
+import { LedgerLoginContainer } from '../LedgerLoginContainer';
 import { LedgerLoginButtonPropsType } from './types';
 
 export const LedgerLoginButton: (
@@ -69,5 +69,3 @@ export const LedgerLoginButton: (
     </>
   );
 };
-
-export default LedgerLoginButton;

@@ -4,7 +4,7 @@ import { decodePart } from 'utils';
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
 
-const TransactionData = ({
+export const TransactionData = ({
   data,
   highlight,
   isScCall
@@ -83,5 +83,3 @@ const TransactionData = ({
     </>
   );
 };
-
-export default TransactionData;

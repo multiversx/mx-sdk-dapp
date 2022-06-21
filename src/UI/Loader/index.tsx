@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import PageState from '../PageState';
+import { PageState } from 'UI/PageState';
 
-const Loader = ({
+export const Loader = ({
   dataTestId = 'loader',
   noText = false
 }: {
@@ -19,4 +19,3 @@ const Loader = ({
     />
   );
 };
-export default Loader;

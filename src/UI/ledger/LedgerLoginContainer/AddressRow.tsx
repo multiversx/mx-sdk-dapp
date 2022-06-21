@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Denominate from 'UI/Denominate';
+import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
 
 interface AddressRowType {
@@ -19,7 +19,7 @@ const trimHash = (hash: string, keep = 10) => {
 
 const noBalance = '...';
 
-const AddressRow = ({
+export const AddressRow = ({
   address,
   index,
   selectedAddress,
@@ -79,5 +79,3 @@ const AddressRow = ({
     </tr>
   );
 };
-
-export default AddressRow;

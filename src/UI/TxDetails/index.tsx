@@ -6,14 +6,14 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CopyButton from 'UI/CopyButton';
-import ExplorerLink from 'UI/ExplorerLink';
-import Trim from 'UI/Trim';
+import { CopyButton } from 'UI/CopyButton';
+import { ExplorerLink } from 'UI/ExplorerLink';
+import { Trim } from 'UI/Trim';
 import { getGeneratedClasses } from 'UI/utils';
 import { isServerTransactionPending } from 'utils';
 import { Props } from './types';
 
-const TxDetails = ({
+export const TxDetails = ({
   title,
   transactions,
   className = 'tx-details',
@@ -92,5 +92,3 @@ const TxDetails = ({
     </>
   );
 };
-
-export default TxDetails;

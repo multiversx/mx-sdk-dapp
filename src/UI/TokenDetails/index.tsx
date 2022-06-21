@@ -44,7 +44,7 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
   };
 };
 
-export default class TokenDetails extends React.Component {
+export class TokenDetails extends React.Component {
   static Token = (props: TokenIconProps) => <>{props.token}</>;
   static Symbol = (props: TokenIconProps) => (
     <>

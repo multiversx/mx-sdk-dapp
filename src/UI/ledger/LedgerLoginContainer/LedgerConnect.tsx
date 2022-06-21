@@ -1,7 +1,7 @@
 import React from 'react';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 
-const LedgerConnect = ({
+export const LedgerConnect = ({
   onClick,
   error,
   connectPageContent
@@ -45,5 +45,3 @@ const LedgerConnect = ({
     </div>
   );
 };
-
-export default LedgerConnect;

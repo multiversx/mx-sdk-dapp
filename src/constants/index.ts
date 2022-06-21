@@ -17,4 +17,4 @@ export const dappInitRoute = '/dapp/init';
 export const WALLET_SIGN_SESSION = 'signSession';
 
 export const logoutActionName = 'logout';
-export const loginActionName = 'logout';
+export const loginActionName = 'login';

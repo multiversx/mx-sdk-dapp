@@ -79,5 +79,3 @@ export const Denominate = (props: DenominateType) => {
   const denominateProps = { ...props, egldLabel };
   return <DenominateComponent {...denominateProps} />;
 };
-
-export default Denominate;

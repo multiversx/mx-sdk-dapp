@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetAccountInfo } from 'hooks';
 
-const ConfirmAddress = ({
+export const ConfirmAddress = ({
   token,
   noBorder
 }: {
@@ -48,5 +48,3 @@ const ConfirmAddress = ({
     </div>
   );
 };
-
-export default ConfirmAddress;

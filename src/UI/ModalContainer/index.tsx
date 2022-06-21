@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Modal } from 'react-bootstrap';
 
-const ModalContainer = ({
+export const ModalContainer = ({
   children,
   noSpacer,
   className,
@@ -50,5 +50,3 @@ const ModalContainer = ({
     </Modal>
   );
 };
-
-export default ModalContainer;

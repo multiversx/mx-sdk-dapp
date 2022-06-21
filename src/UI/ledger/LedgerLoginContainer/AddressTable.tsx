@@ -6,10 +6,10 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PageState from 'UI/PageState';
+import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 
-import AddressRow from './AddressRow';
+import { AddressRow } from './AddressRow';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -28,7 +28,7 @@ interface AddressTablePropsType {
   onConfirmSelectedAddress: () => void;
 }
 
-const AddressTable = ({
+export const AddressTable = ({
   loading,
   accounts,
   startIndex,
@@ -129,5 +129,3 @@ const AddressTable = ({
       );
   }
 };
-
-export default AddressTable;

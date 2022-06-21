@@ -62,5 +62,3 @@ export const PageState = ({
     </div>
   );
 };
-
-export default PageState;

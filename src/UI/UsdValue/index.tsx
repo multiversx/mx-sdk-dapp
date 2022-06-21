@@ -14,5 +14,3 @@ export const UsdValue = (props: {
     </small>
   );
 };
-
-export default UsdValue;

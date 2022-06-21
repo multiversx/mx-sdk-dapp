@@ -5,7 +5,7 @@ import { Modal } from 'react-bootstrap';
 import { useGetNotification } from 'hooks';
 import { NotificationTypesEnum } from 'types';
 
-import PageState from '../PageState';
+import { PageState } from '../PageState';
 
 const notificationTypesToIcons = {
   [NotificationTypesEnum.warning]: faExclamationTriangle
@@ -52,5 +52,3 @@ export const NotificationModal = () => {
     </Modal>
   ) : null;
 };
-
-export default NotificationModal;

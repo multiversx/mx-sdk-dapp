@@ -1,6 +1,6 @@
 import React, { Fragment, ReactNode, useState } from 'react';
 import { getGeneratedClasses } from 'UI/utils';
-import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
+import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 
 export interface WalletConnectLoginButtonPropsType {
   onModalOpens?: (props?: any) => void;
@@ -88,5 +88,3 @@ export const WalletConnectLoginButton = ({
     </Fragment>
   );
 };
-
-export default WalletConnectLoginButton;

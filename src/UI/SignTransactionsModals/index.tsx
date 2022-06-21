@@ -8,9 +8,9 @@ import {
   useSignTransactions
 } from 'hooks';
 import { LoginMethodsEnum } from 'types';
-import SignWithExtensionModal from './SignWithExtensionModal';
-import SignWithLedgerModal from './SignWithLedgerModal';
-import SignWithWalletConnectModal from './SignWithWalletConnectModal';
+import { SignWithExtensionModal } from './SignWithExtensionModal';
+import { SignWithLedgerModal } from './SignWithLedgerModal';
+import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
 
 interface SignPropsType {
   handleClose: () => void;
@@ -106,5 +106,3 @@ export const SignTransactionsModals = ({
 
   return null;
 };
-
-export default SignTransactionsModals;

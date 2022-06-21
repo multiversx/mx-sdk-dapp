@@ -13,9 +13,9 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
-import IconState from 'UI/IconState';
-import Progress from 'UI/Progress';
-import TxDetails from 'UI/TxDetails';
+import { IconState } from 'UI/IconState';
+import { Progress } from 'UI/Progress';
+import { TxDetails } from 'UI/TxDetails';
 import { getGeneratedClasses } from 'UI/utils';
 import {
   getAddressFromDataField,
@@ -120,7 +120,9 @@ export const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment().add(Number(transactionDuration), 'milliseconds').unix();
+      moment()
+        .add(Number(transactionDuration), 'milliseconds')
+        .unix();
     return [startTime, endTime];
   }, []);
 
@@ -231,5 +233,3 @@ export const TransactionToast = ({
     </Toast>
   );
 };
-
-export default TransactionToast;

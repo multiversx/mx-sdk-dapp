@@ -70,5 +70,3 @@ export const ExtensionLoginButton: (
     </button>
   );
 };
-
-export default ExtensionLoginButton;

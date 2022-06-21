@@ -3,7 +3,7 @@ import { Modal } from 'react-bootstrap';
 import { useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
-import SignStep from './SignStep';
+import { SignStep } from './SignStep';
 
 export const SignWithDeviceModal = ({
   handleClose,
@@ -65,5 +65,3 @@ export const SignWithDeviceModal = ({
     </Modal>
   );
 };
-
-export default SignWithDeviceModal;

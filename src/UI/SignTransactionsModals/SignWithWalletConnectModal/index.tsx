@@ -2,7 +2,7 @@ import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'react-bootstrap';
 import { SignModalPropsType } from 'types';
-import PageState from 'UI/PageState';
+import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
 
@@ -67,5 +67,3 @@ export const SignWithWalletConnectModal = ({
     </Modal>
   );
 };
-
-export default SignWithWalletConnectModal;

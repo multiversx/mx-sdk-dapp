@@ -5,7 +5,7 @@ import {
   setToastsIdsToStorage
 } from 'storage/session';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
-import TransactionToast from 'UI/TransactionToast';
+import { TransactionToast } from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'UI/utils';
 
 export interface TransactionsToastListPropsType {
@@ -28,11 +28,11 @@ export const TransactionsToastList = ({
 }: TransactionsToastListPropsType) => {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
-  const pendingTransactionsFromStore =
-    useGetPendingTransactions().pendingTransactions;
+  const pendingTransactionsFromStore = useGetPendingTransactions()
+    .pendingTransactions;
 
-  const signedTransactionsFromStore =
-    useGetSignedTransactions().signedTransactions;
+  const signedTransactionsFromStore = useGetSignedTransactions()
+    .signedTransactions;
 
   const pendingTransactionsToRender =
     pendingTransactions || pendingTransactionsFromStore;
@@ -120,5 +120,3 @@ export const TransactionsToastList = ({
 
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
 };
-
-export default TransactionsToastList;

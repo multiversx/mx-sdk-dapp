@@ -1,5 +1,5 @@
 import React from 'react';
-import Dot from './Dot';
+import { Dot } from './Dot';
 
 export interface ProgressStepsType {
   totalSteps: number;
@@ -39,4 +39,3 @@ export const ProgressSteps = ({
     </div>
   );
 };
-export default ProgressSteps;

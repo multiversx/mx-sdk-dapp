@@ -10,10 +10,10 @@ import { useGetNetworkConfig } from 'hooks';
 import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
 
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
-import PageState from 'UI/PageState';
-import ProgressSteps from 'UI/ProgressSteps';
-import TokenDetails from 'UI/TokenDetails';
-import TransactionData from 'UI/TransactionData';
+import { PageState } from 'UI/PageState';
+import { ProgressSteps } from 'UI/ProgressSteps';
+import { TokenDetails } from 'UI/TokenDetails';
+import { TransactionData } from 'UI/TransactionData';
 import { getGeneratedClasses } from 'UI/utils';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 
@@ -54,8 +54,13 @@ export const SignStep = ({
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
 
-  const { tokenId, amount, type, multiTxData, receiver } =
-    currentTransaction.transactionTokenInfo;
+  const {
+    tokenId,
+    amount,
+    type,
+    multiTxData,
+    receiver
+  } = currentTransaction.transactionTokenInfo;
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -224,5 +229,3 @@ export const SignStep = ({
     />
   );
 };
-
-export default SignStep;

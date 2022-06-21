@@ -4,7 +4,7 @@ import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import { useWalletConnectLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
+import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 
 export interface WalletConnectLoginModalPropsType {
@@ -151,5 +151,3 @@ export const WalletConnectLoginContainer = ({
     content
   );
 };
-
-export default WalletConnectLoginContainer;

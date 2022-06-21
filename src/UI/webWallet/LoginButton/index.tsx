@@ -44,5 +44,3 @@ export const WebWalletLoginButton: (
     </button>
   );
 };
-
-export default WebWalletLoginButton;

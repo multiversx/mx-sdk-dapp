@@ -14,7 +14,7 @@ export interface ProgressProps {
   };
 }
 
-const Progress = ({
+export const Progress = ({
   id,
   children,
   progress,
@@ -31,7 +31,9 @@ const Progress = ({
       return;
     }
 
-    const expires = moment().add(expiresIn, 'seconds').unix();
+    const expires = moment()
+      .add(expiresIn, 'seconds')
+      .unix();
 
     delete toastProgress[id];
 
@@ -48,7 +50,9 @@ const Progress = ({
     storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment().add(expiresIn, 'seconds').unix()
+      expires: moment()
+        .add(expiresIn, 'seconds')
+        .unix()
     });
   };
 
@@ -66,8 +70,9 @@ const Progress = ({
 
   const { totalSeconds, currentRemaining } = getInitialData();
 
-  const [percentRemaining, setPercentRemaining] =
-    React.useState<number>(currentRemaining);
+  const [percentRemaining, setPercentRemaining] = React.useState<number>(
+    currentRemaining
+  );
 
   React.useEffect(() => {
     if (progress) {
@@ -129,5 +134,3 @@ const Progress = ({
     <>{children}</>
   );
 };
-
-export default Progress;

@@ -10,7 +10,7 @@ export interface IconStateProps {
   shouldRenderDefaultCss?: boolean;
 }
 
-const IconState = ({
+export const IconState = ({
   icon,
   iconSize = '3x',
   className = 'icon-state',
@@ -37,5 +37,3 @@ const IconState = ({
     </span>
   );
 };
-
-export default IconState;

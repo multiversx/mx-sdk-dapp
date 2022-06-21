@@ -1,6 +1,6 @@
 import React from 'react';
 import { SignModalPropsType } from 'types';
-import SignWithDeviceModal from '../SignWithDeviceModal';
+import { SignWithDeviceModal } from '../SignWithDeviceModal';
 
 export const SignWithLedgerModal = (props: SignModalPropsType) => {
   return (
@@ -11,5 +11,3 @@ export const SignWithLedgerModal = (props: SignModalPropsType) => {
     />
   );
 };
-
-export default SignWithLedgerModal;
