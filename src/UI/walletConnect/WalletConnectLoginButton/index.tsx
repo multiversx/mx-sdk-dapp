@@ -1,10 +1,13 @@
 import React, { Fragment, useState } from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
 import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
+import styles from './wallet-connect-login-button.scss';
+import classNames from 'classnames';
 
-const WalletConnectLoginButton = ({
+export const WalletConnectLoginButton = ({
   children,
   callbackRoute,
   onModalOpens,
@@ -16,7 +19,7 @@ const WalletConnectLoginButton = ({
   wrapContentInsideModal = true,
   redirectAfterLogin = false,
   buttonClassName,
-  className = 'wallect-connect-login',
+  className = styles.wallectConnectLogin,
   lead = 'Scan the QR code using Maiar',
   token,
   hideButtonWhenModalOpens = false
@@ -28,10 +31,15 @@ const WalletConnectLoginButton = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
-        buttonClassName != null ? buttonClassName : ''
-      }`,
-      loginText: 'text-left'
+      wrapper: `${classNames(
+        globalStyles.btn,
+        globalStyles.btnPrimary,
+        globalStyles.px4,
+        globalStyles.m1,
+        globalStyles.mx3,
+        buttonClassName != null && buttonClassName
+      )} `,
+      loginText: globalStyles.textLeft
     }
   );
 

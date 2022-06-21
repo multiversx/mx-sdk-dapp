@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
+import styles from './ledger-login-button.scss';
 import { LedgerLoginButtonPropsType } from './types';
 
 const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
@@ -12,7 +15,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   onModalCloses,
   loginButtonText = 'Ledger',
   buttonClassName,
-  className = 'ledger-login',
+  className = styles.ledgerLogin,
   redirectAfterLogin = false,
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
@@ -26,10 +29,15 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
-        buttonClassName != null ? buttonClassName : ''
-      }`,
-      loginText: 'text-left'
+      wrapper: `${classNames(
+        globalStyles.btn,
+        globalStyles.btnPrimary,
+        globalStyles.px4,
+        globalStyles.m1,
+        globalStyles.mx3,
+        buttonClassName != null && buttonClassName
+      )}`,
+      loginText: styles.loginText
     }
   );
 

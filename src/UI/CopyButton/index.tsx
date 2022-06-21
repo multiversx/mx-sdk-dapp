@@ -1,11 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
-
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import styles from './copy-button.scss';
 import copyTextToClipboard from './helpers/copyToClipboard';
-
-import styles from './styles.scss';
 
 interface CopyButtonType {
   text: string;

@@ -14,7 +14,7 @@ const throttledSetNewExpires = throttle(() => {
   setLoginExpiresAt(getNewLoginExpiresTimestamp());
 }, 5000);
 
-export const loginSessionMiddleware =
+export const loginSessionMiddleware: any =
   (store: StoreType) =>
   (next: (action: PayloadAction) => void) =>
   (action: PayloadAction) => {

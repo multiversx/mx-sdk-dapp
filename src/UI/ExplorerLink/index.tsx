@@ -25,6 +25,7 @@ const ExplorerLink = ({
       href={`${explorerAddress}${page}`}
       target='_blank'
       className={classNames(styles.link, className)}
+      rel='noreferrer'
     >
       {text ? (
         <React.Fragment>{text}</React.Fragment>

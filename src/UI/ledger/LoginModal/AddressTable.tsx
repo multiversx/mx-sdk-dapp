@@ -1,10 +1,10 @@
 import React from 'react';
-
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
-
+import styles from './address-table.scss';
 import AddressRow from './AddressRow';
 
 const ledgerWaitingText = 'Waiting for device';
@@ -34,18 +34,18 @@ const AddressTable = ({
   onConfirmSelectedAddress,
   onSelectAddress,
   shouldRenderDefaultCss = true,
-  className = 'ledger-address-table'
+  className = styles.ledgerAddressTable
 }: AddressTablePropsType) => {
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: 'card my-4 text-center border-0',
-    cardBody: 'card-body p-4 mx-lg-4',
-    tableWrapper: 'table-responsive',
-    tableContent: 'table m-0 border-bottom',
-    tableHeader: 'py-2 text-semibold border-bottom',
-    tableHeaderText: 'text-left border-0',
-    buttonsWrapper: 'd-flex justify-content-center pager mt-2',
-    arrowButton: 'btn btn-link mx-2',
-    confirmButton: 'btn btn-primary px-4 mt-4'
+    wrapper: `${globalStyles.card} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+    cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+    tableWrapper: globalStyles.tableResponsive,
+    tableContent: `${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
+    tableHeader: `${globalStyles.py2} ${globalStyles.textBlack50} ${globalStyles.borderBottom}`,
+    tableHeaderText: `${globalStyles.textLeft} ${globalStyles.border0}`,
+    buttonsWrapper: `${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.mt2}`,
+    arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
+    confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px2} ${globalStyles.mt4}`
   });
   switch (true) {
     case loading:

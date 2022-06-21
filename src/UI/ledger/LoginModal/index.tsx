@@ -1,15 +1,15 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
-
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { useLedgerLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer/ModalContainer';
-
+import ModalContainer from 'UI/ModalContainer';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
+import styles from './login-modal.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -25,7 +25,7 @@ interface LedgerLoginContainerPropsType {
 
 function LedgerLoginContainer({
   callbackRoute,
-  className = 'login-modal-content',
+  className = styles.loginModalContent,
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin,
@@ -35,7 +35,7 @@ function LedgerLoginContainer({
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
-    { spinner: 'fa-spin text-primary' }
+    { spinner: `fa-spin ${globalStyles.textPrimary}` }
   );
   const { ledgerAccount } = useGetAccountInfo();
   const [

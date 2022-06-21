@@ -1,9 +1,10 @@
 import React from 'react';
-
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
+import styles from './login-button.scss';
 import { ExtensionLoginButtonPropsType } from './types';
 
 const ExtensionLoginButton: (
@@ -26,15 +27,16 @@ const ExtensionLoginButton: (
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
+    wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${
+      globalStyles.px4
+    } ${globalStyles.m1} ${globalStyles.mx3} ${
       buttonClassName != null ? buttonClassName : ''
     }`,
-    loginText: 'text-left',
-    noExtensionButtonWrapper: 'btn btn-unlock d-inline-block',
-    noExtensionButtonContent:
-      'd-flex justify-content-between align-items-center',
-    noExtensionButtonTitle: 'title',
-    noExtensionButtonIcon: ''
+    loginText: styles.loginText,
+    noExtensionButtonWrapper: styles.noExtensionButtonWrapper,
+    noExtensionButtonContent: styles.noExtensionButtonContent,
+    noExtensionButtonTitle: styles.noExtensionButtonTitle,
+    noExtensionButtonIcon: styles.noExtensionButtonIcon
   });
 
   const handleLogin = () => {

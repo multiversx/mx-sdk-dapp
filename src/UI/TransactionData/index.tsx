@@ -1,4 +1,5 @@
 import * as React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { decodePart } from 'utils';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
@@ -13,7 +14,7 @@ const TransactionData = ({
   highlight?: string;
   isScCall?: boolean;
 }) => {
-  let output = <React.Fragment>{data}</React.Fragment>;
+  let output = <>{data}</>;
 
   const [encodedScCall, ...remainingDataFields] =
     highlight && isScCall ? highlight.split('@') : [];
@@ -23,20 +24,20 @@ const TransactionData = ({
       case data.startsWith(highlight): {
         const [, rest] = data.split(highlight);
         output = (
-          <React.Fragment>
+          <>
             {highlight}
-            <span className='text-muted'>{rest}</span>
-          </React.Fragment>
+            <span className={globalStyles.textMuted}>{rest}</span>
+          </>
         );
         break;
       }
       case data.endsWith(highlight): {
         const [rest] = data.split(highlight);
         output = (
-          <React.Fragment>
-            <span className='text-muted'>{rest}</span>
+          <>
+            <span className={globalStyles.textMuted}>{rest}</span>
             {highlight}
-          </React.Fragment>
+          </>
         );
         break;
       }
@@ -45,11 +46,11 @@ const TransactionData = ({
         const [start, end] = data.split(highlight);
 
         output = (
-          <React.Fragment>
-            <span className='text-muted'>{start}</span>
-            <span className={'highlighted'}>{highlight}</span>
-            <span className='text-muted'>{end}</span>
-          </React.Fragment>
+          <>
+            <span className={globalStyles.textMuted}>{start}</span>
+            <span className={globalStyles.highlighted}>{highlight}</span>
+            <span className={globalStyles.textMuted}>{end}</span>
+          </>
         );
         break;
       }
@@ -57,30 +58,42 @@ const TransactionData = ({
   }
 
   return (
-    <React.Fragment>
+    <>
       {encodedScCall && (
-        <div className='form-group mb-0 data-field mw-100'>
-          <span className='form-label text-secondary d-block'>SC Call</span>
+        <div
+          className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
+        >
+          <span
+            className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
+          >
+            SC Call
+          </span>
 
           <div
             data-testid='confirmScCall'
-            className='textarea sc-call form-control cursor-text mt-1 text-break-all'
+            className={`${globalStyles.textarea} ${globalStyles.scCall} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak}`}
           >
             {[decodePart(encodedScCall), ...remainingDataFields].join('@')}
           </div>
         </div>
       )}
-      <div className='form-group mb-0 data-field mw-100'>
-        <span className='form-label text-secondary d-block'>Data</span>
+      <div
+        className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
+      >
+        <span
+          className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
+        >
+          Data
+        </span>
 
         <div
           data-testid='confirmData'
-          className='textarea form-control cursor-text mt-1 text-break-all'
+          className={`${globalStyles.textarea} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak}`}
         >
           {data ? output : 'N/A'}
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

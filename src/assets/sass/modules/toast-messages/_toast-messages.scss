@@ -1,3 +1,5 @@
+@import "src/assets/sass/variables/variables";
+
 .toast-messages {
   position: fixed;
   bottom: 1rem;
@@ -5,12 +7,12 @@
   right: 1rem;
   z-index: 9999;
 
-  @include media-breakpoint-up(md) {
-    right: 2rem;
-    bottom: 2rem;
-    width: 22.5rem;
-    left: auto;
-  }
+  //@include media-breakpoint-up(md) {
+  //  right: 2rem;
+  //  bottom: 2rem;
+  //  width: 22.5rem;
+  //  left: auto;
+  //}
 
   .toast {
     display: block;
@@ -30,7 +32,7 @@
       margin-bottom: 0.3rem;
       transform: translateX(0);
       .progress {
-        background-color: transparent;
+        background-color: $transparent;
         height: inherit;
         font-size: inherit;
         line-height: inherit;
@@ -41,19 +43,6 @@
             visibility: hidden;
             width: 0 !important;
           }
-        }
-      }
-    }
-
-    @include media-breakpoint-down(sm) {
-      display: none;
-
-      &:first-child {
-        display: block;
-        transform: translateY(150%);
-
-        &.toast-visible {
-          transform: translateY(0);
         }
       }
     }
