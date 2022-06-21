@@ -34,10 +34,10 @@ const TransactionData = ({
       case data.endsWith(highlight): {
         const [rest] = data.split(highlight);
         output = (
-          <React.Fragment>
+          <>
             <span className={globalStyles.textMuted}>{rest}</span>
             {highlight}
-          </React.Fragment>
+          </>
         );
         break;
       }
