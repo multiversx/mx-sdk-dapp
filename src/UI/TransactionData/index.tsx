@@ -14,7 +14,7 @@ const TransactionData = ({
   highlight?: string;
   isScCall?: boolean;
 }) => {
-  let output = <React.Fragment>{data}</React.Fragment>;
+  let output = <>{data}</>;
 
   const [encodedScCall, ...remainingDataFields] =
     highlight && isScCall ? highlight.split('@') : [];
@@ -24,10 +24,10 @@ const TransactionData = ({
       case data.startsWith(highlight): {
         const [, rest] = data.split(highlight);
         output = (
-          <React.Fragment>
+          <>
             {highlight}
             <span className={globalStyles.textMuted}>{rest}</span>
-          </React.Fragment>
+          </>
         );
         break;
       }
@@ -46,11 +46,11 @@ const TransactionData = ({
         const [start, end] = data.split(highlight);
 
         output = (
-          <React.Fragment>
+          <>
             <span className={globalStyles.textMuted}>{start}</span>
             <span className={globalStyles.highlighted}>{highlight}</span>
             <span className={globalStyles.textMuted}>{end}</span>
-          </React.Fragment>
+          </>
         );
         break;
       }
@@ -58,7 +58,7 @@ const TransactionData = ({
   }
 
   return (
-    <React.Fragment>
+    <>
       {encodedScCall && (
         <div
           className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
@@ -93,7 +93,7 @@ const TransactionData = ({
           {data ? output : 'N/A'}
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useWebWalletLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
@@ -20,11 +21,14 @@ const WebWalletLoginButton: (
     token
   });
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${
-      globalStyles.px4
-    } ${globalStyles.m1} ${globalStyles.mx3} ${
-      buttonClassName != null ? buttonClassName : ''
-    }`,
+    wrapper: `${classNames(
+      globalStyles.btn,
+      globalStyles.btnPrimary,
+      globalStyles.px4,
+      globalStyles.m1,
+      globalStyles.mx3,
+      buttonClassName != null && buttonClassName
+    )} `,
     loginText: globalStyles.textLeft
   });
 

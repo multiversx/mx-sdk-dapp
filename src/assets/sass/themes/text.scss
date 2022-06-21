@@ -203,10 +203,6 @@ a > .trim span,
 
 .table .trim-only-sm .trim {
   max-width: none;
-
-  //@include media-breakpoint-down(sm) {
-  //  max-width: 13rem;
-  //}
 }
 
 .trim-fs-sm .trim {

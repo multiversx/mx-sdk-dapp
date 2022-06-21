@@ -1,7 +1,3 @@
-//@import './../../../../node_modules/bootstrap/scss/functions';
-//@import './../../../../node_modules/bootstrap/scss/variables';
-//@import './../../../../node_modules/bootstrap/scss/mixins';
-
 $headings-font-weight: 300 !important;
 $primary: #1b46c2;
 $light: #fafafa;
@@ -18,6 +14,7 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 $black:    #000 !default;
+$transparent:    transparent !default;
 
 $spacer: 1rem !default;
 $spacers: () !default;

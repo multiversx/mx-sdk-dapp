@@ -41,7 +41,6 @@ const LedgerConnect = ({
               </p>
             )}
             <button
-              // className='btn btn-primary px-4'
               className={`${globalStyles.btn} ${globalStyles.btnPrimary}`}
               onClick={onClick}
               data-testid='connectBtn'

@@ -1,11 +1,12 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import {
   denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
 import { denominate, getEgldLabel, stringIsInteger } from 'utils';
 import styles from './styles/denominate.scss';
-import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
 
 export interface DenominateType {
   value: string;
@@ -71,9 +72,10 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
       )}
       {showLabel && (
         <span
-          className={`${styles.symbol} ${
-            props.token ? globalStyles.textMuted : ''
-          }`}
+          className={`${classNames(
+            styles.symbol,
+            props.token && globalStyles.textMuted
+          )}`}
         >
           &nbsp;{props.token ? props.token : erdLabel}
         </span>

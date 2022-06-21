@@ -50,7 +50,6 @@ export const Pool = ({
 
 export const Locked = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.tokenSymbolLocked}>
-    {/*<div className='locked rounded-circle shadow'>*/}
     <div
       className={`${styles.locked} ${globalStyles.roundedCircle} ${globalStyles.shadow}`}
     >

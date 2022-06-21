@@ -5,6 +5,7 @@ import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
 import styles from '../styles/ledger.scss';
 import { LedgerLoginButtonPropsType } from './types';
+import classNames from 'classnames';
 
 const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   token,
@@ -28,11 +29,14 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${
-        globalStyles.px4
-      } ${globalStyles.m1} ${globalStyles.mx3} ${
-        buttonClassName != null ? buttonClassName : ''
-      }`,
+      wrapper: `${classNames(
+        globalStyles.btn,
+        globalStyles.btnPrimary,
+        globalStyles.px4,
+        globalStyles.m1,
+        globalStyles.mx3,
+        buttonClassName != null && buttonClassName
+      )}`,
       loginText: styles.loginText
     }
   );
