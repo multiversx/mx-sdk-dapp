@@ -4,6 +4,7 @@ import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import { NetworkType } from 'types';
 
+alert('yoyyoy');
 let apiProvider: INetworkProvider | null = null;
 
 export function initializeApiProvider(networkConfig?: NetworkType) {
