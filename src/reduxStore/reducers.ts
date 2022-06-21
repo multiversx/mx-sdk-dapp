@@ -3,6 +3,7 @@ import { persistReducer } from 'redux-persist';
 
 import sessionStorage from 'redux-persist/lib/storage/session';
 import account from './slices/accountInfoSlice';
+import dappModal from './slices/dappModalsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
@@ -26,6 +27,7 @@ const reducers = {
   networkConfig,
   loginInfo,
   modals,
+  dappModal,
   transactions: persistReducer(transactionsReducerPersistConfig, transactions),
   transactionsInfo: persistReducer(
     transactionsInfoPersistConfig,

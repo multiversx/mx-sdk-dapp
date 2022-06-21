@@ -1,10 +1,7 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import globalStyles from 'assets/sass/main.scss';
-import { useGetAccountInfo } from 'hooks';
-import { useLedgerLogin } from 'services';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
-
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';

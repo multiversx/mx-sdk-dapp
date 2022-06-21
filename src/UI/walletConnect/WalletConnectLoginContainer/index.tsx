@@ -3,7 +3,6 @@ import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
-import { useWalletConnectLogin } from 'services';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';

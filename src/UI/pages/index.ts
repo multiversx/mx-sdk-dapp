@@ -1,2 +1,1 @@
-import UnlockPage from './UnlockPage/index';
-export default UnlockPage;
+export { UnlockPage } from './UnlockPage/index';
