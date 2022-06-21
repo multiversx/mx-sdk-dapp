@@ -168,27 +168,6 @@ If you want to show custom notifications, you can use the `useGetNotification` h
 
 </details>
 
-<details>
-  <summary>
-    UI css import
- </summary>
-
-### UI css import
-
-To properly apply the default styles to Dapp Core Components, you need to import the bundled css into your App's entry point.
-
-```
-import ...
-
-import '@elrondnetwork/dapp-core/dist/index.css';
-
-export default function App() {
-...
-
-```
-
-</details>
-
 ## User Identity
 
 Dapp-core makes logging in and persisting user's session easy and hassle-free.
@@ -683,12 +662,12 @@ You can either go into their specific folder in the module for extra trimming, o
 for example, these 2 imports are both valid:
 
 ```
-import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/dist/hooks';
+import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks';
 ```
 and
 ```
-import { useExtensionLogin } from '@elrondnetwork/dapp-core/dist/hooks/login';
-import { useGetAccountInfo } from '@elrondnetwork/dapp-core/dist/hooks/account';
+import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
 ```
 
@@ -705,7 +684,7 @@ import {
    mnemonicWords,
    ledgerErrorCodes,
    fallbackNetworkConfigurations
- } from '@elrondnetwork/dapp-core/dist/constants';
+ } from '@elrondnetwork/dapp-core/constants';
 ```
 
 ## hooks exports
@@ -718,7 +697,7 @@ import {
   useLedgerLogin,
   useWalletConnectLogin,
   useWebWalletLogin
-} from '@elrondnetwork/dapp-core/dist/hooks/login';
+} from '@elrondnetwork/dapp-core/hooks/login';
 ```
 
 ### Account
@@ -727,7 +706,7 @@ import {
   useGetAccountInfo,
   useGetAccountProvider,
   useGetLoginInfo
- } from '@elrondnetwork/dapp-core/dist/hooks/accounts';
+ } from '@elrondnetwork/dapp-core/hooks/accounts';
 ```
 
 ### Transactions
@@ -751,7 +730,7 @@ import {
   useSignTransactions,
   useSignTransactionsWithDevice,
   useSignTransactionsWithLedger,
-} from '@elrondnetwork/dapp-core/dist/hooks/transactions';
+} from '@elrondnetwork/dapp-core/hooks/transactions';
 ```
 
 ### Misc
@@ -761,7 +740,7 @@ import {
   useGetNetworkConfig,
   useGetNotification,
   useUpdateEffect
-} from '@elrondnetwork/dapp-core/dist/hooks';
+} from '@elrondnetwork/dapp-core/hooks';
 ```
 
 ## services exports
@@ -776,7 +755,7 @@ import {
   sendTransactions,
   signTransactions,
   calcTotalFee
-} from '@elrondnetwork/dapp-core/dist/services';
+} from '@elrondnetwork/dapp-core/services';
 ```
 
 ## utils exports
@@ -795,7 +774,7 @@ import {
   refreshAccount,
   setNonce,
   signMessage
-} from '@elrondnetwork/dapp-core/dist/utils/account';
+} from '@elrondnetwork/dapp-core/utils/account';
 ```
 
 ### Operations
@@ -807,7 +786,7 @@ import {
   nominate,
   getTokenFromData,
   getUsdValue,
-} from '@elrondnetwork/dapp-core/dist/utils/operations';
+} from '@elrondnetwork/dapp-core/utils/operations';
 ```
 
 ### Transactions
@@ -820,7 +799,7 @@ import {
   parseMultiEsdtTransferData,
   parseTransactionAfterSigning,
   transactionStateByStatus
-} from '@elrondnetwork/dapp-core/dist/utils/transactions';
+} from '@elrondnetwork/dapp-core/utils/transactions';
 ```
 
 ### Validation
@@ -832,7 +811,7 @@ import {
  stringIsInteger,
  isContract,
  isStringBase64,
-} from '@elrondnetwork/dapp-core/dist/utils';
+} from '@elrondnetwork/dapp-core/utils';
 ```
 
 ### Misc
@@ -846,7 +825,7 @@ import {
   getIsLoggedIn,
   isSelfESDTContract,
   getAddressFromDataField,
-} from '@elrondnetwork/dapp-core/dist/utils';
+} from '@elrondnetwork/dapp-core/utils';
 ```
 
 ## Wrappers
@@ -856,7 +835,7 @@ import {
   DappProvider,
   AuthenticatedRoutesWrapper,
   AppInitializer,
-} from '@elrondnetwork/dapp-core/dist/wrappers';
+} from '@elrondnetwork/dapp-core/wrappers';
 ```
 
 ## Web-specific imports
@@ -864,7 +843,7 @@ import {
 ```
 import {
   useIdleTimer
-} from '@elrondnetwork/dapp-core/dist/web';
+} from '@elrondnetwork/dapp-core/web';
 ```
 
 
@@ -891,15 +870,15 @@ import {
   UsdValue,
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
-} from '@elrondnetwork/dapp-core/dist/UI';
+} from '@elrondnetwork/dapp-core/UI';
 ```
 
 or
 
 ```
-import { CopyButton } from '@elrondnetwork/dapp-core/dist/UI/CopyButton';
-import { Denominate } from '@elrondnetwork/dapp-core/dist/UI/Denominate';
-import { ExplorerLink } from '@elrondnetwork/dapp-core/dist/UI/ExplorerLink';
+import { CopyButton } from '@elrondnetwork/dapp-core/UI/CopyButton';
+import { Denominate } from '@elrondnetwork/dapp-core/UI/Denominate';
+import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
 
 etc
 ```
