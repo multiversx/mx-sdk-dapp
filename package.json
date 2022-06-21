@@ -5,17 +5,18 @@
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
-  "main": "dist/index.js",
-  "typings": "dist/hooks/index.d.ts",
+  "main": "./",
+  "module": "./",
   "engines": {
     "node": ">=16"
   },
   "scripts": {
-    "start": "npm run watch",
+    "start": "yarn watch",
     "build:types": "tsc --project tsconfig.json",
-    "build": "rimraf dist & node esbuild.js & yarn build:types",
-    "watch": "npm run build -- --watch",
-    "prepare": "npm run build"
+    "build": "rimraf dist && node esbuild.js && yarn build:types",
+    "publish-package": "yarn build && cp package.json dist && cd dist && npm publish",
+    "publish-yalc": "yarn build && cp package.json dist && cd dist && yalc publish",
+    "watch": "yarn build -- --watch"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.2",
@@ -107,10 +108,10 @@
     }
   ],
   "files": [
-    "dist/*.js",
-    "dist/**/*.js",
-    "dist/*.d.ts",
-    "dist/**/*.d.ts"
+    "*.js",
+    "**/*.js",
+    "*.d.ts",
+    "**/*.d.ts"
   ],
   "dependencies": {
     "@elrondnetwork/erdjs": "10.2.5",
