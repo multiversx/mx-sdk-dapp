@@ -1,10 +1,10 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
-import styles from '../styles/ledger.scss';
-import globalStyles from 'assets/sass/main.scss';
+import styles from './address-table.scss';
 import AddressRow from './AddressRow';
 
 const ledgerWaitingText = 'Waiting for device';

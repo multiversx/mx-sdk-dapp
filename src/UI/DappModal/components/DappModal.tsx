@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from '../styles/dapp-modal.scss';
+import styles from '../dapp-modal.scss';
 import { DappModalConfig } from '../types';
 import DappModalBody from './DappModalBody';
 import DappModalFooter from './DappModalFooter';

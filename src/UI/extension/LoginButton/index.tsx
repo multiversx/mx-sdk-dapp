@@ -4,7 +4,7 @@ import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useExtensionLogin } from 'services';
 import { getGeneratedClasses } from 'utils';
-import styles from '../styles/login-button.scss';
+import styles from './login-button.scss';
 import { ExtensionLoginButtonPropsType } from './types';
 
 const ExtensionLoginButton: (

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../styles/dapp-modal.scss';
+import styles from '../dapp-modal.scss';
 
 type DappModalFooterProps = {
   visible?: boolean;

@@ -1,7 +1,7 @@
 import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import styles from '../styles/dapp-modal.scss';
+import styles from '../dapp-modal.scss';
 
 type DappModalHeaderProps = {
   visible?: boolean;

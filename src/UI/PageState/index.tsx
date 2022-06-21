@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { getGeneratedClasses } from 'utils';
-import styles from './styles/page-state.scss';
+import styles from './page-state.scss';
 import { PageStateProps } from './types';
 
 export const PageState = ({

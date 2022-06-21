@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
-import styles from '../styles/ledger.scss';
+import styles from './ledger-login-button.scss';
 import { LedgerLoginButtonPropsType } from './types';
-import classNames from 'classnames';
 
 const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   token,

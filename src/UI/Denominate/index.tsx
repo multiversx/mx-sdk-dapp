@@ -1,12 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import {
   denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
 import { denominate, getEgldLabel, stringIsInteger } from 'utils';
-import styles from './styles/denominate.scss';
-import classNames from 'classnames';
+import styles from './denominate.scss';
 
 export interface DenominateType {
   value: string;

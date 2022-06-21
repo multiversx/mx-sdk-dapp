@@ -6,8 +6,8 @@ import LedgerLoginButton from 'UI/ledger/LoginButton';
 import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
 import WebWalletLoginButton from 'UI/webWallet/LoginButton';
 import { getGeneratedClasses } from 'utils';
-import styles from './styles/unlock-page.scss';
 import { Props } from './types';
+import styles from './unlock-page.scss';
 
 const UnlockPage = ({
   loginRoute,

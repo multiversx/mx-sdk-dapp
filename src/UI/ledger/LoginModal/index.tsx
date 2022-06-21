@@ -6,10 +6,10 @@ import { useLedgerLogin } from 'services';
 import ModalContainer from 'UI/ModalContainer';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses } from 'utils';
-import styles from '../styles/ledger.scss';
 import AddressTable from './AddressTable';
 import ConfirmAddress from './ConfirmAddress';
 import LedgerConnect from './LedgerConnect';
+import styles from './login-modal.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
