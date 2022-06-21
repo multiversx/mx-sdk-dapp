@@ -10,7 +10,7 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useSelector } from 'redux/DappProviderContext';
 import { shardSelector } from 'redux/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
-import { SignedTransactionType } from 'types';
+import { SignedTransactionType, SignedTransactionsBodyType } from 'types';
 
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
@@ -22,35 +22,91 @@ import {
   getGeneratedClasses
 } from 'utils';
 
-import Close from './components/Close';
+import CloseButton from './components/CloseButton';
 import styles from './styles.scss';
 import { TransactionToastPropsType } from './types';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
 
-const TransactionToast = ({
-  toastId,
-  title = '',
-  shouldRenderDefaultCss = true,
-  className = '',
-  transactions,
-  status,
-  onClose,
-  startTimeProgress,
-  endTimeProgress,
-  lifetimeAfterSuccess
-}: TransactionToastPropsType) => {
-  const [shouldRender, setShouldRender] = useState(true);
-  const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
-  const accountShard = useSelector(shardSelector);
-
+const getToastsOptionsData = (
+  toastId: string,
+  style: any,
+  transactionDisplayInfo: any
+) => {
   const {
     errorMessage = 'Transaction failed',
     timedOutMessage = 'Transaction timed out',
     successMessage = 'Transaction successful',
     processingMessage = 'Processing transaction'
   } = transactionDisplayInfo;
+
+  const successToastData = {
+    id: toastId,
+    icon: icons.faCheck,
+    expires: 30000,
+    hasCloseButton: true,
+    title: successMessage,
+    iconClassName: style.success
+  };
+
+  const pendingToastData = {
+    id: toastId,
+    expires: false,
+    icon: icons.faHourglass,
+    hasCloseButton: false,
+    title: processingMessage,
+    iconClassName: style.warning
+  };
+
+  const failToastData = {
+    id: toastId,
+    icon: icons.faTimes,
+    title: errorMessage,
+    hasCloseButton: true,
+    iconClassName: style.danger
+  };
+
+  const timedOutToastData = {
+    id: toastId,
+    icon: icons.faTimes,
+    title: timedOutMessage,
+    hasCloseButton: true,
+    iconClassName: style.warning
+  };
+
+  return {
+    signed: pendingToastData,
+    sent: pendingToastData,
+    pending: pendingToastData,
+    success: successToastData,
+    cancelled: failToastData,
+    fail: failToastData,
+    timedOut: timedOutToastData
+  };
+};
+
+const TransactionToast = ({
+  toastId,
+  title = '',
+  shouldRenderDefaultCss = true,
+  className = '',
+  startTimeProgress,
+  endTimeProgress,
+  lifetimeAfterSuccess,
+  signedTransactionsToRender
+}: TransactionToastPropsType) => {
+  const [shouldRender, setShouldRender] = useState(true);
+  const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
+  const accountShard = useSelector(shardSelector);
+
+  const currentTx: SignedTransactionsBodyType =
+    signedTransactionsToRender[toastId];
+
+  const { transactions, status } = currentTx;
+
+  const invalidCurrentTx =
+    currentTx?.transactions == null || currentTx?.status == null;
 
   const isSameShard = useMemo(
     () =>
@@ -94,63 +150,32 @@ const TransactionToast = ({
     return [startTime, endTime];
   }, []);
 
+  if (invalidCurrentTx) {
+    return null;
+  }
+
+  if (transactions === null || !shouldRender) {
+    return null;
+  }
+
   const progress = { startTime, endTime };
   const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
     ...styles
   });
 
-  const successToastData = {
-    id: toastId,
-    icon: icons.faCheck,
-    expires: 30000,
-    hasCloseButton: true,
-    title: successMessage,
-    iconClassName: style.success
-  };
-
-  const pendingToastData = {
-    id: toastId,
-    expires: false,
-    icon: icons.faHourglass,
-    hasCloseButton: false,
-    title: processingMessage,
-    iconClassName: style.warning
-  };
-
-  const failToastData = {
-    id: toastId,
-    icon: icons.faTimes,
-    title: errorMessage,
-    hasCloseButton: true,
-    iconClassName: style.danger
-  };
-
-  const timedOutToastData = {
-    id: toastId,
-    icon: icons.faTimes,
-    title: timedOutMessage,
-    hasCloseButton: true,
-    iconClassName: style.warning
-  };
-
   const isPending = getIsTransactionPending(status);
   const isTimedOut = getIsTransactionTimedOut(status);
 
-  const toatsOptionsData = {
-    signed: pendingToastData,
-    sent: pendingToastData,
-    pending: pendingToastData,
-    success: successToastData,
-    cancelled: failToastData,
-    fail: failToastData,
-    timedOut: timedOutToastData
-  };
+  const toastsOptionsData = getToastsOptionsData(
+    toastId,
+    style,
+    transactionDisplayInfo
+  );
 
-  const toastDataState = toatsOptionsData[status!];
+  const toastDataState = toastsOptionsData[status!];
 
   const handleDeleteToast = () => {
     setShouldRender(false);
-    onClose?.(toastId);
   };
 
   if (!shouldRender || transactions == null) {
@@ -180,7 +205,9 @@ const TransactionToast = ({
           <div className={style.heading}>
             <h5 className={style.title}>{toastDataState.title}</h5>
 
-            <Close {...{ style, isPending, onDelete: handleDeleteToast }} />
+            <CloseButton
+              {...{ style, isPending, onDelete: handleDeleteToast }}
+            />
           </div>
 
           <div className={style.footer}>

@@ -63,27 +63,42 @@ const TransactionsToastList = ({
 
   const mappedToastsList = toastsIds?.map((props: ToastsType) => {
     const { toastId, type = ToastsEnum.transaction, message, duration } = props;
-    const args = {
-      [ToastsEnum.custom]: {
-        message: message ?? '',
-        duration,
-        onDelete: () => handleDeleteCustomToast(toastId)
-      },
-      [ToastsEnum.transaction]: {
-        toastId,
-        signedTransactionsToRender,
-        lifetimeAfterSuccess: successfulToastLifetime
-      }
-    }[type as string];
 
-    return <Toast {...{ ...args, type }} key={toastId} />;
+    switch (type) {
+      case ToastsEnum.custom:
+        return (
+          <Toast
+            key={toastId}
+            {...{
+              message: message ?? '',
+              duration,
+              onDelete: () => handleDeleteCustomToast(toastId)
+            }}
+          />
+        );
+
+      case ToastsEnum.transaction:
+        return (
+          <Toast
+            key={toastId}
+            {...{
+              toastId,
+              signedTransactionsToRender,
+              lifetimeAfterSuccess: successfulToastLifetime
+            }}
+          />
+        );
+
+      default:
+        return null;
+    }
   });
 
   const mapPendingSignedTransactions = () => {
     const newToasts = [...toastsIds];
 
     for (const sessionId in pendingTransactionsToRender) {
-      const hasToast = toastsIds.find(
+      const hasToast = toastsIds.some(
         (toast: ToastsType): boolean => toast.toastId === sessionId
       );
 

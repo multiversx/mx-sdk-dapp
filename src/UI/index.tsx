@@ -12,7 +12,6 @@ import SignWithDeviceModal from './SignTransactionsModals/SignWithDeviceModal';
 import SignWithExtensionModal from './SignTransactionsModals/SignWithExtensionModal';
 import SignWithLedgerModal from './SignTransactionsModals/SignWithLedgerModal';
 import TransactionsToastList from './TransactionsToastList';
-import TransactionToast from './TransactionToast';
 import Trim from './Trim';
 import UsdValue from './UsdValue';
 import WalletConnectLoginButton from './walletConnect/WalletConnectLoginButton';
@@ -32,7 +31,6 @@ export {
   SignWithDeviceModal,
   SignWithExtensionModal,
   TransactionsToastList,
-  TransactionToast,
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
   WebWalletLoginButton,

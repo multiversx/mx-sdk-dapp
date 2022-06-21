@@ -5,18 +5,24 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 
 import styles from './styles.scss';
 
-interface CustomType {
+interface CustomToastType {
   onDelete: () => void;
   message: string;
   duration?: number;
 }
 
-const Custom = (props: CustomType) => {
+const CustomToast = (props: CustomToastType) => {
   const { onDelete, message, duration } = props;
 
   useEffect(() => {
     if (duration) {
-      setTimeout(onDelete, duration);
+      const timeout = setTimeout(onDelete, duration);
+
+      return () => {
+        clearTimeout(timeout);
+      };
+    } else {
+      return () => null;
     }
   }, []);
 
@@ -31,4 +37,4 @@ const Custom = (props: CustomType) => {
   );
 };
 
-export default Custom;
+export default CustomToast;

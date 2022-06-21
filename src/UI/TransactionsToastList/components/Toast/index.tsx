@@ -1,24 +1,21 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { ToastsEnum } from 'types';
 
-import Custom from './components/Custom';
-import Transaction from './components/Transaction';
+import CustomToast from './components/CustomToast';
+import TransactionToast from './components/TransactionToast';
 
 import styles from './styles.scss';
+
+const toasts = (type = ToastsEnum.custom) =>
+  ({
+    [ToastsEnum.custom]: CustomToast,
+    [ToastsEnum.transaction]: TransactionToast
+  }[type]);
 
 const Toast = (props: any) => {
   const { type = ToastsEnum.custom, ...args } = props;
 
-  const toast = useMemo(
-    () =>
-      ({
-        [ToastsEnum.custom]: Custom,
-        [ToastsEnum.transaction]: Transaction
-      }[type as string]),
-    []
-  );
-
-  return <div className={styles.toast}>{toast ? toast(args) : null}</div>;
+  return <div className={styles.toast}>{toasts(type)(args)}</div>;
 };
 
 export default Toast;

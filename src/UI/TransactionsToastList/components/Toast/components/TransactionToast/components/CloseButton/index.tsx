@@ -2,13 +2,15 @@ import React from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 
-interface CloseType {
+interface CloseButtonType {
   onDelete: () => void;
   style: any;
   isPending: boolean;
 }
 
-const Close = ({ onDelete, style, isPending }: CloseType) => {
+const CloseButton = (props: CloseButtonType) => {
+  const { onDelete, style, isPending } = props;
+
   if (isPending) {
     return null;
   }
@@ -20,4 +22,4 @@ const Close = ({ onDelete, style, isPending }: CloseType) => {
   );
 };
 
-export default Close;
+export default CloseButton;
