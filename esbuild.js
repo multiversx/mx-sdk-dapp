@@ -34,7 +34,6 @@ esbuild
     format: 'esm',
     target: ['es2015'],
     tsconfig: './tsconfig.json',
-    // platform: 'browser',
     platform: 'node',
     inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
     define: {

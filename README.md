@@ -669,6 +669,11 @@ but if you need to do this manually, you can use the exposed functions for this:
 
 </details>
 
+
+# Dapp-core exports
+
+
+
 ## Roadmap
 
 See the [open issues](https://github.com/ElrondNetwork/dapp-core/issues) for a list of proposed features (and known issues).

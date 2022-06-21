@@ -8,7 +8,7 @@ import {
   MISSING_PROVIDER_MESSAGE,
   PROVIDER_NOT_INTIALIZED,
   TRANSACTION_CANCELLED,
-  walletSignSession
+  WALLET_SIGN_SESSION
 } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
@@ -83,7 +83,7 @@ export const useSignTransactions = () => {
     sessionId: string,
     callbackRoute = ''
   ) => {
-    const urlParams = { [walletSignSession]: sessionId };
+    const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
     const callbackUrl = `${window.location.origin}${callbackRoute}`;
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 

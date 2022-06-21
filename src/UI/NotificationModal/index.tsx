@@ -30,7 +30,7 @@ export const NotificationModal = () => {
       show={showModal}
       backdrop={true}
       onHide={onDone}
-      className={'modal-container'}
+      className='modal-container'
       animation={false}
       centered
     >

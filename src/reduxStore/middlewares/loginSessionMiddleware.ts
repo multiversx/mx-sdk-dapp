@@ -6,8 +6,9 @@ import { isLoggedInSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import storage from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
+import { logoutActionName } from 'constants/index';
 
-const whitelistedActions = ['logout'];
+const whitelistedActions = [logoutActionName];
 
 const throttledSetNewExpires = throttle(() => {
   setLoginExpiresAt(getNewLoginExpiresTimestamp());

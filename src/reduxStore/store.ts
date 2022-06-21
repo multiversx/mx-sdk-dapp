@@ -17,9 +17,10 @@ import storage from 'redux-persist/lib/storage';
 import { defaultNetwork } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
+import { PersistConfig } from 'redux-persist/es/types';
 
 const migrations: any = {
-  2: (state: PestistedRootState) => {
+  2: (state: PersistedRootState) => {
     return {
       ...state,
       networkConfig: defaultNetwork
@@ -27,7 +28,7 @@ const migrations: any = {
   }
 };
 
-const persistConfig: any = {
+const persistConfig: PersistConfig<any> = {
   key: 'dapp-core-store',
   version: 2,
   storage,
@@ -61,10 +62,8 @@ export const subscription = createSubscription(store);
 
 export const persistor = persistStore(store);
 
-const storeType = configureStore({ reducer: rootReducer });
-type PestistedRootState = ReturnType<typeof store.getState>;
+type PersistedRootState = ReturnType<typeof store.getState>;
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type StoreType = typeof storeType;
-export type RootState = ReturnType<typeof storeType.getState>;
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

@@ -47,7 +47,7 @@ const TransactionData = ({
         output = (
           <>
             <span className='text-muted'>{start}</span>
-            <span className={'highlighted'}>{highlight}</span>
+            <span className='highlighted'>{highlight}</span>
             <span className='text-muted'>{end}</span>
           </>
         );
