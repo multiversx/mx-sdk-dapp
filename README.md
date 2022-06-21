@@ -672,6 +672,237 @@ but if you need to do this manually, you can use the exposed functions for this:
 
 # Dapp-core exports
 
+Since version 2.0, dapp-core does not have a default export object.
+You have to import everything from its own separate module. Below you can find all the exports.
+
+You can either import everything from a module, or if you really want to make sure you're not importing anything
+that is not used, you can import everything from its own file.
+
+You can either go into their specific folder in the module for extra trimming, or import everything together.
+
+for example, these 2 imports are both valid:
+
+```
+import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/dist/hooks';
+```
+and
+```
+import { useExtensionLogin } from '@elrondnetwork/dapp-core/dist/hooks/login';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/dist/hooks/account';
+
+```
+
+## constants exports
+
+```
+import {
+   gasPriceModifier,
+   gasPerDataByte,
+   gasLimit,
+   gasPrice,
+   denomination,
+   decimals,
+   mnemonicWords,
+   ledgerErrorCodes,
+   fallbackNetworkConfigurations
+ } from '@elrondnetwork/dapp-core/dist/constants';
+```
+
+## hooks exports
+
+### Login
+
+```
+import {
+  useExtensionLogin,
+  useLedgerLogin,
+  useWalletConnectLogin,
+  useWebWalletLogin
+} from '@elrondnetwork/dapp-core/dist/hooks/login';
+```
+
+### Account
+```
+import {
+  useGetAccountInfo,
+  useGetAccountProvider,
+  useGetLoginInfo
+ } from '@elrondnetwork/dapp-core/dist/hooks/accounts';
+```
+
+### Transactions
+```
+import {
+  useCheckTransactionsStatus,
+
+  useGetActiveTransactionsStatus,
+  useGetFailedTransactions,
+  useGetPendingTransactions,
+  useGetSignedTransactions,
+  useGetSignTransactionsError,
+  useGetSuccessfulTransactions,
+
+  useGetTokenDetails,
+  useGetTransactionDisplayInfo,
+  useParseMultiEsdtTransferData,
+
+  useParseSignedTransactions,
+  useSignMultipleTransactions,
+  useSignTransactions,
+  useSignTransactionsWithDevice,
+  useSignTransactionsWithLedger,
+} from '@elrondnetwork/dapp-core/dist/hooks/transactions';
+```
+
+### Misc
+```
+import {
+  useDebounce,
+  useGetNetworkConfig,
+  useGetNotification,
+  useUpdateEffect
+} from '@elrondnetwork/dapp-core/dist/hooks';
+```
+
+## services exports
+
+```
+import {
+  removeTransactionsToSign,
+  removeSignedTransaction,
+  removeAllSignedTransactions,
+  removeAllTransactionsToSign,
+  isCrossShardTransaction,
+  sendTransactions,
+  signTransactions,
+  calcTotalFee
+} from '@elrondnetwork/dapp-core/dist/services';
+```
+
+## utils exports
+
+### Account
+
+```
+import {
+  addressIsValid,
+  getAccount,
+  getAccountBalance,
+  getAccountShard,
+  getAddress,
+  getLatestNonce,
+  getShardOfAddress,
+  refreshAccount,
+  setNonce,
+  signMessage
+} from '@elrondnetwork/dapp-core/dist/utils/account';
+```
+
+### Operations
+
+```
+import {
+  calculateFeeLimit,
+  denominate,
+  nominate,
+  getTokenFromData,
+  getUsdValue,
+} from '@elrondnetwork/dapp-core/dist/utils/operations';
+```
+
+### Transactions
+
+```
+import {
+  buildCallbackUrl,
+  getTokenFromData,
+  isTokenTransfer,
+  parseMultiEsdtTransferData,
+  parseTransactionAfterSigning,
+  transactionStateByStatus
+} from '@elrondnetwork/dapp-core/dist/utils/transactions';
+```
+
+### Validation
+
+```
+import {
+ getIdentifierType,
+ stringIsFloat,
+ stringIsInteger,
+ isContract,
+ isStringBase64,
+} from '@elrondnetwork/dapp-core/dist/utils';
+```
+
+### Misc
+
+```
+import {
+  encodeToBase64,
+  decodeBase64,
+  logout,
+  getAllStringOccurences,
+  getIsLoggedIn,
+  isSelfESDTContract,
+  getAddressFromDataField,
+} from '@elrondnetwork/dapp-core/dist/utils';
+```
+
+## Wrappers
+
+```
+import {
+  DappProvider,
+  AuthenticatedRoutesWrapper,
+  AppInitializer,
+} from '@elrondnetwork/dapp-core/dist/wrappers';
+```
+
+## Web-specific imports
+
+```
+import {
+  useIdleTimer
+} from '@elrondnetwork/dapp-core/dist/web';
+```
+
+
+## UI
+
+```
+import {
+  CopyButton,
+  Denominate,
+  ExplorerLink,
+  ExtensionLoginButton,
+  LedgerLoginButton,
+  LedgerLoginContainer,
+  NotificationModal,
+  PageState,
+  ProgressSteps,
+  SignTransactionsModals,
+  SignWithDeviceModal,
+  SignWithExtensionModal,
+  SignWithLedgerModal,
+  TransactionsToastList,
+  TransactionToast,
+  Trim,
+  UsdValue,
+  WalletConnectLoginButton,
+  WalletConnectLoginContainer,
+} from '@elrondnetwork/dapp-core/dist/UI';
+```
+
+or
+
+```
+import { CopyButton } from '@elrondnetwork/dapp-core/dist/UI/CopyButton';
+import { Denominate } from '@elrondnetwork/dapp-core/dist/UI/Denominate';
+import { ExplorerLink } from '@elrondnetwork/dapp-core/dist/UI/ExplorerLink';
+
+etc
+```
 
 
 ## Roadmap

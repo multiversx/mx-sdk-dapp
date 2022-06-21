@@ -7,7 +7,7 @@ import { isLoggedInSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
-import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
+import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 
 interface UseExtensionLoginPropsType {
   callbackRoute: string;

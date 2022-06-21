@@ -27,7 +27,7 @@ import {
   setWalletLogin,
   setChainID
 } from 'reduxStore/slices';
-import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
+import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
 import { getAddress, getAccount, getLatestNonce, logout } from 'utils';
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useExtensionLogin } from 'services';
+import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { ExtensionLoginButtonPropsType } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
 
