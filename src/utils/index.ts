@@ -3,6 +3,7 @@ export * from './getIsLoggedIn';
 export * from './buildUrlParams';
 export * from './switchTrue';
 export * from './transactions';
+export * from './toasts';
 export * from './account';
 export * from './math';
 export * from './operations';

@@ -20,6 +20,7 @@ const ExplorerLink = ({
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
+
   return (
     <a
       href={`${explorerAddress}${page}`}
