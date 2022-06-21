@@ -15,6 +15,7 @@
     "build:types": "tsc --project tsconfig.json",
     "build": "rimraf dist & node esbuild.js & yarn build:types",
     "publish-package": "yarn build & cp package.json dist & cd dist & npm publish",
+    "publish-yalc": "yarn build & cp package.json dist & cd dist & yalc publish",
     "watch": "yarn build -- --watch"
   },
   "devDependencies": {
