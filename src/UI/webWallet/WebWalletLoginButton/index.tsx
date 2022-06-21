@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { useWebWalletLogin } from 'services';
+import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
 import { getGeneratedClasses } from 'UI/utils';
 
 export interface WebWalletLoginButtonPropsType {

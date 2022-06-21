@@ -22,5 +22,3 @@ export const useIdleTimer = ({ minutes = 10, onLogout }: IdleTimerType) => {
 
   useReactIdleTimer({ timeout, onIdle, debounce });
 };
-
-export default useIdleTimer;

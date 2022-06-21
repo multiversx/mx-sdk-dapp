@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
-import { useWalletConnectLogin } from 'services';
+import { useWalletConnectLogin } from 'hooks';
 import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 
