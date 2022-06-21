@@ -1,9 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import {
   denomination as configDenomination,
   decimals as configDecimals
 } from 'constants/index';
 import { denominate, getEgldLabel, stringIsInteger } from 'utils';
+import styles from './denominate.scss';
 
 export interface DenominateType {
   value: string;
@@ -23,7 +26,7 @@ const denominateInvalid = (props: DenominateType) => {
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
     >
-      <span className='int-amount'>...</span>
+      <span className={styles.intAmount}>...</span>
     </span>
   );
 };
@@ -63,12 +66,17 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
     >
-      <span className='int-amount'>{valueParts[0]}</span>
+      <span className={styles.intAmount}>{valueParts[0]}</span>
       {valueParts.length > 1 && (
-        <span className='decimals'>.{valueParts[1]}</span>
+        <span className={styles.decimals}>.{valueParts[1]}</span>
       )}
       {showLabel && (
-        <span className={`symbol ${props.token ? 'text-muted' : ''}`}>
+        <span
+          className={`${classNames(
+            styles.symbol,
+            props.token && globalStyles.textMuted
+          )}`}
+        >
           &nbsp;{props.token ? props.token : erdLabel}
         </span>
       )}

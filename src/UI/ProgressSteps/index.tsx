@@ -1,4 +1,5 @@
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import Dot from './Dot';
 
 interface ProgressStepsType {
@@ -17,7 +18,9 @@ const ProgressSteps = ({
   for (let i = 1; i <= totalSteps; i += 1) {
     const isCurrentStep = currentStep === i;
     const color =
-      isCurrentStep || i < currentStep ? 'bg-primary' : 'bg-secondary';
+      isCurrentStep || i < currentStep
+        ? globalStyles.bgPrimary
+        : 'bg-secondary';
 
     dots.push(
       <Dot
@@ -30,10 +33,14 @@ const ProgressSteps = ({
 
   return (
     <div
-      className={`progress-steps d-flex justify-content-center ${className}`}
+      className={`${globalStyles.progressSteps} ${globalStyles.flexRow} ${globalStyles.justifyContentCenter} ${className}`}
     >
-      <div className='steps d-flex justify-content-center align-items-center position-relative'>
-        <hr className='position-absolute w-100 m-0' />
+      <div
+        className={`${globalStyles.steps} ${globalStyles.flexRow} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter} ${globalStyles.positionRelative}`}
+      >
+        <hr
+          className={`${globalStyles.positionAbsolute} ${globalStyles.w100} ${globalStyles.m0}`}
+        />
         {dots}
       </div>
     </div>

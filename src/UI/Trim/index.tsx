@@ -1,6 +1,7 @@
 import React from 'react';
 import { useCallback } from 'react';
 import debounce from 'lodash.debounce';
+import globalStyles from 'assets/sass/main.scss';
 
 import styles from './styles.scss';
 
@@ -40,8 +41,14 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   }, []);
 
   return (
-    <span ref={trimRef} className={styles.trim} data-testid={dataTestId}>
-      <span ref={hiddenTextRef} className={styles.hidden}>
+    <span
+      ref={trimRef}
+      className={`${globalStyles.trim} ${
+        overflow ? globalStyles.overflow : ''
+      }`}
+      data-testid={dataTestId}
+    >
+      <span ref={hiddenTextRef} className={globalStyles.hiddenTextRef}>
         {text}
       </span>
 
@@ -52,10 +59,8 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
               {String(text).substring(0, Math.floor(text.length / 2))}
             </span>
           </span>
-
-          <span className={styles.ellipsis}>...</span>
-
-          <span className={styles.right}>
+          <span className={globalStyles.ellipsis}>...</span>
+          <span className={globalStyles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
         </React.Fragment>

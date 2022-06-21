@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
 import { SignModalPropsType } from 'types';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import PageState from 'UI/PageState';
 import { getGeneratedClasses, safeRedirect } from 'utils';
+import ModalContainer from 'UI/ModalContainer/ModalContainer';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -25,8 +26,7 @@ export const SignWithWalletConnectModal = ({
         hasMultipleTransactions ? 's' : ''
       }`;
 
-  const close = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const close = () => {
     handleClose();
     if (
       callbackRoute != null &&
@@ -35,14 +35,21 @@ export const SignWithWalletConnectModal = ({
       safeRedirect(callbackRoute);
     }
   };
+
+  const { handleShowModal } = useDappModal({
+    modalDialogClassName: classes.wrapper
+  });
+
+  useEffect(() => {
+    handleShowModal();
+  }, []);
+
   return (
-    <ReactBootstrap.Modal
-      show
-      backdrop='static'
-      onHide={close}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={close}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
     >
       <PageState
         icon={error ? icons.faTimes : icons.faHourglass}
@@ -63,7 +70,7 @@ export const SignWithWalletConnectModal = ({
           </button>
         }
       />
-    </ReactBootstrap.Modal>
+    </ModalContainer>
   );
 };
 

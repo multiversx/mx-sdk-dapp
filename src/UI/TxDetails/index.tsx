@@ -1,28 +1,48 @@
 import React from 'react';
-import classNames from 'classnames';
-
+import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import CopyButton from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
-
-import { isServerTransactionPending } from 'utils';
-
-import styles from './styles.scss';
+import { getGeneratedClasses, isServerTransactionPending } from 'utils';
+import styles from './tx-details.scss';
 import { Props } from './types';
 
-const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
+const TxDetails = ({
+  title,
+  transactions,
+  className = styles.txDetails,
+  isTimedOut = false,
+  shouldRenderDefaultCss = true
+}: Props) => {
+  const generatedClasses = getGeneratedClasses(
+    className,
+    shouldRenderDefaultCss,
+    {
+      title: globalStyles.mb0,
+      statusTransactions: `${globalStyles.mb2} ${globalStyles.mt1}`,
+      iconSuccess: `${globalStyles.mr1} ${globalStyles.textSecondary}`,
+      iconFailed: `${globalStyles.mr1} ${globalStyles.textSecondary}`,
+      trimContainer: `${globalStyles.textNowrap} ${globalStyles.trimFsSm} ${globalStyles.mr3}`,
+      iconPending: `${globalStyles.mr1} ${globalStyles.textSecondary} fa-spin slow-spin`,
+      item: `${globalStyles.toastMessages} ${globalStyles.dFlex} ${globalStyles.justifyContentStart} ${globalStyles.alignItemsCenter}`
+    }
+  );
+
   const iconSuccessData = {
-    icon: icons.faCheck
+    icon: icons.faCheck,
+    classNames: generatedClasses.iconSuccess
   };
 
   const iconFailedData = {
-    icon: icons.faTimes
+    icon: icons.faTimes,
+    classNames: generatedClasses.iconSuccess
   };
 
   const iconPendingData = {
-    icon: icons.faCircleNotch
+    icon: icons.faCircleNotch,
+    classNames: generatedClasses.iconPending
   };
 
   const iconData: Record<string, typeof iconPendingData> = {
@@ -34,38 +54,36 @@ const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
   };
   return (
     <React.Fragment>
-      {title && <div className={styles.title}>{title}</div>}
-
-      <div className={styles.status}>
+      {title && <div className={generatedClasses.title}>{title}</div>}
+      <div className={generatedClasses.statusTransactions}>
         {
           transactions.filter((tx) => !isServerTransactionPending(tx.status))
             .length
         }{' '}
         / {transactions.length} transactions processed
       </div>
-
       {transactions.map(({ hash, status }) => {
         const iconSrc = iconData[status];
-
         return (
-          <div className={styles.item} key={hash}>
+          <div className={generatedClasses.item} key={hash}>
             {!isTimedOut && iconSrc != null && (
               <ReactFontawesome.FontAwesomeIcon
                 icon={iconSrc.icon}
-                className={classNames(styles.icon, {
-                  'fa-spin slow-spin': status === 'pending'
-                })}
+                className={iconSrc.classNames}
               />
             )}
-
-            <span className={styles.trim}>
+            <span
+              className={generatedClasses.trimContainer}
+              style={{ width: '10rem' }}
+            >
               <Trim text={hash} />
             </span>
-
             <CopyButton text={hash} />
-
             {!isServerTransactionPending(status) && (
-              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
+              <ExplorerLink
+                page={`/transactions/${hash}`}
+                className={globalStyles.ml2}
+              />
             )}
           </div>
         );

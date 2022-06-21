@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import useDappModal from 'UI/DappModal/hooks/useDappModal';
 import { getGeneratedClasses } from 'utils';
 import LedgerLoginContainer from '../LoginModal';
+import styles from './ledger-login-button.scss';
 import { LedgerLoginButtonPropsType } from './types';
 
 const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
@@ -11,36 +15,45 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
   onModalCloses,
   loginButtonText = 'Ledger',
   buttonClassName,
-  className = 'ledger-login',
+  className = styles.ledgerLogin,
   redirectAfterLogin = false,
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
   shouldRenderDefaultModalCss = true,
   hideButtonWhenModalOpens = false
 }) => {
-  const [showLoginModal, setShowLoginModal] = React.useState(false);
+  const [canShowLoginModal, setCanShowLoginModal] = useState(false);
+  const { handleShowModal, handleHideModal } = useDappModal();
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
-        buttonClassName != null ? buttonClassName : ''
-      }`,
-      loginText: 'text-left'
+      wrapper: `${classNames(
+        globalStyles.btn,
+        globalStyles.btnPrimary,
+        globalStyles.px4,
+        globalStyles.m1,
+        globalStyles.mx3,
+        buttonClassName != null && buttonClassName
+      )}`,
+      loginText: styles.loginText
     }
   );
 
   function handleOpenModal() {
-    setShowLoginModal(true);
+    setCanShowLoginModal(true);
+    handleShowModal();
     onModalOpens?.();
   }
 
   function handleCloseModal() {
-    setShowLoginModal(false);
+    setCanShowLoginModal(false);
+    handleHideModal();
     onModalCloses?.();
   }
 
-  const shouldRenderButton = !hideButtonWhenModalOpens || !showLoginModal;
+  const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
 
   return (
     <>
@@ -53,7 +66,7 @@ const LedgerLoginButton: (props: LedgerLoginButtonPropsType) => JSX.Element = ({
           )}
         </button>
       )}
-      {showLoginModal && (
+      {canShowLoginModal && (
         <LedgerLoginContainer
           className={className}
           shouldRenderDefaultCss={shouldRenderDefaultModalCss}

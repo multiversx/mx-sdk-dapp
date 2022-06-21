@@ -1,0 +1,14 @@
+.side-action {
+  color: #cacbcc;
+  margin-left: 0.5rem;
+  transition: color 200ms ease;
+
+  &:hover {
+    color: #000 !important;
+  }
+}
+.copy {
+  color: #6c757d;
+}
+
+

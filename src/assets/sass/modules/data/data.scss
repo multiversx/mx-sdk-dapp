@@ -34,7 +34,4 @@
   .small-font {
     font-size: $font-size;
   }
-  @include media-breakpoint-up(sm) {
-    max-width: 39rem;
-  }
 }
