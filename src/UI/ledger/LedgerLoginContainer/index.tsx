@@ -1,8 +1,8 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import { useGetAccountInfo } from 'hooks';
+import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 
-import { useLedgerLogin } from 'hooks';
+import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 
 import { PageState } from 'UI/PageState';
