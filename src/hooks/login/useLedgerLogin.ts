@@ -16,7 +16,7 @@ import {
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
-import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
+import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -72,8 +72,10 @@ export function useLedgerLogin({
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [selectedAddress, setSelectedAddress] =
-    useState<SelectedAddress | null>(null);
+  const [
+    selectedAddress,
+    setSelectedAddress
+  ] = useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = useState(false);
 

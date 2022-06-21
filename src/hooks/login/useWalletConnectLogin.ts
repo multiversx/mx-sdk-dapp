@@ -21,7 +21,7 @@ import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
-import { LoginHookGenericStateType } from '../types';
+import { LoginHookGenericStateType } from 'types';
 
 interface InitWalletConnectType {
   callbackRoute: string;
@@ -192,8 +192,9 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    const walletConnectUri: string | undefined =
-      await providerRef.current?.login();
+    const walletConnectUri:
+      | string
+      | undefined = await providerRef.current?.login();
     const hasUri = Boolean(walletConnectUri);
 
     if (!hasUri) {

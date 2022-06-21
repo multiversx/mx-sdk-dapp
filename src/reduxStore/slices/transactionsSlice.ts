@@ -10,7 +10,7 @@ import {
   SignedTransactionsType,
   SignedTransactionType,
   TransactionsToSignType
-} from 'types/transactions';
+} from 'types';
 import {
   getIsTransactionFailed,
   getIsTransactionSuccessful

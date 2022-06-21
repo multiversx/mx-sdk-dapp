@@ -4,7 +4,7 @@ import {
   CustomTransactionInformation,
   RawTransactionType,
   SignedTransactionsType
-} from 'types/transactions';
+} from 'types';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,

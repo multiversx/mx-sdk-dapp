@@ -7,7 +7,7 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums';
-import { SmartContractResult } from 'types/transactions';
+import { SmartContractResult } from 'types';
 
 export function manageFailedTransactions({
   results,

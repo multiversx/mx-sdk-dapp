@@ -10,7 +10,7 @@ import {
   gasPrice,
   version as defaultVersion
 } from 'constants/index';
-import { RawTransactionType } from 'types/transactions';
+import { RawTransactionType } from 'types';
 import { isStringBase64 } from 'utils/decoders/base64Utils';
 
 export function newTransaction(rawTransaction: RawTransactionType) {
