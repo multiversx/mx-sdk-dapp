@@ -1,3 +1,5 @@
+@import "src/assets/sass/variables/variables";
+
 .toast-messages {
   position: fixed;
   bottom: 1rem;
@@ -30,7 +32,7 @@
       margin-bottom: 0.3rem;
       transform: translateX(0);
       .progress {
-        background-color: transparent;
+        background-color: $transparent;
         height: inherit;
         font-size: inherit;
         line-height: inherit;

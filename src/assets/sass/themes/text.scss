@@ -77,9 +77,9 @@
 
 .text-hide {
   font: 0/0 a;
-  color: transparent;
+  color: $transparent;
   text-shadow: none;
-  background-color: transparent;
+  background-color: $transparent;
   border: 0;
 }
 
@@ -172,7 +172,7 @@
   .hidden-text-ref {
     position: absolute;
     display: block;
-    color: transparent;
+    color: $transparent;
   }
 }
 
