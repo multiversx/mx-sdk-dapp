@@ -24,10 +24,10 @@ interface SignPropsType {
 }
 
 interface CustomConfirmScreensType {
-  Ledger: (signProps: SignPropsType) => JSX.Element;
-  Extension: (signProps: SignPropsType) => JSX.Element;
-  WalletConnect: (signProps: SignPropsType) => JSX.Element;
-  Extra: (signProps: SignPropsType) => JSX.Element;
+  Ledger?: (signProps: SignPropsType) => JSX.Element;
+  Extension?: (signProps: SignPropsType) => JSX.Element;
+  WalletConnect?: (signProps: SignPropsType) => JSX.Element;
+  Extra?: (signProps: SignPropsType) => JSX.Element;
 }
 
 interface SignTransactionsPropsType {

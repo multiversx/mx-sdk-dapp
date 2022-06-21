@@ -5,7 +5,7 @@ import globalStyles from 'assets/sass/main.scss';
 
 import styles from './styles.scss';
 
-interface TrimType {
+export interface TrimType {
   text: string;
   dataTestId?: string;
 }

@@ -1,0 +1,9 @@
+src
+.travis.yml
+.idea
+.eslintrc
+.eslintignore
+tsconfig.json
+tsconfig.test.json
+jest.config.ts
+.prettierrc

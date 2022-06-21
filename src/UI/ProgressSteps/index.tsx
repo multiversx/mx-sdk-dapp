@@ -2,7 +2,7 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import Dot from './Dot';
 
-interface ProgressStepsType {
+export interface ProgressStepsType {
   totalSteps: number;
   currentStep: number;
   className?: string;
