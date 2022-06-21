@@ -1,2 +1,2 @@
-export { WalletConnectLoginButton } from './WalletConnectLoginButton';
-export { WalletConnectLoginContainer } from './WalletConnectLoginContainer';
+export * from './WalletConnectLoginButton';
+export * from './WalletConnectLoginContainer';

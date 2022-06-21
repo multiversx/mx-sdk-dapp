@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { newWalletProvider } from 'providers/utils';
-import { useSelector } from 'redux/DappProviderContext';
-import { isLoggedInSelector, networkSelector } from 'redux/selectors';
-import { setWalletLogin } from 'redux/slices';
-import { store } from 'redux/store';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
+import { setWalletLogin } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 
 interface UseWebWalletLoginPropsType {

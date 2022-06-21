@@ -1,6 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 
+
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetNetworkConfig } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
@@ -9,6 +12,7 @@ import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import styles from './styles.scss';
 
 const ExplorerLink = ({
+export const ExplorerLink = ({
   page,
   text,
   className
@@ -28,12 +32,9 @@ const ExplorerLink = ({
       rel='noreferrer'
     >
       {text ? (
-        <React.Fragment>{text}</React.Fragment>
+        <>{text}</>
       ) : (
-        <ReactFontawesome.FontAwesomeIcon
-          icon={icons.faSearch}
-          className={styles.search}
-        />
+        <FontAwesomeIcon icon={faSearch} className={styles.search} />
       )}
     </a>
   );

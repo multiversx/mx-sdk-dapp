@@ -1,10 +1,10 @@
 import React from 'react';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import qs from 'qs';
-import { dappInitRoute, walletSignSession } from 'constants/index';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { networkSelector } from 'redux/selectors';
-import { moveTransactionsToSignedState } from 'redux/slices';
+import { dappInitRoute, WALLET_SIGN_SESSION } from 'constants/index';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { networkSelector } from 'reduxStore/selectors';
+import { moveTransactionsToSignedState } from 'reduxStore/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums';
 import { parseTransactionAfterSigning } from 'utils';
 
@@ -19,8 +19,8 @@ export function useParseSignedTransactions(
     if (search != null) {
       const searchData = qs.parse(search.replace('?', ''));
 
-      if (searchData && walletSignSession in searchData) {
-        const sessionId = String((searchData as any)[walletSignSession]);
+      if (searchData && WALLET_SIGN_SESSION in searchData) {
+        const sessionId = String((searchData as any)[WALLET_SIGN_SESSION]);
         const signedTransactions = new WalletProvider(
           `${network.walletAddress}${dappInitRoute}`
         ).getTransactionsFromWalletUrl();

@@ -1,11 +1,12 @@
 import * as React from 'react';
 import globalStyles from 'assets/sass/main.scss';
+import React from 'react';
 import { decodePart } from 'utils';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
 
-const TransactionData = ({
+export const TransactionData = ({
   data,
   highlight,
   isScCall

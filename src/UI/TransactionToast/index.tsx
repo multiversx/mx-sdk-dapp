@@ -1,6 +1,14 @@
 import React, { useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 
+import {
+  faCheck,
+  faHourglass,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import moment from 'moment';
+import { Toast } from 'react-bootstrap';
 import { useGetTransactionDisplayInfo } from 'hooks';
 
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
@@ -8,12 +16,19 @@ import moment from 'optionalPackages/moment';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import { useSelector } from 'redux/DappProviderContext';
 import { shardSelector } from 'redux/selectors';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { shardSelector } from 'reduxStore/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 import { SignedTransactionType } from 'types';
 
 import Progress from 'UI/Progress';
 import TxDetails from 'UI/TxDetails';
 
+import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
+import { IconState } from 'UI/IconState';
+import { Progress } from 'UI/Progress';
+import { TxDetails } from 'UI/TxDetails';
+import { getGeneratedClasses } from 'UI/utils';
 import {
   getAddressFromDataField,
   getIsTransactionPending,
@@ -27,7 +42,24 @@ import { TransactionToastPropsType } from './types';
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
 
-const TransactionToast = ({
+export interface TransactionToastPropsType {
+  title?: string;
+  toastId: string;
+  className?: string;
+  errorMessage?: string;
+  withTxNonce?: boolean;
+  successMessage?: string;
+  endTimeProgress?: number;
+  processingMessage?: string;
+  startTimeProgress?: number;
+  shouldRenderDefaultCss?: boolean;
+  transactions: SignedTransactionType[];
+  status: TransactionBatchStatusesEnum;
+  lifetimeAfterSuccess?: number;
+  onClose?: (toastId: string) => void;
+}
+
+export const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
@@ -90,7 +122,9 @@ const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment().add(Number(transactionDuration), 'milliseconds').unix();
+      moment()
+        .add(Number(transactionDuration), 'milliseconds')
+        .unix();
     return [startTime, endTime];
   }, []);
 
@@ -101,7 +135,7 @@ const TransactionToast = ({
 
   const successToastData = {
     id: toastId,
-    icon: icons.faCheck,
+    icon: faCheck,
     expires: 30000,
     hasCloseButton: true,
     title: successMessage,
@@ -111,7 +145,7 @@ const TransactionToast = ({
   const pendingToastData = {
     id: toastId,
     expires: false,
-    icon: icons.faHourglass,
+    icon: faHourglass,
     hasCloseButton: false,
     title: processingMessage,
     iconClassName: style.warning
@@ -119,7 +153,7 @@ const TransactionToast = ({
 
   const failToastData = {
     id: toastId,
-    icon: icons.faTimes,
+    icon: faTimes,
     title: errorMessage,
     hasCloseButton: true,
     iconClassName: style.danger
@@ -127,7 +161,7 @@ const TransactionToast = ({
 
   const timedOutToastData = {
     id: toastId,
-    icon: icons.faTimes,
+    icon: faTimes,
     title: timedOutMessage,
     hasCloseButton: true,
     iconClassName: style.warning
@@ -196,10 +230,7 @@ const TransactionToast = ({
                   className={style.close}
                   onClick={handleDeleteToast}
                 >
-                  <ReactFontawesome.FontAwesomeIcon
-                    icon={icons.faTimes}
-                    size='xs'
-                  />
+                  <FontAwesomeIcon icon={faTimes} size='xs' />
                 </button>
               )}
             </div>

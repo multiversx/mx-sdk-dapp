@@ -3,8 +3,8 @@ import {
   addressSelector,
   isLoggedInSelector,
   walletLoginSelector
-} from 'redux/selectors';
-import { store } from 'redux/store';
+} from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { getIsProviderEqualTo } from 'utils/network';
 import { addressIsValid } from './addressIsValid';

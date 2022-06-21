@@ -6,6 +6,27 @@ import WalletConnectLoginContainer from '../WalletConnectLoginContainer';
 import { WalletConnectLoginButtonPropsType } from './types';
 import styles from './wallet-connect-login-button.scss';
 import classNames from 'classnames';
+import React, { Fragment, ReactNode, useState } from 'react';
+import { getGeneratedClasses } from 'UI/utils';
+import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+
+export interface WalletConnectLoginButtonPropsType {
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  lead?: string;
+  title?: string;
+  className?: string;
+  logoutRoute?: string;
+  callbackRoute: string;
+  loginButtonText?: string;
+  buttonClassName?: string;
+  shouldRenderDefaultCss?: boolean;
+  wrapContentInsideModal?: boolean;
+  redirectAfterLogin?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  token?: string;
+}
 
 export const WalletConnectLoginButton = ({
   children,

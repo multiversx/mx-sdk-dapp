@@ -1,5 +1,5 @@
 import { GetTransactionsByHashesType } from 'contexts/types';
-import { useGetPendingTransactions } from 'services/transactions/hooks';
+import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import { getIsTransactionPending, refreshAccount } from 'utils';
 import checkBatch from './checkBatch';
 

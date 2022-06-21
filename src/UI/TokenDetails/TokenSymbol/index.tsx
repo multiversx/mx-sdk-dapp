@@ -3,6 +3,9 @@ import globalStyles from 'assets/sass/main.scss';
 import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import styles from 'UI/TokenDetails/TokenSymbol/token-symbol.scss';
+import React from 'react';
+import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Simple = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.tokenSymbol}>{children}</div>
@@ -24,7 +27,7 @@ export const Wrapped = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.tokenSymbolWrapped}>
     <div className={`${globalStyles.roundedCircle} ${globalStyles.shadow}`}>
       <div className={globalStyles.lockedIcon}>
-        <ReactFontawesome.FontAwesomeIcon icon={icons.faDollarSign} size='sm' />
+        <FontAwesomeIcon icon={icons.faDollarSign} size='sm' />
       </div>
       {children}
     </div>

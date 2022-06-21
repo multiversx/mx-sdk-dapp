@@ -7,9 +7,21 @@ import ExplorerLink from 'UI/ExplorerLink';
 import Trim from 'UI/Trim';
 import { getGeneratedClasses, isServerTransactionPending } from 'utils';
 import styles from './tx-details.scss';
+
+import {
+  faCheck,
+  faCircleNotch,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CopyButton } from 'UI/CopyButton';
+import { ExplorerLink } from 'UI/ExplorerLink';
+import { Trim } from 'UI/Trim';
+import { getGeneratedClasses } from 'UI/utils';
+import { isServerTransactionPending } from 'utils';
 import { Props } from './types';
 
-const TxDetails = ({
+export const TxDetails = ({
   title,
   transactions,
   className = styles.txDetails,
@@ -31,17 +43,17 @@ const TxDetails = ({
   );
 
   const iconSuccessData = {
-    icon: icons.faCheck,
+    icon: faCheck,
     classNames: generatedClasses.iconSuccess
   };
 
   const iconFailedData = {
-    icon: icons.faTimes,
+    icon: faTimes,
     classNames: generatedClasses.iconSuccess
   };
 
   const iconPendingData = {
-    icon: icons.faCircleNotch,
+    icon: faCircleNotch,
     classNames: generatedClasses.iconPending
   };
 
@@ -53,7 +65,7 @@ const TxDetails = ({
     timedOut: iconFailedData
   };
   return (
-    <React.Fragment>
+    <>
       {title && <div className={generatedClasses.title}>{title}</div>}
       <div className={generatedClasses.statusTransactions}>
         {
@@ -67,7 +79,7 @@ const TxDetails = ({
         return (
           <div className={generatedClasses.item} key={hash}>
             {!isTimedOut && iconSrc != null && (
-              <ReactFontawesome.FontAwesomeIcon
+              <FontAwesomeIcon
                 icon={iconSrc.icon}
                 className={iconSrc.classNames}
               />
@@ -88,8 +100,6 @@ const TxDetails = ({
           </div>
         );
       })}
-    </React.Fragment>
+    </>
   );
 };
-
-export default TxDetails;

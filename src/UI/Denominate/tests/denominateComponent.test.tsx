@@ -1,6 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import Denominate, { DenominateType } from '../index';
+import { DenominateType } from 'types/UI';
+import { Denominate } from '../index';
 
 const renderComponent = (props: DenominateType) => {
   const methods = render(<Denominate {...props} egldLabel='EGLD' />);

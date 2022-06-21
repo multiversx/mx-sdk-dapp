@@ -568,12 +568,12 @@ Tracking a transaction
 
 ### Tracking a transaction
 
-The library exposes a hook called useTrackTransactionStatus under the object `transactionServices`.
+The library exposes a hook called useTrackTransactionStatus;
 
 ```
-import {transactionServices} from @elrondnetwork/dapp-core;
+import {useTrackTransactionStatus} from @elrondnetwork/dapp-core/hooks;
 
-const transactionStatus = transactionServices.useTrackTransactionStatus({
+const transactionStatus = useTrackTransactionStatus({
   transactionId: sessionId,
   onSuccess,
   onFail,
@@ -660,14 +660,19 @@ Dapp-core takes care to change transactions' statuses and removes them when need
 but if you need to do this manually, you can use the exposed functions for this:
 
 ```
-transactionServices.removeTransactionsToSign(sessionId);
-transactionServices.removeSignedTransaction(sessionId);
-transactionServices.removeAllTransactionsToSign();
-transactionServices.removeAllSignedTransactions();
+  removeTransactionsToSign(sessionId);
+  removeSignedTransaction(sessionId);
+  removeAllTransactionsToSign();
+  removeAllSignedTransactions();
 
 ```
 
 </details>
+
+
+# Dapp-core exports
+
+
 
 ## Roadmap
 

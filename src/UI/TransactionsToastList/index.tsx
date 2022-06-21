@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 
 import { useGetSignedTransactions } from 'hooks';
 import { useGetPendingTransactions } from 'services';
+import { useGetSignedTransactions, useGetPendingTransactions } from 'hooks';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
@@ -11,11 +12,24 @@ import { SignedTransactionsBodyType } from 'types';
 import TransactionToast from 'UI/TransactionToast';
 
 import { getGeneratedClasses } from 'utils';
+import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
+import { TransactionToast } from 'UI/TransactionToast';
+import { getGeneratedClasses } from 'UI/utils';
 
 import styles from './styles.scss';
 import { TransactionsToastListPropsType } from './types';
+export interface TransactionsToastListPropsType {
+  toastProps?: any;
+  className?: string;
+  withTxNonce?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  pendingTransactions?: SignedTransactionsType;
+  signedTransactions?: SignedTransactionsType;
+  successfulToastLifetime?: number;
+}
 
 const TransactionsToastList = ({
+export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
   className = '',
@@ -24,13 +38,15 @@ const TransactionsToastList = ({
   successfulToastLifetime,
   parentElement
 }: TransactionsToastListPropsType) => {
+  successfulToastLifetime
+}: TransactionsToastListPropsType) => {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
-  const pendingTransactionsFromStore =
-    useGetPendingTransactions().pendingTransactions;
+  const pendingTransactionsFromStore = useGetPendingTransactions()
+    .pendingTransactions;
 
-  const signedTransactionsFromStore =
-    useGetSignedTransactions().signedTransactions;
+  const signedTransactionsFromStore = useGetSignedTransactions()
+    .signedTransactions;
 
   const pendingTransactionsToRender =
     pendingTransactions || pendingTransactionsFromStore;
@@ -116,5 +132,3 @@ const TransactionsToastList = ({
     parentElement || document.body
   );
 };
-
-export default TransactionsToastList;

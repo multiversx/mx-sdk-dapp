@@ -3,8 +3,8 @@ import {
   GetTransactionsByHashesReturnType
 } from 'apiCalls/transactions';
 import { GetTransactionsByHashesType } from 'contexts/types';
-import { updateSignedTransactionStatus } from 'redux/slices';
-import { store } from 'redux/store';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import { TransactionServerStatusesEnum } from 'types/enums';
 import {
   CustomTransactionInformation,
@@ -47,13 +47,8 @@ function manageTransaction({
   customTransactionInformation,
   shouldRefreshBalance
 }: ManageTransactionType) {
-  const {
-    hash,
-    status,
-    results,
-    invalidTransaction,
-    hasStatusChanged
-  } = serverTransaction;
+  const { hash, status, results, invalidTransaction, hasStatusChanged } =
+    serverTransaction;
   try {
     if (timeouts.includes(hash)) {
       return;

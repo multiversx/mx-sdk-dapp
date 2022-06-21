@@ -1,11 +1,21 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'services';
-import { getGeneratedClasses } from 'utils';
-import { WebWalletLoginButtonPropsType } from './types';
+import { getGeneratedClasses } from 'UI/utils';
 
-const WebWalletLoginButton: (
+export interface WebWalletLoginButtonPropsType {
+  token?: string;
+  className?: string;
+  callbackRoute: string;
+  buttonClassName?: string;
+  children?: ReactNode;
+  loginButtonText?: string;
+  shouldRenderDefaultCss?: boolean;
+}
+
+export const WebWalletLoginButton: (
   props: WebWalletLoginButtonPropsType
 ) => JSX.Element = ({
   children,
