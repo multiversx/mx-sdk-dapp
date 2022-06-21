@@ -1,7 +1,7 @@
 export * as DappCorePages from './pages';
 export * from './Denominate';
 export * from './ExplorerLink';
-export * from './extension/LoginButton';
+export * from './extension/ExtensionLoginButton';
 export * from './ledger/LedgerLoginButton';
 export * from './ledger/LedgerLoginContainer';
 export * from './NotificationModal';
@@ -17,4 +17,4 @@ export * from './Trim';
 export * from './UsdValue';
 export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
-export * from './webWallet/LoginButton';
+export * from './webWallet/WebWalletLoginButton';

@@ -4,7 +4,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
 import { setWalletLogin } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
-import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
+import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;

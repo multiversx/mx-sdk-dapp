@@ -3,6 +3,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import { useExtensionLogin } from 'services';
+import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { ExtensionLoginButtonPropsType } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
 import styles from './login-button.scss';
@@ -72,5 +73,3 @@ export const ExtensionLoginButton: (
     </button>
   );
 };
-
-export default ExtensionLoginButton;

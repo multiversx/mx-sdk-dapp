@@ -3,7 +3,8 @@ import { Address, Transaction } from '@elrondnetwork/erdjs';
 import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
 import {
   TransactionBatchStatusesEnum,
-  TransactionServerStatusesEnum
+  TransactionServerStatusesEnum,
+  TransactionTypesEnum
 } from './enums';
 
 export interface TransactionsToSignType {
@@ -133,15 +134,6 @@ export interface SignTransactionsPropsType {
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   customTransactionInformation: CustomTransactionInformation;
-}
-
-export enum TransactionTypesEnum {
-  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
-  ESDTTransfer = 'ESDTTransfer',
-  ESDTNFTTransfer = 'ESDTNFTTransfer',
-  esdtTransaction = 'esdtTransaction',
-  nftTransaction = 'nftTransaction',
-  scCall = 'scCall'
 }
 
 export interface ActiveLedgerTransactionType {

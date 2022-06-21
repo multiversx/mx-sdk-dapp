@@ -1,10 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import {
-  MultiSignTxType,
-  TxDataTokenType,
-  TxsDataTokensType
-} from 'types/transactions';
+import { MultiSignTxType, TxDataTokenType, TxsDataTokensType } from 'types';
 import { getTokenFromData } from 'utils';
 import parseMultiEsdtTransferData from 'utils/transactions/parseMultiEsdtTransferData';
 
@@ -32,8 +28,9 @@ interface UseParseMultiEsdtTransferDataReturnType {
 export function useParseMultiEsdtTransferData({
   transactions
 }: UseParseMultiEsdtTransferDataPropsType): UseParseMultiEsdtTransferDataReturnType {
-  const [parsedTransactionsByDataField, setParsedTransactions] =
-    useState<TxsDataTokensType>({});
+  const [parsedTransactionsByDataField, setParsedTransactions] = useState<
+    TxsDataTokensType
+  >({});
   const [allTransactions, setAllTransactions] = useState<MultiSignTxType[]>([]);
 
   function addTransactionDataToParsedInfo(

@@ -59,3 +59,4 @@ export * from './transactions';
 export * from './enums';
 export * from './dapp-provider';
 export * from './UI';
+export * from './login';

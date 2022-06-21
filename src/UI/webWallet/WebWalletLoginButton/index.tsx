@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useWebWalletLogin } from 'services';
+import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
 import { getGeneratedClasses } from 'UI/utils';
 
 export interface WebWalletLoginButtonPropsType {
@@ -51,5 +52,3 @@ export const WebWalletLoginButton: (
     </button>
   );
 };
-
-export default WebWalletLoginButton;
