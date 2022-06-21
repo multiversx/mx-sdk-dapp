@@ -5,7 +5,6 @@ import { createPortal } from 'react-dom';
 import { useGetSignedTransactions } from 'hooks';
 import { useSelector } from 'redux/DappProviderContext';
 import { customToastsSelector } from 'redux/selectors';
-import { CustomToastType } from 'redux/slices';
 
 import { useGetPendingTransactions } from 'services';
 
@@ -14,12 +13,11 @@ import {
   setToastsIdsToStorage
 } from 'storage/session';
 
-import { SignedTransactionsType, ToastsEnum } from 'types';
+import { ToastsEnum } from 'types';
 import { getGeneratedClasses } from 'utils';
-import { removeToast } from 'utils/toasts';
+import { handleCustomToasts } from 'utils/toasts';
 
-import CustomToastComponent from './components/CustomToastComponent';
-import TransactionToastComponent from './components/TransactionToastComponent';
+import Toast from './components/Toast';
 
 import styles from './styles.scss';
 import { TransactionsToastListPropsType } from './types';
@@ -40,9 +38,9 @@ const TransactionsToastList = ({
   parentElement
 }: TransactionsToastListPropsType) => {
   const [toastsIds, setToastsIds] = useState<ToastsType[]>([]);
+  const { removeToast } = handleCustomToasts();
 
-  const customToastsFromStore: CustomToastType[] | undefined =
-    useSelector(customToastsSelector);
+  const customToastsFromStore = useSelector(customToastsSelector);
 
   const pendingTransactionsFromStore =
     useGetPendingTransactions().pendingTransactions;
@@ -53,7 +51,7 @@ const TransactionsToastList = ({
   const pendingTransactionsToRender =
     pendingTransactions || pendingTransactionsFromStore;
 
-  const signedTransactionsToRender: SignedTransactionsType =
+  const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
 
   const handleDeleteCustomToast = (toastId: string) => {
@@ -63,36 +61,23 @@ const TransactionsToastList = ({
     );
   };
 
-  const mappedToastsList = toastsIds?.map(
-    ({ toastId, type, message, duration }: ToastsType) => {
-      switch (type) {
-        case ToastsEnum.custom:
-          return (
-            <CustomToastComponent
-              {...{
-                message: message ?? '',
-                duration,
-                onDelete: () => handleDeleteCustomToast(toastId)
-              }}
-            />
-          );
-
-        case ToastsEnum.transaction:
-          return (
-            <TransactionToastComponent
-              {...{
-                toastId,
-                signedTransactionsToRender,
-                lifetimeAfterSuccess: successfulToastLifetime
-              }}
-            />
-          );
-
-        default:
-          return null;
+  const mappedToastsList = toastsIds?.map((props: ToastsType) => {
+    const { toastId, type = ToastsEnum.transaction, message, duration } = props;
+    const args = {
+      [ToastsEnum.custom]: {
+        message: message ?? '',
+        duration,
+        onDelete: () => handleDeleteCustomToast(toastId)
+      },
+      [ToastsEnum.transaction]: {
+        toastId,
+        signedTransactionsToRender,
+        lifetimeAfterSuccess: successfulToastLifetime
       }
-    }
-  );
+    }[type as string];
+
+    return <Toast {...{ ...args, type }} key={toastId} />;
+  });
 
   const mapPendingSignedTransactions = () => {
     const newToasts = [...toastsIds];

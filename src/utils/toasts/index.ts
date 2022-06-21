@@ -1,2 +1,1 @@
-export * from './showToast';
-export * from './removeToast';
+export * from './handleCustomToasts';

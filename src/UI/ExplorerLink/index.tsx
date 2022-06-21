@@ -24,6 +24,7 @@ const ExplorerLink = ({
     <a
       href={`${explorerAddress}${page}`}
       target='_blank'
+      rel='noreferrer'
       className={classNames(styles.link, className)}
     >
       {text ? (
