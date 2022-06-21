@@ -1,17 +1,10 @@
 import React from 'react';
-import classNames from 'classnames';
-
-
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { useGetNetworkConfig } from 'hooks';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-
 import styles from './styles.scss';
 
-const ExplorerLink = ({
 export const ExplorerLink = ({
   page,
   text,

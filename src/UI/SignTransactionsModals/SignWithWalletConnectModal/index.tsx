@@ -1,13 +1,8 @@
 import React, { useEffect } from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'react-bootstrap';
 import { SignModalPropsType } from 'types';
-import useDappModal from 'UI/DappModal/hooks/useDappModal';
-import PageState from 'UI/PageState';
-import { getGeneratedClasses, safeRedirect } from 'utils';
-import ModalContainer from 'UI/ModalContainer/ModalContainer';
+import { useDappModal } from 'UI/DappModal';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';

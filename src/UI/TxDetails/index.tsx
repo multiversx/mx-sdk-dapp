@@ -1,24 +1,17 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import CopyButton from 'UI/CopyButton';
-import ExplorerLink from 'UI/ExplorerLink';
-import Trim from 'UI/Trim';
-import { getGeneratedClasses, isServerTransactionPending } from 'utils';
-import styles from './tx-details.scss';
-
 import {
   faCheck,
   faCircleNotch,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import globalStyles from 'assets/sass/main.scss';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
 import { getGeneratedClasses } from 'UI/utils';
 import { isServerTransactionPending } from 'utils';
+import styles from './tx-details.scss';
 import { Props } from './types';
 
 export const TxDetails = ({

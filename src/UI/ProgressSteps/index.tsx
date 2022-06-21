@@ -1,6 +1,5 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
-import Dot from './Dot';
 import { Dot } from './Dot';
 
 export interface ProgressStepsType {

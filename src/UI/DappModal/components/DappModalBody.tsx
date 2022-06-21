@@ -6,7 +6,7 @@ type DappModalBodyProps = {
   children?: React.ReactNode;
 };
 
-const DappModalBody: React.FC<DappModalBodyProps> = ({
+export const DappModalBody: React.FC<DappModalBodyProps> = ({
   bodyClassName,
   children
 }) => {
@@ -14,5 +14,3 @@ const DappModalBody: React.FC<DappModalBodyProps> = ({
     <div className={`${styles.dappModalBody} ${bodyClassName}`}>{children}</div>
   );
 };
-
-export default DappModalBody;

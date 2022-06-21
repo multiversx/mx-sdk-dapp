@@ -1,11 +1,9 @@
 import React from 'react';
-import classNames from 'classnames';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import styles from './copy-button.scss';
-
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import styles from './copy-button.scss';
+
 import copyTextToClipboard from './helpers/copyToClipboard';
 
 interface CopyButtonType {
@@ -46,10 +44,8 @@ export const CopyButton = ({ text, className = '' }: CopyButtonType) => {
       {copyResult.default || !copyResult.success ? (
         <FontAwesomeIcon icon={faCopy} />
       ) : (
-        <FontAwesomeIcon icon={faCheck}/>
+        <FontAwesomeIcon icon={faCheck} />
       )}
     </a>
   );
 };
-
-export default CopyButton;

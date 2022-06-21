@@ -1,4 +1,4 @@
-import { RootState } from 'redux/store';
+import { RootState } from 'reduxStore/store';
 import { createDeepEqualSelector } from './helpers';
 
 export const modalsSliceSelector = (state: RootState) => state.dappModal;

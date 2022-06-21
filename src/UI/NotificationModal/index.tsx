@@ -1,25 +1,19 @@
 import React, { useEffect } from 'react';
-
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'react-bootstrap';
+import globalStyles from 'assets/sass/main.scss';
 import { useGetNotification } from 'hooks';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
 import { NotificationTypesEnum } from 'types';
-
-import useDappModal from '../DappModal/hooks/useDappModal';
-import ModalContainer from '../ModalContainer/ModalContainer';
-import PageState from '../PageState';
-
-const typedIcons: any = icons;
+import { useDappModal } from 'UI/DappModal';
+import { ModalContainer } from '../ModalContainer/ModalContainer';
 import { PageState } from '../PageState';
+import styles from './notification-modal.scss';
 
 const notificationTypesToIcons = {
   [NotificationTypesEnum.warning]: faExclamationTriangle
 };
 const defaultIcon = faExclamationTriangle;
 
-export const NotificationModal = () => {
+export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
   const { handleShowModal } = useDappModal();
 
@@ -30,7 +24,6 @@ export const NotificationModal = () => {
     }
   }, [notification]);
 
-  const showModal = Boolean(notification);
   const onDone = () => {
     clearNotification();
   };
@@ -43,16 +36,21 @@ export const NotificationModal = () => {
 
   return notification ? (
     <ModalContainer>
-      <div className='card w-100 notification-modal'>
+      <div
+        className={`${globalStyles.card} ${globalStyles.w100} ${styles.notificationModal}`}
+      >
         <PageState
           icon={icon}
           iconClass={notification.iconClassName}
-          iconBgClass='p-4 rounded-bg-circle'
+          iconBgClass={`${globalStyles.p4} ${globalStyles.roundedBgCircle}`}
           iconSize='3x'
           title={notification.title}
           description={notification.description}
           action={
-            <button className='btn btn-primary' onClick={onDone}>
+            <button
+              className={`${globalStyles.btn} ${globalStyles.btnPrimary}`}
+              onClick={onDone}
+            >
               Done
             </button>
           }
@@ -60,4 +58,4 @@ export const NotificationModal = () => {
       </div>
     </ModalContainer>
   ) : null;
-};
+}

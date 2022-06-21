@@ -1,6 +1,6 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '../dapp-modal.scss';
 
 type DappModalHeaderProps = {
@@ -12,7 +12,7 @@ type DappModalHeaderProps = {
   onHide?: () => void;
 };
 
-const DappModalHeader: React.FC<DappModalHeaderProps> = ({
+export const DappModalHeader: React.FC<DappModalHeaderProps> = ({
   visible,
   headerText,
   customHeader,
@@ -36,10 +36,8 @@ const DappModalHeader: React.FC<DappModalHeaderProps> = ({
         className={`${styles.dappModalCloseButton} ${closeButtonClassName}`}
         onClick={onHide}
       >
-        <ReactFontawesome.FontAwesomeIcon size='lg' icon={icons.faTimes} />
+        <FontAwesomeIcon size='lg' icon={faTimes} />
       </button>
     </div>
   );
 };
-
-export default DappModalHeader;

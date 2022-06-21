@@ -3,7 +3,6 @@ import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
-import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
 import styles from './token-details.scss';
 import { Simple, Combined } from './TokenSymbol';
 

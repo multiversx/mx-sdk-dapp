@@ -8,7 +8,7 @@ type DappModalFooterProps = {
   customFooter?: JSX.Element;
 };
 
-const DappModalFooter: React.FC<DappModalFooterProps> = ({
+export const DappModalFooter: React.FC<DappModalFooterProps> = ({
   visible,
   customFooter,
   footerClassName,
@@ -24,5 +24,3 @@ const DappModalFooter: React.FC<DappModalFooterProps> = ({
     </div>
   );
 };
-
-export default DappModalFooter;

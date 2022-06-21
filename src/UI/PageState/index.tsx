@@ -1,13 +1,10 @@
 import React from 'react';
+import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { getGeneratedClasses } from 'utils';
-import styles from './page-state.scss';
-import { PageStateProps } from './types';
 import { getGeneratedClasses } from 'UI/utils';
-import { SizeProp } from '@fortawesome/fontawesome-svg-core';
+import styles from './page-state.scss';
 
 export interface PageStateProps {
   title?: React.ReactNode;

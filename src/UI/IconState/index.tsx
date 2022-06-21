@@ -1,11 +1,7 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import classnames from 'optionalPackages/classnames';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { getGeneratedClasses } from 'utils';
-import { Props } from './types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classnames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { getGeneratedClasses } from 'UI/utils';
 
 export interface IconStateProps {

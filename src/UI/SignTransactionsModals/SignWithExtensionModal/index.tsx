@@ -1,28 +1,25 @@
 import React, { useEffect } from 'react';
-import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'react-bootstrap';
+import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
-import useDappModal from 'UI/DappModal/hooks/useDappModal';
-import PageState from 'UI/PageState';
-import { getGeneratedClasses, safeRedirect } from 'utils';
-import ModalContainer from 'UI/ModalContainer/ModalContainer';
+import { useDappModal } from 'UI/DappModal';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
+import styles from './sing-with-extension-modal.scss';
 
 export const SignWithExtensionModal = ({
   handleClose,
   error,
   callbackRoute,
   transactions,
-  className = 'extension-modal'
+  className = styles.extensionModal
 }: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
-    wrapper: 'modal-container extension',
-    icon: 'text-white',
-    closeBtn: 'btn btn-close-link mt-2'
+    wrapper: `${styles.modalContainer} ${styles.extension}`,
+    icon: globalStyles.textWhite,
+    closeBtn: `${globalStyles.btn} ${globalStyles.btnCloseLink} ${globalStyles.mt2}`
   });
 
   const { handleShowModal } = useDappModal();

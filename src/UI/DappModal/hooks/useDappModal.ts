@@ -1,16 +1,16 @@
 import { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   dappModalConfigSelector,
   dappModalVisibilitySelector
-} from 'redux/selectors/dappModalsSelectors';
+} from 'reduxStore/selectors/dappModalsSelectors';
 import {
   setDappModalConfig,
   setDappModalVisibility
-} from 'redux/slices/dappModalsSlice';
+} from 'reduxStore/slices/dappModalsSlice';
 import { DappModalConfig } from '../types';
 
-const useDappModal = (config?: DappModalConfig) => {
+export const useDappModal = (config?: DappModalConfig) => {
   const dispatch = useDispatch();
   const visible = useSelector(dappModalVisibilitySelector);
   const modalConfig = useSelector(dappModalConfigSelector);
@@ -47,5 +47,3 @@ const useDappModal = (config?: DappModalConfig) => {
     config: modalConfig
   };
 };
-
-export default useDappModal;

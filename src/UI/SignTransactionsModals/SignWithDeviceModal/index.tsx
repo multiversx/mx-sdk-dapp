@@ -1,12 +1,8 @@
 import React, { useEffect } from 'react';
-import React from 'react';
-import { Modal } from 'react-bootstrap';
 import { useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
-import useDappModal from 'UI/DappModal/hooks/useDappModal';
-import { getGeneratedClasses } from 'utils';
-import ModalContainer from 'UI/ModalContainer/ModalContainer';
-import SignStep from './SignStep';
+import { useDappModal } from 'UI/DappModal';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 import { SignStep } from './SignStep';
 

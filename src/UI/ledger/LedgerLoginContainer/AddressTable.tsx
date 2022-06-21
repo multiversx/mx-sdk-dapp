@@ -1,20 +1,14 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import PageState from 'UI/PageState';
-import { getGeneratedClasses } from 'utils';
-import styles from './address-table.scss';
-import AddressRow from './AddressRow';
-
 import {
   faChevronLeft,
   faChevronRight,
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
+import styles from './address-table.scss';
 
 import { AddressRow } from './AddressRow';
 

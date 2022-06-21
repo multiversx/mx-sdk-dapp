@@ -1,6 +1,5 @@
-import * as React from 'react';
-import globalStyles from 'assets/sass/main.scss';
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { decodePart } from 'utils';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
@@ -97,5 +96,3 @@ export const TransactionData = ({
     </>
   );
 };
-
-export default TransactionData;

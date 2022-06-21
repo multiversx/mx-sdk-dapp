@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import platform from 'optionalPackages/platform';
-import QRCode from 'optionalPackages/qrcode';
-
 import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
+import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer/ModalContainer';
-import { getGeneratedClasses } from 'utils';
-import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
-import { LoginModalPropsType } from './types';
-import styles from './wallet-connect-login-container.scss';
 import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
+import styles from './wallet-connect-login-container.scss';
 
 export interface WalletConnectLoginModalPropsType {
   lead?: string;
@@ -159,6 +152,6 @@ export const WalletConnectLoginContainer = ({
   ) : (
     content
   );
-}
+};
 
 export default WalletConnectLoginContainer;

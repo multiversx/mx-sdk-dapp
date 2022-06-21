@@ -1,6 +1,6 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
-import Denominate from 'UI/Denominate';
+import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
 
 interface AddressRowType {

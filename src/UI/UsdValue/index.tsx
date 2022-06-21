@@ -1,6 +1,5 @@
-import * as React from 'react';
-import globalStyles from 'assets/sass/main.scss';
 import React from 'react';
+import globalStyles from 'assets/sass/main.scss';
 import { getUsdValue } from 'utils/operations';
 
 export const UsdValue = (props: {

@@ -1,8 +1,7 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import { ReactComponent as LedgerLogo } from '../assets/ledger-nano.svg';
-import styles from './ledger-connect.scss';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
+import globalStyles from 'assets/sass/main.scss';
+import styles from './ledger-connect.scss';
 
 export const LedgerConnect = ({
   onClick,

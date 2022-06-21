@@ -2,12 +2,23 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
 import ExtensionLoginButton from 'UI/extension/LoginButton';
-import LedgerLoginButton from 'UI/ledger/LoginButton';
+import LedgerLoginButton from 'UI/ledger/LedgerLoginButton';
+import { getGeneratedClasses } from 'UI/utils';
 import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
 import WebWalletLoginButton from 'UI/webWallet/LoginButton';
-import { getGeneratedClasses } from 'utils';
-import { Props } from './types';
 import styles from './unlock-page.scss';
+
+export interface Props {
+  title?: string;
+  className?: string;
+  loginRoute: string;
+  LedgerLoginButtonText?: string;
+  shouldRenderDefaultCss?: boolean;
+  ExtensionLoginButtonText?: string;
+  WebWalletLoginButtonText?: string;
+  WalletConnectLoginButtonText?: string;
+  description?: string | React.ReactNode;
+}
 
 const UnlockPage = ({
   loginRoute,

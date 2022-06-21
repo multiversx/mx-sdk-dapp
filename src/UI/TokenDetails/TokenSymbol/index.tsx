@@ -1,11 +1,8 @@
-import * as React from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import styles from 'UI/TokenDetails/TokenSymbol/token-symbol.scss';
 import React from 'react';
-import { faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faDollarSign, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import globalStyles from 'assets/sass/main.scss';
+import styles from 'UI/TokenDetails/TokenSymbol/token-symbol.scss';
 
 export const Simple = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.tokenSymbol}>{children}</div>
@@ -27,7 +24,7 @@ export const Wrapped = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.tokenSymbolWrapped}>
     <div className={`${globalStyles.roundedCircle} ${globalStyles.shadow}`}>
       <div className={globalStyles.lockedIcon}>
-        <FontAwesomeIcon icon={icons.faDollarSign} size='sm' />
+        <FontAwesomeIcon icon={faDollarSign} size='sm' />
       </div>
       {children}
     </div>
@@ -57,7 +54,7 @@ export const Locked = ({ children }: { children: React.ReactNode }) => (
       className={`${styles.locked} ${globalStyles.roundedCircle} ${globalStyles.shadow}`}
     >
       <div className={globalStyles.lockedIcon}>
-        <ReactFontawesome.FontAwesomeIcon icon={icons.faLock} size='sm' />
+        <FontAwesomeIcon icon={faLock} size='sm' />
       </div>
       {children}
     </div>

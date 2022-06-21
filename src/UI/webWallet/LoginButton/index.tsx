@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'services';
 import { getGeneratedClasses } from 'UI/utils';
 

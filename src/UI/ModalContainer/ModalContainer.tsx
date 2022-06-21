@@ -1,9 +1,7 @@
 import React from 'react';
-import DappModal from '../DappModal/components/DappModal';
-import useDappModal from '../DappModal/hooks/useDappModal';
-import { DappModalConfig } from '../DappModal/types';
+import { DappModal, useDappModal, DappModalConfig } from 'UI/DappModal';
 
-const ModalContainer = ({
+export const ModalContainer = ({
   children,
   onClose,
   modalConfig
@@ -35,5 +33,3 @@ const ModalContainer = ({
     </DappModal>
   );
 };
-
-export default ModalContainer;

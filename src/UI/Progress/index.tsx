@@ -4,7 +4,6 @@ import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
 
 import styles from './styles.scss';
-import { Props } from './type';
 
 export interface ProgressProps {
   id: string;
@@ -34,9 +33,7 @@ export const Progress = ({
       return;
     }
 
-    const expires = moment()
-      .add(expiresIn, 'seconds')
-      .unix();
+    const expires = moment().add(expiresIn, 'seconds').unix();
 
     delete toastProgress[id];
 
@@ -53,9 +50,7 @@ export const Progress = ({
     storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment()
-        .add(expiresIn, 'seconds')
-        .unix()
+      expires: moment().add(expiresIn, 'seconds').unix()
     });
   };
 
@@ -73,9 +68,8 @@ export const Progress = ({
 
   const { totalSeconds, currentRemaining } = getInitialData();
 
-  const [percentRemaining, setPercentRemaining] = React.useState<number>(
-    currentRemaining
-  );
+  const [percentRemaining, setPercentRemaining] =
+    React.useState<number>(currentRemaining);
 
   React.useEffect(() => {
     if (progress) {

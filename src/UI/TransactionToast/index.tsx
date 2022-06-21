@@ -1,43 +1,27 @@
 import React, { useMemo, useRef, useState } from 'react';
-import classNames from 'classnames';
-
 import {
   faCheck,
   faHourglass,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import moment from 'moment';
-import { Toast } from 'react-bootstrap';
 import { useGetTransactionDisplayInfo } from 'hooks';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import moment from 'optionalPackages/moment';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { useSelector } from 'redux/DappProviderContext';
-import { shardSelector } from 'redux/selectors';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
-import { SignedTransactionType } from 'types';
-
-import Progress from 'UI/Progress';
-import TxDetails from 'UI/TxDetails';
-
 import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
-import { IconState } from 'UI/IconState';
 import { Progress } from 'UI/Progress';
 import { TxDetails } from 'UI/TxDetails';
 import { getGeneratedClasses } from 'UI/utils';
 import {
   getAddressFromDataField,
   getIsTransactionPending,
-  getIsTransactionTimedOut,
-  getGeneratedClasses
+  getIsTransactionTimedOut
 } from 'utils';
 
 import styles from './styles.scss';
-import { TransactionToastPropsType } from './types';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
@@ -122,9 +106,7 @@ export const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment()
-        .add(Number(transactionDuration), 'milliseconds')
-        .unix();
+      moment().add(Number(transactionDuration), 'milliseconds').unix();
     return [startTime, endTime];
   }, []);
 
@@ -205,8 +187,8 @@ export const TransactionToast = ({
             <div
               className={classNames(style.icon, toastDataState.iconClassName)}
             >
-              <ReactFontawesome.FontAwesomeIcon
-                iconSize='5x'
+              <FontAwesomeIcon
+                size='5x'
                 icon={toastDataState.icon}
                 className={style.svg}
               />
@@ -224,15 +206,13 @@ export const TransactionToast = ({
             <div className={style.heading}>
               <h5 className={style.title}>{toastDataState.title}</h5>
 
-              {true && (
-                <button
-                  type='button'
-                  className={style.close}
-                  onClick={handleDeleteToast}
-                >
-                  <FontAwesomeIcon icon={faTimes} size='xs' />
-                </button>
-              )}
+              <button
+                type='button'
+                className={style.close}
+                onClick={handleDeleteToast}
+              >
+                <FontAwesomeIcon icon={faTimes} size='xs' />
+              </button>
             </div>
 
             <div className={style.footer}>
