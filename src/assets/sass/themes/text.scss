@@ -214,7 +214,5 @@ a > .trim span,
 }
 
 .table .trim-size-xl .trim {
-  //@include media-breakpoint-up(md) {
-  //  max-width: 13rem;
-  //}
+  max-width: 13rem;
 }
