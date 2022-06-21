@@ -1,3 +1,5 @@
+@import 'src/assets/sass/variables/variables';
+
 .content {
   display: flex;
   align-items: center;
@@ -35,7 +37,7 @@
         width: 20px;
 
         path {
-          fill: white;
+          fill: $white;
         }
       }
     }
@@ -64,11 +66,11 @@
         font-size: 1.5rem;
         font-weight: 700;
         line-height: 1;
-        color: #000;
-        text-shadow: 0 1px 0 #fff;
+        color: $black;
+        text-shadow: 0 1px 0 $white;
         opacity: 0.5;
         padding: 0;
-        background-color: transparent;
+        background-color: $transparent;
         border: 0;
         display: flex;
         align-items: center;

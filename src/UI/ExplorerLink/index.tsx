@@ -20,11 +20,11 @@ const ExplorerLink = ({
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
+
   return (
     <a
       href={`${explorerAddress}${page}`}
       target='_blank'
-      rel='noreferrer'
       className={classNames(styles.link, className)}
       rel='noreferrer'
     >

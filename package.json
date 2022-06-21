@@ -80,7 +80,6 @@
   "keywords": [
     "elrond",
     "blockchain",
-
     "dapp",
     "smart-contract",
     "transaction"
@@ -135,7 +134,7 @@
     "lodash.isequal": "4.5.0",
     "lodash.omit": "4.5.0",
     "lodash.throttle": "4.1.1",
-    "lodash.uniqby": "^4.7.0",
+    "lodash.uniqby": "4.7.0",
     "qs": "6.10.3",
     "react-error-overlay": "6.0.9",
     "react-idle-timer": "5.0.0",

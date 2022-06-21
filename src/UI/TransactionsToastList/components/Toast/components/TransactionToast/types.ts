@@ -14,8 +14,8 @@ export interface TransactionToastPropsType {
   processingMessage?: string;
   startTimeProgress?: number;
   shouldRenderDefaultCss?: boolean;
-  transactions: SignedTransactionType[] | undefined;
-  status: TransactionBatchStatusesEnum | undefined;
+  transactions?: SignedTransactionType[];
+  status?: TransactionBatchStatusesEnum;
   signedTransactionsToRender: SignedTransactionsType;
   lifetimeAfterSuccess?: number;
 }

@@ -70,6 +70,7 @@ const TransactionsToastList = ({
           <Toast
             key={toastId}
             {...{
+              type,
               message: message ?? '',
               duration,
               onDelete: () => handleDeleteCustomToast(toastId)
@@ -82,6 +83,7 @@ const TransactionsToastList = ({
           <Toast
             key={toastId}
             {...{
+              type,
               toastId,
               signedTransactionsToRender,
               lifetimeAfterSuccess: successfulToastLifetime
