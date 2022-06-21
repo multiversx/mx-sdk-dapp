@@ -2,18 +2,28 @@ import { useEffect, useRef, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { errorsMessages, walletSignSession } from 'constants/index';
+import {
+  ERROR_SIGNING,
+  ERROR_SIGNING_TX,
+  MISSING_PROVIDER_MESSAGE,
+  PROVIDER_NOT_INTIALIZED,
+  TRANSACTION_CANCELLED,
+  WALLET_SIGN_SESSION
+} from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { getAccountProvider } from 'providers/accountProvider';
 import { getAccountFromProxyProvider } from 'providers/proxyProvider';
 import { getProviderType } from 'providers/utils';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { addressSelector, transactionsToSignSelector } from 'redux/selectors';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import {
+  addressSelector,
+  transactionsToSignSelector
+} from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
   builtCallbackUrl,
@@ -53,7 +63,7 @@ export const useSignTransactions = () => {
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
-    const isTxCancelled = errorMessage !== errorsMessages.TRANSACTION_CANCELLED;
+    const isTxCancelled = errorMessage !== TRANSACTION_CANCELLED;
 
     clearSignInfo(sessionId);
 
@@ -73,7 +83,7 @@ export const useSignTransactions = () => {
     sessionId: string,
     callbackRoute = ''
   ) => {
-    const urlParams = { [walletSignSession]: sessionId };
+    const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
     const callbackUrl = `${window.location.origin}${callbackRoute}`;
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
@@ -102,10 +112,9 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as unknown as Error)?.message ||
         (error as string) ||
-        errorsMessages.PROVIDER_NOT_INTIALIZED;
-      console.error(errorsMessages.PROVIDER_NOT_INTIALIZED, errorMessage);
+        PROVIDER_NOT_INTIALIZED;
       onCancel(errorMessage);
       return;
     }
@@ -123,9 +132,9 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(
-        signedTransactions
-      ).map((tx) => parseTransactionAfterSigning(tx));
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       dispatch(
         moveTransactionsToSignedState({
@@ -140,10 +149,9 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as unknown as Error)?.message ||
         (error as string) ||
-        errorsMessages.ERROR_SIGNING_TX;
-      console.error(errorsMessages.ERROR_SIGNING_TX, errorMessage);
+        ERROR_SIGNING_TX;
       dispatch(
         moveTransactionsToSignedState({
           sessionId,
@@ -162,7 +170,7 @@ export const useSignTransactions = () => {
     const { sessionId, transactions, callbackRoute } = transactionsToSign;
 
     if (!provider) {
-      console.error(errorsMessages.MISSING_PROVIDER_MESSAGE);
+      console.error(MISSING_PROVIDER_MESSAGE);
       return;
     }
 
@@ -209,8 +217,8 @@ export const useSignTransactions = () => {
         signTransactionsWithProvider();
       }
     } catch (err) {
-      const defaultErrorMessage = ((error as unknown) as Error)?.message;
-      const errorMessage = defaultErrorMessage || errorsMessages.ERROR_SIGNING;
+      const defaultErrorMessage = (error as unknown as Error)?.message;
+      const errorMessage = defaultErrorMessage || ERROR_SIGNING;
       onCancel(errorMessage, sessionId);
 
       dispatch(

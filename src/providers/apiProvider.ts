@@ -1,7 +1,7 @@
 import { ProxyNetworkProvider } from '@elrondnetwork/erdjs-network-providers';
 import { INetworkProvider } from '@elrondnetwork/erdjs-network-providers/out/interface';
-import { networkSelector } from 'redux/selectors';
-import { store } from 'redux/store';
+import { networkSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { NetworkType } from 'types';
 
 let apiProvider: INetworkProvider | null = null;

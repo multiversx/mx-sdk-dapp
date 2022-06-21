@@ -1,10 +1,10 @@
 import React from 'react';
 import { Address, Transaction } from '@elrondnetwork/erdjs';
+import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from './enums';
-import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -32,7 +32,7 @@ export interface TransactionParameter {
   outputParameters: string[];
 }
 
-export interface RawTransactionType extends IPlainTransactionObject {};
+export type RawTransactionType = IPlainTransactionObject;
 
 export interface SignedTransactionType extends RawTransactionType {
   hash: string;
@@ -184,4 +184,9 @@ export interface CustomTransactionInformation {
   sessionInformation: any;
   completedTransactionsDelay?: number;
   signWithoutSending: boolean;
+}
+
+export interface SendTransactionReturnType {
+  error?: string;
+  sessionId: string | null;
 }

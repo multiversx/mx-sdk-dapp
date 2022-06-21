@@ -1,14 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
-import platform from 'optionalPackages/platform';
-import QRCode from 'optionalPackages/qrcode';
+import platform from 'platform';
+import QRCode from 'qrcode';
+import Lighting from 'assets/icons/lightning.svg';
 import { useWalletConnectLogin } from 'services';
-import ModalContainer from 'UI/ModalContainer';
-import { getGeneratedClasses } from 'utils';
-import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
-import { LoginModalPropsType } from './types';
+import { ModalContainer } from 'UI/ModalContainer';
+import { getGeneratedClasses } from 'UI/utils';
 
-export function WalletConnectLoginContainer({
+export interface WalletConnectLoginModalPropsType {
+  lead?: string;
+  title?: string;
+  className?: string;
+  logoutRoute?: string;
+  callbackRoute: string;
+  loginButtonText: string;
+  wrapContentInsideModal?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  redirectAfterLogin?: boolean;
+  token?: string;
+  onClose?: () => void;
+}
+
+export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
@@ -20,7 +33,7 @@ export function WalletConnectLoginContainer({
   redirectAfterLogin,
   token,
   onClose
-}: LoginModalPropsType) {
+}: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnect,
     { error },
@@ -92,7 +105,7 @@ export function WalletConnectLoginContainer({
             />
             <h4 className={generatedClasses.title}>{title}</h4>
             {isMobileDevice ? (
-              <React.Fragment>
+              <>
                 <p className={generatedClasses.leadText}>{loginButtonText}</p>
                 <a
                   id='accessWalletBtn'
@@ -111,7 +124,7 @@ export function WalletConnectLoginContainer({
                   />
                   {title}
                 </a>
-              </React.Fragment>
+              </>
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}
@@ -137,6 +150,4 @@ export function WalletConnectLoginContainer({
   ) : (
     content
   );
-}
-
-export default WalletConnectLoginContainer;
+};

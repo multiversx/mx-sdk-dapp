@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dot = ({
+export const Dot = ({
   color,
   'data-testid': dataTestId
 }: {
@@ -9,4 +9,3 @@ const Dot = ({
 }) => {
   return <span className={`dot ${color}`} data-testid={dataTestId} />;
 };
-export default Dot;

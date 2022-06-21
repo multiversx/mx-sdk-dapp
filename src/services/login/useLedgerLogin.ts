@@ -2,15 +2,18 @@ import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { getLedgerConfiguration } from 'providers/utils';
-import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { isLoggedInSelector, ledgerAccountSelector } from 'redux/selectors';
+import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import {
+  isLoggedInSelector,
+  ledgerAccountSelector
+} from 'reduxStore/selectors';
 import {
   updateLedgerAccount,
   setLedgerLogin,
   setTokenLogin,
   setLedgerAccount
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
 import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
@@ -69,10 +72,8 @@ export function useLedgerLogin({
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [
-    selectedAddress,
-    setSelectedAddress
-  ] = useState<SelectedAddress | null>(null);
+  const [selectedAddress, setSelectedAddress] =
+    useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = useState(false);
 

@@ -1,0 +1,69 @@
+import { configureStore } from '@reduxjs/toolkit';
+import { createSubscription } from 'react-redux/es/utils/Subscription';
+
+import {
+  persistStore,
+  persistReducer,
+  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  createMigrate
+} from 'redux-persist';
+
+import storage from 'redux-persist/lib/storage';
+import { defaultNetwork } from 'reduxStore/slices';
+import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
+import rootReducer from './reducers';
+import { PersistConfig } from 'redux-persist/es/types';
+
+const migrations: any = {
+  2: (state: PersistedRootState) => {
+    return {
+      ...state,
+      networkConfig: defaultNetwork
+    };
+  }
+};
+
+const persistConfig: PersistConfig<any> = {
+  key: 'dapp-core-store',
+  version: 2,
+  storage,
+  whitelist: ['account', 'loginInfo', 'toasts', 'modals', 'networkConfig'],
+  migrate: createMigrate(migrations, { debug: false })
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+          'accountInfoSlice/setAccount',
+          'accountInfoSlice/setAccountNonce'
+        ],
+        ignoredPaths: ['payload.nonce', 'account.account.nonce']
+      }
+    }).concat(loginSessionMiddleware)
+});
+
+export const subscription = createSubscription(store);
+
+export const persistor = persistStore(store);
+
+type PersistedRootState = ReturnType<typeof store.getState>;
+
+// Infer the `RootState` and `AppDispatch` types from the store itself
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

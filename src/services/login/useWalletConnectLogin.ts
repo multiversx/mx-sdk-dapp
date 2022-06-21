@@ -5,18 +5,18 @@ import {
   getAccountProvider,
   setAccountProvider
 } from 'providers/accountProvider';
-import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
+import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   isLoggedInSelector,
   walletConnectBridgeAddressSelector,
   walletConnectDeepLinkSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors';
 import {
   setTokenLogin,
   setTokenLoginSignature,
   setWalletConnectLogin
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
@@ -192,9 +192,8 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    const walletConnectUri:
-      | string
-      | undefined = await providerRef.current?.login();
+    const walletConnectUri: string | undefined =
+      await providerRef.current?.login();
     const hasUri = Boolean(walletConnectUri);
 
     if (!hasUri) {

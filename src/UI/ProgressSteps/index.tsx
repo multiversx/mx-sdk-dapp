@@ -1,5 +1,5 @@
 import React from 'react';
-import Dot from './Dot';
+import { Dot } from './Dot';
 
 export interface ProgressStepsType {
   totalSteps: number;
@@ -7,7 +7,7 @@ export interface ProgressStepsType {
   className?: string;
 }
 
-const ProgressSteps = ({
+export const ProgressSteps = ({
   totalSteps,
   currentStep,
   className
@@ -39,4 +39,3 @@ const ProgressSteps = ({
     </div>
   );
 };
-export default ProgressSteps;

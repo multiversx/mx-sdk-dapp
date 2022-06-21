@@ -1,6 +1,6 @@
 import { getAccountProvider } from 'providers/accountProvider';
-import { setAccount } from 'redux/slices';
-import { store } from 'redux/store';
+import { setAccount } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';

@@ -1,7 +1,7 @@
 import { getAccountProvider } from 'providers/accountProvider';
 import { getProviderType } from 'providers/utils';
-import { logoutAction } from 'redux/commonActions';
-import { store } from 'redux/store';
+import { logoutAction } from 'reduxStore/commonActions';
+import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getAddress } from './account';

@@ -1,12 +1,12 @@
 import React from 'react';
 
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useExtensionLogin } from 'services';
-import { getGeneratedClasses } from 'utils';
-import { ExtensionLoginButtonPropsType } from './types';
+import { ExtensionLoginButtonPropsType } from 'types';
+import { getGeneratedClasses } from 'UI/utils';
 
-const ExtensionLoginButton: (
+export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
   token,
@@ -57,9 +57,9 @@ const ExtensionLoginButton: (
           <div className={classes.noExtensionButtonTitle}>
             Maiar DeFi Wallet
           </div>
-          <ReactFontawesome.FontAwesomeIcon
+          <FontAwesomeIcon
             className={classes.noExtensionButtonIcon}
-            icon={icons.faArrowRight}
+            icon={faArrowRight}
           />
         </div>
       )}
@@ -70,5 +70,3 @@ const ExtensionLoginButton: (
     </button>
   );
 };
-
-export default ExtensionLoginButton;

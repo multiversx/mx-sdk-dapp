@@ -1,16 +1,26 @@
 import React from 'react';
-import moment from 'optionalPackages/moment';
+import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
-import { Props } from './type';
 
-const Progress = ({
+export interface ProgressProps {
+  id: string;
+  done: boolean;
+  children: React.ReactNode;
+  expiresIn?: number;
+  progress: {
+    startTime: number;
+    endTime: number;
+  };
+}
+
+export const Progress = ({
   id,
   children,
   progress,
   done,
   expiresIn = 10 * 60
-}: Props) => {
+}: ProgressProps) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
   const removeTxFromSession = () => {
@@ -21,7 +31,9 @@ const Progress = ({
       return;
     }
 
-    const expires = moment().add(expiresIn, 'seconds').unix();
+    const expires = moment()
+      .add(expiresIn, 'seconds')
+      .unix();
 
     delete toastProgress[id];
 
@@ -38,7 +50,9 @@ const Progress = ({
     storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment().add(expiresIn, 'seconds').unix()
+      expires: moment()
+        .add(expiresIn, 'seconds')
+        .unix()
     });
   };
 
@@ -56,8 +70,9 @@ const Progress = ({
 
   const { totalSeconds, currentRemaining } = getInitialData();
 
-  const [percentRemaining, setPercentRemaining] =
-    React.useState<number>(currentRemaining);
+  const [percentRemaining, setPercentRemaining] = React.useState<number>(
+    currentRemaining
+  );
 
   React.useEffect(() => {
     if (progress) {
@@ -116,8 +131,6 @@ const Progress = ({
       <div className='d-flex position-absolute w-100'>{children}</div>
     </div>
   ) : (
-    <React.Fragment>{children}</React.Fragment>
+    <>{children}</>
   );
 };
-
-export default Progress;
