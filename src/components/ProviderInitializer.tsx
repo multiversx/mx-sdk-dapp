@@ -6,13 +6,15 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
-  networkSelector,
   walletLoginSelector,
-  addressSelector,
-  ledgerAccountSelector,
   ledgerLoginSelector,
   isLoggedInSelector
-} from 'reduxStore/selectors';
+} from 'reduxStore/selectors/loginInfoSelectors';
+import {
+  addressSelector,
+  ledgerAccountSelector
+} from 'reduxStore/selectors/accountInfoSelectors';
+import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -27,10 +29,10 @@ import {
   getAddress,
   getAccount,
   getLatestNonce,
-  logout,
   newWalletProvider,
   getLedgerConfiguration
-} from 'utils';
+} from 'utils/account';
+import { logout } from 'utils';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import {
   setAccountProvider,

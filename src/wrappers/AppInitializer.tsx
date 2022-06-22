@@ -7,7 +7,7 @@ import { useDispatch } from 'reduxStore/DappProviderContext';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils';
-import getAccountShard from 'utils/account/getAccountShard';
+import { getAccountShard } from 'utils/account/getAccountShard';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
