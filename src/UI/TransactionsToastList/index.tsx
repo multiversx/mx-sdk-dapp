@@ -10,19 +10,14 @@ import {
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { ToastsEnum } from 'types';
-import { handleCustomToasts } from 'utils/toasts';
 import { SignedTransactionsType } from 'types';
 
-import styles from './styles.scss';
 import CustomToast from 'UI/TransactionsToastList/components/CustomToast';
 import TransactionToast from 'UI/TransactionsToastList/components/TransactionToast';
+import { removeCustomToast } from 'utils';
 
-export interface ToastsType {
-  toastId: string;
-  type: string;
-  duration?: number | undefined;
-  message?: string;
-}
+import styles from './styles.scss';
+import { ToastsType } from 'types/toasts';
 
 export interface TransactionsToastListPropsType {
   toastProps?: any;
@@ -41,8 +36,7 @@ export const TransactionsToastList = ({
   successfulToastLifetime,
   parentElement
 }: TransactionsToastListPropsType) => {
-  const [toastsIds, setToastsIds] = useState<ToastsType[]>([]);
-  const { removeToast } = handleCustomToasts();
+  const [renderedToasts, setRenderedToasts] = useState<ToastsType[]>([]);
 
   const customToastsFromStore = useSelector(customToastsSelector);
 
@@ -53,14 +47,91 @@ export const TransactionsToastList = ({
     signedTransactions || signedTransactionsFromStore;
 
   const handleDeleteCustomToast = (toastId: string) => {
-    removeToast(toastId);
-    setToastsIds((toastsIds: ToastsType[]): ToastsType[] =>
-      toastsIds.filter((toast: ToastsType) => toast.toastId !== toastId)
+    removeCustomToast(toastId);
+    setRenderedToasts((prevToasts: ToastsType[]): ToastsType[] =>
+      prevToasts.filter((toast: ToastsType) => toast.toastId !== toastId)
     );
   };
 
-  const mappedToastsList = toastsIds?.map((props: ToastsType) => {
-    const { toastId, type = ToastsEnum.transaction, message, duration } = props;
+  const handleSignedTransactionsListUpdate = () => {
+    setRenderedToasts((prevToasts) => {
+      const newToasts = [];
+      for (const sessionId in signedTransactionsToRender) {
+        const alreadyHasToastForThisTransaction = renderedToasts.some(
+          (toast: ToastsType): boolean => toast.toastId === sessionId
+        );
+
+        if (!alreadyHasToastForThisTransaction) {
+          newToasts.push({ toastId: sessionId, type: ToastsEnum.transaction });
+        }
+      }
+      return [...prevToasts, ...newToasts];
+    });
+  };
+
+  const handleCustomToastsChange = () => {
+    if (!Array.isArray(customToastsFromStore)) {
+      return;
+    }
+
+    setRenderedToasts((renderedToasts: ToastsType[]): ToastsType[] =>
+      uniqBy(
+        [...renderedToasts, ...customToastsFromStore],
+        (toast: ToastsType) => toast.toastId
+      )
+    );
+  };
+
+  const handleSaveToastsToStorage = () => {
+    const shouldSaveLocalToasts = Boolean(renderedToasts.length);
+    if (!shouldSaveLocalToasts) {
+      return;
+    }
+
+    setToastsIdsToStorage(
+      renderedToasts.map((toast: ToastsType): string => toast.toastId)
+    );
+  };
+
+  const handleRestoreToastsFromStorage = () => {
+    const sessionStorageToastsIds = getToastsIdsFromStorage();
+
+    if (sessionStorageToastsIds) {
+      const newToasts = [...renderedToasts, ...sessionStorageToastsIds];
+
+      setRenderedToasts(
+        newToasts.map(
+          (toastId: string): ToastsType => ({
+            toastId,
+            type: ToastsEnum.transaction
+          })
+        )
+      );
+    }
+  };
+
+  useEffect(() => {
+    handleRestoreToastsFromStorage();
+
+    return () => {
+      handleSaveToastsToStorage();
+    };
+  }, []);
+
+  useEffect(() => {
+    handleSignedTransactionsListUpdate();
+  }, [signedTransactionsToRender]);
+
+  useEffect(() => {
+    handleCustomToastsChange();
+  }, [customToastsFromStore?.length]);
+
+  const style = getGeneratedClasses(className ?? '', !!shouldRenderDefaultCss, {
+    ...styles
+  });
+
+  const mappedToastsList = renderedToasts?.map((toast: ToastsType) => {
+    const { toastId, type = ToastsEnum.transaction, message, duration } = toast;
 
     switch (type) {
       case ToastsEnum.custom:
@@ -95,79 +166,6 @@ export const TransactionsToastList = ({
       default:
         return null;
     }
-  });
-
-  const mapPendingSignedTransactions = () => {
-    const newToasts = [...toastsIds];
-    for (const sessionId in signedTransactionsToRender) {
-      const hasToast = toastsIds.some(
-        (toast: ToastsType): boolean => toast.toastId === sessionId
-      );
-
-      if (!hasToast) {
-        newToasts.push({ toastId: sessionId, type: ToastsEnum.transaction });
-      }
-    }
-
-    setToastsIds(newToasts);
-  };
-
-  const fetchSessionStorageToasts = () => {
-    const sessionStorageToastsIds = getToastsIdsFromStorage();
-
-    if (sessionStorageToastsIds) {
-      const newToasts = [...toastsIds, ...sessionStorageToastsIds];
-
-      setToastsIds(
-        newToasts.map(
-          (toastId: string): ToastsType => ({
-            toastId,
-            type: ToastsEnum.transaction
-          })
-        )
-      );
-    }
-  };
-
-  const saveSessionStorageToasts = () => {
-    const shouldSaveLocalToasts = Boolean(toastsIds.length);
-    if (!shouldSaveLocalToasts) {
-      return;
-    }
-
-    setToastsIdsToStorage(
-      toastsIds.map((toast: ToastsType): string => toast.toastId)
-    );
-  };
-
-  useEffect(() => {
-    fetchSessionStorageToasts();
-
-    return () => {
-      saveSessionStorageToasts();
-    };
-  }, []);
-
-  useEffect(() => {
-    mapPendingSignedTransactions();
-  }, [signedTransactionsToRender]);
-
-  useEffect(() => {
-    if (!Array.isArray(customToastsFromStore)) {
-      return;
-    }
-
-    const newToasts = (toastsIds: ToastsType[]): ToastsType[] =>
-      uniqBy(
-        [...toastsIds, ...customToastsFromStore],
-        (toast: ToastsType) => toast.toastId
-      );
-
-    setToastsIds(newToasts);
-  }, [customToastsFromStore?.length]);
-
-  const style = getGeneratedClasses(className ?? '', !!shouldRenderDefaultCss, {
-    ...styles
   });
 
   return createPortal(
