@@ -17,6 +17,8 @@ glob('{./src/**/*.tsx,./src/**/*.ts}', function(err, files) {
       treeShaking: true,
       minify: true,
       sourcemap: true,
+      splitting: true,
+      chunkNames: '__chunks__/[name]-[hash].js',
       format: 'esm',
       target: ['es2015'],
       tsconfig: './tsconfig.json',
