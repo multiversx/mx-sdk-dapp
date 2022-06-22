@@ -1,53 +1,31 @@
 import React from 'react';
+import classNames from 'classnames';
 import {
   faCheck,
   faCircleNotch,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import globalStyles from 'assets/sass/main.scss';
-import { CopyButton } from 'UI/CopyButton';
-import { ExplorerLink } from 'UI/ExplorerLink';
-import { Trim } from 'UI/Trim';
-import { getGeneratedClasses } from 'UI/utils';
+import CopyButton from 'UI/CopyButton';
+import ExplorerLink from 'UI/ExplorerLink';
+import Trim from 'UI/Trim';
+
 import { isServerTransactionPending } from 'utils';
-import styles from './tx-details.scss';
+
+import styles from './styles.scss';
 import { Props } from './types';
 
-export const TxDetails = ({
-  title,
-  transactions,
-  className = styles.txDetails,
-  isTimedOut = false,
-  shouldRenderDefaultCss = true
-}: Props) => {
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      title: globalStyles.mb0,
-      statusTransactions: `${globalStyles.mb2} ${globalStyles.mt1}`,
-      iconSuccess: `${globalStyles.mr1} ${globalStyles.textSecondary}`,
-      iconFailed: `${globalStyles.mr1} ${globalStyles.textSecondary}`,
-      trimContainer: `${globalStyles.textNowrap} ${globalStyles.trimFsSm} ${globalStyles.mr3}`,
-      iconPending: `${globalStyles.mr1} ${globalStyles.textSecondary} fa-spin slow-spin`,
-      item: `${globalStyles.toastMessages} ${globalStyles.dFlex} ${globalStyles.justifyContentStart} ${globalStyles.alignItemsCenter}`
-    }
-  );
-
+const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
   const iconSuccessData = {
-    icon: faCheck,
-    classNames: generatedClasses.iconSuccess
+    icon: faCheck
   };
 
   const iconFailedData = {
-    icon: faTimes,
-    classNames: generatedClasses.iconSuccess
+    icon: faTimes
   };
 
   const iconPendingData = {
-    icon: faCircleNotch,
-    classNames: generatedClasses.iconPending
+    icon: faCircleNotch
   };
 
   const iconData: Record<string, typeof iconPendingData> = {
@@ -59,36 +37,38 @@ export const TxDetails = ({
   };
   return (
     <>
-      {title && <div className={generatedClasses.title}>{title}</div>}
-      <div className={generatedClasses.statusTransactions}>
+      {title && <div className={styles.title}>{title}</div>}
+
+      <div className={styles.status}>
         {
           transactions.filter((tx) => !isServerTransactionPending(tx.status))
             .length
         }{' '}
         / {transactions.length} transactions processed
       </div>
+
       {transactions.map(({ hash, status }) => {
         const iconSrc = iconData[status];
+
         return (
-          <div className={generatedClasses.item} key={hash}>
+          <div className={styles.item} key={hash}>
             {!isTimedOut && iconSrc != null && (
               <FontAwesomeIcon
                 icon={iconSrc.icon}
-                className={iconSrc.classNames}
+                className={classNames(styles.icon, {
+                  'fa-spin slow-spin': status === 'pending'
+                })}
               />
             )}
-            <span
-              className={generatedClasses.trimContainer}
-              style={{ width: '10rem' }}
-            >
+
+            <span className={styles.trim}>
               <Trim text={hash} />
             </span>
+
             <CopyButton text={hash} />
+
             {!isServerTransactionPending(status) && (
-              <ExplorerLink
-                page={`/transactions/${hash}`}
-                className={globalStyles.ml2}
-              />
+              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
             )}
           </div>
         );

@@ -2,9 +2,10 @@ import React from 'react';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import styles from './copy-button.scss';
-
+import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
+import ReactFontawesome from 'optionalPackages/react-fontawesome';
 import copyTextToClipboard from './helpers/copyToClipboard';
+import styles from './styles.scss';
 
 interface CopyButtonType {
   text: string;

@@ -5,11 +5,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #fff;
+  background-color: $white;
   border-radius: 50%;
   svg {
     #egld-token {
-      fill: #000;
+      fill: $black;
     }
   }
 }
@@ -19,7 +19,7 @@
 }
 
 .token-symbol {
-  border: 1px solid #000;
+  border: 1px solid $black;
   //box-shadow: $thumbnail-box-shadow;
   width: 2rem;
   height: 2rem;
