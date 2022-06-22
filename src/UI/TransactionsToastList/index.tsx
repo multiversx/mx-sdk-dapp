@@ -1,23 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import uniqBy from 'lodash.uniqby';
 import { createPortal } from 'react-dom';
-
-import { useGetSignedTransactions } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { customToastsSelector } from 'reduxStore/selectors';
-
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
-import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
-import { TransactionToast } from 'UI/TransactionToast';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
-
 import { ToastsEnum } from 'types';
-import { getGeneratedClasses } from 'UI/utils';
 import { handleCustomToasts } from 'utils/toasts';
 import { SignedTransactionsType } from 'types';
 import Toast from './components/Toast';
@@ -178,7 +170,7 @@ export const TransactionsToastList = ({
     setToastsIds(newToasts);
   }, [customToastsFromStore?.length]);
 
-  const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
+  const style = getGeneratedClasses(className ?? '', !!shouldRenderDefaultCss, {
     ...styles
   });
 
