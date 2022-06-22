@@ -18,8 +18,6 @@ import { defaultNetwork, setAccount, setAccountNonce } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 import { PersistConfig } from 'redux-persist/es/types';
-import { setAccountProvider } from 'reduxStore/slices/providersSlice';
-
 const migrations: any = {
   2: (state: PersistedRootState) => {
     return {
@@ -52,8 +50,7 @@ export const store = configureStore({
           PURGE,
           REGISTER,
           setAccountNonce.type,
-          setAccount.type,
-          setAccountProvider.type
+          setAccount.type
         ],
         ignoredPaths: [
           'payload.nonce',

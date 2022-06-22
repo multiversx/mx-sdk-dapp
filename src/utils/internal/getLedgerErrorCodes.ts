@@ -1,4 +1,4 @@
-import ledgerErrorCodes from 'constants/ledgerErrorCodes';
+import { ledgerErrorCodes } from 'constants/ledgerErrorCodes';
 
 const ledgerAppErrorText = 'Check if Elrond app is open on Ledger';
 const notConnectedCode = 0x6e01;

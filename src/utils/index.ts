@@ -9,7 +9,6 @@ export * from './math';
 export * from './operations';
 export * from './network';
 export * from './decoders';
-export * from './providers';
 
 export * from './smartContracts';
 export * from './storage';
