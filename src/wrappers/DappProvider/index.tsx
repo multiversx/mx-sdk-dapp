@@ -16,6 +16,7 @@ export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
+  //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
 }
