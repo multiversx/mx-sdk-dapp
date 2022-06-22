@@ -40,7 +40,8 @@ glob('{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}', function(err, files) {
           loadPaths: [`./${basedir}`, 'node_modules'],
           basedir,
           transform: postcssModules({
-            basedir
+            basedir,
+            localsConvention: 'dashes'
           })
         })
       ]
