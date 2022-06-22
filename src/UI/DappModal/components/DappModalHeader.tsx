@@ -2,6 +2,7 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '../dapp-modal.scss';
+import globalStyles from 'assets/sass/main.scss';
 
 type DappModalHeaderProps = {
   visible?: boolean;
@@ -33,7 +34,7 @@ export const DappModalHeader: React.FC<DappModalHeaderProps> = ({
       <div className={styles.dappModalHeaderText}>{headerText}</div>
 
       <button
-        className={`${styles.dappModalCloseButton} ${closeButtonClassName}`}
+        className={`${styles.dappModalCloseButton} ${globalStyles.btn} ${globalStyles.btnLight} ${closeButtonClassName}`}
         onClick={onHide}
       >
         <FontAwesomeIcon size='lg' icon={faTimes} />

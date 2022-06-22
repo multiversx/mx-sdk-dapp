@@ -710,7 +710,7 @@ import {
 ### Transactions
 ```
 import {
-  useCheckTransactionsStatus,
+  useCheckTransactionStatus,
 
   useGetActiveTransactionsStatus,
   useGetFailedTransactions,
@@ -782,7 +782,6 @@ import {
   calculateFeeLimit,
   denominate,
   nominate,
-  getTokenFromData,
   getUsdValue,
 } from '@elrondnetwork/dapp-core/utils/operations';
 ```
@@ -791,12 +790,10 @@ import {
 
 ```
 import {
-  buildCallbackUrl,
   getTokenFromData,
   isTokenTransfer,
   parseMultiEsdtTransferData,
   parseTransactionAfterSigning,
-  transactionStateByStatus
 } from '@elrondnetwork/dapp-core/utils/transactions';
 ```
 
@@ -819,7 +816,7 @@ import {
   encodeToBase64,
   decodeBase64,
   logout,
-  getAllStringOccurences,
+  getTokenFromData,
   getIsLoggedIn,
   isSelfESDTContract,
   getAddressFromDataField,

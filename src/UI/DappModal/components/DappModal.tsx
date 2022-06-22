@@ -55,7 +55,6 @@ export const DappModal: React.FC<DappModalProps> = ({
       role='dialog'
       aria-modal='true'
       className={`${styles.dappModal} ${modalDialogClassName}`}
-      onClick={onHide}
     >
       <div className={`${styles.dappModalContent} ${modalContentClassName}`}>
         <DappModalHeader

@@ -10,7 +10,6 @@ import networkConfig from './slices/networkConfigSlice';
 import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
-import providers from './slices/providersSlice';
 
 const transactionsInfoPersistConfig = {
   key: 'dapp-core-transactionsInfo',
@@ -31,7 +30,6 @@ const reducers = {
   modals,
   dappModal,
   toasts,
-  providers,
   transactions: persistReducer(transactionsReducerPersistConfig, transactions),
   transactionsInfo: persistReducer(
     transactionsInfoPersistConfig,

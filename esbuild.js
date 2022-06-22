@@ -22,7 +22,7 @@ glob('{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}', function(err, files) {
       bundle: true,
       sourcemap: true,
       splitting: true,
-      chunkNames: '__chunks__/[name]-[hash].js',
+      chunkNames: '__chunks__/[name]-[hash]',
       format: 'esm',
       target: ['es2015'],
       tsconfig: './tsconfig.json',

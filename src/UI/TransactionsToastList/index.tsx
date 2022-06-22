@@ -15,6 +15,7 @@ import { SignedTransactionsType } from 'types';
 import Toast from './components/Toast';
 
 import styles from './styles.scss';
+import { useGetPendingTransactions } from 'hooks';
 
 export interface ToastsType {
   toastId: string;
@@ -47,7 +48,8 @@ export const TransactionsToastList = ({
 
   const customToastsFromStore = useSelector(customToastsSelector);
 
-  const pendingTransactionsFromStore = pendingTransactions;
+  const pendingTransactionsFromStore =
+    useGetPendingTransactions().pendingTransactions;
 
   const signedTransactionsFromStore =
     useGetSignedTransactions().signedTransactions;
@@ -60,6 +62,7 @@ export const TransactionsToastList = ({
 
   const handleDeleteCustomToast = (toastId: string) => {
     removeToast(toastId);
+    console.log(handleDeleteCustomToast, toastId);
     setToastsIds((toastsIds: ToastsType[]): ToastsType[] =>
       toastsIds.filter((toast: ToastsType) => toast.toastId !== toastId)
     );
@@ -113,6 +116,7 @@ export const TransactionsToastList = ({
       }
     }
 
+    console.log('mapPendingSignedTransactions', newToasts);
     setToastsIds(newToasts);
   };
 
@@ -122,14 +126,14 @@ export const TransactionsToastList = ({
     if (sessionStorageToastsIds) {
       const newToasts = [...toastsIds, ...sessionStorageToastsIds];
 
-      setToastsIds(
-        newToasts.map(
-          (toastId: string): ToastsType => ({
-            toastId,
-            type: ToastsEnum.transaction
-          })
-        )
+      const newToastsIds = newToasts.map(
+        (toastId: string): ToastsType => ({
+          toastId,
+          type: ToastsEnum.transaction
+        })
       );
+      console.log('fetchSessionStorageToasts', newToastsIds);
+      setToastsIds(newToastsIds);
     }
   };
 
@@ -161,11 +165,16 @@ export const TransactionsToastList = ({
       return;
     }
 
-    const newToasts = (toastsIds: ToastsType[]): ToastsType[] =>
-      uniqBy(
+    const newToasts = (toastsIds: ToastsType[]): ToastsType[] => {
+      const uniqueToasts = uniqBy(
         [...toastsIds, ...customToastsFromStore],
         (toast: ToastsType) => toast.toastId
       );
+
+      console.log('UseEffect', uniqueToasts);
+
+      return uniqueToasts;
+    };
 
     setToastsIds(newToasts);
   }, [customToastsFromStore?.length]);
