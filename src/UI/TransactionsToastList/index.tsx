@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import uniqBy from 'lodash.uniqby';
 import { createPortal } from 'react-dom';
 
@@ -10,6 +11,10 @@ import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
+import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
+import { TransactionToast } from 'UI/TransactionToast';
+import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 
 import { ToastsEnum } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
@@ -29,6 +34,7 @@ export interface ToastsType {
 export interface TransactionsToastListPropsType {
   toastProps?: any;
   className?: string;
+  withTxNonce?: boolean;
   shouldRenderDefaultCss?: boolean;
   pendingTransactions?: SignedTransactionsType;
   signedTransactions?: SignedTransactionsType;

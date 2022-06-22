@@ -14,10 +14,11 @@ import {
 } from 'redux-persist';
 
 import storage from 'redux-persist/lib/storage';
-import { defaultNetwork } from 'reduxStore/slices';
+import { defaultNetwork, setAccount, setAccountNonce } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 import { PersistConfig } from 'redux-persist/es/types';
+import { setAccountProvider } from 'reduxStore/slices/providersSlice';
 
 const migrations: any = {
   2: (state: PersistedRootState) => {
@@ -50,10 +51,15 @@ export const store = configureStore({
           PERSIST,
           PURGE,
           REGISTER,
-          'accountInfoSlice/setAccount',
-          'accountInfoSlice/setAccountNonce'
+          setAccountNonce.type,
+          setAccount.type,
+          setAccountProvider.type
         ],
-        ignoredPaths: ['payload.nonce', 'account.account.nonce']
+        ignoredPaths: [
+          'payload.nonce',
+          'account.account.nonce',
+          'providers.accountProvider'
+        ]
       }
     }).concat(loginSessionMiddleware)
 });

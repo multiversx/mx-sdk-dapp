@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
-import { GetTransactionsByHashesType } from 'contexts/types';
+import { GetTransactionsByHashesType } from 'types';
 import { useCheckTransactionStatus, useGetPendingTransactions } from 'hooks';
 import { getIsTransactionPending } from 'utils';
 

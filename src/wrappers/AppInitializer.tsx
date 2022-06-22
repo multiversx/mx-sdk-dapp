@@ -3,21 +3,23 @@ import { Address } from '@elrondnetwork/erdjs/out';
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks';
-import { initializeProxyProvider } from 'providers/proxyProvider';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
-import { CustomNetworkType, EnvironmentsEnum, NetworkType } from 'types';
+import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils';
 import getAccountShard from 'utils/account/getAccountShard';
+import { setExternalProvider } from 'reduxStore/slices/providersSlice';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   children: any;
+  externalProvider?: IDappProvider;
   environment: EnvironmentsEnum;
 }
 
 export function AppInitializer({
   customNetworkConfig = {},
+  externalProvider,
   children,
   environment
 }: AppInitializerPropsType) {
@@ -25,10 +27,6 @@ export function AppInitializer({
   const account = useGetAccountInfo();
   const { address, publicKey } = account;
   const dispatch = useDispatch();
-
-  function initializeProviders(networkConfig: NetworkType) {
-    initializeProxyProvider(networkConfig);
-  }
 
   async function initializeNetwork() {
     const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
@@ -54,17 +52,18 @@ export function AppInitializer({
           ...customNetworkConfig
         };
         dispatch(initializeNetworkConfig(apiConfig));
-        initializeProviders(apiConfig);
         return;
       }
     }
 
     dispatch(initializeNetworkConfig(localConfig));
-    initializeProviders(localConfig);
   }
 
   async function initializeApp() {
     await initializeNetwork();
+    if (externalProvider != null) {
+      dispatch(setExternalProvider(externalProvider));
+    }
     setInitialized(true);
 
     getAccountShard();

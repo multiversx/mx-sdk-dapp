@@ -3,11 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
 import ProviderInitializer from 'components/ProviderInitializer';
-import {
-  GetTransactionsByHashesType,
-  SendSignedTransactionsAsyncType
-} from 'contexts/types';
-import { setExternalProvider } from 'providers/accountProvider';
+
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { IDappProvider } from 'types';
@@ -20,9 +16,8 @@ export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
+  //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
-  sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
-  getTransactionsByHash?: GetTransactionsByHashesType;
   customComponents?: CustomComponentsType;
 }
 
@@ -38,14 +33,11 @@ export const DappProvider = ({
     throw new Error('missing environment flag');
   }
 
-  if (externalProvider != null) {
-    setExternalProvider(externalProvider);
-  }
-
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <AppInitializer
+          externalProvider={externalProvider}
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
         >
