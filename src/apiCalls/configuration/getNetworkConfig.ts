@@ -1,16 +1,12 @@
 import axios from 'axios';
 import { BlockchainNetworkConfigType } from 'types';
 import { networkConfigEndpoint } from 'apiCalls/endpoints';
-import { apiAddressSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { getCleanApiAddress } from 'apiCalls/utils';
 
 export async function getNetworkConfigFromApi() {
-  const apiAddress = apiAddressSelector(store.getState());
-  const cleanApiAddress = apiAddress.endsWith('/')
-    ? apiAddress.slice(0, -1)
-    : apiAddress;
+  const apiAddress = getCleanApiAddress();
 
-  const configUrl = `${cleanApiAddress}/${networkConfigEndpoint}`;
+  const configUrl = `${apiAddress}/${networkConfigEndpoint}`;
 
   try {
     const { data } = await axios.get<{
