@@ -816,6 +816,7 @@ import {
   encodeToBase64,
   decodeBase64,
   logout,
+  getTokenFromData,
   getIsLoggedIn,
   isSelfESDTContract,
   getAddressFromDataField,
