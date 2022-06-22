@@ -1,4 +1,4 @@
-@import "src/assets/sass/variables/variables";
+@import 'assets/sass/variables/variables';
 
 //
 // Basic Bootstrap table
@@ -27,7 +27,6 @@
   }
 }
 
-
 //
 // Condensed table w/ half padding
 //
@@ -38,7 +37,6 @@
     padding: $table-cell-padding-sm;
   }
 }
-
 
 // Border versions
 //
@@ -78,7 +76,6 @@
     background-color: $table-accent-bg;
   }
 }
-
 
 // Dark styles
 //
@@ -130,7 +127,6 @@
     }
   }
 }
-
 
 // Responsive tables
 //

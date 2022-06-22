@@ -1,4 +1,6 @@
-@import "./mixins/hover";
+@use 'sass:math';
+@import './mixins/hover';
+@import 'assets/sass/variables/variables';
 
 //
 // Base styles
@@ -29,7 +31,7 @@
       border-top-width: 0;
     }
 
-    &:last-child  {
+    &:last-child {
       border-bottom-width: 0;
     }
   }
@@ -58,7 +60,7 @@
 }
 
 .card-subtitle {
-  margin-top: -$card-spacer-y / 2;
+  margin-top: math.div(-$card-spacer-y, 2);
   margin-bottom: 0;
 }
 
