@@ -16,6 +16,7 @@ glob('{./src/**/*.tsx,./src/**/*.ts}', function(err, files) {
       outdir: 'dist',
       treeShaking: true,
       minify: true,
+      bundle: true,
       sourcemap: true,
       splitting: true,
       chunkNames: '__chunks__/[name]-[hash].js',
