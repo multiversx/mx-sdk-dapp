@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
 import { TransactionTypesEnum } from 'types';
-export default function getTokenFromData(
+export function getTokenFromData(
   data?: string
 ): { tokenId: string; nominatedTokenAmount: string } {
   if (data && data.includes(TransactionTypesEnum.ESDTTransfer)) {

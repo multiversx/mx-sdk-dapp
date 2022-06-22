@@ -1,4 +1,4 @@
-import { getAccountProvider, getProviderType } from 'utils';
+import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';

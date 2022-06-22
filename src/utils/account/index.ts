@@ -8,6 +8,6 @@ export * from './refreshAccount';
 export * from './getShardOfAddress';
 export * from './signMessage';
 export * from './loginWithExternalProvider';
-export * from './getAccountProvider';
+export * from 'providers';
 export * from './getAccountProviderType';
 export * from './getIsProviderEqualTo';
