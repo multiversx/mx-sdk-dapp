@@ -59,6 +59,5 @@ export const {
   setExternalProvider,
   setExternalProviderAsAccountProvider
 } = providersSlice.actions;
-console.log(providersSlice);
 
 export default providersSlice.reducer;
