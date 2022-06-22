@@ -1,4 +1,4 @@
-@import 'src/assets/sass/variables/variables';
+@import 'assets/sass/variables/variables';
 
 .content {
   display: flex;
@@ -13,15 +13,15 @@
     padding-right: 0.75rem;
 
     .warning {
-      background-color: #f0ad4e;
+      background-color: $warning;
     }
 
     .danger {
-      background-color: #d9534f;
+      background-color: $danger;
     }
 
     .success {
-      background-color: #5cb85c;
+      background-color: $success;
     }
 
     .icon {

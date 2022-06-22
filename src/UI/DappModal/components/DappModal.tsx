@@ -2,9 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from '../dapp-modal.scss';
 import { DappModalConfig } from '../types';
-import DappModalBody from './DappModalBody';
-import DappModalFooter from './DappModalFooter';
-import DappModalHeader from './DappModalHeader';
+import { DappModalBody } from './DappModalBody';
+import { DappModalFooter } from './DappModalFooter';
+import { DappModalHeader } from './DappModalHeader';
 
 type DappModalProps = {
   id?: string;
@@ -22,7 +22,7 @@ const defaultConfig: DappModalConfig = {
   footerText: ''
 };
 
-const DappModal: React.FC<DappModalProps> = ({
+export const DappModal: React.FC<DappModalProps> = ({
   id = 'dapp-modal',
   visible,
   onHide,
@@ -82,5 +82,3 @@ const DappModal: React.FC<DappModalProps> = ({
     parentElement ?? document.body
   );
 };
-
-export default DappModal;

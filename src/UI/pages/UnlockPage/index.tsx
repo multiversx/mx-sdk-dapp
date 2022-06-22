@@ -1,15 +1,26 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
-import ExtensionLoginButton from 'UI/extension/LoginButton';
-import LedgerLoginButton from 'UI/ledger/LoginButton';
+import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
+import LedgerLoginButton from 'UI/ledger/LedgerLoginButton';
+import { getGeneratedClasses } from 'UI/utils';
 import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
-import WebWalletLoginButton from 'UI/webWallet/LoginButton';
-import { getGeneratedClasses } from 'utils';
-import { Props } from './types';
+import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import styles from './unlock-page.scss';
 
-const UnlockPage = ({
+export interface Props {
+  title?: string;
+  className?: string;
+  loginRoute: string;
+  LedgerLoginButtonText?: string;
+  shouldRenderDefaultCss?: boolean;
+  ExtensionLoginButtonText?: string;
+  WebWalletLoginButtonText?: string;
+  WalletConnectLoginButtonText?: string;
+  description?: string | React.ReactNode;
+}
+
+export const UnlockPage = ({
   loginRoute,
   title = 'Login',
   className = 'unlock-page',
@@ -69,5 +80,3 @@ const UnlockPage = ({
     </div>
   );
 };
-
-export default UnlockPage;

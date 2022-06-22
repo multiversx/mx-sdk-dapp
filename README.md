@@ -168,27 +168,6 @@ If you want to show custom notifications, you can use the `useGetNotification` h
 
 </details>
 
-<details>
-  <summary>
-    UI css import
- </summary>
-
-### UI css import
-
-To properly apply the default styles to Dapp Core Components, you need to import the bundled css into your App's entry point.
-
-```
-import ...
-
-import '@elrondnetwork/dapp-core/dist/index.css';
-
-export default function App() {
-...
-
-```
-
-</details>
-
 ## User Identity
 
 Dapp-core makes logging in and persisting user's session easy and hassle-free.
@@ -568,12 +547,12 @@ Tracking a transaction
 
 ### Tracking a transaction
 
-The library exposes a hook called useTrackTransactionStatus under the object `transactionServices`.
+The library exposes a hook called useTrackTransactionStatus;
 
 ```
-import {transactionServices} from @elrondnetwork/dapp-core;
+import {useTrackTransactionStatus} from @elrondnetwork/dapp-core/hooks;
 
-const transactionStatus = transactionServices.useTrackTransactionStatus({
+const transactionStatus = useTrackTransactionStatus({
   transactionId: sessionId,
   onSuccess,
   onFail,
@@ -660,14 +639,250 @@ Dapp-core takes care to change transactions' statuses and removes them when need
 but if you need to do this manually, you can use the exposed functions for this:
 
 ```
-transactionServices.removeTransactionsToSign(sessionId);
-transactionServices.removeSignedTransaction(sessionId);
-transactionServices.removeAllTransactionsToSign();
-transactionServices.removeAllSignedTransactions();
+  removeTransactionsToSign(sessionId);
+  removeSignedTransaction(sessionId);
+  removeAllTransactionsToSign();
+  removeAllSignedTransactions();
 
 ```
 
 </details>
+
+
+# Dapp-core exports
+
+Since version 2.0, dapp-core does not have a default export object.
+You have to import everything from its own separate module. Below you can find all the exports.
+
+You can either import everything from a module, or if you really want to make sure you're not importing anything
+that is not used, you can import everything from its own file.
+
+You can either go into their specific folder in the module for extra trimming, or import everything together.
+
+for example, these 2 imports are both valid:
+
+```
+import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks';
+```
+and
+```
+import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login';
+import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
+
+```
+
+## constants exports
+
+```
+import {
+   gasPriceModifier,
+   gasPerDataByte,
+   gasLimit,
+   gasPrice,
+   denomination,
+   decimals,
+   mnemonicWords,
+   ledgerErrorCodes,
+   fallbackNetworkConfigurations
+ } from '@elrondnetwork/dapp-core/constants';
+```
+
+## hooks exports
+
+### Login
+
+```
+import {
+  useExtensionLogin,
+  useLedgerLogin,
+  useWalletConnectLogin,
+  useWebWalletLogin
+} from '@elrondnetwork/dapp-core/hooks/login';
+```
+
+### Account
+```
+import {
+  useGetAccountInfo,
+  useGetAccountProvider,
+  useGetLoginInfo
+ } from '@elrondnetwork/dapp-core/hooks/accounts';
+```
+
+### Transactions
+```
+import {
+  useCheckTransactionsStatus,
+
+  useGetActiveTransactionsStatus,
+  useGetFailedTransactions,
+  useGetPendingTransactions,
+  useGetSignedTransactions,
+  useGetSignTransactionsError,
+  useGetSuccessfulTransactions,
+
+  useGetTokenDetails,
+  useGetTransactionDisplayInfo,
+  useParseMultiEsdtTransferData,
+
+  useParseSignedTransactions,
+  useSignMultipleTransactions,
+  useSignTransactions,
+  useSignTransactionsWithDevice,
+  useSignTransactionsWithLedger,
+} from '@elrondnetwork/dapp-core/hooks/transactions';
+```
+
+### Misc
+```
+import {
+  useDebounce,
+  useGetNetworkConfig,
+  useGetNotification,
+  useUpdateEffect
+} from '@elrondnetwork/dapp-core/hooks';
+```
+
+## services exports
+
+```
+import {
+  removeTransactionsToSign,
+  removeSignedTransaction,
+  removeAllSignedTransactions,
+  removeAllTransactionsToSign,
+  isCrossShardTransaction,
+  sendTransactions,
+  signTransactions,
+  calcTotalFee
+} from '@elrondnetwork/dapp-core/services';
+```
+
+## utils exports
+
+### Account
+
+```
+import {
+  addressIsValid,
+  getAccount,
+  getAccountBalance,
+  getAccountShard,
+  getAddress,
+  getLatestNonce,
+  getShardOfAddress,
+  refreshAccount,
+  setNonce,
+  signMessage
+} from '@elrondnetwork/dapp-core/utils/account';
+```
+
+### Operations
+
+```
+import {
+  calculateFeeLimit,
+  denominate,
+  nominate,
+  getTokenFromData,
+  getUsdValue,
+} from '@elrondnetwork/dapp-core/utils/operations';
+```
+
+### Transactions
+
+```
+import {
+  buildCallbackUrl,
+  getTokenFromData,
+  isTokenTransfer,
+  parseMultiEsdtTransferData,
+  parseTransactionAfterSigning,
+  transactionStateByStatus
+} from '@elrondnetwork/dapp-core/utils/transactions';
+```
+
+### Validation
+
+```
+import {
+ getIdentifierType,
+ stringIsFloat,
+ stringIsInteger,
+ isContract,
+ isStringBase64,
+} from '@elrondnetwork/dapp-core/utils';
+```
+
+### Misc
+
+```
+import {
+  encodeToBase64,
+  decodeBase64,
+  logout,
+  getAllStringOccurences,
+  getIsLoggedIn,
+  isSelfESDTContract,
+  getAddressFromDataField,
+} from '@elrondnetwork/dapp-core/utils';
+```
+
+## Wrappers
+
+```
+import {
+  DappProvider,
+  AuthenticatedRoutesWrapper,
+  AppInitializer,
+} from '@elrondnetwork/dapp-core/wrappers';
+```
+
+## Web-specific imports
+
+```
+import {
+  useIdleTimer
+} from '@elrondnetwork/dapp-core/web';
+```
+
+
+## UI
+
+```
+import {
+  CopyButton,
+  Denominate,
+  ExplorerLink,
+  ExtensionLoginButton,
+  LedgerLoginButton,
+  LedgerLoginContainer,
+  NotificationModal,
+  PageState,
+  ProgressSteps,
+  SignTransactionsModals,
+  SignWithDeviceModal,
+  SignWithExtensionModal,
+  SignWithLedgerModal,
+  TransactionsToastList,
+  TransactionToast,
+  Trim,
+  UsdValue,
+  WalletConnectLoginButton,
+  WalletConnectLoginContainer,
+} from '@elrondnetwork/dapp-core/UI';
+```
+
+or
+
+```
+import { CopyButton } from '@elrondnetwork/dapp-core/UI/CopyButton';
+import { Denominate } from '@elrondnetwork/dapp-core/UI/Denominate';
+import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
+
+etc
+```
+
 
 ## Roadmap
 

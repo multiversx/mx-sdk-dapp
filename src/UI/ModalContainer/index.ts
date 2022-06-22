@@ -1,2 +1,1 @@
-import ModalContainer from './ModalContainer';
-export default ModalContainer;
+export { ModalContainer } from './ModalContainer';

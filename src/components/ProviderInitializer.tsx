@@ -7,8 +7,8 @@ import {
 } from 'providers/accountProvider';
 import { getNetworkConfigFromProxyProvider } from 'providers/proxyProvider';
 import { getLedgerConfiguration, newWalletProvider } from 'providers/utils';
-import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
+import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
@@ -18,7 +18,7 @@ import {
   ledgerAccountSelector,
   ledgerLoginSelector,
   isLoggedInSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -26,8 +26,8 @@ import {
   setLedgerAccount,
   setWalletLogin,
   setChainID
-} from 'redux/slices';
-import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
+} from 'reduxStore/slices';
+import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
 import { getAddress, getAccount, getLatestNonce, logout } from 'utils';
 

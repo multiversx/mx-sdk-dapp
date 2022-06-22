@@ -3,10 +3,10 @@ import {
   addressSelector,
   apiNetworkSelector,
   shardSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors';
 
-import { setAccountShard } from 'redux/slices';
-import { store } from 'redux/store';
+import { setAccountShard } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 
 export default async function getAccountShard() {
   const appState = store.getState();

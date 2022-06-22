@@ -1,14 +1,14 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
-import Dot from './Dot';
+import { Dot } from './Dot';
 
-interface ProgressStepsType {
+export interface ProgressStepsType {
   totalSteps: number;
   currentStep: number;
   className?: string;
 }
 
-const ProgressSteps = ({
+export const ProgressSteps = ({
   totalSteps,
   currentStep,
   className

@@ -3,13 +3,13 @@ import {
   GetTransactionsByHashesReturnType
 } from 'apiCalls/transactions';
 import { GetTransactionsByHashesType } from 'contexts/types';
-import { updateSignedTransactionStatus } from 'redux/slices';
-import { store } from 'redux/store';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import { TransactionServerStatusesEnum } from 'types/enums';
 import {
   CustomTransactionInformation,
   SignedTransactionsBodyType
-} from 'types/transactions';
+} from 'types';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,

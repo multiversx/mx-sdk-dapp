@@ -1,18 +1,28 @@
 import React from 'react';
-import moment from 'optionalPackages/moment';
+import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
 
 import styles from './styles.scss';
-import { Props } from './type';
 
-const Progress = ({
+export interface ProgressProps {
+  id: string;
+  done: boolean;
+  children: React.ReactNode;
+  expiresIn?: number;
+  progress: {
+    startTime: number;
+    endTime: number;
+  };
+}
+
+export const Progress = ({
   id,
   children,
   progress,
   done,
   expiresIn = 10 * 60
-}: Props) => {
+}: ProgressProps) => {
   const ref = React.useRef(null);
   const intervalRef = React.useRef<any>();
   const removeTxFromSession = () => {
@@ -117,8 +127,6 @@ const Progress = ({
       {children}
     </div>
   ) : (
-    <React.Fragment>{children}</React.Fragment>
+    <>{children}</>
   );
 };
-
-export default Progress;

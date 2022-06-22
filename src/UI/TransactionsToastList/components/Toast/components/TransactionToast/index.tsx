@@ -1,30 +1,30 @@
 import React, { useMemo, useState } from 'react';
 import classNames from 'classnames';
-
 import { useGetTransactionDisplayInfo } from 'hooks';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import moment from 'optionalPackages/moment';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-
-import { useSelector } from 'redux/DappProviderContext';
-import { shardSelector } from 'redux/selectors';
+import {
+  faCheck,
+  faHourglass,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { shardSelector } from 'reduxStore/selectors';
 import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 import { SignedTransactionType, SignedTransactionsBodyType } from 'types';
-
-import Progress from 'UI/Progress';
-import TxDetails from 'UI/TxDetails';
+import { Progress } from 'UI/Progress';
+import { TxDetails } from 'UI/TxDetails';
 
 import {
   getAddressFromDataField,
   getIsTransactionPending,
-  getIsTransactionTimedOut,
-  getGeneratedClasses
+  getIsTransactionTimedOut
 } from 'utils';
 
 import CloseButton from './components/CloseButton';
 import styles from './styles.scss';
 import { TransactionToastPropsType } from './types';
+import { getGeneratedClasses } from 'UI/utils';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
@@ -43,7 +43,7 @@ const getToastsOptionsData = (
 
   const successToastData = {
     id: toastId,
-    icon: icons.faCheck,
+    icon: faCheck,
     expires: 30000,
     hasCloseButton: true,
     title: successMessage,
@@ -53,7 +53,7 @@ const getToastsOptionsData = (
   const pendingToastData = {
     id: toastId,
     expires: false,
-    icon: icons.faHourglass,
+    icon: faHourglass,
     hasCloseButton: false,
     title: processingMessage,
     iconClassName: style.warning
@@ -61,7 +61,7 @@ const getToastsOptionsData = (
 
   const failToastData = {
     id: toastId,
-    icon: icons.faTimes,
+    icon: faTimes,
     title: errorMessage,
     hasCloseButton: true,
     iconClassName: style.danger
@@ -69,7 +69,7 @@ const getToastsOptionsData = (
 
   const timedOutToastData = {
     id: toastId,
-    icon: icons.faTimes,
+    icon: faTimes,
     title: timedOutMessage,
     hasCloseButton: true,
     iconClassName: style.warning
@@ -193,7 +193,7 @@ const TransactionToast = ({
       <div className={style.content}>
         <div className={style.left}>
           <div className={classNames(style.icon, toastDataState.iconClassName)}>
-            <ReactFontawesome.FontAwesomeIcon
+            <FontAwesomeIcon
               size='5x'
               icon={toastDataState.icon}
               className={style.svg}

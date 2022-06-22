@@ -1,6 +1,6 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface CloseButtonType {
   onDelete: () => void;
@@ -17,7 +17,7 @@ const CloseButton = (props: CloseButtonType) => {
 
   return (
     <button type='button' className={style.close} onClick={onDelete}>
-      <ReactFontawesome.FontAwesomeIcon icon={icons.faTimes} size='xs' />
+      <FontAwesomeIcon icon={faTimes} size='xs' />
     </button>
   );
 };

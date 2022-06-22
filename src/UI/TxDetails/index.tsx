@@ -1,28 +1,35 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import CopyButton from 'UI/CopyButton';
+import {
+  faCheck,
+  faCircleNotch,
+  faTimes
+} from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { CopyButton } from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
-import Trim from 'UI/Trim';
+import { Trim } from 'UI/Trim';
 
 import { isServerTransactionPending } from 'utils';
 
 import styles from './styles.scss';
 import { Props } from './types';
 
-const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
+export const TxDetails = ({
+  title,
+  transactions,
+  isTimedOut = false
+}: Props) => {
   const iconSuccessData = {
-    icon: icons.faCheck
+    icon: faCheck
   };
 
   const iconFailedData = {
-    icon: icons.faTimes
+    icon: faTimes
   };
 
   const iconPendingData = {
-    icon: icons.faCircleNotch
+    icon: faCircleNotch
   };
 
   const iconData: Record<string, typeof iconPendingData> = {
@@ -33,7 +40,7 @@ const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
     timedOut: iconFailedData
   };
   return (
-    <React.Fragment>
+    <>
       {title && <div className={styles.title}>{title}</div>}
 
       <div className={styles.status}>
@@ -50,7 +57,7 @@ const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
         return (
           <div className={styles.item} key={hash}>
             {!isTimedOut && iconSrc != null && (
-              <ReactFontawesome.FontAwesomeIcon
+              <FontAwesomeIcon
                 icon={iconSrc.icon}
                 className={classNames(styles.icon, {
                   'fa-spin slow-spin': status === 'pending'
@@ -70,8 +77,6 @@ const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
           </div>
         );
       })}
-    </React.Fragment>
+    </>
   );
 };
-
-export default TxDetails;

@@ -2,8 +2,8 @@ import {
   setCustomToasts,
   removeCustomToasts,
   CustomToastType
-} from 'redux/slices';
-import { store } from 'redux/store';
+} from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 
 interface handleCustomToastsType {
   showToast: (args: CustomToastType) => void;

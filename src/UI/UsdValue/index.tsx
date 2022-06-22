@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { getUsdValue } from 'utils/operations';
 
-const UsdValue = (props: {
+export const UsdValue = (props: {
   amount: string;
   usd: number;
   'data-testid'?: string;
@@ -18,5 +18,3 @@ const UsdValue = (props: {
     </small>
   );
 };
-
-export default UsdValue;

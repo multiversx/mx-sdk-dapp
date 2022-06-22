@@ -5,12 +5,12 @@ import globalStyles from 'assets/sass/main.scss';
 
 import styles from './styles.scss';
 
-interface TrimType {
+export interface TrimType {
   text: string;
   dataTestId?: string;
 }
 
-const Trim = ({ text, dataTestId = '' }: TrimType) => {
+export const Trim = ({ text, dataTestId = '' }: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
   const hiddenTextRef = React.useRef(document.createElement('span'));
@@ -53,7 +53,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
       </span>
 
       {overflow ? (
-        <React.Fragment>
+        <>
           <span className={styles.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
@@ -63,12 +63,10 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
           <span className={globalStyles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
-        </React.Fragment>
+        </>
       ) : (
         <span>{text}</span>
       )}
     </span>
   );
 };
-
-export default Trim;

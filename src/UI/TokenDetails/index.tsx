@@ -1,8 +1,8 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faDiamond } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
-import { ReactComponent as EgldIcon } from '../../assets/icons/EGLD.svg';
 import styles from './token-details.scss';
 import { Simple, Combined } from './TokenSymbol';
 
@@ -29,11 +29,7 @@ function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
   if (tokenAvatar) {
     return <img className={styles.tokenSymbolCustomToken} src={tokenAvatar} />;
   }
-  return isEgldTransfer ? (
-    <EgldIcon />
-  ) : (
-    <ReactFontawesome.FontAwesomeIcon icon={icons.faDiamond} />
-  );
+  return isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faDiamond} />;
 }
 
 const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
@@ -49,25 +45,23 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
   };
 };
 
-export default class TokenDetails extends React.Component {
-  static Token = (props: TokenIconProps) => (
-    <React.Fragment>{props.token}</React.Fragment>
-  );
+export class TokenDetails extends React.Component {
+  static Token = (props: TokenIconProps) => <>{props.token}</>;
   static Symbol = (props: TokenIconProps) => (
-    <React.Fragment>
+    <>
       {
         getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
           .symbol
       }
-    </React.Fragment>
+    </>
   );
   static Label = (props: TokenIconProps) => (
-    <React.Fragment>
+    <>
       {
         getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
           .label
       }
-    </React.Fragment>
+    </>
   );
   static Icon = (props: TokenIconProps) => {
     const Component: any =

@@ -1,13 +1,13 @@
 import {
   updateSignedTransactions,
   updateSignedTransactionStatus
-} from 'redux/slices';
-import { store } from 'redux/store';
+} from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums';
-import { SmartContractResult } from 'types/transactions';
+import { SmartContractResult } from 'types';
 
 export function manageFailedTransactions({
   results,

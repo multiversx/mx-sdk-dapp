@@ -11,7 +11,6 @@ export * from './network';
 export * from './decoders';
 
 export * from './smartContracts';
-export * from './getGeneratedClasses';
 export * from './storage';
 export * from './validation';
 export * from './redirect';
