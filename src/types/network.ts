@@ -38,7 +38,7 @@ export interface CustomNetworkType {
   apiTimeout?: string;
 }
 
-export interface BlockchainNetworkConfigType {
+export interface ApiNetworkConfigType {
   erd_chain_id: string;
   erd_denomination: number;
   erd_gas_per_data_byte: number;
