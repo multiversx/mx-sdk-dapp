@@ -6,16 +6,20 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import CopyButton from 'UI/CopyButton';
+import { CopyButton } from 'UI/CopyButton';
 import ExplorerLink from 'UI/ExplorerLink';
-import Trim from 'UI/Trim';
+import { Trim } from 'UI/Trim';
 
 import { isServerTransactionPending } from 'utils';
 
 import styles from './styles.scss';
 import { Props } from './types';
 
-const TxDetails = ({ title, transactions, isTimedOut = false }: Props) => {
+export const TxDetails = ({
+  title,
+  transactions,
+  isTimedOut = false
+}: Props) => {
   const iconSuccessData = {
     icon: faCheck
   };

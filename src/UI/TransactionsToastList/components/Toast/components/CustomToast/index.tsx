@@ -1,8 +1,6 @@
 import React, { useEffect, Fragment } from 'react';
-
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.scss';
 
 interface CustomToastType {
@@ -29,7 +27,7 @@ const CustomToast = (props: CustomToastType) => {
   return (
     <Fragment>
       <button type='button' className={styles.close} onClick={onDelete}>
-        <ReactFontawesome.FontAwesomeIcon icon={icons.faTimes} size='xs' />
+        <FontAwesomeIcon icon={faTimes} size='xs' />
       </button>
 
       {message}

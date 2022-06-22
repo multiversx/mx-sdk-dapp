@@ -3,10 +3,8 @@ import uniqBy from 'lodash.uniqby';
 import { createPortal } from 'react-dom';
 
 import { useGetSignedTransactions } from 'hooks';
-import { useSelector } from 'redux/DappProviderContext';
-import { customToastsSelector } from 'redux/selectors';
-
-import { useGetPendingTransactions } from 'services';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { customToastsSelector } from 'reduxStore/selectors';
 
 import {
   getToastsIdsFromStorage,
@@ -14,13 +12,12 @@ import {
 } from 'storage/session';
 
 import { ToastsEnum } from 'types';
-import { getGeneratedClasses } from 'utils';
+import { getGeneratedClasses } from 'UI/utils';
 import { handleCustomToasts } from 'utils/toasts';
-
+import { SignedTransactionsType } from 'types';
 import Toast from './components/Toast';
 
 import styles from './styles.scss';
-import { TransactionsToastListPropsType } from './types';
 
 export interface ToastsType {
   toastId: string;
@@ -29,7 +26,17 @@ export interface ToastsType {
   message?: string;
 }
 
-const TransactionsToastList = ({
+export interface TransactionsToastListPropsType {
+  toastProps?: any;
+  className?: string;
+  shouldRenderDefaultCss?: boolean;
+  pendingTransactions?: SignedTransactionsType;
+  signedTransactions?: SignedTransactionsType;
+  successfulToastLifetime?: number;
+  parentElement?: Element | DocumentFragment;
+}
+
+export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
   className = '',
   pendingTransactions,
@@ -42,8 +49,7 @@ const TransactionsToastList = ({
 
   const customToastsFromStore = useSelector(customToastsSelector);
 
-  const pendingTransactionsFromStore =
-    useGetPendingTransactions().pendingTransactions;
+  const pendingTransactionsFromStore = pendingTransactions;
 
   const signedTransactionsFromStore =
     useGetSignedTransactions().signedTransactions;
