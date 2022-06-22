@@ -1,3 +1,5 @@
+@import 'assets/sass/variables/variables';
+
 .data-field {
   $font-size: 0.8125rem;
   $highlighted-font-size: 1rem;
@@ -25,7 +27,6 @@
       min-height: 3rem;
     }
   }
-
 
   .form-control:disabled,
   .form-control[readonly] {

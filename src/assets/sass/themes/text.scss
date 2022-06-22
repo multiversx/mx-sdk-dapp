@@ -1,5 +1,5 @@
-@import "./mixins/text-truncate";
-@import "src/assets/sass/variables/variables";
+@import './mixins/text-truncate';
+@import 'assets/sass/variables/variables';
 
 .text {
   color: #9dabbd;
@@ -10,7 +10,8 @@
 }
 
 .text-monospace {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !important;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace !important;
 }
 
 .text-justify {
@@ -59,19 +60,33 @@
   color: $text-muted !important;
 }
 
-
 // Alignment
-.text-justify  { text-align: justify !important; }
-.text-wrap     { white-space: normal !important; }
-.text-nowrap   { white-space: nowrap !important; }
-.text-truncate { @include text-truncate(); }
+.text-justify {
+  text-align: justify !important;
+}
+.text-wrap {
+  white-space: normal !important;
+}
+.text-nowrap {
+  white-space: nowrap !important;
+}
+.text-truncate {
+  @include text-truncate();
+}
 
+.text-body {
+  color: $body-color !important;
+}
+.text-muted {
+  color: $text-muted !important;
+}
 
-.text-body { color: $body-color !important; }
-.text-muted { color: $text-muted !important; }
-
-.text-black-50 { color: rgba($black, .5) !important; }
-.text-white-50 { color: rgba($white, .5) !important; }
+.text-black-50 {
+  color: rgba($black, 0.5) !important;
+}
+.text-white-50 {
+  color: rgba($white, 0.5) !important;
+}
 
 // Misc
 
@@ -83,7 +98,9 @@
   border: 0;
 }
 
-.text-decoration-none { text-decoration: none !important; }
+.text-decoration-none {
+  text-decoration: none !important;
+}
 
 .text-break {
   word-break: break-word !important; // Deprecated, but avoids issues with flex containers
@@ -92,13 +109,21 @@
 
 // Reset
 
-.text-reset { color: inherit !important; }
+.text-reset {
+  color: inherit !important;
+}
 
 // Transformation
 
-.text-lowercase  { text-transform: lowercase !important; }
-.text-uppercase  { text-transform: uppercase !important; }
-.text-capitalize { text-transform: capitalize !important; }
+.text-lowercase {
+  text-transform: lowercase !important;
+}
+.text-uppercase {
+  text-transform: uppercase !important;
+}
+.text-capitalize {
+  text-transform: capitalize !important;
+}
 
 .text-danger {
   color: $danger;

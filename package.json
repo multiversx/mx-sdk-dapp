@@ -13,6 +13,7 @@
   "scripts": {
     "start": "npm run watch",
     "build:types": "tsc --project tsconfig.json",
+    "build:styles": "rimraf dist & node esbuild.js",
     "build": "rimraf dist & node esbuild.js & yarn build:types",
     "watch": "npm run build -- --watch",
     "prepare": "npm run build"
@@ -30,9 +31,11 @@
     "@types/qs": "6.9.7",
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "@typescript-eslint/parser": "5.14.0",
+    "autoprefixer": "^10.4.7",
     "esbuild": "^0.14.47",
     "esbuild-node-externals": "1.4.1",
     "esbuild-plugin-svgr": "1.0.1",
+    "esbuild-sass-plugin": "^2.2.6",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-react": "1.1.7",
     "eslint-config-standard": "17.0.0",
@@ -49,6 +52,7 @@
     "husky": "8.0.1",
     "jest": "28.1.1",
     "node-stdlib-browser": "1.2.0",
+    "postcss": "^8.4.14",
     "process": "0.11.10",
     "react": "18.1.0",
     "react-dom": "18.1.0",
@@ -60,7 +64,6 @@
   "keywords": [
     "elrond",
     "blockchain",
-
     "dapp",
     "smart-contract",
     "transaction"
