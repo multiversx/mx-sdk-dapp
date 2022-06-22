@@ -19,6 +19,7 @@ import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 import { PersistConfig } from 'redux-persist/es/types';
 import { ReducersEnum } from 'types/reducers';
+
 const migrations: any = {
   2: (state: PersistedRootState) => {
     return {

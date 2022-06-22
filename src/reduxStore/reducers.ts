@@ -9,8 +9,8 @@ import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
 import toasts from './slices/toastsSlice';
-import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
+import transactionsInfo from './slices/transactionsInfoSlice';
 
 const transactionsInfoPersistConfig = {
   key: 'dapp-core-transactionsInfo',

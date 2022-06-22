@@ -12,9 +12,10 @@ import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { ToastsEnum } from 'types';
 import { handleCustomToasts } from 'utils/toasts';
 import { SignedTransactionsType } from 'types';
-import Toast from './components/Toast';
 
 import styles from './styles.scss';
+import CustomToast from 'UI/TransactionsToastList/components/CustomToast';
+import TransactionToast from 'UI/TransactionsToastList/components/TransactionToast';
 
 export interface ToastsType {
   toastId: string;
@@ -28,7 +29,6 @@ export interface TransactionsToastListPropsType {
   className?: string;
   withTxNonce?: boolean;
   shouldRenderDefaultCss?: boolean;
-  pendingTransactions?: SignedTransactionsType;
   signedTransactions?: SignedTransactionsType;
   successfulToastLifetime?: number;
   parentElement?: Element | DocumentFragment;
@@ -37,7 +37,6 @@ export interface TransactionsToastListPropsType {
 export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
   className = '',
-  pendingTransactions,
   signedTransactions,
   successfulToastLifetime,
   parentElement
@@ -47,13 +46,8 @@ export const TransactionsToastList = ({
 
   const customToastsFromStore = useSelector(customToastsSelector);
 
-  const pendingTransactionsFromStore = pendingTransactions;
-
-  const signedTransactionsFromStore =
-    useGetSignedTransactions().signedTransactions;
-
-  const pendingTransactionsToRender =
-    pendingTransactions || pendingTransactionsFromStore;
+  const signedTransactionsFromStore = useGetSignedTransactions()
+    .signedTransactions;
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
@@ -71,9 +65,10 @@ export const TransactionsToastList = ({
     switch (type) {
       case ToastsEnum.custom:
         return (
-          <Toast
+          <CustomToast
             key={toastId}
             {...{
+              containerClassName: styles.toastWrapper,
               type,
               message: message ?? '',
               duration,
@@ -84,10 +79,12 @@ export const TransactionsToastList = ({
 
       case ToastsEnum.transaction:
         return (
-          <Toast
+          <TransactionToast
             key={toastId}
             {...{
               type,
+              containerClassName: styles.toastWrapper,
+
               toastId,
               signedTransactionsToRender,
               lifetimeAfterSuccess: successfulToastLifetime
@@ -102,8 +99,7 @@ export const TransactionsToastList = ({
 
   const mapPendingSignedTransactions = () => {
     const newToasts = [...toastsIds];
-
-    for (const sessionId in pendingTransactionsToRender) {
+    for (const sessionId in signedTransactionsToRender) {
       const hasToast = toastsIds.some(
         (toast: ToastsType): boolean => toast.toastId === sessionId
       );
@@ -154,7 +150,7 @@ export const TransactionsToastList = ({
 
   useEffect(() => {
     mapPendingSignedTransactions();
-  }, [pendingTransactionsToRender]);
+  }, [signedTransactionsToRender]);
 
   useEffect(() => {
     if (!Array.isArray(customToastsFromStore)) {

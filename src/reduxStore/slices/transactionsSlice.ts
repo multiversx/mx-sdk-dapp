@@ -14,7 +14,7 @@ import {
 import {
   getIsTransactionFailed,
   getIsTransactionSuccessful
-} from 'utils/transactions';
+} from 'utils/transactions/transactionStateByStatus';
 import { logoutAction } from '../commonActions';
 
 export interface UpdateSignedTransactionsPayloadType {
