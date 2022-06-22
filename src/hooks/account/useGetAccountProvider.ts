@@ -1,8 +1,10 @@
-import { getAccountProvider } from 'providers/accountProvider';
-import { getProviderType } from 'providers/utils';
+import { getProviderType } from 'utils';
+import { accountProviderSelector } from 'reduxStore/selectors/providersSelectors';
+import { useSelector } from 'reduxStore/DappProviderContext';
 
 export const useGetAccountProvider = () => {
-  const provider = getAccountProvider();
+  const provider = useSelector(accountProviderSelector);
+
   const providerType = getProviderType(provider);
   return { provider, providerType };
 };

@@ -51,9 +51,14 @@ export const store = configureStore({
           PURGE,
           REGISTER,
           'accountInfoSlice/setAccount',
-          'accountInfoSlice/setAccountNonce'
+          'accountInfoSlice/setAccountNonce',
+          'providersSlice/setAccountProvider'
         ],
-        ignoredPaths: ['payload.nonce', 'account.account.nonce']
+        ignoredPaths: [
+          'payload.nonce',
+          'account.account.nonce',
+          'providers.accountProvider'
+        ]
       }
     }).concat(loginSessionMiddleware)
 });

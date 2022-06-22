@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
-import {
-  getAccountProvider,
-  setAccountProvider
-} from 'providers/accountProvider';
+import { setAccountProvider } from 'reduxStore/slices/providersSlice';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -22,6 +19,7 @@ import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType } from 'types';
+import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 
 interface InitWalletConnectType {
   callbackRoute: string;
@@ -54,7 +52,7 @@ export const useWalletConnectLogin = ({
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
 
-  const provider = getAccountProvider();
+  const { provider } = useGetAccountProvider();
   const walletConnectBridgeAddress = useSelector(
     walletConnectBridgeAddressSelector
   );
@@ -180,7 +178,7 @@ export const useWalletConnectLogin = ({
     );
 
     await newProvider.init();
-    setAccountProvider(newProvider);
+    dispatch(setAccountProvider(newProvider));
     providerRef.current = newProvider;
     if (loginProvider) {
       generateWcUri();

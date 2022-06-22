@@ -6,6 +6,10 @@ import {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums';
+import {
+  GetTransactionsByHashesReturnType,
+  PendingTransactionsType
+} from 'apiCalls';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -182,3 +186,7 @@ export interface SendTransactionReturnType {
   error?: string;
   sessionId: string | null;
 }
+
+export type GetTransactionsByHashesType = (
+  pendingTransactions: PendingTransactionsType
+) => Promise<GetTransactionsByHashesReturnType>;

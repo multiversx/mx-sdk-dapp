@@ -1,8 +1,11 @@
 import axios from 'axios';
-import { configEndpoint } from 'constants/network';
 import { NetworkType } from 'types';
+import { apiAddressSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
+import { configEndpoint } from 'apiCalls/endpoints';
 
-export async function getServerConfiguration(apiAddress: string) {
+export async function getServerConfiguration(address?: string) {
+  const apiAddress = address ?? apiAddressSelector(store.getState());
   const cleanApiAddress = apiAddress.endsWith('/')
     ? apiAddress.slice(0, -1)
     : apiAddress;

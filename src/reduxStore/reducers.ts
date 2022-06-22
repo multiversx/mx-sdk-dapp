@@ -8,6 +8,7 @@ import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
+import providers from './slices/providersSlice';
 
 const transactionsInfoPersistConfig = {
   key: 'dapp-core-transactionsInfo',
@@ -26,6 +27,7 @@ const reducers = {
   networkConfig,
   loginInfo,
   modals,
+  providers,
   transactions: persistReducer(transactionsReducerPersistConfig, transactions),
   transactionsInfo: persistReducer(
     transactionsInfoPersistConfig,
