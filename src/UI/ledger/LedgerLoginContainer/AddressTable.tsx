@@ -52,6 +52,9 @@ export const AddressTable = ({
     arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
     confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px2} ${globalStyles.mt4}`
   });
+
+  console.log('Booooo!');
+
   switch (true) {
     case loading:
       return (
