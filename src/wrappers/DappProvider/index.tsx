@@ -16,7 +16,7 @@ export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
-  environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
+  environment: keyof typeof EnvironmentsEnum;
   customComponents?: CustomComponentsType;
 }
 

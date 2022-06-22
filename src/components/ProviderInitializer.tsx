@@ -83,7 +83,7 @@ export default function ProviderInitializer() {
         dispatch(setChainID(networkConfig.erd_chain_id));
       }
     } catch (err) {
-      console.error('To do ', err);
+      console.error('failed refreshing chainId ', err);
     }
   }
 

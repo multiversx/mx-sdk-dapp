@@ -32,6 +32,7 @@ import {
 } from 'utils';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import getAccount from 'utils/account/getAccount';
+import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 
 const setTransactionNonces = (
   latestNonce: number,
@@ -121,7 +122,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
+        (error as Error)?.message ||
         (error as string) ||
         PROVIDER_NOT_INTIALIZED;
       onCancel(errorMessage);
@@ -129,7 +130,9 @@ export const useSignTransactions = () => {
     }
 
     try {
-      const signedTransactions = await provider.signTransactions(transactions);
+      const signedTransactions: {
+        [key: string]: Transaction | PlainSignedTransaction;
+      } = await provider.signTransactions(transactions);
 
       const hasSameTransactions =
         Object.keys(signedTransactions).length === transactions.length;
@@ -144,7 +147,7 @@ export const useSignTransactions = () => {
 
       const signedTransactionsArray = Object.values(
         signedTransactions
-      ).map((tx: any) => parseTransactionAfterSigning(tx));
+      ).map((tx) => parseTransactionAfterSigning(tx));
 
       dispatch(
         moveTransactionsToSignedState({
@@ -159,9 +162,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        ((error as unknown) as Error)?.message ||
-        (error as string) ||
-        ERROR_SIGNING_TX;
+        (error as Error)?.message || (error as string) || ERROR_SIGNING_TX;
       dispatch(
         moveTransactionsToSignedState({
           sessionId,
@@ -216,7 +217,7 @@ export const useSignTransactions = () => {
         signTransactionsWithProvider();
       }
     } catch (err) {
-      const defaultErrorMessage = ((error as unknown) as Error)?.message;
+      const defaultErrorMessage = (err as Error)?.message;
       const errorMessage = defaultErrorMessage || ERROR_SIGNING;
       onCancel(errorMessage, sessionId);
 

@@ -24,7 +24,7 @@ const initialState = {
   externalProvider: null
 };
 
-export const modalsSlice = createSlice({
+export const providersSlice = createSlice({
   name: 'providersSlice',
   initialState,
   reducers: {
@@ -58,6 +58,7 @@ export const {
   setAccountProvider,
   setExternalProvider,
   setExternalProviderAsAccountProvider
-} = modalsSlice.actions;
+} = providersSlice.actions;
+console.log(providersSlice);
 
-export default modalsSlice.reducer;
+export default providersSlice.reducer;
