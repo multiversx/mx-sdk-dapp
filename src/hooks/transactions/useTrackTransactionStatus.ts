@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { transactionStatusSelector } from 'reduxStore/selectors';
-import { RootState } from 'reduxStore/store';
 import {
   removeAllSignedTransactions,
   removeAllTransactionsToSign
@@ -47,7 +46,7 @@ export function useTrackTransactionStatus({
 
   const transactionId = isWalletProvider ? walletSessionId : txId;
 
-  const transactionsBatch = useSelector((state: RootState) =>
+  const transactionsBatch = useSelector((state) =>
     transactionStatusSelector(state, transactionId)
   );
 

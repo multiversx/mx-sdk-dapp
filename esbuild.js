@@ -14,7 +14,6 @@ glob('{./src/**/*.tsx,./src/**/*.ts}', function(err, files) {
     .build({
       entryPoints: files,
       outdir: 'dist',
-      bundle: true,
       treeShaking: true,
       minify: true,
       sourcemap: true,

@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { newWalletProvider } from 'utils/providers/utils';
-import { useSelector } from 'reduxStore/DappProviderContext';
+import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
 import { setWalletLogin } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
+import { newWalletProvider } from 'utils';
 
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;
@@ -23,12 +22,12 @@ export const useWebWalletLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const network = useSelector(networkSelector);
+  const dispatch = useDispatch();
 
   async function initiateLogin() {
     try {
       setIsLoading(true);
-      const appState = store.getState();
-      const network = networkSelector(appState);
       const provider = newWalletProvider(network.walletAddress);
 
       const now = new Date();
@@ -38,7 +37,7 @@ export const useWebWalletLogin = ({
         expires: expires
       };
 
-      store.dispatch(setWalletLogin(walletLoginData));
+      dispatch(setWalletLogin(walletLoginData));
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`
