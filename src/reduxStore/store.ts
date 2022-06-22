@@ -18,6 +18,7 @@ import { defaultNetwork, setAccount, setAccountNonce } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 import rootReducer from './reducers';
 import { PersistConfig } from 'redux-persist/es/types';
+import { ReducersEnum } from 'types/reducers';
 const migrations: any = {
   2: (state: PersistedRootState) => {
     return {
@@ -31,7 +32,13 @@ const persistConfig: PersistConfig<any> = {
   key: 'dapp-core-store',
   version: 2,
   storage,
-  whitelist: ['account', 'loginInfo', 'toasts', 'modals', 'networkConfig'],
+  whitelist: [
+    ReducersEnum.account,
+    ReducersEnum.loginInfo,
+    ReducersEnum.toasts,
+    ReducersEnum.modals,
+    ReducersEnum.networkConfig
+  ],
   migrate: createMigrate(migrations, { debug: false })
 };
 

@@ -2,6 +2,7 @@ import { combineReducers } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 
 import sessionStorage from 'redux-persist/lib/storage/session';
+import { ReducersEnum } from 'types/reducers';
 import account from './slices/accountInfoSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
@@ -18,16 +19,19 @@ const transactionsReducerPersistConfig = {
   key: 'dapp-core-transactions',
   version: 1,
   storage: sessionStorage,
-  blacklist: ['transactionsToSign']
+  blacklist: [ReducersEnum.transactionsToSign]
 };
 
 const reducers = {
-  account,
-  networkConfig,
-  loginInfo,
-  modals,
-  transactions: persistReducer(transactionsReducerPersistConfig, transactions),
-  transactionsInfo: persistReducer(
+  [ReducersEnum.account]: account,
+  [ReducersEnum.networkConfig]: networkConfig,
+  [ReducersEnum.loginInfo]: loginInfo,
+  [ReducersEnum.modals]: modals,
+  [ReducersEnum.transactions]: persistReducer(
+    transactionsReducerPersistConfig,
+    transactions
+  ),
+  [ReducersEnum.transactionsInfo]: persistReducer(
     transactionsInfoPersistConfig,
     transactionsInfo
   )
