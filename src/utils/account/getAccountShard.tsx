@@ -8,7 +8,7 @@ import {
 import { setAccountShard } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 
-export default async function getAccountShard() {
+export async function getAccountShard() {
   const appState = store.getState();
   const apiAddress = apiAddressSelector(appState);
   const address = addressSelector(appState);

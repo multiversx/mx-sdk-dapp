@@ -32,7 +32,6 @@ import {
 } from 'utils';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import getAccount from 'utils/account/getAccount';
-import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 
 const setTransactionNonces = (
   latestNonce: number,
@@ -130,9 +129,9 @@ export const useSignTransactions = () => {
     }
 
     try {
-      const signedTransactions: {
-        [key: string]: Transaction | PlainSignedTransaction;
-      } = await provider.signTransactions(transactions);
+      const signedTransactions: Transaction[] = await provider.signTransactions(
+        transactions
+      );
 
       const hasSameTransactions =
         Object.keys(signedTransactions).length === transactions.length;
