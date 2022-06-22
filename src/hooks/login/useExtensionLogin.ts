@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { setAccountProvider } from 'providers/accountProvider';
+import { setAccountProvider } from 'reduxStore/slices/providersSlice';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector } from 'reduxStore/selectors';
@@ -54,7 +54,7 @@ export const useExtensionLogin = ({
 
       await provider.login(providerLoginData);
 
-      setAccountProvider(provider);
+      dispatch(setAccountProvider(provider));
 
       const { signature, address } = provider.account;
       if (signature) {

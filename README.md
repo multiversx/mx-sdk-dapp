@@ -42,9 +42,9 @@ This library covers two main areas: **User Identity** and **Transactions**. The 
 
 However, to simplify usage even further, the library also comes with a default UI that already uses these hooks and methods under the hood. These UI elements can be easily customized with custom css classes.
 
-The default UI is exposed via the `DappUI` object.
+The default UI is exposed via the `UI` module.
 
-`import { DappUI } from "@elrondnetwork/dapp-core";`
+`import * as DappUI from "@elrondnetwork/dapp-core/UI";`
 
 More on this below.
 
@@ -126,10 +126,10 @@ when something happens inside the app:
 - `TransactionsToastList` will display new transactions in nice toasts at the bottom of the screen. This component is fully customizable.
 
 ```
-  import {DappUI} from "@elrondnetwork/dapp-core";
+  import {TransactionsToastList} from "@elrondnetwork/dapp-core/UI/TransactionsToastList";
 
   <App>
-    <DappUI.TransactionsToastList
+    <TransactionsToastList
     toastId?: string,
     title: string,
     shouldRenderDefaultCss?: boolean,
@@ -145,10 +145,10 @@ when something happens inside the app:
 **Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
 
 ```
-  import {DappUI} from "@elrondnetwork/dapp-core";
+  import {SignTransactionsModals} from "@elrondnetwork/dapp-core/UI/SignTransactionsModals";
 
   <App>
-    <DappUI.SignTransactionsModals />
+    <SignTransactionsModals />
     <Content/>
   </App>
 ```
@@ -156,10 +156,10 @@ when something happens inside the app:
 `NotificationModal` Will show a modal to the user with various warnings and errors.
 
 ```
-  import {DappUI} from "@elrondnetwork/dapp-core";
+  import {NotificationModal} from "@elrondnetwork/dapp-core/UI/NotificationModal";
 
   <App>
-    <DappUI.NotificationModal />
+    <NotificationModal />
     <Content/>
   </App>
 ```
@@ -216,15 +216,15 @@ There are a couple of very handy React components that can be used to login the 
 Under the `DappUI` object mentioned above, you can find 4 buttons (one for each provider) which abstract away all the logic of loggin in the user and render the default UI. These buttons can be easily customized with a custom css class.
 The exported buttons are:
 
-- DappUI.ExtensionLoginButton
-- DappUI.WalletConnectLoginButton
-- DappUI.LedgerLoginButton
-- DappUI.WebWalletLoginButton
+- ExtensionLoginButton
+- WalletConnectLoginButton
+- LedgerLoginButton
+- WebWalletLoginButton
 
 example:
 
 ```
-<DappUI.ExtensionLoginButton
+<ExtensionLoginButton
   callbackRoute="/dashboard"
   buttonClassName="extension-login"
   loginButtonText="Extension login"
@@ -234,7 +234,7 @@ example:
 They can also be used with children
 
 ```
-<DappUI.ExtensionLoginButton
+<ExtensionLoginButton
   callbackRoute="/dashboard"
   buttonClassName="extension-login"
   loginButtonText="Extension login"
@@ -243,7 +243,7 @@ They can also be used with children
     <icon/>
     <p>Login text</p>
   <>
-</DappUI.ExtensionLoginButton
+</ExtensionLoginButton
 ```
 
 `WalletConnectLoginButton` and `LedgerLoginButton` will trigger a modal with a QR code and the ledger login UI, respectively.
@@ -253,7 +253,7 @@ If, however, you want access to these containers without the buttons,
 you can easily import and use them.
 
 ```
-<DappUI.WalletConnectLoginContainer
+<WalletConnectLoginContainer
   callbackRoute={callbackRoute}
   loginButtonText="Login with Maiar"
   title = 'Maiar Login',
@@ -269,7 +269,7 @@ you can easily import and use them.
 ```
 
 ```
-<DappUI.LedgerLoginContainer
+<LedgerLoginContainer
   callbackRoute: string;
   className?: string;
   shouldRenderDefaultCss?: boolean;
@@ -284,14 +284,12 @@ All login buttons and hooks accept a prop called `redirectAfterLogin` which spec
 The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
 
 
-Also, for a quicker setup, the `DappUI` object exports an `DappUI.UnlockPage` component, which contains all 4 buttons.
-
-Another handly component is DappUI.AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
+Another handly component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
 Import from dapp-core:
 
 ```
-import { AuthenticatedRoutesWrapper} from "@elrondnetwork/dapp-core";
+import { AuthenticatedRoutesWrapper } from "@elrondnetwork/dapp-core";
 ```
 
 Use with routes:
@@ -491,7 +489,7 @@ We suggest displaying a message on the screen that confirms the transaction that
 You can also get the provider via
 
 ```
-  const { providerType } = useGetAccountProvider();
+  const { providerType, provider } = useGetAccountProvider();
 ```
 
 and use that to display an appropriate message to the user.
@@ -617,12 +615,12 @@ Transaction Toasts UI
 
 dapp-core also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
 
-The toasts list is exposed via **DappUI.TransactionsToastList** component and can be used just by rendering it inside the application.
+The toasts list is exposed via **TransactionsToastList** UI component and can be used just by rendering it inside the application.
 
 ```
 <App>
   <Router/>
-  <DappUI.TransactionsToastList />
+  <TransactionsToastList />
 </App>
 ```
 

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { newWalletProvider } from 'providers/utils';
+import { newWalletProvider } from 'utils/providers/utils';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
 import { setWalletLogin } from 'reduxStore/slices';

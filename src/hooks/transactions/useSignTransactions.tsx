@@ -11,9 +11,8 @@ import {
   WALLET_SIGN_SESSION
 } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import { getAccountProvider } from 'providers/accountProvider';
-import { getAccountFromProxyProvider } from 'providers/proxyProvider';
-import { getProviderType } from 'providers/utils';
+
+import { getProviderType } from 'utils';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   addressSelector,
@@ -31,17 +30,29 @@ import {
   parseTransactionAfterSigning,
   safeRedirect
 } from 'utils';
+import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
+import getAccount from 'utils/account/getAccount';
+import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
 
+const setTransactionNonces = (
+  latestNonce: number,
+  transactions: Array<Transaction>
+): Array<Transaction> => {
+  return transactions.map((tx: Transaction, index: number) => {
+    tx.setNonce(latestNonce + index);
+
+    return tx;
+  });
+};
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
-  const provider = getAccountProvider();
+  const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const hasTransactions = Boolean(transactionsToSign?.transactions);
-
   const onAbort = (sessionId?: string) => {
     setError(null);
     clearSignInfo(sessionId);
@@ -106,13 +117,12 @@ export const useSignTransactions = () => {
 
     try {
       const isProviderInitialized = await provider?.init?.();
-
       if (!isProviderInitialized) {
         return;
       }
     } catch (error) {
       const errorMessage =
-        (error as unknown as Error)?.message ||
+        (error as Error)?.message ||
         (error as string) ||
         PROVIDER_NOT_INTIALIZED;
       onCancel(errorMessage);
@@ -120,7 +130,10 @@ export const useSignTransactions = () => {
     }
 
     try {
-      const signedTransactions = await provider.signTransactions(transactions);
+      const signedTransactions: {
+        [key: string]: Transaction | PlainSignedTransaction;
+      } = await provider.signTransactions(transactions);
+
       const hasSameTransactions =
         Object.keys(signedTransactions).length === transactions.length;
       const hasAllTransactionsSigned =
@@ -132,9 +145,9 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(signedTransactions).map(
-        (tx) => parseTransactionAfterSigning(tx)
-      );
+      const signedTransactionsArray = Object.values(
+        signedTransactions
+      ).map((tx) => parseTransactionAfterSigning(tx));
 
       dispatch(
         moveTransactionsToSignedState({
@@ -149,9 +162,7 @@ export const useSignTransactions = () => {
       }
     } catch (error) {
       const errorMessage =
-        (error as unknown as Error)?.message ||
-        (error as string) ||
-        ERROR_SIGNING_TX;
+        (error as Error)?.message || (error as string) || ERROR_SIGNING_TX;
       dispatch(
         moveTransactionsToSignedState({
           sessionId,
@@ -181,20 +192,9 @@ export const useSignTransactions = () => {
      */
     savedCallback.current = callbackRoute || window.location.pathname;
 
-    const setTransactionNonces = (
-      latestNonce: number,
-      transactions: Array<Transaction>
-    ): Array<Transaction> => {
-      return transactions.map((tx: Transaction, index: number) => {
-        tx.setNonce(latestNonce + index);
-
-        return tx;
-      });
-    };
-
     try {
-      const proxyAccount = await getAccountFromProxyProvider(address);
-      if (proxyAccount == null) {
+      const account = await getAccount(address);
+      if (account == null) {
         return;
       }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
@@ -204,7 +204,7 @@ export const useSignTransactions = () => {
         LoginMethodsEnum.ledger
       ].includes(providerType);
 
-      const latestNonce = getLatestNonce(proxyAccount);
+      const latestNonce = getLatestNonce(account);
       const mappedTransactions = setTransactionNonces(
         latestNonce,
         transactions
@@ -217,7 +217,7 @@ export const useSignTransactions = () => {
         signTransactionsWithProvider();
       }
     } catch (err) {
-      const defaultErrorMessage = (error as unknown as Error)?.message;
+      const defaultErrorMessage = (err as Error)?.message;
       const errorMessage = defaultErrorMessage || ERROR_SIGNING;
       onCancel(errorMessage, sessionId);
 
@@ -231,7 +231,6 @@ export const useSignTransactions = () => {
       console.error(errorMessage, err);
     }
   };
-
   useEffect(() => {
     signTransactions();
   }, [transactionsToSign]);

@@ -23,7 +23,7 @@ export const networkSelector = createDeepEqualSelector(
   (state) => state.network
 );
 
-export const apiNetworkSelector = createDeepEqualSelector(
+export const apiAddressSelector = createDeepEqualSelector(
   networkSelector,
   (state) => state.apiAddress
 );

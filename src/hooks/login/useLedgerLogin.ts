@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
-import { setAccountProvider } from 'providers/accountProvider';
-import { getLedgerConfiguration } from 'providers/utils';
+import { setAccountProvider } from 'reduxStore/slices/providersSlice';
+import { getLedgerConfiguration } from 'utils/providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -90,7 +90,7 @@ export function useLedgerLogin({
     index: number;
     signature?: string;
   }) {
-    setAccountProvider(provider);
+    dispatch(setAccountProvider(provider));
 
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
@@ -236,7 +236,7 @@ export function useLedgerLogin({
         const address = await hwWalletP.login({
           addressIndex: selectedAddress.index.valueOf()
         });
-        setAccountProvider(hwWalletP);
+        dispatch(setAccountProvider(hwWalletP));
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );

@@ -9,14 +9,8 @@ import {
   logoutAction,
   LoginActionPayloadType
 } from '../commonActions';
+import { AccountType } from 'types';
 
-export interface AccountType {
-  address: string;
-  balance: string;
-  nonce: number;
-  code?: string;
-  username?: string;
-}
 export interface LedgerAccountType {
   index: number;
   address: string;

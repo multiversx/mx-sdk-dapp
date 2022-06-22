@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useGetSignedTransactions, useGetPendingTransactions } from 'hooks';
+import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import { TransactionToast } from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'UI/utils';
+import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 
 export interface TransactionsToastListPropsType {
   toastProps?: any;
