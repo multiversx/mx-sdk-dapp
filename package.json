@@ -7,6 +7,7 @@
   "repository": "ElrondNetwork/dapp-core",
   "main": "./",
   "module": "./",
+  "types": "./dist",
   "engines": {
     "node": ">=16"
   },
