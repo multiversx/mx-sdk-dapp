@@ -3,7 +3,7 @@ import { store } from 'reduxStore/store';
 import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';
-import { getAccountProvider } from 'utils/account/getAccountProvider';
+import { getAccountProvider } from 'providers';
 
 const setNewAccount = async () => {
   try {

@@ -1,14 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
-import {
-  setExternalProviderAsAccountProvider,
-  setAccountProvider
-} from 'reduxStore/slices/providersSlice';
-import {
-  getLedgerConfiguration,
-  newWalletProvider
-} from 'utils/providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -31,8 +23,19 @@ import {
 } from 'reduxStore/slices';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
-import { getAddress, getAccount, getLatestNonce, logout } from 'utils';
+import {
+  getAddress,
+  getAccount,
+  getLatestNonce,
+  logout,
+  newWalletProvider,
+  getLedgerConfiguration
+} from 'utils';
 import { getNetworkConfigFromApi } from 'apiCalls';
+import {
+  setAccountProvider,
+  setExternalProviderAsAccountProvider
+} from 'providers/accountProvider';
 
 export default function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -129,7 +132,7 @@ export default function ProviderInitializer() {
         const provider = newWalletProvider(network.walletAddress);
         const address = await getAddress();
         if (address) {
-          dispatch(setAccountProvider(provider));
+          setAccountProvider(provider);
           dispatch(
             loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
           );
@@ -176,7 +179,7 @@ export default function ProviderInitializer() {
         return;
       }
       const ledgerConfig = await getLedgerConfiguration(hwWalletP);
-      dispatch(setAccountProvider(hwWalletP));
+      setAccountProvider(hwWalletP);
       setLedgerData(ledgerConfig);
     } catch (err) {
       console.error('Could not initialise ledger app', err);
@@ -191,7 +194,7 @@ export default function ProviderInitializer() {
       const success = await provider.init();
 
       if (success) {
-        dispatch(setAccountProvider(provider));
+        setAccountProvider(provider);
       } else {
         console.error(
           'Could not initialise extension, make sure Elrond wallet extension is installed.'
@@ -218,7 +221,7 @@ export default function ProviderInitializer() {
       }
       case LoginMethodsEnum.wallet: {
         const provider = newWalletProvider(network.walletAddress);
-        dispatch(setAccountProvider(provider));
+        setAccountProvider(provider);
         break;
       }
 

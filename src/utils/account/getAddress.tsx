@@ -7,7 +7,7 @@ import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { addressIsValid } from './addressIsValid';
-import { getAccountProvider } from 'utils/account/getAccountProvider';
+import { getAccountProvider } from 'providers';
 
 export function getAddress(): Promise<string> {
   const { search } = window.location;

@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
-import { setAccountProvider } from 'reduxStore/slices/providersSlice';
-import { getLedgerConfiguration } from 'utils/providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -17,6 +15,8 @@ import {
 import { LoginMethodsEnum } from 'types/enums';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
+import { setAccountProvider } from 'providers/accountProvider';
+import { getLedgerConfiguration } from 'providers';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -90,7 +90,7 @@ export function useLedgerLogin({
     index: number;
     signature?: string;
   }) {
-    dispatch(setAccountProvider(provider));
+    setAccountProvider(provider);
 
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
@@ -236,7 +236,7 @@ export function useLedgerLogin({
         const address = await hwWalletP.login({
           addressIndex: selectedAddress.index.valueOf()
         });
-        dispatch(setAccountProvider(hwWalletP));
+        setAccountProvider(hwWalletP);
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );

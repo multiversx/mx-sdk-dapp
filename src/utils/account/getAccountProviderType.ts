@@ -1,5 +1,4 @@
-import { getAccountProvider } from 'utils/account/getAccountProvider';
-import { getProviderType } from 'utils/providers';
+import { getAccountProvider, getProviderType } from 'providers';
 
 export function getAccountProviderType() {
   const provider = getAccountProvider();

@@ -11,6 +11,7 @@ import { CustomNetworkType, EnvironmentsEnum } from 'types';
 import AppInitializer from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
+import { setExternalProvider } from 'providers/accountProvider';
 
 export interface DappProviderPropsType {
   children: React.ReactChildren | React.ReactElement;
@@ -33,11 +34,14 @@ export const DappProvider = ({
     throw new Error('missing environment flag');
   }
 
+  if (externalProvider != null) {
+    setExternalProvider(externalProvider);
+  }
+
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
         <AppInitializer
-          externalProvider={externalProvider}
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
         >

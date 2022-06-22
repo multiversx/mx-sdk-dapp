@@ -8,7 +8,6 @@ import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils';
 import getAccountShard from 'utils/account/getAccountShard';
-import { setExternalProvider } from 'reduxStore/slices/providersSlice';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -19,7 +18,6 @@ interface AppInitializerPropsType {
 
 export function AppInitializer({
   customNetworkConfig = {},
-  externalProvider,
   children,
   environment
 }: AppInitializerPropsType) {
@@ -61,9 +59,7 @@ export function AppInitializer({
 
   async function initializeApp() {
     await initializeNetwork();
-    if (externalProvider != null) {
-      dispatch(setExternalProvider(externalProvider));
-    }
+
     setInitialized(true);
 
     getAccountShard();
