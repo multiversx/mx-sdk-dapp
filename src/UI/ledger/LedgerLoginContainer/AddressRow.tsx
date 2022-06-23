@@ -82,7 +82,6 @@ export const AddressRow = ({
                 ${globalStyles.flexRow}
                 ${globalStyles.alignItemsCenter}
                 ${globalStyles.textNowrap}
-                ${globalStyles.trim}
               `}
             >
               <span>{trimHash(address)}</span>
