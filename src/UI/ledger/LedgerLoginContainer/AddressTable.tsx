@@ -10,6 +10,7 @@ import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 
 import { AddressRow } from './AddressRow';
+import classNames from 'classnames';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -41,15 +42,15 @@ export const AddressTable = ({
   className = 'ledger-address-table'
 }: AddressTablePropsType) => {
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `${globalStyles.card} ${globalStyles.p4} ${globalStyles.mxLg4}`,
-    cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+    wrapper: `${globalStyles.card} ${globalStyles.px4}`,
+    cardBody: `${globalStyles.cardBody} ${globalStyles.p4}`,
     tableWrapper: globalStyles.tableResponsive,
     tableContent: `${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
     tableHeader: `${globalStyles.py2} ${globalStyles.textBlack50} ${globalStyles.borderBottom}`,
     tableHeaderText: `${globalStyles.textLeft} ${globalStyles.border0}`,
     buttonsWrapper: `${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.mt2}`,
     arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
-    confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px2} ${globalStyles.mt4}`
+    confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.mt4}`
   });
 
   if (loading) {
@@ -104,21 +105,26 @@ export const AddressTable = ({
               </button>
               <button
                 type='button'
-                className={classes.arrowButton}
+                className={classNames(
+                  classes.arrowButton,
+                  globalStyles.linkSecondStyle
+                )}
                 onClick={onGoToNextPage}
                 data-testid='nextBtn'
               >
                 Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
               </button>
             </div>
-            <button
-              className={classes.confirmButton}
-              disabled={selectedAddress === ''}
-              onClick={onConfirmSelectedAddress}
-              data-testid='confirmBtn'
-            >
-              Confirm
-            </button>
+            <div className={globalStyles.centering}>
+              <button
+                className={classes.confirmButton}
+                disabled={selectedAddress === ''}
+                onClick={onConfirmSelectedAddress}
+                data-testid='confirmBtn'
+              >
+                Confirm
+              </button>
+            </div>
           </div>
         </div>
       </div>
