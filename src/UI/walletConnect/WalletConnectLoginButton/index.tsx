@@ -1,9 +1,7 @@
 import React, { Fragment, ReactNode, useState } from 'react';
-import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 import { useDappModal } from 'UI/DappModal';
-import { getGeneratedClasses } from 'UI/utils';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+import { LoginButton } from '../../LoginButton/LoginButton';
 
 export interface WalletConnectLoginButtonPropsType {
   onModalOpens?: (props?: any) => void;
@@ -43,24 +41,6 @@ export const WalletConnectLoginButton = ({
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
 
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper: `${classNames(
-        globalStyles.btn,
-        globalStyles.btnPrimary,
-        globalStyles.px4,
-        globalStyles.m1,
-        globalStyles.mx3,
-        {
-          [buttonClassName]: buttonClassName != null
-        }
-      )} `,
-      loginText: globalStyles.textLeft
-    }
-  );
-
   const handleOpenModal = () => {
     setCanShowLoginModal(true);
     handleShowModal();
@@ -77,13 +57,15 @@ export const WalletConnectLoginButton = ({
   return (
     <Fragment>
       {shouldRenderButton && (
-        <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
-          {children || (
-            <span className={generatedClasses.loginText}>
-              {loginButtonText}
-            </span>
-          )}
-        </button>
+        <LoginButton
+          onLogin={handleOpenModal}
+          shouldRenderDefaultCss={shouldRenderDefaultCss}
+          customClassName={className}
+          btnClassName={buttonClassName}
+          text={loginButtonText}
+        >
+          {children}
+        </LoginButton>
       )}
       {canShowLoginModal && (
         <WalletConnectLoginContainer

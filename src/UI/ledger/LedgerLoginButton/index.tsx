@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 import { useDappModal } from 'UI/DappModal';
-import { getGeneratedClasses } from 'UI/utils';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import styles from './ledger-login-button.scss';
 import { LedgerLoginButtonPropsType } from './types';
+import { LoginButton } from '../../LoginButton/LoginButton';
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
@@ -27,24 +24,6 @@ export const LedgerLoginButton: (
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
 
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper: `${classNames(
-        globalStyles.btn,
-        globalStyles.btnPrimary,
-        globalStyles.px4,
-        globalStyles.m1,
-        globalStyles.mx3,
-        {
-          buttonClassName: buttonClassName != null
-        }
-      )}`,
-      loginText: styles.loginText
-    }
-  );
-
   function handleOpenModal() {
     setCanShowLoginModal(true);
     handleShowModal();
@@ -62,13 +41,15 @@ export const LedgerLoginButton: (
   return (
     <>
       {shouldRenderButton && (
-        <button onClick={handleOpenModal} className={generatedClasses.wrapper}>
-          {children || (
-            <span className={generatedClasses.loginText}>
-              {loginButtonText}
-            </span>
-          )}
-        </button>
+        <LoginButton
+          onLogin={handleOpenModal}
+          shouldRenderDefaultCss={shouldRenderDefaultCss}
+          customClassName={className}
+          btnClassName={buttonClassName}
+          text={loginButtonText}
+        >
+          {children}
+        </LoginButton>
       )}
       {canShowLoginModal && (
         <LedgerLoginContainer
