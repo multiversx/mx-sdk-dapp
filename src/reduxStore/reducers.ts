@@ -23,6 +23,11 @@ const transactionsReducerPersistConfig = {
   storage: sessionStorage,
   blacklist: [ReducersEnum.transactionsToSign]
 };
+const toastsReducerPersistConfig = {
+  key: 'dapp-core-toasts',
+  version: 1,
+  storage: sessionStorage
+};
 
 const reducers = {
   [ReducersEnum.account]: account,
@@ -30,7 +35,7 @@ const reducers = {
   [ReducersEnum.loginInfo]: loginInfo,
   [ReducersEnum.modals]: modals,
   [ReducersEnum.dappModal]: dappModal,
-  [ReducersEnum.toasts]: toasts,
+  [ReducersEnum.toasts]: persistReducer(toastsReducerPersistConfig, toasts),
   [ReducersEnum.transactions]: persistReducer(
     transactionsReducerPersistConfig,
     transactions

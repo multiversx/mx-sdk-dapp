@@ -1,6 +1,12 @@
-export interface ToastsType {
+export interface CustomToastType {
   toastId: string;
-  type: string;
+  message: string;
   duration?: number;
-  message?: string;
+  type: string;
+}
+
+export interface TransactionToastType {
+  toastId: string;
+  startTimestamp: number;
+  type: string;
 }

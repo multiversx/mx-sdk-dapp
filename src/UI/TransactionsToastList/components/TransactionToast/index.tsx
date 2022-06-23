@@ -1,11 +1,15 @@
 import React, { useMemo, useState } from 'react';
 import classNames from 'classnames';
 import { useGetTransactionDisplayInfo } from 'hooks/transactions/useGetTransactionDisplayInfo';
-import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
-import { SignedTransactionsBodyType } from 'types';
+import {
+  SignedTransactionsBodyType,
+  SignedTransactionsType,
+  SignedTransactionType,
+  TransactionBatchStatusesEnum
+} from 'types';
 import { Progress } from 'UI/Progress';
 import { TxDetails } from 'UI/TxDetails';
 
@@ -16,21 +20,42 @@ import {
 } from 'utils/transactions';
 
 import CloseButton from './components/CloseButton';
-import { TransactionToastPropsType } from './types';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { getToastDataStateByStatus } from './utils';
 import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
+import {
+  getUnixTimestampWithAddedMilliseconds,
+  getUnixTimestamp
+} from 'utils/dateTime';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
+
+export interface TransactionToastPropsType {
+  title?: string;
+  toastId: string;
+  className?: string;
+  errorMessage?: string;
+  successMessage?: string;
+  endTimeProgress?: number;
+  processingMessage?: string;
+  startTimestamp?: number;
+  shouldRenderDefaultCss?: boolean;
+  transactions?: SignedTransactionType[];
+  status?: TransactionBatchStatusesEnum;
+  signedTransactionsToRender: SignedTransactionsType;
+  lifetimeAfterSuccess?: number;
+  onDelete?: (toastId: string) => void;
+}
 
 const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
   className = 'transaction-toast',
-  startTimeProgress,
+  onDelete,
+  startTimestamp,
   endTimeProgress,
   lifetimeAfterSuccess,
   signedTransactionsToRender
@@ -63,12 +88,11 @@ const TransactionToast = ({
     transactionDisplayInfo?.transactionDuration || shardAdjustedDuration;
 
   const [startTime, endTime] = useMemo(() => {
-    const startTime = startTimeProgress || moment().unix();
+    const startTime = startTimestamp || getUnixTimestamp();
     const endTime =
       endTimeProgress ||
-      moment()
-        .add(Number(transactionDuration), 'milliseconds')
-        .unix();
+      getUnixTimestampWithAddedMilliseconds(transactionDuration);
+
     return [startTime, endTime];
   }, []);
 
@@ -97,6 +121,7 @@ const TransactionToast = ({
 
   const handleDeleteToast = () => {
     setShouldRender(false);
+    onDelete?.(toastId);
   };
 
   if (!shouldRender || transactions == null) {
