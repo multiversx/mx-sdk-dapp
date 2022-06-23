@@ -1,10 +1,10 @@
 import React from 'react';
 import moment from 'moment';
+import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import storage from 'utils/storage';
 
 import styles from './styles.scss';
-import { logarithmicRest } from 'utils';
 
 export interface ProgressProps {
   id: string;
