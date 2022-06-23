@@ -19,7 +19,7 @@ import CloseButton from './components/CloseButton';
 import styles from './styles.scss';
 import { TransactionToastPropsType } from './types';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
-import { getToastsOptionsData } from 'UI/TransactionsToastList/components/TransactionToast/utils/getToastsOptionsData';
+import { getToastDataStateByStatus } from './utils';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
@@ -85,13 +85,12 @@ const TransactionToast = ({
   const isPending = getIsTransactionPending(status);
   const isTimedOut = getIsTransactionTimedOut(status);
 
-  const toastsOptionsData = getToastsOptionsData(
+  const toastDataState = getToastDataStateByStatus({
+    status,
     toastId,
     style,
     transactionDisplayInfo
-  );
-
-  const toastDataState = toastsOptionsData[status!];
+  });
 
   const handleDeleteToast = () => {
     setShouldRender(false);
