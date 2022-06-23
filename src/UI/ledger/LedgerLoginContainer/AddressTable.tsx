@@ -10,6 +10,7 @@ import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 
 import { AddressRow } from './AddressRow';
+import classNames from 'classnames';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -104,7 +105,10 @@ export const AddressTable = ({
               </button>
               <button
                 type='button'
-                className={classes.arrowButton}
+                className={classNames(
+                  classes.arrowButton,
+                  globalStyles.linkSecondStyle
+                )}
                 onClick={onGoToNextPage}
                 data-testid='nextBtn'
               >
