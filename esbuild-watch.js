@@ -1,3 +1,3 @@
-import executeBuildCommand from './executeBuildCommand';
+const executeBuildCommand = require('./executeBuildCommand');
 
 executeBuildCommand({ watch: true });
