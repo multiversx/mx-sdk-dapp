@@ -1,12 +1,4 @@
-/* Bootstrap overrides
--------------------------------------------------- */
-// Fonts
-// @import "./fonts";
-
-
-/* Do not move the imports from here.
-Override Bootstrap variables only above.
--------------------------------------------------- */
+@import '../variables/variables';
 
 
   /* Base
@@ -76,10 +68,6 @@ Override Bootstrap variables only above.
 
   .border-n {
     border: none !important;
-  }
-
-  .text {
-    color: #9dabbd;
   }
 
   .t-shadow {
@@ -267,3 +255,19 @@ Override Bootstrap variables only above.
       }
     }
   }
+
+@import "button";
+@import "card";
+@import "text";
+@import "spacing";
+@import "flex";
+@import "form";
+@import "border";
+@import "type";
+@import "background";
+@import "position";
+@import "size";
+@import "icons";
+@import "shadows";
+@import "display";
+@import "table";

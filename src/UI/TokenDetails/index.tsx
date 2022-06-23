@@ -3,6 +3,7 @@ import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
+import styles from './token-details.scss';
 import { Simple, Combined } from './TokenSymbol';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
@@ -26,7 +27,7 @@ type TokenIconType = TokenIconProps & {
 
 function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
   if (tokenAvatar) {
-    return <img className='token-symbol-custom-token' src={tokenAvatar} />;
+    return <img className={styles.tokenSymbolCustomToken} src={tokenAvatar} />;
   }
   return isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faDiamond} />;
 }

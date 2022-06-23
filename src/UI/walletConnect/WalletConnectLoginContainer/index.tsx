@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-
 import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
+import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
+import styles from './wallet-connect-login-container.scss';
 
 export interface WalletConnectLoginModalPropsType {
   lead?: string;
@@ -26,7 +27,7 @@ export const WalletConnectLoginContainer = ({
   loginButtonText,
   title = 'Maiar Login',
   logoutRoute = '/unlock',
-  className = 'wallect-connect-login-modal',
+  className = 'wallet-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
@@ -52,19 +53,17 @@ export const WalletConnectLoginContainer = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: 'btn btn-primary px-sm-4 m-1 mx-sm-3',
-      loginText: 'text-left',
-      container: 'm-auto login-container',
-      card: 'card my-3 text-center',
-      cardBody: 'card-body p-4 mx-lg-4',
-      qrCodeSvgContainer: 'mx-auto mb-3',
-      title: 'mb-3',
-      leadText: 'lead mb-0',
-      mobileLoginButton:
-        'btn btn-primary d-inline-flex align-items-center px-4 mt-4',
-      mobileLoginButtonIcon: 'mr-2',
-      errorMessage:
-        'text-danger d-flex justify-content-center align-items-center'
+      wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.m1} ${globalStyles.mx3}`,
+      loginText: globalStyles.textLeft,
+      container: `${globalStyles.mAuto} ${styles.loginContainer}`,
+      card: `${globalStyles.card} ${globalStyles.my3} ${globalStyles.textCenter}`,
+      cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+      qrCodeSvgContainer: `${globalStyles.mxAuto} ${globalStyles.mb3}`,
+      title: globalStyles.mb3,
+      leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
+      mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
+      mobileLoginButtonIcon: globalStyles.mr2,
+      errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter} `
     }
   );
 
@@ -141,9 +140,12 @@ export const WalletConnectLoginContainer = ({
 
   return wrapContentInsideModal ? (
     <ModalContainer
-      title={'Login with Maiar'}
-      className={className}
       onClose={onClose}
+      modalConfig={{
+        headerText: 'Login with Maiar',
+        showHeader: true,
+        modalDialogClassName: className
+      }}
     >
       {content}
     </ModalContainer>

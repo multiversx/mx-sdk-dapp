@@ -1,10 +1,11 @@
 import React from 'react';
-
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { ExtensionLoginButtonPropsType } from 'types';
 import { getGeneratedClasses } from 'UI/utils';
+import styles from './login-button.scss';
+import { LoginButton } from '../../LoginButton/LoginButton';
 
 export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
@@ -26,15 +27,10 @@ export const ExtensionLoginButton: (
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
-      buttonClassName != null ? buttonClassName : ''
-    }`,
-    loginText: 'text-left',
-    noExtensionButtonWrapper: 'btn btn-unlock d-inline-block',
-    noExtensionButtonContent:
-      'd-flex justify-content-between align-items-center',
-    noExtensionButtonTitle: 'title',
-    noExtensionButtonIcon: ''
+    noExtensionButtonWrapper: styles.noExtensionButtonWrapper,
+    noExtensionButtonContent: styles.noExtensionButtonContent,
+    noExtensionButtonTitle: styles.noExtensionButtonTitle,
+    noExtensionButtonIcon: styles.noExtensionButtonIcon
   });
 
   const handleLogin = () => {
@@ -65,8 +61,14 @@ export const ExtensionLoginButton: (
       )}
     </a>
   ) : (
-    <button onClick={handleLogin} className={classes.wrapper}>
-      {children || <span className={classes.loginText}>{loginButtonText}</span>}
-    </button>
+    <LoginButton
+      onLogin={handleLogin}
+      customClassName={className}
+      btnClassName={buttonClassName}
+      shouldRenderDefaultCss={shouldRenderDefaultCss}
+      text={loginButtonText}
+    >
+      {children}
+    </LoginButton>
   );
 };

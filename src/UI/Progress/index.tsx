@@ -3,6 +3,8 @@ import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import storage from 'utils/storage';
 
+import styles from './styles.scss';
+
 export interface ProgressProps {
   id: string;
   done: boolean;
@@ -31,9 +33,7 @@ export const Progress = ({
       return;
     }
 
-    const expires = moment()
-      .add(expiresIn, 'seconds')
-      .unix();
+    const expires = moment().add(expiresIn, 'seconds').unix();
 
     delete toastProgress[id];
 
@@ -50,9 +50,7 @@ export const Progress = ({
     storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment()
-        .add(expiresIn, 'seconds')
-        .unix()
+      expires: moment().add(expiresIn, 'seconds').unix()
     });
   };
 
@@ -70,9 +68,8 @@ export const Progress = ({
 
   const { totalSeconds, currentRemaining } = getInitialData();
 
-  const [percentRemaining, setPercentRemaining] = React.useState<number>(
-    currentRemaining
-  );
+  const [percentRemaining, setPercentRemaining] =
+    React.useState<number>(currentRemaining);
 
   React.useEffect(() => {
     if (progress) {
@@ -116,19 +113,18 @@ export const Progress = ({
     }
     return;
   }, [progress, done]);
+
   return progress ? (
-    <div className='progress position-relative' ref={ref}>
+    <div ref={ref} className={styles.progress}>
       <div
-        className='progress-bar'
         role='progressbar'
         style={{ width: `${percentRemaining}%` }}
         aria-valuenow={percentRemaining}
         aria-valuemin={0}
         aria-valuemax={100}
-      >
-        <div className='content-height'>{children}</div>
-      </div>
-      <div className='d-flex position-absolute w-100'>{children}</div>
+        className={styles.bar}
+      />
+      {children}
     </div>
   ) : (
     <>{children}</>

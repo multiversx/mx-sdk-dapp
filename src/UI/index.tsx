@@ -1,3 +1,4 @@
+export * as DappCorePages from './pages';
 export * from './Denominate';
 export * from './ExplorerLink';
 export * from './extension/ExtensionLoginButton';
@@ -11,9 +12,9 @@ export * from './SignTransactionsModals/SignWithDeviceModal';
 export * from './SignTransactionsModals/SignWithExtensionModal';
 export * from './SignTransactionsModals/SignWithLedgerModal';
 export * from './TransactionsToastList';
-export * from './TransactionToast';
 export * from './Trim';
 export * from './UsdValue';
 export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
 export * from './webWallet/WebWalletLoginButton';
+export * from './utils';

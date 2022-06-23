@@ -1,5 +1,5 @@
 import React from 'react';
-
+import globalStyles from 'assets/sass/main.scss';
 import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
 
@@ -49,8 +49,15 @@ export const AddressRow = ({
 
   return (
     <tr>
-      <td className='text-left'>
-        <div className='d-flex align-items-start text-left form-check'>
+      <td className={globalStyles.textLeft}>
+        <div
+          className={`
+            ${globalStyles.flexRow}
+            ${globalStyles.alignItemsStart}
+            ${globalStyles.textLeft}
+            ${globalStyles.formCheck}
+          `}
+        >
           <input
             type='radio'
             id={`check_${index}`}
@@ -58,24 +65,36 @@ export const AddressRow = ({
             onChange={handleChange}
             role='button'
             checked={selectedAddress === address}
-            className='form-check-input mr-1'
+            className={`${globalStyles.formCheckInput} ${globalStyles.mr1}`}
           />
           <label
             htmlFor={`check_${index}`}
             role='button'
             data-testid={`label_${index}`}
-            className='form-check-label text-nowrap trim-size-xl m-0'
+            className={`
+              ${globalStyles.formCheckLabel}
+              ${globalStyles.textNowrap}
+              ${globalStyles.m0}
+            `}
           >
-            <div className='d-flex align-items-center text-nowrap trim'>
+            <div
+              className={`
+                ${globalStyles.flexRow}
+                ${globalStyles.alignItemsCenter}
+                ${globalStyles.textNowrap}
+              `}
+            >
               <span>{trimHash(address)}</span>
             </div>
           </label>
         </div>
       </td>
-      <td className='text-left'>
+      <td className={globalStyles.textLeft}>
         <Denominate value={balance} />
       </td>
-      <td className='text-left'>{index}</td>
+      <td className={globalStyles.textLeft}>{index}</td>
     </tr>
   );
 };
+
+export default AddressRow;

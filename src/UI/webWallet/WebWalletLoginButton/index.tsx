@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
-import { getGeneratedClasses } from 'UI/utils';
+import { LoginButton } from '../../LoginButton/LoginButton';
 
 export interface WebWalletLoginButtonPropsType {
   token?: string;
@@ -27,20 +27,20 @@ export const WebWalletLoginButton: (
     callbackRoute,
     token
   });
-  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `btn btn-primary px-sm-4 m-1 mx-sm-3 ${
-      buttonClassName != null ? buttonClassName : ''
-    }`,
-    loginText: 'text-left'
-  });
 
   const handleLogin = () => {
     onInitiateLogin();
   };
 
   return (
-    <button onClick={handleLogin} className={classes.wrapper}>
-      {children || <span className={classes.loginText}>{loginButtonText}</span>}
-    </button>
+    <LoginButton
+      onLogin={handleLogin}
+      shouldRenderDefaultCss={shouldRenderDefaultCss}
+      customClassName={className}
+      btnClassName={buttonClassName}
+      text={loginButtonText}
+    >
+      {children}
+    </LoginButton>
   );
 };
