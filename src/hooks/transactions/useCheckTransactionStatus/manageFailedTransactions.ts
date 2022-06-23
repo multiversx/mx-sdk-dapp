@@ -18,7 +18,7 @@ export function manageFailedTransactions({
   hash: string;
   sessionId: string;
 }) {
-  const resultWithError = results.find(
+  const resultWithError = results?.find(
     (scResult) => scResult?.returnMessage !== ''
   );
 

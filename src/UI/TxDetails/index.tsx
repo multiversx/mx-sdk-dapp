@@ -58,7 +58,7 @@ export const TxDetails = ({
         const iconSrc = iconData[status];
 
         return (
-          <div className={styles.item} key={hash}>
+          <div className={styles.container} key={hash}>
             {!isTimedOut && iconSrc != null && (
               <FontAwesomeIcon
                 icon={iconSrc.icon}
