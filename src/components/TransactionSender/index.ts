@@ -2,25 +2,30 @@ import React, { useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
-import { sendSignedTransactions as defaultSendSignedTxs } from 'apiCalls/transactions';
-import { SendSignedTransactionsAsyncType } from 'contexts/types';
+import {
+  sendSignedTransactions as defaultSendSignedTxs,
+  SendSignedTransactionsReturnType
+} from 'apiCalls/transactions';
 import newTransaction from 'models/newTransaction';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { signedTransactionsSelector } from 'redux/selectors';
-import { accountSelector } from 'redux/selectors';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { signedTransactionsSelector } from 'reduxStore/selectors';
+import { accountSelector } from 'reduxStore/selectors';
 import {
   setTxSubmittedModal,
   clearAllTransactionsToSign,
   updateSignedTransactions
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums';
 import { setNonce } from 'utils';
+import { Transaction } from '@elrondnetwork/erdjs/out';
 
 export interface TransactionSenderType {
-  sendSignedTransactionsAsync?: SendSignedTransactionsAsyncType;
+  sendSignedTransactionsAsync?: (
+    signedTransactions: Transaction[]
+  ) => Promise<SendSignedTransactionsReturnType>;
 }
 
 export const TransactionSender = ({

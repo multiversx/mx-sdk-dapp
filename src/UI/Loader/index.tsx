@@ -1,9 +1,9 @@
 import React from 'react';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import globalStyles from 'assets/sass/main.scss';
+import { PageState } from 'UI/PageState';
 
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import PageState from '../PageState';
-
-const Loader = ({
+export const Loader = ({
   dataTestId = 'loader',
   noText = false
 }: {
@@ -13,10 +13,9 @@ const Loader = ({
   return (
     <PageState
       title={noText ? '' : 'Loading...'}
-      iconClass='text-primary fa-spin'
+      iconClass={`fa-spin ${globalStyles.textPrimary}`}
       dataTestId={dataTestId}
-      icon={icons.faCircleNotch}
+      icon={faCircleNotch}
     />
   );
 };
-export default Loader;

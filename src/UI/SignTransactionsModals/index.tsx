@@ -8,10 +8,9 @@ import {
   useSignTransactions
 } from 'hooks';
 import { LoginMethodsEnum } from 'types';
-import { withClassNameWrapper } from 'wrappers/withClassNameWrapper';
-import SignWithExtensionModal from './SignWithExtensionModal';
-import SignWithLedgerModal from './SignWithLedgerModal';
-import SignWithWalletConnectModal from './SignWithWalletConnectModal';
+import { SignWithExtensionModal } from './SignWithExtensionModal';
+import { SignWithLedgerModal } from './SignWithLedgerModal';
+import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
 
 interface SignPropsType {
   handleClose: () => void;
@@ -37,11 +36,11 @@ interface SignTransactionsPropsType {
   verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
 }
 
-function SignTransactionsModals({
+export const SignTransactionsModals = ({
   className,
   CustomConfirmScreens,
   verifyReceiverScam = true
-}: SignTransactionsPropsType) {
+}: SignTransactionsPropsType) => {
   const {
     callbackRoute,
     transactions,
@@ -106,6 +105,4 @@ function SignTransactionsModals({
   }
 
   return null;
-}
-
-export default withClassNameWrapper(SignTransactionsModals);
+};

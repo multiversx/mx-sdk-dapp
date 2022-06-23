@@ -1,16 +1,16 @@
 import axios from 'axios';
 import {
   addressSelector,
-  apiNetworkSelector,
+  apiAddressSelector,
   shardSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors';
 
-import { setAccountShard } from 'redux/slices';
-import { store } from 'redux/store';
+import { setAccountShard } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 
-export default async function getAccountShard() {
+export async function getAccountShard() {
   const appState = store.getState();
-  const apiAddress = apiNetworkSelector(appState);
+  const apiAddress = apiAddressSelector(appState);
   const address = addressSelector(appState);
   const shard = shardSelector(appState);
 

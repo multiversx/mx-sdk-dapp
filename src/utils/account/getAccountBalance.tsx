@@ -1,5 +1,5 @@
-import { accountSelector } from 'redux/selectors';
-import { store } from 'redux/store';
+import { accountSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { getAccount } from './getAccount';
 
 export async function getAccountBalance(address?: string) {
@@ -12,5 +12,5 @@ export async function getAccountBalance(address?: string) {
   if (account == null) {
     throw 'Could not read account, user not logged in';
   }
-  return account?.balance?.toFixed();
+  return account?.balance;
 }

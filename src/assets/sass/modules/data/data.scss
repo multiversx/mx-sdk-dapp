@@ -1,3 +1,5 @@
+@import 'assets/sass/variables/variables';
+
 .data-field {
   $font-size: 0.8125rem;
   $highlighted-font-size: 1rem;
@@ -26,15 +28,11 @@
     }
   }
 
-
   .form-control:disabled,
   .form-control[readonly] {
     background-color: $light;
   }
   .small-font {
     font-size: $font-size;
-  }
-  @include media-breakpoint-up(sm) {
-    max-width: 39rem;
   }
 }

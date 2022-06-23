@@ -1,9 +1,9 @@
-import { getAccountProvider } from 'providers/accountProvider';
-import { setAccount } from 'redux/slices';
-import { store } from 'redux/store';
+import { setAccount } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import getAccount from './getAccount';
 import getAddress from './getAddress';
 import getLatestNonce from './getLatestNonce';
+import { getAccountProvider } from 'providers';
 
 const setNewAccount = async () => {
   try {
@@ -12,9 +12,10 @@ const setNewAccount = async () => {
       const account = await getAccount(address);
       if (account != null) {
         const accountData = {
-          balance: account.balance.toFixed(),
+          balance: account.balance,
           address,
-          nonce: getLatestNonce(account)
+          nonce: getLatestNonce(account),
+          username: account.username
         };
         store.dispatch(setAccount(accountData));
         return accountData;
