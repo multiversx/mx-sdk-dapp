@@ -12,3 +12,7 @@ export type DappModalConfig = {
   customModalHeader?: JSX.Element;
   customModalFooter?: JSX.Element;
 };
+
+export type DappModalInteractionConfig = {
+  openOnMount?: boolean;
+};

@@ -8,9 +8,14 @@ import {
   setDappModalConfig,
   setDappModalVisibility
 } from 'reduxStore/slices/dappModalsSlice';
-import { DappModalConfig } from '../types';
+import { DappModalConfig, DappModalInteractionConfig } from '../types';
 
-export const useDappModal = (config?: DappModalConfig) => {
+type UseDappModalProps = {
+  config?: DappModalInteractionConfig;
+  modalConfig?: DappModalConfig;
+};
+
+export const useDappModal = (props?: UseDappModalProps) => {
   const dispatch = useDispatch();
   const visible = useSelector(dappModalVisibilitySelector);
   const modalConfig = useSelector(dappModalConfigSelector);
@@ -28,12 +33,16 @@ export const useDappModal = (config?: DappModalConfig) => {
   }, []);
 
   useEffect(() => {
-    if (config) {
-      setModalConfig(config);
+    if (props?.modalConfig) {
+      setModalConfig(props?.modalConfig);
     }
-  }, [config]);
+  }, [props?.modalConfig]);
 
   useEffect(() => {
+    if (props?.config?.openOnMount) {
+      handleShowModal();
+    }
+
     return () => {
       handleHideModal();
     };

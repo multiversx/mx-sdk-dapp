@@ -1,20 +1,30 @@
 import React from 'react';
-import { DappModal, useDappModal, DappModalConfig } from 'UI/DappModal';
+import {
+  DappModal,
+  useDappModal,
+  DappModalConfig,
+  DappModalInteractionConfig
+} from 'UI/DappModal';
 
 export const ModalContainer = ({
   children,
   onClose,
-  modalConfig
+  modalConfig,
+  modalInteractionConfig
 }: {
   children: React.ReactNode;
   onClose?: () => void;
   modalConfig?: DappModalConfig;
+  modalInteractionConfig?: DappModalInteractionConfig;
 }) => {
   const {
     handleHideModal: onHide,
     visible,
     config
-  } = useDappModal(modalConfig);
+  } = useDappModal({
+    modalConfig,
+    config: modalInteractionConfig
+  });
 
   const hideModalHandler = () => {
     onHide();

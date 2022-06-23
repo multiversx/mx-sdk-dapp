@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
-import { useDappModal } from 'UI/DappModal';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
@@ -21,12 +20,6 @@ export const SignWithExtensionModal = ({
     icon: globalStyles.textWhite,
     closeBtn: `${globalStyles.btn} ${globalStyles.btnCloseLink} ${globalStyles.mt2}`
   });
-
-  const { handleShowModal } = useDappModal();
-
-  useEffect(() => {
-    handleShowModal();
-  }, []);
 
   const description = error
     ? error
@@ -50,6 +43,9 @@ export const SignWithExtensionModal = ({
       onClose={handleClose}
       modalConfig={{
         modalDialogClassName: classes.wrapper
+      }}
+      modalInteractionConfig={{
+        openOnMount: true
       }}
     >
       <PageState

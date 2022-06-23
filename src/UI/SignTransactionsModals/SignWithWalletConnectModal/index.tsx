@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SignModalPropsType } from 'types';
-import { useDappModal } from 'UI/DappModal';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
@@ -37,19 +36,14 @@ export const SignWithWalletConnectModal = ({
     }
   };
 
-  const { handleShowModal } = useDappModal({
-    modalDialogClassName: classes.wrapper
-  });
-
-  useEffect(() => {
-    handleShowModal();
-  }, []);
-
   return (
     <ModalContainer
       onClose={close}
       modalConfig={{
         modalDialogClassName: classes.wrapper
+      }}
+      modalInteractionConfig={{
+        openOnMount: true
       }}
     >
       <PageState
