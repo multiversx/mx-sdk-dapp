@@ -22,8 +22,8 @@ import { getToastDataStateByStatus } from './utils';
 import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 
-const averageTxDurationMs = 6000;
-const crossShardRounds = 5;
+const AVERAGE_TX_DURATION_MS = 6000;
+const CROSS_SHARD_ROUNDS = 5;
 
 const TransactionToast = ({
   toastId,
@@ -53,8 +53,8 @@ const TransactionToast = ({
   );
 
   const shardAdjustedDuration = areSameShardTransactions
-    ? averageTxDurationMs
-    : crossShardRounds * averageTxDurationMs;
+    ? AVERAGE_TX_DURATION_MS
+    : CROSS_SHARD_ROUNDS * AVERAGE_TX_DURATION_MS;
 
   const transactionDuration =
     transactionDisplayInfo?.transactionDuration || shardAdjustedDuration;
