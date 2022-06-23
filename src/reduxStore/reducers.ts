@@ -4,11 +4,13 @@ import { persistReducer } from 'redux-persist';
 import sessionStorage from 'redux-persist/lib/storage/session';
 import { ReducersEnum } from 'types/reducers';
 import account from './slices/accountInfoSlice';
+import dappModal from './slices/dappModalsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
-import transactionsInfo from './slices/transactionsInfoSlice';
+import toasts from './slices/toastsSlice';
 import transactions from './slices/transactionsSlice';
+import transactionsInfo from './slices/transactionsInfoSlice';
 
 const transactionsInfoPersistConfig = {
   key: 'dapp-core-transactionsInfo',
@@ -27,6 +29,8 @@ const reducers = {
   [ReducersEnum.networkConfig]: networkConfig,
   [ReducersEnum.loginInfo]: loginInfo,
   [ReducersEnum.modals]: modals,
+  [ReducersEnum.dappModal]: dappModal,
+  [ReducersEnum.toasts]: toasts,
   [ReducersEnum.transactions]: persistReducer(
     transactionsReducerPersistConfig,
     transactions

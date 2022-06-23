@@ -1,10 +1,9 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
-
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
-
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { AddressTable } from './AddressTable';
@@ -35,7 +34,7 @@ export const LedgerLoginContainer = ({
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
-    { spinner: 'fa-spin text-primary' }
+    { spinner: `fa-spin ${globalStyles.textPrimary}` }
   );
   const { ledgerAccount } = useGetAccountInfo();
   const [
@@ -86,11 +85,15 @@ export const LedgerLoginContainer = ({
 
     return <LedgerConnect onClick={onStartLogin} error={error} />;
   }
+
   return wrapContentInsideModal ? (
     <ModalContainer
-      title={'Login with ledger'}
-      className={className}
       onClose={onClose}
+      modalConfig={{
+        headerText: 'Login with ledger',
+        showHeader: true,
+        modalDialogClassName: className
+      }}
     >
       {getContent()}
     </ModalContainer>

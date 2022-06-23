@@ -1,5 +1,7 @@
 import React from 'react';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
+import globalStyles from 'assets/sass/main.scss';
+import styles from './ledger-connect.scss';
 
 export const LedgerConnect = ({
   onClick,
@@ -11,16 +13,20 @@ export const LedgerConnect = ({
   connectPageContent?: React.ReactNode;
 }) => {
   return (
-    <div className='m-auto login-container'>
-      <div className='card my-4 text-center border-0'>
-        <div className='card-body p-4 mx-lg-4'>
+    <div className={`${globalStyles.mAuto} ${styles.loginContainer}`}>
+      <div
+        className={`${globalStyles.card} ${globalStyles.my4} ${globalStyles.textCenter} ${globalStyles.border0}`}
+      >
+        <div
+          className={`${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`}
+        >
           {connectPageContent ? (
             <>{connectPageContent}</>
           ) : (
             <>
-              <LedgerLogo className='mb-4' />
-              <h4 className='mb-4'>Connect Ledger</h4>
-              <p className='lead mb-4'>
+              <LedgerLogo className={globalStyles.mb4} />
+              <h4 className={globalStyles.mb4}>Connect Ledger</h4>
+              <p className={`${globalStyles.lead} ${globalStyles.mb4}`}>
                 Unlock your device &amp; open the Elrond App.
               </p>
             </>
@@ -28,12 +34,14 @@ export const LedgerConnect = ({
 
           <div>
             {error && (
-              <p className='text-danger d-flex justify-content-center align-items-center'>
+              <p
+                className={`${globalStyles.textDanger} ${globalStyles.flexRow} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`}
+              >
                 {error}
               </p>
             )}
             <button
-              className='btn btn-primary px-4'
+              className={`${globalStyles.btn} ${globalStyles.btnPrimary}`}
               onClick={onClick}
               data-testid='connectBtn'
             >

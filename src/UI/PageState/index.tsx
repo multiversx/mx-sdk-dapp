@@ -1,8 +1,10 @@
 import React from 'react';
+import { SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { getGeneratedClasses } from 'UI/utils';
-import { SizeProp } from '@fortawesome/fontawesome-svg-core';
+import styles from './page-state.scss';
 
 export interface PageStateProps {
   title?: React.ReactNode;
@@ -33,13 +35,21 @@ export const PageState = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: 'state m-auto p-4 text-center',
-      iconContainer: classNames('icon-state mx-auto', {
-        [`${iconBgClass}`]: Boolean(iconBgClass)
-      }),
+      wrapper: `
+        ${styles.state}
+        ${globalStyles.mAuto}
+        ${globalStyles.p4}
+        ${globalStyles.textCenter}
+      `,
+      iconContainer: classNames(
+        `${globalStyles.iconState} ${globalStyles.mxAuto}`,
+        {
+          [`${iconBgClass}`]: Boolean(iconBgClass)
+        }
+      ),
       iconClass: classNames(iconClass != null && iconClass),
-      title: 'h4 my-4',
-      description: 'mb-3'
+      title: `${globalStyles.h4} ${globalStyles.my4}`,
+      description: globalStyles.mb3
     }
   );
 

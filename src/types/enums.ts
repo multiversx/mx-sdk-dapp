@@ -42,6 +42,11 @@ export enum EnvironmentsEnum {
   mainnet = 'mainnet'
 }
 
+export enum ToastsEnum {
+  custom = 'custom',
+  transaction = 'transaction'
+}
+
 export enum TransactionTypesEnum {
   MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTTransfer = 'ESDTTransfer',

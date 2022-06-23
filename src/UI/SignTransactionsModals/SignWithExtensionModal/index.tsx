@@ -1,10 +1,12 @@
 import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'react-bootstrap';
+import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
+import styles from './sing-with-extension-modal.scss';
 
 export const SignWithExtensionModal = ({
   handleClose,
@@ -14,10 +16,11 @@ export const SignWithExtensionModal = ({
   className = 'extension-modal'
 }: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
-    wrapper: 'modal-container extension',
-    icon: 'text-white',
-    closeBtn: 'btn btn-close-link mt-2'
+    wrapper: `${styles.modalContainer} ${styles.extension}`,
+    icon: globalStyles.textWhite,
+    closeBtn: `${globalStyles.btn} ${globalStyles.btnCloseLink} ${globalStyles.mt2}`
   });
+
   const description = error
     ? error
     : transactions && transactions.length > 1
@@ -36,13 +39,14 @@ export const SignWithExtensionModal = ({
   };
 
   return (
-    <Modal
-      show
-      backdrop='static'
-      onHide={handleClose}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={handleClose}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
+      modalInteractionConfig={{
+        openOnMount: true
+      }}
     >
       <PageState
         icon={error ? faTimes : faHourglass}
@@ -63,6 +67,6 @@ export const SignWithExtensionModal = ({
           </button>
         }
       />
-    </Modal>
+    </ModalContainer>
   );
 };

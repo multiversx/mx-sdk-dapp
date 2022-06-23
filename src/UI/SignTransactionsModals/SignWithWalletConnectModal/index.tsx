@@ -1,7 +1,7 @@
 import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Modal } from 'react-bootstrap';
 import { SignModalPropsType } from 'types';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
@@ -26,8 +26,7 @@ export const SignWithWalletConnectModal = ({
         hasMultipleTransactions ? 's' : ''
       }`;
 
-  const close = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const close = () => {
     handleClose();
     if (
       callbackRoute != null &&
@@ -36,14 +35,16 @@ export const SignWithWalletConnectModal = ({
       safeRedirect(callbackRoute);
     }
   };
+
   return (
-    <Modal
-      show
-      backdrop='static'
-      onHide={close}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={close}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
+      modalInteractionConfig={{
+        openOnMount: true
+      }}
     >
       <PageState
         icon={error ? faTimes : faHourglass}
@@ -64,6 +65,6 @@ export const SignWithWalletConnectModal = ({
           </button>
         }
       />
-    </Modal>
+    </ModalContainer>
   );
 };
