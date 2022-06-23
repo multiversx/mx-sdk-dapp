@@ -1,3 +1,3 @@
-const { executeBuildCommand } = require('./esbuildconfig');
+const executeBuildCommand = require('./executeBuildCommand');
 
 executeBuildCommand();

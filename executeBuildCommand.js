@@ -8,7 +8,7 @@ const { sassPlugin, postcssModules } = require('esbuild-sass-plugin');
 
 const basedir = 'src';
 
-export function executeBuildCommand(customOptions = {}) {
+module.exports = function executeBuildCommand(customOptions = {}) {
   glob('{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}', function(err, files) {
     if (err) {
       console.log('error reading files', err);
@@ -52,4 +52,4 @@ export function executeBuildCommand(customOptions = {}) {
       })
       .catch(() => process.exit(1));
   });
-}
+};
