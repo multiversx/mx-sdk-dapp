@@ -8,7 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
-import styles from './address-table.scss';
 
 import { AddressRow } from './AddressRow';
 
