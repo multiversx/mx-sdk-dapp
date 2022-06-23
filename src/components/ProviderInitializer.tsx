@@ -1,24 +1,20 @@
 import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
-import {
-  setExternalProviderAsAccountProvider,
-  setAccountProvider
-} from 'providers/accountProvider';
-import { getNetworkConfigFromProxyProvider } from 'providers/proxyProvider';
-import { getLedgerConfiguration, newWalletProvider } from 'providers/utils';
-import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
+import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
-  networkSelector,
   walletLoginSelector,
-  addressSelector,
-  ledgerAccountSelector,
   ledgerLoginSelector,
   isLoggedInSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors/loginInfoSelectors';
+import {
+  addressSelector,
+  ledgerAccountSelector
+} from 'reduxStore/selectors/accountInfoSelectors';
+import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -26,11 +22,22 @@ import {
   setLedgerAccount,
   setWalletLogin,
   setChainID
-} from 'redux/slices';
-import { useWalletConnectLogin } from 'services/login/useWalletConnectLogin';
-import { useWalletConnectV2Login } from 'services/login/useWalletConnectV2Login';
+} from 'reduxStore/slices';
+import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
-import { getAddress, getAccount, getLatestNonce, logout } from 'utils';
+import {
+  getAddress,
+  getAccount,
+  getLatestNonce,
+  newWalletProvider,
+  getLedgerConfiguration
+} from 'utils/account';
+import { logout } from 'utils';
+import { getNetworkConfigFromApi } from 'apiCalls';
+import {
+  setAccountProvider,
+  setExternalProviderAsAccountProvider
+} from 'providers/accountProvider';
 
 export default function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -79,16 +86,15 @@ export default function ProviderInitializer() {
     setLedgerAccountInfo();
   }, [ledgerAccount, isLoggedIn, ledgerData]);
 
-  function refreshChainID() {
-    getNetworkConfigFromProxyProvider()
-      .then((networkConfig) => {
-        if (networkConfig) {
-          dispatch(setChainID(networkConfig.ChainID.valueOf()));
-        }
-      })
-      .catch((e: any) => {
-        console.error('To do ', e);
-      });
+  async function refreshChainID() {
+    try {
+      const networkConfig = await getNetworkConfigFromApi();
+      if (networkConfig) {
+        dispatch(setChainID(networkConfig.erd_chain_id));
+      }
+    } catch (err) {
+      console.error('failed refreshing chainId ', err);
+    }
   }
 
   function setLedgerAccountInfo() {
@@ -112,10 +118,10 @@ export default function ProviderInitializer() {
         if (account) {
           dispatch(
             setAccount({
-              balance: account.balance.toFixed(),
+              balance: account.balance,
               address,
               nonce: account.nonce.valueOf(),
-              username: account.userName
+              username: account.username
             })
           );
         }
@@ -141,10 +147,10 @@ export default function ProviderInitializer() {
           if (account) {
             dispatch(
               setAccount({
-                balance: account.balance.toFixed(),
+                balance: account.balance,
                 address,
                 nonce: getLatestNonce(account),
-                username: account.userName
+                username: account.username
               })
             );
           }

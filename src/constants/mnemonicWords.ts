@@ -1,4 +1,4 @@
-const mnemonicWords = [
+export const mnemonicWords = [
   'abandon',
   'ability',
   'able',
@@ -2048,7 +2048,3 @@ const mnemonicWords = [
   'zone',
   'zoo'
 ];
-
-export function getMnemonicWords() {
-  return mnemonicWords;
-}

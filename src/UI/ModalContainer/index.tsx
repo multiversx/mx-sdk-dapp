@@ -1,9 +1,9 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Modal } from 'react-bootstrap';
 
-const ModalContainer = ({
+export const ModalContainer = ({
   children,
   noSpacer,
   className,
@@ -17,7 +17,7 @@ const ModalContainer = ({
   onClose?: () => void;
 }) => {
   return (
-    <ReactBootstrap.Modal
+    <Modal
       show
       backdrop='static'
       onHide={onClose}
@@ -28,16 +28,13 @@ const ModalContainer = ({
       <div className='modal-card card w-100'>
         <div className='card-title h5 mb-0'>
           <div className='d-flex justify-content-between align-items-center pt-spacer px-spacer mb-0'>
-            <div className={'px-3'}>{title}</div>
+            <div className='px-3'>{title}</div>
             <button
               type='button'
               className='btn btn-light px-3 py-2'
               onClick={onClose}
             >
-              <ReactFontawesome.FontAwesomeIcon
-                size='lg'
-                icon={icons.faTimes}
-              />
+              <FontAwesomeIcon size='lg' icon={faTimes} />
             </button>
           </div>
         </div>
@@ -50,8 +47,6 @@ const ModalContainer = ({
           {children}
         </div>
       </div>
-    </ReactBootstrap.Modal>
+    </Modal>
   );
 };
-
-export default ModalContainer;

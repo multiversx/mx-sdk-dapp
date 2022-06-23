@@ -1,6 +1,6 @@
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
-import { notificationModalSelector } from 'redux/selectors';
-import { clearNotificationModal } from 'redux/slices';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { notificationModalSelector } from 'reduxStore/selectors';
+import { clearNotificationModal } from 'reduxStore/slices';
 
 export function useGetNotification() {
   const notification = useSelector(notificationModalSelector);

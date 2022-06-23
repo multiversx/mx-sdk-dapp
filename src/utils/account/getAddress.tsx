@@ -1,13 +1,13 @@
-import { getAccountProvider } from 'providers/accountProvider';
 import {
   addressSelector,
   isLoggedInSelector,
   walletLoginSelector
-} from 'redux/selectors';
-import { store } from 'redux/store';
+} from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types/enums';
-import { getIsProviderEqualTo } from 'utils/network';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { addressIsValid } from './addressIsValid';
+import { getAccountProvider } from 'providers';
 
 export function getAddress(): Promise<string> {
   const { search } = window.location;

@@ -1,16 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
-import platform from 'optionalPackages/platform';
-import QRCode from 'optionalPackages/qrcode';
-import { useWalletConnectLogin, useWalletConnectV2Login } from 'services';
-import CopyButton from 'UI/CopyButton';
-import Loader from 'UI/Loader';
-import ModalContainer from 'UI/ModalContainer';
-import { getGeneratedClasses } from 'utils';
-import { ReactComponent as Lighting } from '../WalletConnectLoginButton/lightning.svg';
-import { LoginModalPropsType } from './types';
+import platform from 'platform';
+import QRCode from 'qrcode';
+import Lighting from 'assets/icons/lightning.svg';
+import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import { ModalContainer } from 'UI/ModalContainer';
+import { getGeneratedClasses } from 'UI/utils';
 
-function WalletConnectLoginContainer({
+export interface WalletConnectLoginModalPropsType {
+  lead?: string;
+  title?: string;
+  className?: string;
+  logoutRoute?: string;
+  callbackRoute: string;
+  loginButtonText: string;
+  wrapContentInsideModal?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  redirectAfterLogin?: boolean;
+  token?: string;
+  onClose?: () => void;
+}
+
+export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText,
   title = 'Maiar Login',
@@ -21,9 +32,8 @@ function WalletConnectLoginContainer({
   wrapContentInsideModal = true,
   redirectAfterLogin,
   token,
-  onClose,
-  isWalletConnectV2 = false
-}: LoginModalPropsType) {
+  onClose
+}: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnect,
     { error },
@@ -139,7 +149,7 @@ function WalletConnectLoginContainer({
 
             <h4 className={generatedClasses.title}>{title}</h4>
             {isMobileDevice ? (
-              <React.Fragment>
+              <>
                 <p className={generatedClasses.leadText}>{loginButtonText}</p>
                 <a
                   id='accessWalletBtn'
@@ -158,7 +168,7 @@ function WalletConnectLoginContainer({
                   />
                   {title}
                 </a>
-              </React.Fragment>
+              </>
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}
@@ -227,6 +237,4 @@ function WalletConnectLoginContainer({
   ) : (
     content
   );
-}
-
-export default WalletConnectLoginContainer;
+};

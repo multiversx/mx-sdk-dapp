@@ -1,13 +1,13 @@
 import React from 'react';
-import Dot from './Dot';
+import { Dot } from './Dot';
 
-interface ProgressStepsType {
+export interface ProgressStepsType {
   totalSteps: number;
   currentStep: number;
   className?: string;
 }
 
-const ProgressSteps = ({
+export const ProgressSteps = ({
   totalSteps,
   currentStep,
   className
@@ -39,4 +39,3 @@ const ProgressSteps = ({
     </div>
   );
 };
-export default ProgressSteps;

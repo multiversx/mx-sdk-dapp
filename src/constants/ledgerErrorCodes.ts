@@ -1,4 +1,4 @@
-const ledgerErrorCodes = {
+export const ledgerErrorCodes = {
   0x9000: {
     code: 'codeSuccess',
     message: 'Success'
@@ -85,5 +85,3 @@ const ledgerErrorCodes = {
       'Regular transaction signing is deprecated in this version. Use hash signing.'
   }
 };
-
-export default ledgerErrorCodes;

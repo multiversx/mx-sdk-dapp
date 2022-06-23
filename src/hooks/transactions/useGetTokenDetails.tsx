@@ -1,7 +1,7 @@
 import axios from 'axios';
+import useSwr from 'swr';
 import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
 
-import useSwr from 'optionalPackages/swr';
 import { getIdentifierType } from 'utils';
 
 interface TokenOptionType {

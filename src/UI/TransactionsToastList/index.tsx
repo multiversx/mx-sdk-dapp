@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { useGetSignedTransactions } from 'hooks';
-import { useGetPendingTransactions } from 'services';
+import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import {
   getToastsIdsFromStorage,
   setToastsIdsToStorage
 } from 'storage/session';
-import { SignedTransactionsBodyType } from 'types';
-import TransactionToast from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'utils';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
+import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
+import { TransactionToast } from 'UI/TransactionToast';
+import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 
-import { TransactionsToastListPropsType } from './types';
+export interface TransactionsToastListPropsType {
+  toastProps?: any;
+  className?: string;
+  withTxNonce?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  pendingTransactions?: SignedTransactionsType;
+  signedTransactions?: SignedTransactionsType;
+  successfulToastLifetime?: number;
+}
 
-function TransactionsToastList({
+export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
   withTxNonce = false,
   className = 'transactions-toast-list',
   pendingTransactions,
   signedTransactions,
   successfulToastLifetime
-}: TransactionsToastListPropsType) {
+}: TransactionsToastListPropsType) => {
   const [toastsIds, setToastsIds] = useState<any>([]);
 
-  const pendingTransactionsFromStore =
-    useGetPendingTransactions().pendingTransactions;
+  const pendingTransactionsFromStore = useGetPendingTransactions()
+    .pendingTransactions;
 
-  const signedTransactionsFromStore =
-    useGetSignedTransactions().signedTransactions;
+  const signedTransactionsFromStore = useGetSignedTransactions()
+    .signedTransactions;
 
   const pendingTransactionsToRender =
     pendingTransactions || pendingTransactionsFromStore;
@@ -112,6 +120,4 @@ function TransactionsToastList({
   }, [pendingTransactionsToRender]);
 
   return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
-}
-
-export default TransactionsToastList;
+};

@@ -41,3 +41,12 @@ export enum EnvironmentsEnum {
   devnet = 'devnet',
   mainnet = 'mainnet'
 }
+
+export enum TransactionTypesEnum {
+  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
+  ESDTTransfer = 'ESDTTransfer',
+  ESDTNFTTransfer = 'ESDTNFTTransfer',
+  esdtTransaction = 'esdtTransaction',
+  nftTransaction = 'nftTransaction',
+  scCall = 'scCall'
+}

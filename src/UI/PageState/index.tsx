@@ -1,8 +1,21 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { getGeneratedClasses } from 'utils';
-import { PageStateProps } from './types';
+import { getGeneratedClasses } from 'UI/utils';
+import { SizeProp } from '@fortawesome/fontawesome-svg-core';
+
+export interface PageStateProps {
+  title?: React.ReactNode;
+  icon?: any;
+  iconClass?: string;
+  className?: string;
+  dataTestId?: string;
+  iconSize?: SizeProp;
+  iconBgClass?: string;
+  action?: React.ReactNode;
+  shouldRenderDefaultCss?: boolean;
+  description?: string | React.ReactNode;
+}
 
 export const PageState = ({
   icon,
@@ -34,7 +47,7 @@ export const PageState = ({
     <div className={generatedClasses.wrapper} data-testid={dataTestId}>
       {icon && (
         <span className={generatedClasses.iconContainer}>
-          <ReactFontawesome.FontAwesomeIcon
+          <FontAwesomeIcon
             icon={icon}
             className={generatedClasses.iconClass}
             size={iconSize}
@@ -45,9 +58,7 @@ export const PageState = ({
       {description && (
         <div className={generatedClasses.description}>{description}</div>
       )}
-      {action && <React.Fragment>{action}</React.Fragment>}
+      {action && <>{action}</>}
     </div>
   );
 };
-
-export default PageState;
