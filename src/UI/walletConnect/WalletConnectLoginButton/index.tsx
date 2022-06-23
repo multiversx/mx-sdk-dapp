@@ -35,7 +35,7 @@ export const WalletConnectLoginButton = ({
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin = false,
-  buttonClassName,
+  buttonClassName = '',
   className = styles.wallectConnectLogin,
   lead = 'Scan the QR code using Maiar',
   token,
@@ -54,7 +54,9 @@ export const WalletConnectLoginButton = ({
         globalStyles.px4,
         globalStyles.m1,
         globalStyles.mx3,
-        buttonClassName != null && buttonClassName
+        {
+          [buttonClassName]: buttonClassName != null
+        }
       )} `,
       loginText: globalStyles.textLeft
     }

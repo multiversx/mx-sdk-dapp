@@ -3,6 +3,7 @@ import { faDollarSign, faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import styles from 'UI/TokenDetails/TokenSymbol/token-symbol.scss';
+import classNames from 'classnames';
 
 export const Simple = ({ children }: { children: React.ReactNode }) => (
   <div className={styles.tokenSymbol}>{children}</div>
@@ -15,7 +16,11 @@ export const Combined = ({
   small: boolean | undefined;
   children: React.ReactNode;
 }) => (
-  <div className={`${styles.tokenSymbolCombined} ${small ? styles.small : ''}`}>
+  <div
+    className={classNames(styles.tokenSymbolCombined, {
+      [styles.small]: small
+    })}
+  >
     {children}
   </div>
 );

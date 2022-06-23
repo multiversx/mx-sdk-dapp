@@ -1,3 +1,5 @@
+@import 'assets/sass/variables/variables';
+
 .dappModal {
   position: fixed;
   z-index: 999;
@@ -28,7 +30,7 @@
 
 .dappModalHeader {
   padding: 2px 16px;
-  background-color: #ffffff;
+  background-color: $white;
   font-size: 1.25rem;
 }
 
@@ -39,7 +41,7 @@
 .dappModalBody {padding: 2px 16px;}
 
 .dappModalFooter {
-  background-color: #ffffff;
+  background-color: $white;
   padding: 1rem 0.5rem;
 }
 
@@ -60,6 +62,6 @@
   text-decoration: none;
   cursor: pointer;
   color: #212529;
-  background-color: #e7e7e7;
-  border-color: #e1e1e1;
+  background-color: $gray-300;
+  border-color: $gray-200;
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Dot } from './Dot';
+import classnames from 'classnames';
 
 export interface ProgressStepsType {
   totalSteps: number;
@@ -33,13 +34,28 @@ export const ProgressSteps = ({
 
   return (
     <div
-      className={`${globalStyles.progressSteps} ${globalStyles.flexRow} ${globalStyles.justifyContentCenter} ${className}`}
+      className={classnames(
+        globalStyles.progressSteps,
+        globalStyles.flexRow,
+        globalStyles.justifyContentCenter,
+        className
+      )}
     >
       <div
-        className={`${globalStyles.steps} ${globalStyles.flexRow} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter} ${globalStyles.positionRelative}`}
+        className={classnames(
+          globalStyles.steps,
+          globalStyles.flexRow,
+          globalStyles.justifyContentCenter,
+          globalStyles.alignItemsCenter,
+          globalStyles.positionRelative
+        )}
       >
         <hr
-          className={`${globalStyles.positionAbsolute} ${globalStyles.w100} ${globalStyles.m0}`}
+          className={classnames(
+            globalStyles.positionAbsolute,
+            globalStyles.w100,
+            globalStyles.m0
+          )}
         />
         {dots}
       </div>

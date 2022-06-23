@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import {
   faCheck,
@@ -39,17 +39,20 @@ export const TxDetails = ({
     invalid: iconFailedData,
     timedOut: iconFailedData
   };
+
+  const processedTransactionsStatus = useMemo(() => {
+    const processedTransactions = transactions.filter(
+      (tx) => !isServerTransactionPending(tx.status)
+    );
+    const totalTransactions = transactions.length;
+    return `${processedTransactions} / ${totalTransactions} transactions processed`;
+  }, [transactions]);
+
   return (
     <>
       {title && <div className={styles.title}>{title}</div>}
 
-      <div className={styles.status}>
-        {
-          transactions.filter((tx) => !isServerTransactionPending(tx.status))
-            .length
-        }{' '}
-        / {transactions.length} transactions processed
-      </div>
+      <div className={styles.status}>{processedTransactionsStatus}</div>
 
       {transactions.map(({ hash, status }) => {
         const iconSrc = iconData[status];

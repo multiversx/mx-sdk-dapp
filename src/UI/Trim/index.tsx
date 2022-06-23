@@ -4,6 +4,7 @@ import debounce from 'lodash.debounce';
 import globalStyles from 'assets/sass/main.scss';
 
 import styles from './styles.scss';
+import classNames from 'classnames';
 
 export interface TrimType {
   text: string;
@@ -43,9 +44,9 @@ export const Trim = ({ text, dataTestId = '' }: TrimType) => {
   return (
     <span
       ref={trimRef}
-      className={`${globalStyles.trim} ${
-        overflow ? globalStyles.overflow : ''
-      }`}
+      className={classNames(globalStyles.trim, {
+        [globalStyles.overflow]: overflow
+      })}
       data-testid={dataTestId}
     >
       <span ref={hiddenTextRef} className={globalStyles.hiddenTextRef}>

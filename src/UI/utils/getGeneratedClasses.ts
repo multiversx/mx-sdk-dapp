@@ -10,10 +10,10 @@ export function getGeneratedClasses(
   }
   return Object.entries(defaultStyles).reduce(
     (acc, [key, defaultClassNames]) => {
-      acc[key] = classNames?.(
-        shouldRenderDefaultCss && (defaultClassNames as string),
-        { [`${className}_${key}`]: Boolean(className) }
-      );
+      acc[key] = classNames?.({
+        [`${className}_${key}`]: Boolean(className),
+        [defaultClassNames]: shouldRenderDefaultCss
+      });
       return acc;
     },
     {} as Record<string, string>
