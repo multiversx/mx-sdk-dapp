@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetNotification } from 'hooks';
 import { NotificationTypesEnum } from 'types';
-import { useDappModal } from 'UI/DappModal';
 import { ModalContainer } from '../ModalContainer';
 import { PageState } from '../PageState';
 import styles from './notification-modal.scss';
@@ -15,14 +14,6 @@ const defaultIcon = faExclamationTriangle;
 
 export function NotificationModal() {
   const { notification, clearNotification } = useGetNotification();
-  const { handleShowModal } = useDappModal();
-
-  useEffect(() => {
-    const showModal = Boolean(notification);
-    if (showModal) {
-      handleShowModal();
-    }
-  }, [notification]);
 
   const onDone = () => {
     clearNotification();
@@ -34,18 +25,18 @@ export function NotificationModal() {
     ? notificationTypesToIcons[type] || defaultIcon
     : null;
 
-  return notification ? (
-    <ModalContainer>
+  return (
+    <ModalContainer onClose={clearNotification} visible={Boolean(notification)}>
       <div
         className={`${globalStyles.card} ${globalStyles.w100} ${styles.notificationModal}`}
       >
         <PageState
           icon={icon}
-          iconClass={notification.iconClassName}
+          iconClass={notification?.iconClassName}
           iconBgClass={`${globalStyles.p4} ${globalStyles.roundedBgCircle}`}
           iconSize='3x'
-          title={notification.title}
-          description={notification.description}
+          title={notification?.title}
+          description={notification?.description}
           action={
             <button
               className={`${globalStyles.btn} ${globalStyles.btnPrimary}`}
@@ -57,5 +48,5 @@ export function NotificationModal() {
         />
       </div>
     </ModalContainer>
-  ) : null;
+  );
 }

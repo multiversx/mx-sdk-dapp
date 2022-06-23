@@ -6,29 +6,28 @@ import {
   DappModalInteractionConfig
 } from 'UI/DappModal';
 
-export const ModalContainer = ({
-  children,
-  onClose,
-  modalConfig,
-  modalInteractionConfig
-}: {
+export const ModalContainer = (props: {
   children: React.ReactNode;
   onClose?: () => void;
   modalConfig?: DappModalConfig;
   modalInteractionConfig?: DappModalInteractionConfig;
+  visible?: boolean;
 }) => {
   const {
     handleHideModal: onHide,
     visible,
     config
   } = useDappModal({
-    modalConfig,
-    config: modalInteractionConfig
+    modalConfig: props.modalConfig,
+    config: {
+      ...props.modalInteractionConfig,
+      visible: props.visible
+    }
   });
 
   const hideModalHandler = () => {
     onHide();
-    onClose?.();
+    props.onClose?.();
   };
 
   return (
@@ -39,7 +38,7 @@ export const ModalContainer = ({
         ...config
       }}
     >
-      {children}
+      {props.children}
     </DappModal>
   );
 };

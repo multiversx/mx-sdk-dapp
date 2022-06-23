@@ -15,4 +15,5 @@ export type DappModalConfig = {
 
 export type DappModalInteractionConfig = {
   openOnMount?: boolean;
+  visible?: boolean;
 };

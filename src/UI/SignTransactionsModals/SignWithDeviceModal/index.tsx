@@ -51,6 +51,7 @@ export const SignWithDeviceModal = ({
       modalConfig={{
         modalDialogClassName: classes.wrapper
       }}
+      visible={currentTransaction != null}
     >
       <div className={classes.container}>
         <div className={classes.cardBody}>

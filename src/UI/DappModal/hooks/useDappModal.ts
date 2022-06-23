@@ -48,6 +48,18 @@ export const useDappModal = (props?: UseDappModalProps) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (typeof props?.config?.visible !== 'boolean') {
+      return;
+    }
+
+    if (props.config.visible) {
+      handleShowModal();
+    } else {
+      handleHideModal();
+    }
+  }, [props?.config?.visible]);
+
   return {
     handleShowModal,
     handleHideModal,
