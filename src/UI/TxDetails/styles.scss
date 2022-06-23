@@ -8,11 +8,13 @@
   line-height: 1.5;
 }
 
-.item {
+.container {
   line-height: 1.5;
   font-size: 0.875rem;
+  padding-right: 0.5rem;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.2rem;
 
   .icon {
@@ -22,7 +24,7 @@
   }
 
   .trim {
-    width: 10rem;
+    width: 11rem;
     white-space: nowrap;
     margin-right: 1rem;
   }

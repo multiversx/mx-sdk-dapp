@@ -58,7 +58,7 @@ export const TxDetails = ({
         const iconSrc = iconData[status];
 
         return (
-          <div className={styles.item} key={hash}>
+          <div className={styles.container} key={hash}>
             {!isTimedOut && iconSrc != null && (
               <FontAwesomeIcon
                 icon={iconSrc.icon}
@@ -72,11 +72,13 @@ export const TxDetails = ({
               <Trim text={hash} />
             </span>
 
-            <CopyButton text={hash} />
+            <div>
+              <CopyButton text={hash} />
 
-            {!isServerTransactionPending(status) && (
-              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
-            )}
+              {!isServerTransactionPending(status) && (
+                <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
+              )}
+            </div>
           </div>
         );
       })}
