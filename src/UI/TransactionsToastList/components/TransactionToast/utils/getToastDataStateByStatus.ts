@@ -54,13 +54,11 @@ export const getToastDataStateByStatus = ({
 
   switch (status) {
     case TransactionBatchStatusesEnum.signed:
-      return pendingToastData;
     case TransactionBatchStatusesEnum.sent:
       return pendingToastData;
     case TransactionBatchStatusesEnum.success:
       return successToastData;
     case TransactionBatchStatusesEnum.cancelled:
-      return failToastData;
     case TransactionBatchStatusesEnum.fail:
       return failToastData;
     case TransactionBatchStatusesEnum.timedOut:
