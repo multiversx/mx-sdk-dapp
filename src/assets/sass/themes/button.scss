@@ -49,31 +49,31 @@
 .btn-primary {
   color: $white;
   background-color: $primary;
-  border-color: #007bff;
+  border-color: $buttonBorderColorDefault;
 
   .focus {
     color: $white;
     background-color: $primary;
-    border-color: #0062cc;
+    border-color: $buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 
   .disabled {
     color: $white;
     background-color: $primary;
-    border-color: #007bff;
+    border-color: $buttonBorderColorDefault;
   }
 
   &:hover {
     color: $white;
     background-color: $primary;
-    border-color: #0062cc;
+    border-color: $buttonBorderColorHoverAndFocus;
   }
 
   &:focus {
     color: $white;
     background-color: $primary;
-    border-color: #0062cc;
+    border-color: $buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 }
@@ -81,31 +81,31 @@
 .btn-secondary {
   color: $white;
   background-color: $secondary;
-  border-color: #007bff;
+  border-color: $buttonBorderColorDefault;
 
   .focus {
     color: $white;
     background-color: $secondary;
-    border-color: #0062cc;
+    border-color: $buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 
   .disabled {
     color: $white;
     background-color: $secondary;
-    border-color: #007bff;
+    border-color: $buttonBorderColorDefault;
   }
 
   &:hover {
     color: $white;
     background-color: $secondary;
-    border-color: #0062cc;
+    border-color: $buttonBorderColorHoverAndFocus;
   }
 
   &:focus {
     color: $white;
     background-color: $secondary;
-    border-color: #0062cc;
+    border-color: $buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 }
