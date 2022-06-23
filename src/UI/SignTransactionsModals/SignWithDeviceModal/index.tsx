@@ -5,6 +5,8 @@ import { useDappModal } from 'UI/DappModal';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 import { SignStep } from './SignStep';
+import styles from './sing-with-device-modal.scss';
+import globalStyles from '../../../assets/sass/main.scss';
 
 export const SignWithDeviceModal = ({
   handleClose,
@@ -29,9 +31,9 @@ export const SignWithDeviceModal = ({
     verifyReceiverScam
   });
   const classes = getGeneratedClasses(className, true, {
-    wrapper: 'modal-container wallet-connect',
-    container: 'card container',
-    cardBody: 'card-body'
+    wrapper: `${styles.modalContainer} ${styles.walletConnect}`,
+    container: `${globalStyles.card} ${globalStyles.container}`,
+    cardBody: globalStyles.cardBody
   });
   const { handleShowModal, handleHideModal } = useDappModal();
 
