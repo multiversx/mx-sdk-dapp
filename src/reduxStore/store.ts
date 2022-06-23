@@ -36,7 +36,6 @@ const persistConfig: PersistConfig<any> = {
   whitelist: [
     ReducersEnum.account,
     ReducersEnum.loginInfo,
-    ReducersEnum.toasts,
     ReducersEnum.modals,
     ReducersEnum.networkConfig
   ],

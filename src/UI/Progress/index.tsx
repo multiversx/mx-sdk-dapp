@@ -1,6 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
+import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import storage from 'utils/storage';
 
 import styles from './styles.scss';
@@ -33,7 +34,7 @@ export const Progress = ({
       return;
     }
 
-    const expires = moment().add(expiresIn, 'seconds').unix();
+    const expires = getUnixTimestampWithAddedSeconds(expiresIn);
 
     delete toastProgress[id];
 
@@ -50,7 +51,7 @@ export const Progress = ({
     storage.session.setItem({
       key: 'toastProgress',
       data: toastProgress,
-      expires: moment().add(expiresIn, 'seconds').unix()
+      expires: getUnixTimestampWithAddedSeconds(expiresIn)
     });
   };
 
@@ -68,8 +69,9 @@ export const Progress = ({
 
   const { totalSeconds, currentRemaining } = getInitialData();
 
-  const [percentRemaining, setPercentRemaining] =
-    React.useState<number>(currentRemaining);
+  const [percentRemaining, setPercentRemaining] = React.useState<number>(
+    currentRemaining
+  );
 
   React.useEffect(() => {
     if (progress) {
