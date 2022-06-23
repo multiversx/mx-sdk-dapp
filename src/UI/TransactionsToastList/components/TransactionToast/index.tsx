@@ -41,6 +41,9 @@ const TransactionToast = ({
 
   const currentTx: SignedTransactionsBodyType =
     signedTransactionsToRender[toastId];
+  if (currentTx == null) {
+    return null;
+  }
 
   const { transactions, status } = currentTx;
 
@@ -63,7 +66,9 @@ const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment().add(Number(transactionDuration), 'milliseconds').unix();
+      moment()
+        .add(Number(transactionDuration), 'milliseconds')
+        .unix();
     return [startTime, endTime];
   }, []);
 
