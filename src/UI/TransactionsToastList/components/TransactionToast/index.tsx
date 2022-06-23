@@ -60,7 +60,6 @@ const TransactionToast = ({
   lifetimeAfterSuccess,
   signedTransactionsToRender
 }: TransactionToastPropsType) => {
-  const [shouldRender, setShouldRender] = useState(true);
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
 
@@ -100,7 +99,7 @@ const TransactionToast = ({
     return null;
   }
 
-  if (transactions === null || !shouldRender) {
+  if (transactions === null) {
     return null;
   }
 
@@ -120,16 +119,11 @@ const TransactionToast = ({
   });
 
   const handleDeleteToast = () => {
-    setShouldRender(false);
     onDelete?.(toastId);
   };
 
-  if (!shouldRender || transactions == null) {
-    return null;
-  }
-
   const closeButton = !isPending ? (
-    <button type='button' className={className} onClick={handleDeleteToast}>
+    <button type='button' className={styles.close} onClick={handleDeleteToast}>
       <FontAwesomeIcon icon={faTimes} size='xs' />
     </button>
   ) : null;
