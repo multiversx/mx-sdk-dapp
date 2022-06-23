@@ -53,83 +53,76 @@ export const AddressTable = ({
     confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px2} ${globalStyles.mt4}`
   });
 
-  console.log('Booooo!');
-
-  switch (true) {
-    case loading:
-      return (
-        <PageState
-          className={className}
-          icon={faCircleNotch}
-          iconClass='fa-spin text-primary'
-          title={ledgerWaitingText}
-        />
-      );
-    default:
-      return (
-        <>
-          <div className='m-auto'>
-            <div className={classes.wrapper}>
-              <div className={classes.cardBody}>
-                <div
-                  className={classes.tableWrapper}
-                  data-testid='ledgerAddresses'
-                >
-                  <table className={classes.tableContent}>
-                    <thead className={classes.tableHeader}>
-                      <tr>
-                        <th className={classes.tableHeaderText}>Address</th>
-                        <th className={classes.tableHeaderText}>Balance</th>
-                        <th className={classes.tableHeaderText}>#</th>
-                      </tr>
-                    </thead>
-                    <tbody data-testid='addressesTable'>
-                      {accounts.map((address, index) => {
-                        const key = index + startIndex * addressesPerPage;
-                        return (
-                          <AddressRow
-                            key={key}
-                            address={address}
-                            index={key}
-                            selectedAddress={selectedAddress}
-                            onSelectAddress={onSelectAddress}
-                          />
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
-                <div className={classes.buttonsWrapper}>
-                  <button
-                    type='button'
-                    className={classes.arrowButton}
-                    onClick={onGoToPrevPage}
-                    data-testid='prevBtn'
-                    disabled={startIndex === 0}
-                  >
-                    <FontAwesomeIcon size='sm' icon={faChevronLeft} /> Prev
-                  </button>
-                  <button
-                    type='button'
-                    className={classes.arrowButton}
-                    onClick={onGoToNextPage}
-                    data-testid='nextBtn'
-                  >
-                    Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
-                  </button>
-                </div>
-                <button
-                  className={classes.confirmButton}
-                  disabled={selectedAddress === ''}
-                  onClick={onConfirmSelectedAddress}
-                  data-testid='confirmBtn'
-                >
-                  Confirm
-                </button>
-              </div>
-            </div>
-          </div>
-        </>
-      );
+  if (loading) {
+    return (
+      <PageState
+        className={className}
+        icon={faCircleNotch}
+        iconClass='fa-spin text-primary'
+        title={ledgerWaitingText}
+      />
+    );
   }
+  return (
+    <>
+      <div className='m-auto'>
+        <div className={classes.wrapper}>
+          <div className={classes.cardBody}>
+            <div className={classes.tableWrapper} data-testid='ledgerAddresses'>
+              <table className={classes.tableContent}>
+                <thead className={classes.tableHeader}>
+                  <tr>
+                    <th className={classes.tableHeaderText}>Address</th>
+                    <th className={classes.tableHeaderText}>Balance</th>
+                    <th className={classes.tableHeaderText}>#</th>
+                  </tr>
+                </thead>
+                <tbody data-testid='addressesTable'>
+                  {accounts.map((address, index) => {
+                    const key = index + startIndex * addressesPerPage;
+                    return (
+                      <AddressRow
+                        key={key}
+                        address={address}
+                        index={key}
+                        selectedAddress={selectedAddress}
+                        onSelectAddress={onSelectAddress}
+                      />
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className={classes.buttonsWrapper}>
+              <button
+                type='button'
+                className={classes.arrowButton}
+                onClick={onGoToPrevPage}
+                data-testid='prevBtn'
+                disabled={startIndex === 0}
+              >
+                <FontAwesomeIcon size='sm' icon={faChevronLeft} /> Prev
+              </button>
+              <button
+                type='button'
+                className={classes.arrowButton}
+                onClick={onGoToNextPage}
+                data-testid='nextBtn'
+              >
+                Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
+              </button>
+            </div>
+            <button
+              className={classes.confirmButton}
+              disabled={selectedAddress === ''}
+              onClick={onConfirmSelectedAddress}
+              data-testid='confirmBtn'
+            >
+              Confirm
+            </button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
