@@ -16,10 +16,11 @@ import {
 } from 'utils/transactions';
 
 import CloseButton from './components/CloseButton';
-import styles from './styles.scss';
 import { TransactionToastPropsType } from './types';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { getToastDataStateByStatus } from './utils';
+import styles from './styles.scss';
+import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 
 const averageTxDurationMs = 6000;
 const crossShardRounds = 5;
@@ -30,7 +31,6 @@ const TransactionToast = ({
   shouldRenderDefaultCss = true,
   className = 'transaction-toast',
   startTimeProgress,
-  containerClassName,
   endTimeProgress,
   lifetimeAfterSuccess,
   signedTransactionsToRender
@@ -99,7 +99,7 @@ const TransactionToast = ({
   }
 
   return (
-    <div className={containerClassName}>
+    <div className={wrapperStyles.toastWrapper}>
       <Progress
         key={toastId}
         id={toastId}

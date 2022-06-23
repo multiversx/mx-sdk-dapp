@@ -139,7 +139,6 @@ export const TransactionsToastList = ({
           <CustomToast
             key={toastId}
             {...{
-              containerClassName: styles.toastWrapper,
               type,
               message: message ?? '',
               duration,
@@ -154,7 +153,6 @@ export const TransactionsToastList = ({
             key={toastId}
             {...{
               type,
-              containerClassName: styles.toastWrapper,
 
               toastId,
               signedTransactionsToRender,
