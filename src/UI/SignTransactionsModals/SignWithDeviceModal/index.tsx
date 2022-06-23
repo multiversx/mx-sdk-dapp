@@ -6,7 +6,7 @@ import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 import { SignStep } from './SignStep';
 import styles from './sing-with-device-modal.scss';
-import globalStyles from '../../../assets/sass/main.scss';
+import globalStyles from 'assets/sass/main.scss';
 
 export const SignWithDeviceModal = ({
   handleClose,

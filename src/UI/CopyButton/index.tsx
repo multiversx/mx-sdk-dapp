@@ -10,7 +10,10 @@ interface CopyButtonType {
   className?: string;
 }
 
-export const CopyButton = ({ text, className = '' }: CopyButtonType) => {
+export const CopyButton = ({
+  text,
+  className = 'dapp-copy-button'
+}: CopyButtonType) => {
   const [copyResult, setCopyResut] = React.useState({
     default: true,
     success: false

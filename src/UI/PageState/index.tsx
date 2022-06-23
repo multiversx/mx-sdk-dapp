@@ -28,7 +28,7 @@ export const PageState = ({
   description,
   iconBgClass,
   iconSize = '5x',
-  className = globalStyles.pageState,
+  className = 'page-state',
   shouldRenderDefaultCss = true
 }: PageStateProps) => {
   const generatedClasses = getGeneratedClasses(

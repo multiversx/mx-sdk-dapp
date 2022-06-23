@@ -62,10 +62,10 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
       )}
       {showLabel && (
         <span
-          className={`${classNames(
+          className={classNames(
             styles.symbol,
             props.token && globalStyles.textMuted
-          )}`}
+          )}
         >
           &nbsp;{props.token ? props.token : erdLabel}
         </span>

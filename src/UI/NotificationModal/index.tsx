@@ -4,7 +4,7 @@ import globalStyles from 'assets/sass/main.scss';
 import { useGetNotification } from 'hooks';
 import { NotificationTypesEnum } from 'types';
 import { useDappModal } from 'UI/DappModal';
-import { ModalContainer } from '../ModalContainer/ModalContainer';
+import { ModalContainer } from '../ModalContainer';
 import { PageState } from '../PageState';
 import styles from './notification-modal.scss';
 

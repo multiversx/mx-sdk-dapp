@@ -28,7 +28,7 @@ const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
-  className = '',
+  className = 'transaction-toast',
   startTimeProgress,
   containerClassName,
   endTimeProgress,
@@ -63,9 +63,7 @@ const TransactionToast = ({
     const startTime = startTimeProgress || moment().unix();
     const endTime =
       endTimeProgress ||
-      moment()
-        .add(Number(transactionDuration), 'milliseconds')
-        .unix();
+      moment().add(Number(transactionDuration), 'milliseconds').unix();
     return [startTime, endTime];
   }, []);
 

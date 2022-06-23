@@ -9,7 +9,6 @@ import { getGeneratedClasses } from 'UI/utils';
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
-import styles from './login-modal.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -25,7 +24,7 @@ interface LedgerLoginContainerPropsType {
 
 export const LedgerLoginContainer = ({
   callbackRoute,
-  className = styles.loginModalContent,
+  className = 'login-modal-content',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin,

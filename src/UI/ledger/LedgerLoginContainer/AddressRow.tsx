@@ -51,7 +51,12 @@ export const AddressRow = ({
     <tr>
       <td className={globalStyles.textLeft}>
         <div
-          className={`${globalStyles.flexRow} ${globalStyles.alignItemsStart} ${globalStyles.textLeft} ${globalStyles.formCheck}`}
+          className={`
+            ${globalStyles.flexRow}
+            ${globalStyles.alignItemsStart}
+            ${globalStyles.textLeft}
+            ${globalStyles.formCheck}
+          `}
         >
           <input
             type='radio'
@@ -66,10 +71,19 @@ export const AddressRow = ({
             htmlFor={`check_${index}`}
             role='button'
             data-testid={`label_${index}`}
-            className={`${globalStyles.formCheckLabel} ${globalStyles.textNowrap} ${globalStyles.m0}`}
+            className={`
+              ${globalStyles.formCheckLabel}
+              ${globalStyles.textNowrap}
+              ${globalStyles.m0}
+            `}
           >
             <div
-              className={`${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.textNowrap} ${globalStyles.trim}`}
+              className={`
+                ${globalStyles.flexRow}
+                ${globalStyles.alignItemsCenter}
+                ${globalStyles.textNowrap}
+                ${globalStyles.trim}
+              `}
             >
               <span>{trimHash(address)}</span>
             </div>

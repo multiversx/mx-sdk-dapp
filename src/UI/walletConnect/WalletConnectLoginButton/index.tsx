@@ -4,7 +4,6 @@ import globalStyles from 'assets/sass/main.scss';
 import { useDappModal } from 'UI/DappModal';
 import { getGeneratedClasses } from 'UI/utils';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
-import styles from './wallet-connect-login-button.scss';
 
 export interface WalletConnectLoginButtonPropsType {
   onModalOpens?: (props?: any) => void;
@@ -35,8 +34,8 @@ export const WalletConnectLoginButton = ({
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin = false,
-  buttonClassName = '',
-  className = styles.wallectConnectLogin,
+  buttonClassName = 'wallet-connect-login-button',
+  className = 'wallet-connect-login',
   lead = 'Scan the QR code using Maiar',
   token,
   hideButtonWhenModalOpens = false

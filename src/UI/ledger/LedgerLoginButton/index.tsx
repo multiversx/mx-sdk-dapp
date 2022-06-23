@@ -16,8 +16,8 @@ export const LedgerLoginButton: (
   onModalOpens,
   onModalCloses,
   loginButtonText = 'Ledger',
-  buttonClassName = '',
-  className = styles.ledgerLogin,
+  buttonClassName = 'ledger-login-button',
+  className = 'ledger-login',
   redirectAfterLogin = false,
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
@@ -38,7 +38,7 @@ export const LedgerLoginButton: (
         globalStyles.m1,
         globalStyles.mx3,
         {
-          [buttonClassName]: buttonClassName != null
+          buttonClassName: buttonClassName != null
         }
       )}`,
       loginText: styles.loginText

@@ -8,8 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
-import styles from './address-table.scss';
-
 import { AddressRow } from './AddressRow';
 
 const ledgerWaitingText = 'Waiting for device';
@@ -39,7 +37,7 @@ export const AddressTable = ({
   onConfirmSelectedAddress,
   onSelectAddress,
   shouldRenderDefaultCss = true,
-  className = styles.ledgerAddressTable
+  className = 'ledger-address-table'
 }: AddressTablePropsType) => {
   const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
     wrapper: `${globalStyles.card} ${globalStyles.p4} ${globalStyles.mxLg4}`,
@@ -53,22 +51,20 @@ export const AddressTable = ({
     confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px2} ${globalStyles.mt4}`
   });
 
-  console.log('Booooo!');
-
   switch (true) {
     case loading:
       return (
         <PageState
           className={className}
           icon={faCircleNotch}
-          iconClass='fa-spin text-primary'
+          iconClass={`fa-spin ${globalStyles.textPrimary}`}
           title={ledgerWaitingText}
         />
       );
     default:
       return (
         <>
-          <div className='m-auto'>
+          <div className={globalStyles.mAuto}>
             <div className={classes.wrapper}>
               <div className={classes.cardBody}>
                 <div

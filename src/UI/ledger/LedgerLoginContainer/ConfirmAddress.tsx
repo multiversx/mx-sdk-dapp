@@ -22,13 +22,27 @@ export const ConfirmAddress = ({
         >
           <h4 className={globalStyles.mb4}>Confirm Ledger Address</h4>
           <p>For security, please confirm that your address: </p>
-          <p className='lead border rounded p-2'>
+          <p
+            className={`
+              ${globalStyles.lead}
+              ${globalStyles.border}
+              ${globalStyles.rounded}
+              ${globalStyles.p2}
+            `}
+          >
             {ledgerAccount ? ledgerAccount.address : ''}
           </p>
           {token && (
             <>
               <p>and Auth Token</p>
-              <p className='lead border rounded p-2'>{`${token}{}`}</p>
+              <p
+                className={`
+                  ${globalStyles.lead}
+                  ${globalStyles.border}
+                  ${globalStyles.rounded}
+                  ${globalStyles.p2}
+                `}
+              >{`${token}{}`}</p>
             </>
           )}
           <p className={globalStyles.m0}>

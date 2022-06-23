@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classnames from 'classnames';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { getGeneratedClasses } from 'UI/utils';
 
@@ -14,21 +14,21 @@ export interface IconStateProps {
 export const IconState = ({
   icon,
   iconSize = '3x',
-  className = globalStyles.iconState,
+  className = 'icon-state',
   shouldRenderDefaultCss = true
 }: IconStateProps) => {
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: classnames(
+      wrapper: classNames(
         `${globalStyles.iconState} ${globalStyles.mxAuto}`,
         className,
         {
           half: iconSize === '2x'
         }
       ),
-      icon: classnames(globalStyles.textWhite, className)
+      icon: classNames(globalStyles.textWhite, className)
     }
   );
 

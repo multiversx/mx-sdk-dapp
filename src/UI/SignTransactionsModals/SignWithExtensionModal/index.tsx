@@ -14,7 +14,7 @@ export const SignWithExtensionModal = ({
   error,
   callbackRoute,
   transactions,
-  className = styles.extensionModal
+  className = 'extension-modal'
 }: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
     wrapper: `${styles.modalContainer} ${styles.extension}`,

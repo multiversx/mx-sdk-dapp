@@ -1,6 +1,6 @@
 export interface ToastsType {
   toastId: string;
   type: string;
-  duration?: number | undefined;
+  duration?: number;
   message?: string;
 }

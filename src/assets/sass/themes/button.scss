@@ -31,7 +31,7 @@
   }
 
   &:hover {
-    color: #212529;
+    color: $gray-900;
     text-decoration: none;
   }
 
@@ -47,32 +47,64 @@
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #007bff;
+  color: $white;
+  background-color: $primary;
   border-color: #007bff;
 
   .focus {
-    color: #fff;
-    background-color: #0069d9;
+    color: $white;
+    background-color: $primary;
     border-color: #0062cc;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 
   .disabled {
-    color: #fff;
-    background-color: #007bff;
+    color: $white;
+    background-color: $primary;
     border-color: #007bff;
   }
 
   &:hover {
-    color: #fff;
-    background-color: #0069d9;
+    color: $white;
+    background-color: $primary;
     border-color: #0062cc;
   }
 
   &:focus {
-    color: #fff;
-    background-color: #0069d9;
+    color: $white;
+    background-color: $primary;
+    border-color: #0062cc;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }
+}
+
+.btn-secondary {
+  color: $white;
+  background-color: $secondary;
+  border-color: #007bff;
+
+  .focus {
+    color: $white;
+    background-color: $secondary;
+    border-color: #0062cc;
+    box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
+  }
+
+  .disabled {
+    color: $white;
+    background-color: $secondary;
+    border-color: #007bff;
+  }
+
+  &:hover {
+    color: $white;
+    background-color: $secondary;
+    border-color: #0062cc;
+  }
+
+  &:focus {
+    color: $white;
+    background-color: $secondary;
     border-color: #0062cc;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }

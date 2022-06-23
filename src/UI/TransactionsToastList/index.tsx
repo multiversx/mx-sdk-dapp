@@ -31,7 +31,7 @@ export interface TransactionsToastListPropsType {
 
 export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
-  className = '',
+  className = 'transactions-toast-list',
   signedTransactions,
   successfulToastLifetime,
   parentElement
@@ -40,8 +40,8 @@ export const TransactionsToastList = ({
 
   const customToastsFromStore = useSelector(customToastsSelector);
 
-  const signedTransactionsFromStore = useGetSignedTransactions()
-    .signedTransactions;
+  const signedTransactionsFromStore =
+    useGetSignedTransactions().signedTransactions;
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;

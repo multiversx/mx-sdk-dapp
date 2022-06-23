@@ -27,7 +27,7 @@ export const WalletConnectLoginContainer = ({
   loginButtonText,
   title = 'Maiar Login',
   logoutRoute = '/unlock',
-  className = styles.wallectConnectLoginModal,
+  className = 'wallet-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
