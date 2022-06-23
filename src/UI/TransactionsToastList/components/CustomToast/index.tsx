@@ -2,20 +2,15 @@ import React, { useEffect } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.scss';
+import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 
 interface CustomToastType {
   onDelete: () => void;
   message: string;
   duration?: number;
-  containerClassName: string;
 }
 
-const CustomToast = ({
-  onDelete,
-  message,
-  duration,
-  containerClassName
-}: CustomToastType) => {
+const CustomToast = ({ onDelete, message, duration }: CustomToastType) => {
   useEffect(() => {
     let timeout: any = null;
     if (duration) {
@@ -27,7 +22,7 @@ const CustomToast = ({
   }, []);
 
   return (
-    <div className={containerClassName}>
+    <div className={wrapperStyles.toastWrapper}>
       <button type='button' className={styles.close} onClick={onDelete}>
         <FontAwesomeIcon icon={faTimes} size='xs' />
       </button>

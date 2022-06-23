@@ -45,7 +45,7 @@ export const TxDetails = ({
       (tx) => !isServerTransactionPending(tx.status)
     );
     const totalTransactions = transactions.length;
-    return `${processedTransactions} / ${totalTransactions} transactions processed`;
+    return `${processedTransactions.length} / ${totalTransactions} transactions processed`;
   }, [transactions]);
 
   return (
