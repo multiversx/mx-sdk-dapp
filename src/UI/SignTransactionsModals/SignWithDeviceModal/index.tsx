@@ -53,26 +53,24 @@ export const SignWithDeviceModal = ({
       }}
       visible={currentTransaction != null}
     >
-      <div className={classes.container}>
-        <div className={classes.cardBody}>
-          <SignStep
-            {...{
-              onSignTransaction,
-              onNext,
-              onPrev,
-              allTransactions,
-              waitingForDevice,
-              isLastTransaction,
-              currentStep,
-              callbackRoute,
-              currentTransaction,
-              handleClose: onAbort,
-              className,
-              error,
-              title
-            }}
-          />
-        </div>
+      <div className={classes.cardBody}>
+        <SignStep
+          {...{
+            onSignTransaction,
+            onNext,
+            onPrev,
+            allTransactions,
+            waitingForDevice,
+            isLastTransaction,
+            currentStep,
+            callbackRoute,
+            currentTransaction,
+            handleClose: onAbort,
+            className,
+            error,
+            title
+          }}
+        />
       </div>
     </ModalContainer>
   );
