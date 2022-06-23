@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useGetTransactionDisplayInfo } from 'hooks/transactions/useGetTransactionDisplayInfo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -157,7 +157,9 @@ const TransactionToast = ({
             </div>
 
             <div className={style.footer}>
-              <TxDetails {...{ transactions, title, isTimedOut }} />
+              <TxDetails
+                {...{ transactions: transactions ?? [], title, isTimedOut }}
+              />
             </div>
           </div>
         </div>
