@@ -19,7 +19,6 @@ import {
   getIsTransactionTimedOut
 } from 'utils/transactions';
 
-import CloseButton from './components/CloseButton';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { getToastDataStateByStatus } from './utils';
 import styles from './styles.scss';
@@ -28,6 +27,7 @@ import {
   getUnixTimestampWithAddedMilliseconds,
   getUnixTimestamp
 } from 'utils/dateTime';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
@@ -60,7 +60,6 @@ const TransactionToast = ({
   lifetimeAfterSuccess,
   signedTransactionsToRender
 }: TransactionToastPropsType) => {
-  const [shouldRender, setShouldRender] = useState(true);
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
 
@@ -100,7 +99,7 @@ const TransactionToast = ({
     return null;
   }
 
-  if (transactions === null || !shouldRender) {
+  if (transactions === null) {
     return null;
   }
 
@@ -120,13 +119,14 @@ const TransactionToast = ({
   });
 
   const handleDeleteToast = () => {
-    setShouldRender(false);
     onDelete?.(toastId);
   };
 
-  if (!shouldRender || transactions == null) {
-    return null;
-  }
+  const closeButton = !isPending ? (
+    <button type='button' className={styles.close} onClick={handleDeleteToast}>
+      <FontAwesomeIcon icon={faTimes} size='xs' />
+    </button>
+  ) : null;
 
   return (
     <div className={wrapperStyles.toastWrapper}>
@@ -153,10 +153,7 @@ const TransactionToast = ({
           <div className={style.right}>
             <div className={style.heading}>
               <h5 className={style.title}>{toastDataState.title}</h5>
-
-              <CloseButton
-                {...{ style, isPending, onDelete: handleDeleteToast }}
-              />
+              {closeButton}
             </div>
 
             <div className={style.footer}>

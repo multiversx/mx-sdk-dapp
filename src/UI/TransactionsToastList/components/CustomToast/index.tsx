@@ -12,7 +12,7 @@ interface CustomToastType {
 
 const CustomToast = ({ onDelete, message, duration }: CustomToastType) => {
   useEffect(() => {
-    let timeout: any = null;
+    let timeout: NodeJS.Timeout | undefined;
     if (duration) {
       timeout = setTimeout(onDelete, duration);
     }
