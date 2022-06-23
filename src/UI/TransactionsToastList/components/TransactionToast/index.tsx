@@ -19,7 +19,6 @@ import {
   getIsTransactionTimedOut
 } from 'utils/transactions';
 
-import CloseButton from './components/CloseButton';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { getToastDataStateByStatus } from './utils';
 import styles from './styles.scss';
@@ -28,6 +27,7 @@ import {
   getUnixTimestampWithAddedMilliseconds,
   getUnixTimestamp
 } from 'utils/dateTime';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
@@ -128,6 +128,12 @@ const TransactionToast = ({
     return null;
   }
 
+  const closeButton = !isPending ? (
+    <button type='button' className={className} onClick={handleDeleteToast}>
+      <FontAwesomeIcon icon={faTimes} size='xs' />
+    </button>
+  ) : null;
+
   return (
     <div className={wrapperStyles.toastWrapper}>
       <Progress
@@ -153,10 +159,7 @@ const TransactionToast = ({
           <div className={style.right}>
             <div className={style.heading}>
               <h5 className={style.title}>{toastDataState.title}</h5>
-
-              <CloseButton
-                {...{ style, isPending, onDelete: handleDeleteToast }}
-              />
+              {closeButton}
             </div>
 
             <div className={style.footer}>

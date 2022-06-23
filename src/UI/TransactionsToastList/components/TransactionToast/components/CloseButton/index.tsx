@@ -4,19 +4,19 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 interface CloseButtonType {
   onDelete: () => void;
-  style: any;
+  className?: string;
   isPending: boolean;
 }
 
 const CloseButton = (props: CloseButtonType) => {
-  const { onDelete, style, isPending } = props;
+  const { onDelete, className, isPending } = props;
 
   if (isPending) {
     return null;
   }
 
   return (
-    <button type='button' className={style.close} onClick={onDelete}>
+    <button type='button' className={className} onClick={onDelete}>
       <FontAwesomeIcon icon={faTimes} size='xs' />
     </button>
   );
