@@ -1,1 +1,1 @@
-export * from './handleCustomToasts';
+export * from './customToastsActions';

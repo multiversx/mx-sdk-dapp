@@ -12,6 +12,7 @@ export interface TransactionToastPropsType {
   successMessage?: string;
   endTimeProgress?: number;
   processingMessage?: string;
+  containerClassName?: string;
   startTimeProgress?: number;
   shouldRenderDefaultCss?: boolean;
   transactions?: SignedTransactionType[];
