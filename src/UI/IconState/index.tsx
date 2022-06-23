@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { getGeneratedClasses } from 'UI/utils';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 export interface IconStateProps {
-  icon: any;
+  icon: IconProp;
   className?: string;
   iconSize?: '2x' | '3x' | '5x';
   shouldRenderDefaultCss?: boolean;

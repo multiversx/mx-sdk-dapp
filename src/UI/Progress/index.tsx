@@ -129,6 +129,6 @@ export const Progress = ({
       {children}
     </div>
   ) : (
-    <>{children}</>
+    children
   );
 };
