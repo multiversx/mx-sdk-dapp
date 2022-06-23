@@ -13,13 +13,23 @@ import { Trim } from 'UI/Trim';
 import { isServerTransactionPending } from 'utils';
 
 import styles from './styles.scss';
-import { Props } from './types';
+import { SignedTransactionType } from 'types';
 
+export interface TxDetailsProps {
+  title?: React.ReactNode;
+  isTimedOut?: boolean;
+  transactions?: SignedTransactionType[];
+  className?: string;
+  shouldRenderDefaultCss?: boolean;
+}
 export const TxDetails = ({
   title,
   transactions,
   isTimedOut = false
-}: Props) => {
+}: TxDetailsProps) => {
+  if (transactions == null) {
+    return null;
+  }
   const iconSuccessData = {
     icon: faCheck
   };
@@ -42,7 +52,7 @@ export const TxDetails = ({
 
   const processedTransactionsStatus = useMemo(() => {
     const processedTransactions = transactions.filter(
-      (tx) => !isServerTransactionPending(tx.status)
+      (tx) => !isServerTransactionPending(tx?.status)
     );
     const totalTransactions = transactions.length;
     return `${processedTransactions.length} / ${totalTransactions} transactions processed`;
