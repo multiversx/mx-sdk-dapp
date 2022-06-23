@@ -72,13 +72,11 @@ export const TxDetails = ({
               <Trim text={hash} />
             </span>
 
-            <div>
-              <CopyButton text={hash} />
+            <CopyButton text={hash} />
 
-              {!isServerTransactionPending(status) && (
-                <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
-              )}
-            </div>
+            {!isServerTransactionPending(status) && (
+              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
+            )}
           </div>
         );
       })}
