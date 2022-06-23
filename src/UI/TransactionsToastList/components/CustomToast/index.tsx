@@ -10,19 +10,20 @@ interface CustomToastType {
   containerClassName: string;
 }
 
-const CustomToast = (props: CustomToastType) => {
-  const { onDelete, message, duration, containerClassName } = props;
-
+const CustomToast = ({
+  onDelete,
+  message,
+  duration,
+  containerClassName
+}: CustomToastType) => {
   useEffect(() => {
+    let timeout: any = null;
     if (duration) {
-      const timeout = setTimeout(onDelete, duration);
-
-      return () => {
-        clearTimeout(timeout);
-      };
-    } else {
-      return () => null;
+      timeout = setTimeout(onDelete, duration);
     }
+    return () => {
+      clearTimeout(timeout);
+    };
   }, []);
 
   return (
