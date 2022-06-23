@@ -61,7 +61,7 @@
 .dappModalCloseButton:focus {
   text-decoration: none;
   cursor: pointer;
-  color: #212529;
+  color: $gray-900;
   background-color: $gray-300;
   border-color: $gray-200;
 }
