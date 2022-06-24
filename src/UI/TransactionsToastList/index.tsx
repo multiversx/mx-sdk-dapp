@@ -97,7 +97,12 @@ export const TransactionsToastList = ({
           />
         )
       ),
-    [transactionsToasts]
+    [
+      transactionsToasts,
+      signedTransactionsToRender,
+      successfulToastLifetime,
+      handleDeleteTransactionToast
+    ]
   );
 
   const customToastsList = customToasts.map(
