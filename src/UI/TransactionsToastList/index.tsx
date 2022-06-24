@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import {
@@ -17,6 +17,7 @@ import styles from './styles.scss';
 import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
+import { store } from '../../reduxStore/store';
 export interface TransactionsToastListPropsType {
   toastProps?: any;
   className?: string;
@@ -43,6 +44,16 @@ export const TransactionsToastList = ({
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
+
+  const signedTransactionsToRenderRef = useRef(signedTransactionsToRender);
+
+  useEffect(() => {
+    signedTransactionsToRenderRef.current = signedTransactionsToRender;
+    console.log(
+      'UseEffect -> SignedTransactionToRender',
+      signedTransactionsToRender
+    );
+  }, [signedTransactionsToRender]);
 
   const handleDeleteCustomToast = (toastId: string) => {
     deleteCustomToast(toastId);
@@ -109,10 +120,22 @@ export const TransactionsToastList = ({
 
   const clearNotPendingTransactionsFromStorage = (e: BeforeUnloadEvent) => {
     e.preventDefault();
+    console.log('Inside', signedTransactionsToRenderRef.current);
 
-    transactionsToasts.forEach((transactionToast: TransactionToastType) => {
+    const toasts = transactionToastsSelector(store.getState());
+    toasts.forEach((transactionToast: TransactionToastType) => {
+      localStorage.setItem(
+        'ciprian:transactionToast',
+        JSON.stringify(transactionToast)
+      );
+
+      localStorage.setItem(
+        'ciprian:signedTransactionsToRenderRef',
+        JSON.stringify(signedTransactionsToRenderRef.current)
+      );
+
       const currentTx: SignedTransactionsBodyType =
-        signedTransactionsToRender[transactionToast.toastId];
+        signedTransactionsToRenderRef.current[transactionToast.toastId];
 
       localStorage.setItem(
         'ciprian:current_transaction',
@@ -132,10 +155,13 @@ export const TransactionsToastList = ({
           'ciprian:isRemoving',
           JSON.stringify(transactionToast.toastId)
         );
-        removeSignedTransaction(transactionToast.toastId);
+        // removeSignedTransaction(transactionToast.toastId);
+        handleDeleteTransactionToast(transactionToast.toastId);
       }
     });
   };
+
+  console.log('Outside', signedTransactionsToRenderRef.current);
 
   useEffect(() => {
     window.addEventListener(
