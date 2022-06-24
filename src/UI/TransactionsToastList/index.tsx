@@ -49,10 +49,6 @@ export const TransactionsToastList = ({
 
   useEffect(() => {
     signedTransactionsToRenderRef.current = signedTransactionsToRender;
-    console.log(
-      'UseEffect -> SignedTransactionToRender',
-      signedTransactionsToRender
-    );
   }, [signedTransactionsToRender]);
 
   const handleDeleteCustomToast = (toastId: string) => {
@@ -120,42 +116,16 @@ export const TransactionsToastList = ({
 
   const clearNotPendingTransactionsFromStorage = (e: BeforeUnloadEvent) => {
     e.preventDefault();
-    console.log('Inside', signedTransactionsToRenderRef.current);
 
     const toasts = transactionToastsSelector(store.getState());
     toasts.forEach((transactionToast: TransactionToastType) => {
-      localStorage.setItem(
-        'ciprian:transactionToast',
-        JSON.stringify(transactionToast)
-      );
-
-      localStorage.setItem(
-        'ciprian:signedTransactionsToRenderRef',
-        JSON.stringify(signedTransactionsToRenderRef.current)
-      );
-
       const currentTx: SignedTransactionsBodyType =
         signedTransactionsToRenderRef.current[transactionToast.toastId];
 
-      localStorage.setItem(
-        'ciprian:current_transaction',
-        JSON.stringify(currentTx)
-      );
-
       const { status } = currentTx;
-
-      localStorage.setItem('ciprian:status', JSON.stringify(status));
-
       const isPending = getIsTransactionPending(status);
 
-      localStorage.setItem('ciprian:isPending', JSON.stringify(isPending));
-
       if (!isPending) {
-        localStorage.setItem(
-          'ciprian:isRemoving',
-          JSON.stringify(transactionToast.toastId)
-        );
-        // removeSignedTransaction(transactionToast.toastId);
         handleDeleteTransactionToast(transactionToast.toastId);
       }
     });
