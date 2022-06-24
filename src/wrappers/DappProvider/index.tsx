@@ -29,8 +29,6 @@ export const DappProvider = ({
   environment,
   customComponents
 }: DappProviderPropsType) => {
-  console.log('DappProvider');
-
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
     throw new Error('missing environment flag');
