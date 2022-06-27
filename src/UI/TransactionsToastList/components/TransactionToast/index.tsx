@@ -49,7 +49,7 @@ export interface TransactionToastPropsType {
   onDelete?: (toastId: string) => void;
 }
 
-const TransactionToast = ({
+export const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
@@ -167,5 +167,3 @@ const TransactionToast = ({
     </div>
   );
 };
-
-export default TransactionToast;
