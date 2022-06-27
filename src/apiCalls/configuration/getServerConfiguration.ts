@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { NetworkType } from 'types';
 import { configEndpoint } from 'apiCalls/endpoints';
-import { getCleanApiAddress } from 'apiCalls/utils';
 
-export async function getServerConfiguration(customApiAddress?: string) {
-  const apiAddress = getCleanApiAddress(customApiAddress);
-
+export async function getServerConfiguration(apiAddress: string) {
   const configUrl = `${apiAddress}/${configEndpoint}`;
 
   try {
