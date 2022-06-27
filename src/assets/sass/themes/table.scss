@@ -140,3 +140,10 @@
     border: 0;
   }
 }
+
+
+@media (max-width: 767.98px) {
+  .transactions.table .transaction-hash .trim {
+    max-width: 8rem;
+  }
+}
