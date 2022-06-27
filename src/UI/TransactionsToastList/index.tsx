@@ -9,8 +9,8 @@ import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransac
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 
-import CustomToast from 'UI/TransactionsToastList/components/CustomToast';
-import TransactionToast from 'UI/TransactionsToastList/components/TransactionToast';
+import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
+import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
 import { deleteCustomToast, getIsTransactionPending } from 'utils';
 
 import styles from './styles.scss';
