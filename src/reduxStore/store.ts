@@ -3,49 +3,26 @@ import { createSubscription } from 'react-redux/es/utils/Subscription';
 
 import {
   persistStore,
-  persistReducer,
   FLUSH,
   REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
-  REGISTER,
-  createMigrate
+  REGISTER
 } from 'redux-persist';
 
-import storage from 'redux-persist/lib/storage';
-import { defaultNetwork, setAccount, setAccountNonce } from 'reduxStore/slices';
+import { setAccount, setAccountNonce } from 'reduxStore/slices';
 import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
-import rootReducer from './reducers';
-import { PersistConfig } from 'redux-persist/es/types';
-import { ReducersEnum } from 'types/reducers';
 
-const migrations: any = {
-  2: (state: PersistedRootState) => {
-    return {
-      ...state,
-      networkConfig: defaultNetwork
-    };
-  }
-};
-
-const persistConfig: PersistConfig<any> = {
-  key: 'dapp-core-store',
-  version: 2,
-  storage,
-  whitelist: [
-    ReducersEnum.account,
-    ReducersEnum.loginInfo,
-    ReducersEnum.modals,
-    ReducersEnum.networkConfig
-  ],
-  migrate: createMigrate(migrations, { debug: false })
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+//this will make sure that when importing store in the app,
+// in non-browser envs there will be no warnings/errors caused by redux-persist
+const reducers =
+  typeof sessionStorage !== 'undefined'
+    ? require('./persistedRootReducer').default
+    : require('./rootReducer').default;
 
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: reducers,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -71,8 +48,6 @@ export const store = configureStore({
 export const subscription = createSubscription(store);
 
 export const persistor = persistStore(store);
-
-type PersistedRootState = ReturnType<typeof store.getState>;
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
