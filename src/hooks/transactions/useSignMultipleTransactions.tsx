@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { getScamAddressData } from 'apiCalls';
+import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
-import { getLedgerErrorCodes } from 'utils/internal';
+import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
@@ -52,16 +52,21 @@ export function useSignMultipleTransactions({
   onTransactionsSignSuccess
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
   const [currentStep, setCurrentStep] = useState(0);
-  const [signedTransactions, setSignedTransactions] =
-    useState<DeviceSignedTransactions>();
-  const [currentTransaction, setCurrentTransaction] =
-    useState<ActiveLedgerTransactionType | null>(null);
+  const [signedTransactions, setSignedTransactions] = useState<
+    DeviceSignedTransactions
+  >();
+  const [
+    currentTransaction,
+    setCurrentTransaction
+  ] = useState<ActiveLedgerTransactionType | null>(null);
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const isLedger = getIsProviderEqualTo(LoginMethodsEnum.ledger);
 
-  const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions: transactionsToSign });
+  const {
+    getTxInfoByDataField,
+    allTransactions
+  } = useParseMultiEsdtTransferData({ transactions: transactionsToSign });
 
   const isLastTransaction = currentStep === allTransactions.length - 1;
 
