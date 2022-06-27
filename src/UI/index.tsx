@@ -13,6 +13,7 @@ export * from './SignTransactionsModals/SignWithExtensionModal';
 export * from './SignTransactionsModals/SignWithLedgerModal';
 export * from './TransactionsToastList';
 export * from './Trim';
+export * from './Loader';
 export * from './UsdValue';
 export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
