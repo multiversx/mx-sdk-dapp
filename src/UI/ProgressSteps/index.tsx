@@ -1,5 +1,7 @@
 import React from 'react';
-import Dot from './Dot';
+import globalStyles from 'assets/sass/main.scss';
+import { Dot } from './Dot';
+import classNames from 'classnames';
 
 export interface ProgressStepsType {
   totalSteps: number;
@@ -7,7 +9,7 @@ export interface ProgressStepsType {
   className?: string;
 }
 
-const ProgressSteps = ({
+export const ProgressSteps = ({
   totalSteps,
   currentStep,
   className
@@ -17,7 +19,9 @@ const ProgressSteps = ({
   for (let i = 1; i <= totalSteps; i += 1) {
     const isCurrentStep = currentStep === i;
     const color =
-      isCurrentStep || i < currentStep ? 'bg-primary' : 'bg-secondary';
+      isCurrentStep || i < currentStep
+        ? globalStyles.bgPrimary
+        : globalStyles.bgSecondary;
 
     dots.push(
       <Dot
@@ -30,10 +34,29 @@ const ProgressSteps = ({
 
   return (
     <div
-      className={`progress-steps d-flex justify-content-center ${className}`}
+      className={classNames(
+        globalStyles.progressSteps,
+        globalStyles.flexRow,
+        globalStyles.justifyContentCenter,
+        className
+      )}
     >
-      <div className='steps d-flex justify-content-center align-items-center position-relative'>
-        <hr className='position-absolute w-100 m-0' />
+      <div
+        className={classNames(
+          globalStyles.steps,
+          globalStyles.flexRow,
+          globalStyles.justifyContentCenter,
+          globalStyles.alignItemsCenter,
+          globalStyles.positionRelative
+        )}
+      >
+        <hr
+          className={classNames(
+            globalStyles.positionAbsolute,
+            globalStyles.w100,
+            globalStyles.m0
+          )}
+        />
         {dots}
       </div>
     </div>

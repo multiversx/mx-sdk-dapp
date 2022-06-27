@@ -2,12 +2,15 @@ import React from 'react';
 import { useCallback } from 'react';
 import debounce from 'lodash.debounce';
 
+import styles from './styles.scss';
+import classNames from 'classnames';
+
 export interface TrimType {
   text: string;
   dataTestId?: string;
 }
 
-const Trim = ({ text, dataTestId = '' }: TrimType) => {
+export const Trim = ({ text, dataTestId = '' }: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
   const hiddenTextRef = React.useRef(document.createElement('span'));
@@ -25,6 +28,7 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
 
   const addWindowResizeListener = () => {
     window.addEventListener('resize', listener);
+
     return () => {
       window.removeEventListener('resize', listener);
     };
@@ -39,30 +43,30 @@ const Trim = ({ text, dataTestId = '' }: TrimType) => {
   return (
     <span
       ref={trimRef}
-      className={`trim ${overflow ? 'overflow' : ''}`}
+      className={classNames(styles.trim, {
+        [styles.overflow]: overflow
+      })}
       data-testid={dataTestId}
     >
-      <span ref={hiddenTextRef} className='hidden-text-ref'>
+      <span ref={hiddenTextRef} className={styles.hiddenTextRef}>
         {text}
       </span>
 
       {overflow ? (
-        <React.Fragment>
-          <span className='left'>
+        <>
+          <span className={styles.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
             </span>
           </span>
-          <span className='ellipsis'>...</span>
-          <span className='right'>
+          <span className={styles.ellipsis}>...</span>
+          <span className={styles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
-        </React.Fragment>
+        </>
       ) : (
         <span>{text}</span>
       )}
     </span>
   );
 };
-
-export default Trim;

@@ -1,21 +1,24 @@
 import { Transaction } from '@elrondnetwork/erdjs';
-import { useDispatch } from 'react-redux';
-import { useGetAccountInfo } from 'hooks/account';
+import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import useSignMultipleTransactions from 'hooks/transactions/useSignMultipleTransactions';
-import { getAccountProvider } from 'providers/accountProvider';
-import { useSelector } from 'redux/DappProviderContext';
-import { egldLabelSelector, transactionsToSignSelector } from 'redux/selectors';
+
+import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
+import {
+  egldLabelSelector,
+  transactionsToSignSelector
+} from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   moveTransactionsToSignedState,
   setSignTransactionsError
-} from 'redux/slices';
+} from 'reduxStore/slices';
 import {
   ActiveLedgerTransactionType,
   MultiSignTxType,
   TransactionBatchStatusesEnum
 } from 'types';
 import { parseTransactionAfterSigning, safeRedirect } from 'utils';
+import useGetAccountProvider from 'hooks/account/useGetAccountProvider';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -47,7 +50,7 @@ export function useSignTransactionsWithDevice({
   const {
     account: { address }
   } = useGetAccountInfo();
-  const provider = getAccountProvider();
+  const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
 
   const {

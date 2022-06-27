@@ -1,9 +1,10 @@
 import React from 'react';
-import icons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
+import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SignModalPropsType } from 'types';
-import PageState from 'UI/PageState';
-import { getGeneratedClasses, safeRedirect } from 'utils';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
+import { PageState } from 'UI/PageState';
+import { getGeneratedClasses } from 'UI/utils';
+import { safeRedirect } from 'utils';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -25,8 +26,7 @@ export const SignWithWalletConnectModal = ({
         hasMultipleTransactions ? 's' : ''
       }`;
 
-  const close = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const close = () => {
     handleClose();
     if (
       callbackRoute != null &&
@@ -35,17 +35,19 @@ export const SignWithWalletConnectModal = ({
       safeRedirect(callbackRoute);
     }
   };
+
   return (
-    <ReactBootstrap.Modal
-      show
-      backdrop='static'
-      onHide={close}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={close}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
+      modalInteractionConfig={{
+        openOnMount: true
+      }}
     >
       <PageState
-        icon={error ? icons.faTimes : icons.faHourglass}
+        icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
         className={className}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}
@@ -63,8 +65,6 @@ export const SignWithWalletConnectModal = ({
           </button>
         }
       />
-    </ReactBootstrap.Modal>
+    </ModalContainer>
   );
 };
-
-export default SignWithWalletConnectModal;

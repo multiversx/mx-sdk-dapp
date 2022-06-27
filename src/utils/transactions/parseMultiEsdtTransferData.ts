@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import { MultiEsdtTxType, TransactionTypesEnum } from 'types/transactions';
 import { decodePart } from 'utils/decoders';
 import { getAllStringOccurrences } from '../getAllStringOccurrences';
+import { TransactionTypesEnum, MultiEsdtTxType } from 'types';
 
 // TODO: add tests
 export function parseMultiEsdtTransferData(data?: string) {

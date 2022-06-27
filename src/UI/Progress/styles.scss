@@ -1,0 +1,17 @@
+@import 'assets/sass/variables/variables';
+
+.progress {
+  position: relative;
+
+  .bar {
+    position: absolute;
+    pointer-events: none;
+    left: -0.5rem;
+    right: -0.5rem;
+    bottom: -0.5rem;
+    top: -0.5rem;
+    background-color: $gray-700;
+    opacity: 0.25;
+    transition: width 0.6s ease;
+  }
+}

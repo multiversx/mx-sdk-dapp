@@ -2,8 +2,8 @@ import {
   clearSignedTransaction,
   clearAllTransactionsToSign,
   clearAllSignedTransactions
-} from 'redux/slices';
-import { store } from 'redux/store';
+} from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 
 export function removeTransactionsToSign(sessionId: string) {
   store.dispatch(clearSignedTransaction(sessionId));

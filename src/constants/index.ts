@@ -1,6 +1,7 @@
-export * as errorsMessages from './errorsMessages';
-export * as networkConstants from './network';
-export * as ledgerErrorCodes from './ledgerErrorCodes';
+export * from './errorsMessages';
+export * from './network';
+export * from './ledgerErrorCodes';
+export * from './mnemonicWords';
 
 export const gasPriceModifier = '0.01';
 export const gasPerDataByte = '1500';
@@ -13,4 +14,7 @@ export const version = 1;
 export const ledgerContractDataEnabledValue = 1;
 
 export const dappInitRoute = '/dapp/init';
-export const walletSignSession = 'signSession';
+export const WALLET_SIGN_SESSION = 'signSession';
+
+export const logoutActionName = 'logout';
+export const loginActionName = 'login';

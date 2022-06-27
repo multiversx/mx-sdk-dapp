@@ -1,4 +1,4 @@
-
+   
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
@@ -13,6 +13,7 @@ dist
 .idea
 .idea/workspace.xml
 .rpt2_cache
+.yalc
 
 # misc
 .DS_Store
@@ -21,7 +22,6 @@ dist
 .env.development.local
 .env.test.local
 .env.production.local
-src/optionalPackages/react-bootstrap.tsx
 
 
 npm-debug.log*

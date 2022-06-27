@@ -1,117 +1,113 @@
-import React, { useEffect, useState } from 'react';
-import { useGetSignedTransactions } from 'hooks';
-import { useGetPendingTransactions } from 'services';
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import {
-  getToastsIdsFromStorage,
-  setToastsIdsToStorage
-} from 'storage/session';
-import { SignedTransactionsBodyType } from 'types';
-import TransactionToast from 'UI/TransactionToast';
-import { getGeneratedClasses } from 'utils';
+  customToastsSelector,
+  transactionToastsSelector
+} from 'reduxStore/selectors/toastsSelectors';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
+import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
+import { SignedTransactionsType } from 'types';
 
-import { TransactionsToastListPropsType } from './types';
+import CustomToast from 'UI/TransactionsToastList/components/CustomToast';
+import TransactionToast from 'UI/TransactionsToastList/components/TransactionToast';
+import { deleteCustomToast } from 'utils';
 
-function TransactionsToastList({
+import styles from './styles.scss';
+import { CustomToastType, TransactionToastType } from 'types/toasts';
+import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
+import { removeSignedTransaction } from 'services';
+export interface TransactionsToastListPropsType {
+  toastProps?: any;
+  className?: string;
+  withTxNonce?: boolean;
+  shouldRenderDefaultCss?: boolean;
+  signedTransactions?: SignedTransactionsType;
+  successfulToastLifetime?: number;
+  parentElement?: Element | DocumentFragment;
+}
+
+export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
-  withTxNonce = false,
   className = 'transactions-toast-list',
-  pendingTransactions,
   signedTransactions,
-  successfulToastLifetime
-}: TransactionsToastListPropsType) {
-  const [toastsIds, setToastsIds] = useState<any>([]);
+  successfulToastLifetime,
+  parentElement
+}: TransactionsToastListPropsType) => {
+  const customToasts = useSelector(customToastsSelector);
+  const transactionsToasts = useSelector(transactionToastsSelector);
+  const dispatch = useDispatch();
 
-  const pendingTransactionsFromStore =
-    useGetPendingTransactions().pendingTransactions;
-
-  const signedTransactionsFromStore =
-    useGetSignedTransactions().signedTransactions;
-
-  const pendingTransactionsToRender =
-    pendingTransactions || pendingTransactionsFromStore;
+  const signedTransactionsFromStore = useGetSignedTransactions()
+    .signedTransactions;
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
 
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper:
-        'toast-messages d-flex flex-column align-items-center justify-content-sm-end',
-      toast: ''
-    }
-  );
+  const handleDeleteCustomToast = (toastId: string) => {
+    deleteCustomToast(toastId);
+  };
 
-  const mappedToastsList = toastsIds?.map((toastId: string) => {
-    const currentTx: SignedTransactionsBodyType =
-      signedTransactionsToRender[toastId];
-    if (
-      currentTx == null ||
-      currentTx?.transactions == null ||
-      currentTx?.status == null
-    ) {
-      return null;
-    }
+  const handleDeleteTransactionToast = (toastId: string) => {
+    dispatch(removeTransactionToast(toastId));
+    removeSignedTransaction(toastId);
+  };
 
-    const { transactions, status } = currentTx;
-    return (
-      <TransactionToast
-        className={className}
-        key={toastId}
-        transactions={transactions}
-        status={status}
-        toastId={toastId}
-        withTxNonce={withTxNonce}
-        lifetimeAfterSuccess={successfulToastLifetime}
-      />
-    );
-  });
+  const handleSignedTransactionsListUpdate = () => {
+    for (const sessionId in signedTransactionsToRender) {
+      const alreadyHasToastForThisTransaction = transactionsToasts.some(
+        (toast: TransactionToastType): boolean => toast.toastId === sessionId
+      );
 
-  const mapPendingSignedTransactions = () => {
-    const newToasts = [...toastsIds];
-
-    for (const sessionId in pendingTransactionsToRender) {
-      const hasToast = toastsIds.includes(sessionId);
-
-      if (!hasToast) {
-        newToasts.push(sessionId);
+      if (!alreadyHasToastForThisTransaction) {
+        dispatch(addTransactionToast(sessionId));
       }
     }
-
-    setToastsIds(newToasts);
-  };
-
-  const fetchSessionStorageToasts = () => {
-    const sessionStorageToastsIds = getToastsIdsFromStorage();
-
-    if (sessionStorageToastsIds) {
-      const newToasts = [...toastsIds, ...sessionStorageToastsIds];
-      setToastsIds(newToasts);
-    }
-  };
-
-  const saveSessionStorageToasts = () => {
-    const shouldSaveLocalToasts = Boolean(toastsIds.length);
-    if (!shouldSaveLocalToasts) {
-      return;
-    }
-
-    setToastsIdsToStorage(toastsIds);
   };
 
   useEffect(() => {
-    fetchSessionStorageToasts();
-    return () => {
-      saveSessionStorageToasts();
-    };
-  }, []);
+    handleSignedTransactionsListUpdate();
+  }, [signedTransactionsToRender]);
 
-  useEffect(() => {
-    mapPendingSignedTransactions();
-  }, [pendingTransactionsToRender]);
+  const style = getGeneratedClasses(className ?? '', !!shouldRenderDefaultCss, {
+    ...styles
+  });
 
-  return <div className={generatedClasses.wrapper}>{mappedToastsList}</div>;
-}
+  const transactionsToastsList = transactionsToasts.map(
+    ({ toastId, type, startTimestamp }: TransactionToastType) => (
+      <TransactionToast
+        key={toastId}
+        {...{
+          type,
+          startTimestamp,
+          toastId,
+          signedTransactionsToRender,
+          lifetimeAfterSuccess: successfulToastLifetime,
+          onDelete: handleDeleteTransactionToast
+        }}
+      />
+    )
+  );
 
-export default TransactionsToastList;
+  const customToastsList = customToasts.map(
+    ({ toastId, type, message, duration }: CustomToastType) => (
+      <CustomToast
+        key={toastId}
+        {...{
+          type,
+          message: message ?? '',
+          duration,
+          onDelete: () => handleDeleteCustomToast(toastId)
+        }}
+      />
+    )
+  );
+
+  return createPortal(
+    <div className={style.toasts}>
+      {customToastsList}
+      {transactionsToastsList}
+    </div>,
+    parentElement || document.body
+  );
+};

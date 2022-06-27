@@ -1,8 +1,24 @@
 import React from 'react';
+import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import ReactFontawesome from 'optionalPackages/react-fontawesome';
-import { getGeneratedClasses } from 'utils';
-import { PageStateProps } from './types';
+import globalStyles from 'assets/sass/main.scss';
+import { getGeneratedClasses } from 'UI/utils';
+import styles from './page-state.scss';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+
+export interface PageStateProps {
+  title?: React.ReactNode;
+  icon?: IconProp | IconDefinition | null;
+  iconClass?: string;
+  className?: string;
+  dataTestId?: string;
+  iconSize?: SizeProp;
+  iconBgClass?: string;
+  action?: React.ReactNode;
+  shouldRenderDefaultCss?: boolean;
+  description?: string | React.ReactNode;
+}
 
 export const PageState = ({
   icon,
@@ -20,13 +36,21 @@ export const PageState = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: 'state m-auto p-4 text-center',
-      iconContainer: classNames('icon-state mx-auto', {
-        [`${iconBgClass}`]: Boolean(iconBgClass)
-      }),
+      wrapper: `
+        ${styles.state}
+        ${globalStyles.mAuto}
+        ${globalStyles.p4}
+        ${globalStyles.textCenter}
+      `,
+      iconContainer: classNames(
+        `${globalStyles.iconState} ${globalStyles.mxAuto}`,
+        {
+          [`${iconBgClass}`]: Boolean(iconBgClass)
+        }
+      ),
       iconClass: classNames(iconClass != null && iconClass),
-      title: 'h4 my-4',
-      description: 'mb-3'
+      title: `${globalStyles.h4} ${globalStyles.my4}`,
+      description: globalStyles.mb3
     }
   );
 
@@ -34,7 +58,7 @@ export const PageState = ({
     <div className={generatedClasses.wrapper} data-testid={dataTestId}>
       {icon && (
         <span className={generatedClasses.iconContainer}>
-          <ReactFontawesome.FontAwesomeIcon
+          <FontAwesomeIcon
             icon={icon}
             className={generatedClasses.iconClass}
             size={iconSize}
@@ -45,9 +69,7 @@ export const PageState = ({
       {description && (
         <div className={generatedClasses.description}>{description}</div>
       )}
-      {action && <React.Fragment>{action}</React.Fragment>}
+      {action && <>{action}</>}
     </div>
   );
 };
-
-export default PageState;

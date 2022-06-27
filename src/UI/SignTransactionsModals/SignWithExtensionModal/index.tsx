@@ -1,11 +1,14 @@
 import React from 'react';
-import freeSolidIcons from 'optionalPackages/fortawesome-free-solid-svg-icons';
-import ReactBootstrap from 'optionalPackages/react-bootstrap';
+import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
-import PageState from 'UI/PageState';
-import { getGeneratedClasses, safeRedirect } from 'utils';
+import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
+import { PageState } from 'UI/PageState';
+import { getGeneratedClasses } from 'UI/utils';
+import { safeRedirect } from 'utils';
+import styles from './sing-with-extension-modal.scss';
 
-const SignWithExtensionModal = ({
+export const SignWithExtensionModal = ({
   handleClose,
   error,
   callbackRoute,
@@ -13,10 +16,11 @@ const SignWithExtensionModal = ({
   className = 'extension-modal'
 }: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
-    wrapper: 'modal-container extension',
-    icon: 'text-white',
-    closeBtn: 'btn btn-close-link mt-2'
+    wrapper: `${styles.modalContainer} ${styles.extension}`,
+    icon: globalStyles.textWhite,
+    closeBtn: `${globalStyles.btn} ${globalStyles.btnCloseLink} ${globalStyles.mt2}`
   });
+
   const description = error
     ? error
     : transactions && transactions.length > 1
@@ -35,16 +39,17 @@ const SignWithExtensionModal = ({
   };
 
   return (
-    <ReactBootstrap.Modal
-      show
-      backdrop='static'
-      onHide={handleClose}
-      className={classes.wrapper}
-      animation={false}
-      centered
+    <ModalContainer
+      onClose={handleClose}
+      modalConfig={{
+        modalDialogClassName: classes.wrapper
+      }}
+      modalInteractionConfig={{
+        openOnMount: true
+      }}
     >
       <PageState
-        icon={error ? freeSolidIcons.faTimes : freeSolidIcons.faHourglass}
+        icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
         className={className}
         iconBgClass={error ? 'bg-danger' : 'bg-warning'}
@@ -62,8 +67,6 @@ const SignWithExtensionModal = ({
           </button>
         }
       />
-    </ReactBootstrap.Modal>
+    </ModalContainer>
   );
 };
-
-export default SignWithExtensionModal;

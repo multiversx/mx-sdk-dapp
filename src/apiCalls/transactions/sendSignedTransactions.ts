@@ -1,7 +1,7 @@
 import { Transaction } from '@elrondnetwork/erdjs';
 import axios from 'axios';
-import { networkSelector } from 'redux/selectors';
-import { store } from 'redux/store';
+import { networkSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 
 export type SendSignedTransactionsReturnType = string[];
 
