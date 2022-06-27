@@ -69,20 +69,16 @@
   }
 
   @media (max-width: 1199.98px) {
-    max-width: 26rem !important;
+    max-width: 26rem;
   }
 
   @media (max-width: 991.98px) {
-    max-width: 12rem !important;
+    max-width: 12rem
   }
 
   @media (max-width: 768px) {
-    max-width: 8rem !important;
+    max-width: 8rem;
   }
-}
-
-.test-class {
-  background: red;
 }
 
 .trim-wrapper {

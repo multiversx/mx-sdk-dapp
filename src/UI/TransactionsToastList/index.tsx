@@ -17,7 +17,7 @@ import styles from './styles.scss';
 import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
-import { store } from '../../reduxStore/store';
+import { store } from 'reduxStore/store';
 export interface TransactionsToastListPropsType {
   toastProps?: any;
   className?: string;
@@ -39,8 +39,8 @@ export const TransactionsToastList = ({
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
 
-  const signedTransactionsFromStore =
-    useGetSignedTransactions().signedTransactions;
+  const signedTransactionsFromStore = useGetSignedTransactions()
+    .signedTransactions;
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
@@ -127,6 +127,10 @@ export const TransactionsToastList = ({
       const currentTx: SignedTransactionsBodyType =
         signedTransactionsToRenderRef.current[transactionToast.toastId];
 
+      if (!currentTx) {
+        return;
+      }
+
       const { status } = currentTx;
       const isPending = getIsTransactionPending(status);
 
@@ -135,8 +139,6 @@ export const TransactionsToastList = ({
       }
     });
   };
-
-  console.log('Outside', signedTransactionsToRenderRef.current);
 
   useEffect(() => {
     window.addEventListener(

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
@@ -26,7 +26,20 @@ export const Progress = ({
   done,
   expiresIn = 10 * 60
 }: ProgressProps) => {
-  const { totalSeconds, currentRemaining } = getInitialData();
+  const initialData = useMemo(() => {
+    const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
+    const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
+    const remaining = progress
+      ? ((progress.endTime - moment().unix()) * 100) / totalSeconds
+      : 0;
+
+    const currentRemaining =
+      toastProgress && id in toastProgress ? toastProgress[id] : remaining;
+
+    return { currentRemaining, totalSeconds };
+  }, []);
+
+  const { totalSeconds, currentRemaining } = initialData;
 
   const progressRef = useRef<HTMLDivElement | null>(null);
   const intervalRef = useRef<NodeJS.Timer | undefined>();
@@ -79,19 +92,6 @@ export const Progress = ({
       data: data,
       expires: getUnixTimestampWithAddedSeconds(expiresIn)
     });
-  }
-
-  function getInitialData() {
-    const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
-    const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
-    const remaining = progress
-      ? ((progress.endTime - moment().unix()) * 100) / totalSeconds
-      : 0;
-
-    const currentRemaining =
-      toastProgress && id in toastProgress ? toastProgress[id] : remaining;
-
-    return { currentRemaining, totalSeconds };
   }
 
   function handleFinishedProgress() {
