@@ -83,19 +83,40 @@ export const TransactionsToastList = ({
   const transactionsToastsList = useMemo(
     () =>
       transactionsToasts.map(
-        ({ toastId, type, startTimestamp }: TransactionToastType) => (
-          <TransactionToast
-            key={toastId}
-            {...{
-              type,
-              startTimestamp,
-              toastId,
-              signedTransactionsToRender,
-              lifetimeAfterSuccess: successfulToastLifetime,
-              onDelete: handleDeleteTransactionToast
-            }}
-          />
-        )
+        ({ toastId, type, startTimestamp }: TransactionToastType) => {
+          const currentTx: SignedTransactionsBodyType =
+            signedTransactionsToRender[toastId];
+
+          if (currentTx == null) {
+            return null;
+          }
+
+          const invalidCurrentTx =
+            currentTx?.transactions == null || currentTx?.status == null;
+          if (invalidCurrentTx) {
+            return null;
+          }
+
+          const { transactions, status } = currentTx;
+          if (transactions === null) {
+            return null;
+          }
+
+          return (
+            <TransactionToast
+              key={toastId}
+              {...{
+                type,
+                startTimestamp,
+                toastId,
+                transactions,
+                status,
+                lifetimeAfterSuccess: successfulToastLifetime,
+                onDelete: handleDeleteTransactionToast
+              }}
+            />
+          );
+        }
       ),
     [
       transactionsToasts,
