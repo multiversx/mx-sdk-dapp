@@ -105,7 +105,9 @@ export const TransactionToast = ({
   ) : null;
 
   return (
-    <div className={wrapperStyles.toastWrapper}>
+    <div
+      className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
+    >
       <Progress
         key={toastId}
         id={toastId}
