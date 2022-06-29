@@ -1,11 +1,10 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import { useGetTransactionDisplayInfo } from 'hooks/transactions/useGetTransactionDisplayInfo';
-import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
-import { SignedTransactionsBodyType } from 'types';
+import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { Progress } from 'UI/Progress';
 import { TxDetails } from 'UI/TxDetails';
 
@@ -15,40 +14,49 @@ import {
   getIsTransactionTimedOut
 } from 'utils/transactions';
 
-import CloseButton from './components/CloseButton';
-import { TransactionToastPropsType } from './types';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { getToastDataStateByStatus } from './utils';
 import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
+import {
+  getUnixTimestampWithAddedMilliseconds,
+  getUnixTimestamp
+} from 'utils/dateTime';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
 
-const TransactionToast = ({
+export interface TransactionToastPropsType {
+  title?: string;
+  toastId: string;
+  className?: string;
+  errorMessage?: string;
+  successMessage?: string;
+  endTimeProgress?: number;
+  processingMessage?: string;
+  startTimestamp?: number;
+  shouldRenderDefaultCss?: boolean;
+  transactions?: SignedTransactionType[];
+  status?: TransactionBatchStatusesEnum;
+  lifetimeAfterSuccess?: number;
+  onDelete?: (toastId: string) => void;
+}
+
+export const TransactionToast = ({
   toastId,
   title = '',
   shouldRenderDefaultCss = true,
   className = 'transaction-toast',
-  startTimeProgress,
+  onDelete,
+  startTimestamp,
   endTimeProgress,
   lifetimeAfterSuccess,
-  signedTransactionsToRender
+  status,
+  transactions
 }: TransactionToastPropsType) => {
-  const [shouldRender, setShouldRender] = useState(true);
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
-
-  const currentTx: SignedTransactionsBodyType =
-    signedTransactionsToRender[toastId];
-  if (currentTx == null) {
-    return null;
-  }
-
-  const { transactions, status } = currentTx;
-
-  const invalidCurrentTx =
-    currentTx?.transactions == null || currentTx?.status == null;
 
   const areSameShardTransactions = useMemo(
     () => getAreTransactionsOnSameShard(transactions, accountShard),
@@ -63,22 +71,13 @@ const TransactionToast = ({
     transactionDisplayInfo?.transactionDuration || shardAdjustedDuration;
 
   const [startTime, endTime] = useMemo(() => {
-    const startTime = startTimeProgress || moment().unix();
+    const startTime = startTimestamp || getUnixTimestamp();
     const endTime =
       endTimeProgress ||
-      moment()
-        .add(Number(transactionDuration), 'milliseconds')
-        .unix();
+      getUnixTimestampWithAddedMilliseconds(transactionDuration);
+
     return [startTime, endTime];
   }, []);
-
-  if (invalidCurrentTx) {
-    return null;
-  }
-
-  if (transactions === null || !shouldRender) {
-    return null;
-  }
 
   const progress = { startTime, endTime };
   const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
@@ -96,15 +95,19 @@ const TransactionToast = ({
   });
 
   const handleDeleteToast = () => {
-    setShouldRender(false);
+    onDelete?.(toastId);
   };
 
-  if (!shouldRender || transactions == null) {
-    return null;
-  }
+  const closeButton = !isPending ? (
+    <button type='button' className={styles.close} onClick={handleDeleteToast}>
+      <FontAwesomeIcon icon={faTimes} size='xs' />
+    </button>
+  ) : null;
 
   return (
-    <div className={wrapperStyles.toastWrapper}>
+    <div
+      className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
+    >
       <Progress
         key={toastId}
         id={toastId}
@@ -128,14 +131,13 @@ const TransactionToast = ({
           <div className={style.right}>
             <div className={style.heading}>
               <h5 className={style.title}>{toastDataState.title}</h5>
-
-              <CloseButton
-                {...{ style, isPending, onDelete: handleDeleteToast }}
-              />
+              {closeButton}
             </div>
 
             <div className={style.footer}>
-              <TxDetails {...{ transactions, title, isTimedOut }} />
+              <TxDetails
+                {...{ transactions: transactions ?? [], title, isTimedOut }}
+              />
             </div>
           </div>
         </div>
@@ -143,5 +145,3 @@ const TransactionToast = ({
     </div>
   );
 };
-
-export default TransactionToast;

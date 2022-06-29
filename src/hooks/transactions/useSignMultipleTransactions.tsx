@@ -1,18 +1,20 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { getScamAddressData } from 'apiCalls';
+import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
-import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
-import { getLedgerErrorCodes } from 'utils/internal';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+
+import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
   verifyReceiverScam?: boolean;
   transactionsToSign?: Transaction[];
-  onCancel: () => void;
+  onCancel?: () => void;
   onSignTransaction: (transaction: Transaction) => Promise<Transaction>;
   onTransactionsSignSuccess: (transactions: Transaction[]) => void;
   onTransactionsSignError: (errorMessage: string) => void;
@@ -32,7 +34,10 @@ export interface UseSignMultipleTransactionsReturnType {
   onPrev: () => void;
   onAbort: () => void;
   waitingForDevice: boolean;
+  shouldContinueWithoutSigning: boolean;
+  isFirstTransaction: boolean;
   isLastTransaction: boolean;
+  hasMultipleTransactions: boolean;
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
   currentTransaction: ActiveLedgerTransactionType | null;
@@ -49,16 +54,21 @@ export function useSignMultipleTransactions({
   onTransactionsSignSuccess
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
   const [currentStep, setCurrentStep] = useState(0);
-  const [signedTransactions, setSignedTransactions] =
-    useState<DeviceSignedTransactions>();
-  const [currentTransaction, setCurrentTransaction] =
-    useState<ActiveLedgerTransactionType | null>(null);
+  const [signedTransactions, setSignedTransactions] = useState<
+    DeviceSignedTransactions
+  >();
+  const [
+    currentTransaction,
+    setCurrentTransaction
+  ] = useState<ActiveLedgerTransactionType | null>(null);
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
   const isLedger = getIsProviderEqualTo(LoginMethodsEnum.ledger);
 
-  const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions: transactionsToSign });
+  const {
+    getTxInfoByDataField,
+    allTransactions
+  } = useParseMultiEsdtTransferData({ transactions: transactionsToSign });
 
   const isLastTransaction = currentStep === allTransactions.length - 1;
 
@@ -166,21 +176,22 @@ export function useSignMultipleTransactions({
 
   function handleAbort() {
     if (isFirst) {
-      onCancel();
+      onCancel?.();
     } else {
       setCurrentStep((existing) => existing - 1);
     }
   }
 
-  const continueWithoutSigning =
+  const shouldContinueWithoutSigning = Boolean(
     currentTransaction?.transactionTokenInfo?.type &&
-    currentTransaction?.transactionTokenInfo?.multiTxData &&
-    !currentTransaction?.dataField.endsWith(
-      currentTransaction?.transactionTokenInfo?.multiTxData
-    );
+      currentTransaction?.transactionTokenInfo?.multiTxData &&
+      !currentTransaction?.dataField.endsWith(
+        currentTransaction?.transactionTokenInfo?.multiTxData
+      )
+  );
 
   function handleSignTransaction() {
-    if (continueWithoutSigning) {
+    if (shouldContinueWithoutSigning) {
       setCurrentStep((exising) => exising + 1);
     } else {
       signTx();
@@ -215,6 +226,9 @@ export function useSignMultipleTransactions({
     waitingForDevice,
     onAbort: handleAbort,
     isLastTransaction,
+    isFirstTransaction: currentStep === 0,
+    hasMultipleTransactions: allTransactions.length > 1,
+    shouldContinueWithoutSigning,
     currentStep,
     signedTransactions,
     currentTransaction

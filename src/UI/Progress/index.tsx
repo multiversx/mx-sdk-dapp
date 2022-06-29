@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useRef, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
+import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import storage from 'utils/storage';
 
 import styles from './styles.scss';
+
+const TOAST_PROGRESS_KEY = 'toastProgress';
 
 export interface ProgressProps {
   id: string;
@@ -23,103 +26,136 @@ export const Progress = ({
   done,
   expiresIn = 10 * 60
 }: ProgressProps) => {
-  const ref = React.useRef(null);
-  const intervalRef = React.useRef<any>();
-  const removeTxFromSession = () => {
-    const toastProgress = storage.session.getItem('toastProgress');
-    const hasSessionStoredTx = Boolean(toastProgress?.[id]);
-
-    if (!hasSessionStoredTx) {
-      return;
-    }
-
-    const expires = moment().add(expiresIn, 'seconds').unix();
-
-    delete toastProgress[id];
-
-    storage.session.setItem({
-      key: 'toastProgress',
-      data: toastProgress,
-      expires
-    });
-  };
-
-  const saveToSession = ({ value }: { value: number }) => {
-    const toastProgress = storage.session.getItem('toastProgress') || {};
-    toastProgress[id] = value;
-    storage.session.setItem({
-      key: 'toastProgress',
-      data: toastProgress,
-      expires: moment().add(expiresIn, 'seconds').unix()
-    });
-  };
-
-  const getInitialData = () => {
+  const initialData = useMemo(() => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
-    const toastProgress = storage.session.getItem('toastProgress');
+    const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
     const remaining = progress
       ? ((progress.endTime - moment().unix()) * 100) / totalSeconds
       : 0;
 
     const currentRemaining =
       toastProgress && id in toastProgress ? toastProgress[id] : remaining;
+
     return { currentRemaining, totalSeconds };
-  };
+  }, []);
 
-  const { totalSeconds, currentRemaining } = getInitialData();
+  const { totalSeconds, currentRemaining } = initialData;
 
-  const [percentRemaining, setPercentRemaining] =
-    React.useState<number>(currentRemaining);
+  const progressRef = useRef<HTMLDivElement | null>(null);
+  const intervalRef = useRef<NodeJS.Timer | undefined>();
+  const percentRemainingRef = useRef(currentRemaining);
 
-  React.useEffect(() => {
-    if (progress) {
-      const maxPercent = 90;
-      const perc = totalSeconds / maxPercent;
-      const int = moment.duration(perc.toFixed(2), 's').asMilliseconds();
-
-      if (done) {
-        intervalRef.current = setInterval(() => {
-          if (ref.current !== null) {
-            setPercentRemaining((existing) => {
-              const value = existing - 1;
-              if (value <= 0) {
-                clearInterval(intervalRef.current);
-                removeTxFromSession();
-                return 0;
-              } else {
-                saveToSession({ value });
-                return value;
-              }
-            });
-          }
-        }, 5);
-      } else {
-        intervalRef.current = setInterval(() => {
-          if (ref.current !== null) {
-            setPercentRemaining((existing) => {
-              const decrement =
-                existing > 100 - maxPercent ? 1 : logarithmicRest(existing);
-              const value = existing - decrement;
-              saveToSession({ value });
-              return value;
-            });
-          }
-        }, int);
-      }
-
-      return () => {
-        clearInterval(intervalRef.current);
-      };
+  useEffect(() => {
+    if (progress == null) {
+      return;
     }
-    return;
+
+    if (done) {
+      handleFinishedProgress();
+    } else {
+      handleRunningProgress();
+    }
+
+    return () => {
+      clearInterval(intervalRef.current);
+    };
   }, [progress, done]);
 
+  function removeTxFromSession() {
+    const toastProgress: Record<number, number> = storage.session.getItem(
+      TOAST_PROGRESS_KEY
+    );
+
+    const hasSessionStoredTx = Boolean(toastProgress?.[id]);
+
+    if (!hasSessionStoredTx) {
+      return;
+    }
+
+    delete toastProgress[id];
+
+    saveToSession(toastProgress);
+  }
+
+  function updateTxFromSession(value: number) {
+    const toastProgress: Record<number, number> =
+      storage.session.getItem(TOAST_PROGRESS_KEY) || {};
+
+    toastProgress[id] = value;
+
+    saveToSession(toastProgress);
+  }
+
+  function saveToSession(data: Record<number, number>) {
+    storage.session.setItem({
+      key: TOAST_PROGRESS_KEY,
+      data: data,
+      expires: getUnixTimestampWithAddedSeconds(expiresIn)
+    });
+  }
+
+  function handleFinishedProgress() {
+    intervalRef.current = setInterval(() => {
+      if (progressRef.current == null) {
+        return;
+      }
+
+      const existing = percentRemainingRef.current;
+      const value = existing - 1;
+
+      if (value <= 0) {
+        clearInterval(intervalRef.current);
+        removeTxFromSession();
+        setPercentRemaining(0);
+      } else {
+        updateTxFromSession(value);
+        setPercentRemaining(value);
+      }
+    }, 5);
+  }
+
+  function handleRunningProgress() {
+    const maxPercent = 90;
+    const perc = totalSeconds / maxPercent;
+    const int = moment.duration(perc.toFixed(2), 's').asMilliseconds();
+
+    intervalRef.current = setInterval(() => {
+      if (progressRef.current == null) {
+        return;
+      }
+
+      const existing = percentRemainingRef.current;
+
+      const decrement =
+        existing > 100 - maxPercent ? 1 : logarithmicRest(existing);
+      const value = existing - decrement;
+
+      updateTxFromSession(value);
+      setPercentRemaining(value);
+    }, int);
+  }
+
+  function setPercentRemaining(value: number) {
+    percentRemainingRef.current = value;
+    updateProgressBar();
+  }
+
+  function updateProgressBar() {
+    if (progressRef.current == null) {
+      return;
+    }
+
+    const value = percentRemainingRef.current;
+
+    progressRef.current.style.width = `${value}%`;
+    progressRef.current.ariaValueNow = value;
+  }
+
   return progress ? (
-    <div ref={ref} className={styles.progress}>
+    <div className={styles.progress}>
       <div
+        ref={progressRef}
         role='progressbar'
-        style={{ width: `${percentRemaining}%` }}
-        aria-valuenow={percentRemaining}
         aria-valuemin={0}
         aria-valuemax={100}
         className={styles.bar}

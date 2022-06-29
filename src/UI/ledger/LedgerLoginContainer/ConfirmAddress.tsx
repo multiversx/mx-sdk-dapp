@@ -1,6 +1,7 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
+import classNames from 'classnames';
 
 export const ConfirmAddress = ({
   token,
@@ -13,22 +14,29 @@ export const ConfirmAddress = ({
   return (
     <div className={globalStyles.mAuto}>
       <div
-        className={`${globalStyles.card} ${globalStyles.my4} ${
-          globalStyles.textCenter
-        } ${noBorder ? globalStyles.border0 : ''}`}
+        className={classNames([
+          globalStyles.card,
+          globalStyles.my4,
+          globalStyles.textCenter,
+          { [globalStyles.border0]: noBorder }
+        ])}
       >
         <div
-          className={`${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`}
+          className={classNames([
+            globalStyles.cardBody,
+            globalStyles.p4,
+            globalStyles.mxLg4
+          ])}
         >
           <h4 className={globalStyles.mb4}>Confirm Ledger Address</h4>
           <p>For security, please confirm that your address: </p>
           <p
-            className={`
-              ${globalStyles.lead}
-              ${globalStyles.border}
-              ${globalStyles.rounded}
-              ${globalStyles.p2}
-            `}
+            className={classNames([
+              globalStyles.lead,
+              globalStyles.border,
+              globalStyles.rounded,
+              globalStyles.p2
+            ])}
           >
             {ledgerAccount ? ledgerAccount.address : ''}
           </p>
@@ -36,12 +44,12 @@ export const ConfirmAddress = ({
             <>
               <p>and Auth Token</p>
               <p
-                className={`
-                  ${globalStyles.lead}
-                  ${globalStyles.border}
-                  ${globalStyles.rounded}
-                  ${globalStyles.p2}
-                `}
+                className={classNames([
+                  globalStyles.lead,
+                  globalStyles.border,
+                  globalStyles.rounded,
+                  globalStyles.p2
+                ])}
               >{`${token}{}`}</p>
             </>
           )}

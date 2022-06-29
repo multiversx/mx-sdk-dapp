@@ -1,11 +1,10 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import throttle from 'lodash.throttle';
-import { logoutAction } from 'reduxStore/commonActions';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import storage from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
 import { logoutActionName } from 'constants/index';
-import { getAccountProvider } from 'utils';
+import { logout } from 'utils';
 
 const whitelistedActions = [logoutActionName];
 
@@ -32,11 +31,9 @@ export const loginSessionMiddleware: any = (store: any) => (
   const isExpired = loginTimestamp - now < 0;
   if (isExpired) {
     return setTimeout(async () => {
-      const provider = getAccountProvider();
       console.log('session expired');
-      store.dispatch(logoutAction());
       try {
-        await provider?.logout({ callbackUrl: '/' });
+        logout();
       } catch (err) {
         console.error('error logging out', err);
       }

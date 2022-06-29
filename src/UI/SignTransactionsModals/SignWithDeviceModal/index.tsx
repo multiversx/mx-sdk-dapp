@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
-import { useDappModal } from 'UI/DappModal';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 import { SignStep } from './SignStep';
@@ -35,15 +34,6 @@ export const SignWithDeviceModal = ({
     container: `${globalStyles.card} ${globalStyles.container}`,
     cardBody: globalStyles.cardBody
   });
-  const { handleShowModal, handleHideModal } = useDappModal();
-
-  useEffect(() => {
-    if (currentTransaction != null) {
-      handleShowModal();
-    } else {
-      handleHideModal();
-    }
-  }, [currentTransaction]);
 
   return (
     <ModalContainer
@@ -53,26 +43,24 @@ export const SignWithDeviceModal = ({
       }}
       visible={currentTransaction != null}
     >
-      <div className={classes.container}>
-        <div className={classes.cardBody}>
-          <SignStep
-            {...{
-              onSignTransaction,
-              onNext,
-              onPrev,
-              allTransactions,
-              waitingForDevice,
-              isLastTransaction,
-              currentStep,
-              callbackRoute,
-              currentTransaction,
-              handleClose: onAbort,
-              className,
-              error,
-              title
-            }}
-          />
-        </div>
+      <div className={classes.cardBody}>
+        <SignStep
+          {...{
+            onSignTransaction,
+            onNext,
+            onPrev,
+            allTransactions,
+            waitingForDevice,
+            isLastTransaction,
+            currentStep,
+            callbackRoute,
+            currentTransaction,
+            handleClose: onAbort,
+            className,
+            error,
+            title
+          }}
+        />
       </div>
     </ModalContainer>
   );

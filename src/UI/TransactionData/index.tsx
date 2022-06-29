@@ -88,7 +88,7 @@ export const TransactionData = ({
 
         <div
           data-testid='confirmData'
-          className={`${globalStyles.textarea} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak}`}
+          className={`${globalStyles.textarea} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak} ${globalStyles.w100}`}
         >
           {data ? output : 'N/A'}
         </div>

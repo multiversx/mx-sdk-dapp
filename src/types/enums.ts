@@ -55,3 +55,10 @@ export enum TransactionTypesEnum {
   nftTransaction = 'nftTransaction',
   scCall = 'scCall'
 }
+
+export enum TransactionsDefaultTitles {
+  success = 'Transaction successful',
+  failed = 'Transaction failed',
+  pending = 'Processing transaction',
+  timedOut = 'Transaction timed out'
+}

@@ -1,7 +1,5 @@
 import { combineReducers } from '@reduxjs/toolkit';
-import { persistReducer } from 'redux-persist';
 
-import sessionStorage from 'redux-persist/lib/storage/session';
 import { ReducersEnum } from 'types/reducers';
 import account from './slices/accountInfoSlice';
 import dappModal from './slices/dappModalsSlice';
@@ -12,18 +10,6 @@ import toasts from './slices/toastsSlice';
 import transactions from './slices/transactionsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 
-const transactionsInfoPersistConfig = {
-  key: 'dapp-core-transactionsInfo',
-  version: 1,
-  storage: sessionStorage
-};
-const transactionsReducerPersistConfig = {
-  key: 'dapp-core-transactions',
-  version: 1,
-  storage: sessionStorage,
-  blacklist: [ReducersEnum.transactionsToSign]
-};
-
 const reducers = {
   [ReducersEnum.account]: account,
   [ReducersEnum.networkConfig]: networkConfig,
@@ -31,16 +17,11 @@ const reducers = {
   [ReducersEnum.modals]: modals,
   [ReducersEnum.dappModal]: dappModal,
   [ReducersEnum.toasts]: toasts,
-  [ReducersEnum.transactions]: persistReducer(
-    transactionsReducerPersistConfig,
-    transactions
-  ),
-  [ReducersEnum.transactionsInfo]: persistReducer(
-    transactionsInfoPersistConfig,
-    transactionsInfo
-  )
+  [ReducersEnum.transactions]: transactions,
+  [ReducersEnum.transactionsInfo]: transactionsInfo
 };
 
-const rootReducer = combineReducers(reducers);
+const getRootReducer = (customReducers = {}) =>
+  combineReducers({ ...reducers, ...customReducers });
 
-export default rootReducer;
+export default getRootReducer;

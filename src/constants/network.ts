@@ -58,3 +58,19 @@ export const fallbackNetworkConfigurations: Record<
     apiTimeout: '4000'
   }
 };
+
+const { chainId: devnetChainId } = fallbackNetworkConfigurations[
+  EnvironmentsEnum.devnet
+];
+const { chainId: testnetChainId } = fallbackNetworkConfigurations[
+  EnvironmentsEnum.testnet
+];
+const { chainId: mainnetChainId } = fallbackNetworkConfigurations[
+  EnvironmentsEnum.mainnet
+];
+
+export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
+  [EnvironmentsEnum.devnet]: devnetChainId,
+  [EnvironmentsEnum.testnet]: testnetChainId,
+  [EnvironmentsEnum.mainnet]: mainnetChainId
+};

@@ -38,7 +38,7 @@
   padding: 0 1rem;
 }
 
-.dappModalBody {padding: 2px 16px;}
+.dappModalBody {padding: 16px 0;}
 
 .dappModalFooter {
   background-color: $white;
@@ -61,7 +61,7 @@
 .dappModalCloseButton:focus {
   text-decoration: none;
   cursor: pointer;
-  color: #212529;
+  color: $gray-900;
   background-color: $gray-300;
   border-color: $gray-200;
 }
