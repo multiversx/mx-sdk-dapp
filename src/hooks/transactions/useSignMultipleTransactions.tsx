@@ -4,7 +4,9 @@ import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
-import { getIsProviderEqualTo, isTokenTransfer } from 'utils';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 
 export interface UseSignMultipleTransactionsPropsType {
