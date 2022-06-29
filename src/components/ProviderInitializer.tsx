@@ -24,6 +24,7 @@ import {
   setChainID
 } from 'reduxStore/slices';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { LoginMethodsEnum } from 'types/enums';
 import {
   getAddress,

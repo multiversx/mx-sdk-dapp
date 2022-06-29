@@ -23,7 +23,6 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   walletConnectV2RelayAddress: '',
   walletConnectV2ProjectId: '',
   walletAddress: '',
-
   apiAddress: '',
   explorerAddress: '',
   apiTimeout: '4000'
@@ -74,9 +73,7 @@ export const networkConfigSlice = createSlice({
   }
 });
 
-export const {
-  initializeNetworkConfig,
-  setChainID
-} = networkConfigSlice.actions;
+export const { initializeNetworkConfig, setChainID } =
+  networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

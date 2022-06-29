@@ -5,24 +5,24 @@ import {
   getAccountProvider,
   setAccountProvider
 } from 'providers/accountProvider';
-import { loginAction } from 'redux/commonActions';
-import { useDispatch, useSelector } from 'redux/DappProviderContext';
+import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { isLoggedInSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import {
-  isLoggedInSelector,
   walletConnectV2RelaySelector,
   walletConnectV2ProjectIdSelector,
   chainIDSelector,
   walletConnectDeepLinkSelector
-} from 'redux/selectors';
+} from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setTokenLogin,
   setTokenLoginSignature,
   setWalletConnectLogin
-} from 'redux/slices';
+} from 'reduxStore/slices';
+import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
-import { LoginHookGenericStateType } from '../types';
 
 interface InitWalletConnectType {
   callbackRoute: string;
