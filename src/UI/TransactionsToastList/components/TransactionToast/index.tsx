@@ -4,12 +4,7 @@ import { useGetTransactionDisplayInfo } from 'hooks/transactions/useGetTransacti
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
-import {
-  SignedTransactionsBodyType,
-  SignedTransactionsType,
-  SignedTransactionType,
-  TransactionBatchStatusesEnum
-} from 'types';
+import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { Progress } from 'UI/Progress';
 import { TxDetails } from 'UI/TxDetails';
 
@@ -44,7 +39,6 @@ export interface TransactionToastPropsType {
   shouldRenderDefaultCss?: boolean;
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
-  signedTransactionsToRender: SignedTransactionsType;
   lifetimeAfterSuccess?: number;
   onDelete?: (toastId: string) => void;
 }
@@ -58,21 +52,11 @@ export const TransactionToast = ({
   startTimestamp,
   endTimeProgress,
   lifetimeAfterSuccess,
-  signedTransactionsToRender
+  status,
+  transactions
 }: TransactionToastPropsType) => {
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
-
-  const currentTx: SignedTransactionsBodyType =
-    signedTransactionsToRender[toastId];
-  if (currentTx == null) {
-    return null;
-  }
-
-  const { transactions, status } = currentTx;
-
-  const invalidCurrentTx =
-    currentTx?.transactions == null || currentTx?.status == null;
 
   const areSameShardTransactions = useMemo(
     () => getAreTransactionsOnSameShard(transactions, accountShard),
@@ -94,14 +78,6 @@ export const TransactionToast = ({
 
     return [startTime, endTime];
   }, []);
-
-  if (invalidCurrentTx) {
-    return null;
-  }
-
-  if (transactions === null) {
-    return null;
-  }
 
   const progress = { startTime, endTime };
   const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
@@ -129,7 +105,9 @@ export const TransactionToast = ({
   ) : null;
 
   return (
-    <div className={wrapperStyles.toastWrapper}>
+    <div
+      className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
+    >
       <Progress
         key={toastId}
         id={toastId}

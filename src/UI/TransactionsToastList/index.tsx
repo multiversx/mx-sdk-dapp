@@ -8,16 +8,15 @@ import {
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
-
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
 import { deleteCustomToast, getIsTransactionPending } from 'utils';
-
 import styles from './styles.scss';
 import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
+
 export interface TransactionsToastListPropsType {
   toastProps?: any;
   className?: string;
@@ -27,6 +26,45 @@ export interface TransactionsToastListPropsType {
   successfulToastLifetime?: number;
   parentElement?: Element | DocumentFragment;
 }
+
+const renderTransactionToast = (
+  signedTransactionsToRender: SignedTransactionsType,
+  toastId: string,
+  type: string,
+  startTimestamp: number,
+  successfulToastLifetime: number | undefined,
+  handleDeleteTransactionToast: (toastId: string) => void
+) => {
+  const currentTx: SignedTransactionsBodyType =
+    signedTransactionsToRender[toastId];
+
+  if (currentTx == null) {
+    return null;
+  }
+
+  const invalidCurrentTx =
+    currentTx?.transactions == null || currentTx?.status == null;
+  if (invalidCurrentTx) {
+    return null;
+  }
+
+  const { transactions, status } = currentTx;
+
+  return (
+    <TransactionToast
+      key={toastId}
+      {...{
+        type,
+        startTimestamp,
+        toastId,
+        transactions,
+        status,
+        lifetimeAfterSuccess: successfulToastLifetime,
+        onDelete: handleDeleteTransactionToast
+      }}
+    />
+  );
+};
 
 export const TransactionsToastList = ({
   shouldRenderDefaultCss = true,
@@ -83,25 +121,23 @@ export const TransactionsToastList = ({
   const transactionsToastsList = useMemo(
     () =>
       transactionsToasts.map(
-        ({ toastId, type, startTimestamp }: TransactionToastType) => (
-          <TransactionToast
-            key={toastId}
-            {...{
-              type,
-              startTimestamp,
-              toastId,
-              signedTransactionsToRender,
-              lifetimeAfterSuccess: successfulToastLifetime,
-              onDelete: handleDeleteTransactionToast
-            }}
-          />
-        )
+        ({ toastId, type, startTimestamp }: TransactionToastType) => {
+          return renderTransactionToast(
+            signedTransactionsToRender,
+            toastId,
+            type,
+            startTimestamp,
+            successfulToastLifetime,
+            handleDeleteTransactionToast
+          );
+        }
       ),
     [
       transactionsToasts,
       signedTransactionsToRender,
       successfulToastLifetime,
-      handleDeleteTransactionToast
+      handleDeleteTransactionToast,
+      renderTransactionToast
     ]
   );
 
