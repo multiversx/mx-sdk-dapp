@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { CopyButton } from 'UI/CopyButton';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
