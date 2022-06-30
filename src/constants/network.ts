@@ -71,3 +71,13 @@ export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
   [EnvironmentsEnum.testnet]: testnetChainId,
   [EnvironmentsEnum.mainnet]: mainnetChainId
 };
+
+const chainIDToEnvironment: Record<string, string> = {
+  [devnetChainId]: EnvironmentsEnum.devnet,
+  [testnetChainId]: EnvironmentsEnum.testnet,
+  [mainnetChainId]: EnvironmentsEnum.mainnet
+};
+
+export function getEnvironmentForChainId(chainId: string) {
+  return chainIDToEnvironment[chainId];
+}
