@@ -3,6 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
+import classNames from 'classnames';
 
 interface CustomToastType {
   onDelete: () => void;
@@ -26,7 +27,9 @@ export const CustomToast = ({
   }, []);
 
   return (
-    <div className={wrapperStyles.toastWrapper}>
+    <div
+      className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
+    >
       <button type='button' className={styles.close} onClick={onDelete}>
         <FontAwesomeIcon icon={faTimes} size='xs' />
       </button>

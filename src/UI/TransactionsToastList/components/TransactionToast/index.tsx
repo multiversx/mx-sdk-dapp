@@ -1,19 +1,15 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import { useGetTransactionDisplayInfo } from 'hooks/transactions/useGetTransactionDisplayInfo';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { Progress } from 'UI/Progress';
-import { TxDetails } from 'UI/TxDetails';
-
 import {
   getAreTransactionsOnSameShard,
   getIsTransactionPending,
   getIsTransactionTimedOut
 } from 'utils/transactions';
-
 import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
 import { getToastDataStateByStatus } from './utils';
 import styles from './styles.scss';
@@ -22,25 +18,26 @@ import {
   getUnixTimestampWithAddedMilliseconds,
   getUnixTimestamp
 } from 'utils/dateTime';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { TransactionToastContent } from './TransactionToastContent';
+import { TransactionToastWrapper } from './TransactionToastWrapper';
+import { TransactionToastCustomizationProps } from './types';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
 
 export interface TransactionToastPropsType {
-  title?: string;
+  title?: string | React.ReactNode;
   toastId: string;
   className?: string;
-  errorMessage?: string;
-  successMessage?: string;
   endTimeProgress?: number;
-  processingMessage?: string;
   startTimestamp?: number;
   shouldRenderDefaultCss?: boolean;
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
   lifetimeAfterSuccess?: number;
   onDelete?: (toastId: string) => void;
+  children?: React.ReactNode;
+  customization?: TransactionToastCustomizationProps;
 }
 
 export const TransactionToast = ({
@@ -53,7 +50,9 @@ export const TransactionToast = ({
   endTimeProgress,
   lifetimeAfterSuccess,
   status,
-  transactions
+  transactions,
+  customization,
+  children
 }: TransactionToastPropsType) => {
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
@@ -98,15 +97,27 @@ export const TransactionToast = ({
     onDelete?.(toastId);
   };
 
-  const closeButton = !isPending ? (
-    <button type='button' className={styles.close} onClick={handleDeleteToast}>
-      <FontAwesomeIcon icon={faTimes} size='xs' />
-    </button>
-  ) : null;
+  useEffect(() => {
+    if (status !== 'success' || !lifetimeAfterSuccess) {
+      return;
+    }
+
+    const timeout = setTimeout(() => {
+      handleDeleteToast();
+    }, lifetimeAfterSuccess);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [lifetimeAfterSuccess, status]);
 
   return (
-    <div
-      className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
+    <TransactionToastWrapper
+      className={classNames(
+        className,
+        wrapperStyles.toasts,
+        wrapperStyles.toastWrapper
+      )}
     >
       <Progress
         key={toastId}
@@ -114,34 +125,21 @@ export const TransactionToast = ({
         progress={progress}
         expiresIn={lifetimeAfterSuccess}
         done={!isPending || isTimedOut}
+        customization={customization?.Progress}
       >
-        <div className={style.content}>
-          <div className={style.left}>
-            <div
-              className={classNames(style.icon, toastDataState.iconClassName)}
-            >
-              <FontAwesomeIcon
-                size='5x'
-                icon={toastDataState.icon}
-                className={style.svg}
-              />
-            </div>
-          </div>
-
-          <div className={style.right}>
-            <div className={style.heading}>
-              <h5 className={style.title}>{toastDataState.title}</h5>
-              {closeButton}
-            </div>
-
-            <div className={style.footer}>
-              <TxDetails
-                {...{ transactions: transactions ?? [], title, isTimedOut }}
-              />
-            </div>
-          </div>
-        </div>
+        {children ?? (
+          <TransactionToastContent
+            style={style}
+            toastDataState={toastDataState}
+            transactions={transactions ?? []}
+            toastTitle={title}
+            isTimedOut={isTimedOut}
+            showCloseButton={!isPending}
+            onDeleteToast={handleDeleteToast}
+            customization={customization?.TransactionToastContent}
+          />
+        )}
       </Progress>
-    </div>
+    </TransactionToastWrapper>
   );
 };

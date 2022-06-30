@@ -1,9 +1,19 @@
 import {
   faCheck,
   faHourglass,
-  faTimes
+  faTimes,
+  IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import { TransactionBatchStatusesEnum, TransactionsDefaultTitles } from 'types';
+
+export type ToastDataState = {
+  id: string;
+  icon: IconDefinition;
+  hasCloseButton: boolean;
+  title: TransactionsDefaultTitles;
+  iconClassName: string;
+  expires?: number | boolean;
+};
 
 interface GetToastsOptionsDataPropsType {
   status?: TransactionBatchStatusesEnum;
@@ -18,7 +28,7 @@ export const getToastDataStateByStatus = ({
   style,
   transactionDisplayInfo
 }: GetToastsOptionsDataPropsType) => {
-  const successToastData = {
+  const successToastData: ToastDataState = {
     id: toastId,
     icon: faCheck,
     expires: 30000,
@@ -29,7 +39,7 @@ export const getToastDataStateByStatus = ({
     iconClassName: style.success
   };
 
-  const pendingToastData = {
+  const pendingToastData: ToastDataState = {
     id: toastId,
     expires: false,
     icon: faHourglass,
@@ -40,7 +50,7 @@ export const getToastDataStateByStatus = ({
     iconClassName: style.warning
   };
 
-  const failToastData = {
+  const failToastData: ToastDataState = {
     id: toastId,
     icon: faTimes,
     title:
