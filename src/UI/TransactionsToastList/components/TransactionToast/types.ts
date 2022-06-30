@@ -1,30 +1,30 @@
 import React from 'react';
-import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
-import { ToastDataState } from './utils';
-import { TransactionToastContentProps } from './TransactionToastContent';
 import { TxDetailsProps } from '../../../TxDetails';
+import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { ProgressProps } from '../../../Progress';
+import { TransactionToastContentProps } from './TransactionToastContent';
+import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 
-export type TransactionToastCustomProgressProps = {
-  classes: {
-    progress?: string;
-    bar?: string;
-  };
+export type TransactionToastDefaultProps = {
+  toastId: string;
+  transactions?: SignedTransactionType[];
+  status?: TransactionBatchStatusesEnum;
+  lifetimeAfterSuccess?: number;
+  endTimeProgress?: number;
+  startTimestamp?: number;
+  className?: string;
+  shouldRenderDefaultCss?: boolean;
+  onDelete?: (toastId: string) => void;
 };
 
-export type TransactionToastCustomContentProps = {
-  classes?: {
-    content?: string;
-    left?: string;
-    right?: string;
-    icon?: string;
-    svg?: string;
-    heading?: string;
-    title?: string;
-    footer?: string;
-  };
-  renderLeftSideIconCallback?: <T>(
-    props?: React.PropsWithChildren<T>
-  ) => JSX.Element;
+export type TransactionToastContentElementsProps = {
+  TransactionToastStatusIcon?: React.ComponentType<
+    React.PropsWithChildren<{
+      size?: SizeProp;
+      icon?: IconProp;
+      className?: string;
+    }>
+  >;
   CustomCloseButton?: React.ComponentType<
     React.PropsWithChildren<{
       onClick?: () => void;
@@ -36,55 +36,9 @@ export type TransactionToastCustomContentProps = {
 };
 
 export type TransactionToastCustomizationProps = {
-  TransactionToastContent?: TransactionToastCustomContentProps;
-  Progress?: TransactionToastCustomProgressProps;
-};
-
-export type TransactionToastDefaultPropsType = {
-  title?: string | React.ReactNode;
-  toastId: string;
-  className?: string;
-  endTimeProgress?: number;
-  startTimestamp?: number;
-  shouldRenderDefaultCss?: boolean;
-  transactions?: SignedTransactionType[];
-  status?: TransactionBatchStatusesEnum;
-  lifetimeAfterSuccess?: number;
-  onDelete?: (toastId: string) => void;
-};
-
-export type TransactionToastDefaultContentProps = {
-  title?: string | React.ReactNode;
-  toastId: string;
-  progress: { startTime: number; endTime: number };
-  lifetimeAfterSuccess?: number;
-  isPending: boolean;
-  isTimedOut: boolean;
-  style: {
-    content?: string;
-    left?: string;
-    right?: string;
-    icon?: string;
-    svg?: string;
-    heading?: string;
-    title?: string;
-    footer?: string;
-  };
-  toastDataState: ToastDataState;
-  transactions?: SignedTransactionType[];
-  handleDeleteToast: () => void;
-};
-
-export type CustomToastContentProps = {
-  CustomToastContent?: React.ComponentType<
+  TransactionToastContentCustomElements?: TransactionToastContentElementsProps;
+  TransactionToastContent?: React.ComponentType<
     React.PropsWithChildren<TransactionToastContentProps>
   >;
-  customToastContentProps?: TransactionToastContentProps;
-  style: Record<string, string>;
-  toastDataState: ToastDataState;
-  transactions?: SignedTransactionType[];
-  title: string | React.ReactNode;
-  isTimedOut?: boolean;
-  isPending?: boolean;
-  handleDeleteToast: () => void;
+  Progress?: React.ComponentType<React.PropsWithChildren<ProgressProps>>;
 };

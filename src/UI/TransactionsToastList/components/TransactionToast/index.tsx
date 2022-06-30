@@ -1,44 +1,20 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 import classNames from 'classnames';
-import { useGetTransactionDisplayInfo } from 'hooks/transactions/useGetTransactionDisplayInfo';
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { shardSelector } from 'reduxStore/selectors';
-import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { Progress } from 'UI/Progress';
-import {
-  getAreTransactionsOnSameShard,
-  getIsTransactionPending,
-  getIsTransactionTimedOut
-} from 'utils/transactions';
-import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
-import { getToastDataStateByStatus } from './utils';
-import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
-import {
-  getUnixTimestampWithAddedMilliseconds,
-  getUnixTimestamp
-} from 'utils/dateTime';
 import { TransactionToastContent } from './TransactionToastContent';
 import { TransactionToastWrapper } from './TransactionToastWrapper';
-import { TransactionToastCustomizationProps } from './types';
+import {
+  TransactionToastCustomizationProps,
+  TransactionToastDefaultProps
+} from './types';
+import { useTransactionToast } from './hooks/useTransactionToast';
 
-const AVERAGE_TX_DURATION_MS = 6000;
-const CROSS_SHARD_ROUNDS = 5;
-
-export interface TransactionToastPropsType {
+export type TransactionToastPropsType = {
   title?: string | React.ReactNode;
-  toastId: string;
-  className?: string;
-  endTimeProgress?: number;
-  startTimestamp?: number;
-  shouldRenderDefaultCss?: boolean;
-  transactions?: SignedTransactionType[];
-  status?: TransactionBatchStatusesEnum;
-  lifetimeAfterSuccess?: number;
-  onDelete?: (toastId: string) => void;
   children?: React.ReactNode;
   customization?: TransactionToastCustomizationProps;
-}
+} & TransactionToastDefaultProps;
 
 export const TransactionToast = ({
   toastId,
@@ -51,65 +27,30 @@ export const TransactionToast = ({
   lifetimeAfterSuccess,
   status,
   transactions,
-  customization,
-  children
+  customization
 }: TransactionToastPropsType) => {
-  const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
-  const accountShard = useSelector(shardSelector);
-
-  const areSameShardTransactions = useMemo(
-    () => getAreTransactionsOnSameShard(transactions, accountShard),
-    [transactions, accountShard]
-  );
-
-  const shardAdjustedDuration = areSameShardTransactions
-    ? AVERAGE_TX_DURATION_MS
-    : CROSS_SHARD_ROUNDS * AVERAGE_TX_DURATION_MS;
-
-  const transactionDuration =
-    transactionDisplayInfo?.transactionDuration || shardAdjustedDuration;
-
-  const [startTime, endTime] = useMemo(() => {
-    const startTime = startTimestamp || getUnixTimestamp();
-    const endTime =
-      endTimeProgress ||
-      getUnixTimestampWithAddedMilliseconds(transactionDuration);
-
-    return [startTime, endTime];
-  }, []);
-
-  const progress = { startTime, endTime };
-  const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    ...styles
-  });
-
-  const isPending = getIsTransactionPending(status);
-  const isTimedOut = getIsTransactionTimedOut(status);
-
-  const toastDataState = getToastDataStateByStatus({
-    status,
-    toastId,
+  const {
+    progress,
+    isPending,
+    isTimedOut,
+    toastDataState,
     style,
-    transactionDisplayInfo
+    handleDeleteToast
+  } = useTransactionToast({
+    toastId,
+    transactions,
+    status,
+    lifetimeAfterSuccess,
+    shouldRenderDefaultCss,
+    className,
+    startTimestamp,
+    endTimeProgress,
+    onDelete
   });
 
-  const handleDeleteToast = () => {
-    onDelete?.(toastId);
-  };
-
-  useEffect(() => {
-    if (status !== 'success' || !lifetimeAfterSuccess) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      handleDeleteToast();
-    }, lifetimeAfterSuccess);
-
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [lifetimeAfterSuccess, status]);
+  const ProgressComponent = customization?.Progress ?? Progress;
+  const TransactionToastContentComponent =
+    customization?.TransactionToastContent ?? TransactionToastContent;
 
   return (
     <TransactionToastWrapper
@@ -119,27 +60,24 @@ export const TransactionToast = ({
         wrapperStyles.toastWrapper
       )}
     >
-      <Progress
+      <ProgressComponent
         key={toastId}
         id={toastId}
         progress={progress}
         expiresIn={lifetimeAfterSuccess}
         done={!isPending || isTimedOut}
-        customization={customization?.Progress}
       >
-        {children ?? (
-          <TransactionToastContent
-            style={style}
-            toastDataState={toastDataState}
-            transactions={transactions ?? []}
-            toastTitle={title}
-            isTimedOut={isTimedOut}
-            showCloseButton={!isPending}
-            onDeleteToast={handleDeleteToast}
-            customization={customization?.TransactionToastContent}
-          />
-        )}
-      </Progress>
+        <TransactionToastContentComponent
+          style={style}
+          toastDataState={toastDataState}
+          transactions={transactions ?? []}
+          toastTitle={title}
+          isTimedOut={isTimedOut}
+          showCloseButton={!isPending}
+          onDeleteToast={handleDeleteToast}
+          customElements={customization?.TransactionToastContentCustomElements}
+        />
+      </ProgressComponent>
     </TransactionToastWrapper>
   );
 };

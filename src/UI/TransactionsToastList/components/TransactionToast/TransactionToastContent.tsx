@@ -6,7 +6,7 @@ import { ToastDataState } from './utils';
 import styles from './styles.scss';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SignedTransactionType } from 'types';
-import { TransactionToastCustomContentProps } from './types';
+import { TransactionToastContentElementsProps } from './types';
 
 export type TransactionToastContentProps = {
   style: Record<string, string>;
@@ -16,7 +16,7 @@ export type TransactionToastContentProps = {
   onDeleteToast?: () => void;
   toastTitle?: string | React.ReactNode;
   isTimedOut?: boolean;
-  customization?: TransactionToastCustomContentProps;
+  customElements?: TransactionToastContentElementsProps;
 };
 
 export const TransactionToastContent: React.FC<TransactionToastContentProps> = ({
@@ -27,10 +27,14 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
   onDeleteToast,
   toastTitle,
   isTimedOut,
-  customization
+  customElements
 }) => {
+  const CustomTransactionDetailsComponent =
+    customElements?.CustomTransactionDetailsComponent;
+  const TransactionToastStatusIcon = customElements?.TransactionToastStatusIcon;
+
   const closeButton = useMemo(() => {
-    const CustomCloseButton = customization?.CustomCloseButton;
+    const CustomCloseButton = customElements?.CustomCloseButton;
 
     return CustomCloseButton ? (
       <CustomCloseButton onClick={onDeleteToast} />
@@ -39,41 +43,35 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
         <FontAwesomeIcon icon={faTimes} size='xs' />
       </button>
     );
-  }, [customization?.CustomCloseButton, onDeleteToast]);
-
-  const CustomTransactionDetailsComponent =
-    customization?.CustomTransactionDetailsComponent;
+  }, [customElements?.CustomCloseButton, onDeleteToast]);
 
   return (
-    <div className={customization?.classes?.content ?? style.content}>
-      <div className={customization?.classes?.left ?? style.left}>
-        <div
-          className={classNames(
-            customization?.classes?.icon ?? style.icon,
-            toastDataState.iconClassName
-          )}
-        >
-          {customization?.renderLeftSideIconCallback ? (
-            customization?.renderLeftSideIconCallback()
+    <div className={style.content}>
+      <div className={style.left}>
+        <div className={classNames(style.icon, toastDataState.iconClassName)}>
+          {TransactionToastStatusIcon ? (
+            <TransactionToastStatusIcon
+              size='5x'
+              icon={toastDataState.icon}
+              className={style.svg}
+            />
           ) : (
             <FontAwesomeIcon
               size='5x'
               icon={toastDataState.icon}
-              className={customization?.classes?.svg ?? style.svg}
+              className={style.svg}
             />
           )}
         </div>
       </div>
 
-      <div className={customization?.classes?.right ?? style.right}>
-        <div className={customization?.classes?.heading ?? style.heading}>
-          <h5 className={customization?.classes?.title ?? style.title}>
-            {toastDataState.title}
-          </h5>
+      <div className={style.right}>
+        <div className={style.heading}>
+          <h5 className={style.title}>{toastDataState.title}</h5>
           {showCloseButton && closeButton}
         </div>
 
-        <div className={customization?.classes?.footer ?? style.footer}>
+        <div className={style.footer}>
           {CustomTransactionDetailsComponent ? (
             <CustomTransactionDetailsComponent
               {...{

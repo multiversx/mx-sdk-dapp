@@ -3,9 +3,7 @@ import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import storage from 'utils/storage';
-
 import styles from './styles.scss';
-import { TransactionToastCustomProgressProps } from '../TransactionsToastList/components/TransactionToast/types';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
@@ -18,7 +16,6 @@ export interface ProgressProps {
     startTime: number;
     endTime: number;
   };
-  customization?: TransactionToastCustomProgressProps;
 }
 
 export const Progress = ({
@@ -26,8 +23,7 @@ export const Progress = ({
   children,
   progress,
   done,
-  expiresIn = 10 * 60,
-  customization
+  expiresIn = 10 * 60
 }: ProgressProps) => {
   const initialData = useMemo(() => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
@@ -155,13 +151,13 @@ export const Progress = ({
   }
 
   return progress ? (
-    <div className={customization?.classes.progress ?? styles.progress}>
+    <div className={styles.progress}>
       <div
         ref={progressRef}
         role='progressbar'
         aria-valuemin={0}
         aria-valuemax={100}
-        className={customization?.classes.bar ?? styles.bar}
+        className={styles.bar}
       />
       {children}
     </div>

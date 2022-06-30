@@ -4,13 +4,17 @@ import {
   faTimes,
   IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
-import { TransactionBatchStatusesEnum, TransactionsDefaultTitles } from 'types';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionsDefaultTitles,
+  TransactionsDisplayInfoType
+} from 'types';
 
 export type ToastDataState = {
   id: string;
   icon: IconDefinition;
   hasCloseButton: boolean;
-  title: TransactionsDefaultTitles;
+  title: string;
   iconClassName: string;
   expires?: number | boolean;
 };
@@ -19,7 +23,7 @@ interface GetToastsOptionsDataPropsType {
   status?: TransactionBatchStatusesEnum;
   toastId: string;
   style: any;
-  transactionDisplayInfo: any;
+  transactionDisplayInfo: TransactionsDisplayInfoType;
 }
 
 export const getToastDataStateByStatus = ({
