@@ -66,6 +66,8 @@ const { chainId: mainnetChainId } = fallbackNetworkConfigurations[
   EnvironmentsEnum.mainnet
 ];
 
+export { devnetChainId, testnetChainId, mainnetChainId };
+
 export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
   [EnvironmentsEnum.devnet]: devnetChainId,
   [EnvironmentsEnum.testnet]: testnetChainId,
