@@ -66,8 +66,29 @@ const { chainId: mainnetChainId } = fallbackNetworkConfigurations[
   EnvironmentsEnum.mainnet
 ];
 
+export { devnetChainId, testnetChainId, mainnetChainId };
+
 export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
   [EnvironmentsEnum.devnet]: devnetChainId,
   [EnvironmentsEnum.testnet]: testnetChainId,
   [EnvironmentsEnum.mainnet]: mainnetChainId
 };
+
+const chainIdToEnvironment: Record<string, string> = {
+  [devnetChainId]: EnvironmentsEnum.devnet,
+  [testnetChainId]: EnvironmentsEnum.testnet,
+  [mainnetChainId]: EnvironmentsEnum.mainnet
+};
+
+export function getEnvironmentForChainId(chainId: string) {
+  return chainIdToEnvironment[chainId];
+}
+
+export function getApiAddressForChainId(chainId: string) {
+  const environment = getEnvironmentForChainId(chainId);
+  const apiAddress = fallbackNetworkConfigurations[environment].apiAddress;
+  if (!apiAddress) {
+    throw 'Could not extract api address for environment, check if you have a valid chainID';
+  }
+  return apiAddress;
+}
