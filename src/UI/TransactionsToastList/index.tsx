@@ -142,12 +142,12 @@ export const TransactionsToastList = ({
   );
 
   const customToastsList = customToasts.map(
-    ({ toastId, type, message, duration }: CustomToastType) => (
+    ({ toastId, type, content, duration }: CustomToastType) => (
       <CustomToast
         key={toastId}
         {...{
           type,
-          message: message ?? '',
+          content: content ?? '',
           duration,
           onDelete: () => handleDeleteCustomToast(toastId)
         }}

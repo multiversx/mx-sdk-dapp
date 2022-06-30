@@ -1,6 +1,8 @@
+import React from 'react';
+
 export interface CustomToastType {
   toastId: string;
-  message: string;
+  content: string | React.ReactNode;
   duration?: number;
   type: string;
 }
