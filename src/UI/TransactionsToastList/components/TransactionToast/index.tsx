@@ -27,7 +27,10 @@ export const TransactionToast = ({
   lifetimeAfterSuccess,
   status,
   transactions,
-  customization
+  customization = {
+    TransactionToastContent,
+    Progress
+  }
 }: TransactionToastPropsType) => {
   const {
     progress,
@@ -48,9 +51,8 @@ export const TransactionToast = ({
     onDelete
   });
 
-  const ProgressComponent = customization?.Progress ?? Progress;
-  const TransactionToastContentComponent =
-    customization?.TransactionToastContent ?? TransactionToastContent;
+  const ProgressComponent = customization.Progress!;
+  const TransactionToastContentComponent = customization.TransactionToastContent!;
 
   return (
     <TransactionToastWrapper

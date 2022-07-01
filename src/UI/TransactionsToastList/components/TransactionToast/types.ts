@@ -1,9 +1,9 @@
 import React from 'react';
-import { TxDetailsProps } from '../../../TxDetails';
-import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
-import { ProgressProps } from '../../../Progress';
+import { TxDetailsProps } from 'UI/TxDetails';
+import { ProgressProps } from 'UI/Progress';
 import { TransactionToastContentProps } from './TransactionToastContent';
 import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
+import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 
 export type TransactionToastDefaultProps = {
   toastId: string;
@@ -19,18 +19,14 @@ export type TransactionToastDefaultProps = {
 
 export type TransactionToastContentElementsProps = {
   TransactionToastStatusIcon?: React.ComponentType<
-    React.PropsWithChildren<{
-      size?: SizeProp;
-      icon?: IconProp;
-      className?: string;
-    }>
+    React.PropsWithChildren<FontAwesomeIconProps>
   >;
   CustomCloseButton?: React.ComponentType<
     React.PropsWithChildren<{
       onClick?: () => void;
     }>
   >;
-  CustomTransactionDetailsComponent?: React.ComponentType<
+  TransactionDetails?: React.ComponentType<
     React.PropsWithChildren<TxDetailsProps>
   >;
 };

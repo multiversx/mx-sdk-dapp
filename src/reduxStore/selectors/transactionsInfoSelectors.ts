@@ -5,7 +5,7 @@ import {
   defaultTransactionSuccessMessage
 } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
-import { TransactionsDisplayInfoType } from '../../types';
+import { TransactionsDisplayInfoType } from 'types';
 
 const defaultTransactionInfo: TransactionsDisplayInfoType = {
   errorMessage: defaultTransactionErrorMessage,

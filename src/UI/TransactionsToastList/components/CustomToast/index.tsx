@@ -7,7 +7,8 @@ import classNames from 'classnames';
 
 interface CustomToastType {
   onDelete: () => void;
-  content: string | React.ReactNode;
+  message?: string;
+  messageComponent?: React.ReactNode;
   duration?: number;
   CustomCloseButton?: React.ComponentType<
     React.PropsWithChildren<{
@@ -18,7 +19,8 @@ interface CustomToastType {
 
 export const CustomToast = ({
   onDelete,
-  content,
+  message,
+  messageComponent,
   duration,
   CustomCloseButton
 }: CustomToastType) => {
@@ -47,7 +49,8 @@ export const CustomToast = ({
       className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
     >
       {closeButton}
-      {content}
+      {messageComponent}
+      {message}
     </div>
   );
 };
