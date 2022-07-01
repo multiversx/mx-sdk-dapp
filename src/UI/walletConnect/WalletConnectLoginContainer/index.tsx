@@ -70,6 +70,10 @@ export const WalletConnectLoginContainer = ({
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
   const isMobileDevice =
     platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';
+  const activePairings =
+    isWalletConnectV2 && wcPairings && wcPairings?.length > 0
+      ? wcPairings.filter((pairing) => !!pairing.active)
+      : [];
 
   const generatedClasses = getGeneratedClasses(
     className,
@@ -189,37 +193,35 @@ export const WalletConnectLoginContainer = ({
                   or choose an existing pairing:
                 </p>
                 <div className={generatedClasses.pairList}>
-                  {wcPairings
-                    .filter((pairing) => !!pairing.active)
-                    .map((pairing) => (
-                      <button
-                        type='button'
-                        key={pairing.topic}
-                        onClick={() => connectExisting(pairing)}
-                        className={generatedClasses.pairButton}
-                      >
-                        {pairing.peerMetadata ? (
-                          <>
-                            <img
-                              src={pairing.peerMetadata.icons[0]}
-                              alt={pairing.peerMetadata.name}
-                              className={generatedClasses.pairImage}
-                            />
-                            <div className={generatedClasses.pairDetails}>
-                              <strong>{pairing.peerMetadata.name}</strong>
-                              <span>{pairing.peerMetadata.description}</span>
-                              <span>{pairing.peerMetadata.url}</span>
-                            </div>
-                          </>
-                        ) : (
-                          // TODO remove when debugging ends
-                          <div style={{ width: '400px' }}>
-                            no metadata: debug pairing details:{' '}
-                            <code>{JSON.stringify(pairing)}</code>
+                  {activePairings.map((pairing) => (
+                    <button
+                      type='button'
+                      key={pairing.topic}
+                      onClick={() => connectExisting(pairing)}
+                      className={generatedClasses.pairButton}
+                    >
+                      {pairing.peerMetadata ? (
+                        <>
+                          <img
+                            src={pairing.peerMetadata.icons[0]}
+                            alt={pairing.peerMetadata.name}
+                            className={generatedClasses.pairImage}
+                          />
+                          <div className={generatedClasses.pairDetails}>
+                            <strong>{pairing.peerMetadata.name}</strong>
+                            <span>{pairing.peerMetadata.description}</span>
+                            <span>{pairing.peerMetadata.url}</span>
                           </div>
-                        )}
-                      </button>
-                    ))}
+                        </>
+                      ) : (
+                        // TODO remove when debugging ends
+                        <div style={{ width: '400px' }}>
+                          no metadata: debug pairing details:{' '}
+                          <code>{JSON.stringify(pairing)}</code>
+                        </div>
+                      )}
+                    </button>
+                  ))}
                 </div>
               </div>
             )}

@@ -1,5 +1,8 @@
 import { useRef, useState } from 'react';
-import { WalletConnectProviderV2 } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import {
+  WalletConnectProviderV2,
+  PairingTypes
+} from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
   getAccountProvider,
@@ -35,12 +38,12 @@ interface InitWalletConnectType {
 export interface WalletConnectLoginHookCustomStateType {
   uriDeepLink: string | null;
   walletConnectUri?: string;
-  wcPairings?: any[];
+  wcPairings?: PairingTypes.Struct[];
 }
 
 export type WalletConnectV2LoginHookReturnType = [
   (loginProvider?: boolean) => void,
-  (pairing: any) => Promise<void>,
+  (pairing: PairingTypes.Struct) => Promise<void>,
   LoginHookGenericStateType,
   WalletConnectLoginHookCustomStateType
 ];
@@ -55,7 +58,9 @@ export const useWalletConnectV2Login = ({
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
-  const [wcPairings, setWcPairings] = useState<any[] | undefined>([]); //useState<PairingTypes.Struct[]>([]);
+  const [wcPairings, setWcPairings] = useState<
+    PairingTypes.Struct[] | undefined
+  >([]);
 
   const provider = getAccountProvider();
   const walletConnectV2RelayAddress = useSelector(walletConnectV2RelaySelector);
@@ -157,17 +162,30 @@ export const useWalletConnectV2Login = ({
     }
   }
 
-  async function connectExisting(pairing: any) {
+  async function connectExisting(pairing: PairingTypes.Struct | undefined) {
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
       return;
     }
-
-    const { approval } = await providerRef.current?.connect(pairing);
-    if (token) {
-      dispatch(setTokenLogin({ loginToken: token }));
+    if (!pairing || !pairing.topic) {
+      return;
     }
 
-    await providerRef.current?.login(approval);
+    try {
+      const { approval } = await providerRef.current?.connect(pairing.topic);
+      if (token) {
+        dispatch(setTokenLogin({ loginToken: token }));
+      }
+
+      try {
+        await providerRef.current?.login(approval);
+      } catch {
+        await initiateLogin();
+      }
+    } catch {
+      setError('Unable to connect to existing session');
+    } finally {
+      setWcPairings(providerRef.current?.pairings);
+    }
   }
 
   async function generateWcUri() {
@@ -194,7 +212,7 @@ export const useWalletConnectV2Login = ({
 
     try {
       await providerRef.current?.login(approval);
-    } catch (e) {
+    } catch {
       await initiateLogin();
     }
   }
