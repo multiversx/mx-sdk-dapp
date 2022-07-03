@@ -171,13 +171,15 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      const { approval } = await providerRef.current?.connect(pairing.topic);
+      const { approval } = await providerRef.current?.connect({
+        topic: pairing.topic
+      });
       if (token) {
         dispatch(setTokenLogin({ loginToken: token }));
       }
 
       try {
-        await providerRef.current?.login(approval);
+        await providerRef.current?.login({ approval });
       } catch {
         await initiateLogin();
       }
@@ -211,7 +213,7 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      await providerRef.current?.login(approval);
+      await providerRef.current?.login({ approval });
     } catch {
       await initiateLogin();
     }
