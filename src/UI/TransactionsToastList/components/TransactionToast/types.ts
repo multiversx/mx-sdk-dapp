@@ -5,6 +5,9 @@ import { TransactionToastContentProps } from './TransactionToastContent';
 import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
 
+export type ComponentTypeWithChildren<T> = React.ComponentType<
+  React.PropsWithChildren<T>>
+
 export type TransactionToastDefaultProps = {
   toastId: string;
   transactions?: SignedTransactionType[];
@@ -18,23 +21,15 @@ export type TransactionToastDefaultProps = {
 };
 
 export type TransactionToastContentElementsProps = {
-  TransactionToastStatusIcon?: React.ComponentType<
-    React.PropsWithChildren<FontAwesomeIconProps>
-  >;
-  CustomCloseButton?: React.ComponentType<
-    React.PropsWithChildren<{
+  TransactionToastStatusIcon?: ComponentTypeWithChildren<FontAwesomeIconProps>;
+  CustomCloseButton?: ComponentTypeWithChildren<{
       onClick?: () => void;
-    }>
-  >;
-  TransactionDetails?: React.ComponentType<
-    React.PropsWithChildren<TxDetailsProps>
-  >;
+    }>;
+  TransactionDetails?: ComponentTypeWithChildren<TxDetailsProps>;
 };
 
 export type TransactionToastCustomizationProps = {
   TransactionToastContentCustomElements?: TransactionToastContentElementsProps;
-  TransactionToastContent?: React.ComponentType<
-    React.PropsWithChildren<TransactionToastContentProps>
-  >;
-  Progress?: React.ComponentType<React.PropsWithChildren<ProgressProps>>;
+  TransactionToastContent?: ComponentTypeWithChildren<TransactionToastContentProps>;
+  Progress?: ComponentTypeWithChildren<ProgressProps>;
 };
