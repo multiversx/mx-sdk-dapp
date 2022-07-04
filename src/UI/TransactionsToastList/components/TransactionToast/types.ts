@@ -1,12 +1,9 @@
-import React from 'react';
 import { TxDetailsProps } from 'UI/TxDetails';
 import { ProgressProps } from 'UI/Progress';
 import { TransactionToastContentProps } from './TransactionToastContent';
 import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-
-export type ComponentTypeWithChildren<T> = React.ComponentType<
-  React.PropsWithChildren<T>>
+import { ComponentTypeWithChildren } from '../types';
 
 export type TransactionToastDefaultProps = {
   toastId: string;

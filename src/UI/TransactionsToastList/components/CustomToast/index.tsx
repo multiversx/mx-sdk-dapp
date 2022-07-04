@@ -4,17 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 import classNames from 'classnames';
+import { ComponentTypeWithChildren } from '../types';
 
 interface CustomToastType {
   onDelete: () => void;
   message?: string;
   messageComponent?: React.ReactNode;
   duration?: number;
-  CustomCloseButton?: React.ComponentType<
-    React.PropsWithChildren<{
-      onClick?: () => void;
-    }>
-  >;
+  CustomCloseButton?: ComponentTypeWithChildren<{
+    onClick?: () => void;
+  }>;
 }
 
 export const CustomToast = ({
