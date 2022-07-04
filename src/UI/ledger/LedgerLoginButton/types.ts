@@ -7,9 +7,8 @@ export interface LedgerLoginButtonPropsType {
   children?: ReactNode;
   className?: string;
   buttonClassName?: string;
-  callbackRoute: string;
+  callbackRoute?: string;
   loginButtonText?: string;
-  redirectAfterLogin?: boolean;
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
   shouldRenderDefaultModalCss?: boolean;

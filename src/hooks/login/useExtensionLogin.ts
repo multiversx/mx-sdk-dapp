@@ -10,9 +10,8 @@ import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { setAccountProvider } from 'providers/accountProvider';
 
 interface UseExtensionLoginPropsType {
-  callbackRoute: string;
+  callbackRoute?: string;
   token?: string;
-  redirectAfterLogin?: boolean;
 }
 
 export type UseExtensionLoginReturnType = [
@@ -23,12 +22,13 @@ export type UseExtensionLoginReturnType = [
 export const useExtensionLogin = ({
   callbackRoute,
   token,
-  redirectAfterLogin = false
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
+
+  const redirectAfterLogin = Boolean(callbackRoute);
 
   async function initiateLogin() {
     setIsLoading(true);
@@ -45,7 +45,7 @@ export const useExtensionLogin = ({
       }
 
       const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
+        `${window.location.origin}${callbackRoute ?? window.location.href}`
       );
       const providerLoginData = {
         callbackUrl,

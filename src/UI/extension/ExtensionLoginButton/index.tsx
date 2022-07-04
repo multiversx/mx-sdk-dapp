@@ -16,13 +16,11 @@ export const ExtensionLoginButton: (
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Maiar DeFi Wallet',
-  redirectAfterLogin = false,
   shouldRenderDefaultCss = true
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
-    token,
-    redirectAfterLogin
+    token
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;

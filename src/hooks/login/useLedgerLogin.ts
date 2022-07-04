@@ -24,10 +24,9 @@ const failInitializeErrorText =
 const defaultAddressesPerPage = 10;
 
 export interface UseLedgerLoginPropsType {
-  callbackRoute: string;
+  callbackRoute?: string;
   addressesPerPage?: number;
   token?: string;
-  redirectAfterLogin?: boolean;
 }
 
 export interface SelectedAddress {
@@ -59,8 +58,8 @@ export function useLedgerLogin({
   callbackRoute,
   token,
   addressesPerPage = defaultAddressesPerPage,
-  redirectAfterLogin = false
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
+  const redirectAfterLogin = Boolean(callbackRoute);
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
