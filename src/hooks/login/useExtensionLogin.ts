@@ -10,9 +10,8 @@ import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { setAccountProvider } from 'providers/accountProvider';
 
 interface UseExtensionLoginPropsType {
-  callbackRoute: string;
+  callbackRoute?: string;
   token?: string;
-  redirectAfterLogin?: boolean;
 }
 
 export type UseExtensionLoginReturnType = [
@@ -23,7 +22,6 @@ export type UseExtensionLoginReturnType = [
 export const useExtensionLogin = ({
   callbackRoute,
   token,
-  redirectAfterLogin = false
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +43,7 @@ export const useExtensionLogin = ({
       }
 
       const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
+        `${window.location.origin}${callbackRoute ?? window.location.pathname}`
       );
       const providerLoginData = {
         callbackUrl,
@@ -68,7 +66,7 @@ export const useExtensionLogin = ({
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-      optionalRedirect(callbackRoute, redirectAfterLogin);
+      optionalRedirect(callbackRoute);
     } catch (error) {
       console.error('error loging in', error);
       // TODO: can be any or typed error

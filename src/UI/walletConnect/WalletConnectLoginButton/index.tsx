@@ -11,12 +11,11 @@ export interface WalletConnectLoginButtonPropsType {
   title?: string;
   className?: string;
   logoutRoute?: string;
-  callbackRoute: string;
+  callbackRoute?: string;
   loginButtonText?: string;
   buttonClassName?: string;
   shouldRenderDefaultCss?: boolean;
   wrapContentInsideModal?: boolean;
-  redirectAfterLogin?: boolean;
   hideButtonWhenModalOpens?: boolean;
   token?: string;
 }
@@ -31,7 +30,6 @@ export const WalletConnectLoginButton = ({
   logoutRoute = '/unlock',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
-  redirectAfterLogin = false,
   buttonClassName = 'wallet-connect-login-button',
   className = 'wallet-connect-login',
   lead = 'Scan the QR code using Maiar',
@@ -77,7 +75,6 @@ export const WalletConnectLoginButton = ({
           logoutRoute={logoutRoute}
           lead={lead}
           wrapContentInsideModal={wrapContentInsideModal}
-          redirectAfterLogin={redirectAfterLogin}
           onClose={handleCloseModal}
         />
       )}

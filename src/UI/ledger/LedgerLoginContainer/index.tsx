@@ -13,11 +13,10 @@ import { LedgerConnect } from './LedgerConnect';
 const ledgerWaitingText = 'Waiting for device';
 
 interface LedgerLoginContainerPropsType {
-  callbackRoute: string;
+  callbackRoute?: string;
   className?: string;
   shouldRenderDefaultCss?: boolean;
   wrapContentInsideModal?: boolean;
-  redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
 }
@@ -27,7 +26,6 @@ export const LedgerLoginContainer = ({
   className = 'login-modal-content',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
-  redirectAfterLogin,
   onClose,
   token
 }: LedgerLoginContainerPropsType) => {
@@ -50,7 +48,7 @@ export const LedgerLoginContainer = ({
       startIndex,
       selectedAddress
     }
-  ] = useLedgerLogin({ callbackRoute, token, redirectAfterLogin });
+  ] = useLedgerLogin({ callbackRoute, token });
 
   function getContent() {
     if (isLoading) {
