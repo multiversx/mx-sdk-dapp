@@ -5,24 +5,30 @@ interface Options {
   delay?: number;
 }
 
-export async function retryMultipleTimes(
+const executeAsyncCall = async (
   cb: any,
-  options: Options = { retries: 5, delay: 500 },
+  options: Options,
+  args: any,
   retries = 0
-): Promise<any | null> {
+): Promise<any | null> => {
   try {
-    return await cb;
+    return await cb(...args);
   } catch (error) {
     if (retries < options.retries) {
       if (options?.delay != null) {
         await sleep(options.delay);
       }
 
-      return retryMultipleTimes(cb, options, retries + 1);
+      return executeAsyncCall(cb, options, args, retries + 1);
     }
-
-    console.error(error);
 
     return null;
   }
-}
+};
+
+export const retryMultipleTimes = (
+  cb: any,
+  options: Options = { retries: 5, delay: 500 }
+) => async (...args: any) => {
+  return executeAsyncCall(cb, options, args);
+};
