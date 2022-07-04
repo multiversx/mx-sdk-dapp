@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TxDetails } from '../../../TxDetails';
+import { TxDetails } from 'UI/TxDetails';
 import React from 'react';
 import { ToastDataState } from './utils';
 import styles from './styles.scss';

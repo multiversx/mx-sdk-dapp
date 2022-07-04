@@ -13,6 +13,7 @@ import { getToastDataStateByStatus } from '../utils';
 import { getGeneratedClasses } from 'UI/utils';
 import styles from '../styles.scss';
 import { TransactionToastDefaultProps } from '../types';
+import { TransactionBatchStatusesEnum } from '../../../../../types';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
@@ -72,7 +73,7 @@ export const useTransactionToast = ({
   };
 
   useEffect(() => {
-    if (status !== 'success' || !lifetimeAfterSuccess) {
+    if (status !== TransactionBatchStatusesEnum.success || !lifetimeAfterSuccess) {
       return;
     }
 
