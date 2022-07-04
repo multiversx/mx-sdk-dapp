@@ -111,6 +111,7 @@ export interface TransactionsDisplayInfoType {
   processingMessage?: string;
   submittedMessage?: string;
   transactionDuration?: number;
+  timedOutMessage?: string;
 }
 
 export interface SendSimpleTransactionPropsType {

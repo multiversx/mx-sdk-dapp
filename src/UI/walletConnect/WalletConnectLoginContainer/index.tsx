@@ -13,11 +13,10 @@ export interface WalletConnectLoginModalPropsType {
   title?: string;
   className?: string;
   logoutRoute?: string;
-  callbackRoute: string;
+  callbackRoute?: string;
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
-  redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
 }
@@ -31,7 +30,6 @@ export const WalletConnectLoginContainer = ({
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
-  redirectAfterLogin,
   token,
   onClose
 }: WalletConnectLoginModalPropsType) => {
@@ -43,7 +41,6 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
-    redirectAfterLogin,
     shouldLoginUser: true
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');

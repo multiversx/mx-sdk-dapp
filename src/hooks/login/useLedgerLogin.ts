@@ -24,10 +24,9 @@ const failInitializeErrorText =
 const defaultAddressesPerPage = 10;
 
 export interface UseLedgerLoginPropsType {
-  callbackRoute: string;
+  callbackRoute?: string;
   addressesPerPage?: number;
   token?: string;
-  redirectAfterLogin?: boolean;
 }
 
 export interface SelectedAddress {
@@ -59,7 +58,6 @@ export function useLedgerLogin({
   callbackRoute,
   token,
   addressesPerPage = defaultAddressesPerPage,
-  redirectAfterLogin = false
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -103,7 +101,7 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    optionalRedirect(callbackRoute, redirectAfterLogin);
+    optionalRedirect(callbackRoute);
   }
 
   const onLoginFailed = (err: any, customMessage?: string) => {
@@ -240,7 +238,7 @@ export function useLedgerLogin({
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
-        optionalRedirect(callbackRoute, redirectAfterLogin);
+        optionalRedirect(callbackRoute);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);

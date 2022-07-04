@@ -16,8 +16,7 @@ export interface ExtensionLoginButtonPropsType {
   children?: ReactNode;
   className?: string;
   buttonClassName?: string;
-  callbackRoute: string;
+  callbackRoute?: string;
   loginButtonText?: string;
-  redirectAfterLogin?: boolean;
   shouldRenderDefaultCss?: boolean;
 }

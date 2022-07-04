@@ -1,11 +1,13 @@
 let preventRedirect = false;
 
-export const preventRedirects = () => {
-  preventRedirect = true;
+export const preventRedirects = (shouldPreventRedirect: boolean = true) => {
+  preventRedirect = shouldPreventRedirect;
 };
 
-export const safeRedirect = (url: string) => {
+export const safeRedirect = (url: string, timeout: number = 0) => {
   if (!preventRedirect) {
-    window.location.href = url;
+    setTimeout(() => {
+      window.location.href = url;
+    }, timeout);
   }
 };
