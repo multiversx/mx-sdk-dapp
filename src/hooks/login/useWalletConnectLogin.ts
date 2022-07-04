@@ -46,7 +46,6 @@ export const useWalletConnectLogin = ({
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
-  const redirectAfterLogin = Boolean(callbackRoute);
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
@@ -150,7 +149,7 @@ export const useWalletConnectLogin = ({
         }, 150000);
       });
 
-      optionalRedirect(callbackRoute, redirectAfterLogin);
+      optionalRedirect(callbackRoute);
     } catch (err) {
       setError('Invalid address');
       console.error(err);

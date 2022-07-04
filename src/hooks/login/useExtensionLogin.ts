@@ -28,8 +28,6 @@ export const useExtensionLogin = ({
   const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
 
-  const redirectAfterLogin = Boolean(callbackRoute);
-
   async function initiateLogin() {
     setIsLoading(true);
     const provider: ExtensionProvider = ExtensionProvider.getInstance();
@@ -45,7 +43,7 @@ export const useExtensionLogin = ({
       }
 
       const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute ?? window.location.href}`
+        `${window.location.origin}${callbackRoute ?? window.location.pathname}`
       );
       const providerLoginData = {
         callbackUrl,
@@ -68,7 +66,7 @@ export const useExtensionLogin = ({
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-      optionalRedirect(callbackRoute, redirectAfterLogin);
+      optionalRedirect(callbackRoute);
     } catch (error) {
       console.error('error loging in', error);
       // TODO: can be any or typed error

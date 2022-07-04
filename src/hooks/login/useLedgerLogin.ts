@@ -59,7 +59,6 @@ export function useLedgerLogin({
   token,
   addressesPerPage = defaultAddressesPerPage,
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
-  const redirectAfterLogin = Boolean(callbackRoute);
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
@@ -102,7 +101,7 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    optionalRedirect(callbackRoute, redirectAfterLogin);
+    optionalRedirect(callbackRoute);
   }
 
   const onLoginFailed = (err: any, customMessage?: string) => {
@@ -239,7 +238,7 @@ export function useLedgerLogin({
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
-        optionalRedirect(callbackRoute, redirectAfterLogin);
+        optionalRedirect(callbackRoute);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);

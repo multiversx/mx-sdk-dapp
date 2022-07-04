@@ -1,9 +1,10 @@
 import { safeRedirect } from '../redirect';
 
 export function optionalRedirect(
-  callbackUrl?: string,
-  shouldRedirect?: boolean
+  callbackUrl?: string
 ) {
+  const shouldRedirect = Boolean(callbackUrl);
+
   if (shouldRedirect && callbackUrl != null) {
     setTimeout(() => {
       if (!window.location.pathname.includes(callbackUrl)) {
