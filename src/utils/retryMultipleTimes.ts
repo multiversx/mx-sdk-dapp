@@ -6,9 +6,9 @@ interface Options {
 }
 
 const executeAsyncCall = async (
-  cb: any,
+  cb: (...args: any[]) => any,
   options: Options,
-  args: any,
+  args: any[],
   retries = 0
 ): Promise<any | null> => {
   try {
@@ -27,8 +27,8 @@ const executeAsyncCall = async (
 };
 
 export const retryMultipleTimes = (
-  cb: any,
+  cb: (...args: any[]) => any,
   options: Options = { retries: 5, delay: 500 }
-) => async (...args: any) => {
+) => async (...args: any[]) => {
   return executeAsyncCall(cb, options, args);
 };
