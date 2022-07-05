@@ -5,8 +5,9 @@ import {
   defaultTransactionSuccessMessage
 } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
+import { TransactionsDisplayInfoType } from 'types';
 
-const defaultTransactionInfo = {
+const defaultTransactionInfo: TransactionsDisplayInfoType = {
   errorMessage: defaultTransactionErrorMessage,
   successMessage: defaultTransactionSuccessMessage,
   processingMessage: defaultTransactionProcessingMessage
@@ -18,7 +19,10 @@ export const transactionsInfoSelectors = (state: RootState) =>
 export const transactionDisplayInfoSelector = createDeepEqualSelector(
   transactionsInfoSelectors,
   (_: RootState, transactionSessionId: string | null) => transactionSessionId,
-  (transactionsDisplayInfo: any, transactionSessionId: string | null) =>
+  (
+    transactionsDisplayInfo: TransactionsDisplayInfoType,
+    transactionSessionId: string | null
+  ) =>
     transactionSessionId != null
       ? transactionsDisplayInfo?.[Number(transactionSessionId)] ||
         defaultTransactionInfo

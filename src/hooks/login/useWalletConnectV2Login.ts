@@ -27,15 +27,14 @@ import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
 
-interface InitWalletConnectType {
-  callbackRoute: string;
+interface InitWalletConnectV2Type {
   logoutRoute: string;
   token?: string;
+  callbackRoute?: string;
   shouldLoginUser?: boolean;
-  redirectAfterLogin?: boolean;
 }
 
-export interface WalletConnectLoginHookCustomStateType {
+export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string | null;
   walletConnectUri?: string;
   wcPairings?: PairingTypes.Struct[];
@@ -45,15 +44,14 @@ export type WalletConnectV2LoginHookReturnType = [
   (loginProvider?: boolean) => void,
   (pairing: PairingTypes.Struct) => Promise<void>,
   LoginHookGenericStateType,
-  WalletConnectLoginHookCustomStateType
+  WalletConnectV2LoginHookCustomStateType
 ];
 
 export const useWalletConnectV2Login = ({
   callbackRoute,
   logoutRoute,
-  token,
-  redirectAfterLogin = false
-}: InitWalletConnectType): WalletConnectV2LoginHookReturnType => {
+  token
+}: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
 
   const [error, setError] = useState<string>('');
@@ -113,7 +111,7 @@ export const useWalletConnectV2Login = ({
       const loginData = {
         logoutRoute: logoutRoute,
         loginType: 'walletconnectv2',
-        callbackRoute: callbackRoute
+        callbackRoute: callbackRoute ?? window.location.href
       };
 
       if (hasSignature) {
@@ -123,8 +121,7 @@ export const useWalletConnectV2Login = ({
         dispatch(setWalletConnectLogin(loginData));
       }
       dispatch(loginAction(loginActionData));
-
-      optionalRedirect(callbackRoute, redirectAfterLogin);
+      optionalRedirect(callbackRoute);
     } catch (err) {
       setError('Invalid address');
       console.error(err);

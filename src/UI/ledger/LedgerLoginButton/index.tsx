@@ -15,7 +15,6 @@ export const LedgerLoginButton: (
   loginButtonText = 'Ledger',
   buttonClassName = 'ledger-login-button',
   className = 'ledger-login',
-  redirectAfterLogin = false,
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
   shouldRenderDefaultModalCss = true,
@@ -58,7 +57,6 @@ export const LedgerLoginButton: (
           callbackRoute={callbackRoute}
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}
-          redirectAfterLogin={redirectAfterLogin}
           onClose={handleCloseModal}
         />
       )}
