@@ -28,7 +28,9 @@ module.exports = function executeBuildCommand(customOptions = {}) {
         target: ['es2015'],
         tsconfig: './tsconfig.json',
         platform: 'node',
-        inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
+        inject: [
+          require.resolve('node-stdlib-browser/helpers/esbuild/shim')
+        ],
         define: {
           global: 'global',
           process: 'process',
