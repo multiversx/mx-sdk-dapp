@@ -25,6 +25,7 @@ export interface UseLedgerLoginPropsType {
   addressesPerPage?: number;
   token?: string;
   redirectAfterLogin?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface SelectedAddress {
@@ -56,6 +57,7 @@ export function useLedgerLogin({
   callbackRoute,
   token,
   addressesPerPage = defaultAddressesPerPage,
+  onLoginRedirect,
   redirectAfterLogin = false
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
@@ -100,7 +102,7 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    optionalRedirect(callbackRoute, redirectAfterLogin);
+    optionalRedirect(callbackRoute, redirectAfterLogin, onLoginRedirect);
   }
 
   const onLoginFailed = (err: any, customMessage?: string) => {

@@ -19,6 +19,7 @@ function WalletConnectLoginContainer({
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin,
+  onLoginRedirect,
   token,
   onClose
 }: LoginModalPropsType) {
@@ -31,6 +32,7 @@ function WalletConnectLoginContainer({
     callbackRoute,
     token,
     redirectAfterLogin,
+    onLoginRedirect,
     shouldLoginUser: true
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');

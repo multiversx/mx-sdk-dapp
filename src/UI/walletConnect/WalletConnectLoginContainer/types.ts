@@ -10,4 +10,5 @@ export interface LoginModalPropsType {
   redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }

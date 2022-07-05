@@ -22,6 +22,7 @@ interface LedgerLoginContainerPropsType {
   redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 function LedgerLoginContainer({
@@ -30,6 +31,7 @@ function LedgerLoginContainer({
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   redirectAfterLogin,
+  onLoginRedirect,
   onClose,
   token
 }: LedgerLoginContainerPropsType) {
@@ -52,7 +54,12 @@ function LedgerLoginContainer({
       startIndex,
       selectedAddress
     }
-  ] = useLedgerLogin({ callbackRoute, token, redirectAfterLogin });
+  ] = useLedgerLogin({
+    callbackRoute,
+    token,
+    redirectAfterLogin,
+    onLoginRedirect
+  });
 
   function getContent() {
     if (isLoading) {

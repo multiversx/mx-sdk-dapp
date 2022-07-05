@@ -16,12 +16,14 @@ const ExtensionLoginButton: (
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Maiar DeFi Wallet',
+  onLoginRedirect,
   redirectAfterLogin = false,
   shouldRenderDefaultCss = true
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
     token,
+    onLoginRedirect,
     redirectAfterLogin
   });
 

@@ -29,6 +29,7 @@ interface InitWalletConnectType {
   token?: string;
   shouldLoginUser?: boolean;
   redirectAfterLogin?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface WalletConnectLoginHookCustomStateType {
@@ -46,7 +47,8 @@ export const useWalletConnectLogin = ({
   callbackRoute,
   logoutRoute,
   token,
-  redirectAfterLogin = false
+  redirectAfterLogin = false,
+  onLoginRedirect
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
@@ -153,7 +155,7 @@ export const useWalletConnectLogin = ({
         }, 150000);
       });
 
-      optionalRedirect(callbackRoute, redirectAfterLogin);
+      optionalRedirect(callbackRoute, redirectAfterLogin, onLoginRedirect);
     } catch (err) {
       setError('Invalid address');
       console.error(err);

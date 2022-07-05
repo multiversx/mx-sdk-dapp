@@ -13,6 +13,7 @@ interface UseExtensionLoginPropsType {
   callbackRoute: string;
   token?: string;
   redirectAfterLogin?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export type UseExtensionLoginReturnType = [
@@ -23,6 +24,7 @@ export type UseExtensionLoginReturnType = [
 export const useExtensionLogin = ({
   callbackRoute,
   token,
+  onLoginRedirect,
   redirectAfterLogin = false
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
@@ -68,7 +70,7 @@ export const useExtensionLogin = ({
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-      optionalRedirect(callbackRoute, redirectAfterLogin);
+      optionalRedirect(callbackRoute, redirectAfterLogin, onLoginRedirect);
     } catch (error) {
       console.error('error loging in', error);
       // TODO: can be any or typed error
