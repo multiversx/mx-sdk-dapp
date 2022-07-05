@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
+import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
 import { LedgerLoginButtonPropsType } from './types';
-import { LoginButton } from '../../LoginButton/LoginButton';
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
@@ -18,7 +18,8 @@ export const LedgerLoginButton: (
   wrapContentInsideModal = true,
   shouldRenderDefaultCss = true,
   shouldRenderDefaultModalCss = true,
-  hideButtonWhenModalOpens = false
+  hideButtonWhenModalOpens = false,
+  onLoginRedirect
 }) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -58,6 +59,7 @@ export const LedgerLoginButton: (
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}
           onClose={handleCloseModal}
+          onLoginRedirect={onLoginRedirect}
         />
       )}
     </>

@@ -1,7 +1,7 @@
 import React, { Fragment, ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
-import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 import { LoginButton } from '../../LoginButton/LoginButton';
+import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 
 export interface WalletConnectLoginButtonPropsType {
   onModalOpens?: (props?: any) => void;
@@ -18,6 +18,7 @@ export interface WalletConnectLoginButtonPropsType {
   wrapContentInsideModal?: boolean;
   hideButtonWhenModalOpens?: boolean;
   token?: string;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export const WalletConnectLoginButton = ({
@@ -34,7 +35,8 @@ export const WalletConnectLoginButton = ({
   className = 'wallet-connect-login',
   lead = 'Scan the QR code using Maiar',
   token,
-  hideButtonWhenModalOpens = false
+  hideButtonWhenModalOpens = false,
+  onLoginRedirect
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -76,6 +78,7 @@ export const WalletConnectLoginButton = ({
           lead={lead}
           wrapContentInsideModal={wrapContentInsideModal}
           onClose={handleCloseModal}
+          onLoginRedirect={onLoginRedirect}
         />
       )}
     </Fragment>

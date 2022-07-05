@@ -264,6 +264,7 @@ you can easily import and use them.
   wrapContentInsideModal={wrapContentInsideModal}
   redirectAfterLogin={redirectAfterLogin}
   token={token}
+  onLoginRedirect={onLoginRedirect}
   onClose={onClose}
   />
 ```
@@ -277,6 +278,7 @@ you can easily import and use them.
   redirectAfterLogin?: boolean;
   token?: string;
   onClose?: () => void;
+  onLoginRedirect?: () => void;
   />
 ```
 
@@ -346,7 +348,8 @@ return type is as follows:
 ```
 const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLoginHook({
     callbackRoute,
-    logoutRoute
+    logoutRoute,
+    onLoginRedirect,
   });
 ```
 

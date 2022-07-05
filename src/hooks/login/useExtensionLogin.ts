@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
+import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
-import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
-import { setAccountProvider } from 'providers/accountProvider';
 
 interface UseExtensionLoginPropsType {
   callbackRoute?: string;
   token?: string;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export type UseExtensionLoginReturnType = [
@@ -22,6 +23,7 @@ export type UseExtensionLoginReturnType = [
 export const useExtensionLogin = ({
   callbackRoute,
   token,
+  onLoginRedirect
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +68,7 @@ export const useExtensionLogin = ({
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
-      optionalRedirect(callbackRoute);
+      optionalRedirect(callbackRoute, onLoginRedirect);
     } catch (error) {
       console.error('error loging in', error);
       // TODO: can be any or typed error
