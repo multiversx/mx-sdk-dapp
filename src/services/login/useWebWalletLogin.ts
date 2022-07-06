@@ -20,7 +20,7 @@ export type UseWebWalletLoginReturnType = [
 export const useWebWalletLogin = ({
   callbackRoute,
   token,
-  redirectDelayMilliseconds
+  redirectDelayMilliseconds = 100
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
