@@ -101,21 +101,11 @@ export const SignTransactionsModals = ({
       );
     }
 
-    console.log('renderTransactionStatusToast - null');
     return null;
   };
 
-  console.log('signError', signError);
-  console.log('cancelTransactionsMessage', cancelTransactionsMessage);
-  console.log('hasTransactions', hasTransactions);
-
   const shouldShowTransactionStatusToast =
     Boolean(signError) || Boolean(cancelTransactionsMessage);
-
-  console.log(
-    'shouldShowTransactionStatusToast',
-    shouldShowTransactionStatusToast
-  );
 
   if (shouldShowTransactionStatusToast || hasTransactions) {
     switch (loginMethod) {

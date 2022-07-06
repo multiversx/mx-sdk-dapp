@@ -92,27 +92,16 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
     }
   }, [type]);
 
-  console.log(duration);
-
   return (
     show &&
     errorToast && (
       <CustomToast
         {...errorToast}
-        // duration={duration}
+        duration={duration}
         messageComponent={MessageComponent}
         onDelete={handleDelete}
         className={styles.transactionsStatusToast}
       />
-      // <div className='toast-messages d-flex flex-column align-items-center justify-content-sm-end'>
-      //   <CustomToast
-      //     {...errorToast}
-      //     // duration={duration}
-      //     messageComponent={MessageComponent}
-      //     onDelete={handleDelete}
-      //     className={styles.transactionsStatusToast}
-      //   />
-      // </div>
     )
   );
 };
