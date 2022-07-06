@@ -129,8 +129,8 @@ export default function ProviderInitializer() {
   }
 
   async function tryAuthenticateWalletUser() {
-    try {
-      if (walletLogin != null) {
+    if (walletLogin != null) {
+      try {
         const provider = newWalletProvider(network.walletAddress);
         const address = await getAddress();
         if (address) {
@@ -150,10 +150,10 @@ export default function ProviderInitializer() {
             );
           }
         }
-        dispatch(setWalletLogin(null));
+      } catch (e) {
+        console.error('Failed authenticating wallet user ', e);
       }
-    } catch (e) {
-      console.error('Failed authenticating wallet user ', e);
+      dispatch(setWalletLogin(null));
     }
   }
 
@@ -221,11 +221,6 @@ export default function ProviderInitializer() {
         initWalletLoginProvider(false);
         break;
       }
-      case LoginMethodsEnum.wallet: {
-        const provider = newWalletProvider(network.walletAddress);
-        setAccountProvider(provider);
-        break;
-      }
 
       case LoginMethodsEnum.extension: {
         setExtensionProvider();
@@ -237,6 +232,7 @@ export default function ProviderInitializer() {
         break;
       }
 
+      case LoginMethodsEnum.wallet:
       case LoginMethodsEnum.none: {
         tryAuthenticateWalletUser();
         break;
