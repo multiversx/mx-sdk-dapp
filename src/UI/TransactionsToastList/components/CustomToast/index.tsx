@@ -31,7 +31,7 @@ export const CustomToast = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [duration]);
 
   const closeButton = useMemo(() => {
     return CustomCloseButton ? (
@@ -48,8 +48,7 @@ export const CustomToast = ({
       className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
     >
       {closeButton}
-      {messageComponent}
-      {message}
+      {messageComponent ? messageComponent : message}
     </div>
   );
 };

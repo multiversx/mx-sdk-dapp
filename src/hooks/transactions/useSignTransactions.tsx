@@ -6,7 +6,7 @@ import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
   MISSING_PROVIDER_MESSAGE,
-  PROVIDER_NOT_INTIALIZED,
+  PROVIDER_NOT_INITIALIZED,
   TRANSACTION_CANCELLED,
   WALLET_SIGN_SESSION
 } from 'constants/index';
@@ -50,6 +50,9 @@ export const useSignTransactions = () => {
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
+  const [cancelTransactionsMessage, setCancelTransactionsMessage] = useState<
+    string | null
+  >(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const hasTransactions = Boolean(transactionsToSign?.transactions);
   const onAbort = (sessionId?: string) => {
@@ -73,15 +76,16 @@ export const useSignTransactions = () => {
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
-    const isTxCancelled = errorMessage !== TRANSACTION_CANCELLED;
+    const isTxCancelled = errorMessage.includes(TRANSACTION_CANCELLED);
 
     clearSignInfo(sessionId);
 
     /*
      * this is triggered by abort action,
-     * so no need to show error again
+     * so no need to show error
      */
-    if (!isTxCancelled) {
+    if (isTxCancelled) {
+      setCancelTransactionsMessage(TRANSACTION_CANCELLED);
       return;
     }
 
@@ -123,7 +127,9 @@ export const useSignTransactions = () => {
       const errorMessage =
         (error as Error)?.message ||
         (error as string) ||
-        PROVIDER_NOT_INTIALIZED;
+        PROVIDER_NOT_INITIALIZED;
+      console.error(errorMessage);
+
       onCancel(errorMessage);
       return;
     }
@@ -162,13 +168,18 @@ export const useSignTransactions = () => {
     } catch (error) {
       const errorMessage =
         (error as Error)?.message || (error as string) || ERROR_SIGNING_TX;
+      console.error(errorMessage);
+
       dispatch(
         moveTransactionsToSignedState({
           sessionId,
           status: TransactionBatchStatusesEnum.cancelled
         })
       );
-      onCancel(errorMessage, sessionId);
+      onCancel(
+        errorMessage.includes('cancel') ? TRANSACTION_CANCELLED : errorMessage,
+        sessionId
+      );
     }
   };
 
@@ -218,6 +229,8 @@ export const useSignTransactions = () => {
     } catch (err) {
       const defaultErrorMessage = (err as Error)?.message;
       const errorMessage = defaultErrorMessage || ERROR_SIGNING;
+      console.error(errorMessage);
+
       onCancel(errorMessage, sessionId);
 
       dispatch(
@@ -236,6 +249,7 @@ export const useSignTransactions = () => {
 
   return {
     error,
+    cancelTransactionsMessage,
     onAbort,
     hasTransactions,
     callbackRoute: savedCallback.current,
