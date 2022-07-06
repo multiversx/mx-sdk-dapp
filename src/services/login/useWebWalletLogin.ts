@@ -9,6 +9,7 @@ import { LoginHookGenericStateType, InitiateLoginFunctionType } from '../types';
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;
   token?: string;
+  redirectDelayMilliseconds?: number;
 }
 
 export type UseWebWalletLoginReturnType = [
@@ -18,7 +19,8 @@ export type UseWebWalletLoginReturnType = [
 
 export const useWebWalletLogin = ({
   callbackRoute,
-  token
+  token,
+  redirectDelayMilliseconds
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +47,8 @@ export const useWebWalletLogin = ({
       );
       const loginData = {
         callbackUrl: callbackUrl,
-        ...(token && { token })
+        ...(token && { token }),
+        redirectDelayMilliseconds
       };
 
       await provider.login(loginData);
