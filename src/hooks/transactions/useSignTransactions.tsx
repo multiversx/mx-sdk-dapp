@@ -8,6 +8,7 @@ import {
   MISSING_PROVIDER_MESSAGE,
   PROVIDER_NOT_INITIALIZED,
   TRANSACTION_CANCELLED,
+  TRANSACTION_STATUS_TOAST_ID,
   WALLET_SIGN_SESSION
 } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -21,7 +22,8 @@ import {
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
-  moveTransactionsToSignedState
+  moveTransactionsToSignedState,
+  removeCustomToast
 } from 'reduxStore/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
@@ -55,8 +57,14 @@ export const useSignTransactions = () => {
   >(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const hasTransactions = Boolean(transactionsToSign?.transactions);
-  const onAbort = (sessionId?: string) => {
+
+  const clearTransactionStatusMessage = () => {
     setError(null);
+    setCancelTransactionsMessage(null);
+  };
+
+  const onAbort = (sessionId?: string) => {
+    clearTransactionStatusMessage();
     clearSignInfo(sessionId);
   };
 
@@ -67,11 +75,13 @@ export const useSignTransactions = () => {
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
+    dispatch(removeCustomToast(TRANSACTION_STATUS_TOAST_ID));
 
     if (!isExtensionProvider) {
       return;
     }
 
+    clearTransactionStatusMessage();
     ExtensionProvider.getInstance()?.cancelAction?.();
   }
 
@@ -187,6 +197,8 @@ export const useSignTransactions = () => {
     if (!transactionsToSign) {
       return;
     }
+
+    clearTransactionStatusMessage();
 
     const { sessionId, transactions, callbackRoute } = transactionsToSign;
 

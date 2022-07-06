@@ -16,6 +16,7 @@ import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
+import { TRANSACTION_STATUS_TOAST_ID } from '../../constants';
 
 export interface TransactionsToastListPropsType {
   toastProps?: any;
@@ -141,8 +142,12 @@ export const TransactionsToastList = ({
     ]
   );
 
-  const customToastsList = customToasts.map(
-    ({ toastId, type, duration, message = '' }: CustomToastType) => (
+  const customToastsList = customToasts
+    .filter(
+      (customToast: CustomToastType) =>
+        customToast.toastId !== TRANSACTION_STATUS_TOAST_ID
+    )
+    .map(({ toastId, type, duration, message = '' }: CustomToastType) => (
       <CustomToast
         key={toastId}
         {...{
@@ -152,8 +157,7 @@ export const TransactionsToastList = ({
           onDelete: () => handleDeleteCustomToast(toastId)
         }}
       />
-    )
-  );
+    ));
 
   const clearNotPendingTransactionsFromStorage = (e: BeforeUnloadEvent) => {
     e.preventDefault();

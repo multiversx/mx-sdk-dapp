@@ -8,8 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
-
-const ERROR_TOAST_ID = 'sign-transactions-modals-error-toast-id';
+import { TRANSACTION_STATUS_TOAST_ID } from 'constants/index';
+import styles from './transaction-status-toast.scss';
 
 type ErrorToastProps = {
   type?: 'info' | 'error' | 'warning';
@@ -31,14 +31,15 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
   const errorToast = useMemo(
     () =>
       customToasts.find(
-        (customToast: CustomToastType) => customToast.toastId === ERROR_TOAST_ID
+        (customToast: CustomToastType) =>
+          customToast.toastId === TRANSACTION_STATUS_TOAST_ID
       ),
     [customToasts]
   );
 
   const showErrorToast = () => {
     addNewCustomToast({
-      toastId: ERROR_TOAST_ID,
+      toastId: TRANSACTION_STATUS_TOAST_ID,
       message,
       type: 'custom'
     });
@@ -46,10 +47,10 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
 
   const handleDelete = () => {
     if (Boolean(errorToast)) {
-      deleteCustomToast(ERROR_TOAST_ID);
+      deleteCustomToast(TRANSACTION_STATUS_TOAST_ID);
       onDelete?.();
     } else {
-      deleteCustomToast(ERROR_TOAST_ID);
+      deleteCustomToast(TRANSACTION_STATUS_TOAST_ID);
     }
   };
 
@@ -70,8 +71,12 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
         );
       case 'warning':
         return (
-          <div className={classNames(globalStyles.icon, globalStyles.warning)}>
-            <FontAwesomeIcon icon={faWarning} />
+          <div className={styles.transactionsStatusToastContent}>
+            <div
+              className={classNames(globalStyles.icon, globalStyles.warning)}
+            >
+              <FontAwesomeIcon icon={faWarning} className={globalStyles.svg} />
+            </div>
             {message}
           </div>
         );
@@ -87,15 +92,27 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
     }
   }, [type]);
 
+  console.log(duration);
+
   return (
     show &&
     errorToast && (
       <CustomToast
         {...errorToast}
-        duration={duration}
+        // duration={duration}
         messageComponent={MessageComponent}
         onDelete={handleDelete}
+        className={styles.transactionsStatusToast}
       />
+      // <div className='toast-messages d-flex flex-column align-items-center justify-content-sm-end'>
+      //   <CustomToast
+      //     {...errorToast}
+      //     // duration={duration}
+      //     messageComponent={MessageComponent}
+      //     onDelete={handleDelete}
+      //     className={styles.transactionsStatusToast}
+      //   />
+      // </div>
     )
   );
 };

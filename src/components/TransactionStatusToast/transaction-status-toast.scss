@@ -1,0 +1,29 @@
+@import 'assets/sass/variables/variables';
+
+.transactions-status-toast {
+  position: fixed !important;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 9999;
+}
+
+.transactions-status-toast-content {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: left;
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.75rem;
+}
+//
+//.transactions-status-toast-icon {
+//  .svg {
+//    height: auto;
+//    width: 20px;
+//
+//    path {
+//      fill: $white;
+//    }
+//  }
+//}

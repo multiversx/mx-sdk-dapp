@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { useGetLoginInfo } from 'hooks';
 import {
@@ -10,7 +10,7 @@ import { LoginMethodsEnum } from 'types';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
-import { TransactionStatusToast } from '../../components/ErrorToast/TransactionStatusToast';
+import { TransactionStatusToast } from '../../components/TransactionStatusToast/TransactionStatusToast';
 
 interface SignPropsType {
   handleClose: () => void;
@@ -80,13 +80,14 @@ export const SignTransactionsModals = ({
     Extra: CustomConfirmScreens?.Extra ?? null
   };
 
-  const TxStatusToast = useMemo(() => {
+  const renderTransactionStatusToast = () => {
     if (signError) {
       return (
         <TransactionStatusToast
           show={Boolean(signError)}
           message={signError}
           type={'error'}
+          onDelete={() => onAbort(sessionId)}
         />
       );
     } else if (cancelTransactionsMessage) {
@@ -95,39 +96,54 @@ export const SignTransactionsModals = ({
           show={Boolean(cancelTransactionsMessage)}
           message={cancelTransactionsMessage}
           type={'warning'}
+          onDelete={() => onAbort(sessionId)}
         />
       );
     }
-    return null;
-  }, [signError, cancelTransactionsMessage]);
 
-  if (hasTransactions) {
+    console.log('renderTransactionStatusToast - null');
+    return null;
+  };
+
+  console.log('signError', signError);
+  console.log('cancelTransactionsMessage', cancelTransactionsMessage);
+  console.log('hasTransactions', hasTransactions);
+
+  const shouldShowTransactionStatusToast =
+    Boolean(signError) || Boolean(cancelTransactionsMessage);
+
+  console.log(
+    'shouldShowTransactionStatusToast',
+    shouldShowTransactionStatusToast
+  );
+
+  if (shouldShowTransactionStatusToast || hasTransactions) {
     switch (loginMethod) {
       case LoginMethodsEnum.ledger:
-        return TxStatusToast ? (
-          TxStatusToast
+        return shouldShowTransactionStatusToast ? (
+          renderTransactionStatusToast()
         ) : (
           <ConfirmScreens.Ledger {...signProps} />
         );
 
       case LoginMethodsEnum.walletconnect:
-        return TxStatusToast ? (
-          TxStatusToast
+        return shouldShowTransactionStatusToast ? (
+          renderTransactionStatusToast()
         ) : (
           <ConfirmScreens.WalletConnect {...signProps} />
         );
 
       case LoginMethodsEnum.extension:
-        return TxStatusToast ? (
-          TxStatusToast
+        return shouldShowTransactionStatusToast ? (
+          renderTransactionStatusToast()
         ) : (
           <ConfirmScreens.Extension {...signProps} />
         );
 
       case LoginMethodsEnum.extra:
         return ConfirmScreens?.Extra ? (
-          TxStatusToast ? (
-            TxStatusToast
+          shouldShowTransactionStatusToast ? (
+            renderTransactionStatusToast()
           ) : (
             <ConfirmScreens.Extra {...signProps} />
           )
