@@ -1,3 +1,5 @@
+@import 'assets/sass/variables/variables';
+
 .transactions-status-toast {
   position: fixed !important;
   bottom: 1rem;
@@ -13,4 +15,23 @@
   align-items: center;
   padding-left: 0.5rem;
   padding-right: 0.75rem;
+}
+
+.transactions-status-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  width: 4.5rem;
+  height: 4.5rem;
+  border-radius: 50%;
+
+  .svg {
+    height: auto;
+    width: 40px;
+
+    path {
+      fill: $white;
+    }
+  }
 }

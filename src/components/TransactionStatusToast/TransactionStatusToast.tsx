@@ -22,7 +22,7 @@ type ErrorToastProps = {
 export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
   show,
   message,
-  duration = 5000,
+  duration = 30000,
   onDelete,
   type = 'info'
 }) => {
@@ -60,37 +60,60 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
     }
   }, [show]);
 
-  const MessageComponent = useMemo(() => {
+  const StatusIcon = useMemo(() => {
     switch (type) {
       case 'info':
         return (
-          <div className={classNames(globalStyles.icon, globalStyles.success)}>
-            <FontAwesomeIcon icon={faInfo} />
-            {message}
+          <div
+            className={classNames(
+              styles.transactionsStatusToastIcon,
+              globalStyles.success
+            )}
+          >
+            <FontAwesomeIcon icon={faInfo} className={styles.svg} size='5x' />
           </div>
         );
       case 'warning':
         return (
-          <div className={styles.transactionsStatusToastContent}>
-            <div
-              className={classNames(globalStyles.icon, globalStyles.warning)}
-            >
-              <FontAwesomeIcon icon={faWarning} className={globalStyles.svg} />
-            </div>
-            {message}
+          <div
+            className={classNames(
+              styles.transactionsStatusToastIcon,
+              globalStyles.warning,
+              styles.warningIcon
+            )}
+          >
+            <FontAwesomeIcon
+              icon={faWarning}
+              className={styles.svg}
+              size='5x'
+            />
           </div>
         );
       case 'error':
         return (
-          <div className={classNames(globalStyles.icon, globalStyles.danger)}>
-            <FontAwesomeIcon icon={faTimes} />
-            {message}
+          <div
+            className={classNames(
+              styles.transactionsStatusToastIcon,
+              globalStyles.danger,
+              styles.errorIcon
+            )}
+          >
+            <FontAwesomeIcon icon={faTimes} className={styles.svg} size='5x' />
           </div>
         );
       default:
         return null;
     }
   }, [type]);
+
+  const MessageComponent = useMemo(() => {
+    return (
+      <div className={styles.transactionsStatusToastContent}>
+        {StatusIcon}
+        {message}
+      </div>
+    );
+  }, [StatusIcon]);
 
   return (
     show &&
