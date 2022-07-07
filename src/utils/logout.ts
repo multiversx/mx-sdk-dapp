@@ -63,7 +63,7 @@ function redirectToCallbackUrl(
   onRedirect?: (callbackUrl?: string) => void,
   isWalletProvider?: boolean
 ) {
-  if (callbackUrl && isWalletProvider) {
+  if (callbackUrl && !isWalletProvider) {
     if (typeof onRedirect === 'function') {
       onRedirect(callbackUrl);
     } else {
