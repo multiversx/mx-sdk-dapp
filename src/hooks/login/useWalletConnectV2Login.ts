@@ -35,6 +35,12 @@ interface InitWalletConnectV2Type {
   onLoginRedirect?: (callbackRoute: string) => void;
 }
 
+export enum WalletConnectV2Error {
+  invalidAddress = 'Invalid address',
+  invalidConfig = 'Invalid WalletConnect setup',
+  sessionExpired = 'Unable to connect to existing session'
+}
+
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string | null;
   walletConnectUri?: string;
@@ -126,7 +132,7 @@ export const useWalletConnectV2Login = ({
       dispatch(loginAction(loginActionData));
       optionalRedirect(callbackRoute, onLoginRedirect);
     } catch (err) {
-      setError('Invalid address');
+      setError(WalletConnectV2Error.invalidAddress);
       console.error(err);
     }
   }
@@ -164,6 +170,7 @@ export const useWalletConnectV2Login = ({
 
   async function connectExisting(pairing: PairingTypes.Struct | undefined) {
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
+      setError(WalletConnectV2Error.invalidConfig);
       return;
     }
     if (!pairing || !pairing.topic) {
@@ -184,7 +191,7 @@ export const useWalletConnectV2Login = ({
         await initiateLogin();
       }
     } catch {
-      setError('Unable to connect to existing session');
+      setError(WalletConnectV2Error.sessionExpired);
     } finally {
       setWcPairings(providerRef.current?.pairings);
     }
@@ -192,6 +199,7 @@ export const useWalletConnectV2Login = ({
 
   async function generateWcUri() {
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
+      setError(WalletConnectV2Error.invalidConfig);
       return;
     }
 
