@@ -1,9 +1,9 @@
-import { addNewCustomToast, deleteCustomToast } from '../../utils';
-import { CustomToast } from '../../UI';
+import { addNewCustomToast, deleteCustomToast } from 'utils';
+import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import React, { useEffect, useMemo } from 'react';
-import { CustomToastType } from '../../types/toasts';
-import { useSelector } from '../../reduxStore/DappProviderContext';
-import { customToastsSelector } from '../../reduxStore/selectors';
+import { CustomToastType } from 'types/toasts';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { customToastsSelector } from 'reduxStore/selectors';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
 import globalStyles from 'assets/sass/main.scss';

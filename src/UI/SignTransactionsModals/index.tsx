@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useGetLoginInfo } from 'hooks';
 import {
   useGetAccountProvider,
@@ -11,6 +11,7 @@ import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
 import {
   CustomConfirmScreensType,
+  ScreenType,
   SignPropsType
 } from './types/sign-transactions-modals';
 import { ConfirmationScreen } from './components/ConfirmationScreen';
@@ -68,35 +69,44 @@ export const SignTransactionsModals = ({
   const shouldShowTransactionStatusToast =
     Boolean(signError) || Boolean(cancelTransactionsMessage);
 
-  const renderScreen = (Screen?: (signProps: SignPropsType) => JSX.Element) => {
-    return (
-      <ConfirmationScreen
-        Screen={Screen}
-        signProps={signProps}
-        transactionStatusToastType={{
-          signError,
-          cancelTransactionsMessage,
-          onDelete: handleClose
-        }}
-        shouldShowTransactionStatusToast={shouldShowTransactionStatusToast}
-      />
-    );
-  };
+  const renderScreen = useCallback(
+    (Screen?: ScreenType) => {
+      return (
+        <ConfirmationScreen
+          Screen={Screen}
+          signProps={signProps}
+          transactionStatusToastType={{
+            signError,
+            canceledTransactionsMessage: cancelTransactionsMessage,
+            onDelete: handleClose
+          }}
+          shouldShowTransactionStatusToast={shouldShowTransactionStatusToast}
+        />
+      );
+    },
+    [
+      signProps,
+      signError,
+      cancelTransactionsMessage,
+      handleClose,
+      shouldShowTransactionStatusToast
+    ]
+  );
 
-  if (shouldShowTransactionStatusToast || hasTransactions) {
-    switch (loginMethod) {
-      case LoginMethodsEnum.ledger:
-        return renderScreen(ConfirmScreens.Ledger);
-      case LoginMethodsEnum.walletconnect:
-        return renderScreen(ConfirmScreens.WalletConnect);
-      case LoginMethodsEnum.extension:
-        return renderScreen(ConfirmScreens.Extension);
-      case LoginMethodsEnum.extra:
-        return renderScreen(ConfirmScreens.Extra);
-      default:
-        return null;
-    }
+  if (!shouldShowTransactionStatusToast && !hasTransactions) {
+    return;
   }
 
-  return null;
+  switch (loginMethod) {
+    case LoginMethodsEnum.ledger:
+      return renderScreen(ConfirmScreens.Ledger);
+    case LoginMethodsEnum.walletconnect:
+      return renderScreen(ConfirmScreens.WalletConnect);
+    case LoginMethodsEnum.extension:
+      return renderScreen(ConfirmScreens.Extension);
+    case LoginMethodsEnum.extra:
+      return renderScreen(ConfirmScreens.Extra);
+    default:
+      return null;
+  }
 };

@@ -143,6 +143,8 @@ export const TransactionsToastList = ({
   );
 
   const customToastsList = customToasts
+    // Avoid rendering transaction status toast.
+    // This is rendered individually in case of canceled/error transaction
     .filter(
       (customToast: CustomToastType) =>
         customToast.toastId !== TRANSACTION_STATUS_TOAST_ID

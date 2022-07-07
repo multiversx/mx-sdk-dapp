@@ -3,13 +3,13 @@ import React from 'react';
 
 export type TxStatusToastProps = {
   signError: string | null;
-  cancelTransactionsMessage: string | null;
+  canceledTransactionsMessage: string | null;
   onDelete: () => void;
 };
 
 export const TxStatusToast: React.FC<TxStatusToastProps> = ({
   signError,
-  cancelTransactionsMessage,
+  canceledTransactionsMessage,
   onDelete
 }) => {
   if (signError) {
@@ -21,11 +21,11 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
         onDelete={onDelete}
       />
     );
-  } else if (cancelTransactionsMessage) {
+  } else if (canceledTransactionsMessage) {
     return (
       <TransactionStatusToast
-        show={Boolean(cancelTransactionsMessage)}
-        message={cancelTransactionsMessage}
+        show={Boolean(canceledTransactionsMessage)}
+        message={canceledTransactionsMessage}
         type={'warning'}
         onDelete={onDelete}
       />

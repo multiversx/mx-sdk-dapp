@@ -52,15 +52,16 @@ export const useSignTransactions = () => {
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
-  const [cancelTransactionsMessage, setCancelTransactionsMessage] = useState<
-    string | null
-  >(null);
+  const [
+    canceledTransactionsMessage,
+    setCanceledTransactionsMessage
+  ] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const hasTransactions = Boolean(transactionsToSign?.transactions);
 
   const clearTransactionStatusMessage = () => {
     setError(null);
-    setCancelTransactionsMessage(null);
+    setCanceledTransactionsMessage(null);
   };
 
   const onAbort = (sessionId?: string) => {
@@ -95,7 +96,7 @@ export const useSignTransactions = () => {
      * so no need to show error
      */
     if (isTxCancelled) {
-      setCancelTransactionsMessage(TRANSACTION_CANCELLED);
+      setCanceledTransactionsMessage(TRANSACTION_CANCELLED);
       return;
     }
 
@@ -261,7 +262,7 @@ export const useSignTransactions = () => {
 
   return {
     error,
-    cancelTransactionsMessage,
+    cancelTransactionsMessage: canceledTransactionsMessage,
     onAbort,
     hasTransactions,
     callbackRoute: savedCallback.current,

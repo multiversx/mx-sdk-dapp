@@ -12,9 +12,11 @@ export type SignPropsType = {
   verifyReceiverScam?: boolean;
 };
 
+export type ScreenType = (signProps: SignPropsType) => JSX.Element;
+
 export type CustomConfirmScreensType = {
-  Ledger?: (signProps: SignPropsType) => JSX.Element;
-  Extension?: (signProps: SignPropsType) => JSX.Element;
-  WalletConnect?: (signProps: SignPropsType) => JSX.Element;
-  Extra?: (signProps: SignPropsType) => JSX.Element;
+  Ledger?: ScreenType;
+  Extension?: ScreenType;
+  WalletConnect?: ScreenType;
+  Extra?: ScreenType;
 };
