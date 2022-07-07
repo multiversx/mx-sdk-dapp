@@ -10,7 +10,7 @@ import { LoginMethodsEnum } from 'types';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
-import { TransactionStatusToast } from '../../components/TransactionStatusToast/TransactionStatusToast';
+import { TransactionStatusToast } from 'components/TransactionStatusToast/TransactionStatusToast';
 
 interface SignPropsType {
   handleClose: () => void;
