@@ -135,16 +135,6 @@ export const WalletConnectLoginContainer = ({
       <div className={generatedClasses.root}>
         <div className={generatedClasses.card}>
           <div className={generatedClasses.cardBody}>
-            {(walletConnectUriV2 || walletConnectUri) && (
-              <span>
-                URI:{' '}
-                {walletConnectUri && <CopyButton text={walletConnectUri} />}
-                {isWalletConnectV2 && walletConnectUriV2 && (
-                  <CopyButton text={walletConnectUriV2} />
-                )}
-              </span>
-            )}
-
             {qrCodeSvg ? (
               <div
                 className={generatedClasses.qrCodeSvgContainer}
