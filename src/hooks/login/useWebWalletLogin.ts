@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
-import { setWalletLogin } from 'reduxStore/slices';
+import { setTokenLogin, setWalletLogin } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { newWalletProvider } from 'utils';
 
@@ -40,6 +40,9 @@ export const useWebWalletLogin = ({
       };
 
       dispatch(setWalletLogin(walletLoginData));
+      if (token) {
+        dispatch(setTokenLogin({ loginToken: token }));
+      }
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`
