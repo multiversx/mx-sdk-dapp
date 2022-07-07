@@ -1,5 +1,4 @@
 import React from 'react';
-import { Transaction } from '@elrondnetwork/erdjs';
 import { useGetLoginInfo } from 'hooks';
 import {
   useGetAccountProvider,
@@ -10,25 +9,11 @@ import { LoginMethodsEnum } from 'types';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
-import { TransactionStatusToast } from 'components/TransactionStatusToast/TransactionStatusToast';
-
-interface SignPropsType {
-  handleClose: () => void;
-  error: string | null;
-  sessionId?: string;
-  transactions: Transaction[];
-  providerType: LoginMethodsEnum;
-  callbackRoute: string;
-  className?: string;
-  verifyReceiverScam?: boolean;
-}
-
-interface CustomConfirmScreensType {
-  Ledger?: (signProps: SignPropsType) => JSX.Element;
-  Extension?: (signProps: SignPropsType) => JSX.Element;
-  WalletConnect?: (signProps: SignPropsType) => JSX.Element;
-  Extra?: (signProps: SignPropsType) => JSX.Element;
-}
+import {
+  CustomConfirmScreensType,
+  SignPropsType
+} from './types/sign-transactions-modals';
+import { ConfirmationScreen } from './components/ConfirmationScreen';
 
 interface SignTransactionsPropsType {
   className?: string;
@@ -72,73 +57,42 @@ export const SignTransactionsModals = ({
     verifyReceiverScam
   };
 
-  const ConfirmScreens = {
+  const ConfirmScreens: CustomConfirmScreensType = {
     Ledger: CustomConfirmScreens?.Ledger ?? SignWithLedgerModal,
     WalletConnect:
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
     Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
-    Extra: CustomConfirmScreens?.Extra ?? null
-  };
-
-  const renderTransactionStatusToast = () => {
-    if (signError) {
-      return (
-        <TransactionStatusToast
-          show={Boolean(signError)}
-          message={signError}
-          type={'error'}
-          onDelete={() => onAbort(sessionId)}
-        />
-      );
-    } else if (cancelTransactionsMessage) {
-      return (
-        <TransactionStatusToast
-          show={Boolean(cancelTransactionsMessage)}
-          message={cancelTransactionsMessage}
-          type={'warning'}
-          onDelete={() => onAbort(sessionId)}
-        />
-      );
-    }
-
-    return null;
+    Extra: CustomConfirmScreens?.Extra
   };
 
   const shouldShowTransactionStatusToast =
     Boolean(signError) || Boolean(cancelTransactionsMessage);
 
+  const renderScreen = (Screen?: (signProps: SignPropsType) => JSX.Element) => {
+    return (
+      <ConfirmationScreen
+        Screen={Screen}
+        signProps={signProps}
+        transactionStatusToastType={{
+          signError,
+          cancelTransactionsMessage,
+          onDelete: handleClose
+        }}
+        shouldShowTransactionStatusToast={shouldShowTransactionStatusToast}
+      />
+    );
+  };
+
   if (shouldShowTransactionStatusToast || hasTransactions) {
     switch (loginMethod) {
       case LoginMethodsEnum.ledger:
-        return shouldShowTransactionStatusToast ? (
-          renderTransactionStatusToast()
-        ) : (
-          <ConfirmScreens.Ledger {...signProps} />
-        );
-
+        return renderScreen(ConfirmScreens.Ledger);
       case LoginMethodsEnum.walletconnect:
-        return shouldShowTransactionStatusToast ? (
-          renderTransactionStatusToast()
-        ) : (
-          <ConfirmScreens.WalletConnect {...signProps} />
-        );
-
+        return renderScreen(ConfirmScreens.WalletConnect);
       case LoginMethodsEnum.extension:
-        return shouldShowTransactionStatusToast ? (
-          renderTransactionStatusToast()
-        ) : (
-          <ConfirmScreens.Extension {...signProps} />
-        );
-
+        return renderScreen(ConfirmScreens.Extension);
       case LoginMethodsEnum.extra:
-        return ConfirmScreens?.Extra ? (
-          shouldShowTransactionStatusToast ? (
-            renderTransactionStatusToast()
-          ) : (
-            <ConfirmScreens.Extra {...signProps} />
-          )
-        ) : null;
-
+        return renderScreen(ConfirmScreens.Extra);
       default:
         return null;
     }
