@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
+import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -13,19 +15,18 @@ import {
   setTokenLoginSignature,
   setWalletConnectLogin
 } from 'reduxStore/slices';
+import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
-import { LoginHookGenericStateType } from 'types';
-import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
-import { setAccountProvider } from 'providers/accountProvider';
 
 interface InitWalletConnectType {
   logoutRoute: string;
   token?: string;
   callbackRoute?: string;
   shouldLoginUser?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface WalletConnectLoginHookCustomStateType {
@@ -42,7 +43,8 @@ export type WalletConnectLoginHookReturnType = [
 export const useWalletConnectLogin = ({
   callbackRoute,
   logoutRoute,
-  token
+  token,
+  onLoginRedirect
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
@@ -149,7 +151,7 @@ export const useWalletConnectLogin = ({
         }, 150000);
       });
 
-      optionalRedirect(callbackRoute);
+      optionalRedirect(callbackRoute, onLoginRedirect);
     } catch (err) {
       setError('Invalid address');
       console.error(err);

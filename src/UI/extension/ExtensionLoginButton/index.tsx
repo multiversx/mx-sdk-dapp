@@ -3,9 +3,9 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { ExtensionLoginButtonPropsType } from 'types';
+import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { getGeneratedClasses } from 'UI/utils';
 import styles from './login-button.scss';
-import { LoginButton } from '../../LoginButton/LoginButton';
 
 export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
@@ -16,11 +16,13 @@ export const ExtensionLoginButton: (
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Maiar DeFi Wallet',
-  shouldRenderDefaultCss = true
+  shouldRenderDefaultCss = true,
+  onLoginRedirect
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
-    token
+    token,
+    onLoginRedirect
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;

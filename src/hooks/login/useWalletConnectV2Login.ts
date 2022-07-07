@@ -32,6 +32,7 @@ interface InitWalletConnectV2Type {
   token?: string;
   callbackRoute?: string;
   shouldLoginUser?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -50,7 +51,8 @@ export type WalletConnectV2LoginHookReturnType = [
 export const useWalletConnectV2Login = ({
   callbackRoute,
   logoutRoute,
-  token
+  token,
+  onLoginRedirect
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
 
@@ -120,8 +122,9 @@ export const useWalletConnectV2Login = ({
       } else {
         dispatch(setWalletConnectLogin(loginData));
       }
+
       dispatch(loginAction(loginActionData));
-      optionalRedirect(callbackRoute);
+      optionalRedirect(callbackRoute, onLoginRedirect);
     } catch (err) {
       setError('Invalid address');
       console.error(err);

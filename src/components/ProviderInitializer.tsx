@@ -1,8 +1,19 @@
 import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { getNetworkConfigFromApi } from 'apiCalls';
+import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import {
+  setAccountProvider,
+  setExternalProviderAsAccountProvider
+} from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import {
+  addressSelector,
+  ledgerAccountSelector
+} from 'reduxStore/selectors/accountInfoSelectors';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
@@ -10,10 +21,6 @@ import {
   ledgerLoginSelector,
   isLoggedInSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
-import {
-  addressSelector,
-  ledgerAccountSelector
-} from 'reduxStore/selectors/accountInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setAccount,
@@ -23,9 +30,8 @@ import {
   setWalletLogin,
   setChainID
 } from 'reduxStore/slices';
-import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
-import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { LoginMethodsEnum } from 'types/enums';
+import { logout } from 'utils';
 import {
   getAddress,
   getAccount,
@@ -33,12 +39,6 @@ import {
   newWalletProvider,
   getLedgerConfiguration
 } from 'utils/account';
-import { logout } from 'utils';
-import { getNetworkConfigFromApi } from 'apiCalls';
-import {
-  setAccountProvider,
-  setExternalProviderAsAccountProvider
-} from 'providers/accountProvider';
 
 export default function ProviderInitializer() {
   const network = useSelector(networkSelector);

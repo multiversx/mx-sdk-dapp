@@ -22,6 +22,7 @@ export interface WalletConnectLoginModalPropsType {
   shouldRenderDefaultCss?: boolean;
   isWalletConnectV2?: boolean;
   token?: string;
+  onLoginRedirect?: (callbackRoute: string) => void;
   onClose?: () => void;
 }
 
@@ -36,7 +37,8 @@ export const WalletConnectLoginContainer = ({
   wrapContentInsideModal = true,
   isWalletConnectV2 = false,
   token,
-  onClose
+  onClose,
+  onLoginRedirect
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnect,
@@ -46,7 +48,8 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
-    shouldLoginUser: true
+    shouldLoginUser: true,
+    onLoginRedirect
   });
   const [
     initLoginWithWalletConnectV2,

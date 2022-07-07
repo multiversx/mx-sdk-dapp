@@ -19,6 +19,7 @@ export interface WalletConnectLoginButtonPropsType {
   hideButtonWhenModalOpens?: boolean;
   token?: string;
   isWalletConnectV2?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export const WalletConnectLoginButton = ({
@@ -36,7 +37,8 @@ export const WalletConnectLoginButton = ({
   lead = 'Scan the QR code using Maiar',
   token,
   hideButtonWhenModalOpens = false,
-  isWalletConnectV2 = false
+  isWalletConnectV2 = false,
+  onLoginRedirect
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -79,6 +81,7 @@ export const WalletConnectLoginButton = ({
           wrapContentInsideModal={wrapContentInsideModal}
           isWalletConnectV2={isWalletConnectV2}
           onClose={handleCloseModal}
+          onLoginRedirect={onLoginRedirect}
         />
       )}
     </Fragment>
