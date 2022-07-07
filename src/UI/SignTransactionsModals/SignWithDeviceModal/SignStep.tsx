@@ -16,6 +16,8 @@ import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
 import { getGeneratedClasses } from 'UI/utils';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
+import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
 
 export interface SignStepType {
   onSignTransaction: () => void;
@@ -106,26 +108,68 @@ export const SignStep = ({
   const showProgressSteps = allTransactions.length > 1;
 
   const classes = getGeneratedClasses(className, true, {
-    formGroup: 'form-group text-left',
-    formLabel: 'form-label text-secondary',
-    icon: 'text-white',
-    contentWrapper:
-      'd-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3',
-    tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
-    tokenLabel: 'text-secondary text-left',
-    tokenValue: 'd-flex align-items-center mt-1',
-    scamReport: 'text-warning',
-    scamReportIcon: 'text-warning mr-1',
-    tokenAmountLabel: 'text-secondary text-left',
-    tokenAmountValue: 'd-flex align-items-center',
-    dataFormGroup: 'form-group text-left',
-    errorMessage:
-      'text-danger d-flex justify-content-center align-items-center',
-    buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
-    cancelButton: 'btn btn-dark text-white flex-even mr-2',
-    signButton: `btn ${
-      scamReport ? 'btn-warning' : 'btn-primary'
-    } flex-even ml-2`
+    formGroup: `${globalStyles.formGroup} ${globalStyles.textLeft}`,
+    formLabel: `${globalStyles.formLabel} ${globalStyles.textSecondary}`,
+    icon: globalStyles.textWhite,
+    // contentWrapper:
+    //   'd-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3',
+    contentWrapper: `
+        ${globalStyles.dFlex}
+        ${globalStyles.flexColumn}
+        ${globalStyles.justifyContentStart}
+        ${globalStyles.flexMdRow}
+        ${globalStyles.justifyContentMdBetween}
+        ${globalStyles.mb3}
+      `,
+    // tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
+    tokenWrapper: `
+        ${globalStyles.mb3}
+        ${globalStyles.mbMd0}
+        ${globalStyles.dFlex}
+        ${globalStyles.flexColumn}
+        ${globalStyles.alignItemsStart}
+      `,
+    tokenLabel: `${globalStyles.textSecondary} ${globalStyles.textLeft}`,
+    // tokenValue: 'd-flex align-items-center mt-1',
+    tokenValue: `${globalStyles.dFlex} ${globalStyles.alignItemsCenter} ${globalStyles.mt1}`,
+    // scamReport: 'text-warning',
+    scamReport: `${globalStyles.textWarning}`,
+    scamReportIcon: `${globalStyles.textWarning} ${globalStyles.mr1}`,
+    tokenAmountLabel: `${globalStyles.textSecondary} ${globalStyles.textLeft}`,
+    tokenAmountValue: `${globalStyles.dFlex} ${globalStyles.alignItemsCenter}`,
+    dataFormGroup: `${globalStyles.formGroup} ${globalStyles.textLeft}`,
+    // errorMessage:
+    //   'text-danger d-flex justify-content-center align-items-center',
+    errorMessage: `
+        ${globalStyles.textDanger}
+        ${globalStyles.dFlex}
+        ${globalStyles.justifyContentCenter}
+        ${globalStyles.alignItemsCenter}
+      `,
+    // buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
+    buttonsWrapper: `
+        ${globalStyles.dFlex}
+        ${globalStyles.alignItemsCenter}
+        ${globalStyles.justifyContentEnd}
+        ${globalStyles.mtSpacer}
+      `,
+    // cancelButton: 'btn btn-dark text-white flex-even mr-2',
+    cancelButton: `
+        ${globalStyles.btn}
+        ${globalStyles.btnDark}
+        ${globalStyles.textWhite}
+        ${globalStyles.flexEven}
+        ${globalStyles.mr2}
+      `,
+    // signButton: `btn ${
+    //   scamReport ? 'btn-warning' : 'btn-primary'
+    // } flex-even ml-2`
+    signButton: classNames(
+      globalStyles.btn,
+      scamReport ? globalStyles.btnWarning : globalStyles.primary,
+      globalStyles.flexEven,
+      globalStyles.ml2
+    )
   });
 
   return (
