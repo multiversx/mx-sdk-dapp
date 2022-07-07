@@ -5,7 +5,10 @@ import {
   BaseNetworkType,
   NetworkType
 } from 'types';
-import { getBridgeAddressFromNetwork } from 'utils/internal';
+import {
+  getBridgeAddressFromNetwork,
+  getRelayAddressFromNetwork
+} from 'utils/internal';
 
 export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
@@ -17,8 +20,9 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   gasPerDataByte: '1500',
   walletConnectDeepLink: '',
   walletConnectBridgeAddress: '',
+  walletConnectV2RelayAddress: '',
+  walletConnectV2ProjectId: '',
   walletAddress: '',
-
   apiAddress: '',
   explorerAddress: '',
   apiTimeout: '4000'
@@ -45,14 +49,19 @@ export const networkConfigSlice = createSlice({
       const walletConnectBridgeAddress = getBridgeAddressFromNetwork(
         action.payload.walletConnectBridgeAddresses
       );
+      const walletConnectV2RelayAddress = getRelayAddressFromNetwork(
+        action.payload.walletConnectV2RelayAddresses
+      );
       const network: BaseNetworkType = omit(
         action.payload,
-        'walletConnectBridgeAddresses'
+        'walletConnectBridgeAddresses',
+        'walletConnectV2RelayAddresses'
       );
       state.network = {
         ...state.network,
         ...network,
-        walletConnectBridgeAddress
+        walletConnectBridgeAddress,
+        walletConnectV2RelayAddress
       };
     },
     setChainID: (
@@ -64,9 +73,7 @@ export const networkConfigSlice = createSlice({
   }
 });
 
-export const {
-  initializeNetworkConfig,
-  setChainID
-} = networkConfigSlice.actions;
+export const { initializeNetworkConfig, setChainID } =
+  networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;
