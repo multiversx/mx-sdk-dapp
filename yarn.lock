@@ -291,23 +291,15 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@elrondnetwork/bls-wasm@0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/bls-wasm/-/bls-wasm-0.3.3.tgz#5164a95f39727c53dba877bf43c0374bca9f01eb"
-  integrity sha512-neCzWRk8pZsOBeAI3+t8jgiSkqj/y4IJPOMKG4ebL1+MiOFayygmfDvfZrK57RSoMWvDfXHlhTL25DrI+EtH+w==
-  dependencies:
-    assert "^2.0.0"
-    perf_hooks "0.0.1"
+"@elrondnetwork/erdjs-extension-provider@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-extension-provider/-/erdjs-extension-provider-2.0.2.tgz#06f7912442ad262355c2b05d83897e2262b3eb57"
+  integrity sha512-SGbPOMuRQSGIjIFTX2X3JsYggEchsb8wPK2aY4D37/fNriLQL42gDDdAkabLAMl5pwXaYJ+I6tr5jMnA++gbAg==
 
-"@elrondnetwork/erdjs-extension-provider@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-extension-provider/-/erdjs-extension-provider-2.0.1.tgz#34c550540b940dd00dbe11eccaa7b27ac1802661"
-  integrity sha512-RGfVNF9i9U5Bo6ayr9M5o7KvKLjtIQoTJdyN1T1e8IwXL13k3LPcaGGWRbwmFR2Wn07V3fq8GRAheSCVvx+i8A==
-
-"@elrondnetwork/erdjs-hw-provider@2.0.1":
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-hw-provider/-/erdjs-hw-provider-2.0.1.tgz#4f746f2abf7dfd26446b4cefb3d74e6010a5a99d"
-  integrity sha512-copXBQEh6OUPr/U7rwwONmGQMeBx28qEBdCK01AvL1vWs3E2YLeB0gcA2fS6eWJwI2bOruCwSdvjq2aPZ9gvlg==
+"@elrondnetwork/erdjs-hw-provider@2.0.2":
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-hw-provider/-/erdjs-hw-provider-2.0.2.tgz#f58f4a572d6fea03ea6874991e4040cb22fa4af2"
+  integrity sha512-zV9T7qWi9NwHWXR/n4IENfnkRmC1/YvQfQleayrtllGMZdkto+2ElB6JKES0SCqnIoykrlqvsOLRggL6F0o6+w==
   dependencies:
     "@elrondnetwork/hw-app-elrond" "0.3.2"
     "@ledgerhq/hw-transport-u2f" "5.36.0-deprecated"
@@ -316,10 +308,10 @@
     buffer "6.0.3"
     platform "1.3.6"
 
-"@elrondnetwork/erdjs-network-providers@0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-network-providers/-/erdjs-network-providers-0.1.5.tgz#dbee664c0c17120c0e53bd33f540588dc59e2351"
-  integrity sha512-7NGoU2rBZk1NkxaO2hIs/4eN8ZYEOWYOkDCpTc35diEOoHjkk13Ov+6qtNjkyKbWn5bnEjdtwMKddc6ilwwR9Q==
+"@elrondnetwork/erdjs-network-providers@0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-network-providers/-/erdjs-network-providers-0.1.6.tgz#b449a96d31f62201dc371249b5f26efcb6352acf"
+  integrity sha512-U1ajPhq6Qv8RHA1/bY5s9/cO7e+T+GbKS3dWZYWEj7AoTVG43YVl/DtiDBUi/WVx90CykzUlDmrM2ysCKQ1+Ag==
   dependencies:
     axios "0.24.0"
     bech32 "1.1.4"
@@ -337,32 +329,17 @@
     "@walletconnect/utils" "2.0.0-beta.102"
     bech32 "1.1.4"
 
-"@elrondnetwork/erdjs-walletcore@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-walletcore/-/erdjs-walletcore-1.0.0.tgz#19444ed54cf7c3d892edf85a73573c0336c31d03"
-  integrity sha512-I+N7rwBs4p9bX6d2Rd9Ck6uwCOsgafDzL9aAaFqwh3NnmEI7JGrXPvFoZxDTOQ9pyd2J9jk4dXS6GAImjd3R8g==
-  dependencies:
-    "@elrondnetwork/bls-wasm" "0.3.3"
-    bech32 "1.1.4"
-    bip39 "3.0.2"
-    blake2b "2.1.3"
-    ed25519-hd-key "1.1.2"
-    keccak "3.0.1"
-    scryptsy "2.1.0"
-    tweetnacl "1.0.3"
-    uuid "8.3.2"
-
-"@elrondnetwork/erdjs-web-wallet-provider@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.1.0.tgz#b9250c8d266615213e57492cce479784b3c8708d"
-  integrity sha512-cRrYasp/CoPjzlfRB+pUctgl72e85ALnjBF9e0VTqNGnzWA3HnAGqBxHm0yQ3PG+U3/YuB4YyVd11C3S/ZXv+g==
+"@elrondnetwork/erdjs-web-wallet-provider@2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.1.1.tgz#a9653e9e34b1e77a80ef7412b21c3125367f1f2f"
+  integrity sha512-QFNPBFDSpVifui8VpD+295hzcuP6ebVV/r9ZB7mWUwqRFP+pfwuabyaG4ypapSidDOYgwHAggBi0/wlIcSiaMw==
   dependencies:
     qs "6.10.1"
 
-"@elrondnetwork/erdjs@10.2.5":
-  version "10.2.5"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-10.2.5.tgz#b85fb1aba0230e29681002f0d60da71d19707a64"
-  integrity sha512-4FfcQ0OjPmLSvkuuUm3NXKrdmn+wlvBnZsNVhbFtuqIIgN+l6yTYrA/WNKfq4bPBkQZ5OaCEkEU75zA2s1586w==
+"@elrondnetwork/erdjs@10.2.7":
+  version "10.2.7"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-10.2.7.tgz#5165a0f966f59bd031e2e96637bcca5e0db201e2"
+  integrity sha512-GmoCq7cbWEMj/p0usLAcNf4kdFd2nq0GIcn2Kk4lDmt4PsyxYYb1XydbNKyb8wVNY99+Iy5OsaGLXx3eQom2Vw==
   dependencies:
     "@elrondnetwork/transaction-decoder" "0.1.0"
     bech32 "1.1.4"
@@ -370,8 +347,8 @@
     blake2b "2.1.3"
     buffer "6.0.3"
     json-duplicate-key-handle "1.0.0"
-    keccak "3.0.1"
-    protobufjs "6.10.2"
+    keccak "3.0.2"
+    protobufjs "6.11.3"
 
 "@elrondnetwork/hw-app-elrond@0.3.2":
   version "0.3.2"
@@ -1420,20 +1397,10 @@
   resolved "https://registry.yarnpkg.com/@types/long/-/long-4.0.2.tgz#b74129719fc8d11c01868010082d483b7545591a"
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
-"@types/node@*":
+"@types/node@*", "@types/node@>=13.7.0":
   version "18.0.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-18.0.3.tgz#463fc47f13ec0688a33aec75d078a0541a447199"
   integrity sha512-HzNRZtp4eepNitP+BD6k2L6DROIDG4Q0fm4x+dwfsr6LGmROENnok75VGw40628xf+iR24WeMFcHuuBDUAzzsQ==
-
-"@types/node@11.11.6":
-  version "11.11.6"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-11.11.6.tgz#df929d1bb2eee5afdda598a41930fe50b43eaa6a"
-  integrity sha512-Exw4yUWMBXM3X+8oqzJNRqZSwUAaS4+7NdvHqQuFi/d+synz++xmX3QIf+BFqneW8N31R8Ky+sikfZUXq07ggQ==
-
-"@types/node@^13.7.0":
-  version "13.13.52"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.13.52.tgz#03c13be70b9031baaed79481c0c0cfb0045e53f7"
-  integrity sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -2197,16 +2164,6 @@ bip32-path@^0.4.2:
   resolved "https://registry.yarnpkg.com/bip32-path/-/bip32-path-0.4.2.tgz#5db0416ad6822712f077836e2557b8697c0c7c99"
   integrity sha512-ZBMCELjJfcNMkz5bDuJ1WrYvjlhEF5k6mQ8vUr4N7MbVRsXei7ZOg8VhhwMfNiW68NWmLkgkc6WvTickrLGprQ==
 
-bip39@3.0.2:
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/bip39/-/bip39-3.0.2.tgz#2baf42ff3071fc9ddd5103de92e8f80d9257ee32"
-  integrity sha512-J4E1r2N0tUylTKt07ibXvhpT2c5pyAFgvuA5q1H9uDy6dEGpjV8jmymh3MTYJDLCNbIVClSB9FbND49I6N24MQ==
-  dependencies:
-    "@types/node" "11.11.6"
-    create-hash "^1.1.0"
-    pbkdf2 "^3.0.9"
-    randombytes "^2.0.1"
-
 bl@^4.0.3:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/bl/-/bl-4.1.0.tgz#451535264182bec2fbbc83a62ab98cf11d9f7b3a"
@@ -2669,7 +2626,7 @@ create-hash@^1.1.0, create-hash@^1.1.2, create-hash@^1.2.0:
     ripemd160 "^2.0.1"
     sha.js "^2.4.0"
 
-create-hmac@1.1.7, create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
+create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
   version "1.1.7"
   resolved "https://registry.yarnpkg.com/create-hmac/-/create-hmac-1.1.7.tgz#69170c78b3ab957147b2b8b04572e47ead2243ff"
   integrity sha512-MJG9liiZ+ogc4TzUwuvbER1JRdgvUFSB5+VR/g5h82fGaIRWMWddtKBHi7/sVhfjQZ6SehlyhvQYrcYkaUIpLg==
@@ -2894,15 +2851,6 @@ domain-browser@^4.22.0:
   version "4.22.0"
   resolved "https://registry.yarnpkg.com/domain-browser/-/domain-browser-4.22.0.tgz#6ddd34220ec281f9a65d3386d267ddd35c491f9f"
   integrity sha512-IGBwjF7tNk3cwypFNH/7bfzBcgSCbaMOD3GsaY1AU/JRrnHnYgEM0+9kQt52iZxjNsjBtJYtao146V+f8jFZNw==
-
-ed25519-hd-key@1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/ed25519-hd-key/-/ed25519-hd-key-1.1.2.tgz#168dcf08419694be7bba3319e7d64e4a5cfe5d44"
-  integrity sha512-/0y9y6N7vM6Kj5ASr9J9wcMVDTtygxSOvYX+PJiMD7VcxCx2G03V5bLRl8Dug9EgkLFsLhGqBtQWQRcElEeWTA==
-  dependencies:
-    bip39 "3.0.2"
-    create-hmac "1.1.7"
-    tweetnacl "1.0.3"
 
 electron-to-chromium@^1.4.172:
   version "1.4.182"
@@ -4645,13 +4593,14 @@ jsonfile@^4.0.0:
     array-includes "^3.1.5"
     object.assign "^4.1.2"
 
-keccak@3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.1.tgz#ae30a0e94dbe43414f741375cff6d64c8bea0bff"
-  integrity sha512-epq90L9jlFWCW7+pQa6JOnKn2Xgl2mtI664seYR6MHskvI9agt7AnDqmAlp9TqU4/caMYbA08Hi5DMZAl5zdkA==
+keccak@3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/keccak/-/keccak-3.0.2.tgz#4c2c6e8c54e04f2670ee49fa734eb9da152206e0"
+  integrity sha512-PyKKjkH53wDMLGrvmRGSNWgmSxZOUqbnXwKL9tmgbFYA1iAYqW21kfR7mZXV0MlESiefxQQE9X9fTa3X+2MPDQ==
   dependencies:
     node-addon-api "^2.0.0"
     node-gyp-build "^4.2.0"
+    readable-stream "^3.6.0"
 
 kefir@^3.7.3:
   version "3.8.8"
@@ -5309,7 +5258,7 @@ path-type@^4.0.0:
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-4.0.0.tgz#84ed01c0a7ba380afe09d90a8c180dcd9d03043b"
   integrity sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==
 
-pbkdf2@^3.0.3, pbkdf2@^3.0.9:
+pbkdf2@^3.0.3:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/pbkdf2/-/pbkdf2-3.1.2.tgz#dd822aa0887580e52f1a039dc3eda108efae3075"
   integrity sha512-iuh7L6jA7JEGu2WxDwtQP1ddOpaJNC4KlDEFfdQajSGgGPNi4OyDc2R7QnbY2bR9QjBVGwgvTdNJZoE7RaxUMA==
@@ -5319,11 +5268,6 @@ pbkdf2@^3.0.3, pbkdf2@^3.0.9:
     ripemd160 "^2.0.1"
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
-
-perf_hooks@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/perf_hooks/-/perf_hooks-0.0.1.tgz#253e7e18b71fcc0390fd3afb2cd7cf1685df040c"
-  integrity sha512-qG/D9iA4KDme+KF4vCObJy6Bouu3BlQnmJ8jPydVPm32NJBD9ZK1ZNgXSYaZKHkVC1sKSqUiLgFvAZPUiIEnBw==
 
 picocolors@^1.0.0:
   version "1.0.0"
@@ -5551,10 +5495,10 @@ prop-types@^15.8.1:
     object-assign "^4.1.1"
     react-is "^16.13.1"
 
-protobufjs@6.10.2:
-  version "6.10.2"
-  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.10.2.tgz#b9cb6bd8ec8f87514592ba3fdfd28e93f33a469b"
-  integrity sha512-27yj+04uF6ya9l+qfpH187aqEzfCF4+Uit0I9ZBQVqK09hk/SQzKa2MUqUpXaVa7LOFRg1TSSr3lVxGOk6c0SQ==
+protobufjs@6.11.3:
+  version "6.11.3"
+  resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-6.11.3.tgz#637a527205a35caa4f3e2a9a4a13ddffe0e7af74"
+  integrity sha512-xL96WDdCZYdU7Slin569tFX712BxsxslWwAfAhCYjQKGTq7dAU91Lomy6nLLhh/dyGhk/YH4TwTSRxTzhuHyZg==
   dependencies:
     "@protobufjs/aspromise" "^1.1.2"
     "@protobufjs/base64" "^1.1.2"
@@ -5567,7 +5511,7 @@ protobufjs@6.10.2:
     "@protobufjs/pool" "^1.1.0"
     "@protobufjs/utf8" "^1.1.0"
     "@types/long" "^4.0.1"
-    "@types/node" "^13.7.0"
+    "@types/node" ">=13.7.0"
     long "^4.0.0"
 
 public-encrypt@^4.0.0:
@@ -5983,11 +5927,6 @@ scheduler@^0.23.0:
   integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
   dependencies:
     loose-envify "^1.1.0"
-
-scryptsy@2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/scryptsy/-/scryptsy-2.1.0.tgz#8d1e8d0c025b58fdd25b6fa9a0dc905ee8faa790"
-  integrity sha512-1CdSqHQowJBnMAFyPEBRfqag/YP9OF394FV+4YREIJX4ljD7OxvQRDayyoyyCk+senRjSkP6VnUNQmVQqB6g7w==
 
 semver@7.3.2:
   version "7.3.2"
@@ -6489,11 +6428,6 @@ tunnel-agent@^0.6.0:
   dependencies:
     safe-buffer "^5.0.1"
 
-tweetnacl@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.3.tgz#ac0af71680458d8a6378d0d0d050ab1407d35596"
-  integrity sha512-6rt+RN7aOi1nGMyC4Xa5DdYiukl2UWCbcJft7YhxReBGQD7OAM8Pbxw6YMo4r2diNEA8FEmu32YOn9rhaiE5yw==
-
 type-detect@4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/type-detect/-/type-detect-4.0.8.tgz#7646fb5f18871cfbb7749e69bd39a6388eb7450c"
@@ -6610,11 +6544,6 @@ util@^0.12.0, util@^0.12.4:
     is-typed-array "^1.1.3"
     safe-buffer "^5.1.2"
     which-typed-array "^1.1.2"
-
-uuid@8.3.2:
-  version "8.3.2"
-  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
-  integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
 v8-to-istanbul@^9.0.1:
   version "9.0.1"

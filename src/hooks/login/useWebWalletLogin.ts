@@ -8,6 +8,7 @@ import { newWalletProvider } from 'utils';
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;
   token?: string;
+  redirectDelayMilliseconds?: number;
 }
 
 export type UseWebWalletLoginReturnType = [
@@ -17,7 +18,8 @@ export type UseWebWalletLoginReturnType = [
 
 export const useWebWalletLogin = ({
   callbackRoute,
-  token
+  token,
+  redirectDelayMilliseconds = 100
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +46,8 @@ export const useWebWalletLogin = ({
       );
       const loginData = {
         callbackUrl: callbackUrl,
-        ...(token && { token })
+        ...(token && { token }),
+        redirectDelayMilliseconds
       };
 
       await provider.login(loginData);
