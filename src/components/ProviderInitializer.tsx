@@ -121,12 +121,12 @@ export default function ProviderInitializer() {
   }
 
   async function tryAuthenticateWalletUser() {
+    const provider = newWalletProvider(network.walletAddress);
+    setAccountProvider(provider);
     if (walletLogin != null) {
       try {
-        const provider = newWalletProvider(network.walletAddress);
         const address = await getAddress();
         if (address) {
-          setAccountProvider(provider);
           dispatch(
             loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
           );
