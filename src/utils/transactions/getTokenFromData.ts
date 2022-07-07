@@ -1,8 +1,8 @@
 import { Address } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
+import { TransactionTypesEnum } from 'types/enums';
 import addressIsValid from 'utils/account/addressIsValid';
 import decodePart from 'utils/decoders/decodePart';
-import { TransactionTypesEnum } from 'types';
 
 const noData = {
   tokenId: '',

@@ -1,23 +1,26 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { getScamAddressData } from 'apiCalls/getScamAddressData';
-import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
-import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
-import { LoginMethodsEnum } from 'types/enums';
-import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
-import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 
+import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
+import {
+  ActiveLedgerTransactionType,
+  MultiSignTxType,
+  ScamInfoType
+} from 'types';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
+import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
   verifyReceiverScam?: boolean;
+  isLedger?: boolean;
   transactionsToSign?: Transaction[];
   onCancel?: () => void;
   onSignTransaction: (transaction: Transaction) => Promise<Transaction>;
   onTransactionsSignSuccess: (transactions: Transaction[]) => void;
   onTransactionsSignError: (errorMessage: string) => void;
+  onGetScamAddressData?: ((address: string) => Promise<ScamInfoType>) | null;
 }
 
 interface VerifiedAddressesType {
@@ -44,14 +47,15 @@ export interface UseSignMultipleTransactionsReturnType {
 }
 
 export function useSignMultipleTransactions({
+  isLedger = false,
   transactionsToSign,
   egldLabel,
   address,
-  verifyReceiverScam = true,
   onCancel,
   onSignTransaction,
   onTransactionsSignError,
-  onTransactionsSignSuccess
+  onTransactionsSignSuccess,
+  onGetScamAddressData
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
   const [currentStep, setCurrentStep] = useState(0);
   const [signedTransactions, setSignedTransactions] = useState<
@@ -63,7 +67,6 @@ export function useSignMultipleTransactions({
   ] = useState<ActiveLedgerTransactionType | null>(null);
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
-  const isLedger = getIsProviderEqualTo(LoginMethodsEnum.ledger);
 
   const {
     getTxInfoByDataField,
@@ -92,11 +95,11 @@ export function useSignMultipleTransactions({
     const notSender = address !== receiver;
     const verified = receiver in verifiedAddresses;
 
-    if (notSender && !verified && verifyReceiverScam) {
-      const data = await getScamAddressData(receiver);
+    if (notSender && !verified && onGetScamAddressData != null) {
+      const data = await onGetScamAddressData(receiver);
       verifiedAddresses = {
         ...verifiedAddresses,
-        ...(data.scamInfo ? { [receiver]: data.scamInfo } : {})
+        ...(data?.scamInfo ? { [receiver]: data.scamInfo } : {})
       };
     }
 
