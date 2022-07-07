@@ -94,7 +94,7 @@ export const SignTransactionsModals = ({
   );
 
   if (!shouldShowTransactionStatusToast && !hasTransactions) {
-    return;
+    return null;
   }
 
   switch (loginMethod) {

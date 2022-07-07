@@ -15,7 +15,6 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
   if (signError) {
     return (
       <TransactionStatusToast
-        show={Boolean(signError)}
         message={signError}
         type={'error'}
         onDelete={onDelete}
@@ -24,7 +23,6 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
   } else if (canceledTransactionsMessage) {
     return (
       <TransactionStatusToast
-        show={Boolean(canceledTransactionsMessage)}
         message={canceledTransactionsMessage}
         type={'warning'}
         onDelete={onDelete}
