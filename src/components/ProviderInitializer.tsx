@@ -1,8 +1,18 @@
 import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { getNetworkConfigFromApi } from 'apiCalls';
+import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import {
+  setAccountProvider,
+  setExternalProviderAsAccountProvider
+} from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import {
+  addressSelector,
+  ledgerAccountSelector
+} from 'reduxStore/selectors/accountInfoSelectors';
 import {
   loginMethodSelector,
   walletConnectLoginSelector,
@@ -10,10 +20,6 @@ import {
   ledgerLoginSelector,
   isLoggedInSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
-import {
-  addressSelector,
-  ledgerAccountSelector
-} from 'reduxStore/selectors/accountInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setAccount,
@@ -23,8 +29,8 @@ import {
   setWalletLogin,
   setChainID
 } from 'reduxStore/slices';
-import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { LoginMethodsEnum } from 'types/enums';
+import { logout } from 'utils';
 import {
   getAddress,
   getAccount,
@@ -32,12 +38,6 @@ import {
   newWalletProvider,
   getLedgerConfiguration
 } from 'utils/account';
-import { logout } from 'utils';
-import { getNetworkConfigFromApi } from 'apiCalls';
-import {
-  setAccountProvider,
-  setExternalProviderAsAccountProvider
-} from 'providers/accountProvider';
 
 export default function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -129,12 +129,12 @@ export default function ProviderInitializer() {
   }
 
   async function tryAuthenticateWalletUser() {
-    try {
-      if (walletLogin != null) {
-        const provider = newWalletProvider(network.walletAddress);
+    const provider = newWalletProvider(network.walletAddress);
+    setAccountProvider(provider);
+    if (walletLogin != null) {
+      try {
         const address = await getAddress();
         if (address) {
-          setAccountProvider(provider);
           dispatch(
             loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
           );
@@ -150,10 +150,10 @@ export default function ProviderInitializer() {
             );
           }
         }
-        dispatch(setWalletLogin(null));
+      } catch (e) {
+        console.error('Failed authenticating wallet user ', e);
       }
-    } catch (e) {
-      console.error('Failed authenticating wallet user ', e);
+      dispatch(setWalletLogin(null));
     }
   }
 
@@ -221,11 +221,6 @@ export default function ProviderInitializer() {
         initWalletLoginProvider(false);
         break;
       }
-      case LoginMethodsEnum.wallet: {
-        const provider = newWalletProvider(network.walletAddress);
-        setAccountProvider(provider);
-        break;
-      }
 
       case LoginMethodsEnum.extension: {
         setExtensionProvider();
@@ -237,6 +232,7 @@ export default function ProviderInitializer() {
         break;
       }
 
+      case LoginMethodsEnum.wallet:
       case LoginMethodsEnum.none: {
         tryAuthenticateWalletUser();
         break;

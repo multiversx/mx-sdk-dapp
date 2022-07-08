@@ -1,17 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { ToastsEnum } from 'types';
 import { logoutAction } from '../commonActions';
-import { CustomToastType, TransactionToastType } from 'types/toasts';
+import {
+  CustomToastType,
+  FailTransactionToastType,
+  TransactionToastType
+} from 'types/toasts';
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
+import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transaction-status';
 
 export interface ToastsSliceState {
   customToasts: CustomToastType[];
   transactionToasts: TransactionToastType[];
+  failTransactionToast: FailTransactionToastType | null;
 }
 
 const initialState: ToastsSliceState = {
   customToasts: [],
-  transactionToasts: []
+  transactionToasts: [],
+  failTransactionToast: null
 };
 
 export const toastsSlice = createSlice({
@@ -56,6 +63,18 @@ export const toastsSlice = createSlice({
       state.transactionToasts = state.transactionToasts.filter((toast) => {
         return toast.toastId !== action.payload;
       });
+    },
+    addFailTransactionToast: (
+      state: ToastsSliceState,
+      action: PayloadAction<FailTransactionToastType>
+    ) => {
+      state.failTransactionToast = {
+        ...action.payload,
+        toastId: TRANSACTION_STATUS_TOAST_ID
+      };
+    },
+    removeFailTransactionToast: (state: ToastsSliceState) => {
+      state.failTransactionToast = null;
     }
   },
 
@@ -70,7 +89,9 @@ export const {
   addCustomToast,
   removeCustomToast,
   addTransactionToast,
-  removeTransactionToast
+  removeTransactionToast,
+  addFailTransactionToast,
+  removeFailTransactionToast
 } = toastsSlice.actions;
 
 export default toastsSlice.reducer;

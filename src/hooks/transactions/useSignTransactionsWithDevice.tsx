@@ -1,5 +1,7 @@
 import { Transaction } from '@elrondnetwork/erdjs';
+import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
+import useGetAccountProvider from 'hooks/account/useGetAccountProvider';
 import useSignMultipleTransactions from 'hooks/transactions/useSignMultipleTransactions';
 
 import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
@@ -14,11 +16,15 @@ import {
 } from 'reduxStore/slices';
 import {
   ActiveLedgerTransactionType,
+  LoginMethodsEnum,
   MultiSignTxType,
   TransactionBatchStatusesEnum
 } from 'types';
-import { parseTransactionAfterSigning, safeRedirect } from 'utils';
-import useGetAccountProvider from 'hooks/account/useGetAccountProvider';
+import {
+  getIsProviderEqualTo,
+  parseTransactionAfterSigning,
+  safeRedirect
+} from 'utils';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -102,10 +108,11 @@ export function useSignTransactionsWithDevice({
   }
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
-    verifyReceiverScam,
     address,
     egldLabel,
     transactionsToSign: transactions,
+    onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
+    isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),
     onCancel: handleCancel,
     onSignTransaction: handleSignTransaction,
     onTransactionsSignError: handleTransactionSignError,

@@ -5,3 +5,11 @@ export interface AccountType {
   code?: string;
   username?: string;
 }
+
+export type ScamInfoType = {
+  scamInfo?: {
+    type: string;
+    info: string;
+  };
+  code: string;
+};

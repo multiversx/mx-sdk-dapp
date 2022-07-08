@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { getLedgerConfiguration } from 'providers';
+import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -12,11 +14,9 @@ import {
   setTokenLogin,
   setLedgerAccount
 } from 'reduxStore/slices';
+import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
-import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
-import { setAccountProvider } from 'providers/accountProvider';
-import { getLedgerConfiguration } from 'providers';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -27,6 +27,7 @@ export interface UseLedgerLoginPropsType {
   callbackRoute?: string;
   addressesPerPage?: number;
   token?: string;
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface SelectedAddress {
@@ -58,6 +59,7 @@ export function useLedgerLogin({
   callbackRoute,
   token,
   addressesPerPage = defaultAddressesPerPage,
+  onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -101,7 +103,7 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    optionalRedirect(callbackRoute);
+    optionalRedirect(callbackRoute, onLoginRedirect);
   }
 
   const onLoginFailed = (err: any, customMessage?: string) => {
@@ -238,7 +240,7 @@ export function useLedgerLogin({
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
-        optionalRedirect(callbackRoute);
+        optionalRedirect(callbackRoute, onLoginRedirect);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);

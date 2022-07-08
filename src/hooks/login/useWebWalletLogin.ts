@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
-import { setWalletLogin } from 'reduxStore/slices';
+import { setTokenLogin, setWalletLogin } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { newWalletProvider } from 'utils';
 
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;
   token?: string;
+  redirectDelayMilliseconds?: number;
 }
 
 export type UseWebWalletLoginReturnType = [
@@ -17,7 +18,8 @@ export type UseWebWalletLoginReturnType = [
 
 export const useWebWalletLogin = ({
   callbackRoute,
-  token
+  token,
+  redirectDelayMilliseconds = 100
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -38,13 +40,17 @@ export const useWebWalletLogin = ({
       };
 
       dispatch(setWalletLogin(walletLoginData));
+      if (token) {
+        dispatch(setTokenLogin({ loginToken: token }));
+      }
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`
       );
       const loginData = {
         callbackUrl: callbackUrl,
-        ...(token && { token })
+        ...(token && { token }),
+        redirectDelayMilliseconds
       };
 
       await provider.login(loginData);
