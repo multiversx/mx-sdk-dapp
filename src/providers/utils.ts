@@ -2,10 +2,7 @@ import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
-import {
-  WalletConnectProvider,
-  WalletConnectProviderV2
-} from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { ledgerContractDataEnabledValue } from 'constants/index';
 import { IDappProvider } from 'types';
@@ -21,8 +18,6 @@ export const getProviderType = <TProvider extends Object>(
       return LoginMethodsEnum.wallet;
     case WalletConnectProvider:
       return LoginMethodsEnum.walletconnect;
-    case WalletConnectProviderV2:
-      return LoginMethodsEnum.walletconnectv2;
     case HWProvider:
       return LoginMethodsEnum.ledger;
     case ExtensionProvider:
