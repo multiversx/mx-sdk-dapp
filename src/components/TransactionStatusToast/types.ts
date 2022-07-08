@@ -1,1 +1,5 @@
-export type StatusIconType = 'info' | 'error' | 'warning';
+export enum StatusIconType {
+  INFO = 'info',
+  ERROR = 'error',
+  WARNING = 'warning'
+}

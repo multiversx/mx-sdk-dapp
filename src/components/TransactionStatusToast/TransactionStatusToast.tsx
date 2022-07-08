@@ -7,9 +7,10 @@ import { customToastsSelector } from 'reduxStore/selectors';
 import { TRANSACTION_STATUS_TOAST_ID } from 'constants/index';
 import styles from './transaction-status-toast.scss';
 import { StatusMessageComponent } from './StatusMessageComponent';
+import { StatusIconType } from './types';
 
 type ErrorToastProps = {
-  type?: 'info' | 'error' | 'warning';
+  type?: StatusIconType;
   message: string;
   duration?: number;
   onDelete?: () => void;
@@ -19,7 +20,7 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
   message,
   duration = 30000,
   onDelete,
-  type = 'warning'
+  type = StatusIconType.WARNING
 }) => {
   const customToasts = useSelector(customToastsSelector);
 
@@ -33,11 +34,10 @@ export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
   );
 
   const handleDelete = () => {
+    deleteCustomToast(TRANSACTION_STATUS_TOAST_ID);
+
     if (Boolean(errorToast)) {
-      deleteCustomToast(TRANSACTION_STATUS_TOAST_ID);
       onDelete?.();
-    } else {
-      deleteCustomToast(TRANSACTION_STATUS_TOAST_ID);
     }
   };
 
