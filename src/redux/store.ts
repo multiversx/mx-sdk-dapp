@@ -45,7 +45,7 @@ if (typeof window !== 'undefined' && window?.localStorage != null) {
 
 export const store = configureStore({
   reducer: localStorageReducers,
-  middleware: (getDefaultMiddleware) =>
+  middleware: (getDefaultMiddleware: any) =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
