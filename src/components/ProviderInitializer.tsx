@@ -166,7 +166,9 @@ export default function ProviderInitializer() {
     }
     const { signature, loginToken, address, ...remainingParams } = params;
 
-    dispatch(setTokenLoginSignature(signature));
+    if (signature) {
+      dispatch(setTokenLoginSignature(signature));
+    }
     clearWalletLoginHistory(remainingParams);
   }
 
