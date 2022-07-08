@@ -4,6 +4,8 @@ import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 import styles from './wallet-connect-login-container.scss';
@@ -17,6 +19,7 @@ export interface WalletConnectLoginModalPropsType {
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
+  isWalletConnectV2?: boolean;
   token?: string;
   onLoginRedirect?: (callbackRoute: string) => void;
   onClose?: () => void;
@@ -31,6 +34,7 @@ export const WalletConnectLoginContainer = ({
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
+  isWalletConnectV2 = false,
   token,
   onClose,
   onLoginRedirect
@@ -43,12 +47,31 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
-    shouldLoginUser: true,
+    onLoginRedirect
+  });
+  const [
+    initLoginWithWalletConnectV2,
+    connectExisting,
+    { error: walletConnectErrorV2 },
+    {
+      uriDeepLink: walletConnectDeepLinkV2,
+      walletConnectUri: walletConnectUriV2,
+      wcPairings
+    }
+  ] = useWalletConnectV2Login({
+    logoutRoute,
+    callbackRoute,
+    token,
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
   const isMobileDevice =
     platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';
+  const activePairings =
+    isWalletConnectV2 && wcPairings && wcPairings?.length > 0
+      ? wcPairings.filter((pairing) => !!pairing.active && pairing.peerMetadata)
+      : [];
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -63,28 +86,46 @@ export const WalletConnectLoginContainer = ({
       leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
       mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
       mobileLoginButtonIcon: globalStyles.mr2,
-      errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter} `
+      errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
+      pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
+      pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
+      pairImage: globalStyles.pairImage,
+      pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
     }
   );
 
   const generateQRCode = async () => {
-    if (!walletConnectUri) {
-      return;
+    if (isWalletConnectV2) {
+      if (!walletConnectUriV2) {
+        return;
+      }
+    } else {
+      if (!walletConnectUri) {
+        return;
+      }
     }
 
-    const svg = await QRCode.toString(walletConnectUri, {
-      type: 'svg'
-    });
-
-    setQrCodeSvg(svg);
+    const uri = isWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
+    if (uri) {
+      const svg = await QRCode.toString(uri, {
+        type: 'svg'
+      });
+      if (svg) {
+        setQrCodeSvg(svg);
+      }
+    }
   };
 
   useEffect(() => {
     generateQRCode();
-  }, [walletConnectUri]);
+  }, [walletConnectUri, walletConnectUriV2]);
 
   useEffect(() => {
-    initLoginWithWalletConnect();
+    if (isWalletConnectV2) {
+      initLoginWithWalletConnectV2();
+    } else {
+      initLoginWithWalletConnect();
+    }
   }, []);
 
   const content = (
@@ -92,16 +133,21 @@ export const WalletConnectLoginContainer = ({
       <div className={generatedClasses.root}>
         <div className={generatedClasses.card}>
           <div className={generatedClasses.cardBody}>
-            <div
-              className={generatedClasses.qrCodeSvgContainer}
-              dangerouslySetInnerHTML={{
-                __html: qrCodeSvg
-              }}
-              style={{
-                width: '15rem',
-                height: '15rem'
-              }}
-            />
+            {qrCodeSvg ? (
+              <div
+                className={generatedClasses.qrCodeSvgContainer}
+                dangerouslySetInnerHTML={{
+                  __html: qrCodeSvg
+                }}
+                style={{
+                  width: '15rem',
+                  height: '15rem'
+                }}
+              />
+            ) : (
+              <Loader />
+            )}
+
             <h4 className={generatedClasses.title}>{title}</h4>
             {isMobileDevice ? (
               <>
@@ -110,7 +156,7 @@ export const WalletConnectLoginContainer = ({
                   id='accessWalletBtn'
                   data-testid='accessWalletBtn'
                   className={generatedClasses.mobileLoginButton}
-                  href={uriDeepLink || undefined}
+                  href={uriDeepLink || walletConnectDeepLinkV2 || undefined}
                   rel='noopener noreferrer nofollow'
                   target='_blank'
                 >
@@ -127,9 +173,46 @@ export const WalletConnectLoginContainer = ({
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}
+            {isWalletConnectV2 && activePairings && activePairings?.length > 0 && (
+              <div className={generatedClasses.pairsContainer}>
+                <p className={generatedClasses.leadText}>
+                  or choose an existing pairing:
+                </p>
+                <div className={generatedClasses.pairList}>
+                  {activePairings.map((pairing) => (
+                    <button
+                      type='button'
+                      key={pairing.topic}
+                      onClick={() => connectExisting(pairing)}
+                      className={generatedClasses.pairButton}
+                    >
+                      {pairing.peerMetadata && (
+                        <>
+                          <img
+                            src={pairing.peerMetadata.icons[0]}
+                            alt={pairing.peerMetadata.name}
+                            className={generatedClasses.pairImage}
+                          />
+                          <div className={generatedClasses.pairDetails}>
+                            <strong>{pairing.peerMetadata.name}</strong>
+                            <span>{pairing.peerMetadata.description}</span>
+                            <span>{pairing.peerMetadata.url}</span>
+                          </div>
+                        </>
+                      )}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
             <div>
               {error && (
                 <p className={generatedClasses.errorMessage}>{error}</p>
+              )}
+              {walletConnectErrorV2 && (
+                <p className={generatedClasses.errorMessage}>
+                  {walletConnectErrorV2}
+                </p>
               )}
             </div>
           </div>

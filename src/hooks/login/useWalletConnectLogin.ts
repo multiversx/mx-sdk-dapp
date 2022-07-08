@@ -22,10 +22,9 @@ import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
 
 interface InitWalletConnectType {
-  callbackRoute?: string;
   logoutRoute: string;
+  callbackRoute?: string;
   token?: string;
-  shouldLoginUser?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
 }
 
@@ -41,8 +40,8 @@ export type WalletConnectLoginHookReturnType = [
 ];
 
 export const useWalletConnectLogin = ({
-  callbackRoute,
   logoutRoute,
+  callbackRoute,
   token,
   onLoginRedirect
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {

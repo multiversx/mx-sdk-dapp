@@ -13,6 +13,16 @@ export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
   (state) => state.network.walletConnectBridgeAddress
 );
 
+export const walletConnectV2RelaySelector = createDeepEqualSelector(
+  networkConfigSelector,
+  (state) => state.network.walletConnectV2RelayAddress
+);
+
+export const walletConnectV2ProjectIdSelector = createDeepEqualSelector(
+  networkConfigSelector,
+  (state) => state.network.walletConnectV2ProjectId
+);
+
 export const walletConnectDeepLinkSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.network.walletConnectDeepLink
