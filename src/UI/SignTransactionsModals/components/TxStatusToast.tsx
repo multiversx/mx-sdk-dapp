@@ -1,6 +1,7 @@
 import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
 import React, { useMemo } from 'react';
 import { StatusIconType } from 'components/TransactionStatusToast/types';
+import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from '../../../constants';
 
 export type TxStatusToastProps = {
   signError: string | null;
@@ -14,13 +15,11 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
   onDelete
 }) => {
   const message = useMemo(() => {
-    if (signError) {
-      return signError;
-    } else if (canceledTransactionsMessage) {
-      return canceledTransactionsMessage;
-    }
-
-    return 'Undefined transaction status';
+    return (
+      signError ||
+      canceledTransactionsMessage ||
+      DEFAULT_TRANSACTION_STATUS_MESSAGE
+    );
   }, [signError, canceledTransactionsMessage]);
 
   const type = useMemo(() => {
