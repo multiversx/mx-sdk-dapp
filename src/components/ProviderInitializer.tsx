@@ -3,7 +3,6 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
-import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
   setAccountProvider,
   setExternalProviderAsAccountProvider
@@ -61,11 +60,6 @@ export default function ProviderInitializer() {
     : { callbackRoute: '', logoutRoute: '' };
 
   const [initWalletLoginProvider] = useWalletConnectLogin({
-    callbackRoute,
-    logoutRoute
-  });
-
-  const [initWalletConnectV2LoginProvider] = useWalletConnectV2Login({
     callbackRoute,
     logoutRoute
   });
@@ -225,11 +219,6 @@ export default function ProviderInitializer() {
 
       case LoginMethodsEnum.walletconnect: {
         initWalletLoginProvider(false);
-        break;
-      }
-
-      case LoginMethodsEnum.walletconnectv2: {
-        initWalletConnectV2LoginProvider(false);
         break;
       }
 

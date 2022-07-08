@@ -81,7 +81,6 @@ export const SignTransactionsModals = ({
         );
 
       case LoginMethodsEnum.walletconnect:
-      case LoginMethodsEnum.walletconnectv2:
         return CustomConfirmScreens?.WalletConnect ? (
           <CustomConfirmScreens.WalletConnect {...signProps} />
         ) : (

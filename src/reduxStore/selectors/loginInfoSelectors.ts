@@ -1,7 +1,7 @@
-import { RootState } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { addressSelector } from './accountInfoSelectors';
 import { createDeepEqualSelector } from './helpers';
+import { RootState } from 'reduxStore/store';
 
 export const loginInfoSelector = (state: RootState) => state.loginInfo;
 
