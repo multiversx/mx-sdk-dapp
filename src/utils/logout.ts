@@ -27,6 +27,7 @@ export async function logout(
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
 
   if (!isLoggedIn || !provider) {
+    redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
     return;
   }
 
@@ -34,6 +35,7 @@ export async function logout(
     const address = await getAddress();
     broadcastLogoutAcrossTabs(address);
   } catch (err) {
+    redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
     console.error('error fetching logout address', err);
   }
 
@@ -48,14 +50,23 @@ export async function logout(
     const url = needsCallbackUrl ? window.location.origin : callbackUrl;
 
     await provider.logout({ callbackUrl: url });
-    if (callbackUrl && providerType !== LoginMethodsEnum.wallet) {
-      if (typeof onRedirect === 'function') {
-        onRedirect(callbackUrl);
-      } else {
-        safeRedirect(callbackUrl);
-      }
-    }
+
+    redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
   } catch (err) {
     console.error('error logging out', err);
+  }
+}
+
+function redirectToCallbackUrl(
+  callbackUrl?: string,
+  onRedirect?: (callbackUrl?: string) => void,
+  isWalletProvider?: boolean
+) {
+  if (callbackUrl && !isWalletProvider) {
+    if (typeof onRedirect === 'function') {
+      onRedirect(callbackUrl);
+    } else {
+      safeRedirect(callbackUrl);
+    }
   }
 }

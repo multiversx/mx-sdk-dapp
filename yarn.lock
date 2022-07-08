@@ -308,10 +308,10 @@
     buffer "6.0.3"
     platform "1.3.6"
 
-"@elrondnetwork/erdjs-network-providers@0.1.5":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-network-providers/-/erdjs-network-providers-0.1.5.tgz#dbee664c0c17120c0e53bd33f540588dc59e2351"
-  integrity sha512-7NGoU2rBZk1NkxaO2hIs/4eN8ZYEOWYOkDCpTc35diEOoHjkk13Ov+6qtNjkyKbWn5bnEjdtwMKddc6ilwwR9Q==
+"@elrondnetwork/erdjs-network-providers@0.1.6":
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-network-providers/-/erdjs-network-providers-0.1.6.tgz#b449a96d31f62201dc371249b5f26efcb6352acf"
+  integrity sha512-U1ajPhq6Qv8RHA1/bY5s9/cO7e+T+GbKS3dWZYWEj7AoTVG43YVl/DtiDBUi/WVx90CykzUlDmrM2ysCKQ1+Ag==
   dependencies:
     axios "0.24.0"
     bech32 "1.1.4"
@@ -319,18 +319,18 @@
     buffer "6.0.3"
     json-bigint "1.0.0"
 
-"@elrondnetwork/erdjs-wallet-connect-provider@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.0.2.tgz#91733b3d6161c8957119c7a33e189c9b36461344"
-  integrity sha512-CtMNp+YOv98WdAWUC2i1wpcXr9vcm0TeYTCYSLhDWh6AXw1H9/UYpKTHm/o3NKwSzlZ0JC/01YfBqUxhAKpilg==
+"@elrondnetwork/erdjs-wallet-connect-provider@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.0.3.tgz#fbc577658413f7fb3d2c0cacd2c4995c31e932a3"
+  integrity sha512-SDXz4rjMmBixjwQCsfPcaBl4/jbz33ryc7VbEAlzHAgbsMymQwdHQt68/pyFO6h8caKZJIXnTmGpgAcuTzlRgg==
   dependencies:
     "@walletconnect/client" "1.6.5"
     bech32 "1.1.4"
 
-"@elrondnetwork/erdjs-web-wallet-provider@2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.1.0.tgz#b9250c8d266615213e57492cce479784b3c8708d"
-  integrity sha512-cRrYasp/CoPjzlfRB+pUctgl72e85ALnjBF9e0VTqNGnzWA3HnAGqBxHm0yQ3PG+U3/YuB4YyVd11C3S/ZXv+g==
+"@elrondnetwork/erdjs-web-wallet-provider@2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.1.1.tgz#a9653e9e34b1e77a80ef7412b21c3125367f1f2f"
+  integrity sha512-QFNPBFDSpVifui8VpD+295hzcuP6ebVV/r9ZB7mWUwqRFP+pfwuabyaG4ypapSidDOYgwHAggBi0/wlIcSiaMw==
   dependencies:
     qs "6.10.1"
 
