@@ -1,11 +1,11 @@
 import React from 'react';
 import { TxStatusToast, TxStatusToastProps } from './TxStatusToast';
-import { SignPropsType } from '../types/sign-transactions-modals';
+import { SignPropsType } from 'UI/SignTransactionsModals/types/sign-transactions-modals';
 import {
   useGetAccountProvider,
   useGetSignTransactionsError,
   useSignTransactions
-} from '../../../hooks';
+} from 'hooks';
 
 type ExtraConfirmationScreenProps = {
   Screen?: (signProps: SignPropsType) => JSX.Element;

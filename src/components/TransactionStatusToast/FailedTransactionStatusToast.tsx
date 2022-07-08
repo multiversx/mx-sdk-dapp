@@ -1,13 +1,14 @@
-import { addNewCustomToast, deleteCustomToast } from 'utils';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
-import React, { useEffect, useMemo } from 'react';
-import { CustomToastType } from 'types/toasts';
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { customToastsSelector } from 'reduxStore/selectors';
-import { TRANSACTION_STATUS_TOAST_ID } from 'constants/index';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { failTransactionToastSelector } from 'reduxStore/selectors';
 import styles from './transaction-status-toast.scss';
 import { StatusMessageComponent } from './StatusMessageComponent';
 import { StatusIconType } from './types';
+import {
+  addFailTransactionToast,
+  removeFailTransactionToast
+} from 'reduxStore/slices';
 
 type ErrorToastProps = {
   type?: StatusIconType;
@@ -22,39 +23,32 @@ export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
   onDelete,
   type = StatusIconType.WARNING
 }) => {
-  const customToasts = useSelector(customToastsSelector);
-
-  const errorToast = useMemo(
-    () =>
-      customToasts.find(
-        (customToast: CustomToastType) =>
-          customToast.toastId === TRANSACTION_STATUS_TOAST_ID
-      ),
-    [customToasts]
-  );
+  const dispatch = useDispatch();
+  const failToast = useSelector(failTransactionToastSelector);
 
   const handleDelete = () => {
-    deleteCustomToast(TRANSACTION_STATUS_TOAST_ID);
+    dispatch(removeFailTransactionToast());
 
-    if (Boolean(errorToast)) {
+    if (Boolean(failToast)) {
       onDelete?.();
     }
   };
 
   useEffect(() => {
-    addNewCustomToast({
-      toastId: TRANSACTION_STATUS_TOAST_ID,
-      message,
-      type: 'custom'
-    });
+    dispatch(
+      addFailTransactionToast({
+        message,
+        duration: 20000
+      })
+    );
 
     return () => handleDelete();
   }, []);
 
   return (
-    errorToast && (
+    failToast && (
       <CustomToast
-        {...errorToast}
+        {...failToast}
         duration={duration}
         messageComponent={
           <StatusMessageComponent type={type} message={message} />
