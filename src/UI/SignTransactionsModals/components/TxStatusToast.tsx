@@ -21,7 +21,7 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
     }
 
     return 'Undefined transaction status';
-  }, []);
+  }, [signError, canceledTransactionsMessage]);
 
   const type = useMemo(() => {
     if (signError) {
@@ -31,7 +31,7 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
     }
 
     return StatusIconType.INFO;
-  }, []);
+  }, [signError, canceledTransactionsMessage]);
 
   return (
     <FailedTransactionStatusToast
