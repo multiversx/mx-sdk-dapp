@@ -16,7 +16,7 @@ type ErrorToastProps = {
   onDelete?: () => void;
 };
 
-export const TransactionStatusToast: React.FC<ErrorToastProps> = ({
+export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
   message,
   duration = 30000,
   onDelete,

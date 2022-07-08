@@ -1,4 +1,4 @@
-import { TransactionStatusToast } from 'components/TransactionStatusToast/TransactionStatusToast';
+import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
 import React from 'react';
 import { StatusIconType } from 'components/TransactionStatusToast/types';
 
@@ -15,7 +15,7 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
 }) => {
   if (signError) {
     return (
-      <TransactionStatusToast
+      <FailedTransactionStatusToast
         message={signError}
         type={StatusIconType.ERROR}
         onDelete={onDelete}
@@ -23,7 +23,7 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
     );
   } else if (canceledTransactionsMessage) {
     return (
-      <TransactionStatusToast
+      <FailedTransactionStatusToast
         message={canceledTransactionsMessage}
         type={StatusIconType.WARNING}
         onDelete={onDelete}
