@@ -16,7 +16,7 @@ import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
-import { TRANSACTION_STATUS_TOAST_ID } from '../../constants';
+import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transaction-status';
 
 export interface TransactionsToastListPropsType {
   toastProps?: any;

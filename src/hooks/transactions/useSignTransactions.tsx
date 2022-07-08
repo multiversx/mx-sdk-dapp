@@ -262,7 +262,7 @@ export const useSignTransactions = () => {
 
   return {
     error,
-    cancelTransactionsMessage: canceledTransactionsMessage,
+    canceledTransactionsMessage,
     onAbort,
     hasTransactions,
     callbackRoute: savedCallback.current,

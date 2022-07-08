@@ -1,10 +1,5 @@
 import React, { useCallback } from 'react';
 import { useGetLoginInfo } from 'hooks';
-import {
-  useGetAccountProvider,
-  useGetSignTransactionsError,
-  useSignTransactions
-} from 'hooks';
 import { LoginMethodsEnum } from 'types';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
@@ -27,36 +22,7 @@ export const SignTransactionsModals = ({
   CustomConfirmScreens,
   verifyReceiverScam = true
 }: SignTransactionsPropsType) => {
-  const {
-    callbackRoute,
-    transactions,
-    error,
-    sessionId,
-    onAbort,
-    hasTransactions,
-    cancelTransactionsMessage
-  } = useSignTransactions();
-
-  const { providerType } = useGetAccountProvider();
-  const signTransactionsError = useGetSignTransactionsError();
   const { loginMethod } = useGetLoginInfo();
-
-  const handleClose = () => {
-    onAbort(sessionId);
-  };
-
-  const signError = error || signTransactionsError;
-
-  const signProps: SignPropsType = {
-    handleClose,
-    error: signError,
-    sessionId,
-    transactions: transactions!,
-    providerType,
-    callbackRoute,
-    className,
-    verifyReceiverScam
-  };
 
   const ConfirmScreens: CustomConfirmScreensType = {
     Ledger: CustomConfirmScreens?.Ledger ?? SignWithLedgerModal,
@@ -66,36 +32,18 @@ export const SignTransactionsModals = ({
     Extra: CustomConfirmScreens?.Extra
   };
 
-  const shouldShowTransactionStatusToast =
-    Boolean(signError) || Boolean(cancelTransactionsMessage);
-
   const renderScreen = useCallback(
     (Screen?: ScreenType) => {
       return (
         <ConfirmationScreen
           Screen={Screen}
-          signProps={signProps}
-          transactionStatusToastType={{
-            signError,
-            canceledTransactionsMessage: cancelTransactionsMessage,
-            onDelete: handleClose
-          }}
-          shouldShowTransactionStatusToast={shouldShowTransactionStatusToast}
+          verifyReceiverScam={verifyReceiverScam}
+          className={className}
         />
       );
     },
-    [
-      signProps,
-      signError,
-      cancelTransactionsMessage,
-      handleClose,
-      shouldShowTransactionStatusToast
-    ]
+    [verifyReceiverScam, className]
   );
-
-  if (!shouldShowTransactionStatusToast && !hasTransactions) {
-    return null;
-  }
 
   switch (loginMethod) {
     case LoginMethodsEnum.ledger:
