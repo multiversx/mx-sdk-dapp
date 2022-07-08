@@ -14,6 +14,7 @@ interface CustomToastType {
   CustomCloseButton?: ComponentTypeWithChildren<{
     onClick?: () => void;
   }>;
+  className?: string;
 }
 
 export const CustomToast = ({
@@ -21,7 +22,8 @@ export const CustomToast = ({
   message,
   messageComponent,
   duration,
-  CustomCloseButton
+  CustomCloseButton,
+  className
 }: CustomToastType) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
@@ -31,7 +33,7 @@ export const CustomToast = ({
     return () => {
       clearTimeout(timeout);
     };
-  }, []);
+  }, [duration]);
 
   const closeButton = useMemo(() => {
     return CustomCloseButton ? (
@@ -45,11 +47,14 @@ export const CustomToast = ({
 
   return (
     <div
-      className={classNames(wrapperStyles.toasts, wrapperStyles.toastWrapper)}
+      className={classNames(
+        wrapperStyles.toasts,
+        wrapperStyles.toastWrapper,
+        className
+      )}
     >
       {closeButton}
-      {messageComponent}
-      {message}
+      {messageComponent ? messageComponent : message}
     </div>
   );
 };

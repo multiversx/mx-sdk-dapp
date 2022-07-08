@@ -6,8 +6,9 @@ import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
   MISSING_PROVIDER_MESSAGE,
-  PROVIDER_NOT_INTIALIZED,
+  PROVIDER_NOT_INITIALIZED,
   TRANSACTION_CANCELLED,
+  TRANSACTION_STATUS_TOAST_ID,
   WALLET_SIGN_SESSION
 } from 'constants/index';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -21,7 +22,8 @@ import {
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
-  moveTransactionsToSignedState
+  moveTransactionsToSignedState,
+  removeCustomToast
 } from 'reduxStore/slices';
 import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
 import {
@@ -50,10 +52,20 @@ export const useSignTransactions = () => {
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
+  const [
+    canceledTransactionsMessage,
+    setCanceledTransactionsMessage
+  ] = useState<string | null>(null);
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const hasTransactions = Boolean(transactionsToSign?.transactions);
-  const onAbort = (sessionId?: string) => {
+
+  const clearTransactionStatusMessage = () => {
     setError(null);
+    setCanceledTransactionsMessage(null);
+  };
+
+  const onAbort = (sessionId?: string) => {
+    clearTransactionStatusMessage();
     clearSignInfo(sessionId);
   };
 
@@ -64,24 +76,27 @@ export const useSignTransactions = () => {
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
+    dispatch(removeCustomToast(TRANSACTION_STATUS_TOAST_ID));
 
     if (!isExtensionProvider) {
       return;
     }
 
+    clearTransactionStatusMessage();
     ExtensionProvider.getInstance()?.cancelAction?.();
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
-    const isTxCancelled = errorMessage !== TRANSACTION_CANCELLED;
+    const isTxCancelled = errorMessage.includes(TRANSACTION_CANCELLED);
 
     clearSignInfo(sessionId);
 
     /*
      * this is triggered by abort action,
-     * so no need to show error again
+     * so no need to show error
      */
-    if (!isTxCancelled) {
+    if (isTxCancelled) {
+      setCanceledTransactionsMessage(TRANSACTION_CANCELLED);
       return;
     }
 
@@ -123,7 +138,9 @@ export const useSignTransactions = () => {
       const errorMessage =
         (error as Error)?.message ||
         (error as string) ||
-        PROVIDER_NOT_INTIALIZED;
+        PROVIDER_NOT_INITIALIZED;
+      console.error(errorMessage);
+
       onCancel(errorMessage);
       return;
     }
@@ -162,13 +179,18 @@ export const useSignTransactions = () => {
     } catch (error) {
       const errorMessage =
         (error as Error)?.message || (error as string) || ERROR_SIGNING_TX;
+      console.error(errorMessage);
+
       dispatch(
         moveTransactionsToSignedState({
           sessionId,
           status: TransactionBatchStatusesEnum.cancelled
         })
       );
-      onCancel(errorMessage, sessionId);
+      onCancel(
+        errorMessage.includes('cancel') ? TRANSACTION_CANCELLED : errorMessage,
+        sessionId
+      );
     }
   };
 
@@ -176,6 +198,8 @@ export const useSignTransactions = () => {
     if (!transactionsToSign) {
       return;
     }
+
+    clearTransactionStatusMessage();
 
     const { sessionId, transactions, callbackRoute } = transactionsToSign;
 
@@ -218,6 +242,8 @@ export const useSignTransactions = () => {
     } catch (err) {
       const defaultErrorMessage = (err as Error)?.message;
       const errorMessage = defaultErrorMessage || ERROR_SIGNING;
+      console.error(errorMessage);
+
       onCancel(errorMessage, sessionId);
 
       dispatch(
@@ -236,6 +262,7 @@ export const useSignTransactions = () => {
 
   return {
     error,
+    canceledTransactionsMessage,
     onAbort,
     hasTransactions,
     callbackRoute: savedCallback.current,

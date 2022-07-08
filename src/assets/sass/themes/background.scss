@@ -1,3 +1,17 @@
+@import 'assets/sass/variables/variables';
+
 .bg-primary {
   background-color: #007bff !important;
+}
+
+.warning {
+  background-color: $warning;
+}
+
+.danger {
+  background-color: $danger;
+}
+
+.success {
+  background-color: $success;
 }
