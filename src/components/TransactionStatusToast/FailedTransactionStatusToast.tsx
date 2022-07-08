@@ -19,7 +19,7 @@ type ErrorToastProps = {
 
 export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
   message,
-  duration = 30000,
+  duration = 20000,
   onDelete,
   type = StatusIconType.WARNING
 }) => {
@@ -38,7 +38,7 @@ export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
     dispatch(
       addFailTransactionToast({
         message,
-        duration: 20000
+        duration
       })
     );
 
