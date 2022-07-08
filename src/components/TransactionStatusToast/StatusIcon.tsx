@@ -12,7 +12,7 @@ type StatusIconProps = {
 
 export const StatusIcon: React.FC<StatusIconProps> = ({ type }) => {
   switch (type) {
-    case 'info':
+    case StatusIconType.INFO:
       return (
         <div
           className={classNames(
@@ -23,7 +23,7 @@ export const StatusIcon: React.FC<StatusIconProps> = ({ type }) => {
           <FontAwesomeIcon icon={faInfo} className={styles.svg} size='5x' />
         </div>
       );
-    case 'warning':
+    case StatusIconType.WARNING:
       return (
         <div
           className={classNames(
@@ -35,7 +35,7 @@ export const StatusIcon: React.FC<StatusIconProps> = ({ type }) => {
           <FontAwesomeIcon icon={faWarning} className={styles.svg} size='5x' />
         </div>
       );
-    case 'error':
+    case StatusIconType.ERROR:
       return (
         <div
           className={classNames(
