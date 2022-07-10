@@ -108,66 +108,54 @@ export const SignStep = ({
   const showProgressSteps = allTransactions.length > 1;
 
   const classes = getGeneratedClasses(className, true, {
-    formGroup: `${globalStyles.formGroup} ${globalStyles.textLeft}`,
-    formLabel: `${globalStyles.formLabel} ${globalStyles.textSecondary}`,
+    formGroup: `${globalStyles.formGroup} ${globalStyles.textBreak} ${globalStyles.textLeft}`,
+    formLabel: `${globalStyles.textBreak} ${globalStyles.textSecondary}`,
     icon: globalStyles.textWhite,
-    // contentWrapper:
-    //   'd-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3',
     contentWrapper: `
         ${globalStyles.dFlex}
         ${globalStyles.flexColumn}
         ${globalStyles.justifyContentStart}
-        ${globalStyles.flexMdRow}
-        ${globalStyles.justifyContentMdBetween}
+        ${globalStyles.flexRow}
+        ${globalStyles.justifyContentBetween}
         ${globalStyles.mb3}
       `,
-    // tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
     tokenWrapper: `
         ${globalStyles.mb3}
-        ${globalStyles.mbMd0}
+        ${globalStyles.mb0}
         ${globalStyles.dFlex}
         ${globalStyles.flexColumn}
         ${globalStyles.alignItemsStart}
       `,
     tokenLabel: `${globalStyles.textSecondary} ${globalStyles.textLeft}`,
-    // tokenValue: 'd-flex align-items-center mt-1',
     tokenValue: `${globalStyles.dFlex} ${globalStyles.alignItemsCenter} ${globalStyles.mt1}`,
-    // scamReport: 'text-warning',
     scamReport: `${globalStyles.textWarning}`,
     scamReportIcon: `${globalStyles.textWarning} ${globalStyles.mr1}`,
     tokenAmountLabel: `${globalStyles.textSecondary} ${globalStyles.textLeft}`,
     tokenAmountValue: `${globalStyles.dFlex} ${globalStyles.alignItemsCenter}`,
     dataFormGroup: `${globalStyles.formGroup} ${globalStyles.textLeft}`,
-    // errorMessage:
-    //   'text-danger d-flex justify-content-center align-items-center',
     errorMessage: `
         ${globalStyles.textDanger}
         ${globalStyles.dFlex}
         ${globalStyles.justifyContentCenter}
         ${globalStyles.alignItemsCenter}
       `,
-    // buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
     buttonsWrapper: `
         ${globalStyles.dFlex}
         ${globalStyles.alignItemsCenter}
         ${globalStyles.justifyContentEnd}
-        ${globalStyles.mtSpacer}
+        ${globalStyles.mt1}
       `,
-    // cancelButton: 'btn btn-dark text-white flex-even mr-2',
     cancelButton: `
         ${globalStyles.btn}
         ${globalStyles.btnDark}
         ${globalStyles.textWhite}
-        ${globalStyles.flexEven}
+        ${globalStyles.dFlex}
         ${globalStyles.mr2}
       `,
-    // signButton: `btn ${
-    //   scamReport ? 'btn-warning' : 'btn-primary'
-    // } flex-even ml-2`
     signButton: classNames(
       globalStyles.btn,
-      scamReport ? globalStyles.btnWarning : globalStyles.primary,
-      globalStyles.flexEven,
+      scamReport ? globalStyles.btnWarning : globalStyles.btnPrimary,
+      globalStyles.dFlex,
       globalStyles.ml2
     )
   });
@@ -176,7 +164,7 @@ export const SignStep = ({
     <PageState
       icon={error ? faTimes : faHourglass}
       iconClass={classes.icon}
-      iconBgClass={error ? 'bg-danger' : 'bg-warning'}
+      iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
       iconSize='3x'
       className={className}
       title={title || 'Confirm on Ledger'}
@@ -193,7 +181,7 @@ export const SignStep = ({
               )}
 
               <div className={classes.formGroup} data-testid='transactionTitle'>
-                <div className={classes.formLabel}>To: </div>
+                <div className={classes.formLabel}>To </div>
                 {multiTxData
                   ? new Address(receiver).bech32()
                   : currentTransaction.transaction.getReceiver().toString()}
@@ -212,7 +200,7 @@ export const SignStep = ({
 
               <div className={classes.contentWrapper}>
                 <div className={classes.tokenWrapper}>
-                  <div className={classes.tokenlabel}>Token</div>
+                  <div className={classes.tokenLabel}>Token</div>
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}

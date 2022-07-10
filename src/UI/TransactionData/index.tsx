@@ -61,7 +61,7 @@ export const TransactionData = ({
     <>
       {encodedScCall && (
         <div
-          className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
+          className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100} ${globalStyles.w100}`}
         >
           <span
             className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
@@ -78,7 +78,7 @@ export const TransactionData = ({
         </div>
       )}
       <div
-        className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
+        className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100} ${globalStyles.w100}`}
       >
         <span
           className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
