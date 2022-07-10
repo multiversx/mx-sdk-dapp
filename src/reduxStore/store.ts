@@ -17,7 +17,7 @@ import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
 //this will make sure that when importing store in the app,
 // in non-browser envs there will be no warnings/errors caused by redux-persist
 const reducers =
-  typeof sessionStorage !== 'undefined'
+  navigator?.userAgent != null
     ? require('./persistedRootReducer').default
     : require('./rootReducer').default;
 
