@@ -31,3 +31,8 @@ export const walletLoginSelector = createDeepEqualSelector(
   loginInfoSelector,
   (state) => state.walletLogin
 );
+
+export const shouldForceLogoutSelector = createDeepEqualSelector(
+  loginInfoSelector,
+  (state) => state.shouldForceLogout
+);

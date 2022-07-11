@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
-import { useGetAccountInfo } from 'hooks';
-import { useDispatch } from 'reduxStore/DappProviderContext';
+import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
-import { logout } from 'utils';
+import { logout } from 'utils/logout';
 import { getAccountShard } from 'utils/account/getAccountShard';
+import { shouldForceLogoutSelector } from 'reduxStore/selectors/loginInfoSelectors';
+import { setShouldForceLogout } from 'reduxStore/slices/loginInfoSlice';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -23,6 +25,8 @@ export function AppInitializer({
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
+  const shouldForceLogout = useSelector(shouldForceLogoutSelector);
+
   const { address, publicKey } = account;
   const dispatch = useDispatch();
 
@@ -85,6 +89,13 @@ export function AppInitializer({
   useEffect(() => {
     initializeApp();
   }, [customNetworkConfig, environment]);
+
+  useEffect(() => {
+    if (shouldForceLogout) {
+      dispatch(setShouldForceLogout(false));
+      logout();
+    }
+  }, [shouldForceLogout]);
 
   return initialized ? <>{children}</> : null;
 }
