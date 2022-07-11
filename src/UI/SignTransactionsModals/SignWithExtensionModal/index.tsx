@@ -7,6 +7,7 @@ import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
 import styles from './sing-with-extension-modal.scss';
+import classNames from 'classnames';
 
 export const SignWithExtensionModal = ({
   handleClose,
@@ -16,9 +17,13 @@ export const SignWithExtensionModal = ({
   className = 'extension-modal'
 }: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
-    wrapper: `${styles.modalContainer} ${styles.extension}`,
+    wrapper: classNames(styles.modalContainer, styles.extension),
     icon: globalStyles.textWhite,
-    closeBtn: `${globalStyles.btn} ${globalStyles.btnCloseLink} ${globalStyles.mt2}`
+    closeBtn: classNames(
+      globalStyles.btn,
+      globalStyles.btnCloseLink,
+      globalStyles.mt2
+    )
   });
 
   const description = error
@@ -52,7 +57,7 @@ export const SignWithExtensionModal = ({
         icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
         className={className}
-        iconBgClass={error ? 'bg-danger' : 'bg-warning'}
+        iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
         title='Confirm on Maiar DeFi Wallet'
         description={description}

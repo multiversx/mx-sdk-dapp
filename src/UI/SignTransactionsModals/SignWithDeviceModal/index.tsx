@@ -6,6 +6,7 @@ import { getGeneratedClasses } from 'UI/utils';
 import { SignStep } from './SignStep';
 import styles from './sing-with-device-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
 
 export const SignWithDeviceModal = ({
   handleClose,
@@ -30,8 +31,8 @@ export const SignWithDeviceModal = ({
     verifyReceiverScam
   });
   const classes = getGeneratedClasses(className, true, {
-    wrapper: `${styles.modalContainer} ${styles.walletConnect}`,
-    container: `${globalStyles.card} ${globalStyles.container}`,
+    wrapper: classNames(styles.modalContainer, styles.walletConnect),
+    container: classNames(globalStyles.card, globalStyles.container),
     cardBody: globalStyles.cardBody
   });
 

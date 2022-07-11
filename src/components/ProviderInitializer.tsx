@@ -27,7 +27,8 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID
+  setChainID,
+  setTokenLoginSignature
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
@@ -71,7 +72,6 @@ export default function ProviderInitializer() {
   useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
-
   useEffect(() => {
     fetchAccount();
   }, [address, isLoggedIn]);
@@ -150,11 +150,34 @@ export default function ProviderInitializer() {
             );
           }
         }
+        parseWalletSignature();
       } catch (e) {
         console.error('Failed authenticating wallet user ', e);
       }
       dispatch(setWalletLogin(null));
     }
+  }
+
+  function parseWalletSignature() {
+    let params: any = {};
+    if (window?.location?.search) {
+      const urlSearchParams = new URLSearchParams(window.location.search);
+      params = Object.fromEntries(urlSearchParams as any);
+    }
+    const { signature, loginToken, address, ...remainingParams } = params;
+
+    if (signature) {
+      dispatch(setTokenLoginSignature(signature));
+    }
+    clearWalletLoginHistory(remainingParams);
+  }
+
+  function clearWalletLoginHistory(remainingParams: any) {
+    const newUrlParams = new URLSearchParams(remainingParams).toString();
+    const { pathname } = window.location;
+    const newSearch = newUrlParams ? `?${newUrlParams}` : '';
+    const fullPath = pathname ? `${pathname}${newSearch}` : './';
+    window.history.replaceState({}, document.title, fullPath);
   }
 
   async function getInitializedHwWalletProvider() {
