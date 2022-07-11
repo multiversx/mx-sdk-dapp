@@ -7,6 +7,7 @@ import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
 import styles from './sing-with-wallet-connect-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -16,9 +17,13 @@ export const SignWithWalletConnectModal = ({
   className = 'wallet-connect-modal'
 }: SignModalPropsType) => {
   const classes = getGeneratedClasses(className, true, {
-    wrapper: `${styles.modalContainer} ${styles.walletConnect}`,
+    wrapper: classNames(styles.modalContainer, styles.walletConnect),
     icon: globalStyles.textWhite,
-    closeBtn: `${globalStyles.btn} ${globalStyles.btnCloseLink} ${globalStyles.mt2}`
+    closeBtn: classNames(
+      globalStyles.btn,
+      globalStyles.btnCloseLink,
+      globalStyles.mt2
+    )
   });
 
   const hasMultipleTransactions = transactions && transactions?.length > 1;
