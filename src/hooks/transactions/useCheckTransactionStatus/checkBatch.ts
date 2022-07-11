@@ -1,8 +1,8 @@
+import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import {
-  getTransactionsByHashes as defaultGetTxByHash,
-  GetTransactionsByHashesReturnType
-} from 'apiCalls/transactions';
-import { GetTransactionsByHashesType } from 'types';
+  GetTransactionsByHashesReturnType,
+  GetTransactionsByHashesType
+} from 'types';
 import { updateSignedTransactionStatus } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import { TransactionServerStatusesEnum } from 'types/enums';

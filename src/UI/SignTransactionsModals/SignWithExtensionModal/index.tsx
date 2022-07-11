@@ -6,7 +6,7 @@ import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
-import styles from './sing-with-extension-modal.scss';
+import styles from './sign-with-extension-modal.scss';
 import classNames from 'classnames';
 
 export const SignWithExtensionModal = ({

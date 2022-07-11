@@ -6,10 +6,6 @@ import {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums';
-import {
-  GetTransactionsByHashesReturnType,
-  PendingTransactionsType
-} from 'apiCalls';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -191,3 +187,20 @@ export interface SendTransactionReturnType {
 export type GetTransactionsByHashesType = (
   pendingTransactions: PendingTransactionsType
 ) => Promise<GetTransactionsByHashesReturnType>;
+
+export type GetTransactionsByHashesReturnType = {
+  hash: string;
+  invalidTransaction: boolean;
+  status: TransactionServerStatusesEnum;
+  results: SmartContractResult[];
+  sender: string;
+  receiver: string;
+  data: string;
+  previousStatus: string;
+  hasStatusChanged: boolean;
+}[];
+
+export type PendingTransactionsType = {
+  hash: string;
+  previousStatus: string;
+}[];
