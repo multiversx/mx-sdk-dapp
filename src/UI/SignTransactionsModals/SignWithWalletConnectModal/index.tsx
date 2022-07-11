@@ -4,8 +4,8 @@ import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { getGeneratedClasses } from 'UI/utils';
-import { safeRedirect } from 'utils';
-import styles from './sing-with-wallet-connect-modal.scss';
+import { safeRedirect } from 'utils/redirect';
+import styles from './sign-with-wallet-connect-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
 
