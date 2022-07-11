@@ -4,15 +4,15 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 type DefaultToastDeleteButtonProps = {
   className?: string;
-  onDelete?: () => void;
+  onClick?: () => void;
 };
 
 export const DefaultToastDeleteButton: React.FC<DefaultToastDeleteButtonProps> = ({
   className,
-  onDelete
+  onClick
 }) => {
   return (
-    <button type='button' className={className} onClick={onDelete}>
+    <button type='button' className={className} onClick={onClick}>
       <FontAwesomeIcon icon={faTimes} size='xs' />
     </button>
   );
