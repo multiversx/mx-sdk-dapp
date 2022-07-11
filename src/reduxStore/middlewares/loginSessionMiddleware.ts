@@ -4,7 +4,7 @@ import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import storage from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
 import { logoutActionName } from 'constants/index';
-import { setShouldForceLogout } from 'reduxStore/slices';
+import { invalidateLoginSession } from 'reduxStore/slices';
 
 const whitelistedActions = [logoutActionName];
 
@@ -33,7 +33,7 @@ export const loginSessionMiddleware: any = (store: any) => (
     return setTimeout(async () => {
       console.log('session expired');
       try {
-        store.dispatch(setShouldForceLogout(true));
+        store.dispatch(invalidateLoginSession(true));
       } catch (err) {
         console.error('error logging out', err);
       }

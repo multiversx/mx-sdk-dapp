@@ -32,7 +32,7 @@ export const walletLoginSelector = createDeepEqualSelector(
   (state) => state.walletLogin
 );
 
-export const shouldForceLogoutSelector = createDeepEqualSelector(
+export const isLoginSessionInvalidSelector = createDeepEqualSelector(
   loginInfoSelector,
-  (state) => state.shouldForceLogout
+  (state) => state.isLoginSessionInvalid
 );

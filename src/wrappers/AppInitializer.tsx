@@ -8,8 +8,8 @@ import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils/logout';
 import { getAccountShard } from 'utils/account/getAccountShard';
-import { shouldForceLogoutSelector } from 'reduxStore/selectors/loginInfoSelectors';
-import { setShouldForceLogout } from 'reduxStore/slices/loginInfoSlice';
+import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
+import { invalidateLoginSession } from 'reduxStore/slices/loginInfoSlice';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -25,7 +25,7 @@ export function AppInitializer({
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
-  const shouldForceLogout = useSelector(shouldForceLogoutSelector);
+  const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
 
   const { address, publicKey } = account;
   const dispatch = useDispatch();
@@ -91,11 +91,11 @@ export function AppInitializer({
   }, [customNetworkConfig, environment]);
 
   useEffect(() => {
-    if (shouldForceLogout) {
-      dispatch(setShouldForceLogout(false));
+    if (isLoginSessionInvalid) {
+      dispatch(invalidateLoginSession(false));
       logout();
     }
-  }, [shouldForceLogout]);
+  }, [isLoginSessionInvalid]);
 
   return initialized ? <>{children}</> : null;
 }

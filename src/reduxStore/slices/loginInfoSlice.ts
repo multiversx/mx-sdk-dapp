@@ -31,7 +31,7 @@ export interface LoginInfoStateType {
   tokenLogin: TokenLoginType | null;
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
-  shouldForceLogout: boolean;
+  isLoginSessionInvalid: boolean;
 }
 
 const initialState: LoginInfoStateType = {
@@ -41,7 +41,7 @@ const initialState: LoginInfoStateType = {
   tokenLogin: null,
   walletLogin: null,
   extensionLogin: null,
-  shouldForceLogout: false
+  isLoginSessionInvalid: false
 };
 
 export const loginInfoSlice = createSlice({
@@ -86,11 +86,11 @@ export const loginInfoSlice = createSlice({
     ) => {
       state.ledgerLogin = action.payload;
     },
-    setShouldForceLogout: (
+    invalidateLoginSession: (
       state: LoginInfoStateType,
       action: PayloadAction<boolean>
     ) => {
-      state.shouldForceLogout = action.payload;
+      state.isLoginSessionInvalid = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -117,7 +117,7 @@ export const {
   setTokenLogin,
   setTokenLoginSignature,
   setWalletLogin,
-  setShouldForceLogout
+  invalidateLoginSession
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;
