@@ -2,13 +2,13 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-import ProviderInitializer from 'components/ProviderInitializer';
+import { ProviderInitializer } from 'components/ProviderInitializer';
 
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { IDappProvider } from 'types';
 import { CustomNetworkType, EnvironmentsEnum } from 'types';
-import AppInitializer from 'wrappers/AppInitializer';
+import { AppInitializer } from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 import { setExternalProvider } from 'providers/accountProvider';
@@ -53,5 +53,3 @@ export const DappProvider = ({
     </Provider>
   );
 };
-
-export default DappProvider;

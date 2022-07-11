@@ -19,5 +19,3 @@ export function getLedgerErrorCodes(err?: any) {
     defaultErrorMessage: ledgerAppErrorText
   };
 }
-
-export default getLedgerErrorCodes;

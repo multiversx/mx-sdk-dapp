@@ -6,5 +6,3 @@ export const useGetAccountProvider = () => {
   const providerType = getProviderType(provider);
   return { provider, providerType };
 };
-
-export default useGetAccountProvider;

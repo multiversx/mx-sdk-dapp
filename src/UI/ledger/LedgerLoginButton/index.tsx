@@ -65,5 +65,3 @@ export const LedgerLoginButton: (
     </>
   );
 };
-
-export default LedgerLoginButton;

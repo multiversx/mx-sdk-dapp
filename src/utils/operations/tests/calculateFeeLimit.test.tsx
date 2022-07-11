@@ -1,5 +1,5 @@
 import { gasPerDataByte, gasPriceModifier } from 'constants/index';
-import { calculateFeeLimit } from './../calculateFeeLimit';
+import { calculateFeeLimit } from '../calculateFeeLimit';
 
 describe('calculateFeeLimit tests', () => {
   it('computes correct fee', () => {

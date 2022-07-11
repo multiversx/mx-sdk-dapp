@@ -38,5 +38,3 @@ export function manageFailedTransactions({
     })
   );
 }
-
-export default manageFailedTransactions;

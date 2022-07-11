@@ -1,8 +1,8 @@
 import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
-import useGetAccountProvider from 'hooks/account/useGetAccountProvider';
-import useSignMultipleTransactions from 'hooks/transactions/useSignMultipleTransactions';
+import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
+import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
 import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
 import {
@@ -120,5 +120,3 @@ export function useSignTransactionsWithDevice({
   });
   return { ...signMultipleTxReturnValues, callbackRoute };
 }
-
-export default useSignTransactionsWithDevice;

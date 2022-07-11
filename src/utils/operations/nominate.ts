@@ -11,5 +11,3 @@ export function nominate(
     customDenomination
   ).toString();
 }
-
-export default nominate;

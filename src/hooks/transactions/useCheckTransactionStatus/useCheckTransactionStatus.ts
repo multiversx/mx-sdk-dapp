@@ -1,7 +1,7 @@
 import { GetTransactionsByHashesType } from 'types';
 import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import { getIsTransactionPending, refreshAccount } from 'utils';
-import checkBatch from './checkBatch';
+import { checkBatch } from './checkBatch';
 
 export function useCheckTransactionStatus() {
   const { pendingTransactionsArray } = useGetPendingTransactions();
@@ -33,5 +33,3 @@ export function useCheckTransactionStatus() {
 
   return checkTransactionStatus;
 }
-
-export default useCheckTransactionStatus;

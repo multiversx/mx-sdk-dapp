@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import throttle from 'lodash.throttle';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
-import storage from 'utils/storage';
+import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
 import { logoutActionName } from 'constants/index';
 import { logout } from 'utils';
@@ -43,5 +43,3 @@ export const loginSessionMiddleware: any = (store: any) => (
   }
   return next(action);
 };
-
-export default loginSessionMiddleware;

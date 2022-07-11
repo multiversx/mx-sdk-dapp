@@ -6,5 +6,3 @@ export const useGetLoginInfo = () => {
   const isLoggedIn = useSelector(isLoggedInSelector);
   return { ...loginInfo, isLoggedIn };
 };
-
-export default useGetLoginInfo;

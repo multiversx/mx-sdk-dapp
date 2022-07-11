@@ -5,7 +5,7 @@ import {
   gasLimit as configGasLimit,
   gasPerDataByte
 } from 'constants/index';
-import newTransaction from 'models/newTransaction';
+import { newTransaction } from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import { SendSimpleTransactionPropsType } from 'types';
@@ -54,7 +54,9 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
+    const storeChainId = chainIDSelector(store.getState())
+      .valueOf()
+      .toString();
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
       value,
@@ -70,5 +72,3 @@ export async function transformAndSignTransactions({
     });
   });
 }
-
-export default transformAndSignTransactions;

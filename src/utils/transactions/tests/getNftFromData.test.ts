@@ -1,4 +1,4 @@
-import getTokenFromData from '../getTokenFromData';
+import { getTokenFromData } from '../getTokenFromData';
 
 describe('getTokenFromData tests', () => {
   test('get nft test', () => {

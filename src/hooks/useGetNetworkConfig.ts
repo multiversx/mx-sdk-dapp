@@ -4,5 +4,3 @@ import { networkConfigSelector } from 'reduxStore/selectors';
 export const useGetNetworkConfig = () => {
   return useSelector(networkConfigSelector);
 };
-
-export default useGetNetworkConfig;

@@ -12,7 +12,7 @@ import {
 } from 'redux-persist';
 
 import { setAccount, setAccountNonce } from 'reduxStore/slices';
-import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
+import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
 
 //this will make sure that when importing store in the app,
 // in non-browser envs there will be no warnings/errors caused by redux-persist

@@ -222,5 +222,3 @@ export const useWalletConnectLogin = ({
     { uriDeepLink, walletConnectUri: wcUri }
   ];
 };
-
-export default useWalletConnectLogin;

@@ -7,7 +7,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { CopyButton } from 'UI/CopyButton';
-import ExplorerLink from 'UI/ExplorerLink';
+import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
 
 import { isServerTransactionPending } from 'utils';

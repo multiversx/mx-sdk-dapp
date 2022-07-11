@@ -84,5 +84,3 @@ export const WalletConnectLoginButton = ({
     </Fragment>
   );
 };
-
-export default WalletConnectLoginButton;

@@ -52,5 +52,3 @@ export function useParseSignedTransactions(
     }
   }, [search]);
 }
-
-export default useParseSignedTransactions;

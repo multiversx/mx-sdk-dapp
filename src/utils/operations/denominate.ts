@@ -5,7 +5,7 @@ import {
   denomination as configDenomination
 } from 'constants/index';
 import { stringIsInteger } from 'utils/validation';
-import pipe from './pipe';
+import { pipe } from './pipe';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 
@@ -133,4 +133,3 @@ export function denominate({
       .valueOf()
   );
 }
-export default denominate;
