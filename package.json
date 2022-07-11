@@ -3,6 +3,7 @@
   "version": "2.0.0-beta.3",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
+  "homepage": "https://github.com/ElrondNetwork/dapp-core#readme",
   "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
   "main": "./",
