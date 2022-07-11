@@ -110,6 +110,71 @@
   }
 }
 
+.btn-warning {
+  color: $gray-900;
+  background-color: #ffc107;
+  border-color: #ffc107;
+
+  .focus {
+    color: $gray-900;
+    background-color: #e0a800;
+    border-color: #d39e00;
+    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+  }
+
+  .disabled {
+    color: $gray-900;
+    background-color: #ffc107;
+    border-color: #ffc107;
+  }
+
+  &:hover {
+    color: $gray-900;
+    background-color: #e0a800;
+    border-color: #d39e00;
+    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+  }
+
+  &:focus {
+    color: $gray-900;
+    background-color: #e0a800;
+    border-color: #d39e00;
+    box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
+  }
+}
+
+.btn-dark {
+  color: $white;
+  background-color: $gray-800;
+  border-color: $gray-800;
+
+  .focus {
+    color: $white;
+    background-color: #23272b;
+    border-color: #1d2124;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+  }
+
+  .disabled {
+    color: $white;
+    background-color: $gray-800;
+    border-color: $gray-800;
+  }
+
+  &:hover {
+    color: $white;
+    background-color: #23272b;
+    border-color: #1d2124;
+  }
+
+  &:focus {
+    color: $white;
+    background-color: #23272b;
+    border-color: #1d2124;
+    box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
+  }
+}
+
 // Make a button look and behave like a link
 .btn-link {
   font-weight: $font-weight-normal;
@@ -136,7 +201,33 @@
 }
 
 .btn-light {
-  color: #212529;
-  background-color: #fafafa;
-  border-color: #fafafa;
+  color: $gray-900;
+  background-color: $light;
+  border-color: $light;
+
+  .focus {
+    color: $gray-900;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+    box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
+  }
+
+  .disabled {
+    color: $gray-900;
+    background-color: #f8f9fa;
+    border-color: #f8f9fa;
+  }
+
+  &:hover {
+    color: $gray-900;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+  }
+
+  &:focus {
+    color: $gray-900;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+    box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
+  }
 }
