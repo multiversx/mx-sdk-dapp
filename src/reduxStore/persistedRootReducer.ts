@@ -6,6 +6,8 @@ import { defaultNetwork } from 'reduxStore/slices';
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
+import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
+import reduxPersistLocalStorage from 'redux-persist/lib/storage';
 
 const migrations: any = {
   2: (state: any) => {
@@ -16,27 +18,30 @@ const migrations: any = {
   }
 };
 
-const transactionsInfoPersistConfig = {
-  key: 'dapp-core-transactionsInfo',
-  version: 1,
-  storage: require('redux-persist/lib/storage/session')
-};
-const transactionsReducerPersistConfig = {
-  key: 'dapp-core-transactions',
-  version: 1,
-  storage: require('redux-persist/lib/storage/session'),
-  blacklist: [ReducersEnum.transactionsToSign]
-};
-const toastsReducerPersistConfig = {
-  key: 'dapp-core-toasts',
-  version: 1,
-  storage: require('redux-persist/lib/storage/session')
-};
+function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
+  return {
+    key,
+    version: 1,
+    storage: reduxPersistSessionStorage,
+    blacklist
+  };
+}
+
+const transactionsInfoPersistConfig = getSessionStoragePersistConfig(
+  'dapp-core-transactionsInfo'
+);
+const transactionsReducerPersistConfig = getSessionStoragePersistConfig(
+  'dapp-core-transactions',
+  [ReducersEnum.transactionsToSign]
+);
+const toastsReducerPersistConfig = getSessionStoragePersistConfig(
+  'dapp-core-toasts'
+);
 
 const localStoragePersistConfig: PersistConfig<any> = {
   key: 'dapp-core-store',
   version: 2,
-  storage: require('redux-persist/lib/storage'),
+  storage: reduxPersistLocalStorage,
   whitelist: [
     ReducersEnum.account,
     ReducersEnum.loginInfo,
