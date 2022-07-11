@@ -9,7 +9,6 @@ import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils/logout';
 import { getAccountShard } from 'utils/account/getAccountShard';
 import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
-import { invalidateLoginSession } from 'reduxStore/slices/loginInfoSlice';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -92,7 +91,6 @@ export function AppInitializer({
 
   useEffect(() => {
     if (isLoginSessionInvalid) {
-      dispatch(invalidateLoginSession(false));
       logout();
     }
   }, [isLoginSessionInvalid]);

@@ -86,11 +86,8 @@ export const loginInfoSlice = createSlice({
     ) => {
       state.ledgerLogin = action.payload;
     },
-    invalidateLoginSession: (
-      state: LoginInfoStateType,
-      action: PayloadAction<boolean>
-    ) => {
-      state.isLoginSessionInvalid = action.payload;
+    invalidateLoginSession: (state: LoginInfoStateType) => {
+      state.isLoginSessionInvalid = true;
     }
   },
   extraReducers: (builder) => {

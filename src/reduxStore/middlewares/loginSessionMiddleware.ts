@@ -33,7 +33,7 @@ export const loginSessionMiddleware: any = (store: any) => (
     return setTimeout(async () => {
       console.log('session expired');
       try {
-        store.dispatch(invalidateLoginSession(true));
+        store.dispatch(invalidateLoginSession());
       } catch (err) {
         console.error('error logging out', err);
       }
