@@ -105,9 +105,6 @@ export const useWalletConnectV2Login = ({
       if (provider == null) {
         return;
       }
-      if (Object.keys(provider).length === 0) {
-        return;
-      }
       const address = await provider.getAddress();
       const signature = await provider.getSignature();
       const hasSignature = Boolean(signature);
