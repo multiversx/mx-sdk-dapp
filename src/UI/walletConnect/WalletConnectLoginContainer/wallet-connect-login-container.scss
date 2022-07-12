@@ -4,20 +4,4 @@
 
 .login-container {
   color: inherit;
-
-  .qr-code-svg-container {
-    width: 15rem;
-    height: 15rem;
-  }
-
-  .pair-list {
-    max-height: 20rem;
-    overflow-y: auto;
-  }
-
-  .pair-image {
-    width: 4rem;
-    overflow: hidden;
-    height: auto;
-  }
 }

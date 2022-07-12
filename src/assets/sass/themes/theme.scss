@@ -42,9 +42,20 @@ a,
   opacity: 0.6;
 }
 
+.qr-code-svg-container {
+  width: 15rem;
+  height: 15rem;
+}
+
+.pair-list {
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
 .pair-image {
-  border: 1px solid $border-color;
-  border-radius: $border-radius;
+  width: 4rem;
+  overflow: hidden;
+  height: auto;
 }
 
 .dapp-icon {

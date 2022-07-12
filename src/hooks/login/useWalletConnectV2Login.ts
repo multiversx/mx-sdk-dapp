@@ -144,6 +144,8 @@ export const useWalletConnectV2Login = ({
       !walletConnectV2RelayAddress ||
       (providerRef?.current?.isInitialized?.() && !shouldGenerateWcUri)
     ) {
+      setError(WalletConnectV2Error.invalidConfig);
+
       return;
     }
 
