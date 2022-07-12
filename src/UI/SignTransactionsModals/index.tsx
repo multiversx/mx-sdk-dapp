@@ -49,6 +49,7 @@ export const SignTransactionsModals = ({
     case LoginMethodsEnum.ledger:
       return renderScreen(ConfirmScreens.Ledger);
     case LoginMethodsEnum.walletconnect:
+    case LoginMethodsEnum.walletconnectv2:
       return renderScreen(ConfirmScreens.WalletConnect);
     case LoginMethodsEnum.extension:
       return renderScreen(ConfirmScreens.Extension);

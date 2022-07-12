@@ -1,3 +1,3 @@
 export * from './optionalRedirect';
-export * from './getBridgeAddressFromNetwork';
+export * from './getRandomAddressFromNetwork';
 export * from './getLedgerErrorCodes';
