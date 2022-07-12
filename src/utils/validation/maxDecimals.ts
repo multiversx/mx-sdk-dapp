@@ -15,5 +15,3 @@ export const maxDecimals = (amount: string, customDenomination?: number) => {
   }
   return true;
 };
-
-export default maxDecimals;

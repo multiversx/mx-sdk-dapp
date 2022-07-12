@@ -43,4 +43,3 @@ export function newTransaction(rawTransaction: RawTransactionType) {
 
   return transaction;
 }
-export default newTransaction;

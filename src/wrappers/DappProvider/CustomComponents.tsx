@@ -1,9 +1,10 @@
 import React from 'react';
-import LogoutListener from 'components/LogoutListener';
-import TransactionSender, {
+import { LogoutListener } from 'components/LogoutListener';
+import {
+  TransactionSender,
   TransactionSenderType
 } from 'components/TransactionSender';
-import TransactionsTracker from 'components/TransactionsTracker';
+import { TransactionsTracker } from 'components/TransactionsTracker';
 import { TransactionsTrackerType } from 'components/TransactionsTracker/useTransactionsTracker';
 
 export interface CustomComponentsType {

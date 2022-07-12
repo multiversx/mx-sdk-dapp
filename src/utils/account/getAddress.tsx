@@ -47,5 +47,3 @@ export function getAddress(): Promise<string> {
         resolve('');
       });
 }
-
-export default getAddress;

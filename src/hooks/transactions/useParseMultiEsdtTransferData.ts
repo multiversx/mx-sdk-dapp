@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import { MultiSignTxType, TxDataTokenType, TxsDataTokensType } from 'types';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
-import parseMultiEsdtTransferData from 'utils/transactions/parseMultiEsdtTransferData';
+import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
 
 const defaultTransactionInfo: TxDataTokenType = {
   tokenId: '',

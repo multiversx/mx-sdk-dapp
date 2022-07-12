@@ -1,4 +1,4 @@
-import timeRemaining from './../timeRemaining';
+import { timeRemaining } from './../timeRemaining';
 
 describe('timeRemaining tests', () => {
   const entries: [number, string][] = [

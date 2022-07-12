@@ -55,5 +55,3 @@ export function timeRemaining(duration: number) {
 
   return remaning;
 }
-
-export default timeRemaining;

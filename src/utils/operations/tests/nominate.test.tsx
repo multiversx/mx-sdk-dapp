@@ -1,4 +1,4 @@
-import nominate from './../nominate';
+import { nominate } from './../nominate';
 
 describe('nominate tests', () => {
   it('adds 18 zeros', () => {

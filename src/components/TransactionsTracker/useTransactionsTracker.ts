@@ -38,5 +38,3 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
     };
   }, [pendingBatches]);
 }
-
-export default useTransactionsTracker;

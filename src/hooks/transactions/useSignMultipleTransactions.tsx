@@ -237,5 +237,3 @@ export function useSignMultipleTransactions({
     currentTransaction
   };
 }
-
-export default useSignMultipleTransactions;

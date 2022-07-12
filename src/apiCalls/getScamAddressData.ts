@@ -17,5 +17,3 @@ export async function getScamAddressData(addressToVerify: string) {
 
   return data;
 }
-
-export default getScamAddressData;

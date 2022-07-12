@@ -1,8 +1,8 @@
 import { Address } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import { TransactionTypesEnum } from 'types/enums';
-import addressIsValid from 'utils/account/addressIsValid';
-import decodePart from 'utils/decoders/decodePart';
+import { addressIsValid } from 'utils/account/addressIsValid';
+import { decodePart } from 'utils/decoders/decodePart';
 
 const noData = {
   tokenId: '',
@@ -82,4 +82,3 @@ export function getTokenFromData(
 
   return noData;
 }
-export default getTokenFromData;

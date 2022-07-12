@@ -41,7 +41,7 @@ import {
   getLedgerConfiguration
 } from 'utils/account';
 
-export default function ProviderInitializer() {
+export function ProviderInitializer() {
   const network = useSelector(networkSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);

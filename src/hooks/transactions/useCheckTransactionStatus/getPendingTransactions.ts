@@ -28,5 +28,3 @@ export function getPendingTransactions(
   );
   return pendingTransactions;
 }
-
-export default getPendingTransactions;

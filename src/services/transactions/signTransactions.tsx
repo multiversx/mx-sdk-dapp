@@ -76,5 +76,3 @@ export function signTransactions({
   );
   return { sessionId };
 }
-
-export default signTransactions;

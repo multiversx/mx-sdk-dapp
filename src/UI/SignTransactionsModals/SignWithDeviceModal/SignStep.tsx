@@ -7,7 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetNetworkConfig } from 'hooks';
-import useGetTokenDetails from 'hooks/transactions/useGetTokenDetails';
+import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
+
 import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';

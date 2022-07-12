@@ -109,5 +109,3 @@ function getAddressIndex(data: string) {
   }
   return -1;
 }
-
-export default isContract;
