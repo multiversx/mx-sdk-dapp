@@ -16,6 +16,8 @@ import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
 import { getGeneratedClasses } from 'UI/utils';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
+import globalStyles from 'assets/sass/main.scss';
+import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
 export interface SignStepType {
   onSignTransaction: () => void;
@@ -105,34 +107,13 @@ export const SignStep = ({
   const scamReport = currentTransaction.receiverScamInfo;
   const showProgressSteps = allTransactions.length > 1;
 
-  const classes = getGeneratedClasses(className, true, {
-    formGroup: 'form-group text-left',
-    formLabel: 'form-label text-secondary',
-    icon: 'text-white',
-    contentWrapper:
-      'd-flex flex-column justify-content-start flex-md-row justify-content-md-between mb-3',
-    tokenWrapper: 'mb-3 mb-md-0 d-flex flex-column align-items-start',
-    tokenLabel: 'text-secondary text-left',
-    tokenValue: 'd-flex align-items-center mt-1',
-    scamReport: 'text-warning',
-    scamReportIcon: 'text-warning mr-1',
-    tokenAmountLabel: 'text-secondary text-left',
-    tokenAmountValue: 'd-flex align-items-center',
-    dataFormGroup: 'form-group text-left',
-    errorMessage:
-      'text-danger d-flex justify-content-center align-items-center',
-    buttonsWrapper: 'd-flex align-items-center justify-content-end mt-spacer',
-    cancelButton: 'btn btn-dark text-white flex-even mr-2',
-    signButton: `btn ${
-      scamReport ? 'btn-warning' : 'btn-primary'
-    } flex-even ml-2`
-  });
+  const classes = useSignStepsClasses(className, scamReport);
 
   return (
     <PageState
       icon={error ? faTimes : faHourglass}
       iconClass={classes.icon}
-      iconBgClass={error ? 'bg-danger' : 'bg-warning'}
+      iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
       iconSize='3x'
       className={className}
       title={title || 'Confirm on Ledger'}
@@ -149,7 +130,7 @@ export const SignStep = ({
               )}
 
               <div className={classes.formGroup} data-testid='transactionTitle'>
-                <div className={classes.formLabel}>To: </div>
+                <div className={classes.formLabel}>To </div>
                 {multiTxData
                   ? new Address(receiver).bech32()
                   : currentTransaction.transaction.getReceiver().toString()}
@@ -168,7 +149,7 @@ export const SignStep = ({
 
               <div className={classes.contentWrapper}>
                 <div className={classes.tokenWrapper}>
-                  <div className={classes.tokenlabel}>Token</div>
+                  <div className={classes.tokenLabel}>Token</div>
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}

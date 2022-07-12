@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
-import { useGetAccountInfo } from 'hooks';
-import { useDispatch } from 'reduxStore/DappProviderContext';
+import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
-import { logout } from 'utils';
+import { logout } from 'utils/logout';
 import { getAccountShard } from 'utils/account/getAccountShard';
+import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -23,6 +24,8 @@ export function AppInitializer({
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
+  const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
+
   const { address, publicKey } = account;
   const dispatch = useDispatch();
 
@@ -85,6 +88,12 @@ export function AppInitializer({
   useEffect(() => {
     initializeApp();
   }, [customNetworkConfig, environment]);
+
+  useEffect(() => {
+    if (isLoginSessionInvalid) {
+      logout();
+    }
+  }, [isLoginSessionInvalid]);
 
   return initialized ? <>{children}</> : null;
 }

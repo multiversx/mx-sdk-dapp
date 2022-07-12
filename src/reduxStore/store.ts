@@ -1,25 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createSubscription } from 'react-redux/es/utils/Subscription';
 
-import {
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER
-} from 'redux-persist';
-
 import { setAccount, setAccountNonce } from 'reduxStore/slices';
 import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
-
-//this will make sure that when importing store in the app,
-// in non-browser envs there will be no warnings/errors caused by redux-persist
-const reducers =
-  typeof sessionStorage !== 'undefined'
-    ? require('./persistedRootReducer').default
-    : require('./rootReducer').default;
+import {
+  persistStore,
+  reducers,
+  persistIgnoredActions
+} from './webPersistConfig';
 
 export const store = configureStore({
   reducer: reducers,
@@ -27,12 +15,7 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [
-          FLUSH,
-          REHYDRATE,
-          PAUSE,
-          PERSIST,
-          PURGE,
-          REGISTER,
+          ...persistIgnoredActions,
           setAccountNonce.type,
           setAccount.type
         ],

@@ -1,7 +1,7 @@
 import { Address, TransactionPayload } from '@elrondnetwork/erdjs';
 import { TypesOfSmartContractCallsEnum } from 'types';
-import { addressIsValid } from './account';
-import { isStringBase64 } from './decoders';
+import { addressIsValid } from './account/addressIsValid';
+import { isStringBase64 } from './decoders/base64Utils';
 
 export const ESDTTransferTypes = [
   'ESDTNFTTransfer',

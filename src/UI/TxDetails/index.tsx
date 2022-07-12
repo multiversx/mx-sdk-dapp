@@ -14,6 +14,7 @@ import { isServerTransactionPending } from 'utils';
 
 import styles from './styles.scss';
 import { SignedTransactionType } from 'types';
+import globalStyles from '../../assets/sass/main.scss';
 
 export interface TxDetailsProps {
   title?: React.ReactNode;
@@ -85,7 +86,10 @@ export const TxDetails = ({
             <CopyButton text={hash} />
 
             {!isServerTransactionPending(status) && (
-              <ExplorerLink page={`/transactions/${hash}`} className='ml-2' />
+              <ExplorerLink
+                page={`/transactions/${hash}`}
+                className={globalStyles.ml2}
+              />
             )}
           </div>
         );

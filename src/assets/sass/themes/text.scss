@@ -140,9 +140,16 @@
   color: $danger;
 }
 
+.text-warning {
+  color: $warning;
+}
+
 .trim-fs-sm {
   color: inherit;
 }
 
-
+.text-break {
+  word-break: break-word !important;
+  word-wrap: break-word !important;
+}
 

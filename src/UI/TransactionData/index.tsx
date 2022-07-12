@@ -1,6 +1,7 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { decodePart } from 'utils';
+import classNames from 'classnames';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
@@ -61,7 +62,13 @@ export const TransactionData = ({
     <>
       {encodedScCall && (
         <div
-          className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
+          className={classNames(
+            globalStyles.formGroup,
+            globalStyles.mb0,
+            globalStyles.dataField,
+            globalStyles.mw100,
+            globalStyles.w100
+          )}
         >
           <span
             className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
@@ -78,7 +85,13 @@ export const TransactionData = ({
         </div>
       )}
       <div
-        className={`${globalStyles.formGroup} ${globalStyles.mb0} ${globalStyles.dataField} ${globalStyles.mw100}`}
+        className={classNames(
+          globalStyles.formGroup,
+          globalStyles.mb0,
+          globalStyles.dataField,
+          globalStyles.mw100,
+          globalStyles.w100
+        )}
       >
         <span
           className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
