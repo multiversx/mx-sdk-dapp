@@ -169,16 +169,14 @@ export const WalletConnectLoginContainer = ({
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}
-            {isWalletConnectV2 &&
-              activePairings &&
-              activePairings?.length > 0 && (
-                <Pairinglist
-                  activePairings={activePairings}
-                  connectExisting={connectExisting}
-                  className={className}
-                  shouldRenderDefaultCss={shouldRenderDefaultCss}
-                />
-              )}
+            {activePairings.length > 0 && (
+              <Pairinglist
+                activePairings={activePairings}
+                connectExisting={connectExisting}
+                className={className}
+                shouldRenderDefaultCss={shouldRenderDefaultCss}
+              />
+            )}
             <div>
               {error && (
                 <p className={generatedClasses.errorMessage}>{error}</p>
