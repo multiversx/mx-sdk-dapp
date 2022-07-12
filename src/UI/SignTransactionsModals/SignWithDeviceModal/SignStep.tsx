@@ -14,7 +14,6 @@ import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
-import { getGeneratedClasses } from 'UI/utils';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 import globalStyles from 'assets/sass/main.scss';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
