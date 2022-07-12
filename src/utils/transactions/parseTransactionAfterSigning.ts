@@ -21,5 +21,3 @@ export function parseTransactionAfterSigning(
   };
   return parsedTransaction;
 }
-
-export default parseTransactionAfterSigning;

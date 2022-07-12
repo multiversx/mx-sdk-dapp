@@ -36,12 +36,12 @@ export const PageState = ({
     className,
     shouldRenderDefaultCss,
     {
-      wrapper: `
-        ${styles.state}
-        ${globalStyles.mAuto}
-        ${globalStyles.p4}
-        ${globalStyles.textCenter}
-      `,
+      wrapper: classNames(
+        styles.state,
+        globalStyles.mAuto,
+        globalStyles.p4,
+        globalStyles.textCenter
+      ),
       iconContainer: classNames(
         `${globalStyles.iconState} ${globalStyles.mxAuto}`,
         {
@@ -49,7 +49,7 @@ export const PageState = ({
         }
       ),
       iconClass: classNames(iconClass != null && iconClass),
-      title: `${globalStyles.h4} ${globalStyles.my4}`,
+      title: classNames(globalStyles.h4, globalStyles.my4),
       description: globalStyles.mb3
     }
   );

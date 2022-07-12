@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "2.0.0-beta.1",
+  "version": "2.0.0-beta.3",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -15,7 +15,7 @@
     "start": "yarn watch",
     "build:types": "tsc --project tsconfig.json",
     "build": "rimraf dist && node esbuild.js && yarn build:types && cp package.json dist",
-    "publish-package": "yarn build && cp package.json dist && cd dist && npm publish",
+    "publish-package": "yarn build && cp package.json dist&& cp README.md dist && cp README.md dist && cd dist && npm publish",
     "publish-yalc": "yarn build && cd dist && yalc publish",
     "watch": "yarn node esbuild-watch.js && yarn build:types -- --watch"
   },

@@ -20,11 +20,9 @@ import {
   MultiSignTxType,
   TransactionBatchStatusesEnum
 } from 'types';
-import {
-  getIsProviderEqualTo,
-  parseTransactionAfterSigning,
-  safeRedirect
-} from 'utils';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { safeRedirect } from 'utils/redirect';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;

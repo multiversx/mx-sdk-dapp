@@ -1,24 +1,10 @@
 import axios from 'axios';
 import { apiAddressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
-import { SmartContractResult, TransactionServerStatusesEnum } from 'types';
-
-export type GetTransactionsByHashesReturnType = {
-  hash: string;
-  invalidTransaction: boolean;
-  status: TransactionServerStatusesEnum;
-  results: SmartContractResult[];
-  sender: string;
-  receiver: string;
-  data: string;
-  previousStatus: string;
-  hasStatusChanged: boolean;
-}[];
-
-export type PendingTransactionsType = {
-  hash: string;
-  previousStatus: string;
-}[];
+import {
+  GetTransactionsByHashesReturnType,
+  PendingTransactionsType
+} from 'types/transactions';
 
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType
