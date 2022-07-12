@@ -87,5 +87,3 @@ export function parseMultiEsdtTransferData(data?: string) {
   }
   return transactions;
 }
-
-export default parseMultiEsdtTransferData;

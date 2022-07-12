@@ -97,5 +97,3 @@ export function AppInitializer({
 
   return initialized ? <>{children}</> : null;
 }
-
-export default AppInitializer;

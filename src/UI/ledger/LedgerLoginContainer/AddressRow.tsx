@@ -96,5 +96,3 @@ export const AddressRow = ({
     </tr>
   );
 };
-
-export default AddressRow;

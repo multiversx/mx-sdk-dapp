@@ -1,4 +1,4 @@
-import storage from 'utils/storage';
+import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
 
 export function getNewLoginExpiresTimestamp() {

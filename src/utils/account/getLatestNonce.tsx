@@ -12,5 +12,3 @@ export function getLatestNonce(account: AccountType | null) {
     ? Math.max(currentAccountNonce, account.nonce)
     : account.nonce;
 }
-
-export default getLatestNonce;

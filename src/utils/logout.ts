@@ -5,7 +5,7 @@ import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getAddress } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
-import storage from './storage';
+import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
 
 const broadcastLogoutAcrossTabs = (address: string) => {

@@ -120,5 +120,3 @@ export function useTrackTransactionStatus({
     transactions
   };
 }
-
-export default useTrackTransactionStatus;

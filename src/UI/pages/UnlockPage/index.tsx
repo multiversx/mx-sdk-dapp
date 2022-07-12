@@ -2,9 +2,9 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
-import LedgerLoginButton from 'UI/ledger/LedgerLoginButton';
+import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
 import { getGeneratedClasses } from 'UI/utils';
-import WalletConnectLoginButton from 'UI/walletConnect/WalletConnectLoginButton';
+import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import styles from './unlock-page.scss';
 

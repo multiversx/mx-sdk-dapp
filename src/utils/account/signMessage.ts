@@ -22,5 +22,3 @@ export async function signMessage({ message, callbackRoute }: SignMessageType) {
 
   return signedMessage;
 }
-
-export default signMessage;

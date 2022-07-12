@@ -16,9 +16,9 @@ import {
   getIsTransactionSuccessful
 } from 'utils';
 import { refreshAccount } from 'utils/account';
-import getPendingTransactions from './getPendingTransactions';
-import manageFailedTransactions from './manageFailedTransactions';
-import manageTimedOutTransactions from './manageTimedOutTransactions';
+import { getPendingTransactions } from './getPendingTransactions';
+import { manageFailedTransactions } from './manageFailedTransactions';
+import { manageTimedOutTransactions } from './manageTimedOutTransactions';
 
 interface TransactionStatusTrackerPropsType {
   sessionId: string;
@@ -142,5 +142,3 @@ export async function checkBatch({
     console.error(error);
   }
 }
-
-export default checkBatch;

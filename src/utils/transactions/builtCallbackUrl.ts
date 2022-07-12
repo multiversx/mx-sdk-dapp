@@ -32,5 +32,3 @@ export function builtCallbackUrl({
   }
   return url;
 }
-
-export default builtCallbackUrl;

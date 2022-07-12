@@ -6,7 +6,7 @@ import { localStorageKeys } from 'utils/storage/local';
 const { logoutEvent } = localStorageKeys;
 const storageKey = 'storage';
 
-const LogoutListener = () => {
+export const LogoutListener = () => {
   const { address } = useGetAccountInfo();
 
   useEffect(() => {
@@ -34,5 +34,3 @@ const LogoutListener = () => {
 
   return null;
 };
-
-export default LogoutListener;

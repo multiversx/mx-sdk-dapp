@@ -10,5 +10,3 @@ export function manageTimedOutTransactions(sessionId: string) {
     })
   );
 }
-
-export default manageTimedOutTransactions;

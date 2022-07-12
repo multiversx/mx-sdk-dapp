@@ -5,7 +5,7 @@ import {
   SimpleTransactionType
 } from 'types';
 import { signTransactions } from './signTransactions';
-import transformAndSignTransactions from './transformAndSignTransactions';
+import { transformAndSignTransactions } from './transformAndSignTransactions';
 
 export async function sendTransactions({
   transactions,
@@ -50,5 +50,3 @@ export async function sendTransactions({
     return { error: err as any, sessionId: null };
   }
 }
-
-export default sendTransactions;

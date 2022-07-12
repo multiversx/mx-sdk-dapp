@@ -74,5 +74,3 @@ export const useWebWalletLogin = ({
     }
   ];
 };
-
-export default useWebWalletLogin;

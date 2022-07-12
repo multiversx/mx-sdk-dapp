@@ -2,7 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { createSubscription } from 'react-redux/es/utils/Subscription';
 
 import { setAccount, setAccountNonce } from 'reduxStore/slices';
-import loginSessionMiddleware from './middlewares/loginSessionMiddleware';
+import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
 import {
   persistStore,
   reducers,

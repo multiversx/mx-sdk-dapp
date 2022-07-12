@@ -9,7 +9,7 @@ import {
 import { RouteType } from 'types';
 import { safeRedirect } from '../../utils';
 
-const AuthenticatedRoutesWrapper = ({
+export const AuthenticatedRoutesWrapper = ({
   children,
   routes,
   unlockRoute,
@@ -53,5 +53,3 @@ const AuthenticatedRoutesWrapper = ({
 
   return <>{children}</>;
 };
-
-export default AuthenticatedRoutesWrapper;

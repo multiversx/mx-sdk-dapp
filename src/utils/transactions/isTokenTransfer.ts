@@ -7,5 +7,3 @@ export function isTokenTransfer({
 }) {
   return Boolean(tokenId && tokenId !== erdLabel);
 }
-
-export default isTokenTransfer;

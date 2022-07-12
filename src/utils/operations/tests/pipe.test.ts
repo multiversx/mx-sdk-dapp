@@ -1,4 +1,4 @@
-import pipe from './../pipe';
+import { pipe } from './../pipe';
 describe('pipe tests', () => {
   test('pipe basic test', () => {
     const result = pipe(2)

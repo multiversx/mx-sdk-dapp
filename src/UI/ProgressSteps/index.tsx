@@ -62,4 +62,3 @@ export const ProgressSteps = ({
     </div>
   );
 };
-export default ProgressSteps;
