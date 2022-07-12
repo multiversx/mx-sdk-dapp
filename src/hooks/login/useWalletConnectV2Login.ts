@@ -43,13 +43,13 @@ export enum WalletConnectV2Error {
 
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string;
+  connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   walletConnectUri?: string;
   wcPairings?: PairingTypes.Struct[];
 }
 
 export type WalletConnectV2LoginHookReturnType = [
   (loginProvider?: boolean) => void,
-  (pairing: PairingTypes.Struct) => Promise<void>,
   LoginHookGenericStateType,
   WalletConnectV2LoginHookCustomStateType
 ];
@@ -237,13 +237,12 @@ export const useWalletConnectV2Login = ({
   const loginFailed = Boolean(error);
   return [
     initiateLogin,
-    connectExisting,
     {
       error,
       loginFailed,
       isLoading: isLoading && !loginFailed,
       isLoggedIn: isLoggedIn && !loginFailed
     },
-    { uriDeepLink, walletConnectUri: wcUri, wcPairings }
+    { uriDeepLink, walletConnectUri: wcUri, connectExisting, wcPairings }
   ];
 };

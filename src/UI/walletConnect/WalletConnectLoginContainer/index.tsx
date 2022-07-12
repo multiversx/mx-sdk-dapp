@@ -52,9 +52,9 @@ export const WalletConnectLoginContainer = ({
   });
   const [
     initLoginWithWalletConnectV2,
-    connectExisting,
     { error: walletConnectErrorV2 },
     {
+      connectExisting,
       uriDeepLink: walletConnectDeepLinkV2,
       walletConnectUri: walletConnectUriV2,
       wcPairings
@@ -68,10 +68,11 @@ export const WalletConnectLoginContainer = ({
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
   const isMobileDevice =
     platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';
-  const activePairings =
-    isWalletConnectV2 && wcPairings && wcPairings?.length > 0
-      ? wcPairings.filter((pairing) => !!pairing.active && pairing.peerMetadata)
-      : [];
+  const activePairings = isWalletConnectV2
+    ? wcPairings?.filter(
+        (pairing) => Boolean(pairing.active) && pairing.peerMetadata
+      ) ?? []
+    : [];
 
   const generatedClasses = getGeneratedClasses(
     className,
