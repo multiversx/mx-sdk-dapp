@@ -37,11 +37,12 @@ interface InitWalletConnectV2Type {
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
   invalidConfig = 'Invalid WalletConnect setup',
+  invalidTopic = 'Expired connection',
   sessionExpired = 'Unable to connect to existing session'
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
-  uriDeepLink: string | null;
+  uriDeepLink: string;
   walletConnectUri?: string;
   wcPairings?: PairingTypes.Struct[];
 }
@@ -81,7 +82,7 @@ export const useWalletConnectV2Login = ({
   const isLoading = !hasWcUri;
   const uriDeepLink = hasWcUri
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
-    : null;
+    : '';
 
   useUpdateEffect(() => {
     generateWcUri();
@@ -167,12 +168,13 @@ export const useWalletConnectV2Login = ({
     }
   }
 
-  async function connectExisting(pairing: PairingTypes.Struct | undefined) {
+  async function connectExisting(pairing: PairingTypes.Struct) {
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
       setError(WalletConnectV2Error.invalidConfig);
       return;
     }
     if (!pairing || !pairing.topic) {
+      setError(WalletConnectV2Error.invalidTopic);
       return;
     }
 
@@ -186,10 +188,13 @@ export const useWalletConnectV2Login = ({
 
       try {
         await providerRef.current?.login({ approval });
-      } catch {
+      } catch (err) {
+        console.warn('User rejected existing connection proposal ', err);
+
         await initiateLogin();
       }
-    } catch {
+    } catch (err) {
+      console.error('Error while attempting to retore connection ', err);
       setError(WalletConnectV2Error.sessionExpired);
     } finally {
       setWcPairings(providerRef.current?.pairings);
@@ -203,17 +208,16 @@ export const useWalletConnectV2Login = ({
     }
 
     const { uri, approval } = await providerRef.current?.connect();
-    const walletConnectUri: string | undefined = uri;
-    const hasUri = Boolean(walletConnectUri);
+    const hasUri = Boolean(uri);
 
     if (!hasUri) {
       return;
     }
 
     if (!token) {
-      setWcUri(walletConnectUri as string);
+      setWcUri(uri);
     } else {
-      const wcUriWithToken = `${walletConnectUri}&token=${token}`;
+      const wcUriWithToken = `${uri}&token=${token}`;
 
       setWcUri(wcUriWithToken);
       dispatch(setTokenLogin({ loginToken: token }));
@@ -221,7 +225,9 @@ export const useWalletConnectV2Login = ({
 
     try {
       await providerRef.current?.login({ approval });
-    } catch {
+    } catch (err) {
+      console.warn('User rejected connection proposal ', err);
+
       await initiateLogin();
     }
   }
@@ -239,5 +245,3 @@ export const useWalletConnectV2Login = ({
     { uriDeepLink, walletConnectUri: wcUri, wcPairings }
   ];
 };
-
-export default useWalletConnectV2Login;

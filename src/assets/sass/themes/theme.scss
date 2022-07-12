@@ -43,16 +43,8 @@ a,
 }
 
 .pair-image {
-  width: 4rem;
   border: 1px solid $border-color;
   border-radius: $border-radius;
-  overflow: hidden;
-  height: auto;
-}
-
-.pair-list {
-  max-height: 20rem;
-  overflow-y: auto;
 }
 
 .dapp-icon {

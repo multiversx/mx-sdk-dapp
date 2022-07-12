@@ -29,7 +29,7 @@ interface InitWalletConnectType {
 }
 
 export interface WalletConnectLoginHookCustomStateType {
-  uriDeepLink: string | null;
+  uriDeepLink: string;
   walletConnectUri?: string;
 }
 
@@ -65,7 +65,7 @@ export const useWalletConnectLogin = ({
   const isLoading = !hasWcUri;
   const uriDeepLink = hasWcUri
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
-    : null;
+    : '';
 
   useEffect(() => {
     handleHeartbeat();
@@ -189,21 +189,19 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    const walletConnectUri:
-      | string
-      | undefined = await providerRef.current?.login();
-    const hasUri = Boolean(walletConnectUri);
+    const uri: string = await providerRef.current?.login();
+    const hasUri = Boolean(uri);
 
     if (!hasUri) {
       return;
     }
 
     if (!token) {
-      setWcUri(walletConnectUri as string);
+      setWcUri(uri);
       return;
     }
 
-    const wcUriWithToken = `${walletConnectUri}&token=${token}`;
+    const wcUriWithToken = `${uri}&token=${token}`;
 
     setWcUri(wcUriWithToken);
     dispatch(setTokenLogin({ loginToken: token }));
