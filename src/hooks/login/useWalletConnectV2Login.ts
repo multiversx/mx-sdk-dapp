@@ -26,6 +26,7 @@ import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 
 interface InitWalletConnectV2Type {
   logoutRoute: string;
@@ -99,12 +100,15 @@ export const useWalletConnectV2Login = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
-      if (isLoggedIn) {
+
+      if (
+        isLoggedIn ||
+        provider == null ||
+        !getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)
+      ) {
         return;
       }
-      if (provider == null) {
-        return;
-      }
+
       const address = await provider.getAddress();
       const signature = await provider.getSignature();
       const hasSignature = Boolean(signature);

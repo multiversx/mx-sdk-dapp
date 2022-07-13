@@ -19,6 +19,7 @@ import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import Timeout = NodeJS.Timeout;
 
 interface InitWalletConnectType {
@@ -113,12 +114,14 @@ export const useWalletConnectLogin = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
-      if (isLoggedIn) {
+      if (
+        isLoggedIn ||
+        provider == null ||
+        !getIsProviderEqualTo(LoginMethodsEnum.walletconnect)
+      ) {
         return;
       }
-      if (provider == null) {
-        return;
-      }
+
       const address = await provider.getAddress();
       const signature = await provider.getSignature();
       const hasSignature = Boolean(signature);
