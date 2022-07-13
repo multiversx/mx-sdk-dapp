@@ -33,5 +33,3 @@ export const ExplorerLink = ({
     </a>
   );
 };
-
-export default ExplorerLink;

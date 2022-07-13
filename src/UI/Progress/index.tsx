@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useMemo } from 'react';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
-import storage from 'utils/storage';
+import { storage } from 'utils/storage';
 import styles from './styles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';

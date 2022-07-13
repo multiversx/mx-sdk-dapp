@@ -57,5 +57,3 @@ export const storage = {
   removeItem,
   clear
 };
-
-export default storage;

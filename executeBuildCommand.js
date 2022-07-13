@@ -44,7 +44,8 @@ module.exports = function executeBuildCommand(customOptions = {}) {
             basedir,
             transform: postcssModules({
               basedir,
-              localsConvention: 'dashes'
+              localsConvention: 'dashes',
+              generateScopedName: 'dapp-core-component__[name]__[local]'
             })
           })
         ],

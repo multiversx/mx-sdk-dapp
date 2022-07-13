@@ -6,7 +6,7 @@ import {
   sendSignedTransactions as defaultSendSignedTxs,
   SendSignedTransactionsReturnType
 } from 'apiCalls/transactions';
-import newTransaction from 'models/newTransaction';
+import { newTransaction } from 'models/newTransaction';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { signedTransactionsSelector } from 'reduxStore/selectors';
 import { accountSelector } from 'reduxStore/selectors';
@@ -128,5 +128,3 @@ export const TransactionSender = ({
 
   return null;
 };
-
-export default TransactionSender;

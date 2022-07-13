@@ -1,8 +1,8 @@
 import { setAccount } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
-import getAccount from './getAccount';
-import getAddress from './getAddress';
-import getLatestNonce from './getLatestNonce';
+import { getAccount } from './getAccount';
+import { getAddress } from './getAddress';
+import { getLatestNonce } from './getLatestNonce';
 import { getAccountProvider } from 'providers';
 
 const setNewAccount = async () => {

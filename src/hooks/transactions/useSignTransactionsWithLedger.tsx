@@ -9,5 +9,3 @@ export function useSignTransactionsWithLedger(
 ): UseSignTransactionsWithDeviceReturnType {
   return useSignTransactionsWithDevice(props);
 }
-
-export default useSignTransactionsWithLedger;

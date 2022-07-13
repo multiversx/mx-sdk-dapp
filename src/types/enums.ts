@@ -18,6 +18,7 @@ export enum TransactionBatchStatusesEnum {
 export enum LoginMethodsEnum {
   ledger = 'ledger',
   walletconnect = 'walletconnect',
+  walletconnectv2 = 'walletconnectv2',
   wallet = 'wallet',
   extension = 'extension',
   extra = 'extra',

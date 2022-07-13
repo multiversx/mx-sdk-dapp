@@ -1,6 +1,9 @@
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
-import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import {
+  WalletConnectProvider,
+  WalletConnectProviderV2
+} from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { IDappProvider } from 'types';
 import { emptyProvider } from './utils';
@@ -10,7 +13,8 @@ type ProvidersType =
   | ExtensionProvider
   | WalletProvider
   | HWProvider
-  | WalletConnectProvider;
+  | WalletConnectProvider
+  | WalletConnectProviderV2;
 
 let accountProvider: ProvidersType = emptyProvider;
 

@@ -33,7 +33,7 @@ import {
   safeRedirect
 } from 'utils';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
-import getAccount from 'utils/account/getAccount';
+import { getAccount } from 'utils/account/getAccount';
 
 const setTransactionNonces = (
   latestNonce: number,
@@ -161,9 +161,9 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(
-        signedTransactions
-      ).map((tx) => parseTransactionAfterSigning(tx));
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       dispatch(
         moveTransactionsToSignedState({
@@ -270,5 +270,3 @@ export const useSignTransactions = () => {
     transactions: transactionsToSign?.transactions
   };
 };
-
-export default useSignTransactions;

@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "2.0.0-beta.3",
+  "version": "2.0.0-beta.4",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -15,7 +15,8 @@
     "start": "yarn watch",
     "build:types": "tsc --project tsconfig.json",
     "build": "rimraf dist && node esbuild.js && yarn build:types && cp package.json dist",
-    "publish-package": "yarn build && cp package.json dist && cd dist && npm publish",
+    "publish-package": "yarn build && cp package.json dist&& cp README.md dist && cp README.md dist && cd dist && npm publish",
+    "publish-package-next": "yarn build && cp package.json dist&& cp README.md dist && cp README.md dist && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish",
     "watch": "yarn node esbuild-watch.js && yarn build:types -- --watch"
   },
@@ -119,7 +120,7 @@
     "@elrondnetwork/erdjs-extension-provider": "2.0.2",
     "@elrondnetwork/erdjs-hw-provider": "2.0.4",
     "@elrondnetwork/erdjs-network-providers": "0.1.6",
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.0.3",
+    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-alpha.1",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.1",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",

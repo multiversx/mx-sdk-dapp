@@ -1,6 +1,6 @@
 import axios from 'axios';
 import useSwr from 'swr';
-import useGetNetworkConfig from 'hooks/useGetNetworkConfig';
+import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 
 import { getIdentifierType } from 'utils';
 
@@ -62,5 +62,3 @@ export function useGetTokenDetails({
 
   return { tokenDenomination, tokenLabel, tokenAvatar, error };
 }
-
-export default useGetTokenDetails;

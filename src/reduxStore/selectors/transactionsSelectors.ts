@@ -1,5 +1,5 @@
 import { Transaction } from '@elrondnetwork/erdjs';
-import newTransaction from 'models/newTransaction';
+import { newTransaction } from 'models/newTransaction';
 import {
   CustomTransactionInformation,
   RawTransactionType,

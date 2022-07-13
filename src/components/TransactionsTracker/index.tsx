@@ -1,4 +1,5 @@
-import useTransactionsTracker, {
+import {
+  useTransactionsTracker,
   TransactionsTrackerType
 } from './useTransactionsTracker';
 
@@ -8,5 +9,3 @@ export function TransactionsTracker({
   useTransactionsTracker({ getTransactionsByHash });
   return null;
 }
-
-export default TransactionsTracker;

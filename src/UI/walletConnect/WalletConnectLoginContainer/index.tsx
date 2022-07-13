@@ -4,9 +4,12 @@ import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
+import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
 import { getGeneratedClasses } from 'UI/utils';
 import styles from './wallet-connect-login-container.scss';
+import { Pairinglist } from './PairingList';
 
 export interface WalletConnectLoginModalPropsType {
   lead?: string;
@@ -17,6 +20,7 @@ export interface WalletConnectLoginModalPropsType {
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
   shouldRenderDefaultCss?: boolean;
+  isWalletConnectV2?: boolean;
   token?: string;
   onLoginRedirect?: (callbackRoute: string) => void;
   onClose?: () => void;
@@ -31,6 +35,7 @@ export const WalletConnectLoginContainer = ({
   lead = 'Scan the QR code using Maiar',
   shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
+  isWalletConnectV2 = false,
   token,
   onClose,
   onLoginRedirect
@@ -43,12 +48,32 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
-    shouldLoginUser: true,
+    onLoginRedirect
+  });
+  const [
+    initLoginWithWalletConnectV2,
+    { error: walletConnectErrorV2 },
+    {
+      connectExisting,
+      uriDeepLink: walletConnectDeepLinkV2,
+      walletConnectUri: walletConnectUriV2,
+      wcPairings
+    }
+  ] = useWalletConnectV2Login({
+    logoutRoute,
+    callbackRoute,
+    token,
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
   const isMobileDevice =
     platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';
+  const activePairings = isWalletConnectV2
+    ? wcPairings?.filter(
+        (pairing) => Boolean(pairing.active) && pairing.peerMetadata
+      ) ?? []
+    : [];
+
   const generatedClasses = getGeneratedClasses(
     className,
     shouldRenderDefaultCss,
@@ -58,33 +83,50 @@ export const WalletConnectLoginContainer = ({
       container: `${globalStyles.mAuto} ${styles.loginContainer}`,
       card: `${globalStyles.card} ${globalStyles.my3} ${globalStyles.textCenter}`,
       cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
-      qrCodeSvgContainer: `${globalStyles.mxAuto} ${globalStyles.mb3}`,
+      qrCodeSvgContainer: `${globalStyles.qrCodeSvgContainer} ${globalStyles.mxAuto} ${globalStyles.mb3}`,
       title: globalStyles.mb3,
       leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
       mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
       mobileLoginButtonIcon: globalStyles.mr2,
-      errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter} `
+      errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
+      pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
+      pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
+      pairImage: globalStyles.pairImage,
+      pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
     }
   );
 
   const generateQRCode = async () => {
-    if (!walletConnectUri) {
+    const canGenerateQRCodeForWC2 = isWalletConnectV2 && walletConnectUriV2;
+    const canGenerateQRCodeForWC1 = !isWalletConnectV2 && walletConnectUri;
+    const canGenerateQRCode =
+      canGenerateQRCodeForWC2 || canGenerateQRCodeForWC1;
+
+    if (!canGenerateQRCode) {
       return;
     }
 
-    const svg = await QRCode.toString(walletConnectUri, {
-      type: 'svg'
-    });
-
-    setQrCodeSvg(svg);
+    const uri = isWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
+    if (uri) {
+      const svg = await QRCode.toString(uri, {
+        type: 'svg'
+      });
+      if (svg) {
+        setQrCodeSvg(svg);
+      }
+    }
   };
 
   useEffect(() => {
     generateQRCode();
-  }, [walletConnectUri]);
+  }, [walletConnectUri, walletConnectUriV2]);
 
   useEffect(() => {
-    initLoginWithWalletConnect();
+    if (isWalletConnectV2) {
+      initLoginWithWalletConnectV2();
+    } else {
+      initLoginWithWalletConnect();
+    }
   }, []);
 
   const content = (
@@ -92,16 +134,17 @@ export const WalletConnectLoginContainer = ({
       <div className={generatedClasses.root}>
         <div className={generatedClasses.card}>
           <div className={generatedClasses.cardBody}>
-            <div
-              className={generatedClasses.qrCodeSvgContainer}
-              dangerouslySetInnerHTML={{
-                __html: qrCodeSvg
-              }}
-              style={{
-                width: '15rem',
-                height: '15rem'
-              }}
-            />
+            {qrCodeSvg ? (
+              <div
+                className={generatedClasses.qrCodeSvgContainer}
+                dangerouslySetInnerHTML={{
+                  __html: qrCodeSvg
+                }}
+              />
+            ) : (
+              <Loader />
+            )}
+
             <h4 className={generatedClasses.title}>{title}</h4>
             {isMobileDevice ? (
               <>
@@ -110,7 +153,7 @@ export const WalletConnectLoginContainer = ({
                   id='accessWalletBtn'
                   data-testid='accessWalletBtn'
                   className={generatedClasses.mobileLoginButton}
-                  href={uriDeepLink || undefined}
+                  href={uriDeepLink || walletConnectDeepLinkV2}
                   rel='noopener noreferrer nofollow'
                   target='_blank'
                 >
@@ -127,9 +170,22 @@ export const WalletConnectLoginContainer = ({
             ) : (
               <p className={generatedClasses.leadText}>{lead}</p>
             )}
+            {activePairings.length > 0 && (
+              <Pairinglist
+                activePairings={activePairings}
+                connectExisting={connectExisting}
+                className={className}
+                shouldRenderDefaultCss={shouldRenderDefaultCss}
+              />
+            )}
             <div>
               {error && (
                 <p className={generatedClasses.errorMessage}>{error}</p>
+              )}
+              {walletConnectErrorV2 && (
+                <p className={generatedClasses.errorMessage}>
+                  {walletConnectErrorV2}
+                </p>
               )}
             </div>
           </div>
