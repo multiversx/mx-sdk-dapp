@@ -16,6 +16,7 @@
     "build:types": "tsc --project tsconfig.json",
     "build": "rimraf dist && node esbuild.js && yarn build:types && cp package.json dist",
     "publish-package": "yarn build && cp package.json dist&& cp README.md dist && cp README.md dist && cd dist && npm publish",
+    "publish-package-next": "yarn build && cp package.json dist&& cp README.md dist && cp README.md dist && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish",
     "watch": "yarn node esbuild-watch.js && yarn build:types -- --watch"
   },
