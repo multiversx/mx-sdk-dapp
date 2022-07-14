@@ -29,6 +29,10 @@ export const SignTransactionsModals = ({
     WalletConnect:
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
     Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
+    // The purpose of having this is to have a consistent flow of transaction signing.
+    // The logic for redirecting to the web wallet is placed in the ConfirmationScreen component,
+    // so we have to render that component when we are logged in with the web wallet provider
+    Wallet: () => <></>,
     Extra: CustomConfirmScreens?.Extra
   };
 
@@ -53,6 +57,8 @@ export const SignTransactionsModals = ({
       return renderScreen(ConfirmScreens.WalletConnect);
     case LoginMethodsEnum.extension:
       return renderScreen(ConfirmScreens.Extension);
+    case LoginMethodsEnum.wallet:
+      return renderScreen(ConfirmScreens.Wallet);
     case LoginMethodsEnum.extra:
       return renderScreen(ConfirmScreens.Extra);
     default:
