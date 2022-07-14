@@ -266,11 +266,12 @@ export function ProviderInitializer() {
         break;
       }
 
-      case LoginMethodsEnum.wallet: {
+      case LoginMethodsEnum.wallet:
+      case LoginMethodsEnum.none: {
         tryAuthenticateWalletUser();
         break;
       }
-      case LoginMethodsEnum.none:
+
       default:
         return;
     }
