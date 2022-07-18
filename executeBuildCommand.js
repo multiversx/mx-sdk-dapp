@@ -17,7 +17,7 @@ module.exports = function executeBuildCommand(customOptions = {}) {
     esbuild
       .build({
         entryPoints: files,
-        outdir: 'dist',
+        outdir: 'dist/esm',
         treeShaking: true,
         minify: true,
         bundle: true,

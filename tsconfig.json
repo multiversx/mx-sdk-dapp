@@ -6,7 +6,7 @@
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "./dist/types",
     "strict": true,
     "lib": ["dom", "esnext"],
     "skipLibCheck": true,
