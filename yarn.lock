@@ -291,10 +291,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@elrondnetwork/erdjs-extension-provider@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-extension-provider/-/erdjs-extension-provider-2.0.2.tgz#06f7912442ad262355c2b05d83897e2262b3eb57"
-  integrity sha512-SGbPOMuRQSGIjIFTX2X3JsYggEchsb8wPK2aY4D37/fNriLQL42gDDdAkabLAMl5pwXaYJ+I6tr5jMnA++gbAg==
+"@elrondnetwork/erdjs-extension-provider@2.0.5":
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-extension-provider/-/erdjs-extension-provider-2.0.5.tgz#bdf127dc42c0cd1edcac1e332160eb9f1f98d554"
+  integrity sha512-lmKj5qjJgbc/C32BU0oxddtcp+TZeJ+9C7Pe0UtETDfW90aGUdWfUuSFVjlZEiIbFgv42b5zDKZiXcnUqiHgqw==
 
 "@elrondnetwork/erdjs-hw-provider@2.0.4":
   version "2.0.4"
