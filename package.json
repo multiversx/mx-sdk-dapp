@@ -120,6 +120,13 @@
     "*.d.ts",
     "**/*.d.ts"
   ],
+  "exports": {
+    "./*": {
+      "browser": "./esm/*",
+      "require": "./cjs/*",
+      "import": "./esm/*"
+    }
+  },
   "dependencies": {
     "@elrondnetwork/erdjs": "10.2.7",
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
