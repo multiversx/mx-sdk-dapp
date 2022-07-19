@@ -30,7 +30,7 @@ export const SignWithDeviceModal = ({
     onCancel: handleClose,
     verifyReceiverScam
   });
-  const classes = getGeneratedClasses(className, true, {
+  const classes = getGeneratedClasses(className, {
     wrapper: classNames(styles.modalContainer, styles.walletConnect),
     container: classNames(globalStyles.card, globalStyles.container),
     cardBody: globalStyles.cardBody

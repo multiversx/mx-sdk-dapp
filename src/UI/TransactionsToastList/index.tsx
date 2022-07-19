@@ -21,7 +21,6 @@ export interface TransactionsToastListPropsType {
   toastProps?: any;
   className?: string;
   withTxNonce?: boolean;
-  shouldRenderDefaultCss?: boolean;
   signedTransactions?: SignedTransactionsType;
   successfulToastLifetime?: number;
   parentElement?: Element | DocumentFragment;
@@ -67,7 +66,6 @@ const renderTransactionToast = (
 };
 
 export const TransactionsToastList = ({
-  shouldRenderDefaultCss = true,
   className = 'transactions-toast-list',
   signedTransactions,
   successfulToastLifetime,
@@ -114,9 +112,7 @@ export const TransactionsToastList = ({
     handleSignedTransactionsListUpdate();
   }, [signedTransactionsToRender]);
 
-  const style = getGeneratedClasses(className ?? '', !!shouldRenderDefaultCss, {
-    ...styles
-  });
+  const style = getGeneratedClasses(className ?? '', styles);
 
   const transactionsToastsList = useMemo(
     () =>

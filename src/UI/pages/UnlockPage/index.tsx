@@ -13,7 +13,6 @@ export interface Props {
   className?: string;
   loginRoute: string;
   LedgerLoginButtonText?: string;
-  shouldRenderDefaultCss?: boolean;
   ExtensionLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
@@ -25,25 +24,20 @@ export const UnlockPage = ({
   loginRoute,
   title = 'Login',
   className = 'unlock-page',
-  shouldRenderDefaultCss = true,
   LedgerLoginButtonText = 'Ledger',
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'Maiar',
   ExtensionLoginButtonText = 'Extension',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper: `${styles.home} ${globalStyles.dFlex} ${globalStyles.flexFill} ${globalStyles.alignItemsCenter}`,
-      title: globalStyles.mb4,
-      description: globalStyles.mb4,
-      cardContainer: globalStyles.mAuto,
-      card: `${globalStyles.card} ${globalStyles.my4} ${globalStyles.textCenter}`,
-      cardBody: `${globalStyles.cardBody} ${globalStyles.py4} ${globalStyles.px2} ${globalStyles.pxSm2} ${globalStyles.mxLg4}`
-    }
-  );
+  const generatedClasses = getGeneratedClasses(className, {
+    wrapper: `${styles.home} ${globalStyles.dFlex} ${globalStyles.flexFill} ${globalStyles.alignItemsCenter}`,
+    title: globalStyles.mb4,
+    description: globalStyles.mb4,
+    cardContainer: globalStyles.mAuto,
+    card: `${globalStyles.card} ${globalStyles.my4} ${globalStyles.textCenter}`,
+    cardBody: `${globalStyles.cardBody} ${globalStyles.py4} ${globalStyles.px2} ${globalStyles.pxSm2} ${globalStyles.mxLg4}`
+  });
   const { isLoggedIn } = useGetLoginInfo();
 
   React.useEffect(() => {

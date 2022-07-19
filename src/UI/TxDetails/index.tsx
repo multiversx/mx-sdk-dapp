@@ -21,7 +21,6 @@ export interface TxDetailsProps {
   isTimedOut?: boolean;
   transactions?: SignedTransactionType[];
   className?: string;
-  shouldRenderDefaultCss?: boolean;
 }
 export const TxDetails = ({
   title,

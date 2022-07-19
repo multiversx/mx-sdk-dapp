@@ -9,29 +9,23 @@ export interface IconStateProps {
   icon: IconProp;
   className?: string;
   iconSize?: '2x' | '3x' | '5x';
-  shouldRenderDefaultCss?: boolean;
 }
 
 export const IconState = ({
   icon,
   iconSize = '3x',
-  className = 'icon-state',
-  shouldRenderDefaultCss = true
+  className = 'icon-state'
 }: IconStateProps) => {
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper: classNames(
-        `${globalStyles.iconState} ${globalStyles.mxAuto}`,
-        className,
-        {
-          half: iconSize === '2x'
-        }
-      ),
-      icon: classNames(globalStyles.textWhite, className)
-    }
-  );
+  const generatedClasses = getGeneratedClasses(className, {
+    wrapper: classNames(
+      `${globalStyles.iconState} ${globalStyles.mxAuto}`,
+      className,
+      {
+        half: iconSize === '2x'
+      }
+    ),
+    icon: classNames(globalStyles.textWhite, className)
+  });
 
   return (
     <span className={generatedClasses.wrapper}>

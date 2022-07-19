@@ -7,25 +7,19 @@ interface PairingListPropsType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   activePairings: PairingTypes.Struct[];
   className: string;
-  shouldRenderDefaultCss: boolean;
 }
 
 export const Pairinglist = ({
   connectExisting,
   activePairings,
-  shouldRenderDefaultCss = true,
   className = 'wallet-connect-pairing-list'
 }: PairingListPropsType) => {
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
-      pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
-      pairImage: globalStyles.pairImage,
-      pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
-    }
-  );
+  const generatedClasses = getGeneratedClasses(className, {
+    pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
+    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
+    pairImage: globalStyles.pairImage,
+    pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
+  });
 
   return (
     <div className={generatedClasses.pairsContainer}>

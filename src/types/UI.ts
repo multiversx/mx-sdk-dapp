@@ -18,6 +18,5 @@ export interface ExtensionLoginButtonPropsType {
   buttonClassName?: string;
   callbackRoute?: string;
   loginButtonText?: string;
-  shouldRenderDefaultCss?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
 }
