@@ -8,6 +8,7 @@ import {
   reducers,
   persistIgnoredActions
 } from './webPersistConfig';
+import rootReducer from './reducers';
 
 export const store = configureStore({
   reducer: reducers,
@@ -32,6 +33,9 @@ export const subscription = createSubscription(store);
 
 export const persistor = persistStore(store);
 
+const storeType = configureStore({ reducer: rootReducer });
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>;
+export type StoreType = typeof storeType;
+export type RootState = ReturnType<ReturnType<typeof storeType.getState>>;
 export type AppDispatch = typeof store.dispatch;
