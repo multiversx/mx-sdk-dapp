@@ -40,7 +40,7 @@ export const PageState = ({
     iconContainer: classNames(
       `${globalStyles.iconState} ${globalStyles.mxAuto}`,
       {
-        [`${iconBgClass}`]: Boolean(iconBgClass)
+        [iconBgClass ?? '']: Boolean(iconBgClass)
       }
     ),
     iconClass: classNames(iconClass != null && iconClass),
