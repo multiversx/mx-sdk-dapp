@@ -16,7 +16,7 @@ export const SignWithWalletConnectModal = ({
   transactions,
   className = 'wallet-connect-modal'
 }: SignModalPropsType) => {
-  const classes = getGeneratedClasses(className, true, {
+  const classes = getGeneratedClasses(className, {
     wrapper: classNames(styles.modalContainer, styles.walletConnect),
     icon: globalStyles.textWhite,
     closeBtn: classNames(

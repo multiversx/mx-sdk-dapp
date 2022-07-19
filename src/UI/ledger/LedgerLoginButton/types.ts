@@ -10,8 +10,6 @@ export interface LedgerLoginButtonPropsType {
   callbackRoute?: string;
   loginButtonText?: string;
   wrapContentInsideModal?: boolean;
-  shouldRenderDefaultCss?: boolean;
-  shouldRenderDefaultModalCss?: boolean;
   hideButtonWhenModalOpens?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
 }

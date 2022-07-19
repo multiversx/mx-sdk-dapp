@@ -9,7 +9,6 @@ export interface WebWalletLoginButtonPropsType {
   buttonClassName?: string;
   children?: ReactNode;
   loginButtonText?: string;
-  shouldRenderDefaultCss?: boolean;
 }
 
 export const WebWalletLoginButton: (
@@ -20,8 +19,7 @@ export const WebWalletLoginButton: (
   className = 'web-wallet-login',
   callbackRoute,
   buttonClassName,
-  loginButtonText = 'Elrond Web Wallet',
-  shouldRenderDefaultCss = true
+  loginButtonText = 'Elrond Web Wallet'
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({
     callbackRoute,
@@ -35,7 +33,6 @@ export const WebWalletLoginButton: (
   return (
     <LoginButton
       onLogin={handleLogin}
-      shouldRenderDefaultCss={shouldRenderDefaultCss}
       customClassName={className}
       btnClassName={buttonClassName}
       text={loginButtonText}

@@ -15,7 +15,6 @@ const ledgerWaitingText = 'Waiting for device';
 interface LedgerLoginContainerPropsType {
   callbackRoute?: string;
   className?: string;
-  shouldRenderDefaultCss?: boolean;
   wrapContentInsideModal?: boolean;
   token?: string;
   onClose?: () => void;
@@ -25,17 +24,14 @@ interface LedgerLoginContainerPropsType {
 export const LedgerLoginContainer = ({
   callbackRoute,
   className = 'login-modal-content',
-  shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   onClose,
   onLoginRedirect,
   token
 }: LedgerLoginContainerPropsType) => {
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    { spinner: `fa-spin ${globalStyles.textPrimary}` }
-  );
+  const generatedClasses = getGeneratedClasses(className, {
+    spinner: `fa-spin ${globalStyles.textPrimary}`
+  });
   const { ledgerAccount } = useGetAccountInfo();
   const [
     onStartLogin,
@@ -72,7 +68,6 @@ export const LedgerLoginContainer = ({
           accounts={accounts}
           loading={isLoading}
           className={className}
-          shouldRenderDefaultCss={shouldRenderDefaultCss}
           onGoToNextPage={onGoToNextPage}
           onGoToPrevPage={onGoToPrevPage}
           onSelectAddress={onSelectAddress}

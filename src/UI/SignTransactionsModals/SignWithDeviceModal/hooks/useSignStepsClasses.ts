@@ -5,12 +5,11 @@ import { useMemo } from 'react';
 
 export const useSignStepsClasses = (
   className: string,
-  scamReport: string | null = null,
-  shouldRenderDefaultCss = true
+  scamReport: string | null = null
 ) => {
   return useMemo(
     () =>
-      getGeneratedClasses(className, shouldRenderDefaultCss, {
+      getGeneratedClasses(className, {
         formGroup: classNames(
           globalStyles.formGroup,
           globalStyles.textBreak,
@@ -85,6 +84,6 @@ export const useSignStepsClasses = (
           globalStyles.ml2
         )
       }),
-    [className, scamReport, shouldRenderDefaultCss]
+    [className, scamReport]
   );
 };
