@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   customToastsSelector,
   transactionToastsSelector
@@ -155,9 +155,7 @@ export const TransactionsToastList = ({
     )
   );
 
-  const clearNotPendingTransactionsFromStorage = (e: BeforeUnloadEvent) => {
-    e.preventDefault();
-
+  const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());
     toasts.forEach((transactionToast: TransactionToastType) => {
       const currentTx: SignedTransactionsBodyType =

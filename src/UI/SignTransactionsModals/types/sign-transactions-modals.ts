@@ -18,5 +18,6 @@ export type CustomConfirmScreensType = {
   Ledger?: ScreenType;
   Extension?: ScreenType;
   WalletConnect?: ScreenType;
+  Wallet?: ScreenType;
   Extra?: ScreenType;
 };
