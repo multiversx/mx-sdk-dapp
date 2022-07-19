@@ -14,6 +14,7 @@ import {
   getIsTransactionSuccessful,
   getIsTransactionTimedOut
 } from 'utils';
+import { RootState } from 'reduxStore/store';
 
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;
@@ -46,7 +47,7 @@ export function useTrackTransactionStatus({
 
   const transactionId = isWalletProvider ? walletSessionId : txId;
 
-  const transactionsBatch = useSelector((state) =>
+  const transactionsBatch = useSelector((state: RootState) =>
     transactionStatusSelector(state, transactionId)
   );
 
