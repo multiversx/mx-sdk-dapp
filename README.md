@@ -637,7 +637,7 @@ dapp-core also exposes a toast component for tracking transactions that uses the
 The toasts list is exposed via **TransactionsToastList** UI component and can be used just by rendering it inside the application.
 `TransactionToastList` component renders also custom toasts. A custom toast can be added using the util function: `addNewCustomToast` and can be removed using `deleteCustomToast`
 
-When `TransactionToastList` is used also for custom toasts, is enough to call `addNewCustomToast` for displaying in the list;
+When `TransactionToastList` is also used for displaying custom toasts, is enough to call `addNewCustomToast` to add new custom toast to the list;
 
 ```
 <App>
