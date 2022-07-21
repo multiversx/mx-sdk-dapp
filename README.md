@@ -917,6 +917,8 @@ import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
 etc
 ```
 
+**Important**: `shouldRenderDefaultCss` was removed from all components.
+
 
 ## Roadmap
 
