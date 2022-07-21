@@ -26,7 +26,6 @@ export const useTransactionToast = ({
   startTimestamp,
   endTimeProgress,
   className = 'dApp-transaction-toast',
-  shouldRenderDefaultCss = true,
   onDelete
 }: TransactionToastDefaultProps) => {
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
@@ -54,9 +53,7 @@ export const useTransactionToast = ({
   }, []);
 
   const progress = { startTime, endTime };
-  const style = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    ...styles
-  });
+  const style = getGeneratedClasses(className, styles);
 
   const isPending = getIsTransactionPending(status);
   const isTimedOut = getIsTransactionTimedOut(status);
@@ -73,7 +70,10 @@ export const useTransactionToast = ({
   };
 
   useEffect(() => {
-    if (status !== TransactionBatchStatusesEnum.success || !lifetimeAfterSuccess) {
+    if (
+      status !== TransactionBatchStatusesEnum.success ||
+      !lifetimeAfterSuccess
+    ) {
       return;
     }
 

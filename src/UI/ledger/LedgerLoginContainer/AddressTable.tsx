@@ -22,7 +22,6 @@ interface AddressTablePropsType {
   startIndex: number;
   selectedAddress?: string;
   className: string;
-  shouldRenderDefaultCss: boolean;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
@@ -38,10 +37,9 @@ export const AddressTable = ({
   onGoToNextPage,
   onConfirmSelectedAddress,
   onSelectAddress,
-  shouldRenderDefaultCss = true,
   className = 'ledger-address-table'
 }: AddressTablePropsType) => {
-  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
+  const classes = getGeneratedClasses(className, {
     wrapper: `${globalStyles.card} ${globalStyles.px4}`,
     cardBody: `${globalStyles.cardBody} ${globalStyles.p4}`,
     tableWrapper: globalStyles.tableResponsive,

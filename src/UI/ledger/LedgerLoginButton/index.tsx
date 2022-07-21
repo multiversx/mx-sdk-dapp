@@ -16,8 +16,6 @@ export const LedgerLoginButton: (
   buttonClassName = 'ledger-login-button',
   className = 'ledger-login',
   wrapContentInsideModal = true,
-  shouldRenderDefaultCss = true,
-  shouldRenderDefaultModalCss = true,
   hideButtonWhenModalOpens = false,
   onLoginRedirect
 }) => {
@@ -43,7 +41,6 @@ export const LedgerLoginButton: (
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          shouldRenderDefaultCss={shouldRenderDefaultCss}
           customClassName={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
@@ -54,7 +51,6 @@ export const LedgerLoginButton: (
       {canShowLoginModal && (
         <LedgerLoginContainer
           className={className}
-          shouldRenderDefaultCss={shouldRenderDefaultModalCss}
           callbackRoute={callbackRoute}
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}

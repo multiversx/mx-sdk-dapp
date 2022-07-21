@@ -16,7 +16,6 @@ export interface PageStateProps {
   iconSize?: SizeProp;
   iconBgClass?: string;
   action?: React.ReactNode;
-  shouldRenderDefaultCss?: boolean;
   description?: string | React.ReactNode;
 }
 
@@ -29,30 +28,25 @@ export const PageState = ({
   description,
   iconBgClass,
   iconSize = '5x',
-  className = 'page-state',
-  shouldRenderDefaultCss = true
+  className = 'page-state'
 }: PageStateProps) => {
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper: classNames(
-        styles.state,
-        globalStyles.mAuto,
-        globalStyles.p4,
-        globalStyles.textCenter
-      ),
-      iconContainer: classNames(
-        `${globalStyles.iconState} ${globalStyles.mxAuto}`,
-        {
-          [`${iconBgClass}`]: Boolean(iconBgClass)
-        }
-      ),
-      iconClass: classNames(iconClass != null && iconClass),
-      title: classNames(globalStyles.h4, globalStyles.my4),
-      description: globalStyles.mb3
-    }
-  );
+  const generatedClasses = getGeneratedClasses(className, {
+    wrapper: classNames(
+      styles.state,
+      globalStyles.mAuto,
+      globalStyles.p4,
+      globalStyles.textCenter
+    ),
+    iconContainer: classNames(
+      `${globalStyles.iconState} ${globalStyles.mxAuto}`,
+      {
+        [iconBgClass ?? '']: Boolean(iconBgClass)
+      }
+    ),
+    iconClass: classNames(iconClass != null && iconClass),
+    title: classNames(globalStyles.h4, globalStyles.my4),
+    description: globalStyles.mb3
+  });
 
   return (
     <div className={generatedClasses.wrapper} data-testid={dataTestId}>

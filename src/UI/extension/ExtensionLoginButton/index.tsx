@@ -16,7 +16,6 @@ export const ExtensionLoginButton: (
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Maiar DeFi Wallet',
-  shouldRenderDefaultCss = true,
   onLoginRedirect
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
@@ -26,7 +25,7 @@ export const ExtensionLoginButton: (
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
-  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
+  const classes = getGeneratedClasses(className, {
     noExtensionButtonWrapper: styles.noExtensionButtonWrapper,
     noExtensionButtonContent: styles.noExtensionButtonContent,
     noExtensionButtonTitle: styles.noExtensionButtonTitle,
@@ -65,7 +64,6 @@ export const ExtensionLoginButton: (
       onLogin={handleLogin}
       customClassName={className}
       btnClassName={buttonClassName}
-      shouldRenderDefaultCss={shouldRenderDefaultCss}
       text={loginButtonText}
     >
       {children}

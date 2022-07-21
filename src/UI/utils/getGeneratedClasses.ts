@@ -2,7 +2,6 @@ import classNames from 'classnames';
 
 export function getGeneratedClasses(
   className: string,
-  shouldRenderDefaultCss: boolean,
   defaultStyles: Record<string, string>
 ) {
   if (typeof classNames != 'function') {
@@ -12,7 +11,7 @@ export function getGeneratedClasses(
     (acc, [key, defaultClassNames]) => {
       acc[key] = classNames?.({
         [`${className}_${key}`]: Boolean(className),
-        [defaultClassNames]: shouldRenderDefaultCss
+        [defaultClassNames]: true
       });
       return acc;
     },
