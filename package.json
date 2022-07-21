@@ -7,7 +7,7 @@
   "repository": "ElrondNetwork/dapp-core",
   "main": "./",
   "module": "./",
-  "types": "./dist/types/*",
+  "types": "./types/*",
   "engines": {
     "node": ">=16"
   },
@@ -121,11 +121,9 @@
     "**/*.d.ts"
   ],
   "exports": {
-    ".": {
-      "browser": "./esm/*",
-      "require": "./cjs/*",
-      "import": "./esm/*"
-    }
+    "default": "./esm",
+    "require": "./cjs",
+    "import": "./esm"
   },
   "dependencies": {
     "@elrondnetwork/erdjs": "10.2.7",
