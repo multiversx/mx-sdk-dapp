@@ -8,10 +8,12 @@ module.exports = {
     '^.+\\.scss$': 'jest-scss-transform'
   },
   moduleNameMapper: {
-    '.+\\.(css|styl|less|sass|png|jpg|ttf|woff|woff2)$': 'identity-obj-proxy'
+    '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':
+      'identity-obj-proxy'
   },
   moduleNameMapper: {
     uint8arrays: '<rootDir>/node_modules/uint8arrays/cjs/src',
     multiformats: '<rootDir>/node_modules/multiformats/cjs/src'
-  }
+  },
+  setupFiles: ['<rootDir>/src/setupTests.js']
 };
