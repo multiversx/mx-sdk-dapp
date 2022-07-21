@@ -117,13 +117,9 @@
     "**/*.d.ts"
   ],
   "exports": {
-    "./constants/index": {
-      "import": "./constants/index.js",
-      "require": "./cjs/constants/index.js"
-    },
-    "./utils/operations/denominate": {
-      "import": "./utils/operations/denominate.js",
-      "require": "./cjs/utils/operations/denominate.js"
+    "./*": {
+      "import": "./*.js",
+      "require": "./cjs/*.js"
     }
   },
   "dependencies": {
