@@ -8,49 +8,71 @@ const { sassPlugin, postcssModules } = require('esbuild-sass-plugin');
 
 const basedir = 'src';
 
-module.exports = function executeBuildCommand(customOptions = {}) {
-  glob('{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}', function(err, files) {
-    if (err) {
-      console.log('error reading files', err);
-    }
+const buildTypes = {
+  cjs: {
+    splitting: false,
+    format: 'cjs',
+    tsconfig: './tsconfig.cjs.json',
+    destination: '/cjs'
+  },
+  esm: {
+    splitting: true,
+    format: 'esm',
+    tsconfig: './tsconfig.esm.json',
+    destination: ''
+  }
+};
 
-    esbuild
-      .build({
-        entryPoints: files,
-        outdir: 'dist',
-        treeShaking: true,
-        minify: true,
-        bundle: true,
-        sourcemap: true,
-        splitting: true,
-        chunkNames: '__chunks__/[name]-[hash]',
-        format: 'esm',
-        target: ['es2015'],
-        tsconfig: './tsconfig.json',
-        platform: 'node',
-        inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
-        define: {
-          global: 'global',
-          process: 'process',
-          Buffer: 'Buffer',
-          'process.env.NODE_ENV': `"production"`
-        },
-        plugins: [
-          svgrPlugin(),
-          plugin(stdLibBrowser),
-          nodeExternalsPlugin(),
-          sassPlugin({
-            loadPaths: [`./${basedir}`, 'node_modules'],
-            basedir,
-            transform: postcssModules({
+module.exports = function esbuildWrapper(buildType = 'esm') {
+  const { format, splitting, tsconfig, destination } = buildTypes[buildType];
+
+  return function executeBuildCommand(customOptions = {}) {
+    glob('{./src/**/*.tsx,./src/**/*.ts,./src/**/*.scss}', function(
+      err,
+      files
+    ) {
+      if (err) {
+        console.log('error reading files', err);
+      }
+
+      esbuild
+        .build({
+          entryPoints: files,
+          splitting,
+          format,
+          outdir: `dist${destination}`,
+          treeShaking: true,
+          minify: true,
+          bundle: true,
+          sourcemap: true,
+          chunkNames: '__chunks__/[name]-[hash]',
+          target: ['es2015'],
+          tsconfig,
+          platform: 'node',
+          inject: [require.resolve('node-stdlib-browser/helpers/esbuild/shim')],
+          define: {
+            global: 'global',
+            process: 'process',
+            Buffer: 'Buffer',
+            'process.env.NODE_ENV': `"production"`
+          },
+          plugins: [
+            svgrPlugin(),
+            plugin(stdLibBrowser),
+            nodeExternalsPlugin(),
+            sassPlugin({
+              loadPaths: [`./${basedir}`, 'node_modules'],
               basedir,
-              localsConvention: 'dashes',
-              generateScopedName: 'dapp-core-component__[name]__[local]'
+              transform: postcssModules({
+                basedir,
+                localsConvention: 'dashes',
+                generateScopedName: 'dapp-core-component__[name]__[local]'
+              })
             })
-          })
-        ],
-        ...customOptions
-      })
-      .catch(() => process.exit(1));
-  });
+          ],
+          ...customOptions
+        })
+        .catch(() => process.exit(1));
+    });
+  };
 };

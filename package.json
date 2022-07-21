@@ -5,20 +5,21 @@
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
-  "main": "./",
-  "module": "./",
+  "main": "./esm",
+  "module": "./esm",
   "types": "./dist",
   "engines": {
     "node": ">=16"
   },
   "scripts": {
     "start": "yarn watch",
-    "build:types": "tsc --project tsconfig.json",
-    "build": "rimraf dist && node esbuild.js && yarn build:types && cp package.json dist && cp README.md dist",
+    "build:esmtypes": "tsc --project tsconfig.esm.json",
+    "build:cjstypes": "tsc --project tsconfig.cjs.json",
+    "build": "rimraf dist && node esbuild.js && yarn build:esmtypes && yarn build:cjstypes && cp package.json dist && cp README.md dist",
     "publish-package": "yarn build && cd dist && npm publish",
     "publish-package-next": "yarn build && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish",
-    "watch": "yarn node esbuild-watch.js && yarn build:types -- --watch"
+    "watch": "yarn node esbuild-watch.js && yarn build:esmtypes && yarn build:cjstypes -- --watch"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.2",
@@ -115,6 +116,16 @@
     "*.d.ts",
     "**/*.d.ts"
   ],
+  "exports": {
+    "./constants/index": {
+      "import": "./constants/index.js",
+      "require": "./cjs/constants/index.js"
+    },
+    "./utils/operations/denominate": {
+      "import": "./utils/operations/denominate.js",
+      "require": "./cjs/utils/operations/denominate.js"
+    }
+  },
   "dependencies": {
     "@elrondnetwork/erdjs": "10.2.7",
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
