@@ -6,7 +6,10 @@ import {
   decimals as configDecimals
 } from 'constants/index';
 import { DenominateType } from 'types/UI';
-import { denominate, getEgldLabel, stringIsInteger } from 'utils';
+import { getEgldLabel } from 'utils/network/getEgldLabel';
+import { stringIsInteger } from 'utils/validation';
+import { denominate } from 'utils/operations';
+
 import styles from './denominate.scss';
 
 const denominateInvalid = (props: DenominateType) => {
@@ -16,7 +19,9 @@ const denominateInvalid = (props: DenominateType) => {
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
     >
-      <span className={styles.intAmount}>...</span>
+      <span className={styles['int-amount']} data-testid='denominateIntAmount'>
+        ...
+      </span>
     </span>
   );
 };
@@ -56,9 +61,13 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
     >
-      <span className={styles.intAmount}>{valueParts[0]}</span>
+      <span className={styles['int-amount']} data-testid='denominateIntAmount'>
+        {valueParts[0]}
+      </span>
       {valueParts.length > 1 && (
-        <span className={styles.decimals}>.{valueParts[1]}</span>
+        <span className={styles.decimals} data-testid='denominateDecimals'>
+          .{valueParts[1]}
+        </span>
       )}
       {showLabel && (
         <span
@@ -66,6 +75,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
             styles.symbol,
             props.token && globalStyles.textMuted
           )}
+          data-testid='denominateSymbol'
         >
           &nbsp;{props.token ? props.token : erdLabel}
         </span>
@@ -85,5 +95,6 @@ const DenominateComponent = (props: DenominateType) => {
 export const Denominate = (props: DenominateType) => {
   const egldLabel = props.egldLabel || getEgldLabel();
   const denominateProps = { ...props, egldLabel };
+
   return <DenominateComponent {...denominateProps} />;
 };
