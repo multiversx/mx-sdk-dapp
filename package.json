@@ -116,10 +116,19 @@
   ],
   "files": [
     "*.js",
+    "*.js",
     "**/*.js",
     "*.d.ts",
     "**/*.d.ts"
   ],
+  "typesVersions": {
+    "*": {
+      "*": [
+        "types",
+        "types/*"
+      ]
+    }
+  },
   "exports": {
     "default": "./esm",
     "require": "./cjs",
