@@ -183,7 +183,8 @@ export const useWalletConnectV2Login = ({
 
     try {
       const { approval } = await providerRef.current?.connect({
-        topic: pairing.topic
+        topic: pairing.topic,
+        token
       });
       if (token) {
         dispatch(setTokenLogin({ loginToken: token }));
@@ -210,19 +211,15 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
-    const { uri, approval } = await providerRef.current?.connect();
+    const { uri, approval } = await providerRef.current?.connect({ token });
     const hasUri = Boolean(uri);
 
     if (!hasUri) {
       return;
     }
 
-    if (!token) {
-      setWcUri(uri);
-    } else {
-      const wcUriWithToken = `${uri}&token=${token}`;
-
-      setWcUri(wcUriWithToken);
+    setWcUri(uri);
+    if (token) {
       dispatch(setTokenLogin({ loginToken: token }));
     }
 
