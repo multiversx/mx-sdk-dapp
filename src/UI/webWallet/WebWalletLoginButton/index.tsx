@@ -9,6 +9,7 @@ export interface WebWalletLoginButtonPropsType {
   buttonClassName?: string;
   children?: ReactNode;
   loginButtonText?: string;
+  disabled?: boolean;
 }
 
 export const WebWalletLoginButton: (
@@ -19,7 +20,8 @@ export const WebWalletLoginButton: (
   className = 'web-wallet-login',
   callbackRoute,
   buttonClassName,
-  loginButtonText = 'Elrond Web Wallet'
+  loginButtonText = 'Elrond Web Wallet',
+  disabled
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({
     callbackRoute,
@@ -36,6 +38,7 @@ export const WebWalletLoginButton: (
       customClassName={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
+      disabled={disabled}
     >
       {children}
     </LoginButton>
