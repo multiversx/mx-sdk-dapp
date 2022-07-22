@@ -7,7 +7,6 @@
   "repository": "ElrondNetwork/dapp-core",
   "main": "./",
   "module": "./",
-  "types": "./",
   "engines": {
     "node": ">=16"
   },
@@ -19,7 +18,9 @@
     "publish-package": "yarn build && cd dist && npm publish",
     "publish-package-next": "yarn build && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish",
-    "watch": "yarn node esbuild-watch.js && yarn build:esmtypes && yarn build:cjstypes -- --watch"
+    "watch": "yarn node esbuild-watch.js && yarn build:esmtypes && yarn build:cjstypes -- --watch",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.2",
