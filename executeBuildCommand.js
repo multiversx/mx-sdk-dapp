@@ -13,12 +13,12 @@ const buildTypes = {
     splitting: false,
     format: 'cjs',
     tsconfig: './tsconfig.cjs.json',
-    destination: '/cjs'
+    destination: '/__commonjs'
   },
   esm: {
     splitting: true,
     format: 'esm',
-    tsconfig: './tsconfig.esm.json',
+    tsconfig: './tsconfig.json',
     destination: ''
   }
 };

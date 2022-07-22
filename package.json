@@ -12,7 +12,7 @@
   },
   "scripts": {
     "start": "yarn watch",
-    "build:esmtypes": "tsc --project tsconfig.esm.json",
+    "build:esmtypes": "tsc --project tsconfig.json",
     "build:cjstypes": "tsc --project tsconfig.cjs.json",
     "build": "rimraf dist && node esbuild.js && yarn build:esmtypes && yarn build:cjstypes && cp package.json dist && cp README.md dist",
     "publish-package": "yarn build && cd dist && npm publish",
@@ -99,11 +99,6 @@
     "qrcode": "1.5.0",
     "swr": "1.1.2"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "dts lint"
-    }
-  },
   "size-limit": [
     {
       "path": "dist/dapp-core.cjs.production.min.js",
@@ -124,7 +119,7 @@
   "exports": {
     "./*": {
       "import": "./*.js",
-      "require": "./cjs/*.js",
+      "require": "./__commonjs/*.js",
       "default": "./*.js"
     }
   },
