@@ -5,9 +5,9 @@
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
   "repository": "ElrondNetwork/dapp-core",
-  "main": "./esm",
-  "module": "./esm",
-  "types": "./dist",
+  "main": "./",
+  "module": "./",
+  "types": "./",
   "engines": {
     "node": ">=16"
   },
