@@ -19,7 +19,6 @@ export interface WalletConnectLoginModalPropsType {
   callbackRoute?: string;
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
-  shouldRenderDefaultCss?: boolean;
   isWalletConnectV2?: boolean;
   token?: string;
   onLoginRedirect?: (callbackRoute: string) => void;
@@ -33,7 +32,6 @@ export const WalletConnectLoginContainer = ({
   logoutRoute = '/unlock',
   className = 'wallet-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
-  shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   isWalletConnectV2 = false,
   token,
@@ -74,27 +72,23 @@ export const WalletConnectLoginContainer = ({
       ) ?? []
     : [];
 
-  const generatedClasses = getGeneratedClasses(
-    className,
-    shouldRenderDefaultCss,
-    {
-      wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.m1} ${globalStyles.mx3}`,
-      loginText: globalStyles.textLeft,
-      container: `${globalStyles.mAuto} ${styles.loginContainer}`,
-      card: `${globalStyles.card} ${globalStyles.my3} ${globalStyles.textCenter}`,
-      cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
-      qrCodeSvgContainer: `${globalStyles.qrCodeSvgContainer} ${globalStyles.mxAuto} ${globalStyles.mb3}`,
-      title: globalStyles.mb3,
-      leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
-      mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
-      mobileLoginButtonIcon: globalStyles.mr2,
-      errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
-      pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
-      pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
-      pairImage: globalStyles.pairImage,
-      pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
-    }
-  );
+  const generatedClasses = getGeneratedClasses(className, {
+    wrapper: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.m1} ${globalStyles.mx3}`,
+    loginText: globalStyles.textLeft,
+    container: `${globalStyles.mAuto} ${styles.loginContainer}`,
+    card: `${globalStyles.card} ${globalStyles.my3} ${globalStyles.textCenter}`,
+    cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
+    qrCodeSvgContainer: `${globalStyles.qrCodeSvgContainer} ${globalStyles.mxAuto} ${globalStyles.mb3}`,
+    title: globalStyles.mb3,
+    leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
+    mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
+    mobileLoginButtonIcon: globalStyles.mr2,
+    errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
+    pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
+    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
+    pairImage: globalStyles.pairImage,
+    pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
+  });
 
   const generateQRCode = async () => {
     const canGenerateQRCodeForWC2 = isWalletConnectV2 && walletConnectUriV2;
@@ -175,7 +169,6 @@ export const WalletConnectLoginContainer = ({
                 activePairings={activePairings}
                 connectExisting={connectExisting}
                 className={className}
-                shouldRenderDefaultCss={shouldRenderDefaultCss}
               />
             )}
             <div>

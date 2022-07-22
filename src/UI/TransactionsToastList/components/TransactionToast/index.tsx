@@ -19,7 +19,6 @@ export type TransactionToastPropsType = {
 export const TransactionToast = ({
   toastId,
   title = '',
-  shouldRenderDefaultCss = true,
   className = 'transaction-toast',
   onDelete,
   startTimestamp,
@@ -44,7 +43,6 @@ export const TransactionToast = ({
     transactions,
     status,
     lifetimeAfterSuccess,
-    shouldRenderDefaultCss,
     className,
     startTimestamp,
     endTimeProgress,

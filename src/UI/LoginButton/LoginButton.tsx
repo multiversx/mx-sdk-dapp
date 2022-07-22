@@ -9,8 +9,8 @@ type LoginButtonProps = {
   text?: string;
   customClassName?: string;
   btnClassName?: string;
-  shouldRenderDefaultCss?: boolean;
   children?: React.ReactNode;
+  disabled?: boolean;
 };
 
 export const LoginButton = ({
@@ -18,10 +18,10 @@ export const LoginButton = ({
   text = 'Default Login Button',
   customClassName = '',
   btnClassName = 'default-login-button',
-  shouldRenderDefaultCss = true,
+  disabled,
   children
 }: LoginButtonProps) => {
-  const classes = getGeneratedClasses(customClassName, shouldRenderDefaultCss, {
+  const classes = getGeneratedClasses(customClassName, {
     wrapper: classNames(
       globalStyles.btn,
       globalStyles.btnPrimary,
@@ -32,16 +32,12 @@ export const LoginButton = ({
         [btnClassName]: btnClassName != null
       }
     ),
-    loginText: styles.loginText,
-    noExtensionButtonWrapper: styles.buttonWrapper,
-    noExtensionButtonContent: styles.buttonContent,
-    noExtensionButtonTitle: styles.buttonTitle,
-    noExtensionButtonIcon: styles.buttonIcon
+    loginText: styles.loginText
   });
 
   return (
-    <button onClick={onLogin} className={classes.wrapper}>
-      {children || <span className={styles.loginText}>{text}</span>}
+    <button disabled={disabled} className={classes.wrapper} onClick={onLogin}>
+      {children || <span className={classes.loginText}>{text}</span>}
     </button>
   );
 };

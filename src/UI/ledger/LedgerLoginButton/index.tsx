@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import { LedgerLoginButtonPropsType } from './types';
+
+export interface LedgerLoginButtonPropsType {
+  token?: string;
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  className?: string;
+  buttonClassName?: string;
+  callbackRoute?: string;
+  loginButtonText?: string;
+  wrapContentInsideModal?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
+}
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
@@ -16,10 +30,9 @@ export const LedgerLoginButton: (
   buttonClassName = 'ledger-login-button',
   className = 'ledger-login',
   wrapContentInsideModal = true,
-  shouldRenderDefaultCss = true,
-  shouldRenderDefaultModalCss = true,
   hideButtonWhenModalOpens = false,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -43,10 +56,10 @@ export const LedgerLoginButton: (
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          shouldRenderDefaultCss={shouldRenderDefaultCss}
           customClassName={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          disabled={disabled}
         >
           {children}
         </LoginButton>
@@ -54,7 +67,6 @@ export const LedgerLoginButton: (
       {canShowLoginModal && (
         <LedgerLoginContainer
           className={className}
-          shouldRenderDefaultCss={shouldRenderDefaultModalCss}
           callbackRoute={callbackRoute}
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}

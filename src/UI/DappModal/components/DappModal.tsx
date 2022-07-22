@@ -5,6 +5,7 @@ import { DappModalConfig } from '../types';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
+import classNames from 'classnames';
 
 type DappModalProps = {
   id?: string;
@@ -39,12 +40,12 @@ export const DappModal: React.FC<DappModalProps> = ({
     showFooter,
     headerText,
     footerText,
-    modalDialogClassName,
-    modalContentClassName,
-    modalHeaderClassName,
-    modalCloseButtonClassName,
-    modalBodyClassName,
-    modalFooterClassName,
+    modalDialogClassName = '',
+    modalContentClassName = '',
+    modalHeaderClassName = '',
+    modalCloseButtonClassName = '',
+    modalBodyClassName = '',
+    modalFooterClassName = '',
     customModalHeader,
     customModalFooter
   } = config;
@@ -54,9 +55,11 @@ export const DappModal: React.FC<DappModalProps> = ({
       id={id}
       role='dialog'
       aria-modal='true'
-      className={`${styles.dappModal} ${modalDialogClassName}`}
+      className={classNames(styles.dappModal, modalDialogClassName)}
     >
-      <div className={`${styles.dappModalContent} ${modalContentClassName}`}>
+      <div
+        className={classNames(styles.dappModalContent, modalContentClassName)}
+      >
         <DappModalHeader
           visible={showHeader}
           headerText={headerText}

@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
-import { ExtensionLoginButtonPropsType } from 'types';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { getGeneratedClasses } from 'UI/utils';
 import styles from './login-button.scss';
+
+export interface ExtensionLoginButtonPropsType {
+  token?: string;
+  children?: ReactNode;
+  className?: string;
+  buttonClassName?: string;
+  callbackRoute?: string;
+  loginButtonText?: string;
+  onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
+}
 
 export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
@@ -16,8 +26,8 @@ export const ExtensionLoginButton: (
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Maiar DeFi Wallet',
-  shouldRenderDefaultCss = true,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
@@ -26,7 +36,7 @@ export const ExtensionLoginButton: (
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
-  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
+  const classes = getGeneratedClasses(className, {
     noExtensionButtonWrapper: styles.noExtensionButtonWrapper,
     noExtensionButtonContent: styles.noExtensionButtonContent,
     noExtensionButtonTitle: styles.noExtensionButtonTitle,
@@ -65,8 +75,8 @@ export const ExtensionLoginButton: (
       onLogin={handleLogin}
       customClassName={className}
       btnClassName={buttonClassName}
-      shouldRenderDefaultCss={shouldRenderDefaultCss}
       text={loginButtonText}
+      disabled={disabled}
     >
       {children}
     </LoginButton>

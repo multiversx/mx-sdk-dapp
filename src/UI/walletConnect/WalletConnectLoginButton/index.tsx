@@ -14,12 +14,12 @@ export interface WalletConnectLoginButtonPropsType {
   callbackRoute?: string;
   loginButtonText?: string;
   buttonClassName?: string;
-  shouldRenderDefaultCss?: boolean;
   wrapContentInsideModal?: boolean;
   hideButtonWhenModalOpens?: boolean;
   token?: string;
   isWalletConnectV2?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
 }
 
 export const WalletConnectLoginButton = ({
@@ -30,7 +30,6 @@ export const WalletConnectLoginButton = ({
   loginButtonText = 'Maiar App',
   title = 'Maiar Login',
   logoutRoute = '/unlock',
-  shouldRenderDefaultCss = true,
   wrapContentInsideModal = true,
   buttonClassName = 'wallet-connect-login-button',
   className = 'wallet-connect-login',
@@ -38,7 +37,8 @@ export const WalletConnectLoginButton = ({
   token,
   hideButtonWhenModalOpens = false,
   isWalletConnectV2 = false,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -61,10 +61,10 @@ export const WalletConnectLoginButton = ({
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          shouldRenderDefaultCss={shouldRenderDefaultCss}
           customClassName={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          disabled={disabled}
         >
           {children}
         </LoginButton>
