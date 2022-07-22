@@ -10,6 +10,7 @@ type LoginButtonProps = {
   customClassName?: string;
   btnClassName?: string;
   children?: React.ReactNode;
+  disabled?: boolean;
 };
 
 export const LoginButton = ({
@@ -17,6 +18,7 @@ export const LoginButton = ({
   text = 'Default Login Button',
   customClassName = '',
   btnClassName = 'default-login-button',
+  disabled,
   children
 }: LoginButtonProps) => {
   const classes = getGeneratedClasses(customClassName, {
@@ -34,7 +36,7 @@ export const LoginButton = ({
   });
 
   return (
-    <button onClick={onLogin} className={classes.wrapper}>
+    <button disabled={disabled} className={classes.wrapper} onClick={onLogin}>
       {children || <span className={classes.loginText}>{text}</span>}
     </button>
   );

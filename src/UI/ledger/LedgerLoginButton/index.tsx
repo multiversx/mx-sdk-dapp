@@ -1,8 +1,22 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import { LedgerLoginButtonPropsType } from './types';
+
+export interface LedgerLoginButtonPropsType {
+  token?: string;
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  className?: string;
+  buttonClassName?: string;
+  callbackRoute?: string;
+  loginButtonText?: string;
+  wrapContentInsideModal?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
+}
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
@@ -17,7 +31,8 @@ export const LedgerLoginButton: (
   className = 'ledger-login',
   wrapContentInsideModal = true,
   hideButtonWhenModalOpens = false,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -44,6 +59,7 @@ export const LedgerLoginButton: (
           customClassName={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          disabled={disabled}
         >
           {children}
         </LoginButton>

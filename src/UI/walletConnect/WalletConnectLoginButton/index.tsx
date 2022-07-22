@@ -19,6 +19,7 @@ export interface WalletConnectLoginButtonPropsType {
   token?: string;
   isWalletConnectV2?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
 }
 
 export const WalletConnectLoginButton = ({
@@ -36,7 +37,8 @@ export const WalletConnectLoginButton = ({
   token,
   hideButtonWhenModalOpens = false,
   isWalletConnectV2 = false,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -62,6 +64,7 @@ export const WalletConnectLoginButton = ({
           customClassName={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          disabled={disabled}
         >
           {children}
         </LoginButton>
