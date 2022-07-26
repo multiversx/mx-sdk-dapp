@@ -7,3 +7,4 @@ export * from './getAreTransactionsOnSameShard';
 export * from './builtCallbackUrl';
 export * from './parseTransactionAfterSigning';
 export * from './getTransactionLink';
+export * from './getAllTransactionsLink';
