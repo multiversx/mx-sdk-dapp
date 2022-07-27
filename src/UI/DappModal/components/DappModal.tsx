@@ -6,7 +6,7 @@ import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
 import classNames from 'classnames';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 type DappModalProps = {
   id?: string;

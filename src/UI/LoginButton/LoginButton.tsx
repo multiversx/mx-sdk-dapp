@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './login-button.scss';
 import globalStyles from '../../assets/sass/main.scss';
 import classNames from 'classnames';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 type LoginButtonProps = {
   onLogin: () => void;
@@ -32,7 +32,7 @@ export const LoginButton = ({
       }
     ),
     loginText: styles.loginText,
-    className
+    wrapperClassName: className
   };
 
   return (

@@ -9,7 +9,7 @@ import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 import { AddressRow } from './AddressRow';
 import classNames from 'classnames';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 const ledgerWaitingText = 'Waiting for device';
 

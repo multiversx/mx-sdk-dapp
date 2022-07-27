@@ -1,12 +1,13 @@
 import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { SignModalPropsType, WithClassname } from 'types';
+import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { safeRedirect } from 'utils/redirect';
 import styles from './sign-with-wallet-connect-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const SignWithWalletConnectModal = ({
   error,

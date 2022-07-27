@@ -2,7 +2,7 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 interface AddressRowType extends WithClassname {
   selectedAddress?: string;

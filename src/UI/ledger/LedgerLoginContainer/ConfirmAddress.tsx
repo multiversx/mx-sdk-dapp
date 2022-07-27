@@ -2,7 +2,7 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
 import classNames from 'classnames';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const ConfirmAddress = ({
   token,

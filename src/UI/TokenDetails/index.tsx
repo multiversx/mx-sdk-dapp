@@ -5,7 +5,7 @@ import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
 import styles from './token-details.scss';
 import { Combined, Simple } from './TokenSymbol';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');

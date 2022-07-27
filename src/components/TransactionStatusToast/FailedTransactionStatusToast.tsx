@@ -9,7 +9,7 @@ import {
   addFailTransactionToast,
   removeFailTransactionToast
 } from 'reduxStore/slices';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
 
 type ErrorToastProps = {

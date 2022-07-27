@@ -1,11 +1,12 @@
 import React from 'react';
 import { useSignTransactionsWithDevice } from 'hooks';
-import { SignModalPropsType, WithClassname } from 'types';
+import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { SignStep } from './SignStep';
 import styles from './sign-with-device-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const SignWithDeviceModal = ({
   handleClose,

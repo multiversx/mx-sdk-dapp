@@ -1,6 +1,4 @@
-export type WithClassname = {
-  className?: string;
-};
+import { WithClassname } from 'UI/types/with-classname';
 
 export interface DenominateType extends WithClassname {
   value: string;

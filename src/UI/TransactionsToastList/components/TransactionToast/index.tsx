@@ -9,7 +9,7 @@ import {
   TransactionToastDefaultProps
 } from './types';
 import { useTransactionToast } from './hooks/useTransactionToast';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 import styles from './styles.scss';
 
 export type TransactionToastPropsType = {

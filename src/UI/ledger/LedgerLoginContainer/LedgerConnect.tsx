@@ -2,7 +2,7 @@ import React from 'react';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './ledger-connect.scss';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
 
 export const LedgerConnect = ({

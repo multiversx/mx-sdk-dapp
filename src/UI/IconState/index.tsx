@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 export interface IconStateProps extends WithClassname {
   icon: IconProp;

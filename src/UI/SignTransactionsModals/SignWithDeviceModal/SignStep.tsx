@@ -9,11 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 
-import {
-  ActiveLedgerTransactionType,
-  MultiSignTxType,
-  WithClassname
-} from 'types';
+import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
@@ -21,6 +17,7 @@ import { TransactionData } from 'UI/TransactionData';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 import globalStyles from 'assets/sass/main.scss';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+import { WithClassname } from 'UI/types/with-classname';
 
 export interface SignStepType extends WithClassname {
   onSignTransaction: () => void;

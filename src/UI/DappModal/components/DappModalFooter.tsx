@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from '../dapp-modal.scss';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
 
 type DappModalFooterProps = {

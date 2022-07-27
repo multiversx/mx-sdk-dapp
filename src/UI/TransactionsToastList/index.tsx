@@ -6,11 +6,7 @@ import {
   transactionToastsSelector
 } from 'reduxStore/selectors/toastsSelectors';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
-import {
-  SignedTransactionsBodyType,
-  SignedTransactionsType,
-  WithClassname
-} from 'types';
+import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
 import { deleteCustomToast, getIsTransactionPending } from 'utils';
@@ -20,6 +16,7 @@ import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 export interface TransactionsToastListPropsType extends WithClassname {
   toastProps?: any;

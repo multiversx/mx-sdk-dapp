@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useGetNetworkConfig } from 'hooks';
 import styles from './styles.scss';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const ExplorerLink = ({
   page,

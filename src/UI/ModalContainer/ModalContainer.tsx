@@ -5,7 +5,7 @@ import {
   DappModalInteractionConfig,
   useDappModal
 } from 'UI/DappModal';
-import { WithClassname } from 'types';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const ModalContainer = (
   props: {
