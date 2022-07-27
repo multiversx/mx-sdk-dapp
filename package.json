@@ -12,13 +12,12 @@
   },
   "scripts": {
     "start": "yarn watch",
-    "build:esmtypes": "tsc --project tsconfig.json",
-    "build:cjstypes": "tsc --project tsconfig.cjs.json",
-    "build": "rimraf dist && node esbuild.js && yarn build:esmtypes && yarn build:cjstypes && cp package.json dist && cp README.md dist",
+    "build:types": "tsc --project tsconfig.json",
+    "build": "rimraf dist && node esbuild.js && yarn build:types && cp package.json dist && cp README.md dist",
     "publish-package": "yarn build && cd dist && npm publish",
     "publish-package-next": "yarn build && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish",
-    "watch": "yarn node esbuild-watch.js && yarn build:esmtypes && yarn build:cjstypes -- --watch",
+    "watch": "yarn node esbuild-watch.js && yarn build:types -- --watch",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -118,9 +117,9 @@
   ],
   "exports": {
     "./*": {
-      "import": "./*.js",
-      "require": "./__commonjs/*.js",
-      "default": "./*.js"
+      "import": "./*",
+      "require": "./__commonjs/*",
+      "default": "./*"
     }
   },
   "dependencies": {
