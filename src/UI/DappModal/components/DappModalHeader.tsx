@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '../dapp-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
-import { WithClassname } from '../../../types';
+import { WithClassname } from 'types';
 import classNames from 'classnames';
 
 type DappModalHeaderProps = {

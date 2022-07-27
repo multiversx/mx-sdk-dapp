@@ -9,6 +9,7 @@ export type TransactionToastDefaultProps = {
   toastId: string;
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
+  classes?: Record<string, string>;
   lifetimeAfterSuccess?: number;
   endTimeProgress?: number;
   startTimestamp?: number;

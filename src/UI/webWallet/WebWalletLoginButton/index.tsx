@@ -17,7 +17,7 @@ export const WebWalletLoginButton: (
 ) => JSX.Element = ({
   children,
   token,
-  className = 'web-wallet-login',
+  className = 'dapp-web-wallet-login',
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Elrond Web Wallet',

@@ -1,6 +1,6 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
-import { WithClassname } from '../../types';
+import { WithClassname } from 'types';
 import classNames from 'classnames';
 
 export const Dot = ({

@@ -9,7 +9,7 @@ import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
 import styles from './wallet-connect-login-container.scss';
 import { Pairinglist } from './PairingList';
-import { WithClassname } from '../../../types';
+import { WithClassname } from 'types';
 
 export interface WalletConnectLoginModalPropsType extends WithClassname {
   lead?: string;

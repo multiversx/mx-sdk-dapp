@@ -12,6 +12,7 @@ import {
 import { getToastDataStateByStatus } from '../utils';
 import { TransactionToastDefaultProps } from '../types';
 import { TransactionBatchStatusesEnum } from 'types';
+import styles from '../styles.scss';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;
@@ -57,7 +58,8 @@ export const useTransactionToast = ({
   const toastDataState = getToastDataStateByStatus({
     status,
     toastId,
-    transactionDisplayInfo
+    transactionDisplayInfo,
+    classes: styles
   });
 
   const handleDeleteToast = () => {

@@ -9,7 +9,6 @@ import {
   TransactionsDefaultTitles,
   TransactionsDisplayInfoType
 } from 'types';
-import globalStyles from 'assets/sass/main.scss';
 
 export type ToastDataState = {
   id: string;
@@ -23,12 +22,21 @@ export type ToastDataState = {
 interface GetToastsOptionsDataPropsType {
   status?: TransactionBatchStatusesEnum;
   toastId: string;
+  classes?: Record<
+    'success' | 'warning' | 'danger' | string,
+    'success' | 'warning' | 'danger' | string
+  >;
   transactionDisplayInfo: TransactionsDisplayInfoType;
 }
 
 export const getToastDataStateByStatus = ({
   status,
   toastId,
+  classes = {
+    success: 'success',
+    danger: 'danger',
+    warning: 'warning'
+  },
   transactionDisplayInfo
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: ToastDataState = {
@@ -39,7 +47,7 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.successMessage ??
       TransactionsDefaultTitles.success,
-    iconClassName: globalStyles.success
+    iconClassName: classes.success
   };
 
   const pendingToastData: ToastDataState = {
@@ -50,7 +58,7 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.processingMessage ??
       TransactionsDefaultTitles.pending,
-    iconClassName: globalStyles.warning
+    iconClassName: classes.warning
   };
 
   const failToastData: ToastDataState = {
@@ -59,7 +67,7 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.errorMessage ?? TransactionsDefaultTitles.failed,
     hasCloseButton: true,
-    iconClassName: globalStyles.danger
+    iconClassName: classes.danger
   };
 
   const timedOutToastData = {
@@ -69,7 +77,7 @@ export const getToastDataStateByStatus = ({
       transactionDisplayInfo?.timedOutMessage ??
       TransactionsDefaultTitles.timedOut,
     hasCloseButton: true,
-    iconClassName: globalStyles.warning
+    iconClassName: classes.warning
   };
 
   switch (status) {

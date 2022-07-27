@@ -9,12 +9,15 @@ import {
   TransactionToastDefaultProps
 } from './types';
 import { useTransactionToast } from './hooks/useTransactionToast';
+import { WithClassname } from 'types';
+import styles from './styles.scss';
 
 export type TransactionToastPropsType = {
   title?: string | React.ReactNode;
   children?: React.ReactNode;
   customization?: TransactionToastCustomizationProps;
-} & TransactionToastDefaultProps;
+} & TransactionToastDefaultProps &
+  WithClassname;
 
 export const TransactionToast = ({
   toastId,
@@ -66,7 +69,7 @@ export const TransactionToast = ({
         done={!isPending || isTimedOut}
       >
         <TransactionToastContentComponent
-          style={style}
+          style={styles}
           toastDataState={toastDataState}
           transactions={transactions ?? []}
           toastTitle={title}

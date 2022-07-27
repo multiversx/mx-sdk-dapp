@@ -16,7 +16,7 @@ export const LoginButton = ({
   onLogin,
   text = 'Default Login Button',
   className = 'dapp-login-button',
-  btnClassName = 'default-login-button',
+  btnClassName = 'dapp-default-login-button',
   disabled,
   children
 }: LoginButtonProps) => {

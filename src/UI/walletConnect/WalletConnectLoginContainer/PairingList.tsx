@@ -11,7 +11,7 @@ interface PairingListPropsType {
 export const Pairinglist = ({
   connectExisting,
   activePairings,
-  className = 'wallet-connect-pairing-list'
+  className = 'dapp-wallet-connect-pairing-list'
 }: PairingListPropsType) => {
   const classes = {
     pairsContainer: className,
