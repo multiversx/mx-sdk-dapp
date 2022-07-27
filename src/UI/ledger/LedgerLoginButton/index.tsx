@@ -2,13 +2,14 @@ import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
+import { WithClassname } from '../../../types';
 
-export interface LedgerLoginButtonPropsType {
+export interface LedgerLoginButtonPropsType extends WithClassname {
   token?: string;
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   children?: ReactNode;
-  className?: string;
+  modalClassName?: string;
   buttonClassName?: string;
   callbackRoute?: string;
   loginButtonText?: string;
@@ -27,8 +28,9 @@ export const LedgerLoginButton: (
   onModalOpens,
   onModalCloses,
   loginButtonText = 'Ledger',
-  buttonClassName = 'ledger-login-button',
-  className = 'ledger-login',
+  buttonClassName = 'dapp-ledger-login-button',
+  className = 'dapp-ledger-login',
+  modalClassName,
   wrapContentInsideModal = true,
   hideButtonWhenModalOpens = false,
   onLoginRedirect,
@@ -56,7 +58,7 @@ export const LedgerLoginButton: (
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          customClassName={className}
+          className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
           disabled={disabled}
@@ -66,7 +68,7 @@ export const LedgerLoginButton: (
       )}
       {canShowLoginModal && (
         <LedgerLoginContainer
-          className={className}
+          className={modalClassName}
           callbackRoute={callbackRoute}
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}

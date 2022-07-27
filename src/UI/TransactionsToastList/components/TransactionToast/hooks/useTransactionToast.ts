@@ -10,8 +10,6 @@ import {
   getUnixTimestampWithAddedMilliseconds
 } from 'utils';
 import { getToastDataStateByStatus } from '../utils';
-import { getGeneratedClasses } from 'UI/utils';
-import styles from '../styles.scss';
 import { TransactionToastDefaultProps } from '../types';
 import { TransactionBatchStatusesEnum } from 'types';
 
@@ -25,7 +23,6 @@ export const useTransactionToast = ({
   lifetimeAfterSuccess,
   startTimestamp,
   endTimeProgress,
-  className = 'dApp-transaction-toast',
   onDelete
 }: TransactionToastDefaultProps) => {
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
@@ -53,7 +50,6 @@ export const useTransactionToast = ({
   }, []);
 
   const progress = { startTime, endTime };
-  const style = getGeneratedClasses(className, styles);
 
   const isPending = getIsTransactionPending(status);
   const isTimedOut = getIsTransactionTimedOut(status);
@@ -61,7 +57,6 @@ export const useTransactionToast = ({
   const toastDataState = getToastDataStateByStatus({
     status,
     toastId,
-    style,
     transactionDisplayInfo
   });
 
@@ -91,7 +86,6 @@ export const useTransactionToast = ({
     isPending,
     isTimedOut,
     toastDataState,
-    style,
     handleDeleteToast
   };
 };

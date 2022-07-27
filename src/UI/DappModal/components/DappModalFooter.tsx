@@ -1,17 +1,18 @@
 import React from 'react';
 import styles from '../dapp-modal.scss';
+import { WithClassname } from 'types';
+import classNames from 'classnames';
 
 type DappModalFooterProps = {
   visible?: boolean;
-  footerClassName?: string;
   footerText?: string;
   customFooter?: JSX.Element;
-};
+} & WithClassname;
 
 export const DappModalFooter: React.FC<DappModalFooterProps> = ({
   visible,
   customFooter,
-  footerClassName,
+  className,
   footerText
 }) => {
   if (!visible) {
@@ -19,7 +20,7 @@ export const DappModalFooter: React.FC<DappModalFooterProps> = ({
   }
 
   return (
-    <div className={`${styles.dappModalFooter} ${footerClassName}`}>
+    <div className={classNames(styles.dappModalFooter, className)}>
       {customFooter ?? <div>{footerText}</div>}
     </div>
   );

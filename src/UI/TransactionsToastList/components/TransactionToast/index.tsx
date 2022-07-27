@@ -19,7 +19,7 @@ export type TransactionToastPropsType = {
 export const TransactionToast = ({
   toastId,
   title = '',
-  className = 'transaction-toast',
+  className = 'dapp-transaction-toast',
   onDelete,
   startTimestamp,
   endTimeProgress,
@@ -36,14 +36,12 @@ export const TransactionToast = ({
     isPending,
     isTimedOut,
     toastDataState,
-    style,
     handleDeleteToast
   } = useTransactionToast({
     toastId,
     transactions,
     status,
     lifetimeAfterSuccess,
-    className,
     startTimestamp,
     endTimeProgress,
     onDelete
@@ -55,9 +53,9 @@ export const TransactionToast = ({
   return (
     <TransactionToastWrapper
       className={classNames(
-        className,
         wrapperStyles.toasts,
-        wrapperStyles.toastWrapper
+        wrapperStyles.toastWrapper,
+        className
       )}
     >
       <ProgressComponent

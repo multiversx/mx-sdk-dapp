@@ -2,8 +2,9 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
+import { WithClassname } from '../../../types';
 
-interface AddressRowType {
+interface AddressRowType extends WithClassname {
   selectedAddress?: string;
   index: number;
   address: string;
@@ -23,7 +24,8 @@ export const AddressRow = ({
   address,
   index,
   selectedAddress,
-  onSelectAddress
+  onSelectAddress,
+  className = 'dapp-ledger-address-row'
 }: AddressRowType) => {
   const [balance, setBalance] = React.useState(noBalance);
 
@@ -48,7 +50,7 @@ export const AddressRow = ({
   }, []);
 
   return (
-    <tr>
+    <tr className={className}>
       <td className={globalStyles.textLeft}>
         <div
           className={`

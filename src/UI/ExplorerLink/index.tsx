@@ -4,16 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useGetNetworkConfig } from 'hooks';
 import styles from './styles.scss';
+import { WithClassname } from 'types';
 
 export const ExplorerLink = ({
   page,
   text,
-  className
+  className = 'dapp-explorer-link'
 }: {
   page: string;
   text?: any;
-  className?: string;
-}) => {
+} & WithClassname) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();

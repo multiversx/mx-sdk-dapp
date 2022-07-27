@@ -2,17 +2,19 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
 import classNames from 'classnames';
+import { WithClassname } from 'types';
 
 export const ConfirmAddress = ({
   token,
-  noBorder
+  noBorder,
+  className = 'dapp-ledger-confirm-address'
 }: {
   token?: string;
   noBorder?: boolean;
-}) => {
+} & WithClassname) => {
   const { ledgerAccount } = useGetAccountInfo();
   return (
-    <div className={globalStyles.mAuto}>
+    <div className={classNames(globalStyles.mAuto, className)}>
       <div
         className={classNames([
           globalStyles.card,

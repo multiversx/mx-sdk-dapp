@@ -12,7 +12,6 @@ export type TransactionToastDefaultProps = {
   lifetimeAfterSuccess?: number;
   endTimeProgress?: number;
   startTimestamp?: number;
-  className?: string;
   onDelete?: (toastId: string) => void;
 };
 

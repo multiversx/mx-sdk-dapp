@@ -2,6 +2,7 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { decodePart } from 'utils';
 import classNames from 'classnames';
+import { WithClassname } from 'types';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
@@ -9,12 +10,13 @@ const allOccurences = (sourceStr: string, searchStr: string) =>
 export const TransactionData = ({
   data,
   highlight,
-  isScCall
+  isScCall,
+  className = 'dapp-transaction-data'
 }: {
   data: string;
   highlight?: string;
   isScCall?: boolean;
-}) => {
+} & WithClassname) => {
   let output = <>{data}</>;
 
   const [encodedScCall, ...remainingDataFields] =
@@ -67,7 +69,8 @@ export const TransactionData = ({
             globalStyles.mb0,
             globalStyles.dataField,
             globalStyles.mw100,
-            globalStyles.w100
+            globalStyles.w100,
+            className
           )}
         >
           <span
@@ -90,7 +93,8 @@ export const TransactionData = ({
           globalStyles.mb0,
           globalStyles.dataField,
           globalStyles.mw100,
-          globalStyles.w100
+          globalStyles.w100,
+          className
         )}
       >
         <span

@@ -1,4 +1,8 @@
-export interface DenominateType {
+export type WithClassname = {
+  className?: string;
+};
+
+export interface DenominateType extends WithClassname {
   value: string;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;

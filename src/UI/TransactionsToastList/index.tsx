@@ -6,8 +6,11 @@ import {
   transactionToastsSelector
 } from 'reduxStore/selectors/toastsSelectors';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
-import { getGeneratedClasses } from 'UI/utils/getGeneratedClasses';
-import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
+import {
+  SignedTransactionsBodyType,
+  SignedTransactionsType,
+  WithClassname
+} from 'types';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
 import { deleteCustomToast, getIsTransactionPending } from 'utils';
@@ -16,24 +19,35 @@ import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
+import classNames from 'classnames';
 
-export interface TransactionsToastListPropsType {
+export interface TransactionsToastListPropsType extends WithClassname {
   toastProps?: any;
-  className?: string;
   withTxNonce?: boolean;
   signedTransactions?: SignedTransactionsType;
   successfulToastLifetime?: number;
   parentElement?: Element | DocumentFragment;
+  transactionToastClassName?: string;
+  customToastClassName?: string;
 }
 
-const renderTransactionToast = (
-  signedTransactionsToRender: SignedTransactionsType,
-  toastId: string,
-  type: string,
-  startTimestamp: number,
-  successfulToastLifetime: number | undefined,
-  handleDeleteTransactionToast: (toastId: string) => void
-) => {
+const renderTransactionToast = ({
+  className,
+  signedTransactionsToRender,
+  successfulToastLifetime,
+  handleDeleteTransactionToast,
+  type,
+  startTimestamp,
+  toastId
+}: {
+  signedTransactionsToRender: SignedTransactionsType;
+  toastId: string;
+  type: string;
+  startTimestamp: number;
+  successfulToastLifetime: number | undefined;
+  handleDeleteTransactionToast: (toastId: string) => void;
+  className?: string;
+}) => {
   const currentTx: SignedTransactionsBodyType =
     signedTransactionsToRender[toastId];
 
@@ -59,7 +73,8 @@ const renderTransactionToast = (
         transactions,
         status,
         lifetimeAfterSuccess: successfulToastLifetime,
-        onDelete: handleDeleteTransactionToast
+        onDelete: handleDeleteTransactionToast,
+        className
       }}
     />
   );
@@ -67,6 +82,8 @@ const renderTransactionToast = (
 
 export const TransactionsToastList = ({
   className = 'transactions-toast-list',
+  transactionToastClassName,
+  customToastClassName,
   signedTransactions,
   successfulToastLifetime,
   parentElement
@@ -112,20 +129,19 @@ export const TransactionsToastList = ({
     handleSignedTransactionsListUpdate();
   }, [signedTransactionsToRender]);
 
-  const style = getGeneratedClasses(className ?? '', styles);
-
   const transactionsToastsList = useMemo(
     () =>
       transactionsToasts.map(
         ({ toastId, type, startTimestamp }: TransactionToastType) => {
-          return renderTransactionToast(
+          return renderTransactionToast({
             signedTransactionsToRender,
             toastId,
             type,
             startTimestamp,
             successfulToastLifetime,
-            handleDeleteTransactionToast
-          );
+            handleDeleteTransactionToast,
+            className: transactionToastClassName
+          });
         }
       ),
     [
@@ -145,7 +161,8 @@ export const TransactionsToastList = ({
           type,
           message,
           duration,
-          onDelete: () => handleDeleteCustomToast(toastId)
+          onDelete: () => handleDeleteCustomToast(toastId),
+          className: customToastClassName
         }}
       />
     )
@@ -185,7 +202,7 @@ export const TransactionsToastList = ({
   }, []);
 
   return createPortal(
-    <div className={style.toasts}>
+    <div className={classNames(styles.toasts, className)}>
       {customToastsList}
       {transactionsToastsList}
     </div>,

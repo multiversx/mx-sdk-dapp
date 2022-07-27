@@ -1,23 +1,22 @@
 import React from 'react';
 import {
   DappModal,
-  useDappModal,
   DappModalConfig,
-  DappModalInteractionConfig
+  DappModalInteractionConfig,
+  useDappModal
 } from 'UI/DappModal';
+import { WithClassname } from 'types';
 
-export const ModalContainer = (props: {
-  children: React.ReactNode;
-  onClose?: () => void;
-  modalConfig?: DappModalConfig;
-  modalInteractionConfig?: DappModalInteractionConfig;
-  visible?: boolean;
-}) => {
-  const {
-    handleHideModal: onHide,
-    visible,
-    config
-  } = useDappModal({
+export const ModalContainer = (
+  props: {
+    children: React.ReactNode;
+    onClose?: () => void;
+    modalConfig?: DappModalConfig;
+    modalInteractionConfig?: DappModalInteractionConfig;
+    visible?: boolean;
+  } & WithClassname
+) => {
+  const { handleHideModal: onHide, visible, config } = useDappModal({
     modalConfig: props.modalConfig,
     config: {
       ...props.modalInteractionConfig,
@@ -37,6 +36,7 @@ export const ModalContainer = (props: {
       config={{
         ...config
       }}
+      className={props.className}
     >
       {props.children}
     </DappModal>

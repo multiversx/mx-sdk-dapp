@@ -2,14 +2,15 @@ import React, { Fragment, ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+import { WithClassname } from '../../../types';
 
-export interface WalletConnectLoginButtonPropsType {
+export interface WalletConnectLoginButtonPropsType extends WithClassname {
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   children?: ReactNode;
   lead?: string;
   title?: string;
-  className?: string;
+  modalClassName?: string;
   logoutRoute?: string;
   callbackRoute?: string;
   loginButtonText?: string;
@@ -31,8 +32,9 @@ export const WalletConnectLoginButton = ({
   title = 'Maiar Login',
   logoutRoute = '/unlock',
   wrapContentInsideModal = true,
-  buttonClassName = 'wallet-connect-login-button',
-  className = 'wallet-connect-login',
+  buttonClassName = 'dapp-wallet-connect-login-button',
+  className = 'dapp-wallet-connect-login',
+  modalClassName,
   lead = 'Scan the QR code using Maiar',
   token,
   hideButtonWhenModalOpens = false,
@@ -61,7 +63,7 @@ export const WalletConnectLoginButton = ({
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          customClassName={className}
+          className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
           disabled={disabled}
@@ -75,7 +77,7 @@ export const WalletConnectLoginButton = ({
           loginButtonText={loginButtonText}
           title={title}
           token={token}
-          className={className}
+          className={modalClassName}
           logoutRoute={logoutRoute}
           lead={lead}
           wrapContentInsideModal={wrapContentInsideModal}

@@ -9,7 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 
-import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
+import {
+  ActiveLedgerTransactionType,
+  MultiSignTxType,
+  WithClassname
+} from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
@@ -18,7 +22,7 @@ import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 import globalStyles from 'assets/sass/main.scss';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
-export interface SignStepType {
+export interface SignStepType extends WithClassname {
   onSignTransaction: () => void;
   onPrev: () => void;
   handleClose: () => void;
@@ -30,7 +34,6 @@ export interface SignStepType {
   currentTransaction: ActiveLedgerTransactionType | null;
   allTransactions: MultiSignTxType[];
   isLastTransaction: boolean;
-  className: string;
 }
 
 export const SignStep = ({
@@ -106,7 +109,7 @@ export const SignStep = ({
   const scamReport = currentTransaction.receiverScamInfo;
   const showProgressSteps = allTransactions.length > 1;
 
-  const classes = useSignStepsClasses(className, scamReport);
+  const classes = useSignStepsClasses(scamReport);
 
   return (
     <PageState

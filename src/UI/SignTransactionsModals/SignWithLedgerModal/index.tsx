@@ -1,13 +1,15 @@
 import React from 'react';
-import { SignModalPropsType } from 'types';
+import { SignModalPropsType, WithClassname } from 'types';
 import { SignWithDeviceModal } from '../SignWithDeviceModal';
 
-export const SignWithLedgerModal = (props: SignModalPropsType) => {
+export const SignWithLedgerModal = (
+  props: SignModalPropsType & WithClassname
+) => {
   return (
     <SignWithDeviceModal
       {...props}
       title={props.title || 'Confirm on Ledger'}
-      className={props.className || 'ledger-modal'}
+      className={props.className || 'dapp-ledger-modal'}
     />
   );
 };

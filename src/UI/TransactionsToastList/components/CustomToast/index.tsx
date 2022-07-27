@@ -5,8 +5,9 @@ import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 import classNames from 'classnames';
 import { ComponentTypeWithChildren } from '../types';
+import { WithClassname } from 'types';
 
-interface CustomToastType {
+interface CustomToastType extends WithClassname {
   onDelete: () => void;
   message?: string;
   messageComponent?: React.ReactNode;
@@ -14,7 +15,6 @@ interface CustomToastType {
   CustomCloseButton?: ComponentTypeWithChildren<{
     onClick?: () => void;
   }>;
-  className?: string;
 }
 
 export const CustomToast = ({
@@ -23,7 +23,7 @@ export const CustomToast = ({
   messageComponent,
   duration,
   CustomCloseButton,
-  className
+  className = 'dapp-custom-toast'
 }: CustomToastType) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;

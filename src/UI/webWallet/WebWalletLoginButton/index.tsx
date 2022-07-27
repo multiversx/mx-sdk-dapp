@@ -35,7 +35,7 @@ export const WebWalletLoginButton: (
   return (
     <LoginButton
       onLogin={handleLogin}
-      customClassName={className}
+      className={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
       disabled={disabled}

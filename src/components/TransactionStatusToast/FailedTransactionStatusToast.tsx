@@ -9,19 +9,22 @@ import {
   addFailTransactionToast,
   removeFailTransactionToast
 } from 'reduxStore/slices';
+import { WithClassname } from '../../types';
+import classNames from 'classnames';
 
 type ErrorToastProps = {
   type?: StatusIconType;
   message: string;
   duration?: number;
   onDelete?: () => void;
-};
+} & WithClassname;
 
 export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
   message,
   duration = 20000,
   onDelete,
-  type = StatusIconType.WARNING
+  type = StatusIconType.WARNING,
+  className = 'dapp-failed-transaction-status-toast'
 }) => {
   const dispatch = useDispatch();
   const failToast = useSelector(failTransactionToastSelector);
@@ -54,7 +57,7 @@ export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
           <StatusMessageComponent type={type} message={message} />
         }
         onDelete={handleDelete}
-        className={styles.transactionsStatusToast}
+        className={classNames(styles.transactionsStatusToast, className)}
       />
     )
   );

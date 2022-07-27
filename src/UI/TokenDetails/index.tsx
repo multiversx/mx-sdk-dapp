@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
 import styles from './token-details.scss';
-import { Simple, Combined } from './TokenSymbol';
+import { Combined, Simple } from './TokenSymbol';
+import { WithClassname } from '../../types';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');
@@ -63,7 +64,7 @@ export class TokenDetails extends React.Component {
       }
     </>
   );
-  static Icon = (props: TokenIconProps) => {
+  static Icon = (props: TokenIconProps & WithClassname) => {
     const Component: any =
       process.env.NODE_ENV !== 'test'
         ? getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
@@ -71,7 +72,7 @@ export class TokenDetails extends React.Component {
         : () => null;
 
     return (
-      <div>
+      <div className={props.className ?? 'dapp-token-details-icon'}>
         {props.combined ? (
           <Combined small={props.small}>
             <Component />

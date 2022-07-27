@@ -2,17 +2,17 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Dot } from './Dot';
 import classNames from 'classnames';
+import { WithClassname } from 'types';
 
-export interface ProgressStepsType {
+export interface ProgressStepsType extends WithClassname {
   totalSteps: number;
   currentStep: number;
-  className?: string;
 }
 
 export const ProgressSteps = ({
   totalSteps,
   currentStep,
-  className
+  className = 'dapp-progress-steps'
 }: ProgressStepsType) => {
   const dots = [];
 
