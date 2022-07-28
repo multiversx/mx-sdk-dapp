@@ -29,5 +29,22 @@
     "resolveJsonModule": true
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": ["node_modules", "dist"],
+  "paths": {
+    "apiCalls/*": ["./src/apiCalls/*"],
+    "assets/*": ["./src/assets/*"],
+    "components/*": ["./src/components/*"],
+    "constants/*": ["./src/constants/*"],
+    "hooks/*": ["./src/hooks/*"],
+    "models/*": ["./src/models/*"],
+    "providers/*": ["./src/providers/*"],
+    "reduxStore/*": ["./src/reduxStore/*"],
+    "services/*": ["./src/services/*"],
+    "storage/*": ["./src/storage/*"],
+    "types/*": ["./src/types/*"],
+    "UI/*": ["./src/UI/*"],
+    "utils/*": ["./src/utils/*"],
+    "web/*": ["./src/web/*"],
+    "wrappers/*": ["./src/wrappers/*"]
+  }
 }

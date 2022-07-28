@@ -2,17 +2,19 @@ import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/
 import React, { useMemo } from 'react';
 import { StatusIconType } from 'components/TransactionStatusToast/types';
 import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from '../../../constants';
+import { WithClassname } from 'UI/types/with-classname';
 
 export type TxStatusToastProps = {
   signError: string | null;
   canceledTransactionsMessage: string | null;
   onDelete: () => void;
-};
+} & WithClassname;
 
 export const TxStatusToast: React.FC<TxStatusToastProps> = ({
   signError,
   canceledTransactionsMessage,
-  onDelete
+  onDelete,
+  className
 }) => {
   const message = useMemo(() => {
     return (
@@ -37,6 +39,7 @@ export const TxStatusToast: React.FC<TxStatusToastProps> = ({
       message={message}
       type={type}
       onDelete={onDelete}
+      className={className}
     />
   );
 };

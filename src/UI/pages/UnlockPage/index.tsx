@@ -3,10 +3,10 @@ import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
-import { getGeneratedClasses } from 'UI/utils';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import styles from './unlock-page.scss';
+import classNames from 'classnames';
 
 export interface Props {
   title?: string;
@@ -23,21 +23,27 @@ export interface Props {
 export const UnlockPage = ({
   loginRoute,
   title = 'Login',
-  className = 'unlock-page',
+  className = 'dapp-unlock-page',
   LedgerLoginButtonText = 'Ledger',
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'Maiar',
   ExtensionLoginButtonText = 'Extension',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
-  const generatedClasses = getGeneratedClasses(className, {
-    wrapper: `${styles.home} ${globalStyles.dFlex} ${globalStyles.flexFill} ${globalStyles.alignItemsCenter}`,
+  const generatedClasses = {
+    wrapper: classNames(
+      styles.home,
+      globalStyles.dFlex,
+      globalStyles.flexFill,
+      globalStyles.alignItemsCenter,
+      className
+    ),
     title: globalStyles.mb4,
     description: globalStyles.mb4,
     cardContainer: globalStyles.mAuto,
     card: `${globalStyles.card} ${globalStyles.my4} ${globalStyles.textCenter}`,
     cardBody: `${globalStyles.cardBody} ${globalStyles.py4} ${globalStyles.px2} ${globalStyles.pxSm2} ${globalStyles.mxLg4}`
-  });
+  };
   const { isLoggedIn } = useGetLoginInfo();
 
   React.useEffect(() => {

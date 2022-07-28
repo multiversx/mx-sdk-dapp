@@ -167,7 +167,7 @@ export interface SignModalPropsType {
   error: string | null;
   callbackRoute?: string;
   transactions: Transaction[];
-  className?: string;
+  modalContentClassName?: string;
   verifyReceiverScam?: boolean;
   title?: React.ReactNode;
 }

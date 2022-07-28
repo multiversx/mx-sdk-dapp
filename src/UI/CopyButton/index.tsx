@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
 import styles from './styles.scss';
+import { WithClassname } from 'UI/types/with-classname';
 
-interface CopyButtonType {
+interface CopyButtonType extends WithClassname {
   text: string;
-  className?: string;
 }
 
 export const CopyButton = ({
