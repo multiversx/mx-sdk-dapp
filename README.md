@@ -1,4 +1,3 @@
-
 # dapp-core
 
 > A library that holds the core functional logic of a dapp on the Elrond Network
@@ -52,7 +51,7 @@ More on this below.
 
 There are a couple of requirements that need to be met for the application to work properly.
 
-***If you experience bugs, please make sure that you read these, before opening an issue***
+**_If you experience bugs, please make sure that you read these, before opening an issue_**
 
 <details>
   <summary>
@@ -86,6 +85,7 @@ You need to wrap your application with the **DappProvider** component, which is 
     customNetworkConfig={customNetworkConfig}
 >
 ```
+
 `environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet`
 
 DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
@@ -109,7 +109,6 @@ This allows using different APIs and different connection providers to configure
   apiTimeout?: 4000;
 }
 ```
-
 
   </details>
 
@@ -285,7 +284,6 @@ you can easily import and use them.
 All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
 The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
 
-
 Another handly component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
 Import from dapp-core:
@@ -404,10 +402,11 @@ Once logged in, the user's session is persisted and can be read and deleted via 
 For logging out, the library exposes a simple function called **logout**, which can be called to clear the user data.
 
 the function accepts 2 arguments:
+
 - `callbackUrl: string (optional)` the url to redirect the user to after logging him out
 - `onRedirect: (callbackUrl: string) => void (optional)` a function that will be called instead of redirecting the user.
-This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
-*Important* this function will not be called for web wallet logout
+  This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
+  _Important_ this function will not be called for web wallet logout
 
 You can opt-in for using the `useIdleTimer` hook, which logs out the user after a period of inactivity (default set to 10 minutes). Optionally it accepts an `onLogout` function that fulfills your dapp's specific logout business logic. Make sure to call the above `logout` function inside this `onLogout` callback.
 
@@ -457,7 +456,7 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 
 `sessionId` is the transaction's batch id which can be used to track a transaction's status and react to it.
 
-**Important! For the transaction to be signed, you will have to use either  `SignTransactionsModals` defined above, in the `Prerequisites` section,
+**Important! For the transaction to be signed, you will have to use either `SignTransactionsModals` defined above, in the `Prerequisites` section,
 or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
 
 </details>
@@ -636,6 +635,7 @@ Removing transactions manually
   </summary>
 
 ### Removing transactions manually
+
 Dapp-core takes care to change transactions' statuses and removes them when needed,
 but if you need to do this manually, you can use the exposed functions for this:
 
@@ -649,6 +649,16 @@ but if you need to do this manually, you can use the exposed functions for this:
 
 </details>
 
+# Unit testing with Jest
+
+The dapp-core library exposes bundles for both CommonJS and ESModules, however, in some enviornments, Jest might require manual mapping of the CommonJS output. To implement it, add the following snippet inside your jest config file.
+
+```
+moduleNameMapper: {
+    '@elrondnetwork/dapp-core/(.*)':
+      '<rootDir>/node_modules/@elrondnetwork/dapp-core/__commonjs/$1.js'
+}
+```
 
 # Dapp-core exports
 
@@ -665,7 +675,9 @@ for example, these 2 imports are both valid:
 ```
 import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks';
 ```
+
 and
+
 ```
 import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
@@ -702,6 +714,7 @@ import {
 ```
 
 ### Account
+
 ```
 import {
   useGetAccountInfo,
@@ -711,6 +724,7 @@ import {
 ```
 
 ### Transactions
+
 ```
 import {
   useCheckTransactionStatus,
@@ -735,6 +749,7 @@ import {
 ```
 
 ### Misc
+
 ```
 import {
   useDebounce,
@@ -844,7 +859,6 @@ import {
 } from '@elrondnetwork/dapp-core/web';
 ```
 
-
 ## UI
 
 ```
@@ -880,7 +894,6 @@ import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
 
 etc
 ```
-
 
 ## Roadmap
 
