@@ -649,7 +649,16 @@ but if you need to do this manually, you can use the exposed functions for this:
 
 </details>
 
+# Unit testing with Jest
 
+The dapp-core library exposes bundles for both CommonJS and ESModules, however, in some enviornments, Jest might require manual mapping of the CommonJS output. To implement it, add the following snippet inside your jest config file.
+
+```
+moduleNameMapper: {
+    '@elrondnetwork/dapp-core/(.*)':
+      '<rootDir>/node_modules/@elrondnetwork/dapp-core/__commonjs/$1.js'
+}
+```
 # Dapp-core exports
 
 Since version 2.0, dapp-core does not have a default export object.
