@@ -8,15 +8,15 @@ type TransactionToastWrapperProps = {
 };
 
 export const TransactionToastWrapper = ({
-  className = 'transaction-toast',
+  className = 'dapp-transaction-toast-wrapper',
   children
 }: TransactionToastWrapperProps) => {
   return (
     <div
       className={classNames(
-        className,
         wrapperStyles.toasts,
-        wrapperStyles.toastWrapper
+        wrapperStyles.toastWrapper,
+        className
       )}
     >
       {children}
