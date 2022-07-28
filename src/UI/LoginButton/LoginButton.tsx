@@ -29,7 +29,8 @@ export const LoginButton = ({
       globalStyles.mx3,
       {
         [btnClassName]: btnClassName != null
-      }
+      },
+      className
     ),
     loginText: styles.loginText,
     wrapperClassName: className
