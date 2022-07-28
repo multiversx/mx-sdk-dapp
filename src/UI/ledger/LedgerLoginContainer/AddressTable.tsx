@@ -7,22 +7,19 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
-import { getGeneratedClasses } from 'UI/utils';
-
 import { AddressRow } from './AddressRow';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 const ledgerWaitingText = 'Waiting for device';
 
 const addressesPerPage = 10;
 
-interface AddressTablePropsType {
+interface AddressTablePropsType extends WithClassname {
   loading: boolean;
   accounts: string[];
   startIndex: number;
   selectedAddress?: string;
-  className: string;
-  shouldRenderDefaultCss: boolean;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
@@ -38,11 +35,10 @@ export const AddressTable = ({
   onGoToNextPage,
   onConfirmSelectedAddress,
   onSelectAddress,
-  shouldRenderDefaultCss = true,
-  className = 'ledger-address-table'
+  className = 'dapp-ledger-address-table'
 }: AddressTablePropsType) => {
-  const classes = getGeneratedClasses(className, shouldRenderDefaultCss, {
-    wrapper: `${globalStyles.card} ${globalStyles.px4}`,
+  const classes = {
+    wrapper: classNames(globalStyles.card, globalStyles.px4, className),
     cardBody: `${globalStyles.cardBody} ${globalStyles.p4}`,
     tableWrapper: globalStyles.tableResponsive,
     tableContent: `${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
@@ -51,12 +47,11 @@ export const AddressTable = ({
     buttonsWrapper: `${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.mt2}`,
     arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
     confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.mt4}`
-  });
+  };
 
   if (loading) {
     return (
       <PageState
-        className={className}
         icon={faCircleNotch}
         iconClass={`fa-spin ${globalStyles.textPrimary}`}
         title={ledgerWaitingText}

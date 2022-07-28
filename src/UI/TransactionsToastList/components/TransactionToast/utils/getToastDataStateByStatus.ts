@@ -22,14 +22,21 @@ export type ToastDataState = {
 interface GetToastsOptionsDataPropsType {
   status?: TransactionBatchStatusesEnum;
   toastId: string;
-  style: any;
+  classes?: Record<
+    'success' | 'warning' | 'danger' | string,
+    'success' | 'warning' | 'danger' | string
+  >;
   transactionDisplayInfo: TransactionsDisplayInfoType;
 }
 
 export const getToastDataStateByStatus = ({
   status,
   toastId,
-  style,
+  classes = {
+    success: 'success',
+    danger: 'danger',
+    warning: 'warning'
+  },
   transactionDisplayInfo
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: ToastDataState = {
@@ -40,7 +47,7 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.successMessage ??
       TransactionsDefaultTitles.success,
-    iconClassName: style.success
+    iconClassName: classes.success
   };
 
   const pendingToastData: ToastDataState = {
@@ -51,7 +58,7 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.processingMessage ??
       TransactionsDefaultTitles.pending,
-    iconClassName: style.warning
+    iconClassName: classes.warning
   };
 
   const failToastData: ToastDataState = {
@@ -60,7 +67,7 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.errorMessage ?? TransactionsDefaultTitles.failed,
     hasCloseButton: true,
-    iconClassName: style.danger
+    iconClassName: classes.danger
   };
 
   const timedOutToastData = {
@@ -70,7 +77,7 @@ export const getToastDataStateByStatus = ({
       transactionDisplayInfo?.timedOutMessage ??
       TransactionsDefaultTitles.timedOut,
     hasCloseButton: true,
-    iconClassName: style.warning
+    iconClassName: classes.warning
   };
 
   switch (status) {

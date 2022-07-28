@@ -2,14 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import {
-  denomination as configDenomination,
-  decimals as configDecimals
+  decimals as configDecimals,
+  denomination as configDenomination
 } from 'constants/index';
-import { DenominateType } from 'types/UI';
-import { getEgldLabel } from 'utils/network/getEgldLabel';
-import { stringIsInteger } from 'utils/validation';
-import { denominate } from 'utils/operations';
-
+import { DenominateType } from 'UI/types/denominate';
+import { denominate, getEgldLabel, stringIsInteger } from 'utils';
 import styles from './denominate.scss';
 
 const denominateInvalid = (props: DenominateType) => {
@@ -18,6 +15,7 @@ const denominateInvalid = (props: DenominateType) => {
       data-testid={
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
+      className={props.className}
     >
       <span className={styles['int-amount']} data-testid='denominateIntAmount'>
         ...
@@ -60,6 +58,7 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
       data-testid={
         props['data-testid'] ? props['data-testid'] : 'denominateComponent'
       }
+      className={props.className}
     >
       <span className={styles['int-amount']} data-testid='denominateIntAmount'>
         {valueParts[0]}

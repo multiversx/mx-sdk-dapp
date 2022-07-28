@@ -3,28 +3,29 @@ import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
-import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils/redirect';
 import styles from './sign-with-wallet-connect-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const SignWithWalletConnectModal = ({
   error,
   handleClose,
   callbackRoute,
   transactions,
-  className = 'wallet-connect-modal'
-}: SignModalPropsType) => {
-  const classes = getGeneratedClasses(className, true, {
-    wrapper: classNames(styles.modalContainer, styles.walletConnect),
+  className = 'dapp-wallet-connect-modal',
+  modalContentClassName
+}: SignModalPropsType & WithClassname) => {
+  const classes = {
+    wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
     icon: globalStyles.textWhite,
     closeBtn: classNames(
       globalStyles.btn,
       globalStyles.btnCloseLink,
       globalStyles.mt2
     )
-  });
+  };
 
   const hasMultipleTransactions = transactions && transactions?.length > 1;
   const description = error
@@ -56,7 +57,7 @@ export const SignWithWalletConnectModal = ({
       <PageState
         icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
-        className={className}
+        className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
         title='Confirm on Maiar'

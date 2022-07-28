@@ -9,24 +9,25 @@ export type TransactionToastDefaultProps = {
   toastId: string;
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
+  classes?: Record<string, string>;
   lifetimeAfterSuccess?: number;
   endTimeProgress?: number;
   startTimestamp?: number;
-  className?: string;
-  shouldRenderDefaultCss?: boolean;
   onDelete?: (toastId: string) => void;
 };
 
 export type TransactionToastContentElementsProps = {
   TransactionToastStatusIcon?: ComponentTypeWithChildren<FontAwesomeIconProps>;
   CustomCloseButton?: ComponentTypeWithChildren<{
-      onClick?: () => void;
-    }>;
+    onClick?: () => void;
+  }>;
   TransactionDetails?: ComponentTypeWithChildren<TxDetailsProps>;
 };
 
 export type TransactionToastCustomizationProps = {
   TransactionToastContentCustomElements?: TransactionToastContentElementsProps;
-  TransactionToastContent?: ComponentTypeWithChildren<TransactionToastContentProps>;
+  TransactionToastContent?: ComponentTypeWithChildren<
+    TransactionToastContentProps
+  >;
   Progress?: ComponentTypeWithChildren<ProgressProps>;
 };

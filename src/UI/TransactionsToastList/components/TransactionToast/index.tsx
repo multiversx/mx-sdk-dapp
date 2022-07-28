@@ -9,18 +9,20 @@ import {
   TransactionToastDefaultProps
 } from './types';
 import { useTransactionToast } from './hooks/useTransactionToast';
+import { WithClassname } from 'UI/types/with-classname';
+import styles from './styles.scss';
 
 export type TransactionToastPropsType = {
   title?: string | React.ReactNode;
   children?: React.ReactNode;
   customization?: TransactionToastCustomizationProps;
-} & TransactionToastDefaultProps;
+} & TransactionToastDefaultProps &
+  WithClassname;
 
 export const TransactionToast = ({
   toastId,
   title = '',
-  shouldRenderDefaultCss = true,
-  className = 'transaction-toast',
+  className = 'dapp-transaction-toast',
   onDelete,
   startTimestamp,
   endTimeProgress,
@@ -37,15 +39,12 @@ export const TransactionToast = ({
     isPending,
     isTimedOut,
     toastDataState,
-    style,
     handleDeleteToast
   } = useTransactionToast({
     toastId,
     transactions,
     status,
     lifetimeAfterSuccess,
-    shouldRenderDefaultCss,
-    className,
     startTimestamp,
     endTimeProgress,
     onDelete
@@ -57,9 +56,9 @@ export const TransactionToast = ({
   return (
     <TransactionToastWrapper
       className={classNames(
-        className,
         wrapperStyles.toasts,
-        wrapperStyles.toastWrapper
+        wrapperStyles.toastWrapper,
+        className
       )}
     >
       <ProgressComponent
@@ -70,7 +69,7 @@ export const TransactionToast = ({
         done={!isPending || isTimedOut}
       >
         <TransactionToastContentComponent
-          style={style}
+          style={styles}
           toastDataState={toastDataState}
           transactions={transactions ?? []}
           toastTitle={title}

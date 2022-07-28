@@ -4,27 +4,28 @@ import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
-import { getGeneratedClasses } from 'UI/utils';
 import { safeRedirect } from 'utils';
 import styles from './sign-with-extension-modal.scss';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const SignWithExtensionModal = ({
   handleClose,
   error,
   callbackRoute,
   transactions,
-  className = 'extension-modal'
-}: SignModalPropsType) => {
-  const classes = getGeneratedClasses(className, true, {
-    wrapper: classNames(styles.modalContainer, styles.extension),
+  className = 'dapp-extension-modal',
+  modalContentClassName
+}: SignModalPropsType & WithClassname) => {
+  const classes = {
+    wrapper: classNames(styles.modalContainer, styles.extension, className),
     icon: globalStyles.textWhite,
     closeBtn: classNames(
       globalStyles.btn,
       globalStyles.btnCloseLink,
       globalStyles.mt2
     )
-  });
+  };
 
   const description = error
     ? error
@@ -56,7 +57,7 @@ export const SignWithExtensionModal = ({
       <PageState
         icon={error ? faTimes : faHourglass}
         iconClass={classes.icon}
-        className={className}
+        className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
         title='Confirm on Maiar DeFi Wallet'

@@ -21,12 +21,12 @@ export interface TxDetailsProps {
   isTimedOut?: boolean;
   transactions?: SignedTransactionType[];
   className?: string;
-  shouldRenderDefaultCss?: boolean;
 }
 export const TxDetails = ({
   title,
   transactions,
-  isTimedOut = false
+  isTimedOut = false,
+  className = 'dapp-transaction-details'
 }: TxDetailsProps) => {
   if (transactions == null) {
     return null;
@@ -69,7 +69,7 @@ export const TxDetails = ({
         const iconSrc = iconData[status];
 
         return (
-          <div className={styles.container} key={hash}>
+          <div className={classNames(styles.container, className)} key={hash}>
             {!isTimedOut && iconSrc != null && (
               <FontAwesomeIcon
                 icon={iconSrc.icon}
