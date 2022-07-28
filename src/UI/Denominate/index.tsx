@@ -5,7 +5,7 @@ import {
   decimals as configDecimals,
   denomination as configDenomination
 } from 'constants/index';
-import { DenominateType } from 'types/UI';
+import { DenominateType } from 'UI/types/denominate';
 import { denominate, getEgldLabel, stringIsInteger } from 'utils';
 import styles from './denominate.scss';
 
