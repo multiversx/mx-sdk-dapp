@@ -1,22 +1,33 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
-import { ExtensionLoginButtonPropsType } from 'types';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
-import { getGeneratedClasses } from 'UI/utils';
 import styles from './login-button.scss';
+import { WithClassname } from 'UI/types/with-classname';
+import classNames from 'classnames';
+
+export interface ExtensionLoginButtonPropsType extends WithClassname {
+  token?: string;
+  children?: ReactNode;
+  buttonClassName?: string;
+  callbackRoute?: string;
+  loginButtonText?: string;
+  onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
+}
 
 export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
   token,
-  className = 'extension-login',
+  className = 'dapp-extension-login',
   children,
   callbackRoute,
   buttonClassName,
   loginButtonText = 'Maiar DeFi Wallet',
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
@@ -25,12 +36,15 @@ export const ExtensionLoginButton: (
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
-  const classes = getGeneratedClasses(className, {
-    noExtensionButtonWrapper: styles.noExtensionButtonWrapper,
+  const classes = {
+    noExtensionButtonWrapper: classNames(
+      styles.noExtensionButtonWrapper,
+      className
+    ),
     noExtensionButtonContent: styles.noExtensionButtonContent,
     noExtensionButtonTitle: styles.noExtensionButtonTitle,
     noExtensionButtonIcon: styles.noExtensionButtonIcon
-  });
+  };
 
   const handleLogin = () => {
     onInitiateLogin();
@@ -62,9 +76,10 @@ export const ExtensionLoginButton: (
   ) : (
     <LoginButton
       onLogin={handleLogin}
-      customClassName={className}
+      className={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
+      disabled={disabled}
     >
       {children}
     </LoginButton>

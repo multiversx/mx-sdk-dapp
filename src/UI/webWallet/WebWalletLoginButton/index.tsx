@@ -9,6 +9,7 @@ export interface WebWalletLoginButtonPropsType {
   buttonClassName?: string;
   children?: ReactNode;
   loginButtonText?: string;
+  disabled?: boolean;
 }
 
 export const WebWalletLoginButton: (
@@ -16,10 +17,11 @@ export const WebWalletLoginButton: (
 ) => JSX.Element = ({
   children,
   token,
-  className = 'web-wallet-login',
+  className = 'dapp-web-wallet-login',
   callbackRoute,
   buttonClassName,
-  loginButtonText = 'Elrond Web Wallet'
+  loginButtonText = 'Elrond Web Wallet',
+  disabled
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({
     callbackRoute,
@@ -33,9 +35,10 @@ export const WebWalletLoginButton: (
   return (
     <LoginButton
       onLogin={handleLogin}
-      customClassName={className}
+      className={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
+      disabled={disabled}
     >
       {children}
     </LoginButton>

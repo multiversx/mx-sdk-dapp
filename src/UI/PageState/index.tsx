@@ -3,15 +3,14 @@ import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { getGeneratedClasses } from 'UI/utils';
 import styles from './page-state.scss';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { WithClassname } from 'UI/types/with-classname';
 
-export interface PageStateProps {
+export interface PageStateProps extends WithClassname {
   title?: React.ReactNode;
   icon?: IconProp | IconDefinition | null;
   iconClass?: string;
-  className?: string;
   dataTestId?: string;
   iconSize?: SizeProp;
   iconBgClass?: string;
@@ -28,14 +27,15 @@ export const PageState = ({
   description,
   iconBgClass,
   iconSize = '5x',
-  className = 'page-state'
+  className = 'dapp-page-state'
 }: PageStateProps) => {
-  const generatedClasses = getGeneratedClasses(className, {
+  const classes = {
     wrapper: classNames(
       styles.state,
       globalStyles.mAuto,
       globalStyles.p4,
-      globalStyles.textCenter
+      globalStyles.textCenter,
+      className
     ),
     iconContainer: classNames(
       `${globalStyles.iconState} ${globalStyles.mxAuto}`,
@@ -46,23 +46,21 @@ export const PageState = ({
     iconClass: classNames(iconClass != null && iconClass),
     title: classNames(globalStyles.h4, globalStyles.my4),
     description: globalStyles.mb3
-  });
+  };
 
   return (
-    <div className={generatedClasses.wrapper} data-testid={dataTestId}>
+    <div className={classes.wrapper} data-testid={dataTestId}>
       {icon && (
-        <span className={generatedClasses.iconContainer}>
+        <span className={classes.iconContainer}>
           <FontAwesomeIcon
             icon={icon}
-            className={generatedClasses.iconClass}
+            className={classes.iconClass}
             size={iconSize}
           />
         </span>
       )}
-      {title && <p className={generatedClasses.title}>{title}</p>}
-      {description && (
-        <div className={generatedClasses.description}>{description}</div>
-      )}
+      {title && <p className={classes.title}>{title}</p>}
+      {description && <div className={classes.description}>{description}</div>}
       {action && <>{action}</>}
     </div>
   );

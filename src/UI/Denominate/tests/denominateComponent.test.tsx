@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { DenominateType } from 'types/UI';
+import { DenominateType } from 'UI/types/denominate';
 import { Denominate } from '../index';
 
 const renderComponent = (props: DenominateType) => {

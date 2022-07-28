@@ -1,13 +1,15 @@
-import React, { useRef, useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import { storage } from 'utils/storage';
 import styles from './styles.scss';
+import { WithClassname } from 'UI/types/with-classname';
+import classNames from 'classnames';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
-export interface ProgressProps {
+export interface ProgressProps extends WithClassname {
   id: string;
   done: boolean;
   children: React.ReactNode;
@@ -23,7 +25,8 @@ export const Progress = ({
   children,
   progress,
   done,
-  expiresIn = 10 * 60
+  expiresIn = 10 * 60,
+  className = 'dapp-progress'
 }: ProgressProps) => {
   const initialData = useMemo(() => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
@@ -151,7 +154,7 @@ export const Progress = ({
   }
 
   return progress ? (
-    <div className={styles.progress}>
+    <div className={classNames(styles.progress, className)}>
       <div
         ref={progressRef}
         role='progressbar'

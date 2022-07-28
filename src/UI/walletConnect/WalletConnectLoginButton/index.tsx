@@ -2,14 +2,15 @@ import React, { Fragment, ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+import { WithClassname } from 'UI/types/with-classname';
 
-export interface WalletConnectLoginButtonPropsType {
+export interface WalletConnectLoginButtonPropsType extends WithClassname {
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   children?: ReactNode;
   lead?: string;
   title?: string;
-  className?: string;
+  modalClassName?: string;
   logoutRoute?: string;
   callbackRoute?: string;
   loginButtonText?: string;
@@ -19,6 +20,7 @@ export interface WalletConnectLoginButtonPropsType {
   token?: string;
   isWalletConnectV2?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
 }
 
 export const WalletConnectLoginButton = ({
@@ -30,13 +32,15 @@ export const WalletConnectLoginButton = ({
   title = 'Maiar Login',
   logoutRoute = '/unlock',
   wrapContentInsideModal = true,
-  buttonClassName = 'wallet-connect-login-button',
-  className = 'wallet-connect-login',
+  buttonClassName = 'dapp-wallet-connect-login-button',
+  className = 'dapp-wallet-connect-login',
+  modalClassName,
   lead = 'Scan the QR code using Maiar',
   token,
   hideButtonWhenModalOpens = false,
   isWalletConnectV2 = false,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -59,9 +63,10 @@ export const WalletConnectLoginButton = ({
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          customClassName={className}
+          className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          disabled={disabled}
         >
           {children}
         </LoginButton>
@@ -72,7 +77,7 @@ export const WalletConnectLoginButton = ({
           loginButtonText={loginButtonText}
           title={title}
           token={token}
-          className={className}
+          className={modalClassName}
           logoutRoute={logoutRoute}
           lead={lead}
           wrapContentInsideModal={wrapContentInsideModal}

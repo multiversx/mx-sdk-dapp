@@ -1,8 +1,23 @@
-import React, { useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import { LedgerLoginButtonPropsType } from './types';
+import { WithClassname } from 'UI/types/with-classname';
+
+export interface LedgerLoginButtonPropsType extends WithClassname {
+  token?: string;
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  modalClassName?: string;
+  buttonClassName?: string;
+  callbackRoute?: string;
+  loginButtonText?: string;
+  wrapContentInsideModal?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  onLoginRedirect?: (callbackRoute: string) => void;
+  disabled?: boolean;
+}
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
@@ -13,11 +28,13 @@ export const LedgerLoginButton: (
   onModalOpens,
   onModalCloses,
   loginButtonText = 'Ledger',
-  buttonClassName = 'ledger-login-button',
-  className = 'ledger-login',
+  buttonClassName = 'dapp-ledger-login-button',
+  className = 'dapp-ledger-login',
+  modalClassName,
   wrapContentInsideModal = true,
   hideButtonWhenModalOpens = false,
-  onLoginRedirect
+  onLoginRedirect,
+  disabled
 }) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -41,16 +58,17 @@ export const LedgerLoginButton: (
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
-          customClassName={className}
+          className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          disabled={disabled}
         >
           {children}
         </LoginButton>
       )}
       {canShowLoginModal && (
         <LedgerLoginContainer
-          className={className}
+          className={modalClassName}
           callbackRoute={callbackRoute}
           token={token}
           wrapContentInsideModal={wrapContentInsideModal}
