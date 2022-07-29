@@ -20,7 +20,7 @@ export interface TransactionRowType {
   showLockedAccounts?: boolean;
 }
 
-const TransactionRow = ({
+export const TransactionRow = ({
   transaction,
   showDirectionCol,
   showLockedAccounts
@@ -158,5 +158,3 @@ const TransactionRow = ({
     </tr>
   );
 };
-
-export default TransactionRow;

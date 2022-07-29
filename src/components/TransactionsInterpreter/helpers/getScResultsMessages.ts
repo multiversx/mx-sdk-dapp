@@ -1,4 +1,4 @@
-import { TransactionType } from 'helpers/types';
+import { TransactionType } from './types';
 
 export default function getScResultsMessages(transaction: TransactionType) {
   const messages =

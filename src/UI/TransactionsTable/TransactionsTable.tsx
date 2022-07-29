@@ -1,9 +1,7 @@
 import * as React from 'react';
-import TransactionRow from './TransactionRow';
+import { TransactionRow } from './TransactionRow';
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
-import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
-
-export type TransactionType = UITransactionType;
+import { UITransactionType as TransactionType } from 'components/TransactionsInterpreter/helpers/types';
 
 interface TransactionsTableType {
   transactions: TransactionType[];
