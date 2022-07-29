@@ -1,10 +1,9 @@
 import * as React from 'react';
 import TransactionRow from './TransactionRow';
-import Pager from '../Pager';
-import { UITransactionType as TransacionInterface } from 'helpers/types';
-import { parseTransactions } from '../../components/TransactionsInterpreter/TransactionsInterpreter';
+import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
+import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
 
-export type TransactionType = TransacionInterface;
+export type TransactionType = UITransactionType;
 
 interface TransactionsTableType {
   transactions: TransactionType[];
@@ -19,8 +18,6 @@ interface TransactionsTableType {
 const TransactionsTable = ({
   transactions,
   address,
-  totalTransactions,
-  size,
   title = (
     <>
       <h6 data-testid='title'>Transactions</h6>
@@ -42,22 +39,8 @@ const TransactionsTable = ({
         <div className='card-header'>
           <div className='card-header-item d-flex justify-content-between align-items-center'>
             <div>{title}</div>
-            <div className='d-none d-sm-flex'>
-              <Pager
-                itemsPerPage={25}
-                page={String(size)}
-                total={
-                  totalTransactions !== '...'
-                    ? Math.min(totalTransactions, 10000)
-                    : totalTransactions
-                }
-                show={transactions.length > 0}
-                hasTestId={false}
-              />
-            </div>
           </div>
         </div>
-
         <div className='card-body p-0'>
           <div className='table-wrapper animated-list'>
             <table
@@ -81,7 +64,6 @@ const TransactionsTable = ({
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}
-                    address={address}
                     showDirectionCol={directionCol}
                     showLockedAccounts={showLockedAccounts}
                   />
@@ -89,19 +71,6 @@ const TransactionsTable = ({
               </tbody>
             </table>
           </div>
-        </div>
-
-        <div className='card-footer d-flex justify-content-end'>
-          <Pager
-            itemsPerPage={25}
-            page={String(size)}
-            total={
-              totalTransactions !== '...'
-                ? Math.min(totalTransactions, 10000)
-                : totalTransactions
-            }
-            show={transactions.length > 0}
-          />
         </div>
       </div>
     </div>
