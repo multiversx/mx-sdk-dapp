@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react';
 import {
   WalletConnectProviderV2,
-  PairingTypes
+  WalletConnectV2Events,
+  PairingTypes,
+  SessionEventTypes
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -25,21 +27,29 @@ import {
 import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { logout } from 'utils';
-import { optionalRedirect } from 'utils/internal';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
-
-interface InitWalletConnectV2Type {
-  logoutRoute: string;
-  token?: string;
-  callbackRoute?: string;
-  onLoginRedirect?: (callbackRoute: string) => void;
-}
+import { optionalRedirect } from 'utils/internal';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
   invalidConfig = 'Invalid WalletConnect setup',
   invalidTopic = 'Expired connection',
-  sessionExpired = 'Unable to connect to existing session'
+  sessionExpired = 'Unable to connect to existing session',
+  connectError = 'Unable to connect',
+  userRejected = 'User rejected connection proposal',
+  userRejectedExisting = 'User rejected existing connection proposal'
+}
+
+export enum DappCoreWCV2Events {
+  erd_cancelAction = 'erd_cancelAction'
+}
+
+interface InitWalletConnectV2Type {
+  logoutRoute: string;
+  token?: string;
+  callbackRoute?: string;
+  events?: string[];
+  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -80,6 +90,12 @@ export const useWalletConnectV2Login = ({
   const providerRef = useRef<any>(provider);
 
   const hasWcUri = Boolean(wcUri);
+  const dappEvents: [WalletConnectV2Events | DappCoreWCV2Events] = [
+    DappCoreWCV2Events.erd_cancelAction
+  ];
+  if (token) {
+    dappEvents.push(WalletConnectV2Events.erd_signLoginToken);
+  }
   const isLoading = !hasWcUri;
   const uriDeepLink = hasWcUri
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
@@ -95,6 +111,10 @@ export const useWalletConnectV2Login = ({
 
   const handleOnLogout = () => {
     logout(logoutRoute);
+  };
+
+  const handleOnEvent = (event: SessionEventTypes['event']) => {
+    console.log('session event: ', event);
   };
 
   async function handleOnLogin() {
@@ -152,7 +172,8 @@ export const useWalletConnectV2Login = ({
 
     const providerHandlers = {
       onClientLogin: handleOnLogin,
-      onClientLogout: handleOnLogout
+      onClientLogout: handleOnLogout,
+      onClientEvent: handleOnEvent
     };
 
     const newProvider = new WalletConnectProviderV2(
@@ -184,21 +205,21 @@ export const useWalletConnectV2Login = ({
     try {
       const { approval } = await providerRef.current?.connect({
         topic: pairing.topic,
-        token
+        events: dappEvents
       });
       if (token) {
         dispatch(setTokenLogin({ loginToken: token }));
       }
 
       try {
-        await providerRef.current?.login({ approval });
+        await providerRef.current?.login({ approval, token });
       } catch (err) {
-        console.warn('User rejected existing connection proposal ', err);
+        console.warn(WalletConnectV2Error.userRejectedExisting, err);
 
         await initiateLogin();
       }
     } catch (err) {
-      console.error('Error while attempting to retore connection ', err);
+      console.error(WalletConnectV2Error.sessionExpired, err);
       setError(WalletConnectV2Error.sessionExpired);
     } finally {
       setWcPairings(providerRef.current?.pairings);
@@ -211,24 +232,33 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
-    const { uri, approval } = await providerRef.current?.connect({ token });
-    const hasUri = Boolean(uri);
-
-    if (!hasUri) {
-      return;
-    }
-
-    setWcUri(uri);
-    if (token) {
-      dispatch(setTokenLogin({ loginToken: token }));
-    }
-
     try {
-      await providerRef.current?.login({ approval });
-    } catch (err) {
-      console.warn('User rejected connection proposal ', err);
+      const { uri, approval } = await providerRef.current?.connect({
+        events: dappEvents
+      });
 
-      await initiateLogin();
+      const hasUri = Boolean(uri);
+
+      if (!hasUri) {
+        return;
+      }
+
+      console.log('uri', uri);
+
+      setWcUri(uri);
+      if (token) {
+        dispatch(setTokenLogin({ loginToken: token }));
+      }
+
+      try {
+        await providerRef.current?.login({ approval, token });
+      } catch (err) {
+        console.warn(WalletConnectV2Error.userRejected, err);
+
+        await initiateLogin();
+      }
+    } catch (err) {
+      console.error(WalletConnectV2Error.connectError, err);
     }
   }
 

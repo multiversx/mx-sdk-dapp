@@ -1,6 +1,6 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import globalStyles from 'assets/sass/main.scss';
 
 interface PairingListPropsType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;

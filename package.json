@@ -120,7 +120,7 @@
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
     "@elrondnetwork/erdjs-hw-provider": "2.0.4",
     "@elrondnetwork/erdjs-network-providers": "0.1.6",
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-alpha.3",
+    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-alpha.4",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.1",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",
