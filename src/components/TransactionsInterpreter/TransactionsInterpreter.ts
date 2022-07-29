@@ -1,7 +1,6 @@
 import {
   ExtendedTransactionType,
   TokenArgumentType,
-  TransferTypeEnum,
   UITransactionType
 } from './helpers/types';
 import getTransactionMethod from './helpers/getTransactionMethod';
@@ -10,6 +9,10 @@ import urlBuilder from './helpers/urlBuilder';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getTmeAgo } from './helpers/getTimeAgo';
+import { getTokenFromData } from '../../utils';
+import { isContract } from './helpers/isContract';
+import { getTransactionDirection } from './helpers/getTransactionDirection';
+import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
 
 export type DenominationConfig = {
   erdLabel?: string;
@@ -25,39 +28,17 @@ export function parseTransactions(
   address: string,
   denominationConfig: DenominationConfig = {
     erdLabel: 'EGLD'
-  }
+  },
+  numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType[] {
   return transactions.map((transaction) => {
-    return processTransaction(transaction, address, denominationConfig);
+    return processTransaction(
+      transaction,
+      address,
+      denominationConfig,
+      numInitCharactersForScAddress
+    );
   });
-}
-
-function getTransactionDirection(
-  address: string,
-  transaction: UITransactionType,
-  receiver: string
-) {
-  const directionOut = address === transaction.sender;
-  const directionIn = address === receiver;
-  const directionSelf = directionOut && directionIn;
-  const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
-
-  let direction = 'Out';
-  switch (true) {
-    case isScResult:
-      direction = 'Internal';
-      break;
-    case directionSelf:
-      direction = 'Self';
-      break;
-    case directionOut:
-      direction = 'Out';
-      break;
-    case directionIn:
-      direction = 'In';
-      break;
-  }
-  return direction;
 }
 
 export function processTransaction(
@@ -65,8 +46,12 @@ export function processTransaction(
   address: string,
   denominationConfig: DenominationConfig = {
     erdLabel: 'EGLD'
-  }
+  },
+  numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType {
+  const tokenIdentifier =
+    transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
+
   let receiver = transaction.receiver;
   if (transaction.action && transaction.action.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
@@ -108,8 +93,30 @@ export function processTransaction(
   const shortTimeAgo = getTmeAgo(transaction.timestamp, true);
   const longTimeAgo = getTmeAgo(transaction.timestamp, false);
 
+  // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
+  // let lockedAccountName: string | undefined;
+  // const tokenDetails = getTokenFromData(transaction.data);
+  //
+  // const lockedAccounts = tokenDetails?.assets?.lockedAccounts;
+  // if (lockedAccounts) {
+  //   const validLockedAccounts = Object.keys(lockedAccounts).filter(
+  //     (account, i) => {
+  //       const validAddress = addressIsBech32(account)
+  //         ? account
+  //         : addressIsBech32(lockedAccounts[account])
+  //         ? lockedAccounts[account]
+  //         : '';
+  //
+  //       return validAddress === address;
+  //     }
+  //   );
+  //   const lockedAccountName =
+  //     tokenDetails.assets?.lockedAccounts?.[validLockedAccounts[0]];
+  // }
+
   return {
     ...transaction,
+    tokenIdentifier,
     receiver,
     receiverAssets,
     direction,
@@ -123,6 +130,7 @@ export function processTransaction(
     receiverShardLink,
     transactionLink,
     shortTimeAgo,
-    longTimeAgo
+    longTimeAgo,
+    isContract: isContract(transaction.sender, numInitCharactersForScAddress)
   };
 }

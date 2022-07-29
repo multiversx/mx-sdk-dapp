@@ -1,0 +1,29 @@
+.transactions-table {
+  .table {
+    .trim-hash {
+      max-width: 8rem;
+
+      @include media-breakpoint-up(lg) {
+        max-width: 9rem;
+      }
+
+      @include media-breakpoint-up(xl) {
+        max-width: 10rem;
+      }
+    }
+    th:last-child,
+    td:last-child {
+      padding-right: 1rem !important;
+    }
+    .transaction-value {
+      width: 12rem;
+    }
+    .transaction-function {
+      width: 10.5rem;
+      .transaction-function-badge {
+        max-width: 9.5rem;
+        line-height: 1.2;
+      }
+    }
+  }
+}

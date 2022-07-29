@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -8,12 +8,13 @@ import styles from './styles.scss';
 export const ExplorerLink = ({
   page,
   text,
-  className
+  className,
+  children
 }: {
   page: string;
   text?: any;
   className?: string;
-}) => {
+} & PropsWithChildren) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
@@ -25,7 +26,7 @@ export const ExplorerLink = ({
       className={classNames(styles.link, className)}
       rel='noreferrer'
     >
-      {text ? (
+      {children ?? text ? (
         <>{text}</>
       ) : (
         <FontAwesomeIcon icon={faSearch} className={styles.search} />

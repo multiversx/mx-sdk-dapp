@@ -442,8 +442,15 @@ export interface UITransactionType extends TransferType {
 //   maxRedelegateAmountAllowed?: string;
 // }
 
+export enum TransactionDirection {
+  SELF = 'Self',
+  INTERNAL = 'Internal',
+  IN = 'In',
+  OUT = 'Out'
+}
+
 export type ExtendedTransactionType = {
-  direction?: string;
+  direction?: TransactionDirection;
   method: string;
   transactionTokens: TokenArgumentType[];
   denominatedValue?: string;
@@ -455,4 +462,6 @@ export type ExtendedTransactionType = {
   transactionLink?: string;
   shortTimeAgo?: string;
   longTimeAgo?: string;
-} & TransactionType;
+  lockedAccountName?: string;
+  isContract?: boolean;
+} & UITransactionType;
