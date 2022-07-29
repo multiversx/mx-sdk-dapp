@@ -3,6 +3,7 @@ export * from './network';
 export * from './ledgerErrorCodes';
 export * from './mnemonicWords';
 export * from './transaction-status';
+export * from './transaction-interpreter';
 
 export const gasPriceModifier = '0.01';
 export const gasPerDataByte = '1500';

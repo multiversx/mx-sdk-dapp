@@ -1,9 +1,8 @@
 import React from 'react';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import TransactionIcon from '../TransactionsTable/TransactionIcon';
-import TransactionMethod from '../TransactionsTable/TransactionMethod';
-import TransactionValue from '../TransactionsTable/TransactionValue';
+import { TransactionIcon } from './TransactionIcon';
+import { TransactionMethod } from './TransactionMethod';
 import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import { addressIsBech32 } from 'utils/addressIsBech32';
 import { Trim } from '../Trim';
@@ -13,6 +12,7 @@ import { ShardSpan } from './ShardSpan';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 import { AccountName } from './AccountName';
+import globalStyles from 'assets/sass/main.scss';
 
 export interface TransactionRowType {
   transaction: ExtendedTransactionType;
@@ -152,8 +152,8 @@ const TransactionRow = ({
       <td className='transaction-function'>
         <TransactionMethod transaction={transaction} />
       </td>
-      <td>
-        <TransactionValue transaction={transaction} />
+      <td className={globalStyles.textLeft}>
+        <span>{transaction.denominatedValue}</span>
       </td>
     </tr>
   );

@@ -2,14 +2,6 @@
   .table {
     .trim-hash {
       max-width: 8rem;
-
-      @include media-breakpoint-up(lg) {
-        max-width: 9rem;
-      }
-
-      @include media-breakpoint-up(xl) {
-        max-width: 10rem;
-      }
     }
     th:last-child,
     td:last-child {

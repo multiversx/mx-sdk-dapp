@@ -15,7 +15,7 @@ interface TransactionsTableType {
   showLockedAccounts?: boolean;
 }
 
-const TransactionsTable = ({
+export const TransactionsTable = ({
   transactions,
   address,
   title = (
@@ -76,5 +76,3 @@ const TransactionsTable = ({
     </div>
   );
 };
-
-export default TransactionsTable;
