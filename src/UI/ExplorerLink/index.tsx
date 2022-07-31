@@ -14,7 +14,8 @@ export const ExplorerLink = ({
 }: {
   page: string;
   text?: any;
-} & PropsWithChildren & WithClassname) => {
+} & PropsWithChildren &
+  WithClassname) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
@@ -26,11 +27,12 @@ export const ExplorerLink = ({
       className={classNames(styles.link, className)}
       rel='noreferrer'
     >
-      {children ?? text ? (
-        <>{text}</>
-      ) : (
-        <FontAwesomeIcon icon={faSearch} className={styles.search} />
-      )}
+      {children ??
+        (text ? (
+          <>{text}</>
+        ) : (
+          <FontAwesomeIcon icon={faSearch} className={styles.search} />
+        ))}
     </a>
   );
 };

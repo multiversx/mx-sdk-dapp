@@ -18,4 +18,18 @@
       }
     }
   }
+
+  table {
+    text-align: left;
+    position: relative;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background: white;
+    position: sticky;
+    top: 0; /* required for the stickiness */
+    z-index: 99999;
+  }
 }
+

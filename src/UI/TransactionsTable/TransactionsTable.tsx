@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TransactionRow } from './TransactionRow';
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { UITransactionType as TransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import styles from './transactions-table.scss';
 
 interface TransactionsTableType {
   transactions: TransactionType[];
@@ -33,7 +34,7 @@ export const TransactionsTable = ({
   console.log(processedTransactions);
 
   return (
-    <div className='transactions-table'>
+    <div className={styles.transactionsTable}>
       <div className='card'>
         <div className='card-header'>
           <div className='card-header-item d-flex justify-content-between align-items-center'>
@@ -41,14 +42,17 @@ export const TransactionsTable = ({
           </div>
         </div>
         <div className='card-body p-0'>
-          <div className='table-wrapper animated-list'>
+          <div
+            className='table-wrapper animated-list'
+            style={{ maxHeight: '500px', overflow: 'scroll' }}
+          >
             <table
               className='table trim-size-sm'
               data-testid='transactionsTable'
             >
               <thead>
                 <tr>
-                  <th scope='col'>Txn Hash</th>
+                  <th scope='col'>Tx Hash</th>
                   <th scope='col'>Age</th>
                   <th scope='col'>Shard</th>
                   <th scope='col'>From</th>
