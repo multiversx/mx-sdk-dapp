@@ -8,7 +8,7 @@ export function getNetworkLink(to: string) {
   }
 
   const explorerAddress = explorerAddressSelector(store.getState());
-  return explorerAddress ? `/${explorerAddress}${to}` : to;
+  return explorerAddress ? `${explorerAddress}${to}` : to;
 
   // const networkConfig = networkConfigSelector(store.getState());
   // return networkConfig.network.id ? `/${networkConfig.network.id}${to}` : to;

@@ -6,8 +6,8 @@ import { UITransactionType as TransactionType } from 'components/TransactionsInt
 interface TransactionsTableType {
   transactions: TransactionType[];
   address?: string;
-  totalTransactions: number | '...';
-  size: number;
+  // totalTransactions: number | '...';
+  // size: number;
   title?: React.ReactNode;
   directionCol?: boolean;
   showLockedAccounts?: boolean;
@@ -30,6 +30,7 @@ export const TransactionsTable = ({
   }
 
   const processedTransactions = parseTransactions(transactions, address);
+  console.log(processedTransactions);
 
   return (
     <div className='transactions-table'>

@@ -9,7 +9,7 @@ import urlBuilder from './helpers/urlBuilder';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getTmeAgo } from './helpers/getTimeAgo';
-import { getTokenFromData } from '../../utils';
+import { getEgldLabel, getTokenFromData } from '../../utils';
 import { isContract } from './helpers/isContract';
 import { getTransactionDirection } from './helpers/getTransactionDirection';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
@@ -50,7 +50,8 @@ export function processTransaction(
   numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType {
   const tokenIdentifier =
-    transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
+    transaction.tokenIdentifier ??
+    (getTokenFromData(transaction.data).tokenId || getEgldLabel());
 
   let receiver = transaction.receiver;
   if (transaction.action && transaction.action.arguments?.receiver) {
