@@ -3,14 +3,20 @@ import debounce from 'lodash.debounce';
 
 import styles from './styles.scss';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
-export interface TrimType {
+export interface TrimType extends WithClassname {
   text: string;
   dataTestId?: string;
   color?: 'muted' | 'secondary';
 }
 
-export const Trim = ({ text, color, dataTestId = '' }: TrimType) => {
+export const Trim = ({
+  text,
+  className = 'dapp-trim',
+  dataTestId = '',
+  color
+}: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
   const hiddenTextRef = React.useRef(document.createElement('span'));
@@ -43,9 +49,14 @@ export const Trim = ({ text, color, dataTestId = '' }: TrimType) => {
   return (
     <span
       ref={trimRef}
-      className={classNames(styles.trim, color ?? '', {
-        [styles.overflow]: overflow
-      })}
+      className={classNames(
+        styles.trim,
+        color ?? '',
+        {
+          [styles.overflow]: overflow
+        },
+        className
+      )}
       data-testid={dataTestId}
     >
       <span ref={hiddenTextRef} className={styles.hiddenTextRef}>

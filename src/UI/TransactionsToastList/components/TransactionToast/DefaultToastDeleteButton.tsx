@@ -1,14 +1,14 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { WithClassname } from 'UI/types/with-classname';
 
 type DefaultToastDeleteButtonProps = {
-  className?: string;
   onClick?: () => void;
-};
+} & WithClassname;
 
 export const DefaultToastDeleteButton: React.FC<DefaultToastDeleteButtonProps> = ({
-  className,
+  className = 'dapp-default-toast-delete-button',
   onClick
 }) => {
   return (

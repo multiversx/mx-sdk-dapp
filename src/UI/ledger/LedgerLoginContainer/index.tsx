@@ -5,16 +5,15 @@ import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
-import { getGeneratedClasses } from 'UI/utils';
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
+import { WithClassname } from 'UI/types/with-classname';
 
 const ledgerWaitingText = 'Waiting for device';
 
-interface LedgerLoginContainerPropsType {
+interface LedgerLoginContainerPropsType extends WithClassname {
   callbackRoute?: string;
-  className?: string;
   wrapContentInsideModal?: boolean;
   token?: string;
   onClose?: () => void;
@@ -23,15 +22,15 @@ interface LedgerLoginContainerPropsType {
 
 export const LedgerLoginContainer = ({
   callbackRoute,
-  className = 'login-modal-content',
+  className = 'dapp-ledger-login-container',
   wrapContentInsideModal = true,
   onClose,
   onLoginRedirect,
   token
 }: LedgerLoginContainerPropsType) => {
-  const generatedClasses = getGeneratedClasses(className, {
+  const classes = {
     spinner: `fa-spin ${globalStyles.textPrimary}`
-  });
+  };
   const { ledgerAccount } = useGetAccountInfo();
   const [
     onStartLogin,
@@ -53,7 +52,7 @@ export const LedgerLoginContainer = ({
       return (
         <PageState
           icon={faCircleNotch}
-          iconClass={generatedClasses.spinner}
+          iconClass={classes.spinner}
           title={ledgerWaitingText}
         />
       );
@@ -67,7 +66,6 @@ export const LedgerLoginContainer = ({
         <AddressTable
           accounts={accounts}
           loading={isLoading}
-          className={className}
           onGoToNextPage={onGoToNextPage}
           onGoToPrevPage={onGoToPrevPage}
           onSelectAddress={onSelectAddress}

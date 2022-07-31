@@ -2,18 +2,27 @@ import React from 'react';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './ledger-connect.scss';
+import { WithClassname } from 'UI/types/with-classname';
+import classNames from 'classnames';
 
 export const LedgerConnect = ({
   onClick,
   error,
-  connectPageContent
+  connectPageContent,
+  className = 'dapp-ledger-connect-button'
 }: {
   onClick: () => void;
   error: string;
   connectPageContent?: React.ReactNode;
-}) => {
+} & WithClassname) => {
   return (
-    <div className={`${globalStyles.mAuto} ${styles.loginContainer}`}>
+    <div
+      className={classNames(
+        globalStyles.mAuto,
+        styles.loginContainer,
+        className
+      )}
+    >
       <div
         className={`${globalStyles.card} ${globalStyles.my4} ${globalStyles.textCenter} ${globalStyles.border0}`}
       >
