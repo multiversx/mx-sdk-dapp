@@ -319,10 +319,10 @@
     buffer "6.0.3"
     json-bigint "1.0.0"
 
-"@elrondnetwork/erdjs-wallet-connect-provider@2.1.0-alpha.4":
-  version "2.1.0-alpha.4"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.1.0-alpha.4.tgz#8d1f94c39e08a978baa5c6722eb13742acbe574b"
-  integrity sha512-1bkoiWxxatSYKdtiG3BNnS5oPAqgwjs4l7jVggZatxTYQIeAaQFwcp7IgaROTJ2ZrBo6yPE3RuRKr9ysDOhoVw==
+"@elrondnetwork/erdjs-wallet-connect-provider@2.1.0-alpha.5":
+  version "2.1.0-alpha.5"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-wallet-connect-provider/-/erdjs-wallet-connect-provider-2.1.0-alpha.5.tgz#1a27f125d81de6c1b2c42b316b83c8636efdcd15"
+  integrity sha512-WV+1QYwgcJe+ro27filvZVehaQPF2844p4Qc+hI8z554qnbPQJqQIy3u/pYZg6SGa2kEFWDFln5ip58RcIL7Tg==
   dependencies:
     "@walletconnect/client" "1.7.8"
     "@walletconnect/sign-client" "2.0.0-rc.1"
@@ -957,9 +957,9 @@
     reselect "^4.1.5"
 
 "@sinclair/typebox@^0.24.1":
-  version "0.24.22"
-  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.24.22.tgz#0da18e6e75701d6609c7c68fe18002bb1f47345f"
-  integrity sha512-JsBe3cOFpNZ6yjBYnXKhcENWy5qZE3PQZwExQ5ksA/h8qp4bwwxFmy07A6bC2R6qv6+RF3SfrbQTskTwYNTXUQ==
+  version "0.24.24"
+  resolved "https://registry.yarnpkg.com/@sinclair/typebox/-/typebox-0.24.24.tgz#1c201951882b0954b0689b0047584776e0053c1f"
+  integrity sha512-YaQ015FMwcveHbmI7w7X19f979CUCut2sf1gryWVV5nkAFr598jUhSpByKaC2BSBtJLT9lrDBfEo0Y2IFNipMQ==
 
 "@sindresorhus/is@^4.0.0":
   version "4.6.0"
@@ -1422,9 +1422,9 @@
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "18.6.2"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.6.2.tgz#ffc5f0f099d27887c8d9067b54e55090fcd54126"
-  integrity sha512-KcfkBq9H4PI6Vpu5B/KoPeuVDAbmi+2mDBqGPGUgoL7yXQtcWGu2vJWmmRkneWK3Rh0nIAX192Aa87AqKHYChQ==
+  version "18.6.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.6.3.tgz#4e4a95b6fe44014563ceb514b2598b3e623d1c98"
+  integrity sha512-6qKpDtoaYLM+5+AFChLhHermMQxc3TOEFIDzrZLPRGHPrLEwqFkkT5Kx3ju05g6X7uDPazz3jHbKPX0KzCjntg==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
