@@ -37,7 +37,8 @@ export enum WalletConnectV2Error {
   sessionExpired = 'Unable to connect to existing session',
   connectError = 'Unable to connect',
   userRejected = 'User rejected connection proposal',
-  userRejectedExisting = 'User rejected existing connection proposal'
+  userRejectedExisting = 'User rejected existing connection proposal',
+  errorLogout = 'Unable to remove existing pairing'
 }
 
 export enum DappCoreWCV2Events {
@@ -55,6 +56,7 @@ interface InitWalletConnectV2Type {
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string;
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
+  removeExistingPairing: (topic: string) => Promise<void>;
   walletConnectUri?: string;
   wcPairings?: PairingTypes.Struct[];
 }
@@ -114,7 +116,7 @@ export const useWalletConnectV2Login = ({
   };
 
   const handleOnEvent = (event: SessionEventTypes['event']) => {
-    console.log('session event: ', event);
+    console.log('wc2 session event: ', event);
   };
 
   async function handleOnLogin() {
@@ -226,6 +228,21 @@ export const useWalletConnectV2Login = ({
     }
   }
 
+  async function removeExistingPairing(topic: string) {
+    try {
+      if (topic) {
+        await providerRef.current?.logout({
+          topic
+        });
+      }
+    } catch (err) {
+      console.error(WalletConnectV2Error.errorLogout, err);
+      setError(WalletConnectV2Error.errorLogout);
+    } finally {
+      setWcPairings(providerRef.current?.pairings);
+    }
+  }
+
   async function generateWcUri() {
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
       setError(WalletConnectV2Error.invalidConfig);
@@ -271,6 +288,12 @@ export const useWalletConnectV2Login = ({
       isLoading: isLoading && !loginFailed,
       isLoggedIn: isLoggedIn && !loginFailed
     },
-    { uriDeepLink, walletConnectUri: wcUri, connectExisting, wcPairings }
+    {
+      uriDeepLink,
+      walletConnectUri: wcUri,
+      connectExisting,
+      removeExistingPairing,
+      wcPairings
+    }
   ];
 };
