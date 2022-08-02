@@ -95,25 +95,6 @@ export function processTransaction(
   const longTimeAgo = getTmeAgo(transaction.timestamp, false);
 
   // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
-  // let lockedAccountName: string | undefined;
-  // const tokenDetails = getTokenFromData(transaction.data);
-  //
-  // const lockedAccounts = tokenDetails?.assets?.lockedAccounts;
-  // if (lockedAccounts) {
-  //   const validLockedAccounts = Object.keys(lockedAccounts).filter(
-  //     (account, i) => {
-  //       const validAddress = addressIsBech32(account)
-  //         ? account
-  //         : addressIsBech32(lockedAccounts[account])
-  //         ? lockedAccounts[account]
-  //         : '';
-  //
-  //       return validAddress === address;
-  //     }
-  //   );
-  //   const lockedAccountName =
-  //     tokenDetails.assets?.lockedAccounts?.[validLockedAccounts[0]];
-  // }
 
   return {
     ...transaction,
