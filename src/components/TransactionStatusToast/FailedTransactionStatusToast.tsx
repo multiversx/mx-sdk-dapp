@@ -9,7 +9,6 @@ import {
   addFailTransactionToast,
   removeFailTransactionToast
 } from 'reduxStore/slices';
-import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
 
 type ErrorToastProps = {
@@ -17,7 +16,8 @@ type ErrorToastProps = {
   message: string;
   duration?: number;
   onDelete?: () => void;
-} & WithClassname;
+  className?: string;
+};
 
 export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
   message,

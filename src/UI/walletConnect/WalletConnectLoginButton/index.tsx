@@ -2,9 +2,8 @@ import React, { Fragment, ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
-import { WithClassname } from 'UI/types/with-classname';
 
-export interface WalletConnectLoginButtonPropsType extends WithClassname {
+export interface WalletConnectLoginButtonPropsType {
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   children?: ReactNode;
@@ -21,6 +20,7 @@ export interface WalletConnectLoginButtonPropsType extends WithClassname {
   isWalletConnectV2?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
   disabled?: boolean;
+  className?: string;
 }
 
 export const WalletConnectLoginButton = ({

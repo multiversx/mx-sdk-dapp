@@ -7,11 +7,10 @@ import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
-import { WithClassname } from 'UI/types/with-classname';
 import { Pairinglist } from './PairingList';
 import styles from './wallet-connect-login-container.scss';
 
-export interface WalletConnectLoginModalPropsType extends WithClassname {
+export interface WalletConnectLoginModalPropsType {
   lead?: string;
   title?: string;
   logoutRoute?: string;
@@ -22,6 +21,7 @@ export interface WalletConnectLoginModalPropsType extends WithClassname {
   token?: string;
   onLoginRedirect?: (callbackRoute: string) => void;
   onClose?: () => void;
+  className?: string;
 }
 
 export const WalletConnectLoginContainer = ({

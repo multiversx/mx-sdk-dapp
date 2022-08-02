@@ -1,16 +1,14 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { getUsdValue } from 'utils/operations';
-import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
 
-export const UsdValue = (
-  props: {
-    amount: string;
-    usd: number;
-    'data-testid'?: string;
-  } & WithClassname
-) => {
+export const UsdValue = (props: {
+  amount: string;
+  usd: number;
+  'data-testid'?: string;
+  className?: string;
+}) => {
   const { amount, usd, ...dataTestId } = props;
   const value = `≈ $${getUsdValue({ amount, usd })}`;
   return (

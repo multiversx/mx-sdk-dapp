@@ -9,13 +9,12 @@ import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 import { AddressRow } from './AddressRow';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
 
 const ledgerWaitingText = 'Waiting for device';
 
 const addressesPerPage = 10;
 
-interface AddressTablePropsType extends WithClassname {
+interface AddressTablePropsType {
   loading: boolean;
   accounts: string[];
   startIndex: number;
@@ -24,6 +23,7 @@ interface AddressTablePropsType extends WithClassname {
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
+  className?: string;
 }
 
 export const AddressTable = ({

@@ -1,19 +1,20 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useGetNetworkConfig } from 'hooks';
 import styles from './styles.scss';
-import { WithClassname } from 'UI/types/with-classname';
 
 export const ExplorerLink = ({
   page,
   text,
-  className = 'dapp-explorer-link'
+  className = 'dapp-explorer-link',
+  children
 }: {
   page: string;
   text?: any;
-} & WithClassname) => {
+  className?: string;
+} & PropsWithChildren) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
@@ -25,11 +26,12 @@ export const ExplorerLink = ({
       className={classNames(styles.link, className)}
       rel='noreferrer'
     >
-      {text ? (
-        <>{text}</>
-      ) : (
-        <FontAwesomeIcon icon={faSearch} className={styles.search} />
-      )}
+      {children ??
+        (text ? (
+          <>{text}</>
+        ) : (
+          <FontAwesomeIcon icon={faSearch} className={styles.search} />
+        ))}
     </a>
   );
 };

@@ -16,9 +16,8 @@ import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
 
-export interface TransactionsToastListPropsType extends WithClassname {
+export interface TransactionsToastListPropsType {
   toastProps?: any;
   withTxNonce?: boolean;
   signedTransactions?: SignedTransactionsType;
@@ -26,6 +25,7 @@ export interface TransactionsToastListPropsType extends WithClassname {
   parentElement?: Element | DocumentFragment;
   transactionToastClassName?: string;
   customToastClassName?: string;
+  className?: string;
 }
 
 const renderTransactionToast = ({

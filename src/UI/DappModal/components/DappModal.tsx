@@ -6,7 +6,6 @@ import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
 
 type DappModalProps = {
   id?: string;
@@ -15,7 +14,8 @@ type DappModalProps = {
   parentElement?: Element;
   children?: React.ReactNode;
   config?: DappModalConfig;
-} & WithClassname;
+  className?: string;
+};
 
 const defaultConfig: DappModalConfig = {
   showHeader: true,

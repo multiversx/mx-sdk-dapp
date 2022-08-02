@@ -9,15 +9,14 @@ import {
   TransactionToastDefaultProps
 } from './types';
 import { useTransactionToast } from './hooks/useTransactionToast';
-import { WithClassname } from 'UI/types/with-classname';
 import styles from './styles.scss';
 
 export type TransactionToastPropsType = {
   title?: string | React.ReactNode;
   children?: React.ReactNode;
   customization?: TransactionToastCustomizationProps;
-} & TransactionToastDefaultProps &
-  WithClassname;
+  className?: string;
+} & TransactionToastDefaultProps;
 
 export const TransactionToast = ({
   toastId,

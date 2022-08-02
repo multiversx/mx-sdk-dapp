@@ -2,13 +2,13 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Denominate } from 'UI/Denominate';
 import { getAccountBalance } from 'utils';
-import { WithClassname } from 'UI/types/with-classname';
 
-interface AddressRowType extends WithClassname {
+interface AddressRowType {
   selectedAddress?: string;
   index: number;
   address: string;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
+  className?: string;
 }
 
 // TODO: why not use Trim component?

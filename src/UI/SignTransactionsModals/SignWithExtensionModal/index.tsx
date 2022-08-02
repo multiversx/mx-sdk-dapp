@@ -7,7 +7,6 @@ import { PageState } from 'UI/PageState';
 import { safeRedirect } from 'utils';
 import styles from './sign-with-extension-modal.scss';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
 
 export const SignWithExtensionModal = ({
   handleClose,
@@ -16,7 +15,7 @@ export const SignWithExtensionModal = ({
   transactions,
   className = 'dapp-extension-modal',
   modalContentClassName
-}: SignModalPropsType & WithClassname) => {
+}: SignModalPropsType) => {
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.extension, className),
     icon: globalStyles.textWhite,
