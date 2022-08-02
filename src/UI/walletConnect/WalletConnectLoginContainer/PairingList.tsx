@@ -1,15 +1,18 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import globalStyles from 'assets/sass/main.scss';
+import { WithClassname } from 'UI/types/with-classname';
 
-interface PairingListPropsType {
+interface PairingListPropsType extends WithClassname {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
+  removeExistingPairing: (topic: string) => Promise<void>;
   activePairings: PairingTypes.Struct[];
   className: string;
 }
 
 export const Pairinglist = ({
   connectExisting,
+  removeExistingPairing,
   activePairings,
   className = 'dapp-wallet-connect-pairing-list'
 }: PairingListPropsType) => {
@@ -17,8 +20,9 @@ export const Pairinglist = ({
     pairsContainer: className,
     leadText: '',
     pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
-    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
+    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.positionRelative} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2} ${globalStyles.p2}`,
     pairImage: globalStyles.pairImage,
+    pairRemove: globalStyles.pairRemove,
     pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
   };
 
@@ -30,9 +34,20 @@ export const Pairinglist = ({
           <button
             type='button'
             key={pairing.topic}
-            onClick={() => connectExisting(pairing)}
+            onClick={() => {
+              connectExisting(pairing);
+            }}
             className={classes.pairButton}
           >
+            <div
+              className={classes.pairRemove}
+              onClick={(e) => {
+                e.stopPropagation();
+                removeExistingPairing(pairing.topic);
+              }}
+            >
+              <span aria-hidden='true'>×</span>
+            </div>
             {pairing.peerMetadata && (
               <>
                 <img
