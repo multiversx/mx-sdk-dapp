@@ -9,7 +9,6 @@ export function dhms(ms: number) {
   let minsms = hrsms % (60 * 1000);
   let secs = Math.floor(minsms / 1000);
 
-  // let diff = ' ago';
   let diff = '';
   let secsString = secs + ' sec';
   let minsString = mins + ' min';

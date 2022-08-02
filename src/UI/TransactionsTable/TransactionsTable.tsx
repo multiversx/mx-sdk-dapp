@@ -7,8 +7,6 @@ import styles from './transactions-table.scss';
 interface TransactionsTableType {
   transactions: TransactionType[];
   address?: string;
-  // totalTransactions: number | '...';
-  // size: number;
   title?: React.ReactNode;
   directionCol?: boolean;
   showLockedAccounts?: boolean;
@@ -17,11 +15,7 @@ interface TransactionsTableType {
 export const TransactionsTable = ({
   transactions,
   address,
-  title = (
-    <>
-      <h6 data-testid='title'>Transactions</h6>
-    </>
-  ),
+  title = <h6 data-testid='title'>Transactions</h6>,
   directionCol = false,
   showLockedAccounts = false
 }: TransactionsTableType) => {
