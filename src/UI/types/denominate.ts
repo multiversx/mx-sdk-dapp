@@ -1,4 +1,6 @@
-export interface DenominateType {
+import { WithClassname } from './with-classname';
+
+export interface DenominateType extends WithClassname {
   value: string;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
@@ -7,5 +9,4 @@ export interface DenominateType {
   denomination?: number;
   egldLabel?: string;
   'data-testid'?: string;
-  className?: string;
 }

@@ -2,8 +2,9 @@ import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
+import { WithClassname } from 'UI/types/with-classname';
 
-export interface LedgerLoginButtonPropsType {
+export interface LedgerLoginButtonPropsType extends WithClassname {
   token?: string;
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
@@ -16,7 +17,6 @@ export interface LedgerLoginButtonPropsType {
   hideButtonWhenModalOpens?: boolean;
   onLoginRedirect?: (callbackRoute: string) => void;
   disabled?: boolean;
-  className?: string;
 }
 
 export const LedgerLoginButton: (

@@ -170,7 +170,6 @@ export interface SignModalPropsType {
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
   title?: React.ReactNode;
-  className?: string;
 }
 
 export interface CustomTransactionInformation {

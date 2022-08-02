@@ -5,15 +5,17 @@ import {
   DappModalInteractionConfig,
   useDappModal
 } from 'UI/DappModal';
+import { WithClassname } from 'UI/types/with-classname';
 
-export const ModalContainer = (props: {
-  children: React.ReactNode;
-  onClose?: () => void;
-  modalConfig?: DappModalConfig;
-  modalInteractionConfig?: DappModalInteractionConfig;
-  visible?: boolean;
-  className?: string;
-}) => {
+export const ModalContainer = (
+  props: {
+    children: React.ReactNode;
+    onClose?: () => void;
+    modalConfig?: DappModalConfig;
+    modalInteractionConfig?: DappModalInteractionConfig;
+    visible?: boolean;
+  } & WithClassname
+) => {
   const { handleHideModal: onHide, visible, config } = useDappModal({
     modalConfig: props.modalConfig,
     config: {

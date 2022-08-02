@@ -17,8 +17,9 @@ import { TransactionData } from 'UI/TransactionData';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 import globalStyles from 'assets/sass/main.scss';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+import { WithClassname } from 'UI/types/with-classname';
 
-export interface SignStepType {
+export interface SignStepType extends WithClassname {
   onSignTransaction: () => void;
   onPrev: () => void;
   handleClose: () => void;
@@ -30,7 +31,6 @@ export interface SignStepType {
   currentTransaction: ActiveLedgerTransactionType | null;
   allTransactions: MultiSignTxType[];
   isLastTransaction: boolean;
-  className?: string;
 }
 
 export const SignStep = ({

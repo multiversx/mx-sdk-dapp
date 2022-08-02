@@ -2,6 +2,7 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
 import classNames from 'classnames';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const ConfirmAddress = ({
   token,
@@ -10,8 +11,7 @@ export const ConfirmAddress = ({
 }: {
   token?: string;
   noBorder?: boolean;
-  className?: string;
-}) => {
+} & WithClassname) => {
   const { ledgerAccount } = useGetAccountInfo();
   return (
     <div className={classNames(globalStyles.mAuto, className)}>

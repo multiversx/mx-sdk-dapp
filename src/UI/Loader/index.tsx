@@ -2,6 +2,7 @@ import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
+import { WithClassname } from 'UI/types/with-classname';
 
 export const Loader = ({
   dataTestId = 'loader',
@@ -10,8 +11,7 @@ export const Loader = ({
 }: {
   dataTestId?: string;
   noText?: boolean;
-  className?: string;
-}) => {
+} & WithClassname) => {
   return (
     <PageState
       title={noText ? '' : 'Loading...'}

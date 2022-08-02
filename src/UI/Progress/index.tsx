@@ -4,11 +4,12 @@ import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import { storage } from 'utils/storage';
 import styles from './styles.scss';
+import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
-export interface ProgressProps {
+export interface ProgressProps extends WithClassname {
   id: string;
   done: boolean;
   children: React.ReactNode;
@@ -17,7 +18,6 @@ export interface ProgressProps {
     startTime: number;
     endTime: number;
   };
-  className?: string;
 }
 
 export const Progress = ({
