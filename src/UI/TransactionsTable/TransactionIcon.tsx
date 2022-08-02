@@ -39,25 +39,19 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
   if (invalid) icon = faBan;
   if (pending) icon = faHourglass;
 
-  return icon === undefined ? null : (
+  return icon ? (
     <FontAwesomeIcon
       title={`
             ${capitalizeFirstLetter(transaction.status)}
             ${
               (failed || invalid) && transactionMessages.length > 0
                 ? transactionMessages.join(',')
-                : // ? transactionMessages.map(
-                  //     (message, messageIndex) =>
-                  //       `${capitalizeFirstLetter(message)} ${
-                  //         messageIndex > 0 ? ', ' : ''
-                  //       }`
-                  //   )
-                  ''
+                : ''
             }
           `}
       icon={icon}
       size={icon === faTimes ? '1x' : 'sm'}
       className='mr-1 text-secondary'
     />
-  );
+  ) : null;
 };
