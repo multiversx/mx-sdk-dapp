@@ -12,14 +12,12 @@ export function getDenominatedValue(
 
   const value = transaction.value;
   const { showLastNonZeroDecimal = false } = denominationConfig;
-  const decimals =
-    denominationConfig.decimals !== undefined
-      ? denominationConfig.decimals
-      : networkConfig.network.decimals;
-  const denomination =
-    denominationConfig.denomination !== undefined
-      ? denominationConfig.denomination
-      : networkConfig.network.egldDenomination;
+  const decimals = denominationConfig.decimals
+    ? denominationConfig.decimals
+    : networkConfig.network.decimals;
+  const denomination = denominationConfig.denomination
+    ? denominationConfig.denomination
+    : networkConfig.network.egldDenomination;
 
   return denominate({
     input: value,
