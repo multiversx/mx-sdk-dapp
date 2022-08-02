@@ -8,10 +8,11 @@ import { getTransactionTokens } from './helpers/getTransactionTokens';
 import urlBuilder from './helpers/urlBuilder';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
-import { getEgldLabel, getTokenFromData, timeRemaining } from 'utils';
+import { getEgldLabel, getTokenFromData } from 'utils';
 import { isContract } from './helpers/isContract';
 import { getTransactionDirection } from './helpers/getTransactionDirection';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
+import { parseTransactionTime } from './helpers/parseTransactionTime';
 
 export type DenominationConfig = {
   egldLabel?: string;
@@ -22,13 +23,22 @@ export type DenominationConfig = {
   token?: string;
 };
 
+export type ParseTransactionsConfiguration = {
+  denominationConfig: DenominationConfig;
+  numInitCharactersForScAddress: number;
+};
+
+const defaultConfig: ParseTransactionsConfiguration = {
+  denominationConfig: {
+    egldLabel: 'EGLD'
+  },
+  numInitCharactersForScAddress: NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
+};
+
 export function parseTransactions(
   transactions: UITransactionType[],
   address: string,
-  denominationConfig: DenominationConfig = {
-    egldLabel: 'EGLD'
-  },
-  numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
+  { denominationConfig, numInitCharactersForScAddress } = defaultConfig
 ): ExtendedTransactionType[] {
   return transactions.map((transaction) => {
     return processTransaction(
@@ -53,10 +63,11 @@ export function processTransaction(
     (getTokenFromData(transaction.data).tokenId || getEgldLabel());
 
   let receiver = transaction.receiver;
-  if (transaction.action && transaction.action.arguments?.receiver) {
+  if (transaction.action?.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
   }
 
+  // The information about an account like name, icon, etc...
   const receiverAssets =
     transaction.receiver === receiver ? transaction.receiverAssets : undefined;
 
@@ -82,16 +93,13 @@ export function processTransaction(
   const receiverShardLink = getNetworkLink(
     urlBuilder.receiverShard(transaction.receiverShard)
   );
-  const transactionLink = getNetworkLink(
-    `/transactions/${
-      transaction.originalTxHash
-        ? `${transaction.originalTxHash}#${transaction.txHash}`
-        : transaction.txHash
-    }`
-  );
 
-  const shortTimeAgo = timeRemaining(transaction.timestamp, true);
-  const longTimeAgo = timeRemaining(transaction.timestamp, false);
+  const transactionHash = transaction.originalTxHash
+    ? `${transaction.originalTxHash}#${transaction.txHash}`
+    : transaction.txHash;
+  const transactionLink = getNetworkLink(`/transactions/${transactionHash}`);
+
+  const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
 
   // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
 
@@ -100,18 +108,26 @@ export function processTransaction(
     tokenIdentifier,
     receiver,
     receiverAssets,
-    direction,
-    method,
-    transactionTokens,
-    denominatedValue,
-    fullDenominatedValue,
-    senderLink,
-    receiverLink,
-    senderShardLink,
-    receiverShardLink,
-    transactionLink,
-    shortTimeAgo,
-    longTimeAgo,
-    isContract: isContract(transaction.sender, numInitCharactersForScAddress)
+    denomination: {
+      denominatedValue,
+      fullDenominatedValue
+    },
+    transactionDetails: {
+      direction,
+      method,
+      transactionTokens,
+      isContract: isContract(transaction.sender, numInitCharactersForScAddress)
+    },
+    links: {
+      senderLink,
+      receiverLink,
+      senderShardLink,
+      receiverShardLink,
+      transactionLink
+    },
+    dateTime: {
+      shortTimeAgo,
+      longTimeAgo
+    }
   };
 }

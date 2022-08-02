@@ -6,23 +6,18 @@ import { DenominationConfig } from '../TransactionsInterpreter';
 
 export function getDenominatedValue(
   transaction: UITransactionType,
-  denominationConfig: DenominationConfig
+  { decimals, denomination, showLastNonZeroDecimal = false }: DenominationConfig
 ) {
   const networkConfig = networkConfigSelector(store.getState());
 
   const value = transaction.value;
-  const { showLastNonZeroDecimal = false } = denominationConfig;
-  const decimals = denominationConfig.decimals
-    ? denominationConfig.decimals
-    : networkConfig.network.decimals;
-  const denomination = denominationConfig.denomination
-    ? denominationConfig.denomination
-    : networkConfig.network.egldDenomination;
 
   return denominate({
     input: value,
-    denomination: Number(denomination),
-    decimals: Number(decimals),
+    denomination: Number(
+      denomination ? denomination : networkConfig.network.egldDenomination
+    ),
+    decimals: Number(decimals ? decimals : networkConfig.network.decimals),
     showLastNonZeroDecimal
   });
 }

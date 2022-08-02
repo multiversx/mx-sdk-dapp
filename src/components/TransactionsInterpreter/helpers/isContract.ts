@@ -1,3 +1,5 @@
+const CONTRACT_ADDRESS_PREFIX = 'erd1';
+
 export const isContract = (
   initiator: string | undefined,
   numberOfCharactersForScAddress: number
@@ -6,6 +8,6 @@ export const isContract = (
     initiator &&
       numberOfCharactersForScAddress > 0 &&
       initiator
-        .substring('erd1'.length)
+        .substring(CONTRACT_ADDRESS_PREFIX.length)
         .startsWith('q'.repeat(numberOfCharactersForScAddress))
   );

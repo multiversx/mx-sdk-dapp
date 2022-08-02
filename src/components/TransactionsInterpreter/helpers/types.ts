@@ -409,39 +409,6 @@ export interface UITransactionType extends TransferType {
   tokenIdentifier?: string;
 }
 
-// export interface ProviderType {
-//   provider: string;
-//   apr: string;
-//   delegationCap: string;
-//   locked: string;
-//   numUsers: number;
-//   numNodes: number;
-//   owner: string;
-//   serviceFee: number;
-//   stake: string;
-//   topUp: string;
-//   featured?: boolean;
-//   identity?: string;
-//   cumulatedRewards?: string;
-//
-//   identityDetails?: IdentityType; // local field
-//
-//   // not used
-//   initialOwnerFunds?: string;
-//   automaticActivation?: boolean;
-//   withDelegationCap?: boolean;
-//   changeableServiceFee?: boolean;
-//   checkCapOnRedelegate?: boolean;
-//   createdNonce?: number;
-//   unBondPeriod?: number;
-//   totalUnStaked?: string;
-//
-//   totalUnStakedFromNodes?: string;
-//   totalUnBondedFromNodes?: string;
-//   maxDelegateAmountAllowed?: string;
-//   maxRedelegateAmountAllowed?: string;
-// }
-
 export enum TransactionDirection {
   SELF = 'Self',
   INTERNAL = 'Internal',
@@ -450,18 +417,26 @@ export enum TransactionDirection {
 }
 
 export type ExtendedTransactionType = {
-  direction?: TransactionDirection;
-  method: string;
-  transactionTokens: TokenArgumentType[];
-  denominatedValue?: string;
-  fullDenominatedValue?: string;
-  senderLink?: string;
-  receiverLink?: string;
-  senderShardLink?: string;
-  receiverShardLink?: string;
-  transactionLink?: string;
-  shortTimeAgo?: string;
-  longTimeAgo?: string;
-  lockedAccountName?: string;
-  isContract?: boolean;
+  transactionDetails: {
+    direction?: TransactionDirection;
+    method: string;
+    transactionTokens: TokenArgumentType[];
+    lockedAccountName?: string;
+    isContract?: boolean;
+  };
+  denomination: {
+    denominatedValue?: string;
+    fullDenominatedValue?: string;
+  };
+  links: {
+    senderLink?: string;
+    receiverLink?: string;
+    senderShardLink?: string;
+    receiverShardLink?: string;
+    transactionLink?: string;
+  };
+  dateTime: {
+    shortTimeAgo?: string;
+    longTimeAgo?: string;
+  };
 } & UITransactionType;

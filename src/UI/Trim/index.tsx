@@ -14,7 +14,7 @@ export interface TrimType extends WithClassname {
 export const Trim = ({
   text,
   className = 'dapp-trim',
-  dataTestId = '',
+  dataTestId = 'trim-text-component',
   color
 }: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);

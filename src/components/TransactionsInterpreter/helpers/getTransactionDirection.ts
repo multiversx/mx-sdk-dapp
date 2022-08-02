@@ -14,20 +14,15 @@ export function getTransactionDirection(
   const directionSelf = directionOut && directionIn;
   const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;
 
-  let direction = TransactionDirection.OUT;
   switch (true) {
     case isScResult:
-      direction = TransactionDirection.INTERNAL;
-      break;
+      return TransactionDirection.INTERNAL;
     case directionSelf:
-      direction = TransactionDirection.SELF;
-      break;
-    case directionOut:
-      direction = TransactionDirection.OUT;
-      break;
+      return TransactionDirection.SELF;
     case directionIn:
-      direction = TransactionDirection.IN;
-      break;
+      return TransactionDirection.IN;
+    case directionOut:
+    default:
+      return TransactionDirection.OUT;
   }
-  return direction;
 }
