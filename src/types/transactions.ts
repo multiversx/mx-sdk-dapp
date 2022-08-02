@@ -6,6 +6,7 @@ import {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums';
+import { WithClassname } from '../UI/types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -162,7 +163,7 @@ export interface SmartContractResult {
   returnMessage: string;
 }
 
-export interface SignModalPropsType {
+export interface SignModalPropsType extends WithClassname {
   handleClose: () => void;
   error: string | null;
   callbackRoute?: string;

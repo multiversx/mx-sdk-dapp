@@ -17,7 +17,7 @@ import { TransactionData } from 'UI/TransactionData';
 import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
 import globalStyles from 'assets/sass/main.scss';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../../types';
 
 export interface SignStepType extends WithClassname {
   onSignTransaction: () => void;

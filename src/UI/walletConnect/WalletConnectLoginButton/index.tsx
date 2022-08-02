@@ -2,7 +2,7 @@ import React, { Fragment, ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../../types';
 
 export interface WalletConnectLoginButtonPropsType extends WithClassname {
   onModalOpens?: (props?: any) => void;

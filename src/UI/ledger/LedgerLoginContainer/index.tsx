@@ -8,7 +8,7 @@ import { PageState } from 'UI/PageState';
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../../types';
 
 const ledgerWaitingText = 'Waiting for device';
 
