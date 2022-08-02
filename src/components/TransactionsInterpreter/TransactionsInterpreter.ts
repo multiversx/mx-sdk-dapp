@@ -13,6 +13,8 @@ import { isContract } from './helpers/isContract';
 import { getTransactionDirection } from './helpers/getTransactionDirection';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
 import { parseTransactionTime } from './helpers/parseTransactionTime';
+import { getTransactionReceiver } from './helpers/getTransactionReceiver';
+import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 
 export type DenominationConfig = {
   egldLabel?: string;
@@ -40,14 +42,14 @@ export function parseTransactions(
   address: string,
   { denominationConfig, numInitCharactersForScAddress } = defaultConfig
 ): ExtendedTransactionType[] {
-  return transactions.map((transaction) => {
-    return processTransaction(
+  return transactions.map((transaction) =>
+    processTransaction(
       transaction,
       address,
       denominationConfig,
       numInitCharactersForScAddress
-    );
-  });
+    )
+  );
 }
 
 export function processTransaction(
@@ -62,14 +64,8 @@ export function processTransaction(
     transaction.tokenIdentifier ??
     (getTokenFromData(transaction.data).tokenId || getEgldLabel());
 
-  let receiver = transaction.receiver;
-  if (transaction.action?.arguments?.receiver) {
-    receiver = transaction.action.arguments.receiver;
-  }
-
-  // The information about an account like name, icon, etc...
-  const receiverAssets =
-    transaction.receiver === receiver ? transaction.receiverAssets : undefined;
+  const receiver = getTransactionReceiver(transaction);
+  const receiverAssets = getTransactionReceiverAssets(transaction);
 
   const direction = getTransactionDirection(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
