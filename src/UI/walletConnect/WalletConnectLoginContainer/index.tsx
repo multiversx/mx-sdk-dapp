@@ -7,9 +7,9 @@ import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
-import styles from './wallet-connect-login-container.scss';
-import { Pairinglist } from './PairingList';
 import { WithClassname } from 'UI/types/with-classname';
+import { Pairinglist } from './PairingList';
+import styles from './wallet-connect-login-container.scss';
 
 export interface WalletConnectLoginModalPropsType extends WithClassname {
   lead?: string;
@@ -52,6 +52,7 @@ export const WalletConnectLoginContainer = ({
     { error: walletConnectErrorV2 },
     {
       connectExisting,
+      removeExistingPairing,
       uriDeepLink: walletConnectDeepLinkV2,
       walletConnectUri: walletConnectUriV2,
       wcPairings
@@ -82,7 +83,7 @@ export const WalletConnectLoginContainer = ({
     mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
     mobileLoginButtonIcon: globalStyles.mr2,
     errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
-    pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
+    pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList} ${globalStyles.mbn2}`,
     pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
     pairImage: globalStyles.pairImage,
     pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
@@ -165,6 +166,7 @@ export const WalletConnectLoginContainer = ({
             <Pairinglist
               activePairings={activePairings}
               connectExisting={connectExisting}
+              removeExistingPairing={removeExistingPairing}
               className={className}
             />
           )}
