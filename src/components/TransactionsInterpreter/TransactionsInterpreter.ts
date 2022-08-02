@@ -8,8 +8,7 @@ import { getTransactionTokens } from './helpers/getTransactionTokens';
 import urlBuilder from './helpers/urlBuilder';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
-import { getTmeAgo } from './helpers/getTimeAgo';
-import { getEgldLabel, getTokenFromData } from '../../utils';
+import { getEgldLabel, getTokenFromData, timeRemaining } from 'utils';
 import { isContract } from './helpers/isContract';
 import { getTransactionDirection } from './helpers/getTransactionDirection';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
@@ -91,8 +90,8 @@ export function processTransaction(
     }`
   );
 
-  const shortTimeAgo = getTmeAgo(transaction.timestamp, true);
-  const longTimeAgo = getTmeAgo(transaction.timestamp, false);
+  const shortTimeAgo = timeRemaining(transaction.timestamp, true);
+  const longTimeAgo = timeRemaining(transaction.timestamp, false);
 
   // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
 
