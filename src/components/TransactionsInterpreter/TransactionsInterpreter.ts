@@ -15,7 +15,7 @@ import { getTransactionDirection } from './helpers/getTransactionDirection';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
 
 export type DenominationConfig = {
-  erdLabel?: string;
+  egldLabel?: string;
   decimals?: number;
   denomination?: number;
   showLastNonZeroDecimal?: boolean;
@@ -27,7 +27,7 @@ export function parseTransactions(
   transactions: UITransactionType[],
   address: string,
   denominationConfig: DenominationConfig = {
-    erdLabel: 'EGLD'
+    egldLabel: 'EGLD'
   },
   numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType[] {
@@ -45,7 +45,7 @@ export function processTransaction(
   transaction: UITransactionType,
   address: string,
   denominationConfig: DenominationConfig = {
-    erdLabel: 'EGLD'
+    egldLabel: 'EGLD'
   },
   numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType {

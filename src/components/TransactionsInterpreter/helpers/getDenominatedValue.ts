@@ -1,7 +1,7 @@
 import { UITransactionType } from './types';
-import { networkConfigSelector } from '../../../reduxStore/selectors';
-import { store } from '../../../reduxStore/store';
-import { denominate } from '../../../utils';
+import { networkConfigSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
+import { denominate } from 'utils';
 import { DenominationConfig } from '../TransactionsInterpreter';
 
 export function getDenominatedValue(

@@ -6,22 +6,23 @@ import {
 
 const getTransactionMethod = (transaction: UITransactionType) => {
   let transactionAction = 'Transaction';
-  if (
+  const transactionHasAction =
     transaction.action &&
     transaction.action.name &&
-    transaction.action.category
-  ) {
+    transaction.action.category;
+
+  if (transactionHasAction) {
     if (
-      transaction.action.category === TxActionCategoryEnum.esdtNft &&
-      transaction.action.name === TxActionsEnum.transfer
+      transaction.action!.category === TxActionCategoryEnum.esdtNft &&
+      transaction.action!.name === TxActionsEnum.transfer
     ) {
       transactionAction = 'Transaction';
     } else {
-      transactionAction = transaction.action.name;
+      transactionAction = transaction.action!.name;
     }
 
-    if (transaction.action.arguments?.functionName) {
-      transactionAction = transaction.action.arguments?.functionName;
+    if (transaction.action!.arguments?.functionName) {
+      transactionAction = transaction.action!.arguments?.functionName;
     }
   }
 
