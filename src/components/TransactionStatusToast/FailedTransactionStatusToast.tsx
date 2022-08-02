@@ -9,8 +9,8 @@ import {
   addFailTransactionToast,
   removeFailTransactionToast
 } from 'reduxStore/slices';
-import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
+import { WithClassname } from '../../UI/types';
 
 type ErrorToastProps = {
   type?: StatusIconType;
