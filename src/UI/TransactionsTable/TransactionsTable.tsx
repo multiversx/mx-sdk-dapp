@@ -3,8 +3,11 @@ import { TransactionRow } from './TransactionRow';
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { UITransactionType as TransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import styles from './transactions-table.scss';
+import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
+import { WithClassname } from '../types';
 
-interface TransactionsTableType {
+interface TransactionsTableType extends WithClassname {
   transactions: TransactionType[];
   address?: string;
   title?: React.ReactNode;
@@ -17,7 +20,8 @@ export const TransactionsTable = ({
   address,
   title = <h6 data-testid='title'>Transactions</h6>,
   directionCol = false,
-  showLockedAccounts = false
+  showLockedAccounts = false,
+  className = 'dapp-transactions-table'
 }: TransactionsTableType) => {
   if (!address) {
     console.error('Invalid account');
@@ -25,23 +29,26 @@ export const TransactionsTable = ({
   }
 
   const processedTransactions = parseTransactions(transactions, address);
-  console.log(processedTransactions);
 
   return (
-    <div className={styles.transactionsTable}>
-      <div className='card'>
-        <div className='card-header'>
-          <div className='card-header-item d-flex justify-content-between align-items-center'>
+    <div className={classNames(styles.transactionsTable, className)}>
+      <div className={globalStyles.card}>
+        <div className={globalStyles.cardHeader}>
+          <div
+            className={classNames(
+              globalStyles.cardHeaderItem,
+              globalStyles.dFlex,
+              globalStyles.justifyContentBetween,
+              globalStyles.alignItemsCenter
+            )}
+          >
             <div>{title}</div>
           </div>
         </div>
-        <div className='card-body p-0'>
-          <div
-            className='table-wrapper animated-list'
-            style={{ maxHeight: '500px', overflow: 'scroll' }}
-          >
+        <div className={classNames(globalStyles.cardBody, globalStyles.p0)}>
+          <div className={styles.tableWrapper}>
             <table
-              className='table trim-size-sm'
+              className={classNames(styles.table, globalStyles.trimSizeSm)}
               data-testid='transactionsTable'
             >
               <thead>
@@ -50,7 +57,7 @@ export const TransactionsTable = ({
                   <th scope='col'>Age</th>
                   <th scope='col'>Shard</th>
                   <th scope='col'>From</th>
-                  {directionCol && <th scope='col' />}
+                  {directionCol && <th scope='col'> Tx Direction </th>}
                   <th scope='col'>To</th>
                   <th scope='col'>Method</th>
                   <th scope='col'>Value</th>

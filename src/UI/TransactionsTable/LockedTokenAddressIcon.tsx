@@ -2,7 +2,9 @@ import React from 'react';
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useGetTokenDetails } from 'hooks';
-import { addressIsBech32 } from 'utils';
+import { addressIsValid } from 'utils';
+import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
 
 export const LockedTokenAddressIcon = ({
   address,
@@ -16,9 +18,9 @@ export const LockedTokenAddressIcon = ({
   if (lockedAccounts) {
     const validLockedAccounts = Object.keys(lockedAccounts).filter(
       (account) => {
-        const validAddress = addressIsBech32(account)
+        const validAddress = addressIsValid(account)
           ? account
-          : addressIsBech32(lockedAccounts[account])
+          : addressIsValid(lockedAccounts[account])
           ? lockedAccounts[account]
           : '';
 
@@ -33,7 +35,7 @@ export const LockedTokenAddressIcon = ({
         title={lockedAccountName}
         icon={faLock}
         size='xs'
-        className='mr-1 text-secondary'
+        className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
       />
     ) : null;
   }

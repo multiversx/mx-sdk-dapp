@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React from 'react';
 import { isContract } from 'components/TransactionsInterpreter/helpers/isContract';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 
 interface ScAddressIconType {
   initiator: string;
@@ -23,7 +25,7 @@ export const ScAddressIcon = ({
     <FontAwesomeIcon
       title={'Smart Contract'}
       icon={faFileAlt}
-      className='mr-1 text-secondary'
+      className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
     />
   ) : null;
 };

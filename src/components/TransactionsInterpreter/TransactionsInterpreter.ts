@@ -97,8 +97,6 @@ export function processTransaction(
 
   const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
 
-  // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
-
   return {
     ...transaction,
     tokenIdentifier,

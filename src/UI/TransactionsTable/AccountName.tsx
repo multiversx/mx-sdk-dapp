@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Trim } from '../Trim';
 import { AssetType } from 'components/TransactionsInterpreter/helpers/types';
+import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
 
 export const AccountName = ({
   address,
@@ -18,7 +20,9 @@ export const AccountName = ({
     const description = `${name} (${address})`;
     return (
       <span
-        className={`text-truncate ${color ? `text-${color}` : ''}`}
+        className={classNames(globalStyles.textTruncate, {
+          [`text-${color}`]: color
+        })}
         {...(dataTestId
           ? {
               dataTestId

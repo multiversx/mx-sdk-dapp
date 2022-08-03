@@ -17,4 +17,3 @@ export * from './redirect';
 export * from './dateTime';
 
 export * from './retryMultipleTimes';
-export * from './addressIsBech32';

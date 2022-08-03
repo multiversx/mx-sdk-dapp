@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TransactionIcon } from './TransactionIcon';
 import { TransactionMethod } from './TransactionMethod';
 import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
-import { addressIsBech32 } from 'utils/addressIsBech32';
 import { Trim } from '../Trim';
 import { ExplorerLink } from '../ExplorerLink';
 import { TimeAgo } from './TImeAgo';
@@ -13,6 +12,9 @@ import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 import { AccountName } from './AccountName';
 import globalStyles from 'assets/sass/main.scss';
+import { addressIsValid } from 'utils';
+import classNames from 'classnames';
+import styles from './transactions-table.scss';
 
 export interface TransactionRowType {
   transaction: ExtendedTransactionType;
@@ -29,15 +31,18 @@ export const TransactionRow = ({
   if (transaction.action && transaction.action.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
   }
-  const directionOut = transaction.direction === 'Out';
-  const directionIn = transaction.direction === 'In';
+  const directionOut = transaction.transactionDetails.direction === 'Out';
+  const directionIn = transaction.transactionDetails.direction === 'In';
 
   return (
-    <tr
-      className={`animated-row trim-size-sm ${transaction.isNew ? 'new' : ''}`}
-    >
+    <tr className={`${transaction.isNew ? 'new' : ''}`}>
       <td>
-        <div className='d-flex align-items-center'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           <TransactionIcon transaction={transaction} />
           <ExplorerLink
             page={`/transactions/${
@@ -46,7 +51,7 @@ export const TransactionRow = ({
                 : transaction.txHash
             }`}
             data-testid='transactionLink'
-            className='trim-wrapper'
+            className={globalStyles.trimWrapper}
           >
             <Trim text={transaction.txHash} />
           </ExplorerLink>
@@ -56,19 +61,24 @@ export const TransactionRow = ({
         <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>
-        <div className='d-flex align-items-center'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           <ExplorerLink
-            page={transaction.senderShardLink ?? ''}
+            page={transaction.links.senderShardLink ?? ''}
             data-testid='shardFromLink'
           >
             <ShardSpan shard={transaction.senderShard} />
           </ExplorerLink>
           <FontAwesomeIcon
             icon={faArrowRight}
-            className='text-secondary mx-2'
+            className={classNames(globalStyles.textSecondary, globalStyles.mx2)}
           />
           <ExplorerLink
-            page={transaction.receiverShardLink ?? ''}
+            page={transaction.links.receiverShardLink ?? ''}
             data-testid='shardToLink'
           >
             <ShardSpan shard={transaction.receiverShard} />
@@ -76,7 +86,12 @@ export const TransactionRow = ({
         </div>
       </td>
       <td>
-        <div className='d-flex align-items-center'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           {showLockedAccounts && (
             <LockedTokenAddressIcon
               address={transaction.sender}
@@ -91,11 +106,11 @@ export const TransactionRow = ({
             />
           ) : (
             <>
-              {addressIsBech32(transaction.sender) ? (
+              {addressIsValid(transaction.sender) ? (
                 <ExplorerLink
-                  page={transaction.senderLink ?? ''}
+                  page={transaction.links.senderLink ?? ''}
                   data-testid='senderLink'
-                  className='trim-wrapper'
+                  className={globalStyles.trimWrapper}
                 >
                   <AccountName
                     address={transaction.sender}
@@ -111,18 +126,26 @@ export const TransactionRow = ({
       </td>
       {showDirectionCol && (
         <td>
-          <div className='d-flex'>
+          <div className={globalStyles.dFlex}>
             <span
-              className={`direction-badge ${transaction.direction?.toLowerCase()}`}
+              className={classNames(
+                styles.directionBadge,
+                transaction.transactionDetails.direction?.toLowerCase()
+              )}
             >
-              {transaction.direction?.toUpperCase()}
+              {transaction.transactionDetails.direction?.toUpperCase()}
             </span>
           </div>
         </td>
       )}
 
       <td>
-        <div className='d-flex align-items-center'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           {showLockedAccounts && (
             <LockedTokenAddressIcon
               address={receiver}
@@ -137,9 +160,9 @@ export const TransactionRow = ({
             />
           ) : (
             <ExplorerLink
-              page={transaction.receiverLink ?? ''}
+              page={transaction.links.receiverLink ?? ''}
               data-testid='receiverLink'
-              className='trim-wrapper'
+              className={globalStyles.trimWrapper}
             >
               <AccountName
                 address={receiver}
@@ -149,11 +172,11 @@ export const TransactionRow = ({
           )}
         </div>
       </td>
-      <td className='transaction-function'>
+      <td className={styles.transactionFunction}>
         <TransactionMethod transaction={transaction} />
       </td>
       <td className={globalStyles.textLeft}>
-        <span>{transaction.denominatedValue}</span>
+        <span>{transaction.denomination.denominatedValue}</span>
       </td>
     </tr>
   );

@@ -9,6 +9,8 @@ import { getOperationsMessages } from 'components/TransactionsInterpreter/helper
 import { getReceiptMessages } from 'components/TransactionsInterpreter/helpers/getReceiptMessages';
 import { TransactionServerStatusesEnum } from '../../types';
 import { capitalizeFirstLetter } from 'components/TransactionsInterpreter/helpers/capitalizeFirstLetter';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 
 interface TransactionIconType {
   transaction: UITransactionType;
@@ -51,7 +53,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
           `}
       icon={icon}
       size={icon === faTimes ? '1x' : 'sm'}
-      className='mr-1 text-secondary'
+      className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
     />
   ) : null;
 };

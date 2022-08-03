@@ -125,8 +125,12 @@ $grid-columns: 12 !default;
 $grid-gutter-width: 30px !default;
 $grid-row-columns: 6 !default;
 
-// Cards
 
+$standard-box-shadow: red !default; // sidebar, navbar, cards
+// NAVBAR
+$main-navbar-box-shadow: 0 0.75rem 1.875rem 0 rgba($standard-box-shadow, 0.05);
+
+// Cards
 $card-spacer-y: 0.75rem !default;
 $card-spacer-x: 1.25rem !default;
 $card-border-width: $border-width !default;
@@ -137,6 +141,10 @@ $card-cap-color: null !default;
 $card-height: null !default;
 $card-color: null !default;
 $card-bg: $white !default;
+
+$card-small-box-shadow: $main-navbar-box-shadow;
+$card-cap-bg: $card-bg;
+$card-headings-font-weight: 400;
 
 $card-img-overlay-padding: 1.25rem !default;
 
@@ -200,3 +208,23 @@ $font-weight-bold: 700 !default;
 $font-weight-bolder: bolder !default;
 
 $btn-link-disabled-color: $gray-600 !default;
+$btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+
+
+$input-btn-focus-width:       .2rem !default;
+
+// Badges
+
+$badge-font-size:                   75% !default;
+$badge-font-weight:                 $font-weight-bold !default;
+$badge-padding-y:                   .25em !default;
+$badge-padding-x:                   .4em !default;
+$badge-border-radius:               $border-radius !default;
+
+$badge-transition:                  $btn-transition !default;
+$badge-focus-width:                 $input-btn-focus-width !default;
+
+$badge-pill-padding-x:              .6em !default;
+// Use a higher than normal value to ensure completely rounded edges when
+// customizing padding or font-size on labels.
+$badge-pill-border-radius:          10rem !default;
