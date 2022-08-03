@@ -53,7 +53,9 @@ export function getTokenFromData(
         tokenId,
         amount
       };
-    } catch (e) {}
+    } catch (e) {
+      console.error('Error getting token from transaction data', e);
+    }
   }
 
   if (nftTransfer) {

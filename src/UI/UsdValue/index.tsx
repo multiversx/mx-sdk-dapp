@@ -1,8 +1,8 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { getUsdValue } from 'utils/operations';
-import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
+import { WithClassname } from '../types';
 
 export const UsdValue = (
   props: {

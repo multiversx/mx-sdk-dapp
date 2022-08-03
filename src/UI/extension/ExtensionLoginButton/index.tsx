@@ -4,8 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import styles from './login-button.scss';
-import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
+import { WithClassname } from '../../types';
 
 export interface ExtensionLoginButtonPropsType extends WithClassname {
   token?: string;

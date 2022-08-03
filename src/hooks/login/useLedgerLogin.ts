@@ -4,19 +4,17 @@ import { getLedgerConfiguration } from 'providers';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { ledgerAccountSelector } from 'reduxStore/selectors';
 import {
-  isLoggedInSelector,
-  ledgerAccountSelector
-} from 'reduxStore/selectors';
-import {
-  updateLedgerAccount,
+  setLedgerAccount,
   setLedgerLogin,
   setTokenLogin,
-  setLedgerAccount
+  updateLedgerAccount
 } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
+import { getIsLoggedIn } from '../../utils';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -62,7 +60,6 @@ export function useLedgerLogin({
   onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
-  const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -277,6 +274,7 @@ export function useLedgerLogin({
   }, [startIndex]);
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = getIsLoggedIn();
 
   return [
     onStartLogin,
