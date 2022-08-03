@@ -8,12 +8,14 @@ import { WithClassname } from '../types';
 export interface TrimType extends WithClassname {
   text: string;
   dataTestId?: string;
+  color?: 'muted' | 'secondary';
 }
 
 export const Trim = ({
   text,
   className = 'dapp-trim',
-  dataTestId = ''
+  dataTestId = 'trim-text-component',
+  color
 }: TrimType) => {
   const [overflow, setOverflow] = React.useState(false);
   const trimRef = React.useRef(document.createElement('span'));
@@ -49,6 +51,7 @@ export const Trim = ({
       ref={trimRef}
       className={classNames(
         styles.trim,
+        color ?? '',
         {
           [styles.overflow]: overflow
         },

@@ -42,16 +42,18 @@ export function getRemainingTime(ms: number) {
   return secsString;
 }
 
-export function timeRemaining(duration: number) {
+export function timeRemaining(duration: number, short: boolean = false) {
   const startDate = moment.utc();
   const endDate = moment.utc().add(duration, 'seconds');
   const diffInMs = Math.max(endDate.diff(startDate), 0);
-  let remaning = getRemainingTime(diffInMs);
+  let remaining = getRemainingTime(diffInMs);
 
-  const parts = remaning.split(' ');
-  if (parts.length > 1) {
-    remaning = `${parts[0]} ${parts[1]}`;
+  if (short) {
+    const parts = remaining.split(' ');
+    if (parts.length > 1) {
+      remaining = `${parts[0]} ${parts[1]}`;
+    }
   }
 
-  return remaning;
+  return remaining;
 }

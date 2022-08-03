@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropsWithChildren, useMemo } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -9,14 +9,21 @@ import { WithClassname } from '../types';
 export const ExplorerLink = ({
   page,
   text,
-  className = 'dapp-explorer-link'
+  className = 'dapp-explorer-link',
+  children
 }: {
   page: string;
   text?: any;
-} & WithClassname) => {
+} & PropsWithChildren &
+  WithClassname) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
+
+  const defaultContent = useMemo(
+    () => text ?? <FontAwesomeIcon icon={faSearch} className={styles.search} />,
+    [text]
+  );
 
   return (
     <a
@@ -25,11 +32,7 @@ export const ExplorerLink = ({
       className={classNames(styles.link, className)}
       rel='noreferrer'
     >
-      {text ? (
-        <>{text}</>
-      ) : (
-        <FontAwesomeIcon icon={faSearch} className={styles.search} />
-      )}
+      {children ?? defaultContent}
     </a>
   );
 };
