@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
-import { isLoggedInSelector, networkSelector } from 'reduxStore/selectors';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { networkSelector } from 'reduxStore/selectors';
 import { setTokenLogin, setWalletLogin } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
-import { newWalletProvider } from 'utils';
+import { getIsLoggedIn, newWalletProvider } from 'utils';
 
 interface UseWebWalletLoginPropsType {
   callbackRoute: string;
@@ -23,7 +23,6 @@ export const useWebWalletLogin = ({
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const isLoggedIn = useSelector(isLoggedInSelector);
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
 
@@ -63,6 +62,7 @@ export const useWebWalletLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = getIsLoggedIn();
 
   return [
     initiateLogin,
