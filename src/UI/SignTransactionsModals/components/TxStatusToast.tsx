@@ -2,7 +2,7 @@ import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/
 import React, { useMemo } from 'react';
 import { StatusIconType } from 'components/TransactionStatusToast/types';
 import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from '../../../constants';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../../types';
 
 export type TxStatusToastProps = {
   signError: string | null;

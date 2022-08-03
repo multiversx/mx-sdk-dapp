@@ -1,5 +1,5 @@
-import { explorerAddressSelector } from '../../../reduxStore/selectors';
-import { store } from '../../../reduxStore/store';
+import { explorerAddressSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 
 export function getNetworkLink(to: string) {
   if (!to.startsWith('/')) {

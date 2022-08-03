@@ -16,7 +16,7 @@ import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
 import { store } from 'reduxStore/store';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../types';
 
 export interface TransactionsToastListPropsType extends WithClassname {
   toastProps?: any;

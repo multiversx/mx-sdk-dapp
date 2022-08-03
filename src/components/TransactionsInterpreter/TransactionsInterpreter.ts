@@ -8,14 +8,16 @@ import { getTransactionTokens } from './helpers/getTransactionTokens';
 import urlBuilder from './helpers/urlBuilder';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
-import { getTmeAgo } from './helpers/getTimeAgo';
-import { getEgldLabel, getTokenFromData } from '../../utils';
+import { getEgldLabel, getTokenFromData } from 'utils';
 import { isContract } from './helpers/isContract';
 import { getTransactionDirection } from './helpers/getTransactionDirection';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
+import { parseTransactionTime } from './helpers/parseTransactionTime';
+import { getTransactionReceiver } from './helpers/getTransactionReceiver';
+import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 
 export type DenominationConfig = {
-  erdLabel?: string;
+  egldLabel?: string;
   decimals?: number;
   denomination?: number;
   showLastNonZeroDecimal?: boolean;
@@ -23,29 +25,38 @@ export type DenominationConfig = {
   token?: string;
 };
 
+export type ParseTransactionsConfiguration = {
+  denominationConfig: DenominationConfig;
+  numInitCharactersForScAddress: number;
+};
+
+const defaultConfig: ParseTransactionsConfiguration = {
+  denominationConfig: {
+    egldLabel: 'EGLD'
+  },
+  numInitCharactersForScAddress: NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
+};
+
 export function parseTransactions(
   transactions: UITransactionType[],
   address: string,
-  denominationConfig: DenominationConfig = {
-    erdLabel: 'EGLD'
-  },
-  numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
+  { denominationConfig, numInitCharactersForScAddress } = defaultConfig
 ): ExtendedTransactionType[] {
-  return transactions.map((transaction) => {
-    return processTransaction(
+  return transactions.map((transaction) =>
+    processTransaction(
       transaction,
       address,
       denominationConfig,
       numInitCharactersForScAddress
-    );
-  });
+    )
+  );
 }
 
 export function processTransaction(
   transaction: UITransactionType,
   address: string,
   denominationConfig: DenominationConfig = {
-    erdLabel: 'EGLD'
+    egldLabel: 'EGLD'
   },
   numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType {
@@ -53,13 +64,8 @@ export function processTransaction(
     transaction.tokenIdentifier ??
     (getTokenFromData(transaction.data).tokenId || getEgldLabel());
 
-  let receiver = transaction.receiver;
-  if (transaction.action && transaction.action.arguments?.receiver) {
-    receiver = transaction.action.arguments.receiver;
-  }
-
-  const receiverAssets =
-    transaction.receiver === receiver ? transaction.receiverAssets : undefined;
+  const receiver = getTransactionReceiver(transaction);
+  const receiverAssets = getTransactionReceiverAssets(transaction);
 
   const direction = getTransactionDirection(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
@@ -83,16 +89,13 @@ export function processTransaction(
   const receiverShardLink = getNetworkLink(
     urlBuilder.receiverShard(transaction.receiverShard)
   );
-  const transactionLink = getNetworkLink(
-    `/transactions/${
-      transaction.originalTxHash
-        ? `${transaction.originalTxHash}#${transaction.txHash}`
-        : transaction.txHash
-    }`
-  );
 
-  const shortTimeAgo = getTmeAgo(transaction.timestamp, true);
-  const longTimeAgo = getTmeAgo(transaction.timestamp, false);
+  const transactionHash = transaction.originalTxHash
+    ? `${transaction.originalTxHash}#${transaction.txHash}`
+    : transaction.txHash;
+  const transactionLink = getNetworkLink(`/transactions/${transactionHash}`);
+
+  const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
 
   // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
 
@@ -101,18 +104,26 @@ export function processTransaction(
     tokenIdentifier,
     receiver,
     receiverAssets,
-    direction,
-    method,
-    transactionTokens,
-    denominatedValue,
-    fullDenominatedValue,
-    senderLink,
-    receiverLink,
-    senderShardLink,
-    receiverShardLink,
-    transactionLink,
-    shortTimeAgo,
-    longTimeAgo,
-    isContract: isContract(transaction.sender, numInitCharactersForScAddress)
+    denomination: {
+      denominatedValue,
+      fullDenominatedValue
+    },
+    transactionDetails: {
+      direction,
+      method,
+      transactionTokens,
+      isContract: isContract(transaction.sender, numInitCharactersForScAddress)
+    },
+    links: {
+      senderLink,
+      receiverLink,
+      senderShardLink,
+      receiverShardLink,
+      transactionLink
+    },
+    dateTime: {
+      shortTimeAgo,
+      longTimeAgo
+    }
   };
 }

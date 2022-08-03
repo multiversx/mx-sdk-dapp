@@ -4,7 +4,7 @@ import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import { storage } from 'utils/storage';
 import styles from './styles.scss';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../types';
 import classNames from 'classnames';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
