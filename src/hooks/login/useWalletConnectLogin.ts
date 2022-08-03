@@ -6,7 +6,6 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
-  isLoggedInSelector,
   walletConnectBridgeAddressSelector,
   walletConnectDeepLinkSelector
 } from 'reduxStore/selectors';
@@ -17,7 +16,7 @@ import {
 } from 'reduxStore/slices';
 import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
-import { logout } from 'utils';
+import { getIsLoggedIn, logout } from 'utils';
 import { optionalRedirect } from 'utils/internal';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import Timeout = NodeJS.Timeout;
@@ -57,7 +56,6 @@ export const useWalletConnectLogin = ({
     walletConnectBridgeAddressSelector
   );
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
-  const isLoggedIn = useSelector(isLoggedInSelector);
   const providerRef = useRef<any>(provider);
 
   let heartbeatDisconnectInterval: Timeout;
@@ -114,6 +112,8 @@ export const useWalletConnectLogin = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
+      const isLoggedIn = getIsLoggedIn();
+
       if (
         isLoggedIn ||
         provider == null ||
@@ -211,6 +211,8 @@ export const useWalletConnectLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = getIsLoggedIn();
+
   return [
     initiateLogin,
     {
