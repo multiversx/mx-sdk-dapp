@@ -235,14 +235,16 @@ export function useLedgerLogin({
         });
         setAccountProvider(hwWalletP);
 
-        if (address) {
-          dispatch(
-            loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
-          );
-          optionalRedirect(callbackRoute, onLoginRedirect);
-        } else {
+        if (!address) {
+          setIsLoading(false);
           console.warn('Login cancelled.');
+          return;
         }
+
+        dispatch(
+          loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
+        );
+        optionalRedirect(callbackRoute, onLoginRedirect);
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);
