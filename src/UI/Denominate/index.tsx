@@ -3,10 +3,12 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import {
   decimals as configDecimals,
-  denomination as configDenomination
+  denomination as configDenomination,
+  mainnetEgldLabel
 } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';
-import { denominate, getEgldLabel, stringIsInteger } from 'utils';
+import { denominate } from 'utils/operations/denominate';
+import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import styles from './denominate.scss';
 
 const denominateInvalid = (props: DenominateType) => {
@@ -91,8 +93,12 @@ const DenominateComponent = (props: DenominateType) => {
     : denominateValid(props, props.egldLabel || '');
 };
 
+/**
+ * @param props.egldLabel  if not provided, will fallback on **EGLD**
+ */
 export const Denominate = (props: DenominateType) => {
-  const egldLabel = props.egldLabel || getEgldLabel();
+  const egldLabel = props.egldLabel || mainnetEgldLabel;
+
   const denominateProps = { ...props, egldLabel };
 
   return <DenominateComponent {...denominateProps} />;

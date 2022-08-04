@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import { DenominateType } from 'UI/types/denominate';
 import { Denominate } from '../index';
+import { mainnetEgldLabel } from 'constants/index';
 
 const renderComponent = (props: DenominateType) => {
   const methods = render(<Denominate {...props} egldLabel='EGLD' />);
@@ -22,7 +23,8 @@ describe('Denominate component when decimals = 2', () => {
       value: '9999979999800000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2
+      decimals: 2,
+      egldLabel: mainnetEgldLabel
     };
 
     const component = renderComponent(props);
@@ -35,7 +37,8 @@ describe('Denominate component when decimals = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2
+      decimals: 2,
+      egldLabel: mainnetEgldLabel
     };
 
     const component = renderComponent(props);
@@ -48,7 +51,8 @@ describe('Denominate component when decimals = 2', () => {
       value: '100000000000000',
       showLastNonZeroDecimal: true,
       showLabel: false,
-      decimals: 2
+      decimals: 2,
+      egldLabel: mainnetEgldLabel
     };
 
     const component = renderComponent(props);
@@ -60,7 +64,8 @@ describe('Denominate component when decimals = 2', () => {
       value: '100000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2
+      decimals: 2,
+      egldLabel: mainnetEgldLabel
     };
 
     const component = renderComponent(props);
@@ -73,7 +78,8 @@ describe('Denominate component when decimals = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2
+      decimals: 2,
+      egldLabel: mainnetEgldLabel
     };
 
     const component = renderComponent(props);
@@ -85,7 +91,8 @@ describe('Denominate component when decimals = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: false,
-      decimals: 2
+      decimals: 2,
+      egldLabel: mainnetEgldLabel
     };
 
     const component = renderComponent(props);

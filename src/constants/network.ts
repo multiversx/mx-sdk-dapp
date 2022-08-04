@@ -59,17 +59,27 @@ export const fallbackNetworkConfigurations: Record<
   }
 };
 
-const { chainId: devnetChainId } = fallbackNetworkConfigurations[
-  EnvironmentsEnum.devnet
-];
-const { chainId: testnetChainId } = fallbackNetworkConfigurations[
-  EnvironmentsEnum.testnet
-];
-const { chainId: mainnetChainId } = fallbackNetworkConfigurations[
-  EnvironmentsEnum.mainnet
-];
+const {
+  chainId: devnetChainId,
+  egldLabel: devnetEgldLabel
+} = fallbackNetworkConfigurations[EnvironmentsEnum.devnet];
+const {
+  chainId: testnetChainId,
+  egldLabel: testnetEgldLabel
+} = fallbackNetworkConfigurations[EnvironmentsEnum.testnet];
+const {
+  chainId: mainnetChainId,
+  egldLabel: mainnetEgldLabel
+} = fallbackNetworkConfigurations[EnvironmentsEnum.mainnet];
 
-export { devnetChainId, testnetChainId, mainnetChainId };
+export {
+  devnetChainId,
+  testnetChainId,
+  mainnetChainId,
+  devnetEgldLabel,
+  testnetEgldLabel,
+  mainnetEgldLabel
+};
 
 export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
   [EnvironmentsEnum.devnet]: devnetChainId,
