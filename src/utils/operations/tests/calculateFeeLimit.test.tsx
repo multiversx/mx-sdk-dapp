@@ -1,7 +1,7 @@
 import { gasPerDataByte, gasPriceModifier } from 'constants/index';
 import { calculateFeeLimit } from '../calculateFeeLimit';
 
-describe('calculateFeeLimit tests', () => {
+describe.only('calculateFeeLimit tests', () => {
   it('computes correct fee', () => {
     const feeLimit = calculateFeeLimit({
       gasLimit: '62000',
