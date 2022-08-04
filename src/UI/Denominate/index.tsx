@@ -4,13 +4,12 @@ import globalStyles from 'assets/sass/main.scss';
 import {
   decimals as configDecimals,
   denomination as configDenomination,
-  fallbackNetworkConfigurations
+  mainnetEgldLabel
 } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';
 import { denominate } from 'utils/operations/denominate';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import styles from './denominate.scss';
-import { EnvironmentsEnum } from 'types/enums';
 
 const denominateInvalid = (props: DenominateType) => {
   return (
@@ -98,9 +97,7 @@ const DenominateComponent = (props: DenominateType) => {
  * @param props.egldLabel  if not provided, will fallback on **EGLD**
  */
 export const Denominate = (props: DenominateType) => {
-  const egldLabel =
-    props.egldLabel ||
-    fallbackNetworkConfigurations[EnvironmentsEnum.mainnet].egldLabel; // EGLD
+  const egldLabel = props.egldLabel || mainnetEgldLabel;
 
   const denominateProps = { ...props, egldLabel };
 
