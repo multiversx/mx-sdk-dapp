@@ -4,7 +4,7 @@ import {
   decimals as configDecimals,
   denomination as configDenomination
 } from 'constants/index';
-import { stringIsInteger } from 'utils/validation';
+import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { pipe } from './pipe';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
