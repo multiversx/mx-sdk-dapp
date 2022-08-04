@@ -103,7 +103,7 @@ export function useLedgerLogin({
     optionalRedirect(callbackRoute, onLoginRedirect);
   }
 
-  const onLoginFailed = (err: any, customMessage?: string) => {
+  const onLoginFailed = (err: any, customMessage: string = '') => {
     const { errorMessage } = getLedgerErrorCodes(err);
 
     if (errorMessage) {
