@@ -64,10 +64,16 @@ export const useExtensionLogin = ({
           })
         );
       }
-      dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.extension })
-      );
-      optionalRedirect(callbackRoute, onLoginRedirect);
+
+      if (address) {
+        dispatch(
+          loginAction({ address, loginMethod: LoginMethodsEnum.extension })
+        );
+
+        optionalRedirect(callbackRoute, onLoginRedirect);
+      } else {
+        console.warn('Login cancelled.');
+      }
     } catch (error) {
       console.error('error loging in', error);
       // TODO: can be any or typed error

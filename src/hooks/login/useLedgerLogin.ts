@@ -107,7 +107,7 @@ export function useLedgerLogin({
     const { errorMessage } = getLedgerErrorCodes(err);
 
     if (errorMessage) {
-      setError(errorMessage + customMessage);
+      setError(`${errorMessage}.${customMessage}`);
     }
     setIsLoading(false);
     console.warn(err);
@@ -234,10 +234,15 @@ export function useLedgerLogin({
           addressIndex: selectedAddress.index.valueOf()
         });
         setAccountProvider(hwWalletP);
-        dispatch(
-          loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
-        );
-        optionalRedirect(callbackRoute, onLoginRedirect);
+
+        if (address) {
+          dispatch(
+            loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
+          );
+          optionalRedirect(callbackRoute, onLoginRedirect);
+        } else {
+          console.warn('Login cancelled.');
+        }
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);
