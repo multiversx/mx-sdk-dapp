@@ -1,7 +1,7 @@
 import React from 'react';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import globalStyles from 'assets/sass/main.scss';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../../types';
 
 interface PairingListPropsType extends WithClassname {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;

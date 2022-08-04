@@ -4,10 +4,22 @@ import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 
 import { getIdentifierType } from 'utils';
 
+export type TokenAssets = {
+  description: string;
+  status: string;
+  svgUrl: string;
+  website?: string;
+  pngUrl?: string;
+  social?: any;
+  extraTokens?: string[];
+  lockedAccounts?: { [key: string]: string };
+};
+
 interface TokenOptionType {
   tokenLabel: string;
   tokenDenomination: number;
   tokenAvatar: string;
+  assets?: TokenAssets;
   error?: string;
 }
 
@@ -16,11 +28,7 @@ interface TokenInfoResponse {
   name: string;
   ticker: string;
   decimals: number;
-  assets: {
-    description: string;
-    status: string;
-    svgUrl: string;
-  };
+  assets: TokenAssets;
 }
 
 const fetcher = (url: string) =>
@@ -60,5 +68,7 @@ export function useGetTokenDetails({
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken ? `${selectedToken?.assets?.svgUrl}` : '';
 
-  return { tokenDenomination, tokenLabel, tokenAvatar, error };
+  const assets = selectedToken?.assets;
+
+  return { tokenDenomination, tokenLabel, tokenAvatar, assets, error };
 }

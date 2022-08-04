@@ -1,8 +1,9 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Denominate } from 'UI/Denominate';
-import { getAccountBalance, getEgldLabel } from 'utils';
-import { WithClassname } from 'UI/types/with-classname';
+import { getEgldLabel } from 'utils/network/getEgldLabel';
+import { WithClassname } from '../../types';
+import { getAccountBalance } from 'utils/account/getAccountBalance';
 
 interface AddressRowType extends WithClassname {
   selectedAddress?: string;

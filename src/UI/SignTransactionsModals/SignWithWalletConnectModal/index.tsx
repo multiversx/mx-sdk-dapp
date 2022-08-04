@@ -7,7 +7,6 @@ import { safeRedirect } from 'utils/redirect';
 import styles from './sign-with-wallet-connect-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -16,7 +15,7 @@ export const SignWithWalletConnectModal = ({
   transactions,
   className = 'dapp-wallet-connect-modal',
   modalContentClassName
-}: SignModalPropsType & WithClassname) => {
+}: SignModalPropsType) => {
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
     icon: globalStyles.textWhite,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../dapp-modal.scss';
-import { WithClassname } from 'UI/types/with-classname';
 import classNames from 'classnames';
+import { WithClassname } from '../../types';
 
 type DappModalFooterProps = {
   visible?: boolean;

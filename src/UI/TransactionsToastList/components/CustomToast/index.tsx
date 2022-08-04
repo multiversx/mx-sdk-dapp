@@ -5,7 +5,7 @@ import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 import classNames from 'classnames';
 import { ComponentTypeWithChildren } from '../types';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../../../types';
 
 interface CustomToastType extends WithClassname {
   onDelete: () => void;

@@ -2,7 +2,7 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { decodePart } from 'utils';
 import classNames from 'classnames';
-import { WithClassname } from 'UI/types/with-classname';
+import { WithClassname } from '../types';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
