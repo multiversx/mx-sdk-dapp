@@ -59,7 +59,7 @@ export const SignWithExtensionModal = ({
         className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
-        title='Confirm on Maiar Extension 123'
+        title='Confirm on Maiar DeFi Wallet'
         description={description}
         action={
           <button
