@@ -10,7 +10,7 @@ import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getEgldLabel, getTokenFromData } from 'utils';
 import { isContract } from './helpers/isContract';
-import { getTransactionDirection } from './helpers/getTransactionDirection';
+import { getTransactionType } from './helpers/getTransactionType';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
 import { parseTransactionTime } from './helpers/parseTransactionTime';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
@@ -67,7 +67,7 @@ export function processTransaction(
   const receiver = getTransactionReceiver(transaction);
   const receiverAssets = getTransactionReceiverAssets(transaction);
 
-  const direction = getTransactionDirection(address, transaction, receiver);
+  const direction = getTransactionType(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
