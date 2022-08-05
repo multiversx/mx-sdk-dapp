@@ -1,6 +1,6 @@
 import React from 'react';
-import { getTmeAgo } from 'components/TransactionsInterpreter/helpers/getTimeAgo';
-import { dateFormatted } from 'components/TransactionsInterpreter/helpers/dateFormatted';
+import { humanReadableFormat } from 'components/TransactionsInterpreter/helpers/humanReadableFormat';
+import { timeRemaining } from 'utils';
 
 export const TimeAgo = ({
   value,
@@ -11,18 +11,10 @@ export const TimeAgo = ({
   short?: boolean;
   tooltip?: boolean;
 }) => {
-  const ms = value * 1000;
-  let result = getTmeAgo(ms);
-
-  if (short) {
-    const parts = result.split(' ');
-    if (parts.length > 1) {
-      result = `${parts[0]} ${parts[1]}`;
-    }
-  }
+  const result = timeRemaining(value, short);
 
   return tooltip ? (
-    <span title={dateFormatted(value, false, true)}>{result}</span>
+    <span title={humanReadableFormat(value, false, true)}>{result}</span>
   ) : (
     <>{result}</>
   );

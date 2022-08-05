@@ -8,9 +8,9 @@ import getScResultsMessages from 'components/TransactionsInterpreter/helpers/get
 import { getOperationsMessages } from 'components/TransactionsInterpreter/helpers/getOperationsMessages';
 import { getReceiptMessages } from 'components/TransactionsInterpreter/helpers/getReceiptMessages';
 import { TransactionServerStatusesEnum } from '../../types';
-import { capitalizeFirstLetter } from 'components/TransactionsInterpreter/helpers/capitalizeFirstLetter';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import lodash from 'lodash';
 
 interface TransactionIconType {
   transaction: UITransactionType;
@@ -44,7 +44,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
   return icon ? (
     <FontAwesomeIcon
       title={`
-            ${capitalizeFirstLetter(transaction.status)}
+            ${lodash.upperFirst(transaction.status)}
             ${
               (failed || invalid) && transactionMessages.length > 0
                 ? transactionMessages.join(',')

@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export function dateFormatted(
+export function humanReadableFormat(
   value: number,
   noSeconds?: boolean,
   utc?: boolean

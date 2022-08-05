@@ -18,13 +18,13 @@ export const LockedTokenAddressIcon = ({
   if (lockedAccounts) {
     const validLockedAccounts = Object.keys(lockedAccounts).filter(
       (account) => {
-        const validAddress = addressIsValid(account)
-          ? account
-          : addressIsValid(lockedAccounts[account])
-          ? lockedAccounts[account]
-          : '';
+        if (addressIsValid(account)) {
+          return account === address;
+        }
 
-        return validAddress === address;
+        return addressIsValid(lockedAccounts[account])
+          ? lockedAccounts[account] === address
+          : false;
       }
     );
     const lockedAccountName =
