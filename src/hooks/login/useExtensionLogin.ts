@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { isLoggedInSelector } from 'reduxStore/selectors';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setTokenLogin } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { optionalRedirect } from 'utils/internal';
+import { getIsLoggedIn } from '../../utils';
 
 interface UseExtensionLoginPropsType {
   callbackRoute?: string;
@@ -27,7 +27,6 @@ export const useExtensionLogin = ({
 }: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const isLoggedIn = useSelector(isLoggedInSelector);
   const dispatch = useDispatch();
 
   async function initiateLogin() {
@@ -57,6 +56,13 @@ export const useExtensionLogin = ({
       setAccountProvider(provider);
 
       const { signature, address } = provider.account;
+
+      if (!address) {
+        setIsLoading(false);
+        console.warn('Login cancelled.');
+        return;
+      }
+
       if (signature) {
         dispatch(
           setTokenLogin({
@@ -65,9 +71,11 @@ export const useExtensionLogin = ({
           })
         );
       }
+
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
+
       optionalRedirect(callbackRoute, onLoginRedirect);
     } catch (error) {
       console.error('error loging in', error);
@@ -79,6 +87,8 @@ export const useExtensionLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = getIsLoggedIn();
+
   return [
     initiateLogin,
     {

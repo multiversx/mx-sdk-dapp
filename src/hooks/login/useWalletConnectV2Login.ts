@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
 import {
-  WalletConnectProviderV2,
-  WalletConnectV2Events,
   PairingTypes,
-  SessionEventTypes
+  SessionEventTypes,
+  WalletConnectProviderV2,
+  WalletConnectV2Events
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -12,12 +12,11 @@ import {
 } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { isLoggedInSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import {
-  walletConnectV2RelaySelector,
-  walletConnectV2ProjectIdSelector,
   chainIDSelector,
-  walletConnectDeepLinkSelector
+  walletConnectDeepLinkSelector,
+  walletConnectV2ProjectIdSelector,
+  walletConnectV2RelaySelector
 } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setTokenLogin,
@@ -26,7 +25,7 @@ import {
 } from 'reduxStore/slices';
 import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
-import { logout } from 'utils';
+import { getIsLoggedIn, logout } from 'utils';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
 
@@ -88,7 +87,6 @@ export const useWalletConnectV2Login = ({
   );
   const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
-  const isLoggedIn = useSelector(isLoggedInSelector);
   const providerRef = useRef<any>(provider);
 
   const hasWcUri = Boolean(wcUri);
@@ -122,6 +120,7 @@ export const useWalletConnectV2Login = ({
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
+      const isLoggedIn = getIsLoggedIn();
 
       if (
         isLoggedIn ||
@@ -132,6 +131,11 @@ export const useWalletConnectV2Login = ({
       }
 
       const address = await provider.getAddress();
+      if (!address) {
+        console.warn('Login cancelled.');
+        return;
+      }
+
       const signature = await provider.getSignature();
       const hasSignature = Boolean(signature);
       const loginActionData = {
@@ -280,6 +284,8 @@ export const useWalletConnectV2Login = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = getIsLoggedIn();
+
   return [
     initiateLogin,
     {
