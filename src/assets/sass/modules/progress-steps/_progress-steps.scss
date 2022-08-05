@@ -1,8 +1,12 @@
 @import 'assets/sass/variables/variables';
 
 .progress-steps {
+  display: flex;
   .steps {
+    display: flex;
+
     hr {
+      background-color: $secondary;
       border-color: $border-color;
       z-index: 2;
     }
@@ -13,6 +17,7 @@
       border-radius: 50%;
       margin: 0 1rem;
       z-index: 5;
+      background-color: $secondary;
 
       &:first-of-type {
         margin-left: 0;
@@ -20,6 +25,10 @@
 
       &:last-of-type {
         margin-right: 0;
+      }
+
+      &.bg-primary {
+        background-color: $primary;
       }
     }
   }
