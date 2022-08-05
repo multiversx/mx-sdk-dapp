@@ -15,10 +15,10 @@ export function getRemainingTime(ms: number) {
   let daysString = days + ' day';
 
   if (secs > 1) {
-    secsString = secs + ' secs';
+    secsString = secs + ' sec';
   }
   if (mins > 1) {
-    minsString = mins + ' mins';
+    minsString = mins + ' min';
   }
   if (hrs > 1) {
     hrsString = hrs + ' hrs';
