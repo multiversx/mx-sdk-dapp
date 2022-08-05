@@ -1,6 +1,6 @@
 import React from 'react';
 import { humanReadableFormat } from 'components/TransactionsInterpreter/helpers/humanReadableFormat';
-import { timeRemaining } from 'utils';
+import { timeAgo } from 'utils';
 
 export const TimeAgo = ({
   value,
@@ -11,7 +11,7 @@ export const TimeAgo = ({
   short?: boolean;
   tooltip?: boolean;
 }) => {
-  const result = timeRemaining(value, short);
+  const result = timeAgo(value * 1000, short);
 
   return tooltip ? (
     <span title={humanReadableFormat(value, false, true)}>{result}</span>

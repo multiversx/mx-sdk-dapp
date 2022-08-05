@@ -61,8 +61,7 @@ export function processTransaction(
   numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType {
   const tokenIdentifier =
-    transaction.tokenIdentifier ??
-    (getTokenFromData(transaction.data).tokenId || getEgldLabel());
+    transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
 
   const receiver = getTransactionReceiver(transaction);
   const receiverAssets = getTransactionReceiverAssets(transaction);
@@ -72,6 +71,11 @@ export function processTransaction(
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
+  let tokenLabel = getEgldLabel();
+  if (transactionTokens.length > 0) {
+    const txToken = transactionTokens[0];
+    tokenLabel = txToken.ticker ?? tokenLabel;
+  }
 
   const denominatedValue = getDenominatedValue(transaction, denominationConfig);
   const fullDenominatedValue = getDenominatedValue(transaction, {
@@ -102,6 +106,7 @@ export function processTransaction(
     tokenIdentifier,
     receiver,
     receiverAssets,
+    tokenLabel,
     denomination: {
       denominatedValue,
       fullDenominatedValue
