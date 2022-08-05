@@ -131,6 +131,11 @@ export const useWalletConnectV2Login = ({
       }
 
       const address = await provider.getAddress();
+      if (!address) {
+        console.warn('Login cancelled.');
+        return;
+      }
+
       const signature = await provider.getSignature();
       const hasSignature = Boolean(signature);
       const loginActionData = {

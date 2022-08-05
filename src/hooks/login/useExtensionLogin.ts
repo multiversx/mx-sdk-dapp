@@ -56,6 +56,13 @@ export const useExtensionLogin = ({
       setAccountProvider(provider);
 
       const { signature, address } = provider.account;
+
+      if (!address) {
+        setIsLoading(false);
+        console.warn('Login cancelled.');
+        return;
+      }
+
       if (signature) {
         dispatch(
           setTokenLogin({
@@ -64,9 +71,11 @@ export const useExtensionLogin = ({
           })
         );
       }
+
       dispatch(
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
+
       optionalRedirect(callbackRoute, onLoginRedirect);
     } catch (error) {
       console.error('error loging in', error);
