@@ -42,7 +42,7 @@ export function getRemainingTime(ms: number) {
   return secsString;
 }
 
-export function timeRemaining(duration: number, short: boolean = false) {
+export function timeRemaining(duration: number, short: boolean = true) {
   const startDate = moment.utc();
   const endDate = moment.utc().add(duration, 'seconds');
   const diffInMs = Math.max(endDate.diff(startDate), 0);
