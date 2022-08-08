@@ -10,7 +10,7 @@ import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getEgldLabel, getTokenFromData } from 'utils';
 import { isContract } from './helpers/isContract';
-import { getTransactionDirection } from './helpers/getTransactionDirection';
+import { getTransactionType } from './helpers/getTransactionType';
 import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
 import { parseTransactionTime } from './helpers/parseTransactionTime';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
@@ -61,17 +61,21 @@ export function processTransaction(
   numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
 ): ExtendedTransactionType {
   const tokenIdentifier =
-    transaction.tokenIdentifier ??
-    (getTokenFromData(transaction.data).tokenId || getEgldLabel());
+    transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
 
   const receiver = getTransactionReceiver(transaction);
   const receiverAssets = getTransactionReceiverAssets(transaction);
 
-  const direction = getTransactionDirection(address, transaction, receiver);
+  const direction = getTransactionType(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
+  let tokenLabel = getEgldLabel();
+  if (transactionTokens.length > 0) {
+    const txToken = transactionTokens[0];
+    tokenLabel = txToken.ticker ?? tokenLabel;
+  }
 
   const denominatedValue = getDenominatedValue(transaction, denominationConfig);
   const fullDenominatedValue = getDenominatedValue(transaction, {
@@ -97,13 +101,12 @@ export function processTransaction(
 
   const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
 
-  // TODO create getTokenDetails utils function and compute lockedAccountName property in order to use it inside the LockedTokenAddressIcon component
-
   return {
     ...transaction,
     tokenIdentifier,
     receiver,
     receiverAssets,
+    tokenLabel,
     denomination: {
       denominatedValue,
       fullDenominatedValue

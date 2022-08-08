@@ -19,3 +19,4 @@ export * from './UsdValue';
 export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
 export * from './webWallet/WebWalletLoginButton';
+export * from './TransactionsTable';
