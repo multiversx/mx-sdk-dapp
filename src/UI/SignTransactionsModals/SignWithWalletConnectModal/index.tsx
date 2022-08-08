@@ -1,5 +1,6 @@
 import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
@@ -33,8 +34,13 @@ export const SignWithWalletConnectModal = ({
         hasMultipleTransactions ? 's' : ''
       }`;
 
-  const close = () => {
+  const { cancelWalletConnectAction } = useCancelWalletConnectAction(
+    'cancelSignTx'
+  );
+
+  const close = async () => {
     handleClose();
+    await cancelWalletConnectAction();
     if (
       callbackRoute != null &&
       !window.location.pathname.includes(callbackRoute)
