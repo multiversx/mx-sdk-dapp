@@ -4,7 +4,7 @@ import { AssetType } from 'components/TransactionsInterpreter/helpers/types';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
 
-export type AccountNameProps = {
+export type AccountNamePropsType = {
   address: string;
   assets?: AssetType;
   dataTestId?: string;
@@ -16,7 +16,7 @@ export const AccountName = ({
   assets,
   dataTestId,
   color
-}: AccountNameProps) => {
+}: AccountNamePropsType) => {
   if (assets && assets.name) {
     const name = assets.name.replace(/\p{Emoji}/gu, '');
     const description = `${name} (${address})`;

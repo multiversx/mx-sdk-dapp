@@ -41,16 +41,15 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
   if (invalid) icon = faBan;
   if (pending) icon = faHourglass;
 
+  const tooltip = `${lodash.upperFirst(transaction.status)} ${
+    (failed || invalid) && transactionMessages.length > 0
+      ? transactionMessages.join(',')
+      : ''
+  }`;
+
   return icon ? (
     <FontAwesomeIcon
-      title={`
-            ${lodash.upperFirst(transaction.status)}
-            ${
-              (failed || invalid) && transactionMessages.length > 0
-                ? transactionMessages.join(',')
-                : ''
-            }
-          `}
+      title={tooltip}
       icon={icon}
       size={icon === faTimes ? '1x' : 'sm'}
       className={classNames(globalStyles.mr1, globalStyles.textSecondary)}

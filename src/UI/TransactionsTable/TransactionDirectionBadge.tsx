@@ -4,11 +4,11 @@ import React from 'react';
 import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import styles from './transactions-table.scss';
 
-type TransactionDirectionBadgeProps = {
+type TransactionDirectionBadgePropsType = {
   transaction: ExtendedTransactionType;
 };
 
-export const TransactionDirectionBadge: React.FC<TransactionDirectionBadgeProps> = ({
+export const TransactionDirectionBadge: React.FC<TransactionDirectionBadgePropsType> = ({
   transaction
 }) => {
   return (
