@@ -222,4 +222,15 @@ describe('denomination single tests', () => {
     });
     expect(result).toBe('369884');
   });
+
+  it('should show all 4 decimals', () => {
+    const result = denominate({
+      input: '995000000000000000',
+      denomination: 18,
+      decimals: 4,
+      showLastNonZeroDecimal: true,
+      addCommas: false
+    });
+    expect(result).toBe('0.9950');
+  });
 });
