@@ -63,3 +63,7 @@ export enum TransactionsDefaultTitles {
   pending = 'Processing transaction',
   timedOut = 'Transaction timed out'
 }
+
+export enum DappCoreWCV2EventsEnum {
+  erd_cancelAction = 'erd_cancelAction'
+}
