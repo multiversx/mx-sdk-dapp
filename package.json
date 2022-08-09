@@ -41,6 +41,7 @@
     "esbuild-node-externals": "1.4.1",
     "esbuild-plugin-svgr": "1.0.1",
     "esbuild-sass-plugin": "2.2.6",
+    "eslint": "8.21.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-config-react": "1.1.7",
     "eslint-config-standard": "17.0.0",
