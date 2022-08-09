@@ -4,11 +4,7 @@ import { DappCoreWCV2EventsEnum } from 'types/enums';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 
 export function useCancelWalletConnectAction(action?: string) {
-  const {
-    provider
-  }: {
-    provider: any;
-  } = useGetAccountProvider();
+  const { provider } = useGetAccountProvider();
 
   async function cancelWalletConnectAction() {
     if (!provider) {
@@ -20,7 +16,7 @@ export function useCancelWalletConnectAction(action?: string) {
     }
 
     if (getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)) {
-      await cancelAction();
+      await cancelActionV2();
     }
 
     return;
@@ -32,7 +28,7 @@ export function useCancelWalletConnectAction(action?: string) {
         return;
       }
 
-      const isProviderConnected = Boolean(provider?.walletConnector?.connected);
+      const isProviderConnected = await provider.isConnected();
       if (!isProviderConnected) {
         return;
       }
@@ -42,11 +38,9 @@ export function useCancelWalletConnectAction(action?: string) {
         params: { action }
       };
 
-      await provider.sendCustomMessage(customMessage);
+      await provider?.sendCustomMessage?.(customMessage);
     } catch (error) {
-      console.warn('Unable to send cancelAction event', error);
-    } finally {
-      return;
+      console.warn('WalletConnect: Unable to send cancelAction event', error);
     }
   }
 
@@ -59,16 +53,14 @@ export function useCancelWalletConnectAction(action?: string) {
         return;
       }
 
-      await provider?.sendSessionEvent({
+      await provider?.sendSessionEvent?.({
         event: {
           name: DappCoreWCV2EventsEnum.erd_cancelAction,
           data: { action }
         }
       });
-    } catch (err) {
-      console.warn(err);
-    } finally {
-      return;
+    } catch (error) {
+      console.warn('WalletConnectV2: Unable to send cancelAction event', error);
     }
   }
 
