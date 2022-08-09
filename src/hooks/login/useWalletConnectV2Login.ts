@@ -135,7 +135,9 @@ export const useWalletConnectV2Login = ({
       if (!canLoginRef.current) {
         try {
           await providerRef.current?.logout();
-        } catch {}
+        } catch {
+          console.warn('Unable to logout');
+        }
 
         return;
       }

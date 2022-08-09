@@ -95,6 +95,13 @@ export const useWalletConnectLogin = ({
   };
 
   async function handleHeartbeat() {
+    if (
+      provider == null ||
+      !getIsProviderEqualTo(LoginMethodsEnum.walletconnect)
+    ) {
+      return;
+    }
+
     const isProviderConnected = Boolean(
       providerRef.current?.walletConnector?.connected
     );
@@ -131,7 +138,9 @@ export const useWalletConnectLogin = ({
       if (!canLoginRef.current) {
         try {
           await providerRef.current?.logout();
-        } catch {}
+        } catch {
+          console.warn('Unable to logout');
+        }
 
         return;
       }

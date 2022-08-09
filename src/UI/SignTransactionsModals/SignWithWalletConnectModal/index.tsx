@@ -1,13 +1,14 @@
 import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { cancelActionName } from 'constants/index';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { safeRedirect } from 'utils/redirect';
 import styles from './sign-with-wallet-connect-modal.scss';
-import globalStyles from 'assets/sass/main.scss';
-import classNames from 'classnames';
 
 export const SignWithWalletConnectModal = ({
   error,
@@ -35,7 +36,7 @@ export const SignWithWalletConnectModal = ({
       }`;
 
   const { cancelWalletConnectAction } = useCancelWalletConnectAction(
-    'cancelSignTx'
+    cancelActionName
   );
 
   const close = async () => {
