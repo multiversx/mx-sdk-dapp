@@ -15,10 +15,10 @@ export function getRemainingTime(ms: number) {
   let daysString = days + ' day';
 
   if (secs > 1) {
-    secsString = secs + ' secs';
+    secsString = secs + ' sec';
   }
   if (mins > 1) {
-    minsString = mins + ' mins';
+    minsString = mins + ' min';
   }
   if (hrs > 1) {
     hrsString = hrs + ' hrs';
@@ -42,18 +42,29 @@ export function getRemainingTime(ms: number) {
   return secsString;
 }
 
-export function timeRemaining(duration: number, short: boolean = false) {
+function getShortDateTimeFormat(datetime: string) {
+  const parts = datetime.split(' ');
+  if (parts.length > 1) {
+    return `${parts[0]} ${parts[1]}`;
+  }
+  return datetime;
+}
+
+export function timeRemaining(duration: number, short: boolean = true) {
   const startDate = moment.utc();
   const endDate = moment.utc().add(duration, 'seconds');
   const diffInMs = Math.max(endDate.diff(startDate), 0);
   let remaining = getRemainingTime(diffInMs);
 
-  if (short) {
-    const parts = remaining.split(' ');
-    if (parts.length > 1) {
-      remaining = `${parts[0]} ${parts[1]}`;
-    }
-  }
+  return short ? getShortDateTimeFormat(remaining) : remaining;
+}
 
-  return remaining;
+export function timeAgo(timestamp: number, short: boolean = true) {
+  const dateNow = moment.utc();
+  const txtTime = moment.utc(timestamp);
+  const diffInMs = Math.max(dateNow.diff(txtTime), 0);
+
+  let remaining = getRemainingTime(diffInMs);
+
+  return short ? getShortDateTimeFormat(remaining) : remaining;
 }
