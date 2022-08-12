@@ -109,12 +109,22 @@ export function denominate({
 
           .if(Boolean(!shownDecimalsAreZero && decimalPart))
           .then((current) => {
+            const [numericPart] = current.split('.');
+            let decimalSide = decimalPart.substring(0, decimalPlaces);
+
             if (showLastNonZeroDecimal) {
+              const noOfZerosAtEnd = decimals - decimalSide.length;
+
+              if (noOfZerosAtEnd > 0) {
+                const zeroPadding = Array(noOfZerosAtEnd)
+                  .fill(0)
+                  .join('');
+                decimalSide = `${decimalSide}${zeroPadding}`;
+                return `${numericPart}.${decimalSide}`;
+              }
+
               return current;
             }
-
-            const [numericPart] = current.split('.');
-            const decimalSide = decimalPart.substring(0, decimalPlaces);
 
             if (!decimalSide) {
               return numericPart;

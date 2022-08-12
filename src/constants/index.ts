@@ -20,3 +20,5 @@ export const WALLET_SIGN_SESSION = 'signSession';
 
 export const logoutActionName = 'logout';
 export const loginActionName = 'login';
+
+export const cancelActionName = 'cancelSignTx';

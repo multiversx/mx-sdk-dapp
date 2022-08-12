@@ -42,18 +42,29 @@ export function getRemainingTime(ms: number) {
   return secsString;
 }
 
+function getShortDateTimeFormat(datetime: string) {
+  const parts = datetime.split(' ');
+  if (parts.length > 1) {
+    return `${parts[0]} ${parts[1]}`;
+  }
+  return datetime;
+}
+
 export function timeRemaining(duration: number, short: boolean = true) {
   const startDate = moment.utc();
   const endDate = moment.utc().add(duration, 'seconds');
   const diffInMs = Math.max(endDate.diff(startDate), 0);
   let remaining = getRemainingTime(diffInMs);
 
-  if (short) {
-    const parts = remaining.split(' ');
-    if (parts.length > 1) {
-      remaining = `${parts[0]} ${parts[1]}`;
-    }
-  }
+  return short ? getShortDateTimeFormat(remaining) : remaining;
+}
 
-  return remaining;
+export function timeAgo(timestamp: number, short: boolean = true) {
+  const dateNow = moment.utc();
+  const txtTime = moment.utc(timestamp);
+  const diffInMs = Math.max(dateNow.diff(txtTime), 0);
+
+  let remaining = getRemainingTime(diffInMs);
+
+  return short ? getShortDateTimeFormat(remaining) : remaining;
 }

@@ -1,6 +1,10 @@
 import BigNumber from 'bignumber.js';
 
 export const stringIsFloat = (amount: string) => {
+  if (isNaN(amount as any)) {
+    return false;
+  }
+
   // tslint:disable-next-line
   let [wholes, decimals] = amount.split('.');
   if (decimals) {

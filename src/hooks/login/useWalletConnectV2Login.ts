@@ -24,7 +24,7 @@ import {
   setWalletConnectLogin
 } from 'reduxStore/slices';
 import { LoginHookGenericStateType } from 'types';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum, DappCoreWCV2EventsEnum } from 'types/enums';
 import { getIsLoggedIn, logout } from 'utils';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
@@ -40,10 +40,6 @@ export enum WalletConnectV2Error {
   errorLogout = 'Unable to remove existing pairing'
 }
 
-export enum DappCoreWCV2Events {
-  erd_cancelAction = 'erd_cancelAction'
-}
-
 interface InitWalletConnectV2Type {
   logoutRoute: string;
   token?: string;
@@ -54,6 +50,7 @@ interface InitWalletConnectV2Type {
 
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string;
+  cancelLogin: () => void;
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   removeExistingPairing: (topic: string) => Promise<void>;
   walletConnectUri?: string;
@@ -88,10 +85,11 @@ export const useWalletConnectV2Login = ({
   const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);
+  const canLoginRef = useRef<boolean>(true);
 
   const hasWcUri = Boolean(wcUri);
-  const dappEvents: [WalletConnectV2Events | DappCoreWCV2Events] = [
-    DappCoreWCV2Events.erd_cancelAction
+  const dappEvents: [WalletConnectV2Events | DappCoreWCV2EventsEnum] = [
+    DappCoreWCV2EventsEnum.erd_cancelAction
   ];
   if (token) {
     dappEvents.push(WalletConnectV2Events.erd_signLoginToken);
@@ -117,6 +115,10 @@ export const useWalletConnectV2Login = ({
     console.log('wc2 session event: ', event);
   };
 
+  const cancelLogin = () => {
+    canLoginRef.current = false;
+  };
+
   async function handleOnLogin() {
     try {
       const provider = providerRef.current;
@@ -127,6 +129,16 @@ export const useWalletConnectV2Login = ({
         provider == null ||
         !getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)
       ) {
+        return;
+      }
+
+      if (!canLoginRef.current) {
+        try {
+          await providerRef.current?.logout();
+        } catch {
+          console.warn('Unable to logout');
+        }
+
         return;
       }
 
@@ -190,6 +202,7 @@ export const useWalletConnectV2Login = ({
     );
 
     await newProvider.init();
+    canLoginRef.current = true;
     setAccountProvider(newProvider);
     setWcPairings(newProvider.pairings);
     providerRef.current = newProvider;
@@ -297,6 +310,7 @@ export const useWalletConnectV2Login = ({
     {
       uriDeepLink,
       walletConnectUri: wcUri,
+      cancelLogin,
       connectExisting,
       removeExistingPairing,
       wcPairings

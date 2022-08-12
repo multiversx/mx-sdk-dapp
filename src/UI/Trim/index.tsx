@@ -8,7 +8,7 @@ import { WithClassname } from '../types';
 export interface TrimType extends WithClassname {
   text: string;
   dataTestId?: string;
-  color?: 'muted' | 'secondary';
+  color?: 'muted' | 'secondary' | string;
 }
 
 export const Trim = ({

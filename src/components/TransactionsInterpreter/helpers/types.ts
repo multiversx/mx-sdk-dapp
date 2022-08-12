@@ -417,6 +417,7 @@ export enum TransactionDirection {
 }
 
 export type ExtendedTransactionType = {
+  tokenLabel: string;
   transactionDetails: {
     direction?: TransactionDirection;
     method: string;

@@ -1,0 +1,1 @@
+export { TransactionsTable } from './TransactionsTable';

@@ -40,7 +40,7 @@ export const WalletConnectLoginContainer = ({
   const [
     initLoginWithWalletConnect,
     { error },
-    { uriDeepLink, walletConnectUri }
+    { uriDeepLink, walletConnectUri, cancelLogin }
   ] = useWalletConnectLogin({
     logoutRoute,
     callbackRoute,
@@ -53,6 +53,7 @@ export const WalletConnectLoginContainer = ({
     {
       connectExisting,
       removeExistingPairing,
+      cancelLogin: cancelLoginV2,
       uriDeepLink: walletConnectDeepLinkV2,
       walletConnectUri: walletConnectUriV2,
       wcPairings
@@ -108,6 +109,15 @@ export const WalletConnectLoginContainer = ({
         setQrCodeSvg(svg);
       }
     }
+  };
+
+  const onCloseModal = () => {
+    if (isWalletConnectV2) {
+      cancelLoginV2();
+    } else {
+      cancelLogin();
+    }
+    onClose?.();
   };
 
   useEffect(() => {
@@ -185,7 +195,7 @@ export const WalletConnectLoginContainer = ({
 
   return wrapContentInsideModal ? (
     <ModalContainer
-      onClose={onClose}
+      onClose={onCloseModal}
       modalConfig={{
         headerText: 'Login with Maiar',
         showHeader: true,
