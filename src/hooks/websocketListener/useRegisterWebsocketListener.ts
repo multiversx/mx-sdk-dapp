@@ -8,9 +8,9 @@ interface UseRegisterWebsocketListenerPropsType {
   apiAddress: string;
 }
 
-const timeout = 3000;
-const reconnectionAttempts = 3;
-const retryInterval = 500;
+const TIMEOUT = 3000;
+const RECONNECTION_ATTEMPTS = 3;
+const RETRY_INTERVAL = 500;
 
 export function useRegisterWebsocketListener({
   onMessage,
@@ -20,7 +20,7 @@ export function useRegisterWebsocketListener({
   const { data: websocketUrl, getUrl, error } = useGetWebsocketUrl(apiAddress);
 
   const websocketRef = useRef<Socket | null>(null);
-  const refetchInterval = useRef<any>(null);
+  const refetchInterval = useRef<NodeJS.Timer | null>(null);
 
   function initializeWebsocketConnection() {
     if (!websocketUrl) {
@@ -28,23 +28,21 @@ export function useRegisterWebsocketListener({
     }
     websocketRef.current = io(websocketUrl, {
       forceNew: true,
-      reconnectionAttempts,
-      timeout,
+      reconnectionAttempts: RECONNECTION_ATTEMPTS,
+      timeout: TIMEOUT,
       query: {
         address: address
       }
     });
 
-    websocketRef.current.onAny((message) => {
-      // a message was received
-      console.log('Message received', message);
+    websocketRef.current.onAny((message: string) => {
       onMessage(message);
     });
   }
 
   function handleRefetchUrlLogic() {
     if (error) {
-      refetchInterval.current = setInterval(getUrl, retryInterval);
+      refetchInterval.current = setInterval(getUrl, RETRY_INTERVAL);
     } else if (refetchInterval.current != null) {
       clearInterval(refetchInterval.current);
       refetchInterval.current = null;
