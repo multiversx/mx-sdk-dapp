@@ -1,6 +1,6 @@
 import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getAddress } from './account';
@@ -43,7 +43,7 @@ export async function logout(
     preventRedirects();
   }
 
-  store.dispatch(logoutAction());
+  getStore().dispatch(logoutAction());
 
   try {
     const needsCallbackUrl = isWalletProvider && !callbackUrl;

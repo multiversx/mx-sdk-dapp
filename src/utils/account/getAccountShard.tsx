@@ -6,10 +6,10 @@ import {
 } from 'reduxStore/selectors';
 
 import { setAccountShard } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 
 export async function getAccountShard() {
-  const appState = store.getState();
+  const appState = getStore().getState();
   const apiAddress = apiAddressSelector(appState);
   const address = addressSelector(appState);
   const shard = shardSelector(appState);
@@ -19,7 +19,7 @@ export async function getAccountShard() {
       const { data: account } = await axios.get(
         `${apiAddress}/accounts/${address}`
       );
-      store.dispatch(setAccountShard(account.shard));
+      getStore().dispatch(setAccountShard(account.shard));
       return account.shard;
     } else {
       return shard;

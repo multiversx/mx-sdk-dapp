@@ -1,8 +1,8 @@
 import { setAccountNonce } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 
-// this is is needed to allow the users to set the nonce dynamically from outside the library
+// this is needed to allow the users to set the nonce dynamically from outside the library
 // without getting access to store.dispatch function
 export function setNonce(nonce: number) {
-  store.dispatch(setAccountNonce(nonce));
+  getStore().dispatch(setAccountNonce(nonce));
 }

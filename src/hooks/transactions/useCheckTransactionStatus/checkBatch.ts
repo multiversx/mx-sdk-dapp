@@ -1,15 +1,13 @@
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import {
-  GetTransactionsByHashesReturnType,
-  GetTransactionsByHashesType
-} from 'types';
-import { updateSignedTransactionStatus } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
-import { TransactionServerStatusesEnum } from 'types/enums';
-import {
   CustomTransactionInformation,
+  GetTransactionsByHashesReturnType,
+  GetTransactionsByHashesType,
   SignedTransactionsBodyType
 } from 'types';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { getStore } from 'reduxStore/store';
+import { TransactionServerStatusesEnum } from 'types/enums';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,
@@ -80,7 +78,7 @@ function manageTransaction({
         timeouts.push(hash);
         setTimeout(
           () =>
-            store.dispatch(
+            getStore().dispatch(
               updateSignedTransactionStatus({
                 sessionId,
                 status: TransactionServerStatusesEnum.success,
@@ -91,7 +89,7 @@ function manageTransaction({
         );
       } else {
         //otherwise, it will just trigger the change of status
-        store.dispatch(
+        getStore().dispatch(
           updateSignedTransactionStatus({
             sessionId,
             status,

@@ -4,11 +4,11 @@ import { DEFAULT_MIN_GAS_LIMIT } from 'constants/index';
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
 import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
-  setTransactionsToSign,
   setNotificationModal,
-  setTransactionsDisplayInfo
+  setTransactionsDisplayInfo,
+  setTransactionsToSign
 } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 import {
   NotificationTypesEnum,
   SendTransactionReturnType,
@@ -24,7 +24,7 @@ export function signTransactions({
   customTransactionInformation,
   transactionsDisplayInfo
 }: SignTransactionsPropsType): SendTransactionReturnType {
-  const appState = store.getState();
+  const appState = getStore().getState();
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(appState);
   const storeChainId = chainIDSelector(appState);
@@ -46,7 +46,7 @@ export function signTransactions({
       description: 'Current EGLD balance cannot cover the transaction fees.'
     };
 
-    store.dispatch(setNotificationModal(notificationPayload));
+    getStore().dispatch(setNotificationModal(notificationPayload));
     return { error: 'insufficient funds', sessionId: null };
   }
 
@@ -60,7 +60,7 @@ export function signTransactions({
       title: 'Network change detected',
       description: 'The application tried to change the transaction network'
     };
-    store.dispatch(setNotificationModal(notificationPayload));
+    getStore().dispatch(setNotificationModal(notificationPayload));
     return { error: 'Invalid ChainID', sessionId: null };
   }
 
@@ -70,8 +70,8 @@ export function signTransactions({
     customTransactionInformation,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
-  store.dispatch(setTransactionsToSign(signTransactionsPayload));
-  store.dispatch(
+  getStore().dispatch(setTransactionsToSign(signTransactionsPayload));
+  getStore().dispatch(
     setTransactionsDisplayInfo({ sessionId, transactionsDisplayInfo })
   );
   return { sessionId };

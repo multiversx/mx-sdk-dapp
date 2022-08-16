@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { apiAddressSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
@@ -9,7 +9,7 @@ import {
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType
 ): Promise<GetTransactionsByHashesReturnType> {
-  const apiAddress = apiAddressSelector(store.getState());
+  const apiAddress = apiAddressSelector(getStore().getState());
   const hashes = pendingTransactions.map((tx) => tx.hash);
   const { data: responseData } = await axios.get(`${apiAddress}/transactions`, {
     params: {

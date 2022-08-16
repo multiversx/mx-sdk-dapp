@@ -3,7 +3,7 @@ import {
   isLoggedInSelector,
   walletLoginSelector
 } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types/enums';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { addressIsValid } from './addressIsValid';
@@ -11,7 +11,7 @@ import { getAccountProvider } from 'providers';
 
 export function getAddress(): Promise<string> {
   const { search } = window.location;
-  const appState = store.getState();
+  const appState = getStore().getState();
   const provider = getAccountProvider();
   const address = addressSelector(appState);
   const loggedIn = isLoggedInSelector(appState);

@@ -6,8 +6,10 @@ import { defaultNetwork } from 'reduxStore/slices';
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
-import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
-import reduxPersistLocalStorage from 'redux-persist/lib/storage';
+import {
+  getPersistLocalStorage,
+  getPersistSessionStorage
+} from './persistStorage';
 
 const migrations: any = {
   2: (state: any) => {
@@ -22,7 +24,7 @@ function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
   return {
     key,
     version: 1,
-    storage: reduxPersistSessionStorage,
+    storage: getPersistSessionStorage(),
     blacklist
   };
 }
@@ -41,7 +43,7 @@ const toastsReducerPersistConfig = getSessionStoragePersistConfig(
 const localStoragePersistConfig: PersistConfig<any> = {
   key: 'dapp-core-store',
   version: 2,
-  storage: reduxPersistLocalStorage,
+  storage: getPersistLocalStorage(),
   whitelist: [
     ReducersEnum.account,
     ReducersEnum.loginInfo,

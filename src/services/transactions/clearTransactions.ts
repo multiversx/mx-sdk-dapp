@@ -1,21 +1,21 @@
 import {
-  clearSignedTransaction,
+  clearAllSignedTransactions,
   clearAllTransactionsToSign,
-  clearAllSignedTransactions
+  clearSignedTransaction
 } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 
 export function removeTransactionsToSign(sessionId: string) {
-  store.dispatch(clearSignedTransaction(sessionId));
+  getStore().dispatch(clearSignedTransaction(sessionId));
 }
 export function removeSignedTransaction(sessionId: string) {
-  store.dispatch(clearSignedTransaction(sessionId));
+  getStore().dispatch(clearSignedTransaction(sessionId));
 }
 
 export function removeAllSignedTransactions() {
-  store.dispatch(clearAllSignedTransactions());
+  getStore().dispatch(clearAllSignedTransactions());
 }
 
 export function removeAllTransactionsToSign() {
-  store.dispatch(clearAllTransactionsToSign());
+  getStore().dispatch(clearAllTransactionsToSign());
 }

@@ -1,10 +1,10 @@
 import { addCustomToast, removeCustomToast } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 import { CustomToastType } from 'types/toasts';
 
 export const addNewCustomToast = (args: CustomToastType) => {
-  return store.dispatch(addCustomToast(args));
+  return getStore().dispatch(addCustomToast(args));
 };
 
 export const deleteCustomToast = (toastId: string) =>
-  store.dispatch(removeCustomToast(toastId));
+  getStore().dispatch(removeCustomToast(toastId));

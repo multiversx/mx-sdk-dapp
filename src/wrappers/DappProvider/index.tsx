@@ -5,9 +5,8 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer';
 
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
-import { persistor, store } from 'reduxStore/store';
-import { IDappProvider } from 'types';
-import { CustomNetworkType, EnvironmentsEnum } from 'types';
+import { getPersistor, getStore } from 'reduxStore/store';
+import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { AppInitializer } from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
@@ -39,8 +38,8 @@ export const DappProvider = ({
   }
 
   return (
-    <Provider context={DappCoreContext} store={store}>
-      <PersistGate persistor={persistor} loading={null}>
+    <Provider context={DappCoreContext} store={getStore()}>
+      <PersistGate persistor={getPersistor()} loading={null}>
         <AppInitializer
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}

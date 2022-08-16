@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
@@ -10,6 +9,7 @@ import { ModalContainer } from 'UI/ModalContainer';
 import { WithClassname } from '../../types';
 import { Pairinglist } from './PairingList';
 import styles from './wallet-connect-login-container.scss';
+import { isMobileEnvironment } from 'utils';
 
 export interface WalletConnectLoginModalPropsType extends WithClassname {
   lead?: string;
@@ -65,8 +65,7 @@ export const WalletConnectLoginContainer = ({
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-  const isMobileDevice =
-    platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';
+  const isMobileDevice = isMobileEnvironment();
   const activePairings = isWalletConnectV2
     ? wcPairings?.filter(
         (pairing) => Boolean(pairing.active) && pairing.peerMetadata

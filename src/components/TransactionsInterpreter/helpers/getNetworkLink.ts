@@ -1,5 +1,5 @@
 import { explorerAddressSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 
 export function getNetworkLink(to: string) {
   if (!to.startsWith('/')) {
@@ -7,6 +7,6 @@ export function getNetworkLink(to: string) {
     to = `/${to}`;
   }
 
-  const explorerAddress = explorerAddressSelector(store.getState());
+  const explorerAddress = explorerAddressSelector(getStore().getState());
   return explorerAddress ? `${explorerAddress}${to}` : to;
 }

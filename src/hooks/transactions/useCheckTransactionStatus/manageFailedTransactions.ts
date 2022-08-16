@@ -2,7 +2,7 @@ import {
   updateSignedTransactions,
   updateSignedTransactionStatus
 } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
+import { getStore } from 'reduxStore/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -22,7 +22,7 @@ export function manageFailedTransactions({
     (scResult) => scResult?.returnMessage !== ''
   );
 
-  store.dispatch(
+  getStore().dispatch(
     updateSignedTransactionStatus({
       transactionHash: hash,
       sessionId,
@@ -30,7 +30,7 @@ export function manageFailedTransactions({
       errorMessage: resultWithError?.returnMessage
     })
   );
-  store.dispatch(
+  getStore().dispatch(
     updateSignedTransactions({
       sessionId,
       status: TransactionBatchStatusesEnum.fail,
