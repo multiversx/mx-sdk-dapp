@@ -44,9 +44,7 @@ export function useRegisterWebsocketListener({
 
         websocketConnection.status = 'completed';
 
-        websocketConnection.current.onAny((message: string) => {
-          onMessage(message);
-        });
+        websocketConnection.current.onAny(onMessage);
       },
       {
         retries: 2,

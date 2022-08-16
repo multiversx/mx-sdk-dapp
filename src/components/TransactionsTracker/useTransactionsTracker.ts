@@ -4,7 +4,6 @@ import { GetTransactionsByHashesType } from 'types';
 import {
   useCheckTransactionStatus,
   useGetAccountInfo,
-  useGetNetworkConfig,
   useRegisterWebsocketListener
 } from 'hooks/index';
 
@@ -13,7 +12,6 @@ export interface TransactionsTrackerType {
 }
 
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
-  const { network } = useGetNetworkConfig();
   const { address } = useGetAccountInfo();
   const checkTransactionStatus = useCheckTransactionStatus();
   const checkTransactionStatusRef = useRef(checkTransactionStatus);
@@ -34,7 +32,6 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
 
   useRegisterWebsocketListener({
     onMessage,
-    address,
-    apiAddress: network.apiAddress
+    address
   });
 }
