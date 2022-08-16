@@ -6,7 +6,7 @@ import {
   useGetAccountInfo,
   useGetNetworkConfig,
   useRegisterWebsocketListener
-} from 'hooks';
+} from 'hooks/index';
 
 export interface TransactionsTrackerType {
   getTransactionsByHash?: GetTransactionsByHashesType;
