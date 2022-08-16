@@ -1,5 +1,5 @@
 import { setAccount } from 'reduxStore/slices';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 import { getAccount } from './getAccount';
 import { getAddress } from './getAddress';
 import { getLatestNonce } from './getLatestNonce';
@@ -17,7 +17,7 @@ const setNewAccount = async () => {
           nonce: getLatestNonce(account),
           username: account.username
         };
-        getStore().dispatch(setAccount(accountData));
+        store.dispatch(setAccount(accountData));
         return accountData;
       }
     } catch (e) {

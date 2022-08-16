@@ -5,11 +5,11 @@ import {
   createStoreHook,
   ReactReduxContextValue
 } from 'react-redux';
-import { getStore, getSubscription } from './store';
+import { store, subscription } from './store';
 
 const defaultContextValue: ReactReduxContextValue = {
-  store: getStore(),
-  subscription: getSubscription()
+  store,
+  subscription
 };
 
 export const DappCoreContext = React.createContext(defaultContextValue);

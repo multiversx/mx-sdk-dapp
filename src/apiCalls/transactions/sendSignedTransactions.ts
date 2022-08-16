@@ -1,14 +1,14 @@
 import { Transaction } from '@elrondnetwork/erdjs';
 import axios from 'axios';
 import { networkSelector } from 'reduxStore/selectors';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 
 export type SendSignedTransactionsReturnType = string[];
 
 export async function sendSignedTransactions(
   signedTransactions: Transaction[]
 ): Promise<SendSignedTransactionsReturnType> {
-  const { apiAddress, apiTimeout } = networkSelector(getStore().getState());
+  const { apiAddress, apiTimeout } = networkSelector(store.getState());
   const promises = signedTransactions.map((transaction) => {
     return axios.post(
       `${apiAddress}/transactions`,

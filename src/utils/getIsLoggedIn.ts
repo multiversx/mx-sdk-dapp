@@ -1,6 +1,6 @@
 import { isLoggedInSelector } from 'reduxStore/selectors';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 
 export function getIsLoggedIn() {
-  return isLoggedInSelector(getStore().getState());
+  return isLoggedInSelector(store.getState());
 }

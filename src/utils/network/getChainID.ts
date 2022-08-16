@@ -1,6 +1,6 @@
 import { chainIDSelector } from 'reduxStore/selectors';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 
 export function getChainID() {
-  return chainIDSelector(getStore().getState());
+  return chainIDSelector(store.getState());
 }

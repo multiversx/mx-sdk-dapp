@@ -1,9 +1,9 @@
 import { accountNonceSelector } from 'reduxStore/selectors';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 import { AccountType } from 'types';
 
 export function getLatestNonce(account: AccountType | null) {
-  const appState = getStore().getState();
+  const appState = store.getState();
   const currentAccountNonce = accountNonceSelector(appState);
   if (!account) {
     return currentAccountNonce;

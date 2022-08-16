@@ -1,11 +1,11 @@
 import { accountSelector } from 'reduxStore/selectors';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 import { getAccount } from './getAccount';
 
 export async function getAccountBalance(address?: string) {
   let accountAddress = address;
   if (accountAddress == null) {
-    const account = accountSelector(getStore().getState());
+    const account = accountSelector(store.getState());
     accountAddress = account.address;
   }
   const account = await getAccount(accountAddress);

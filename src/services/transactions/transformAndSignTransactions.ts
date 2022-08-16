@@ -1,13 +1,13 @@
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
+  gasPrice as configGasPrice,
   gasLimit as configGasLimit,
-  gasPerDataByte,
-  gasPrice as configGasPrice
+  gasPerDataByte
 } from 'constants/index';
 import { newTransaction } from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'reduxStore/selectors';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 import { SendSimpleTransactionPropsType } from 'types';
 import { getAccount, getLatestNonce } from 'utils';
 
@@ -31,7 +31,7 @@ function calculateGasLimit(data?: string) {
 export async function transformAndSignTransactions({
   transactions
 }: SendSimpleTransactionPropsType): Promise<Transaction[]> {
-  const address = addressSelector(getStore().getState());
+  const address = addressSelector(store.getState());
   const account = await getAccount(address);
   const nonce = getLatestNonce(account);
   return transactions.map((tx) => {
@@ -54,7 +54,7 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const storeChainId = chainIDSelector(getStore().getState())
+    const storeChainId = chainIDSelector(store.getState())
       .valueOf()
       .toString();
     const transactionsChainId = chainID || storeChainId;

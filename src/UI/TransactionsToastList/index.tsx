@@ -14,7 +14,7 @@ import styles from './styles.scss';
 import { CustomToastType, TransactionToastType } from 'types/toasts';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { removeSignedTransaction } from 'services';
-import { getStore } from 'reduxStore/store';
+import { store } from 'reduxStore/store';
 import classNames from 'classnames';
 import { WithClassname } from '../types';
 
@@ -166,7 +166,7 @@ export const TransactionsToastList = ({
   );
 
   const clearNotPendingTransactionsFromStorage = () => {
-    const toasts = transactionToastsSelector(getStore().getState());
+    const toasts = transactionToastsSelector(store.getState());
     toasts.forEach((transactionToast: TransactionToastType) => {
       const currentTx: SignedTransactionsBodyType =
         signedTransactionsToRenderRef.current[transactionToast.toastId];
