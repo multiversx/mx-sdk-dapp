@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { getWebsocketUrl } from 'utils';
 
 export function useGetWebsocketUrl(apiAddress: string) {
   const [url, setUrl] = useState<string>();
@@ -7,10 +7,8 @@ export function useGetWebsocketUrl(apiAddress: string) {
 
   async function getUrl() {
     try {
-      const { data } = await axios.get<{ url: string }>(
-        `${apiAddress}/websocket/config`
-      );
-      setUrl(`wss://${data.url}`);
+      const fetchedUrl = await getWebsocketUrl(apiAddress);
+      setUrl(fetchedUrl);
     } catch (err) {
       setError(err);
     }

@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
-import { io, Socket } from 'socket.io-client';
-import { useGetWebsocketUrl } from './useGetWebsocketUrl';
+import { useCallback, useEffect } from 'react';
+import { io } from 'socket.io-client';
+import { websocketConnection } from './websoketConnection';
+import { getWebsocketUrl, retryMultipleTimes } from 'utils';
+import { useGetNetworkConfig } from '../useGetNetworkConfig';
 
 interface UseRegisterWebsocketListenerPropsType {
   onMessage: (message: string) => void;
   address: string;
-  apiAddress: string;
 }
 
 const TIMEOUT = 3000;
@@ -14,54 +15,60 @@ const RETRY_INTERVAL = 500;
 
 export function useRegisterWebsocketListener({
   onMessage,
-  address,
-  apiAddress
+  address
 }: UseRegisterWebsocketListenerPropsType) {
-  const { data: websocketUrl, getUrl, error } = useGetWebsocketUrl(apiAddress);
+  const { network } = useGetNetworkConfig();
 
-  const websocketRef = useRef<Socket | null>(null);
-  const refetchInterval = useRef<NodeJS.Timer | null>(null);
+  const initializeWebsocketConnection = useCallback(
+    retryMultipleTimes(
+      async () => {
+        // If there are many components that use this hook, the initialize method is triggered many times.
+        // To avoid multiple connections to the same endpoint, we have to guard the initialization before the logic started
+        websocketConnection.status = 'pending';
 
-  function initializeWebsocketConnection() {
-    if (!websocketUrl) {
-      return;
-    }
-    websocketRef.current = io(websocketUrl, {
-      forceNew: true,
-      reconnectionAttempts: RECONNECTION_ATTEMPTS,
-      timeout: TIMEOUT,
-      query: {
-        address: address
+        const websocketUrl = await getWebsocketUrl(network.apiAddress);
+
+        if (websocketUrl == null) {
+          console.warn('Can not get websocket url');
+          return;
+        }
+
+        websocketConnection.current = io(websocketUrl, {
+          forceNew: true,
+          reconnectionAttempts: RECONNECTION_ATTEMPTS,
+          timeout: TIMEOUT,
+          query: {
+            address
+          }
+        });
+
+        websocketConnection.status = 'completed';
+
+        websocketConnection.current.onAny((message: string) => {
+          onMessage(message);
+        });
+      },
+      {
+        retries: 2,
+        delay: RETRY_INTERVAL
       }
-    });
-
-    websocketRef.current.onAny((message: string) => {
-      onMessage(message);
-    });
-  }
-
-  function handleRefetchUrlLogic() {
-    if (error) {
-      refetchInterval.current = setInterval(getUrl, RETRY_INTERVAL);
-    } else if (refetchInterval.current != null) {
-      clearInterval(refetchInterval.current);
-      refetchInterval.current = null;
-    }
-  }
+    ),
+    [address, onMessage]
+  );
 
   useEffect(() => {
-    if (address && websocketUrl) {
+    if (
+      address &&
+      websocketConnection.status === 'not_initialized' &&
+      !websocketConnection.current
+    ) {
       initializeWebsocketConnection();
     }
-  }, [address, websocketUrl]);
+  }, [address, websocketConnection.current]);
 
   useEffect(() => {
     return () => {
-      websocketRef.current?.close();
+      websocketConnection.current?.close();
     };
   }, []);
-
-  useEffect(() => {
-    handleRefetchUrlLogic();
-  }, [error]);
 }
