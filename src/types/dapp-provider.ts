@@ -33,7 +33,7 @@ export interface IDappProvider {
     method: string;
     params: any;
   }): Promise<any>;
-  sendSessionEvent(options?: {
+  sendSessionEvent?(options?: {
     event: SessionEventTypes['event'];
   }): Promise<any>;
 }
