@@ -6,8 +6,7 @@ import { ProviderInitializer } from 'components/ProviderInitializer';
 
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
-import { IDappProvider } from 'types';
-import { CustomNetworkType, EnvironmentsEnum } from 'types';
+import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { AppInitializer } from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
