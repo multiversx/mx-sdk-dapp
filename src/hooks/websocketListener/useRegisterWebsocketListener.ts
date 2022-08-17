@@ -1,6 +1,9 @@
 import { useCallback, useEffect } from 'react';
 import { io } from 'socket.io-client';
-import { websocketConnection } from './websoketConnection';
+import {
+  websocketConnection,
+  WebsocketConnectionStatusEnum
+} from './websocketConnection';
 import { getWebsocketUrl, retryMultipleTimes } from 'utils';
 import { useGetNetworkConfig } from '../useGetNetworkConfig';
 
@@ -24,7 +27,7 @@ export function useRegisterWebsocketListener({
       async () => {
         // If there are many components that use this hook, the initialize method is triggered many times.
         // To avoid multiple connections to the same endpoint, we have to guard the initialization before the logic started
-        websocketConnection.status = 'pending';
+        websocketConnection.status = WebsocketConnectionStatusEnum.PENDING;
 
         const websocketUrl = await getWebsocketUrl(network.apiAddress);
 
@@ -42,7 +45,7 @@ export function useRegisterWebsocketListener({
           }
         });
 
-        websocketConnection.status = 'completed';
+        websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
 
         websocketConnection.current.onAny(onMessage);
       },
@@ -57,7 +60,8 @@ export function useRegisterWebsocketListener({
   useEffect(() => {
     if (
       address &&
-      websocketConnection.status === 'not_initialized' &&
+      websocketConnection.status ===
+        WebsocketConnectionStatusEnum.NOT_INITIALIZED &&
       !websocketConnection.current
     ) {
       initializeWebsocketConnection();

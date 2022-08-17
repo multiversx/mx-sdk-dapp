@@ -14,15 +14,13 @@ export interface TransactionsTrackerType {
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
   const { address } = useGetAccountInfo();
   const checkTransactionStatus = useCheckTransactionStatus();
-  const checkTransactionStatusCallbackRef = useClosureRef(
-    checkTransactionStatus
-  );
+  const checkTransactionStatusCallback = useClosureRef(checkTransactionStatus);
 
   const getTransactionsByHash =
     props?.getTransactionsByHash ?? defaultGetTxByHash;
 
   const onMessage = () => {
-    checkTransactionStatusCallbackRef.current({
+    checkTransactionStatusCallback.current({
       shouldRefreshBalance: true,
       getTransactionsByHash
     });
