@@ -1,12 +1,12 @@
-import classNames from 'classnames';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { TxDetails } from 'UI/TxDetails';
 import React from 'react';
-import { ToastDataState } from './utils';
-import styles from './styles.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { SignedTransactionType } from 'types';
-import { TransactionToastContentElementsProps } from './types';
+import { TxDetails } from 'UI/TxDetails';
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
+import styles from './styles.scss';
+import { TransactionToastContentElementsProps } from './types';
+import { ToastDataState } from './utils';
 
 export type TransactionToastContentProps = {
   style: Record<string, string>;
@@ -33,26 +33,28 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
     TransactionDetails: TxDetails
   }
 }) => {
-  const TransactionDetails = customElements?.TransactionDetails!;
-  const TransactionToastStatusIcon = customElements?.TransactionToastStatusIcon!;
-  const CustomCloseButton = customElements?.CustomCloseButton!;
+  const TransactionDetails = customElements?.TransactionDetails;
+  const TransactionToastStatusIcon = customElements?.TransactionToastStatusIcon;
+  const CustomCloseButton = customElements?.CustomCloseButton;
 
   return (
     <div className={style.content}>
       <div className={style.left}>
         <div className={classNames(style.icon, toastDataState.iconClassName)}>
-          <TransactionToastStatusIcon
-            size='5x'
-            icon={toastDataState.icon}
-            className={style.svg}
-          />
+          {TransactionToastStatusIcon && (
+            <TransactionToastStatusIcon
+              size='5x'
+              icon={toastDataState.icon}
+              className={style.svg}
+            />
+          )}
         </div>
       </div>
 
       <div className={style.right}>
         <div className={style.heading}>
           <h5 className={style.title}>{toastDataState.title}</h5>
-          {showCloseButton && (
+          {showCloseButton && CustomCloseButton && (
             <CustomCloseButton
               className={styles.close}
               onClick={onDeleteToast}
@@ -61,13 +63,15 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
         </div>
 
         <div className={style.footer}>
-          <TransactionDetails
-            {...{
-              transactions,
-              title: toastTitle,
-              isTimedOut
-            }}
-          />
+          {TransactionDetails && (
+            <TransactionDetails
+              {...{
+                transactions,
+                title: toastTitle,
+                isTimedOut
+              }}
+            />
+          )}
         </div>
       </div>
     </div>
