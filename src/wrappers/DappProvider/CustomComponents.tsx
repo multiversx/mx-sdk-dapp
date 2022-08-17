@@ -4,8 +4,10 @@ import {
   TransactionSender,
   TransactionSenderType
 } from 'components/TransactionSender';
-import { TransactionsTracker } from 'components/TransactionsTracker';
-import { TransactionsTrackerType } from 'components/TransactionsTracker/useTransactionsTracker';
+import {
+  TransactionsTracker,
+  TransactionsTrackerType
+} from 'components/TransactionsTracker';
 
 export interface CustomComponentsType {
   transactionSender?: {
