@@ -1,45 +1,48 @@
 import { stringIsFloat } from '../stringIsFloat';
 
 describe('stringIsFloat tests', () => {
-  it(`allows valid numbers`, () => {
+  it('allows valid numbers', () => {
     expect(stringIsFloat('1')).toBe(true);
   });
-  it(`allows decimal numbers with zeros`, () => {
+  it('allows decimal numbers with zeros', () => {
     expect(stringIsFloat('0.1')).toBe(true);
     expect(stringIsFloat('0.001')).toBe(true);
   });
-  it(`allows large decimal places`, () => {
+  it('allows large decimal places', () => {
     expect(stringIsFloat('999999999999999999999.123456789012345678')).toBe(
       true
     );
     expect(stringIsFloat('0.111111111111111111')).toBe(true);
   });
-  it(`allows trailing 0`, () => {
+  it('allows trailing 0', () => {
     expect(stringIsFloat('0.10')).toBe(true);
     expect(stringIsFloat('10')).toBe(true);
   });
-  it(`denies negative numbers`, () => {
+  it('denies negative numbers', () => {
     expect(stringIsFloat('-1')).toBe(false);
   });
-  it(`denies explicit positive`, () => {
+  it('denies explicit positive', () => {
     expect(stringIsFloat('+1')).toBe(false);
   });
-  it(`denies leading 0`, () => {
+  it('denies leading 0', () => {
     expect(stringIsFloat('01')).toBe(false);
   });
-  it(`denies string`, () => {
+  it('denies string', () => {
     expect(stringIsFloat('null')).toBe(false);
   });
-  it(`denies hexadecimal`, () => {
+  it('denies hexadecimal', () => {
     expect(stringIsFloat('0x2')).toBe(false);
   });
-  it(`denies exponential`, () => {
+  it('denies exponential', () => {
     expect(stringIsFloat('1e2')).toBe(false);
   });
-  it(`denies caret separation`, () => {
+  it('denies caret separation', () => {
     expect(stringIsFloat('100_200')).toBe(false);
   });
-  it(`denies caret separation`, () => {
+  it('denies NaN', () => {
     expect(stringIsFloat(NaN as any)).toBe(false);
+  });
+  it('denies caret separation', () => {
+    expect(stringIsFloat(Infinity as any)).toBe(false);
   });
 });

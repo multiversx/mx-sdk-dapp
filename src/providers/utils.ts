@@ -4,7 +4,8 @@ import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
 import {
   WalletConnectProvider,
-  WalletConnectProviderV2
+  WalletConnectProviderV2,
+  SessionEventTypes
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { ledgerContractDataEnabledValue } from 'constants/index';
@@ -123,6 +124,28 @@ export class EmptyProvider implements IDappProvider {
       notInitializedError(
         `signTransactions with ${message} and options ${options}`
       )
+    );
+  }
+
+  sendCustomMessage?({
+    method,
+    params
+  }: {
+    method: string;
+    params: any;
+  }): Promise<any> {
+    throw new Error(
+      notInitializedError(
+        `sendCustomMessage with method: ${method} params: ${params}`
+      )
+    );
+  }
+
+  sendSessionEvent(options?: {
+    event: SessionEventTypes['event'];
+  }): Promise<any> {
+    throw new Error(
+      notInitializedError(`sendSessionEvent with options: ${options}`)
     );
   }
 }

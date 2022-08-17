@@ -17,8 +17,8 @@ import {
 import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums';
 import { getIsLoggedIn, logout } from 'utils';
-import { optionalRedirect } from 'utils/internal';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
 
 interface InitWalletConnectType {
@@ -31,6 +31,7 @@ interface InitWalletConnectType {
 export interface WalletConnectLoginHookCustomStateType {
   uriDeepLink: string;
   walletConnectUri?: string;
+  cancelLogin: () => void;
 }
 
 export type WalletConnectLoginHookReturnType = [
@@ -57,6 +58,7 @@ export const useWalletConnectLogin = ({
   );
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);
+  const canLoginRef = useRef<boolean>(true);
 
   let heartbeatDisconnectInterval: Timeout;
 
@@ -88,7 +90,18 @@ export const useWalletConnectLogin = ({
     logout(logoutRoute);
   };
 
+  const cancelLogin = () => {
+    canLoginRef.current = false;
+  };
+
   async function handleHeartbeat() {
+    if (
+      provider == null ||
+      !getIsProviderEqualTo(LoginMethodsEnum.walletconnect)
+    ) {
+      return;
+    }
+
     const isProviderConnected = Boolean(
       providerRef.current?.walletConnector?.connected
     );
@@ -119,6 +132,16 @@ export const useWalletConnectLogin = ({
         provider == null ||
         !getIsProviderEqualTo(LoginMethodsEnum.walletconnect)
       ) {
+        return;
+      }
+
+      if (!canLoginRef.current) {
+        try {
+          await providerRef.current?.logout();
+        } catch {
+          console.warn('Unable to logout');
+        }
+
         return;
       }
 
@@ -185,6 +208,7 @@ export const useWalletConnectLogin = ({
     );
 
     await newProvider.init();
+    canLoginRef.current = true;
     setAccountProvider(newProvider);
     providerRef.current = newProvider;
     if (loginProvider) {
@@ -226,6 +250,6 @@ export const useWalletConnectLogin = ({
       isLoading: isLoading && !loginFailed,
       isLoggedIn: isLoggedIn && !loginFailed
     },
-    { uriDeepLink, walletConnectUri: wcUri }
+    { uriDeepLink, walletConnectUri: wcUri, cancelLogin }
   ];
 };

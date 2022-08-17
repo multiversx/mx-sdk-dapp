@@ -17,3 +17,5 @@ export * from './redirect';
 export * from './dateTime';
 
 export * from './retryMultipleTimes';
+export * from './websocket';
+export * from './environment';

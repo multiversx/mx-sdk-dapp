@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import platform from 'platform';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
@@ -10,6 +9,7 @@ import { ModalContainer } from 'UI/ModalContainer';
 import { WithClassname } from '../../types';
 import { Pairinglist } from './PairingList';
 import styles from './wallet-connect-login-container.scss';
+import { isMobileEnvironment } from 'utils';
 
 export interface WalletConnectLoginModalPropsType extends WithClassname {
   lead?: string;
@@ -40,7 +40,7 @@ export const WalletConnectLoginContainer = ({
   const [
     initLoginWithWalletConnect,
     { error },
-    { uriDeepLink, walletConnectUri }
+    { uriDeepLink, walletConnectUri, cancelLogin }
   ] = useWalletConnectLogin({
     logoutRoute,
     callbackRoute,
@@ -53,6 +53,7 @@ export const WalletConnectLoginContainer = ({
     {
       connectExisting,
       removeExistingPairing,
+      cancelLogin: cancelLoginV2,
       uriDeepLink: walletConnectDeepLinkV2,
       walletConnectUri: walletConnectUriV2,
       wcPairings
@@ -64,8 +65,7 @@ export const WalletConnectLoginContainer = ({
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-  const isMobileDevice =
-    platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';
+  const isMobileDevice = isMobileEnvironment();
   const activePairings = isWalletConnectV2
     ? wcPairings?.filter(
         (pairing) => Boolean(pairing.active) && pairing.peerMetadata
@@ -108,6 +108,15 @@ export const WalletConnectLoginContainer = ({
         setQrCodeSvg(svg);
       }
     }
+  };
+
+  const onCloseModal = () => {
+    if (isWalletConnectV2) {
+      cancelLoginV2();
+    } else {
+      cancelLogin();
+    }
+    onClose?.();
   };
 
   useEffect(() => {
@@ -185,7 +194,7 @@ export const WalletConnectLoginContainer = ({
 
   return wrapContentInsideModal ? (
     <ModalContainer
-      onClose={onClose}
+      onClose={onCloseModal}
       modalConfig={{
         headerText: 'Login with Maiar',
         showHeader: true,
