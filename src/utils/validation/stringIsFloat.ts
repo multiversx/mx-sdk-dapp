@@ -4,8 +4,11 @@ export const stringIsFloat = (amount: string) => {
   if (isNaN(amount as any)) {
     return false;
   }
+  if (String(amount).includes('Infinity')) {
+    return false;
+  }
 
-  // tslint:disable-next-line
+  // eslint-disable-next-line
   let [wholes, decimals] = amount.split('.');
   if (decimals) {
     while (decimals.charAt(decimals.length - 1) === '0') {
