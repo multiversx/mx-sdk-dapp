@@ -5,7 +5,7 @@ import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
 import {
   WalletConnectProvider,
   WalletConnectProviderV2,
-  SessionEventTypes
+  EngineTypes
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { ledgerContractDataEnabledValue } from 'constants/index';
@@ -141,8 +141,8 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  sendSessionEvent(options?: {
-    event: SessionEventTypes['event'];
+  sendCustomRequest?(options?: {
+    request: EngineTypes.RequestParams['request'];
   }): Promise<any> {
     throw new Error(
       notInitializedError(`sendSessionEvent with options: ${options}`)
