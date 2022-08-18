@@ -1,11 +1,11 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
+import { getWebsocketUrl, retryMultipleTimes } from 'utils';
+import { useGetNetworkConfig } from '../useGetNetworkConfig';
 import {
   websocketConnection,
   WebsocketConnectionStatusEnum
 } from './websocketConnection';
-import { getWebsocketUrl, retryMultipleTimes } from 'utils';
-import { useGetNetworkConfig } from '../useGetNetworkConfig';
 
 interface UseRegisterWebsocketListenerPropsType {
   onMessage: (message: string) => void;
@@ -15,12 +15,23 @@ interface UseRegisterWebsocketListenerPropsType {
 const TIMEOUT = 3000;
 const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
+const MESSAGE_DELAY = 1000;
 
 export function useRegisterWebsocketListener({
   onMessage,
   address
 }: UseRegisterWebsocketListenerPropsType) {
+  const timeout = useRef<NodeJS.Timeout | null>(null);
+
   const { network } = useGetNetworkConfig();
+
+  const handleMessageReceived = (message: string) => {
+    if (timeout.current) {
+      clearTimeout(timeout.current);
+    }
+
+    timeout.current = setTimeout(() => onMessage(message), MESSAGE_DELAY);
+  };
 
   const initializeWebsocketConnection = useCallback(
     retryMultipleTimes(
@@ -47,7 +58,9 @@ export function useRegisterWebsocketListener({
 
         websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
 
-        websocketConnection.current.onAny(onMessage);
+        websocketConnection.current.onAny((message) => {
+          handleMessageReceived(message);
+        });
       },
       {
         retries: 2,
@@ -71,6 +84,9 @@ export function useRegisterWebsocketListener({
   useEffect(() => {
     return () => {
       websocketConnection.current?.close();
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
     };
   }, []);
 }

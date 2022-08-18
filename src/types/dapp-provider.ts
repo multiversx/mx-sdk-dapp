@@ -1,5 +1,5 @@
 import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
-import { SessionEventTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { EngineTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
 
 export type DappOptions = { callbackUrl?: string };
 
@@ -33,7 +33,7 @@ export interface IDappProvider {
     method: string;
     params: any;
   }): Promise<any>;
-  sendSessionEvent(options?: {
-    event: SessionEventTypes['event'];
+  sendCustomRequest?(options?: {
+    request: EngineTypes.RequestParams['request'];
   }): Promise<any>;
 }

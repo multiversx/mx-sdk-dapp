@@ -2,8 +2,7 @@ import { useRef, useState } from 'react';
 import {
   PairingTypes,
   SessionEventTypes,
-  WalletConnectProviderV2,
-  WalletConnectV2Events
+  WalletConnectProviderV2
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -24,7 +23,7 @@ import {
   setWalletConnectLogin
 } from 'reduxStore/slices';
 import { LoginHookGenericStateType } from 'types';
-import { LoginMethodsEnum, DappCoreWCV2EventsEnum } from 'types/enums';
+import { LoginMethodsEnum, DappCoreWCV2CustomMethodsEnum } from 'types/enums';
 import { getIsLoggedIn, logout } from 'utils';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
@@ -88,12 +87,9 @@ export const useWalletConnectV2Login = ({
   const canLoginRef = useRef<boolean>(true);
 
   const hasWcUri = Boolean(wcUri);
-  const dappEvents: [WalletConnectV2Events | DappCoreWCV2EventsEnum] = [
-    DappCoreWCV2EventsEnum.erd_cancelAction
+  const dappMethods: string[] = [
+    DappCoreWCV2CustomMethodsEnum.erd_cancelAction
   ];
-  if (token) {
-    dappEvents.push(WalletConnectV2Events.erd_signLoginToken);
-  }
   const isLoading = !hasWcUri;
   const uriDeepLink = hasWcUri
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
@@ -224,7 +220,7 @@ export const useWalletConnectV2Login = ({
     try {
       const { approval } = await providerRef.current?.connect({
         topic: pairing.topic,
-        events: dappEvents
+        methods: dappMethods
       });
       if (token) {
         dispatch(setTokenLogin({ loginToken: token }));
@@ -268,7 +264,7 @@ export const useWalletConnectV2Login = ({
 
     try {
       const { uri, approval } = await providerRef.current?.connect({
-        events: dappEvents
+        methods: dappMethods
       });
 
       const hasUri = Boolean(uri);
