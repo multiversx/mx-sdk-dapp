@@ -14,7 +14,7 @@ describe('getTransactionReceiver', () => {
     expect(result).toEqual(transaction.receiver);
   });
 
-  it('returns receiver address from the action arguments if exists', () => {
+  it('returns receiver address from the transaction action arguments if exists', () => {
     const transaction: TransactionType = {
       ...transactionMock,
       action: {

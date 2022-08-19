@@ -1,5 +1,5 @@
-import { UITransactionType } from './types';
 import { getTransactionReceiver } from './getTransactionReceiver';
+import { UITransactionType } from './types';
 
 /**
  * The information about an account like name, icon, etc...
