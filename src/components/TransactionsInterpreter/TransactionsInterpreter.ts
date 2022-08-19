@@ -6,7 +6,7 @@ import { getTransactionMethod } from './helpers/getTransactionMethod';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
-import { getTransactionType } from './helpers/getTransactionType';
+import { getTransactionTransferType } from './helpers/getTransactionTransferType';
 import { isContract } from './helpers/isContract';
 import { parseTransactionTime } from './helpers/parseTransactionTime';
 import {
@@ -82,7 +82,7 @@ export function processTransaction({
   const receiver = getTransactionReceiver(transaction);
   const receiverAssets = getTransactionReceiverAssets(transaction);
 
-  const direction = getTransactionType(address, transaction, receiver);
+  const direction = getTransactionTransferType(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
