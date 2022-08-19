@@ -5,7 +5,7 @@ describe.only('getNetworkLink', () => {
     const input = 'address';
     const consoleErrorSpy = jest.spyOn(console, 'error');
 
-    const result = getNetworkLink('', input); // http://devnet-explorer.elrond.com
+    const result = getNetworkLink('', input);
 
     expect(consoleErrorSpy).toHaveBeenCalled();
     expect(result).toEqual(`/${input}`);
