@@ -218,7 +218,8 @@ export enum TxActionsEnum {
   wrapEgld = 'wrapEgld',
   unwrapEgld = 'unwrapEgld',
   unlockAssets = 'unlockAssets',
-  mergeLockedAssetTokens = 'mergeLockedAssetTokens'
+  mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  ping = 'ping'
 }
 
 export enum TxActionCategoryEnum {
