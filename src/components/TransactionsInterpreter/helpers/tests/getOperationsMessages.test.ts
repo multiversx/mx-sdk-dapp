@@ -6,7 +6,7 @@ import {
 } from '../types';
 import { transactionMock } from './transaction-mock';
 
-describe.only('getOperationsMessages', () => {
+describe('getOperationsMessages', () => {
   it('receive empty array if no operations messages exists on the transaction', () => {
     const result = getOperationsMessages(transactionMock);
 

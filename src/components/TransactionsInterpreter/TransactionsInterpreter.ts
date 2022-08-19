@@ -1,20 +1,20 @@
+import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
+import { getEgldLabel, getTokenFromData } from 'utils';
+import { getDenominatedValue } from './helpers/getDenominatedValue';
+import { getNetworkLink } from './helpers/getNetworkLink';
+import getTransactionMethod from './helpers/getTransactionMethod';
+import { getTransactionReceiver } from './helpers/getTransactionReceiver';
+import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
+import { getTransactionTokens } from './helpers/getTransactionTokens';
+import { getTransactionType } from './helpers/getTransactionType';
+import { isContract } from './helpers/isContract';
+import { parseTransactionTime } from './helpers/parseTransactionTime';
 import {
   ExtendedTransactionType,
   TokenArgumentType,
   UITransactionType
 } from './helpers/types';
-import getTransactionMethod from './helpers/getTransactionMethod';
-import { getTransactionTokens } from './helpers/getTransactionTokens';
 import urlBuilder from './helpers/urlBuilder';
-import { getDenominatedValue } from './helpers/getDenominatedValue';
-import { getNetworkLink } from './helpers/getNetworkLink';
-import { getEgldLabel, getTokenFromData } from 'utils';
-import { isContract } from './helpers/isContract';
-import { getTransactionType } from './helpers/getTransactionType';
-import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
-import { parseTransactionTime } from './helpers/parseTransactionTime';
-import { getTransactionReceiver } from './helpers/getTransactionReceiver';
-import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 
 export type DenominationConfig = {
   egldLabel?: string;
@@ -28,38 +28,54 @@ export type DenominationConfig = {
 export type ParseTransactionsConfiguration = {
   denominationConfig: DenominationConfig;
   numInitCharactersForScAddress: number;
+  networkAddress?: string;
 };
 
 const defaultConfig: ParseTransactionsConfiguration = {
   denominationConfig: {
     egldLabel: 'EGLD'
   },
-  numInitCharactersForScAddress: NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
+  numInitCharactersForScAddress: NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS,
+  networkAddress: ''
 };
 
 export function parseTransactions(
   transactions: UITransactionType[],
   address: string,
-  { denominationConfig, numInitCharactersForScAddress } = defaultConfig
+  {
+    denominationConfig,
+    numInitCharactersForScAddress,
+    networkAddress
+  } = defaultConfig
 ): ExtendedTransactionType[] {
   return transactions.map((transaction) =>
-    processTransaction(
+    processTransaction({
       transaction,
       address,
       denominationConfig,
-      numInitCharactersForScAddress
-    )
+      numInitCharactersForScAddress,
+      networkAddress
+    })
   );
 }
 
-export function processTransaction(
-  transaction: UITransactionType,
-  address: string,
-  denominationConfig: DenominationConfig = {
+type ProcessTransactionParams = {
+  transaction: UITransactionType;
+  address: string;
+  denominationConfig: DenominationConfig;
+  numInitCharactersForScAddress: number;
+  networkAddress?: string;
+};
+
+export function processTransaction({
+  transaction,
+  address,
+  denominationConfig = {
     egldLabel: 'EGLD'
   },
-  numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
-): ExtendedTransactionType {
+  numInitCharactersForScAddress = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS,
+  networkAddress = ''
+}: ProcessTransactionParams): ExtendedTransactionType {
   const tokenIdentifier =
     transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
 
@@ -84,20 +100,29 @@ export function processTransaction(
   });
 
   const senderLink = getNetworkLink(
+    networkAddress,
     urlBuilder.accountDetails(transaction.sender)
   );
-  const receiverLink = getNetworkLink(urlBuilder.accountDetails(receiver));
+  const receiverLink = getNetworkLink(
+    networkAddress,
+    urlBuilder.accountDetails(receiver)
+  );
   const senderShardLink = getNetworkLink(
+    networkAddress,
     urlBuilder.senderShard(transaction.senderShard)
   );
   const receiverShardLink = getNetworkLink(
+    networkAddress,
     urlBuilder.receiverShard(transaction.receiverShard)
   );
 
   const transactionHash = transaction.originalTxHash
     ? `${transaction.originalTxHash}#${transaction.txHash}`
     : transaction.txHash;
-  const transactionLink = getNetworkLink(`/transactions/${transactionHash}`);
+  const transactionLink = getNetworkLink(
+    networkAddress,
+    `/transactions/${transactionHash}`
+  );
 
   const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
 

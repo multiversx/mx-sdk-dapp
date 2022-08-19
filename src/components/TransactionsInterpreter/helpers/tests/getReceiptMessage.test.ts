@@ -4,7 +4,7 @@ import { denominate } from 'utils/operations/denominate';
 import { getReceiptMessage } from '../getReceiptMessage';
 import { transactionMock } from './transaction-mock';
 
-describe.only('getReceiptMessage', () => {
+describe('getReceiptMessage', () => {
   it('returns empty string if no data exists on the transaction receipt field', () => {
     const result = getReceiptMessage(transactionMock);
 

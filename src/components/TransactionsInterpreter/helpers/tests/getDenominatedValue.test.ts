@@ -2,7 +2,7 @@ import { getDenominatedValue } from '../getDenominatedValue';
 import { UITransactionType } from '../types';
 import { transactionMock } from './transaction-mock';
 
-describe.only('getDenominatedValue', () => {
+describe('getDenominatedValue', () => {
   describe('get transaction denominated value using default denomination config', () => {
     it('denominated value for "102000000000000000" is "0.102"', () => {
       const transaction: UITransactionType = {

@@ -1,6 +1,6 @@
 import { getNetworkLink } from '../getNetworkLink';
 
-describe.only('getNetworkLink', () => {
+describe('getNetworkLink', () => {
   it('return "/${to}" parameter when the explorerAddress is empty and log an error in console', () => {
     const input = 'address';
     const consoleErrorSpy = jest.spyOn(console, 'error');
