@@ -1,14 +1,12 @@
-import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
-import { getEgldLabel, getTokenFromData } from 'utils';
+import { getEgldLabel, getTokenFromData, isContract } from 'utils';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getTransactionMethod } from './helpers/getTransactionMethod';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
+import { getTransactionTimeFormats } from './helpers/getTransactionTimeFormats';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
 import { getTransactionTransferType } from './helpers/getTransactionTransferType';
-import { isContract } from './helpers/isContract';
-import { parseTransactionTime } from './helpers/parseTransactionTime';
 import {
   ExtendedTransactionType,
   TokenArgumentType,
@@ -27,7 +25,6 @@ export type DenominationConfig = {
 
 export type ParseTransactionsConfiguration = {
   denominationConfig: DenominationConfig;
-  numInitCharactersForScAddress: number;
   networkAddress?: string;
 };
 
@@ -35,25 +32,19 @@ const defaultConfig: ParseTransactionsConfiguration = {
   denominationConfig: {
     egldLabel: 'EGLD'
   },
-  numInitCharactersForScAddress: NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS,
   networkAddress: ''
 };
 
 export function parseTransactions(
   transactions: UITransactionType[],
   address: string,
-  {
-    denominationConfig,
-    numInitCharactersForScAddress,
-    networkAddress
-  } = defaultConfig
+  { denominationConfig, networkAddress } = defaultConfig
 ): ExtendedTransactionType[] {
   return transactions.map((transaction) =>
     processTransaction({
       transaction,
       address,
       denominationConfig,
-      numInitCharactersForScAddress,
       networkAddress
     })
   );
@@ -63,7 +54,6 @@ type ProcessTransactionParams = {
   transaction: UITransactionType;
   address: string;
   denominationConfig: DenominationConfig;
-  numInitCharactersForScAddress: number;
   networkAddress?: string;
 };
 
@@ -73,7 +63,6 @@ export function processTransaction({
   denominationConfig = {
     egldLabel: 'EGLD'
   },
-  numInitCharactersForScAddress = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS,
   networkAddress = ''
 }: ProcessTransactionParams): ExtendedTransactionType {
   const tokenIdentifier =
@@ -124,7 +113,7 @@ export function processTransaction({
     `/transactions/${transactionHash}`
   );
 
-  const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
+  const { shortTimeAgo, longTimeAgo } = getTransactionTimeFormats(transaction);
 
   return {
     ...transaction,
@@ -140,7 +129,7 @@ export function processTransaction({
       direction,
       method,
       transactionTokens,
-      isContract: isContract(transaction.sender, numInitCharactersForScAddress)
+      isContract: isContract(transaction.sender)
     },
     links: {
       senderLink,
