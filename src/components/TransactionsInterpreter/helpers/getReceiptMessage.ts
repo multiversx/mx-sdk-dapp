@@ -4,11 +4,11 @@ import { denominate } from 'utils/operations/denominate';
 import { TransactionType } from './types';
 
 const getReceiptValue = (transaction: TransactionType) => {
-  if (!transaction?.receipt?.value) {
+  if (!transaction.receipt?.value) {
     return '';
   }
 
-  if (transaction?.receipt?.data === REFUNDED_GAS) {
+  if (transaction.receipt?.data === REFUNDED_GAS) {
     const denominatedGas = denominate({
       input: transaction.receipt.value,
       denomination,
@@ -26,7 +26,7 @@ const getReceiptValue = (transaction: TransactionType) => {
 };
 
 export function getReceiptMessage(transaction: TransactionType) {
-  const message = transaction?.receipt?.data;
+  const message = transaction.receipt?.data;
 
   if (!message) {
     return '';

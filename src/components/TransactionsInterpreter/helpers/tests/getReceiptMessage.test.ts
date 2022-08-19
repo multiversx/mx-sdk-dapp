@@ -6,7 +6,11 @@ import { transactionMock } from './transaction-mock';
 
 describe('getReceiptMessage', () => {
   it('returns empty string if no data exists on the transaction receipt field', () => {
-    const result = getReceiptMessage(transactionMock);
+    const transaction = {
+      ...transactionMock,
+      receipt: undefined
+    };
+    const result = getReceiptMessage(transaction);
 
     expect(result).toEqual('');
   });
