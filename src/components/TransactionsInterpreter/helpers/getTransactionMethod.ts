@@ -4,7 +4,7 @@ import {
   UITransactionType
 } from './types';
 
-const getTransactionMethod = (transaction: UITransactionType) => {
+export const getTransactionMethod = (transaction: UITransactionType) => {
   let transactionAction = 'Transaction';
   const transactionHasAction =
     transaction.action?.name && transaction.action?.category;
@@ -26,5 +26,3 @@ const getTransactionMethod = (transaction: UITransactionType) => {
 
   return transactionAction;
 };
-
-export default getTransactionMethod;

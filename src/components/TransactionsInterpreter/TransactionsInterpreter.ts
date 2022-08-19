@@ -2,7 +2,7 @@ import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/trans
 import { getEgldLabel, getTokenFromData } from 'utils';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
-import getTransactionMethod from './helpers/getTransactionMethod';
+import { getTransactionMethod } from './helpers/getTransactionMethod';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
