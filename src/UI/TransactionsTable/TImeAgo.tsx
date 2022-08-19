@@ -1,5 +1,5 @@
 import React from 'react';
-import { humanReadableFormat } from 'components/TransactionsInterpreter/helpers/humanReadableFormat';
+import { getHumanReadableTimeFormat } from 'components/TransactionsInterpreter/helpers/getHumanReadableTimeFormat';
 import { timeAgo } from 'utils';
 
 export type TimeAgoPropsType = {
@@ -16,7 +16,7 @@ export const TimeAgo = ({
   const result = timeAgo(value * 1000, short);
 
   return tooltip ? (
-    <span title={humanReadableFormat(value, false, true)}>{result}</span>
+    <span title={getHumanReadableTimeFormat(value, false, true)}>{result}</span>
   ) : (
     <>{result}</>
   );

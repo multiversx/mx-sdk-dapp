@@ -1,6 +1,9 @@
 import moment from 'moment';
 
-export function humanReadableFormat(
+/**
+ * value - UNIX timestamp
+ * */
+export function getHumanReadableTimeFormat(
   value: number,
   noSeconds?: boolean,
   utc?: boolean
