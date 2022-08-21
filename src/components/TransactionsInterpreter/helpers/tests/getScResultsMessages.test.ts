@@ -1,10 +1,10 @@
 import getScResultsMessages from '../getScResultsMessages';
 import { ResultType, TransactionType } from '../types';
-import { transactionMock } from './transaction-mock';
+import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getScResultsMessages', () => {
   it('receive empty array if no results exists on the transaction', () => {
-    const result = getScResultsMessages(transactionMock);
+    const result = getScResultsMessages(baseTransactionMock);
 
     expect(result).toEqual([]);
   });
@@ -23,7 +23,7 @@ describe('getScResultsMessages', () => {
     } as ResultType;
 
     const transaction: TransactionType = {
-      ...transactionMock,
+      ...baseTransactionMock,
       results: [
         {
           ...baseTransactionResult,

@@ -1,10 +1,11 @@
-import { getEgldLabel, getTokenFromData, isContract } from 'utils';
+import { mainnetEgldLabel } from 'constants/network';
+import { isContract } from 'utils/smartContracts';
+import { getTokenFromData } from 'utils/transactions/getTokenFromData';
 import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getTransactionMethod } from './helpers/getTransactionMethod';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
-import { getTransactionTimeFormats } from './helpers/getTransactionTimeFormats';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
 import { getTransactionTransferType } from './helpers/getTransactionTransferType';
 import {
@@ -30,7 +31,7 @@ export type ParseTransactionsConfiguration = {
 
 const defaultConfig: ParseTransactionsConfiguration = {
   denominationConfig: {
-    egldLabel: 'EGLD'
+    egldLabel: mainnetEgldLabel
   },
   networkAddress: ''
 };
@@ -76,7 +77,7 @@ export function processTransaction({
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
-  let tokenLabel = getEgldLabel();
+  let tokenLabel = denominationConfig.egldLabel ?? mainnetEgldLabel;
   if (transactionTokens.length > 0) {
     const txToken = transactionTokens[0];
     tokenLabel = txToken.ticker ?? tokenLabel;
@@ -110,10 +111,8 @@ export function processTransaction({
     : transaction.txHash;
   const transactionLink = getNetworkLink(
     networkAddress,
-    `/transactions/${transactionHash}`
+    urlBuilder.transactionDetails(transactionHash)
   );
-
-  const { shortTimeAgo, longTimeAgo } = getTransactionTimeFormats(transaction);
 
   return {
     ...transaction,
@@ -137,10 +136,6 @@ export function processTransaction({
       senderShardLink,
       receiverShardLink,
       transactionLink
-    },
-    dateTime: {
-      shortTimeAgo,
-      longTimeAgo
     }
   };
 }

@@ -423,7 +423,6 @@ export type ExtendedTransactionType = {
     direction?: TransactionDirection;
     method: string;
     transactionTokens: TokenArgumentType[];
-    lockedAccountName?: string;
     isContract?: boolean;
   };
   denomination: {
@@ -436,9 +435,5 @@ export type ExtendedTransactionType = {
     senderShardLink?: string;
     receiverShardLink?: string;
     transactionLink?: string;
-  };
-  dateTime: {
-    shortTimeAgo?: string;
-    longTimeAgo?: string;
   };
 } & UITransactionType;

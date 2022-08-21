@@ -1,11 +1,11 @@
 import { getTransactionReceiverAssets } from '../getTransactionReceiverAssets';
 import { TransactionType, TxActionCategoryEnum, TxActionsEnum } from '../types';
-import { transactionMock } from './transaction-mock';
+import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionReceiverAssets', () => {
   it('returns receiver assets', () => {
     const transaction: TransactionType = {
-      ...transactionMock,
+      ...baseTransactionMock,
       receiver: 'receiver-hash',
       receiverAssets: {
         name: 'john doe',
@@ -23,7 +23,7 @@ describe('getTransactionReceiverAssets', () => {
 
   it('returns "undefined" when the transaction receiver does not match the receiver address from the transaction action arguments', () => {
     const transaction: TransactionType = {
-      ...transactionMock,
+      ...baseTransactionMock,
       receiver: 'receiver-hash',
       receiverAssets: {
         name: 'john doe',

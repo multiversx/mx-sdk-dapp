@@ -1,11 +1,11 @@
 import { getTransactionReceiver } from '../getTransactionReceiver';
 import { TransactionType, TxActionCategoryEnum, TxActionsEnum } from '../types';
-import { transactionMock } from './transaction-mock';
+import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionReceiver', () => {
   it('returns receiver address from transaction body', () => {
     const transaction: TransactionType = {
-      ...transactionMock,
+      ...baseTransactionMock,
       receiver: 'receiver-hash'
     };
 
@@ -16,7 +16,7 @@ describe('getTransactionReceiver', () => {
 
   it('returns receiver address from the transaction action arguments if exists', () => {
     const transaction: TransactionType = {
-      ...transactionMock,
+      ...baseTransactionMock,
       action: {
         category: TxActionCategoryEnum.esdtNft,
         name: TxActionsEnum.transfer,

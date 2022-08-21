@@ -2,12 +2,12 @@ import BigNumber from 'bignumber.js';
 import { decimals, denomination, REFUNDED_GAS } from 'constants/index';
 import { denominate } from 'utils/operations/denominate';
 import { getReceiptMessage } from '../getReceiptMessage';
-import { transactionMock } from './transaction-mock';
+import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getReceiptMessage', () => {
   it('returns empty string if no data exists on the transaction receipt field', () => {
     const transaction = {
-      ...transactionMock,
+      ...baseTransactionMock,
       receipt: undefined
     };
     const result = getReceiptMessage(transaction);
@@ -17,7 +17,7 @@ describe('getReceiptMessage', () => {
 
   it(`returns a message that contains the refunded gas value if the receipt data field contains ${REFUNDED_GAS}`, () => {
     const transaction = {
-      ...transactionMock,
+      ...baseTransactionMock,
       receipt: {
         data: REFUNDED_GAS,
         value: '1000',
@@ -40,7 +40,7 @@ describe('getReceiptMessage', () => {
 
   it(`returns a message that contains the receipt data field value and the receipt value if the receipt data field does not contains ${REFUNDED_GAS}`, () => {
     const transaction = {
-      ...transactionMock,
+      ...baseTransactionMock,
       receipt: {
         data: '@some-data',
         value: '1000',

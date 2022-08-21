@@ -4,11 +4,11 @@ import {
   TransactionOperationActionType,
   VisibleTransactionOperationType
 } from '../types';
-import { transactionMock } from './transaction-mock';
+import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getOperationsMessages', () => {
   it('receive empty array if no operations messages exists on the transaction', () => {
-    const result = getOperationsMessages(transactionMock);
+    const result = getOperationsMessages(baseTransactionMock);
 
     expect(result).toEqual([]);
   });
@@ -28,7 +28,7 @@ describe('getOperationsMessages', () => {
     };
 
     const transaction = {
-      ...transactionMock,
+      ...baseTransactionMock,
       operations: [
         {
           ...baseTransactionOperation,
