@@ -1,6 +1,6 @@
+import { baseTransactionMock } from 'components/TransactionsInterpreter/helpers/tests/base-transaction-mock';
+import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import { getDenominatedValue } from '../getDenominatedValue';
-import { UITransactionType } from '../types';
-import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getDenominatedValue', () => {
   describe('get transaction denominated value using default denomination config', () => {

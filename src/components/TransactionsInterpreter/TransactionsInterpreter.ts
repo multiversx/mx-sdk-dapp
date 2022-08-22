@@ -1,7 +1,7 @@
 import { mainnetEgldLabel } from 'constants/network';
+import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
-import { getDenominatedValue } from './helpers/getDenominatedValue';
 import { getNetworkLink } from './helpers/getNetworkLink';
 import { getTransactionMethod } from './helpers/getTransactionMethod';
 import { getTransactionReceiver } from './helpers/getTransactionReceiver';

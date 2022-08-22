@@ -1,7 +1,7 @@
+import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import { DenominationConfig } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { defaultNetwork } from 'reduxStore/slices';
 import { denominate } from 'utils/operations/denominate';
-import { DenominationConfig } from '../TransactionsInterpreter';
-import { UITransactionType } from './types';
 
 export function getDenominatedValue(
   transaction: UITransactionType,
