@@ -6,7 +6,11 @@ describe('getHumanReadableTimeFormat', () => {
     const noSeconds = false;
     const utc = false;
 
-    const result = getHumanReadableTimeFormat(value, noSeconds, utc);
+    const result = getHumanReadableTimeFormat({
+      value,
+      noSeconds,
+      utc
+    });
 
     expect(result).toEqual('Apr 23, 1993 08:33:12 AM');
   });
@@ -16,7 +20,11 @@ describe('getHumanReadableTimeFormat', () => {
     const noSeconds = true;
     const utc = false;
 
-    const result = getHumanReadableTimeFormat(value, noSeconds, utc);
+    const result = getHumanReadableTimeFormat({
+      value,
+      noSeconds,
+      utc
+    });
 
     expect(result).toEqual('Apr 23, 1993 08:33 AM');
   });
@@ -26,7 +34,11 @@ describe('getHumanReadableTimeFormat', () => {
     const noSeconds = false;
     const utc = true;
 
-    const result = getHumanReadableTimeFormat(value, noSeconds, utc);
+    const result = getHumanReadableTimeFormat({
+      value,
+      noSeconds,
+      utc
+    });
 
     expect(result).toEqual('Apr 23, 1993 05:33:12 AM UTC');
   });
@@ -36,7 +48,11 @@ describe('getHumanReadableTimeFormat', () => {
     const noSeconds = true;
     const utc = true;
 
-    const result = getHumanReadableTimeFormat(value, noSeconds, utc);
+    const result = getHumanReadableTimeFormat({
+      value,
+      noSeconds,
+      utc
+    });
 
     expect(result).toEqual('Apr 23, 1993 05:33 AM UTC');
   });
