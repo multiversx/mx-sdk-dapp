@@ -1,20 +1,19 @@
+import { mainnetEgldLabel } from 'constants/network';
+import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
+import { isContract } from 'utils/smartContracts';
+import { getTokenFromData } from 'utils/transactions/getTokenFromData';
+import { getNetworkLink } from './helpers/getNetworkLink';
+import { getTransactionMethod } from './helpers/getTransactionMethod';
+import { getTransactionReceiver } from './helpers/getTransactionReceiver';
+import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
+import { getTransactionTokens } from './helpers/getTransactionTokens';
+import { getTransactionTransferType } from './helpers/getTransactionTransferType';
 import {
   ExtendedTransactionType,
   TokenArgumentType,
   UITransactionType
 } from './helpers/types';
-import getTransactionMethod from './helpers/getTransactionMethod';
-import { getTransactionTokens } from './helpers/getTransactionTokens';
 import urlBuilder from './helpers/urlBuilder';
-import { getDenominatedValue } from './helpers/getDenominatedValue';
-import { getNetworkLink } from './helpers/getNetworkLink';
-import { getEgldLabel, getTokenFromData } from 'utils';
-import { isContract } from './helpers/isContract';
-import { getTransactionType } from './helpers/getTransactionType';
-import { NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS } from 'constants/transaction-interpreter';
-import { parseTransactionTime } from './helpers/parseTransactionTime';
-import { getTransactionReceiver } from './helpers/getTransactionReceiver';
-import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 
 export type DenominationConfig = {
   egldLabel?: string;
@@ -27,51 +26,58 @@ export type DenominationConfig = {
 
 export type ParseTransactionsConfiguration = {
   denominationConfig: DenominationConfig;
-  numInitCharactersForScAddress: number;
+  networkAddress?: string;
 };
 
 const defaultConfig: ParseTransactionsConfiguration = {
   denominationConfig: {
-    egldLabel: 'EGLD'
+    egldLabel: mainnetEgldLabel
   },
-  numInitCharactersForScAddress: NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
+  networkAddress: ''
 };
 
 export function parseTransactions(
   transactions: UITransactionType[],
   address: string,
-  { denominationConfig, numInitCharactersForScAddress } = defaultConfig
+  { denominationConfig, networkAddress } = defaultConfig
 ): ExtendedTransactionType[] {
   return transactions.map((transaction) =>
-    processTransaction(
+    processTransaction({
       transaction,
       address,
       denominationConfig,
-      numInitCharactersForScAddress
-    )
+      networkAddress
+    })
   );
 }
 
-export function processTransaction(
-  transaction: UITransactionType,
-  address: string,
-  denominationConfig: DenominationConfig = {
-    egldLabel: 'EGLD'
+type ProcessTransactionParams = {
+  transaction: UITransactionType;
+  address: string;
+  denominationConfig: DenominationConfig;
+  networkAddress?: string;
+};
+
+export function processTransaction({
+  transaction,
+  address,
+  denominationConfig = {
+    egldLabel: mainnetEgldLabel
   },
-  numInitCharactersForScAddress: number = NUMBER_OF_CHARACTERS_FOR_SMART_CONTRACT_ADDRESS
-): ExtendedTransactionType {
+  networkAddress = ''
+}: ProcessTransactionParams): ExtendedTransactionType {
   const tokenIdentifier =
     transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
 
   const receiver = getTransactionReceiver(transaction);
   const receiverAssets = getTransactionReceiverAssets(transaction);
 
-  const direction = getTransactionType(address, transaction, receiver);
+  const direction = getTransactionTransferType(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
-  let tokenLabel = getEgldLabel();
+  let tokenLabel = denominationConfig.egldLabel ?? mainnetEgldLabel;
   if (transactionTokens.length > 0) {
     const txToken = transactionTokens[0];
     tokenLabel = txToken.ticker ?? tokenLabel;
@@ -84,22 +90,29 @@ export function processTransaction(
   });
 
   const senderLink = getNetworkLink(
+    networkAddress,
     urlBuilder.accountDetails(transaction.sender)
   );
-  const receiverLink = getNetworkLink(urlBuilder.accountDetails(receiver));
+  const receiverLink = getNetworkLink(
+    networkAddress,
+    urlBuilder.accountDetails(receiver)
+  );
   const senderShardLink = getNetworkLink(
+    networkAddress,
     urlBuilder.senderShard(transaction.senderShard)
   );
   const receiverShardLink = getNetworkLink(
+    networkAddress,
     urlBuilder.receiverShard(transaction.receiverShard)
   );
 
   const transactionHash = transaction.originalTxHash
     ? `${transaction.originalTxHash}#${transaction.txHash}`
     : transaction.txHash;
-  const transactionLink = getNetworkLink(`/transactions/${transactionHash}`);
-
-  const { shortTimeAgo, longTimeAgo } = parseTransactionTime(transaction);
+  const transactionLink = getNetworkLink(
+    networkAddress,
+    urlBuilder.transactionDetails(transactionHash)
+  );
 
   return {
     ...transaction,
@@ -115,7 +128,7 @@ export function processTransaction(
       direction,
       method,
       transactionTokens,
-      isContract: isContract(transaction.sender, numInitCharactersForScAddress)
+      isContract: isContract(transaction.sender)
     },
     links: {
       senderLink,
@@ -123,10 +136,6 @@ export function processTransaction(
       senderShardLink,
       receiverShardLink,
       transactionLink
-    },
-    dateTime: {
-      shortTimeAgo,
-      longTimeAgo
     }
   };
 }

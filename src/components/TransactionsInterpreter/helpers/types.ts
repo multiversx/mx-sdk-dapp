@@ -218,7 +218,8 @@ export enum TxActionsEnum {
   wrapEgld = 'wrapEgld',
   unwrapEgld = 'unwrapEgld',
   unlockAssets = 'unlockAssets',
-  mergeLockedAssetTokens = 'mergeLockedAssetTokens'
+  mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  ping = 'ping'
 }
 
 export enum TxActionCategoryEnum {
@@ -422,7 +423,6 @@ export type ExtendedTransactionType = {
     direction?: TransactionDirection;
     method: string;
     transactionTokens: TokenArgumentType[];
-    lockedAccountName?: string;
     isContract?: boolean;
   };
   denomination: {
@@ -435,9 +435,5 @@ export type ExtendedTransactionType = {
     senderShardLink?: string;
     receiverShardLink?: string;
     transactionLink?: string;
-  };
-  dateTime: {
-    shortTimeAgo?: string;
-    longTimeAgo?: string;
   };
 } & UITransactionType;

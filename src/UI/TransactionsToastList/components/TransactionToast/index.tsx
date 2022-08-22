@@ -1,16 +1,14 @@
 import React from 'react';
-import classNames from 'classnames';
 import { Progress } from 'UI/Progress';
-import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
+import { WithClassname } from '../../../types';
+import { useTransactionToast } from './hooks/useTransactionToast';
+import styles from './styles.scss';
 import { TransactionToastContent } from './TransactionToastContent';
 import { TransactionToastWrapper } from './TransactionToastWrapper';
 import {
   TransactionToastCustomizationProps,
   TransactionToastDefaultProps
 } from './types';
-import { useTransactionToast } from './hooks/useTransactionToast';
-import styles from './styles.scss';
-import { WithClassname } from '../../../types';
 
 export type TransactionToastPropsType = {
   title?: string | React.ReactNode;
@@ -54,13 +52,7 @@ export const TransactionToast = ({
   const TransactionToastContentComponent = customization.TransactionToastContent!;
 
   return (
-    <TransactionToastWrapper
-      className={classNames(
-        wrapperStyles.toasts,
-        wrapperStyles.toastWrapper,
-        className
-      )}
-    >
+    <TransactionToastWrapper className={className}>
       <ProgressComponent
         key={toastId}
         id={toastId}

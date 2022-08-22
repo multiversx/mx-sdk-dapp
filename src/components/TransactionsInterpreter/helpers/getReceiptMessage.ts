@@ -1,14 +1,14 @@
 import BigNumber from 'bignumber.js';
 import { decimals, denomination, REFUNDED_GAS } from 'constants/index';
+import { denominate } from 'utils/operations/denominate';
 import { TransactionType } from './types';
-import { denominate } from 'utils';
 
-export const getReceiptValue = (transaction: TransactionType) => {
-  if (!transaction?.receipt?.value) {
+const getReceiptValue = (transaction: TransactionType) => {
+  if (!transaction.receipt?.value) {
     return '';
   }
 
-  if (transaction?.receipt?.data === REFUNDED_GAS) {
+  if (transaction.receipt?.data === REFUNDED_GAS) {
     const denominatedGas = denominate({
       input: transaction.receipt.value,
       denomination,
@@ -25,15 +25,15 @@ export const getReceiptValue = (transaction: TransactionType) => {
   return transaction.receipt.value;
 };
 
-export function getReceiptMessages(transaction: TransactionType) {
-  const message = transaction?.receipt?.data;
+export function getReceiptMessage(transaction: TransactionType) {
+  const message = transaction.receipt?.data;
 
   if (!message) {
-    return [];
+    return '';
   }
 
   const receiptValue = getReceiptValue(transaction);
   const value = receiptValue ? `: ${receiptValue}` : '';
 
-  return [`${message}${value}`];
+  return `${message}${value}`;
 }

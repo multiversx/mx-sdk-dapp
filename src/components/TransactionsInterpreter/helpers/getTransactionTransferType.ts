@@ -4,7 +4,7 @@ import {
   UITransactionType
 } from './types';
 
-export function getTransactionType(
+export function getTransactionTransferType(
   address: string,
   transaction: UITransactionType,
   receiver: string

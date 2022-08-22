@@ -1,9 +1,9 @@
-import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import React from 'react';
-import getTransactionMethod from 'components/TransactionsInterpreter/helpers/getTransactionMethod';
-import styles from './transactions-table.scss';
-import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { getTransactionMethod } from 'components/TransactionsInterpreter/helpers/getTransactionMethod';
+import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import styles from './transactions-table.scss';
 
 export const TransactionMethod = ({
   transaction

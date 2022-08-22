@@ -3,7 +3,6 @@ export * from './network';
 export * from './ledgerErrorCodes';
 export * from './mnemonicWords';
 export * from './transaction-status';
-export * from './transaction-interpreter';
 
 export const gasPriceModifier = '0.01';
 export const gasPerDataByte = '1500';
@@ -22,3 +21,5 @@ export const logoutActionName = 'logout';
 export const loginActionName = 'login';
 
 export const cancelActionName = 'cancelSignTx';
+
+export const REFUNDED_GAS = 'refundedGas';
