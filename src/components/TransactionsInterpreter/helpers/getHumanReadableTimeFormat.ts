@@ -1,13 +1,19 @@
 import moment from 'moment';
 
+type GetHumanReadableTimeFormatProps = {
+  value: number;
+  noSeconds?: boolean;
+  utc?: boolean;
+};
+
 /**
  * value - UNIX timestamp
  * */
-export function getHumanReadableTimeFormat(
-  value: number,
-  noSeconds?: boolean,
-  utc?: boolean
-) {
+export function getHumanReadableTimeFormat({
+  value,
+  noSeconds,
+  utc
+}: GetHumanReadableTimeFormatProps) {
   if (utc) {
     return moment
       .utc(value * 1000)

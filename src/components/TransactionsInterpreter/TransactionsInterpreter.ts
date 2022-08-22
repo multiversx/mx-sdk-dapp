@@ -62,7 +62,7 @@ export function processTransaction({
   transaction,
   address,
   denominationConfig = {
-    egldLabel: 'EGLD'
+    egldLabel: mainnetEgldLabel
   },
   networkAddress = ''
 }: ProcessTransactionParams): ExtendedTransactionType {

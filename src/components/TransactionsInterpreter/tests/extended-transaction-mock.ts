@@ -1,7 +1,5 @@
 import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 import {
-  OperationType,
-  ResultType,
   TransactionOperationActionType,
   TxActionCategoryEnum,
   TxActionsEnum,
@@ -58,7 +56,7 @@ export const transactionMock: UITransactionType = {
       identifier: 'EGLD',
       message: 'message 1'
     }
-  ] as OperationType[],
+  ],
   results: [
     {
       callType: '',
@@ -84,7 +82,7 @@ export const transactionMock: UITransactionType = {
       prevTxHash: 'prev-tx-hash',
       returnMessage: 'message 1'
     }
-  ] as ResultType[],
+  ],
   receipt: {
     data: '@some-data',
     value: '1000',
