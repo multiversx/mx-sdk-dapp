@@ -50,11 +50,13 @@ export const Pairinglist = ({
             </div>
             {pairing.peerMetadata && (
               <>
-                <img
-                  src={pairing.peerMetadata.icons[0]}
-                  alt={pairing.peerMetadata.name}
-                  className={classes.pairImage}
-                />
+                {pairing.peerMetadata?.icons?.[0] && (
+                  <img
+                    src={pairing.peerMetadata.icons[0]}
+                    alt={pairing.peerMetadata.name}
+                    className={classes.pairImage}
+                  />
+                )}
                 <div className={classes.pairDetails}>
                   <strong>{pairing.peerMetadata.name}</strong>
                   <span>{pairing.peerMetadata.description}</span>
