@@ -34,6 +34,8 @@ or
 yarn add @elrondnetwork/dapp-core --no-optional
 ```
 
+### **If you're transitioning from dapp-core 1.x to dapp-core 2.0, please read the [Migration guide](https://github.com/ElrondNetwork/dapp-core/wiki/Migration-guide-2.0)**
+
 # Usage
 
 dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the Elrond Network, allowing developers to easily get started with a new application or integrate dapp-core into an existing application.
@@ -45,7 +47,11 @@ However, to simplify usage even further, the library also comes with a default U
 The default UI is exposed via the `UI` module.
 
 `import * as DappUI from "@elrondnetwork/dapp-core/UI";`
-or use named imports for each component like
+
+**Please be aware that this style of importing might also import unused code.**
+
+
+To reduce the amount of dead code, you can use named imports for each component like
 
 ```
 import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages";
@@ -84,9 +90,9 @@ You need to wrap your application with the **DappProvider** component, which is 
 - import the Provider:
 
 ```
-import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
+import { DappProvider } from '@elrondnetwork/dapp-core/wrappers/DappProvider';
 or
-import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers';
+import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
 ```
 - Wrap your application with this Provider.
 
@@ -918,6 +924,20 @@ etc
 ```
 
 **Important**: `shouldRenderDefaultCss` was removed from all components.
+
+
+## React Native support
+
+We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with Maiar.
+
+You can use this library for its utility functions, like "denominate, nominate", mnemonic words list or its constants.
+
+However, certain architectural decisions that we made do not work out of the box with React Native runtime (neither Metro nor Re.pack).
+Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
+
+We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
+Until then, you can use @elrondnetwork/erdjs libraries and @walletconnect to connect to Maiar.
+There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
 
 
 ## Roadmap
