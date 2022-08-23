@@ -5,11 +5,7 @@ import {
   TransactionPayload,
   TransactionVersion
 } from '@elrondnetwork/erdjs';
-import {
-  GAS_LIMIT as defaultGasLimit,
-  GAS_PRICE,
-  VERSION as defaultVersion
-} from 'constants/index';
+import { GAS_LIMIT, GAS_PRICE, VERSION } from 'constants/index';
 import { RawTransactionType } from 'types';
 import { isStringBase64 } from 'utils/decoders/base64Utils';
 
@@ -25,10 +21,10 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     nonce: rawTransaction.nonce.valueOf(),
     receiver: new Address(rawTransaction.receiver),
     sender: new Address(rawTransaction.sender),
-    gasLimit: rawTransaction.gasLimit.valueOf() ?? defaultGasLimit,
+    gasLimit: rawTransaction.gasLimit.valueOf() ?? GAS_LIMIT,
     gasPrice: rawTransaction.gasPrice.valueOf() ?? GAS_PRICE,
     chainID: rawTransaction.chainID.valueOf(),
-    version: new TransactionVersion(rawTransaction.version ?? defaultVersion),
+    version: new TransactionVersion(rawTransaction.version ?? VERSION),
     ...(rawTransaction.options
       ? { options: new TransactionOptions(rawTransaction.options) }
       : {})
