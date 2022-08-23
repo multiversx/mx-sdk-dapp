@@ -80,13 +80,9 @@ export const WalletConnectLoginContainer = ({
     qrCodeSvgContainer: `${globalStyles.qrCodeSvgContainer} ${globalStyles.mxAuto} ${globalStyles.mb3}`,
     title: globalStyles.mb3,
     leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
-    mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.mt4}`,
+    mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.my4}`,
     mobileLoginButtonIcon: globalStyles.mr2,
-    errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
-    pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList} ${globalStyles.mbn2}`,
-    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2}`,
-    pairImage: globalStyles.pairImage,
-    pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
+    errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`
   };
 
   const generateQRCode = async () => {

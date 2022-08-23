@@ -20,7 +20,7 @@ export const Pairinglist = ({
     pairsContainer: className,
     leadText: '',
     pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
-    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.positionRelative} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2} ${globalStyles.p2}`,
+    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.positionRelative} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.textLeft} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2} ${globalStyles.p2}`,
     pairImage: globalStyles.pairImage,
     pairRemove: globalStyles.pairRemove,
     pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
