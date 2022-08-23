@@ -230,13 +230,14 @@ export interface TransactionType {
   receipt?: ReceiptType;
   senderAssets?: AssetType;
   receiverAssets?: AssetType;
+  type?: TransferTypeEnum;
+  originalTxHash?: string;
+  isNew?: boolean; // UI flag
+  tokenValue?: string;
+  tokenIdentifier?: string;
 }
 
 export enum TransferTypeEnum {
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult'
-}
-export interface TransferType extends TransactionType {
-  type?: TransferTypeEnum;
-  originalTxHash?: string;
 }

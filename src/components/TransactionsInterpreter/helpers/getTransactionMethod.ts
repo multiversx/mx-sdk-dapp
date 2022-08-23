@@ -1,7 +1,10 @@
-import { TxActionCategoryEnum, TxActionsEnum } from 'types/server-transations';
-import { UITransactionType } from './types';
+import {
+  TxActionCategoryEnum,
+  TxActionsEnum,
+  TransactionType
+} from 'types/server-transations';
 
-export const getTransactionMethod = (transaction: UITransactionType) => {
+export const getTransactionMethod = (transaction: TransactionType) => {
   let transactionAction = 'Transaction';
   const transactionHasAction =
     transaction.action?.name && transaction.action?.category;

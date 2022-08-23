@@ -1,10 +1,4 @@
-import { TokenArgumentType, TransferType } from 'types/server-transations';
-
-export interface UITransactionType extends TransferType {
-  isNew?: boolean; // UI flag
-  tokenValue?: string;
-  tokenIdentifier?: string;
-}
+import { TokenArgumentType, TransactionType } from 'types/server-transations';
 
 export enum TransactionDirection {
   SELF = 'Self',
@@ -32,4 +26,4 @@ export type ExtendedTransactionType = {
     receiverShardLink?: string;
     transactionLink?: string;
   };
-} & UITransactionType;
+} & TransactionType;

@@ -9,11 +9,11 @@ import globalStyles from 'assets/sass/main.scss';
 import { getOperationsMessages } from 'components/TransactionsInterpreter/helpers/getOperationsMessages';
 import { getReceiptMessage } from 'components/TransactionsInterpreter/helpers/getReceiptMessage';
 import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
-import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
-import { TransactionServerStatusesEnum } from '../../types';
+import { TransactionServerStatusesEnum } from 'types/enums';
+import { TransactionType } from 'types/server-transations';
 
 interface TransactionIconType {
-  transaction: UITransactionType;
+  transaction: TransactionType;
 }
 
 export const TransactionIcon = ({ transaction }: TransactionIconType) => {

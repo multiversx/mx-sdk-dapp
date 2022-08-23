@@ -1,11 +1,11 @@
 import { baseTransactionMock } from 'components/TransactionsInterpreter/helpers/tests/base-transaction-mock';
-import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import { TransactionType } from 'types/server-transations';
 import { getDenominatedValue } from '../getDenominatedValue';
 
 describe('getDenominatedValue', () => {
   describe('get transaction denominated value using default denomination config', () => {
     it('denominated value for "102000000000000000" is "0.102"', () => {
-      const transaction: UITransactionType = {
+      const transaction: TransactionType = {
         ...baseTransactionMock!,
         value: '102000000000000000'
       };
@@ -17,7 +17,7 @@ describe('getDenominatedValue', () => {
     });
 
     it('denominated value for "0" is "0"', () => {
-      const transaction: UITransactionType = {
+      const transaction: TransactionType = {
         ...baseTransactionMock!,
         value: '0'
       };
@@ -36,7 +36,7 @@ describe('getDenominatedValue', () => {
     };
 
     it('denominated value for "102000000000000000" is "10200000000000"', () => {
-      const transaction: UITransactionType = {
+      const transaction: TransactionType = {
         ...baseTransactionMock!,
         value: '102000000000000000'
       };
@@ -51,7 +51,7 @@ describe('getDenominatedValue', () => {
     });
 
     it('denominated value for "10221334511" is "1022133.4511"', () => {
-      const transaction: UITransactionType = {
+      const transaction: TransactionType = {
         ...baseTransactionMock!,
         value: '10221334511'
       };

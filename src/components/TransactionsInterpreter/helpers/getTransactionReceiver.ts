@@ -1,6 +1,6 @@
-import { UITransactionType } from './types';
+import { TransactionType } from 'types/server-transations';
 
-export function getTransactionReceiver(transaction: UITransactionType) {
+export function getTransactionReceiver(transaction: TransactionType) {
   let receiver = transaction.receiver;
   if (transaction.action?.arguments?.receiver) {
     receiver = transaction.action.arguments.receiver;
