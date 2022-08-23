@@ -1,5 +1,5 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
-import { denomination as configDenomination } from 'constants/index';
+import { DENOMINATION as configDenomination } from 'constants/index';
 
 export function nominate(
   input: string,

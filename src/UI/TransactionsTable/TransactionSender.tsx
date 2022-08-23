@@ -1,16 +1,16 @@
-import classNames from 'classnames';
-import globalStyles from '../../assets/sass/main.scss';
-import { ExplorerLink } from '../ExplorerLink';
 import React from 'react';
+import classNames from 'classnames';
 import {
   ExtendedTransactionType,
-  TransactionDirection
+  TransactionDirectionEnum
 } from 'components/TransactionsInterpreter/helpers/types';
-import { ShardSpan } from './ShardSpan';
+import globalStyles from '../../assets/sass/main.scss';
+import { addressIsValid } from '../../utils';
+import { ExplorerLink } from '../ExplorerLink';
+import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
-import { AccountName } from './AccountName';
-import { addressIsValid } from '../../utils';
+import { ShardSpan } from './ShardSpan';
 
 type TransactionSenderProps = {
   transaction: ExtendedTransactionType;
@@ -22,7 +22,7 @@ export const TransactionSender: React.FC<TransactionSenderProps> = ({
   showLockedAccounts
 }) => {
   const directionOut =
-    transaction.transactionDetails.direction === TransactionDirection.OUT;
+    transaction.transactionDetails.direction === TransactionDirectionEnum.OUT;
 
   return (
     <div

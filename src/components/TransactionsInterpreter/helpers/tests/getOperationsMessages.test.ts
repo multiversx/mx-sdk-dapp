@@ -1,6 +1,6 @@
 import {
   OperationType,
-  TransactionOperationActionType,
+  TransactionOperationActionTypeEnum,
   VisibleTransactionOperationType
 } from 'types/server-transactions';
 import { getOperationsMessages } from '../getOperationsMessages';
@@ -17,7 +17,7 @@ describe('getOperationsMessages', () => {
     const baseTransactionOperation = {
       name: 'send',
       type: VisibleTransactionOperationType.egld,
-      action: TransactionOperationActionType.transfer,
+      action: TransactionOperationActionTypeEnum.transfer,
       esdtType: 'FungibleESDT',
       receiver:
         'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',

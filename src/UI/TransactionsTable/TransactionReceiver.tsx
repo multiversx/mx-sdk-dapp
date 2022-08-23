@@ -1,14 +1,14 @@
-import classNames from 'classnames';
-import globalStyles from '../../assets/sass/main.scss';
-import { ExplorerLink } from '../ExplorerLink';
 import React from 'react';
+import classNames from 'classnames';
 import {
   ExtendedTransactionType,
-  TransactionDirection
+  TransactionDirectionEnum
 } from 'components/TransactionsInterpreter/helpers/types';
+import globalStyles from '../../assets/sass/main.scss';
+import { ExplorerLink } from '../ExplorerLink';
+import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
-import { AccountName } from './AccountName';
 
 type TransactionReceiverProps = {
   transaction: ExtendedTransactionType;
@@ -20,7 +20,7 @@ export const TransactionReceiver: React.FC<TransactionReceiverProps> = ({
   showLockedAccounts
 }) => {
   const directionIn =
-    transaction.transactionDetails.direction === TransactionDirection.IN;
+    transaction.transactionDetails.direction === TransactionDirectionEnum.IN;
 
   return (
     <div

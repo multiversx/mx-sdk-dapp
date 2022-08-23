@@ -5,9 +5,9 @@ import {
 } from 'types/server-transactions';
 import {
   ExtendedTransactionType,
-  TransactionDirection
+  TransactionDirectionEnum
 } from '../helpers/types';
-import urlBuilder from '../helpers/urlBuilder';
+import { urlBuilder } from '../helpers/urlBuilder';
 import {
   parseTransactions,
   processTransaction
@@ -53,7 +53,7 @@ describe('transaction interpreter', () => {
             transaction?.action?.arguments?.token2,
             transaction?.action?.arguments?.transfers
           ].filter((x) => x != null),
-          direction: TransactionDirection.OUT,
+          direction: TransactionDirectionEnum.OUT,
           isContract: false,
           method: TxActionsEnum.transfer
         }
@@ -130,7 +130,7 @@ describe('transaction interpreter', () => {
               transactions[0]?.action?.arguments?.token2,
               transactions[0]?.action?.arguments?.transfers
             ].filter((x) => x != null),
-            direction: TransactionDirection.IN,
+            direction: TransactionDirectionEnum.IN,
             isContract: false,
             method: TxActionsEnum.transfer
           }
@@ -166,7 +166,7 @@ describe('transaction interpreter', () => {
               transactions[1]?.action?.arguments?.token2,
               transactions[1]?.action?.arguments?.transfers
             ].filter((x) => x != null),
-            direction: TransactionDirection.SELF,
+            direction: TransactionDirectionEnum.SELF,
             isContract: true,
             method: TxActionsEnum.transfer
           }

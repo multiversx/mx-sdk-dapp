@@ -1,4 +1,4 @@
-import { denomination as configDenomination } from 'constants/index';
+import { DENOMINATION as configDenomination } from 'constants/index';
 
 export const maxDecimals = (amount: string, customDenomination?: number) => {
   const denomination =

@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import {
-  decimals as configDecimals,
-  denomination as configDenomination,
+  DECIMALS as configDecimals,
+  DENOMINATION as configDenomination,
   mainnetEgldLabel
 } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';

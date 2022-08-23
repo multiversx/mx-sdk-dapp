@@ -97,7 +97,7 @@ export interface UnwrapperType {
   providerAvatar?: string;
 }
 
-export enum TransactionOperationActionType {
+export enum TransactionOperationActionTypeEnum {
   none = 'none',
   transfer = 'transfer',
   burn = 'burn',
@@ -128,7 +128,7 @@ export enum HiddenTransactionOperationType {
 }
 
 export interface OperationType {
-  action: TransactionOperationActionType;
+  action: TransactionOperationActionTypeEnum;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
   esdtType: NftEnumType | 'FungibleESDT';
   collection?: string;

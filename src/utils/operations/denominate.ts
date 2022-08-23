@@ -1,8 +1,8 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import {
-  decimals as configDecimals,
-  denomination as configDenomination
+  DECIMALS as configDecimals,
+  DENOMINATION as configDenomination
 } from 'constants/index';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { pipe } from './pipe';

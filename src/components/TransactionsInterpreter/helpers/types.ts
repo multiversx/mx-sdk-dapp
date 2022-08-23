@@ -1,9 +1,9 @@
 import {
-  TokenArgumentType,
-  ServerTransactionType
+  ServerTransactionType,
+  TokenArgumentType
 } from 'types/server-transactions';
 
-export enum TransactionDirection {
+export enum TransactionDirectionEnum {
   SELF = 'Self',
   INTERNAL = 'Internal',
   IN = 'In',
@@ -13,7 +13,7 @@ export enum TransactionDirection {
 export type ExtendedTransactionType = {
   tokenLabel: string;
   transactionDetails: {
-    direction?: TransactionDirection;
+    direction?: TransactionDirectionEnum;
     method: string;
     transactionTokens: TokenArgumentType[];
     isContract?: boolean;

@@ -1,9 +1,9 @@
 import {
-  TxActionsEnum,
+  ServerTransactionType,
+  TransactionOperationActionTypeEnum,
   TxActionCategoryEnum,
-  VisibleTransactionOperationType,
-  TransactionOperationActionType,
-  ServerTransactionType
+  TxActionsEnum,
+  VisibleTransactionOperationType
 } from 'types/server-transactions';
 import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 
@@ -32,7 +32,7 @@ export const transactionMock: ServerTransactionType = {
     {
       name: 'send',
       type: VisibleTransactionOperationType.egld,
-      action: TransactionOperationActionType.transfer,
+      action: TransactionOperationActionTypeEnum.transfer,
       esdtType: 'FungibleESDT',
       receiver:
         'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
@@ -45,7 +45,7 @@ export const transactionMock: ServerTransactionType = {
     {
       name: 'send',
       type: VisibleTransactionOperationType.egld,
-      action: TransactionOperationActionType.transfer,
+      action: TransactionOperationActionTypeEnum.transfer,
       esdtType: 'FungibleESDT',
       receiver:
         'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',

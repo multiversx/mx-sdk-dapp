@@ -4,22 +4,22 @@ export * from './ledgerErrorCodes';
 export * from './mnemonicWords';
 export * from './transaction-status';
 
-export const gasPriceModifier = '0.01';
-export const gasPerDataByte = '1500';
-export const gasLimit = '50000';
-export const gasPrice = 1_000_000_000;
-export const denomination = 18;
-export const decimals = 4;
-export const version = 1;
+export const GAS_PRICE_MODIFIER = '0.01';
+export const GAS_PER_DATA_BYTE = '1500';
+export const GAS_LIMIT = '50000';
+export const GAS_PRICE = 1_000_000_000;
+export const DENOMINATION = 18;
+export const DECIMALS = 4;
+export const VERSION = 1;
 
-export const ledgerContractDataEnabledValue = 1;
+export const LEDGER_CONTRACT_DATA_ENABLED_VALUE = 1;
 
-export const dappInitRoute = '/dapp/init';
+export const DAPP_INIT_ROUTE = '/dapp/init';
 export const WALLET_SIGN_SESSION = 'signSession';
 
-export const logoutActionName = 'logout';
-export const loginActionName = 'login';
+export const LOGOUT_ACTION_NAME = 'logout';
+export const LOGIN_ACTION_NAME = 'login';
 
-export const cancelActionName = 'cancelSignTx';
+export const CANCEL_ACTION_NAME = 'cancelSignTx';
 
 export const REFUNDED_GAS = 'refundedGas';
