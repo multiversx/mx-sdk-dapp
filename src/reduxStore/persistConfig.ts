@@ -1,4 +1,4 @@
-import { isWebEnvironment } from 'utils';
+import { isWebEnvironment } from 'utils/environment/isWebEnvironment';
 
 //this will make sure that when importing store in the app,
 // in non-browser or mobile envs there will be no warnings/errors caused by redux-persist
