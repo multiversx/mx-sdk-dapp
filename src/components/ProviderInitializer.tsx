@@ -148,7 +148,6 @@ export function ProviderInitializer() {
             dispatch(
               setAccount({
                 ...account,
-                address,
                 nonce: getLatestNonce(account)
               })
             );

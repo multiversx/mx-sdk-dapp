@@ -13,7 +13,6 @@ const setNewAccount = async () => {
       if (account != null) {
         const accountData = {
           ...account,
-          address,
           nonce: getLatestNonce(account)
         };
         store.dispatch(setAccount(accountData));
