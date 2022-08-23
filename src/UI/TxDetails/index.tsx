@@ -1,11 +1,13 @@
 import React, { useMemo } from 'react';
-import classNames from 'classnames';
 import {
   faCheck,
   faCircleNotch,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { SignedTransactionType } from 'types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
@@ -13,8 +15,6 @@ import { Trim } from 'UI/Trim';
 import { isServerTransactionPending } from 'utils';
 
 import styles from './styles.scss';
-import { SignedTransactionType } from 'types';
-import globalStyles from '../../assets/sass/main.scss';
 
 export interface TxDetailsProps {
   title?: React.ReactNode;

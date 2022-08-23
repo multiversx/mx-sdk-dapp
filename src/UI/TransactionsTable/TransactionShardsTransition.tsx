@@ -1,11 +1,11 @@
-import classNames from 'classnames';
-import globalStyles from '../../assets/sass/main.scss';
-import { ExplorerLink } from '../ExplorerLink';
 import React from 'react';
-import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
-import { ShardSpan } from './ShardSpan';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import { ExplorerLink } from '../ExplorerLink';
+import { ShardSpan } from './ShardSpan';
 
 type TransactionShardsTransitionProps = {
   transaction: ExtendedTransactionType;
