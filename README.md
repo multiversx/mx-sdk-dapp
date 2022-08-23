@@ -282,7 +282,7 @@ you can easily import and use them.
   token={token}
   onLoginRedirect={onLoginRedirect}
   onClose={onClose}
-  isWalletConnectV2={true} // by default is false and use walletconnect version 1
+  isWalletConnectV2={true} // by default is false and will use walletconnect version 1
   />
 ```
 
