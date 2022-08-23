@@ -10,10 +10,10 @@ import { getOperationsMessages } from 'components/TransactionsInterpreter/helper
 import { getReceiptMessage } from 'components/TransactionsInterpreter/helpers/getReceiptMessage';
 import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
 import { TransactionServerStatusesEnum } from 'types/enums';
-import { TransactionType } from 'types/server-transations';
+import { ServerTransactionType } from 'types/server-transactions';
 
 interface TransactionIconType {
-  transaction: TransactionType;
+  transaction: ServerTransactionType;
 }
 
 export const TransactionIcon = ({ transaction }: TransactionIconType) => {

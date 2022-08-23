@@ -1,4 +1,4 @@
-import { ResultType, TransactionType } from 'types/server-transations';
+import { ResultType, ServerTransactionType } from 'types/server-transactions';
 import getScResultsMessages from '../getScResultsMessages';
 import { baseTransactionMock } from './base-transaction-mock';
 
@@ -22,7 +22,7 @@ describe('getScResultsMessages', () => {
       prevTxHash: 'prev-tx-hash'
     } as ResultType;
 
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       results: [
         {

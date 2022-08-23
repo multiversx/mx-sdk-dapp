@@ -197,7 +197,7 @@ export interface ReceiptType {
   data: string;
 }
 
-export interface TransactionType {
+export interface ServerTransactionType {
   fee?: string;
   blockHash: string;
   data: string;

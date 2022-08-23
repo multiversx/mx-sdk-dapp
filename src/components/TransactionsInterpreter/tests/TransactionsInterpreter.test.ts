@@ -1,5 +1,8 @@
 import { mainnetEgldLabel } from 'constants/network';
-import { TransactionType, TxActionsEnum } from 'types/server-transations';
+import {
+  ServerTransactionType,
+  TxActionsEnum
+} from 'types/server-transactions';
 import {
   ExtendedTransactionType,
   TransactionDirection
@@ -15,7 +18,7 @@ describe('transaction interpreter', () => {
   describe('processTransaction', () => {
     it('creates an extended model of the existing transaction, containing all the needed information necessary to build the UI without processing inside the components', () => {
       const networkAddress = 'https://testing.devnet.com';
-      const transaction: TransactionType = {
+      const transaction: ServerTransactionType = {
         ...transactionMock,
         tokenIdentifier: 'token-id'
       };
@@ -77,7 +80,7 @@ describe('transaction interpreter', () => {
   describe('parseTransactions', () => {
     it('parse all the transactions and creates transactions extended models, containing all the needed information necessary to build the UI without processing inside the components', () => {
       const networkAddress = 'https://testing.devnet.com';
-      const transactions: TransactionType[] = [
+      const transactions: ServerTransactionType[] = [
         {
           ...transactionMock,
           tokenIdentifier: 'token-id'

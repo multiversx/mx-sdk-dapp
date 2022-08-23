@@ -1,14 +1,14 @@
 import {
-  TransactionType,
+  ServerTransactionType,
   TxActionCategoryEnum,
   TxActionsEnum
-} from 'types/server-transations';
+} from 'types/server-transactions';
 import { getTransactionTokens } from '../getTransactionTokens';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionTokens', () => {
   it('returns empty array when the transaction action details are missing', () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: undefined
     };
@@ -19,7 +19,7 @@ describe('getTransactionTokens', () => {
   });
 
   it('returns an array with all existing tokens in the action arguments', () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
         name: TxActionsEnum.transfer,

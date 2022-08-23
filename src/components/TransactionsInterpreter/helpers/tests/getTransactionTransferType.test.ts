@@ -1,11 +1,14 @@
-import { TransactionType, TransferTypeEnum } from 'types/server-transations';
+import {
+  ServerTransactionType,
+  TransferTypeEnum
+} from 'types/server-transactions';
 import { getTransactionTransferType } from '../getTransactionTransferType';
 import { TransactionDirection } from '../types';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionTransferType', () => {
   it(`returns "${TransactionDirection.INTERNAL}" when the transaction type is "${TransferTypeEnum.SmartContractResult}" `, () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       type: TransferTypeEnum.SmartContractResult
     };
@@ -22,7 +25,7 @@ describe('getTransactionTransferType', () => {
   it(`returns "${TransactionDirection.SELF}" for self transfers`, () => {
     const sender = 'my-address-hash';
 
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       sender
     };
@@ -35,7 +38,7 @@ describe('getTransactionTransferType', () => {
   it(`returns "${TransactionDirection.IN}" when receive something from an address`, () => {
     const receiver = 'my-address-hash';
 
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       receiver
     };
@@ -48,7 +51,7 @@ describe('getTransactionTransferType', () => {
   it(`returns "${TransactionDirection.OUT}" for when transfer something to an address`, () => {
     const sender = 'my-address-hash';
 
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       sender
     };

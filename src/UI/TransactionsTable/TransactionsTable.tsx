@@ -2,13 +2,13 @@ import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
-import { TransactionType } from 'types/server-transations';
+import { ServerTransactionType } from 'types/server-transactions';
 import { WithClassname } from '../types';
 import { TransactionRow } from './TransactionRow';
 import styles from './transactions-table.scss';
 
 interface TransactionsTableType extends WithClassname {
-  transactions: TransactionType[];
+  transactions: ServerTransactionType[];
   address?: string;
   title?: React.ReactNode;
   directionCol?: boolean;

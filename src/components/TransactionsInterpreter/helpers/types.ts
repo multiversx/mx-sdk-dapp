@@ -1,4 +1,7 @@
-import { TokenArgumentType, TransactionType } from 'types/server-transations';
+import {
+  TokenArgumentType,
+  ServerTransactionType
+} from 'types/server-transactions';
 
 export enum TransactionDirection {
   SELF = 'Self',
@@ -26,4 +29,4 @@ export type ExtendedTransactionType = {
     receiverShardLink?: string;
     transactionLink?: string;
   };
-} & TransactionType;
+} & ServerTransactionType;

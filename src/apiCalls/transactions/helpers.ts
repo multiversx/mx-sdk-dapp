@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { addressSelector, networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
-import { TransactionType } from 'types/server-transations';
+import { ServerTransactionType } from 'types/server-transactions';
 import {
   TRANSACTIONS_ENDPOINT,
   TRANSACTIONS_COUNT_ENDPOINT
@@ -50,7 +50,7 @@ export const getTransactionsBuilder = (isCount?: boolean) => ({
     });
   }
 
-  return axios.get<TransactionType[]>(
+  return axios.get<ServerTransactionType[]>(
     `${apiAddress}/${TRANSACTIONS_ENDPOINT}`,
     {
       params,
