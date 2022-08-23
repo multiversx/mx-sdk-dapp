@@ -1,11 +1,11 @@
-import { PersistConfig } from 'redux-persist/es/types';
-import { ReducersEnum } from 'types/reducers';
 import { createMigrate, persistReducer } from 'redux-persist';
+import { PersistConfig } from 'redux-persist/es/types';
 import getRootReducer from 'reduxStore/reducers';
 import { defaultNetwork } from 'reduxStore/slices';
 import toasts from 'reduxStore/slices/toastsSlice';
-import transactions from 'reduxStore/slices/transactionsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
+import transactions from 'reduxStore/slices/transactionsSlice';
+import { ReducersEnum } from 'types/reducers';
 import {
   getPersistLocalStorage,
   getPersistSessionStorage
