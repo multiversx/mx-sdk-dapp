@@ -1,11 +1,11 @@
-import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 import {
-  TransactionOperationActionType,
-  TxActionCategoryEnum,
   TxActionsEnum,
-  UITransactionType,
-  VisibleTransactionOperationType
-} from '../helpers/types';
+  TxActionCategoryEnum,
+  VisibleTransactionOperationType,
+  TransactionOperationActionType
+} from 'types/server-transations';
+import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
+import { UITransactionType } from '../helpers/types';
 
 export const transactionMock: UITransactionType = {
   ...baseTransactionMock,

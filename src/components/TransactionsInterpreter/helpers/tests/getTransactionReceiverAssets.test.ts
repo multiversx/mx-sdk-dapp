@@ -1,5 +1,9 @@
+import {
+  TransactionType,
+  TxActionCategoryEnum,
+  TxActionsEnum
+} from 'types/server-transations';
 import { getTransactionReceiverAssets } from '../getTransactionReceiverAssets';
-import { TransactionType, TxActionCategoryEnum, TxActionsEnum } from '../types';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionReceiverAssets', () => {

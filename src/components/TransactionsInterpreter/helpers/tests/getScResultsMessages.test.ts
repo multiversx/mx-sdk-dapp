@@ -1,5 +1,5 @@
+import { ResultType, TransactionType } from 'types/server-transations';
 import getScResultsMessages from '../getScResultsMessages';
-import { ResultType, TransactionType } from '../types';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getScResultsMessages', () => {

@@ -1,8 +1,5 @@
-import {
-  TransactionDirection,
-  TransferTypeEnum,
-  UITransactionType
-} from './types';
+import { TransferTypeEnum } from 'types/server-transations';
+import { TransactionDirection, UITransactionType } from './types';
 
 export function getTransactionTransferType(
   address: string,

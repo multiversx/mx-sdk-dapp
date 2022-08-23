@@ -1,4 +1,5 @@
 import { mainnetEgldLabel } from 'constants/network';
+import { TokenArgumentType } from 'types/server-transations';
 import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
@@ -8,11 +9,7 @@ import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
 import { getTransactionTransferType } from './helpers/getTransactionTransferType';
-import {
-  ExtendedTransactionType,
-  TokenArgumentType,
-  UITransactionType
-} from './helpers/types';
+import { ExtendedTransactionType, UITransactionType } from './helpers/types';
 import urlBuilder from './helpers/urlBuilder';
 
 export type DenominationConfig = {

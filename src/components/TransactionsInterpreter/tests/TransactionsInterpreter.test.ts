@@ -1,8 +1,8 @@
 import { mainnetEgldLabel } from 'constants/network';
+import { TxActionsEnum } from 'types/server-transations';
 import {
   ExtendedTransactionType,
   TransactionDirection,
-  TxActionsEnum,
   UITransactionType
 } from '../helpers/types';
 import urlBuilder from '../helpers/urlBuilder';

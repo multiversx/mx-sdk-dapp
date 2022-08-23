@@ -1,4 +1,4 @@
-import { TransactionType } from './types';
+import { TransactionType } from 'types/server-transations';
 
 export function getOperationsMessages(transaction: TransactionType) {
   return (

@@ -1,4 +1,4 @@
-import { TransactionType } from './types';
+import { TransactionType } from 'types/server-transations';
 
 export default function getScResultsMessages(transaction: TransactionType) {
   return (
