@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "2.0.0-beta.19",
+  "version": "2.0.0",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -125,9 +125,8 @@
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
     "@elrondnetwork/erdjs-hw-provider": "2.0.4",
     "@elrondnetwork/erdjs-network-providers": "0.1.6",
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-alpha.9",
+    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.1",
-    "@react-native-async-storage/async-storage": "1.17.9",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",

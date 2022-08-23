@@ -33,12 +33,14 @@ a,
 .pair-list {
   max-height: 20rem;
   overflow-y: auto;
+  margin-bottom: -0.5rem;
 }
 
 .pair-image {
   width: 4rem;
   overflow: hidden;
   height: auto;
+  min-width: 2rem;
 }
 
 .pair-remove {
