@@ -273,8 +273,6 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
-      console.log('uri', uri);
-
       setWcUri(uri);
       if (token) {
         dispatch(setTokenLogin({ loginToken: token }));
