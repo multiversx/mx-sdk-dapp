@@ -2,7 +2,7 @@ export interface CustomToastType {
   toastId: string;
   message: string;
   duration?: number;
-  type: string;
+  type?: string;
 }
 
 export interface TransactionToastType {

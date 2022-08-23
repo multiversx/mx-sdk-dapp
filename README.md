@@ -34,6 +34,8 @@ or
 yarn add @elrondnetwork/dapp-core --no-optional
 ```
 
+### **If you're transitioning from dapp-core 1.x to dapp-core 2.0, please read the [Migration guide](https://github.com/ElrondNetwork/dapp-core/wiki/Migration-guide-2.0)**
+
 # Usage
 
 dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the Elrond Network, allowing developers to easily get started with a new application or integrate dapp-core into an existing application.
@@ -45,6 +47,17 @@ However, to simplify usage even further, the library also comes with a default U
 The default UI is exposed via the `UI` module.
 
 `import * as DappUI from "@elrondnetwork/dapp-core/UI";`
+
+**Please be aware that this style of importing might also import unused code.**
+
+
+To reduce the amount of dead code, you can use named imports for each component like
+
+```
+import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages";
+or
+import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages/UnlockPage";
+```
 
 More on this below.
 
@@ -76,8 +89,11 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 - import the Provider:
 
-`import { DappProvider } from "@elrondnetwork/dapp-core";`
-
+```
+import { DappProvider } from '@elrondnetwork/dapp-core/wrappers/DappProvider';
+or
+import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
+```
 - Wrap your application with this Provider.
 
 ```
@@ -130,10 +146,9 @@ when something happens inside the app:
 
   <App>
     <TransactionsToastList
-    toastId?: string,
-    title: string,
-    shouldRenderDefaultCss?: boolean,
-    className?: string
+      toastId?: string,
+      title: string,
+      className?: string
     />
     <Content/>
   </App>
@@ -177,7 +192,9 @@ A handy component is AuthenticatedRoutesWrapper, which can be used to protect ce
 Import from dapp-core:
 
 ```
-import { AuthenticatedRoutesWrapper} from "@elrondnetwork/dapp-core";
+import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
+or
+import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers';
 ```
 
 Use with routes:
@@ -256,29 +273,28 @@ you can easily import and use them.
 <WalletConnectLoginContainer
   callbackRoute={callbackRoute}
   loginButtonText="Login with Maiar"
-  title = 'Maiar Login',
-  logoutRoute = '/unlock',
-  className = 'wallect-connect-login-modal',
-  lead = 'Scan the QR code using Maiar',
-  shouldRenderDefaultCss={shouldRenderDefaultCss}
+  title='Maiar Login',
+  logoutRoute='/unlock',
+  className='wallect-connect-login-modal',
+  lead='Scan the QR code using Maiar',
   wrapContentInsideModal={wrapContentInsideModal}
   redirectAfterLogin={redirectAfterLogin}
   token={token}
   onLoginRedirect={onLoginRedirect}
   onClose={onClose}
+  isWalletConnectV2={true} // by default is false and use walletconnect version 1
   />
 ```
 
 ```
 <LedgerLoginContainer
-  callbackRoute: string;
-  className?: string;
-  shouldRenderDefaultCss?: boolean;
-  wrapContentInsideModal?: boolean;
-  redirectAfterLogin?: boolean;
-  token?: string;
-  onClose?: () => void;
-  onLoginRedirect?: () => void;
+  callbackRoute={callbackRoute}
+  className='ledger-login-modal',
+  wrapContentInsideModal={wrapContentInsideModal}
+  redirectAfterLogin={redirectAfterLogin}
+  token={token}
+  onClose={onClose}
+  onLoginRedirect={onLoginRedirect}
   />
 ```
 
@@ -291,7 +307,7 @@ Another handly component is AuthenticatedRoutesWrapper, which can be used to pro
 Import from dapp-core:
 
 ```
-import { AuthenticatedRoutesWrapper } from "@elrondnetwork/dapp-core";
+import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
 ```
 
 Use with routes:
@@ -328,10 +344,15 @@ Login hooks
 
 This area covers the login hooks, which expose a trigger function and the login data, ready to be rendered.
 
-These hooks are exposed by the `loginServices` object, which can be imported from dapp-core:
+These hooks are exposed as named exports, which can be imported from dapp-core:
 
 ```
-import {loginServices} from @elrondnetwork/dapp-core
+import { useExtensionLogin, useWalletConnectLogin, useLedgerLogin, useWebWalletLogin } from '@elrondnetwork/dapp-core/hooks';
+or
+import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login/useExtensionLogin';
+import { useWalletConnectLogin } from '@elrondnetwork/dapp-core/hooks/login/useWebWalletLogin';
+import { useLedgerLogin } from '@elrondnetwork/dapp-core/hooks/login/useLedgerLogin';
+import { useWebWalletLogin } from '@elrondnetwork/dapp-core/hooks/login/useWebWalletLogin';
 ```
 
 There are 4 available hooks:
@@ -346,7 +367,7 @@ All hooks have the same response signature:
 return type is as follows:
 
 ```
-const [triggerFunction, genericLoginReturnType, customLoginReturnType] = useLoginHook({
+const [initiateLogin, genericLoginReturnType, customLoginReturnType] = useLoginHook({
     callbackRoute,
     logoutRoute,
     onLoginRedirect,
@@ -481,7 +502,8 @@ you have to use the `useSignTransactions` hook to sign those transactions.
     error,
     sessionId,
     onAbort,
-    hasTransactions
+    hasTransactions,
+    canceledTransactionsMessage
   } = useSignTransactions();
 ```
 
@@ -619,6 +641,9 @@ Transaction Toasts UI
 dapp-core also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
 
 The toasts list is exposed via **TransactionsToastList** UI component and can be used just by rendering it inside the application.
+`TransactionToastList` component renders also custom toasts. A custom toast can be added using the util function: `addNewCustomToast` and can be removed using `deleteCustomToast`
+
+When `TransactionToastList` is also used for displaying custom toasts, is enough to call `addNewCustomToast` to add new custom toast to the list;
 
 ```
 <App>
@@ -628,6 +653,23 @@ The toasts list is exposed via **TransactionsToastList** UI component and can be
 ```
 
 **Important**: This has to be inside the `<DappProvider/>` children.
+
+In case you don't want to use `TransactionToastList` and just display a custom toast, then you have to import `CustomToast` component
+```
+const customToast = addNewCustomToast(
+  {
+    toastId: 'toast-id',
+    message: '',
+    type: 'custom',
+    duration: 2000
+  }
+);
+
+<CustomToast
+  {...customToast}
+  onDelete: () => deleteCustomToast(toastId)
+ />
+```
 
 </details>
 
@@ -889,6 +931,22 @@ import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
 
 etc
 ```
+
+**Important**: `shouldRenderDefaultCss` was removed from all components.
+
+
+## React Native support
+
+We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with Maiar.
+
+You can use this library for its utility functions, like "denominate, nominate", mnemonic words list or its constants.
+
+However, certain architectural decisions that we made do not work out of the box with React Native runtime (neither Metro nor Re.pack).
+Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
+
+We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
+Until then, you can use @elrondnetwork/erdjs libraries and @walletconnect to connect to Maiar.
+There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
 
 
 ## Roadmap
