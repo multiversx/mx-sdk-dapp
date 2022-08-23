@@ -1,4 +1,8 @@
 import { mainnetEgldLabel } from 'constants/network';
+import {
+  TokenArgumentType,
+  ServerTransactionType
+} from 'types/server-transactions';
 import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
@@ -8,11 +12,7 @@ import { getTransactionReceiver } from './helpers/getTransactionReceiver';
 import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAssets';
 import { getTransactionTokens } from './helpers/getTransactionTokens';
 import { getTransactionTransferType } from './helpers/getTransactionTransferType';
-import {
-  ExtendedTransactionType,
-  TokenArgumentType,
-  UITransactionType
-} from './helpers/types';
+import { ExtendedTransactionType } from './helpers/types';
 import urlBuilder from './helpers/urlBuilder';
 
 export type DenominationConfig = {
@@ -37,7 +37,7 @@ const defaultConfig: ParseTransactionsConfiguration = {
 };
 
 export function parseTransactions(
-  transactions: UITransactionType[],
+  transactions: ServerTransactionType[],
   address: string,
   { denominationConfig, networkAddress } = defaultConfig
 ): ExtendedTransactionType[] {
@@ -52,7 +52,7 @@ export function parseTransactions(
 }
 
 type ProcessTransactionParams = {
-  transaction: UITransactionType;
+  transaction: ServerTransactionType;
   address: string;
   denominationConfig: DenominationConfig;
   networkAddress?: string;

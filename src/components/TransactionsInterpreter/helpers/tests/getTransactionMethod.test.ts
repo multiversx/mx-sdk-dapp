@@ -1,10 +1,14 @@
+import {
+  ServerTransactionType,
+  TxActionCategoryEnum,
+  TxActionsEnum
+} from 'types/server-transactions';
 import { getTransactionMethod } from '../getTransactionMethod';
-import { TransactionType, TxActionCategoryEnum, TxActionsEnum } from '../types';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionMethod', () => {
   it('returns default value "Transaction" in case of missing "action" field ', () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: undefined
     };
@@ -15,7 +19,7 @@ describe('getTransactionMethod', () => {
   });
 
   it(`returns default value "Transaction" when the transaction is a "${TxActionsEnum.transfer}" and the action's category is "${TxActionCategoryEnum.esdtNft}"`, () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
         category: TxActionCategoryEnum.esdtNft,
@@ -29,7 +33,7 @@ describe('getTransactionMethod', () => {
   });
 
   it(`returns the transaction method read from the action field when the transaction is not a "${TxActionsEnum.transfer}" or the action's category is not "${TxActionCategoryEnum.esdtNft}"`, () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
         category: TxActionCategoryEnum.scCall,
@@ -43,7 +47,7 @@ describe('getTransactionMethod', () => {
   });
 
   it('overrides the transaction method when there is a transaction method defined on the action arguments', () => {
-    const transaction: TransactionType = {
+    const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
         category: TxActionCategoryEnum.scCall,

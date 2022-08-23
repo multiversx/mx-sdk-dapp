@@ -1,10 +1,10 @@
-import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import { DenominationConfig } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { defaultNetwork } from 'reduxStore/slices';
+import { ServerTransactionType } from 'types/server-transactions';
 import { denominate } from 'utils/operations/denominate';
 
 export function getDenominatedValue(
-  transaction: UITransactionType,
+  transaction: ServerTransactionType,
   { decimals, denomination, showLastNonZeroDecimal }: DenominationConfig = {
     decimals: Number(defaultNetwork.decimals),
     denomination: Number(defaultNetwork.egldDenomination),

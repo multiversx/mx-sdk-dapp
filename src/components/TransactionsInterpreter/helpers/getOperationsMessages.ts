@@ -1,6 +1,6 @@
-import { TransactionType } from './types';
+import { ServerTransactionType } from 'types/server-transactions';
 
-export function getOperationsMessages(transaction: TransactionType) {
+export function getOperationsMessages(transaction: ServerTransactionType) {
   return (
     transaction?.operations
       ?.map((operation) => operation.message)

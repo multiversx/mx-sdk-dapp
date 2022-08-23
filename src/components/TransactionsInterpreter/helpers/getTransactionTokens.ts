@@ -1,6 +1,6 @@
-import { UITransactionType } from './types';
+import { ServerTransactionType } from 'types/server-transactions';
 
-export const getTransactionTokens = (transaction: UITransactionType) => {
+export const getTransactionTokens = (transaction: ServerTransactionType) => {
   if (transaction.action) {
     return [
       transaction.action.arguments?.token,

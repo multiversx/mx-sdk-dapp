@@ -1,15 +1,14 @@
-import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 import {
-  TransactionOperationActionType,
-  TxActionCategoryEnum,
   TxActionsEnum,
-  UITransactionType,
-  VisibleTransactionOperationType
-} from '../helpers/types';
+  TxActionCategoryEnum,
+  VisibleTransactionOperationType,
+  TransactionOperationActionType,
+  ServerTransactionType
+} from 'types/server-transactions';
+import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 
-export const transactionMock: UITransactionType = {
+export const transactionMock: ServerTransactionType = {
   ...baseTransactionMock,
-  // type: TransferTypeEnum.SmartContractResult,
   action: {
     name: TxActionsEnum.transfer,
     category: TxActionCategoryEnum.scCall,

@@ -21,8 +21,8 @@ import {
   TransactionBatchStatusesEnum
 } from 'types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
-import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { safeRedirect } from 'utils/redirect';
+import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;

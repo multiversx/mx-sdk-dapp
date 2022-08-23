@@ -1,9 +1,9 @@
-import { getOperationsMessages } from '../getOperationsMessages';
 import {
   OperationType,
   TransactionOperationActionType,
   VisibleTransactionOperationType
-} from '../types';
+} from 'types/server-transactions';
+import { getOperationsMessages } from '../getOperationsMessages';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getOperationsMessages', () => {

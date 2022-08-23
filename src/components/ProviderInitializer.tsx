@@ -119,10 +119,9 @@ export function ProviderInitializer() {
         if (account) {
           dispatch(
             setAccount({
-              balance: account.balance,
+              ...account,
               address,
-              nonce: account.nonce.valueOf(),
-              username: account.username
+              nonce: account.nonce.valueOf()
             })
           );
         }
@@ -148,10 +147,8 @@ export function ProviderInitializer() {
           if (account) {
             dispatch(
               setAccount({
-                balance: account.balance,
-                address,
-                nonce: getLatestNonce(account),
-                username: account.username
+                ...account,
+                nonce: getLatestNonce(account)
               })
             );
           }
@@ -170,6 +167,7 @@ export function ProviderInitializer() {
       const urlSearchParams = new URLSearchParams(window.location.search);
       params = Object.fromEntries(urlSearchParams as any);
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { signature, loginToken, address, ...remainingParams } = params;
 
     if (signature) {

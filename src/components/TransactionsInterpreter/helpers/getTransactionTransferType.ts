@@ -1,12 +1,12 @@
 import {
-  TransactionDirection,
   TransferTypeEnum,
-  UITransactionType
-} from './types';
+  ServerTransactionType
+} from 'types/server-transactions';
+import { TransactionDirection } from './types';
 
 export function getTransactionTransferType(
   address: string,
-  transaction: UITransactionType,
+  transaction: ServerTransactionType,
   receiver: string
 ): TransactionDirection {
   const directionOut = address === transaction.sender;

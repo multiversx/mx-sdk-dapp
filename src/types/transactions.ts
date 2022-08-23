@@ -1,12 +1,12 @@
 import React from 'react';
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
+import { WithClassname } from '../UI/types';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums';
-import { WithClassname } from '../UI/types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];

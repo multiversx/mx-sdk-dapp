@@ -1,9 +1,9 @@
 import BigNumber from 'bignumber.js';
 import { decimals, denomination, REFUNDED_GAS } from 'constants/index';
+import { ServerTransactionType } from 'types/server-transactions';
 import { denominate } from 'utils/operations/denominate';
-import { TransactionType } from './types';
 
-const getReceiptValue = (transaction: TransactionType) => {
+const getReceiptValue = (transaction: ServerTransactionType) => {
   if (!transaction.receipt?.value) {
     return '';
   }
@@ -25,7 +25,7 @@ const getReceiptValue = (transaction: TransactionType) => {
   return transaction.receipt.value;
 };
 
-export function getReceiptMessage(transaction: TransactionType) {
+export function getReceiptMessage(transaction: ServerTransactionType) {
   const message = transaction.receipt?.data;
 
   if (!message) {
