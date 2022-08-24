@@ -54,7 +54,7 @@ export const ConfirmationScreen: React.FC<ExtraConfirmationScreenProps> = ({
     verifyReceiverScam
   };
 
-  const transactionStatusToastType: TransactionStatusToastType = {
+  const transactionStatusToastProps: TransactionStatusToastType = {
     signError,
     canceledTransactionsMessage,
     onDelete: handleClose
@@ -68,7 +68,7 @@ export const ConfirmationScreen: React.FC<ExtraConfirmationScreenProps> = ({
   }
 
   return shouldShowTransactionStatusToast ? (
-    <TransactionStatusToast {...transactionStatusToastType} />
+    <TransactionStatusToast {...transactionStatusToastProps} />
   ) : (
     <Screen {...signProps} />
   );
