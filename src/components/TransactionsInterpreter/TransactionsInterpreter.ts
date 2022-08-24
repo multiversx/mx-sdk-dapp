@@ -1,4 +1,4 @@
-import { mainnetEgldLabel } from 'constants/network';
+import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   ServerTransactionType,
   TokenArgumentType
@@ -31,7 +31,7 @@ export type ParseTransactionsConfiguration = {
 
 const defaultConfig: ParseTransactionsConfiguration = {
   denominationConfig: {
-    egldLabel: mainnetEgldLabel
+    egldLabel: MAINNET_EGLD_LABEL
   },
   networkAddress: ''
 };
@@ -62,7 +62,7 @@ export function processTransaction({
   transaction,
   address,
   denominationConfig = {
-    egldLabel: mainnetEgldLabel
+    egldLabel: MAINNET_EGLD_LABEL
   },
   networkAddress = ''
 }: ProcessTransactionParams): ExtendedTransactionType {
@@ -77,7 +77,7 @@ export function processTransaction({
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
-  let tokenLabel = denominationConfig.egldLabel ?? mainnetEgldLabel;
+  let tokenLabel = denominationConfig.egldLabel ?? MAINNET_EGLD_LABEL;
   if (transactionTokens.length > 0) {
     const txToken = transactionTokens[0];
     tokenLabel = txToken.ticker ?? tokenLabel;

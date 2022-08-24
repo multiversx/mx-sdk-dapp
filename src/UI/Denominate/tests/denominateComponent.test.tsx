@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { MAINNET_EGLD_LABEL } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';
 import { Denominate } from '../index';
-import { mainnetEgldLabel } from 'constants/index';
 
 const renderComponent = (props: DenominateType) => {
   const methods = render(<Denominate {...props} egldLabel='EGLD' />);
@@ -24,7 +24,7 @@ describe('Denominate component when decimals = 2', () => {
       showLastNonZeroDecimal: false,
       showLabel: true,
       decimals: 2,
-      egldLabel: mainnetEgldLabel
+      egldLabel: MAINNET_EGLD_LABEL
     };
 
     const component = renderComponent(props);
@@ -38,7 +38,7 @@ describe('Denominate component when decimals = 2', () => {
       showLastNonZeroDecimal: false,
       showLabel: true,
       decimals: 2,
-      egldLabel: mainnetEgldLabel
+      egldLabel: MAINNET_EGLD_LABEL
     };
 
     const component = renderComponent(props);
@@ -52,7 +52,7 @@ describe('Denominate component when decimals = 2', () => {
       showLastNonZeroDecimal: true,
       showLabel: false,
       decimals: 2,
-      egldLabel: mainnetEgldLabel
+      egldLabel: MAINNET_EGLD_LABEL
     };
 
     const component = renderComponent(props);
@@ -65,7 +65,7 @@ describe('Denominate component when decimals = 2', () => {
       showLastNonZeroDecimal: false,
       showLabel: true,
       decimals: 2,
-      egldLabel: mainnetEgldLabel
+      egldLabel: MAINNET_EGLD_LABEL
     };
 
     const component = renderComponent(props);
@@ -79,7 +79,7 @@ describe('Denominate component when decimals = 2', () => {
       showLastNonZeroDecimal: false,
       showLabel: true,
       decimals: 2,
-      egldLabel: mainnetEgldLabel
+      egldLabel: MAINNET_EGLD_LABEL
     };
 
     const component = renderComponent(props);
@@ -92,7 +92,7 @@ describe('Denominate component when decimals = 2', () => {
       showLastNonZeroDecimal: false,
       showLabel: false,
       decimals: 2,
-      egldLabel: mainnetEgldLabel
+      egldLabel: MAINNET_EGLD_LABEL
     };
 
     const component = renderComponent(props);

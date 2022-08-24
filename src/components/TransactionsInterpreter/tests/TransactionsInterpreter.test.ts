@@ -1,4 +1,4 @@
-import { mainnetEgldLabel } from 'constants/network';
+import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   ServerTransactionType,
   TxActionsEnum
@@ -45,7 +45,7 @@ describe('transaction interpreter', () => {
             transaction.txHash
           )}`
         },
-        tokenLabel: mainnetEgldLabel,
+        tokenLabel: MAINNET_EGLD_LABEL,
         transactionDetails: {
           transactionTokens: [
             transaction?.action?.arguments?.token,
@@ -63,7 +63,7 @@ describe('transaction interpreter', () => {
         transaction,
         address: 'erd1-my-address-hash',
         denominationConfig: {
-          egldLabel: mainnetEgldLabel,
+          egldLabel: MAINNET_EGLD_LABEL,
           denomination: 2,
           decimals: 3,
           showLabel: true,
@@ -122,7 +122,7 @@ describe('transaction interpreter', () => {
               transactions[0].txHash
             )}`
           },
-          tokenLabel: mainnetEgldLabel,
+          tokenLabel: MAINNET_EGLD_LABEL,
           transactionDetails: {
             transactionTokens: [
               transactions[0]?.action?.arguments?.token,
@@ -158,7 +158,7 @@ describe('transaction interpreter', () => {
               transactions[1].txHash
             )}`
           },
-          tokenLabel: mainnetEgldLabel,
+          tokenLabel: MAINNET_EGLD_LABEL,
           transactionDetails: {
             transactionTokens: [
               transactions[1]?.action?.arguments?.token,
@@ -179,7 +179,7 @@ describe('transaction interpreter', () => {
         {
           networkAddress,
           denominationConfig: {
-            egldLabel: mainnetEgldLabel,
+            egldLabel: MAINNET_EGLD_LABEL,
             denomination: 2,
             decimals: 3,
             showLabel: true,

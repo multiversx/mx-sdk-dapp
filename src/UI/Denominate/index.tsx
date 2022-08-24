@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { DIGITS, DECIMALS, mainnetEgldLabel } from 'constants/index';
+import { DIGITS, DECIMALS, MAINNET_EGLD_LABEL } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';
 import { denominate } from 'utils/operations/denominate';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
@@ -92,7 +92,7 @@ const DenominateComponent = (props: DenominateType) => {
  * @param props.egldLabel  if not provided, will fallback on **EGLD**
  */
 export const Denominate = (props: DenominateType) => {
-  const egldLabel = props.egldLabel || mainnetEgldLabel;
+  const egldLabel = props.egldLabel || MAINNET_EGLD_LABEL;
 
   const denominateProps = { ...props, egldLabel };
 
