@@ -1,17 +1,23 @@
 import axios from 'axios';
-import { networkSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TRANSACTIONS_ENDPOINT } from '../endpoints';
+import { getTimeout } from './helpers';
 
-export const getTransactionsBuilder = (hash: string) => {
-  const storeState = store.getState();
-  const { apiAddress, apiTimeout } = networkSelector(storeState);
+interface GetTransactionType {
+  apiAddress: string;
+  apiTimeout?: string | number;
+  hash: string;
+}
 
+export const getTransaction = ({
+  hash,
+  apiAddress,
+  apiTimeout
+}: GetTransactionType) => {
   return axios.get<ServerTransactionType[]>(
     `${apiAddress}/${TRANSACTIONS_ENDPOINT}/${hash}`,
     {
-      timeout: parseInt(apiTimeout)
+      ...getTimeout(apiTimeout)
     }
   );
 };
