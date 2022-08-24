@@ -2,10 +2,10 @@ import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
-import { ServerTransactionType } from 'types/server-transactions';
+import { ServerTransactionType } from 'types/serverTransactions';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './TransactionRow';
-import styles from './transactions-table.scss';
+import styles from './transactionsTable.scss';
 
 interface TransactionsTableType extends WithClassnameType {
   transactions: ServerTransactionType[];

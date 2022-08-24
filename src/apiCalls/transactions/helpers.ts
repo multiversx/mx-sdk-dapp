@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { addressSelector, networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
-import { ServerTransactionType } from 'types/server-transactions';
+import { ServerTransactionType } from 'types/serverTransactions';
 import {
   TRANSACTIONS_ENDPOINT,
   TRANSACTIONS_COUNT_ENDPOINT

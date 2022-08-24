@@ -1,5 +1,5 @@
 import { baseTransactionMock } from 'components/TransactionsInterpreter/helpers/tests/base-transaction-mock';
-import { ServerTransactionType } from 'types/server-transactions';
+import { ServerTransactionType } from 'types/serverTransactions';
 import { getDenominatedValue } from '../getDenominatedValue';
 
 describe('getDenominatedValue', () => {

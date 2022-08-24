@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from 'UI/TokenDetails/TokenSymbol/token-symbol.scss';
 import classNames from 'classnames';
+import styles from 'UI/TokenDetails/TokenSymbol/tokenSymbol.scss';
 import { WithClassnameType } from '../../types';
 
 export const Simple = ({

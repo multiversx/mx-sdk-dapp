@@ -9,7 +9,7 @@ import {
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { WithClassnameType } from '../../UI/types';
 import { StatusMessageComponent } from './StatusMessageComponent';
-import styles from './transaction-status-toast.scss';
+import styles from './transactionStatusToast.scss';
 import { StatusIconType } from './transactionStatusToast.types';
 
 type ErrorToastProps = {

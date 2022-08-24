@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
-import styles from './login-button.scss';
-import classNames from 'classnames';
 import { WithClassnameType } from '../../types';
+import styles from './loginButton.scss';
 
 export interface ExtensionLoginButtonPropsType extends WithClassnameType {
   token?: string;

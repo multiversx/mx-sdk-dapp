@@ -4,7 +4,7 @@ import {
   TransactionActionCategoryEnum,
   TransactionActionsEnum,
   VisibleTransactionOperationType
-} from 'types/server-transactions';
+} from 'types/serverTransactions';
 import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 
 export const transactionMock: ServerTransactionType = {

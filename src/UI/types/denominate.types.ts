@@ -1,4 +1,4 @@
-import { WithClassnameType } from './with-classname.types';
+import { WithClassnameType } from './withClassname.types';
 
 export interface DenominateType extends WithClassnameType {
   value: string;

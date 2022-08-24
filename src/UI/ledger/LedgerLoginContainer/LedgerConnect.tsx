@@ -1,9 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 import globalStyles from 'assets/sass/main.scss';
-import styles from './ledger-connect.scss';
-import classNames from 'classnames';
 import { WithClassnameType } from '../../types';
+import styles from './ledgerConnect.scss';
 
 export const LedgerConnect = ({
   onClick,

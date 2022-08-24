@@ -1,12 +1,12 @@
 import React from 'react';
 import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { safeRedirect } from 'utils';
-import styles from './sign-with-extension-modal.scss';
-import classNames from 'classnames';
+import styles from './signWithExtensionModal.scss';
 
 export const SignWithExtensionModal = ({
   handleClose,

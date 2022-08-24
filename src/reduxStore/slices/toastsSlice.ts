@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transaction-status';
+import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transactionStatus';
 import { ToastsEnum } from 'types';
 import {
   CustomToastType,

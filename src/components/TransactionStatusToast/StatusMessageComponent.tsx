@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusIcon } from './StatusIcon';
-import styles from './transaction-status-toast.scss';
+import styles from './transactionStatusToast.scss';
 import { StatusIconType } from './transactionStatusToast.types';
 
 type StatusMessageComponentProps = {

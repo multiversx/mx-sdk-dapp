@@ -1,10 +1,10 @@
 import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from '../dapp-modal.scss';
-import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../../types';
+import styles from '../dappModal.scss';
 
 type DappModalHeaderProps = {
   visible?: boolean;

@@ -1,12 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import styles from '../dapp-modal.scss';
+import { WithClassnameType } from '../../types';
+import styles from '../dappModal.scss';
 import { DappModalConfig } from '../dappModal.types';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
-import classNames from 'classnames';
-import { WithClassnameType } from '../../types';
 
 type DappModalProps = {
   id?: string;

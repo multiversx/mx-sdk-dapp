@@ -1,2 +1,2 @@
-export * from './with-classname.types';
+export * from './withClassname.types';
 export * from './denominate.types';

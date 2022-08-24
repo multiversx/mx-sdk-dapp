@@ -16,9 +16,9 @@ export interface TokenLoginType {
 }
 
 export * from './transactions.types';
-export * from './server-transactions';
+export * from './serverTransactions';
 export * from './enums.types';
 export * from './account.types';
 export * from './network.types';
-export * from './dapp-provider.types';
+export * from './dappProvider.types';
 export * from './login.types';

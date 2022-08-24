@@ -1,11 +1,11 @@
 import React from 'react';
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import styles from './page-state.scss';
-import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { WithClassnameType } from '../types';
+import styles from './pageState.scss';
 
 export interface PageStateProps extends WithClassnameType {
   title?: React.ReactNode;

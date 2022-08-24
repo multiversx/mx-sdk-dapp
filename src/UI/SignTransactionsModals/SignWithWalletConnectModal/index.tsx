@@ -8,7 +8,7 @@ import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { safeRedirect } from 'utils/redirect';
-import styles from './sign-with-wallet-connect-modal.scss';
+import styles from './signWithWalletConnectModal.scss';
 
 export const SignWithWalletConnectModal = ({
   error,

@@ -3,9 +3,9 @@ import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
-import styles from './token-details.scss';
-import { Combined, Simple } from './TokenSymbol';
 import { WithClassnameType } from '../types';
+import styles from './tokenDetails.scss';
+import { Combined, Simple } from './TokenSymbol';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');
