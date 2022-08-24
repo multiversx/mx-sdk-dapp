@@ -1,13 +1,6 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
-import { DENOMINATION as configDenomination } from 'constants/index';
+import { DECIMALS } from 'constants/index';
 
-export function nominate(
-  input: string,
-  customDenomination: number = configDenomination
-) {
-  return TokenPayment.fungibleFromAmount(
-    '',
-    input,
-    customDenomination
-  ).toString();
+export function nominate(amount: string, numDecimals: number = DECIMALS) {
+  return TokenPayment.fungibleFromAmount('', amount, numDecimals).toString();
 }

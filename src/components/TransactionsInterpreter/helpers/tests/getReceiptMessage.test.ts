@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { DIGITS, DENOMINATION, REFUNDED_GAS } from 'constants/index';
+import { DIGITS, DECIMALS, REFUNDED_GAS } from 'constants/index';
 import { denominate } from 'utils/operations/denominate';
 import { getReceiptMessage } from '../getReceiptMessage';
 import { baseTransactionMock } from './base-transaction-mock';
@@ -27,7 +27,7 @@ describe('getReceiptMessage', () => {
     const result = getReceiptMessage(transaction);
     const denominatedGas = denominate({
       input: transaction.receipt.value,
-      denomination: DENOMINATION,
+      denomination: DECIMALS,
       decimals: DIGITS,
       showLastNonZeroDecimal: true
     });

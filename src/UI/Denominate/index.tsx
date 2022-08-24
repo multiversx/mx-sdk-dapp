@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { DIGITS, DENOMINATION, mainnetEgldLabel } from 'constants/index';
+import { DIGITS, DECIMALS, mainnetEgldLabel } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';
 import { denominate } from 'utils/operations/denominate';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
@@ -24,14 +24,14 @@ const denominateInvalid = (props: DenominateType) => {
 
 const denominateValid = (props: DenominateType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
-  const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
-  const denomination =
-    props.denomination !== undefined ? props.denomination : DENOMINATION;
+  const digits = props.decimals !== undefined ? props.decimals : DIGITS;
+  const decimals =
+    props.denomination !== undefined ? props.denomination : DECIMALS;
 
   const denominatedValue = denominate({
     input: value,
-    denomination,
-    decimals,
+    denomination: decimals,
+    decimals: digits,
     showLastNonZeroDecimal,
     addCommas: true
   });
@@ -40,10 +40,10 @@ const denominateValid = (props: DenominateType, erdLabel: string) => {
   const hasNoDecimals = valueParts.length === 1;
   const isNotZero = denominatedValue !== '0';
 
-  if (decimals > 0 && hasNoDecimals && isNotZero) {
+  if (digits > 0 && hasNoDecimals && isNotZero) {
     let zeros = '';
 
-    for (let i = 1; i <= decimals; i++) {
+    for (let i = 1; i <= digits; i++) {
       zeros = zeros + '0';
     }
 
