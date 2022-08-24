@@ -24,9 +24,8 @@ const denominateInvalid = (props: DenominateType) => {
 
 const denominateValid = (props: DenominateType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
-  const digits = props.decimals !== undefined ? props.decimals : DIGITS;
-  const decimals =
-    props.denomination !== undefined ? props.denomination : DECIMALS;
+  const digits = props.decimals != null ? props.decimals : DIGITS;
+  const decimals = props.denomination != null ? props.denomination : DECIMALS;
 
   const denominatedValue = denominate({
     input: value,
