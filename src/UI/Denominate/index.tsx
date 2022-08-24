@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { DECIMALS, DENOMINATION, mainnetEgldLabel } from 'constants/index';
+import { DIGITS, DENOMINATION, mainnetEgldLabel } from 'constants/index';
 import { DenominateType } from 'UI/types/denominate';
 import { denominate } from 'utils/operations/denominate';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
@@ -24,7 +24,7 @@ const denominateInvalid = (props: DenominateType) => {
 
 const denominateValid = (props: DenominateType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
-  const decimals = props.decimals !== undefined ? props.decimals : DECIMALS;
+  const decimals = props.decimals !== undefined ? props.decimals : DIGITS;
   const denomination =
     props.denomination !== undefined ? props.denomination : DENOMINATION;
 

@@ -1,6 +1,6 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
-import { DECIMALS, DENOMINATION } from 'constants/index';
+import { DIGITS, DENOMINATION } from 'constants/index';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { pipe } from './pipe';
 
@@ -9,7 +9,7 @@ BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 export function denominate({
   input,
   denomination = DENOMINATION,
-  decimals = DECIMALS,
+  decimals = DIGITS,
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
   addCommas = false

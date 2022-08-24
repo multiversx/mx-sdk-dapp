@@ -9,7 +9,7 @@ export const GAS_PER_DATA_BYTE = '1500';
 export const GAS_LIMIT = '50000';
 export const GAS_PRICE = 1_000_000_000;
 export const DENOMINATION = 18;
-export const DECIMALS = 4;
+export const DIGITS = 4;
 export const VERSION = 1;
 
 export const LEDGER_CONTRACT_DATA_ENABLED_VALUE = 1;
