@@ -8,8 +8,8 @@ describe('calculateFeeLimit tests', () => {
       gasPrice: '1000000000',
       data: 'testdata',
       chainId: 'T',
-      gasPerDataByte: GAS_PER_DATA_BYTE,
-      gasPriceModifier: GAS_PRICE_MODIFIER
+      gasPerDataByte: String(GAS_PER_DATA_BYTE),
+      gasPriceModifier: String(GAS_PRICE_MODIFIER)
     });
     expect(feeLimit).toBe('62000000000000');
   });

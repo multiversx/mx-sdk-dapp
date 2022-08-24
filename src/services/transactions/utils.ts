@@ -8,8 +8,8 @@ export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
 
   transactions.forEach((tx) => {
     const fee = calculateFeeLimit({
-      gasPerDataByte: GAS_PER_DATA_BYTE,
-      gasPriceModifier: GAS_PRICE_MODIFIER,
+      gasPerDataByte: String(GAS_PER_DATA_BYTE),
+      gasPriceModifier: String(GAS_PRICE_MODIFIER),
       minGasLimit: String(minGasLimit),
       gasLimit: tx
         .getGasLimit()
