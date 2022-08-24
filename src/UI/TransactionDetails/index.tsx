@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { SignedTransactionType } from 'types';
+import { SignedTransactionType } from 'types/index';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
@@ -16,18 +16,18 @@ import { isServerTransactionPending } from 'utils';
 
 import styles from './styles.scss';
 
-export interface TxDetailsProps {
+export interface TransactionDetailsType {
   title?: React.ReactNode;
   isTimedOut?: boolean;
   transactions?: SignedTransactionType[];
   className?: string;
 }
-export const TxDetails = ({
+export const TransactionDetails = ({
   title,
   transactions,
   isTimedOut = false,
   className = 'dapp-transaction-details'
-}: TxDetailsProps) => {
+}: TransactionDetailsType) => {
   if (transactions == null) {
     return null;
   }

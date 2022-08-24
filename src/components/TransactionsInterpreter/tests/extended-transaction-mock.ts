@@ -1,8 +1,8 @@
 import {
   ServerTransactionType,
   TransactionOperationActionTypeEnum,
-  TxActionCategoryEnum,
-  TxActionsEnum,
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum,
   VisibleTransactionOperationType
 } from 'types/server-transactions';
 import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
@@ -10,8 +10,8 @@ import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 export const transactionMock: ServerTransactionType = {
   ...baseTransactionMock,
   action: {
-    name: TxActionsEnum.transfer,
-    category: TxActionCategoryEnum.scCall,
+    name: TransactionActionsEnum.transfer,
+    category: TransactionActionCategoryEnum.scCall,
     arguments: {
       token: 'token',
       token1: 'token1',

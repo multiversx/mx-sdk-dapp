@@ -1,4 +1,4 @@
-import { TxActionsEnum } from 'types/server-transactions';
+import { TransactionActionsEnum } from 'types/server-transactions';
 
 export const baseTransactionMock = {
   blockHash: '',
@@ -23,6 +23,6 @@ export const baseTransactionMock = {
   data: 'cGluZw==',
   action: {
     category: 'scCall',
-    name: TxActionsEnum.ping
+    name: TransactionActionsEnum.ping
   }
 };

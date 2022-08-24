@@ -43,7 +43,7 @@ export interface SignedTransactionType extends RawTransactionType {
   customTransactionInformation?: CustomTransactionInformation;
 }
 
-export interface TxDataTokenType {
+export interface TransactionDataTokenType {
   tokenId: string;
   amount: string;
   receiver: string;
@@ -52,7 +52,9 @@ export interface TxDataTokenType {
   multiTxData?: string;
 }
 
-export type TxsDataTokensType = Record<string, TxDataTokenType> | undefined;
+export type TxsDataTokensType =
+  | Record<string, TransactionDataTokenType>
+  | undefined;
 
 interface MultiEsdtType {
   type:
@@ -140,7 +142,7 @@ export interface SignTransactionsPropsType {
 
 export interface ActiveLedgerTransactionType {
   transaction: Transaction;
-  transactionTokenInfo: TxDataTokenType;
+  transactionTokenInfo: TransactionDataTokenType;
   isTokenTransaction: boolean;
   dataField: string;
   receiverScamInfo: string | null;

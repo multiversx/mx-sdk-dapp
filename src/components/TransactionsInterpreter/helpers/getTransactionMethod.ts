@@ -1,6 +1,6 @@
 import {
-  TxActionCategoryEnum,
-  TxActionsEnum,
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum,
   ServerTransactionType
 } from 'types/server-transactions';
 
@@ -11,8 +11,8 @@ export const getTransactionMethod = (transaction: ServerTransactionType) => {
 
   if (transactionHasAction) {
     if (
-      transaction.action?.category === TxActionCategoryEnum.esdtNft &&
-      transaction.action?.name === TxActionsEnum.transfer
+      transaction.action?.category === TransactionActionCategoryEnum.esdtNft &&
+      transaction.action?.name === TransactionActionsEnum.transfer
     ) {
       transactionAction = 'Transaction';
     } else if (transaction.action) {

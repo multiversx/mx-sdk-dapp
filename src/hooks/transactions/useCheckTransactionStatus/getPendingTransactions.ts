@@ -1,7 +1,7 @@
 import { SignedTransactionType } from 'types';
 import { getIsTransactionPending } from 'utils';
 
-interface PendingTxType {
+interface PendingTransactionType {
   hash: string;
   previousStatus: string;
 }
@@ -9,9 +9,9 @@ interface PendingTxType {
 export function getPendingTransactions(
   transactions: SignedTransactionType[],
   timedOutHashes: string[]
-): PendingTxType[] {
+): PendingTransactionType[] {
   const pendingTransactions = transactions.reduce(
-    (acc: PendingTxType[], { status, hash }) => {
+    (acc: PendingTransactionType[], { status, hash }) => {
       if (
         hash != null &&
         !timedOutHashes.includes(hash) &&

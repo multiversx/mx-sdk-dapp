@@ -1,7 +1,7 @@
 import {
   ServerTransactionType,
-  TxActionCategoryEnum,
-  TxActionsEnum
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum
 } from 'types/server-transactions';
 import { getTransactionReceiver } from '../getTransactionReceiver';
 import { baseTransactionMock } from './base-transaction-mock';
@@ -22,8 +22,8 @@ describe('getTransactionReceiver', () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
-        category: TxActionCategoryEnum.esdtNft,
-        name: TxActionsEnum.transfer,
+        category: TransactionActionCategoryEnum.esdtNft,
+        name: TransactionActionsEnum.transfer,
         arguments: {
           receiver: 'receiver-hash'
         }

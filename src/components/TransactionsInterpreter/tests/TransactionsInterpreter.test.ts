@@ -1,7 +1,7 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   ServerTransactionType,
-  TxActionsEnum
+  TransactionActionsEnum
 } from 'types/server-transactions';
 import {
   ExtendedTransactionType,
@@ -55,7 +55,7 @@ describe('transaction interpreter', () => {
           ].filter((x) => x != null),
           direction: TransactionDirectionEnum.OUT,
           isContract: false,
-          method: TxActionsEnum.transfer
+          method: TransactionActionsEnum.transfer
         }
       };
 
@@ -132,7 +132,7 @@ describe('transaction interpreter', () => {
             ].filter((x) => x != null),
             direction: TransactionDirectionEnum.IN,
             isContract: false,
-            method: TxActionsEnum.transfer
+            method: TransactionActionsEnum.transfer
           }
         },
         {
@@ -168,7 +168,7 @@ describe('transaction interpreter', () => {
             ].filter((x) => x != null),
             direction: TransactionDirectionEnum.SELF,
             isContract: true,
-            method: TxActionsEnum.transfer
+            method: TransactionActionsEnum.transfer
           }
         }
       ];

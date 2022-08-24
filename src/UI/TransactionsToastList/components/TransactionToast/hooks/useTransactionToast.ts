@@ -1,7 +1,8 @@
+import { useEffect, useMemo } from 'react';
 import { useGetTransactionDisplayInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
-import { useEffect, useMemo } from 'react';
+import { TransactionBatchStatusesEnum } from 'types';
 import {
   getAreTransactionsOnSameShard,
   getIsTransactionPending,
@@ -9,10 +10,9 @@ import {
   getUnixTimestamp,
   getUnixTimestampWithAddedMilliseconds
 } from 'utils';
-import { getToastDataStateByStatus } from '../utils';
-import { TransactionToastDefaultProps } from '../types';
-import { TransactionBatchStatusesEnum } from 'types';
 import styles from '../styles.scss';
+import { TransactionToastDefaultProps } from '../transactionToast.type';
+import { getToastDataStateByStatus } from '../utils';
 
 const AVERAGE_TX_DURATION_MS = 6000;
 const CROSS_SHARD_ROUNDS = 5;

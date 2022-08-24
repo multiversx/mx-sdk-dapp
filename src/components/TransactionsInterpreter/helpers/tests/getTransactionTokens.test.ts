@@ -1,7 +1,7 @@
 import {
   ServerTransactionType,
-  TxActionCategoryEnum,
-  TxActionsEnum
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum
 } from 'types/server-transactions';
 import { getTransactionTokens } from '../getTransactionTokens';
 import { baseTransactionMock } from './base-transaction-mock';
@@ -22,8 +22,8 @@ describe('getTransactionTokens', () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
-        name: TxActionsEnum.transfer,
-        category: TxActionCategoryEnum.scCall,
+        name: TransactionActionsEnum.transfer,
+        category: TransactionActionCategoryEnum.scCall,
         arguments: {
           token: 'token',
           token1: 'token1',

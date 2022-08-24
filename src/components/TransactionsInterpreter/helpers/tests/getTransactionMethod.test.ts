@@ -1,7 +1,7 @@
 import {
   ServerTransactionType,
-  TxActionCategoryEnum,
-  TxActionsEnum
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum
 } from 'types/server-transactions';
 import { getTransactionMethod } from '../getTransactionMethod';
 import { baseTransactionMock } from './base-transaction-mock';
@@ -18,12 +18,12 @@ describe('getTransactionMethod', () => {
     expect(result).toEqual('Transaction');
   });
 
-  it(`returns default value "Transaction" when the transaction is a "${TxActionsEnum.transfer}" and the action's category is "${TxActionCategoryEnum.esdtNft}"`, () => {
+  it(`returns default value "Transaction" when the transaction is a "${TransactionActionsEnum.transfer}" and the action's category is "${TransactionActionCategoryEnum.esdtNft}"`, () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
-        category: TxActionCategoryEnum.esdtNft,
-        name: TxActionsEnum.transfer
+        category: TransactionActionCategoryEnum.esdtNft,
+        name: TransactionActionsEnum.transfer
       }
     };
 
@@ -32,12 +32,12 @@ describe('getTransactionMethod', () => {
     expect(result).toEqual('Transaction');
   });
 
-  it(`returns the transaction method read from the action field when the transaction is not a "${TxActionsEnum.transfer}" or the action's category is not "${TxActionCategoryEnum.esdtNft}"`, () => {
+  it(`returns the transaction method read from the action field when the transaction is not a "${TransactionActionsEnum.transfer}" or the action's category is not "${TransactionActionCategoryEnum.esdtNft}"`, () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
-        category: TxActionCategoryEnum.scCall,
-        name: TxActionsEnum.claimRewards
+        category: TransactionActionCategoryEnum.scCall,
+        name: TransactionActionsEnum.claimRewards
       }
     };
 
@@ -50,8 +50,8 @@ describe('getTransactionMethod', () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
-        category: TxActionCategoryEnum.scCall,
-        name: TxActionsEnum.claimRewards,
+        category: TransactionActionCategoryEnum.scCall,
+        name: TransactionActionsEnum.claimRewards,
         arguments: {
           functionName: 'customFunction'
         }

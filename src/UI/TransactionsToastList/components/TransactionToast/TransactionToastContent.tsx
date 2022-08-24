@@ -2,10 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { SignedTransactionType } from 'types';
-import { TxDetails } from 'UI/TxDetails';
+import { TransactionDetails } from 'UI/TransactionDetails';
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
 import styles from './styles.scss';
-import { TransactionToastContentElementsProps } from './types';
+import { TransactionToastContentElementsProps } from './transactionToast.type';
 import { ToastDataState } from './utils';
 
 export type TransactionToastContentProps = {
@@ -30,7 +30,7 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
   customElements = {
     CustomCloseButton: DefaultToastDeleteButton,
     TransactionToastStatusIcon: FontAwesomeIcon,
-    TransactionDetails: TxDetails
+    TransactionDetails: TransactionDetails
   }
 }) => {
   const TransactionDetails = customElements?.TransactionDetails;
