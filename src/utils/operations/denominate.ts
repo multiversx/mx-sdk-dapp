@@ -1,8 +1,7 @@
-import BigNumber from 'bignumber.js';
 import { DECIMALS, DIGITS } from 'constants/index';
 import { formatAmount } from './formatAmount';
 
-BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
+let deprecationMessageDisplayed = false;
 
 /**
  * !!! This function is deprecated. Please use formatAmount instead.
@@ -22,9 +21,13 @@ export function denominate({
   showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
 }) {
-  console.warn(
-    '!!! Be aware !!! The "denominate" function is deprecated. Please use "formatAmount" instead.'
-  );
+  if (!deprecationMessageDisplayed) {
+    console.warn(
+      '!!! Be aware !!! The "denominate" function is deprecated. Please use "formatAmount" instead.'
+    );
+
+    deprecationMessageDisplayed = true;
+  }
 
   return formatAmount({
     input,
