@@ -3,8 +3,8 @@ import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionStatusToast.scss';
 import { StatusIconType } from './transactionStatusToast.types';
+import styles from './transactionStatusToastStyles.scss';
 
 type StatusIconProps = {
   type: StatusIconType;
