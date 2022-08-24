@@ -8,7 +8,7 @@ import {
   CustomConfirmScreensType,
   ScreenType,
   SignPropsType
-} from './types/sign-transactions-modals';
+} from './types/signTransactionsModals.types';
 import { ConfirmationScreen } from './components/ConfirmationScreen';
 
 interface SignTransactionsPropsType {

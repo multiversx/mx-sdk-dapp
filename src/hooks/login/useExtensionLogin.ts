@@ -5,7 +5,7 @@ import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setTokenLogin } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums.types';
 import { optionalRedirect } from 'utils/internal';
 import { getIsLoggedIn } from '../../utils';
 

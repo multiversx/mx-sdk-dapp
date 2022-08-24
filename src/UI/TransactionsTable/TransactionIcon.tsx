@@ -9,8 +9,8 @@ import globalStyles from 'assets/sass/main.scss';
 import { getOperationsMessages } from 'components/TransactionsInterpreter/helpers/getOperationsMessages';
 import { getReceiptMessage } from 'components/TransactionsInterpreter/helpers/getReceiptMessage';
 import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
-import { TransactionServerStatusesEnum } from 'types/enums';
-import { ServerTransactionType } from 'types/server-transactions';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 
 interface TransactionIconType {
   transaction: ServerTransactionType;

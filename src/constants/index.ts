@@ -2,7 +2,7 @@ export * from './errorsMessages';
 export * from './network';
 export * from './ledgerErrorCodes';
 export * from './mnemonicWords';
-export * from './transaction-status';
+export * from './transactionStatus';
 
 export const GAS_PRICE_MODIFIER = 0.01;
 export const GAS_PER_DATA_BYTE = 1_500;

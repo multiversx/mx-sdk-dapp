@@ -2,10 +2,10 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Denominate } from 'UI/Denominate';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 
-interface AddressRowType extends WithClassname {
+interface AddressRowType extends WithClassnameType {
   selectedAddress?: string;
   index: number;
   address: string;

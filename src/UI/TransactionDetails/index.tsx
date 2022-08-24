@@ -14,7 +14,7 @@ import { Trim } from 'UI/Trim';
 
 import { isServerTransactionPending } from 'utils';
 
-import styles from './styles.scss';
+import styles from './transactionDetailsStyles.scss';
 
 export interface TransactionDetailsType {
   title?: React.ReactNode;

@@ -15,10 +15,10 @@ export interface TokenLoginType {
   signature?: string;
 }
 
-export * from './transactions';
-export * from './server-transactions';
-export * from './enums';
-export * from './account';
-export * from './network';
-export * from './dapp-provider';
-export * from './login';
+export * from './transactions.types';
+export * from './serverTransactions.types';
+export * from './enums.types';
+export * from './account.types';
+export * from './network.types';
+export * from './dappProvider.types';
+export * from './login.types';

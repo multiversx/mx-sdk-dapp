@@ -1,24 +1,24 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import classNames from 'classnames';
 import { createPortal } from 'react-dom';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   customToastsSelector,
   transactionToastsSelector
 } from 'reduxStore/selectors/toastsSelectors';
-import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
+import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
+import { removeSignedTransaction } from 'services';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
+import { CustomToastType, TransactionToastType } from 'types/toasts.types';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
 import { deleteCustomToast, getIsTransactionPending } from 'utils';
-import styles from './styles.scss';
-import { CustomToastType, TransactionToastType } from 'types/toasts';
-import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
-import { removeSignedTransaction } from 'services';
-import { store } from 'reduxStore/store';
-import classNames from 'classnames';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
+import styles from './transactionsToastListStyles.scss';
 
-export interface TransactionsToastListPropsType extends WithClassname {
+export interface TransactionsToastListPropsType extends WithClassnameType {
   toastProps?: any;
   withTxNonce?: boolean;
   signedTransactions?: SignedTransactionsType;

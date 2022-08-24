@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
-import { StatusIconType } from 'components/TransactionStatusToast/types';
+import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
 import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from 'constants/index';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
 export type TransactionStatusToastType = {
   signError: string | null;
   canceledTransactionsMessage: string | null;
   onDelete: () => void;
-} & WithClassname;
+} & WithClassnameType;
 
 export const TransactionStatusToast: React.FC<TransactionStatusToastType> = ({
   signError,

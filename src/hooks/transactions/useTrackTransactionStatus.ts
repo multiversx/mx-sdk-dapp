@@ -2,11 +2,15 @@ import { useEffect } from 'react';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { transactionStatusSelector } from 'reduxStore/selectors';
+import { RootState } from 'reduxStore/store';
 import {
   removeAllSignedTransactions,
   removeAllTransactionsToSign
 } from 'services';
-import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
+import {
+  LoginMethodsEnum,
+  TransactionBatchStatusesEnum
+} from 'types/enums.types';
 import {
   getIsProviderEqualTo,
   getIsTransactionFailed,
@@ -14,7 +18,6 @@ import {
   getIsTransactionSuccessful,
   getIsTransactionTimedOut
 } from 'utils';
-import { RootState } from 'reduxStore/store';
 
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;

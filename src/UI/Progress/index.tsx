@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import classNames from 'classnames';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import { storage } from 'utils/storage';
-import styles from './styles.scss';
-import { WithClassname } from '../types';
-import classNames from 'classnames';
+import { WithClassnameType } from '../types';
+import styles from './progressStyles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
-export interface ProgressProps extends WithClassname {
+export interface ProgressProps extends WithClassnameType {
   id: string;
   done: boolean;
   children: React.ReactNode;

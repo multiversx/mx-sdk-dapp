@@ -1,6 +1,6 @@
 import { addCustomToast, removeCustomToast } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
-import { CustomToastType } from 'types/toasts';
+import { CustomToastType } from 'types/toasts.types';
 
 export const addNewCustomToast = (args: CustomToastType) => {
   return store.dispatch(addCustomToast(args)).payload;

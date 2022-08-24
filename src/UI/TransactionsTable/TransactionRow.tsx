@@ -1,15 +1,15 @@
 import React from 'react';
-import { TransactionMethod } from './TransactionMethod';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import { TimeAgo } from './TImeAgo';
-import globalStyles from 'assets/sass/main.scss';
-import styles from './transactions-table.scss';
-import { TransactionHash } from './TransactionHash';
-import { TransactionShardsTransition } from './TransactionShardsTransition';
-import { TransactionSender } from './TransactionSender';
 import { TransactionDirectionBadge } from './TransactionDirectionBadge';
+import { TransactionHash } from './TransactionHash';
+import { TransactionMethod } from './TransactionMethod';
 import { TransactionReceiver } from './TransactionReceiver';
-import classNames from 'classnames';
+import { TransactionSender } from './TransactionSender';
+import { TransactionShardsTransition } from './TransactionShardsTransition';
+import styles from './transactionsTableStyles.scss';
 
 export interface TransactionRowType {
   transaction: ExtendedTransactionType;

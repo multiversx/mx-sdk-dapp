@@ -3,8 +3,8 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useGetNetworkConfig } from 'hooks';
-import styles from './styles.scss';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
+import styles from './explorerLinkStyles.scss';
 
 export const ExplorerLink = ({
   page,
@@ -15,7 +15,7 @@ export const ExplorerLink = ({
   page: string;
   text?: any;
 } & PropsWithChildren &
-  WithClassname) => {
+  WithClassnameType) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();

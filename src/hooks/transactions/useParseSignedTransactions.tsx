@@ -5,7 +5,7 @@ import { DAPP_INIT_ROUTE, WALLET_SIGN_SESSION } from 'constants/index';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { moveTransactionsToSignedState } from 'reduxStore/slices';
-import { TransactionBatchStatusesEnum } from 'types/enums';
+import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { parseTransactionAfterSigning } from 'utils';
 
 export function useParseSignedTransactions(

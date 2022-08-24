@@ -1,7 +1,7 @@
 import {
   ServerTransactionType,
   TokenArgumentType
-} from 'types/server-transactions';
+} from 'types/serverTransactions.types';
 
 export enum TransactionDirectionEnum {
   SELF = 'Self',

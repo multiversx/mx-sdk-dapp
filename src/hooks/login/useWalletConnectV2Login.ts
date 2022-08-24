@@ -23,7 +23,10 @@ import {
   setWalletConnectLogin
 } from 'reduxStore/slices';
 import { LoginHookGenericStateType } from 'types';
-import { LoginMethodsEnum, DappCoreWCV2CustomMethodsEnum } from 'types/enums';
+import {
+  LoginMethodsEnum,
+  DappCoreWCV2CustomMethodsEnum
+} from 'types/enums.types';
 import { getIsLoggedIn, logout } from 'utils';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';

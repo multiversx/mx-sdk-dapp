@@ -5,7 +5,7 @@ import {
   DappModalInteractionConfig,
   useDappModal
 } from 'UI/DappModal';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
 
 export const ModalContainer = (
   props: {
@@ -14,7 +14,7 @@ export const ModalContainer = (
     modalConfig?: DappModalConfig;
     modalInteractionConfig?: DappModalInteractionConfig;
     visible?: boolean;
-  } & WithClassname
+  } & WithClassnameType
 ) => {
   const { handleHideModal: onHide, visible, config } = useDappModal({
     modalConfig: props.modalConfig,

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DappModalConfig } from '../../UI/DappModal/types';
+import { DappModalConfig } from '../../UI/DappModal/dappModal.types';
 import { logoutAction } from '../commonActions';
 
 export interface ModalsSliceState {

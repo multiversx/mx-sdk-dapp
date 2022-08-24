@@ -1,14 +1,14 @@
 import { combineReducers } from '@reduxjs/toolkit';
 
-import { ReducersEnum } from 'types/reducers';
+import { ReducersEnum } from 'types/reducers.types';
 import account from './slices/accountInfoSlice';
 import dappModal from './slices/dappModalsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
 import toasts from './slices/toastsSlice';
-import transactions from './slices/transactionsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
+import transactions from './slices/transactionsSlice';
 
 const reducers = {
   [ReducersEnum.account]: account,

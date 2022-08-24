@@ -1,12 +1,12 @@
 import React from 'react';
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
-import { WithClassname } from '../UI/types';
+import { WithClassnameType } from '../UI/types';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum,
   TransactionTypesEnum
-} from './enums';
+} from './enums.types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -47,12 +47,12 @@ export interface TransactionDataTokenType {
   tokenId: string;
   amount: string;
   receiver: string;
-  type?: MultiEsdtTxType['type'] | '';
+  type?: MultiEsdtTransactionType['type'] | '';
   nonce?: string;
   multiTxData?: string;
 }
 
-export type TxsDataTokensType =
+export type TransactionsDataTokensType =
   | Record<string, TransactionDataTokenType>
   | undefined;
 
@@ -76,9 +76,9 @@ interface MultiEsdtScCallType {
   data: string;
 }
 
-export type MultiEsdtTxType = MultiEsdtType | MultiEsdtScCallType;
+export type MultiEsdtTransactionType = MultiEsdtType | MultiEsdtScCallType;
 
-export type MultiSignTxType = {
+export type MultiSignTransactionType = {
   multiTxData?: string;
   transactionIndex: number;
   transaction: Transaction;
@@ -165,7 +165,7 @@ export interface SmartContractResult {
   returnMessage: string;
 }
 
-export interface SignModalPropsType extends WithClassname {
+export interface SignModalPropsType extends WithClassnameType {
   handleClose: () => void;
   error: string | null;
   callbackRoute?: string;

@@ -1,23 +1,23 @@
-import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import React, { useEffect } from 'react';
+import classNames from 'classnames';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { failTransactionToastSelector } from 'reduxStore/selectors';
-import styles from './transaction-status-toast.scss';
-import { StatusMessageComponent } from './StatusMessageComponent';
-import { StatusIconType } from './types';
 import {
   addFailTransactionToast,
   removeFailTransactionToast
 } from 'reduxStore/slices';
-import classNames from 'classnames';
-import { WithClassname } from '../../UI/types';
+import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
+import { WithClassnameType } from '../../UI/types';
+import { StatusMessageComponent } from './StatusMessageComponent';
+import { StatusIconType } from './transactionStatusToast.types';
+import styles from './transactionStatusToastStyles.scss';
 
 type ErrorToastProps = {
   type?: StatusIconType;
   message: string;
   duration?: number;
   onDelete?: () => void;
-} & WithClassname;
+} & WithClassnameType;
 
 export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
   message,

@@ -1,5 +1,5 @@
-import { AssetType, ScamInfoType } from './account';
-import { NftEnumType } from './tokens';
+import { AssetType, ScamInfoType } from './account.types';
+import { NftEnumType } from './tokens.types';
 
 export interface ScResultType {
   callType: string;

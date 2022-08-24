@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MAINNET_EGLD_LABEL } from 'constants/index';
-import { DenominateType } from 'UI/types/denominate';
+import { DenominateType } from 'UI/types/denominate.types';
 import { Denominate } from '../index';
 
 const renderComponent = (props: DenominateType) => {

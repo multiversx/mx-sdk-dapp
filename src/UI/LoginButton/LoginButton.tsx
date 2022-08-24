@@ -1,8 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { WithClassname } from '../types';
-import styles from './login-button.scss';
+import { WithClassnameType } from '../types';
+import styles from './loginButtonStyles.scss';
 
 type LoginButtonProps = {
   onLogin: () => void;
@@ -10,7 +10,7 @@ type LoginButtonProps = {
   btnClassName?: string;
   children?: React.ReactNode;
   disabled?: boolean;
-} & WithClassname;
+} & WithClassnameType;
 
 export const LoginButton = ({
   onLogin,

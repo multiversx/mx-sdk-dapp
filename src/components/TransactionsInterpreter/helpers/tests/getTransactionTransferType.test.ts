@@ -1,7 +1,7 @@
 import {
   ServerTransactionType,
   TransferTypeEnum
-} from 'types/server-transactions';
+} from 'types/serverTransactions.types';
 import { getTransactionTransferType } from '../getTransactionTransferType';
 import { TransactionDirectionEnum } from '../types';
 import { baseTransactionMock } from './base-transaction-mock';

@@ -1,10 +1,10 @@
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
-import { GetTransactionsByHashesType } from 'types';
 import {
   useCheckTransactionStatus,
   useGetAccountInfo,
   useRegisterWebsocketListener
-} from 'hooks/index';
+} from 'hooks';
+import { GetTransactionsByHashesType } from 'types';
 import { useClosureRef } from './useClosureRef';
 
 export interface TransactionsTrackerType {
