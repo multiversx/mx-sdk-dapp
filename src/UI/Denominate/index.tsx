@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { DIGITS, DECIMALS, MAINNET_EGLD_LABEL } from 'constants/index';
-import { DenominateType } from 'UI/types/denominate';
+import { DenominateType } from 'UI/types/denominate.types';
 import { denominate } from 'utils/operations/denominate';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import styles from './denominate.scss';

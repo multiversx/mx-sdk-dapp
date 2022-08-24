@@ -3,11 +3,11 @@ import {
   updateSignedTransactionStatus
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
+import { SmartContractResult } from 'types';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
-} from 'types/enums';
-import { SmartContractResult } from 'types';
+} from 'types/enums.types';
 
 export function manageFailedTransactions({
   results,

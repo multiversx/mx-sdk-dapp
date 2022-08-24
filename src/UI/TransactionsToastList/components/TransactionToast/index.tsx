@@ -1,6 +1,6 @@
 import React from 'react';
 import { Progress } from 'UI/Progress';
-import { WithClassname } from '../../../types';
+import { WithClassnameType } from '../../../types';
 import { useTransactionToast } from './hooks/useTransactionToast';
 import styles from './styles.scss';
 import {
@@ -15,7 +15,7 @@ export type TransactionToastPropsType = {
   children?: React.ReactNode;
   customization?: TransactionToastCustomizationProps;
 } & TransactionToastDefaultProps &
-  WithClassname;
+  WithClassnameType;
 
 export const TransactionToast = ({
   toastId,

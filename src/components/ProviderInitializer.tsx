@@ -31,7 +31,7 @@ import {
   setChainID,
   setTokenLoginSignature
 } from 'reduxStore/slices';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums.types';
 import { logout } from 'utils';
 import {
   getAddress,

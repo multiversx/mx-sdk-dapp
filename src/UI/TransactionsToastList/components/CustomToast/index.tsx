@@ -5,9 +5,9 @@ import styles from './styles.scss';
 import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 import classNames from 'classnames';
 import { ComponentTypeWithChildren } from '../types';
-import { WithClassname } from '../../../types';
+import { WithClassnameType } from '../../../types';
 
-interface CustomToastType extends WithClassname {
+interface CustomToastType extends WithClassnameType {
   onDelete: () => void;
   message?: string;
   messageComponent?: React.ReactNode;

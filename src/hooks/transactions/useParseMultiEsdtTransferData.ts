@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 import {
-  MultiSignTxType,
+  MultiSignTransactionType,
   TransactionDataTokenType,
-  TxsDataTokensType
+  TransactionsDataTokensType
 } from 'types';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
 import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
@@ -21,21 +21,23 @@ interface UseParseMultiEsdtTransferDataPropsType {
 }
 
 interface UseParseMultiEsdtTransferDataReturnType {
-  parsedTransactionsByDataField: TxsDataTokensType;
+  parsedTransactionsByDataField: TransactionsDataTokensType;
   getTxInfoByDataField: (
     data: string,
     multiTransactionData?: string
   ) => TransactionDataTokenType;
-  allTransactions: MultiSignTxType[];
+  allTransactions: MultiSignTransactionType[];
 }
 
 export function useParseMultiEsdtTransferData({
   transactions
 }: UseParseMultiEsdtTransferDataPropsType): UseParseMultiEsdtTransferDataReturnType {
   const [parsedTransactionsByDataField, setParsedTransactions] = useState<
-    TxsDataTokensType
+    TransactionsDataTokensType
   >({});
-  const [allTransactions, setAllTransactions] = useState<MultiSignTxType[]>([]);
+  const [allTransactions, setAllTransactions] = useState<
+    MultiSignTransactionType[]
+  >([]);
 
   function addTransactionDataToParsedInfo(
     data: string,
@@ -71,14 +73,14 @@ export function useParseMultiEsdtTransferData({
 
   function extractTransactionESDTData() {
     if (transactions && transactions.length > 0) {
-      const allTxs: MultiSignTxType[] = [];
+      const allTxs: MultiSignTransactionType[] = [];
       transactions.forEach((transaction, transactionIndex) => {
         const txData = transaction.getData().toString();
         const multiTxs = parseMultiEsdtTransferData(txData);
 
         if (multiTxs.length > 0) {
           multiTxs.forEach((trx, idx) => {
-            const newTx: MultiSignTxType = {
+            const newTx: MultiSignTransactionType = {
               transaction,
               multiTxData: trx.data,
               transactionIndex: idx

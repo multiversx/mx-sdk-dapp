@@ -1,7 +1,7 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
 
 export const Dot = ({
   color,
@@ -10,7 +10,7 @@ export const Dot = ({
 }: {
   color: string;
   'data-testid'?: string;
-} & WithClassname) => {
+} & WithClassnameType) => {
   return (
     <span
       className={classNames(globalStyles.dot, color, className)}

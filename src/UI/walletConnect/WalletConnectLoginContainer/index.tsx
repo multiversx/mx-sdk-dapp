@@ -7,11 +7,11 @@ import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
 import { isMobileEnvironment } from 'utils';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 import { Pairinglist } from './PairingList';
 import styles from './wallet-connect-login-container.scss';
 
-export interface WalletConnectLoginModalPropsType extends WithClassname {
+export interface WalletConnectLoginModalPropsType extends WithClassnameType {
   lead?: string;
   title?: string;
   logoutRoute?: string;

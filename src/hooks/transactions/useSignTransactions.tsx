@@ -11,9 +11,9 @@ import {
   TRANSACTION_STATUS_TOAST_ID,
   WALLET_SIGN_SESSION
 } from 'constants/index';
+import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 
-import { getProviderType } from 'utils';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   addressSelector,
@@ -25,14 +25,17 @@ import {
   moveTransactionsToSignedState,
   removeCustomToast
 } from 'reduxStore/slices';
-import { LoginMethodsEnum, TransactionBatchStatusesEnum } from 'types/enums';
+import {
+  LoginMethodsEnum,
+  TransactionBatchStatusesEnum
+} from 'types/enums.types';
+import { getProviderType } from 'utils';
 import {
   builtCallbackUrl,
   getLatestNonce,
   parseTransactionAfterSigning,
   safeRedirect
 } from 'utils';
-import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { getAccount } from 'utils/account/getAccount';
 
 const setTransactionNonces = (
@@ -161,9 +164,9 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(signedTransactions).map(
-        (tx) => parseTransactionAfterSigning(tx)
-      );
+      const signedTransactionsArray = Object.values(
+        signedTransactions
+      ).map((tx) => parseTransactionAfterSigning(tx));
 
       dispatch(
         moveTransactionsToSignedState({

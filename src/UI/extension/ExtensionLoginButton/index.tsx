@@ -5,9 +5,9 @@ import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import styles from './login-button.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
-export interface ExtensionLoginButtonPropsType extends WithClassname {
+export interface ExtensionLoginButtonPropsType extends WithClassnameType {
   token?: string;
   children?: ReactNode;
   buttonClassName?: string;

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styles from '../dapp-modal.scss';
 import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
 type DappModalHeaderProps = {
   visible?: boolean;
@@ -12,7 +12,7 @@ type DappModalHeaderProps = {
   customHeader?: JSX.Element | string;
   closeButtonClassName?: string;
   onHide?: () => void;
-} & WithClassname;
+} & WithClassnameType;
 
 export const DappModalHeader: React.FC<DappModalHeaderProps> = ({
   visible,

@@ -1,13 +1,13 @@
 import React from 'react';
 import styles from '../dapp-modal.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
 type DappModalFooterProps = {
   visible?: boolean;
   footerText?: string;
   customFooter?: JSX.Element;
-} & WithClassname;
+} & WithClassnameType;
 
 export const DappModalFooter: React.FC<DappModalFooterProps> = ({
   visible,

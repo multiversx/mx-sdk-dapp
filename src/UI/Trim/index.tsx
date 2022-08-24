@@ -3,9 +3,9 @@ import debounce from 'lodash.debounce';
 
 import styles from './styles.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
 
-export interface TrimType extends WithClassname {
+export interface TrimType extends WithClassnameType {
   text: string;
   dataTestId?: string;
   color?: 'muted' | 'secondary' | string;

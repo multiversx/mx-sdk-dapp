@@ -2,9 +2,9 @@ import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { Dot } from './Dot';
 import classNames from 'classnames';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
 
-export interface ProgressStepsType extends WithClassname {
+export interface ProgressStepsType extends WithClassnameType {
   totalSteps: number;
   currentStep: number;
 }

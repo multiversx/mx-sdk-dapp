@@ -1,15 +1,15 @@
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import {
   GetTransactionsByHashesReturnType,
   GetTransactionsByHashesType
 } from 'types';
-import { updateSignedTransactionStatus } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
-import { TransactionServerStatusesEnum } from 'types/enums';
 import {
   CustomTransactionInformation,
   SignedTransactionsBodyType
 } from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,

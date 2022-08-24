@@ -5,7 +5,7 @@ import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils';
 import styles from './token-details.scss';
 import { Combined, Simple } from './TokenSymbol';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');
@@ -64,7 +64,7 @@ export class TokenDetails extends React.Component {
       }
     </>
   );
-  static Icon = (props: TokenIconProps & WithClassname) => {
+  static Icon = (props: TokenIconProps & WithClassnameType) => {
     const Component: any =
       process.env.NODE_ENV !== 'test'
         ? getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)

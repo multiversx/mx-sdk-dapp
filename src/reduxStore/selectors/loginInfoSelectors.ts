@@ -1,5 +1,5 @@
 import { RootState } from 'reduxStore/store';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums.types';
 import { addressSelector } from './accountInfoSelectors';
 import { createDeepEqualSelector } from './helpers';
 

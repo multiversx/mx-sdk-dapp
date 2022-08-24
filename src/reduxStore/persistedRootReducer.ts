@@ -7,7 +7,7 @@ import { defaultNetwork } from 'reduxStore/slices';
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
-import { ReducersEnum } from 'types/reducers';
+import { ReducersEnum } from 'types/reducers.types';
 
 const migrations: any = {
   2: (state: any) => {

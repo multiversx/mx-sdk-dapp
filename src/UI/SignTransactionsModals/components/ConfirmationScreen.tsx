@@ -4,7 +4,7 @@ import {
   useGetSignTransactionsError,
   useSignTransactions
 } from 'hooks';
-import { SignPropsType } from 'UI/SignTransactionsModals/types/sign-transactions-modals';
+import { SignPropsType } from 'UI/SignTransactionsModals/types/signTransactionsModals.types';
 import {
   TransactionStatusToast,
   TransactionStatusToastType

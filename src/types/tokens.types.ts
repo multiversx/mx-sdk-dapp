@@ -1,4 +1,4 @@
-import { ScamInfoType } from './account';
+import { ScamInfoType } from './account.types';
 
 export interface TokenRolesType {
   address: string;

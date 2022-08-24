@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './page-state.scss';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
 
-export interface PageStateProps extends WithClassname {
+export interface PageStateProps extends WithClassnameType {
   title?: React.ReactNode;
   icon?: IconProp | IconDefinition | null;
   iconClass?: string;

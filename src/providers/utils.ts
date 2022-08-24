@@ -10,7 +10,7 @@ import {
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
 import { IDappProvider } from 'types';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums.types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
