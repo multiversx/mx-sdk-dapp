@@ -1,6 +1,6 @@
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import BigNumber from 'bignumber.js';
-import { gasPerDataByte, gasPriceModifier } from 'constants/index';
+import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
 import { calculateFeeLimit } from 'utils/operations';
 
 export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
@@ -8,8 +8,8 @@ export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
 
   transactions.forEach((tx) => {
     const fee = calculateFeeLimit({
-      gasPerDataByte,
-      gasPriceModifier,
+      gasPerDataByte: String(GAS_PER_DATA_BYTE),
+      gasPriceModifier: String(GAS_PRICE_MODIFIER),
       minGasLimit: String(minGasLimit),
       gasLimit: tx
         .getGasLimit()

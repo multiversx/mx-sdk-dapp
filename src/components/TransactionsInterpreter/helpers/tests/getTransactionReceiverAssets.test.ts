@@ -1,7 +1,7 @@
 import {
   ServerTransactionType,
-  TxActionCategoryEnum,
-  TxActionsEnum
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum
 } from 'types/server-transactions';
 import { getTransactionReceiverAssets } from '../getTransactionReceiverAssets';
 import { baseTransactionMock } from './base-transaction-mock';
@@ -37,8 +37,8 @@ describe('getTransactionReceiverAssets', () => {
         tags: ['@tag1', '@tag2']
       },
       action: {
-        name: TxActionsEnum.transfer,
-        category: TxActionCategoryEnum.scCall,
+        name: TransactionActionsEnum.transfer,
+        category: TransactionActionCategoryEnum.scCall,
         arguments: {
           receiver: 'receiver-hash-from-action-arguments'
         }

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
+import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
 
 import {
@@ -20,7 +21,6 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums';
 import { setNonce } from 'utils';
-import { Transaction } from '@elrondnetwork/erdjs/out';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: (

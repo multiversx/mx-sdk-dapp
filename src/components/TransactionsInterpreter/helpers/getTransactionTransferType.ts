@@ -1,14 +1,14 @@
 import {
-  TransferTypeEnum,
-  ServerTransactionType
+  ServerTransactionType,
+  TransferTypeEnum
 } from 'types/server-transactions';
-import { TransactionDirection } from './types';
+import { TransactionDirectionEnum } from './types';
 
 export function getTransactionTransferType(
   address: string,
   transaction: ServerTransactionType,
   receiver: string
-): TransactionDirection {
+): TransactionDirectionEnum {
   const directionOut = address === transaction.sender;
   const directionIn = address === receiver;
   const directionSelf = directionOut && directionIn;
@@ -16,13 +16,13 @@ export function getTransactionTransferType(
 
   switch (true) {
     case isScResult:
-      return TransactionDirection.INTERNAL;
+      return TransactionDirectionEnum.INTERNAL;
     case directionSelf:
-      return TransactionDirection.SELF;
+      return TransactionDirectionEnum.SELF;
     case directionIn:
-      return TransactionDirection.IN;
+      return TransactionDirectionEnum.IN;
     case directionOut:
     default:
-      return TransactionDirection.OUT;
+      return TransactionDirectionEnum.OUT;
   }
 }

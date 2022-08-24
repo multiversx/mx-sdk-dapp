@@ -1,7 +1,7 @@
-import { mainnetEgldLabel } from 'constants/network';
+import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
-  TokenArgumentType,
-  ServerTransactionType
+  ServerTransactionType,
+  TokenArgumentType
 } from 'types/server-transactions';
 import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
 import { isContract } from 'utils/smartContracts';
@@ -13,7 +13,7 @@ import { getTransactionReceiverAssets } from './helpers/getTransactionReceiverAs
 import { getTransactionTokens } from './helpers/getTransactionTokens';
 import { getTransactionTransferType } from './helpers/getTransactionTransferType';
 import { ExtendedTransactionType } from './helpers/types';
-import urlBuilder from './helpers/urlBuilder';
+import { urlBuilder } from './helpers/urlBuilder';
 
 export type DenominationConfig = {
   egldLabel?: string;
@@ -31,7 +31,7 @@ export type ParseTransactionsConfiguration = {
 
 const defaultConfig: ParseTransactionsConfiguration = {
   denominationConfig: {
-    egldLabel: mainnetEgldLabel
+    egldLabel: MAINNET_EGLD_LABEL
   },
   networkAddress: ''
 };
@@ -62,7 +62,7 @@ export function processTransaction({
   transaction,
   address,
   denominationConfig = {
-    egldLabel: mainnetEgldLabel
+    egldLabel: MAINNET_EGLD_LABEL
   },
   networkAddress = ''
 }: ProcessTransactionParams): ExtendedTransactionType {
@@ -77,7 +77,7 @@ export function processTransaction({
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
-  let tokenLabel = denominationConfig.egldLabel ?? mainnetEgldLabel;
+  let tokenLabel = denominationConfig.egldLabel ?? MAINNET_EGLD_LABEL;
   if (transactionTokens.length > 0) {
     const txToken = transactionTokens[0];
     tokenLabel = txToken.ticker ?? tokenLabel;

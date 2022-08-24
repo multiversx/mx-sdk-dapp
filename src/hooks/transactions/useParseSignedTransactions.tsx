@@ -1,7 +1,7 @@
 import React from 'react';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import qs from 'qs';
-import { dappInitRoute, WALLET_SIGN_SESSION } from 'constants/index';
+import { DAPP_INIT_ROUTE, WALLET_SIGN_SESSION } from 'constants/index';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { moveTransactionsToSignedState } from 'reduxStore/slices';
@@ -22,7 +22,7 @@ export function useParseSignedTransactions(
       if (searchData && WALLET_SIGN_SESSION in searchData) {
         const sessionId = String((searchData as any)[WALLET_SIGN_SESSION]);
         const signedTransactions = new WalletProvider(
-          `${network.walletAddress}${dappInitRoute}`
+          `${network.walletAddress}${DAPP_INIT_ROUTE}`
         ).getTransactionsFromWalletUrl();
 
         if (searchData.status === TransactionBatchStatusesEnum.cancelled) {

@@ -22,7 +22,7 @@ export interface TransactionTokensType {
   nfts: string[];
 }
 
-export enum TxActionsEnum {
+export enum TransactionActionsEnum {
   // esdtNft category
   transfer = 'transfer',
   // stake category
@@ -58,7 +58,7 @@ export enum TxActionsEnum {
   ping = 'ping'
 }
 
-export enum TxActionCategoryEnum {
+export enum TransactionActionCategoryEnum {
   esdtNft = 'esdtNft',
   mex = 'mex',
   stake = 'stake',
@@ -81,7 +81,7 @@ export interface TokenArgumentType {
 
 export interface TxActionType {
   category: string;
-  name: TxActionsEnum;
+  name: TransactionActionsEnum;
   description?: string;
   arguments?: { [key: string]: any };
 }
@@ -97,7 +97,7 @@ export interface UnwrapperType {
   providerAvatar?: string;
 }
 
-export enum TransactionOperationActionType {
+export enum TransactionOperationActionTypeEnum {
   none = 'none',
   transfer = 'transfer',
   burn = 'burn',
@@ -128,7 +128,7 @@ export enum HiddenTransactionOperationType {
 }
 
 export interface OperationType {
-  action: TransactionOperationActionType;
+  action: TransactionOperationActionTypeEnum;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
   esdtType: NftEnumType | 'FungibleESDT';
   collection?: string;

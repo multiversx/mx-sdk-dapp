@@ -3,12 +3,12 @@ import { Progress } from 'UI/Progress';
 import { WithClassname } from '../../../types';
 import { useTransactionToast } from './hooks/useTransactionToast';
 import styles from './styles.scss';
-import { TransactionToastContent } from './TransactionToastContent';
-import { TransactionToastWrapper } from './TransactionToastWrapper';
 import {
   TransactionToastCustomizationProps,
   TransactionToastDefaultProps
-} from './types';
+} from './transactionToast.type';
+import { TransactionToastContent } from './TransactionToastContent';
+import { TransactionToastWrapper } from './TransactionToastWrapper';
 
 export type TransactionToastPropsType = {
   title?: string | React.ReactNode;

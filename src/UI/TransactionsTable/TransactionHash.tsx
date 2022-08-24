@@ -1,10 +1,10 @@
+import React from 'react';
 import classNames from 'classnames';
-import globalStyles from '../../assets/sass/main.scss';
-import { TransactionIcon } from './TransactionIcon';
+import globalStyles from 'assets/sass/main.scss';
+import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import { ExplorerLink } from '../ExplorerLink';
 import { Trim } from '../Trim';
-import React from 'react';
-import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import { TransactionIcon } from './TransactionIcon';
 
 type TransactionHashColumnProps = {
   transaction: ExtendedTransactionType;

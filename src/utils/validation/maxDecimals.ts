@@ -1,15 +1,14 @@
-import { denomination as configDenomination } from 'constants/index';
+import { DECIMALS } from 'constants/index';
 
-export const maxDecimals = (amount: string, customDenomination?: number) => {
-  const denomination =
-    customDenomination === undefined ? configDenomination : customDenomination;
+export const maxDecimals = (amount: string, customDecimals?: number) => {
+  const decimals = customDecimals === undefined ? DECIMALS : customDecimals;
   if (
-    amount !== undefined &&
+    amount != null &&
     amount.toString().indexOf('.') >= 0 &&
     (amount as any)
       .toString()
       .split('.')
-      .pop().length > denomination
+      .pop().length > decimals
   ) {
     return false;
   }
