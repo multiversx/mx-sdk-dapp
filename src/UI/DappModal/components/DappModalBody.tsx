@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import { WithClassnameType } from '../../types';
-import styles from '../dappModal.scss';
+import styles from '../dappModalStyles.scss';
 
 type DappModalBodyProps = {
   children?: React.ReactNode;

@@ -6,7 +6,7 @@ import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { safeRedirect } from 'utils';
-import styles from './signWithExtensionModal.scss';
+import styles from './signWithExtensionModalStyles.scss';
 
 export const SignWithExtensionModal = ({
   handleClose,

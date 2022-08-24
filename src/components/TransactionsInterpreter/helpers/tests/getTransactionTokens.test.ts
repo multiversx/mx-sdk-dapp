@@ -2,7 +2,7 @@ import {
   ServerTransactionType,
   TransactionActionCategoryEnum,
   TransactionActionsEnum
-} from 'types/serverTransactions';
+} from 'types/serverTransactions.types';
 import { getTransactionTokens } from '../getTransactionTokens';
 import { baseTransactionMock } from './base-transaction-mock';
 

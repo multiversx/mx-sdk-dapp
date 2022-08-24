@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { WithClassnameType } from '../../types';
-import styles from './loginButton.scss';
+import styles from './extensionLoginButtonStyles.scss';
 
 export interface ExtensionLoginButtonPropsType extends WithClassnameType {
   token?: string;

@@ -1,4 +1,4 @@
-import { TransactionActionsEnum } from 'types/serverTransactions';
+import { TransactionActionsEnum } from 'types/serverTransactions.types';
 
 export const baseTransactionMock = {
   blockHash: '',

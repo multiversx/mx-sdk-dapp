@@ -6,7 +6,7 @@ import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
-import styles from './unlockPage.scss';
+import styles from './unlockPageStyles.scss';
 
 export interface Props {
   title?: string;

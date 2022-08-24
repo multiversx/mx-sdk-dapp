@@ -2,7 +2,7 @@ import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   ServerTransactionType,
   TokenArgumentType
-} from 'types/serverTransactions';
+} from 'types/serverTransactions.types';
 import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';

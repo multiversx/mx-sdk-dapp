@@ -1,6 +1,6 @@
 import { DenominationConfig } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { defaultNetwork } from 'reduxStore/slices';
-import { ServerTransactionType } from 'types/serverTransactions';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import { denominate } from 'utils/operations/denominate';
 
 export function getDenominatedValue(

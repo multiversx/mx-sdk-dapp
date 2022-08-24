@@ -2,7 +2,7 @@ import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
-import { ServerTransactionType } from 'types/serverTransactions';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './TransactionRow';
 import styles from './transactionsTableStyles.scss';

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { getTransactionMethod } from 'components/TransactionsInterpreter/helpers/getTransactionMethod';
-import { ServerTransactionType } from 'types/serverTransactions';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import styles from './transactionsTableStyles.scss';
 
 export const TransactionMethod = ({

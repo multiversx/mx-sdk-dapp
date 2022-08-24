@@ -5,7 +5,7 @@ import { useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { SignStep } from './SignStep';
-import styles from './signWithDeviceModal.scss';
+import styles from './signWithDeviceModalStyles.scss';
 
 export const SignWithDeviceModal = ({
   handleClose,

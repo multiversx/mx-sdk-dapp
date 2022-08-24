@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo, useRef } from 'react';
+import classNames from 'classnames';
 import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import { storage } from 'utils/storage';
-import styles from './styles.scss';
 import { WithClassnameType } from '../types';
-import classNames from 'classnames';
+import styles from './progressStyles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 

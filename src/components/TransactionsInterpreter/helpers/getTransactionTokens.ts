@@ -1,4 +1,4 @@
-import { ServerTransactionType } from 'types/serverTransactions';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 
 export const getTransactionTokens = (transaction: ServerTransactionType) => {
   if (transaction.action) {

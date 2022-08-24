@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../types';
-import styles from './pageState.scss';
+import styles from './pageStateStyles.scss';
 
 export interface PageStateProps extends WithClassnameType {
   title?: React.ReactNode;

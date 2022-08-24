@@ -16,7 +16,7 @@ import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
 import { deleteCustomToast, getIsTransactionPending } from 'utils';
 import { WithClassnameType } from '../types';
-import styles from './styles.scss';
+import styles from './transactionsToastListStyles.scss';
 
 export interface TransactionsToastListPropsType extends WithClassnameType {
   toastProps?: any;

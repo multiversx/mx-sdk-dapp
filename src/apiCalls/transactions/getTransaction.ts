@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
-import { ServerTransactionType } from 'types/serverTransactions';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TRANSACTIONS_ENDPOINT } from '../endpoints';
 
 export const getTransactionsBuilder = (hash: string) => {

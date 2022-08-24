@@ -10,7 +10,7 @@ import { getOperationsMessages } from 'components/TransactionsInterpreter/helper
 import { getReceiptMessage } from 'components/TransactionsInterpreter/helpers/getReceiptMessage';
 import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
-import { ServerTransactionType } from 'types/serverTransactions';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 
 interface TransactionIconType {
   transaction: ServerTransactionType;

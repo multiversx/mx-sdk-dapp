@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import styles from './styles.scss';
-import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
 import classNames from 'classnames';
-import { ComponentTypeWithChildren } from '../types';
+import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
 import { WithClassnameType } from '../../../types';
+import { ComponentTypeWithChildren } from '../types';
+import styles from './styles.scss';
 
 interface CustomToastType extends WithClassnameType {
   onDelete: () => void;

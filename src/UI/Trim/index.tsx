@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
+import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 
-import styles from './styles.scss';
-import classNames from 'classnames';
 import { WithClassnameType } from '../types';
+import styles from './trimStyles.scss';
 
 export interface TrimType extends WithClassnameType {
   text: string;

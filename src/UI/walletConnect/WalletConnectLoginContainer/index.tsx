@@ -9,7 +9,7 @@ import { ModalContainer } from 'UI/ModalContainer';
 import { isMobileEnvironment } from 'utils';
 import { WithClassnameType } from '../../types';
 import { Pairinglist } from './PairingList';
-import styles from './walletConnectLoginContainer.scss';
+import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectLoginModalPropsType extends WithClassnameType {
   lead?: string;
