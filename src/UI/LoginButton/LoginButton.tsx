@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../types';
-import styles from './loginButton.scss';
+import styles from './loginButtonStyles.scss';
 
 type LoginButtonProps = {
   onLogin: () => void;

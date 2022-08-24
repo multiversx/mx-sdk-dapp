@@ -9,7 +9,7 @@ import { TransactionMethod } from './TransactionMethod';
 import { TransactionReceiver } from './TransactionReceiver';
 import { TransactionSender } from './TransactionSender';
 import { TransactionShardsTransition } from './TransactionShardsTransition';
-import styles from './transactionsTable.scss';
+import styles from './transactionsTableStyles.scss';
 
 export interface TransactionRowType {
   transaction: ExtendedTransactionType;

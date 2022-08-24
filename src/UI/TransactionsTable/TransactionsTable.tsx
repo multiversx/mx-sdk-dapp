@@ -5,7 +5,7 @@ import { parseTransactions } from 'components/TransactionsInterpreter/Transactio
 import { ServerTransactionType } from 'types/serverTransactions';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './TransactionRow';
-import styles from './transactionsTable.scss';
+import styles from './transactionsTableStyles.scss';
 
 interface TransactionsTableType extends WithClassnameType {
   transactions: ServerTransactionType[];

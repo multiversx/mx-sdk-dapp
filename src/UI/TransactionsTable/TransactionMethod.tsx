@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { getTransactionMethod } from 'components/TransactionsInterpreter/helpers/getTransactionMethod';
 import { ServerTransactionType } from 'types/serverTransactions';
-import styles from './transactionsTable.scss';
+import styles from './transactionsTableStyles.scss';
 
 export const TransactionMethod = ({
   transaction

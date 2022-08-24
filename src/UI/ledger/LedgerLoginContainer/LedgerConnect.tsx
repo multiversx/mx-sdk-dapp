@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../../types';
-import styles from './ledgerConnect.scss';
+import styles from './ledgerConnectStyles.scss';
 
 export const LedgerConnect = ({
   onClick,
