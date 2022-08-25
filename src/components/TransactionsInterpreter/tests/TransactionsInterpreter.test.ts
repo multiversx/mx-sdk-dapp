@@ -62,10 +62,10 @@ describe('transaction interpreter', () => {
       const result = processTransaction({
         transaction,
         address: 'erd1-my-address-hash',
-        denominationConfig: {
+        formatAmountConfig: {
           egldLabel: MAINNET_EGLD_LABEL,
-          denomination: 2,
-          decimals: 3,
+          decimals: 2,
+          digits: 3,
           showLabel: true,
           token: 'egld',
           showLastNonZeroDecimal: true
@@ -178,10 +178,10 @@ describe('transaction interpreter', () => {
         'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
         {
           networkAddress,
-          denominationConfig: {
+          formatAmountConfig: {
             egldLabel: MAINNET_EGLD_LABEL,
-            denomination: 2,
-            decimals: 3,
+            decimals: 2,
+            digits: 3,
             showLabel: true,
             token: 'egld',
             showLastNonZeroDecimal: true

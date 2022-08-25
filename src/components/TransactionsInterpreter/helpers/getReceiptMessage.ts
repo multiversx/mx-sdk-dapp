@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
-import { DIGITS, DECIMALS, REFUNDED_GAS } from 'constants/index';
+import { DECIMALS, DIGITS, REFUNDED_GAS } from 'constants/index';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { denominate } from 'utils/operations/denominate';
+import { formatAmount } from 'utils/operations/formatAmount';
 
 const getReceiptValue = (transaction: ServerTransactionType) => {
   if (!transaction.receipt?.value) {
@@ -9,13 +9,13 @@ const getReceiptValue = (transaction: ServerTransactionType) => {
   }
 
   if (transaction.receipt?.data === REFUNDED_GAS) {
-    const denominatedGas = denominate({
+    const formattedGas = formatAmount({
       input: transaction.receipt.value,
-      denomination: DECIMALS,
-      decimals: DIGITS,
+      decimals: DECIMALS,
+      digits: DIGITS,
       showLastNonZeroDecimal: true
     });
-    const gasRefunded = new BigNumber(denominatedGas)
+    const gasRefunded = new BigNumber(formattedGas)
       .times(transaction.gasPrice)
       .times(100);
 

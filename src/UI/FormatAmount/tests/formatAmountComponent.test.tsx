@@ -1,29 +1,29 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { MAINNET_EGLD_LABEL } from 'constants/index';
-import { DenominateType } from 'UI/types/denominate.types';
-import { Denominate } from '../index';
+import { MAINNET_EGLD_LABEL } from 'constants/network';
+import { FormatAmountType } from 'UI/types/formatAmount.types';
+import { FormatAmount } from '../FormatAmount';
 
-const renderComponent = (props: DenominateType) => {
-  const methods = render(<Denominate {...props} egldLabel='EGLD' />);
+const renderComponent = (props: FormatAmountType) => {
+  const methods = render(<FormatAmount {...props} egldLabel='EGLD' />);
 
-  return methods.getByTestId('denominateComponent');
+  return methods.getByTestId('formatAmountComponent');
 };
 
 const decimalsSelector = (component: HTMLElement) =>
-  component.querySelectorAll('span[data-testid=denominateDecimals]')[0]
+  component.querySelectorAll('span[data-testid=formatAmountDecimals]')[0]
     ?.textContent;
 
 const symbolSelector = (component: HTMLElement) =>
-  component.querySelectorAll('span[data-testid=denominateSymbol]').length;
+  component.querySelectorAll('span[data-testid=formatAmountSymbol]').length;
 
-describe('Denominate component when decimals = 2', () => {
+describe('Format amount component when digits = 2', () => {
   it('should show 2 non zero decimals ', () => {
     const props = {
       value: '9999979999800000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -37,7 +37,7 @@ describe('Denominate component when decimals = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -51,7 +51,7 @@ describe('Denominate component when decimals = 2', () => {
       value: '100000000000000',
       showLastNonZeroDecimal: true,
       showLabel: false,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -64,7 +64,7 @@ describe('Denominate component when decimals = 2', () => {
       value: '100000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -78,7 +78,7 @@ describe('Denominate component when decimals = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -91,7 +91,7 @@ describe('Denominate component when decimals = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: false,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
