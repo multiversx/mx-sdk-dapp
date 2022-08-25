@@ -1,11 +1,11 @@
-import { TokenPayment } from '@elrondnetwork/erdjs';
-import BigNumber from 'bignumber.js';
-import { DIGITS, DECIMALS } from 'constants/index';
-import { stringIsInteger } from 'utils/validation/stringIsInteger';
-import { pipe } from './pipe';
+import { DECIMALS, DIGITS } from 'constants/index';
+import { formatAmount } from './formatAmount';
 
-BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
+let deprecationMessageDisplayed = false;
 
+/**
+ * !!! This function is deprecated. Please use formatAmount instead.
+ * */
 export function denominate({
   input,
   denomination = DECIMALS,
@@ -21,122 +21,20 @@ export function denominate({
   showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
 }) {
-  if (!stringIsInteger(input, false)) {
-    throw new Error('Invalid input');
+  if (!deprecationMessageDisplayed) {
+    console.warn(
+      '!!! Be aware !!! The "denominate" function is deprecated. Please use "formatAmount" instead.'
+    );
+
+    deprecationMessageDisplayed = true;
   }
 
-  const isNegative = new BigNumber(input).isNegative();
-  let modInput = input;
-
-  if (isNegative) {
-    // remove - at start of input
-    modInput = input.substring(1);
-  }
-
-  return (
-    pipe(modInput as string)
-      // denominate
-      .then(() =>
-        TokenPayment.fungibleFromBigInteger(
-          '',
-          modInput as string,
-          denomination
-        ).toRationalNumber()
-      )
-
-      // format
-      .then((current) => {
-        const bnBalance = new BigNumber(current);
-
-        if (bnBalance.isZero()) {
-          return '0';
-        }
-        const balance = bnBalance.toString(10);
-        const [integerPart, decimalPart] = balance.split('.');
-        const bNdecimalPart = new BigNumber(decimalPart || 0);
-
-        const decimalPlaces = pipe(0)
-          .if(Boolean(decimalPart && showLastNonZeroDecimal))
-          .then(() => Math.max(decimalPart.length, decimals))
-
-          .if(bNdecimalPart.isZero() && !showLastNonZeroDecimal)
-          .then(0)
-
-          .if(Boolean(decimalPart && !showLastNonZeroDecimal))
-          .then(() => Math.min(decimalPart.length, decimals))
-
-          .valueOf();
-
-        const shownDecimalsAreZero =
-          decimalPart &&
-          decimals >= 1 &&
-          decimals <= decimalPart.length &&
-          bNdecimalPart.isGreaterThan(0) &&
-          new BigNumber(decimalPart.substring(0, decimals)).isZero();
-
-        const formatted = bnBalance.toFormat(decimalPlaces);
-
-        const formattedBalance = pipe(balance)
-          .if(addCommas)
-          .then(formatted)
-
-          .if(Boolean(shownDecimalsAreZero))
-          .then((current) => {
-            const integerPartZero = new BigNumber(integerPart).isZero();
-            const [numericPart, decimalSide] = current.split('.');
-
-            const zeroPlaceholders = new Array(decimals - 1).fill(0);
-            const zeros = [...zeroPlaceholders, 0].join('');
-            const minAmount = [...zeroPlaceholders, 1].join(''); // 00..1
-
-            if (!integerPartZero) {
-              return `${numericPart}.${zeros}`;
-            }
-
-            if (showIsLessThanDecimalsLabel) {
-              return `<${numericPart}.${minAmount}`;
-            }
-
-            if (!showLastNonZeroDecimal) {
-              return numericPart;
-            }
-
-            return `${numericPart}.${decimalSide}`;
-          })
-
-          .if(Boolean(!shownDecimalsAreZero && decimalPart))
-          .then((current) => {
-            const [numericPart] = current.split('.');
-            let decimalSide = decimalPart.substring(0, decimalPlaces);
-
-            if (showLastNonZeroDecimal) {
-              const noOfZerosAtEnd = decimals - decimalSide.length;
-
-              if (noOfZerosAtEnd > 0) {
-                const zeroPadding = Array(noOfZerosAtEnd)
-                  .fill(0)
-                  .join('');
-                decimalSide = `${decimalSide}${zeroPadding}`;
-                return `${numericPart}.${decimalSide}`;
-              }
-
-              return current;
-            }
-
-            if (!decimalSide) {
-              return numericPart;
-            }
-
-            return `${numericPart}.${decimalSide}`;
-          })
-
-          .valueOf();
-
-        return formattedBalance;
-      })
-      .if(isNegative)
-      .then((current) => `-${current}`)
-
-      .valueOf()
-  );
+  return formatAmount({
+    input,
+    decimals: denomination,
+    addCommas,
+    digits: decimals,
+    showIsLessThanDecimalsLabel,
+    showLastNonZeroDecimal
+  });
 }
