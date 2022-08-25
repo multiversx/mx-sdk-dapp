@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import { MAINNET_EGLD_LABEL } from 'constants/network';
-import { FormatAmountPropsType } from 'UI/types/formatAmount.types';
+import { FormatAmountPropsType } from 'UI/FormatAmount/formatAmount.types';
 import { FormatAmount } from '../FormatAmount';
 
 const renderComponent = (props: FormatAmountPropsType) => {

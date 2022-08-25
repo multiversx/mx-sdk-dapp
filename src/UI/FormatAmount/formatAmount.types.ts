@@ -1,4 +1,4 @@
-import { WithClassnameType } from './withClassname.types';
+import { WithClassnameType } from '../types/withClassname.types';
 
 export interface FormatAmountPropsType extends WithClassnameType {
   value: string;
