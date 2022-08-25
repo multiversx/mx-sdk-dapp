@@ -1,19 +1,11 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
 import { DECIMALS, DIGITS } from 'constants/index';
+import { FormatAmountType } from 'types/balance.types';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { pipe } from './pipe';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
-
-type FormatAmountType = {
-  input: string;
-  decimals?: number;
-  digits?: number;
-  showIsLessThanDecimalsLabel?: boolean;
-  showLastNonZeroDecimal?: boolean;
-  addCommas?: boolean;
-};
 
 export function formatAmount({
   input,
