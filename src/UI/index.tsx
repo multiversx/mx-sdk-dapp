@@ -1,5 +1,6 @@
 export * as DappCorePages from './pages';
 export * from './Denominate';
+export * from './FormatAmount';
 export * from './ExplorerLink';
 export * from './extension/ExtensionLoginButton';
 export * from './ledger/LedgerLoginButton';
