@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import {
   useCheckTransactionStatus,
@@ -30,4 +31,11 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
     onMessage,
     address
   });
+
+  useEffect(() => {
+    const interval = setInterval(onMessage, 30000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [onMessage]);
 }
