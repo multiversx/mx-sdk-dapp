@@ -23,7 +23,7 @@ describe('Format amount component when digits = 2', () => {
       value: '9999979999800000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -37,7 +37,7 @@ describe('Format amount component when digits = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -51,7 +51,7 @@ describe('Format amount component when digits = 2', () => {
       value: '100000000000000',
       showLastNonZeroDecimal: true,
       showLabel: false,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -64,7 +64,7 @@ describe('Format amount component when digits = 2', () => {
       value: '100000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -78,7 +78,7 @@ describe('Format amount component when digits = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: true,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
@@ -91,7 +91,7 @@ describe('Format amount component when digits = 2', () => {
       value: '9000000000000000000000000',
       showLastNonZeroDecimal: false,
       showLabel: false,
-      decimals: 2,
+      digits: 2,
       egldLabel: MAINNET_EGLD_LABEL
     };
 
