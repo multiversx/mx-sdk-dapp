@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { FormatAmountType } from 'UI/types/denominate.types';
-import { MAINNET_EGLD_LABEL } from '../../../constants';
+import { MAINNET_EGLD_LABEL } from 'constants/network';
+import { DenominateType } from 'UI/types/denominate.types';
 import { FormatAmount } from '../FormatAmount';
 
-const renderComponent = (props: FormatAmountType) => {
+const renderComponent = (props: DenominateType) => {
   const methods = render(<FormatAmount {...props} egldLabel='EGLD' />);
 
   return methods.getByTestId('formatAmountComponent');
