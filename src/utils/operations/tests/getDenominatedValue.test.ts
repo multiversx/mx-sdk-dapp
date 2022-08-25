@@ -1,6 +1,6 @@
 import { baseTransactionMock } from 'components/TransactionsInterpreter/helpers/tests/base-transaction-mock';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { getDenominatedValue } from '../getDenominatedValue';
+import { getFormattedAmount } from '../getFormattedAmount';
 
 describe('getDenominatedValue', () => {
   describe('get transaction denominated value using default denomination config', () => {
@@ -11,7 +11,7 @@ describe('getDenominatedValue', () => {
       };
       const output = '0.102';
 
-      const denominatedValue = getDenominatedValue(transaction);
+      const denominatedValue = getFormattedAmount(transaction);
 
       expect(denominatedValue).toEqual(output);
     });
@@ -23,7 +23,7 @@ describe('getDenominatedValue', () => {
       };
       const output = '0';
 
-      const denominatedValue = getDenominatedValue(transaction);
+      const denominatedValue = getFormattedAmount(transaction);
 
       expect(denominatedValue).toEqual(output);
     });
@@ -42,7 +42,7 @@ describe('getDenominatedValue', () => {
       };
       const output = '10200000000000';
 
-      const denominatedValue = getDenominatedValue(
+      const denominatedValue = getFormattedAmount(
         transaction,
         customDenominationConfig
       );
@@ -57,7 +57,7 @@ describe('getDenominatedValue', () => {
       };
       const output = '1022133.4511';
 
-      const denominatedValue = getDenominatedValue(
+      const denominatedValue = getFormattedAmount(
         transaction,
         customDenominationConfig
       );

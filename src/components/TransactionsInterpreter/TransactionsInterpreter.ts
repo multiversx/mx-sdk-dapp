@@ -3,7 +3,7 @@ import {
   ServerTransactionType,
   TokenArgumentType
 } from 'types/serverTransactions.types';
-import { getDenominatedValue } from 'utils/operations/getDenominatedValue';
+import { getFormattedAmount } from 'utils/operations/getFormattedAmount';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
 import { getNetworkLink } from './helpers/getNetworkLink';
@@ -83,8 +83,8 @@ export function processTransaction({
     tokenLabel = txToken.ticker ?? tokenLabel;
   }
 
-  const denominatedValue = getDenominatedValue(transaction, denominationConfig);
-  const fullDenominatedValue = getDenominatedValue(transaction, {
+  const denominatedValue = getFormattedAmount(transaction, denominationConfig);
+  const fullDenominatedValue = getFormattedAmount(transaction, {
     ...denominationConfig,
     showLastNonZeroDecimal: true
   });

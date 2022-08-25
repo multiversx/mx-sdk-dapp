@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { DIGITS, DECIMALS, REFUNDED_GAS } from 'constants/index';
-import { denominate } from 'utils/operations/denominate';
+import { DECIMALS, DIGITS, REFUNDED_GAS } from 'constants/index';
+import { formatAmount } from 'utils/operations/formatAmount';
 import { getReceiptMessage } from '../getReceiptMessage';
 import { baseTransactionMock } from './base-transaction-mock';
 
@@ -25,10 +25,10 @@ describe('getReceiptMessage', () => {
       }
     };
     const result = getReceiptMessage(transaction);
-    const denominatedGas = denominate({
+    const denominatedGas = formatAmount({
       input: transaction.receipt.value,
-      denomination: DECIMALS,
-      decimals: DIGITS,
+      decimals: DECIMALS,
+      digits: DIGITS,
       showLastNonZeroDecimal: true
     });
     const gasRefunded = new BigNumber(denominatedGas)

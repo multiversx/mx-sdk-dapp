@@ -1,9 +1,9 @@
 import { DenominationConfig } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { defaultNetwork } from 'reduxStore/slices';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { denominate } from 'utils/operations/denominate';
+import { formatAmount } from './formatAmount';
 
-export function getDenominatedValue(
+export function getFormattedAmount(
   transaction: ServerTransactionType,
   { decimals, denomination, showLastNonZeroDecimal }: DenominationConfig = {
     decimals: Number(defaultNetwork.decimals),
@@ -13,10 +13,10 @@ export function getDenominatedValue(
 ) {
   const value = transaction.value;
 
-  return denominate({
+  return formatAmount({
     input: value,
-    denomination,
-    decimals,
+    decimals: denomination,
+    digits: decimals,
     showLastNonZeroDecimal
   });
 }
