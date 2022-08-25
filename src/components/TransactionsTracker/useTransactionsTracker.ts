@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import {
   useCheckTransactionStatus,
@@ -12,6 +13,8 @@ export interface TransactionsTrackerType {
 }
 
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
+  const timeoutRef = useRef<NodeJS.Timeout>();
+
   const { address } = useGetAccountInfo();
   const checkTransactionStatus = useCheckTransactionStatus();
   const checkTransactionStatusCallback = useClosureRef(checkTransactionStatus);
@@ -30,4 +33,11 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
     onMessage,
     address
   });
+
+  useEffect(() => {
+    timeoutRef.current = setTimeout(() => onMessage(), 30000);
+    return () => {
+      clearInterval(timeoutRef.current);
+    };
+  }, [timeoutRef.current, onMessage]);
 }
