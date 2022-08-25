@@ -1,6 +1,6 @@
 import { WithClassnameType } from './withClassname.types';
 
-export interface FormatAmountType extends WithClassnameType {
+export interface FormatAmountPropsType extends WithClassnameType {
   value: string;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
