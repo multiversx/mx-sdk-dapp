@@ -1,6 +1,6 @@
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { LoginMethodsEnum } from 'types';
-import { DappCoreWCV2CustomMethodsEnum } from 'types/enums';
+import { DappCoreWCV2CustomMethodsEnum } from 'types/enums.types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 
 export function useCancelWalletConnectAction(action?: string) {

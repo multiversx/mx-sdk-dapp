@@ -1,15 +1,13 @@
-import { PersistConfig } from 'redux-persist/es/types';
-import { ReducersEnum } from 'types/reducers';
 import { createMigrate, persistReducer } from 'redux-persist';
+import { PersistConfig } from 'redux-persist/es/types';
+import reduxPersistLocalStorage from 'redux-persist/lib/storage';
+import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
 import getRootReducer from 'reduxStore/reducers';
 import { defaultNetwork } from 'reduxStore/slices';
 import toasts from 'reduxStore/slices/toastsSlice';
-import transactions from 'reduxStore/slices/transactionsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
-import {
-  getPersistLocalStorage,
-  getPersistSessionStorage
-} from './persistStorage';
+import transactions from 'reduxStore/slices/transactionsSlice';
+import { ReducersEnum } from 'types/reducers.types';
 
 const migrations: any = {
   2: (state: any) => {
@@ -24,7 +22,7 @@ function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
   return {
     key,
     version: 1,
-    storage: getPersistSessionStorage(),
+    storage: reduxPersistSessionStorage,
     blacklist
   };
 }
@@ -43,7 +41,7 @@ const toastsReducerPersistConfig = getSessionStoragePersistConfig(
 const localStoragePersistConfig: PersistConfig<any> = {
   key: 'dapp-core-store',
   version: 2,
-  storage: getPersistLocalStorage(),
+  storage: reduxPersistLocalStorage,
   whitelist: [
     ReducersEnum.account,
     ReducersEnum.loginInfo,

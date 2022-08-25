@@ -1,6 +1,7 @@
 import { Address } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
+import { AccountType } from 'types/account.types';
 import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
 
@@ -9,7 +10,6 @@ import {
   logoutAction,
   LoginActionPayloadType
 } from '../commonActions';
-import { AccountType } from 'types';
 
 export interface LedgerAccountType {
   index: number;
@@ -37,7 +37,10 @@ export interface AccountInfoSliceType {
 export const emptyAccount: AccountType = {
   balance: '...',
   address: '',
-  nonce: 0
+  nonce: 0,
+  txCount: 0,
+  scrCount: 0,
+  claimableRewards: '0'
 };
 
 const initialState: AccountInfoSliceType = {

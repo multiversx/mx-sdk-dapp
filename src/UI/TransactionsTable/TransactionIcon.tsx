@@ -1,19 +1,19 @@
 import React from 'react';
 import { faBan } from '@fortawesome/free-solid-svg-icons/faBan';
-import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { faHourglass } from '@fortawesome/free-solid-svg-icons/faHourglass';
+import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { UITransactionType } from 'components/TransactionsInterpreter/helpers/types';
-import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
-import { getOperationsMessages } from 'components/TransactionsInterpreter/helpers/getOperationsMessages';
-import { getReceiptMessages } from 'components/TransactionsInterpreter/helpers/getReceiptMessages';
-import { TransactionServerStatusesEnum } from '../../types';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 import lodash from 'lodash';
+import globalStyles from 'assets/sass/main.scss';
+import { getOperationsMessages } from 'components/TransactionsInterpreter/helpers/getOperationsMessages';
+import { getReceiptMessage } from 'components/TransactionsInterpreter/helpers/getReceiptMessage';
+import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 
 interface TransactionIconType {
-  transaction: UITransactionType;
+  transaction: ServerTransactionType;
 }
 
 export const TransactionIcon = ({ transaction }: TransactionIconType) => {
@@ -24,7 +24,7 @@ export const TransactionIcon = ({ transaction }: TransactionIconType) => {
     new Set([
       ...getScResultsMessages(transaction),
       ...getOperationsMessages(transaction),
-      ...getReceiptMessages(transaction)
+      getReceiptMessage(transaction)
     ])
   );
 

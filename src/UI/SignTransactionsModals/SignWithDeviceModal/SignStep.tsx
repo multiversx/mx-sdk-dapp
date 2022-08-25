@@ -6,20 +6,21 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 
-import { ActiveLedgerTransactionType, MultiSignTxType } from 'types';
+import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
-import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
-import globalStyles from 'assets/sass/main.scss';
+import { getEgldLabel, isTokenTransfer } from 'utils';
+import { formatAmount } from '../../../utils/operations/formatAmount';
+import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
-import { WithClassname } from '../../types';
 
-export interface SignStepType extends WithClassname {
+export interface SignStepType extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;
   handleClose: () => void;
@@ -29,7 +30,7 @@ export interface SignStepType extends WithClassname {
   title?: React.ReactNode;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
-  allTransactions: MultiSignTxType[];
+  allTransactions: MultiSignTransactionType[];
   isLastTransaction: boolean;
 }
 
@@ -91,14 +92,14 @@ export const SignStep = ({
     tokenId: currentTransaction.transactionTokenInfo.tokenId
   });
 
-  const denominatedAmount = denominate({
+  const denominatedAmount = formatAmount({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
-    denomination: isTokenTransaction
+    decimals: isTokenTransaction
       ? tokenDenomination
       : Number(network.egldDenomination),
-    decimals: Number(network.decimals),
+    digits: Number(network.decimals),
     showLastNonZeroDecimal: false,
     addCommas: true
   });

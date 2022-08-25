@@ -1,4 +1,4 @@
-import { gasPerDataByte, gasPriceModifier } from 'constants/index';
+import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
 import { calculateFeeLimit } from '../calculateFeeLimit';
 
 describe('calculateFeeLimit tests', () => {
@@ -8,8 +8,8 @@ describe('calculateFeeLimit tests', () => {
       gasPrice: '1000000000',
       data: 'testdata',
       chainId: 'T',
-      gasPerDataByte,
-      gasPriceModifier
+      gasPerDataByte: String(GAS_PER_DATA_BYTE),
+      gasPriceModifier: String(GAS_PRICE_MODIFIER)
     });
     expect(feeLimit).toBe('62000000000000');
   });

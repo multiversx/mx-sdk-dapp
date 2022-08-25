@@ -1,9 +1,9 @@
 import React from 'react';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import globalStyles from 'assets/sass/main.scss';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
-interface PairingListPropsType extends WithClassname {
+interface PairingListPropsType extends WithClassnameType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   removeExistingPairing: (topic: string) => Promise<void>;
   activePairings: PairingTypes.Struct[];
@@ -20,7 +20,7 @@ export const Pairinglist = ({
     pairsContainer: className,
     leadText: '',
     pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
-    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.positionRelative} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2} ${globalStyles.p2}`,
+    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.positionRelative} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.textLeft} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2} ${globalStyles.p2}`,
     pairImage: globalStyles.pairImage,
     pairRemove: globalStyles.pairRemove,
     pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
@@ -50,11 +50,13 @@ export const Pairinglist = ({
             </div>
             {pairing.peerMetadata && (
               <>
-                <img
-                  src={pairing.peerMetadata.icons[0]}
-                  alt={pairing.peerMetadata.name}
-                  className={classes.pairImage}
-                />
+                {pairing.peerMetadata?.icons?.[0] && (
+                  <img
+                    src={pairing.peerMetadata.icons[0]}
+                    alt={pairing.peerMetadata.name}
+                    className={classes.pairImage}
+                  />
+                )}
                 <div className={classes.pairDetails}>
                   <strong>{pairing.peerMetadata.name}</strong>
                   <span>{pairing.peerMetadata.description}</span>

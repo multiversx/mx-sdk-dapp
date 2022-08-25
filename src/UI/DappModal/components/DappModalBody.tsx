@@ -1,11 +1,11 @@
 import React from 'react';
-import styles from '../dapp-modal.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
+import styles from '../dappModalStyles.scss';
 
 type DappModalBodyProps = {
   children?: React.ReactNode;
-} & WithClassname;
+} & WithClassnameType;
 
 export const DappModalBody: React.FC<DappModalBodyProps> = ({
   className,

@@ -4,7 +4,7 @@ import { Transaction } from '@elrondnetwork/erdjs';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import {
   ActiveLedgerTransactionType,
-  MultiSignTxType,
+  MultiSignTransactionType,
   ScamInfoType
 } from 'types';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
@@ -20,7 +20,9 @@ export interface UseSignMultipleTransactionsPropsType {
   onSignTransaction: (transaction: Transaction) => Promise<Transaction>;
   onTransactionsSignSuccess: (transactions: Transaction[]) => void;
   onTransactionsSignError: (errorMessage: string) => void;
-  onGetScamAddressData?: ((address: string) => Promise<ScamInfoType>) | null;
+  onGetScamAddressData?:
+    | ((address: string) => Promise<{ scamInfo?: ScamInfoType }>)
+    | null;
 }
 
 interface VerifiedAddressesType {
@@ -31,7 +33,7 @@ let verifiedAddresses: VerifiedAddressesType = {};
 type DeviceSignedTransactions = Record<number, Transaction>;
 
 export interface UseSignMultipleTransactionsReturnType {
-  allTransactions: MultiSignTxType[];
+  allTransactions: MultiSignTransactionType[];
   onSignTransaction: () => void;
   onNext: () => void;
   onPrev: () => void;

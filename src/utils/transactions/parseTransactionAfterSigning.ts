@@ -2,7 +2,7 @@ import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { newTransaction } from 'models';
 import { SignedTransactionType } from 'types';
-import { TransactionServerStatusesEnum } from 'types/enums';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
 
 export function parseTransactionAfterSigning(
   signedTransaction: Transaction | PlainSignedTransaction

@@ -8,11 +8,11 @@ import { PageState } from 'UI/PageState';
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
 const ledgerWaitingText = 'Waiting for device';
 
-interface LedgerLoginContainerPropsType extends WithClassname {
+interface LedgerLoginContainerPropsType extends WithClassnameType {
   callbackRoute?: string;
   wrapContentInsideModal?: boolean;
   token?: string;

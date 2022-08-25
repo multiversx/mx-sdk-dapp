@@ -1,12 +1,12 @@
-import { WithClassname } from './with-classname';
+import { WithClassnameType } from './withClassname.types';
 
-export interface DenominateType extends WithClassname {
+export interface FormatAmountType extends WithClassnameType {
   value: string;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
   token?: string;
+  digits?: number;
   decimals?: number;
-  denomination?: number;
   egldLabel?: string;
   'data-testid'?: string;
 }

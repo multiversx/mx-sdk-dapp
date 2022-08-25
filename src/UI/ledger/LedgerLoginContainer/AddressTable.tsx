@@ -5,17 +5,17 @@ import {
   faCircleNotch
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
+import { WithClassnameType } from '../../types';
 import { AddressRow } from './AddressRow';
-import classNames from 'classnames';
-import { WithClassname } from '../../types';
 
-const ledgerWaitingText = 'Waiting for device';
+const LEDGER_WAITING_TEXT = 'Waiting for device';
 
-const addressesPerPage = 10;
+const ADDRESSES_PER_PAGE = 10;
 
-interface AddressTablePropsType extends WithClassname {
+interface AddressTablePropsType extends WithClassnameType {
   loading: boolean;
   accounts: string[];
   startIndex: number;
@@ -54,7 +54,7 @@ export const AddressTable = ({
       <PageState
         icon={faCircleNotch}
         iconClass={`fa-spin ${globalStyles.textPrimary}`}
-        title={ledgerWaitingText}
+        title={LEDGER_WAITING_TEXT}
       />
     );
   }
@@ -74,7 +74,7 @@ export const AddressTable = ({
                 </thead>
                 <tbody data-testid='addressesTable'>
                   {accounts.map((address, index) => {
-                    const key = index + startIndex * addressesPerPage;
+                    const key = index + startIndex * ADDRESSES_PER_PAGE;
                     return (
                       <AddressRow
                         key={key}

@@ -1,3 +1,13 @@
-export const configEndpoint = 'dapp/config';
-export const networkConfigEndpoint = 'network/config';
-export const addressEndpoint = 'address';
+export const CONFIG_ENDPOINT = 'dapp/config';
+export const NETWORK_CONFIG_ENDPOINT = 'network/config';
+export const ADDRESS_ENDPOINT = 'address';
+export const ACCOUNTS_ENDPOINT = 'accounts';
+export const TRANSACTIONS_ENDPOINT = 'transactions';
+export const TRANSACTIONS_COUNT_ENDPOINT = 'transactions/count';
+export const TOKENS_ENDPOINT = 'transactions';
+export const BLOCKS_ENDPOINT = 'blocks';
+export const NODES_ENDPOINT = 'nodes';
+export const IDENTITIES_ENDPOINT = 'identities';
+export const COLLECTIONS_ENDPOINT = 'collections';
+export const NFTS_ENDPOINT = 'nfts';
+export const PROVIDERS_ENDPOINT = 'providers';

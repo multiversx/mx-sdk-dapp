@@ -1,16 +1,16 @@
-import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
 import React, { useMemo } from 'react';
-import { StatusIconType } from 'components/TransactionStatusToast/types';
-import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from '../../../constants';
-import { WithClassname } from '../../types';
+import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
+import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
+import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from 'constants/index';
+import { WithClassnameType } from '../../types';
 
-export type TxStatusToastProps = {
+export type TransactionStatusToastType = {
   signError: string | null;
   canceledTransactionsMessage: string | null;
   onDelete: () => void;
-} & WithClassname;
+} & WithClassnameType;
 
-export const TxStatusToast: React.FC<TxStatusToastProps> = ({
+export const TransactionStatusToast: React.FC<TransactionStatusToastType> = ({
   signError,
   canceledTransactionsMessage,
   onDelete,

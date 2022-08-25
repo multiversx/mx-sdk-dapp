@@ -12,7 +12,7 @@ import {
   updateLedgerAccount
 } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums.types';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
 import { getIsLoggedIn } from '../../utils';
 
@@ -103,7 +103,7 @@ export function useLedgerLogin({
     optionalRedirect(callbackRoute, onLoginRedirect);
   }
 
-  const onLoginFailed = (err: any, customMessage: string = '') => {
+  const onLoginFailed = (err: any, customMessage = '') => {
     const { errorMessage } = getLedgerErrorCodes(err);
 
     if (errorMessage) {

@@ -1,11 +1,11 @@
 import BigNumber from 'bignumber.js';
-import { TransactionTypesEnum, MultiEsdtTxType } from 'types';
+import { TransactionTypesEnum, MultiEsdtTransactionType } from 'types';
 import { decodePart } from 'utils/decoders/decodePart';
 import { getAllStringOccurrences } from '../getAllStringOccurrences';
 
 // TODO: add tests
 export function parseMultiEsdtTransferData(data?: string) {
-  const transactions: MultiEsdtTxType[] = [];
+  const transactions: MultiEsdtTransactionType[] = [];
   let contractCallDataIndex = 0;
   try {
     if (
@@ -18,7 +18,7 @@ export function parseMultiEsdtTransferData(data?: string) {
 
         let itemIndex = 0;
         for (let txIndex = 0; txIndex < txCount; txIndex++) {
-          const transaction: MultiEsdtTxType = {
+          const transaction: MultiEsdtTransactionType = {
             type: TransactionTypesEnum.nftTransaction,
             data: '',
             receiver

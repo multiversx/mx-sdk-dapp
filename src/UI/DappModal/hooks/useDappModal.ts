@@ -8,7 +8,7 @@ import {
   setDappModalConfig,
   setDappModalVisibility
 } from 'reduxStore/slices/dappModalsSlice';
-import { DappModalConfig, DappModalInteractionConfig } from '../types';
+import { DappModalConfig, DappModalInteractionConfig } from '../dappModal.types';
 
 type UseDappModalProps = {
   config?: DappModalInteractionConfig;

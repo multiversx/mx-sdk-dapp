@@ -4,7 +4,7 @@ import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
-import { useSelector, useDispatch } from 'reduxStore/DappProviderContext';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   egldLabelSelector,
   transactionsToSignSelector
@@ -17,12 +17,12 @@ import {
 import {
   ActiveLedgerTransactionType,
   LoginMethodsEnum,
-  MultiSignTxType,
+  MultiSignTransactionType,
   TransactionBatchStatusesEnum
 } from 'types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
-import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { safeRedirect } from 'utils/redirect';
+import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -32,7 +32,7 @@ export interface UseSignTransactionsWithDevicePropsType {
 type DeviceSignedTransactions = Record<number, Transaction>;
 
 export interface UseSignTransactionsWithDeviceReturnType {
-  allTransactions: MultiSignTxType[];
+  allTransactions: MultiSignTransactionType[];
   onSignTransaction: () => void;
   onNext: () => void;
   onPrev: () => void;

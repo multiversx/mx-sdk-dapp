@@ -20,7 +20,8 @@
     "publish-yalc": "yarn build && cd dist && yalc publish",
     "watch": "yarn node esbuild-watch.js && yarn build:types -- --watch",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.2",
@@ -124,9 +125,8 @@
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
     "@elrondnetwork/erdjs-hw-provider": "2.0.4",
     "@elrondnetwork/erdjs-network-providers": "0.1.6",
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-alpha.9",
+    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.1",
-    "@react-native-async-storage/async-storage": "1.17.9",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",

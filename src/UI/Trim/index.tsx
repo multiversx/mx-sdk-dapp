@@ -1,11 +1,11 @@
 import React, { useCallback } from 'react';
+import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 
-import styles from './styles.scss';
-import classNames from 'classnames';
-import { WithClassname } from '../types';
+import { WithClassnameType } from '../types';
+import styles from './trimStyles.scss';
 
-export interface TrimType extends WithClassname {
+export interface TrimType extends WithClassnameType {
   text: string;
   dataTestId?: string;
   color?: 'muted' | 'secondary' | string;

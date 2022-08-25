@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from 'UI/TokenDetails/TokenSymbol/token-symbol.scss';
 import classNames from 'classnames';
-import { WithClassname } from '../../types';
+import styles from 'UI/TokenDetails/TokenSymbol/tokenSymbol.scss';
+import { WithClassnameType } from '../../types';
 
 export const Simple = ({
   children,
   className = 'dapp-simple-token-symbol'
-}: { children: React.ReactNode } & WithClassname) => (
+}: { children: React.ReactNode } & WithClassnameType) => (
   <div className={classNames(styles.tokenSymbol, className)}>{children}</div>
 );
 
@@ -17,7 +17,7 @@ export const Combined = ({
 }: {
   small: boolean | undefined;
   children: React.ReactNode;
-} & WithClassname) => (
+} & WithClassnameType) => (
   <div
     className={classNames(
       styles.tokenSymbolCombined,

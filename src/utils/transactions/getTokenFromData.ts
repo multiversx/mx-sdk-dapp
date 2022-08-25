@@ -1,6 +1,6 @@
 import { Address } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
-import { TransactionTypesEnum } from 'types/enums';
+import { TransactionTypesEnum } from 'types/enums.types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { decodePart } from 'utils/decoders/decodePart';
 

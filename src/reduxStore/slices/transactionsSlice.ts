@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 import {
-  TransactionBatchStatusesEnum,
-  TransactionServerStatusesEnum
-} from 'types/enums';
-import {
   CustomTransactionInformation,
   SignedTransactionsBodyType,
   SignedTransactionsType,
   SignedTransactionType,
   TransactionsToSignType
 } from 'types';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
 import {
   getIsTransactionFailed,
   getIsTransactionSuccessful

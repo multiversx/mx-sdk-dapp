@@ -3,14 +3,14 @@ import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
 import {
+  EngineTypes,
   WalletConnectProvider,
-  WalletConnectProviderV2,
-  EngineTypes
+  WalletConnectProviderV2
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
-import { ledgerContractDataEnabledValue } from 'constants/index';
+import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
 import { IDappProvider } from 'types';
-import { LoginMethodsEnum } from 'types/enums';
+import { LoginMethodsEnum } from 'types/enums.types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
@@ -46,7 +46,7 @@ export const getLedgerConfiguration = async (
   }
   const hwApp: IHWElrondApp = (initializedHwWalletP as any).hwApp;
   const { contractData, version } = await hwApp.getAppConfiguration();
-  const dataEnabled = contractData === ledgerContractDataEnabledValue;
+  const dataEnabled = contractData === LEDGER_CONTRACT_DATA_ENABLED_VALUE;
   return { version, dataEnabled };
 };
 

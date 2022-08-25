@@ -1,7 +1,7 @@
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
-} from 'types/enums';
+} from 'types/enums.types';
 
 export const pendingBatchTransactionsStates = [
   TransactionBatchStatusesEnum.sent

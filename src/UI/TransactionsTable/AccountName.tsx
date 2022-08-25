@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Trim } from '../Trim';
-import { AssetType } from 'components/TransactionsInterpreter/helpers/types';
-import globalStyles from 'assets/sass/main.scss';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { AssetType } from 'types/account.types';
+import { Trim } from '../Trim';
 
 export type AccountNamePropsType = {
   address: string;

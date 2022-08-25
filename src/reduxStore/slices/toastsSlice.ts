@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transactionStatus';
 import { ToastsEnum } from 'types';
-import { logoutAction } from '../commonActions';
 import {
   CustomToastType,
   FailTransactionToastType,
   TransactionToastType
-} from 'types/toasts';
+} from 'types/toasts.types';
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
-import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transaction-status';
+import { logoutAction } from '../commonActions';
 
 export interface ToastsSliceState {
   customToasts: CustomToastType[];

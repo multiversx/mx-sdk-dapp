@@ -1,11 +1,14 @@
 import React from 'react';
-import { TxStatusToast, TxStatusToastProps } from './TxStatusToast';
-import { SignPropsType } from 'UI/SignTransactionsModals/types/sign-transactions-modals';
 import {
   useGetAccountProvider,
   useGetSignTransactionsError,
   useSignTransactions
 } from 'hooks';
+import { SignPropsType } from 'UI/SignTransactionsModals/types/signTransactionsModals.types';
+import {
+  TransactionStatusToast,
+  TransactionStatusToastType
+} from './TransactionStatusToast';
 
 type ExtraConfirmationScreenProps = {
   Screen?: (signProps: SignPropsType) => JSX.Element;
@@ -51,7 +54,7 @@ export const ConfirmationScreen: React.FC<ExtraConfirmationScreenProps> = ({
     verifyReceiverScam
   };
 
-  const transactionStatusToastType: TxStatusToastProps = {
+  const transactionStatusToastProps: TransactionStatusToastType = {
     signError,
     canceledTransactionsMessage,
     onDelete: handleClose
@@ -65,7 +68,7 @@ export const ConfirmationScreen: React.FC<ExtraConfirmationScreenProps> = ({
   }
 
   return shouldShowTransactionStatusToast ? (
-    <TxStatusToast {...transactionStatusToastType} />
+    <TransactionStatusToast {...transactionStatusToastProps} />
   ) : (
     <Screen {...signProps} />
   );

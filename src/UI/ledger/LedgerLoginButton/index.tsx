@@ -2,9 +2,9 @@ import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import { WithClassname } from '../../types';
+import { WithClassnameType } from '../../types';
 
-export interface LedgerLoginButtonPropsType extends WithClassname {
+export interface LedgerLoginButtonPropsType extends WithClassnameType {
   token?: string;
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;

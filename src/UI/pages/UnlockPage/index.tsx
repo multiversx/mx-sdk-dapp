@@ -1,12 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
-import styles from './unlock-page.scss';
-import classNames from 'classnames';
+import styles from './unlockPageStyles.scss';
 
 export interface Props {
   title?: string;

@@ -4,7 +4,7 @@ import { store } from 'reduxStore/store';
 import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
-} from 'types/transactions';
+} from 'types/transactions.types';
 
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType

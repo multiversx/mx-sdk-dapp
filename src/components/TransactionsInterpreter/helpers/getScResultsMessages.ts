@@ -1,6 +1,8 @@
-import { TransactionType } from './types';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 
-export default function getScResultsMessages(transaction: TransactionType) {
+export default function getScResultsMessages(
+  transaction: ServerTransactionType
+) {
   return (
     transaction?.results
       ?.map((result) => result.returnMessage)

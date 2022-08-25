@@ -1,12 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import styles from '../dapp-modal.scss';
-import { DappModalConfig } from '../types';
+import { WithClassnameType } from '../../types';
+import { DappModalConfig } from '../dappModal.types';
+import styles from '../dappModalStyles.scss';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
-import classNames from 'classnames';
-import { WithClassname } from '../../types';
 
 type DappModalProps = {
   id?: string;
@@ -15,7 +15,7 @@ type DappModalProps = {
   parentElement?: Element;
   children?: React.ReactNode;
   config?: DappModalConfig;
-} & WithClassname;
+} & WithClassnameType;
 
 const defaultConfig: DappModalConfig = {
   showHeader: true,

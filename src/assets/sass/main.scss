@@ -1,8 +1,8 @@
 @import './themes/theme.scss';
 // Variables override
-@import './variables/variables';
+@import 'variables/variables';
 
-@import './modules/icon-state/icon-state';
-@import './modules/toast-messages/toast-messages';
+@import 'modules/icon-state/iconState';
+@import 'modules/toast-messages/toastMessages';
 @import './modules/data/data';
-@import './modules/progress-steps/progress-steps';
+@import 'modules/progress-steps/progressSteps';

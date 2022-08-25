@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
-import { MultiSignTxType, TxDataTokenType, TxsDataTokensType } from 'types';
+import {
+  MultiSignTransactionType,
+  TransactionDataTokenType,
+  TransactionsDataTokensType
+} from 'types';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
 import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
 
-const defaultTransactionInfo: TxDataTokenType = {
+const defaultTransactionInfo: TransactionDataTokenType = {
   tokenId: '',
   amount: '',
   type: '',
@@ -17,25 +21,27 @@ interface UseParseMultiEsdtTransferDataPropsType {
 }
 
 interface UseParseMultiEsdtTransferDataReturnType {
-  parsedTransactionsByDataField: TxsDataTokensType;
+  parsedTransactionsByDataField: TransactionsDataTokensType;
   getTxInfoByDataField: (
     data: string,
     multiTransactionData?: string
-  ) => TxDataTokenType;
-  allTransactions: MultiSignTxType[];
+  ) => TransactionDataTokenType;
+  allTransactions: MultiSignTransactionType[];
 }
 
 export function useParseMultiEsdtTransferData({
   transactions
 }: UseParseMultiEsdtTransferDataPropsType): UseParseMultiEsdtTransferDataReturnType {
   const [parsedTransactionsByDataField, setParsedTransactions] = useState<
-    TxsDataTokensType
+    TransactionsDataTokensType
   >({});
-  const [allTransactions, setAllTransactions] = useState<MultiSignTxType[]>([]);
+  const [allTransactions, setAllTransactions] = useState<
+    MultiSignTransactionType[]
+  >([]);
 
   function addTransactionDataToParsedInfo(
     data: string,
-    txInfo: TxDataTokenType
+    txInfo: TransactionDataTokenType
   ) {
     setParsedTransactions((existing) => ({
       ...existing,
@@ -46,7 +52,7 @@ export function useParseMultiEsdtTransferData({
   function getTxInfoByDataField(
     data: string,
     multiTransactionData?: string
-  ): TxDataTokenType {
+  ): TransactionDataTokenType {
     if (parsedTransactionsByDataField == null) {
       return defaultTransactionInfo;
     }
@@ -67,14 +73,14 @@ export function useParseMultiEsdtTransferData({
 
   function extractTransactionESDTData() {
     if (transactions && transactions.length > 0) {
-      const allTxs: MultiSignTxType[] = [];
+      const allTxs: MultiSignTransactionType[] = [];
       transactions.forEach((transaction, transactionIndex) => {
         const txData = transaction.getData().toString();
         const multiTxs = parseMultiEsdtTransferData(txData);
 
         if (multiTxs.length > 0) {
           multiTxs.forEach((trx, idx) => {
-            const newTx: MultiSignTxType = {
+            const newTx: MultiSignTransactionType = {
               transaction,
               multiTxData: trx.data,
               transactionIndex: idx

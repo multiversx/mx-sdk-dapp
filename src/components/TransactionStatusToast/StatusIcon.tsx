@@ -1,10 +1,10 @@
-import classNames from 'classnames';
-import styles from './transaction-status-toast.scss';
-import globalStyles from 'assets/sass/main.scss';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
 import React from 'react';
-import { StatusIconType } from './types';
+import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { StatusIconType } from './transactionStatusToast.types';
+import styles from './transactionStatusToastStyles.scss';
 
 type StatusIconProps = {
   type: StatusIconType;

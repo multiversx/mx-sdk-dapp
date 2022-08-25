@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-import wrapperStyles from 'UI/TransactionsToastList/styles.scss';
+import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
 
 type TransactionToastWrapperProps = {
   className?: string;

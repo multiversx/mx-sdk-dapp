@@ -1,18 +1,18 @@
 import {
-  TxActionCategoryEnum,
-  TxActionsEnum,
-  UITransactionType
-} from './types';
+  TransactionActionCategoryEnum,
+  TransactionActionsEnum,
+  ServerTransactionType
+} from 'types/serverTransactions.types';
 
-const getTransactionMethod = (transaction: UITransactionType) => {
+export const getTransactionMethod = (transaction: ServerTransactionType) => {
   let transactionAction = 'Transaction';
   const transactionHasAction =
     transaction.action?.name && transaction.action?.category;
 
   if (transactionHasAction) {
     if (
-      transaction.action?.category === TxActionCategoryEnum.esdtNft &&
-      transaction.action?.name === TxActionsEnum.transfer
+      transaction.action?.category === TransactionActionCategoryEnum.esdtNft &&
+      transaction.action?.name === TransactionActionsEnum.transfer
     ) {
       transactionAction = 'Transaction';
     } else if (transaction.action) {
@@ -26,5 +26,3 @@ const getTransactionMethod = (transaction: UITransactionType) => {
 
   return transactionAction;
 };
-
-export default getTransactionMethod;
