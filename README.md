@@ -834,7 +834,7 @@ import {
 ```
 import {
   calculateFeeLimit,
-  denominate,
+  formatAmount,
   nominate,
   getUsdValue,
 } from '@elrondnetwork/dapp-core/utils/operations';
@@ -901,7 +901,7 @@ import {
 ```
 import {
   CopyButton,
-  Denominate,
+  FormatAmount,
   ExplorerLink,
   ExtensionLoginButton,
   LedgerLoginButton,
@@ -926,7 +926,7 @@ or
 
 ```
 import { CopyButton } from '@elrondnetwork/dapp-core/UI/CopyButton';
-import { Denominate } from '@elrondnetwork/dapp-core/UI/Denominate';
+import { FormatAmount } from '@elrondnetwork/dapp-core/UI/FormatAmount';
 import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
 
 etc
@@ -939,7 +939,7 @@ etc
 
 We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with Maiar.
 
-You can use this library for its utility functions, like "denominate, nominate", mnemonic words list or its constants.
+You can use this library for its utility functions, like "formatAmount, parseAmount", mnemonic words list or its constants.
 
 However, certain architectural decisions that we made do not work out of the box with React Native runtime (neither Metro nor Re.pack).
 Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
