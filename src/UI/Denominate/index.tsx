@@ -1,7 +1,7 @@
 import React from 'react';
 import { MAINNET_EGLD_LABEL } from 'constants/index';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
-import { FormatAmountType } from 'UI/types/denominate.types';
+import { FormatAmountType } from 'UI/types/formatAmount.types';
 
 let deprecationMessageDisplayed = false;
 

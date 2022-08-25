@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL } from 'constants/index';
-import { FormatAmountType } from 'UI/types/denominate.types';
+import { FormatAmountType } from 'UI/types/formatAmount.types';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { formatAmount } from '../../utils/operations/formatAmount';
 import styles from './formatAmountStyles.scss';
