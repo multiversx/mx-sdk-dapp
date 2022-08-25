@@ -3,6 +3,15 @@ import { formatAmount } from './formatAmount';
 
 let deprecationMessageDisplayed = false;
 
+type DenominateType = {
+  input: string;
+  denomination?: number;
+  decimals?: number;
+  showIsLessThanDecimalsLabel?: boolean;
+  showLastNonZeroDecimal?: boolean;
+  addCommas?: boolean;
+};
+
 /**
  * !!! This function is deprecated. Please use formatAmount instead.
  * */
@@ -13,14 +22,7 @@ export function denominate({
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
   addCommas = false
-}: {
-  input: string;
-  denomination?: number;
-  decimals?: number;
-  showIsLessThanDecimalsLabel?: boolean;
-  showLastNonZeroDecimal?: boolean;
-  addCommas?: boolean;
-}) {
+}: DenominateType) {
   if (!deprecationMessageDisplayed) {
     console.warn(
       '!!! Be aware !!! The "denominate" function is deprecated. Please use "formatAmount" instead.'

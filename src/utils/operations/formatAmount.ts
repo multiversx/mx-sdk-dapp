@@ -6,6 +6,15 @@ import { pipe } from './pipe';
 
 BigNumber.config({ ROUNDING_MODE: BigNumber.ROUND_FLOOR });
 
+type FormatAmountType = {
+  input: string;
+  decimals?: number;
+  digits?: number;
+  showIsLessThanDecimalsLabel?: boolean;
+  showLastNonZeroDecimal?: boolean;
+  addCommas?: boolean;
+};
+
 export function formatAmount({
   input,
   decimals = DECIMALS,
@@ -13,14 +22,7 @@ export function formatAmount({
   showLastNonZeroDecimal = true,
   showIsLessThanDecimalsLabel = false,
   addCommas = false
-}: {
-  input: string;
-  decimals?: number;
-  digits?: number;
-  showIsLessThanDecimalsLabel?: boolean;
-  showLastNonZeroDecimal?: boolean;
-  addCommas?: boolean;
-}) {
+}: FormatAmountType) {
   if (!stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }

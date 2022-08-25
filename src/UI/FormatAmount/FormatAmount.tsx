@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL } from 'constants/index';
-import { DenominateType } from 'UI/types/denominate.types';
+import { FormatAmountType } from 'UI/types/denominate.types';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { formatAmount } from '../../utils/operations/formatAmount';
 import styles from './formatAmountStyles.scss';
 
-const formatAmountInvalid = (props: DenominateType) => {
+const formatAmountInvalid = (props: FormatAmountType) => {
   return (
     <span
       data-testid={
@@ -22,7 +22,7 @@ const formatAmountInvalid = (props: DenominateType) => {
   );
 };
 
-const formatAmountValid = (props: DenominateType, erdLabel: string) => {
+const formatAmountValid = (props: FormatAmountType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
   const digits = props.decimals != null ? props.decimals : DIGITS;
   const decimals = props.denomination != null ? props.denomination : DECIMALS;
@@ -79,7 +79,7 @@ const formatAmountValid = (props: DenominateType, erdLabel: string) => {
   );
 };
 
-const FormatAmountComponent = (props: DenominateType) => {
+const FormatAmountComponent = (props: FormatAmountType) => {
   const { value } = props;
 
   return !stringIsInteger(value)
@@ -90,10 +90,10 @@ const FormatAmountComponent = (props: DenominateType) => {
 /**
  * @param props.egldLabel  if not provided, will fallback on **EGLD**
  */
-export const FormatAmount = (props: DenominateType) => {
+export const FormatAmount = (props: FormatAmountType) => {
   const egldLabel = props.egldLabel || MAINNET_EGLD_LABEL;
 
-  const denominateProps = { ...props, egldLabel };
+  const formatAmountProps = { ...props, egldLabel };
 
-  return <FormatAmountComponent {...denominateProps} />;
+  return <FormatAmountComponent {...formatAmountProps} />;
 };

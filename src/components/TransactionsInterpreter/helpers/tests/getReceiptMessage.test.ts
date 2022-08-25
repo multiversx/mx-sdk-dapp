@@ -25,13 +25,13 @@ describe('getReceiptMessage', () => {
       }
     };
     const result = getReceiptMessage(transaction);
-    const denominatedGas = formatAmount({
+    const formattedGas = formatAmount({
       input: transaction.receipt.value,
       decimals: DECIMALS,
       digits: DIGITS,
       showLastNonZeroDecimal: true
     });
-    const gasRefunded = new BigNumber(denominatedGas)
+    const gasRefunded = new BigNumber(formattedGas)
       .times(transaction.gasPrice)
       .times(100);
 
