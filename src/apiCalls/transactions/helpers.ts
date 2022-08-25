@@ -1,10 +1,3 @@
-// import axios, { AxiosRequestConfig } from 'axios';
-// import { ServerTransactionType } from 'types/serverTransactions.types';
-// import {
-//   TRANSACTIONS_ENDPOINT,
-//   TRANSACTIONS_COUNT_ENDPOINT
-// } from '../endpoints';
-
 export interface GetTransactionsType {
   apiAddress: string;
   apiTimeout?: string | number;
