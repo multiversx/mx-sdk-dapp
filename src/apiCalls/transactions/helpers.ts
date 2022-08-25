@@ -1,13 +1,6 @@
-import axios from 'axios';
-import { addressSelector, networkSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
-import { ServerTransactionType } from 'types/serverTransactions.types';
-import {
-  TRANSACTIONS_ENDPOINT,
-  TRANSACTIONS_COUNT_ENDPOINT
-} from '../endpoints';
-
 export interface GetTransactionsType {
+  apiAddress: string;
+  apiTimeout?: string | number;
   sender?: string;
   receiver?: string;
   page?: number;
@@ -18,7 +11,10 @@ export interface GetTransactionsType {
   withScResults?: boolean;
 }
 
-export const getTransactionsBuilder = (isCount?: boolean) => ({
+export const getTimeout = (apiTimeout?: string | number) =>
+  apiTimeout ? { timeout: parseInt(String(apiTimeout)) } : {};
+
+export const getTransactionsParams = ({
   sender,
   receiver,
   page = 1,
@@ -28,13 +24,9 @@ export const getTransactionsBuilder = (isCount?: boolean) => ({
   after,
   before
 }: GetTransactionsType) => {
-  const storeState = store.getState();
-  const address = addressSelector(storeState);
-  const { apiAddress, apiTimeout } = networkSelector(storeState);
-
   const params = {
-    sender: sender ?? address,
-    receiver: receiver ?? address,
+    sender,
+    receiver,
     condition,
     after,
     before,
@@ -43,18 +35,5 @@ export const getTransactionsBuilder = (isCount?: boolean) => ({
     withScResults
   };
 
-  if (isCount) {
-    return axios.get<number>(`${apiAddress}/${TRANSACTIONS_COUNT_ENDPOINT}`, {
-      params,
-      timeout: parseInt(apiTimeout)
-    });
-  }
-
-  return axios.get<ServerTransactionType[]>(
-    `${apiAddress}/${TRANSACTIONS_ENDPOINT}`,
-    {
-      params,
-      timeout: parseInt(apiTimeout)
-    }
-  );
+  return params;
 };
