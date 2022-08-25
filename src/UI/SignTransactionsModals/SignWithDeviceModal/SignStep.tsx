@@ -88,7 +88,7 @@ export const SignStep = ({
     isLastTransaction && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
-  const { tokenDenomination, tokenAvatar } = useGetTokenDetails({
+  const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
     tokenId: currentTransaction.transactionTokenInfo.tokenId
   });
 
@@ -96,7 +96,7 @@ export const SignStep = ({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
-    decimals: isTokenTransaction ? tokenDenomination : Number(network.decimals),
+    decimals: isTokenTransaction ? tokenDecimals : Number(network.decimals),
     digits: Number(network.digits),
     showLastNonZeroDecimal: false,
     addCommas: true

@@ -17,7 +17,7 @@ export type TokenAssets = {
 
 interface TokenOptionType {
   tokenLabel: string;
-  tokenDenomination: number;
+  tokenDecimals: number;
   tokenAvatar: string;
   assets?: TokenAssets;
   error?: string;
@@ -56,13 +56,13 @@ export function useGetTokenDetails({
 
   if (!tokenId) {
     return {
-      tokenDenomination: Number(network.decimals),
+      tokenDecimals: Number(network.decimals),
       tokenLabel: '',
       tokenAvatar: ''
     };
   }
 
-  const tokenDenomination = selectedToken
+  const tokenDecimals = selectedToken
     ? selectedToken?.decimals
     : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
@@ -70,5 +70,11 @@ export function useGetTokenDetails({
 
   const assets = selectedToken?.assets;
 
-  return { tokenDenomination, tokenLabel, tokenAvatar, assets, error };
+  return {
+    tokenDecimals: tokenDecimals,
+    tokenLabel,
+    tokenAvatar,
+    assets,
+    error
+  };
 }
