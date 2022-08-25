@@ -24,8 +24,8 @@ const formatAmountInvalid = (props: FormatAmountType) => {
 
 const formatAmountValid = (props: FormatAmountType, erdLabel: string) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
-  const digits = props.decimals != null ? props.decimals : DIGITS;
-  const decimals = props.denomination != null ? props.denomination : DECIMALS;
+  const digits = props.digits != null ? props.digits : DIGITS;
+  const decimals = props.decimals != null ? props.decimals : DECIMALS;
 
   const formattedValue = formatAmount({
     input: value,

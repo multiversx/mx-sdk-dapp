@@ -5,8 +5,8 @@ export interface FormatAmountType extends WithClassnameType {
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
   token?: string;
+  digits?: number;
   decimals?: number;
-  denomination?: number;
   egldLabel?: string;
   'data-testid'?: string;
 }
