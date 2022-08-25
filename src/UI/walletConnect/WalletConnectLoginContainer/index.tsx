@@ -91,7 +91,7 @@ export const WalletConnectLoginContainer = ({
     mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.my4}`,
     mobileLoginButtonIcon: globalStyles.mr2,
     errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
-    useLegacyMessageContainer: `${globalStyles.mt4} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`
+    legacyMessageContainer: `${globalStyles.linkStyle} ${globalStyles.mt4} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`
   };
 
   const onVersionSwitch = (e: React.MouseEvent) => {
@@ -194,7 +194,7 @@ export const WalletConnectLoginContainer = ({
           {isWalletConnectV2 && showLegacySwitch && (
             <a
               href='/#'
-              className={generatedClasses.useLegacyMessageContainer}
+              className={generatedClasses.legacyMessageContainer}
               onClick={onVersionSwitch}
             >
               {legacyMessage}
