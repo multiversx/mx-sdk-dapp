@@ -17,7 +17,7 @@ export type TokenAssets = {
 
 interface TokenOptionType {
   tokenLabel: string;
-  tokenDenomination: number;
+  tokenDecimals: number;
   tokenAvatar: string;
   assets?: TokenAssets;
   error?: string;
@@ -56,19 +56,25 @@ export function useGetTokenDetails({
 
   if (!tokenId) {
     return {
-      tokenDenomination: Number(network.egldDenomination),
+      tokenDecimals: Number(network.decimals),
       tokenLabel: '',
       tokenAvatar: ''
     };
   }
 
-  const tokenDenomination = selectedToken
+  const tokenDecimals = selectedToken
     ? selectedToken?.decimals
-    : Number(network.egldDenomination);
+    : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken ? `${selectedToken?.assets?.svgUrl}` : '';
 
   const assets = selectedToken?.assets;
 
-  return { tokenDenomination, tokenLabel, tokenAvatar, assets, error };
+  return {
+    tokenDecimals: tokenDecimals,
+    tokenLabel,
+    tokenAvatar,
+    assets,
+    error
+  };
 }
