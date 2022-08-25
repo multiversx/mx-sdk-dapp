@@ -1,13 +1,13 @@
-import { DenominationConfig } from 'components/TransactionsInterpreter/TransactionsInterpreter';
+import { FormatAmountConfig } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { defaultNetwork } from 'reduxStore/slices';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { formatAmount } from './formatAmount';
 
 export function getFormattedAmount(
   transaction: ServerTransactionType,
-  { decimals, denomination, showLastNonZeroDecimal }: DenominationConfig = {
-    decimals: Number(defaultNetwork.decimals),
-    denomination: Number(defaultNetwork.egldDenomination),
+  { digits, decimals, showLastNonZeroDecimal }: FormatAmountConfig = {
+    decimals: Number(defaultNetwork.egldDenomination),
+    digits: Number(defaultNetwork.decimals),
     showLastNonZeroDecimal: false
   }
 ) {
@@ -15,8 +15,8 @@ export function getFormattedAmount(
 
   return formatAmount({
     input: value,
-    decimals: denomination,
-    digits: decimals,
+    decimals,
+    digits,
     showLastNonZeroDecimal
   });
 }

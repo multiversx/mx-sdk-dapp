@@ -15,22 +15,22 @@ import { getTransactionTransferType } from './helpers/getTransactionTransferType
 import { ExtendedTransactionType } from './helpers/types';
 import { urlBuilder } from './helpers/urlBuilder';
 
-export type DenominationConfig = {
+export type FormatAmountConfig = {
   egldLabel?: string;
+  digits?: number;
   decimals?: number;
-  denomination?: number;
   showLastNonZeroDecimal?: boolean;
   showLabel?: boolean;
   token?: string;
 };
 
 export type ParseTransactionsConfiguration = {
-  denominationConfig: DenominationConfig;
+  formatAmountConfig: FormatAmountConfig;
   networkAddress?: string;
 };
 
 const defaultConfig: ParseTransactionsConfiguration = {
-  denominationConfig: {
+  formatAmountConfig: {
     egldLabel: MAINNET_EGLD_LABEL
   },
   networkAddress: ''
@@ -39,13 +39,13 @@ const defaultConfig: ParseTransactionsConfiguration = {
 export function parseTransactions(
   transactions: ServerTransactionType[],
   address: string,
-  { denominationConfig, networkAddress } = defaultConfig
+  { formatAmountConfig, networkAddress } = defaultConfig
 ): ExtendedTransactionType[] {
   return transactions.map((transaction) =>
     processTransaction({
       transaction,
       address,
-      denominationConfig,
+      formatAmountConfig,
       networkAddress
     })
   );
@@ -54,14 +54,14 @@ export function parseTransactions(
 type ProcessTransactionParams = {
   transaction: ServerTransactionType;
   address: string;
-  denominationConfig: DenominationConfig;
+  formatAmountConfig: FormatAmountConfig;
   networkAddress?: string;
 };
 
 export function processTransaction({
   transaction,
   address,
-  denominationConfig = {
+  formatAmountConfig = {
     egldLabel: MAINNET_EGLD_LABEL
   },
   networkAddress = ''
@@ -77,15 +77,15 @@ export function processTransaction({
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
-  let tokenLabel = denominationConfig.egldLabel ?? MAINNET_EGLD_LABEL;
+  let tokenLabel = formatAmountConfig.egldLabel ?? MAINNET_EGLD_LABEL;
   if (transactionTokens.length > 0) {
     const txToken = transactionTokens[0];
     tokenLabel = txToken.ticker ?? tokenLabel;
   }
 
-  const denominatedValue = getFormattedAmount(transaction, denominationConfig);
+  const denominatedValue = getFormattedAmount(transaction, formatAmountConfig);
   const fullDenominatedValue = getFormattedAmount(transaction, {
-    ...denominationConfig,
+    ...formatAmountConfig,
     showLastNonZeroDecimal: true
   });
 
