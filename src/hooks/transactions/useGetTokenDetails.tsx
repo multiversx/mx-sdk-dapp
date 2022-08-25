@@ -56,7 +56,7 @@ export function useGetTokenDetails({
 
   if (!tokenId) {
     return {
-      tokenDenomination: Number(network.egldDenomination),
+      tokenDenomination: Number(network.decimals),
       tokenLabel: '',
       tokenAvatar: ''
     };
@@ -64,7 +64,7 @@ export function useGetTokenDetails({
 
   const tokenDenomination = selectedToken
     ? selectedToken?.decimals
-    : Number(network.egldDenomination);
+    : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken ? `${selectedToken?.assets?.svgUrl}` : '';
 

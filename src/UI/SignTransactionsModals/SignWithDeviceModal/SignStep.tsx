@@ -96,10 +96,8 @@ export const SignStep = ({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
-    decimals: isTokenTransaction
-      ? tokenDenomination
-      : Number(network.egldDenomination),
-    digits: Number(network.decimals),
+    decimals: isTokenTransaction ? tokenDenomination : Number(network.decimals),
+    digits: Number(network.digits),
     showLastNonZeroDecimal: false,
     addCommas: true
   });

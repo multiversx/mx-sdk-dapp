@@ -11,8 +11,8 @@ export const fallbackNetworkConfigurations: Record<
     chainId: 'D',
     name: 'Devnet',
     egldLabel: 'xEGLD',
-    egldDenomination: '18',
-    decimals: '4',
+    decimals: '18',
+    digits: '4',
     gasPerDataByte: '1500',
     walletConnectDeepLink:
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
@@ -28,8 +28,8 @@ export const fallbackNetworkConfigurations: Record<
     chainId: 'T',
     name: 'Testnet',
     egldLabel: 'xEGLD',
-    egldDenomination: '18',
-    decimals: '4',
+    decimals: '18',
+    digits: '4',
     gasPerDataByte: '1500',
     walletConnectDeepLink:
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
@@ -45,8 +45,8 @@ export const fallbackNetworkConfigurations: Record<
     chainId: '1',
     name: 'Mainnet',
     egldLabel: 'xEGLD',
-    egldDenomination: '18',
-    decimals: '4',
+    decimals: '18',
+    digits: '4',
     gasPerDataByte: '1500',
     walletConnectDeepLink:
       'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
