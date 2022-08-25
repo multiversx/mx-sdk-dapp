@@ -15,7 +15,8 @@ import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
-import { denominate, getEgldLabel, isTokenTransfer } from 'utils';
+import { getEgldLabel, isTokenTransfer } from 'utils';
+import { formatAmount } from '../../../utils/operations/formatAmount';
 import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
@@ -91,14 +92,14 @@ export const SignStep = ({
     tokenId: currentTransaction.transactionTokenInfo.tokenId
   });
 
-  const denominatedAmount = denominate({
+  const denominatedAmount = formatAmount({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
-    denomination: isTokenTransaction
+    decimals: isTokenTransaction
       ? tokenDenomination
       : Number(network.egldDenomination),
-    decimals: Number(network.decimals),
+    digits: Number(network.decimals),
     showLastNonZeroDecimal: false,
     addCommas: true
   });
