@@ -14,6 +14,7 @@ import styles from './walletConnectLoginContainerStyles.scss';
 export interface WalletConnectLoginModalPropsType extends WithClassnameType {
   lead?: string;
   title?: string;
+  legacyMessage?: string;
   logoutRoute?: string;
   callbackRoute?: string;
   loginButtonText: string;
@@ -31,6 +32,7 @@ export const WalletConnectLoginContainer = ({
   logoutRoute = '/unlock',
   className = 'dapp-wallet-connect-login-modal',
   lead = 'Scan the QR code using Maiar',
+  legacyMessage = 'Unable to login? Use the legacy version',
   wrapContentInsideModal = true,
   isWalletConnectV2 = false,
   token,
@@ -65,8 +67,14 @@ export const WalletConnectLoginContainer = ({
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
+  const [displayWalletConnectV2, setDisplayWalletConnectV2] = useState<boolean>(
+    isWalletConnectV2
+  );
+  const [showLegacySwitch, setShowLegacySwitch] = useState<boolean>(
+    isWalletConnectV2
+  );
   const isMobileDevice = isMobileEnvironment();
-  const activePairings = isWalletConnectV2
+  const activePairings = displayWalletConnectV2
     ? wcPairings?.filter(
         (pairing) => Boolean(pairing.active) && pairing.peerMetadata
       ) ?? []
@@ -82,12 +90,20 @@ export const WalletConnectLoginContainer = ({
     leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
     mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.my4}`,
     mobileLoginButtonIcon: globalStyles.mr2,
-    errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`
+    errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
+    legacyMessageContainer: `${globalStyles.linkStyle} ${globalStyles.mt4} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`
+  };
+
+  const onVersionSwitch = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setDisplayWalletConnectV2(false);
+    setShowLegacySwitch(false);
   };
 
   const generateQRCode = async () => {
-    const canGenerateQRCodeForWC2 = isWalletConnectV2 && walletConnectUriV2;
-    const canGenerateQRCodeForWC1 = !isWalletConnectV2 && walletConnectUri;
+    const canGenerateQRCodeForWC2 =
+      displayWalletConnectV2 && walletConnectUriV2;
+    const canGenerateQRCodeForWC1 = !displayWalletConnectV2 && walletConnectUri;
     const canGenerateQRCode =
       canGenerateQRCodeForWC2 || canGenerateQRCodeForWC1;
 
@@ -95,7 +111,7 @@ export const WalletConnectLoginContainer = ({
       return;
     }
 
-    const uri = isWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
+    const uri = displayWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
     if (uri) {
       const svg = await QRCode.toString(uri, {
         type: 'svg'
@@ -107,7 +123,7 @@ export const WalletConnectLoginContainer = ({
   };
 
   const onCloseModal = () => {
-    if (isWalletConnectV2) {
+    if (displayWalletConnectV2) {
       cancelLoginV2();
     } else {
       cancelLogin();
@@ -117,15 +133,15 @@ export const WalletConnectLoginContainer = ({
 
   useEffect(() => {
     generateQRCode();
-  }, [walletConnectUri, walletConnectUriV2]);
+  }, [displayWalletConnectV2, walletConnectUri, walletConnectUriV2]);
 
   useEffect(() => {
-    if (isWalletConnectV2) {
+    if (displayWalletConnectV2) {
       initLoginWithWalletConnectV2();
     } else {
       initLoginWithWalletConnect();
     }
-  }, []);
+  }, [displayWalletConnectV2]);
 
   const content = (
     <div className={generatedClasses.container}>
@@ -174,6 +190,15 @@ export const WalletConnectLoginContainer = ({
               removeExistingPairing={removeExistingPairing}
               className={className}
             />
+          )}
+          {isWalletConnectV2 && showLegacySwitch && (
+            <a
+              href='/#'
+              className={generatedClasses.legacyMessageContainer}
+              onClick={onVersionSwitch}
+            >
+              {legacyMessage}
+            </a>
           )}
           <div>
             {error && <p className={generatedClasses.errorMessage}>{error}</p>}
