@@ -121,7 +121,7 @@
     "**/*.d.ts"
   ],
   "dependencies": {
-    "@elrondnetwork/erdjs": "10.2.7",
+    "@elrondnetwork/erdjs": "11.0.0",
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
     "@elrondnetwork/erdjs-hw-provider": "2.0.4",
     "@elrondnetwork/erdjs-network-providers": "0.1.6",
