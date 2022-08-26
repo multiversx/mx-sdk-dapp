@@ -1,11 +1,8 @@
 import axios from 'axios';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { ServerTransactionType } from 'types';
-import {
-  getTimeout,
-  getTransactionsParams,
-  GetTransactionsType
-} from './helpers';
+import { GetTransactionsType } from './getTransactions.types';
+import { getTimeout, getTransactionsParams } from './helpers';
 
 export const getTransactions = (props: GetTransactionsType) => {
   const params = getTransactionsParams(props);
