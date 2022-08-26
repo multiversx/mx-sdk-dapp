@@ -2,7 +2,6 @@ import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import {
   faExclamationTriangle,
-  faHourglass,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -111,7 +110,7 @@ export const SignStep = ({
 
   return (
     <PageState
-      icon={error ? faTimes : faHourglass}
+      icon={error ? faTimes : null}
       iconClass={classes.icon}
       iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
       iconSize='3x'
