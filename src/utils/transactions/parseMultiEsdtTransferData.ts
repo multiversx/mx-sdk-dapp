@@ -27,13 +27,10 @@ export function parseMultiEsdtTransferData(data?: string) {
           for (let index = 0; index < 3; index++) {
             switch (index) {
               case 0:
-                console.log('rest', rest);
                 transaction.token = decodePart(rest[itemIndex]);
                 transaction.data = rest[itemIndex];
-                console.log('transaction', transaction);
                 break;
               case 1: {
-                console.log('rest', rest);
                 const encodedNonce =
                   rest[itemIndex] && rest[itemIndex].length
                     ? rest[itemIndex]
