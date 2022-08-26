@@ -3,7 +3,7 @@ import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TRANSACTIONS_ENDPOINT } from '../endpoints';
 import { getTimeout } from './helpers';
 
-interface GetTransactionType {
+export interface GetTransactionType {
   apiAddress: string;
   apiTimeout?: string | number;
   hash: string;
