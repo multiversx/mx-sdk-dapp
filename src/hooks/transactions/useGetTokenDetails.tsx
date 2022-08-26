@@ -1,7 +1,7 @@
 import axios from 'axios';
 import useSwr from 'swr';
+import { COLLECTIONS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
-
 import { getIdentifierType } from 'utils';
 
 export type TokenAssets = {
@@ -41,20 +41,26 @@ export function useGetTokenDetails({
 }): TokenOptionType {
   const { network } = useGetNetworkConfig();
 
-  const { isEsdt } = getIdentifierType(tokenId);
-  const tokenEndpoint = isEsdt ? 'tokens' : 'nfts';
+  const { isEsdt, isNft } = getIdentifierType(tokenId);
+  const tokenEndpoint = isEsdt ? TOKENS_ENDPOINT : COLLECTIONS_ENDPOINT;
+  let tokenIdentifier = tokenId;
+
+  if (isNft) {
+    const [firstPart, secondPart] = tokenId.split('-');
+    tokenIdentifier = `${firstPart}-${secondPart}`;
+  }
 
   const {
     data: selectedToken,
     error
   }: { data?: TokenInfoResponse; error?: string } = useSwr(
-    Boolean(tokenId)
-      ? `${network.apiAddress}/${tokenEndpoint}/${tokenId}`
+    Boolean(tokenIdentifier)
+      ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
     fetcher
   );
 
-  if (!tokenId) {
+  if (!tokenIdentifier) {
     return {
       tokenDecimals: Number(network.decimals),
       tokenLabel: '',
