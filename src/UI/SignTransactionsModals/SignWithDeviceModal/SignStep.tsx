@@ -87,6 +87,7 @@ export const SignStep = ({
     isLastTransaction && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
+  // If the token has a nonce means that this is an NFT. Eg: TokenId=TOKEN-1hfr, nonce=123 => NFT id=TOKEN-1hfr-123
   const nftId = `${tokenId}-${nonce}`;
 
   const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
