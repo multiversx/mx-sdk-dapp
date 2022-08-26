@@ -30,7 +30,9 @@ export const ConfirmAddress = ({
             globalStyles.mxLg4
           ])}
         >
-          <h4 className={globalStyles.mb4}>Confirm Ledger Address</h4>
+          <h4 className={classNames([globalStyles.h4, globalStyles.mb4])}>
+            Confirm Ledger Address
+          </h4>
           <p>For security, please confirm that your address: </p>
           <p
             className={classNames([
@@ -60,7 +62,6 @@ export const ConfirmAddress = ({
               ? 'are the one shown on your Ledger device screen now.'
               : 'is the one shown on your Ledger device screen now.'}
           </p>
-
           <p>Select Approve on your device to confirm.</p>
           <p>
             Or, if it does not match, close this page and{' '}

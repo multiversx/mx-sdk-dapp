@@ -57,7 +57,9 @@ export const UnlockPage = ({
       <div className={generatedClasses.cardContainer}>
         <div className={generatedClasses.card}>
           <div className={generatedClasses.cardBody}>
-            <h4 className={generatedClasses.title}>{title}</h4>
+            <h4 className={classNames([globalStyles.h4, globalStyles.title])}>
+              {title}
+            </h4>
             <p className={generatedClasses.description}>{description}</p>
             <ExtensionLoginButton
               callbackRoute={loginRoute}

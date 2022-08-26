@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { SignedTransactionType } from 'types';
 import { TransactionDetails } from 'UI/TransactionDetails';
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
@@ -53,7 +54,9 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
 
       <div className={style.right}>
         <div className={style.heading}>
-          <h5 className={style.title}>{toastDataState.title}</h5>
+          <h5 className={classNames([globalStyles.h5, style.mb4])}>
+            {toastDataState.title}
+          </h5>
           {showCloseButton && CustomCloseButton && (
             <CustomCloseButton
               className={styles.close}
