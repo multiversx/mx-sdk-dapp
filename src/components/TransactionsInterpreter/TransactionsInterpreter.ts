@@ -121,8 +121,8 @@ export function processTransaction({
     receiverAssets,
     tokenLabel,
     amountInfo: {
-      formattedValue: formattedValue,
-      fullFormattedValue: fullFormattedValue
+      formattedValue,
+      fullFormattedValue
     },
     transactionDetails: {
       direction,
