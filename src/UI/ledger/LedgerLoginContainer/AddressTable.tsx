@@ -10,6 +10,7 @@ import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 import { WithClassnameType } from '../../types';
 import { AddressRow } from './AddressRow';
+import styles from './addressTableStyles.scss';
 
 const LEDGER_WAITING_TEXT = 'Waiting for device';
 
@@ -41,7 +42,7 @@ export const AddressTable = ({
     wrapper: classNames(globalStyles.card, globalStyles.px4, className),
     cardBody: `${globalStyles.cardBody} ${globalStyles.p4}`,
     tableWrapper: globalStyles.tableResponsive,
-    tableContent: `${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
+    tableContent: `${styles.ledgerAddressTable} ${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
     tableHeader: `${globalStyles.py2} ${globalStyles.textBlack50} ${globalStyles.borderBottom}`,
     tableHeaderText: `${globalStyles.textLeft} ${globalStyles.border0}`,
     buttonsWrapper: `${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.mt2}`,
