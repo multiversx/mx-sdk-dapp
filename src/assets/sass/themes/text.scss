@@ -11,7 +11,7 @@
 
 .text-monospace {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-    'Courier New', monospace !important;
+    'Courier New', monospace;
 }
 .table .trim-size-xl .trim {
   max-width: 13rem;
@@ -26,15 +26,15 @@
 
 
 .text-justify {
-  text-align: justify !important;
+  text-align: justify;
 }
 
 .text-wrap {
-  white-space: normal !important;
+  white-space: normal;
 }
 
 .text-nowrap {
-  white-space: nowrap !important;
+  white-space: nowrap;
 }
 
 .text-truncate {
@@ -44,15 +44,15 @@
 }
 
 .text-left {
-  text-align: left !important;
+  text-align: left;
 }
 
 .text-right {
-  text-align: right !important;
+  text-align: right;
 }
 
 .text-center {
-  text-align: center !important;
+  text-align: center;
 }
 
 .text-primary {
@@ -60,7 +60,7 @@
 }
 
 .text-secondary {
-  color: #6c757d !important;
+  color: #6c757d;
 }
 
 .text-primary-highlight {
@@ -68,35 +68,35 @@
 }
 
 .text-muted {
-  color: $text-muted !important;
+  color: $text-muted;
 }
 
 // Alignment
 .text-justify {
-  text-align: justify !important;
+  text-align: justify;
 }
 .text-wrap {
-  white-space: normal !important;
+  white-space: normal;
 }
 .text-nowrap {
-  white-space: nowrap !important;
+  white-space: nowrap;
 }
 .text-truncate {
   @include text-truncate();
 }
 
 .text-body {
-  color: $body-color !important;
+  color: $body-color;
 }
 .text-muted {
-  color: $text-muted !important;
+  color: $text-muted;
 }
 
 .text-black-50 {
-  color: rgba($black, 0.5) !important;
+  color: rgba($black, 0.5);
 }
 .text-white-50 {
-  color: rgba($white, 0.5) !important;
+  color: rgba($white, 0.5);
 }
 
 // Misc
@@ -110,30 +110,30 @@
 }
 
 .text-decoration-none {
-  text-decoration: none !important;
+  text-decoration: none;
 }
 
 .text-break {
-  word-break: break-word !important; // Deprecated, but avoids issues with flex containers
-  word-wrap: break-word !important; // Used instead of `overflow-wrap` for IE & Edge Legacy
+  word-break: break-word; // Deprecated, but avoids issues with flex containers
+  word-wrap: break-word; // Used instead of `overflow-wrap` for IE & Edge Legacy
 }
 
 // Reset
 
 .text-reset {
-  color: inherit !important;
+  color: inherit;
 }
 
 // Transformation
 
 .text-lowercase {
-  text-transform: lowercase !important;
+  text-transform: lowercase;
 }
 .text-uppercase {
-  text-transform: uppercase !important;
+  text-transform: uppercase;
 }
 .text-capitalize {
-  text-transform: capitalize !important;
+  text-transform: capitalize;
 }
 
 .text-danger {
@@ -149,6 +149,6 @@
 }
 
 .text-break {
-  word-break: break-word !important;
-  word-wrap: break-word !important;
+  word-break: break-word;
+  word-wrap: break-word;
 }
