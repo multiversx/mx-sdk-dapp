@@ -342,12 +342,12 @@
   dependencies:
     qs "6.10.1"
 
-"@elrondnetwork/erdjs@10.2.7":
-  version "10.2.7"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-10.2.7.tgz#5165a0f966f59bd031e2e96637bcca5e0db201e2"
-  integrity sha512-GmoCq7cbWEMj/p0usLAcNf4kdFd2nq0GIcn2Kk4lDmt4PsyxYYb1XydbNKyb8wVNY99+Iy5OsaGLXx3eQom2Vw==
+"@elrondnetwork/erdjs@11.0.0":
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs/-/erdjs-11.0.0.tgz#0ee6c0d6c472cae549bf1b62c0a160378a031d9d"
+  integrity sha512-XUvWYcEsKp5NKf81Avz0m3yHvHRzkyyztWFH+M/XEDhsPAy7FyZAY0HCH8ri5JvDhDr45IaE3Nlh6oeXqlOc9A==
   dependencies:
-    "@elrondnetwork/transaction-decoder" "0.1.0"
+    "@elrondnetwork/transaction-decoder" "1.0.0"
     bech32 "1.1.4"
     bignumber.js "9.0.1"
     blake2b "2.1.3"
@@ -367,10 +367,10 @@
     flow-copy-source "^2.0.9"
     flow-typed "^3.2.1"
 
-"@elrondnetwork/transaction-decoder@0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/transaction-decoder/-/transaction-decoder-0.1.0.tgz#a2502a4dc50885242c1b167cc9a6394062ec7423"
-  integrity sha512-R9YSiJCAgdlSzTKBy7/KjohFghmUhZIGDqWt6NGXrf33EN24QB15Q0LgHEW7lXsqsDSF5GpRYetsS7V3jYZQOg==
+"@elrondnetwork/transaction-decoder@1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/transaction-decoder/-/transaction-decoder-1.0.0.tgz#b1cdababcd9ac04be42ea384c693fa20b9e9b043"
+  integrity sha512-FFUDXffwDNwo4V6Co+S9ur3OPYyAEzwgen7gh7LtQrG7SNPELFHjl+YssABXI8v1+SWmqcrSxervMggAiDDXkg==
   dependencies:
     bech32 "^2.0.0"
 

@@ -54,7 +54,7 @@ export const TransactionRow = ({
         <TransactionMethod transaction={transaction} />
       </td>
       <td className={globalStyles.textLeft}>
-        <span>{`${transaction.denomination.denominatedValue} ${transaction.tokenLabel}`}</span>
+        <span>{`${transaction.amountInfo.formattedValue} ${transaction.tokenLabel}`}</span>
       </td>
     </tr>
   );

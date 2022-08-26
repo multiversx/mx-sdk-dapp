@@ -6,6 +6,7 @@ import {
 } from '@elrondnetwork/erdjs';
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers';
+import { GAS_LIMIT, GAS_PRICE } from 'constants/index';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
 
 interface CalculateFeeLimitType {
@@ -23,13 +24,13 @@ const placeholderData = {
   to: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa'
 };
 export function calculateFeeLimit({
-  minGasLimit = '50000',
+  minGasLimit = String(GAS_LIMIT),
   gasLimit,
   gasPrice,
   data: inputData,
   gasPerDataByte,
   gasPriceModifier,
-  defaultGasPrice = '1000000000',
+  defaultGasPrice = String(GAS_PRICE),
   chainId
 }: CalculateFeeLimitType) {
   const data = inputData || '';
@@ -39,6 +40,7 @@ export function calculateFeeLimit({
     nonce: 0,
     value: TokenPayment.egldFromAmount('0'),
     receiver: new Address(placeholderData.to),
+    sender: new Address(placeholderData.to),
     gasPrice: parseInt(validGasPrice),
     gasLimit: parseInt(validGasLimit),
     data: new TransactionPayload(data.trim()),
