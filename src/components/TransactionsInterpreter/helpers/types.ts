@@ -18,9 +18,9 @@ export type ExtendedTransactionType = {
     transactionTokens: TokenArgumentType[];
     isContract?: boolean;
   };
-  denomination: {
-    denominatedValue?: string;
-    fullDenominatedValue?: string;
+  amountInfo: {
+    formattedValue?: string;
+    fullFormattedValue?: string;
   };
   links: {
     senderLink?: string;

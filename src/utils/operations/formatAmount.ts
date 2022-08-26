@@ -37,7 +37,7 @@ export function formatAmount({
 
   return (
     pipe(modInput as string)
-      // denominate
+      // format
       .then(() =>
         TokenPayment.fungibleFromBigInteger(
           '',

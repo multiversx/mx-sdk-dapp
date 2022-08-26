@@ -83,8 +83,8 @@ export function processTransaction({
     tokenLabel = txToken.ticker ?? tokenLabel;
   }
 
-  const denominatedValue = getFormattedAmount(transaction, formatAmountConfig);
-  const fullDenominatedValue = getFormattedAmount(transaction, {
+  const formattedValue = getFormattedAmount(transaction, formatAmountConfig);
+  const fullFormattedValue = getFormattedAmount(transaction, {
     ...formatAmountConfig,
     showLastNonZeroDecimal: true
   });
@@ -120,9 +120,9 @@ export function processTransaction({
     receiver,
     receiverAssets,
     tokenLabel,
-    denomination: {
-      denominatedValue,
-      fullDenominatedValue
+    amountInfo: {
+      formattedValue: formattedValue,
+      fullFormattedValue: fullFormattedValue
     },
     transactionDetails: {
       direction,

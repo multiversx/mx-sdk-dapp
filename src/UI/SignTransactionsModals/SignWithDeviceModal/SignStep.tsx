@@ -92,7 +92,7 @@ export const SignStep = ({
     tokenId: currentTransaction.transactionTokenInfo.tokenId
   });
 
-  const denominatedAmount = formatAmount({
+  const formattedAmount = formatAmount({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
@@ -160,7 +160,7 @@ export const SignStep = ({
                 <div>
                   <div className={classes.tokenAmountLabel}>Amount</div>
                   <div className={classes.tokenAmountValue}>
-                    <div className='mr-1'>{denominatedAmount}</div>
+                    <div className='mr-1'>{formattedAmount}</div>
                     <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>

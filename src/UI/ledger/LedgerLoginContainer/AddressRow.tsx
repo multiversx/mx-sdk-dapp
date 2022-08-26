@@ -1,9 +1,9 @@
 import React from 'react';
 import globalStyles from 'assets/sass/main.scss';
-import { Denominate } from 'UI/Denominate';
+import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
+import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { WithClassnameType } from '../../types';
-import { getAccountBalance } from 'utils/account/getAccountBalance';
 
 interface AddressRowType extends WithClassnameType {
   selectedAddress?: string;
@@ -93,7 +93,7 @@ export const AddressRow = ({
         </div>
       </td>
       <td className={globalStyles.textLeft}>
-        <Denominate value={balance} egldLabel={getEgldLabel()} />
+        <FormatAmount value={balance} egldLabel={getEgldLabel()} />
       </td>
       <td className={globalStyles.textLeft}>{index}</td>
     </tr>

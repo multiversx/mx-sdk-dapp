@@ -24,9 +24,9 @@ describe('transaction interpreter', () => {
       };
       const output: ExtendedTransactionType = {
         ...transaction,
-        denomination: {
-          denominatedValue: '12.340',
-          fullDenominatedValue: '12.340'
+        amountInfo: {
+          formattedValue: '12.340',
+          fullFormattedValue: '12.340'
         },
         links: {
           senderLink: `${networkAddress}${urlBuilder.accountDetails(
@@ -101,9 +101,9 @@ describe('transaction interpreter', () => {
       const output: ExtendedTransactionType[] = [
         {
           ...transactions[0],
-          denomination: {
-            denominatedValue: '12.340',
-            fullDenominatedValue: '12.340'
+          amountInfo: {
+            formattedValue: '12.340',
+            fullFormattedValue: '12.340'
           },
           links: {
             senderLink: `${networkAddress}${urlBuilder.accountDetails(
@@ -137,9 +137,9 @@ describe('transaction interpreter', () => {
         },
         {
           ...transactions[1],
-          denomination: {
-            denominatedValue: '12.340',
-            fullDenominatedValue: '12.340'
+          amountInfo: {
+            formattedValue: '12.340',
+            fullFormattedValue: '12.340'
           },
           links: {
             senderLink: `${networkAddress}${urlBuilder.accountDetails(
