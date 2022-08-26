@@ -2,10 +2,12 @@ import {
   ACCOUNTS_ENDPOINT,
   BLOCKS_ENDPOINT,
   COLLECTIONS_ENDPOINT,
+  CONTRACTS_ENDPOINT,
   IDENTITIES_ENDPOINT,
   NFTS_ENDPOINT,
   NODES_ENDPOINT,
   PROVIDERS_ENDPOINT,
+  SC_RESULTS_ENDPOINT,
   TOKENS_ENDPOINT,
   TRANSACTIONS_ENDPOINT
 } from 'apiCalls/endpoints';
@@ -19,7 +21,7 @@ export const urlBuilder = {
   transactionDetails: (hash: number | string) =>
     `/${TRANSACTIONS_ENDPOINT}/${hash}`,
   transactionDetailsScResults: (hash: string) =>
-    `/${TRANSACTIONS_ENDPOINT}/${hash}/sc-results`,
+    `/${TRANSACTIONS_ENDPOINT}/${hash}/${SC_RESULTS_ENDPOINT}`,
   transactionDetailsLogs: (hash: string) =>
     `/${TRANSACTIONS_ENDPOINT}/${hash}/logs`,
   nodeDetails: (publicKey: string) => `/${NODES_ENDPOINT}/${publicKey}`,
@@ -29,11 +31,11 @@ export const urlBuilder = {
   accountDetailsTokens: (address: string) =>
     `/${ACCOUNTS_ENDPOINT}/${address}/${TOKENS_ENDPOINT}`,
   accountDetailsNfts: (address: string) =>
-    `/${ACCOUNTS_ENDPOINT}/${address}/nfts`,
+    `/${ACCOUNTS_ENDPOINT}/${address}/${NFTS_ENDPOINT}`,
   accountDetailsScResults: (address: string) =>
-    `/${ACCOUNTS_ENDPOINT}/${address}/sc-results`,
+    `/${ACCOUNTS_ENDPOINT}/${address}/${SC_RESULTS_ENDPOINT}`,
   accountDetailsContracts: (address: string) =>
-    `/${ACCOUNTS_ENDPOINT}/${address}/contracts`,
+    `/${ACCOUNTS_ENDPOINT}/${address}/${CONTRACTS_ENDPOINT}`,
   identityDetails: (id: string) => `/${IDENTITIES_ENDPOINT}/${id}`,
   tokenDetails: (tokenId: string) => `/${TOKENS_ENDPOINT}/${tokenId}`,
   tokenDetailsAccounts: (tokenId: string) =>

@@ -1,7 +1,7 @@
 import React from 'react';
+import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { decodePart } from 'utils';
-import classNames from 'classnames';
 import { WithClassnameType } from '../types';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
@@ -81,7 +81,14 @@ export const TransactionData = ({
 
           <div
             data-testid='confirmScCall'
-            className={`${globalStyles.textarea} ${globalStyles.scCall} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak}`}
+            className={classNames(
+              globalStyles.textarea,
+              globalStyles.scCall,
+              globalStyles.formControl,
+              globalStyles.mt1,
+              globalStyles.textBreak,
+              globalStyles.w100
+            )}
           >
             {[decodePart(encodedScCall), ...remainingDataFields].join('@')}
           </div>

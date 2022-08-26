@@ -57,6 +57,7 @@ export const SignStep = ({
 
   const {
     tokenId,
+    nonce,
     amount,
     type,
     multiTxData,
@@ -87,8 +88,10 @@ export const SignStep = ({
     isLastTransaction && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
+  const nftId = `${tokenId}-${nonce}`;
+
   const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
-    tokenId: currentTransaction.transactionTokenInfo.tokenId
+    tokenId: nonce ? nftId : tokenId
   });
 
   const formattedAmount = formatAmount({
