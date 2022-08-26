@@ -13,3 +13,7 @@ export const NFTS_ENDPOINT = 'nfts';
 export const PROVIDERS_ENDPOINT = 'providers';
 export const SC_RESULTS_ENDPOINT = 'sc-results';
 export const CONTRACTS_ENDPOINT = 'contracts';
+export const LOGS_ENDPOINT = 'logs';
+export const CODE_ENDPOINT = 'code';
+export const LOCKED_ACCOUNTS_ENDPOINT = 'locked-accounts';
+export const ROLES_ENDPOINT = 'roles';

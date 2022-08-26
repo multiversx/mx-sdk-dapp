@@ -1,12 +1,16 @@
 import {
   ACCOUNTS_ENDPOINT,
   BLOCKS_ENDPOINT,
+  CODE_ENDPOINT,
   COLLECTIONS_ENDPOINT,
   CONTRACTS_ENDPOINT,
   IDENTITIES_ENDPOINT,
+  LOCKED_ACCOUNTS_ENDPOINT,
+  LOGS_ENDPOINT,
   NFTS_ENDPOINT,
   NODES_ENDPOINT,
   PROVIDERS_ENDPOINT,
+  ROLES_ENDPOINT,
   SC_RESULTS_ENDPOINT,
   TOKENS_ENDPOINT,
   TRANSACTIONS_ENDPOINT
@@ -23,11 +27,11 @@ export const urlBuilder = {
   transactionDetailsScResults: (hash: string) =>
     `/${TRANSACTIONS_ENDPOINT}/${hash}/${SC_RESULTS_ENDPOINT}`,
   transactionDetailsLogs: (hash: string) =>
-    `/${TRANSACTIONS_ENDPOINT}/${hash}/logs`,
+    `/${TRANSACTIONS_ENDPOINT}/${hash}/${LOGS_ENDPOINT}`,
   nodeDetails: (publicKey: string) => `/${NODES_ENDPOINT}/${publicKey}`,
   accountDetails: (address: string) => `/${ACCOUNTS_ENDPOINT}/${address}`,
   accountDetailsContractCode: (address: string) =>
-    `/${ACCOUNTS_ENDPOINT}/${address}/code`,
+    `/${ACCOUNTS_ENDPOINT}/${address}/${CODE_ENDPOINT}`,
   accountDetailsTokens: (address: string) =>
     `/${ACCOUNTS_ENDPOINT}/${address}/${TOKENS_ENDPOINT}`,
   accountDetailsNfts: (address: string) =>
@@ -41,9 +45,9 @@ export const urlBuilder = {
   tokenDetailsAccounts: (tokenId: string) =>
     `/${TOKENS_ENDPOINT}/${tokenId}/${ACCOUNTS_ENDPOINT}`,
   tokenDetailsLockedAccounts: (tokenId: string) =>
-    `/${TOKENS_ENDPOINT}/${tokenId}/locked-accounts`,
+    `/${TOKENS_ENDPOINT}/${tokenId}/${LOCKED_ACCOUNTS_ENDPOINT}`,
   tokenDetailsRoles: (tokenId: string) =>
-    `/${TOKENS_ENDPOINT}/${tokenId}/roles`,
+    `/${TOKENS_ENDPOINT}/${tokenId}/${ROLES_ENDPOINT}`,
   collectionDetails: (identifier: string) =>
     `/${COLLECTIONS_ENDPOINT}/${identifier}`,
   nftDetails: (identifier: string) => `/${NFTS_ENDPOINT}/${identifier}`,
