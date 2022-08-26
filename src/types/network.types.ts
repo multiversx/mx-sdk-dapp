@@ -3,8 +3,8 @@ export interface BaseNetworkType {
   chainId: string;
   name: string;
   egldLabel: string;
-  egldDenomination: string;
   decimals: string;
+  digits: string;
   gasPerDataByte: string;
   walletConnectDeepLink: string;
   walletAddress: string;
@@ -29,8 +29,8 @@ export interface CustomNetworkType {
   chainId?: string;
   name?: string;
   egldLabel?: string;
-  egldDenomination?: string;
   decimals?: string;
+  digits?: string;
   gasPerDataByte?: string;
   walletConnectDeepLink?: string;
   walletConnectBridgeAddresses?: string[];

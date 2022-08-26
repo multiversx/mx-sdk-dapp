@@ -1,5 +1,5 @@
 import BigNumber from 'bignumber.js';
-import { TransactionTypesEnum, MultiEsdtTransactionType } from 'types';
+import { MultiEsdtTransactionType, TransactionTypesEnum } from 'types';
 import { decodePart } from 'utils/decoders/decodePart';
 import { getAllStringOccurrences } from '../getAllStringOccurrences';
 

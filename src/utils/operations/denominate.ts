@@ -3,7 +3,7 @@ import { formatAmount } from './formatAmount';
 
 let deprecationMessageDisplayed = false;
 
-type DenominateType = {
+export type DenominateType = {
   input: string;
   denomination?: number;
   decimals?: number;

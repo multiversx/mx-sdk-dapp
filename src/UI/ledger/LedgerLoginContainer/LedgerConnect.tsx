@@ -34,7 +34,9 @@ export const LedgerConnect = ({
           ) : (
             <>
               <LedgerLogo className={globalStyles.mb4} />
-              <h4 className={globalStyles.mb4}>Connect Ledger</h4>
+              <h4 className={classNames([globalStyles.h4, globalStyles.mb4])}>
+                Connect Ledger
+              </h4>
               <p className={`${globalStyles.lead} ${globalStyles.mb4}`}>
                 Unlock your device &amp; open the Elrond App.
               </p>

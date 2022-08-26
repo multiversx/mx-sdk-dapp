@@ -1,5 +1,5 @@
-import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import React from 'react';
+import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 
 export const TokenValue = ({
   transaction
@@ -7,6 +7,6 @@ export const TokenValue = ({
   transaction: ExtendedTransactionType;
 }) => {
   return (
-    <span>{`${transaction.denomination.denominatedValue} ${transaction.tokenLabel}`}</span>
+    <span>{`${transaction.amountInfo.formattedValue} ${transaction.tokenLabel}`}</span>
   );
 };

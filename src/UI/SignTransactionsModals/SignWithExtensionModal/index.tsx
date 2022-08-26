@@ -1,5 +1,5 @@
 import React from 'react';
-import { faHourglass, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { SignModalPropsType } from 'types';
@@ -22,6 +22,8 @@ export const SignWithExtensionModal = ({
     closeBtn: classNames(
       globalStyles.btn,
       globalStyles.btnCloseLink,
+      globalStyles.btnDark,
+      globalStyles.textWhite,
       globalStyles.mt2
     )
   };
@@ -54,7 +56,7 @@ export const SignWithExtensionModal = ({
       }}
     >
       <PageState
-        icon={error ? faTimes : faHourglass}
+        icon={error ? faTimes : null}
         iconClass={classes.icon}
         className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}

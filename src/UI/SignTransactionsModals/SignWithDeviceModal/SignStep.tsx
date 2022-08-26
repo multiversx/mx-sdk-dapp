@@ -2,21 +2,19 @@ import React from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import {
   faExclamationTriangle,
-  faHourglass,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
-
 import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
 import { getEgldLabel, isTokenTransfer } from 'utils';
-import { formatAmount } from '../../../utils/operations/formatAmount';
+import { formatAmount } from 'utils/operations/formatAmount';
 import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
@@ -58,6 +56,7 @@ export const SignStep = ({
 
   const {
     tokenId,
+    nonce,
     amount,
     type,
     multiTxData,
@@ -88,18 +87,19 @@ export const SignStep = ({
     isLastTransaction && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
-  const { tokenDenomination, tokenAvatar } = useGetTokenDetails({
-    tokenId: currentTransaction.transactionTokenInfo.tokenId
+  // If the token has a nonce means that this is an NFT. Eg: TokenId=TOKEN-1hfr, nonce=123 => NFT id=TOKEN-1hfr-123
+  const nftId = `${tokenId}-${nonce}`;
+
+  const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
+    tokenId: nonce && nonce.length > 0 ? nftId : tokenId
   });
 
-  const denominatedAmount = formatAmount({
+  const formattedAmount = formatAmount({
     input: isTokenTransaction
       ? amount
       : currentTransaction.transaction.getValue().toString(),
-    decimals: isTokenTransaction
-      ? tokenDenomination
-      : Number(network.egldDenomination),
-    digits: Number(network.decimals),
+    decimals: isTokenTransaction ? tokenDecimals : Number(network.decimals),
+    digits: Number(network.digits),
     showLastNonZeroDecimal: false,
     addCommas: true
   });
@@ -111,7 +111,7 @@ export const SignStep = ({
 
   return (
     <PageState
-      icon={error ? faTimes : faHourglass}
+      icon={error ? faTimes : null}
       iconClass={classes.icon}
       iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
       iconSize='3x'
@@ -162,7 +162,7 @@ export const SignStep = ({
                 <div>
                   <div className={classes.tokenAmountLabel}>Amount</div>
                   <div className={classes.tokenAmountValue}>
-                    <div className='mr-1'>{denominatedAmount}</div>
+                    <div className='mr-1'>{formattedAmount}</div>
                     <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>
