@@ -91,7 +91,7 @@ export const SignStep = ({
   const nftId = `${tokenId}-${nonce}`;
 
   const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
-    tokenId: Boolean(nonce) || Number(nonce) === 0 ? nftId : tokenId
+    tokenId: nonce && nonce.length > 0 ? nftId : tokenId
   });
 
   const formattedAmount = formatAmount({

@@ -1,7 +1,6 @@
 import axios from 'axios';
 import useSwr from 'swr';
-import { ACCOUNTS_ENDPOINT, NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls';
-import { useGetAccountInfo } from 'hooks/account';
+import { COLLECTIONS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { getIdentifierType } from 'utils';
 
@@ -41,22 +40,27 @@ export function useGetTokenDetails({
   tokenId: string;
 }): TokenOptionType {
   const { network } = useGetNetworkConfig();
-  const { address } = useGetAccountInfo();
 
-  const { isEsdt } = getIdentifierType(tokenId);
-  const tokenEndpoint = isEsdt ? TOKENS_ENDPOINT : NFTS_ENDPOINT;
+  const { isEsdt, isNft } = getIdentifierType(tokenId);
+  const tokenEndpoint = isEsdt ? TOKENS_ENDPOINT : COLLECTIONS_ENDPOINT;
+  let tokenIdentifier = tokenId;
+
+  if (isNft) {
+    const [firstPart, secondPart] = tokenId.split('-');
+    tokenIdentifier = `${firstPart}-${secondPart}`;
+  }
 
   const {
     data: selectedToken,
     error
   }: { data?: TokenInfoResponse; error?: string } = useSwr(
-    Boolean(tokenId)
-      ? `${network.apiAddress}/${ACCOUNTS_ENDPOINT}/${address}/${tokenEndpoint}/${tokenId}`
+    Boolean(tokenIdentifier)
+      ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
     fetcher
   );
 
-  if (!tokenId) {
+  if (!tokenIdentifier) {
     return {
       tokenDecimals: Number(network.decimals),
       tokenLabel: '',
