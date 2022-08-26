@@ -10,8 +10,8 @@ export async function getServerConfiguration(apiAddress: string) {
     if (data != null) {
       // TODO: egldDenomination will be removed from API when dapp-core v1 will be disontinued
       if ('egldDenomination' in data) {
-        data.decimals = data['egldDenomination'];
         data.digits = data['decimals'];
+        data.decimals = data['egldDenomination'];
         delete data['egldDenomination'];
       }
       return data;
