@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import classNames from 'classnames';
 import QRCode from 'qrcode';
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
@@ -158,7 +159,9 @@ export const WalletConnectLoginContainer = ({
             <Loader />
           )}
 
-          <h4 className={generatedClasses.title}>{title}</h4>
+          <h4 className={classNames([globalStyles.h4, globalStyles.title])}>
+            {title}
+          </h4>
           {isMobileDevice ? (
             <>
               <p className={generatedClasses.leadText}>{loginButtonText}</p>

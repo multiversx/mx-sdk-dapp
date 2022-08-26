@@ -18,7 +18,11 @@ interface TransactionsTableType extends WithClassnameType {
 export const TransactionsTable = ({
   transactions,
   address,
-  title = <h6 data-testid='title'>Transactions</h6>,
+  title = (
+    <h6 className={globalStyles.h6} data-testid='title'>
+      Transactions
+    </h6>
+  ),
   directionCol = false,
   showLockedAccounts = false,
   className = 'dapp-transactions-table'
