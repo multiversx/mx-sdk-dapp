@@ -8,14 +8,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
-
 import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
 import { getEgldLabel, isTokenTransfer } from 'utils';
-import { formatAmount } from '../../../utils/operations/formatAmount';
+import { formatAmount } from 'utils/operations/formatAmount';
 import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
