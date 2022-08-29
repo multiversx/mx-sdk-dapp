@@ -102,7 +102,7 @@ import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
     customNetworkConfig={customNetworkConfig}
 >
 ```
-`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet`
+`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet` (also configured in `EnvironmentsEnum`)
 
 DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
 This allows using different APIs and different connection providers to configure your network configuration.
@@ -114,8 +114,8 @@ This allows using different APIs and different connection providers to configure
   id?: string;
   name?: string;
   egldLabel?: string;
-  egldDenomination?: string;
   decimals?: string;
+  digits?: string;
   gasPerDataByte?: string;
   walletConnectDeepLink?: string; - a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
   walletConnectBridgeAddresses?: string; - a string that is used to establish the connection to walletConnect library;
@@ -202,7 +202,7 @@ Use with routes:
 ```
   <AuthenticatedRoutesWrapper
     routes={routes}
-    unlockRoute={routeNames.unlock}
+    unlockRoute="/unlock"
   >
     {appContent}
   </AuthenticatedRoutesWrapper>
@@ -727,15 +727,15 @@ import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
 ```
 import {
-   gasPriceModifier,
-   gasPerDataByte,
-   gasLimit,
-   gasPrice,
-   denomination,
-   decimals,
-   mnemonicWords,
-   ledgerErrorCodes,
-   fallbackNetworkConfigurations
+  GAS_PRICE_MODIFIER,
+  GAS_PER_DATA_BYTE,
+  GAS_LIMIT,
+  GAS_PRICE,
+  DECIMALS,
+  DIGITS,
+  mnemonicWords,
+  ledgerErrorCodes,
+  fallbackNetworkConfigurations
  } from '@elrondnetwork/dapp-core/constants';
 ```
 
