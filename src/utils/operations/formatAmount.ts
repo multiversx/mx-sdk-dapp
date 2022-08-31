@@ -38,110 +38,110 @@ export function formatAmount({
     modInput = input.substring(1);
   }
 
-  const result = pipe(modInput as string)
-    // format
-    .then(() =>
-      TokenPayment.fungibleFromBigInteger(
-        '',
-        modInput as string,
-        decimals
-      ).toRationalNumber()
-    )
+  return (
+    pipe(modInput as string)
+      // format
+      .then(() =>
+        TokenPayment.fungibleFromBigInteger(
+          '',
+          modInput as string,
+          decimals
+        ).toRationalNumber()
+      )
 
-    // format
-    .then((current) => {
-      const bnBalance = new BigNumber(current);
+      // format
+      .then((current) => {
+        const bnBalance = new BigNumber(current);
 
-      if (bnBalance.isZero()) {
-        return '0';
-      }
-      const balance = bnBalance.toString(10);
-      const [integerPart, decimalPart] = balance.split('.');
-      const bNdecimalPart = new BigNumber(decimalPart || 0);
+        if (bnBalance.isZero()) {
+          return '0';
+        }
+        const balance = bnBalance.toString(10);
+        const [integerPart, decimalPart] = balance.split('.');
+        const bNdecimalPart = new BigNumber(decimalPart || 0);
 
-      const decimalPlaces = pipe(0)
-        .if(Boolean(decimalPart && showLastNonZeroDecimal))
-        .then(() => Math.max(decimalPart.length, digits))
+        const decimalPlaces = pipe(0)
+          .if(Boolean(decimalPart && showLastNonZeroDecimal))
+          .then(() => Math.max(decimalPart.length, digits))
 
-        .if(bNdecimalPart.isZero() && !showLastNonZeroDecimal)
-        .then(0)
+          .if(bNdecimalPart.isZero() && !showLastNonZeroDecimal)
+          .then(0)
 
-        .if(Boolean(decimalPart && !showLastNonZeroDecimal))
-        .then(() => Math.min(decimalPart.length, digits))
+          .if(Boolean(decimalPart && !showLastNonZeroDecimal))
+          .then(() => Math.min(decimalPart.length, digits))
 
-        .valueOf();
+          .valueOf();
 
-      const shownDecimalsAreZero =
-        decimalPart &&
-        digits >= 1 &&
-        digits <= decimalPart.length &&
-        bNdecimalPart.isGreaterThan(0) &&
-        new BigNumber(decimalPart.substring(0, digits)).isZero();
+        const shownDecimalsAreZero =
+          decimalPart &&
+          digits >= 1 &&
+          digits <= decimalPart.length &&
+          bNdecimalPart.isGreaterThan(0) &&
+          new BigNumber(decimalPart.substring(0, digits)).isZero();
 
-      const formatted = bnBalance.toFormat(decimalPlaces);
+        const formatted = bnBalance.toFormat(decimalPlaces);
 
-      const formattedBalance = pipe(balance)
-        .if(addCommas)
-        .then(formatted)
+        const formattedBalance = pipe(balance)
+          .if(addCommas)
+          .then(formatted)
 
-        .if(Boolean(shownDecimalsAreZero))
-        .then((current) => {
-          const integerPartZero = new BigNumber(integerPart).isZero();
-          const [numericPart, decimalSide] = current.split('.');
+          .if(Boolean(shownDecimalsAreZero))
+          .then((current) => {
+            const integerPartZero = new BigNumber(integerPart).isZero();
+            const [numericPart, decimalSide] = current.split('.');
 
-          const zeroPlaceholders = new Array(digits - 1).fill(0);
-          const zeros = [...zeroPlaceholders, 0].join('');
-          const minAmount = [...zeroPlaceholders, 1].join(''); // 00..1
+            const zeroPlaceholders = new Array(digits - 1).fill(0);
+            const zeros = [...zeroPlaceholders, 0].join('');
+            const minAmount = [...zeroPlaceholders, 1].join(''); // 00..1
 
-          if (!integerPartZero) {
-            return `${numericPart}.${zeros}`;
-          }
-
-          if (showIsLessThanDecimalsLabel) {
-            return `<${numericPart}.${minAmount}`;
-          }
-
-          if (!showLastNonZeroDecimal) {
-            return numericPart;
-          }
-
-          return `${numericPart}.${decimalSide}`;
-        })
-
-        .if(Boolean(!shownDecimalsAreZero && decimalPart))
-        .then((current) => {
-          const [numericPart] = current.split('.');
-          let decimalSide = decimalPart.substring(0, decimalPlaces);
-
-          if (showLastNonZeroDecimal) {
-            const noOfZerosAtEnd = digits - decimalSide.length;
-
-            if (noOfZerosAtEnd > 0) {
-              const zeroPadding = Array(noOfZerosAtEnd)
-                .fill(0)
-                .join('');
-              decimalSide = `${decimalSide}${zeroPadding}`;
-              return `${numericPart}.${decimalSide}`;
+            if (!integerPartZero) {
+              return `${numericPart}.${zeros}`;
             }
 
-            return current;
-          }
+            if (showIsLessThanDecimalsLabel) {
+              return `<${numericPart}.${minAmount}`;
+            }
 
-          if (!decimalSide) {
-            return numericPart;
-          }
+            if (!showLastNonZeroDecimal) {
+              return numericPart;
+            }
 
-          return `${numericPart}.${decimalSide}`;
-        })
+            return `${numericPart}.${decimalSide}`;
+          })
 
-        .valueOf();
+          .if(Boolean(!shownDecimalsAreZero && decimalPart))
+          .then((current) => {
+            const [numericPart] = current.split('.');
+            let decimalSide = decimalPart.substring(0, decimalPlaces);
 
-      return formattedBalance;
-    })
-    .if(isNegative)
-    .then((current) => `-${current}`)
+            if (showLastNonZeroDecimal) {
+              const noOfZerosAtEnd = digits - decimalSide.length;
 
-    .valueOf();
-  console.log({ result });
-  return result;
+              if (noOfZerosAtEnd > 0) {
+                const zeroPadding = Array(noOfZerosAtEnd)
+                  .fill(0)
+                  .join('');
+                decimalSide = `${decimalSide}${zeroPadding}`;
+                return `${numericPart}.${decimalSide}`;
+              }
+
+              return current;
+            }
+
+            if (!decimalSide) {
+              return numericPart;
+            }
+
+            return `${numericPart}.${decimalSide}`;
+          })
+
+          .valueOf();
+
+        return formattedBalance;
+      })
+      .if(isNegative)
+      .then((current) => `-${current}`)
+
+      .valueOf()
+  );
 }

@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL } from 'constants/index';
+import { formatAmount } from 'utils/operations/formatAmount';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
-import { formatAmount } from '../../utils/operations/formatAmount';
 import { FormatAmountPropsType } from './formatAmount.types';
 import styles from './formatAmountStyles.scss';
 
