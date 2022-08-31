@@ -4,11 +4,11 @@ import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
-import { logout } from 'utils/logout';
 import { getAccountShard } from 'utils/account/getAccountShard';
-import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
+import { logout } from 'utils/logout';
 
 interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
