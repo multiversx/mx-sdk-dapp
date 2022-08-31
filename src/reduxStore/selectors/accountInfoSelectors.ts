@@ -1,6 +1,4 @@
 import { emptyAccount } from 'reduxStore/slices';
-import { emptyAccount } from 'reduxStore/slices';
-import { RootState } from 'reduxStore/store';
 import { RootState } from 'reduxStore/store';
 import { createDeepEqualSelector } from './helpers';
 
@@ -15,7 +13,7 @@ export const accountSelector = createDeepEqualSelector(
   accountInfoSelector,
   addressSelector,
   (state, address) =>
-    state.account.address === address ? state.account : emptyAccount
+    address in state.accounts ? state.accounts[address] : emptyAccount
 );
 
 export const accountBalanceSelector = createDeepEqualSelector(
