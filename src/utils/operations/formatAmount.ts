@@ -23,9 +23,6 @@ export function formatAmount({
   showIsLessThanDecimalsLabel = false,
   addCommas = false
 }: FormatAmountType) {
-  if (input == null) {
-    return input;
-  }
   if (!stringIsInteger(input, false)) {
     throw new Error('Invalid input');
   }
