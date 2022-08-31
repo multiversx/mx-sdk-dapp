@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   faChevronLeft,
   faChevronRight,
@@ -49,6 +49,21 @@ export const AddressTable = ({
     arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
     confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.mt4}`
   };
+
+  useEffect(() => {
+    const isAccountsLoaded = accounts.length > 0 && !loading;
+
+    const isFirstPageAndNoAddressSelected =
+      !selectedAddress && startIndex === 0;
+
+    const shouldSelectFirstAddress =
+      isAccountsLoaded && isFirstPageAndNoAddressSelected;
+    if (shouldSelectFirstAddress) {
+      const index = 0;
+      const address = accounts[index];
+      onSelectAddress({ address, index });
+    }
+  }, [accounts, selectedAddress, loading, startIndex]);
 
   if (loading) {
     return (
