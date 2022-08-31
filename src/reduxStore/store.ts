@@ -17,6 +17,7 @@ export const store = configureStore({
         ],
         ignoredPaths: [
           'payload.nonce',
+          // TODO: check regex for: account.accounts[erd1regex].nonce
           'account.account.nonce',
           'providers.accountProvider'
         ]

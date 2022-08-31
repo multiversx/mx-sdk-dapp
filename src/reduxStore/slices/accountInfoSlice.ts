@@ -69,8 +69,10 @@ export const accountInfoSlice = createSlice({
       state: AccountInfoSliceType,
       action: PayloadAction<AccountType>
     ) => {
+      // account fetching always comes after address is populated
+      const isSameAddress = state.address === action.payload.address;
       state.accounts = {
-        [action.payload.address]: action.payload
+        [state.address]: isSameAddress ? action.payload : emptyAccount
       };
       state.isAccountLoading = false;
       state.accountLoadingError = null;
@@ -154,7 +156,8 @@ export const accountInfoSlice = createSlice({
       } = accountInfo as AccountInfoSliceType;
       state.address = address;
       state.shard = shard;
-      state.accounts = accounts ?? initialState.accounts;
+      const isAddressInAccounts = accounts && address in accounts;
+      state.accounts = isAddressInAccounts ? accounts : initialState.accounts;
       state.publicKey = publicKey;
     });
   }
