@@ -1,4 +1,6 @@
 import { emptyAccount } from 'reduxStore/slices';
+import { emptyAccount } from 'reduxStore/slices';
+import { RootState } from 'reduxStore/store';
 import { RootState } from 'reduxStore/store';
 import { createDeepEqualSelector } from './helpers';
 

@@ -7,12 +7,12 @@ export const useGetAccountInfo = () => {
   const account = useGetAccount();
   const info = useSelector(accountInfoSelector);
 
-  const accountInfo = useMemo(() => {
+  const memoizedAccountInfo = useMemo(() => {
     return {
       ...info,
       account
     };
   }, [account, info]);
 
-  return accountInfo;
+  return memoizedAccountInfo;
 };

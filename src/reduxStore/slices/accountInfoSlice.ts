@@ -26,7 +26,7 @@ export interface UpdateLedgerAccountPayloadType {
 export interface AccountInfoSliceType {
   address: string;
   shard?: number;
-  account: AccountType;
+  account: { [address: string]: AccountType };
   publicKey: string;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
@@ -45,7 +45,7 @@ export const emptyAccount: AccountType = {
 
 const initialState: AccountInfoSliceType = {
   address: '',
-  account: emptyAccount,
+  account: { '': emptyAccount },
   ledgerAccount: null,
   publicKey: '',
   walletConnectAccount: null,
@@ -69,7 +69,9 @@ export const accountInfoSlice = createSlice({
       state: AccountInfoSliceType,
       action: PayloadAction<AccountType>
     ) => {
-      state.account = action.payload;
+      state.account = {
+        [action.payload.address]: action.payload
+      };
       state.isAccountLoading = false;
       state.accountLoadingError = null;
     },
@@ -77,7 +79,8 @@ export const accountInfoSlice = createSlice({
       state: AccountInfoSliceType,
       action: PayloadAction<number>
     ) => {
-      state.account.nonce = action.payload;
+      const { address } = state;
+      state.account[address].nonce = action.payload;
     },
     setAccountShard: (
       state: AccountInfoSliceType,
