@@ -77,10 +77,10 @@ export const accountInfoSlice = createSlice({
     },
     setAccountNonce: (
       state: AccountInfoSliceType,
-      action: PayloadAction<{ nonce: number; address: string }>
+      action: PayloadAction<number>
     ) => {
-      const { nonce, address } = action.payload;
-      state.account[address].nonce = nonce;
+      const { address } = state;
+      state.account[address].nonce = action.payload;
     },
     setAccountShard: (
       state: AccountInfoSliceType,

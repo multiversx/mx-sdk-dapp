@@ -1,12 +1,18 @@
+import { useMemo } from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { accountSelector, accountInfoSelector } from 'reduxStore/selectors';
+import { accountInfoSelector } from 'reduxStore/selectors';
+import { useGetAccount } from './useGetAccount';
 
 export const useGetAccountInfo = () => {
-  const account = useSelector(accountSelector);
+  const account = useGetAccount();
   const info = useSelector(accountInfoSelector);
-  return {
-    ...info,
-    // overwrite namespaced account information with plain current account
-    account
-  };
+
+  const memoizedAccountInfo = useMemo(() => {
+    return {
+      ...info,
+      account
+    };
+  }, [account, info]);
+
+  return memoizedAccountInfo;
 };
