@@ -5,7 +5,8 @@ import {
 import { InterpreterAmountFormatConfigType } from '../transactionsInterpreter.types';
 
 export const defaultAmountFormatConfig: InterpreterAmountFormatConfigType = {
-  egldLabel: MAINNET_EGLD_LABEL
+  egldLabel: MAINNET_EGLD_LABEL,
+  showLastNonZeroDecimal: false
 };
 
 export const {

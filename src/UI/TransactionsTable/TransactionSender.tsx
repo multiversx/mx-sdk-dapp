@@ -2,11 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 
+import { addressIsValid } from 'utils';
 import {
   ExtendedTransactionType,
   TransactionDirectionEnum
-} from 'components/TransactionsInterpreter/transactionsInterpreter.types';
-import { addressIsValid } from 'utils';
+} from 'utils/transactions/interpreter';
 import { ExplorerLink } from '../ExplorerLink';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';

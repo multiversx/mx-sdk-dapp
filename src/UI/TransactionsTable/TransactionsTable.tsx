@@ -1,9 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { interpretServerTransactions } from 'components/TransactionsInterpreter';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils';
+import { interpretServerTransactions } from 'utils/transactions/interpreter';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './TransactionRow';
 import styles from './transactionsTableStyles.scss';

@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import lodash from 'lodash';
 import globalStyles from 'assets/sass/main.scss';
-import { getOperationsMessages } from 'components/TransactionsInterpreter/helpers/getOperationsMessages';
-import { getReceiptMessage } from 'components/TransactionsInterpreter/helpers/getReceiptMessage';
-import getScResultsMessages from 'components/TransactionsInterpreter/helpers/getScResultsMessages';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
+import { getOperationsMessages } from 'utils/transactions/interpreter/helpers/getOperationsMessages';
+import { getReceiptMessage } from 'utils/transactions/interpreter/helpers/getReceiptMessage';
+import getScResultsMessages from 'utils/transactions/interpreter/helpers/getScResultsMessages';
 
 interface TransactionIconType {
   transaction: ServerTransactionType;

@@ -1,8 +1,8 @@
-import { TransactionDirectionEnum } from 'components/TransactionsInterpreter/transactionsInterpreter.types';
 import {
   ServerTransactionType,
   TransferTypeEnum
 } from 'types/serverTransactions.types';
+import { TransactionDirectionEnum } from 'utils/transactions/interpreter';
 import { getTransactionTransferType } from '../getTransactionTransferType';
 import { baseTransactionMock } from './base-transaction-mock';
 
