@@ -556,7 +556,7 @@ and returns an object with the following keys:
           multiTxData?: string;
       };
       isTokenTransaction: boolean;
-      tokenDenomination: number;
+      tokenDecimals: number;
       dataField: string;
   };
   }
