@@ -1,6 +1,12 @@
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { accountInfoSelector } from 'reduxStore/selectors';
+import { accountSelector, accountInfoSelector } from 'reduxStore/selectors';
 
 export const useGetAccountInfo = () => {
-  return useSelector(accountInfoSelector);
+  const account = useSelector(accountSelector);
+  const info = useSelector(accountInfoSelector);
+  return {
+    ...info,
+    // overwrite namespaced account information with plain current account
+    account
+  };
 };

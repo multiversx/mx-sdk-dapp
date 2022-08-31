@@ -177,14 +177,17 @@ export const transactionsSlice = createSlice({
 
       state.signTransactionsError = null;
     },
-    clearAllTransactionsToSign: (state) => {
+    clearAllTransactionsToSign: (state: TransactionsSliceStateType) => {
       state.transactionsToSign = initialState.transactionsToSign;
       state.signTransactionsError = null;
     },
-    clearAllSignedTransactions: (state) => {
+    clearAllSignedTransactions: (state: TransactionsSliceStateType) => {
       state.signedTransactions = initialState.signedTransactions;
     },
-    setSignTransactionsError: (state, action: PayloadAction<string | null>) => {
+    setSignTransactionsError: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<string | null>
+    ) => {
       state.signTransactionsError = action.payload;
     }
   },

@@ -105,7 +105,10 @@ export const TransactionSender = ({
           })
         );
         clearSignInfo();
-        setNonce(account.nonce + transactions.length);
+        setNonce({
+          nonce: account.nonce + transactions.length,
+          address: account.address
+        });
 
         history.pushState({}, document.title, '?');
       } catch (error) {
