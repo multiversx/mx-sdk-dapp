@@ -6,7 +6,7 @@ describe('getFormattedAmount', () => {
   describe('get transaction denominated value using default format amount config', () => {
     it('formatted amount for "102000000000000000" is "0.102"', () => {
       const transaction: ServerTransactionType = {
-        ...baseTransactionMock!,
+        ...baseTransactionMock,
         value: '102000000000000000'
       };
       const output = '0.102';
@@ -18,7 +18,7 @@ describe('getFormattedAmount', () => {
 
     it('formatted amount for "0" is "0"', () => {
       const transaction: ServerTransactionType = {
-        ...baseTransactionMock!,
+        ...baseTransactionMock,
         value: '0'
       };
       const output = '0';
@@ -37,7 +37,7 @@ describe('getFormattedAmount', () => {
 
     it('formatted amount for "102000000000000000" is "10200000000000"', () => {
       const transaction: ServerTransactionType = {
-        ...baseTransactionMock!,
+        ...baseTransactionMock,
         value: '102000000000000000'
       };
       const output = '10200000000000';
@@ -52,7 +52,7 @@ describe('getFormattedAmount', () => {
 
     it('formatted amount for "10221334511" is "1022133.4511"', () => {
       const transaction: ServerTransactionType = {
-        ...baseTransactionMock!,
+        ...baseTransactionMock,
         value: '10221334511'
       };
       const output = '1022133.4511';

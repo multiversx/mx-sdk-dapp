@@ -3,7 +3,7 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import { ExtendedTransactionType } from 'components/TransactionsInterpreter';
 import { ExplorerLink } from '../ExplorerLink';
 import { ShardSpan } from './ShardSpan';
 

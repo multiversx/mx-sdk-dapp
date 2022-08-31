@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
+import { ExtendedTransactionType } from 'components/TransactionsInterpreter';
 import { TimeAgo } from './TImeAgo';
 import { TransactionDirectionBadge } from './TransactionDirectionBadge';
 import { TransactionHash } from './TransactionHash';

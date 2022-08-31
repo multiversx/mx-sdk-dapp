@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons/faExchangeAlt';
-import { PageState } from 'UI/PageState';
 import globalStyles from 'assets/sass/main.scss';
+import { PageState } from 'UI/PageState';
 
 export function NoTransactions() {
   return (

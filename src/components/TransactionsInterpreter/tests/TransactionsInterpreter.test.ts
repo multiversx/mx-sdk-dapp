@@ -3,21 +3,22 @@ import {
   ServerTransactionType,
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
+
+import { urlBuilder } from '../helpers/urlBuilder';
+import { interpretServerTransaction } from '../interpretServerTransaction';
+import { interpretServerTransactions } from '../interpretServerTransactions';
+
 import {
   ExtendedTransactionType,
   TransactionDirectionEnum
-} from '../helpers/types';
-import { urlBuilder } from '../helpers/urlBuilder';
-import {
-  parseTransactions,
-  processTransaction
-} from '../TransactionsInterpreter';
+} from '../transactionsInterpreter.types';
 import { transactionMock } from './extended-transaction-mock';
+
+const explorerAddress = 'https://testing.devnet.com';
 
 describe('transaction interpreter', () => {
   describe('processTransaction', () => {
     it('creates an extended model of the existing transaction, containing all the needed information necessary to build the UI without processing inside the components', () => {
-      const networkAddress = 'https://testing.devnet.com';
       const transaction: ServerTransactionType = {
         ...transactionMock,
         tokenIdentifier: 'token-id'
@@ -29,19 +30,19 @@ describe('transaction interpreter', () => {
           fullFormattedValue: '12.340'
         },
         links: {
-          senderLink: `${networkAddress}${urlBuilder.accountDetails(
+          senderLink: `${explorerAddress}${urlBuilder.accountDetails(
             transaction.sender
           )}`,
-          receiverLink: `${networkAddress}${urlBuilder.accountDetails(
+          receiverLink: `${explorerAddress}${urlBuilder.accountDetails(
             transaction.receiver
           )}`,
-          receiverShardLink: `${networkAddress}${urlBuilder.receiverShard(
+          receiverShardLink: `${explorerAddress}${urlBuilder.receiverShard(
             transaction.receiverShard
           )}`,
-          senderShardLink: `${networkAddress}${urlBuilder.senderShard(
+          senderShardLink: `${explorerAddress}${urlBuilder.senderShard(
             transaction.senderShard
           )}`,
-          transactionLink: `${networkAddress}${urlBuilder.transactionDetails(
+          transactionLink: `${explorerAddress}${urlBuilder.transactionDetails(
             transaction.txHash
           )}`
         },
@@ -59,10 +60,10 @@ describe('transaction interpreter', () => {
         }
       };
 
-      const result = processTransaction({
+      const result = interpretServerTransaction({
         transaction,
         address: 'erd1-my-address-hash',
-        formatAmountConfig: {
+        amountFormatConfig: {
           egldLabel: MAINNET_EGLD_LABEL,
           decimals: 2,
           digits: 3,
@@ -70,7 +71,7 @@ describe('transaction interpreter', () => {
           token: 'egld',
           showLastNonZeroDecimal: true
         },
-        networkAddress
+        explorerAddress
       });
 
       expect(result).toEqual(output);
@@ -173,21 +174,20 @@ describe('transaction interpreter', () => {
         }
       ];
 
-      const result = parseTransactions(
+      const result = interpretServerTransactions({
         transactions,
-        'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
-        {
-          networkAddress,
-          formatAmountConfig: {
-            egldLabel: MAINNET_EGLD_LABEL,
-            decimals: 2,
-            digits: 3,
-            showLabel: true,
-            token: 'egld',
-            showLastNonZeroDecimal: true
-          }
-        }
-      );
+        address:
+          'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
+        amountFormatConfig: {
+          egldLabel: MAINNET_EGLD_LABEL,
+          decimals: 2,
+          digits: 3,
+          showLabel: true,
+          token: 'egld',
+          showLastNonZeroDecimal: true
+        },
+        explorerAddress
+      });
 
       expect(result).toEqual(output);
     });

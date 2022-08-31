@@ -1,8 +1,9 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
+import { interpretServerTransactions } from 'components/TransactionsInterpreter';
 import { ServerTransactionType } from 'types/serverTransactions.types';
+import { getEgldLabel } from 'utils';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './TransactionRow';
 import styles from './transactionsTableStyles.scss';
@@ -31,8 +32,16 @@ export const TransactionsTable = ({
     console.error('Invalid account');
     return null;
   }
+  const egldLabel = getEgldLabel();
 
-  const processedTransactions = parseTransactions(transactions, address);
+  const processedTransactions = interpretServerTransactions({
+    transactions,
+    address,
+    explorerAddress: '',
+    amountFormatConfig: {
+      egldLabel
+    }
+  });
 
   return (
     <div className={classNames(styles.transactionsTable, className)}>
