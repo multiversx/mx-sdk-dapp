@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { moveTransactionsToSignedState } from 'reduxStore/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
-import { parseTransactionAfterSigning } from 'utils';
+import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void

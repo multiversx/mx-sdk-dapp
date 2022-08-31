@@ -1,5 +1,5 @@
 import { Address } from '@elrondnetwork/erdjs/out';
-import { getShardOfAddress } from 'utils';
+import { getShardOfAddress } from 'utils/account/getShardOfAddress';
 
 interface IsCrossShardTransactionPropsType {
   receiverAddress: string;
