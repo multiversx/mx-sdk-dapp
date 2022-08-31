@@ -8,3 +8,5 @@ export * from './builtCallbackUrl';
 export * from './parseTransactionAfterSigning';
 export * from './getTransactionLink';
 export * from './getAllTransactionsLink';
+
+export * from './interpreter';
