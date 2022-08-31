@@ -1,6 +1,6 @@
+import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 import { SignedTransactionType } from 'types';
 import { getAddressFromDataField } from 'utils/smartContracts';
-import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';
 
 export const getAreTransactionsOnSameShard = (
   transactions?: SignedTransactionType[],

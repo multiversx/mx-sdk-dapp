@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
-import { getWebsocketUrl, retryMultipleTimes } from 'utils';
+import { retryMultipleTimes } from 'utils/retryMultipleTimes';
+import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
 import { useGetNetworkConfig } from '../useGetNetworkConfig';
 import {
   websocketConnection,
