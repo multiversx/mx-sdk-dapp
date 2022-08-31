@@ -51,7 +51,9 @@ export function useSignTransactionsWithDevice({
 }: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType {
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const egldLabel = useSelector(egldLabelSelector);
-  const { address } = useGetAccountInfo();
+  const {
+    account: { address }
+  } = useGetAccountInfo();
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
 
