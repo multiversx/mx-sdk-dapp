@@ -7,7 +7,7 @@ import {
 } from 'reduxStore/selectors';
 
 import { RouteType } from 'types';
-import { safeRedirect } from '../../utils';
+import { safeRedirect } from 'utils/redirect';
 
 export const AuthenticatedRoutesWrapper = ({
   children,

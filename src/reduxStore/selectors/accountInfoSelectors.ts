@@ -1,16 +1,30 @@
-import { createDeepEqualSelector } from './helpers';
+import { emptyAccount } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
+import { createDeepEqualSelector } from './helpers';
 
-export const accountInfoSelector = (state: RootState) => state.account;
+const privateAccountInfoSelector = (state: RootState) => state.account;
 
 export const addressSelector = createDeepEqualSelector(
-  accountInfoSelector,
+  privateAccountInfoSelector,
   (state) => state.address
 );
 
 export const accountSelector = createDeepEqualSelector(
-  accountInfoSelector,
-  (state) => state.account
+  privateAccountInfoSelector,
+  addressSelector,
+  (state, address) =>
+    address in state.accounts ? state.accounts[address] : emptyAccount
+);
+
+// accounts object will not be public
+export const accountInfoSelector = createDeepEqualSelector(
+  privateAccountInfoSelector,
+  accountSelector,
+  (state, account) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { accounts, ...info } = state;
+    return { ...info, account };
+  }
 );
 
 export const accountBalanceSelector = createDeepEqualSelector(
@@ -24,26 +38,26 @@ export const accountNonceSelector = createDeepEqualSelector(
 );
 
 export const shardSelector = createDeepEqualSelector(
-  accountInfoSelector,
+  privateAccountInfoSelector,
   (state) => state.shard
 );
 
 export const ledgerAccountSelector = createDeepEqualSelector(
-  accountInfoSelector,
+  privateAccountInfoSelector,
   (state) => state.ledgerAccount
 );
 
 export const walletConnectAccountSelector = createDeepEqualSelector(
-  accountInfoSelector,
+  privateAccountInfoSelector,
   (state) => state.walletConnectAccount
 );
 
 export const isAccountLoadingSelector = createDeepEqualSelector(
-  accountInfoSelector,
+  privateAccountInfoSelector,
   (state) => state.isAccountLoading
 );
 
 export const isAccountLoadingErrorSelector = createDeepEqualSelector(
-  accountInfoSelector,
+  privateAccountInfoSelector,
   (state) => state.accountLoadingError
 );
