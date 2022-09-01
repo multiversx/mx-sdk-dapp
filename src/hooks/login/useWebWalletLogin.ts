@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { setTokenLogin, setWalletLogin } from 'reduxStore/slices';
@@ -25,8 +26,12 @@ export const useWebWalletLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
+  const isLoggedIn = getIsLoggedIn();
 
   async function initiateLogin() {
+    if (isLoggedIn) {
+      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
+    }
     try {
       setIsLoading(true);
       const provider = newWalletProvider(network.walletAddress);
@@ -62,7 +67,6 @@ export const useWebWalletLogin = ({
   }
 
   const loginFailed = Boolean(error);
-  const isLoggedIn = getIsLoggedIn();
 
   return [
     initiateLogin,

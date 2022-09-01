@@ -1,8 +1,10 @@
 import React, { ReactNode, useState } from 'react';
+import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
-import { LedgerLoginContainer } from '../LedgerLoginContainer';
 import { WithClassnameType } from '../../types';
+import { LedgerLoginContainer } from '../LedgerLoginContainer';
 
 export interface LedgerLoginButtonPropsType extends WithClassnameType {
   token?: string;
@@ -36,10 +38,14 @@ export const LedgerLoginButton: (
   onLoginRedirect,
   disabled
 }) => {
+  const isLoggedIn = useGetIsLoggedIn();
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
 
   function handleOpenModal() {
+    if (isLoggedIn) {
+      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
+    }
     setCanShowLoginModal(true);
     handleShowModal();
     onModalOpens?.();

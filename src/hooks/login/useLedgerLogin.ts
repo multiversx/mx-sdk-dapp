@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { getLedgerConfiguration } from 'providers';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -61,6 +62,8 @@ export function useLedgerLogin({
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const dispatch = useDispatch();
+  const isLoggedIn = getIsLoggedIn();
+
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -219,6 +222,9 @@ export function useLedgerLogin({
   }
 
   async function onStartLogin() {
+    if (isLoggedIn) {
+      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
+    }
     setError('');
     try {
       setIsLoading(true);
@@ -281,7 +287,6 @@ export function useLedgerLogin({
   }, [startIndex]);
 
   const loginFailed = Boolean(error);
-  const isLoggedIn = getIsLoggedIn();
 
   return [
     onStartLogin,
