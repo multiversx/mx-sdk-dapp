@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setTokenLogin } from 'reduxStore/slices';
 import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { getIsLoggedIn } from '../../utils';
-
 interface UseExtensionLoginPropsType {
   callbackRoute?: string;
   token?: string;
@@ -28,8 +28,13 @@ export const useExtensionLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
+  const isLoggedIn = getIsLoggedIn();
 
   async function initiateLogin() {
+    if (isLoggedIn) {
+      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
+    }
+
     setIsLoading(true);
     const provider: ExtensionProvider = ExtensionProvider.getInstance();
 
@@ -87,7 +92,6 @@ export const useExtensionLogin = ({
   }
 
   const loginFailed = Boolean(error);
-  const isLoggedIn = getIsLoggedIn();
 
   return [
     initiateLogin,

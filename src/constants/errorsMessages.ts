@@ -6,3 +6,5 @@ export const MISSING_PROVIDER_MESSAGE =
   'You need a signer/valid signer to send a transaction,use either WalletProvider, LedgerProvider or WalletConnect';
 export const DEFAULT_TRANSACTION_STATUS_MESSAGE =
   'Undefined transaction status';
+export const SECOND_LOGIN_ATTEMPT_ERROR =
+  'Action not allowed. User is logged in. Call logout() first';
