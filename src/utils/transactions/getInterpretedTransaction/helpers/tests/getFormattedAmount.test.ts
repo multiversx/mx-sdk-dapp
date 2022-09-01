@@ -1,5 +1,5 @@
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { baseTransactionMock } from 'utils/transactions/interpreter/helpers/tests/base-transaction-mock';
+import { baseTransactionMock } from 'utils/transactions/getInterpretedTransaction/helpers/tests/base-transaction-mock';
 import { getFormattedAmount } from '../getFormattedAmount';
 
 describe('getFormattedAmount', () => {

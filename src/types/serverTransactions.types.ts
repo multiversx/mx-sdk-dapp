@@ -253,15 +253,10 @@ export type InterpreterAmountFormatConfigType = Omit<
   'value'
 >;
 
-interface BaseInterpretServerTransactionsType {
+export interface BaseInterpretServerTransactionsType {
   address: string;
   amountFormatConfig: InterpreterAmountFormatConfigType;
   explorerAddress: string;
-}
-
-export interface InterpretServerTransactionsType
-  extends BaseInterpretServerTransactionsType {
-  transactions: ServerTransactionType[];
 }
 
 export interface InterpretServerTransactionType

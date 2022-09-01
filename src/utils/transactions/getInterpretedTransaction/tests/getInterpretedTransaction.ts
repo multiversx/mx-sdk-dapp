@@ -1,5 +1,6 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
+  BaseInterpretServerTransactionsType,
   ExtendedTransactionType,
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
@@ -7,10 +8,31 @@ import {
   ServerTransactionType,
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
+import { getInterpretedTransaction } from '../getInterpretedTransaction';
+import { defaultAmountFormatConfig } from '../helpers';
 
 import { urlBuilder } from '../helpers/urlBuilder';
-import { interpretServerTransaction } from '../interpretServerTransaction';
-import { interpretServerTransactions } from '../interpretServerTransactions';
+
+interface InterpretServerTransactionsType
+  extends BaseInterpretServerTransactionsType {
+  transactions: ServerTransactionType[];
+}
+
+function interpretServerTransactions({
+  transactions,
+  address,
+  amountFormatConfig = defaultAmountFormatConfig,
+  explorerAddress
+}: InterpretServerTransactionsType): ExtendedTransactionType[] {
+  return transactions.map((transaction) =>
+    getInterpretedTransaction({
+      transaction,
+      address,
+      amountFormatConfig,
+      explorerAddress
+    })
+  );
+}
 
 import { transactionMock } from './extended-transaction-mock';
 
@@ -60,7 +82,7 @@ describe('transaction interpreter', () => {
         }
       };
 
-      const result = interpretServerTransaction({
+      const result = getInterpretedTransaction({
         transaction,
         address: 'erd1-my-address-hash',
         amountFormatConfig: {

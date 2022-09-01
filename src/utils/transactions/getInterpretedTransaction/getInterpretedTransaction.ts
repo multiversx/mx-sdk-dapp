@@ -19,7 +19,7 @@ import {
   urlBuilder
 } from './helpers';
 
-export function interpretServerTransaction({
+export function getInterpretedTransaction({
   transaction,
   address,
   amountFormatConfig = defaultAmountFormatConfig,

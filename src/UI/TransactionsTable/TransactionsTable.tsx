@@ -1,15 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ServerTransactionType } from 'types/serverTransactions.types';
-import { getEgldLabel } from 'utils';
-import { interpretServerTransactions } from 'utils/transactions/interpreter';
+import { ExtendedTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionsRow';
 import styles from './components/TransactionsRow/components/transactionsTableStyles.scss';
 
 interface TransactionsTableType extends WithClassnameType {
-  transactions: ServerTransactionType[];
+  extendedTransactions: ExtendedTransactionType[];
   address?: string;
   title?: React.ReactNode;
   directionCol?: boolean;
@@ -17,7 +15,7 @@ interface TransactionsTableType extends WithClassnameType {
 }
 
 export const TransactionsTable = ({
-  transactions,
+  extendedTransactions,
   address,
   title = (
     <h6 className={globalStyles.h6} data-testid='title'>
@@ -32,16 +30,6 @@ export const TransactionsTable = ({
     console.error('Invalid account');
     return null;
   }
-  const egldLabel = getEgldLabel();
-
-  const processedTransactions = interpretServerTransactions({
-    transactions,
-    address,
-    explorerAddress: '',
-    amountFormatConfig: {
-      egldLabel
-    }
-  });
 
   return (
     <div className={classNames(styles.transactionsTable, className)}>
@@ -77,7 +65,7 @@ export const TransactionsTable = ({
                 </tr>
               </thead>
               <tbody>
-                {processedTransactions.map((transaction) => (
+                {extendedTransactions.map((transaction) => (
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}

@@ -8,9 +8,9 @@ import lodash from 'lodash';
 import globalStyles from 'assets/sass/main.scss';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { getOperationsMessages } from 'utils/transactions/interpreter/helpers/getOperationsMessages';
-import { getReceiptMessage } from 'utils/transactions/interpreter/helpers/getReceiptMessage';
-import getScResultsMessages from 'utils/transactions/interpreter/helpers/getScResultsMessages';
+import { getOperationsMessages } from 'utils/transactions/getInterpretedTransaction/helpers/getOperationsMessages';
+import { getReceiptMessage } from 'utils/transactions/getInterpretedTransaction/helpers/getReceiptMessage';
+import getScResultsMessages from 'utils/transactions/getInterpretedTransaction/helpers/getScResultsMessages';
 
 interface TransactionIconType {
   transaction: ServerTransactionType;

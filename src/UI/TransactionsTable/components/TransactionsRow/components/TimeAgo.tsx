@@ -1,6 +1,6 @@
 import React from 'react';
 import { timeAgo } from 'utils';
-import { getHumanReadableTimeFormat } from 'utils/transactions/interpreter/helpers/getHumanReadableTimeFormat';
+import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 
 export type TimeAgoPropsType = {
   value: number;
