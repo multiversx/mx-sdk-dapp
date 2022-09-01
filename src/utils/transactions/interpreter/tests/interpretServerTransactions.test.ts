@@ -17,7 +17,7 @@ import { transactionMock } from './extended-transaction-mock';
 const explorerAddress = 'https://testing.devnet.com';
 
 describe('transaction interpreter', () => {
-  describe('processTransaction', () => {
+  describe('interpretServerTransaction', () => {
     it('creates an extended model of the existing transaction, containing all the needed information necessary to build the UI without processing inside the components', () => {
       const transaction: ServerTransactionType = {
         ...transactionMock,
@@ -78,7 +78,7 @@ describe('transaction interpreter', () => {
     });
   });
 
-  describe('parseTransactions', () => {
+  describe('interpretServerTransactions', () => {
     it('parse all the transactions and creates transactions extended models, containing all the needed information necessary to build the UI without processing inside the components', () => {
       const networkAddress = 'https://testing.devnet.com';
       const transactions: ServerTransactionType[] = [
