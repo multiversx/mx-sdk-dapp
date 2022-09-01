@@ -1,13 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'types/serverTransactions.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
 import { TransactionIcon } from './TransactionIcon';
 
 type TransactionHashColumnProps = {
-  transaction: ExtendedTransactionType;
+  transaction: InterpretedTransactionType;
 };
 
 export const TransactionHash: React.FC<TransactionHashColumnProps> = ({

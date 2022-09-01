@@ -254,7 +254,7 @@ export enum TransactionDirectionEnum {
   OUT = 'Out'
 }
 
-export type ExtendedTransactionType = {
+export type InterpretedTransactionType = {
   tokenLabel: string;
   transactionDetails: {
     direction?: TransactionDirectionEnum;

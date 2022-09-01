@@ -1,13 +1,13 @@
 import * as React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'types/serverTransactions.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionsRow';
 import styles from './components/TransactionsRow/components/transactionsTableStyles.scss';
 
 interface TransactionsTableType extends WithClassnameType {
-  extendedTransactions: ExtendedTransactionType[];
+  extendedTransactions: InterpretedTransactionType[];
   address?: string;
   title?: React.ReactNode;
   directionCol?: boolean;

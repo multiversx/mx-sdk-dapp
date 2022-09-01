@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'types/serverTransactions.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 
 import {
   TimeAgo,
@@ -15,7 +15,7 @@ import {
 import styles from './components/transactionsTableStyles.scss';
 
 export interface TransactionRowType {
-  transaction: ExtendedTransactionType;
+  transaction: InterpretedTransactionType;
   showDirectionCol?: boolean;
   showLockedAccounts?: boolean;
 }

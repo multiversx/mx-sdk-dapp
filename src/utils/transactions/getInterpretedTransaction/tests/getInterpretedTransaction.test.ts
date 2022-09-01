@@ -1,6 +1,6 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
-  ExtendedTransactionType,
+  InterpretedTransactionType,
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
 import {
@@ -22,7 +22,7 @@ describe('transaction interpreter', () => {
         ...transactionMock,
         tokenIdentifier: 'token-id'
       };
-      const output: ExtendedTransactionType = {
+      const output: InterpretedTransactionType = {
         ...transaction,
         amountInfo: {
           formattedValue: '12.340',
@@ -98,7 +98,7 @@ describe('transaction interpreter', () => {
           receiverShard: 3
         }
       ];
-      const output: ExtendedTransactionType[] = [
+      const output: InterpretedTransactionType[] = [
         {
           ...transactions[0],
           amountInfo: {

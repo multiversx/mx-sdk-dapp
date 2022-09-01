@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 
 import {
-  ExtendedTransactionType,
+  InterpretedTransactionType,
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -12,7 +12,7 @@ import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 
 type TransactionReceiverProps = {
-  transaction: ExtendedTransactionType;
+  transaction: InterpretedTransactionType;
   showLockedAccounts?: boolean;
 };
 
