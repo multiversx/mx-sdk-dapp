@@ -1,4 +1,3 @@
-import { FormatAmountPropsType } from 'UI/FormatAmount/formatAmount.types';
 import { AssetType, ScamInfoType } from './account.types';
 import { NftEnumType } from './tokens.types';
 
@@ -247,22 +246,6 @@ export enum TransferTypeEnum {
 //#endregion
 
 //#region interpreted trasactions
-
-export type InterpreterAmountFormatConfigType = Omit<
-  FormatAmountPropsType,
-  'value'
->;
-
-export interface BaseInterpretServerTransactionsType {
-  address: string;
-  amountFormatConfig: InterpreterAmountFormatConfigType;
-  explorerAddress: string;
-}
-
-export interface InterpretServerTransactionType
-  extends BaseInterpretServerTransactionsType {
-  transaction: ServerTransactionType;
-}
 
 export enum TransactionDirectionEnum {
   SELF = 'Self',

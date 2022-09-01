@@ -2,9 +2,14 @@ import {
   fallbackNetworkConfigurations,
   MAINNET_EGLD_LABEL
 } from 'constants/index';
-import { InterpreterAmountFormatConfigType } from 'types/serverTransactions.types';
+import { FormatAmountPropsType } from 'UI/FormatAmount/formatAmount.types';
 
-export const defaultAmountFormatConfig: InterpreterAmountFormatConfigType = {
+export type TransactionAmountFormatConfigType = Omit<
+  FormatAmountPropsType,
+  'value'
+>;
+
+export const defaultAmountFormatConfig: TransactionAmountFormatConfigType = {
   egldLabel: MAINNET_EGLD_LABEL,
   showLastNonZeroDecimal: false
 };

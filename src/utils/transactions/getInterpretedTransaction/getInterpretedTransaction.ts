@@ -1,7 +1,7 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   ExtendedTransactionType,
-  InterpretServerTransactionType
+  ServerTransactionType
 } from 'types/serverTransactions.types';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { isContract } from 'utils/smartContracts';
@@ -16,15 +16,27 @@ import {
   getTransactionReceiverAssets,
   getTransactionTokens,
   getTransactionTransferType,
+  TransactionAmountFormatConfigType,
   urlBuilder
 } from './helpers';
+
+interface BaseInterpretServerTransactionsType {
+  address: string;
+  amountFormatConfig: TransactionAmountFormatConfigType;
+  explorerAddress: string;
+}
+
+export interface GetInterpretedTransactionType
+  extends BaseInterpretServerTransactionsType {
+  transaction: ServerTransactionType;
+}
 
 export function getInterpretedTransaction({
   transaction,
   address,
   amountFormatConfig = defaultAmountFormatConfig,
   explorerAddress = defaultInterpreterExplorerAddress
-}: InterpretServerTransactionType): ExtendedTransactionType {
+}: GetInterpretedTransactionType): ExtendedTransactionType {
   const tokenIdentifier =
     transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
 

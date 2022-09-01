@@ -1,6 +1,5 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
-  BaseInterpretServerTransactionsType,
   ExtendedTransactionType,
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
@@ -9,30 +8,8 @@ import {
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
 import { getInterpretedTransaction } from '../getInterpretedTransaction';
-import { defaultAmountFormatConfig } from '../helpers';
 
 import { urlBuilder } from '../helpers/urlBuilder';
-
-interface InterpretServerTransactionsType
-  extends BaseInterpretServerTransactionsType {
-  transactions: ServerTransactionType[];
-}
-
-function interpretServerTransactions({
-  transactions,
-  address,
-  amountFormatConfig = defaultAmountFormatConfig,
-  explorerAddress
-}: InterpretServerTransactionsType): ExtendedTransactionType[] {
-  return transactions.map((transaction) =>
-    getInterpretedTransaction({
-      transaction,
-      address,
-      amountFormatConfig,
-      explorerAddress
-    })
-  );
-}
 
 import { transactionMock } from './extended-transaction-mock';
 
@@ -196,20 +173,22 @@ describe('transaction interpreter', () => {
         }
       ];
 
-      const result = interpretServerTransactions({
-        transactions,
-        address:
-          'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
-        amountFormatConfig: {
-          egldLabel: MAINNET_EGLD_LABEL,
-          decimals: 2,
-          digits: 3,
-          showLabel: true,
-          token: 'egld',
-          showLastNonZeroDecimal: true
-        },
-        explorerAddress
-      });
+      const result = transactions.map((transaction) =>
+        getInterpretedTransaction({
+          transaction,
+          address:
+            'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
+          amountFormatConfig: {
+            egldLabel: MAINNET_EGLD_LABEL,
+            decimals: 2,
+            digits: 3,
+            showLabel: true,
+            token: 'egld',
+            showLastNonZeroDecimal: true
+          },
+          explorerAddress
+        })
+      );
 
       expect(result).toEqual(output);
     });
