@@ -5,7 +5,7 @@ import {
   useGetAccountInfo,
   useRegisterWebsocketListener
 } from 'hooks';
-import { GetTransactionsByHashesType } from 'types';
+import { GetTransactionsByHashesType } from 'types/transactions.types';
 import { useClosureRef } from './useClosureRef';
 
 export interface TransactionsTrackerType {

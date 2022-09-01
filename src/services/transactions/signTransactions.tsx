@@ -14,7 +14,7 @@ import {
   SendTransactionReturnType,
   SignTransactionsPropsType
 } from 'types';
-import { stringIsFloat } from 'utils';
+import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
 export function signTransactions({
