@@ -1,15 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'types/interpretedTransactions.types';
-import { TimeAgo } from './TImeAgo';
-import { TransactionDirectionBadge } from './TransactionDirectionBadge';
-import { TransactionHash } from './TransactionHash';
-import { TransactionMethod } from './TransactionMethod';
-import { TransactionReceiver } from './TransactionReceiver';
-import { TransactionSender } from './TransactionSender';
-import { TransactionShardsTransition } from './TransactionShardsTransition';
-import styles from './transactionsTableStyles.scss';
+import { ExtendedTransactionType } from 'types/serverTransactions.types';
+
+import {
+  TimeAgo,
+  TransactionDirectionBadge,
+  TransactionHash,
+  TransactionMethod,
+  TransactionReceiver,
+  TransactionSender,
+  TransactionShardsTransition
+} from './components';
+import styles from './components/transactionsTableStyles.scss';
 
 export interface TransactionRowType {
   transaction: ExtendedTransactionType;
@@ -23,7 +26,7 @@ export const TransactionRow = ({
   showLockedAccounts
 }: TransactionRowType) => {
   return (
-    <tr className={classNames({ ['new']: transaction.isNew })}>
+    <tr className={classNames({ new: transaction.isNew })}>
       <td>
         <TransactionHash transaction={transaction} />
       </td>

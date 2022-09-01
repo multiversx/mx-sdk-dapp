@@ -5,8 +5,8 @@ import globalStyles from 'assets/sass/main.scss';
 import {
   ExtendedTransactionType,
   TransactionDirectionEnum
-} from 'types/interpretedTransactions.types';
-import { ExplorerLink } from '../ExplorerLink';
+} from 'types/serverTransactions.types';
+import { ExplorerLink } from 'UI/ExplorerLink';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';

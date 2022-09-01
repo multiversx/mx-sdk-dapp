@@ -17,7 +17,6 @@ export interface TokenLoginType {
 
 export * from './transactions.types';
 export * from './serverTransactions.types';
-export * from './interpretedTransactions.types';
 export * from './enums.types';
 export * from './account.types';
 export * from './network.types';

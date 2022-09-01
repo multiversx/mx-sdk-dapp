@@ -1,5 +1,5 @@
 import React from 'react';
-import { getShardOfAddress } from '../../utils';
+import { getShardOfAddress } from 'utils/account/getShardOfAddress';
 
 interface ShardSpanType {
   shard: number | string;

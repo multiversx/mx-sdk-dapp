@@ -1,5 +1,5 @@
 import React from 'react';
-import { ExtendedTransactionType } from 'types/interpretedTransactions.types';
+import { ExtendedTransactionType } from 'types/serverTransactions.types';
 
 export const TokenValue = ({
   transaction

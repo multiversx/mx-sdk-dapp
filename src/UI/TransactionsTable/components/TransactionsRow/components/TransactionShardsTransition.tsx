@@ -3,8 +3,8 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'types/interpretedTransactions.types';
-import { ExplorerLink } from '../ExplorerLink';
+import { ExtendedTransactionType } from 'types/serverTransactions.types';
+import { ExplorerLink } from 'UI/ExplorerLink';
 import { ShardSpan } from './ShardSpan';
 
 type TransactionShardsTransitionProps = {

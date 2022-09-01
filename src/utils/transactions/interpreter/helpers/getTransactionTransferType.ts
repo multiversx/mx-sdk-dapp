@@ -1,4 +1,4 @@
-import { TransactionDirectionEnum } from 'types/interpretedTransactions.types';
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import {
   ServerTransactionType,
   TransferTypeEnum

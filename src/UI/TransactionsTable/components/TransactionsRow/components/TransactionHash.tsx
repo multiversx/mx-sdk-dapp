@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'types/interpretedTransactions.types';
-import { ExplorerLink } from '../ExplorerLink';
-import { Trim } from '../Trim';
+import { ExtendedTransactionType } from 'types/serverTransactions.types';
+import { ExplorerLink } from 'UI/ExplorerLink';
+import { Trim } from 'UI/Trim';
 import { TransactionIcon } from './TransactionIcon';
 
 type TransactionHashColumnProps = {

@@ -1,7 +1,7 @@
 import {
   ExtendedTransactionType,
   InterpretServerTransactionsType
-} from 'types/interpretedTransactions.types';
+} from 'types/serverTransactions.types';
 import { defaultAmountFormatConfig } from './helpers';
 import { interpretServerTransaction } from './interpretServerTransaction';
 

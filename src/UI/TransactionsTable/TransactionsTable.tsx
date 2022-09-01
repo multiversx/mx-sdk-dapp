@@ -5,8 +5,8 @@ import { ServerTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils';
 import { interpretServerTransactions } from 'utils/transactions/interpreter';
 import { WithClassnameType } from '../types';
-import { TransactionRow } from './TransactionRow';
-import styles from './transactionsTableStyles.scss';
+import { TransactionRow } from './components/TransactionsRow';
+import styles from './components/TransactionsRow/components/transactionsTableStyles.scss';
 
 interface TransactionsTableType extends WithClassnameType {
   transactions: ServerTransactionType[];

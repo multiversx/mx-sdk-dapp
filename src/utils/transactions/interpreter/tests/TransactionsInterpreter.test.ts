@@ -2,7 +2,7 @@ import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   ExtendedTransactionType,
   TransactionDirectionEnum
-} from 'types/interpretedTransactions.types';
+} from 'types/serverTransactions.types';
 import {
   ServerTransactionType,
   TransactionActionsEnum
