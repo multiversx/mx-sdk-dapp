@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { ExtendedTransactionType } from 'utils/transactions/interpreter';
+import { ExtendedTransactionType } from 'types/interpretedTransactions.types';
 import styles from './transactionsTableStyles.scss';
 
 type TransactionDirectionBadgePropsType = {

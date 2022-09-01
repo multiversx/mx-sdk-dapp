@@ -1,4 +1,8 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
+import {
+  ExtendedTransactionType,
+  InterpretServerTransactionType
+} from 'types/interpretedTransactions.types';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
@@ -14,10 +18,6 @@ import {
   getTransactionTransferType,
   urlBuilder
 } from './helpers';
-import {
-  ExtendedTransactionType,
-  InterpretServerTransactionType
-} from './transactionsInterpreter.types';
 
 export function interpretServerTransaction({
   transaction,

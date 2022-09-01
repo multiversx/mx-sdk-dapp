@@ -1,5 +1,9 @@
 import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
+  ExtendedTransactionType,
+  TransactionDirectionEnum
+} from 'types/interpretedTransactions.types';
+import {
   ServerTransactionType,
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
@@ -8,10 +12,6 @@ import { urlBuilder } from '../helpers/urlBuilder';
 import { interpretServerTransaction } from '../interpretServerTransaction';
 import { interpretServerTransactions } from '../interpretServerTransactions';
 
-import {
-  ExtendedTransactionType,
-  TransactionDirectionEnum
-} from '../transactionsInterpreter.types';
 import { transactionMock } from './extended-transaction-mock';
 
 const explorerAddress = 'https://testing.devnet.com';

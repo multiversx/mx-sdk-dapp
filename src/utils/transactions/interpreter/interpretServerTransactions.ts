@@ -1,9 +1,9 @@
-import { defaultAmountFormatConfig } from './helpers';
-import { interpretServerTransaction } from './interpretServerTransaction';
 import {
   ExtendedTransactionType,
   InterpretServerTransactionsType
-} from './transactionsInterpreter.types';
+} from 'types/interpretedTransactions.types';
+import { defaultAmountFormatConfig } from './helpers';
+import { interpretServerTransaction } from './interpretServerTransaction';
 
 export function interpretServerTransactions({
   transactions,

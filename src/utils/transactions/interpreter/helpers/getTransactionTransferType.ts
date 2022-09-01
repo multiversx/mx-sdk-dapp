@@ -1,8 +1,8 @@
+import { TransactionDirectionEnum } from 'types/interpretedTransactions.types';
 import {
   ServerTransactionType,
   TransferTypeEnum
 } from 'types/serverTransactions.types';
-import { TransactionDirectionEnum } from '../transactionsInterpreter.types';
 
 export function getTransactionTransferType(
   address: string,
