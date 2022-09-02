@@ -11,9 +11,9 @@ type TransactionShardsTransitionProps = {
   transaction: InterpretedTransactionType;
 };
 
-export const TransactionShardsTransition: React.FC<TransactionShardsTransitionProps> = ({
+export const TransactionShardsTransition = ({
   transaction
-}) => {
+}: TransactionShardsTransitionProps) => {
   return (
     <div
       className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}

@@ -10,7 +10,7 @@ type StatusIconProps = {
   type: StatusIconType;
 };
 
-export const StatusIcon: React.FC<StatusIconProps> = ({ type }) => {
+export const StatusIcon = ({ type }: StatusIconProps) => {
   switch (type) {
     case StatusIconType.INFO:
       return (

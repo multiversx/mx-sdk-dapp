@@ -10,9 +10,9 @@ type TransactionHashColumnProps = {
   transaction: InterpretedTransactionType;
 };
 
-export const TransactionHash: React.FC<TransactionHashColumnProps> = ({
+export const TransactionHash = ({
   transaction
-}) => {
+}: TransactionHashColumnProps) => {
   const transactionHashLink = `/transactions/${
     transaction.originalTxHash
       ? `${transaction.originalTxHash}#${transaction.txHash}`

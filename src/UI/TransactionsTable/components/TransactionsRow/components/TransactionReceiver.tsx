@@ -16,10 +16,10 @@ type TransactionReceiverProps = {
   showLockedAccounts?: boolean;
 };
 
-export const TransactionReceiver: React.FC<TransactionReceiverProps> = ({
+export const TransactionReceiver = ({
   transaction,
   showLockedAccounts
-}) => {
+}: TransactionReceiverProps) => {
   const directionIn =
     transaction.transactionDetails.direction === TransactionDirectionEnum.IN;
 

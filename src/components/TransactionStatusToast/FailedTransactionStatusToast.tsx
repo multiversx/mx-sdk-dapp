@@ -19,13 +19,13 @@ type ErrorToastProps = {
   onDelete?: () => void;
 } & WithClassnameType;
 
-export const FailedTransactionStatusToast: React.FC<ErrorToastProps> = ({
+export const FailedTransactionStatusToast = ({
   message,
   duration = 20000,
   onDelete,
   type = StatusIconType.WARNING,
   className = 'dapp-failed-transaction-status-toast'
-}) => {
+}: ErrorToastProps) => {
   const dispatch = useDispatch();
   const failToast = useSelector(failTransactionToastSelector);
 

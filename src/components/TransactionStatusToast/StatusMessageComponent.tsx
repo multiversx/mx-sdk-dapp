@@ -8,10 +8,10 @@ type StatusMessageComponentProps = {
   message?: string;
 };
 
-export const StatusMessageComponent: React.FC<StatusMessageComponentProps> = ({
+export const StatusMessageComponent = ({
   type,
   message
-}) => {
+}: StatusMessageComponentProps) => {
   return (
     <div className={styles.transactionsStatusToastContent}>
       <StatusIcon type={type} />

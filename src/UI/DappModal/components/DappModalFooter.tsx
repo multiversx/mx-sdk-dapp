@@ -9,12 +9,12 @@ type DappModalFooterProps = {
   customFooter?: JSX.Element;
 } & WithClassnameType;
 
-export const DappModalFooter: React.FC<DappModalFooterProps> = ({
+export const DappModalFooter = ({
   visible,
   customFooter,
   className,
   footerText
-}) => {
+}: DappModalFooterProps) => {
   if (!visible) {
     return null;
   }

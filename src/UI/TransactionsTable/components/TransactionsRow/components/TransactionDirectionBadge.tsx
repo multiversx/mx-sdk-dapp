@@ -8,9 +8,9 @@ type TransactionDirectionBadgePropsType = {
   transaction: InterpretedTransactionType;
 };
 
-export const TransactionDirectionBadge: React.FC<TransactionDirectionBadgePropsType> = ({
+export const TransactionDirectionBadge = ({
   transaction
-}) => {
+}: TransactionDirectionBadgePropsType) => {
   return (
     <div className={globalStyles.dFlex}>
       <span

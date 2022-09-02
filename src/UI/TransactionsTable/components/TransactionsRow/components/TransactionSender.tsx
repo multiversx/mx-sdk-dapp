@@ -18,10 +18,10 @@ type TransactionSenderProps = {
   showLockedAccounts?: boolean;
 };
 
-export const TransactionSender: React.FC<TransactionSenderProps> = ({
+export const TransactionSender = ({
   transaction,
   showLockedAccounts
-}) => {
+}: TransactionSenderProps) => {
   const directionOut =
     transaction.transactionDetails.direction === TransactionDirectionEnum.OUT;
 
