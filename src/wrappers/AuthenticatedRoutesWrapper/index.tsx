@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   isAccountLoadingSelector,
@@ -8,6 +8,7 @@ import {
 
 import { RouteType } from 'types';
 import { safeRedirect } from 'utils/redirect';
+import { matchRoute } from './helpers/matchRoute';
 
 export const AuthenticatedRoutesWrapper = ({
   children,
@@ -25,15 +26,8 @@ export const AuthenticatedRoutesWrapper = ({
   const isAccountLoading = useSelector(isAccountLoadingSelector);
 
   const walletLogin = useSelector(walletLoginSelector);
-  const { pathname } = window.location;
 
-  const authenticatedRoutesRef = useRef(
-    routes.filter((route) => Boolean(route.authenticatedRoute))
-  );
-
-  const isOnAuthenticatedRoute = authenticatedRoutesRef.current.some(
-    ({ path }) => pathname === path
-  );
+  const isOnAuthenticatedRoute = matchRoute(routes, window.location.pathname);
 
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
