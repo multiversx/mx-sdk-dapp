@@ -6,53 +6,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import lodash from 'lodash';
 import globalStyles from 'assets/sass/main.scss';
-import { TransactionServerStatusesEnum } from 'types/enums.types';
-import { ServerTransactionType } from 'types/serverTransactions.types';
-import { getOperationsMessages } from 'utils/transactions/getInterpretedTransaction/helpers/getOperationsMessages';
-import { getReceiptMessage } from 'utils/transactions/getInterpretedTransaction/helpers/getReceiptMessage';
-import getScResultsMessages from 'utils/transactions/getInterpretedTransaction/helpers/getScResultsMessages';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import {
+  getTransactionMessages,
+  getTransactionStatus
+} from 'utils/transactions/getInterpretedTransaction/helpers';
 
 interface TransactionIconType {
-  transaction: ServerTransactionType;
+  transaction: InterpretedTransactionType;
 }
 
 export const TransactionIcon = ({ transaction }: TransactionIconType) => {
-  const statusIs = (compareTo: string) =>
-    transaction.status.toLowerCase() === compareTo.toLowerCase();
+  const transactionMessages = getTransactionMessages(transaction);
 
-  const transactionMessages = Array.from(
-    new Set([
-      ...getScResultsMessages(transaction),
-      ...getOperationsMessages(transaction),
-      getReceiptMessage(transaction)
-    ])
-  );
-
-  const failed =
-    statusIs(TransactionServerStatusesEnum.fail) ||
-    statusIs(TransactionServerStatusesEnum.fail);
-  const invalid =
-    statusIs(TransactionServerStatusesEnum.notExecuted) ||
-    statusIs(TransactionServerStatusesEnum.invalid);
-  const pending = statusIs(TransactionServerStatusesEnum.pending);
+  const { failed, invalid, pending } = getTransactionStatus(transaction);
 
   let icon;
-  if (failed) icon = faTimes;
-  if (invalid) icon = faBan;
-  if (pending) icon = faHourglass;
+  if (failed) {
+    icon = faTimes;
+  }
+  if (invalid) {
+    icon = faBan;
+  }
+  if (pending) {
+    icon = faHourglass;
+  }
 
-  const tooltip = `${lodash.upperFirst(transaction.status)} ${
-    (failed || invalid) && transactionMessages.length > 0
-      ? transactionMessages.join(',')
-      : ''
-  }`;
+  const showErrorText = (failed || invalid) && transactionMessages.length > 0;
+  const errorText = showErrorText ? transactionMessages.join(',') : '';
 
-  return icon ? (
+  const tooltip = `${lodash.upperFirst(transaction.status)} ${errorText}`;
+
+  if (!icon) {
+    return null;
+  }
+
+  return (
     <FontAwesomeIcon
       title={tooltip}
       icon={icon}
       size={icon === faTimes ? '1x' : 'sm'}
       className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
     />
-  ) : null;
+  );
 };
