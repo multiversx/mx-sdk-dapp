@@ -758,7 +758,7 @@ import {
   useGetAccountInfo,
   useGetAccountProvider,
   useGetLoginInfo
- } from '@elrondnetwork/dapp-core/hooks/accounts';
+ } from '@elrondnetwork/dapp-core/hooks/account';
 ```
 
 ### Transactions
