@@ -9,7 +9,7 @@ import {
 } from 'types/serverTransactions.types';
 import { getInterpretedTransaction } from '../getInterpretedTransaction';
 
-import { urlBuilder } from '../helpers/urlBuilder';
+import { explorerUrlBuilder } from '../helpers/explorerUrlBuilder';
 
 import { transactionMock } from './extended-transaction-mock';
 
@@ -29,19 +29,19 @@ describe('transaction interpreter', () => {
           fullFormattedValue: '12.340'
         },
         links: {
-          senderLink: `${explorerAddress}${urlBuilder.accountDetails(
+          senderLink: `${explorerAddress}${explorerUrlBuilder.accountDetails(
             transaction.sender
           )}`,
-          receiverLink: `${explorerAddress}${urlBuilder.accountDetails(
+          receiverLink: `${explorerAddress}${explorerUrlBuilder.accountDetails(
             transaction.receiver
           )}`,
-          receiverShardLink: `${explorerAddress}${urlBuilder.receiverShard(
+          receiverShardLink: `${explorerAddress}${explorerUrlBuilder.receiverShard(
             transaction.receiverShard
           )}`,
-          senderShardLink: `${explorerAddress}${urlBuilder.senderShard(
+          senderShardLink: `${explorerAddress}${explorerUrlBuilder.senderShard(
             transaction.senderShard
           )}`,
-          transactionLink: `${explorerAddress}${urlBuilder.transactionDetails(
+          transactionLink: `${explorerAddress}${explorerUrlBuilder.transactionDetails(
             transaction.txHash
           )}`
         },
@@ -106,19 +106,19 @@ describe('transaction interpreter', () => {
             fullFormattedValue: '12.340'
           },
           links: {
-            senderLink: `${networkAddress}${urlBuilder.accountDetails(
+            senderLink: `${networkAddress}${explorerUrlBuilder.accountDetails(
               transactions[0].sender
             )}`,
-            receiverLink: `${networkAddress}${urlBuilder.accountDetails(
+            receiverLink: `${networkAddress}${explorerUrlBuilder.accountDetails(
               transactions[0].receiver
             )}`,
-            receiverShardLink: `${networkAddress}${urlBuilder.receiverShard(
+            receiverShardLink: `${networkAddress}${explorerUrlBuilder.receiverShard(
               transactions[0].receiverShard
             )}`,
-            senderShardLink: `${networkAddress}${urlBuilder.senderShard(
+            senderShardLink: `${networkAddress}${explorerUrlBuilder.senderShard(
               transactions[0].senderShard
             )}`,
-            transactionLink: `${networkAddress}${urlBuilder.transactionDetails(
+            transactionLink: `${networkAddress}${explorerUrlBuilder.transactionDetails(
               transactions[0].txHash
             )}`
           },
@@ -142,19 +142,19 @@ describe('transaction interpreter', () => {
             fullFormattedValue: '12.340'
           },
           links: {
-            senderLink: `${networkAddress}${urlBuilder.accountDetails(
+            senderLink: `${networkAddress}${explorerUrlBuilder.accountDetails(
               transactions[1].sender
             )}`,
-            receiverLink: `${networkAddress}${urlBuilder.accountDetails(
+            receiverLink: `${networkAddress}${explorerUrlBuilder.accountDetails(
               transactions[1].receiver
             )}`,
-            receiverShardLink: `${networkAddress}${urlBuilder.receiverShard(
+            receiverShardLink: `${networkAddress}${explorerUrlBuilder.receiverShard(
               transactions[1].receiverShard
             )}`,
-            senderShardLink: `${networkAddress}${urlBuilder.senderShard(
+            senderShardLink: `${networkAddress}${explorerUrlBuilder.senderShard(
               transactions[1].senderShard
             )}`,
-            transactionLink: `${networkAddress}${urlBuilder.transactionDetails(
+            transactionLink: `${networkAddress}${explorerUrlBuilder.transactionDetails(
               transactions[1].txHash
             )}`
           },

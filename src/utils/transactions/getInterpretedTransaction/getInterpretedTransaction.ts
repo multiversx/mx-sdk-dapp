@@ -10,14 +10,14 @@ import {
   defaultAmountFormatConfig,
   defaultInterpreterExplorerAddress,
   getFormattedAmount,
-  getNetworkLink,
+  getExplorerLink,
   getTransactionMethod,
   getTransactionReceiver,
   getTransactionReceiverAssets,
   getTransactionTokens,
   getTransactionTransferType,
   TransactionAmountFormatConfigType,
-  urlBuilder
+  explorerUrlBuilder
 } from './helpers';
 
 export interface GetInterpretedTransactionType {
@@ -56,30 +56,31 @@ export function getInterpretedTransaction({
     showLastNonZeroDecimal: true
   });
 
-  const senderLink = getNetworkLink(
+  const senderLink = getExplorerLink({
     explorerAddress,
-    urlBuilder.accountDetails(transaction.sender)
-  );
-  const receiverLink = getNetworkLink(
+    to: explorerUrlBuilder.accountDetails(transaction.sender)
+  });
+  const receiverLink = getExplorerLink({
     explorerAddress,
-    urlBuilder.accountDetails(receiver)
-  );
-  const senderShardLink = getNetworkLink(
+    to: explorerUrlBuilder.accountDetails(receiver)
+  });
+  const senderShardLink = getExplorerLink({
     explorerAddress,
-    urlBuilder.senderShard(transaction.senderShard)
-  );
-  const receiverShardLink = getNetworkLink(
+    to: explorerUrlBuilder.senderShard(transaction.senderShard)
+  });
+  const receiverShardLink = getExplorerLink({
     explorerAddress,
-    urlBuilder.receiverShard(transaction.receiverShard)
-  );
+    to: explorerUrlBuilder.receiverShard(transaction.receiverShard)
+  });
 
   const transactionHash = transaction.originalTxHash
     ? `${transaction.originalTxHash}#${transaction.txHash}`
     : transaction.txHash;
-  const transactionLink = getNetworkLink(
+
+  const transactionLink = getExplorerLink({
     explorerAddress,
-    urlBuilder.transactionDetails(transactionHash)
-  );
+    to: explorerUrlBuilder.transactionDetails(transactionHash)
+  });
 
   return {
     ...transaction,

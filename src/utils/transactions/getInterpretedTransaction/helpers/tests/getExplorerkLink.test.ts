@@ -1,11 +1,11 @@
-import { getNetworkLink } from '../getNetworkLink';
+import { getExplorerLink } from '../getExplorerLink';
 
 describe('getNetworkLink', () => {
   it('return "/${to}" parameter when the explorerAddress is empty and log an error in console', () => {
     const input = 'address';
     const consoleErrorSpy = jest.spyOn(console, 'error');
 
-    const result = getNetworkLink('', input);
+    const result = getExplorerLink({ explorerAddress: '', to: input });
 
     expect(consoleErrorSpy).toHaveBeenCalled();
     expect(result).toEqual(`/${input}`);
@@ -15,7 +15,7 @@ describe('getNetworkLink', () => {
     const explorerAddress = 'http://devnet-explorer.elrond.com';
     const to = '/address';
 
-    const result = getNetworkLink(explorerAddress, to);
+    const result = getExplorerLink({ explorerAddress, to });
 
     expect(result).toEqual(`${explorerAddress}${to}`);
   });

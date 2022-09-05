@@ -16,7 +16,7 @@ import {
   TRANSACTIONS_ENDPOINT
 } from 'apiCalls/endpoints';
 
-export const urlBuilder = {
+export const explorerUrlBuilder = {
   shard: (shard: number | string) => `/${BLOCKS_ENDPOINT}?shard=${shard}`,
   receiverShard: (shard: number | string) =>
     `/${TRANSACTIONS_ENDPOINT}?receivershard=${shard}`,

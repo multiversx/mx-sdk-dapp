@@ -7,7 +7,7 @@ type GetHumanReadableTimeFormatProps = {
 };
 
 /**
- * value - UNIX timestamp
+ * @param value - UNIX timestamp
  * */
 export function getHumanReadableTimeFormat({
   value,
