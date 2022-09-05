@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
  - [Added second login attempt error](https://github.com/ElrondNetwork/dapp-core/pull/408)
- - [Fixed AuthenticatedRoutesWrapper not detecting pattern routes](https://github.com/ElrondNetwork/dapp-core/pull/408). Added react-router-dom as dependency
+ - [Fixed AuthenticatedRoutesWrapper not detecting pattern routes](https://github.com/ElrondNetwork/dapp-core/pull/409). Added react-router-dom as dependency
 ## [2.0.2] - 2022-09-01
  - [Changed saving account information by using address namespacing](https://github.com/ElrondNetwork/dapp-core/pull/402)
  - [Added ledger login default zero index selection on address table](https://github.com/ElrondNetwork/dapp-core/pull/403)
