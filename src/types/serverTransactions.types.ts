@@ -80,7 +80,7 @@ export interface TokenArgumentType {
   svgUrl?: string;
 }
 
-export interface TxActionType {
+export interface TransactionActionType {
   category: string;
   name: TransactionActionsEnum;
   description?: string;
@@ -220,7 +220,7 @@ export interface ServerTransactionType {
   price: number;
   results?: ResultType[];
   operations?: OperationType[];
-  action?: TxActionType;
+  action?: TransactionActionType;
   logs?: {
     id: string;
     address: string;
