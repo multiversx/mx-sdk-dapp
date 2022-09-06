@@ -275,4 +275,17 @@ export type InterpretedTransactionType = {
   };
 } & ServerTransactionType;
 
+export const internalTransactionActions = [
+  TransactionOperationActionTypeEnum.create,
+  TransactionOperationActionTypeEnum.localMint,
+  TransactionOperationActionTypeEnum.ESDTLocalMint,
+  TransactionOperationActionTypeEnum.addQuantity,
+  TransactionOperationActionTypeEnum.burn,
+  TransactionOperationActionTypeEnum.localBurn,
+  TransactionOperationActionTypeEnum.ESDTLocalBurn,
+  TransactionOperationActionTypeEnum.wipe,
+  TransactionOperationActionTypeEnum.writeLog,
+  TransactionOperationActionTypeEnum.signalError
+];
+
 //#endregion
