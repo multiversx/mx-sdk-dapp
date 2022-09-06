@@ -11,7 +11,7 @@ import {
   defaultInterpreterExplorerAddress,
   getFormattedAmount,
   getExplorerLink,
-  getTransactionMethod,
+  getTransactionAction,
   getTransactionReceiver,
   getTransactionReceiverAssets,
   getTransactionTokens,
@@ -40,7 +40,7 @@ export function getInterpretedTransaction({
   const receiverAssets = getTransactionReceiverAssets(transaction);
 
   const direction = getTransactionTransferType(address, transaction, receiver);
-  const method = getTransactionMethod(transaction);
+  const action = getTransactionAction(transaction);
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
@@ -94,7 +94,7 @@ export function getInterpretedTransaction({
     },
     transactionDetails: {
       direction,
-      method,
+      action,
       transactionTokens,
       isContract: isContract(transaction.sender)
     },

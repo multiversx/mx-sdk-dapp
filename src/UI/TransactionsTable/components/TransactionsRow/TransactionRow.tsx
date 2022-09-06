@@ -7,7 +7,7 @@ import {
   TimeAgo,
   TransactionDirectionBadge,
   TransactionHash,
-  TransactionMethod,
+  TransactionAction,
   TransactionReceiver,
   TransactionSender,
   TransactionShardsTransition
@@ -54,7 +54,7 @@ export const TransactionRow = ({
         />
       </td>
       <td className={styles.transactionFunction}>
-        <TransactionMethod transaction={transaction} />
+        <TransactionAction transaction={transaction} />
       </td>
       <td className={globalStyles.textLeft}>
         <span>{`${transaction.amountInfo.formattedValue} ${transaction.tokenLabel}`}</span>

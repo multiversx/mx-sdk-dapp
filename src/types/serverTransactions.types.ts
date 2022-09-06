@@ -258,7 +258,7 @@ export type InterpretedTransactionType = {
   tokenLabel: string;
   transactionDetails: {
     direction?: TransactionDirectionEnum;
-    method: string;
+    action: string;
     transactionTokens: TokenArgumentType[];
     isContract?: boolean;
   };

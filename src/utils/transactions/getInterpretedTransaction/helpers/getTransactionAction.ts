@@ -4,7 +4,7 @@ import {
   ServerTransactionType
 } from 'types/serverTransactions.types';
 
-export const getTransactionMethod = (transaction: ServerTransactionType) => {
+export const getTransactionAction = (transaction: ServerTransactionType) => {
   let transactionAction = 'Transaction';
   const transactionHasAction =
     transaction.action?.name && transaction.action?.category;
