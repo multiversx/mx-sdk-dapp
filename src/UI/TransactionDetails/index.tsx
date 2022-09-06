@@ -87,7 +87,7 @@ export const TransactionDetails = ({
 
             {!isServerTransactionPending(status) && (
               <ExplorerLink
-                page={`/transactions/${hash}`}
+                to={`/transactions/${hash}`}
                 className={globalStyles.ml2}
               />
             )}

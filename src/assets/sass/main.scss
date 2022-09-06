@@ -2,7 +2,9 @@
 // Variables override
 @import 'variables/variables';
 
-@import 'modules/icon-state/iconState';
+@import 'modules/icons/iconState';
+@import 'modules/icons/sideIcon';
 @import 'modules/toast-messages/toastMessages';
 @import './modules/data/data';
 @import 'modules/progress-steps/progressSteps';
+@import 'modules/links/links';

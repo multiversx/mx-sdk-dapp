@@ -1,5 +1,5 @@
 import { AssetType, ScamInfoType } from './account.types';
-import { NftEnumType } from './tokens.types';
+import { EsdtEnumType, NftEnumType } from './tokens.types';
 
 //#region server trasactions
 export interface ScResultType {
@@ -67,7 +67,7 @@ export enum TransactionActionCategoryEnum {
 }
 
 export interface TokenArgumentType {
-  type: NftEnumType | 'FungibleESDT';
+  type: NftEnumType | EsdtEnumType;
   name: string;
   ticker: string;
   collection?: string;
@@ -131,7 +131,7 @@ export enum HiddenTransactionOperationType {
 export interface OperationType {
   action: TransactionOperationActionTypeEnum;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
-  esdtType: NftEnumType | 'FungibleESDT';
+  esdtType: NftEnumType | EsdtEnumType;
   collection?: string;
   name: string;
   identifier: string;

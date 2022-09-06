@@ -11,8 +11,8 @@ import {
   TransactionReceiver,
   TransactionSender,
   TransactionShardsTransition
-} from './components';
-import styles from './components/transactionsTableStyles.scss';
+} from '.';
+import styles from './transactionsTableStyles.scss';
 
 export interface TransactionRowType {
   transaction: InterpretedTransactionType;

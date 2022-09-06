@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
-import { TransactionRow } from './components/TransactionsRow';
-import styles from './components/TransactionsRow/components/transactionsTableStyles.scss';
+import { TransactionRow } from './components/TransactionRow';
+import styles from './components/transactionsTableStyles.scss';
 
-interface TransactionsTableType extends WithClassnameType {
+export interface TransactionsTableType extends WithClassnameType {
   extendedTransactions: InterpretedTransactionType[];
   address?: string;
   title?: React.ReactNode;

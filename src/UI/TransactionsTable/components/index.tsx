@@ -12,3 +12,4 @@ export * from './TransactionMethod';
 export * from './TransactionReceiver';
 export * from './TransactionSender';
 export * from './TransactionShardsTransition';
+export * from './TransactionAction';

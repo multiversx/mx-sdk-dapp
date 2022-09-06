@@ -41,7 +41,7 @@ export const TransactionReceiver = ({
         />
       ) : (
         <ExplorerLink
-          page={transaction.links.receiverLink ?? ''}
+          to={transaction.links.receiverLink ?? ''}
           data-testid='receiverLink'
           className={globalStyles.trimWrapper}
         >

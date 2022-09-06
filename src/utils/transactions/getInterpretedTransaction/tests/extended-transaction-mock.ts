@@ -5,6 +5,7 @@ import {
   TransactionActionsEnum,
   VisibleTransactionOperationType
 } from 'types/serverTransactions.types';
+import { EsdtEnumType } from 'types/tokens.types';
 import { baseTransactionMock } from '../helpers/tests/base-transaction-mock';
 
 export const transactionMock: ServerTransactionType = {
@@ -33,7 +34,7 @@ export const transactionMock: ServerTransactionType = {
       name: 'send',
       type: VisibleTransactionOperationType.egld,
       action: TransactionOperationActionTypeEnum.transfer,
-      esdtType: 'FungibleESDT',
+      esdtType: EsdtEnumType.FungibleESDT,
       receiver:
         'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
       sender: 'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
@@ -46,7 +47,7 @@ export const transactionMock: ServerTransactionType = {
       name: 'send',
       type: VisibleTransactionOperationType.egld,
       action: TransactionOperationActionTypeEnum.transfer,
-      esdtType: 'FungibleESDT',
+      esdtType: EsdtEnumType.FungibleESDT,
       receiver:
         'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
       sender: 'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',

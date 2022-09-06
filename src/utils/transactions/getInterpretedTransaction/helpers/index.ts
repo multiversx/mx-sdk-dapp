@@ -19,3 +19,4 @@ export * from './getTransactionStatusText';
 export * from './getTransactionFee';
 export * from './getVisibleOperations';
 export * from './getExplorerLink';
+export * from './transactionActionUnwrapper';

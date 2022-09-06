@@ -19,7 +19,7 @@ export const TransactionShardsTransition = ({
       className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
     >
       <ExplorerLink
-        page={transaction.links.senderShardLink ?? ''}
+        to={transaction.links.senderShardLink ?? ''}
         data-testid='shardFromLink'
       >
         <ShardSpan shard={transaction.senderShard} />
@@ -29,7 +29,7 @@ export const TransactionShardsTransition = ({
         className={classNames(globalStyles.textSecondary, globalStyles.mx2)}
       />
       <ExplorerLink
-        page={transaction.links.receiverShardLink ?? ''}
+        to={transaction.links.receiverShardLink ?? ''}
         data-testid='shardToLink'
       >
         <ShardSpan shard={transaction.receiverShard} />

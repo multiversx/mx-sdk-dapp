@@ -45,7 +45,7 @@ export const TransactionSender = ({
         <>
           {addressIsValid(transaction.sender) ? (
             <ExplorerLink
-              page={transaction.links.senderLink ?? ''}
+              to={transaction.links.senderLink ?? ''}
               data-testid='senderLink'
               className={globalStyles.trimWrapper}
             >
