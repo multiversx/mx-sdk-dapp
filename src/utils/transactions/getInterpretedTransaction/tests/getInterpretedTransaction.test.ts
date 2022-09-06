@@ -55,7 +55,7 @@ describe('transaction interpreter', () => {
           ].filter((x) => x != null),
           direction: TransactionDirectionEnum.OUT,
           isContract: false,
-          action: TransactionActionsEnum.transfer
+          method: TransactionActionsEnum.transfer
         }
       };
 
@@ -132,7 +132,7 @@ describe('transaction interpreter', () => {
             ].filter((x) => x != null),
             direction: TransactionDirectionEnum.IN,
             isContract: false,
-            action: TransactionActionsEnum.transfer
+            method: TransactionActionsEnum.transfer
           }
         },
         {
@@ -168,7 +168,7 @@ describe('transaction interpreter', () => {
             ].filter((x) => x != null),
             direction: TransactionDirectionEnum.SELF,
             isContract: true,
-            action: TransactionActionsEnum.transfer
+            method: TransactionActionsEnum.transfer
           }
         }
       ];

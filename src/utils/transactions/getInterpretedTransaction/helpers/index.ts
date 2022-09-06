@@ -4,7 +4,7 @@ export * from './explorerUrlBuilder';
 export * from './getTransactionTokens';
 export * from './getTransactionReceiverAssets';
 export * from './getTransactionReceiver';
-export * from './getTransactionAction';
+export * from './getTransactionMethod';
 export * from './getExplorerLink';
 export * from './getTransactionTransferType';
 export * from './explorerUrlBuilder';

@@ -2,10 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { getTransactionAction } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionAction';
+import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 import styles from './transactionsTableStyles.scss';
 
-export const TransactionAction = ({
+export const TransactionMethod = ({
   transaction
 }: {
   transaction: InterpretedTransactionType;
@@ -27,7 +27,7 @@ export const TransactionAction = ({
           globalStyles.textCapitalize
         )}
       >
-        {getTransactionAction(transaction)}
+        {getTransactionMethod(transaction)}
       </div>
     </span>
   );

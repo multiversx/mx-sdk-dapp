@@ -3,7 +3,7 @@ import {
   TransactionActionCategoryEnum,
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
-import { getTransactionAction } from '../getTransactionAction';
+import { getTransactionMethod } from '../getTransactionMethod';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionMethod', () => {
@@ -13,7 +13,7 @@ describe('getTransactionMethod', () => {
       action: undefined
     };
 
-    const result = getTransactionAction(transaction);
+    const result = getTransactionMethod(transaction);
 
     expect(result).toEqual('Transaction');
   });
@@ -27,7 +27,7 @@ describe('getTransactionMethod', () => {
       }
     };
 
-    const result = getTransactionAction(transaction);
+    const result = getTransactionMethod(transaction);
 
     expect(result).toEqual('Transaction');
   });
@@ -41,7 +41,7 @@ describe('getTransactionMethod', () => {
       }
     };
 
-    const result = getTransactionAction(transaction);
+    const result = getTransactionMethod(transaction);
 
     expect(result).toEqual(transaction.action?.name);
   });
@@ -58,7 +58,7 @@ describe('getTransactionMethod', () => {
       }
     };
 
-    const result = getTransactionAction(transaction);
+    const result = getTransactionMethod(transaction);
 
     expect(result).toEqual(transaction.action?.arguments?.functionName);
   });

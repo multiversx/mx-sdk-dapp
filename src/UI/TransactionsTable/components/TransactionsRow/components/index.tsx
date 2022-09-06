@@ -8,7 +8,7 @@ export * from './TimeAgo';
 export * from './TokenValue';
 export * from './TransactionDirectionBadge';
 export * from './TransactionHash';
-export * from './TransactionAction';
+export * from './TransactionMethod';
 export * from './TransactionReceiver';
 export * from './TransactionSender';
 export * from './TransactionShardsTransition';
