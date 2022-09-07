@@ -136,6 +136,7 @@
     "lodash.throttle": "4.1.1",
     "lodash.uniqby": "4.7.0",
     "qs": "6.10.3",
+    "react-anchorme": "2.2.1",
     "react-idle-timer": "5.0.0",
     "react-redux": "8.0.2",
     "redux-persist": "6.0.0",

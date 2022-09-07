@@ -6,3 +6,5 @@ export * from './getTransactionStatusText';
 export * from './getTransactionStatus';
 export * from './getTransactionMessages';
 export * from './useGetOperationList';
+export * from './getScamFlag';
+export * from './useDataDecode';

@@ -275,4 +275,11 @@ export type InterpretedTransactionType = {
   };
 } & ServerTransactionType;
 
+export enum DecodeMethodEnum {
+  raw = 'raw',
+  text = 'text',
+  decimal = 'decimal',
+  smart = 'smart'
+}
+
 //#endregion
