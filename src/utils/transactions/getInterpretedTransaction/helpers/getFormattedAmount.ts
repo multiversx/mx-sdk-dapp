@@ -3,7 +3,7 @@ import { formatAmount } from 'utils/operations/formatAmount';
 import { defaultAmountFormatConfig } from './defaultInterpreterConfig';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
+// TODO: remove
 export function getFormattedAmount(
   transaction: ServerTransactionType,
   amountFormatConfig = defaultAmountFormatConfig

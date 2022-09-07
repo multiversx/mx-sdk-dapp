@@ -10,7 +10,7 @@ import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import {
   getTransactionMessages,
   getTransactionStatus
-} from 'utils/transactions/getInterpretedTransaction/helpers';
+} from 'utils/transactions/transactionDetailsHelpers/index';
 
 interface TransactionIconType {
   transaction: InterpretedTransactionType;

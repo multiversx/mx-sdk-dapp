@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { transactionActionUnwrapper } from 'utils/transactions/getInterpretedTransaction/helpers/transactionActionUnwrapper/transactionActionUnwrapper';
+import { transactionActionUnwrapper } from 'utils/transactions/transactionDetailsHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
 import { ActionText } from './components/ActionText';
 import './transactionAction.scss';
 

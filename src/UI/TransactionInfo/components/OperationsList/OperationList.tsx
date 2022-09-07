@@ -1,9 +1,13 @@
 import * as React from 'react';
 import {
+  internalTransactionActions,
+  OPERATION_LIST_DISPLAY_LENGTH
+} from 'constants/transactions';
+import {
   InterpretedTransactionType,
-  OperationType,
-  TransactionOperationActionTypeEnum
+  OperationType
 } from 'types/serverTransactions.types';
+import { OperationRow } from './components/OperationRow';
 
 export const OperationsList = ({
   transaction,
@@ -12,7 +16,6 @@ export const OperationsList = ({
   transaction: InterpretedTransactionType;
   operations: OperationType[];
 }) => {
-  const initialDisplay = 25;
   const [expanded, setExpanded] = React.useState(false);
 
   const toggleCollapseClick = () => {
@@ -30,13 +33,16 @@ export const OperationsList = ({
     filteredOperations.length > 0 ? filteredOperations : operations;
 
   const displayOperations =
-    importantOperations.length > initialDisplay
-      ? importantOperations.slice(0, initialDisplay)
+    importantOperations.length > OPERATION_LIST_DISPLAY_LENGTH
+      ? importantOperations.slice(0, OPERATION_LIST_DISPLAY_LENGTH)
       : importantOperations;
 
   const collapsedOperations =
-    importantOperations.length > initialDisplay
-      ? importantOperations.slice(initialDisplay, importantOperations.length)
+    importantOperations.length > OPERATION_LIST_DISPLAY_LENGTH
+      ? importantOperations.slice(
+          OPERATION_LIST_DISPLAY_LENGTH,
+          importantOperations.length
+        )
       : [];
 
   const buttonText = expanded

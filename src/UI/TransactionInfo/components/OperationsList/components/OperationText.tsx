@@ -5,7 +5,7 @@ import {
   TransactionDirectionEnum,
   TransactionOperationActionTypeEnum
 } from 'types/serverTransactions.types';
-import { getOperationDirection } from 'utils/transactions/getInterpretedTransaction/helpers/getOperationDirection';
+import { getOperationDirection } from 'utils/transactions/transactionDetailsHelpers/getOperationDirection';
 import { OperationBlock } from './OperationBlock';
 
 export const OperationText = ({

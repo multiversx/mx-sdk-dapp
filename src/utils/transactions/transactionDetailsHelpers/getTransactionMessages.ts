@@ -1,7 +1,7 @@
 import { InterpretedTransactionType } from 'types';
-import { getOperationsMessages } from './getOperationsMessages';
-import { getReceiptMessage } from './getReceiptMessage';
-import getScResultsMessages from './getScResultsMessages';
+import { getOperationsMessages } from '../getInterpretedTransaction/helpers/getOperationsMessages';
+import { getReceiptMessage } from '../getInterpretedTransaction/helpers/getReceiptMessage';
+import getScResultsMessages from '../getInterpretedTransaction/helpers/getScResultsMessages';
 
 export function getTransactionMessages(
   transaction: InterpretedTransactionType
