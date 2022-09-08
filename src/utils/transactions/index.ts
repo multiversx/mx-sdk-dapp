@@ -10,4 +10,4 @@ export * from './getTransactionLink';
 export * from './getAllTransactionsLink';
 
 export * from './getInterpretedTransaction';
-export * from './transactionDetailsHelpers';
+export * from './transactionInfoHelpers';

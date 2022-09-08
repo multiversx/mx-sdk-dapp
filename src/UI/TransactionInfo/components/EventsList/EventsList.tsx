@@ -8,7 +8,7 @@ import {
   getEventListDataHexValue,
   getEventListHighlight,
   getEventListInitialDecodeMethod
-} from 'utils/transactions/transactionDetailsHelpers';
+} from 'utils/transactions/transactionInfoHelpers';
 import { DataDecode } from '../DataDecode';
 
 const EventTopics = ({

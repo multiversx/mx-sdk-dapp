@@ -3,7 +3,7 @@ import { OperationType } from 'types/serverTransactions.types';
 import {
   useGetOperationList,
   OperationListType
-} from 'utils/transactions/transactionDetailsHelpers/useGetOperationList';
+} from 'utils/transactions/transactionInfoHelpers/useGetOperationList';
 import { OperationRow } from './components/OperationRow';
 
 export const OperationsList = (props: OperationListType) => {

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Anchorme } from 'react-anchorme';
 import { ScamInfoType } from 'types/account.types';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
-import { getScamFlag } from 'utils/transactions/transactionDetailsHelpers/getScamFlag';
+import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
 import { DataDecode } from '../DataDecode/index';
 import { ModalLink } from '../ModalLink/ModalLink';
 import { truncate } from './helpers/truncate';

@@ -8,11 +8,11 @@ import { FormatAmount } from 'UI/FormatAmount';
 import { AccountName, ScAddressIcon } from 'UI/TransactionsTable/components';
 import { Trim } from 'UI/Trim';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/index';
-import { getInitialScResultsDecodeMethod } from 'utils/transactions/transactionDetailsHelpers/getScResultsInitialDecodeMethod';
+import { getInitialScResultsDecodeMethod } from 'utils/transactions/transactionInfoHelpers/getScResultsInitialDecodeMethod';
 import {
   getScResultsDecodedData,
   getScResultsHighlight
-} from 'utils/transactions/transactionDetailsHelpers/index';
+} from 'utils/transactions/transactionInfoHelpers/index';
 import { DataDecode } from '../DataDecode';
 
 // TODO: refactor after styles
