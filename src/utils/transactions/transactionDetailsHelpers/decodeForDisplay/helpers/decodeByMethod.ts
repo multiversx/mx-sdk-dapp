@@ -5,7 +5,7 @@ import {
   TransactionTokensType
 } from 'types/serverTransactions.types';
 import { addressIsValid } from 'utils/account/addressIsValid';
-import { isUtf8 } from './isUtf8';
+import { isUtf8 } from 'utils/decoders/isUtf8';
 
 export const decodeByMethod = (
   part: string,

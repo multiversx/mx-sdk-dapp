@@ -8,3 +8,5 @@ export * from './getTransactionMessages';
 export * from './useGetOperationList';
 export * from './getScamFlag';
 export * from './useDataDecode';
+export * from './getScResultsHighlight';
+export * from './getScResultsDecodedData';
