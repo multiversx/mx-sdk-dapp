@@ -1,7 +1,5 @@
-import {
-  InterpretedTransactionType,
-  TransactionServerStatusesEnum
-} from 'types';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 
 export const getTransactionStatusText = (
   transaction: InterpretedTransactionType

@@ -10,3 +10,6 @@ export * from './getScamFlag';
 export * from './useDataDecode';
 export * from './getScResultsHighlight';
 export * from './getScResultsDecodedData';
+export * from './getEventListHighlight';
+export * from './getEventListDataHexValue';
+export * from './getEventListInitialDecodeMethod';

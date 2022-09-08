@@ -15,6 +15,7 @@ import {
 } from 'utils/transactions/transactionDetailsHelpers/index';
 import { DataDecode } from '../DataDecode';
 
+// TODO: refactor after styles
 export const ScResultsList = ({ results }: { results: ResultType[] }) => {
   const ref = React.useRef<HTMLDivElement>(null);
   const initialDecodeMethod = getInitialScResultsDecodeMethod();
