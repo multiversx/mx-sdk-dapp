@@ -3,6 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { CANCEL_ACTION_NAME } from 'constants/index';
+import { getIsPathameEqualToCallbackRoute } from 'hooks/transactions/helpers/getIsSamePathnameAsCallbackRoute';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { clearAllTransactionsToSign } from 'reduxStore/slices';
@@ -51,10 +52,10 @@ export const SignWithWalletConnectModal = ({
     dispatch(clearAllTransactionsToSign());
 
     await cancelWalletConnectAction();
-    if (
-      callbackRoute != null &&
-      !window.location.pathname.includes(callbackRoute)
-    ) {
+    const isPathameEqualToCallbackRoute = getIsPathameEqualToCallbackRoute(
+      callbackRoute
+    );
+    if (callbackRoute != null && !isPathameEqualToCallbackRoute) {
       safeRedirect(callbackRoute);
     }
   };

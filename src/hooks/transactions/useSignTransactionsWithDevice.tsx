@@ -23,6 +23,7 @@ import {
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { getIsPathameEqualToCallbackRoute } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 
 export interface UseSignTransactionsWithDevicePropsType {
@@ -69,8 +70,9 @@ export function useSignTransactionsWithDevice({
     dispatch(setSignTransactionsError(errorMessage));
   }
 
-  const locationIncludesCallbackRoute =
-    callbackRoute != null && window.location.pathname.includes(callbackRoute);
+  const isPathameEqualToCallbackRoute = getIsPathameEqualToCallbackRoute(
+    callbackRoute
+  );
 
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
     const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
@@ -95,7 +97,7 @@ export function useSignTransactionsWithDevice({
       if (
         callbackRoute != null &&
         customTransactionInformation?.redirectAfterSign &&
-        !locationIncludesCallbackRoute
+        !isPathameEqualToCallbackRoute
       ) {
         safeRedirect(callbackRoute);
       }
@@ -106,7 +108,8 @@ export function useSignTransactionsWithDevice({
     onCancel();
     dispatch(clearAllTransactionsToSign());
 
-    if (callbackRoute != null && !locationIncludesCallbackRoute) {
+    if (callbackRoute != null && !isPathameEqualToCallbackRoute) {
+      console.log('IS REDIRECT', callbackRoute, window.location.pathname);
       safeRedirect(callbackRoute);
     }
   }

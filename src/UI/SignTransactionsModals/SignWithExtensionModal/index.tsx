@@ -2,6 +2,7 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import { getIsPathameEqualToCallbackRoute } from 'hooks/transactions/helpers/getIsSamePathnameAsCallbackRoute';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
@@ -37,10 +38,10 @@ export const SignWithExtensionModal = ({
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    if (
-      callbackRoute != null &&
-      !window.location.pathname.includes(callbackRoute)
-    ) {
+    const isPathameEqualToCallbackRoute = getIsPathameEqualToCallbackRoute(
+      callbackRoute
+    );
+    if (callbackRoute != null && !isPathameEqualToCallbackRoute) {
       safeRedirect(callbackRoute);
     }
   };
