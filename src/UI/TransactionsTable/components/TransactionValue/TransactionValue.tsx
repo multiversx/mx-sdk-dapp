@@ -85,7 +85,7 @@ export const TransactionValue = ({
 
       return (
         <div className='transaction-value d-flex align-items-center'>
-          {Object.values(NftEnumType).includes(txToken.type) ? (
+          {Object.values(NftEnumType).includes(txToken.type as NftEnumType) ? (
             <TransactionActionBlock.Nft token={txToken} showBadge />
           ) : (
             <TransactionActionBlock.Token token={txToken} />
