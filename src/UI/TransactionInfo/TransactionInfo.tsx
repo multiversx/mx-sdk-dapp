@@ -1,5 +1,4 @@
 import React from 'react';
-import { TransactionStatus } from '@elrondnetwork/erdjs-network-providers/out';
 import {
   faSpinner,
   faClock,
@@ -21,11 +20,22 @@ import {
   ShardSpan
 } from 'UI/TransactionsTable/components';
 import { Trim } from 'UI/Trim';
-import { addressIsValid, isContract, getUsdValue } from 'utils';
+import { addressIsValid } from 'utils/account/addressIsValid';
+import { getEgldLabel } from 'utils/network/getEgldLabel';
+import { formatAmount } from 'utils/operations/formatAmount';
+import { getUsdValue } from 'utils/operations/getUsdValue';
+import { isContract } from 'utils/smartContracts';
 import {
   getHumanReadableTimeFormat,
   getTransactionMethod
-} from 'utils/transactions/getInterpretedTransaction/helpers';
+} from 'utils/transactions/getInterpretedTransaction/helpers/index';
+import {
+  getTransactionFee,
+  getTransactionMessages,
+  getTransactionStatus,
+  getVisibleOperations
+} from 'utils/transactions/transactionInfoHelpers/index';
+import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import {
   DetailItem,
   TransactionAction,
@@ -34,12 +44,40 @@ import {
   ScResultsList
 } from './components';
 import DataField from './components/DataField';
+import TransactionStatus from './components/TransactionStatus/TransactionStatus';
 
-const TransactionInfo = ({
+export const TransactionInfo = ({
   transaction
 }: {
   transaction: InterpretedTransactionType;
 }) => {
+  const egldLabel = getEgldLabel();
+
+  const pending = getTransactionStatus(transaction);
+  const transactionMessages = getTransactionMessages(transaction);
+
+  const txFee = getTransactionFee(transaction);
+  const visibleOperations = getVisibleOperations(transaction);
+
+  const formattedTxValue = formatAmount({
+    input: transaction.value,
+    showLastNonZeroDecimal: true
+  });
+
+  const txValue = formatAmount({
+    input: transaction.value,
+    addCommas: false,
+    showLastNonZeroDecimal: true
+  });
+
+  const transactionFee =
+    txFee && stringIsInteger(txFee)
+      ? formatAmount({
+          input: txFee,
+          showLastNonZeroDecimal: true
+        })
+      : 'N/A';
+
   return (
     <>
       <DetailItem title='Hash'>
@@ -56,7 +94,7 @@ const TransactionInfo = ({
       </DetailItem>
 
       <DetailItem title='Age'>
-        {transaction.timestamp !== undefined ? (
+        {transaction.timestamp != null ? (
           <div className='d-flex flex-wrap align-items-center'>
             {pending ? (
               <FontAwesomeIcon
@@ -131,10 +169,8 @@ const TransactionInfo = ({
       <DetailItem title='To'>
         <div className='d-flex flex-column'>
           <div className='d-flex align-items-center'>
-            {isContract(transaction.receiver) ? (
+            {isContract(transaction.receiver) && (
               <span className='mr-2'>Contract</span>
-            ) : (
-              ''
             )}
             <ExplorerLink
               to={String(transaction.links.receiverLink)}
@@ -238,11 +274,11 @@ const TransactionInfo = ({
       )}
 
       <DetailItem title='Transaction Fee'>
-        {transaction.gasUsed !== undefined ? (
+        {transaction.gasUsed != null ? (
           <>
             {transactionFee} {egldLabel}{' '}
             <span className='text-secondary'>
-              {transaction.price !== undefined ? (
+              {transaction.price != null ? (
                 <>
                   (
                   {getUsdValue({
@@ -274,7 +310,7 @@ const TransactionInfo = ({
       </DetailItem>
 
       <DetailItem title='Gas Limit'>
-        {transaction.gasLimit !== undefined ? (
+        {transaction.gasLimit != null ? (
           <>{transaction.gasLimit.toLocaleString('en')}</>
         ) : (
           <span className='text-secondary'>N/A</span>
@@ -282,7 +318,7 @@ const TransactionInfo = ({
       </DetailItem>
 
       <DetailItem title='Gas Used'>
-        {transaction.gasUsed !== undefined ? (
+        {transaction.gasUsed != null ? (
           <>{transaction.gasUsed.toLocaleString('en')}</>
         ) : (
           <span className='text-secondary'>N/A</span>
@@ -290,7 +326,7 @@ const TransactionInfo = ({
       </DetailItem>
 
       <DetailItem title='Gas Price'>
-        {transaction.gasPrice !== undefined ? (
+        {transaction.gasPrice != null ? (
           <FormatAmount
             value={transaction.gasPrice.toString()}
             showLastNonZeroDecimal
@@ -317,4 +353,3 @@ const TransactionInfo = ({
     </>
   );
 };
-export default TransactionInfo;

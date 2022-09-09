@@ -1,4 +1,3 @@
-import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   InterpretedTransactionType,
   ServerTransactionType
@@ -7,22 +6,17 @@ import { TokenArgumentType } from 'types/serverTransactions.types';
 import { isContract } from 'utils/smartContracts';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
 import {
-  defaultAmountFormatConfig,
-  defaultInterpreterExplorerAddress,
-  getFormattedAmount,
   getExplorerLink,
   getTransactionMethod,
   getTransactionReceiver,
   getTransactionReceiverAssets,
   getTransactionTokens,
   getTransactionTransferType,
-  TransactionAmountFormatConfigType,
   explorerUrlBuilder
 } from './helpers';
 
 export interface GetInterpretedTransactionType {
   address: string;
-  amountFormatConfig: TransactionAmountFormatConfigType;
   explorerAddress: string;
   transaction: ServerTransactionType;
 }
@@ -30,8 +24,7 @@ export interface GetInterpretedTransactionType {
 export function getInterpretedTransaction({
   transaction,
   address,
-  amountFormatConfig = defaultAmountFormatConfig,
-  explorerAddress = defaultInterpreterExplorerAddress
+  explorerAddress
 }: GetInterpretedTransactionType): InterpretedTransactionType {
   const tokenIdentifier =
     transaction.tokenIdentifier ?? getTokenFromData(transaction.data).tokenId;
@@ -44,17 +37,6 @@ export function getInterpretedTransaction({
   const transactionTokens: TokenArgumentType[] = getTransactionTokens(
     transaction
   );
-  let tokenLabel = amountFormatConfig.egldLabel ?? MAINNET_EGLD_LABEL;
-  if (transactionTokens.length > 0) {
-    const txToken = transactionTokens[0];
-    tokenLabel = txToken.ticker ?? tokenLabel;
-  }
-
-  const formattedValue = getFormattedAmount(transaction, amountFormatConfig);
-  const fullFormattedValue = getFormattedAmount(transaction, {
-    ...amountFormatConfig,
-    showLastNonZeroDecimal: true
-  });
 
   const senderLink = getExplorerLink({
     explorerAddress,
@@ -87,11 +69,6 @@ export function getInterpretedTransaction({
     tokenIdentifier,
     receiver,
     receiverAssets,
-    tokenLabel,
-    amountInfo: {
-      formattedValue,
-      fullFormattedValue
-    },
     transactionDetails: {
       direction,
       method,

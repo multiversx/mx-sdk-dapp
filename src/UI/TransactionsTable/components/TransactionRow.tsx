@@ -10,7 +10,8 @@ import {
   TransactionMethod,
   TransactionReceiver,
   TransactionSender,
-  TransactionShardsTransition
+  TransactionShardsTransition,
+  TransactionValue
 } from '.';
 import styles from './transactionsTableStyles.scss';
 
@@ -57,7 +58,7 @@ export const TransactionRow = ({
         <TransactionMethod transaction={transaction} />
       </td>
       <td className={globalStyles.textLeft}>
-        <span>{`${transaction.amountInfo.formattedValue} ${transaction.tokenLabel}`}</span>
+        <TransactionValue transaction={transaction} />
       </td>
     </tr>
   );

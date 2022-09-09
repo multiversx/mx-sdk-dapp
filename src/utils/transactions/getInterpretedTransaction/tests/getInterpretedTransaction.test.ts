@@ -1,4 +1,3 @@
-import { MAINNET_EGLD_LABEL } from 'constants/network';
 import {
   InterpretedTransactionType,
   TransactionDirectionEnum
@@ -24,10 +23,6 @@ describe('transaction interpreter', () => {
       };
       const output: InterpretedTransactionType = {
         ...transaction,
-        amountInfo: {
-          formattedValue: '12.340',
-          fullFormattedValue: '12.340'
-        },
         links: {
           senderLink: `${explorerAddress}${explorerUrlBuilder.accountDetails(
             transaction.sender
@@ -45,7 +40,6 @@ describe('transaction interpreter', () => {
             transaction.txHash
           )}`
         },
-        tokenLabel: MAINNET_EGLD_LABEL,
         transactionDetails: {
           transactionTokens: [
             transaction?.action?.arguments?.token,
@@ -62,14 +56,6 @@ describe('transaction interpreter', () => {
       const result = getInterpretedTransaction({
         transaction,
         address: 'erd1-my-address-hash',
-        amountFormatConfig: {
-          egldLabel: MAINNET_EGLD_LABEL,
-          decimals: 2,
-          digits: 3,
-          showLabel: true,
-          token: 'egld',
-          showLastNonZeroDecimal: true
-        },
         explorerAddress
       });
 
@@ -101,10 +87,6 @@ describe('transaction interpreter', () => {
       const output: InterpretedTransactionType[] = [
         {
           ...transactions[0],
-          amountInfo: {
-            formattedValue: '12.340',
-            fullFormattedValue: '12.340'
-          },
           links: {
             senderLink: `${networkAddress}${explorerUrlBuilder.accountDetails(
               transactions[0].sender
@@ -122,7 +104,6 @@ describe('transaction interpreter', () => {
               transactions[0].txHash
             )}`
           },
-          tokenLabel: MAINNET_EGLD_LABEL,
           transactionDetails: {
             transactionTokens: [
               transactions[0]?.action?.arguments?.token,
@@ -137,10 +118,6 @@ describe('transaction interpreter', () => {
         },
         {
           ...transactions[1],
-          amountInfo: {
-            formattedValue: '12.340',
-            fullFormattedValue: '12.340'
-          },
           links: {
             senderLink: `${networkAddress}${explorerUrlBuilder.accountDetails(
               transactions[1].sender
@@ -158,7 +135,6 @@ describe('transaction interpreter', () => {
               transactions[1].txHash
             )}`
           },
-          tokenLabel: MAINNET_EGLD_LABEL,
           transactionDetails: {
             transactionTokens: [
               transactions[1]?.action?.arguments?.token,
@@ -178,14 +154,6 @@ describe('transaction interpreter', () => {
           transaction,
           address:
             'erd1qqqqqqqqqqqqqpgq4gdcg0k83u7lpv4s4532w3au9y9h0vm70eqq6m8qk2',
-          amountFormatConfig: {
-            egldLabel: MAINNET_EGLD_LABEL,
-            decimals: 2,
-            digits: 3,
-            showLabel: true,
-            token: 'egld',
-            showLastNonZeroDecimal: true
-          },
           explorerAddress
         })
       );

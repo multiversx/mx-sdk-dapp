@@ -1,20 +1,17 @@
 import React from 'react';
-import { DECIMALS } from 'constants/index';
-import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
-import { FormatAmount } from 'UI/FormatAmount';
-import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/explorerUrlBuilder';
+import {
+  getTransactionActionTokenText,
+  TransactionActionTokenType
+} from 'utils/transactions/transactionInfoHelpers/index';
 
-export const TransactionActionToken = ({
-  token,
-  noValue,
-  showLastNonZeroDecimal
-}: {
-  token: TokenArgumentType;
-  noValue?: boolean;
-  showLastNonZeroDecimal?: boolean;
-}) => {
-  const decimals = token.decimals != null ? token.decimals : DECIMALS;
+export const TransactionActionToken = (props: TransactionActionTokenType) => {
+  const { token } = props;
+  const {
+    tokenExplorerLink,
+    tokenFormattedAmount,
+    tokenLinkText
+  } = getTransactionActionTokenText(props);
 
   if (!token.token) {
     return null;
@@ -22,18 +19,11 @@ export const TransactionActionToken = ({
 
   return (
     <>
-      {!noValue && token.value && (
-        <div className='mr-1 text-truncate'>
-          <FormatAmount
-            value={token.value}
-            showLabel={false}
-            decimals={decimals}
-            showLastNonZeroDecimal={showLastNonZeroDecimal}
-          />
-        </div>
+      {tokenFormattedAmount != null && (
+        <div className='mr-1 text-truncate'>{tokenFormattedAmount}</div>
       )}
       <ExplorerLink
-        to={explorerUrlBuilder.tokenDetails(token.token)}
+        to={tokenExplorerLink}
         className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
       >
         <div className='d-flex align-items-center symbol'>
@@ -44,7 +34,7 @@ export const TransactionActionToken = ({
               className='side-icon mr-1'
             />
           )}
-          <span>{token.ticker}</span>
+          <span>{tokenLinkText}</span>
         </div>
       </ExplorerLink>
     </>

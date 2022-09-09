@@ -1,5 +1,3 @@
-export * from './defaultInterpreterConfig';
-export * from './getFormattedAmount';
 export * from './explorerUrlBuilder';
 export * from './getTransactionTokens';
 export * from './getTransactionReceiverAssets';

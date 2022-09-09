@@ -6,9 +6,9 @@ import { CopyButton } from 'UI/CopyButton';
 import { Trim } from 'UI/Trim';
 import {
   getEventListDataHexValue,
-  getEventListHighlight,
-  getEventListInitialDecodeMethod
+  getEventListHighlight
 } from 'utils/transactions/transactionInfoHelpers';
+import { getEventListInitialDecodeMethod } from 'utils/transactions/transactionInfoHelpers/getEventListInitialDecodeMethod';
 import { DataDecode } from '../DataDecode';
 
 const EventTopics = ({

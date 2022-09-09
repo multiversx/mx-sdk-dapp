@@ -12,4 +12,5 @@ export * from './getScResultsHighlight';
 export * from './getScResultsDecodedData';
 export * from './getEventListHighlight';
 export * from './getEventListDataHexValue';
-export * from './getEventListInitialDecodeMethod';
+export * from './getTransactionActionNftText';
+export * from './getTransactionActionTokenText';

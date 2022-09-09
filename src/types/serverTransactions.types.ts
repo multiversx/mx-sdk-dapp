@@ -255,16 +255,11 @@ export enum TransactionDirectionEnum {
 }
 
 export type InterpretedTransactionType = {
-  tokenLabel: string;
   transactionDetails: {
     direction?: TransactionDirectionEnum;
     method: string;
     transactionTokens: TokenArgumentType[];
     isContract?: boolean;
-  };
-  amountInfo: {
-    formattedValue?: string;
-    fullFormattedValue?: string;
   };
   links: {
     senderLink?: string;

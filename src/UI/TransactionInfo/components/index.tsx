@@ -7,3 +7,4 @@ export * from './ScrDetailItem';
 export * from './ScResultsList';
 export * from './AddressDetailItem';
 export * from './EventsList';
+export * from './TransactionStatus';
