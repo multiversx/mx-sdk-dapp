@@ -37,6 +37,7 @@ import {
   safeRedirect
 } from 'utils';
 import { getAccount } from 'utils/account/getAccount';
+import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 
 const setTransactionNonces = (
   latestNonce: number,
@@ -153,12 +154,9 @@ export const useSignTransactions = () => {
         transactions
       );
 
-      const hasSameTransactions =
-        Object.keys(signedTransactions).length === transactions.length;
-      const hasAllTransactionsSigned =
-        signedTransactions && hasSameTransactions;
-      const shouldMoveTransactionsToSignedState =
-        signedTransactions && hasAllTransactionsSigned;
+      const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
+        signedTransactions
+      );
 
       if (!shouldMoveTransactionsToSignedState) {
         return;
