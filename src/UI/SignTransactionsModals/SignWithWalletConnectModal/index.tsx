@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { CANCEL_ACTION_NAME } from 'constants/index';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
+import { useDispatch } from 'reduxStore/DappProviderContext';
+import { clearAllTransactionsToSign } from 'reduxStore/slices';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
@@ -18,6 +20,8 @@ export const SignWithWalletConnectModal = ({
   className = 'dapp-wallet-connect-modal',
   modalContentClassName
 }: SignModalPropsType) => {
+  const dispatch = useDispatch();
+
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
     icon: globalStyles.textWhite,
@@ -43,6 +47,9 @@ export const SignWithWalletConnectModal = ({
 
   const close = async () => {
     handleClose();
+
+    dispatch(clearAllTransactionsToSign());
+
     await cancelWalletConnectAction();
     if (
       callbackRoute != null &&
