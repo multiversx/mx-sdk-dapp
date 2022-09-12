@@ -1,9 +1,7 @@
 import { useCallback, useEffect } from 'react';
+import { useIsDappModalVisible } from 'hooks';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import {
-  dappModalConfigSelector,
-  dappModalVisibilitySelector
-} from 'reduxStore/selectors/dappModalsSelectors';
+import { dappModalConfigSelector } from 'reduxStore/selectors/dappModalsSelectors';
 import {
   setDappModalConfig,
   setDappModalVisibility
@@ -20,7 +18,7 @@ type UseDappModalProps = {
 
 export const useDappModal = (props?: UseDappModalProps) => {
   const dispatch = useDispatch();
-  const visible = useSelector(dappModalVisibilitySelector);
+  const visible = useIsDappModalVisible();
   const modalConfig = useSelector(dappModalConfigSelector);
 
   const handleShowModal = () => {
