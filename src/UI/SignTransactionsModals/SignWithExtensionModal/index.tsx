@@ -2,20 +2,22 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
-import { safeRedirect } from 'utils';
 import styles from './signWithExtensionModalStyles.scss';
 
 export const SignWithExtensionModal = ({
   handleClose,
   error,
-  callbackRoute,
   transactions,
+  sessionId,
   className = 'dapp-extension-modal',
   modalContentClassName
 }: SignModalPropsType) => {
+  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
+
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.extension, className),
     icon: globalStyles.textWhite,
@@ -37,12 +39,7 @@ export const SignWithExtensionModal = ({
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    if (
-      callbackRoute != null &&
-      !window.location.pathname.includes(callbackRoute)
-    ) {
-      safeRedirect(callbackRoute);
-    }
+    clearTransactionsToSignWithWarning(sessionId);
   };
 
   return (

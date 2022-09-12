@@ -169,6 +169,7 @@ export interface SignModalPropsType extends WithClassnameType {
   handleClose: () => void;
   error: string | null;
   callbackRoute?: string;
+  sessionId?: string;
   transactions: Transaction[];
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
