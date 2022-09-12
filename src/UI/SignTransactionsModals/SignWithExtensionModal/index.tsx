@@ -2,13 +2,8 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { TRANSACTION_CANCELLED } from 'constants/index';
+import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { clearTransactionsInfoForSessionId } from 'reduxStore/slices';
-import {
-  clearAllTransactionsToSign,
-  setSignTransactionsCancelMessage
-} from 'reduxStore/slices/transactionsSlice';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
@@ -22,6 +17,8 @@ export const SignWithExtensionModal = ({
   className = 'dapp-extension-modal',
   modalContentClassName
 }: SignModalPropsType) => {
+  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
+
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.extension, className),
     icon: globalStyles.textWhite,
@@ -33,7 +30,6 @@ export const SignWithExtensionModal = ({
       globalStyles.mt2
     )
   };
-  const dispatch = useDispatch();
 
   const description = error
     ? error
@@ -44,9 +40,7 @@ export const SignWithExtensionModal = ({
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    dispatch(clearAllTransactionsToSign());
-    dispatch(clearTransactionsInfoForSessionId(sessionId));
-    dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
+    clearTransactionsToSignWithWarning(sessionId);
   };
 
   return (

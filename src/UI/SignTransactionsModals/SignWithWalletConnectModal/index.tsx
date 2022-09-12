@@ -2,14 +2,9 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { CANCEL_ACTION_NAME, TRANSACTION_CANCELLED } from 'constants/index';
+import { CANCEL_ACTION_NAME } from 'constants/index';
+import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
-import { useDispatch } from 'reduxStore/DappProviderContext';
-import {
-  clearAllTransactionsToSign,
-  clearTransactionsInfoForSessionId,
-  setSignTransactionsCancelMessage
-} from 'reduxStore/slices';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
@@ -23,7 +18,7 @@ export const SignWithWalletConnectModal = ({
   className = 'dapp-wallet-connect-modal',
   modalContentClassName
 }: SignModalPropsType) => {
-  const dispatch = useDispatch();
+  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
 
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
@@ -50,9 +45,7 @@ export const SignWithWalletConnectModal = ({
 
   const close = async () => {
     handleClose();
-    dispatch(clearAllTransactionsToSign());
-    dispatch(clearTransactionsInfoForSessionId(sessionId));
-    dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
+    clearTransactionsToSignWithWarning(sessionId);
 
     await cancelWalletConnectAction();
   };

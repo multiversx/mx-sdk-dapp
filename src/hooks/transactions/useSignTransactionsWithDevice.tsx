@@ -1,6 +1,5 @@
 import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
-import { TRANSACTION_CANCELLED } from 'constants/errorsMessages';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
@@ -11,10 +10,7 @@ import {
   transactionsToSignSelector
 } from 'reduxStore/selectors';
 import {
-  clearAllTransactionsToSign,
-  clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState,
-  setSignTransactionsCancelMessage,
   setSignTransactionsError
 } from 'reduxStore/slices';
 import {
@@ -27,6 +23,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
+import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -60,6 +57,7 @@ export function useSignTransactionsWithDevice({
   } = useGetAccountInfo();
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
+  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
 
   const {
     transactions,
@@ -107,9 +105,7 @@ export function useSignTransactionsWithDevice({
 
   function handleCancel() {
     onCancel();
-    dispatch(clearAllTransactionsToSign());
-    dispatch(clearTransactionsInfoForSessionId(sessionId));
-    dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
+    clearTransactionsToSignWithWarning(sessionId);
   }
 
   async function handleSignTransaction(transaction: Transaction) {
