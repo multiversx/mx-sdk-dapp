@@ -26,7 +26,6 @@ import {
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
-import { getIsPathameEqualToCallbackRoute } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 
 export interface UseSignTransactionsWithDevicePropsType {
@@ -73,9 +72,8 @@ export function useSignTransactionsWithDevice({
     dispatch(setSignTransactionsError(errorMessage));
   }
 
-  const isPathameEqualToCallbackRoute = getIsPathameEqualToCallbackRoute(
-    callbackRoute
-  );
+  const locationIncludesCallbackRoute =
+    callbackRoute != null && window.location.pathname.includes(callbackRoute);
 
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
     const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
@@ -100,7 +98,7 @@ export function useSignTransactionsWithDevice({
       if (
         callbackRoute != null &&
         customTransactionInformation?.redirectAfterSign &&
-        !isPathameEqualToCallbackRoute
+        !locationIncludesCallbackRoute
       ) {
         safeRedirect(callbackRoute);
       }
