@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useGetLoginInfo } from 'hooks';
 import { LoginMethodsEnum } from 'types';
+import { ConfirmationScreen } from './components/ConfirmationScreen';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
@@ -9,7 +10,6 @@ import {
   ScreenType,
   SignPropsType
 } from './types/signTransactionsModals.types';
-import { ConfirmationScreen } from './components/ConfirmationScreen';
 
 interface SignTransactionsPropsType {
   className?: string;
