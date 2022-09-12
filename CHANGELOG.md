@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[2.0.4](https://github.com/ElrondNetwork/dapp-core/pull/416)] - 2022-09-12
+ - [Fixed navigating after pressing Cancel on sign modal](https://github.com/ElrondNetwork/dapp-core/pull/415)
+ - [Added hook allowing to check for dapp modal visibility](https://github.com/ElrondNetwork/dapp-core/pull/416)
 ## [[2.0.3](https://github.com/ElrondNetwork/dapp-core/pull/414)] - 2022-09-09
  - [Added second login attempt error](https://github.com/ElrondNetwork/dapp-core/pull/408)
  - [Fixed AuthenticatedRoutesWrapper not detecting pattern routes](https://github.com/ElrondNetwork/dapp-core/pull/409)
