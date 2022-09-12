@@ -2,17 +2,23 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import { TRANSACTION_CANCELLED } from 'constants/index';
+import { useDispatch } from 'reduxStore/DappProviderContext';
+import { clearTransactionsInfoForSessionId } from 'reduxStore/slices';
+import {
+  clearAllTransactionsToSign,
+  setSignTransactionsCancelMessage
+} from 'reduxStore/slices/transactionsSlice';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
-import { safeRedirect } from 'utils';
 import styles from './signWithExtensionModalStyles.scss';
 
 export const SignWithExtensionModal = ({
   handleClose,
   error,
-  callbackRoute,
   transactions,
+  sessionId,
   className = 'dapp-extension-modal',
   modalContentClassName
 }: SignModalPropsType) => {
@@ -27,6 +33,7 @@ export const SignWithExtensionModal = ({
       globalStyles.mt2
     )
   };
+  const dispatch = useDispatch();
 
   const description = error
     ? error
@@ -37,12 +44,9 @@ export const SignWithExtensionModal = ({
   const close = (e: React.MouseEvent) => {
     e.preventDefault();
     handleClose();
-    if (
-      callbackRoute != null &&
-      !window.location.pathname.includes(callbackRoute)
-    ) {
-      safeRedirect(callbackRoute);
-    }
+    dispatch(clearAllTransactionsToSign());
+    dispatch(clearTransactionsInfoForSessionId(sessionId));
+    dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
   };
 
   return (
