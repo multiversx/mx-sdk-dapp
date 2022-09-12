@@ -1,5 +1,6 @@
 import { Transaction } from '@elrondnetwork/erdjs';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
+import { TRANSACTION_CANCELLED } from 'constants/errorsMessages';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
@@ -11,7 +12,9 @@ import {
 } from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
+  clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState,
+  setSignTransactionsCancelMessage,
   setSignTransactionsError
 } from 'reduxStore/slices';
 import {
@@ -105,10 +108,8 @@ export function useSignTransactionsWithDevice({
   function handleCancel() {
     onCancel();
     dispatch(clearAllTransactionsToSign());
-
-    if (callbackRoute != null && !locationIncludesCallbackRoute) {
-      safeRedirect(callbackRoute);
-    }
+    dispatch(clearTransactionsInfoForSessionId(sessionId));
+    dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
   }
 
   async function handleSignTransaction(transaction: Transaction) {

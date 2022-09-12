@@ -40,6 +40,7 @@ export interface TransactionsSliceStateType {
   signedTransactions: SignedTransactionsType;
   transactionsToSign: TransactionsToSignType | null;
   signTransactionsError: string | null;
+  signTransactionsCancelMessage: string | null;
   customTransactionInformationForSessionId: {
     [sessionId: string]: CustomTransactionInformation;
   };
@@ -49,6 +50,7 @@ const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
   transactionsToSign: null,
   signTransactionsError: null,
+  signTransactionsCancelMessage: null,
   customTransactionInformationForSessionId: {}
 };
 
@@ -189,6 +191,12 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<string | null>
     ) => {
       state.signTransactionsError = action.payload;
+    },
+    setSignTransactionsCancelMessage: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<string | null>
+    ) => {
+      state.signTransactionsCancelMessage = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -235,6 +243,7 @@ export const {
   clearSignedTransaction,
   clearTransactionToSign,
   setSignTransactionsError,
+  setSignTransactionsCancelMessage,
   moveTransactionsToSignedState
 } = transactionsSlice.actions;
 
