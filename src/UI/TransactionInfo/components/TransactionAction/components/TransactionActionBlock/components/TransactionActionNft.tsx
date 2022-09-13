@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import {
   getTransactionActionNftText,
@@ -40,7 +41,7 @@ export const TransactionActionNft = (props: TransactionActionNftType) => {
             <img
               src={token.svgUrl}
               alt={token.name}
-              className='side-icon mr-1'
+              className={classNames(globalStyles.sideIcon, globalStyles.mr1)}
             />
           )}
           <span

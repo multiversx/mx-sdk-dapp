@@ -1,6 +1,8 @@
 import React from 'react';
-
+import classNames from 'classnames';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import globalStyles from 'assets/sass/main.scss';
+
 import {
   InterpretedTransactionType,
   TokenArgumentType
@@ -99,7 +101,13 @@ export const ActionText = ({
         </span>
       );
 
-    case Boolean(entry.providerName):
+    case Boolean(entry.providerName): {
+      const className = classNames(
+        globalStyles.sideIcon,
+        globalStyles.mr1,
+        globalStyles.mrLg1,
+        globalStyles.roundedCircle
+      );
       return (
         <span className='d-flex'>
           <ExplorerLink
@@ -107,18 +115,15 @@ export const ActionText = ({
             className='d-flex align-self-center'
           >
             {entry.providerAvatar ? (
-              <img
-                src={entry.providerAvatar}
-                className='side-icon rounded-circle ml-lg-1 mr-2'
-                alt=' '
-              />
+              <img src={entry.providerAvatar} className={className} alt=' ' />
             ) : (
-              <DefaultAvatar className='side-icon rounded-circle ml-lg-1 mr-2' />
+              <DefaultAvatar className={className} />
             )}
             {entry.providerName}
           </ExplorerLink>
         </span>
       );
+    }
 
     default:
       return null;
