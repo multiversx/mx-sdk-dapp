@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Anchorme } from 'react-anchorme';
 import { ScamInfoType } from 'types/account.types';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
 import { DataDecode } from '../DataDecode/index';
-import { ModalLink } from '../ModalLink/ModalLink';
+import { Anchorme, ModalLink } from './components';
 import { truncate } from './helpers/truncate';
 
 export const DISPLAYED_DATA_LENGTH = 1000000;

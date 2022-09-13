@@ -6367,13 +6367,6 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-anchorme@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/react-anchorme/-/react-anchorme-2.2.1.tgz#234cc1dbb0b6248d34863e4f8e23cec3582c3587"
-  integrity sha512-GvsztP9f4wva7aNZ7pM4tJnUknWnHctksJjsZznIOX+NX6maUrhqokBQnSajVn+1+VfR6ruR1iIF9Hmy5Ky3Fw==
-  dependencies:
-    anchorme "^2.1.2"
-
 react-dom@18.2.0:
   version "18.2.0"
   resolved "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"

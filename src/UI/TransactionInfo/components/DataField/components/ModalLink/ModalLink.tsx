@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { LinkComponentProps } from 'react-anchorme';
 import { DappModal } from 'UI/DappModal/components/DappModal';
+import { LinkComponentProps } from '../Anchorme/anchorme.types';
 
 export const ModalLink = (props: LinkComponentProps) => {
   const [show, setShow] = React.useState(false);
