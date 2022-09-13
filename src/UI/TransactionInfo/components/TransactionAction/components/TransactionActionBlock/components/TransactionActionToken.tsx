@@ -1,5 +1,9 @@
 import React from 'react';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { DECIMALS } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import { FormatAmount } from 'UI/FormatAmount';
 import {
   getTransactionActionTokenText,
   TransactionActionTokenType
@@ -9,7 +13,7 @@ export const TransactionActionToken = (props: TransactionActionTokenType) => {
   const { token } = props;
   const {
     tokenExplorerLink,
-    tokenFormattedAmount,
+    showFormattedAmount,
     tokenLinkText
   } = getTransactionActionTokenText(props);
 
@@ -19,8 +23,14 @@ export const TransactionActionToken = (props: TransactionActionTokenType) => {
 
   return (
     <>
-      {tokenFormattedAmount != null && (
-        <div className='mr-1 text-truncate'>{tokenFormattedAmount}</div>
+      {showFormattedAmount && (
+        <div className='mr-1 text-truncate'>
+          <FormatAmount
+            value={token.value}
+            decimals={token.decimals ?? DECIMALS}
+            showLastNonZeroDecimal={props.showLastNonZeroDecimal}
+          />
+        </div>
       )}
       <ExplorerLink
         to={tokenExplorerLink}
@@ -31,7 +41,7 @@ export const TransactionActionToken = (props: TransactionActionTokenType) => {
             <img
               src={token.svgUrl}
               alt={token.name}
-              className='side-icon mr-1'
+              className={classNames(globalStyles.sideIcon, globalStyles.mr1)}
             />
           )}
           <span>{tokenLinkText}</span>

@@ -14,14 +14,13 @@ export function getTransactionActionTokenText({
   noValue,
   showLastNonZeroDecimal
 }: TransactionActionTokenType) {
-  const decimals = token.decimals != null ? token.decimals : DECIMALS;
-
   const showFormattedAmount = !noValue && token.value;
 
   const tokenFormattedAmount = showFormattedAmount
     ? formatAmount({
         input: token.value,
-        decimals,
+        decimals: token.decimals ?? DECIMALS,
+        digits: 2,
         showLastNonZeroDecimal
       })
     : null;
@@ -32,5 +31,10 @@ export function getTransactionActionTokenText({
 
   const tokenLinkText = token.ticker;
 
-  return { tokenExplorerLink, tokenFormattedAmount, tokenLinkText };
+  return {
+    tokenExplorerLink,
+    tokenFormattedAmount,
+    showFormattedAmount,
+    tokenLinkText
+  };
 }
