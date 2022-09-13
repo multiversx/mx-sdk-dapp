@@ -55,6 +55,17 @@ export enum TransactionActionsEnum {
   unwrapEgld = 'unwrapEgld',
   unlockAssets = 'unlockAssets',
   mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  stakeFarm = 'stakeFarm',
+  stakeFarmProxy = 'stakeFarmProxy',
+  stakeFarmTokens = 'stakeFarmTokens',
+  stakeFarmTokensProxy = 'stakeFarmTokensProxy',
+  unstakeFarm = 'unstakeFarm',
+  unstakeFarmProxy = 'unstakeFarmProxy',
+  unstakeFarmTokens = 'unstakeFarmTokens',
+  unstakeFarmTokensProxy = 'unstakeFarmTokensProxy',
+  claimDualYield = 'claimDualYield',
+  claimDualYieldProxy = 'claimDualYieldProxy',
+  unbondFarm = 'unbondFarm',
   ping = 'ping'
 }
 
