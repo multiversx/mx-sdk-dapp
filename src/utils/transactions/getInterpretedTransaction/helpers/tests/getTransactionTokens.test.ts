@@ -22,28 +22,38 @@ describe('getTransactionTokens', () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: {
-        name: TransactionActionsEnum.transfer,
-        category: TransactionActionCategoryEnum.scCall,
+        name: TransactionActionsEnum.swap,
+        category: TransactionActionCategoryEnum.mex,
+        description: 'Swap 1 WEGLD for a minimum of 45.117988 USDC',
         arguments: {
-          token: 'token',
-          token1: 'token1',
-          token2: 'token2',
-          transfers: 'transfers',
-          null: null,
-          undefined: undefined
+          transfers: [
+            {
+              type: 'FungibleESDT',
+              name: 'WrappedEGLD',
+              ticker: 'WEGLD',
+              svgUrl:
+                'https://devnet-media.elrond.com/tokens/asset/WEGLD-d7c6bb/logo.svg',
+              token: 'WEGLD-d7c6bb',
+              decimals: 18,
+              value: '1000000000000000000'
+            },
+            {
+              type: 'FungibleESDT',
+              name: 'WrappedUSDC',
+              ticker: 'USDC',
+              svgUrl:
+                'https://devnet-media.elrond.com/tokens/asset/USDC-8d4068/logo.svg',
+              token: 'USDC-8d4068',
+              decimals: 6,
+              value: '45117988'
+            }
+          ]
         }
       }
     };
 
     const result = getTransactionTokens(transaction);
 
-    expect(result).toEqual(
-      [
-        transaction.action?.arguments?.token,
-        transaction.action?.arguments?.token1,
-        transaction.action?.arguments?.token2,
-        transaction.action?.arguments?.transfers
-      ].filter((x) => x != null)
-    );
+    expect(result).toEqual(transaction.action?.arguments?.transfers);
   });
 });
