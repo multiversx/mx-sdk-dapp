@@ -76,12 +76,6 @@ export const TransactionValue = ({
 
     if (transactionTokens.length) {
       const txToken = transactionTokens[0];
-      if (
-        transaction.txHash ===
-        'b5ede89b3edd636134ae0edeb1b08deb71512777b0ca28c402f0241d4a5576e8'
-      ) {
-        console.log({ txToken, transactionTokens });
-      }
 
       return (
         <div className='transaction-value d-flex align-items-center'>
