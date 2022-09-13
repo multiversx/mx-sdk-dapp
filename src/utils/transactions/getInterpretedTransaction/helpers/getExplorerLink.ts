@@ -1,3 +1,12 @@
+let errorMessageDisplayed = false;
+
+function logError(error: string) {
+  if (!errorMessageDisplayed) {
+    console.error(error);
+    errorMessageDisplayed = true;
+  }
+}
+
 export function getExplorerLink({
   explorerAddress,
   to
@@ -6,7 +15,7 @@ export function getExplorerLink({
   to: string;
 }) {
   if (!to.startsWith('/')) {
-    console.error('Link not prepended by / : ', to);
+    logError(`Link not prepended by / : ${to}`);
     to = `/${to}`;
   }
 

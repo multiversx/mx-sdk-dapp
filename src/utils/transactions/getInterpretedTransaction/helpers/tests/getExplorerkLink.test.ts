@@ -2,6 +2,11 @@ import { getExplorerLink } from '../getExplorerLink';
 
 describe('getNetworkLink', () => {
   it('return "/${to}" parameter when the explorerAddress is empty and log an error in console', () => {
+    // prevent showing errors in Jest console
+    jest.mock('console', () => ({
+      error: () => null
+    }));
+
     const input = 'address';
     const consoleErrorSpy = jest.spyOn(console, 'error');
 
