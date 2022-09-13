@@ -17,13 +17,15 @@ import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTra
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   addressSelector,
+  signTransactionsCancelMessageSelector,
   transactionsToSignSelector
 } from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState,
-  removeCustomToast
+  removeCustomToast,
+  setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import {
   LoginMethodsEnum,
@@ -56,16 +58,16 @@ export const useSignTransactions = () => {
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
-  const [
-    canceledTransactionsMessage,
-    setCanceledTransactionsMessage
-  ] = useState<string | null>(null);
+
   const transactionsToSign = useSelector(transactionsToSignSelector);
+  const signTransactionsCancelMessage = useSelector(
+    signTransactionsCancelMessageSelector
+  );
   const hasTransactions = Boolean(transactionsToSign?.transactions);
 
   const clearTransactionStatusMessage = () => {
     setError(null);
-    setCanceledTransactionsMessage(null);
+    dispatch(setSignTransactionsCancelMessage(null));
   };
 
   const onAbort = (sessionId?: string) => {
@@ -100,7 +102,7 @@ export const useSignTransactions = () => {
      * so no need to show error
      */
     if (isTxCancelled) {
-      setCanceledTransactionsMessage(TRANSACTION_CANCELLED);
+      dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
       return;
     }
 
@@ -263,7 +265,7 @@ export const useSignTransactions = () => {
 
   return {
     error,
-    canceledTransactionsMessage,
+    canceledTransactionsMessage: signTransactionsCancelMessage,
     onAbort,
     hasTransactions,
     callbackRoute: savedCallback.current,

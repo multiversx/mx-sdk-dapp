@@ -33,6 +33,11 @@ export const signTransactionsErrorSelector = createDeepEqualSelector(
   (state) => state.signTransactionsError
 );
 
+export const signTransactionsCancelMessageSelector = createDeepEqualSelector(
+  transactionsSelectors,
+  (state) => state.signTransactionsCancelMessage
+);
+
 const selectTxByStatus = (txStatusVerifier: typeof getIsTransactionPending) => (
   signedTransactions: SignedTransactionsType
 ) =>
