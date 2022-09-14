@@ -69,7 +69,7 @@ export const TransactionValue = ({
       transaction.action.name === TransactionActionsEnum.wrapEgld ||
       transaction.action.name === TransactionActionsEnum.unwrapEgld
     ) {
-      return <FormatAmount value={transaction.value} />;
+      return <FormatAmount value={transaction.value} digits={2} />;
     }
 
     const transactionTokens = getTransactionTokens(transaction);
@@ -92,5 +92,5 @@ export const TransactionValue = ({
     }
   }
 
-  return <FormatAmount value={transaction.value} />;
+  return <FormatAmount value={transaction.value} digits={2} />;
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import {
   getTransactionActionNftText,
   TransactionActionNftType
@@ -29,7 +30,13 @@ export const TransactionActionNft = (props: TransactionActionNftType) => {
       )}
       {tokenFormattedAmount != null && (
         <div className={`mr-1 ${token.svgUrl ? 'text-truncate' : ''}`}>
-          {tokenFormattedAmount}
+          <FormatAmount
+            value={token.value}
+            digits={2}
+            showLabel={false}
+            showLastNonZeroDecimal={props.showLastNonZeroDecimal}
+            decimals={token.decimals}
+          />
         </div>
       )}
       <ExplorerLink

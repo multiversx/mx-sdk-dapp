@@ -38,6 +38,7 @@ export function getTransactionActionNftText({
       ? formatAmount({
           input: token.value,
           decimals: token.decimals,
+          digits: 2,
           showLastNonZeroDecimal
         })
       : Number(token.value).toLocaleString('en');

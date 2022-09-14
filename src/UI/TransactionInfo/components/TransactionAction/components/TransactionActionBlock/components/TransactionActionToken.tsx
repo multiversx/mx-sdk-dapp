@@ -27,6 +27,7 @@ export const TransactionActionToken = (props: TransactionActionTokenType) => {
         <div className='mr-1 text-truncate'>
           <FormatAmount
             value={token.value}
+            digits={2}
             decimals={token.decimals ?? DECIMALS}
             showLastNonZeroDecimal={props.showLastNonZeroDecimal}
           />
