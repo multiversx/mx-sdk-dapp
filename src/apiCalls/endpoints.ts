@@ -3,6 +3,7 @@ export const NETWORK_CONFIG_ENDPOINT = 'network/config';
 export const ADDRESS_ENDPOINT = 'address';
 export const ACCOUNTS_ENDPOINT = 'accounts';
 export const TRANSACTIONS_ENDPOINT = 'transactions';
+export const TRANSFERS_ENDPOINT = 'transfers';
 export const TRANSACTIONS_COUNT_ENDPOINT = 'transactions/count';
 export const TOKENS_ENDPOINT = 'tokens';
 export const BLOCKS_ENDPOINT = 'blocks';
