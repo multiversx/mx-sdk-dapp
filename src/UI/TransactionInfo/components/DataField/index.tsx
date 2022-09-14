@@ -8,7 +8,7 @@ import { truncate } from './helpers/truncate';
 
 export const DISPLAYED_DATA_LENGTH = 1000000;
 
-const DataField = ({
+export const DataField = ({
   data,
   scamInfo
 }: {
@@ -73,5 +73,3 @@ const DataField = ({
     </>
   );
 };
-
-export default DataField;
