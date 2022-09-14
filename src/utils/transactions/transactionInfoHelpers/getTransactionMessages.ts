@@ -12,6 +12,6 @@ export function getTransactionMessages(
       ...getOperationsMessages(transaction),
       getReceiptMessage(transaction)
     ])
-  );
+  ).filter((el) => Boolean(el));
   return transactionMessages;
 }
