@@ -6,7 +6,7 @@ import { DataDecode } from '../DataDecode/index';
 import { Anchorme, ModalLink } from './components';
 import { truncate } from './helpers/truncate';
 
-export const DISPLAYED_DATA_LENGTH = 1000000;
+const DISPLAYED_DATA_LENGTH = 1000000;
 
 export const DataField = ({
   data,
