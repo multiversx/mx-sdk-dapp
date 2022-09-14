@@ -14,9 +14,9 @@ import {
   TransactionInfoGasPrice,
   TransactionInfoGasUsed,
   TransactionInfoNonce,
-  TransactionInfoScResults
+  TransactionInfoScResults,
+  TransactionInfoInputData
 } from './components';
-import { DataField } from './components/DataField';
 import { TransactionInfoFee } from './components/transactionInfoFields/TransactionInfoFee';
 
 export const TransactionInfo = ({
@@ -41,7 +41,7 @@ export const TransactionInfo = ({
       <TransactionInfoGasPrice transaction={transaction} />
       <TransactionInfoGasUsed transaction={transaction} />
       <TransactionInfoNonce transaction={transaction} />
-      <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
+      <TransactionInfoInputData transaction={transaction} />
       <TransactionInfoScResults transaction={transaction} />
     </>
   );

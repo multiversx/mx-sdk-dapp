@@ -13,3 +13,4 @@ export * from './TransactionInfoGasUsed';
 export * from './TransactionInfoGasPrice';
 export * from './TransactionInfoNonce';
 export * from './TransactionInfoScResults';
+export * from './TransactionInfoInputData';
