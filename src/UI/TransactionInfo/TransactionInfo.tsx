@@ -53,7 +53,8 @@ export const TransactionInfo = ({
 }) => {
   const egldLabel = getEgldLabel();
 
-  const pending = getTransactionStatus(transaction);
+  const { pending } = getTransactionStatus(transaction);
+
   const transactionMessages = getTransactionMessages(transaction);
 
   const txFee = getTransactionFee(transaction);
@@ -193,6 +194,7 @@ export const TransactionInfo = ({
           </div>
           {transactionMessages.map((msg, messageIndex) => (
             <div
+              data-testid={`message_${messageIndex}`}
               key={`tx-message-${messageIndex}`}
               className='d-flex ml-1 text-break-all align-items-center'
             >
