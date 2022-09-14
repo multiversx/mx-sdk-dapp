@@ -8,8 +8,10 @@ export const getUsdValue = ({
   decimals?: number;
 }) => {
   const sum = (parseFloat(amount) * usd).toFixed(decimals);
-  return parseFloat(sum).toLocaleString('en', {
+  const formattedValue = parseFloat(sum).toLocaleString('en', {
     maximumFractionDigits: decimals,
     minimumFractionDigits: decimals
   });
+  const equalSign = parseFloat(amount) > 0 ? '≈' : '=';
+  return `${equalSign} $${formattedValue}`;
 };
