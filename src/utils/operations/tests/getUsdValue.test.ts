@@ -6,7 +6,8 @@ describe('getUsdValue tests', () => {
       getUsdValue({
         amount: '2',
         usd: 40,
-        decimals: 4
+        decimals: 4,
+        addEqualSign: true
       })
     ).toBe('≈ $80.0000');
   });
@@ -14,7 +15,8 @@ describe('getUsdValue tests', () => {
     expect(
       getUsdValue({
         amount: '0',
-        usd: 40
+        usd: 40,
+        addEqualSign: true
       })
     ).toBe('= $0.00');
   });

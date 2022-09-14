@@ -9,8 +9,8 @@ export const UsdValue = (
     'data-testid'?: string;
   } & WithClassnameType
 ) => {
-  const { amount, usd, decimals, ...dataTestId } = props;
-  const value = getUsdValue({ amount, usd, decimals });
+  const { amount, usd, decimals, addEqualSign = true, ...dataTestId } = props;
+  const value = getUsdValue({ amount, usd, decimals, addEqualSign });
   const isAmountZero = `${amount}` === '0';
   const displayedValue = isAmountZero ? '= $0' : value;
 
