@@ -38,10 +38,7 @@ export const OperationRow = ({
         <DetailedItem operation={operation} transaction={transaction}>
           <>
             <div className='mr-2'>Value</div>
-            <FormatAmount
-              value={operation.value}
-              showLastNonZeroDecimal={true}
-            />
+            <FormatAmount value={operation.value} showLastNonZeroDecimal />
           </>
         </DetailedItem>
       );

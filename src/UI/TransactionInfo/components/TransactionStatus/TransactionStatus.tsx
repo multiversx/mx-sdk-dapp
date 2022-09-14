@@ -60,7 +60,7 @@ export const getStatusIconAndColor = (
   };
 };
 
-const TransactionStatus = ({
+export const TransactionStatus = ({
   transaction
 }: {
   transaction: InterpretedTransactionType;
@@ -74,5 +74,3 @@ const TransactionStatus = ({
     </span>
   );
 };
-
-export default TransactionStatus;
