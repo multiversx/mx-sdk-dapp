@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+ - [Fixed fetching transaction count and smart contract results count from accounts endpoint](https://github.com/ElrondNetwork/dapp-core/pull/420)
+ - [Added extra actions names](https://github.com/ElrondNetwork/dapp-core/pull/419)
 ## [[2.0.4](https://github.com/ElrondNetwork/dapp-core/pull/416)] - 2022-09-12
  - [Fixed navigating after pressing Cancel on sign modal](https://github.com/ElrondNetwork/dapp-core/pull/415)
  - [Added hook allowing to check for dapp modal visibility](https://github.com/ElrondNetwork/dapp-core/pull/416)
