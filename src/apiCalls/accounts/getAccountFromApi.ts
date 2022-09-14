@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADDRESS_ENDPOINT } from 'apiCalls/endpoints';
+import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getCleanApiAddress } from 'apiCalls/utils';
 import { AccountType } from 'types';
 
@@ -8,15 +8,13 @@ export async function getAccountFromApi(address?: string) {
     return null;
   }
   const apiAddress = getCleanApiAddress();
-  const configUrl = `${apiAddress}/${ADDRESS_ENDPOINT}/${address}`;
+  const configUrl = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}`;
 
   try {
     const { data } = await axios.get<{ data: { account: AccountType } }>(
       configUrl
     );
-    if (data != null) {
-      return data?.data?.account;
-    }
+    return data;
   } catch (err) {
     console.error('error fetching configuration for ', configUrl);
   }
