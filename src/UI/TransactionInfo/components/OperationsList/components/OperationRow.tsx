@@ -4,6 +4,7 @@ import {
   OperationType,
   VisibleTransactionOperationType
 } from 'types/serverTransactions.types';
+import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
 import { DetailedItem } from './DetailedItem';
 import { OperationToken } from './OperationToken';
@@ -21,10 +22,10 @@ export const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            {operation.esdtType === 'NonFungibleESDT' && (
+            {operation.esdtType === NftEnumType.NonFungibleESDT && (
               <div className='mr-1'>NFT</div>
             )}
-            {operation.esdtType === 'SemiFungibleESDT' && (
+            {operation.esdtType === NftEnumType.SemiFungibleESDT && (
               <div className='mr-1'>SFT quantity</div>
             )}
             <OperationToken operation={operation} />
