@@ -82,7 +82,10 @@ export const TransactionValue = ({
           {Object.values(NftEnumType).includes(txToken.type as NftEnumType) ? (
             <TransactionActionBlock.Nft token={txToken} showBadge />
           ) : (
-            <TransactionActionBlock.Token token={txToken} />
+            <TransactionActionBlock.Token
+              token={txToken}
+              showLastNonZeroDecimal
+            />
           )}
           {!hideMultipleBadge && transactionTokens.length > 1 && (
             <MultipleTokensBadge transactionTokens={transactionTokens} />
