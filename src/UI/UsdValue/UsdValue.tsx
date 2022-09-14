@@ -11,6 +11,9 @@ export const UsdValue = (
 ) => {
   const { amount, usd, decimals, ...dataTestId } = props;
   const value = getUsdValue({ amount, usd, decimals });
+  const isAmountZero = `${amount}` === '0';
+  const displayedValue = isAmountZero ? '= $0' : value;
+
   return (
     <small
       className={classNames(
@@ -21,7 +24,7 @@ export const UsdValue = (
       )}
       {...dataTestId}
     >
-      {`${amount}` === '0' ? '= $0' : value}
+      {displayedValue}
     </small>
   );
 };
