@@ -11,9 +11,7 @@ export async function getAccountFromApi(address?: string) {
   const configUrl = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}`;
 
   try {
-    const { data } = await axios.get<{ data: { account: AccountType } }>(
-      configUrl
-    );
+    const { data } = await axios.get<AccountType>(configUrl);
     return data;
   } catch (err) {
     console.error('error fetching configuration for ', configUrl);
