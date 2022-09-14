@@ -1,6 +1,7 @@
 import React from 'react';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { DetailItem } from '../../DetailItem';
+import { NonceMessage } from '../../NonceMessage/NonceMessage';
 
 export const TransactionInfoNonce = ({
   transaction
@@ -8,12 +9,11 @@ export const TransactionInfoNonce = ({
   transaction: InterpretedTransactionType;
 }) => {
   return (
-    <DetailItem title='Gas Used'>
-      {transaction.gasUsed != null ? (
-        <>{transaction.gasUsed.toLocaleString('en')}</>
-      ) : (
-        <span className='text-secondary'>N/A</span>
-      )}
+    <DetailItem title='Nonce'>
+      <>
+        {transaction.nonce}
+        <NonceMessage transaction={transaction} />
+      </>
     </DetailItem>
   );
 };

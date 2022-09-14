@@ -41,7 +41,6 @@ export const TransactionInfo = ({
       <TransactionInfoGasPrice transaction={transaction} />
       <TransactionInfoGasUsed transaction={transaction} />
       <TransactionInfoNonce transaction={transaction} />
-
       <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
       <TransactionInfoScResults transaction={transaction} />
     </>
