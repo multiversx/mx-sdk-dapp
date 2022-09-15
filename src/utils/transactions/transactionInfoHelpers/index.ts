@@ -14,3 +14,4 @@ export * from './getEventListHighlight';
 export * from './getEventListDataHexValue';
 export * from './getTransactionActionNftText';
 export * from './getTransactionActionTokenText';
+export * from './getShardText';
