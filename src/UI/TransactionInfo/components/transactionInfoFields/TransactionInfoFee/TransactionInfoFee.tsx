@@ -29,7 +29,8 @@ export const TransactionInfoFee = ({
         (
         {getUsdValue({
           amount: transactionFee,
-          usd: transaction.price
+          usd: transaction.price,
+          decimals: 4
         })}
         )
       </>
