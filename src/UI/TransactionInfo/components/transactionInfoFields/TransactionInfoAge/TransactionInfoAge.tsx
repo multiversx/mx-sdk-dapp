@@ -2,7 +2,7 @@ import React from 'react';
 import { faSpinner, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { TimeAgo } from 'UI/TransactionsTable/components';
+import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/index';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 import { DetailItem } from '../../DetailItem';
@@ -25,7 +25,7 @@ export const TransactionInfoAge = ({
           ) : (
             <FontAwesomeIcon icon={faClock} className='mr-2 text-secondary' />
           )}
-          <TimeAgo value={transaction.timestamp} />
+          <TimeAgo value={transaction.timestamp} short />
           &nbsp;
           <span className='text-secondary'>
             (

@@ -4,7 +4,6 @@ export * from './LockedTokenAddressIcon';
 export * from './NoTransactions';
 export * from './ScAddressIcon';
 export * from './ShardSpan';
-export * from './TimeAgo';
 export * from './TransactionDirectionBadge';
 export * from './TransactionHash';
 export * from './TransactionMethod';

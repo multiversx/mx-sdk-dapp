@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 
+import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import {
-  TimeAgo,
   TransactionDirectionBadge,
   TransactionHash,
   TransactionMethod,
