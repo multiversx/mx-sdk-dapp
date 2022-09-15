@@ -9,3 +9,4 @@ export * from './AddressDetailItem';
 export * from './EventsList';
 export * from './TransactionStatus';
 export * from './transactionInfoFields';
+export * from './TransactionLogs';
