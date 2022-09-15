@@ -1,7 +1,7 @@
 import React from 'react';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { CopyButton } from 'UI/CopyButton';
 import { DetailItem } from '../../DetailItem';
+import { TransactionStatus } from '../../TransactionStatus';
 
 export const TransactionInfoStatus = ({
   transaction
@@ -9,10 +9,9 @@ export const TransactionInfoStatus = ({
   transaction: InterpretedTransactionType;
 }) => {
   return (
-    <DetailItem title='Hash'>
-      <div className='d-flex align-items-center text-break-all'>
-        {transaction.txHash}
-        <CopyButton text={transaction.txHash} />
+    <DetailItem title='Status'>
+      <div className='d-flex flex-wrap align-items-center'>
+        <TransactionStatus transaction={transaction} />
       </div>
     </DetailItem>
   );

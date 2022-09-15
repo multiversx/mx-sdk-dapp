@@ -15,7 +15,8 @@ import {
   TransactionInfoGasUsed,
   TransactionInfoNonce,
   TransactionInfoScResults,
-  TransactionInfoInputData
+  TransactionInfoInputData,
+  TransactionInfoHash
 } from './components';
 import { TransactionInfoFee } from './components/transactionInfoFields/TransactionInfoFee';
 
@@ -26,7 +27,7 @@ export const TransactionInfo = ({
 }) => {
   return (
     <>
-      <TransactionInfoValue transaction={transaction} />
+      <TransactionInfoHash transaction={transaction} />
       <TransactionInfoStatus transaction={transaction} />
       <TransactionInfoAge transaction={transaction} />
       <TransactionInfoMiniblock transaction={transaction} />
