@@ -14,7 +14,7 @@ export const TransactionActionCollection = ({
 
   return (
     <ExplorerLink
-      to={explorerUrlBuilder.collectionDetails(token.collection)}
+      page={explorerUrlBuilder.collectionDetails(token.collection)}
       className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
     >
       <div className='d-flex align-items-center symbol'>

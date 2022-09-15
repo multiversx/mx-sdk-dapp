@@ -40,7 +40,7 @@ export const TransactionActionNft = (props: TransactionActionNftType) => {
         </div>
       )}
       <ExplorerLink
-        to={tokenExplorerLink}
+        page={tokenExplorerLink}
         className={`${token.svgUrl ? 'd-flex side-link' : 'text-truncate'}`}
       >
         <div className='d-flex align-items-center symbol'>

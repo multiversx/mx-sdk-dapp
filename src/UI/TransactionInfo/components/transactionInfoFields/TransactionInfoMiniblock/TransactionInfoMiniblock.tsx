@@ -17,7 +17,7 @@ export const TransactionInfoMiniblock = ({
         {transaction.miniBlockHash ? (
           <>
             <ExplorerLink
-              to={`/miniblocks/${transaction.miniBlockHash}`}
+              page={`/miniblocks/${transaction.miniBlockHash}`}
               className='trim-wrapper'
             >
               <Trim text={transaction.miniBlockHash} />

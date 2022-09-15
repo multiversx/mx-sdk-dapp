@@ -15,7 +15,7 @@ export const AddressDetailItem = ({ address }: { address: string }) => {
         {addressIsValid(address) && (
           <>
             <ExplorerLink
-              to={explorerUrlBuilder.accountDetails(address)}
+              page={explorerUrlBuilder.accountDetails(address)}
               className='trim-wrapper'
             >
               <Trim text={address} />

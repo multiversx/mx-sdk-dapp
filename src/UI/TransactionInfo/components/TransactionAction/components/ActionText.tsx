@@ -38,7 +38,7 @@ export const ActionText = ({
         <div className='d-flex align-items-center'>
           <ScAddressIcon initiator={entry.address} />
           <ExplorerLink
-            to={explorerUrlBuilder.accountDetails(entry.address)}
+            page={explorerUrlBuilder.accountDetails(entry.address)}
             data-testid='receiverLink'
             className='trim-wrapper'
           >
@@ -111,7 +111,7 @@ export const ActionText = ({
       return (
         <span className='d-flex'>
           <ExplorerLink
-            to={explorerUrlBuilder.providerDetails(transaction.receiver)}
+            page={explorerUrlBuilder.providerDetails(transaction.receiver)}
             className='d-flex align-self-center'
           >
             {entry.providerAvatar ? (

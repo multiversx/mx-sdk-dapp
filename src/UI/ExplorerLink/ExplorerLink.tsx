@@ -8,13 +8,13 @@ import { WithClassnameType } from '../types';
 import styles from './explorerLinkStyles.scss';
 
 export const ExplorerLink = ({
-  to,
+  page,
   text,
   className = 'dapp-explorer-link',
   children,
   ...rest
 }: {
-  to: string;
+  page: string;
   text?: any;
   title?: string;
   onClick?: () => void;
@@ -32,7 +32,7 @@ export const ExplorerLink = ({
 
   const link = getExplorerLink({
     explorerAddress: String(explorerAddress),
-    to
+    to: page
   });
 
   return (

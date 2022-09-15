@@ -25,7 +25,7 @@ export const TransactionHash = ({
     >
       <TransactionIcon transaction={transaction} />
       <ExplorerLink
-        to={transactionHashLink}
+        page={transactionHashLink}
         data-testid='transactionLink'
         className={globalStyles.trimWrapper}
       >

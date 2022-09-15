@@ -14,7 +14,7 @@ export const ScrDetailItem = ({ result }: { result: ResultType }) => (
       <Trim text={result.hash} />
       <CopyButton className='ml-2' text={result.hash} />
       <ExplorerLink
-        to={explorerUrlBuilder.transactionDetails(
+        page={explorerUrlBuilder.transactionDetails(
           `${result.originalTxHash}#${result.hash}`
         )}
         className='side-action ml-2'

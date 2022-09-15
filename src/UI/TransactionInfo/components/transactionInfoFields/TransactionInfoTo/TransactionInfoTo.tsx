@@ -24,7 +24,7 @@ export const TransactionInfoTo = ({
             <span className='mr-2'>Contract</span>
           )}
           <ExplorerLink
-            to={String(transaction.links.receiverLink)}
+            page={String(transaction.links.receiverLink)}
             className='trim-wrapper'
           >
             <AccountName
@@ -35,7 +35,7 @@ export const TransactionInfoTo = ({
           <CopyButton className='mr-2' text={transaction.receiver} />
           {!isNaN(transaction.receiverShard) && (
             <ExplorerLink
-              to={String(transaction.links.receiverShardLink)}
+              page={String(transaction.links.receiverShardLink)}
               className='flex-shrink-0'
             >
               (<ShardSpan shard={transaction.receiverShard} />)

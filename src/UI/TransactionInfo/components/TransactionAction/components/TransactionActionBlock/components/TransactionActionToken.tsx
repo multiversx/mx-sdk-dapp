@@ -34,7 +34,7 @@ export const TransactionActionToken = (props: TransactionActionTokenType) => {
         </div>
       )}
       <ExplorerLink
-        to={tokenExplorerLink}
+        page={tokenExplorerLink}
         className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
       >
         <div className='d-flex align-items-center symbol'>

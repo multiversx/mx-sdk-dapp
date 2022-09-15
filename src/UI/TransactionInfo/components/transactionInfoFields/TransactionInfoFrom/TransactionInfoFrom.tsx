@@ -22,7 +22,7 @@ export const TransactionInfoFrom = ({
         {addressIsValid(transaction.sender) ? (
           <>
             <ExplorerLink
-              to={String(transaction.links.senderLink)}
+              page={String(transaction.links.senderLink)}
               className='trim-wrapper'
             >
               <AccountName
@@ -32,7 +32,7 @@ export const TransactionInfoFrom = ({
             </ExplorerLink>
             <CopyButton className='mr-2' text={transaction.sender} />
             <ExplorerLink
-              to={String(transaction.links.senderShardLink)}
+              page={String(transaction.links.senderShardLink)}
               className='flex-shrink-0'
             >
               (<ShardSpan shard={transaction.senderShard} />)

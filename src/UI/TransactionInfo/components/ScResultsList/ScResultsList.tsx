@@ -59,7 +59,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                       className='side-action ml-2'
                     />
                     <ExplorerLink
-                      to={explorerUrlBuilder.transactionDetails(
+                      page={explorerUrlBuilder.transactionDetails(
                         `${result.originalTxHash}#${result.hash}/${decodeMethod}`
                       )}
                       className='side-action ml-2'

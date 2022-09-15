@@ -54,7 +54,7 @@ export const OperationBlock = ({
       {addressIsValid(address) ? (
         <>
           <ExplorerLink
-            to={explorerUrlBuilder.accountDetails(address)}
+            page={explorerUrlBuilder.accountDetails(address)}
             className='trim-wrapper'
           >
             <AccountName address={address} assets={operationAssets} />
