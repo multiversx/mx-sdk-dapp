@@ -11,15 +11,16 @@ import {
 
 export const TransactionActionToken = (props: TransactionActionTokenType) => {
   const { token } = props;
+
+  if (!token.token) {
+    return null;
+  }
+
   const {
     tokenExplorerLink,
     showFormattedAmount,
     tokenLinkText
   } = getTransactionActionTokenText(props);
-
-  if (!token.token) {
-    return null;
-  }
 
   return (
     <>

@@ -1,59 +1,29 @@
 import React from 'react';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  InterpretedTransactionType,
-  TokenArgumentType,
-  TransactionActionsEnum
-} from 'types/serverTransactions.types';
-import { NftEnumType } from 'types/tokens.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { FormatAmount } from 'UI/FormatAmount';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
-import { getTransactionActionTokenText } from 'utils';
-import { getTransactionTokens } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens';
-import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
-import { getIdentifierType } from 'utils/validation/getIdentifierType';
+import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
 
-const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
-  const tokensArray = transactionTokens.map((transactionToken) => {
-    const { isNft } = getIdentifierType(transactionToken.type);
-    if (isNft) {
-      const {
-        badgeText,
-        tokenFormattedAmount,
-        tokenLinkText
-      } = getTransactionActionNftText({
-        token: transactionToken,
-        showBadge: true
-      });
-      const badge = badgeText !== null ? `(${badgeText}) ` : '';
-      return `${badge}${tokenFormattedAmount} ${tokenLinkText}`;
-    }
-    const {
-      tokenFormattedAmount,
-      tokenLinkText
-    } = getTransactionActionTokenText({
-      token: transactionToken as TokenArgumentType
-    });
-    return `${tokenFormattedAmount} ${tokenLinkText}`;
-  });
-  const joinedTokensWithLineBreak = decodeURI(tokensArray.join('%0A'));
-  return joinedTokensWithLineBreak;
-};
-
-const MultipleTokensBadge = ({
-  transactionTokens
+const TokenWrapper = ({
+  children,
+  titleText
 }: {
-  transactionTokens: TokenArgumentType[];
+  children: React.ReactNode;
+  titleText?: string;
 }) => {
-  const titleText = getTitleText(transactionTokens);
-
   return (
-    <FontAwesomeIcon
-      icon={faLayerGroup}
-      className='ml-2 text-secondary'
-      title={titleText}
-    />
+    <div className='transaction-value d-flex align-items-center'>
+      {children}
+      {titleText && (
+        <FontAwesomeIcon
+          icon={faLayerGroup}
+          className='ml-2 text-secondary'
+          title={titleText}
+        />
+      )}
+    </div>
   );
 };
 
@@ -64,36 +34,29 @@ export const TransactionValue = ({
   transaction: InterpretedTransactionType;
   hideMultipleBadge?: boolean;
 }) => {
-  if (transaction.action) {
-    if (
-      transaction.action.name === TransactionActionsEnum.wrapEgld ||
-      transaction.action.name === TransactionActionsEnum.unwrapEgld
-    ) {
-      return <FormatAmount value={transaction.value} digits={2} />;
-    }
+  const { egldValueData, tokenValueData, nftValueData } = getTransactionValue({
+    transaction,
+    hideMultipleBadge
+  });
 
-    const transactionTokens = getTransactionTokens(transaction);
-
-    if (transactionTokens.length) {
-      const txToken = transactionTokens[0];
-
-      return (
-        <div className='transaction-value d-flex align-items-center'>
-          {Object.values(NftEnumType).includes(txToken.type as NftEnumType) ? (
-            <TransactionActionBlock.Nft token={txToken} showBadge />
-          ) : (
-            <TransactionActionBlock.Token
-              token={txToken}
-              showLastNonZeroDecimal
-            />
-          )}
-          {!hideMultipleBadge && transactionTokens.length > 1 && (
-            <MultipleTokensBadge transactionTokens={transactionTokens} />
-          )}
-        </div>
-      );
-    }
+  if (tokenValueData) {
+    return (
+      <TokenWrapper titleText={tokenValueData.titleText}>
+        <TransactionActionBlock.Token
+          token={tokenValueData.token}
+          showLastNonZeroDecimal
+        />
+      </TokenWrapper>
+    );
   }
 
-  return <FormatAmount value={transaction.value} digits={2} />;
+  if (nftValueData) {
+    return (
+      <TokenWrapper titleText={nftValueData.titleText}>
+        <TransactionActionBlock.Nft token={nftValueData.token} showBadge />
+      </TokenWrapper>
+    );
+  }
+
+  return <FormatAmount value={egldValueData.value} digits={2} />;
 };
