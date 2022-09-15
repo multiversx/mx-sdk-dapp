@@ -78,14 +78,14 @@ export function getOperationList({
 export function useGetOperationList(props: OperationListType) {
   const [isExpanded, setIsExpanded] = useState(false);
   const onToggleButtonClick = () => {
-    setIsExpanded(!isExpanded);
+    setIsExpanded((existing) => !existing);
   };
 
   const {
     displayedOperations,
     showToggleButton,
     toggleButtonText
-  } = getOperationList(props);
+  } = getOperationList({ ...props, isExpanded });
 
   return {
     isExpanded,
