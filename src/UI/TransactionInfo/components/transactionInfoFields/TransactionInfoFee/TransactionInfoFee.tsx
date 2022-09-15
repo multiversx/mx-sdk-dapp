@@ -30,13 +30,16 @@ export const TransactionInfoFee = ({
         {getUsdValue({
           amount: transactionFee,
           usd: transaction.price,
-          decimals: 4
+          decimals: 4,
+          addEqualSign: true
         })}
         )
       </>
     ) : (
       <>N/A</>
     );
+
+  console.log('\x1b[42m%s\x1b[0m', price);
 
   const fee =
     transaction.gasUsed != null ? (
