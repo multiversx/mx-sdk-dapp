@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { ScamInfoType } from 'types/account.types';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
+import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/index';
 import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
-import { DataDecode } from '../DataDecode/index';
 import { Anchorme, ModalLink } from './components';
 import { truncate } from './helpers/truncate';
 
