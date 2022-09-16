@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { OperationType } from 'types/serverTransactions.types';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
+import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
+import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 
 const getTicker = (identifier: string) => {
   if (!identifier) return '';
@@ -27,11 +29,20 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
     value: operation.value,
     svgUrl: operation.svgUrl
   };
+
   switch (operation.type) {
-    case 'nft':
-      return <TransactionActionBlock.Nft token={token} />;
-    case 'esdt':
-      return <TransactionActionBlock.Token token={token} />;
+    case 'nft': {
+      const props = getTransactionActionNftText({
+        token
+      });
+      return <TransactionActionBlock.Nft {...props} />;
+    }
+    case 'esdt': {
+      const props = getTransactionActionTokenText({
+        token
+      });
+      return <TransactionActionBlock.Token {...props} />;
+    }
     default:
       return <></>;
   }

@@ -19,19 +19,19 @@ const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
         tokenFormattedAmount,
         tokenLinkText
       } = getTransactionActionNftText({
-        token: transactionToken,
-        showBadge: true
+        token: transactionToken
       });
       const badge = badgeText !== null ? `(${badgeText}) ` : '';
       return `${badge}${tokenFormattedAmount} ${tokenLinkText}`;
     }
     const {
       tokenFormattedAmount,
-      tokenLinkText
+      tokenLinkText,
+      token
     } = getTransactionActionTokenText({
       token: transactionToken as TokenArgumentType
     });
-    return `${tokenFormattedAmount} ${tokenLinkText}`;
+    return `${tokenFormattedAmount} ${tokenLinkText} (${token.identifier})`;
   });
   const joinedTokensWithLineBreak = decodeURI(tokensArray.join('%0A'));
   return joinedTokensWithLineBreak;
@@ -72,7 +72,7 @@ export const getTransactionValue = ({
           tokenFormattedAmount,
           tokenExplorerLink,
           tokenLinkText
-        } = getTransactionActionNftText({ token: txToken, showBadge: true });
+        } = getTransactionActionNftText({ token: txToken });
 
         return {
           nftValueData: {
@@ -92,19 +92,21 @@ export const getTransactionValue = ({
       const {
         tokenExplorerLink,
         showFormattedAmount,
-        tokenLinkText
+        tokenFormattedAmount,
+        tokenLinkText,
+        token
       } = getTransactionActionTokenText({
-        token: txToken,
-        showLastNonZeroDecimal: true
+        token: txToken
       });
 
       return {
         tokenValueData: {
           tokenExplorerLink,
           showFormattedAmount,
+          tokenFormattedAmount,
           tokenLinkText,
           transactionTokens,
-          token: txToken,
+          token,
           value: txToken.value,
           decimals: txToken.decimals ?? DECIMALS,
           titleText

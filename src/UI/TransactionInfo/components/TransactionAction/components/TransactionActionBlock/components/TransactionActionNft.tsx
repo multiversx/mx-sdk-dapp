@@ -3,25 +3,19 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
-import {
-  getTransactionActionNftText,
-  TransactionActionNftType
-} from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
+import { TransactionActionNftReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { NftBadge } from './NftBadge';
 
-export const TransactionActionNft = (props: TransactionActionNftType) => {
-  const { token } = props;
-
+export const TransactionActionNft = ({
+  badgeText,
+  tokenFormattedAmount,
+  tokenExplorerLink,
+  tokenLinkText,
+  token
+}: TransactionActionNftReturnType) => {
   if (!token.identifier) {
     return null;
   }
-
-  const {
-    badgeText,
-    tokenFormattedAmount,
-    tokenExplorerLink,
-    tokenLinkText
-  } = getTransactionActionNftText(props);
 
   return (
     <>
@@ -34,7 +28,7 @@ export const TransactionActionNft = (props: TransactionActionNftType) => {
             value={token.value}
             digits={2}
             showLabel={false}
-            showLastNonZeroDecimal={props.showLastNonZeroDecimal}
+            showLastNonZeroDecimal={false}
             decimals={token.decimals}
           />
         </div>

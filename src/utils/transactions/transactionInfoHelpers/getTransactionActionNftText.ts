@@ -5,21 +5,25 @@ import { explorerUrlBuilder } from '../getInterpretedTransaction/helpers/explore
 
 export interface TransactionActionNftType {
   token: TokenArgumentType;
-  showBadge?: boolean;
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }
+export interface TransactionActionNftReturnType {
+  badgeText: string;
+  tokenFormattedAmount: string | null;
+  tokenExplorerLink: string;
+  tokenLinkText?: string;
+  token: TokenArgumentType;
+}
 
 export function getTransactionActionNftText({
-  showBadge,
   token,
   noValue,
   showLastNonZeroDecimal
-}: TransactionActionNftType) {
+}: TransactionActionNftType): TransactionActionNftReturnType {
   const isTokenAmountVisible =
     !noValue && token.value && token.type !== NftEnumType.NonFungibleESDT;
   const canShowFormattedAmount = token.decimals != null;
-  const isBadgeVisible = showBadge && token.type !== NftEnumType.MetaESDT;
 
   let badgeText = '';
   if (token.type === NftEnumType.NonFungibleESDT) {
@@ -52,9 +56,10 @@ export function getTransactionActionNftText({
     token.ticker === token.collection ? token.identifier : token.ticker;
 
   return {
-    badgeText: isBadgeVisible ? badgeText : null,
+    badgeText,
     tokenFormattedAmount: isTokenAmountVisible ? tokenFormattedAmount : null,
     tokenExplorerLink,
-    tokenLinkText
+    tokenLinkText,
+    token
   };
 }

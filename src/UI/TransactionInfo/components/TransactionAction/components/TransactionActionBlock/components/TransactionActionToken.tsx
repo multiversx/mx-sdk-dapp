@@ -4,23 +4,17 @@ import globalStyles from 'assets/sass/main.scss';
 import { DECIMALS } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
-import {
-  getTransactionActionTokenText,
-  TransactionActionTokenType
-} from 'utils/transactions/transactionInfoHelpers/index';
+import { TransactionActionTokenReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 
-export const TransactionActionToken = (props: TransactionActionTokenType) => {
-  const { token } = props;
-
+export const TransactionActionToken = ({
+  tokenExplorerLink,
+  showFormattedAmount,
+  tokenLinkText,
+  token
+}: TransactionActionTokenReturnType) => {
   if (!token.token) {
     return null;
   }
-
-  const {
-    tokenExplorerLink,
-    showFormattedAmount,
-    tokenLinkText
-  } = getTransactionActionTokenText(props);
 
   return (
     <>
@@ -30,7 +24,7 @@ export const TransactionActionToken = (props: TransactionActionTokenType) => {
             value={token.value}
             digits={2}
             decimals={token.decimals ?? DECIMALS}
-            showLastNonZeroDecimal={props.showLastNonZeroDecimal}
+            showLastNonZeroDecimal
           />
         </div>
       )}

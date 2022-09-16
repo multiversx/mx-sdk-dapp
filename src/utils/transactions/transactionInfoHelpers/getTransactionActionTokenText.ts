@@ -6,22 +6,28 @@ import { explorerUrlBuilder } from '../getInterpretedTransaction/helpers/explore
 export interface TransactionActionTokenType {
   token: TokenArgumentType;
   noValue?: boolean;
-  showLastNonZeroDecimal?: boolean;
+}
+export interface TransactionActionTokenReturnType {
+  tokenExplorerLink: string;
+  tokenFormattedAmount: string | null;
+  showFormattedAmount: boolean;
+  tokenLinkText: string;
+  token: TokenArgumentType;
 }
 
 export function getTransactionActionTokenText({
   token,
-  noValue,
-  showLastNonZeroDecimal
-}: TransactionActionTokenType) {
-  const showFormattedAmount = !noValue && token.value;
+  noValue
+}: TransactionActionTokenType): TransactionActionTokenReturnType {
+  const showFormattedAmount = Boolean(!noValue && token.value);
 
   const tokenFormattedAmount = showFormattedAmount
     ? formatAmount({
         input: token.value,
         decimals: token.decimals ?? DECIMALS,
         digits: 2,
-        showLastNonZeroDecimal
+        showLastNonZeroDecimal: false,
+        addCommas: true
       })
     : null;
 
@@ -35,6 +41,7 @@ export function getTransactionActionTokenText({
     tokenExplorerLink,
     tokenFormattedAmount,
     showFormattedAmount,
-    tokenLinkText
+    tokenLinkText,
+    token
   };
 }

@@ -42,10 +42,7 @@ export const TransactionValue = ({
   if (tokenValueData) {
     return (
       <TokenWrapper titleText={tokenValueData.titleText}>
-        <TransactionActionBlock.Token
-          token={tokenValueData.token}
-          showLastNonZeroDecimal
-        />
+        <TransactionActionBlock.Token {...tokenValueData} />
       </TokenWrapper>
     );
   }
@@ -53,7 +50,7 @@ export const TransactionValue = ({
   if (nftValueData) {
     return (
       <TokenWrapper titleText={nftValueData.titleText}>
-        <TransactionActionBlock.Nft token={nftValueData.token} showBadge />
+        <TransactionActionBlock.Nft {...nftValueData} />
       </TokenWrapper>
     );
   }
