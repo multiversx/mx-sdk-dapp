@@ -1,5 +1,5 @@
 import React from 'react';
-import { timeAgo } from 'utils';
+import { timeAgo } from 'utils/operations/timeRemaining';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 
 export type TimeAgoPropsType = {
@@ -22,10 +22,11 @@ export const TimeAgo = ({
         noSeconds: false,
         utc: true
       })}
+      data-testid={`timeAgo-${value}`}
     >
       {result}
     </span>
   ) : (
-    <>{result}</>
+    <span data-testid={`timeAgo-${value}`}>{result}</span>
   );
 };

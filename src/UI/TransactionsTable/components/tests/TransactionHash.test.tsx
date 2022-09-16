@@ -4,7 +4,7 @@ import { TransactionHash } from '../TransactionHash';
 import { getMockTransactionByIndex } from './getMockTransactionByIndex';
 
 describe('TransactionsRow tests', () => {
-  it('should display fields', () => {
+  it('should display hash', () => {
     const methods = render(
       <TransactionHash transaction={getMockTransactionByIndex(0)} />
     );
