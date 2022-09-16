@@ -1,21 +1,21 @@
 import React from 'react';
+
 import { getHumanReadableTimeFormat } from 'components/TransactionsInterpreter/helpers/getHumanReadableTimeFormat';
 import { timeAgo } from 'utils';
 
-export type TimeAgoPropsType = {
+import styles from './transactionsTableStyles.scss';
+
+export interface TransactionTimeAgoPropsTypes {
   value: number;
   short?: boolean;
   tooltip?: boolean;
-};
+}
 
-export const TimeAgo = ({
-  value,
-  short = false,
-  tooltip = false
-}: TimeAgoPropsType) => {
+export const TransactionTimeAgo = (props: TransactionTimeAgoPropsTypes) => {
+  const { value, short = false, tooltip = false } = props;
   const result = timeAgo(value * 1000, short);
 
-  return tooltip ? (
+  const render = tooltip ? (
     <span
       title={getHumanReadableTimeFormat({
         value,
@@ -26,6 +26,8 @@ export const TimeAgo = ({
       {result}
     </span>
   ) : (
-    <>{result}</>
+    <span>{result}</span>
   );
+
+  return <div className={styles.transactionCell}>{render}</div>;
 };

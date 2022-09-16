@@ -63,3 +63,19 @@
 .table .trim-size-sm .trim {
   max-width: 9rem;
 }
+
+.transaction-cell {
+  margin: 0.75rem;
+  padding: 0;
+  font-variant-numeric: slashed-zero;
+  color: #3d5170;
+
+  a,
+  a span {
+    color: #1f43f4 !important;
+  }
+}
+
+.transaction-cell-margin {
+  margin-left: 0;
+}

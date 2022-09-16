@@ -1,34 +1,35 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
-import { TimeAgo } from './TImeAgo';
+
+import { TransactionTimeAgo } from './TransactionTimeAgo';
 import { TransactionDirectionBadge } from './TransactionDirectionBadge';
 import { TransactionHash } from './TransactionHash';
 import { TransactionMethod } from './TransactionMethod';
 import { TransactionReceiver } from './TransactionReceiver';
 import { TransactionSender } from './TransactionSender';
 import { TransactionShardsTransition } from './TransactionShardsTransition';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTableStyles.scss';
 
-export interface TransactionRowType {
+export interface TransactionRowPropsTypes {
   transaction: ExtendedTransactionType;
   showDirectionCol?: boolean;
   showLockedAccounts?: boolean;
 }
 
-export const TransactionRow = ({
-  transaction,
-  showDirectionCol,
-  showLockedAccounts
-}: TransactionRowType) => {
+export const TransactionRow = (props: TransactionRowPropsTypes) => {
+  const { transaction, showDirectionCol, showLockedAccounts } = props;
+
   return (
-    <tr className={classNames({ ['new']: transaction.isNew })}>
+    <tr className={classNames({ new: transaction.isNew })}>
       <td>
         <TransactionHash transaction={transaction} />
       </td>
       <td>
-        <TimeAgo value={transaction.timestamp} short tooltip />
+        <TransactionTimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>
         <TransactionShardsTransition transaction={transaction} />

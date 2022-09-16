@@ -1,34 +1,46 @@
 import React from 'react';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { ExtendedTransactionType } from 'components/TransactionsInterpreter/helpers/types';
 import { ExplorerLink } from '../ExplorerLink';
 import { ShardSpan } from './ShardSpan';
 
-type TransactionShardsTransitionProps = {
-  transaction: ExtendedTransactionType;
-};
+import globalStyles from 'assets/sass/main.scss';
+import styles from './transactionsTableStyles.scss';
 
-export const TransactionShardsTransition: React.FC<TransactionShardsTransitionProps> = ({
-  transaction
-}) => {
+export interface TransactionShardsTransitionPropsTypes {
+  transaction: ExtendedTransactionType;
+}
+
+export const TransactionShardsTransition = (
+  props: TransactionShardsTransitionPropsTypes
+) => {
+  const { transaction } = props;
+
   return (
     <div
-      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.alignItemsCenter,
+        styles.transactionCell
+      )}
     >
       <ExplorerLink
         page={transaction.links.senderShardLink ?? ''}
+        className={styles.transactionCellMargin}
         data-testid='shardFromLink'
       >
         <ShardSpan shard={transaction.senderShard} />
       </ExplorerLink>
-      <FontAwesomeIcon
-        icon={faArrowRight}
+
+      <span
         className={classNames(globalStyles.textSecondary, globalStyles.mx2)}
-      />
+      >
+        &#10132;
+      </span>
+
       <ExplorerLink
+        className={styles.transactionCellMargin}
         page={transaction.links.receiverShardLink ?? ''}
         data-testid='shardToLink'
       >

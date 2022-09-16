@@ -1,32 +1,37 @@
-import * as React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
 import { ServerTransactionType } from 'types/serverTransactions.types';
+
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './TransactionRow';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTableStyles.scss';
 
-interface TransactionsTableType extends WithClassnameType {
+export interface TransactionsTablePropsTypes extends WithClassnameType {
   transactions: ServerTransactionType[];
   address?: string;
-  title?: React.ReactNode;
+  title?: ReactNode;
   directionCol?: boolean;
   showLockedAccounts?: boolean;
 }
 
-export const TransactionsTable = ({
-  transactions,
-  address,
-  title = (
-    <h6 className={globalStyles.h6} data-testid='title'>
-      Transactions
-    </h6>
-  ),
-  directionCol = false,
-  showLockedAccounts = false,
-  className = 'dapp-transactions-table'
-}: TransactionsTableType) => {
+export const TransactionsTable = (props: TransactionsTablePropsTypes) => {
+  const {
+    transactions,
+    address,
+    directionCol = false,
+    showLockedAccounts = false,
+    className = 'dapp-transactions-table',
+    title = (
+      <h6 className={globalStyles.h6} data-testid='title'>
+        Transactions
+      </h6>
+    )
+  } = props;
+
   if (!address) {
     console.error('Invalid account');
     return null;
@@ -49,6 +54,7 @@ export const TransactionsTable = ({
             <div>{title}</div>
           </div>
         </div>
+
         <div className={classNames(globalStyles.cardBody, globalStyles.p0)}>
           <div className={styles.tableWrapper}>
             <table
@@ -67,6 +73,7 @@ export const TransactionsTable = ({
                   <th scope='col'>Value</th>
                 </tr>
               </thead>
+
               <tbody>
                 {processedTransactions.map((transaction) => (
                   <TransactionRow
