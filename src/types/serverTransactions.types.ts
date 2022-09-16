@@ -211,7 +211,7 @@ export interface ReceiptType {
 
 export interface ServerTransactionType {
   fee?: string;
-  blockHash: string;
+  blockHash?: string;
   data: string;
   gasLimit: number;
   gasPrice: number;

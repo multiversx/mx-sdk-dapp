@@ -7,10 +7,8 @@ import classNames from 'classnames';
 import lodash from 'lodash';
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import {
-  getTransactionMessages,
-  getTransactionStatus
-} from 'utils/transactions/transactionInfoHelpers/index';
+import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
+import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 
 interface TransactionIconType {
   transaction: InterpretedTransactionType;

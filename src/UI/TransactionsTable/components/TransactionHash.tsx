@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { ExplorerLink } from 'UI/ExplorerLink';
-import { Trim } from 'UI/Trim';
+import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
+import { Trim } from 'UI/Trim/Trim';
 import { TransactionIcon } from './TransactionIcon';
 
 type TransactionHashColumnProps = {
@@ -29,7 +29,7 @@ export const TransactionHash = ({
         data-testid='transactionLink'
         className={globalStyles.trimWrapper}
       >
-        <Trim text={transaction.txHash} />
+        <Trim text={transaction.txHash} dataTestId='transactionHash' />
       </ExplorerLink>
     </div>
   );

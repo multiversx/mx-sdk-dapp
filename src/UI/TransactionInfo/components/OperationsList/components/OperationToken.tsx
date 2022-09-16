@@ -1,5 +1,8 @@
 import * as React from 'react';
-import { OperationType } from 'types/serverTransactions.types';
+import {
+  OperationType,
+  VisibleTransactionOperationType
+} from 'types/serverTransactions.types';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
@@ -31,13 +34,13 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
   };
 
   switch (operation.type) {
-    case 'nft': {
+    case VisibleTransactionOperationType.nft: {
       const props = getTransactionActionNftText({
         token
       });
       return <TransactionActionBlock.Nft {...props} badgeText={null} />;
     }
-    case 'esdt': {
+    case VisibleTransactionOperationType.esdt: {
       const props = getTransactionActionTokenText({
         token
       });

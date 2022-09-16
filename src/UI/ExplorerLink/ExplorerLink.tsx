@@ -2,7 +2,7 @@ import React, { PropsWithChildren, useMemo } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import { useGetNetworkConfig } from 'hooks';
+import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { getExplorerLink } from 'utils/transactions/getInterpretedTransaction/helpers/getExplorerLink';
 import { WithClassnameType } from '../types';
 import styles from './explorerLinkStyles.scss';
