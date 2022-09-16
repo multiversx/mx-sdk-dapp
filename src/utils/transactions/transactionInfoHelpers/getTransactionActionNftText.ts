@@ -9,11 +9,13 @@ export interface TransactionActionNftType {
   showLastNonZeroDecimal?: boolean;
 }
 export interface TransactionActionNftReturnType {
-  badgeText: string;
+  badgeText: string | null;
   tokenFormattedAmount: string | null;
   tokenExplorerLink: string;
   tokenLinkText?: string;
   token: TokenArgumentType;
+  showLastNonZeroDecimal?: boolean;
+  noValue?: boolean;
 }
 
 export function getTransactionActionNftText({
@@ -60,6 +62,8 @@ export function getTransactionActionNftText({
     tokenFormattedAmount: isTokenAmountVisible ? tokenFormattedAmount : null,
     tokenExplorerLink,
     tokenLinkText,
-    token
+    token,
+    noValue,
+    showLastNonZeroDecimal
   };
 }

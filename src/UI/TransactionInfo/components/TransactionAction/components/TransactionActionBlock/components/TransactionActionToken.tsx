@@ -10,7 +10,8 @@ export const TransactionActionToken = ({
   tokenExplorerLink,
   showFormattedAmount,
   tokenLinkText,
-  token
+  token,
+  showLastNonZeroDecimal
 }: TransactionActionTokenReturnType) => {
   if (!token.token) {
     return null;
@@ -23,8 +24,9 @@ export const TransactionActionToken = ({
           <FormatAmount
             value={token.value}
             digits={2}
+            showLabel={false}
             decimals={token.decimals ?? DECIMALS}
-            showLastNonZeroDecimal
+            showLastNonZeroDecimal={showLastNonZeroDecimal}
           />
         </div>
       )}

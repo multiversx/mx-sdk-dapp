@@ -11,7 +11,8 @@ export const TransactionActionNft = ({
   tokenFormattedAmount,
   tokenExplorerLink,
   tokenLinkText,
-  token
+  token,
+  showLastNonZeroDecimal
 }: TransactionActionNftReturnType) => {
   if (!token.identifier) {
     return null;
@@ -28,7 +29,7 @@ export const TransactionActionNft = ({
             value={token.value}
             digits={2}
             showLabel={false}
-            showLastNonZeroDecimal={false}
+            showLastNonZeroDecimal={showLastNonZeroDecimal}
             decimals={token.decimals}
           />
         </div>

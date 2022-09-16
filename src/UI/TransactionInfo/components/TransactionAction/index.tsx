@@ -20,11 +20,16 @@ export const TransactionAction = ({
 
   return (
     <div className='transaction-action d-flex flex-column flex-lg-row flex-lg-wrap'>
-      {unwrappedResult.map((entry, i) => (
-        <div key={JSON.stringify(unwrappedResult) + i} className='action-step'>
-          <ActionText entry={entry} transaction={transaction} />
-        </div>
-      ))}
+      {unwrappedResult.map((entry, i) => {
+        return (
+          <div
+            key={JSON.stringify(unwrappedResult) + i}
+            className='action-step'
+          >
+            <ActionText entry={entry} transaction={transaction} />
+          </div>
+        );
+      })}
     </div>
   );
 };

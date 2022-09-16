@@ -2,6 +2,7 @@ import React from 'react';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
@@ -48,9 +49,13 @@ export const TransactionValue = ({
   }
 
   if (nftValueData) {
+    const hideBadgeForMetaESDT =
+      nftValueData.token.type === NftEnumType.MetaESDT;
+    const badgeText = hideBadgeForMetaESDT ? null : nftValueData.badgeText;
+
     return (
       <TokenWrapper titleText={nftValueData.titleText}>
-        <TransactionActionBlock.Nft {...nftValueData} />
+        <TransactionActionBlock.Nft {...nftValueData} badgeText={badgeText} />
       </TokenWrapper>
     );
   }

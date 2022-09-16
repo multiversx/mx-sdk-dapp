@@ -35,7 +35,7 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
       const props = getTransactionActionNftText({
         token
       });
-      return <TransactionActionBlock.Nft {...props} />;
+      return <TransactionActionBlock.Nft {...props} badgeText={null} />;
     }
     case 'esdt': {
       const props = getTransactionActionTokenText({
