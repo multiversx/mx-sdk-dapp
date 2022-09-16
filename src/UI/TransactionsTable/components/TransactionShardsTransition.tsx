@@ -22,7 +22,7 @@ export const TransactionShardsTransition = ({
         page={transaction.links.senderShardLink ?? ''}
         data-testid='shardFromLink'
       >
-        <ShardSpan shard={transaction.senderShard} />
+        <ShardSpan shard={transaction.senderShard} data-testid='senderShard' />
       </ExplorerLink>
       <FontAwesomeIcon
         icon={faArrowRight}
@@ -32,7 +32,10 @@ export const TransactionShardsTransition = ({
         page={transaction.links.receiverShardLink ?? ''}
         data-testid='shardToLink'
       >
-        <ShardSpan shard={transaction.receiverShard} />
+        <ShardSpan
+          shard={transaction.receiverShard}
+          data-testid='receiverShard'
+        />
       </ExplorerLink>
     </div>
   );

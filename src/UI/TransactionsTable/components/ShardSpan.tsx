@@ -3,8 +3,9 @@ import { getShardText } from 'utils/transactions/transactionInfoHelpers/getShard
 
 export interface ShardSpanType {
   shard: number | string;
+  ['data-testid']?: string;
 }
 
-export const ShardSpan = ({ shard }: ShardSpanType) => {
-  return <span>{getShardText(shard)}</span>;
+export const ShardSpan = ({ shard, ...rest }: ShardSpanType) => {
+  return <span {...rest}>{getShardText(shard)}</span>;
 };

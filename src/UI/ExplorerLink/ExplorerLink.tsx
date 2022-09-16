@@ -41,7 +41,7 @@ export const ExplorerLink = ({
       target='_blank'
       className={classNames(styles.link, className)}
       rel='noreferrer'
-      {...{ ...rest }}
+      {...rest}
     >
       {children ?? defaultContent}
     </a>

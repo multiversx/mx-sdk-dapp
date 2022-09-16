@@ -14,10 +14,15 @@ export function getExplorerLink({
   explorerAddress: string;
   to: string;
 }) {
-  if (!to.startsWith('/')) {
-    logError(`Link not prepended by / : ${to}`);
-    to = `/${to}`;
+  try {
+    // if a valid url is sent, return the original url
+    const url = new URL(to);
+    return url.href;
+  } catch {
+    if (!to.startsWith('/')) {
+      logError(`Link not prepended by / : ${to}`);
+      to = `/${to}`;
+    }
+    return explorerAddress ? `${explorerAddress}${to}` : to;
   }
-
-  return explorerAddress ? `${explorerAddress}${to}` : to;
 }
