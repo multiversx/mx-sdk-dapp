@@ -19,6 +19,7 @@ export const TransactionMethod = ({
         globalStyles.badgePill,
         globalStyles.fontWeightLight
       )}
+      data-testid='transactionMethod'
     >
       <div
         className={classNames(
