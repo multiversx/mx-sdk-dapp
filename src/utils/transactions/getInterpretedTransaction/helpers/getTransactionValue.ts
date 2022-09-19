@@ -21,8 +21,11 @@ const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
       } = getTransactionActionNftText({
         token: transactionToken
       });
+
       const badge = badgeText != null ? `(${badgeText}) ` : '';
-      return `${badge}${tokenFormattedAmount} ${tokenLinkText}`;
+
+      const value = `${badge}${tokenFormattedAmount} ${tokenLinkText}`;
+      return value;
     }
     const {
       tokenFormattedAmount,
@@ -32,8 +35,12 @@ const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
       token: transactionToken as TokenArgumentType
     });
 
-    return `${tokenFormattedAmount} ${tokenLinkText} (${token.token})`;
+    const identifier = token.token ?? token.identifier;
+
+    const value = `${tokenFormattedAmount} ${tokenLinkText} (${identifier})`;
+    return value;
   });
+
   const joinedTokensWithLineBreak = decodeURI(tokensArray.join('%0A'));
   return joinedTokensWithLineBreak;
 };

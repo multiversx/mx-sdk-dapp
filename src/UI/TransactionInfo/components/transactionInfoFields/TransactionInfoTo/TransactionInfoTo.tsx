@@ -18,18 +18,22 @@ export const TransactionInfoTo = ({
 
   return (
     <DetailItem title='To'>
-      <div className='d-flex flex-column'>
+      <div className='d-flex flex-column' data-testid='transactionTo'>
         <div className='d-flex align-items-center'>
           {isContract(transaction.receiver) && (
-            <span className='mr-2'>Contract</span>
+            <span className='mr-2' data-testid='transactionToContract'>
+              Contract
+            </span>
           )}
           <ExplorerLink
             page={String(transaction.links.receiverLink)}
             className='trim-wrapper'
+            data-testid='transactionToExplorerLink'
           >
             <AccountName
               address={transaction.receiver}
               assets={transaction.receiverAssets}
+              data-testid='transactionToAccount'
             />
           </ExplorerLink>
           <CopyButton className='mr-2' text={transaction.receiver} />
@@ -38,7 +42,12 @@ export const TransactionInfoTo = ({
               page={String(transaction.links.receiverShardLink)}
               className='flex-shrink-0'
             >
-              (<ShardSpan shard={transaction.receiverShard} />)
+              (
+              <ShardSpan
+                shard={transaction.receiverShard}
+                data-testid='transactionToShard'
+              />
+              )
             </ExplorerLink>
           )}
         </div>

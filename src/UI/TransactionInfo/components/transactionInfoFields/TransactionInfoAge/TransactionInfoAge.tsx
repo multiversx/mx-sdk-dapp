@@ -16,7 +16,10 @@ export const TransactionInfoAge = ({
   return (
     <DetailItem title='Age'>
       {transaction.timestamp != null ? (
-        <div className='d-flex flex-wrap align-items-center'>
+        <div
+          className='d-flex flex-wrap align-items-center'
+          data-testid='transactionAge'
+        >
           {pending ? (
             <FontAwesomeIcon
               icon={faSpinner}
@@ -25,8 +28,7 @@ export const TransactionInfoAge = ({
           ) : (
             <FontAwesomeIcon icon={faClock} className='mr-2 text-secondary' />
           )}
-          <TimeAgo value={transaction.timestamp} short />
-          &nbsp;
+          <TimeAgo value={transaction.timestamp} short />{' '}
           <span className='text-secondary'>
             (
             {getHumanReadableTimeFormat({
