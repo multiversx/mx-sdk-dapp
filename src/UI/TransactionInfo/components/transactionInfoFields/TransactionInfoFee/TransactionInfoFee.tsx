@@ -49,5 +49,9 @@ export const TransactionInfoFee = ({
       <span className='text-secondary'>N/A</span>
     );
 
-  return <DetailItem title='Transaction Fee'>{fee}</DetailItem>;
+  return (
+    <DetailItem title='Transaction Fee'>
+      <span data-testid='transactionInfoFee'>{fee}</span>
+    </DetailItem>
+  );
 };

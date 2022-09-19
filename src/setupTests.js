@@ -3,7 +3,7 @@ window.scrollTo = jest.fn();
 jest.mock('./utils/network/getEgldLabel', () => {
   return {
     __esModule: true, // this property makes it work
-    default: () => {
+    getEgldLabel: () => {
       return 'EGLD';
     }
   };
