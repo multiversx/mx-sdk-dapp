@@ -1,4 +1,5 @@
 import React from 'react';
+import { MINIBLOCKS_ENDPOINT } from 'apiCalls/endpoints';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
@@ -17,7 +18,7 @@ export const TransactionInfoMiniblock = ({
         {transaction.miniBlockHash ? (
           <>
             <ExplorerLink
-              page={`/miniblocks/${transaction.miniBlockHash}`}
+              page={`/${MINIBLOCKS_ENDPOINT}/${transaction.miniBlockHash}`}
               className='trim-wrapper'
             >
               <Trim text={transaction.miniBlockHash} />
