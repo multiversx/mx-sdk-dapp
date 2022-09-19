@@ -125,7 +125,7 @@
     "@elrondnetwork/erdjs-extension-provider": "2.0.5",
     "@elrondnetwork/erdjs-hw-provider": "2.0.4",
     "@elrondnetwork/erdjs-network-providers": "0.1.6",
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.0",
+    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.1",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.1",
     "@reduxjs/toolkit": "1.8.2",
     "anchorme": "2.1.2",
