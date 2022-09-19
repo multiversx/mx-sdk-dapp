@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { TransactionMethod } from '../TransactionMethod';
 import { getMockTransactionByIndex } from './getMockTransactionByIndex';
 
-describe('TransactionsSender tests', () => {
+describe('TransactionsMethod tests', () => {
   it('should display hash', () => {
     const methods = render(
       <TransactionMethod transaction={getMockTransactionByIndex(0)} />

@@ -27,12 +27,14 @@ export const TransactionActionToken = ({
             showLabel={false}
             decimals={token.decimals ?? DECIMALS}
             showLastNonZeroDecimal={showLastNonZeroDecimal}
+            data-testid='tokenFormattedAmount'
           />
         </div>
       )}
       <ExplorerLink
         page={tokenExplorerLink}
         className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
+        data-testid='tokenExplorerLink'
       >
         <div className='d-flex align-items-center symbol'>
           {token.svgUrl && (

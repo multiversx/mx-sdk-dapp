@@ -31,12 +31,14 @@ export const TransactionActionNft = ({
             showLabel={false}
             showLastNonZeroDecimal={showLastNonZeroDecimal}
             decimals={token.decimals}
+            data-testid='nftFormattedAmount'
           />
         </div>
       )}
       <ExplorerLink
         page={tokenExplorerLink}
         className={`${token.svgUrl ? 'd-flex side-link' : 'text-truncate'}`}
+        data-testid='nftExplorerLink'
       >
         <div className='d-flex align-items-center symbol'>
           {token.svgUrl && (

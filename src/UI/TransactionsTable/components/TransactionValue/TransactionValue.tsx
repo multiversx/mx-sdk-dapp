@@ -15,11 +15,15 @@ const TokenWrapper = ({
   titleText?: string;
 }) => {
   return (
-    <div className='transaction-value d-flex align-items-center'>
+    <div
+      className='transaction-value d-flex align-items-center'
+      data-testid='transactionValue'
+    >
       {children}
       {titleText && (
         <FontAwesomeIcon
           icon={faLayerGroup}
+          data-testid='transactionValueIcon'
           className='ml-2 text-secondary'
           title={titleText}
         />
@@ -60,5 +64,11 @@ export const TransactionValue = ({
     );
   }
 
-  return <FormatAmount value={egldValueData.value} digits={2} />;
+  return (
+    <FormatAmount
+      value={egldValueData.value}
+      digits={2}
+      data-testid='transactionValue'
+    />
+  );
 };
