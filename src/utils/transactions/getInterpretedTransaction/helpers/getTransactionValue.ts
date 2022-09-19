@@ -35,7 +35,7 @@ const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
       token: transactionToken as TokenArgumentType
     });
 
-    const identifier = token.token ?? token.identifier;
+    const identifier = token.collection ? token.identifier : token.token;
 
     const value = `${tokenFormattedAmount} ${tokenLinkText} (${identifier})`;
     return value;
