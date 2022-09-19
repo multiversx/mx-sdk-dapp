@@ -18,7 +18,6 @@ export const UsdValue = (
   });
   const isAmountZero = `${amount}` === '0';
   const displayedValue = isAmountZero ? '= $0' : value;
-  console.log('\x1b[42m%s\x1b[0m', '///');
 
   return (
     <small
