@@ -755,9 +755,11 @@ import {
 ### Account
 ```
 import {
-  useGetAccountInfo,
+  useGetAccount, // if you only need the account as on network
+  useGetAccountInfo, // if you need all account information from store
   useGetAccountProvider,
-  useGetLoginInfo
+  useGetLoginInfo,
+  useGetWebsocketSignalTimestamp // get a Date.now() timestamp every time a change occurs on the account on network
  } from '@elrondnetwork/dapp-core/hooks/account';
 ```
 

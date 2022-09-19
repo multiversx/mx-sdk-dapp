@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
+import { useDispatch } from 'reduxStore/DappProviderContext';
+import { updateWebsocketSignalTimestamp } from 'reduxStore/slices';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
 import { useGetNetworkConfig } from '../useGetNetworkConfig';
@@ -24,6 +26,8 @@ export function useRegisterWebsocketListener({
 }: UseRegisterWebsocketListenerPropsType) {
   const timeout = useRef<NodeJS.Timeout | null>(null);
 
+  const dispatch = useDispatch();
+
   const { network } = useGetNetworkConfig();
 
   const handleMessageReceived = (message: string) => {
@@ -31,7 +35,10 @@ export function useRegisterWebsocketListener({
       clearTimeout(timeout.current);
     }
 
-    timeout.current = setTimeout(() => onMessage(message), MESSAGE_DELAY);
+    timeout.current = setTimeout(() => {
+      dispatch(updateWebsocketSignalTimestamp());
+      onMessage(message);
+    }, MESSAGE_DELAY);
   };
 
   const initializeWebsocketConnection = useCallback(
