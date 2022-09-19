@@ -3,8 +3,8 @@ import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { useGetTokenDetails } from 'hooks';
-import { addressIsValid } from 'utils';
+import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
+import { addressIsValid } from 'utils/account/addressIsValid';
 
 export const LockedTokenAddressIcon = ({
   address,
