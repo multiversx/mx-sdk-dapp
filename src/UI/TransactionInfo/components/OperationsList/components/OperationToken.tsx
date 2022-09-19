@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {
   OperationType,
+  TokenArgumentType,
   VisibleTransactionOperationType
 } from 'types/serverTransactions.types';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
@@ -23,7 +24,7 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
     type: operation.esdtType,
     name: operation.name,
     ticker: operation.svgUrl
-      ? getTicker(operation.identifier)
+      ? getTicker(String(operation.identifier))
       : operation.identifier,
     collection: operation.collection,
     identifier: operation.identifier,
@@ -31,7 +32,11 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
     decimals: operation.decimals,
     value: operation.value,
     svgUrl: operation.svgUrl
-  };
+  } as TokenArgumentType;
+
+  if (token.type == null) {
+    return <></>;
+  }
 
   switch (operation.type) {
     case VisibleTransactionOperationType.nft: {
