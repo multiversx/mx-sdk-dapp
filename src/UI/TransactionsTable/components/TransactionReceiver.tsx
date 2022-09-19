@@ -26,6 +26,7 @@ export const TransactionReceiver = ({
   return (
     <div
       className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
+      data-testid='transactionReceiver'
     >
       {showLockedAccounts && (
         <LockedTokenAddressIcon

@@ -18,6 +18,7 @@ export const ScAddressIcon = ({
 
   return showIcon ? (
     <FontAwesomeIcon
+      data-testid='scIcon'
       title={'Smart Contract'}
       icon={faFileAlt}
       className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
