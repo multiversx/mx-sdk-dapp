@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { N_A } from 'constants/index';
 import { ScamInfoType } from 'types/account.types';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
@@ -37,7 +37,7 @@ export const DataField = ({
   const dataString = data ? Buffer.from(data, 'base64').toString() : N_A;
   const { stringWithLinks, output, found } = getScamFlag(dataString, scamInfo);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (decodeMethod && decodeMethod !== DecodeMethodEnum.raw) {
       window.history.replaceState(
         {},

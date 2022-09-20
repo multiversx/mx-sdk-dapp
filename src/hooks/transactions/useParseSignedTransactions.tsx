@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import qs from 'qs';
 import { DAPP_INIT_ROUTE, WALLET_SIGN_SESSION } from 'constants/index';
@@ -15,7 +15,7 @@ export function useParseSignedTransactions(
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (search != null) {
       const searchData = qs.parse(search.replace('?', ''));
 

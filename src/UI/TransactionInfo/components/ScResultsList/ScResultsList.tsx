@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faExchange, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { N_A } from 'constants/index';
@@ -23,7 +23,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
 
   const [decodeMethod, setDecodeMethod] = useState(initialDecodeMethod);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
         top: ref.current.getBoundingClientRect().top - 70,
