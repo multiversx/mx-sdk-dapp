@@ -53,7 +53,7 @@ The default UI is exposed via the `UI` module.
 
 To reduce the amount of dead code, you can use named imports for each component like
 
-```
+```typescript
 import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages";
 or
 import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages/UnlockPage";
@@ -89,14 +89,14 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 - import the Provider:
 
-```
+```typescript
 import { DappProvider } from '@elrondnetwork/dapp-core/wrappers/DappProvider';
 or
 import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
 ```
 - Wrap your application with this Provider.
 
-```
+```jsx
 <DappProvider
     environment="devnet"
     customNetworkConfig={customNetworkConfig}
@@ -109,7 +109,7 @@ This allows using different APIs and different connection providers to configure
 
 **All keys are optional**
 
-```
+```typescript
 {
   id?: string;
   name?: string;
@@ -117,8 +117,8 @@ This allows using different APIs and different connection providers to configure
   decimals?: string;
   digits?: string;
   gasPerDataByte?: string;
-  walletConnectDeepLink?: string; - a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
-  walletConnectBridgeAddresses?: string; - a string that is used to establish the connection to walletConnect library;
+  walletConnectDeepLink?: string; // a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
+  walletConnectBridgeAddresses?: string; // a string that is used to establish the connection to walletConnect library;
   walletAddress?: string;
   apiAddress?: string;
   explorerAddress?: string;
@@ -141,7 +141,7 @@ when something happens inside the app:
 
 - `TransactionsToastList` will display new transactions in nice toasts at the bottom of the screen. This component is fully customizable.
 
-```
+```jsx
   import {TransactionsToastList} from "@elrondnetwork/dapp-core/UI/TransactionsToastList";
 
   <App>
@@ -159,7 +159,7 @@ when something happens inside the app:
 
 **Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
 
-```
+```jsx
   import {SignTransactionsModals} from "@elrondnetwork/dapp-core/UI/SignTransactionsModals";
 
   <App>
@@ -170,7 +170,7 @@ when something happens inside the app:
 
 `NotificationModal` Will show a modal to the user with various warnings and errors.
 
-```
+```jsx
   import {NotificationModal} from "@elrondnetwork/dapp-core/UI/NotificationModal";
 
   <App>
@@ -191,7 +191,7 @@ A handy component is AuthenticatedRoutesWrapper, which can be used to protect ce
 
 Import from dapp-core:
 
-```
+```typescript
 import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
 or
 import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers';
@@ -199,7 +199,7 @@ import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers';
 
 Use with routes:
 
-```
+```jsx
   <AuthenticatedRoutesWrapper
     routes={routes}
     unlockRoute="/unlock"
@@ -210,7 +210,7 @@ Use with routes:
 
 **routes** should be an array with objects with a signature similar to this:
 
-```
+```typescript
 {
     path: "/dashboard",
     title: "Dashboard",
@@ -240,7 +240,7 @@ The exported buttons are:
 
 example:
 
-```
+```jsx
 <ExtensionLoginButton
   callbackRoute="/dashboard"
   buttonClassName="extension-login"
@@ -250,7 +250,7 @@ example:
 
 They can also be used with children
 
-```
+```jsx
 <ExtensionLoginButton
   callbackRoute="/dashboard"
   buttonClassName="extension-login"
@@ -260,7 +260,7 @@ They can also be used with children
     <icon/>
     <p>Login text</p>
   <>
-</ExtensionLoginButton
+</ExtensionLoginButton>
 ```
 
 `WalletConnectLoginButton` and `LedgerLoginButton` will trigger a modal with a QR code and the ledger login UI, respectively.
@@ -269,7 +269,7 @@ These are automatically triggered by the buttons.
 If, however, you want access to these containers without the buttons,
 you can easily import and use them.
 
-```
+```jsx
 <WalletConnectLoginContainer
   callbackRoute={callbackRoute}
   loginButtonText="Login with Maiar"
@@ -286,7 +286,7 @@ you can easily import and use them.
   />
 ```
 
-```
+```jsx
 <LedgerLoginContainer
   callbackRoute={callbackRoute}
   className='ledger-login-modal',
@@ -306,13 +306,13 @@ Another handly component is AuthenticatedRoutesWrapper, which can be used to pro
 
 Import from dapp-core:
 
-```
+```typescript
 import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
 ```
 
 Use with routes:
 
-```
+```jsx
 <AuthenticatedRoutesWrapper
     routes={routes}
     unlockRoute={routeNames.unlock}
@@ -323,7 +323,7 @@ Use with routes:
 
 **routes** should be an array with objects with a signature similar to this:
 
-```
+```typescript
 {
     path: "/dashboard",
     title: "Dashboard",
@@ -346,7 +346,7 @@ This area covers the login hooks, which expose a trigger function and the login 
 
 These hooks are exposed as named exports, which can be imported from dapp-core:
 
-```
+```typescript
 import { useExtensionLogin, useWalletConnectLogin, useLedgerLogin, useWebWalletLogin } from '@elrondnetwork/dapp-core/hooks';
 or
 import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login/useExtensionLogin';
@@ -366,7 +366,7 @@ All hooks have the same response signature:
 
 return type is as follows:
 
-```
+```typescript
 const [initiateLogin, genericLoginReturnType, customLoginReturnType] = useLoginHook({
     callbackRoute,
     logoutRoute,
@@ -377,7 +377,7 @@ const [initiateLogin, genericLoginReturnType, customLoginReturnType] = useLoginH
 - **initiateLogin** is a function that needs to be called for the login flow to be initiated;
 - **genericLoginReturnType** is an object that is exactly the same for all hooks:
 
-```
+```typescript
 {
   error: string,
   loginFailed: boolean,
@@ -396,7 +396,7 @@ const [initiateLogin, genericLoginReturnType, customLoginReturnType] = useLoginH
 
   -
 
-```
+```typescript
 {
   accounts: string[];
   showAddressList: boolean;
@@ -432,6 +432,8 @@ This allows you to control how the redirect is done, for example, with react-rou
 
 You can opt-in for using the `useIdleTimer` hook, which logs out the user after a period of inactivity (default set to 10 minutes). Optionally it accepts an `onLogout` function that fulfills your dapp's specific logout business logic. Make sure to call the above `logout` function inside this `onLogout` callback.
 
+You can also opt-in for using the `useRegisterWebsocketListener` hook. You can register a function callback, which will get fired once a websocket message is received, and receive the `string` argument provided by the event.
+
 There are 2 ways of reading the user current state: hooks (to be used inside components and for reacting to changes in the data) and simple functions (for reading data outside of React components or inside handlers).
 
 - hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig`;
@@ -455,7 +457,7 @@ The API for sending transactions is a function called **sendTransactions**:
 
 It can be used to send a transaction with minimum information:
 
-```
+```typescript
 const { sessionId, error } = await sendTransactions({
     transactions: [
         {
@@ -495,7 +497,7 @@ for the user to be prompted in his provider (Extension, Maiar etc) to sign the t
 If you don't want to use the default modals that appear for the user when the signing process happens,
 you have to use the `useSignTransactions` hook to sign those transactions.
 
-```
+```typescript
  const {
     callbackRoute,
     transactions,
@@ -513,7 +515,7 @@ We suggest displaying a message on the screen that confirms the transaction that
 
 You can also get the provider via
 
-```
+```typescript
   const { providerType, provider } = useGetAccountProvider();
 ```
 
@@ -527,7 +529,7 @@ If, however, you want to implement a different experience, you will have to use 
 
 it accepts the following props:
 
-```
+```typescript
 {
   onCancel: () => void;
 }
@@ -535,7 +537,7 @@ it accepts the following props:
 
 and returns an object with the following keys:
 
-```
+```typescript
 {
   onSignTransaction: () => void;
   onNext: () => void;
@@ -572,7 +574,7 @@ Tracking a transaction
 
 The library exposes a hook called useTrackTransactionStatus;
 
-```
+```typescript
 import {useTrackTransactionStatus} from @elrondnetwork/dapp-core/hooks;
 
 const transactionStatus = useTrackTransactionStatus({
@@ -585,7 +587,7 @@ const transactionStatus = useTrackTransactionStatus({
 
 transactionStatus has the following information about the transaction:
 
-```
+```typescript
 {
   isPending,
   isSuccessful,
@@ -620,13 +622,13 @@ of all transactions at a certain point in time.
 
 it's return signature is
 
-```
+```typescript
 {
-  pending: boolean - at least one transaction is pending;
-  hasPendingTransactions: boolean - the user has at least 1 pending transaction active;
-  timedOut: boolean = there are no pending transactions and at least one has timed out;
-  fail: boolean - there are no pending and no timedOut transactions and at least one has failed;
-  success: boolean - all transactions are successful and all smart contract calls have been processed successfully;
+  pending: boolean, // at least one transaction is pending;
+  hasPendingTransactions: boolean, // the user has at least 1 pending transaction active;
+  timedOut: boolean, // there are no pending transactions and at least one has timed out;
+  fail: boolean, // there are no pending and no timedOut transactions and at least one has failed;
+  success: boolean, // all transactions are successful and all smart contract calls have been processed successfully;
 }
 ```
 
@@ -645,7 +647,7 @@ The toasts list is exposed via **TransactionsToastList** UI component and can be
 
 When `TransactionToastList` is also used for displaying custom toasts, is enough to call `addNewCustomToast` to add new custom toast to the list;
 
-```
+```jsx
 <App>
   <Router/>
   <TransactionsToastList />
@@ -655,7 +657,7 @@ When `TransactionToastList` is also used for displaying custom toasts, is enough
 **Important**: This has to be inside the `<DappProvider/>` children.
 
 In case you don't want to use `TransactionToastList` and just display a custom toast, then you have to import `CustomToast` component
-```
+```jsx
 const customToast = addNewCustomToast(
   {
     toastId: 'toast-id',
@@ -681,7 +683,7 @@ Removing transactions manually
 Dapp-core takes care to change transactions' statuses and removes them when needed,
 but if you need to do this manually, you can use the exposed functions for this:
 
-```
+```typescript
   removeTransactionsToSign(sessionId);
   removeSignedTransaction(sessionId);
   removeAllTransactionsToSign();
@@ -695,7 +697,7 @@ but if you need to do this manually, you can use the exposed functions for this:
 
 The dapp-core library exposes bundles for both CommonJS and ESModules, however, in some enviornments, Jest might require manual mapping of the CommonJS output. To implement it, add the following snippet inside your jest config file.
 
-```
+```javascript
 moduleNameMapper: {
     '@elrondnetwork/dapp-core/(.*)':
       '<rootDir>/node_modules/@elrondnetwork/dapp-core/__commonjs/$1.js'
@@ -713,11 +715,11 @@ You can either go into their specific folder in the module for extra trimming, o
 
 for example, these 2 imports are both valid:
 
-```
+```typescript
 import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks';
 ```
 and
-```
+```typescript
 import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login';
 import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
@@ -725,7 +727,7 @@ import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
 
 ## constants exports
 
-```
+```typescript
 import {
   GAS_PRICE_MODIFIER,
   GAS_PER_DATA_BYTE,
@@ -743,7 +745,7 @@ import {
 
 ### Login
 
-```
+```typescript
 import {
   useExtensionLogin,
   useLedgerLogin,
@@ -753,7 +755,7 @@ import {
 ```
 
 ### Account
-```
+```typescript
 import {
   useGetAccount, // if you only need the account as on network
   useGetAccountInfo, // if you need all account information from store
@@ -764,7 +766,7 @@ import {
 ```
 
 ### Transactions
-```
+```typescript
 import {
   useCheckTransactionStatus,
 
@@ -788,7 +790,7 @@ import {
 ```
 
 ### Misc
-```
+```typescript
 import {
   useDebounce,
   useGetNetworkConfig,
@@ -799,7 +801,7 @@ import {
 
 ## services exports
 
-```
+```typescript
 import {
   removeTransactionsToSign,
   removeSignedTransaction,
@@ -816,7 +818,7 @@ import {
 
 ### Account
 
-```
+```typescript
 import {
   addressIsValid,
   getAccount,
@@ -833,7 +835,7 @@ import {
 
 ### Operations
 
-```
+```typescript
 import {
   calculateFeeLimit,
   formatAmount,
@@ -844,7 +846,7 @@ import {
 
 ### Transactions
 
-```
+```typescript
 import {
   getTokenFromData,
   isTokenTransfer,
@@ -855,7 +857,7 @@ import {
 
 ### Validation
 
-```
+```typescript
 import {
  getIdentifierType,
  stringIsFloat,
@@ -867,7 +869,7 @@ import {
 
 ### Misc
 
-```
+```typescript
 import {
   encodeToBase64,
   decodeBase64,
@@ -881,7 +883,7 @@ import {
 
 ## Wrappers
 
-```
+```typescript
 import {
   DappProvider,
   AuthenticatedRoutesWrapper,
@@ -891,7 +893,7 @@ import {
 
 ## Web-specific imports
 
-```
+```typescript
 import {
   useIdleTimer
 } from '@elrondnetwork/dapp-core/web';
@@ -900,7 +902,7 @@ import {
 
 ## UI
 
-```
+```typescript
 import {
   CopyButton,
   FormatAmount,
@@ -926,7 +928,7 @@ import {
 
 or
 
-```
+```typescript
 import { CopyButton } from '@elrondnetwork/dapp-core/UI/CopyButton';
 import { FormatAmount } from '@elrondnetwork/dapp-core/UI/FormatAmount';
 import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
