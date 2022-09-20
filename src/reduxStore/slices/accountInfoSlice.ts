@@ -31,7 +31,10 @@ export interface AccountInfoSliceType {
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
   isAccountLoading: boolean;
-  websocketSignalTimestamp: number | null;
+  websocketEvent: {
+    timestamp: number;
+    message: string;
+  } | null;
   accountLoadingError: string | null;
 }
 
@@ -46,7 +49,7 @@ export const emptyAccount: AccountType = {
 
 const initialState: AccountInfoSliceType = {
   address: '',
-  websocketSignalTimestamp: null,
+  websocketEvent: null,
   accounts: { '': emptyAccount },
   ledgerAccount: null,
   publicKey: '',
@@ -127,8 +130,14 @@ export const accountInfoSlice = createSlice({
       state.accountLoadingError = action.payload;
       state.isAccountLoading = false;
     },
-    updateWebsocketSignalTimestamp: (state: AccountInfoSliceType) => {
-      state.websocketSignalTimestamp = Date.now();
+    setWebsocketEvent: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<string>
+    ) => {
+      state.websocketEvent = {
+        timestamp: Date.now(),
+        message: action.payload
+      };
     }
   },
   extraReducers: (builder) => {
@@ -178,7 +187,7 @@ export const {
   setWalletConnectAccount,
   setIsAccountLoading,
   setAccountLoadingError,
-  updateWebsocketSignalTimestamp
+  setWebsocketEvent
 } = accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;

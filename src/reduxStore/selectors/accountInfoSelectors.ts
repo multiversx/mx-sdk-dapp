@@ -62,7 +62,7 @@ export const isAccountLoadingErrorSelector = createDeepEqualSelector(
   (state) => state.accountLoadingError
 );
 
-export const websocketSignalTimestampSelector = createDeepEqualSelector(
+export const websocketEventSelector = createDeepEqualSelector(
   privateAccountInfoSelector,
-  (state) => state.websocketSignalTimestamp
+  (state) => state.websocketEvent
 );

@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
-import {
-  useCheckTransactionStatus,
-  useGetAccountInfo,
-  useRegisterWebsocketListener
-} from 'hooks';
+import { useCheckTransactionStatus, useRegisterWebsocketListener } from 'hooks';
 import { GetTransactionsByHashesType } from 'types/transactions.types';
 import { useClosureRef } from './useClosureRef';
 
@@ -13,7 +9,6 @@ export interface TransactionsTrackerType {
 }
 
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
-  const { address } = useGetAccountInfo();
   const checkTransactionStatus = useCheckTransactionStatus();
   const checkTransactionStatusCallback = useClosureRef(checkTransactionStatus);
 
@@ -27,10 +22,7 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
     });
   };
 
-  useRegisterWebsocketListener({
-    onMessage,
-    address
-  });
+  useRegisterWebsocketListener(onMessage);
 
   useEffect(() => {
     const interval = setInterval(onMessage, 30000);
