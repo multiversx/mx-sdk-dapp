@@ -61,3 +61,8 @@ export const isAccountLoadingErrorSelector = createDeepEqualSelector(
   privateAccountInfoSelector,
   (state) => state.accountLoadingError
 );
+
+export const websocketEventSelector = createDeepEqualSelector(
+  privateAccountInfoSelector,
+  (state) => state.websocketEvent
+);
