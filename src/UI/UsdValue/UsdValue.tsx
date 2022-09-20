@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import { ZERO } from 'constants/index';
 import { getUsdValue, UsdValueType } from 'utils/operations/getUsdValue';
 import { WithClassnameType } from '../types';
 
@@ -16,8 +17,8 @@ export const UsdValue = (
     decimals,
     addEqualSign: addEqualSign ?? true
   });
-  const isAmountZero = `${amount}` === '0';
-  const displayedValue = isAmountZero ? '= $0' : value;
+  const isAmountZero = `${amount}` === ZERO;
+  const displayedValue = isAmountZero ? `= $${ZERO}` : value;
 
   return (
     <small

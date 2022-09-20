@@ -26,3 +26,11 @@ export const LOGIN_ACTION_NAME = 'login';
 export const CANCEL_ACTION_NAME = 'cancelSignTx';
 
 export const REFUNDED_GAS = 'refundedGas';
+
+/**
+ * Not Applicable
+ * @value N/A
+ */
+export const N_A = 'N/A';
+
+export const ZERO = '0';

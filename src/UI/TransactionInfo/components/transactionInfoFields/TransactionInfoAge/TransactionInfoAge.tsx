@@ -1,6 +1,7 @@
 import React from 'react';
 import { faSpinner, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/index';
@@ -39,7 +40,7 @@ export const TransactionInfoAge = ({
           </span>
         </div>
       ) : (
-        <span className='text-secondary'>N/A</span>
+        <span className='text-secondary'>{N_A}</span>
       )}
     </DetailItem>
   );

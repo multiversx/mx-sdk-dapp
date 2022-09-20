@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons/faExchangeAlt';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';

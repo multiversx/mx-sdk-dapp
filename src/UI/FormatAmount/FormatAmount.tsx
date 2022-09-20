@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL } from 'constants/index';
+import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL, ZERO } from 'constants/index';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { FormatAmountPropsType } from './formatAmount.types';
@@ -37,13 +37,13 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
 
   const valueParts = formattedValue.split('.');
   const hasNoDecimals = valueParts.length === 1;
-  const isNotZero = formattedValue !== '0';
+  const isNotZero = formattedValue !== ZERO;
 
   if (digits > 0 && hasNoDecimals && isNotZero) {
     let zeros = '';
 
     for (let i = 1; i <= digits; i++) {
-      zeros = zeros + '0';
+      zeros = zeros + ZERO;
     }
 
     valueParts.push(zeros);

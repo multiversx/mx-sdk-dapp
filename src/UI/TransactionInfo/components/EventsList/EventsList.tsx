@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EventType } from 'types/serverTransactions.types';

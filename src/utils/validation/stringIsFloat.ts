@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { ZERO } from 'constants/index';
 
 export const stringIsFloat = (amount: string) => {
   if (isNaN(amount as any)) {
@@ -11,7 +12,7 @@ export const stringIsFloat = (amount: string) => {
   // eslint-disable-next-line
   let [wholes, decimals] = amount.split('.');
   if (decimals) {
-    while (decimals.charAt(decimals.length - 1) === '0') {
+    while (decimals.charAt(decimals.length - 1) === ZERO) {
       decimals = decimals.slice(0, -1);
     }
   }

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { ScAddressIcon } from 'UI/TransactionsTable/components';

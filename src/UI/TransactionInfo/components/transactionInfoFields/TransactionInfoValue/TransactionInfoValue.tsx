@@ -1,4 +1,5 @@
 import React from 'react';
+import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
@@ -38,7 +39,7 @@ export const TransactionInfoValue = ({
               )
             </>
           ) : (
-            <>N/A</>
+            <>{N_A}</>
           )}
         </span>
       </span>

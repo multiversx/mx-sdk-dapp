@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { faExchange, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { N_A } from 'constants/index';
 import { ResultType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -119,9 +120,7 @@ export const ScResultsList = ({ results }: { results: ResultType[] }) => {
                   <div className='col-sm-10'>
                     <DataDecode
                       value={
-                        result.data
-                          ? getScResultsDecodedData(result.data)
-                          : 'N/A'
+                        result.data ? getScResultsDecodedData(result.data) : N_A
                       }
                       {...(highlightTx
                         ? { initialDecodeMethod, setDecodeMethod }
