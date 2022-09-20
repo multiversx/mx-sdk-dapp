@@ -13,7 +13,6 @@ export function useRegisterWebsocketListener(
   useEffect(() => {
     const message = websocketEvent?.message;
     if (message) {
-      console.log(112, message);
       onMessage(message);
     }
   }, [onMessage, websocketEvent]);
