@@ -4,7 +4,7 @@ import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionRow';
-import styles from './components/transactionsTableStyles.scss';
+import styles from './components/transactionsTable.styles.scss';
 
 export interface TransactionsTableType extends WithClassnameType {
   transactions: InterpretedTransactionType[];

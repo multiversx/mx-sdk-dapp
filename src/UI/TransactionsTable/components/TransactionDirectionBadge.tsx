@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 type TransactionDirectionBadgePropsType = {
   transaction: InterpretedTransactionType;
