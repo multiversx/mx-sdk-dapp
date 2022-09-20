@@ -432,11 +432,11 @@ This allows you to control how the redirect is done, for example, with react-rou
 
 You can opt-in for using the `useIdleTimer` hook, which logs out the user after a period of inactivity (default set to 10 minutes). Optionally it accepts an `onLogout` function that fulfills your dapp's specific logout business logic. Make sure to call the above `logout` function inside this `onLogout` callback.
 
-You can also opt-in for using the `useRegisterWebsocketListener` hook. You can register a function callback, which will get fired once a websocket message is received, and receive the `string` argument provided by the event.
+You can also opt-in for using the `useRegisterWebsocketListener` hook. The hooks accepts a callback which will get fired once a websocket message is received, receiving the `string` argument provided by the event. Optionally you can simply listen to changes on account/transactions with the `useGetWebsocketEvent` hook.
 
 There are 2 ways of reading the user current state: hooks (to be used inside components and for reacting to changes in the data) and simple functions (for reading data outside of React components or inside handlers).
 
-- hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig`;
+- hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig, useGetWebsocketEvent`;
 - functions: `getAccount, getAccountBalance, getAccountShard, getAddress, getIsLoggedIn;`
 
 </details>
