@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 
@@ -15,7 +16,7 @@ import {
 } from '.';
 import styles from './transactionsTable.styles.scss';
 
-export interface TransactionRowType {
+export interface TransactionRowPropsTypes {
   transaction: InterpretedTransactionType;
   showDirectionCol?: boolean;
   showLockedAccounts?: boolean;
@@ -27,7 +28,7 @@ export const TransactionRow = (props: TransactionRowPropsTypes) => {
   return (
     <tr className={classNames({ new: transaction.isNew })}>
       <td>
-        <TransactionHash transaction={transaction} />
+        <TransactionHash {...{ transaction }} />
       </td>
 
       <td>
@@ -35,35 +36,29 @@ export const TransactionRow = (props: TransactionRowPropsTypes) => {
       </td>
 
       <td>
-        <TransactionShardsTransition transaction={transaction} />
+        <TransactionShardsTransition {...{ transaction }} />
       </td>
 
       <td>
-        <TransactionSender
-          transaction={transaction}
-          showLockedAccounts={showLockedAccounts}
-        />
+        <TransactionSender {...{ transaction, showLockedAccounts }} />
       </td>
 
       {showDirectionCol && (
         <td>
-          <TransactionDirectionBadge transaction={transaction} />
+          <TransactionDirectionBadge {...{ transaction }} />
         </td>
       )}
 
       <td>
-        <TransactionReceiver
-          transaction={transaction}
-          showLockedAccounts={showLockedAccounts}
-        />
+        <TransactionReceiver {...{ transaction, showLockedAccounts }} />
       </td>
 
       <td className={styles.transactionFunction}>
-        <TransactionMethod transaction={transaction} />
+        <TransactionMethod {...{ transaction }} />
       </td>
 
       <td className={globalStyles.textLeft}>
-        <TransactionValue transaction={transaction} />
+        <TransactionValue {...{ transaction }} />
       </td>
     </tr>
   );
