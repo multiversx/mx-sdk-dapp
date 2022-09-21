@@ -1,43 +1,35 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
-import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
-import { ServerTransactionType } from 'types/serverTransactions.types';
-
-import { WithClassnameType } from '../types';
-import { TransactionRow } from './TransactionRow';
-
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionsTableStyles.scss';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import { WithClassnameType } from '../types';
+import { TransactionRow } from './components/TransactionRow';
+import styles from './components/transactionsTableStyles.scss';
 
-export interface TransactionsTablePropsTypes extends WithClassnameType {
-  transactions: ServerTransactionType[];
+export interface TransactionsTableType extends WithClassnameType {
+  extendedTransactions: InterpretedTransactionType[];
   address?: string;
   title?: ReactNode;
   directionCol?: boolean;
   showLockedAccounts?: boolean;
 }
 
-export const TransactionsTable = (props: TransactionsTablePropsTypes) => {
-  const {
-    transactions,
-    address,
-    directionCol = false,
-    showLockedAccounts = false,
-    className = 'dapp-transactions-table',
-    title = (
-      <h6 className={globalStyles.h6} data-testid='title'>
-        Transactions
-      </h6>
-    )
-  } = props;
-
+export const TransactionsTable = ({
+  extendedTransactions,
+  address,
+  title = (
+    <h6 className={globalStyles.h6} data-testid='title'>
+      Transactions
+    </h6>
+  ),
+  directionCol = false,
+  showLockedAccounts = false,
+  className = 'dapp-transactions-table'
+}: TransactionsTableType) => {
   if (!address) {
     console.error('Invalid account');
     return null;
   }
-
-  const processedTransactions = parseTransactions(transactions, address);
 
   return (
     <div className={classNames(styles.transactionsTable, className)}>
@@ -75,7 +67,7 @@ export const TransactionsTable = (props: TransactionsTablePropsTypes) => {
               </thead>
 
               <tbody>
-                {processedTransactions.map((transaction) => (
+                {extendedTransactions.map((transaction) => (
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}

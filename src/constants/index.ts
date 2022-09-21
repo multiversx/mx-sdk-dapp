@@ -14,6 +14,9 @@ export const VERSION = 1;
 
 export const LEDGER_CONTRACT_DATA_ENABLED_VALUE = 1;
 
+export const METACHAIN_SHARD_ID = 4294967295;
+export const ALL_SHARDS_SHARD_ID = 4294967280;
+
 export const DAPP_INIT_ROUTE = '/dapp/init';
 export const WALLET_SIGN_SESSION = 'signSession';
 

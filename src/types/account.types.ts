@@ -2,8 +2,8 @@ export interface AssetType {
   name: string;
   description: string;
   tags: string[];
-  iconPng: string;
-  iconSvg: string;
+  iconPng?: string;
+  iconSvg?: string;
 }
 
 export interface AccountType {

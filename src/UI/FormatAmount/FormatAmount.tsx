@@ -72,7 +72,7 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
           )}
           data-testid='formatAmountSymbol'
         >
-          &nbsp;{props.token ? props.token : erdLabel}
+          {props.token ? ` ${props.token}` : ` ${erdLabel}`}
         </span>
       )}
     </span>

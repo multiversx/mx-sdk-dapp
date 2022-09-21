@@ -89,7 +89,7 @@ $grays: map-merge(
 );
 
 
-
+$muted: #cacbcc;
 $link-color: $blue !default;
 $link-decoration: none !default;
 $link-hover-color: darken($blue, 15%) !default;
@@ -97,6 +97,7 @@ $link-hover-decoration: underline !default;
 
 $border-width: 1px !default;
 $border-color: $gray-300 !default;
+$border-color-alt: $border-color;
 
 $border-radius: 0.25rem !default;
 $border-radius-lg: 0.3rem !default;

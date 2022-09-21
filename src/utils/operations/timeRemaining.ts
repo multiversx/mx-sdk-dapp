@@ -50,21 +50,21 @@ function getShortDateTimeFormat(datetime: string) {
   return datetime;
 }
 
-export function timeRemaining(duration: number, short: boolean = true) {
+export function timeRemaining(duration: number, short = true) {
   const startDate = moment.utc();
   const endDate = moment.utc().add(duration, 'seconds');
   const diffInMs = Math.max(endDate.diff(startDate), 0);
-  let remaining = getRemainingTime(diffInMs);
+  const remaining = getRemainingTime(diffInMs);
 
   return short ? getShortDateTimeFormat(remaining) : remaining;
 }
 
-export function timeAgo(timestamp: number, short: boolean = true) {
+export function timeAgo(timestamp: number, short = true) {
   const dateNow = moment.utc();
   const txtTime = moment.utc(timestamp);
   const diffInMs = Math.max(dateNow.diff(txtTime), 0);
 
-  let remaining = getRemainingTime(diffInMs);
+  const remaining = getRemainingTime(diffInMs);
 
   return short ? getShortDateTimeFormat(remaining) : remaining;
 }

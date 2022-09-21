@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { PropsWithChildren, useMemo } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,3 +44,6 @@ const ExplorerLink = (props: ExplorerLinkType) => {
 };
 
 export { ExplorerLink };
+=======
+export * from './ExplorerLink';
+>>>>>>> origin/tm-transactions-interpreter

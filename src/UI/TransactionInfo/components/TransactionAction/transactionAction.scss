@@ -1,0 +1,23 @@
+.transaction-action {
+  div:not([class]):not([data-testid]) {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .token-block,
+  .collection-block,
+  .nft-block,
+  span:not([class]):not([data-testid]) {
+    margin-right: 0.25rem;
+    margin-left: 0;
+  }
+  // @include media-breakpoint-up(sm) {
+  //   .action-step {
+  //     display: flex;
+  //     flex-direction: row;
+  //     align-items: center;
+  //     display: contents;
+  //   }
+  // }
+}

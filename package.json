@@ -128,6 +128,7 @@
     "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.0",
     "@elrondnetwork/erdjs-web-wallet-provider": "2.1.1",
     "@reduxjs/toolkit": "1.8.2",
+    "anchorme": "2.1.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
     "lodash.debounce": "4.0.8",

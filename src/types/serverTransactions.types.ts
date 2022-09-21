@@ -1,6 +1,7 @@
 import { AssetType, ScamInfoType } from './account.types';
-import { NftEnumType } from './tokens.types';
+import { EsdtEnumType, NftEnumType } from './tokens.types';
 
+//#region server trasactions
 export interface ScResultType {
   callType: string;
   gasLimit: number;
@@ -55,6 +56,17 @@ export enum TransactionActionsEnum {
   unwrapEgld = 'unwrapEgld',
   unlockAssets = 'unlockAssets',
   mergeLockedAssetTokens = 'mergeLockedAssetTokens',
+  stakeFarm = 'stakeFarm',
+  stakeFarmProxy = 'stakeFarmProxy',
+  stakeFarmTokens = 'stakeFarmTokens',
+  stakeFarmTokensProxy = 'stakeFarmTokensProxy',
+  unstakeFarm = 'unstakeFarm',
+  unstakeFarmProxy = 'unstakeFarmProxy',
+  unstakeFarmTokens = 'unstakeFarmTokens',
+  unstakeFarmTokensProxy = 'unstakeFarmTokensProxy',
+  claimDualYield = 'claimDualYield',
+  claimDualYieldProxy = 'claimDualYieldProxy',
+  unbondFarm = 'unbondFarm',
   ping = 'ping'
 }
 
@@ -66,7 +78,7 @@ export enum TransactionActionCategoryEnum {
 }
 
 export interface TokenArgumentType {
-  type: NftEnumType | 'FungibleESDT';
+  type: NftEnumType | EsdtEnumType;
   name: string;
   ticker: string;
   collection?: string;
@@ -79,7 +91,7 @@ export interface TokenArgumentType {
   svgUrl?: string;
 }
 
-export interface TxActionType {
+export interface TransactionActionType {
   category: string;
   name: TransactionActionsEnum;
   description?: string;
@@ -130,7 +142,7 @@ export enum HiddenTransactionOperationType {
 export interface OperationType {
   action: TransactionOperationActionTypeEnum;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
-  esdtType: NftEnumType | 'FungibleESDT';
+  esdtType: NftEnumType | EsdtEnumType;
   collection?: string;
   name: string;
   identifier: string;
@@ -199,7 +211,7 @@ export interface ReceiptType {
 
 export interface ServerTransactionType {
   fee?: string;
-  blockHash: string;
+  blockHash?: string;
   data: string;
   gasLimit: number;
   gasPrice: number;
@@ -219,7 +231,7 @@ export interface ServerTransactionType {
   price: number;
   results?: ResultType[];
   operations?: OperationType[];
-  action?: TxActionType;
+  action?: TransactionActionType;
   logs?: {
     id: string;
     address: string;
@@ -241,3 +253,39 @@ export enum TransferTypeEnum {
   Transaction = 'Transaction',
   SmartContractResult = 'SmartContractResult'
 }
+
+//#endregion
+
+//#region interpreted trasactions
+
+export enum TransactionDirectionEnum {
+  SELF = 'Self',
+  INTERNAL = 'Internal',
+  IN = 'In',
+  OUT = 'Out'
+}
+
+export type InterpretedTransactionType = {
+  transactionDetails: {
+    direction?: TransactionDirectionEnum;
+    method: string;
+    transactionTokens: TokenArgumentType[];
+    isContract?: boolean;
+  };
+  links: {
+    senderLink?: string;
+    receiverLink?: string;
+    senderShardLink?: string;
+    receiverShardLink?: string;
+    transactionLink?: string;
+  };
+} & ServerTransactionType;
+
+export enum DecodeMethodEnum {
+  raw = 'raw',
+  text = 'text',
+  decimal = 'decimal',
+  smart = 'smart'
+}
+
+//#endregion

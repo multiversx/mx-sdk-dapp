@@ -9,6 +9,18 @@ jest.mock('./utils/network/getEgldLabel', () => {
   };
 });
 
+jest.mock('./hooks/useGetNetworkConfig', () => {
+  return {
+    __esModule: true,
+    useGetNetworkConfig: () => {
+      const { fallbackNetworkConfigurations } = require('./constants/network');
+      return {
+        network: fallbackNetworkConfigurations.devnet
+      };
+    }
+  };
+});
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: jest.fn().mockImplementation((query) => ({
