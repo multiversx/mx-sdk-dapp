@@ -14,14 +14,14 @@ type DappModalHeaderProps = {
   onHide?: () => void;
 } & WithClassnameType;
 
-export const DappModalHeader: React.FC<DappModalHeaderProps> = ({
+export const DappModalHeader = ({
   visible,
   headerText,
   customHeader,
   className,
   closeButtonClassName,
   onHide
-}) => {
+}: DappModalHeaderProps) => {
   if (!visible) {
     return null;
   }

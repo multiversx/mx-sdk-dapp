@@ -6,7 +6,7 @@ import {
 } from '@elrondnetwork/erdjs';
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers';
-import { GAS_LIMIT, GAS_PRICE } from 'constants/index';
+import { GAS_LIMIT, GAS_PRICE, ZERO } from 'constants/index';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
 
 interface CalculateFeeLimitType {
@@ -57,6 +57,6 @@ export function calculateFeeLimit({
     const fee = bNfee.toString(10);
     return fee;
   } catch (err) {
-    return '0';
+    return ZERO;
   }
 }

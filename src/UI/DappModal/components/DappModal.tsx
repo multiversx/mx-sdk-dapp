@@ -24,7 +24,7 @@ const defaultConfig: DappModalConfig = {
   footerText: ''
 };
 
-export const DappModal: React.FC<DappModalProps> = ({
+export const DappModal = ({
   id = 'dapp-modal',
   visible,
   onHide,
@@ -32,7 +32,7 @@ export const DappModal: React.FC<DappModalProps> = ({
   config = defaultConfig,
   children,
   className = 'dapp-modal-dialog-wrapper'
-}) => {
+}: DappModalProps) => {
   if (!visible) {
     return null;
   }

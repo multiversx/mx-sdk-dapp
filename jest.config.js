@@ -5,7 +5,8 @@ module.exports = {
   roots: ['<rootDir>/src'],
   transform: {
     '^.+\\.[t|j]sx?$': 'ts-jest',
-    '^.+\\.scss$': 'jest-scss-transform'
+    '^.+\\.scss$': 'jest-scss-transform',
+    '.+\\.(svg)$': 'jest-scss-transform'
   },
   moduleNameMapper: {
     '.+\\.(css|styl|less|sass|scss|png|jpg|ttf|woff|woff2)$':

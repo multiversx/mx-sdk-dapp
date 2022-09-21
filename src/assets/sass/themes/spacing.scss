@@ -712,20 +712,33 @@
   margin-right: auto;
 }
 
+.mr-lg-1 {
+  // TODO: add media-breakpoints
+  margin-right: 0.25rem;
+}
+
 .mr-lg-4 {
+  // TODO: add media-breakpoints
+
   margin-right: 1.5rem;
 }
 
 .mx-lg-4 {
+  // TODO: add media-breakpoints
+
   margin-left: 1.5rem;
   margin-right: 1.5rem;
 }
 
 .pr-sm-2 {
+  // TODO: add media-breakpoints
+
   padding-right: 0.5rem;
 }
 
 .px-sm-2 {
+  // TODO: add media-breakpoints
+
   padding-left: 0.5rem;
   padding-right: 0.5rem;
 }

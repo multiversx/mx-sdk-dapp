@@ -1,3 +1,5 @@
+import { METACHAIN_SHARD_ID } from 'constants/index';
+
 const isAddressOfMetachain = (pubKey: Buffer) => {
   // prettier-ignore
   const metachainPrefix = Buffer.from([
@@ -18,7 +20,7 @@ export const getShardOfAddress = (hexPubKey: any) => {
     const pubKey = Buffer.from(hexPubKey, 'hex');
     const lastByteOfPubKey = pubKey[31];
     if (isAddressOfMetachain(pubKey)) {
-      return 4294967295;
+      return METACHAIN_SHARD_ID;
     }
     let shard = lastByteOfPubKey & maskHigh;
     if (shard > numShards - 1) {

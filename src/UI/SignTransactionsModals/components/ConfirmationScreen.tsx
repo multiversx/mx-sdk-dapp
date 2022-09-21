@@ -16,11 +16,11 @@ type ExtraConfirmationScreenProps = {
   className?: string;
 };
 
-export const ConfirmationScreen: React.FC<ExtraConfirmationScreenProps> = ({
+export const ConfirmationScreen = ({
   Screen,
   verifyReceiverScam,
   className
-}) => {
+}: ExtraConfirmationScreenProps) => {
   if (!Screen) {
     return null;
   }

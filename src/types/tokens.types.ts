@@ -77,6 +77,10 @@ export interface CollectionType {
   scamInfo?: ScamInfoType;
 }
 
+export enum EsdtEnumType {
+  FungibleESDT = 'FungibleESDT'
+}
+
 export enum NftEnumType {
   NonFungibleESDT = 'NonFungibleESDT',
   SemiFungibleESDT = 'SemiFungibleESDT',
