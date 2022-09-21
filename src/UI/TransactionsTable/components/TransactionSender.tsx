@@ -45,17 +45,28 @@ export const TransactionSender = (props: TransactionSenderPropsTypes) => {
       <ScAddressIcon initiator={transaction.sender} />
 
       {directionOut ? (
-        <AccountName
-          address={transaction.sender}
-          assets={transaction.senderAssets}
-        />
+        <div
+          className={classNames(
+            globalStyles.w100,
+            styles.transactionCellOverflow,
+            styles.transactionCellMargin
+          )}
+        >
+          <AccountName
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+          />
+        </div>
       ) : addressIsValid(transaction.sender) ? (
         <ExplorerLink
           page={transaction.links.senderLink ?? ''}
           data-testid='senderLink'
           className={classNames(
             globalStyles.trimWrapper,
-            styles.transactionCellMargin
+            globalStyles.w100,
+            styles.transactionCellOverflow,
+            styles.transactionCellMargin,
+            styles.transactionCellLink
           )}
         >
           <AccountName

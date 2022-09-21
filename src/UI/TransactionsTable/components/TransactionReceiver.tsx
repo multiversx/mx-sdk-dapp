@@ -43,17 +43,28 @@ export const TransactionReceiver = (props: TransactionReceiverPropsTypes) => {
       <ScAddressIcon initiator={transaction.receiver} />
 
       {directionIn ? (
-        <AccountName
-          address={transaction.receiver}
-          assets={transaction.receiverAssets}
-        />
+        <div
+          className={classNames(
+            globalStyles.w100,
+            styles.transactionCellMargin,
+            styles.transactionCellOverflow
+          )}
+        >
+          <AccountName
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+          />
+        </div>
       ) : (
         <ExplorerLink
           page={transaction.links.receiverLink ?? ''}
           data-testid='receiverLink'
           className={classNames(
             globalStyles.trimWrapper,
-            styles.transactionCellMargin
+            globalStyles.w100,
+            styles.transactionCellMargin,
+            styles.transactionCellOverflow,
+            styles.transactionCellLink
           )}
         >
           <AccountName

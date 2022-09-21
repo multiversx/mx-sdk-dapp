@@ -27,7 +27,10 @@ export const TransactionShardsTransition = (
     >
       <ExplorerLink
         page={transaction.links.senderShardLink ?? ''}
-        className={styles.transactionCellMargin}
+        className={classNames(
+          styles.transactionCellMargin,
+          styles.transactionCellLink
+        )}
         data-testid='shardFromLink'
       >
         <ShardSpan shard={transaction.senderShard} data-testid='senderShard' />
@@ -40,7 +43,10 @@ export const TransactionShardsTransition = (
       </span>
 
       <ExplorerLink
-        className={styles.transactionCellMargin}
+        className={classNames(
+          styles.transactionCellMargin,
+          styles.transactionCellLink
+        )}
         page={transaction.links.receiverShardLink ?? ''}
         data-testid='shardToLink'
       >

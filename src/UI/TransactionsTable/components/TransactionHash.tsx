@@ -34,7 +34,13 @@ export const TransactionHash = (props: TransactionHashPropsTypes) => {
       <ExplorerLink
         page={transactionHashLink}
         data-testid='transactionLink'
-        className={globalStyles.trimWrapper}
+        className={classNames(
+          globalStyles.trimWrapper,
+          globalStyles.w100,
+          styles.transactionCellMargin,
+          styles.transactionCellOverflow,
+          styles.transactionCellLink
+        )}
       >
         <Trim text={transaction.txHash} dataTestId='transactionHash' />
       </ExplorerLink>

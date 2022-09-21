@@ -22,7 +22,8 @@ export const TransactionMethod = (props: TransactionMethodPropsTypes) => {
           globalStyles.badge,
           globalStyles.badgeSecondary,
           globalStyles.badgePill,
-          globalStyles.fontWeightLight
+          globalStyles.fontWeightLight,
+          globalStyles.p0
         )}
         data-testid='transactionMethod'
       >
@@ -39,7 +40,9 @@ export const TransactionMethod = (props: TransactionMethodPropsTypes) => {
               styles.transactionFunctionBadge,
               globalStyles.textTruncate,
               globalStyles.textCapitalize,
-              globalStyles.textWhite
+              globalStyles.textWhite,
+              globalStyles.p1,
+              styles.transactionCellFontSmall
             )}
           >
             {getTransactionMethod(transaction)}
