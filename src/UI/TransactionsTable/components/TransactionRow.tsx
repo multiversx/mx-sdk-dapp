@@ -30,7 +30,7 @@ export const TransactionRow = (props: TransactionRowPropsTypes) => {
         <TransactionHash transaction={transaction} />
       </td>
       <td>
-        <TransactionTimeAgo value={transaction.timestamp} short tooltip />
+        <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
       <td>
         <TransactionShardsTransition transaction={transaction} />

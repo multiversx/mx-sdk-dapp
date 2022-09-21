@@ -1,7 +1,6 @@
-export { TransactionMethod } from './TransactionMethod';
-export { TransactionReceiver } from './TransactionReceiver';
-export { TransactionRow } from './TransactionRow';
-export { TransactionSender } from './TransactionSender';
-export { TransactionShardsTransition } from './TransactionShardsTransition';
+export { TransactionMethod } from './components/TransactionMethod';
+export { TransactionReceiver } from './components/TransactionReceiver';
+export { TransactionRow } from './components/TransactionRow';
+export { TransactionSender } from './components/TransactionSender';
+export { TransactionShardsTransition } from './components/TransactionShardsTransition';
 export { TransactionsTable } from './TransactionsTable';
-export { TransactionTimeAgo } from './TransactionTimeAgo';

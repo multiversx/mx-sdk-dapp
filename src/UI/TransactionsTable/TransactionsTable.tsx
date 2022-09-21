@@ -1,9 +1,11 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionRow';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './components/transactionsTableStyles.scss';
 
 export interface TransactionsTableType extends WithClassnameType {
@@ -14,18 +16,20 @@ export interface TransactionsTableType extends WithClassnameType {
   showLockedAccounts?: boolean;
 }
 
-export const TransactionsTable = ({
-  extendedTransactions,
-  address,
-  title = (
-    <h6 className={globalStyles.h6} data-testid='title'>
-      Transactions
-    </h6>
-  ),
-  directionCol = false,
-  showLockedAccounts = false,
-  className = 'dapp-transactions-table'
-}: TransactionsTableType) => {
+export const TransactionsTable = (props: TransactionsTableType) => {
+  const {
+    extendedTransactions,
+    address,
+    directionCol = false,
+    showLockedAccounts = false,
+    className = 'dapp-transactions-table',
+    title = (
+      <h6 className={globalStyles.h6} data-testid='title'>
+        Transactions
+      </h6>
+    )
+  } = props;
+
   if (!address) {
     console.error('Invalid account');
     return null;
