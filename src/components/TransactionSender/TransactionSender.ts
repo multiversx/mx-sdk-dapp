@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Address } from '@elrondnetwork/erdjs';
 import { Transaction } from '@elrondnetwork/erdjs/out';
 import { Signature } from '@elrondnetwork/erdjs/out/signature';
@@ -124,7 +124,7 @@ export const TransactionSender = ({
     }
   }
 
-  React.useEffect(() => {
+  useEffect(() => {
     handleSendTransactions();
   }, [signedTransactions, account]);
 

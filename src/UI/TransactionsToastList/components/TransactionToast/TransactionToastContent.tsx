@@ -20,7 +20,7 @@ export type TransactionToastContentProps = {
   customElements?: TransactionToastContentElementsProps;
 };
 
-export const TransactionToastContent: React.FC<TransactionToastContentProps> = ({
+export const TransactionToastContent = ({
   style,
   toastDataState,
   transactions,
@@ -33,7 +33,7 @@ export const TransactionToastContent: React.FC<TransactionToastContentProps> = (
     TransactionToastStatusIcon: FontAwesomeIcon,
     TransactionDetails: TransactionDetails
   }
-}) => {
+}: TransactionToastContentProps) => {
   const TransactionDetails = customElements?.TransactionDetails;
   const TransactionToastStatusIcon = customElements?.TransactionToastStatusIcon;
   const CustomCloseButton = customElements?.CustomCloseButton;

@@ -1,6 +1,5 @@
 export * from './denominate';
 export * from './formatAmount';
-export * from './getFormattedAmount';
 export * from './nominate';
 export * from './parseAmount';
 export * from './calculateFeeLimit';

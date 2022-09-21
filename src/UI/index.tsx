@@ -21,3 +21,5 @@ export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
 export * from './webWallet/WebWalletLoginButton';
 export * from './TransactionsTable';
+export * from './ExplorerLink';
+export * from './TimeAgo';

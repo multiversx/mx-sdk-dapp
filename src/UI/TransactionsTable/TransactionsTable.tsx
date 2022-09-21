@@ -1,14 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { parseTransactions } from 'components/TransactionsInterpreter/TransactionsInterpreter';
-import { ServerTransactionType } from 'types/serverTransactions.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
-import { TransactionRow } from './TransactionRow';
-import styles from './transactionsTableStyles.scss';
+import { TransactionRow } from './components/TransactionRow';
+import styles from './components/transactionsTable.styles.scss';
 
-interface TransactionsTableType extends WithClassnameType {
-  transactions: ServerTransactionType[];
+export interface TransactionsTableType extends WithClassnameType {
+  transactions: InterpretedTransactionType[];
   address?: string;
   title?: React.ReactNode;
   directionCol?: boolean;
@@ -31,8 +30,6 @@ export const TransactionsTable = ({
     console.error('Invalid account');
     return null;
   }
-
-  const processedTransactions = parseTransactions(transactions, address);
 
   return (
     <div className={classNames(styles.transactionsTable, className)}>
@@ -68,7 +65,7 @@ export const TransactionsTable = ({
                 </tr>
               </thead>
               <tbody>
-                {processedTransactions.map((transaction) => (
+                {transactions.map((transaction) => (
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}

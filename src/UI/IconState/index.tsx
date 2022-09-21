@@ -1,8 +1,8 @@
 import React from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { WithClassnameType } from '../types';
 
 export interface IconStateProps extends WithClassnameType {

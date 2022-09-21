@@ -20,6 +20,7 @@ export type TransactionToastContentElementsProps = {
   TransactionToastStatusIcon?: ComponentTypeWithChildren<FontAwesomeIconProps>;
   CustomCloseButton?: ComponentTypeWithChildren<{
     onClick?: () => void;
+    className?: string;
   }>;
   TransactionDetails?: ComponentTypeWithChildren<TransactionDetailsType>;
 };

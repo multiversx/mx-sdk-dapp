@@ -1,0 +1,7 @@
+a.side-link {
+    &::after {
+      right: 0;
+      left: unset;
+      width: calc(100% - 1.85rem);
+    }
+}

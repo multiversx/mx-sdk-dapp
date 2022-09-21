@@ -1,6 +1,6 @@
 import { TokenPayment } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
-import { DECIMALS, DIGITS } from 'constants/index';
+import { DECIMALS, DIGITS, ZERO } from 'constants/index';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { pipe } from './pipe';
 
@@ -51,7 +51,7 @@ export function formatAmount({
         const bnBalance = new BigNumber(current);
 
         if (bnBalance.isZero()) {
-          return '0';
+          return ZERO;
         }
         const balance = bnBalance.toString(10);
         const [integerPart, decimalPart] = balance.split('.');

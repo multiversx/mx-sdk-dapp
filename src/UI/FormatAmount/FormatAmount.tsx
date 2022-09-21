@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL } from 'constants/index';
+import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL, ZERO } from 'constants/index';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { FormatAmountPropsType } from './formatAmount.types';
@@ -37,13 +37,16 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
 
   const valueParts = formattedValue.split('.');
   const hasNoDecimals = valueParts.length === 1;
-  const isNotZero = formattedValue !== '0';
+  const isNotZero = formattedValue !== ZERO;
 
+  // fill in zeros to match specific formatting
+  // example: if DIGITS are 2, `0.1` will be turned into `0.10`
+  // to take up the same amount of space in a right-aligned table cell
   if (digits > 0 && hasNoDecimals && isNotZero) {
     let zeros = '';
 
     for (let i = 1; i <= digits; i++) {
-      zeros = zeros + '0';
+      zeros = zeros + ZERO;
     }
 
     valueParts.push(zeros);
@@ -72,7 +75,7 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
           )}
           data-testid='formatAmountSymbol'
         >
-          &nbsp;{props.token ? props.token : erdLabel}
+          {` ${props.token ?? erdLabel}`}
         </span>
       )}
     </span>

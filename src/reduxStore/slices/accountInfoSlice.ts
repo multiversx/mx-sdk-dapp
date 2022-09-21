@@ -1,6 +1,7 @@
 import { Address } from '@elrondnetwork/erdjs';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
+import { ZERO } from 'constants/index';
 import { AccountType } from 'types/account.types';
 import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
@@ -44,7 +45,7 @@ export const emptyAccount: AccountType = {
   nonce: 0,
   txCount: 0,
   scrCount: 0,
-  claimableRewards: '0'
+  claimableRewards: ZERO
 };
 
 const initialState: AccountInfoSliceType = {

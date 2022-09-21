@@ -3,8 +3,20 @@ window.scrollTo = jest.fn();
 jest.mock('./utils/network/getEgldLabel', () => {
   return {
     __esModule: true, // this property makes it work
-    default: () => {
+    getEgldLabel: () => {
       return 'EGLD';
+    }
+  };
+});
+
+jest.mock('./hooks/useGetNetworkConfig', () => {
+  return {
+    __esModule: true,
+    useGetNetworkConfig: () => {
+      const { fallbackNetworkConfigurations } = require('./constants/network');
+      return {
+        network: fallbackNetworkConfigurations.devnet
+      };
     }
   };
 });

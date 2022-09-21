@@ -1,8 +1,8 @@
 import axios from 'axios';
 import useSwr from 'swr';
-import { COLLECTIONS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls';
+import { COLLECTIONS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
-import { getIdentifierType } from 'utils';
+import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
 export type TokenAssets = {
   description: string;

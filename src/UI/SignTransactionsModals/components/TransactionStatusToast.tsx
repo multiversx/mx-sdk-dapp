@@ -10,12 +10,12 @@ export type TransactionStatusToastType = {
   onDelete: () => void;
 } & WithClassnameType;
 
-export const TransactionStatusToast: React.FC<TransactionStatusToastType> = ({
+export const TransactionStatusToast = ({
   signError,
   canceledTransactionsMessage,
   onDelete,
   className
-}) => {
+}: TransactionStatusToastType) => {
   const message = useMemo(() => {
     return (
       signError ||
