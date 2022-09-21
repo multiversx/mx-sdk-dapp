@@ -7,6 +7,7 @@ export const TRANSFERS_ENDPOINT = 'transfers';
 export const TRANSACTIONS_COUNT_ENDPOINT = 'transactions/count';
 export const TOKENS_ENDPOINT = 'tokens';
 export const BLOCKS_ENDPOINT = 'blocks';
+export const MINIBLOCKS_ENDPOINT = 'miniblocks';
 export const NODES_ENDPOINT = 'nodes';
 export const IDENTITIES_ENDPOINT = 'identities';
 export const COLLECTIONS_ENDPOINT = 'collections';

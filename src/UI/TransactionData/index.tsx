@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import { N_A } from 'constants/index';
 import { decodePart } from 'utils';
 import { WithClassnameType } from '../types';
 
@@ -114,7 +115,7 @@ export const TransactionData = ({
           data-testid='confirmData'
           className={`${globalStyles.textarea} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak} ${globalStyles.w100}`}
         >
-          {data ? output : 'N/A'}
+          {data ? output : N_A}
         </div>
       </div>
     </>

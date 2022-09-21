@@ -6,10 +6,10 @@ import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionRow';
 
 import globalStyles from 'assets/sass/main.scss';
-import styles from './components/transactionsTableStyles.scss';
+import styles from './components/transactionsTable.styles.scss';
 
 export interface TransactionsTableType extends WithClassnameType {
-  extendedTransactions: InterpretedTransactionType[];
+  transactions: InterpretedTransactionType[];
   address?: string;
   title?: ReactNode;
   directionCol?: boolean;
@@ -18,7 +18,7 @@ export interface TransactionsTableType extends WithClassnameType {
 
 export const TransactionsTable = (props: TransactionsTableType) => {
   const {
-    extendedTransactions,
+    transactions,
     address,
     directionCol = false,
     showLockedAccounts = false,
@@ -71,7 +71,7 @@ export const TransactionsTable = (props: TransactionsTableType) => {
               </thead>
 
               <tbody>
-                {extendedTransactions.map((transaction) => (
+                {transactions.map((transaction) => (
                   <TransactionRow
                     transaction={transaction}
                     key={transaction.txHash}

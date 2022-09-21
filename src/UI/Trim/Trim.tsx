@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 
@@ -40,9 +40,9 @@ export const Trim = ({
     };
   };
 
-  React.useEffect(addWindowResizeListener);
+  useEffect(addWindowResizeListener);
 
-  React.useEffect(() => {
+  useEffect(() => {
     listener();
   }, []);
 

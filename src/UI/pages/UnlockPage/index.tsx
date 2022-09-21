@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
@@ -46,7 +46,7 @@ export const UnlockPage = ({
   };
   const { isLoggedIn } = useGetLoginInfo();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isLoggedIn) {
       window.location.href = loginRoute;
     }

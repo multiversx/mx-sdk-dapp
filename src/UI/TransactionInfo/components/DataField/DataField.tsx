@@ -1,8 +1,9 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
+import { N_A } from 'constants/index';
 import { ScamInfoType } from 'types/account.types';
-import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/index';
 import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
+import { useDataDecodeMethod } from 'utils/transactions/transactionInfoHelpers/useDataDecodeMethod';
 import { Anchorme, ModalLink } from './components';
 import { truncate } from './helpers/truncate';
 
@@ -15,16 +16,7 @@ export const DataField = ({
   data?: string;
   scamInfo?: ScamInfoType;
 }) => {
-  const { hash, pathname } = window.location;
-  const hashDecodeMethod = hash.replace('#', '');
-  const initialDecodeMethod =
-    hashDecodeMethod &&
-    Object.values<string>(DecodeMethodEnum).includes(hashDecodeMethod)
-      ? hashDecodeMethod
-      : DecodeMethodEnum.raw;
-  const [decodeMethod, setDecodeMethod] = React.useState<string>(
-    hashDecodeMethod
-  );
+  const { initialDecodeMethod, setDecodeMethod } = useDataDecodeMethod();
 
   const [showData, setShowData] = React.useState(false);
 
@@ -33,18 +25,8 @@ export const DataField = ({
     setShowData((existing) => !existing);
   };
 
-  const dataString = data ? Buffer.from(data, 'base64').toString() : 'N/A';
+  const dataString = data ? Buffer.from(data, 'base64').toString() : N_A;
   const { stringWithLinks, output, found } = getScamFlag(dataString, scamInfo);
-
-  React.useEffect(() => {
-    if (decodeMethod && decodeMethod !== DecodeMethodEnum.raw) {
-      window.history.replaceState(
-        {},
-        document.title,
-        `${pathname}#${decodeMethod}`
-      );
-    }
-  }, [decodeMethod, pathname]);
 
   return (
     <>

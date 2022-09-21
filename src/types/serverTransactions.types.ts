@@ -142,14 +142,14 @@ export enum HiddenTransactionOperationType {
 export interface OperationType {
   action: TransactionOperationActionTypeEnum;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
-  esdtType: NftEnumType | EsdtEnumType;
+  esdtType?: NftEnumType | EsdtEnumType;
   collection?: string;
-  name: string;
-  identifier: string;
+  name?: string;
+  identifier?: string;
   sender: string;
   receiver: string;
   value: string;
-  decimals: number;
+  decimals?: number;
   data?: string;
   message?: string;
   svgUrl?: string;
@@ -211,7 +211,6 @@ export interface ReceiptType {
 
 export interface ServerTransactionType {
   fee?: string;
-  blockHash?: string;
   data: string;
   gasLimit: number;
   gasPrice: number;

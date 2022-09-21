@@ -1,4 +1,5 @@
 import React from 'react';
+import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
@@ -23,22 +24,24 @@ export const TransactionInfoValue = ({
 
   return (
     <DetailItem title='Value'>
-      {formattedTxValue} {egldLabel}{' '}
-      <span className='text-secondary'>
-        {transaction.price !== undefined ? (
-          <>
-            (
-            {getUsdValue({
-              amount: txValue,
-              usd: transaction.price,
-              decimals: 2,
-              addEqualSign: true
-            })}
-            )
-          </>
-        ) : (
-          <>N/A</>
-        )}
+      <span data-testid='transactionInfoValue'>
+        {formattedTxValue} {egldLabel}{' '}
+        <span className='text-secondary'>
+          {transaction.price != null ? (
+            <>
+              (
+              {getUsdValue({
+                amount: txValue,
+                usd: transaction.price,
+                decimals: 2,
+                addEqualSign: true
+              })}
+              )
+            </>
+          ) : (
+            <>{N_A}</>
+          )}
+        </span>
       </span>
     </DetailItem>
   );

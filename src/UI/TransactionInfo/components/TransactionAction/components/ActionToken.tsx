@@ -31,7 +31,7 @@ export const ActionToken = ({
         return (
           <div>
             <span>SFT quantity</span>
-            <TransactionActionBlock.Nft {...props} />
+            <TransactionActionBlock.Nft {...props} badgeText={null} />
             <span>of collection</span>
             <TransactionActionBlock.Collection token={token} />
           </div>
@@ -48,7 +48,7 @@ export const ActionToken = ({
         return (
           <div>
             <span>NFT</span>
-            <TransactionActionBlock.Nft {...props} />
+            <TransactionActionBlock.Nft {...props} badgeText={null} />
             <span>of collection</span>
             <TransactionActionBlock.Collection token={token} />
           </div>

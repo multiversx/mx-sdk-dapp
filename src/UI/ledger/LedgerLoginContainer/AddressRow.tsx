@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import globalStyles from 'assets/sass/main.scss';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
@@ -46,7 +46,7 @@ export const AddressRow = ({
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     fetchBalance();
   }, []);
 

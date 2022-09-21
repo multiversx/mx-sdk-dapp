@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DappModal } from 'UI/DappModal/components/DappModal';

@@ -13,7 +13,7 @@ import {
   TransactionShardsTransition,
   TransactionValue
 } from '.';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 export interface TransactionRowPropsTypes {
   transaction: InterpretedTransactionType;

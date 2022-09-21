@@ -1,4 +1,5 @@
 import BigNumber from 'bignumber.js';
+import { ZERO } from 'constants/index';
 import {
   TransactionActionType,
   UnwrapperType,
@@ -53,7 +54,7 @@ export const mexUnwrapper = (
         { token: action.arguments?.transfers }
       ];
     case TransactionActionsEnum.mergeLockedAssetTokens:
-      let value = '0';
+      let value = ZERO;
       if (action.arguments?.transfers) {
         const values = action.arguments.transfers.map(
           ({ value }: { value: string }) => value

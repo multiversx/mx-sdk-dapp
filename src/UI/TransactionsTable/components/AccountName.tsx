@@ -1,21 +1,21 @@
-import * as React from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { AssetType } from 'types/account.types';
-import { Trim } from '../../Trim';
+import { Trim } from 'UI/Trim/Trim';
 
 export type AccountNamePropsType = {
   address: string;
   assets?: AssetType;
-  dataTestId?: string;
   color?: 'muted' | 'secondary' | string;
+  ['data-testid']?: string;
 };
 
 export const AccountName = ({
   address,
   assets,
-  dataTestId,
-  color
+  color,
+  ...rest // data-testid
 }: AccountNamePropsType) => {
   if (assets && assets.name) {
     const name = assets.name.replace(/\p{Emoji}/gu, '');
@@ -25,11 +25,7 @@ export const AccountName = ({
         className={classNames(globalStyles.textTruncate, {
           [`text-${color}`]: color
         })}
-        {...(dataTestId
-          ? {
-              dataTestId
-            }
-          : {})}
+        {...rest}
         title={description}
       >
         {name}
@@ -37,15 +33,5 @@ export const AccountName = ({
     );
   }
 
-  return (
-    <Trim
-      text={address}
-      color={color}
-      {...(dataTestId
-        ? {
-            dataTestId
-          }
-        : {})}
-    />
-  );
+  return <Trim text={address} color={color} {...rest} />;
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { N_A } from 'constants/index';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { useDataDecode, DataDecodeType } from 'utils';
 
@@ -18,7 +19,7 @@ export const DataDecode = (
     decodeOptions
   } = useDataDecode(props);
 
-  const showSelect = value && value !== 'N/A';
+  const showSelect = value && value !== N_A;
 
   return (
     <div className='position-relative data-decode mt-1'>

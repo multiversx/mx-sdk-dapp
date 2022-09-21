@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { EventType } from 'types/serverTransactions.types';
@@ -34,7 +34,7 @@ export const EventsList = ({
 
   const initialDecodeMethod = getEventListInitialDecodeMethod();
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (ref.current && ref.current !== null) {
       window.scrollTo({
         top: ref.current.getBoundingClientRect().top - 70,

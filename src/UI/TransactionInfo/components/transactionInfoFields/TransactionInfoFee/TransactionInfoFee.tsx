@@ -1,4 +1,5 @@
 import React from 'react';
+import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
@@ -21,7 +22,7 @@ export const TransactionInfoFee = ({
           input: txFee,
           showLastNonZeroDecimal: true
         })
-      : 'N/A';
+      : N_A;
 
   const price =
     transaction.price != null ? (
@@ -36,7 +37,7 @@ export const TransactionInfoFee = ({
         )
       </>
     ) : (
-      <>N/A</>
+      <>{N_A}</>
     );
 
   const fee =
@@ -46,8 +47,12 @@ export const TransactionInfoFee = ({
         <span className='text-secondary'>{price}</span>
       </>
     ) : (
-      <span className='text-secondary'>N/A</span>
+      <span className='text-secondary'>{N_A}</span>
     );
 
-  return <DetailItem title='Transaction Fee'>{fee}</DetailItem>;
+  return (
+    <DetailItem title='Transaction Fee'>
+      <span data-testid='transactionInfoFee'>{fee}</span>
+    </DetailItem>
+  );
 };
