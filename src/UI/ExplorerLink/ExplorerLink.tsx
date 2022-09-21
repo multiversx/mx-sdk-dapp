@@ -25,9 +25,8 @@ export const ExplorerLink = ({
     network: { explorerAddress }
   } = useGetNetworkConfig();
 
-  const defaultContent = useMemo(
-    () => text ?? <FontAwesomeIcon icon={faSearch} className={styles.search} />,
-    [text]
+  const defaultContent = text ?? (
+    <FontAwesomeIcon icon={faSearch} className={styles.search} />
   );
 
   const link = getExplorerLink({
