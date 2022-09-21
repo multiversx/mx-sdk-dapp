@@ -5,7 +5,7 @@ import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 interface TransactionMethodPropsTypes {
   transaction: InterpretedTransactionType;
