@@ -5,6 +5,7 @@ import {
   TransactionActionsEnum
 } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
+import { formatAmount } from 'utils/operations';
 import { getTransactionTokens } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens';
 import {
   EgldValueDataType,
@@ -135,7 +136,8 @@ export const getTransactionValue = ({
   }
   return {
     egldValueData: {
-      value: transaction.value
+      value: transaction.value,
+      formattedValue: formatAmount({ input: transaction.value })
     }
   };
 };

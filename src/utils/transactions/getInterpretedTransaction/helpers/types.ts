@@ -21,4 +21,5 @@ export interface TokenValueDataType extends ESDTValueDataType {
 
 export interface EgldValueDataType {
   value: string;
+  formattedValue: string;
 }
