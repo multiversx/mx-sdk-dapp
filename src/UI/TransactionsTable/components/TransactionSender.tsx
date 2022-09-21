@@ -14,7 +14,7 @@ import { ScAddressIcon } from './ScAddressIcon';
 import { ShardSpan } from './ShardSpan';
 
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 interface TransactionSenderPropsTypes {
   transaction: InterpretedTransactionType;

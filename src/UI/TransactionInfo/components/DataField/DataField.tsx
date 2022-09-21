@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { N_A } from 'constants/index';
 import { ScamInfoType } from 'types/account.types';
 import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/index';

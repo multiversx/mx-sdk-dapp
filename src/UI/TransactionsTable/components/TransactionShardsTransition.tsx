@@ -6,7 +6,7 @@ import { ExplorerLink } from 'UI/ExplorerLink';
 import { ShardSpan } from './ShardSpan';
 
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 interface TransactionShardsTransitionProps {
   transaction: InterpretedTransactionType;

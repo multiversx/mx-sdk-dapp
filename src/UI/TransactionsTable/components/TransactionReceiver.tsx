@@ -11,7 +11,7 @@ import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 interface TransactionReceiverPropsTypes {
   transaction: InterpretedTransactionType;

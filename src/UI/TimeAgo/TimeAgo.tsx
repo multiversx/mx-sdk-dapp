@@ -3,7 +3,7 @@ import React from 'react';
 import { timeAgo } from 'utils/operations/timeRemaining';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 
-import styles from '../TransactionsTable/components/transactionsTableStyles.scss';
+import styles from '../TransactionsTable/components/transactionsTable.styles.scss';
 
 export interface TimeAgoPropsTypes {
   value: number;

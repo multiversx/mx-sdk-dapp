@@ -7,7 +7,7 @@ import { Trim } from 'UI/Trim/Trim';
 import { TransactionIcon } from './TransactionIcon';
 
 import globalStyles from 'assets/sass/main.scss';
-import styles from './transactionsTableStyles.scss';
+import styles from './transactionsTable.styles.scss';
 
 interface TransactionHashPropsTypes {
   transaction: InterpretedTransactionType;
