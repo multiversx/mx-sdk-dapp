@@ -39,6 +39,9 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
   const hasNoDecimals = valueParts.length === 1;
   const isNotZero = formattedValue !== ZERO;
 
+  // fill in zeros to match specific formatting
+  // example: if DIGITS are 2, `0.1` will be turned into `0.10`
+  // to take up the same amount of space in a right-aligned table cell
   if (digits > 0 && hasNoDecimals && isNotZero) {
     let zeros = '';
 
@@ -72,7 +75,7 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
           )}
           data-testid='formatAmountSymbol'
         >
-          {props.token ? ` ${props.token}` : ` ${erdLabel}`}
+          {` ${props.token ?? erdLabel}`}
         </span>
       )}
     </span>
