@@ -6,13 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[2.1.0-rc1](https://github.com/ElrondNetwork/dapp-core/pull/424)] - 2022-09-21
+
 
 - [Added documentation about registering a websocket listener](https://github.com/ElrondNetwork/dapp-core/pull/423)
 - [Updated @elrondnetwork/erdjs-wallet-connect-provider to 2.1.0-beta.1 with @walletconnect 2.0.0-rc.3](https://github.com/ElrondNetwork/dapp-core/pull/422)
+- [Added option for showing equal sign in front of computed USD value by `getUsdValue` function](https://github.com/ElrondNetwork/dapp-core/pull/421)
 - [Fixed fetching transaction count and smart contract results count from accounts endpoint](https://github.com/ElrondNetwork/dapp-core/pull/420)
 - [Added extra actions names](https://github.com/ElrondNetwork/dapp-core/pull/419)
-- [Added option for showing equal sign in front of computed USD value by `getUsdValue` function](https://github.com/ElrondNetwork/dapp-core/pull/421)
-
+- [Added transaction interpreter functions and UI components (rc1)](https://github.com/ElrondNetwork/dapp-core/pull/418)
 ## [[2.0.4](https://github.com/ElrondNetwork/dapp-core/pull/416)] - 2022-09-12
 
 - [Fixed navigating after pressing Cancel on sign modal](https://github.com/ElrondNetwork/dapp-core/pull/415)

@@ -15,7 +15,7 @@ import {
 } from '.';
 import styles from './transactionsTable.styles.scss';
 
-export interface TransactionRowPropsTypes {
+export interface TransactionRowType {
   transaction: InterpretedTransactionType;
   showDirectionCol?: boolean;
   showLockedAccounts?: boolean;
@@ -29,29 +29,35 @@ export const TransactionRow = (props: TransactionRowPropsTypes) => {
       <td>
         <TransactionHash transaction={transaction} />
       </td>
+
       <td>
         <TimeAgo value={transaction.timestamp} short tooltip />
       </td>
+
       <td>
         <TransactionShardsTransition transaction={transaction} />
       </td>
+
       <td>
         <TransactionSender
           transaction={transaction}
           showLockedAccounts={showLockedAccounts}
         />
       </td>
+
       {showDirectionCol && (
         <td>
           <TransactionDirectionBadge transaction={transaction} />
         </td>
       )}
+
       <td>
         <TransactionReceiver
           transaction={transaction}
           showLockedAccounts={showLockedAccounts}
         />
       </td>
+
       <td className={styles.transactionFunction}>
         <TransactionMethod transaction={transaction} />
       </td>

@@ -6,3 +6,4 @@ export * from './calculateFeeLimit';
 export * from './getUsdValue';
 export * from './pipe';
 export * from './timeRemaining';
+export * from './truncate';
