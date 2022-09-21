@@ -177,7 +177,7 @@ export const useSignTransactions = () => {
       );
 
       if (shouldRedirectAfterSign) {
-        safeRedirect(redirectRoute);
+        safeRedirect(redirectRoute, 1000);
       }
     } catch (error) {
       const errorMessage =
