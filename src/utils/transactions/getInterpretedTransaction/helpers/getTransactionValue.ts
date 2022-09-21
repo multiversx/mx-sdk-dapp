@@ -6,9 +6,20 @@ import {
 } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { getTransactionTokens } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens';
+import {
+  EgldValueDataType,
+  NFTValueDataType,
+  TokenValueDataType
+} from 'utils/transactions/getInterpretedTransaction/helpers/types';
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
+
+interface GetTransactionValueReturnType {
+  egldValueData?: EgldValueDataType;
+  tokenValueData?: TokenValueDataType;
+  nftValueData?: NFTValueDataType;
+}
 
 const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
   const tokensArray = transactionTokens.map((transactionToken) => {
@@ -51,7 +62,7 @@ export const getTransactionValue = ({
 }: {
   transaction: InterpretedTransactionType;
   hideMultipleBadge?: boolean;
-}) => {
+}): GetTransactionValueReturnType => {
   if (transaction.action) {
     if (
       transaction.action.name === TransactionActionsEnum.wrapEgld ||
