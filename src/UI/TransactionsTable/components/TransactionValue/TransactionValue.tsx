@@ -63,12 +63,14 @@ export const TransactionValue = ({
       </TokenWrapper>
     );
   }
-
-  return (
-    <FormatAmount
-      value={egldValueData.value}
-      digits={2}
-      data-testid='transactionValue'
-    />
-  );
+  if (egldValueData) {
+    return (
+      <FormatAmount
+        value={egldValueData.value}
+        digits={2}
+        data-testid='transactionValue'
+      />
+    );
+  }
+  return null;
 };
