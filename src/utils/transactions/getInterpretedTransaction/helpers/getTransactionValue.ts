@@ -71,7 +71,9 @@ export const getTransactionValue = ({
     ) {
       return {
         egldValueData: {
-          value: transaction.value
+          value: transaction.value,
+          formattedValue: formatAmount({ input: transaction.value }),
+          decimals: DECIMALS
         }
       };
     }
@@ -137,7 +139,8 @@ export const getTransactionValue = ({
   return {
     egldValueData: {
       value: transaction.value,
-      formattedValue: formatAmount({ input: transaction.value })
+      formattedValue: formatAmount({ input: transaction.value }),
+      decimals: DECIMALS
     }
   };
 };
