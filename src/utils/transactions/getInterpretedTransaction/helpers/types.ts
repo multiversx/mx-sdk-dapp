@@ -2,8 +2,8 @@ import { TokenArgumentType } from 'types';
 
 export interface ESDTValueDataType {
   tokenFormattedAmount: string | null;
-  tokenExplorerLink?: string;
-  tokenLinkText?: string;
+  tokenExplorerLink: string;
+  tokenLinkText: string;
   transactionTokens: TokenArgumentType[];
   token: TokenArgumentType;
   value: string | null;

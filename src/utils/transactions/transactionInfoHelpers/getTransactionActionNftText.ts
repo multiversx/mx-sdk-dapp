@@ -12,7 +12,7 @@ export interface TransactionActionNftReturnType {
   badgeText: string | null;
   tokenFormattedAmount: string | null;
   tokenExplorerLink: string;
-  tokenLinkText?: string;
+  tokenLinkText: string;
   token: TokenArgumentType;
   showLastNonZeroDecimal?: boolean;
   noValue?: boolean;
@@ -55,7 +55,9 @@ export function getTransactionActionNftText({
   );
 
   const tokenLinkText =
-    token.ticker === token.collection ? token.identifier : token.ticker;
+    token.ticker === token.collection
+      ? token.identifier ?? token.ticker
+      : token.ticker;
 
   return {
     badgeText,
