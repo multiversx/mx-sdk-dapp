@@ -16,7 +16,7 @@ import { getTransactionActionNftText } from 'utils/transactions/transactionInfoH
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
-interface GetTransactionValueReturnType {
+export interface GetTransactionValueReturnType {
   egldValueData?: EgldValueDataType;
   tokenValueData?: TokenValueDataType;
   nftValueData?: NFTValueDataType;
