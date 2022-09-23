@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   InterpretedTransactionType,
   OperationType,
@@ -9,13 +10,16 @@ import { FormatAmount } from 'UI/FormatAmount';
 import { DetailedItem } from './DetailedItem';
 import { OperationToken } from './OperationToken';
 
-export const OperationRow = ({
-  operation,
-  transaction
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+interface OperationRowPropsTypes {
   operation: OperationType;
   transaction: InterpretedTransactionType;
-}) => {
+}
+
+export const OperationRow = (props: OperationRowPropsTypes) => {
+  const { operation, transaction } = props;
+
   switch (operation.type) {
     case VisibleTransactionOperationType.nft:
     case VisibleTransactionOperationType.esdt:
@@ -23,11 +27,13 @@ export const OperationRow = ({
         <DetailedItem operation={operation} transaction={transaction}>
           <>
             {operation.esdtType === NftEnumType.NonFungibleESDT && (
-              <div className='mr-1'>NFT</div>
+              <div className={globalStyles.mr1}>NFT</div>
             )}
+
             {operation.esdtType === NftEnumType.SemiFungibleESDT && (
-              <div className='mr-1'>SFT quantity</div>
+              <div className={globalStyles.mr1}>SFT quantity</div>
             )}
+
             <OperationToken operation={operation} />
           </>
         </DetailedItem>
@@ -37,7 +43,8 @@ export const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            <div className='mr-2'>Value</div>
+            <div className={globalStyles.mr2}>Value</div>
+
             <FormatAmount value={operation.value} showLastNonZeroDecimal />
           </>
         </DetailedItem>

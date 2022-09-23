@@ -1,9 +1,13 @@
 import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import { N_A } from 'constants/index';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { useDataDecode, DataDecodeType } from 'utils';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export const DataDecode = (
   props: DataDecodeType & {
@@ -41,14 +45,16 @@ export const DataDecode = (
           ))}
         </select>
       )}
+
       {validationWarnings.map((warning: string, i: number) => (
         <div key={i} className='d-flex align-items-center mt-1 text-break-all'>
           <FontAwesomeIcon
             icon={faExclamationTriangle}
             size='xs'
-            className='text-warning mr-1'
+            className={classNames(globalStyles.textWarning, globalStyles.mr1)}
           />
-          <small className='text-warning'> {warning}</small>
+
+          <small className={globalStyles.textWarning}> {warning}</small>
         </div>
       ))}
     </div>

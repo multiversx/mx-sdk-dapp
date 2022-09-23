@@ -5,7 +5,7 @@ import {
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import globalStyles from 'assets/sass/main.scss';
+
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
@@ -17,6 +17,8 @@ import { getEgldLabel, isTokenTransfer } from 'utils';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export interface SignStepType extends WithClassnameType {
   onSignTransaction: () => void;
@@ -125,7 +127,7 @@ export const SignStep = ({
                 <ProgressSteps
                   totalSteps={allTransactions.length}
                   currentStep={currentStep + 1} // currentStep starts at 0
-                  className='mb-4'
+                  className={globalStyles.mb4}
                 />
               )}
 
@@ -155,14 +157,14 @@ export const SignStep = ({
                       tokenAvatar={tokenAvatar}
                       token={tokenId || egldLabel}
                     />
-                    <div className='mr-1'></div>
+                    <div className={globalStyles.mr1}></div>
                     <TokenDetails.Label token={tokenId || egldLabel} />
                   </div>
                 </div>
                 <div>
                   <div className={classes.tokenAmountLabel}>Amount</div>
                   <div className={classes.tokenAmountValue}>
-                    <div className='mr-1'>{formattedAmount}</div>
+                    <div className={globalStyles.mr1}>{formattedAmount}</div>
                     <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>

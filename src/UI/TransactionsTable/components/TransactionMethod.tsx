@@ -31,8 +31,7 @@ export const TransactionMethod = (props: TransactionMethodPropsTypes) => {
           className={classNames(
             globalStyles.badge,
             globalStyles.badgeSecondary,
-            globalStyles.badgePill,
-            globalStyles.fontWeightLight
+            globalStyles.badgePill
           )}
         >
           <div

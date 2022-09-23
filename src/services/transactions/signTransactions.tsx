@@ -17,6 +17,8 @@ import {
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
+import globalStyles from 'assets/sass/main.scss';
+
 export function signTransactions({
   transactions,
   callbackRoute,
@@ -41,7 +43,7 @@ export function signTransactions({
   if (!hasSufficientFunds) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,
-      iconClassName: 'text-warning',
+      iconClassName: globalStyles.textWarning,
       title: 'Insufficient EGLD funds',
       description: 'Current EGLD balance cannot cover the transaction fees.'
     };
@@ -56,7 +58,7 @@ export function signTransactions({
   if (!hasValidChainId) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,
-      iconClassName: 'text-warning',
+      iconClassName: globalStyles.textWarning,
       title: 'Network change detected',
       description: 'The application tried to change the transaction network'
     };

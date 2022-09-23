@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import { MINIBLOCKS_ENDPOINT } from 'apiCalls/endpoints';
 import { N_A } from 'constants/index';
 
@@ -8,26 +10,38 @@ import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim';
 import { DetailItem } from '../../DetailItem';
 
-export const TransactionInfoMiniblock = ({
-  transaction
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+interface TransactionInfoMiniblockPropsTypes {
   transaction: InterpretedTransactionType;
-}) => {
+}
+
+export const TransactionInfoMiniblock = (
+  props: TransactionInfoMiniblockPropsTypes
+) => {
+  const { transaction } = props;
+
   return (
     <DetailItem title='Miniblock'>
-      <div className='d-flex align-items-center'>
+      <div
+        className={classNames(
+          globalStyles.dFlex,
+          globalStyles.alignItemsCenter
+        )}
+      >
         {transaction.miniBlockHash ? (
           <>
             <ExplorerLink
               page={`/${MINIBLOCKS_ENDPOINT}/${transaction.miniBlockHash}`}
-              className='trim-wrapper'
+              className={globalStyles.trimWrapper}
             >
               <Trim text={transaction.miniBlockHash} />
             </ExplorerLink>
+
             <CopyButton text={transaction.miniBlockHash} />
           </>
         ) : (
-          <span className='text-secondary'>{N_A}</span>
+          <span className={globalStyles.textSecondary}>{N_A}</span>
         )}
       </div>
     </DetailItem>

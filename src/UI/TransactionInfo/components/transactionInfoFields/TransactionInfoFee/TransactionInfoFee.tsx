@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
@@ -8,11 +9,14 @@ import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/get
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { DetailItem } from '../../DetailItem';
 
-export const TransactionInfoFee = ({
-  transaction
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+interface TransactionInfoFeePropsTypes {
   transaction: InterpretedTransactionType;
-}) => {
+}
+
+export const TransactionInfoFee = (props: TransactionInfoFeePropsTypes) => {
+  const { transaction } = props;
   const egldLabel = getEgldLabel();
   const txFee = getTransactionFee(transaction);
 
@@ -25,29 +29,23 @@ export const TransactionInfoFee = ({
       : N_A;
 
   const price =
-    transaction.price != null ? (
-      <>
-        (
-        {getUsdValue({
+    transaction.price != null
+      ? getUsdValue({
           amount: transactionFee,
           usd: transaction.price,
           decimals: 4,
           addEqualSign: true
-        })}
-        )
-      </>
-    ) : (
-      <>{N_A}</>
-    );
+        })
+      : N_A;
 
   const fee =
     transaction.gasUsed != null ? (
       <>
         {transactionFee} {egldLabel}{' '}
-        <span className='text-secondary'>{price}</span>
+        <span className={globalStyles.textSecondary}>{price}</span>
       </>
     ) : (
-      <span className='text-secondary'>{N_A}</span>
+      <span className={globalStyles.textSecondary}>{N_A}</span>
     );
 
   return (

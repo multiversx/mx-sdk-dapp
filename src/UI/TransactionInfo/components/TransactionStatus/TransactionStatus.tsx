@@ -7,11 +7,19 @@ import {
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import {
   getTransactionStatus,
   getTransactionStatusText
 } from 'utils/transactions/transactionInfoHelpers';
+
+import globalStyles from 'assets/sass/main.scss';
+
+interface TransactionStatusPropsTypes {
+  transaction: InterpretedTransactionType;
+}
 
 export const getStatusIconAndColor = (
   transaction: InterpretedTransactionType
@@ -60,16 +68,21 @@ export const getStatusIconAndColor = (
   };
 };
 
-export const TransactionStatus = ({
-  transaction
-}: {
-  transaction: InterpretedTransactionType;
-}) => {
+export const TransactionStatus = (props: TransactionStatusPropsTypes) => {
+  const { transaction } = props;
   const { Icon } = getStatusIconAndColor(transaction);
 
   return (
-    <span className='d-flex align-items-center text-capitalize mr-2'>
+    <span
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.alignItemsCenter,
+        globalStyles.textCapitalize,
+        globalStyles.mr2
+      )}
+    >
       <Icon />
+
       {getTransactionStatusText(transaction)}
     </span>
   );

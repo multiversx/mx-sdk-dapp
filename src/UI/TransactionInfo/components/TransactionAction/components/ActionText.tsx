@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import globalStyles from 'assets/sass/main.scss';
 
 import {
   InterpretedTransactionType,
@@ -15,32 +14,44 @@ import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 import { ActionToken } from './ActionToken';
 
-export const ActionText = ({
-  entry,
-  transaction
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+interface ActionTextPropsTypes {
   entry: any;
   transaction: InterpretedTransactionType;
-}) => {
+}
+
+export const ActionText = (props: ActionTextPropsTypes) => {
+  const { entry, transaction } = props;
+
   switch (true) {
     case typeof entry === 'string':
       return <span>{entry.replace('eGLD', 'EGLD')}</span>;
 
     case Boolean(entry.address):
       let entryAssets;
+
       if (entry.address === transaction.sender) {
         entryAssets = transaction.senderAssets;
       }
+
       if (entry.address === transaction.receiver) {
         entryAssets = transaction.receiverAssets;
       }
+
       return addressIsValid(entry.address) ? (
-        <div className='d-flex align-items-center'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           <ScAddressIcon initiator={entry.address} />
+
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(entry.address)}
             data-testid='receiverLink'
-            className='trim-wrapper'
+            className={globalStyles.trimWrapper}
           >
             <AccountName address={entry.address} assets={entryAssets} />
           </ExplorerLink>
@@ -54,6 +65,7 @@ export const ActionText = ({
         return (
           <div key={`tx-${token.identifier}-${index}`}>
             <ActionToken token={token} showLastNonZeroDecimal />
+
             {index < entry.token.length - 1 && (
               <span className='ml-n1 mr-1 d-none d-sm-flex'>,</span>
             )}
@@ -66,6 +78,7 @@ export const ActionText = ({
         (tokenNoValue: TokenArgumentType, index: number) => (
           <div key={`tx-${tokenNoValue.token}-${index}`}>
             <ActionToken token={tokenNoValue} noValue showLastNonZeroDecimal />
+
             {index < entry.tokenNoValue.length - 1 && (
               <span className='ml-n1 mr-1 d-none d-sm-flex'>,</span>
             )}
@@ -77,7 +90,8 @@ export const ActionText = ({
       return entry.tokenNoLink.map(
         (tokenNoLink: TokenArgumentType, index: number) => (
           <div key={`tx-${tokenNoLink.token}-${index}`}>
-            <span className='mr-1'>{tokenNoLink.ticker}</span>
+            <span className={globalStyles.mr1}>{tokenNoLink.ticker}</span>
+
             {index < entry.tokenNoLink.length - 1 && (
               <span className='ml-n1 mr-1 d-none d-sm-flex'>,</span>
             )}
@@ -110,8 +124,9 @@ export const ActionText = ({
         globalStyles.mrLg1,
         globalStyles.roundedCircle
       );
+
       return (
-        <span className='d-flex'>
+        <span className={globalStyles.dFlex}>
           <ExplorerLink
             page={explorerUrlBuilder.providerDetails(transaction.receiver)}
             className='d-flex align-self-center'
@@ -121,6 +136,7 @@ export const ActionText = ({
             ) : (
               <DefaultAvatar className={className} />
             )}
+
             {entry.providerName}
           </ExplorerLink>
         </span>

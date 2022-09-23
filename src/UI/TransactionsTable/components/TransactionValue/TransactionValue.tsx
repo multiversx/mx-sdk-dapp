@@ -1,13 +1,15 @@
 import React, { ReactNode } from 'react';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import classNames from 'classnames';
 
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
 
+import globalStyles from 'assets/sass/main.scss';
 import styles from '../transactionsTable.styles.scss';
 
 interface TokenWrapperPropsTypes {
@@ -25,7 +27,7 @@ const TokenWrapper = (props: TokenWrapperPropsTypes) => {
 
   return (
     <div
-      className='transaction-value d-flex align-items-center'
+      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
       data-testid='transactionValue'
     >
       {children}
@@ -34,7 +36,7 @@ const TokenWrapper = (props: TokenWrapperPropsTypes) => {
         <FontAwesomeIcon
           icon={faLayerGroup}
           data-testid='transactionValueIcon'
-          className='ml-2 text-secondary'
+          className={classNames(globalStyles.ml2, globalStyles.textSecondary)}
           title={titleText}
         />
       )}

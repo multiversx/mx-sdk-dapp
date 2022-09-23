@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { ScAddressIcon } from 'UI/TransactionsTable/components';
@@ -7,20 +9,35 @@ import { addressIsValid } from 'utils';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 import { DetailItem } from '../DetailItem';
 
-export const AddressDetailItem = ({ address }: { address: string }) => {
+import globalStyles from 'assets/sass/main.scss';
+
+interface AddressDetailItemPropsTypes {
+  address: string;
+}
+
+export const AddressDetailItem = (props: AddressDetailItemPropsTypes) => {
+  const { address } = props;
+
   return (
     <DetailItem title='Address' noBorder>
-      <div className='d-flex align-items-center'>
+      <div
+        className={classNames(
+          globalStyles.dFlex,
+          globalStyles.alignItemsCenter
+        )}
+      >
         <ScAddressIcon initiator={address} />
+
         {addressIsValid(address) && (
           <>
             <ExplorerLink
               page={explorerUrlBuilder.accountDetails(address)}
-              className='trim-wrapper'
+              className={globalStyles.trimWrapper}
             >
               <Trim text={address} />
             </ExplorerLink>
-            <CopyButton className='mr-2' text={address} />
+
+            <CopyButton className={globalStyles.mr2} text={address} />
           </>
         )}
       </div>
