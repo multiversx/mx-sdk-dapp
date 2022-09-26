@@ -6,12 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Added logic to extract transaction value for staking operations](https://github.com/ElrondNetwork/dapp-core/pull/432)
 ## [[2.1.0-rc2](https://github.com/ElrondNetwork/dapp-core/pull/428)] - 2022-09-22
 
 
 - [Added interfaces for `getTransactionValue`](https://github.com/ElrondNetwork/dapp-core/pull/427)
 
-## [Unreleased]
 ## [[2.1.0-rc1](https://github.com/ElrondNetwork/dapp-core/pull/424)] - 2022-09-21
 
 
