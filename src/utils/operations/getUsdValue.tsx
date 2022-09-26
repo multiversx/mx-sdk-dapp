@@ -1,16 +1,14 @@
-export interface UsdValueType {
-  amount: string;
-  usd: number;
-  decimals?: number;
-  addEqualSign?: boolean;
-}
-
 export const getUsdValue = ({
   amount,
   usd,
   decimals = 2,
   addEqualSign
-}: UsdValueType) => {
+}: {
+  amount: string;
+  usd: number;
+  decimals?: number;
+  addEqualSign?: boolean;
+}) => {
   const sum = (parseFloat(amount) * usd).toFixed(decimals);
   const formattedValue = parseFloat(sum).toLocaleString('en', {
     maximumFractionDigits: decimals,
