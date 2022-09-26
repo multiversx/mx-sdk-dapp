@@ -6,8 +6,14 @@ import { getMockTransactionByIndex } from './getMockTransactionByIndex';
 describe('TransactionsValue tests', () => {
   const transactions: { [key: string]: string } = {
     0: '14.16 xEGLD',
-    1: '0 xEGLD',
-    9: '1.00 xEGLD'
+    9: '1.00 xEGLD',
+    // legacy delegation
+    19: '20.00 xEGLD', // unStake
+    22: '20.00 xEGLD', // unBond
+    // stake transactions
+    1: '5.00 xEGLD', // unDelegate
+    20: '0.06 xEGLD', // claimRewards
+    21: '0.39 xEGLD' // reDelegateRewards
   };
 
   for (let i = 0; i < Object.keys(transactions).length; i++) {
