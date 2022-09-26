@@ -2,15 +2,26 @@ import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { ZERO } from 'constants/index';
-import { getUsdValue, UsdValueType } from 'utils/operations/getUsdValue';
+import { getUsdValue } from 'utils/operations/getUsdValue';
 import { WithClassnameType } from '../types';
 
-export const UsdValue = (
-  props: UsdValueType & {
-    'data-testid'?: string;
-  } & WithClassnameType
-) => {
-  const { amount, usd, decimals, addEqualSign, ...dataTestId } = props;
+export interface UsdValueType {
+  amount: string;
+  usd: number;
+  decimals?: number;
+  addEqualSign?: boolean;
+  'data-testid'?: string;
+}
+
+export const UsdValue = (props: UsdValueType & WithClassnameType) => {
+  const {
+    amount,
+    usd,
+    decimals,
+    addEqualSign,
+    className,
+    ...dataTestId
+  } = props;
   const value = getUsdValue({
     amount,
     usd,
@@ -26,7 +37,7 @@ export const UsdValue = (
         globalStyles.formText,
         globalStyles.textSecondary,
         globalStyles.mt0,
-        props.className ?? 'dapp-usd-value'
+        className ?? 'dapp-usd-value'
       )}
       {...dataTestId}
     >
