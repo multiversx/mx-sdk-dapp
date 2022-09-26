@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[2.1.0-rc3](https://github.com/ElrondNetwork/dapp-core/pull/433)] - 2022-09-26
+
+- [Added logic to extract transaction value for staking operations](https://github.com/ElrondNetwork/dapp-core/pull/432)
+- [Fixed `UsdValue` intelisense](https://github.com/ElrondNetwork/dapp-core/pull/431)
 - [Delegate redirecting after signing to `TreansactionSender`](https://github.com/ElrondNetwork/dapp-core/pull/430)
 ## [[2.1.0-rc2](https://github.com/ElrondNetwork/dapp-core/pull/428)] - 2022-09-22
 
