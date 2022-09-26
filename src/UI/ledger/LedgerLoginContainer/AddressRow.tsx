@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react';
-import globalStyles from 'assets/sass/main.scss';
+import React, { useEffect, useState, SyntheticEvent } from 'react';
+import classNames from 'classnames';
+
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { WithClassnameType } from '../../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 interface AddressRowType extends WithClassnameType {
   selectedAddress?: string;
@@ -21,16 +24,18 @@ const trimHash = (hash: string, keep = 10) => {
 
 const noBalance = '...';
 
-export const AddressRow = ({
-  address,
-  index,
-  selectedAddress,
-  onSelectAddress,
-  className = 'dapp-ledger-address-row'
-}: AddressRowType) => {
-  const [balance, setBalance] = React.useState(noBalance);
+export const AddressRow = (props: AddressRowType) => {
+  const {
+    address,
+    index,
+    selectedAddress,
+    onSelectAddress,
+    className = 'dapp-ledger-address-row'
+  } = props;
 
-  const handleChange = (e: React.SyntheticEvent) => {
+  const [balance, setBalance] = useState(noBalance);
+
+  const handleChange = (e: SyntheticEvent) => {
     const { checked } = e.target as HTMLInputElement;
     if (checked) {
       onSelectAddress({ address, index });
@@ -54,12 +59,12 @@ export const AddressRow = ({
     <tr className={className}>
       <td className={globalStyles.textLeft}>
         <div
-          className={`
-            ${globalStyles.flexRow}
-            ${globalStyles.alignItemsStart}
-            ${globalStyles.textLeft}
-            ${globalStyles.formCheck}
-          `}
+          className={classNames(
+            globalStyles.flexRow,
+            globalStyles.alignItemsStart,
+            globalStyles.textLeft,
+            globalStyles.formCheck
+          )}
         >
           <input
             type='radio'
@@ -68,33 +73,39 @@ export const AddressRow = ({
             onChange={handleChange}
             role='button'
             checked={selectedAddress === address}
-            className={`${globalStyles.formCheckInput} ${globalStyles.mr1}`}
+            className={classNames(
+              globalStyles.formCheckInput,
+              globalStyles.mr1
+            )}
           />
+
           <label
             htmlFor={`check_${index}`}
             role='button'
             data-testid={`label_${index}`}
-            className={`
-              ${globalStyles.formCheckLabel}
-              ${globalStyles.textNowrap}
-              ${globalStyles.m0}
-            `}
+            className={classNames(
+              globalStyles.formCheckLabel,
+              globalStyles.textNowrap,
+              globalStyles.m0
+            )}
           >
             <div
-              className={`
-                ${globalStyles.flexRow}
-                ${globalStyles.alignItemsCenter}
-                ${globalStyles.textNowrap}
-              `}
+              className={classNames(
+                globalStyles.flexRow,
+                globalStyles.alignItemsCenter,
+                globalStyles.textNowrap
+              )}
             >
               <span>{trimHash(address)}</span>
             </div>
           </label>
         </div>
       </td>
+
       <td className={globalStyles.textLeft}>
         <FormatAmount value={balance} egldLabel={getEgldLabel()} />
       </td>
+
       <td className={globalStyles.textLeft}>{index}</td>
     </tr>
   );

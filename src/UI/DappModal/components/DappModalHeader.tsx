@@ -35,8 +35,13 @@ export const DappModalHeader = ({
       <div className={styles.dappModalHeaderText}>{headerText}</div>
 
       <button
-        className={`${styles.dappModalCloseButton} ${globalStyles.btn} ${globalStyles.btnLight} ${closeButtonClassName}`}
         onClick={onHide}
+        className={classNames(
+          styles.dappModalCloseButton,
+          globalStyles.btn,
+          globalStyles.btnLight,
+          closeButtonClassName
+        )}
       >
         <FontAwesomeIcon size='lg' icon={faTimes} />
       </button>

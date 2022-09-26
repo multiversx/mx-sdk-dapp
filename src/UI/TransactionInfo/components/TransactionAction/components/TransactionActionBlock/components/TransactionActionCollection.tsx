@@ -1,13 +1,21 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/explorerUrlBuilder';
 
-export const TransactionActionCollection = ({
-  token
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+interface TransactionActionCollection {
   token: TokenArgumentType;
-}) => {
+}
+
+export const TransactionActionCollection = (
+  props: TransactionActionCollection
+) => {
+  const { token } = props;
+
   if (!token.collection) {
     return null;
   }
@@ -15,12 +23,19 @@ export const TransactionActionCollection = ({
   return (
     <ExplorerLink
       page={explorerUrlBuilder.collectionDetails(token.collection)}
-      className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
+      className={classNames(globalStyles.dFlex, {
+        [globalStyles.sideLink]: token.svgUrl
+      })}
     >
       <div className='d-flex align-items-center symbol'>
         {token.svgUrl && (
-          <img src={token.svgUrl} alt={token.name} className='side-icon mr-1' />
+          <img
+            src={token.svgUrl}
+            alt={token.name}
+            className={classNames(globalStyles.sideIcon, globalStyles.mr1)}
+          />
         )}
+
         <span>{token.ticker}</span>
       </div>
     </ExplorerLink>

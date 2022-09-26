@@ -33,7 +33,6 @@ export const TransactionInfoMiniblock = (
           <>
             <ExplorerLink
               page={`/${MINIBLOCKS_ENDPOINT}/${transaction.miniBlockHash}`}
-              className={globalStyles.trimWrapper}
             >
               <Trim text={transaction.miniBlockHash} />
             </ExplorerLink>

@@ -1,25 +1,44 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import classNames from 'classnames';
+
 import {
   InterpretedTransactionType,
   OperationType
 } from 'types/serverTransactions.types';
 import { OperationText } from './OperationText';
 
-export const DetailedItem = ({
-  children,
-  operation,
-  transaction
-}: {
-  children?: React.ReactNode;
+import globalStyles from 'assets/sass/main.scss';
+
+interface DetailedItemPropsTypes {
+  children?: ReactNode;
   operation: OperationType;
   transaction: InterpretedTransactionType;
-}) => {
+}
+
+export const DetailedItem = (props: DetailedItemPropsTypes) => {
+  const { children, operation, transaction } = props;
+
   return (
     <div className='detailed-item d-flex row mb-3 mb-xl-2'>
       <OperationText operation={operation} transaction={transaction} />
+
       {children && (
-        <div className='col-lg-6 col-xl-6 d-flex align-items-center'>
-          <div className='d-flex text-truncate'>{children}</div>
+        <div
+          className={classNames(
+            globalStyles.colLg6,
+            globalStyles.colXl6,
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
+          <div
+            className={classNames(
+              globalStyles.dFlex,
+              globalStyles.textTruncate
+            )}
+          >
+            {children}
+          </div>
         </div>
       )}
     </div>

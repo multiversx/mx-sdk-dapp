@@ -51,7 +51,6 @@ export const ActionText = (props: ActionTextPropsTypes) => {
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(entry.address)}
             data-testid='receiverLink'
-            className={globalStyles.trimWrapper}
           >
             <AccountName address={entry.address} assets={entryAssets} />
           </ExplorerLink>
@@ -67,7 +66,16 @@ export const ActionText = (props: ActionTextPropsTypes) => {
             <ActionToken token={token} showLastNonZeroDecimal />
 
             {index < entry.token.length - 1 && (
-              <span className='ml-n1 mr-1 d-none d-sm-flex'>,</span>
+              <span
+                className={classNames(
+                  globalStyles.mlN1,
+                  globalStyles.mr1,
+                  globalStyles.dNone,
+                  globalStyles.dSmFlex
+                )}
+              >
+                ,
+              </span>
             )}
           </div>
         );
@@ -80,7 +88,16 @@ export const ActionText = (props: ActionTextPropsTypes) => {
             <ActionToken token={tokenNoValue} noValue showLastNonZeroDecimal />
 
             {index < entry.tokenNoValue.length - 1 && (
-              <span className='ml-n1 mr-1 d-none d-sm-flex'>,</span>
+              <span
+                className={classNames(
+                  globalStyles.mlN1,
+                  globalStyles.mr1,
+                  globalStyles.dNone,
+                  globalStyles.dSmFlex
+                )}
+              >
+                ,
+              </span>
             )}
           </div>
         )
@@ -93,7 +110,16 @@ export const ActionText = (props: ActionTextPropsTypes) => {
             <span className={globalStyles.mr1}>{tokenNoLink.ticker}</span>
 
             {index < entry.tokenNoLink.length - 1 && (
-              <span className='ml-n1 mr-1 d-none d-sm-flex'>,</span>
+              <span
+                className={classNames(
+                  globalStyles.mlN1,
+                  globalStyles.mr1,
+                  globalStyles.dNone,
+                  globalStyles.dSmFlex
+                )}
+              >
+                ,
+              </span>
             )}
           </div>
         )

@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import classNames from 'classnames';
+
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
@@ -8,19 +10,19 @@ import { AccountName } from 'UI/TransactionsTable/components';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 
-export const OperationBlock = ({
-  address,
-  transaction,
-  action,
-  isFullSize,
-  direction
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+interface OperationBlockPropsTypes {
   address: string;
   transaction: InterpretedTransactionType;
   action?: string;
   isFullSize?: boolean;
   direction?: string;
-}) => {
+}
+
+export const OperationBlock = (props: OperationBlockPropsTypes) => {
+  const { address, transaction, action, isFullSize, direction } = props;
+
   let operationAssets;
   if (address === transaction.sender) {
     operationAssets = transaction.senderAssets;
@@ -43,24 +45,26 @@ export const OperationBlock = ({
           {direction.toUpperCase()}
         </div>
       )}
+
       {action && (
         <FontAwesomeIcon
           icon={faCaretRight}
           size='xs'
-          className='text-secondary mr-2'
+          className={classNames(globalStyles.textSecondary, globalStyles.mr2)}
         />
       )}
-      <div className='mr-2 text-nowrap'>{action ? action : ''}</div>
+      <div className={classNames(globalStyles.textNowrap, globalStyles.mr2)}>
+        {action ? action : ''}
+      </div>
+
       {addressIsValid(address) ? (
-        <>
-          <ExplorerLink
-            page={explorerUrlBuilder.accountDetails(address)}
-            className='trim-wrapper'
-          >
+        <Fragment>
+          <ExplorerLink page={explorerUrlBuilder.accountDetails(address)}>
             <AccountName address={address} assets={operationAssets} />
           </ExplorerLink>
-          <CopyButton text={address} className='side-action ml-2' />
-        </>
+
+          <CopyButton text={address} className={globalStyles.ml2} />
+        </Fragment>
       ) : (
         ''
       )}

@@ -62,7 +62,6 @@ export const TransactionSender = (props: TransactionSenderPropsTypes) => {
           page={transaction.links.senderLink ?? ''}
           data-testid='senderLink'
           className={classNames(
-            globalStyles.trimWrapper,
             globalStyles.w100,
             styles.transactionCellOverflow,
             styles.transactionCellMargin,

@@ -1,25 +1,29 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './loginButtonStyles.scss';
 
 type LoginButtonProps = {
   onLogin: () => void;
   text?: string;
   btnClassName?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   disabled?: boolean;
 } & WithClassnameType;
 
-export const LoginButton = ({
-  onLogin,
-  text = 'Default Login Button',
-  className = 'dapp-login-button',
-  btnClassName = 'dapp-default-login-button',
-  disabled,
-  children
-}: LoginButtonProps) => {
+export const LoginButton = (props: LoginButtonProps) => {
+  const {
+    onLogin,
+    text = 'Default Login Button',
+    className = 'dapp-login-button',
+    btnClassName = 'dapp-default-login-button',
+    disabled,
+    children
+  } = props;
+
   const classes = {
     wrapper: classNames(
       globalStyles.btn,

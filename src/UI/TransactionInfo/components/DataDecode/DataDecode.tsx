@@ -47,7 +47,14 @@ export const DataDecode = (
       )}
 
       {validationWarnings.map((warning: string, i: number) => (
-        <div key={i} className='d-flex align-items-center mt-1 text-break-all'>
+        <div
+          key={i}
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter,
+            globalStyles.mt1
+          )}
+        >
           <FontAwesomeIcon
             icon={faExclamationTriangle}
             size='xs'

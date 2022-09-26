@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
+
 import styles from './unlockPageStyles.scss';
+import globalStyles from 'assets/sass/main.scss';
 
 export interface Props {
   title?: string;
@@ -20,16 +22,18 @@ export interface Props {
   description?: string | React.ReactNode;
 }
 
-export const UnlockPage = ({
-  loginRoute,
-  title = 'Login',
-  className = 'dapp-unlock-page',
-  LedgerLoginButtonText = 'Ledger',
-  description = 'Pick a login method',
-  WalletConnectLoginButtonText = 'Maiar',
-  ExtensionLoginButtonText = 'Extension',
-  WebWalletLoginButtonText = 'Web wallet'
-}: Props) => {
+export const UnlockPage = (props: Props) => {
+  const {
+    loginRoute,
+    title = 'Login',
+    className = 'dapp-unlock-page',
+    LedgerLoginButtonText = 'Ledger',
+    description = 'Pick a login method',
+    WalletConnectLoginButtonText = 'Maiar',
+    ExtensionLoginButtonText = 'Extension',
+    WebWalletLoginButtonText = 'Web wallet'
+  } = props;
+
   const generatedClasses = {
     wrapper: classNames(
       styles.home,
@@ -41,8 +45,18 @@ export const UnlockPage = ({
     title: globalStyles.mb4,
     description: globalStyles.mb4,
     cardContainer: globalStyles.mAuto,
-    card: `${globalStyles.card} ${globalStyles.my4} ${globalStyles.textCenter}`,
-    cardBody: `${globalStyles.cardBody} ${globalStyles.py4} ${globalStyles.px2} ${globalStyles.pxSm2} ${globalStyles.mxLg4}`
+    card: classNames(
+      globalStyles.card,
+      globalStyles.my4,
+      globalStyles.textCenter
+    ),
+    cardBody: classNames(
+      globalStyles.cardBody,
+      globalStyles.py4,
+      globalStyles.px2,
+      globalStyles.pxSm2,
+      globalStyles.mxLg4
+    )
   };
   const { isLoggedIn } = useGetLoginInfo();
 
@@ -57,22 +71,27 @@ export const UnlockPage = ({
       <div className={generatedClasses.cardContainer}>
         <div className={generatedClasses.card}>
           <div className={generatedClasses.cardBody}>
-            <h4 className={classNames([globalStyles.h4, globalStyles.title])}>
+            <h4 className={classNames(globalStyles.h4, globalStyles.title)}>
               {title}
             </h4>
+
             <p className={generatedClasses.description}>{description}</p>
+
             <ExtensionLoginButton
               callbackRoute={loginRoute}
               loginButtonText={ExtensionLoginButtonText}
             />
+
             <WebWalletLoginButton
               callbackRoute={loginRoute}
               loginButtonText={WebWalletLoginButtonText}
             />
+
             <LedgerLoginButton
               loginButtonText={LedgerLoginButtonText}
               callbackRoute={loginRoute}
             />
+
             <WalletConnectLoginButton
               callbackRoute={loginRoute}
               loginButtonText={WalletConnectLoginButtonText}

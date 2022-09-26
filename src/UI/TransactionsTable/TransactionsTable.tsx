@@ -5,10 +5,11 @@ import { ServerTransactionType } from 'types/serverTransactions.types';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionRow';
 
-import globalStyles from 'assets/sass/main.scss';
-import styles from './components/transactionsTable.styles.scss';
 import { getInterpretedTransaction } from 'utils';
 import { useGetAccount, useGetNetworkConfig } from 'hooks';
+
+import globalStyles from 'assets/sass/main.scss';
+import styles from './components/transactionsTable.styles.scss';
 
 export interface TransactionsTableType extends WithClassnameType {
   transactions: ServerTransactionType[];

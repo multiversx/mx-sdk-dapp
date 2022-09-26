@@ -32,10 +32,10 @@ export const ScrDetailItem = (props: ScrDetailItemPropsTypes) => {
         <CopyButton className={globalStyles.ml2} text={result.hash} />
 
         <ExplorerLink
+          className={globalStyles.ml2}
           page={explorerUrlBuilder.transactionDetails(
             `${result.originalTxHash}#${result.hash}`
           )}
-          className='side-action ml-2'
         >
           <FontAwesomeIcon icon={faSearch} />
         </ExplorerLink>

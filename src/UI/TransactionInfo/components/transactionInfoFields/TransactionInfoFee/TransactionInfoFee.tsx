@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
@@ -40,10 +40,10 @@ export const TransactionInfoFee = (props: TransactionInfoFeePropsTypes) => {
 
   const fee =
     transaction.gasUsed != null ? (
-      <>
+      <Fragment>
         {transactionFee} {egldLabel}{' '}
         <span className={globalStyles.textSecondary}>{price}</span>
-      </>
+      </Fragment>
     ) : (
       <span className={globalStyles.textSecondary}>{N_A}</span>
     );

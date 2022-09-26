@@ -1,21 +1,28 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
+
 import { PageState } from 'UI/PageState';
 import { WithClassnameType } from '../types';
 
-export const Loader = ({
-  dataTestId = 'loader',
-  noText = false,
-  className = 'dapp-loader'
-}: {
+import globalStyles from 'assets/sass/main.scss';
+
+type LoaderPropsTypes = {
   dataTestId?: string;
   noText?: boolean;
-} & WithClassnameType) => {
+} & WithClassnameType;
+
+export const Loader = (props: LoaderPropsTypes) => {
+  const {
+    dataTestId = 'loader',
+    noText = false,
+    className = 'dapp-loader'
+  } = props;
+
   return (
     <PageState
       title={noText ? '' : 'Loading...'}
-      iconClass={`fa-spin ${globalStyles.textPrimary}`}
+      iconBgClass={classNames(globalStyles.textPrimary, 'fa-spin')}
       dataTestId={dataTestId}
       icon={faCircleNotch}
       className={className}

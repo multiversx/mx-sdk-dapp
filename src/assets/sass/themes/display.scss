@@ -35,3 +35,9 @@
   display: -ms-inline-flexbox;
   display: inline-flex;
 }
+
+.d-sm-flex {
+  @media (min-width: 576px) {
+    display: flex;
+  }
+}

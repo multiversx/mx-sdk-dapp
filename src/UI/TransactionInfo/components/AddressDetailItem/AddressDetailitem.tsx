@@ -30,10 +30,7 @@ export const AddressDetailItem = (props: AddressDetailItemPropsTypes) => {
 
         {addressIsValid(address) && (
           <>
-            <ExplorerLink
-              page={explorerUrlBuilder.accountDetails(address)}
-              className={globalStyles.trimWrapper}
-            >
+            <ExplorerLink page={explorerUrlBuilder.accountDetails(address)}>
               <Trim text={address} />
             </ExplorerLink>
 

@@ -34,7 +34,12 @@ export const TransactionInfoAge = (props: TransactionInfoAgePropsTypes) => {
           {pending ? (
             <FontAwesomeIcon
               icon={faSpinner}
-              className='mr-2 text-secondary fa-spin slow-spin'
+              className={classNames(
+                globalStyles.mr2,
+                globalStyles.textSecondary,
+                'fa-spin',
+                'slow-spin'
+              )}
             />
           ) : (
             <FontAwesomeIcon

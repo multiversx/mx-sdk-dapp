@@ -35,7 +35,6 @@ export const TransactionHash = (props: TransactionHashPropsTypes) => {
         page={transactionHashLink}
         data-testid='transactionLink'
         className={classNames(
-          globalStyles.trimWrapper,
           globalStyles.w100,
           styles.transactionCellMargin,
           styles.transactionCellOverflow,

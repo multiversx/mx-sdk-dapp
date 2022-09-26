@@ -45,7 +45,6 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
 
           <ExplorerLink
             page={String(transaction.links.receiverLink)}
-            className={globalStyles.trimWrapper}
             data-testid='transactionToExplorerLink'
           >
             <AccountName
@@ -59,10 +58,11 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
             className={globalStyles.mr2}
             text={transaction.receiver}
           />
+
           {!isNaN(transaction.receiverShard) && (
             <ExplorerLink
               page={String(transaction.links.receiverShardLink)}
-              className='flex-shrink-0'
+              className={globalStyles.flexShrink0}
             >
               (
               <ShardSpan
@@ -78,7 +78,11 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
           <div
             data-testid={`message_${messageIndex}`}
             key={`tx-message-${messageIndex}`}
-            className='d-flex ml-1 text-break-all align-items-center'
+            className={classNames(
+              globalStyles.dFlex,
+              globalStyles.ml1,
+              globalStyles.alignItemsCenter
+            )}
           >
             <FontAwesomeIcon
               icon={faAngleDown}
@@ -98,7 +102,7 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
 
         {transaction.status ===
           TransactionServerStatusesEnum.rewardReverted && (
-          <div className='d-flex ml-1 text-break-all'>
+          <div className={classNames(globalStyles.ml1, globalStyles.dFlex)}>
             <FontAwesomeIcon
               icon={faAngleDown}
               className={globalStyles.textSecondary}

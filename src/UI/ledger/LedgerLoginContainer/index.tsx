@@ -1,6 +1,7 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
+
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
@@ -9,6 +10,8 @@ import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
 import { WithClassnameType } from '../../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -20,17 +23,20 @@ interface LedgerLoginContainerPropsType extends WithClassnameType {
   onLoginRedirect?: (callbackRoute: string) => void;
 }
 
-export const LedgerLoginContainer = ({
-  callbackRoute,
-  className = 'dapp-ledger-login-container',
-  wrapContentInsideModal = true,
-  onClose,
-  onLoginRedirect,
-  token
-}: LedgerLoginContainerPropsType) => {
+export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
+  const {
+    callbackRoute,
+    className = 'dapp-ledger-login-container',
+    wrapContentInsideModal = true,
+    onClose,
+    onLoginRedirect,
+    token
+  } = props;
+
   const classes = {
-    spinner: `fa-spin ${globalStyles.textPrimary}`
+    spinner: classNames(globalStyles.textPrimary, 'fa-spin')
   };
+
   const { ledgerAccount } = useGetAccountInfo();
   const [
     onStartLogin,

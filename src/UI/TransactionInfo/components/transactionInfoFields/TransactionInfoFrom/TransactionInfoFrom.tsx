@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
@@ -32,11 +32,8 @@ export const TransactionInfoFrom = (props: TransactionInfoFromPropsTypes) => {
         <ScAddressIcon initiator={transaction.sender} />
 
         {addressIsValid(transaction.sender) ? (
-          <>
-            <ExplorerLink
-              page={String(transaction.links.senderLink)}
-              className={globalStyles.trimWrapper}
-            >
+          <Fragment>
+            <ExplorerLink page={String(transaction.links.senderLink)}>
               <AccountName
                 address={transaction.sender}
                 assets={transaction.senderAssets}
@@ -50,11 +47,11 @@ export const TransactionInfoFrom = (props: TransactionInfoFromPropsTypes) => {
 
             <ExplorerLink
               page={String(transaction.links.senderShardLink)}
-              className='flex-shrink-0'
+              className={globalStyles.flexShrink0}
             >
-              (<ShardSpan shard={transaction.senderShard} />)
+              <ShardSpan shard={transaction.senderShard} />
             </ExplorerLink>
-          </>
+          </Fragment>
         ) : (
           <ShardSpan shard={transaction.sender} />
         )}

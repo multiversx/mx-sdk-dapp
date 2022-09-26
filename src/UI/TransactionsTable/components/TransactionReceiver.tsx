@@ -60,7 +60,6 @@ export const TransactionReceiver = (props: TransactionReceiverPropsTypes) => {
           page={transaction.links.receiverLink ?? ''}
           data-testid='receiverLink'
           className={classNames(
-            globalStyles.trimWrapper,
             globalStyles.w100,
             styles.transactionCellMargin,
             styles.transactionCellOverflow,
