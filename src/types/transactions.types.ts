@@ -19,6 +19,7 @@ export interface SignedTransactionsBodyType {
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
   errorMessage?: string;
+  redirectRoute?: string;
   customTransactionInformation?: CustomTransactionInformation;
 }
 
