@@ -22,13 +22,24 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
-import { setNonce } from 'utils';
+import { SignedTransactionsBodyType } from 'types/transactions.types';
+import { safeRedirect, setNonce } from 'utils';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: (
     signedTransactions: Transaction[]
   ) => Promise<SendSignedTransactionsReturnType>;
 }
+
+/**
+ * Function used to redirect after sending because of Safari cancelling async requests on page change
+ */
+const optionalRedirect = (sessionInformation: SignedTransactionsBodyType) => {
+  const redirectRoute = sessionInformation.redirectRoute;
+  if (redirectRoute) {
+    safeRedirect(redirectRoute);
+  }
+};
 
 export const TransactionSender = ({
   sendSignedTransactionsAsync = defaultSendSignedTxs
@@ -47,11 +58,12 @@ export const TransactionSender = ({
   async function handleSendTransactions() {
     const sessionIds = Object.keys(signedTransactions);
     for (const sessionId of sessionIds) {
+      const sessionInformation = signedTransactions?.[sessionId];
       const skipSending =
-        signedTransactions?.[sessionId]?.customTransactionInformation
-          ?.signWithoutSending;
+        sessionInformation?.customTransactionInformation?.signWithoutSending;
 
       if (!sessionId || skipSending) {
+        optionalRedirect(sessionInformation);
         continue;
       }
 
@@ -106,6 +118,8 @@ export const TransactionSender = ({
         );
         clearSignInfo();
         setNonce(account.nonce + transactions.length);
+
+        optionalRedirect(sessionInformation);
 
         history.pushState({}, document.title, '?');
       } catch (error) {
