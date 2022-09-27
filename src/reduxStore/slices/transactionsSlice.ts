@@ -68,7 +68,13 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<MoveTransactionsToSignedStatePayloadType>
     ) => {
-      const { sessionId, transactions, errorMessage, status } = action.payload;
+      const {
+        sessionId,
+        transactions,
+        errorMessage,
+        status,
+        redirectRoute
+      } = action.payload;
       const customTransactionInformation =
         state.customTransactionInformationForSessionId?.[sessionId] ||
         defaultCustomInformation;
@@ -76,6 +82,7 @@ export const transactionsSlice = createSlice({
         transactions,
         status,
         errorMessage,
+        redirectRoute,
         customTransactionInformation
       };
       if (state?.transactionsToSign?.sessionId === sessionId) {
