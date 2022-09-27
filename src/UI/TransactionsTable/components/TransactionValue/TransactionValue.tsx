@@ -75,13 +75,17 @@ export const TransactionValue = (props: TransactionValuePropsTypes) => {
     );
   }
 
-  return (
-    <div className={styles.transactionCell}>
-      <FormatAmount
-        value={egldValueData.value}
-        digits={2}
-        data-testid='transactionValue'
-      />
-    </div>
-  );
+  if (egldValueData) {
+    return (
+      <div className={styles.transactionCell}>
+        <FormatAmount
+          value={egldValueData.value}
+          digits={2}
+          data-testid='transactionValue'
+        />
+      </div>
+    );
+  }
+
+  return null;
 };
