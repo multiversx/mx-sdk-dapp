@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
-import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/index';
+import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 import { DetailItem } from '../../DetailItem';
 

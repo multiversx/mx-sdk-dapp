@@ -1,49 +1,33 @@
 import { DECIMALS } from 'constants/index';
-import {
-  InterpretedTransactionType,
-  TokenArgumentType,
-  TransactionActionsEnum
-} from 'types/serverTransactions.types';
+import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { getTransactionTokens } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens';
+import {
+  EgldValueDataType,
+  NFTValueDataType,
+  TokenValueDataType
+} from 'utils/transactions/getInterpretedTransaction/helpers/types';
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
-import { getIdentifierType } from 'utils/validation/getIdentifierType';
+import {
+  ACTIONS_WITH_EGLD_VALUE,
+  ACTIONS_WITH_MANDATORY_OPERATIONS,
+  ACTIONS_WITH_VALUE_IN_ACTION_FIELD,
+  ACTIONS_WITH_VALUE_IN_DATA_FIELD
+} from '../../constants';
+import {
+  getValueFromActions,
+  getValueFromDataField,
+  getValueFromOperations
+} from './helpers';
+import { getEgldValueData } from './helpers/getEgldValueData';
+import { getTitleText } from './helpers/getTitleText';
 
-const getTitleText = (transactionTokens: TokenArgumentType[]): string => {
-  const tokensArray = transactionTokens.map((transactionToken) => {
-    const { isNft } = getIdentifierType(transactionToken.type);
-    if (isNft) {
-      const {
-        badgeText,
-        tokenFormattedAmount,
-        tokenLinkText
-      } = getTransactionActionNftText({
-        token: transactionToken
-      });
-
-      const badge = badgeText != null ? `(${badgeText}) ` : '';
-
-      const value = `${badge}${tokenFormattedAmount} ${tokenLinkText}`;
-      return value;
-    }
-    const {
-      tokenFormattedAmount,
-      tokenLinkText,
-      token
-    } = getTransactionActionTokenText({
-      token: transactionToken as TokenArgumentType
-    });
-
-    const identifier = token.collection ? token.identifier : token.token;
-
-    const value = `${tokenFormattedAmount} ${tokenLinkText} (${identifier})`;
-    return value;
-  });
-
-  const joinedTokensWithLineBreak = decodeURI(tokensArray.join('%0A'));
-  return joinedTokensWithLineBreak;
-};
+export interface GetTransactionValueReturnType {
+  egldValueData?: EgldValueDataType;
+  tokenValueData?: TokenValueDataType;
+  nftValueData?: NFTValueDataType;
+}
 
 export const getTransactionValue = ({
   transaction,
@@ -51,17 +35,19 @@ export const getTransactionValue = ({
 }: {
   transaction: InterpretedTransactionType;
   hideMultipleBadge?: boolean;
-}) => {
+}): GetTransactionValueReturnType => {
   if (transaction.action) {
-    if (
-      transaction.action.name === TransactionActionsEnum.wrapEgld ||
-      transaction.action.name === TransactionActionsEnum.unwrapEgld
-    ) {
-      return {
-        egldValueData: {
-          value: transaction.value
-        }
-      };
+    if (ACTIONS_WITH_EGLD_VALUE.includes(transaction.action.name)) {
+      return getEgldValueData(transaction.value);
+    }
+    if (ACTIONS_WITH_VALUE_IN_DATA_FIELD.includes(transaction.action.name)) {
+      return getValueFromDataField(transaction);
+    }
+    if (ACTIONS_WITH_MANDATORY_OPERATIONS.includes(transaction.action.name)) {
+      return getValueFromOperations(transaction);
+    }
+    if (ACTIONS_WITH_VALUE_IN_ACTION_FIELD.includes(transaction.action.name)) {
+      return getValueFromActions(transaction);
     }
     const transactionTokens = getTransactionTokens(transaction);
     if (transactionTokens.length) {
@@ -122,9 +108,5 @@ export const getTransactionValue = ({
       };
     }
   }
-  return {
-    egldValueData: {
-      value: transaction.value
-    }
-  };
+  return getEgldValueData(transaction.value);
 };

@@ -24,6 +24,7 @@ import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState,
+  MoveTransactionsToSignedStatePayloadType,
   removeCustomToast,
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
@@ -35,8 +36,7 @@ import { getProviderType } from 'utils';
 import {
   builtCallbackUrl,
   getLatestNonce,
-  parseTransactionAfterSigning,
-  safeRedirect
+  parseTransactionAfterSigning
 } from 'utils';
 import { getAccount } from 'utils/account/getAccount';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
@@ -168,17 +168,18 @@ export const useSignTransactions = () => {
         signedTransactions
       ).map((tx) => parseTransactionAfterSigning(tx));
 
-      dispatch(
-        moveTransactionsToSignedState({
-          sessionId,
-          transactions: signedTransactionsArray,
-          status: TransactionBatchStatusesEnum.signed
-        })
-      );
+      const payload: MoveTransactionsToSignedStatePayloadType = {
+        sessionId,
+        transactions: signedTransactionsArray,
+        status: TransactionBatchStatusesEnum.signed
+      };
 
+      // redirect is delegated to optionalRedirect in TransactionSender
       if (shouldRedirectAfterSign) {
-        safeRedirect(redirectRoute);
+        payload.redirectRoute = redirectRoute;
       }
+
+      dispatch(moveTransactionsToSignedState(payload));
     } catch (error) {
       const errorMessage =
         (error as Error)?.message || (error as string) || ERROR_SIGNING_TX;

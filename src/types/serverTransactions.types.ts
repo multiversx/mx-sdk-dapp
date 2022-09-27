@@ -26,6 +26,9 @@ export interface TransactionTokensType {
 export enum TransactionActionsEnum {
   // esdtNft category
   transfer = 'transfer',
+  // legacy delegation
+  unBond = 'unBond',
+  unStake = 'unStake',
   // stake category
   delegate = 'delegate',
   stake = 'stake',
