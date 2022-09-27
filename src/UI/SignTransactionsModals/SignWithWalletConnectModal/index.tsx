@@ -1,23 +1,27 @@
 import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { CANCEL_ACTION_NAME } from 'constants/index';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './signWithWalletConnectModalStyles.scss';
 
-export const SignWithWalletConnectModal = ({
-  error,
-  handleClose,
-  transactions,
-  sessionId,
-  className = 'dapp-wallet-connect-modal',
-  modalContentClassName
-}: SignModalPropsType) => {
+export const SignWithWalletConnectModal = (props: SignModalPropsType) => {
+  const {
+    error,
+    handleClose,
+    transactions,
+    sessionId,
+    className = 'dapp-wallet-connect-modal',
+    modalContentClassName
+  } = props;
+
   const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
 
   const classes = {

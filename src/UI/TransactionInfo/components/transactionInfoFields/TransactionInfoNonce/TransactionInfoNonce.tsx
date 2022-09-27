@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { DetailItem } from '../../DetailItem';
 import { NonceMessage } from '../../NonceMessage/NonceMessage';
 
-export const TransactionInfoNonce = ({
-  transaction
-}: {
+interface TransactionInfoNoncePropsTypes {
   transaction: InterpretedTransactionType;
-}) => {
+}
+
+export const TransactionInfoNonce = (props: TransactionInfoNoncePropsTypes) => {
+  const { transaction } = props;
+
   return (
     <DetailItem title='Nonce'>
-      <>
+      <Fragment>
         {transaction.nonce}
+
         <NonceMessage transaction={transaction} />
-      </>
+      </Fragment>
     </DetailItem>
   );
 };

@@ -111,3 +111,15 @@
     flex-direction: row;
   }
 }
+
+.flex-lg-row {
+  @media (min-width: 992px) {
+    flex-direction: row;
+  }
+}
+
+.flex-lg-wrap {
+  @media (min-width: 992px) {
+    flex-wrap: wrap;
+  }
+}

@@ -22,28 +22,28 @@ interface OperationBlockPropsTypes {
 
 export const OperationBlock = (props: OperationBlockPropsTypes) => {
   const { address, transaction, action, isFullSize, direction } = props;
-
   let operationAssets;
+
   if (address === transaction.sender) {
     operationAssets = transaction.senderAssets;
   }
+
   if (address === transaction.receiver) {
     operationAssets = transaction.receiverAssets;
   }
+
   return (
     <div
-      className={`d-flex align-items-center ${
-        isFullSize
-          ? 'col-12'
-          : ` pr-xl-0 ${
-              operationAssets ? 'pl-3 mw-lg-6 mw-xl-3' : 'col-lg-6 col-xl-3'
-            }`
-      }`}
+      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter, {
+        [globalStyles.col12]: isFullSize,
+        [globalStyles.prXl0]: !isFullSize,
+        [globalStyles.pl3]: !isFullSize && operationAssets,
+        [globalStyles.colLg6]: !isFullSize && !operationAssets,
+        [globalStyles.colXl3]: !isFullSize && !operationAssets
+      })}
     >
       {direction && (
-        <div className={`direction-badge mr-2 ${direction.toLowerCase()}`}>
-          {direction.toUpperCase()}
-        </div>
+        <div className={globalStyles.mr2}>{direction.toUpperCase()}</div>
       )}
 
       {action && (
@@ -53,8 +53,9 @@ export const OperationBlock = (props: OperationBlockPropsTypes) => {
           className={classNames(globalStyles.textSecondary, globalStyles.mr2)}
         />
       )}
+
       <div className={classNames(globalStyles.textNowrap, globalStyles.mr2)}>
-        {action ? action : ''}
+        {action || ''}
       </div>
 
       {addressIsValid(address) ? (

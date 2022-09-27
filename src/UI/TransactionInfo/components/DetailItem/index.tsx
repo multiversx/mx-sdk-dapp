@@ -1,31 +1,47 @@
-import React from 'react';
-import './detailItem.scss';
+import React, { ReactNode } from 'react';
+import classNames from 'classnames';
 
-export const DetailItem = ({
-  children,
-  title,
-  className = '',
-  colWidth = '2',
-  noBorder = false
-}: {
-  children: React.ReactNode;
-  title: string | React.ReactNode;
+import styles from './detailItem.module.scss';
+import globalStyles from 'assets/sass/main.scss';
+
+interface DetailItemPropsTypes {
+  children: ReactNode;
+  title: string | ReactNode;
   className?: string;
   colWidth?: string;
   noBorder?: boolean;
-}) => (
-  <div
-    className={`row detail-item ${className} ${
-      noBorder ? 'pt-3 pb-1' : 'border-bottom py-3'
-    }`}
-  >
+}
+
+export const DetailItem = (props: DetailItemPropsTypes) => {
+  const {
+    children,
+    title,
+    className = '',
+    colWidth = '2',
+    noBorder = false
+  } = props;
+
+  return (
     <div
-      className={`col-lg-${colWidth} text-secondary text-lg-right pl-lg-spacer`}
+      className={classNames(globalStyles.row, styles.detailItem, className, {
+        [globalStyles.pt3]: noBorder,
+        [globalStyles.pb1]: noBorder,
+        [globalStyles.borderBottom]: !noBorder,
+        [globalStyles.py3]: !noBorder
+      })}
     >
-      {title}
+      <div
+        className={classNames(
+          globalStyles.textSecondary,
+          globalStyles.textLgRight,
+          globalStyles[`colLg${colWidth}`]
+        )}
+      >
+        {title}
+      </div>
+      <div className={globalStyles[`colLg${12 - Number(colWidth)}`]}>
+        {children}
+      </div>
     </div>
-    <div className={`col-lg-${12 - Number(colWidth)} pr-lg-spacer`}>
-      {children}
-    </div>
-  </div>
-);
+  );
+};

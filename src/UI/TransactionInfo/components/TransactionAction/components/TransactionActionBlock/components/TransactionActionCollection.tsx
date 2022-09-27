@@ -27,7 +27,12 @@ export const TransactionActionCollection = (
         [globalStyles.sideLink]: token.svgUrl
       })}
     >
-      <div className='d-flex align-items-center symbol'>
+      <div
+        className={classNames(
+          globalStyles.dFlex,
+          globalStyles.alignItemsCenter
+        )}
+      >
         {token.svgUrl && (
           <img
             src={token.svgUrl}

@@ -155,7 +155,10 @@ export const ActionText = (props: ActionTextPropsTypes) => {
         <span className={globalStyles.dFlex}>
           <ExplorerLink
             page={explorerUrlBuilder.providerDetails(transaction.receiver)}
-            className='d-flex align-self-center'
+            className={classNames(
+              globalStyles.dFlex,
+              globalStyles.alignSelfCenter
+            )}
           >
             {entry.providerAvatar ? (
               <img src={entry.providerAvatar} className={className} alt=' ' />

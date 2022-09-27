@@ -1,38 +1,43 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { transactionActionUnwrapper } from 'utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
 import { ActionText } from './components/ActionText';
-import './transactionAction.styles.scss';
 
-export const TransactionAction = ({
-  transaction
-}: {
+import styles from './transactionAction.module.scss';
+import globalStyles from 'assets/sass/main.scss';
+
+interface TransactionActionPropsTypes {
   transaction: InterpretedTransactionType;
-}) => {
-  const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> = React.useMemo(() => {
+}
+
+export const TransactionAction = (props: TransactionActionPropsTypes) => {
+  const { transaction } = props;
+  const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> = useMemo(() => {
     if (transaction.action) {
-      const result = transactionActionUnwrapper(transaction.action);
-      return result;
+      return transactionActionUnwrapper(transaction.action);
     }
+
     return [];
   }, [transaction.action]);
 
   return (
     <div
-      className='transaction-action d-flex flex-column flex-lg-row flex-lg-wrap'
       data-testid='transactionAction'
+      className={classNames(
+        styles.transactionAction,
+        globalStyles.dFlex,
+        globalStyles.flexColumn,
+        globalStyles.flexLgRow,
+        globalStyles.flexLgWrap
+      )}
     >
-      {unwrappedResult.map((entry, i) => {
-        return (
-          <div
-            key={JSON.stringify(unwrappedResult) + i}
-            className='action-step'
-          >
-            <ActionText entry={entry} transaction={transaction} />
-          </div>
-        );
-      })}
+      {unwrappedResult.map((entry, i) => (
+        <div key={JSON.stringify(unwrappedResult) + i}>
+          <ActionText entry={entry} transaction={transaction} />
+        </div>
+      ))}
     </div>
   );
 };

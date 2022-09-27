@@ -19,7 +19,14 @@ export const DetailedItem = (props: DetailedItemPropsTypes) => {
   const { children, operation, transaction } = props;
 
   return (
-    <div className='detailed-item d-flex row mb-3 mb-xl-2'>
+    <div
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.row,
+        globalStyles.mb3,
+        globalStyles.mbXl2
+      )}
+    >
       <OperationText operation={operation} transaction={transaction} />
 
       {children && (

@@ -107,6 +107,7 @@
 .mb-2 {
   margin-bottom: 0.5rem;
 }
+
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -713,34 +714,48 @@
 }
 
 .mr-lg-1 {
-  // TODO: add media-breakpoints
-  margin-right: 0.25rem;
+  @media (min-width: 992px) {
+    margin-right: 0.25rem;
+  }
 }
 
 .mr-lg-4 {
-  // TODO: add media-breakpoints
-
-  margin-right: 1.5rem;
+  @media (min-width: 992px) {
+    margin-right: 1.5rem;
+  }
 }
 
 .mx-lg-4 {
-  // TODO: add media-breakpoints
+  @media (min-width: 992px) {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+}
 
-  margin-left: 1.5rem;
-  margin-right: 1.5rem;
+.mb-xl-2 {
+  @media (min-width: 1200px) {
+    margin-bottom: 0.5rem;
+  }
 }
 
 .pr-sm-2 {
-  // TODO: add media-breakpoints
-
-  padding-right: 0.5rem;
+  @media (min-width: 576px) {
+    padding-right: 0.5rem;
+  }
 }
 
 .px-sm-2 {
-  // TODO: add media-breakpoints
+  @media (min-width: 576px) {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}
 
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
+.pr-xl-0,
+.px-xl-0 {
+  @media (min-width: 1200px) {
+    padding-right: 0;
+  }
 }
 
 .col {

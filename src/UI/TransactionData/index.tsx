@@ -75,7 +75,11 @@ export const TransactionData = ({
           )}
         >
           <span
-            className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
+            className={classNames(
+              globalStyles.formLabel,
+              globalStyles.textSecondary,
+              globalStyles.dBlock
+            )}
           >
             SC Call
           </span>
@@ -106,14 +110,24 @@ export const TransactionData = ({
         )}
       >
         <span
-          className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
+          className={classNames(
+            globalStyles.formLabel,
+            globalStyles.textSecondary,
+            globalStyles.dBlock
+          )}
         >
           Data
         </span>
 
         <div
           data-testid='confirmData'
-          className={`${globalStyles.textarea} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak} ${globalStyles.w100}`}
+          className={classNames(
+            globalStyles.textarea,
+            globalStyles.formControl,
+            globalStyles.mt1,
+            globalStyles.textBreak,
+            globalStyles.w100
+          )}
         >
           {data ? output : N_A}
         </div>

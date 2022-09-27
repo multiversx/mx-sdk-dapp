@@ -8,12 +8,13 @@ import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { useDataDecode, DataDecodeType } from 'utils';
 
 import globalStyles from 'assets/sass/main.scss';
+import styles from './dataDecode.styles.scss';
 
-export const DataDecode = (
-  props: DataDecodeType & {
-    className?: string;
-  }
-) => {
+type DataDecodePropsTypes = DataDecodeType & {
+  className?: string;
+};
+
+export const DataDecode = (props: DataDecodePropsTypes) => {
   const { className, value } = props;
 
   const {
@@ -26,17 +27,29 @@ export const DataDecode = (
   const showSelect = value && value !== N_A;
 
   return (
-    <div className='position-relative data-decode mt-1'>
-      <div className={`form-control textarea ${className ? className : ''}`}>
+    <div
+      className={classNames(
+        globalStyles.positionRelative,
+        globalStyles.mt1,
+        styles.dataDecode
+      )}
+    >
+      <div
+        className={classNames(
+          globalStyles.formControl,
+          styles.textarea,
+          className
+        )}
+      >
         {displayValue}
       </div>
 
       {showSelect && (
         <select
-          className='position-absolute dropdown'
-          onChange={(e) => {
-            return e ? setActiveKey(e.target.value) : DecodeMethodEnum.raw;
-          }}
+          className={classNames(globalStyles.positionAbsolute, styles.dropdown)}
+          onChange={(event) =>
+            event ? setActiveKey(event.target.value) : DecodeMethodEnum.raw
+          }
         >
           {decodeOptions.map((option) => (
             <option key={option.value} value={option.value}>

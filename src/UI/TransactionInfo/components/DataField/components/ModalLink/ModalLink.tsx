@@ -1,4 +1,4 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { Fragment, useState, MouseEvent } from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -23,13 +23,18 @@ export const ModalLink = (props: LinkComponentProps) => {
   const link = props.href.replace('https://', '').replace('http://', '');
 
   return (
-    <>
+    <Fragment>
       <a {...props} onClick={onClick} />
 
       <DappModal visible={show} onHide={handleClose}>
-        <div className='card card-small'>
-          <div className='card-body text-center p-spacer'>
-            <p className='h3 pt-1'>
+        <div className={globalStyles.card}>
+          <div
+            className={classNames(
+              globalStyles.cardBody,
+              globalStyles.textCenter
+            )}
+          >
+            <p className={classNames(globalStyles.h3, globalStyles.pt1)}>
               <FontAwesomeIcon
                 icon={faExclamationTriangle}
                 className={classNames(
@@ -44,7 +49,7 @@ export const ModalLink = (props: LinkComponentProps) => {
               You are about to navigate to an external website.
             </p>
 
-            <div className='mx-auto mb-spacer'>
+            <div className={globalStyles.mxAuto}>
               <p>
                 This link is not part of Elrond. Do not enter your private
                 words, your keystore file or any of your Elrond account
@@ -52,10 +57,19 @@ export const ModalLink = (props: LinkComponentProps) => {
               </p>
             </div>
 
-            <div className='d-flex align-items-center flex-column mt-spacer'>
+            <div
+              className={classNames(
+                globalStyles.dFlex,
+                globalStyles.alignItemsCenter,
+                globalStyles.flexColumn
+              )}
+            >
               <button
                 type='button'
-                className='btn btn-primary px-spacer'
+                className={classNames(
+                  globalStyles.btn,
+                  globalStyles.btnPrimary
+                )}
                 onClick={handleClose}
               >
                 Back to safety
@@ -73,6 +87,6 @@ export const ModalLink = (props: LinkComponentProps) => {
           </div>
         </div>
       </DappModal>
-    </>
+    </Fragment>
   );
 };

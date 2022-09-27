@@ -32,33 +32,52 @@ export const getStatusIconAndColor = (
   );
 
   if (transaction.pendingResults) {
-    color = 'text-warning';
+    color = globalStyles.textWarning;
     Icon = () => (
-      <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />
+      <FontAwesomeIcon
+        icon={faHourglass}
+        className={classNames(globalStyles.mr2, color)}
+      />
     );
   }
 
   if (failed) {
-    color = 'text-danger';
-    Icon = () => <FontAwesomeIcon icon={faTimes} className={`mr-2 ${color}`} />;
+    color = globalStyles.textDanger;
+    Icon = () => (
+      <FontAwesomeIcon
+        icon={faTimes}
+        className={classNames(globalStyles.mr2, color)}
+      />
+    );
   }
 
   if (invalid) {
-    color = 'text-danger';
-    Icon = () => <FontAwesomeIcon icon={faBan} className={`mr-2 ${color}`} />;
+    color = globalStyles.textDanger;
+    Icon = () => (
+      <FontAwesomeIcon
+        icon={faBan}
+        className={classNames(globalStyles.mr2, color)}
+      />
+    );
   }
 
   if (success) {
-    color = 'text-success';
+    color = globalStyles.textSuccess;
     Icon = () => (
-      <FontAwesomeIcon icon={faCheckCircle} className={`mr-2 ${color}`} />
+      <FontAwesomeIcon
+        icon={faCheckCircle}
+        className={classNames(globalStyles.mr2, color)}
+      />
     );
   }
 
   if (pending) {
-    color = 'text-warning';
+    color = globalStyles.textWarning;
     Icon = () => (
-      <FontAwesomeIcon icon={faHourglass} className={`mr-2 ${color}`} />
+      <FontAwesomeIcon
+        icon={faHourglass}
+        className={classNames(globalStyles.mr2, color)}
+      />
     );
   }
 

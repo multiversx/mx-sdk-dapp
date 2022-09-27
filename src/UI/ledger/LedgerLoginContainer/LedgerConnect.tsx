@@ -38,7 +38,11 @@ export const LedgerConnect = (props: LedgerConnectPropsTypes) => {
         )}
       >
         <div
-          className={`${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`}
+          className={classNames(
+            globalStyles.cardBody,
+            globalStyles.p4,
+            globalStyles.mxLg4
+          )}
         >
           {connectPageContent ? (
             connectPageContent

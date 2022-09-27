@@ -15,6 +15,7 @@
       display: none;
     }
   }
+
   .textarea {
     -moz-appearance: textfield-multiline;
     -webkit-appearance: textarea;
@@ -30,6 +31,7 @@
     resize: vertical;
     scrollbar-width: thin;
     overflow-x: hidden;
+    width: 100%;
 
     &:hover {
       border: 1px solid $border-color;

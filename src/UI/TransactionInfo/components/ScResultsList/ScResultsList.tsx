@@ -41,7 +41,13 @@ export const ScResultsList = (props: ScResultsListPropsTypes) => {
   }, []);
 
   return (
-    <div className='sc-results-list detailed-list d-flex flex-column mt-1'>
+    <div
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.flexColumn,
+        globalStyles.mt1
+      )}
+    >
       {results.map((result: ResultType, i) => {
         const highlightTx = getScResultsHighlight(result.hash);
 
@@ -49,16 +55,20 @@ export const ScResultsList = (props: ScResultsListPropsTypes) => {
           <div
             key={i}
             id={result.hash}
-            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
-              highlightTx ? 'highlighted' : ''
-            }`}
+            className={classNames(
+              globalStyles.dFlex,
+              globalStyles.borderLeft,
+              globalStyles.borderBottom,
+              globalStyles.ml3,
+              globalStyles.py3
+            )}
             {...(highlightTx ? { ref: ref } : {})}
           >
-            <div className='transaction-icon'>
+            <div className={globalStyles.transactionIcon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className='detailed-item-content'>
+            <div>
               {result.hash && (
                 <div
                   className={classNames(
@@ -86,10 +96,10 @@ export const ScResultsList = (props: ScResultsListPropsTypes) => {
                     />
 
                     <ExplorerLink
+                      className={globalStyles.ml2}
                       page={explorerUrlBuilder.transactionDetails(
                         `${result.originalTxHash}#${result.hash}/${decodeMethod}`
                       )}
-                      className={globalStyles.ml2}
                     >
                       <FontAwesomeIcon icon={faSearch} />
                     </ExplorerLink>

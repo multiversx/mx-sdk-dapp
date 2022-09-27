@@ -25,7 +25,10 @@ export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
   return (
     <Fragment>
       {badgeText != null && (
-        <NftBadge text={badgeText} className='mr-1 my-auto' />
+        <NftBadge
+          text={badgeText}
+          className={classNames(globalStyles.mr1, globalStyles.myAuto)}
+        />
       )}
 
       {tokenFormattedAmount != null && (
@@ -54,7 +57,12 @@ export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
           [globalStyles.textTruncate]: !token.svgUrl
         })}
       >
-        <div className='d-flex align-items-center symbol'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           {token.svgUrl && (
             <img
               src={token.svgUrl}

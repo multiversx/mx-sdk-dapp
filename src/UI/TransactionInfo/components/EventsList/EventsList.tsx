@@ -48,7 +48,13 @@ export const EventsList = (props: EventsListPropsTypes) => {
   }, []);
 
   return (
-    <div className='events-list detailed-list d-flex flex-column mt-1'>
+    <div
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.flexColumn,
+        globalStyles.mt1
+      )}
+    >
       {events.map((event: EventType, i) => {
         const dataHexValue = getEventListDataHexValue(event);
         const highlightTx = getEventListHighlight(event, id);
@@ -56,16 +62,20 @@ export const EventsList = (props: EventsListPropsTypes) => {
         return (
           <div
             key={i}
-            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
-              highlightTx ? 'highlighted' : ''
-            }`}
+            className={classNames(
+              globalStyles.dFlex,
+              globalStyles.borderLeft,
+              globalStyles.borderBottom,
+              globalStyles.ml3,
+              globalStyles.py3
+            )}
             {...(highlightTx ? { ref } : {})}
           >
-            <div className='transaction-icon'>
+            <div className={globalStyles.transactionIcon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className='detailed-item-content'>
+            <div>
               {event.address != null && (
                 <div
                   className={classNames(

@@ -2,22 +2,22 @@ import React from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export interface IconStateProps extends WithClassnameType {
   icon: IconProp;
   iconSize?: '2x' | '3x' | '5x';
 }
 
-export const IconState = ({
-  icon,
-  iconSize = '3x',
-  className = 'dapp-icon-state'
-}: IconStateProps) => {
+export const IconState = (props: IconStateProps) => {
+  const { icon, iconSize = '3x', className = 'dapp-icon-state' } = props;
   const classes = {
     wrapper: classNames(
-      `${globalStyles.iconState} ${globalStyles.mxAuto}`,
+      globalStyles.iconState,
+      globalStyles.mxAuto,
       {
         half: iconSize === '2x'
       },

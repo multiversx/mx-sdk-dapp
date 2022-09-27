@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
-import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
+
 import { WithClassnameType } from '../../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 interface PairingListPropsType extends WithClassnameType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
@@ -10,25 +13,50 @@ interface PairingListPropsType extends WithClassnameType {
   className: string;
 }
 
-export const Pairinglist = ({
-  connectExisting,
-  removeExistingPairing,
-  activePairings,
-  className = 'dapp-wallet-connect-pairing-list'
-}: PairingListPropsType) => {
+export const Pairinglist = (props: PairingListPropsType) => {
+  const {
+    connectExisting,
+    removeExistingPairing,
+    activePairings,
+    className = 'dapp-wallet-connect-pairing-list'
+  } = props;
+
   const classes = {
     pairsContainer: className,
     leadText: '',
-    pairList: ` ${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.mt3} ${globalStyles.pairList}`,
-    pairButton: `${globalStyles.btn} ${globalStyles.btnLight} ${globalStyles.positionRelative} ${globalStyles.dFlex} ${globalStyles.flexRow} ${globalStyles.alignItemsCenter} ${globalStyles.textLeft} ${globalStyles.border} ${globalStyles.rounded} ${globalStyles.mb2} ${globalStyles.p2}`,
+    pairList: classNames(
+      globalStyles.dFlex,
+      globalStyles.flexColumn,
+      globalStyles.mt3,
+      globalStyles.pairList
+    ),
+    pairButton: classNames(
+      globalStyles.btn,
+      globalStyles.btnLight,
+      globalStyles.positionRelative,
+      globalStyles.dFlex,
+      globalStyles.flexRow,
+      globalStyles.alignItemsCenter,
+      globalStyles.textLeft,
+      globalStyles.border,
+      globalStyles.rounded,
+      globalStyles.mb2,
+      globalStyles.p2
+    ),
     pairImage: globalStyles.pairImage,
     pairRemove: globalStyles.pairRemove,
-    pairDetails: `${globalStyles.dFlex} ${globalStyles.flexColumn} ${globalStyles.alignItemsStart} ${globalStyles.ml3}`
+    pairDetails: classNames(
+      globalStyles.dFlex,
+      globalStyles.flexColumn,
+      globalStyles.alignItemsStart,
+      globalStyles.ml3
+    )
   };
 
   return (
     <div className={classes.pairsContainer}>
       <p className={classes.leadText}>or choose an existing pairing:</p>
+
       <div className={classes.pairList}>
         {activePairings.map((pairing) => (
           <button
@@ -41,15 +69,16 @@ export const Pairinglist = ({
           >
             <div
               className={classes.pairRemove}
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={(event) => {
+                event.stopPropagation();
                 removeExistingPairing(pairing.topic);
               }}
             >
               <span aria-hidden='true'>×</span>
             </div>
+
             {pairing.peerMetadata && (
-              <>
+              <Fragment>
                 {pairing.peerMetadata?.icons?.[0] && (
                   <img
                     src={pairing.peerMetadata.icons[0]}
@@ -57,12 +86,15 @@ export const Pairinglist = ({
                     className={classes.pairImage}
                   />
                 )}
+
                 <div className={classes.pairDetails}>
                   <strong>{pairing.peerMetadata.name}</strong>
+
                   <span>{pairing.peerMetadata.description}</span>
+
                   <span>{pairing.peerMetadata.url}</span>
                 </div>
-              </>
+              </Fragment>
             )}
           </button>
         ))}
