@@ -1,20 +1,8 @@
 @import 'assets/sass/variables/variables';
 
-.data-decode {
-  .dropdown {
-    right: 0.313rem;
-    top: 0.313rem;
-    pointer-events: none;
-    .btn-pill {
-      background-color: $card-bg;
-    }
-    * {
-      pointer-events: initial;
-    }
-    .dropdown-item::after {
-      display: none;
-    }
-  }
+.decode {
+  margin-top: 0.25rem;
+  position: relative;
 
   .textarea {
     -moz-appearance: textfield-multiline;
@@ -37,8 +25,8 @@
       border: 1px solid $border-color;
     }
 
-    @media screen and (-webkit-min-device-pixel-ratio: 0) {
-      &:before {
+    &:before {
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
         background: $light;
         content: '';
         bottom: 1px;
@@ -48,8 +36,10 @@
         position: absolute;
         cursor: ns-resize;
       }
+    }
 
-      &:after {
+    &:after {
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
         content: '';
         bottom: 0;
         right: 0;
@@ -67,39 +57,60 @@
           transparent 3px
         );
       }
-
-      &::-webkit-scrollbar {
-        background-color: $light;
-        width: 1rem;
-      }
-      &::-webkit-scrollbar-track {
-        background-color: $light;
-      }
-      &::-webkit-scrollbar-track:hover {
-        background-color: $light;
-      }
-      &::-webkit-scrollbar-thumb {
-        background-color: $border-color;
-        border-radius: 1rem;
-        border: 5px solid $light;
-      }
-      &::-webkit-scrollbar-thumb:hover {
-        background-color: #a0a0a5;
-        border: 4px solid $light;
-      }
-      &::-webkit-scrollbar-button {
-        display: none;
-      }
-      &::-webkit-resizer {
-        background-color: transparent;
-      }
     }
 
-    @-moz-document url-prefix() {
-      &:before,
-      &:after {
-        display: none;
-      }
+    &::-webkit-scrollbar {
+      background-color: $light;
+      width: 1rem;
+    }
+    &::-webkit-scrollbar-track {
+      background-color: $light;
+    }
+    &::-webkit-scrollbar-track:hover {
+      background-color: $light;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $border-color;
+      border-radius: 1rem;
+      border: 5px solid $light;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+      background-color: #a0a0a5;
+      border: 4px solid $light;
+    }
+    &::-webkit-scrollbar-button {
+      display: none;
+    }
+    &::-webkit-resizer {
+      background-color: transparent;
+    }
+  }
+
+  @-moz-document url-prefix() {
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+
+  .dropdown {
+    right: 0.313rem;
+    top: 0.313rem;
+    position: absolute;
+  }
+
+  .warnings {
+    display: flex;
+    align-items: center;
+    margin-right: 0.25rem;
+
+    .icon {
+      margin-right: 0.25rem;
+      color: #f0ad4e;
+    }
+
+    .warning {
+      color: #f0ad4e;
     }
   }
 }

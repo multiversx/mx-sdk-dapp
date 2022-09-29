@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
@@ -12,7 +11,7 @@ import {
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { DetailItem } from '../../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface TransactionInfoFromPropsTypes {
   transaction: InterpretedTransactionType;
@@ -22,38 +21,35 @@ export const TransactionInfoFrom = (props: TransactionInfoFromPropsTypes) => {
   const { transaction } = props;
 
   return (
-    <DetailItem title='From'>
-      <div
-        className={classNames(
-          globalStyles.dFlex,
-          globalStyles.alignItemsCenter
-        )}
-      >
+    <DetailItem title='From' className={styles.from}>
+      <div className={styles.wrapper}>
         <ScAddressIcon initiator={transaction.sender} />
 
         {addressIsValid(transaction.sender) ? (
           <Fragment>
-            <ExplorerLink page={String(transaction.links.senderLink)}>
+            <ExplorerLink
+              page={String(transaction.links.senderLink)}
+              className={styles.explorer}
+            >
               <AccountName
                 address={transaction.sender}
                 assets={transaction.senderAssets}
               />
             </ExplorerLink>
 
-            <CopyButton
-              className={globalStyles.mr2}
-              text={transaction.sender}
-            />
+            <CopyButton className={styles.copy} text={transaction.sender} />
 
             <ExplorerLink
               page={String(transaction.links.senderShardLink)}
-              className={globalStyles.flexShrink0}
+              className={styles.shard}
             >
-              <ShardSpan shard={transaction.senderShard} />
+              (<ShardSpan shard={transaction.senderShard} />)
             </ExplorerLink>
           </Fragment>
         ) : (
-          <ShardSpan shard={transaction.sender} />
+          <span className={styles.shard}>
+            (<ShardSpan shard={transaction.sender} />)
+          </span>
         )}
       </div>
     </DetailItem>

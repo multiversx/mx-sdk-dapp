@@ -50,8 +50,12 @@ export const TransactionInfoAge = (props: TransactionInfoAgePropsTypes) => {
               )}
             />
           )}
-          <TimeAgo value={transaction.timestamp} short />{' '}
-          <span className={globalStyles.textSecondary}>
+
+          <TimeAgo value={transaction.timestamp} short={true} />
+
+          <span
+            className={classNames(globalStyles.textSecondary, globalStyles.ml2)}
+          >
             (
             {getHumanReadableTimeFormat({
               value: transaction.timestamp,

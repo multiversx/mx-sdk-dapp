@@ -14,6 +14,7 @@ interface TransactionActionPropsTypes {
 
 export const TransactionAction = (props: TransactionActionPropsTypes) => {
   const { transaction } = props;
+
   const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> = useMemo(() => {
     if (transaction.action) {
       return transactionActionUnwrapper(transaction.action);
@@ -35,7 +36,7 @@ export const TransactionAction = (props: TransactionActionPropsTypes) => {
     >
       {unwrappedResult.map((entry, i) => (
         <div key={JSON.stringify(unwrappedResult) + i}>
-          <ActionText entry={entry} transaction={transaction} />
+          <ActionText {...{ entry, transaction }} />
         </div>
       ))}
     </div>

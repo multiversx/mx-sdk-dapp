@@ -7,10 +7,10 @@ import { WithClassnameType } from '../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-type LoaderPropsTypes = {
+interface LoaderPropsTypes extends WithClassnameType {
   dataTestId?: string;
   noText?: boolean;
-} & WithClassnameType;
+}
 
 export const Loader = (props: LoaderPropsTypes) => {
   const {

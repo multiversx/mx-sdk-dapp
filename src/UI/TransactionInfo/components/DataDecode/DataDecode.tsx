@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -7,12 +7,11 @@ import { N_A } from 'constants/index';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
 import { useDataDecode, DataDecodeType } from 'utils';
 
-import globalStyles from 'assets/sass/main.scss';
-import styles from './dataDecode.styles.scss';
+import styles from './styles.scss';
 
-type DataDecodePropsTypes = DataDecodeType & {
+interface DataDecodePropsTypes extends DataDecodeType {
   className?: string;
-};
+}
 
 export const DataDecode = (props: DataDecodePropsTypes) => {
   const { className, value } = props;
@@ -25,32 +24,17 @@ export const DataDecode = (props: DataDecodePropsTypes) => {
   } = useDataDecode(props);
 
   const showSelect = value && value !== N_A;
+  const onChange = (event: ChangeEvent<HTMLSelectElement>) =>
+    event ? setActiveKey(event.target.value) : DecodeMethodEnum.raw;
 
   return (
-    <div
-      className={classNames(
-        globalStyles.positionRelative,
-        globalStyles.mt1,
-        styles.dataDecode
-      )}
-    >
-      <div
-        className={classNames(
-          globalStyles.formControl,
-          styles.textarea,
-          className
-        )}
-      >
+    <div className={styles.decode}>
+      <div className={classNames(styles.textarea, className)}>
         {displayValue}
       </div>
 
       {showSelect && (
-        <select
-          className={classNames(globalStyles.positionAbsolute, styles.dropdown)}
-          onChange={(event) =>
-            event ? setActiveKey(event.target.value) : DecodeMethodEnum.raw
-          }
-        >
+        <select className={styles.dropdown} onChange={onChange}>
           {decodeOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}
@@ -59,22 +43,15 @@ export const DataDecode = (props: DataDecodePropsTypes) => {
         </select>
       )}
 
-      {validationWarnings.map((warning: string, i: number) => (
-        <div
-          key={i}
-          className={classNames(
-            globalStyles.dFlex,
-            globalStyles.alignItemsCenter,
-            globalStyles.mt1
-          )}
-        >
+      {validationWarnings.map((warning: string, index: number) => (
+        <div key={index} className={styles.warnings}>
           <FontAwesomeIcon
             icon={faExclamationTriangle}
+            className={styles.icon}
             size='xs'
-            className={classNames(globalStyles.textWarning, globalStyles.mr1)}
           />
 
-          <small className={globalStyles.textWarning}> {warning}</small>
+          <small className={styles.warning}>{warning}</small>
         </div>
       ))}
     </div>

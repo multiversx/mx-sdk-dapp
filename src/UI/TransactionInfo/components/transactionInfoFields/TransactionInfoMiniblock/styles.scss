@@ -1,0 +1,13 @@
+.miniblock {
+  .explorer {
+    margin-left: 0 !important;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    span {
+      color: #1f43f4 !important;
+    }
+  }
+}

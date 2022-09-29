@@ -1,0 +1,28 @@
+.from {
+  .wrapper {
+    display: flex;
+    align-items: center;
+
+    .explorer {
+      margin-left: 0 !important;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      span {
+        color: #1f43f4 !important;
+      }
+    }
+
+    .copy {
+      margin-left: 0.5rem;
+    }
+
+    .shard {
+      color: #1f43f4 !important;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+  }
+}

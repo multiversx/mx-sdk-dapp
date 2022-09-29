@@ -1,4 +1,5 @@
 import React, { MouseEvent, useState, Fragment } from 'react';
+import classNames from 'classnames';
 
 import { N_A } from 'constants/index';
 import { ScamInfoType } from 'types/account.types';
@@ -10,17 +11,16 @@ import { Anchorme, ModalLink } from './components';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './dataField.module.scss';
-import classNames from 'classnames';
 
 const DISPLAYED_DATA_LENGTH = 1000000;
 
-export const DataField = ({
-  data,
-  scamInfo
-}: {
+interface DataFieldPropsTypes {
   data?: string;
   scamInfo?: ScamInfoType;
-}) => {
+}
+
+export const DataField = (props: DataFieldPropsTypes) => {
+  const { data, scamInfo } = props;
   const { initialDecodeMethod, setDecodeMethod } = useDataDecodeMethod();
   const [showData, setShowData] = useState(false);
 

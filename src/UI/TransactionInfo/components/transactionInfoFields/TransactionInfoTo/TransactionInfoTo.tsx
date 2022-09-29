@@ -1,7 +1,6 @@
 import React from 'react';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
 
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
@@ -12,7 +11,7 @@ import { isContract } from 'utils/smartContracts';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 import { DetailItem } from '../../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface TransactionInfoToPropsTypes {
   transaction: InterpretedTransactionType;
@@ -20,23 +19,18 @@ interface TransactionInfoToPropsTypes {
 
 export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
   const { transaction } = props;
+
   const transactionMessages = getTransactionMessages(transaction);
+  const isReverted =
+    transaction.status === TransactionServerStatusesEnum.rewardReverted;
 
   return (
-    <DetailItem title='To'>
-      <div
-        className={classNames(globalStyles.dFlex, globalStyles.flexColumn)}
-        data-testid='transactionTo'
-      >
-        <div
-          className={classNames(
-            globalStyles.dFlex,
-            globalStyles.alignItemsCenter
-          )}
-        >
+    <DetailItem title='To' className={styles.to}>
+      <div className={styles.wrapper} data-testid='transactionTo'>
+        <div className={styles.content}>
           {isContract(transaction.receiver) && (
             <span
-              className={globalStyles.mr2}
+              className={styles.contract}
               data-testid='transactionToContract'
             >
               Contract
@@ -46,6 +40,7 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
           <ExplorerLink
             page={String(transaction.links.receiverLink)}
             data-testid='transactionToExplorerLink'
+            className={styles.explorer}
           >
             <AccountName
               address={transaction.receiver}
@@ -54,15 +49,12 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
             />
           </ExplorerLink>
 
-          <CopyButton
-            className={globalStyles.mr2}
-            text={transaction.receiver}
-          />
+          <CopyButton className={styles.copy} text={transaction.receiver} />
 
           {!isNaN(transaction.receiverShard) && (
             <ExplorerLink
               page={String(transaction.links.receiverShardLink)}
-              className={globalStyles.flexShrink0}
+              className={styles.shard}
             >
               (
               <ShardSpan
@@ -78,44 +70,29 @@ export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
           <div
             data-testid={`message_${messageIndex}`}
             key={`tx-message-${messageIndex}`}
-            className={classNames(
-              globalStyles.dFlex,
-              globalStyles.ml1,
-              globalStyles.alignItemsCenter
-            )}
+            className={styles.message}
           >
             <FontAwesomeIcon
               icon={faAngleDown}
-              className={globalStyles.textSecondary}
+              className={styles.icon}
               style={{ marginTop: '2px' }}
               transform={{ rotate: 45 }}
             />
-            &nbsp;
-            <small
-              className={classNames(globalStyles.ml1, globalStyles.textDanger)}
-            >
-              {' '}
-              {msg}
-            </small>
+
+            <small className={styles.text}>{msg}</small>
           </div>
         ))}
 
-        {transaction.status ===
-          TransactionServerStatusesEnum.rewardReverted && (
-          <div className={classNames(globalStyles.ml1, globalStyles.dFlex)}>
+        {isReverted && (
+          <div className={styles.message}>
             <FontAwesomeIcon
               icon={faAngleDown}
-              className={globalStyles.textSecondary}
+              className={styles.icon}
               style={{ marginTop: '2px' }}
               transform={{ rotate: 45 }}
             />
-            &nbsp;
-            <small
-              className={classNames(globalStyles.ml1, globalStyles.textDanger)}
-            >
-              {' '}
-              Block Reverted
-            </small>
+
+            <small className={styles.text}>Block Reverted</small>
           </div>
         )}
       </div>

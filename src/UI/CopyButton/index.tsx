@@ -1,29 +1,31 @@
-import React from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import classNames from 'classnames';
 import { WithClassnameType } from '../types';
-import styles from './copyButtonStyles.scss';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
+
+import styles from './copyButtonStyles.scss';
 
 interface CopyButtonType extends WithClassnameType {
   text: string;
 }
 
-export const CopyButton = ({
-  text,
-  className = 'dapp-copy-button'
-}: CopyButtonType) => {
-  const [copyResult, setCopyResut] = React.useState({
+export const CopyButton = (props: CopyButtonType) => {
+  const { text, className = 'dapp-copy-button' } = props;
+
+  const [copyResult, setCopyResut] = useState({
     default: true,
     success: false
   });
 
-  const handleCopyToClipboard = async (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const handleCopyToClipboard = async (event: MouseEvent) => {
+    event.preventDefault();
+    event.stopPropagation();
 
     const noSpaces = text ? text.trim() : text;
+
     setCopyResut({
       default: false,
       success: await copyTextToClipboard(noSpaces)

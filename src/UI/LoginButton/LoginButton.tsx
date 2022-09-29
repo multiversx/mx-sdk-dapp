@@ -6,13 +6,13 @@ import { WithClassnameType } from '../types';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './loginButtonStyles.scss';
 
-type LoginButtonProps = {
+interface LoginButtonProps extends WithClassnameType {
   onLogin: () => void;
   text?: string;
   btnClassName?: string;
   children?: ReactNode;
   disabled?: boolean;
-} & WithClassnameType;
+}
 
 export const LoginButton = (props: LoginButtonProps) => {
   const {

@@ -7,12 +7,12 @@ import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface TransactionActionCollection {
+export interface TransactionActionCollectionPropsTypes {
   token: TokenArgumentType;
 }
 
 export const TransactionActionCollection = (
-  props: TransactionActionCollection
+  props: TransactionActionCollectionPropsTypes
 ) => {
   const { token } = props;
 

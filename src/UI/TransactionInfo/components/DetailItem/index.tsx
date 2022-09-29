@@ -34,12 +34,19 @@ export const DetailItem = (props: DetailItemPropsTypes) => {
         className={classNames(
           globalStyles.textSecondary,
           globalStyles.textLgRight,
+          globalStyles.fontWeightMedium,
           globalStyles[`colLg${colWidth}`]
         )}
       >
         {title}
       </div>
-      <div className={globalStyles[`colLg${12 - Number(colWidth)}`]}>
+
+      <div
+        className={classNames(
+          globalStyles.fontWeightMedium,
+          globalStyles[`colLg${12 - Number(colWidth)}`]
+        )}
+      >
         {children}
       </div>
     </div>

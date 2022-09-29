@@ -4,7 +4,7 @@ import { N_A } from 'constants/index';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { DetailItem } from '../../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface TransactionInfoGasPricePropsTypes {
   transaction: InterpretedTransactionType;
@@ -18,9 +18,9 @@ export const TransactionInfoGasPrice = (
   return (
     <DetailItem title='Gas Used'>
       {transaction.gasUsed != null ? (
-        <>{transaction.gasUsed.toLocaleString('en')}</>
+        transaction.gasUsed.toLocaleString('en')
       ) : (
-        <span className={globalStyles.textSecondary}>{N_A}</span>
+        <span className={styles.gas}>{N_A}</span>
       )}
     </DetailItem>
   );

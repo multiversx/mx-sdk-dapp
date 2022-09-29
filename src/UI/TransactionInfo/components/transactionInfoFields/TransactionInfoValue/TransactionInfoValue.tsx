@@ -7,7 +7,7 @@ import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 import { DetailItem } from '../../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface TransactionInfoValuePropsTypes {
   transaction: InterpretedTransactionType;
@@ -29,24 +29,18 @@ export const TransactionInfoValue = (props: TransactionInfoValuePropsTypes) => {
   });
 
   return (
-    <DetailItem title='Value'>
+    <DetailItem title='Value' className={styles.value}>
       <span data-testid='transactionInfoValue'>
         {formattedTxValue} {egldLabel}{' '}
-        <span className={globalStyles.textSecondary}>
-          {transaction.price != null ? (
-            <>
-              (
-              {getUsdValue({
+        <span className={styles.price}>
+          {transaction.price != null
+            ? `(${getUsdValue({
                 amount: txValue,
                 usd: transaction.price,
                 decimals: 2,
                 addEqualSign: true
-              })}
-              )
-            </>
-          ) : (
-            N_A
-          )}
+              })})`
+            : N_A}
         </span>
       </span>
     </DetailItem>

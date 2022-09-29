@@ -1,0 +1,59 @@
+.to {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+
+    .content {
+      display: flex;
+      align-items: center;
+
+      .contract {
+        margin-right: 0.5rem;
+      }
+
+      .copy {
+        margin-right: 0.5rem;
+      }
+
+      .explorer {
+        flex-shrink: 0;
+        margin-left: 0 !important;
+
+        &:hover {
+          text-decoration: none;
+        }
+
+        span {
+          color: #1f43f4 !important;
+        }
+      }
+
+      .copy {
+        margin-left: 0.5rem;
+      }
+
+      .shard {
+        color: #1f43f4 !important;
+        text-decoration: none;
+        flex-shrink: 0;
+        margin-left: 0;
+      }
+    }
+
+    .message {
+      margin-left: 0.25rem;
+      display: flex;
+      align-items: center;
+
+      .icon {
+        color: #6c757d;
+        height: 0.75rem;
+      }
+
+      .text {
+        color: #d9534f;
+        margin-left: 0.5rem;
+      }
+    }
+  }
+}

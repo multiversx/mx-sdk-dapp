@@ -7,11 +7,11 @@ import { WithClassnameType } from '../../types';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './ledgerConnectStyles.scss';
 
-type LedgerConnectPropsTypes = {
+interface LedgerConnectPropsTypes extends WithClassnameType {
   onClick: () => void;
   error: string;
   connectPageContent?: ReactNode;
-} & WithClassnameType;
+}
 
 export const LedgerConnect = (props: LedgerConnectPropsTypes) => {
   const {

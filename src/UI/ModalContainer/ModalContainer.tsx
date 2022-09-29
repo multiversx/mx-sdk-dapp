@@ -7,13 +7,13 @@ import {
 } from 'UI/DappModal';
 import { WithClassnameType } from '../types';
 
-type ModalContainerPropsTypes = {
+interface ModalContainerPropsTypes extends WithClassnameType {
   children: ReactNode;
   onClose?: () => void;
   modalConfig?: DappModalConfig;
   modalInteractionConfig?: DappModalInteractionConfig;
   visible?: boolean;
-} & WithClassnameType;
+}
 
 export const ModalContainer = (props: ModalContainerPropsTypes) => {
   const { handleHideModal: onHide, visible, config } = useDappModal({

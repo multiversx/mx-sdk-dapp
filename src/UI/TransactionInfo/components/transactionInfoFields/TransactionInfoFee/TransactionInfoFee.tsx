@@ -9,7 +9,7 @@ import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/get
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { DetailItem } from '../../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface TransactionInfoFeePropsTypes {
   transaction: InterpretedTransactionType;
@@ -42,14 +42,14 @@ export const TransactionInfoFee = (props: TransactionInfoFeePropsTypes) => {
     transaction.gasUsed != null ? (
       <Fragment>
         {transactionFee} {egldLabel}{' '}
-        <span className={globalStyles.textSecondary}>{price}</span>
+        <span className={styles.price}>{price}</span>
       </Fragment>
     ) : (
-      <span className={globalStyles.textSecondary}>{N_A}</span>
+      <span className={styles.price}>{N_A}</span>
     );
 
   return (
-    <DetailItem title='Transaction Fee'>
+    <DetailItem title='Transaction Fee' className={styles.fee}>
       <span data-testid='transactionInfoFee'>{fee}</span>
     </DetailItem>
   );

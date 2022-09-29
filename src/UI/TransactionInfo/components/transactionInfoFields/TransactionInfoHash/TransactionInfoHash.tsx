@@ -24,7 +24,7 @@ export const TransactionInfoHash = (props: TransactionInfoHashPropsTypes) => {
       >
         {transaction.txHash}
 
-        <CopyButton text={transaction.txHash} />
+        <CopyButton text={transaction.txHash} className={globalStyles.ml2} />
       </div>
     </DetailItem>
   );

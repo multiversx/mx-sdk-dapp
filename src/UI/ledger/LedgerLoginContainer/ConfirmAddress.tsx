@@ -6,10 +6,10 @@ import { WithClassnameType } from '../../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-type ConfirmAddressPropsTypes = {
+interface ConfirmAddressPropsTypes extends WithClassnameType {
   token?: string;
   noBorder?: boolean;
-} & WithClassnameType;
+}
 
 export const ConfirmAddress = (props: ConfirmAddressPropsTypes) => {
   const { token, noBorder, className = 'dapp-ledger-confirm-address' } = props;

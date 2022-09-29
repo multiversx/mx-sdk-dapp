@@ -2,26 +2,30 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
-import { WithClassnameType } from '../../types';
-import styles from '../dappModalStyles.scss';
 
-type DappModalHeaderProps = {
+import { WithClassnameType } from '../../types';
+
+import styles from '../dappModalStyles.scss';
+import globalStyles from 'assets/sass/main.scss';
+
+interface DappModalHeaderProps extends WithClassnameType {
   visible?: boolean;
   headerText?: string;
   customHeader?: JSX.Element | string;
   closeButtonClassName?: string;
   onHide?: () => void;
-} & WithClassnameType;
+}
 
-export const DappModalHeader = ({
-  visible,
-  headerText,
-  customHeader,
-  className,
-  closeButtonClassName,
-  onHide
-}: DappModalHeaderProps) => {
+export const DappModalHeader = (props: DappModalHeaderProps) => {
+  const {
+    visible,
+    headerText,
+    customHeader,
+    className,
+    closeButtonClassName,
+    onHide
+  } = props;
+
   if (!visible) {
     return null;
   }
