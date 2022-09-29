@@ -20,6 +20,7 @@
 
     overflow: hidden;
     text-overflow: ellipsis;
+    text-align: left;
   }
 
   .right {
@@ -30,6 +31,7 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     direction: rtl;
+    text-align: right;
   }
 
   .left span,
@@ -53,12 +55,14 @@
     }
   }
 
-  /* SAFARI 10.1+ fix */
-  @media not all and (min-resolution: 0.001dpcm) {
-    @supports (-webkit-appearance: none) {
-      .right {
-        text-overflow: unset;
-      }
+  /* SAFARI fix */
+  @supports (-webkit-hyphens: none) {
+    .right,
+    .left {
+      letter-spacing: -0.001em;
+    }
+    .right {
+      text-overflow: clip;
     }
   }
 
@@ -73,7 +77,7 @@
   }
 
   @media (max-width: 991.98px) {
-    max-width: 12rem
+    max-width: 12rem;
   }
 
   @media (max-width: 768px) {
