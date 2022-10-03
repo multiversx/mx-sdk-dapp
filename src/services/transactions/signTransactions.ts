@@ -1,29 +1,64 @@
+import { Transaction } from '@elrondnetwork/erdjs/out/transaction';
+import axios from 'axios';
 import BigNumber from 'bignumber.js';
+import { NFTS_ENDPOINT } from 'apiCalls';
 import { GAS_LIMIT } from 'constants/index';
 
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
 import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
-  setTransactionsToSign,
   setNotificationModal,
-  setTransactionsDisplayInfo
+  setTransactionsDisplayInfo,
+  setTransactionsToSign
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import {
   NotificationTypesEnum,
   SendTransactionReturnType,
-  SignTransactionsPropsType
+  SignTransactionsPropsType,
+  TransactionTypesEnum
 } from 'types';
+import {
+  getNetworkConfig,
+  getTokenFromData,
+  parseMultiEsdtTransferData
+} from 'utils';
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
-export function signTransactions({
+function extractedNftIds(transactions: Transaction[]) {
+  let ids: string[] = [];
+
+  transactions.forEach((tx) => {
+    const data = tx.getData().toString();
+    const isNftTransfer = data.startsWith(TransactionTypesEnum.ESDTNFTTransfer);
+    const isMultiNftTransfer = data.startsWith(
+      TransactionTypesEnum.MultiESDTNFTTransfer
+    );
+
+    if (isMultiNftTransfer) {
+      ids = [
+        ...parseMultiEsdtTransferData(data)
+          .filter((x) => Boolean(x.nonce))
+          .map((x) => `${x.token}-${parseInt(x.nonce ?? '0', 16)}`)
+      ];
+    }
+
+    if (isNftTransfer) {
+      ids.push(getTokenFromData(data).tokenId);
+    }
+  });
+
+  return ids;
+}
+
+export async function signTransactions({
   transactions,
   callbackRoute,
   minGasLimit = GAS_LIMIT,
   customTransactionInformation,
   transactionsDisplayInfo
-}: SignTransactionsPropsType): SendTransactionReturnType {
+}: SignTransactionsPropsType): Promise<SendTransactionReturnType> {
   const appState = store.getState();
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(appState);
@@ -37,6 +72,31 @@ export function signTransactions({
     stringIsFloat(accountBalance) ? accountBalance : '0'
   );
   const hasSufficientFunds = bNbalance.minus(bNtotalFee).isGreaterThan(0);
+
+  const ids = extractedNftIds(transactionsPayload);
+  const { apiAddress } = getNetworkConfig();
+
+  for (let i = 0; i < ids.length; i++) {
+    try {
+      const result = await axios.get(
+        `${apiAddress}/${NFTS_ENDPOINT}/${ids[i]}`
+      );
+      if (result.data.isTransferAffected) {
+        const notificationPayload = {
+          type: NotificationTypesEnum.error,
+          iconClassName: 'text-danger',
+          title: 'An error occurred',
+          description:
+            'One of the selected tokens is temporary immovable due to a pending ESDT protocol upgrade. Please try again at later stage.'
+        };
+
+        store.dispatch(setNotificationModal(notificationPayload));
+        return { error: 'token non transferable', sessionId: null };
+      }
+    } catch (e) {
+      console.error('NFT not found', e);
+    }
+  }
 
   if (!hasSufficientFunds) {
     const notificationPayload = {
