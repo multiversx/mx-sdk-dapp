@@ -40,7 +40,7 @@ function extractedNftIds(transactions: Transaction[]) {
       ids = [
         ...parseMultiEsdtTransferData(data)
           .filter((x) => Boolean(x.nonce))
-          .map((x) => `${x.token}-${parseInt(x.nonce ?? '0', 16)}`)
+          .map((x) => `${x.token}-${x.nonce}`)
       ];
     }
 
@@ -51,6 +51,23 @@ function extractedNftIds(transactions: Transaction[]) {
 
   return ids;
 }
+
+const getHasNonTransferableTokens = async (ids: string[]) => {
+  const { apiAddress } = getNetworkConfig();
+
+  for (const id of ids) {
+    try {
+      const result = await axios.get(`${apiAddress}/${NFTS_ENDPOINT}/${id}`);
+      if (result.data.isTransferAffected) {
+        return true;
+      }
+    } catch (e) {
+      console.error('NFT not found', e);
+      return false;
+    }
+  }
+  return false;
+};
 
 export async function signTransactions({
   transactions,
@@ -74,28 +91,19 @@ export async function signTransactions({
   const hasSufficientFunds = bNbalance.minus(bNtotalFee).isGreaterThan(0);
 
   const ids = extractedNftIds(transactionsPayload);
-  const { apiAddress } = getNetworkConfig();
+  const hasNonTransferableToken = await getHasNonTransferableTokens(ids);
 
-  for (let i = 0; i < ids.length; i++) {
-    try {
-      const result = await axios.get(
-        `${apiAddress}/${NFTS_ENDPOINT}/${ids[i]}`
-      );
-      if (result.data.isTransferAffected) {
-        const notificationPayload = {
-          type: NotificationTypesEnum.error,
-          iconClassName: 'text-danger',
-          title: 'An error occurred',
-          description:
-            'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.'
-        };
+  if (hasNonTransferableToken) {
+    const notificationPayload = {
+      type: NotificationTypesEnum.error,
+      iconClassName: 'text-danger',
+      title: 'An error occurred',
+      description:
+        'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.'
+    };
 
-        store.dispatch(setNotificationModal(notificationPayload));
-        return { error: 'token non transferable', sessionId: null };
-      }
-    } catch (e) {
-      console.error('NFT not found', e);
-    }
+    store.dispatch(setNotificationModal(notificationPayload));
+    return { error: 'token non transferable', sessionId: null };
   }
 
   if (!hasSufficientFunds) {
