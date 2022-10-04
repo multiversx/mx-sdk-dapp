@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
@@ -26,7 +26,7 @@ export const TransactionInfoTokenOperations = (
   return (
     <DetailItem
       title={
-        <>
+        <Fragment>
           <span className={globalStyles.mr2}>Token Operations</span>
 
           <span
@@ -39,7 +39,7 @@ export const TransactionInfoTokenOperations = (
           >
             {visibleOperations.length}
           </span>
-        </>
+        </Fragment>
       }
     >
       <OperationsList

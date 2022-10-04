@@ -1,12 +1,10 @@
 import React, { useMemo } from 'react';
-import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { transactionActionUnwrapper } from 'utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
 import { ActionText } from './components/ActionText';
 
-import styles from './transactionAction.module.scss';
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface TransactionActionPropsTypes {
   transaction: InterpretedTransactionType;
@@ -24,18 +22,12 @@ export const TransactionAction = (props: TransactionActionPropsTypes) => {
   }, [transaction.action]);
 
   return (
-    <div
-      data-testid='transactionAction'
-      className={classNames(
-        styles.transactionAction,
-        globalStyles.dFlex,
-        globalStyles.flexColumn,
-        globalStyles.flexLgRow,
-        globalStyles.flexLgWrap
-      )}
-    >
+    <div data-testid='transactionAction' className={styles.action}>
       {unwrappedResult.map((entry, i) => (
-        <div key={JSON.stringify(unwrappedResult) + i}>
+        <div
+          key={JSON.stringify(unwrappedResult) + i}
+          className={styles.result}
+        >
           <ActionText {...{ entry, transaction }} />
         </div>
       ))}

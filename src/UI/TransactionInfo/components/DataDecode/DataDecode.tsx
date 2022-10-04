@@ -34,13 +34,15 @@ export const DataDecode = (props: DataDecodePropsTypes) => {
       </div>
 
       {showSelect && (
-        <select className={styles.dropdown} onChange={onChange}>
-          {decodeOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <div className={styles.select}>
+          <select className={styles.dropdown} onChange={onChange}>
+            {decodeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
 
       {validationWarnings.map((warning: string, index: number) => (

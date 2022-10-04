@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 import {
   InterpretedTransactionType,
   ResultType
 } from 'types/serverTransactions.types';
+
 import { AddressDetailItem } from '../AddressDetailItem/AddressDetailitem';
 import { DetailItem } from '../DetailItem';
 import { EventsList } from '../EventsList/EventsList';
@@ -69,13 +70,13 @@ export const TransactionLogs = (props: TransactionLogsPropsTypes) => {
     transaction.logs?.events && transaction.logs?.events?.length > 0;
 
   return (
-    <>
+    <Fragment>
       {transaction.logs && (
-        <>
-          {' '}
+        <Fragment>
           {transaction.logs.address != null && (
             <AddressDetailItem address={transaction.logs.address} />
           )}
+
           {showEvents && (
             <DetailItem title='Events'>
               <EventsList
@@ -84,10 +85,10 @@ export const TransactionLogs = (props: TransactionLogsPropsTypes) => {
               />
             </DetailItem>
           )}
-        </>
+        </Fragment>
       )}
 
       <Results transaction={transaction} />
-    </>
+    </Fragment>
   );
 };

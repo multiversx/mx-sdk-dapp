@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import {
   InterpretedTransactionType,
   OperationType,
@@ -63,7 +63,7 @@ export const OperationText = ({
       );
     case TransactionOperationActionTypeEnum.multiTransfer:
       return (
-        <>
+        <Fragment>
           <OperationBlock
             transaction={transaction}
             address={operation.sender}
@@ -75,11 +75,11 @@ export const OperationText = ({
             address={operation.receiver}
             action='To'
           />
-        </>
+        </Fragment>
       );
     case TransactionOperationActionTypeEnum.transfer:
       return (
-        <>
+        <Fragment>
           <OperationBlock
             transaction={transaction}
             address={operation.sender}
@@ -91,7 +91,7 @@ export const OperationText = ({
             address={operation.receiver}
             action='To'
           />
-        </>
+        </Fragment>
       );
     case TransactionOperationActionTypeEnum.writeLog:
       return (
@@ -115,7 +115,7 @@ export const OperationText = ({
       );
     default:
       return (
-        <>
+        <Fragment>
           <OperationBlock
             transaction={transaction}
             address={operation.sender}
@@ -127,7 +127,7 @@ export const OperationText = ({
             address={operation.receiver}
             action='To'
           />
-        </>
+        </Fragment>
       );
   }
 };

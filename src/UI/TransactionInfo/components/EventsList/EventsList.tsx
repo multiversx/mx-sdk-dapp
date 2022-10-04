@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, Fragment } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -14,6 +14,7 @@ import { getEventListInitialDecodeMethod } from 'utils/transactions/transactionI
 import { DataDecode } from '../DataDecode';
 
 import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface EventTopicsPropsTypes {
   topics: EventType['topics'];
@@ -25,11 +26,32 @@ interface EventsListPropsTypes {
   id?: string;
 }
 
+interface EventDataPropsTypes {
+  children: JSX.Element | JSX.Element[] | string;
+  label: string;
+}
+
 const EventTopics = (props: EventTopicsPropsTypes) => {
   const { topics, identifier } = props;
   const mergedTopics = topics.filter((topic) => topic).join('\n');
 
   return <DataDecode value={mergedTopics} identifier={identifier} />;
+};
+
+const EventData = (props: EventDataPropsTypes) => {
+  const { label, children } = props;
+
+  return (
+    <div className={classNames(globalStyles.row, styles.row)}>
+      <div className={classNames(globalStyles.colSm2, styles.label)}>
+        {label}
+      </div>
+
+      <div className={classNames(globalStyles.colSm10, styles.data)}>
+        <Fragment>{children}</Fragment>
+      </div>
+    </div>
+  );
 };
 
 export const EventsList = (props: EventsListPropsTypes) => {
@@ -48,139 +70,50 @@ export const EventsList = (props: EventsListPropsTypes) => {
   }, []);
 
   return (
-    <div
-      className={classNames(
-        globalStyles.dFlex,
-        globalStyles.flexColumn,
-        globalStyles.mt1
-      )}
-    >
-      {events.map((event: EventType, i) => {
+    <div className={styles.events}>
+      {events.map((event: EventType, index) => {
         const dataHexValue = getEventListDataHexValue(event);
         const highlightTx = getEventListHighlight(event, id);
 
         return (
           <div
-            key={i}
-            className={classNames(
-              globalStyles.dFlex,
-              globalStyles.borderLeft,
-              globalStyles.borderBottom,
-              globalStyles.ml3,
-              globalStyles.py3
-            )}
+            key={index}
+            className={styles.event}
             {...(highlightTx ? { ref } : {})}
           >
-            <div className={globalStyles.transactionIcon}>
+            <div className={styles.icon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div>
+            <div className={styles.content}>
               {event.address != null && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Address</div>
+                <EventData label='Hash'>
+                  <Trim text={event.address} className={styles.hash} />
 
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.dFlex,
-                      globalStyles.flexColumn
-                    )}
-                  >
-                    <Trim text={event.address} />
-
-                    <CopyButton
-                      text={event.address}
-                      className={globalStyles.ml2}
-                    />
-                  </div>
-                </div>
+                  <CopyButton text={event.address} className={styles.copy} />
+                </EventData>
               )}
 
               {event.identifier != null && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Identifier</div>
-
-                  <div
-                    className={classNames(
-                      globalStyles.colSm2,
-                      globalStyles.dFlex,
-                      globalStyles.alignItemsCenter
-                    )}
-                  >
-                    {event.identifier}
-                  </div>
-                </div>
+                <EventData label='Identifier'>{event.identifier}</EventData>
               )}
 
               {event.topics != null && event.topics.length > 0 && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Topics</div>
-
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.dFlex,
-                      globalStyles.flexColumn
-                    )}
-                  >
-                    <EventTopics
-                      topics={event.topics}
-                      identifier={event.identifier}
-                    />
-                  </div>
-                </div>
+                <EventData label='Topics'>
+                  <EventTopics
+                    topics={event.topics}
+                    identifier={event.identifier}
+                  />
+                </EventData>
               )}
 
               {event.data != null && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Data</div>
-
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.dFlex,
-                      globalStyles.flexColumn
-                    )}
-                  >
-                    <DataDecode
-                      value={dataHexValue}
-                      {...(highlightTx ? { initialDecodeMethod } : {})}
-                    />
-                  </div>
-                </div>
+                <EventData label='Data'>
+                  <DataDecode
+                    value={dataHexValue}
+                    {...(highlightTx ? { initialDecodeMethod } : {})}
+                  />
+                </EventData>
               )}
             </div>
           </div>

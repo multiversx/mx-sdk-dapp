@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, Fragment } from 'react';
 import { faExchange, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -18,11 +18,33 @@ import {
 } from 'utils/transactions/transactionInfoHelpers/index';
 import { DataDecode } from '../DataDecode';
 
+import styles from './styles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
 interface ScResultsListPropsTypes {
   results: ResultType[];
 }
+
+interface ResultDataPropsTypes {
+  children: JSX.Element | JSX.Element[] | string;
+  label: string;
+}
+
+const ResultData = (props: ResultDataPropsTypes) => {
+  const { label, children } = props;
+
+  return (
+    <div className={classNames(globalStyles.row, styles.row)}>
+      <div className={classNames(globalStyles.colSm2, styles.label)}>
+        {label}
+      </div>
+
+      <div className={classNames(globalStyles.colSm10, styles.data)}>
+        <Fragment>{children}</Fragment>
+      </div>
+    </div>
+  );
+};
 
 export const ScResultsList = (props: ScResultsListPropsTypes) => {
   const { results } = props;
@@ -41,202 +63,93 @@ export const ScResultsList = (props: ScResultsListPropsTypes) => {
   }, []);
 
   return (
-    <div
-      className={classNames(
-        globalStyles.dFlex,
-        globalStyles.flexColumn,
-        globalStyles.mt1
-      )}
-    >
-      {results.map((result: ResultType, i) => {
+    <div className={styles.results}>
+      {results.map((result: ResultType) => {
         const highlightTx = getScResultsHighlight(result.hash);
 
         return (
           <div
-            key={i}
+            key={result.hash}
             id={result.hash}
-            className={classNames(
-              globalStyles.dFlex,
-              globalStyles.borderLeft,
-              globalStyles.borderBottom,
-              globalStyles.ml3,
-              globalStyles.py3
-            )}
-            {...(highlightTx ? { ref: ref } : {})}
+            className={styles.result}
+            {...(highlightTx ? { ref } : {})}
           >
-            <div className={globalStyles.transactionIcon}>
+            <div className={styles.icon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div>
+            <div className={styles.content}>
               {result.hash && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Hash</div>
+                <ResultData label='Hash'>
+                  <Trim text={result.hash} className={styles.hash} />
 
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.dFlex,
-                      globalStyles.alignItemsCenter
+                  <CopyButton text={result.hash} className={styles.copy} />
+
+                  <ExplorerLink
+                    className={styles.explorer}
+                    page={explorerUrlBuilder.transactionDetails(
+                      `${result.originalTxHash}#${result.hash}/${decodeMethod}`
                     )}
                   >
-                    <Trim text={result.hash} />
-
-                    <CopyButton
-                      text={result.hash}
-                      className={globalStyles.ml2}
-                    />
-
-                    <ExplorerLink
-                      className={globalStyles.ml2}
-                      page={explorerUrlBuilder.transactionDetails(
-                        `${result.originalTxHash}#${result.hash}/${decodeMethod}`
-                      )}
-                    >
-                      <FontAwesomeIcon icon={faSearch} />
-                    </ExplorerLink>
-                  </div>
-                </div>
+                    <FontAwesomeIcon icon={faSearch} />
+                  </ExplorerLink>
+                </ResultData>
               )}
 
               {result.sender && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>From</div>
+                <ResultData label='From'>
+                  <ScAddressIcon initiator={result.sender} />
 
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.dFlex,
-                      globalStyles.alignItemsCenter
-                    )}
-                  >
-                    <ScAddressIcon initiator={result.sender} />
-
+                  <div className={styles.address}>
                     <AccountName
                       address={result.sender}
                       assets={result.senderAssets}
                     />
-
-                    <CopyButton
-                      text={result.sender}
-                      className={globalStyles.ml2}
-                    />
                   </div>
-                </div>
+
+                  <CopyButton text={result.sender} className={styles.copy} />
+                </ResultData>
               )}
 
               {result.receiver && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>To</div>
+                <ResultData label='To'>
+                  <ScAddressIcon initiator={result.receiver} />
 
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.dFlex,
-                      globalStyles.alignItemsCenter
-                    )}
-                  >
-                    <ScAddressIcon initiator={result.receiver} />
-
+                  <div className={styles.address}>
                     <AccountName
                       address={result.receiver}
                       assets={result.receiverAssets}
                     />
-
-                    <CopyButton
-                      text={result.receiver}
-                      className={globalStyles.ml2}
-                    />
                   </div>
-                </div>
+
+                  <CopyButton text={result.receiver} className={styles.copy} />
+                </ResultData>
               )}
 
               {result.value != null && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow,
-                    globalStyles.mb3
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Value</div>
-
-                  <div
-                    className={classNames(
-                      globalStyles.colSm10,
-                      globalStyles.textWrap
-                    )}
-                  >
-                    <FormatAmount value={result.value} showLastNonZeroDecimal />
-                  </div>
-                </div>
+                <ResultData label='Value'>
+                  <FormatAmount
+                    value={result.value}
+                    showLastNonZeroDecimal={true}
+                  />
+                </ResultData>
               )}
 
               {result.data && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Data</div>
-
-                  <div className={globalStyles.colSm10}>
-                    <DataDecode
-                      value={
-                        result.data ? getScResultsDecodedData(result.data) : N_A
-                      }
-                      {...(highlightTx
-                        ? { initialDecodeMethod, setDecodeMethod }
-                        : {})}
-                    />
-                  </div>
-                </div>
+                <ResultData label='Data'>
+                  <DataDecode
+                    value={
+                      result.data ? getScResultsDecodedData(result.data) : N_A
+                    }
+                    {...(highlightTx
+                      ? { initialDecodeMethod, setDecodeMethod }
+                      : {})}
+                  />
+                </ResultData>
               )}
 
               {result.returnMessage && (
-                <div
-                  className={classNames(
-                    globalStyles.row,
-                    globalStyles.mt3,
-                    globalStyles.dFlex,
-                    globalStyles.flexColumn,
-                    globalStyles.flexSmRow
-                  )}
-                >
-                  <div className={globalStyles.colSm2}>Response</div>
-
-                  <div className={globalStyles.colSm10}>
-                    {result.returnMessage}
-                  </div>
-                </div>
+                <ResultData label='Response'>{result.returnMessage}</ResultData>
               )}
             </div>
           </div>

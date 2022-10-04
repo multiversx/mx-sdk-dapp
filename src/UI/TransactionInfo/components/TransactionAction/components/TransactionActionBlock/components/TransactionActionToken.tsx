@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import classNames from 'classnames';
 
 import { DECIMALS } from 'constants/index';
@@ -24,11 +24,9 @@ export const TransactionActionToken = (
   }
 
   return (
-    <>
+    <Fragment>
       {showFormattedAmount && (
-        <div
-          className={classNames(globalStyles.mr1, globalStyles.textTruncate)}
-        >
+        <div className={globalStyles.textTruncate}>
           <FormatAmount
             value={token.value}
             digits={2}
@@ -63,6 +61,6 @@ export const TransactionActionToken = (
           <span>{tokenLinkText}</span>
         </div>
       </ExplorerLink>
-    </>
+    </Fragment>
   );
 };

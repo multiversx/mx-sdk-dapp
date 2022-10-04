@@ -13,12 +13,14 @@ export type AccountNamePropsType = {
   ['data-testid']?: string;
 };
 
-export const AccountName = ({
-  address,
-  assets,
-  color,
-  ...rest // data-testid
-}: AccountNamePropsType) => {
+export const AccountName = (props: AccountNamePropsType) => {
+  const {
+    address,
+    assets,
+    color,
+    ...rest // data-testid
+  } = props;
+
   if (assets && assets.name) {
     const name = assets.name.replace(/\p{Emoji}/gu, '');
     const description = `${name} (${address})`;

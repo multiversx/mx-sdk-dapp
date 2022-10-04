@@ -6,6 +6,7 @@ import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/explorerUrlBuilder';
 
 import globalStyles from 'assets/sass/main.scss';
+import styles from '../styles.scss';
 
 export interface TransactionActionCollectionPropsTypes {
   token: TokenArgumentType;
@@ -23,9 +24,7 @@ export const TransactionActionCollection = (
   return (
     <ExplorerLink
       page={explorerUrlBuilder.collectionDetails(token.collection)}
-      className={classNames(globalStyles.dFlex, {
-        [globalStyles.sideLink]: token.svgUrl
-      })}
+      className={classNames(styles.transactionActionCollection)}
     >
       <div
         className={classNames(

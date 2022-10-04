@@ -17,6 +17,7 @@ export const TransactionInfoScResults = (
   if (!showResults) {
     return null;
   }
+
   return (
     <DetailItem title='Smart Contract Results'>
       <ScResultsList results={transaction.results ?? []} />

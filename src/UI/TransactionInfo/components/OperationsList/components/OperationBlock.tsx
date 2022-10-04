@@ -11,6 +11,7 @@ import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 
 import globalStyles from 'assets/sass/main.scss';
+import styles from '../styles.scss';
 
 interface OperationBlockPropsTypes {
   address: string;
@@ -32,18 +33,32 @@ export const OperationBlock = (props: OperationBlockPropsTypes) => {
     operationAssets = transaction.receiverAssets;
   }
 
+  const directions = {
+    Internal: 'int',
+    In: 'in',
+    Out: 'out',
+    Self: 'self'
+  };
+
   return (
     <div
-      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter, {
+      className={classNames(styles.operationBlock, {
         [globalStyles.col12]: isFullSize,
         [globalStyles.prXl0]: !isFullSize,
         [globalStyles.pl3]: !isFullSize && operationAssets,
         [globalStyles.colLg6]: !isFullSize && !operationAssets,
-        [globalStyles.colXl3]: !isFullSize && !operationAssets
+        [globalStyles.colXl4]: !isFullSize && !operationAssets
       })}
     >
       {direction && (
-        <div className={globalStyles.mr2}>{direction.toUpperCase()}</div>
+        <div
+          className={classNames(
+            styles.direction,
+            styles[directions[direction]]
+          )}
+        >
+          {directions[direction]}
+        </div>
       )}
 
       {action && (
@@ -60,11 +75,14 @@ export const OperationBlock = (props: OperationBlockPropsTypes) => {
 
       {addressIsValid(address) ? (
         <Fragment>
-          <ExplorerLink page={explorerUrlBuilder.accountDetails(address)}>
+          <ExplorerLink
+            page={explorerUrlBuilder.accountDetails(address)}
+            className={styles.explorer}
+          >
             <AccountName address={address} assets={operationAssets} />
           </ExplorerLink>
 
-          <CopyButton text={address} className={globalStyles.ml2} />
+          <CopyButton text={address} className={styles.copy} />
         </Fragment>
       ) : (
         ''

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   OperationType,
   TokenArgumentType,
@@ -12,6 +13,7 @@ const getTicker = (identifier: string) => {
   if (!identifier) return '';
 
   const arr = identifier.split('-');
+
   if (arr.length > 0) {
     return arr[0];
   }
@@ -35,7 +37,7 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
   } as TokenArgumentType;
 
   if (token.type == null) {
-    return <></>;
+    return null;
   }
 
   switch (operation.type) {
@@ -43,15 +45,17 @@ export const OperationToken = ({ operation }: { operation: OperationType }) => {
       const props = getTransactionActionNftText({
         token
       });
+
       return <TransactionActionBlock.Nft {...props} badgeText={null} />;
     }
     case VisibleTransactionOperationType.esdt: {
       const props = getTransactionActionTokenText({
         token
       });
+
       return <TransactionActionBlock.Token {...props} />;
     }
     default:
-      return <></>;
+      return null;
   }
 };

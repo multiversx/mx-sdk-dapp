@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 
 import {
   InterpretedTransactionType,
@@ -25,7 +25,7 @@ export const OperationRow = (props: OperationRowPropsTypes) => {
     case VisibleTransactionOperationType.esdt:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
-          <>
+          <Fragment>
             {operation.esdtType === NftEnumType.NonFungibleESDT && (
               <div className={globalStyles.mr1}>NFT</div>
             )}
@@ -35,22 +35,22 @@ export const OperationRow = (props: OperationRowPropsTypes) => {
             )}
 
             <OperationToken operation={operation} />
-          </>
+          </Fragment>
         </DetailedItem>
       );
 
     case VisibleTransactionOperationType.egld:
       return (
         <DetailedItem operation={operation} transaction={transaction}>
-          <>
+          <Fragment>
             <div className={globalStyles.mr2}>Value</div>
 
             <FormatAmount value={operation.value} showLastNonZeroDecimal />
-          </>
+          </Fragment>
         </DetailedItem>
       );
 
     default:
-      return <></>;
+      return null;
   }
 };

@@ -1,5 +1,4 @@
-import React from 'react';
-import classNames from 'classnames';
+import React, { Fragment } from 'react';
 
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -9,7 +8,7 @@ import { addressIsValid } from 'utils';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 import { DetailItem } from '../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
 
 interface AddressDetailItemPropsTypes {
   address: string;
@@ -19,23 +18,21 @@ export const AddressDetailItem = (props: AddressDetailItemPropsTypes) => {
   const { address } = props;
 
   return (
-    <DetailItem title='Address' noBorder>
-      <div
-        className={classNames(
-          globalStyles.dFlex,
-          globalStyles.alignItemsCenter
-        )}
-      >
+    <DetailItem title='Address' noBorder={true}>
+      <div className={styles.addressDetailItem}>
         <ScAddressIcon initiator={address} />
 
         {addressIsValid(address) && (
-          <>
-            <ExplorerLink page={explorerUrlBuilder.accountDetails(address)}>
+          <Fragment>
+            <ExplorerLink
+              page={explorerUrlBuilder.accountDetails(address)}
+              className={styles.explorer}
+            >
               <Trim text={address} />
             </ExplorerLink>
 
-            <CopyButton className={globalStyles.mr2} text={address} />
-          </>
+            <CopyButton text={address} className={styles.copy} />
+          </Fragment>
         )}
       </div>
     </DetailItem>

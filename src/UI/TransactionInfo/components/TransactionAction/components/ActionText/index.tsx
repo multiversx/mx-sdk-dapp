@@ -12,8 +12,9 @@ import { AccountName } from 'UI/TransactionsTable/components/AccountName';
 import { ScAddressIcon } from 'UI/TransactionsTable/components/ScAddressIcon';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
-import { ActionToken } from './ActionToken';
+import { ActionToken } from '../ActionToken';
 
+import styles from './styles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
 interface ActionTextPropsTypes {
@@ -26,7 +27,11 @@ export const ActionText = (props: ActionTextPropsTypes) => {
 
   switch (true) {
     case typeof entry === 'string':
-      return <span>{entry.replace('eGLD', 'EGLD')}</span>;
+      return (
+        <span className={globalStyles.mr1}>
+          {entry.replace('eGLD', 'EGLD')}
+        </span>
+      );
 
     case Boolean(entry.address):
       let entryAssets;
@@ -39,43 +44,37 @@ export const ActionText = (props: ActionTextPropsTypes) => {
         entryAssets = transaction.receiverAssets;
       }
 
-      return addressIsValid(entry.address) ? (
-        <div
-          className={classNames(
-            globalStyles.dFlex,
-            globalStyles.alignItemsCenter
-          )}
-        >
-          <ScAddressIcon initiator={entry.address} />
+      if (addressIsValid(entry.address)) {
+        return (
+          <div className={styles.address}>
+            <ScAddressIcon initiator={entry.address} />
 
-          <ExplorerLink
-            page={explorerUrlBuilder.accountDetails(entry.address)}
-            data-testid='receiverLink'
-          >
-            <AccountName address={entry.address} assets={entryAssets} />
-          </ExplorerLink>
-        </div>
-      ) : (
-        ''
-      );
+            <ExplorerLink
+              page={explorerUrlBuilder.accountDetails(entry.address)}
+              data-testid='receiverLink'
+              className={styles.explorer}
+            >
+              <AccountName address={entry.address} assets={entryAssets} />
+            </ExplorerLink>
+          </div>
+        );
+      }
+
+      return '';
 
     case Boolean(entry.token && entry.token.length > 0):
       return entry.token.map((token: TokenArgumentType, index: number) => {
         return (
-          <div key={`tx-${token.identifier}-${index}`}>
-            <ActionToken token={token} showLastNonZeroDecimal />
+          <div
+            key={`tx-${token.identifier}-${index}`}
+            className={classNames(styles.token, {
+              [styles.spaced]: entry.token.length > 1
+            })}
+          >
+            <ActionToken token={token} showLastNonZeroDecimal={true} />
 
             {index < entry.token.length - 1 && (
-              <span
-                className={classNames(
-                  globalStyles.mlN1,
-                  globalStyles.mr1,
-                  globalStyles.dNone,
-                  globalStyles.dSmFlex
-                )}
-              >
-                ,
-              </span>
+              <span className={styles.comma}>,</span>
             )}
           </div>
         );
@@ -152,7 +151,7 @@ export const ActionText = (props: ActionTextPropsTypes) => {
       );
 
       return (
-        <span className={globalStyles.dFlex}>
+        <span className={classNames(globalStyles.dFlex, globalStyles.mr1)}>
           <ExplorerLink
             page={explorerUrlBuilder.providerDetails(transaction.receiver)}
             className={classNames(

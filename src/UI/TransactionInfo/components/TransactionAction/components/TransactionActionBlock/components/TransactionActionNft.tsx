@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -7,6 +7,7 @@ import { TransactionActionNftReturnType } from 'utils/transactions/transactionIn
 import { NftBadge } from './NftBadge';
 
 import globalStyles from 'assets/sass/main.scss';
+import styles from '../styles.scss';
 
 export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
   const {
@@ -23,7 +24,7 @@ export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
   }
 
   return (
-    <Fragment>
+    <div className={styles.transactionActionNft}>
       {badgeText != null && (
         <NftBadge
           text={badgeText}
@@ -51,18 +52,13 @@ export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
       <ExplorerLink
         page={tokenExplorerLink}
         data-testid='nftExplorerLink'
-        className={classNames({
+        className={classNames(styles.explorer, {
           [globalStyles.sideLink]: token.svgUrl,
           [globalStyles.dFlex]: token.svgUrl,
           [globalStyles.textTruncate]: !token.svgUrl
         })}
       >
-        <div
-          className={classNames(
-            globalStyles.dFlex,
-            globalStyles.alignItemsCenter
-          )}
-        >
+        <div className={styles.data}>
           {token.svgUrl && (
             <img
               src={token.svgUrl}
@@ -73,14 +69,13 @@ export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
 
           <span
             className={classNames({
-              [globalStyles.mr1]: token.ticker === token.collection,
-              [globalStyles.textTruncate]: token.ticker === token.collection
+              [styles.truncate]: token.ticker === token.collection
             })}
           >
             {tokenLinkText}
           </span>
         </div>
       </ExplorerLink>
-    </Fragment>
+    </div>
   );
 };

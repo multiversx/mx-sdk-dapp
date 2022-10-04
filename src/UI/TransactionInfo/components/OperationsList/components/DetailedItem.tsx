@@ -33,7 +33,7 @@ export const DetailedItem = (props: DetailedItemPropsTypes) => {
         <div
           className={classNames(
             globalStyles.colLg6,
-            globalStyles.colXl6,
+            globalStyles.colXl4,
             globalStyles.dFlex,
             globalStyles.alignItemsCenter
           )}

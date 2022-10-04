@@ -11,12 +11,11 @@
         margin-right: 0.5rem;
       }
 
-      .copy {
-        margin-right: 0.5rem;
-      }
-
       .explorer {
-        flex-shrink: 0;
+        display: flex;
+        max-width: 100%;
+        overflow: hidden;
+        color: #1f43f4 !important;
         margin-left: 0 !important;
 
         &:hover {
@@ -24,12 +23,31 @@
         }
 
         span {
-          color: #1f43f4 !important;
+          max-width: none;
+
+          [class*='left'] span,
+          [class*='right'] span {
+            font-size: 1rem;
+            color: #1f43f4 !important;
+          }
+
+          &:last-child {
+            color: #1f43f4 !important;
+          }
         }
       }
 
       .copy {
-        margin-left: 0.5rem;
+        margin: 0 0.5rem;
+
+        svg path {
+          fill: #cacbcc;
+          transition: all 200ms;
+
+          &:hover {
+            fill: #1f43f4;
+          }
+        }
       }
 
       .shard {

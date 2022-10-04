@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect } from 'react';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState
+} from 'react';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 
@@ -11,15 +17,17 @@ export interface TrimType extends WithClassnameType {
   color?: 'muted' | 'secondary' | string;
 }
 
-export const Trim = ({
-  text,
-  className = 'dapp-trim',
-  dataTestId = 'trim-text-component',
-  color
-}: TrimType) => {
-  const [overflow, setOverflow] = React.useState(false);
-  const trimRef = React.useRef(document.createElement('span'));
-  const hiddenTextRef = React.useRef(document.createElement('span'));
+export const Trim = (props: TrimType) => {
+  const {
+    text,
+    className = 'dapp-trim',
+    dataTestId = 'trim-text-component',
+    color
+  } = props;
+
+  const [overflow, setOverflow] = useState(false);
+  const trimRef = useRef(document.createElement('span'));
+  const hiddenTextRef = useRef(document.createElement('span'));
 
   const listener = useCallback(
     debounce(() => {
@@ -64,17 +72,19 @@ export const Trim = ({
       </span>
 
       {overflow ? (
-        <>
+        <Fragment>
           <span className={styles.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
             </span>
           </span>
+
           <span className={styles.ellipsis}>...</span>
+
           <span className={styles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
-        </>
+        </Fragment>
       ) : (
         <span>{text}</span>
       )}
