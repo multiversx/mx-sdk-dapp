@@ -26,8 +26,6 @@ import {
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
-// TODO It should be removed as soon as the API will fix the issue.
-// TODO Revert commit hash: a4ac9c90c3014a5a312153eb2a23be498d674a06 with message: 'check token transferability'
 function extractedNftIds(transactions: Transaction[]) {
   let ids: string[] = [];
 
@@ -53,7 +51,6 @@ function extractedNftIds(transactions: Transaction[]) {
 
   return ids;
 }
-// TODO END -----------------------------------------------------------------
 
 export async function signTransactions({
   transactions,
@@ -76,8 +73,6 @@ export async function signTransactions({
   );
   const hasSufficientFunds = bNbalance.minus(bNtotalFee).isGreaterThan(0);
 
-  // TODO It should be removed as soon as the API will fix the issue.
-  // TODO Revert commit hash: a4ac9c90c3014a5a312153eb2a23be498d674a06 with message: 'check token transferability'
   const ids = extractedNftIds(transactionsPayload);
   const { apiAddress } = getNetworkConfig();
 
@@ -92,7 +87,7 @@ export async function signTransactions({
           iconClassName: 'text-danger',
           title: 'An error occurred',
           description:
-            'One of the selected tokens is temporary immovable due to a pending ESDT protocol upgrade. Please try again at later stage.'
+            'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.'
         };
 
         store.dispatch(setNotificationModal(notificationPayload));
@@ -102,7 +97,6 @@ export async function signTransactions({
       console.error('NFT not found', e);
     }
   }
-  // TODO END -----------------------------------------------------------------
 
   if (!hasSufficientFunds) {
     const notificationPayload = {
