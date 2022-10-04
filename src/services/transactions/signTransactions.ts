@@ -106,7 +106,7 @@ export async function signTransactions({
     return { error: 'token non transferable', sessionId: null };
   }
 
-  if (hasSufficientFunds) {
+  if (!hasSufficientFunds) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,
       iconClassName: 'text-warning',
