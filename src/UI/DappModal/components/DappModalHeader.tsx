@@ -8,7 +8,7 @@ import { WithClassnameType } from '../../types';
 import styles from '../dappModalStyles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-interface DappModalHeaderProps extends WithClassnameType {
+interface DappModalHeaderPropsType extends WithClassnameType {
   visible?: boolean;
   headerText?: string;
   customHeader?: JSX.Element | string;
@@ -16,16 +16,14 @@ interface DappModalHeaderProps extends WithClassnameType {
   onHide?: () => void;
 }
 
-export const DappModalHeader = (props: DappModalHeaderProps) => {
-  const {
-    visible,
-    headerText,
-    customHeader,
-    className,
-    closeButtonClassName,
-    onHide
-  } = props;
-
+export const DappModalHeader = ({
+  visible,
+  headerText,
+  customHeader,
+  className,
+  closeButtonClassName,
+  onHide
+}: DappModalHeaderPropsType) => {
   if (!visible) {
     return null;
   }

@@ -10,7 +10,7 @@ import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import styles from './unlockPageStyles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-export interface Props {
+export interface UnlockPagePropsType {
   title?: string;
   className?: string;
   loginRoute: string;
@@ -22,18 +22,16 @@ export interface Props {
   description?: string | React.ReactNode;
 }
 
-export const UnlockPage = (props: Props) => {
-  const {
-    loginRoute,
-    title = 'Login',
-    className = 'dapp-unlock-page',
-    LedgerLoginButtonText = 'Ledger',
-    description = 'Pick a login method',
-    WalletConnectLoginButtonText = 'Maiar',
-    ExtensionLoginButtonText = 'Extension',
-    WebWalletLoginButtonText = 'Web wallet'
-  } = props;
-
+export const UnlockPage = ({
+  loginRoute,
+  title = 'Login',
+  className = 'dapp-unlock-page',
+  LedgerLoginButtonText = 'Ledger',
+  description = 'Pick a login method',
+  WalletConnectLoginButtonText = 'Maiar',
+  ExtensionLoginButtonText = 'Extension',
+  WebWalletLoginButtonText = 'Web wallet'
+}: UnlockPagePropsType) => {
   const generatedClasses = {
     wrapper: classNames(
       styles.home,

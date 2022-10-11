@@ -4,16 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { useGetAccount } from 'hooks';
-import { InterpretedTransactionType } from 'types';
+import { WithTransactionType } from 'UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface NonceMessagePropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const NonceMessage = (props: NonceMessagePropsTypes) => {
-  const { transaction } = props;
+export const NonceMessage = ({ transaction }: WithTransactionType) => {
   const { nonce } = useGetAccount();
   const { nonce: transactionNonce } = transaction;
 

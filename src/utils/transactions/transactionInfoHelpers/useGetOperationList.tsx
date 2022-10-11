@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import {
-  InterpretedTransactionType,
   OperationType,
   TransactionOperationActionTypeEnum
 } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 
 const internalTransactionActions = [
   TransactionOperationActionTypeEnum.create,
@@ -24,8 +24,7 @@ enum ButtonTextEnum {
   all = 'Show all operations'
 }
 
-export interface OperationListType {
-  transaction: InterpretedTransactionType;
+export interface OperationListType extends WithTransactionType {
   operations: OperationType[];
   listLength?: number;
 }

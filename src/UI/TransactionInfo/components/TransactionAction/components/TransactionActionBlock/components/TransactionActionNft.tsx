@@ -9,16 +9,14 @@ import { NftBadge } from './NftBadge';
 import globalStyles from 'assets/sass/main.scss';
 import styles from '../styles.scss';
 
-export const TransactionActionNft = (props: TransactionActionNftReturnType) => {
-  const {
-    badgeText,
-    tokenFormattedAmount,
-    tokenExplorerLink,
-    tokenLinkText,
-    token,
-    showLastNonZeroDecimal
-  } = props;
-
+export const TransactionActionNft = ({
+  badgeText,
+  tokenFormattedAmount,
+  tokenExplorerLink,
+  tokenLinkText,
+  token,
+  showLastNonZeroDecimal
+}: TransactionActionNftReturnType) => {
   if (!token.identifier) {
     return null;
   }

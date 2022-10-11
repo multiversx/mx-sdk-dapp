@@ -1,4 +1,4 @@
-import React, { Fragment, useState, MouseEvent } from 'react';
+import React, { useState, MouseEvent } from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -23,7 +23,7 @@ export const ModalLink = (props: LinkComponentProps) => {
   const link = props.href.replace('https://', '').replace('http://', '');
 
   return (
-    <Fragment>
+    <>
       <a {...props} onClick={onClick} />
 
       <DappModal visible={show} onHide={handleClose}>
@@ -87,6 +87,6 @@ export const ModalLink = (props: LinkComponentProps) => {
           </div>
         </div>
       </DappModal>
-    </Fragment>
+    </>
   );
 };

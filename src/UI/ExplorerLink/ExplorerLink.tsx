@@ -19,19 +19,17 @@ interface ExplorerLinkProps {
   'data-testid'?: string;
 }
 
-type ExplorerLinkPropsTypes = ExplorerLinkProps &
+export type ExplorerLinkPropsType = ExplorerLinkProps &
   PropsWithChildren &
   WithClassnameType;
 
-export const ExplorerLink = (props: ExplorerLinkPropsTypes) => {
-  const {
-    page,
-    text,
-    className = 'dapp-explorer-link',
-    children,
-    ...rest
-  } = props;
-
+export const ExplorerLink = ({
+  page,
+  text,
+  className = 'dapp-explorer-link',
+  children,
+  ...rest
+}: ExplorerLinkPropsType) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();

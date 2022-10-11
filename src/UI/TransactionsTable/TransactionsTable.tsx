@@ -18,22 +18,19 @@ export interface TransactionsTableType extends WithClassnameType {
   showLockedAccounts?: boolean;
 }
 
-export const TransactionsTable = (props: TransactionsTableType) => {
-  const {
-    transactions,
-    directionCol = false,
-    showLockedAccounts = false,
-    className = 'dapp-transactions-table',
-    title
-  } = props;
-
+export const TransactionsTable = ({
+  transactions,
+  directionCol = false,
+  showLockedAccounts = false,
+  className = 'dapp-transactions-table',
+  title
+}: TransactionsTableType) => {
   const { address } = useGetAccount();
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
 
   if (!address) {
-    console.error('Invalid account');
     return null;
   }
 

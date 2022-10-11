@@ -1,11 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import {
-  InterpretedTransactionType,
-  TransactionDirectionEnum
-} from 'types/serverTransactions.types';
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import { WithTransactionType } from 'UI/types';
+
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
@@ -13,14 +12,14 @@ import { ScAddressIcon } from './ScAddressIcon';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
-interface TransactionReceiverPropsTypes {
-  transaction: InterpretedTransactionType;
+export interface TransactionReceiverPropsType extends WithTransactionType {
   showLockedAccounts?: boolean;
 }
 
-export const TransactionReceiver = (props: TransactionReceiverPropsTypes) => {
-  const { transaction, showLockedAccounts } = props;
-
+export const TransactionReceiver = ({
+  transaction,
+  showLockedAccounts
+}: TransactionReceiverPropsType) => {
   const directionIn =
     transaction.transactionDetails.direction === TransactionDirectionEnum.IN;
 

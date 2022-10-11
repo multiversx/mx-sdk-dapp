@@ -1,11 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { ZERO } from 'constants/index';
 import { getUsdValue } from 'utils/operations/getUsdValue';
+
 import { WithClassnameType } from '../types';
 
-export interface UsdValueType {
+import globalStyles from 'assets/sass/main.scss';
+
+export interface UsdValuePropsType extends WithClassnameType {
   amount: string;
   usd: number;
   decimals?: number;
@@ -13,15 +16,14 @@ export interface UsdValueType {
   'data-testid'?: string;
 }
 
-export const UsdValue = (props: UsdValueType & WithClassnameType) => {
-  const {
-    amount,
-    usd,
-    decimals,
-    addEqualSign,
-    className,
-    ...dataTestId
-  } = props;
+export const UsdValue = ({
+  amount,
+  usd,
+  decimals,
+  addEqualSign,
+  className,
+  ...dataTestId
+}: UsdValuePropsType) => {
   const value = getUsdValue({
     amount,
     usd,

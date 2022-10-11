@@ -1,11 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
-
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import { WithTransactionType } from 'UI/types';
 import { AccountName } from 'UI/TransactionsTable/components';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
@@ -13,16 +14,20 @@ import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction
 import globalStyles from 'assets/sass/main.scss';
 import styles from '../styles.scss';
 
-interface OperationBlockPropsTypes {
+export interface OperationBlockPropsType extends WithTransactionType {
   address: string;
-  transaction: InterpretedTransactionType;
   action?: string;
   isFullSize?: boolean;
   direction?: string;
 }
 
-export const OperationBlock = (props: OperationBlockPropsTypes) => {
-  const { address, transaction, action, isFullSize, direction } = props;
+export const OperationBlock = ({
+  address,
+  transaction,
+  action,
+  isFullSize,
+  direction
+}: OperationBlockPropsType) => {
   let operationAssets;
 
   if (address === transaction.sender) {
@@ -34,10 +39,10 @@ export const OperationBlock = (props: OperationBlockPropsTypes) => {
   }
 
   const directions = {
-    Internal: 'int',
-    In: 'in',
-    Out: 'out',
-    Self: 'self'
+    [TransactionDirectionEnum.INTERNAL]: 'int',
+    [TransactionDirectionEnum.IN]: 'in',
+    [TransactionDirectionEnum.OUT]: 'out',
+    [TransactionDirectionEnum.SELF]: 'self'
   };
 
   return (
@@ -74,7 +79,7 @@ export const OperationBlock = (props: OperationBlockPropsTypes) => {
       </div>
 
       {addressIsValid(address) ? (
-        <Fragment>
+        <>
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(address)}
             className={styles.explorer}
@@ -83,7 +88,7 @@ export const OperationBlock = (props: OperationBlockPropsTypes) => {
           </ExplorerLink>
 
           <CopyButton text={address} className={styles.copy} />
-        </Fragment>
+        </>
       ) : (
         ''
       )}

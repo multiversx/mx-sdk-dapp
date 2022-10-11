@@ -8,13 +8,14 @@ import { copyTextToClipboard } from './helpers/copyToClipboard';
 
 import styles from './copyButtonStyles.scss';
 
-interface CopyButtonType extends WithClassnameType {
+export interface CopyButtonPropsType extends WithClassnameType {
   text: string;
 }
 
-export const CopyButton = (props: CopyButtonType) => {
-  const { text, className = 'dapp-copy-button' } = props;
-
+export const CopyButton = ({
+  text,
+  className = 'dapp-copy-button'
+}: CopyButtonPropsType) => {
   const [copyResult, setCopyResut] = useState({
     default: true,
     success: false

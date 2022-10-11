@@ -6,6 +6,7 @@ import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
+
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
@@ -15,7 +16,7 @@ import globalStyles from 'assets/sass/main.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
-interface LedgerLoginContainerPropsType extends WithClassnameType {
+export interface LedgerLoginContainerPropsType extends WithClassnameType {
   callbackRoute?: string;
   wrapContentInsideModal?: boolean;
   token?: string;
@@ -23,16 +24,14 @@ interface LedgerLoginContainerPropsType extends WithClassnameType {
   onLoginRedirect?: (callbackRoute: string) => void;
 }
 
-export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
-  const {
-    callbackRoute,
-    className = 'dapp-ledger-login-container',
-    wrapContentInsideModal = true,
-    onClose,
-    onLoginRedirect,
-    token
-  } = props;
-
+export const LedgerLoginContainer = ({
+  callbackRoute,
+  className = 'dapp-ledger-login-container',
+  wrapContentInsideModal = true,
+  onClose,
+  onLoginRedirect,
+  token
+}: LedgerLoginContainerPropsType) => {
   const classes = {
     spinner: classNames(globalStyles.textPrimary, 'fa-spin')
   };

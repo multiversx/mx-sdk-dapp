@@ -1,21 +1,17 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getVisibleOperations } from 'utils/transactions/transactionInfoHelpers/getVisibleOperations';
+import { WithTransactionType } from 'UI/types';
+
 import { DetailItem } from '../../DetailItem';
 import { OperationsList } from '../../OperationsList/OperationList';
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface TransactionInfoTokenOperationsPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionInfoTokenOperations = (
-  props: TransactionInfoTokenOperationsPropsTypes
-) => {
-  const { transaction } = props;
+export const TransactionInfoTokenOperations = ({
+  transaction
+}: WithTransactionType) => {
   const visibleOperations = getVisibleOperations(transaction);
   const showOperations = visibleOperations.length > 0;
 
@@ -26,7 +22,7 @@ export const TransactionInfoTokenOperations = (
   return (
     <DetailItem
       title={
-        <Fragment>
+        <>
           <span className={globalStyles.mr2}>Token Operations</span>
 
           <span
@@ -39,7 +35,7 @@ export const TransactionInfoTokenOperations = (
           >
             {visibleOperations.length}
           </span>
-        </Fragment>
+        </>
       }
     >
       <OperationsList

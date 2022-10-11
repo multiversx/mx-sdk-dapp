@@ -1,20 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim/Trim';
+import { WithTransactionType } from 'UI/types';
+
 import { TransactionIcon } from './TransactionIcon';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
-interface TransactionHashPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionHash = (props: TransactionHashPropsTypes) => {
-  const { transaction } = props;
+export const TransactionHash = ({ transaction }: WithTransactionType) => {
   const transactionHashLink = `/transactions/${
     transaction.originalTxHash
       ? `${transaction.originalTxHash}#${transaction.txHash}`
@@ -29,7 +25,7 @@ export const TransactionHash = (props: TransactionHashPropsTypes) => {
         styles.transactionCell
       )}
     >
-      <TransactionIcon {...{ transaction }} />
+      <TransactionIcon transaction={transaction} />
 
       <ExplorerLink
         page={transactionHashLink}

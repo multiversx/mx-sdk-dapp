@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState, Fragment } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import classNames from 'classnames';
 
 import { N_A } from 'constants/index';
@@ -14,13 +14,12 @@ import styles from './dataField.module.scss';
 
 const DISPLAYED_DATA_LENGTH = 1000000;
 
-interface DataFieldPropsTypes {
+export interface DataFieldPropsType {
   data?: string;
   scamInfo?: ScamInfoType;
 }
 
-export const DataField = (props: DataFieldPropsTypes) => {
-  const { data, scamInfo } = props;
+export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
   const { initialDecodeMethod, setDecodeMethod } = useDataDecodeMethod();
   const [showData, setShowData] = useState(false);
 
@@ -33,7 +32,7 @@ export const DataField = (props: DataFieldPropsTypes) => {
   const { stringWithLinks, output, found } = getScamFlag(dataString, scamInfo);
 
   return (
-    <Fragment>
+    <>
       {showData ? (
         <div
           className={classNames(
@@ -67,6 +66,6 @@ export const DataField = (props: DataFieldPropsTypes) => {
           {!showData ? 'Show' : 'Hide'} original message
         </a>
       )}
-    </Fragment>
+    </>
   );
 };

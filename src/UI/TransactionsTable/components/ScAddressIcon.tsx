@@ -7,13 +7,15 @@ import { isContract } from 'utils/smartContracts';
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface ScAddressIconPropsTypes {
+export interface ScAddressIconPropsType {
   initiator: string;
   secondInitiator?: string;
 }
 
-const ScAddressIcon = (props: ScAddressIconPropsTypes) => {
-  const { initiator, secondInitiator } = props;
+const ScAddressIcon = ({
+  initiator,
+  secondInitiator
+}: ScAddressIconPropsType) => {
   const showIcon = isContract(initiator) || isContract(secondInitiator ?? '');
 
   if (showIcon) {

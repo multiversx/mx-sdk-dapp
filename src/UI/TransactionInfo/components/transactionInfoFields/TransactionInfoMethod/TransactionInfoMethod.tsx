@@ -1,23 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import {
-  InterpretedTransactionType,
-  TransactionActionCategoryEnum
-} from 'types/serverTransactions.types';
+import { TransactionActionCategoryEnum } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
 import { DetailItem } from '../../DetailItem';
 import { TransactionAction } from '../../TransactionAction';
 
-interface TransactionInfoMethodPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionInfoMethod = (
-  props: TransactionInfoMethodPropsTypes
-) => {
-  const { transaction } = props;
-
+export const TransactionInfoMethod = ({ transaction }: WithTransactionType) => {
   const showMethod = transaction.action && transaction.action.category;
   const showAction =
     transaction.action?.category !== TransactionActionCategoryEnum.scCall;
@@ -27,7 +17,7 @@ export const TransactionInfoMethod = (
   }
 
   return (
-    <Fragment>
+    <>
       <DetailItem title='Method'>
         {getTransactionMethod(transaction)}
       </DetailItem>
@@ -37,6 +27,6 @@ export const TransactionInfoMethod = (
           <TransactionAction transaction={transaction} />
         </DetailItem>
       )}
-    </Fragment>
+    </>
   );
 };

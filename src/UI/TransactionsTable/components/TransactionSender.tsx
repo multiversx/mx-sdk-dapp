@@ -1,10 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import {
-  InterpretedTransactionType,
-  TransactionDirectionEnum
-} from 'types/serverTransactions.types';
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { addressIsValid } from 'utils/account/addressIsValid';
 
@@ -16,13 +14,14 @@ import { ShardSpan } from './ShardSpan';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
-interface TransactionSenderPropsTypes {
-  transaction: InterpretedTransactionType;
+export interface TransactionSenderPropsType extends WithTransactionType {
   showLockedAccounts?: boolean;
 }
 
-export const TransactionSender = (props: TransactionSenderPropsTypes) => {
-  const { transaction, showLockedAccounts } = props;
+export const TransactionSender = ({
+  transaction,
+  showLockedAccounts
+}: TransactionSenderPropsType) => {
   const directionOut =
     transaction.transactionDetails.direction === TransactionDirectionEnum.OUT;
 

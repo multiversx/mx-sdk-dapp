@@ -1,10 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
-import {
-  InterpretedTransactionType,
-  ResultType
-} from 'types/serverTransactions.types';
+import { ResultType } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 
 import { AddressDetailItem } from '../AddressDetailItem/AddressDetailitem';
 import { DetailItem } from '../DetailItem';
@@ -13,19 +11,10 @@ import { ScrDetailItem } from '../ScrDetailItem/ScrDetailItem';
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface ResultsPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-interface TransactionLogsPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
 const showResultsEvents = (result: ResultType) =>
   result?.logs?.events && result.logs.events?.length > 0;
 
-const Results = (props: ResultsPropsTypes) => {
-  const { transaction } = props;
+const Results = ({ transaction }: WithTransactionType) => {
   const showResults = transaction.results && transaction.results.length > 0;
 
   if (!showResults) {
@@ -64,15 +53,14 @@ const Results = (props: ResultsPropsTypes) => {
   );
 };
 
-export const TransactionLogs = (props: TransactionLogsPropsTypes) => {
-  const { transaction } = props;
+export const TransactionLogs = ({ transaction }: WithTransactionType) => {
   const showEvents =
     transaction.logs?.events && transaction.logs?.events?.length > 0;
 
   return (
-    <Fragment>
+    <>
       {transaction.logs && (
-        <Fragment>
+        <>
           {transaction.logs.address != null && (
             <AddressDetailItem address={transaction.logs.address} />
           )}
@@ -85,10 +73,10 @@ export const TransactionLogs = (props: TransactionLogsPropsTypes) => {
               />
             </DetailItem>
           )}
-        </Fragment>
+        </>
       )}
 
       <Results transaction={transaction} />
-    </Fragment>
+    </>
   );
 };

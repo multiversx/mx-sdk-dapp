@@ -10,16 +10,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 import {
   getTransactionStatus,
   getTransactionStatusText
 } from 'utils/transactions/transactionInfoHelpers';
 
 import globalStyles from 'assets/sass/main.scss';
-
-interface TransactionStatusPropsTypes {
-  transaction: InterpretedTransactionType;
-}
 
 export const getStatusIconAndColor = (
   transaction: InterpretedTransactionType
@@ -87,8 +84,7 @@ export const getStatusIconAndColor = (
   };
 };
 
-export const TransactionStatus = (props: TransactionStatusPropsTypes) => {
-  const { transaction } = props;
+export const TransactionStatus = ({ transaction }: WithTransactionType) => {
   const { Icon } = getStatusIconAndColor(transaction);
 
   return (

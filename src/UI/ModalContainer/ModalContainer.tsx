@@ -7,7 +7,7 @@ import {
 } from 'UI/DappModal';
 import { WithClassnameType } from '../types';
 
-interface ModalContainerPropsTypes extends WithClassnameType {
+export interface ModalContainerPropsType extends WithClassnameType {
   children: ReactNode;
   onClose?: () => void;
   modalConfig?: DappModalConfig;
@@ -15,7 +15,7 @@ interface ModalContainerPropsTypes extends WithClassnameType {
   visible?: boolean;
 }
 
-export const ModalContainer = (props: ModalContainerPropsTypes) => {
+export const ModalContainer = (props: ModalContainerPropsType) => {
   const { handleHideModal: onHide, visible, config } = useDappModal({
     modalConfig: props.modalConfig,
     config: {

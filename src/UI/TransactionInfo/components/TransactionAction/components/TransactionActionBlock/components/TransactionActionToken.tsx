@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 
 import { DECIMALS } from 'constants/index';
@@ -8,23 +8,19 @@ import { TransactionActionTokenReturnType } from 'utils/transactions/transaction
 
 import globalStyles from 'assets/sass/main.scss';
 
-export const TransactionActionToken = (
-  props: TransactionActionTokenReturnType
-) => {
-  const {
-    tokenExplorerLink,
-    showFormattedAmount,
-    tokenLinkText,
-    token,
-    showLastNonZeroDecimal
-  } = props;
-
+export const TransactionActionToken = ({
+  tokenExplorerLink,
+  showFormattedAmount,
+  tokenLinkText,
+  token,
+  showLastNonZeroDecimal
+}: TransactionActionTokenReturnType) => {
   if (!token.token) {
     return null;
   }
 
   return (
-    <Fragment>
+    <>
       {showFormattedAmount && (
         <div className={globalStyles.textTruncate}>
           <FormatAmount
@@ -61,6 +57,6 @@ export const TransactionActionToken = (
           <span>{tokenLinkText}</span>
         </div>
       </ExplorerLink>
-    </Fragment>
+    </>
   );
 };

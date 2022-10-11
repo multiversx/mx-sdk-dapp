@@ -1,17 +1,13 @@
 import React from 'react';
 
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
+
 import { DetailItem } from '../../DetailItem';
 import { ScResultsList } from '../../ScResultsList/ScResultsList';
 
-interface TransactionInfoScResultsPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionInfoScResults = (
-  props: TransactionInfoScResultsPropsTypes
-) => {
-  const { transaction } = props;
+export const TransactionInfoScResults = ({
+  transaction
+}: WithTransactionType) => {
   const showResults = transaction.results && transaction.results?.length > 0;
 
   if (!showResults) {

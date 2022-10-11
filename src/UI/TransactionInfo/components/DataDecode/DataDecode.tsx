@@ -9,11 +9,11 @@ import { useDataDecode, DataDecodeType } from 'utils';
 
 import styles from './styles.scss';
 
-interface DataDecodePropsTypes extends DataDecodeType {
+export interface DataDecodePropsType extends DataDecodeType {
   className?: string;
 }
 
-export const DataDecode = (props: DataDecodePropsTypes) => {
+export const DataDecode = (props: DataDecodePropsType) => {
   const { className, value } = props;
 
   const {

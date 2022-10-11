@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
@@ -59,7 +59,7 @@ export const WalletConnectLoginButton = ({
 
   const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
   return (
-    <Fragment>
+    <>
       {shouldRenderButton && (
         <LoginButton
           onLogin={handleOpenModal}
@@ -86,6 +86,6 @@ export const WalletConnectLoginButton = ({
           onLoginRedirect={onLoginRedirect}
         />
       )}
-    </Fragment>
+    </>
   );
 };

@@ -1,20 +1,22 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+
 import {
-  InterpretedTransactionType,
   OperationType,
   TransactionDirectionEnum,
   TransactionOperationActionTypeEnum
 } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 import { getOperationDirection } from 'utils/transactions/transactionInfoHelpers/getOperationDirection';
 import { OperationBlock } from './OperationBlock';
+
+export interface OperationTextPropsType extends WithTransactionType {
+  operation: OperationType;
+}
 
 export const OperationText = ({
   operation,
   transaction
-}: {
-  operation: OperationType;
-  transaction: InterpretedTransactionType;
-}) => {
+}: OperationTextPropsType) => {
   const { direction } = getOperationDirection({
     operation,
     address: transaction.sender
@@ -63,7 +65,7 @@ export const OperationText = ({
       );
     case TransactionOperationActionTypeEnum.multiTransfer:
       return (
-        <Fragment>
+        <>
           <OperationBlock
             transaction={transaction}
             address={operation.sender}
@@ -75,11 +77,11 @@ export const OperationText = ({
             address={operation.receiver}
             action='To'
           />
-        </Fragment>
+        </>
       );
     case TransactionOperationActionTypeEnum.transfer:
       return (
-        <Fragment>
+        <>
           <OperationBlock
             transaction={transaction}
             address={operation.sender}
@@ -91,7 +93,7 @@ export const OperationText = ({
             address={operation.receiver}
             action='To'
           />
-        </Fragment>
+        </>
       );
     case TransactionOperationActionTypeEnum.writeLog:
       return (
@@ -115,7 +117,7 @@ export const OperationText = ({
       );
     default:
       return (
-        <Fragment>
+        <>
           <OperationBlock
             transaction={transaction}
             address={operation.sender}
@@ -127,7 +129,7 @@ export const OperationText = ({
             address={operation.receiver}
             action='To'
           />
-        </Fragment>
+        </>
       );
   }
 };

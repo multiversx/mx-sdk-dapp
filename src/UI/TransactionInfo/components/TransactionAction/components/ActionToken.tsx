@@ -10,14 +10,17 @@ import { TransactionActionBlock } from './TransactionActionBlock/index';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './styles.scss';
 
-interface ActionTokenPropsTypes {
+export interface ActionTokenPropsType {
   token: TokenArgumentType;
   noValue?: boolean;
   showLastNonZeroDecimal?: boolean;
 }
 
-export const ActionToken = (props: ActionTokenPropsTypes) => {
-  const { token, noValue, showLastNonZeroDecimal } = props;
+export const ActionToken = ({
+  token,
+  noValue,
+  showLastNonZeroDecimal
+}: ActionTokenPropsType) => {
   const isESDT = [
     NftEnumType.MetaESDT.toString(),
     NftEnumType.SemiFungibleESDT,

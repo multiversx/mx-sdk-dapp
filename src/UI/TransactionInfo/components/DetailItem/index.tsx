@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import styles from './detailItem.module.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-interface DetailItemPropsTypes {
+export interface DetailItemPropsType {
   children: ReactNode;
   title: string | ReactNode;
   className?: string;
@@ -12,43 +12,39 @@ interface DetailItemPropsTypes {
   noBorder?: boolean;
 }
 
-export const DetailItem = (props: DetailItemPropsTypes) => {
-  const {
-    children,
-    title,
-    className = '',
-    colWidth = '2',
-    noBorder = false
-  } = props;
-
-  return (
+export const DetailItem = ({
+  children,
+  title,
+  className = '',
+  colWidth = '2',
+  noBorder = false
+}: DetailItemPropsType) => (
+  <div
+    className={classNames(globalStyles.row, styles.detailItem, className, {
+      [globalStyles.pt3]: noBorder,
+      [globalStyles.pb1]: noBorder,
+      [globalStyles.borderBottom]: !noBorder,
+      [globalStyles.py3]: !noBorder
+    })}
+  >
     <div
-      className={classNames(globalStyles.row, styles.detailItem, className, {
-        [globalStyles.pt3]: noBorder,
-        [globalStyles.pb1]: noBorder,
-        [globalStyles.borderBottom]: !noBorder,
-        [globalStyles.py3]: !noBorder
-      })}
+      className={classNames(
+        globalStyles.textSecondary,
+        globalStyles.textLgRight,
+        globalStyles.fontWeightMedium,
+        globalStyles[`colLg${colWidth}`]
+      )}
     >
-      <div
-        className={classNames(
-          globalStyles.textSecondary,
-          globalStyles.textLgRight,
-          globalStyles.fontWeightMedium,
-          globalStyles[`colLg${colWidth}`]
-        )}
-      >
-        {title}
-      </div>
-
-      <div
-        className={classNames(
-          globalStyles.fontWeightMedium,
-          globalStyles[`colLg${12 - Number(colWidth)}`]
-        )}
-      >
-        {children}
-      </div>
+      {title}
     </div>
-  );
-};
+
+    <div
+      className={classNames(
+        globalStyles.fontWeightMedium,
+        globalStyles[`colLg${12 - Number(colWidth)}`]
+      )}
+    >
+      {children}
+    </div>
+  </div>
+);

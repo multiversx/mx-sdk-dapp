@@ -1,18 +1,13 @@
 import React, { useMemo } from 'react';
 
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
 import { transactionActionUnwrapper } from 'utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
+
 import { ActionText } from './components/ActionText';
 
 import styles from './styles.scss';
 
-interface TransactionActionPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionAction = (props: TransactionActionPropsTypes) => {
-  const { transaction } = props;
-
+export const TransactionAction = ({ transaction }: WithTransactionType) => {
   const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> = useMemo(() => {
     if (transaction.action) {
       return transactionActionUnwrapper(transaction.action);
@@ -28,7 +23,7 @@ export const TransactionAction = (props: TransactionActionPropsTypes) => {
           key={JSON.stringify(unwrappedResult) + i}
           className={styles.result}
         >
-          <ActionText {...{ entry, transaction }} />
+          <ActionText transaction={transaction} entry={entry} />
         </div>
       ))}
     </div>

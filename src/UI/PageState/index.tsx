@@ -9,7 +9,7 @@ import { WithClassnameType } from '../types';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './pageStateStyles.scss';
 
-export interface PageStateProps extends WithClassnameType {
+export interface PageStatePropsType extends WithClassnameType {
   title?: ReactNode;
   icon?: IconProp | IconDefinition | null;
   iconClass?: string;
@@ -20,19 +20,17 @@ export interface PageStateProps extends WithClassnameType {
   description?: string | ReactNode;
 }
 
-export const PageState = (props: PageStateProps) => {
-  const {
-    icon,
-    title,
-    action,
-    iconClass,
-    dataTestId,
-    description,
-    iconBgClass,
-    iconSize = '5x',
-    className = 'dapp-page-state'
-  } = props;
-
+export const PageState = ({
+  icon,
+  title,
+  action,
+  iconClass,
+  dataTestId,
+  description,
+  iconBgClass,
+  iconSize = '5x',
+  className = 'dapp-page-state'
+}: PageStatePropsType) => {
   const classes = {
     wrapper: classNames(
       styles.state,
@@ -65,7 +63,7 @@ export const PageState = (props: PageStateProps) => {
 
       {description && <div className={classes.description}>{description}</div>}
 
-      {action && <>{action}</>}
+      {action}
     </div>
   );
 };

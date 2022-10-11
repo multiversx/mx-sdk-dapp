@@ -1,15 +1,18 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { SignedTransactionType } from 'types';
 import { TransactionDetails } from 'UI/TransactionDetails';
+
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
-import styles from './styles.scss';
 import { TransactionToastContentElementsProps } from './transactionToast.type';
 import { ToastDataState } from './utils';
 
-export type TransactionToastContentProps = {
+import styles from './styles.scss';
+import globalStyles from 'assets/sass/main.scss';
+
+export interface TransactionToastContentPropsType {
   style: Record<string, string>;
   toastDataState: ToastDataState;
   transactions: SignedTransactionType[];
@@ -18,7 +21,7 @@ export type TransactionToastContentProps = {
   toastTitle?: string | React.ReactNode;
   isTimedOut?: boolean;
   customElements?: TransactionToastContentElementsProps;
-};
+}
 
 export const TransactionToastContent = ({
   style,
@@ -33,7 +36,7 @@ export const TransactionToastContent = ({
     TransactionToastStatusIcon: FontAwesomeIcon,
     TransactionDetails: TransactionDetails
   }
-}: TransactionToastContentProps) => {
+}: TransactionToastContentPropsType) => {
   const TransactionDetails = customElements?.TransactionDetails;
   const TransactionToastStatusIcon = customElements?.TransactionToastStatusIcon;
   const CustomCloseButton = customElements?.CustomCloseButton;
@@ -57,6 +60,7 @@ export const TransactionToastContent = ({
           <h5 className={classNames([globalStyles.h5, style.mb4])}>
             {toastDataState.title}
           </h5>
+
           {showCloseButton && CustomCloseButton && (
             <CustomCloseButton
               className={styles.close}
@@ -68,11 +72,9 @@ export const TransactionToastContent = ({
         <div className={style.footer}>
           {TransactionDetails && (
             <TransactionDetails
-              {...{
-                transactions,
-                title: toastTitle,
-                isTimedOut
-              }}
+              transactions={transactions}
+              title={toastTitle}
+              isTimedOut={isTimedOut}
             />
           )}
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, MouseEvent } from 'react';
+import React, { useEffect, useState, MouseEvent } from 'react';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
 
@@ -197,7 +197,7 @@ export const WalletConnectLoginContainer = ({
           </h4>
 
           {isMobileDevice ? (
-            <Fragment>
+            <>
               <p className={generatedClasses.leadText}>{loginButtonText}</p>
 
               <a
@@ -217,7 +217,7 @@ export const WalletConnectLoginContainer = ({
                 />
                 {title}
               </a>
-            </Fragment>
+            </>
           ) : (
             <p className={generatedClasses.leadText}>{lead}</p>
           )}

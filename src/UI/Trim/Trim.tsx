@@ -1,30 +1,22 @@
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useRef,
-  useState
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import debounce from 'lodash.debounce';
 
 import { WithClassnameType } from '../types';
 import styles from './trim.styles.scss';
 
-export interface TrimType extends WithClassnameType {
+export interface TrimPropsType extends WithClassnameType {
   text: string;
   dataTestId?: string;
   color?: 'muted' | 'secondary' | string;
 }
 
-export const Trim = (props: TrimType) => {
-  const {
-    text,
-    className = 'dapp-trim',
-    dataTestId = 'trim-text-component',
-    color
-  } = props;
-
+export const Trim = ({
+  text,
+  className = 'dapp-trim',
+  dataTestId = 'trim-text-component',
+  color
+}: TrimPropsType) => {
   const [overflow, setOverflow] = useState(false);
   const trimRef = useRef(document.createElement('span'));
   const hiddenTextRef = useRef(document.createElement('span'));
@@ -72,7 +64,7 @@ export const Trim = (props: TrimType) => {
       </span>
 
       {overflow ? (
-        <Fragment>
+        <>
           <span className={styles.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
@@ -84,7 +76,7 @@ export const Trim = (props: TrimType) => {
           <span className={styles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
-        </Fragment>
+        </>
       ) : (
         <span>{text}</span>
       )}

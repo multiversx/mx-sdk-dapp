@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import classNames from 'classnames';
 
@@ -13,14 +13,12 @@ interface PairingListPropsType extends WithClassnameType {
   className: string;
 }
 
-export const Pairinglist = (props: PairingListPropsType) => {
-  const {
-    connectExisting,
-    removeExistingPairing,
-    activePairings,
-    className = 'dapp-wallet-connect-pairing-list'
-  } = props;
-
+export const Pairinglist = ({
+  connectExisting,
+  removeExistingPairing,
+  activePairings,
+  className = 'dapp-wallet-connect-pairing-list'
+}: PairingListPropsType) => {
   const classes = {
     pairsContainer: className,
     leadText: '',
@@ -78,7 +76,7 @@ export const Pairinglist = (props: PairingListPropsType) => {
             </div>
 
             {pairing.peerMetadata && (
-              <Fragment>
+              <>
                 {pairing.peerMetadata?.icons?.[0] && (
                   <img
                     src={pairing.peerMetadata.icons[0]}
@@ -94,7 +92,7 @@ export const Pairinglist = (props: PairingListPropsType) => {
 
                   <span>{pairing.peerMetadata.url}</span>
                 </div>
-              </Fragment>
+              </>
             )}
           </button>
         ))}

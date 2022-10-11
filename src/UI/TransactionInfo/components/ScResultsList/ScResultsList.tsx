@@ -1,53 +1,30 @@
-import React, { useEffect, useState, useRef, Fragment } from 'react';
-import { faExchange, faSearch } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState, useRef } from 'react';
+import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
 
 import { N_A } from 'constants/index';
 import { ResultType } from 'types/serverTransactions.types';
-import { CopyButton } from 'UI/CopyButton';
-import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
-import { AccountName, ScAddressIcon } from 'UI/TransactionsTable/components';
-import { Trim } from 'UI/Trim';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/index';
 import { getInitialScResultsDecodeMethod } from 'utils/transactions/transactionInfoHelpers/getScResultsInitialDecodeMethod';
 import {
   getScResultsDecodedData,
   getScResultsHighlight
 } from 'utils/transactions/transactionInfoHelpers/index';
-import { DataDecode } from '../DataDecode';
+
+import ResultWrapper from './components/ResultWrapper/ResultWrapper';
+import ResultSender from './components/ResultSender/ResultSender';
+import ResultHash from './components/ResultHash/ResultHash';
+import ResultReceiver from './components/ResultReceiver/ResultReceiver';
+import ResultData from './components/ResultData/ResultData';
 
 import styles from './styles.scss';
-import globalStyles from 'assets/sass/main.scss';
 
-interface ScResultsListPropsTypes {
+export interface ScResultsListPropsType {
   results: ResultType[];
 }
 
-interface ResultDataPropsTypes {
-  children: JSX.Element | JSX.Element[] | string;
-  label: string;
-}
-
-const ResultData = (props: ResultDataPropsTypes) => {
-  const { label, children } = props;
-
-  return (
-    <div className={classNames(globalStyles.row, styles.row)}>
-      <div className={classNames(globalStyles.colSm2, styles.label)}>
-        {label}
-      </div>
-
-      <div className={classNames(globalStyles.colSm10, styles.data)}>
-        <Fragment>{children}</Fragment>
-      </div>
-    </div>
-  );
-};
-
-export const ScResultsList = (props: ScResultsListPropsTypes) => {
-  const { results } = props;
+export const ScResultsList = ({ results }: ScResultsListPropsType) => {
   const ref = useRef<HTMLDivElement>(null);
   const initialDecodeMethod = getInitialScResultsDecodeMethod();
 
@@ -80,76 +57,52 @@ export const ScResultsList = (props: ScResultsListPropsTypes) => {
 
             <div className={styles.content}>
               {result.hash && (
-                <ResultData label='Hash'>
-                  <Trim text={result.hash} className={styles.hash} />
-
-                  <CopyButton text={result.hash} className={styles.copy} />
-
-                  <ExplorerLink
-                    className={styles.explorer}
-                    page={explorerUrlBuilder.transactionDetails(
-                      `${result.originalTxHash}#${result.hash}/${decodeMethod}`
-                    )}
-                  >
-                    <FontAwesomeIcon icon={faSearch} />
-                  </ExplorerLink>
-                </ResultData>
+                <ResultHash
+                  hash={result.hash}
+                  page={explorerUrlBuilder.transactionDetails(
+                    `${result.originalTxHash}#${result.hash}/${decodeMethod}`
+                  )}
+                />
               )}
 
               {result.sender && (
-                <ResultData label='From'>
-                  <ScAddressIcon initiator={result.sender} />
-
-                  <div className={styles.address}>
-                    <AccountName
-                      address={result.sender}
-                      assets={result.senderAssets}
-                    />
-                  </div>
-
-                  <CopyButton text={result.sender} className={styles.copy} />
-                </ResultData>
+                <ResultSender
+                  sender={result.sender}
+                  assets={result.senderAssets}
+                />
               )}
 
               {result.receiver && (
-                <ResultData label='To'>
-                  <ScAddressIcon initiator={result.receiver} />
-
-                  <div className={styles.address}>
-                    <AccountName
-                      address={result.receiver}
-                      assets={result.receiverAssets}
-                    />
-                  </div>
-
-                  <CopyButton text={result.receiver} className={styles.copy} />
-                </ResultData>
+                <ResultReceiver
+                  receiver={result.receiver}
+                  assets={result.receiverAssets}
+                />
               )}
 
               {result.value != null && (
-                <ResultData label='Value'>
+                <ResultWrapper label='Value'>
                   <FormatAmount
                     value={result.value}
                     showLastNonZeroDecimal={true}
                   />
-                </ResultData>
+                </ResultWrapper>
               )}
 
               {result.data && (
-                <ResultData label='Data'>
-                  <DataDecode
-                    value={
-                      result.data ? getScResultsDecodedData(result.data) : N_A
-                    }
-                    {...(highlightTx
-                      ? { initialDecodeMethod, setDecodeMethod }
-                      : {})}
-                  />
-                </ResultData>
+                <ResultData
+                  value={
+                    result.data ? getScResultsDecodedData(result.data) : N_A
+                  }
+                  {...(highlightTx
+                    ? { initialDecodeMethod, setDecodeMethod }
+                    : {})}
+                />
               )}
 
               {result.returnMessage && (
-                <ResultData label='Response'>{result.returnMessage}</ResultData>
+                <ResultWrapper label='Response'>
+                  {result.returnMessage}
+                </ResultWrapper>
               )}
             </div>
           </div>

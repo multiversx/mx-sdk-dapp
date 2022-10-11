@@ -1,22 +1,18 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { N_A } from 'constants/index';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/getTransactionFee';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
+import { WithTransactionType } from 'UI/types';
+
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
-interface TransactionInfoFeePropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionInfoFee = (props: TransactionInfoFeePropsTypes) => {
-  const { transaction } = props;
+export const TransactionInfoFee = ({ transaction }: WithTransactionType) => {
   const egldLabel = getEgldLabel();
   const txFee = getTransactionFee(transaction);
 
@@ -40,10 +36,10 @@ export const TransactionInfoFee = (props: TransactionInfoFeePropsTypes) => {
 
   const fee =
     transaction.gasUsed != null ? (
-      <Fragment>
+      <>
         {transactionFee} {egldLabel}{' '}
         <span className={styles.price}>{price}</span>
-      </Fragment>
+      </>
     ) : (
       <span className={styles.price}>{N_A}</span>
     );

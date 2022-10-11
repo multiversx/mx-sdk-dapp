@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, Fragment } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -16,46 +16,38 @@ import { DataDecode } from '../DataDecode';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './styles.scss';
 
-interface EventTopicsPropsTypes {
-  topics: EventType['topics'];
-  identifier?: string;
-}
-
-interface EventsListPropsTypes {
+export interface EventsListPropsType {
   events: EventType[];
   id?: string;
 }
 
-interface EventDataPropsTypes {
+interface EventTopicsPropsType {
+  topics: EventType['topics'];
+  identifier?: string;
+}
+
+interface EventDataPropsType {
   children: JSX.Element | JSX.Element[] | string;
   label: string;
 }
 
-const EventTopics = (props: EventTopicsPropsTypes) => {
-  const { topics, identifier } = props;
+const EventTopics = ({ topics, identifier }: EventTopicsPropsType) => {
   const mergedTopics = topics.filter((topic) => topic).join('\n');
 
   return <DataDecode value={mergedTopics} identifier={identifier} />;
 };
 
-const EventData = (props: EventDataPropsTypes) => {
-  const { label, children } = props;
+const EventData = ({ label, children }: EventDataPropsType) => (
+  <div className={classNames(globalStyles.row, styles.row)}>
+    <div className={classNames(globalStyles.colSm2, styles.label)}>{label}</div>
 
-  return (
-    <div className={classNames(globalStyles.row, styles.row)}>
-      <div className={classNames(globalStyles.colSm2, styles.label)}>
-        {label}
-      </div>
-
-      <div className={classNames(globalStyles.colSm10, styles.data)}>
-        <Fragment>{children}</Fragment>
-      </div>
+    <div className={classNames(globalStyles.colSm10, styles.data)}>
+      {children}
     </div>
-  );
-};
+  </div>
+);
 
-export const EventsList = (props: EventsListPropsTypes) => {
-  const { events, id } = props;
+export const EventsList = ({ events, id }: EventsListPropsType) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const initialDecodeMethod = getEventListInitialDecodeMethod();

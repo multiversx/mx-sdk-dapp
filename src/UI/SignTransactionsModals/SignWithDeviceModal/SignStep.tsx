@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import {
   faExclamationTriangle,
@@ -20,7 +20,7 @@ import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
 import globalStyles from 'assets/sass/main.scss';
 
-export interface SignStepType extends WithClassnameType {
+export interface SignStepPropsType extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;
   handleClose: () => void;
@@ -46,7 +46,7 @@ export const SignStep = ({
   isLastTransaction,
   currentStep,
   className
-}: SignStepType) => {
+}: SignStepPropsType) => {
   const egldLabel = getEgldLabel();
 
   if (!currentTransaction) {
@@ -71,8 +71,8 @@ export const SignStep = ({
 
   const isFirst = currentStep === 0;
 
-  const onCloseClick = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const onCloseClick = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
     if (isFirst) {
       handleClose();
     } else {
@@ -108,7 +108,6 @@ export const SignStep = ({
 
   const scamReport = currentTransaction.receiverScamInfo;
   const showProgressSteps = allTransactions.length > 1;
-
   const classes = useSignStepsClasses(scamReport);
 
   return (
@@ -133,9 +132,11 @@ export const SignStep = ({
 
               <div className={classes.formGroup} data-testid='transactionTitle'>
                 <div className={classes.formLabel}>To </div>
+
                 {multiTxData
                   ? new Address(receiver).bech32()
                   : currentTransaction.transaction.getReceiver().toString()}
+
                 {scamReport && (
                   <div className={classes.scamReport}>
                     <span>
@@ -143,6 +144,7 @@ export const SignStep = ({
                         icon={faExclamationTriangle}
                         className={classes.scamReportIcon}
                       />
+
                       <small>{scamReport}</small>
                     </span>
                   </div>
@@ -152,19 +154,25 @@ export const SignStep = ({
               <div className={classes.contentWrapper}>
                 <div className={classes.tokenWrapper}>
                   <div className={classes.tokenLabel}>Token</div>
+
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
                       token={tokenId || egldLabel}
                     />
+
                     <div className={globalStyles.mr1}></div>
+
                     <TokenDetails.Label token={tokenId || egldLabel} />
                   </div>
                 </div>
+
                 <div>
                   <div className={classes.tokenAmountLabel}>Amount</div>
+
                   <div className={classes.tokenAmountValue}>
                     <div className={globalStyles.mr1}>{formattedAmount}</div>
+
                     <TokenDetails.Symbol token={tokenId || egldLabel} />
                   </div>
                 </div>
@@ -173,14 +181,13 @@ export const SignStep = ({
               <div className={classes.dataFormGroup}>
                 {currentTransaction.transaction.getData() && (
                   <TransactionData
-                    {...{
-                      data: currentTransaction.transaction.getData().toString(),
-                      highlight: multiTxData,
-                      isScCall: !tokenId
-                    }}
+                    isScCall={!tokenId}
+                    data={currentTransaction.transaction.getData().toString()}
+                    highlight={multiTxData}
                   />
                 )}
               </div>
+
               {error && <p className={classes.errorMessage}>{error}</p>}
             </>
           )}

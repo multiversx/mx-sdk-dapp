@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import { WithTransactionType } from 'UI/types';
+
 import {
   TransactionInfoValue,
   TransactionInfoStatus,
@@ -21,32 +22,24 @@ import {
 } from './components';
 import { TransactionInfoFee } from './components/transactionInfoFields/TransactionInfoFee';
 
-interface TransactionInfoPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionInfo = (props: TransactionInfoPropsTypes) => {
-  const { transaction } = props;
-
-  return (
-    <Fragment>
-      <TransactionInfoHash {...{ transaction }} />
-      <TransactionInfoStatus {...{ transaction }} />
-      <TransactionInfoAge {...{ transaction }} />
-      <TransactionInfoMiniblock {...{ transaction }} />
-      <TransactionInfoFrom {...{ transaction }} />
-      <TransactionInfoTo {...{ transaction }} />
-      <TransactionInfoValue {...{ transaction }} />
-      <TransactionInfoMethod {...{ transaction }} />
-      <TransactionInfoTokenOperations {...{ transaction }} />
-      <TransactionInfoFee {...{ transaction }} />
-      <TransactionInfoEgldPrice {...{ transaction }} />
-      <TransactionInfoGasLimit {...{ transaction }} />
-      <TransactionInfoGasPrice {...{ transaction }} />
-      <TransactionInfoGasUsed {...{ transaction }} />
-      <TransactionInfoNonce {...{ transaction }} />
-      <TransactionInfoInputData {...{ transaction }} />
-      <TransactionInfoScResults {...{ transaction }} />
-    </Fragment>
-  );
-};
+export const TransactionInfo = ({ transaction }: WithTransactionType) => (
+  <>
+    <TransactionInfoHash transaction={transaction} />
+    <TransactionInfoStatus transaction={transaction} />
+    <TransactionInfoAge transaction={transaction} />
+    <TransactionInfoMiniblock transaction={transaction} />
+    <TransactionInfoFrom transaction={transaction} />
+    <TransactionInfoTo transaction={transaction} />
+    <TransactionInfoValue transaction={transaction} />
+    <TransactionInfoMethod transaction={transaction} />
+    <TransactionInfoTokenOperations transaction={transaction} />
+    <TransactionInfoFee transaction={transaction} />
+    <TransactionInfoEgldPrice transaction={transaction} />
+    <TransactionInfoGasLimit transaction={transaction} />
+    <TransactionInfoGasPrice transaction={transaction} />
+    <TransactionInfoGasUsed transaction={transaction} />
+    <TransactionInfoNonce transaction={transaction} />
+    <TransactionInfoInputData transaction={transaction} />
+    <TransactionInfoScResults transaction={transaction} />
+  </>
+);

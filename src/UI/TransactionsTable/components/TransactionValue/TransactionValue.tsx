@@ -3,49 +3,46 @@ import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
+import { WithTransactionType } from 'UI/types';
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from '../transactionsTable.styles.scss';
 
-interface TokenWrapperPropsTypes {
+interface TokenWrapperPropsType {
   children: ReactNode;
   titleText?: string;
 }
 
-interface TransactionValuePropsTypes {
-  transaction: InterpretedTransactionType;
+export interface TransactionValuePropsType extends WithTransactionType {
   hideMultipleBadge?: boolean;
 }
 
-const TokenWrapper = (props: TokenWrapperPropsTypes) => {
-  const { children, titleText } = props;
+const TokenWrapper = ({ children, titleText }: TokenWrapperPropsType) => (
+  <div
+    className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
+    data-testid='transactionValue'
+  >
+    {children}
 
-  return (
-    <div
-      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
-      data-testid='transactionValue'
-    >
-      {children}
+    {titleText && (
+      <FontAwesomeIcon
+        icon={faLayerGroup}
+        data-testid='transactionValueIcon'
+        className={classNames(globalStyles.ml2, globalStyles.textSecondary)}
+        title={titleText}
+      />
+    )}
+  </div>
+);
 
-      {titleText && (
-        <FontAwesomeIcon
-          icon={faLayerGroup}
-          data-testid='transactionValueIcon'
-          className={classNames(globalStyles.ml2, globalStyles.textSecondary)}
-          title={titleText}
-        />
-      )}
-    </div>
-  );
-};
-
-export const TransactionValue = (props: TransactionValuePropsTypes) => {
-  const { transaction, hideMultipleBadge } = props;
+export const TransactionValue = ({
+  transaction,
+  hideMultipleBadge
+}: TransactionValuePropsType) => {
   const { egldValueData, tokenValueData, nftValueData } = getTransactionValue({
     transaction,
     hideMultipleBadge

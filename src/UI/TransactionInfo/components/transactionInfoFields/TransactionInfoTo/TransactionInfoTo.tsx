@@ -3,23 +3,18 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { TransactionServerStatusesEnum } from 'types/enums.types';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import { WithTransactionType } from 'UI/types';
 import { AccountName, ShardSpan } from 'UI/TransactionsTable/components';
 import { isContract } from 'utils/smartContracts';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
+
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
-interface TransactionInfoToPropsTypes {
-  transaction: InterpretedTransactionType;
-}
-
-export const TransactionInfoTo = (props: TransactionInfoToPropsTypes) => {
-  const { transaction } = props;
-
+export const TransactionInfoTo = ({ transaction }: WithTransactionType) => {
   const transactionMessages = getTransactionMessages(transaction);
   const isReverted =
     transaction.status === TransactionServerStatusesEnum.rewardReverted;

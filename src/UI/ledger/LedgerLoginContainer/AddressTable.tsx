@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { PageState } from 'UI/PageState';
+
 import { WithClassnameType } from '../../types';
 import { AddressRow } from './AddressRow';
 
@@ -17,7 +18,7 @@ import styles from './addressTableStyles.scss';
 const LEDGER_WAITING_TEXT = 'Waiting for device';
 const ADDRESSES_PER_PAGE = 10;
 
-interface AddressTablePropsType extends WithClassnameType {
+export interface AddressTablePropsType extends WithClassnameType {
   loading: boolean;
   accounts: string[];
   startIndex: number;
@@ -28,19 +29,17 @@ interface AddressTablePropsType extends WithClassnameType {
   onConfirmSelectedAddress: () => void;
 }
 
-export const AddressTable = (props: AddressTablePropsType) => {
-  const {
-    loading,
-    accounts,
-    startIndex,
-    selectedAddress,
-    onGoToPrevPage,
-    onGoToNextPage,
-    onConfirmSelectedAddress,
-    onSelectAddress,
-    className = 'dapp-ledger-address-table'
-  } = props;
-
+export const AddressTable = ({
+  loading,
+  accounts,
+  startIndex,
+  selectedAddress,
+  onGoToPrevPage,
+  onGoToNextPage,
+  onConfirmSelectedAddress,
+  onSelectAddress,
+  className = 'dapp-ledger-address-table'
+}: AddressTablePropsType) => {
   const classes = {
     wrapper: classNames(globalStyles.card, globalStyles.px4, className),
     cardBody: classNames(globalStyles.cardBody, globalStyles.p4),

@@ -8,7 +8,7 @@ import { WithClassnameType } from '../../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface AddressRowType extends WithClassnameType {
+export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
   index: number;
   address: string;
@@ -24,19 +24,18 @@ const trimHash = (hash: string, keep = 10) => {
 
 const noBalance = '...';
 
-export const AddressRow = (props: AddressRowType) => {
-  const {
-    address,
-    index,
-    selectedAddress,
-    onSelectAddress,
-    className = 'dapp-ledger-address-row'
-  } = props;
-
+export const AddressRow = ({
+  address,
+  index,
+  selectedAddress,
+  onSelectAddress,
+  className = 'dapp-ledger-address-row'
+}: AddressRowPropsType) => {
   const [balance, setBalance] = useState(noBalance);
 
-  const handleChange = (e: SyntheticEvent) => {
-    const { checked } = e.target as HTMLInputElement;
+  const handleChange = (event: SyntheticEvent) => {
+    const { checked } = event.target as HTMLInputElement;
+
     if (checked) {
       onSelectAddress({ address, index });
     }

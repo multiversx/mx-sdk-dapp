@@ -11,29 +11,25 @@ import { DetailItem } from '../DetailItem';
 
 import styles from './styles.scss';
 
-interface ScrDetailItemPropsTypes {
+export interface ScrDetailItemPropsType {
   result: ResultType;
 }
 
-export const ScrDetailItem = (props: ScrDetailItemPropsTypes) => {
-  const { result } = props;
+export const ScrDetailItem = ({ result }: ScrDetailItemPropsType) => (
+  <DetailItem title='SC Result Hash' noBorder={true}>
+    <div className={styles.contractDetailItem}>
+      <Trim text={result.hash} />
 
-  return (
-    <DetailItem title='SC Result Hash' noBorder={true}>
-      <div className={styles.contractDetailItem}>
-        <Trim text={result.hash} />
+      <CopyButton className={styles.copy} text={result.hash} />
 
-        <CopyButton className={styles.copy} text={result.hash} />
-
-        <ExplorerLink
-          className={styles.explorer}
-          page={explorerUrlBuilder.transactionDetails(
-            `${result.originalTxHash}#${result.hash}`
-          )}
-        >
-          <FontAwesomeIcon icon={faSearch} />
-        </ExplorerLink>
-      </div>
-    </DetailItem>
-  );
-};
+      <ExplorerLink
+        className={styles.explorer}
+        page={explorerUrlBuilder.transactionDetails(
+          `${result.originalTxHash}#${result.hash}`
+        )}
+      >
+        <FontAwesomeIcon icon={faSearch} />
+      </ExplorerLink>
+    </div>
+  </DetailItem>
+);

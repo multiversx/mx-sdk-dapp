@@ -12,16 +12,14 @@ import { PageState } from 'UI/PageState';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './signWithWalletConnectModalStyles.scss';
 
-export const SignWithWalletConnectModal = (props: SignModalPropsType) => {
-  const {
-    error,
-    handleClose,
-    transactions,
-    sessionId,
-    className = 'dapp-wallet-connect-modal',
-    modalContentClassName
-  } = props;
-
+export const SignWithWalletConnectModal = ({
+  error,
+  handleClose,
+  transactions,
+  sessionId,
+  className = 'dapp-wallet-connect-modal',
+  modalContentClassName
+}: SignModalPropsType) => {
   const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
 
   const classes = {
