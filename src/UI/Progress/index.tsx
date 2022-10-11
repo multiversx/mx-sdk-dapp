@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
-import moment from 'moment';
 import { logarithmicRest } from 'utils';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import { storage } from 'utils/storage';
@@ -31,8 +30,9 @@ export const Progress = ({
   const initialData = useMemo(() => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
     const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
+    const unixNow = Math.floor(Date.now() / 1000);
     const remaining = progress
-      ? ((progress.endTime - moment().unix()) * 100) / totalSeconds
+      ? ((progress.endTime - unixNow) * 100) / totalSeconds
       : 0;
 
     const currentRemaining =
@@ -119,7 +119,7 @@ export const Progress = ({
   function handleRunningProgress() {
     const maxPercent = 90;
     const perc = totalSeconds / maxPercent;
-    const int = moment.duration(perc.toFixed(2), 's').asMilliseconds();
+    const intMs = parseFloat(perc.toFixed(2)) * 1000;
 
     intervalRef.current = setInterval(() => {
       if (progressRef.current == null) {
@@ -134,7 +134,7 @@ export const Progress = ({
 
       updateTxFromSession(value);
       setPercentRemaining(value);
-    }, int);
+    }, intMs);
   }
 
   function setPercentRemaining(value: number) {
