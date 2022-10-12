@@ -6,7 +6,11 @@ import { GAS_LIMIT } from 'constants/index';
 
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
 import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { setNotificationModal, setTransactionsDisplayInfo, setTransactionsToSign } from 'reduxStore/slices';
+import {
+  setNotificationModal,
+  setTransactionsDisplayInfo,
+  setTransactionsToSign
+} from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import {
   NotificationTypesEnum,
@@ -14,7 +18,11 @@ import {
   SignTransactionsPropsType,
   TransactionTypesEnum
 } from 'types';
-import { getNetworkConfig, getTokenFromData, parseMultiEsdtTransferData } from 'utils';
+import {
+  getNetworkConfig,
+  getTokenFromData,
+  parseMultiEsdtTransferData
+} from 'utils';
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
