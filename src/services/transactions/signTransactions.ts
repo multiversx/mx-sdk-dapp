@@ -6,11 +6,7 @@ import { GAS_LIMIT } from 'constants/index';
 
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
 import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import {
-  setNotificationModal,
-  setTransactionsDisplayInfo,
-  setTransactionsToSign
-} from 'reduxStore/slices';
+import { setNotificationModal, setTransactionsDisplayInfo, setTransactionsToSign } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import {
   NotificationTypesEnum,
@@ -18,11 +14,7 @@ import {
   SignTransactionsPropsType,
   TransactionTypesEnum
 } from 'types';
-import {
-  getNetworkConfig,
-  getTokenFromData,
-  parseMultiEsdtTransferData
-} from 'utils';
+import { getNetworkConfig, getTokenFromData, parseMultiEsdtTransferData } from 'utils';
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
@@ -99,7 +91,7 @@ export async function signTransactions({
       iconClassName: 'text-danger',
       title: 'An error occurred',
       description:
-        'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.'
+        'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed on October 19th. Please check again later.'
     };
 
     store.dispatch(setNotificationModal(notificationPayload));
