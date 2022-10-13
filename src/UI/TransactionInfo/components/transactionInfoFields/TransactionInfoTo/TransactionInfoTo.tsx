@@ -5,11 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
-import { WithTransactionType } from 'UI/types';
+
 import { AccountName, ShardSpan } from 'UI/TransactionsTable/components';
 import { isContract } from 'utils/smartContracts';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';

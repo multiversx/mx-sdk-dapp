@@ -3,7 +3,8 @@ import {
   OperationType,
   TransactionOperationActionTypeEnum
 } from 'types/serverTransactions.types';
-import { WithTransactionType } from 'UI/types';
+
+import { WithTransactionType } from '../../../UI/types';
 
 const internalTransactionActions = [
   TransactionOperationActionTypeEnum.create,

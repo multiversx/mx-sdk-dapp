@@ -4,8 +4,8 @@ import { N_A } from 'constants/index';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
-import { WithTransactionType } from 'UI/types';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';

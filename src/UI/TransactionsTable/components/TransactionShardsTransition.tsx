@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { WithTransactionType } from 'UI/types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 
 import { ShardSpan } from './ShardSpan';
+import { WithTransactionType } from '../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';

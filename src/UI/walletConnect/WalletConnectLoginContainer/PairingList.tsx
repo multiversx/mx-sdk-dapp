@@ -6,7 +6,7 @@ import { WithClassnameType } from '../../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-interface PairingListPropsType extends WithClassnameType {
+export interface PairingListPropsType extends WithClassnameType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   removeExistingPairing: (topic: string) => Promise<void>;
   activePairings: PairingTypes.Struct[];

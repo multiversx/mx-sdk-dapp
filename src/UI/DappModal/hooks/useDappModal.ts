@@ -11,10 +11,10 @@ import {
   DappModalInteractionConfig
 } from '../dappModal.types';
 
-type UseDappModalProps = {
+interface UseDappModalProps {
   config?: DappModalInteractionConfig;
   modalConfig?: DappModalConfig;
-};
+}
 
 export const useDappModal = (props?: UseDappModalProps) => {
   const dispatch = useDispatch();

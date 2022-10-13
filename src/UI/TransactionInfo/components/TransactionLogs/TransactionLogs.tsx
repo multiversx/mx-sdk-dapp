@@ -2,8 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { ResultType } from 'types/serverTransactions.types';
-import { WithTransactionType } from 'UI/types';
 
+import { WithTransactionType } from '../../../../UI/types';
 import { AddressDetailItem } from '../AddressDetailItem/AddressDetailitem';
 import { DetailItem } from '../DetailItem';
 import { EventsList } from '../EventsList/EventsList';

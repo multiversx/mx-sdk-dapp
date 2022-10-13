@@ -12,12 +12,12 @@ import {
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
 import {
-  getIsProviderEqualTo,
   getIsTransactionFailed,
   getIsTransactionPending,
   getIsTransactionSuccessful,
   getIsTransactionTimedOut
-} from 'utils';
+} from 'utils/transactions/transactionStateByStatus';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 
 export interface UseTrackTransactionStatusArgsType {
   transactionId: string | null;

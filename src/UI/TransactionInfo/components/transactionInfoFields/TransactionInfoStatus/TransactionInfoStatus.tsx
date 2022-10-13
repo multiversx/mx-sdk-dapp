@@ -1,9 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { WithTransactionType } from 'UI/types';
-
 import { DetailItem } from '../../DetailItem';
+import { WithTransactionType } from '../../../../../UI/types';
 import { TransactionStatus } from '../../TransactionStatus';
 
 import globalStyles from 'assets/sass/main.scss';

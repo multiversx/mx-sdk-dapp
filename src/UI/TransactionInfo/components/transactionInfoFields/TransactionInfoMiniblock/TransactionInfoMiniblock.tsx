@@ -6,8 +6,8 @@ import { N_A } from 'constants/index';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim';
-import { WithTransactionType } from 'UI/types';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';

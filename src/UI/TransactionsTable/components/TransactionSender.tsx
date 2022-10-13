@@ -2,10 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
-import { WithTransactionType } from 'UI/types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { addressIsValid } from 'utils/account/addressIsValid';
 
+import { WithTransactionType } from '../../../UI/types';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';

@@ -2,9 +2,9 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { getVisibleOperations } from 'utils/transactions/transactionInfoHelpers/getVisibleOperations';
-import { WithTransactionType } from 'UI/types';
 
 import { DetailItem } from '../../DetailItem';
+import { WithTransactionType } from '../../../../../UI/types';
 import { OperationsList } from '../../OperationsList/OperationList';
 
 import globalStyles from 'assets/sass/main.scss';

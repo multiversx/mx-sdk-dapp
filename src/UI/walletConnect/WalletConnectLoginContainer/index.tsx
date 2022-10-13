@@ -8,7 +8,7 @@ import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
 
-import { isMobileEnvironment } from 'utils';
+import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
 import { WithClassnameType } from '../../types';
 import { Pairinglist } from './PairingList';
 

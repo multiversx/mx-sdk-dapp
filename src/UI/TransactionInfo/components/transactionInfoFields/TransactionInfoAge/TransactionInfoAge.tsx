@@ -5,10 +5,10 @@ import classNames from 'classnames';
 
 import { N_A } from 'constants/index';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
-import { WithTransactionType } from 'UI/types';
-
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
+
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import globalStyles from 'assets/sass/main.scss';

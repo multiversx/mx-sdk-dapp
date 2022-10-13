@@ -7,9 +7,9 @@ import {
   AccountName,
   ShardSpan
 } from 'UI/TransactionsTable/components';
-import { WithTransactionType } from 'UI/types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';

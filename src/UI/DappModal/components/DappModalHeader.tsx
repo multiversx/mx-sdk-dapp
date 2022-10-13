@@ -8,7 +8,7 @@ import { WithClassnameType } from '../../types';
 import styles from '../dappModalStyles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-interface DappModalHeaderPropsType extends WithClassnameType {
+export interface DappModalHeaderPropsType extends WithClassnameType {
   visible?: boolean;
   headerText?: string;
   customHeader?: JSX.Element | string;

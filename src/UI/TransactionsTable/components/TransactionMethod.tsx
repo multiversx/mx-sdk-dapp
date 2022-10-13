@@ -2,7 +2,8 @@ import React from 'react';
 import classNames from 'classnames';
 
 import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
-import { WithTransactionType } from 'UI/types';
+
+import { WithTransactionType } from '../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';

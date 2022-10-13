@@ -1,23 +1,27 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { N_A } from 'constants/index';
-import { decodePart } from 'utils';
+import { decodePart } from 'utils/decoders/decodePart';
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
+
+export interface TransactionDataPropsType extends WithClassnameType {
+  data: string;
+  highlight?: string;
+  isScCall?: boolean;
+}
 
 export const TransactionData = ({
   data,
   highlight,
   isScCall,
   className = 'dapp-transaction-data'
-}: {
-  data: string;
-  highlight?: string;
-  isScCall?: boolean;
-} & WithClassnameType) => {
+}: TransactionDataPropsType) => {
   let output = <>{data}</>;
 
   const [encodedScCall, ...remainingDataFields] =

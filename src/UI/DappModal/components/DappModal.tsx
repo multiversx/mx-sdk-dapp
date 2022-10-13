@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-import { WithClassnameType } from '../../types';
+
 import { DappModalConfig } from '../dappModal.types';
-import styles from '../dappModalStyles.scss';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
+import { WithClassnameType } from '../../types';
 
-type DappModalProps = {
+import styles from '../dappModalStyles.scss';
+
+export interface DappModalPropsType extends WithClassnameType {
   id?: string;
   visible: boolean;
   onHide?: () => void;
   parentElement?: Element;
-  children?: React.ReactNode;
+  children?: ReactNode;
   config?: DappModalConfig;
-} & WithClassnameType;
+}
 
 const defaultConfig: DappModalConfig = {
   showHeader: true,
@@ -32,7 +34,7 @@ export const DappModal = ({
   config = defaultConfig,
   children,
   className = 'dapp-modal-dialog-wrapper'
-}: DappModalProps) => {
+}: DappModalPropsType) => {
   if (!visible) {
     return null;
   }

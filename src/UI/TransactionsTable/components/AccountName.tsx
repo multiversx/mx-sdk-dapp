@@ -6,12 +6,12 @@ import { Trim } from 'UI/Trim/Trim';
 
 import globalStyles from 'assets/sass/main.scss';
 
-export type AccountNamePropsType = {
+export interface AccountNamePropsType {
   address: string;
   assets?: AssetType;
   color?: 'muted' | 'secondary' | string;
   ['data-testid']?: string;
-};
+}
 
 export const AccountName = ({
   address,

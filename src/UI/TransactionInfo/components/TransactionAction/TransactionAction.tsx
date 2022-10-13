@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 
-import { WithTransactionType } from 'UI/types';
 import { transactionActionUnwrapper } from 'utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
 
+import { WithTransactionType } from '../../../../UI/types';
 import { ActionText } from './components/ActionText';
 
 import styles from './styles.scss';

@@ -6,8 +6,8 @@ import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/getTransactionFee';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
-import { WithTransactionType } from 'UI/types';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';

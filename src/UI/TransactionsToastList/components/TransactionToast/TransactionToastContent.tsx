@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
@@ -12,13 +12,14 @@ import { ToastDataState } from './utils';
 import styles from './styles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-export interface TransactionToastContentPropsType {
+// TODO: Rename to "TransactionToastContentPropsType" when dapp-core@3.0.0
+export interface TransactionToastContentProps {
   style: Record<string, string>;
   toastDataState: ToastDataState;
   transactions: SignedTransactionType[];
   showCloseButton?: boolean;
   onDeleteToast?: () => void;
-  toastTitle?: string | React.ReactNode;
+  toastTitle?: string | ReactNode;
   isTimedOut?: boolean;
   customElements?: TransactionToastContentElementsProps;
 }
@@ -36,7 +37,7 @@ export const TransactionToastContent = ({
     TransactionToastStatusIcon: FontAwesomeIcon,
     TransactionDetails: TransactionDetails
   }
-}: TransactionToastContentPropsType) => {
+}: TransactionToastContentProps) => {
   const TransactionDetails = customElements?.TransactionDetails;
   const TransactionToastStatusIcon = customElements?.TransactionToastStatusIcon;
   const CustomCloseButton = customElements?.CustomCloseButton;

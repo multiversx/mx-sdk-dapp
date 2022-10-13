@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { WithTransactionType } from 'UI/types';
+import { WithTransactionType } from '../../UI/types';
 
 import {
   TransactionInfoValue,

@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { useGetAccount } from 'hooks';
-import { WithTransactionType } from 'UI/types';
+
+import { WithTransactionType } from '../../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 

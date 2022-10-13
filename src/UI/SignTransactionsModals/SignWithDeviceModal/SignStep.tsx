@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, ReactNode } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
 import {
   faExclamationTriangle,
@@ -13,21 +13,25 @@ import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
-import { getEgldLabel, isTokenTransfer } from 'utils';
+
+import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
+
 import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
 import globalStyles from 'assets/sass/main.scss';
 
-export interface SignStepPropsType extends WithClassnameType {
+// TODO: Rename to "SignStepPropsType" when dapp-core@3.0.0
+export interface SignStepProps extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;
   handleClose: () => void;
   waitingForDevice: boolean;
   error: string | null;
   callbackRoute?: string;
-  title?: React.ReactNode;
+  title?: ReactNode;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
   allTransactions: MultiSignTransactionType[];
@@ -46,7 +50,7 @@ export const SignStep = ({
   isLastTransaction,
   currentStep,
   className
-}: SignStepPropsType) => {
+}: SignStepProps) => {
   const egldLabel = getEgldLabel();
 
   if (!currentTransaction) {

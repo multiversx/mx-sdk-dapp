@@ -8,7 +8,8 @@ import lodash from 'lodash';
 
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
-import { WithTransactionType } from 'UI/types';
+
+import { WithTransactionType } from '../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 

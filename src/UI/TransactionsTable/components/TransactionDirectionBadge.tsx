@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { WithTransactionType } from 'UI/types';
+import { WithTransactionType } from '../../../UI/types';
 
 import styles from './transactionsTable.styles.scss';
 import globalStyles from 'assets/sass/main.scss';

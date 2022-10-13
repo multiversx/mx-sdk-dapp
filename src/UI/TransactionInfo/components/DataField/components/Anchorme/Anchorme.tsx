@@ -1,15 +1,15 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, memo } from 'react';
 import anchorme from 'anchorme';
 
 import { AnchorProps, LinkComponent } from './anchorme.types';
 import { Link } from './Link';
 
-type Props = {
+interface AnchormePropsType extends AnchorProps {
   children: string;
   linkComponent?: LinkComponent;
-} & AnchorProps;
+}
 
-const Anchorme = ({ children, ...rest }: Props) => {
+const Anchorme = ({ children, ...rest }: AnchormePropsType) => {
   const text = children;
 
   const parse = useCallback(() => {
@@ -40,7 +40,7 @@ const Anchorme = ({ children, ...rest }: Props) => {
 
   const parsedText = useMemo(() => parse(), [parse]);
 
-  return <>{parsedText}</>;
+  return parsedText;
 };
 
-export default React.memo(Anchorme);
+export default memo(Anchorme);

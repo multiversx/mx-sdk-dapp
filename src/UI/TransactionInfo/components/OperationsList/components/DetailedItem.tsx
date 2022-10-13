@@ -1,16 +1,18 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import { OperationType } from 'types/serverTransactions.types';
-import { WithTransactionType } from 'UI/types';
-
+import {
+  WithOperationType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { OperationText } from './OperationText';
 
 import globalStyles from 'assets/sass/main.scss';
 
-export interface DetailedItemPropsType extends WithTransactionType {
+export interface DetailedItemPropsType
+  extends WithTransactionType,
+    WithOperationType {
   children?: ReactNode;
-  operation: OperationType;
 }
 
 export const DetailedItem = ({

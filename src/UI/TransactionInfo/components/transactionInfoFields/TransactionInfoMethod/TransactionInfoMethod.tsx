@@ -1,10 +1,10 @@
 import React from 'react';
 
 import { TransactionActionCategoryEnum } from 'types/serverTransactions.types';
-import { WithTransactionType } from 'UI/types';
 import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
 import { DetailItem } from '../../DetailItem';
+import { WithTransactionType } from '../../../../../UI/types';
 import { TransactionAction } from '../../TransactionAction';
 
 export const TransactionInfoMethod = ({ transaction }: WithTransactionType) => {

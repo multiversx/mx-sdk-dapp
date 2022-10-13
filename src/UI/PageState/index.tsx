@@ -9,7 +9,8 @@ import { WithClassnameType } from '../types';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './pageStateStyles.scss';
 
-export interface PageStatePropsType extends WithClassnameType {
+// TODO: Rename to "PageStatePropsType" when dapp-core@3.0.0
+export interface PageStateProps extends WithClassnameType {
   title?: ReactNode;
   icon?: IconProp | IconDefinition | null;
   iconClass?: string;
@@ -30,7 +31,7 @@ export const PageState = ({
   iconBgClass,
   iconSize = '5x',
   className = 'dapp-page-state'
-}: PageStatePropsType) => {
+}: PageStateProps) => {
   const classes = {
     wrapper: classNames(
       styles.state,

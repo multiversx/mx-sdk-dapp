@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { CopyButton } from 'UI/CopyButton';
-import { WithTransactionType } from 'UI/types';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';

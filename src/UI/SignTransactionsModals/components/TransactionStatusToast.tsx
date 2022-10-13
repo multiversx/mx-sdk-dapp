@@ -1,14 +1,17 @@
 import React, { useMemo } from 'react';
+
 import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
 import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
 import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from 'constants/index';
+
 import { WithClassnameType } from '../../types';
 
-export type TransactionStatusToastType = {
+// TODO: Rename to "TransactionStatusToastPropsType" when dapp-core@3.0.0
+export interface TransactionStatusToastType extends WithClassnameType {
   signError: string | null;
   canceledTransactionsMessage: string | null;
   onDelete: () => void;
-} & WithClassnameType;
+}
 
 export const TransactionStatusToast = ({
   signError,

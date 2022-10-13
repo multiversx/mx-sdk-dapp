@@ -5,7 +5,8 @@ import debounce from 'lodash.debounce';
 import { WithClassnameType } from '../types';
 import styles from './trim.styles.scss';
 
-export interface TrimPropsType extends WithClassnameType {
+// TODO: Rename to "TrimPropsType" when dapp-core@3.0.0
+export interface TrimType extends WithClassnameType {
   text: string;
   dataTestId?: string;
   color?: 'muted' | 'secondary' | string;
@@ -16,7 +17,7 @@ export const Trim = ({
   className = 'dapp-trim',
   dataTestId = 'trim-text-component',
   color
-}: TrimPropsType) => {
+}: TrimType) => {
   const [overflow, setOverflow] = useState(false);
   const trimRef = useRef(document.createElement('span'));
   const hiddenTextRef = useRef(document.createElement('span'));

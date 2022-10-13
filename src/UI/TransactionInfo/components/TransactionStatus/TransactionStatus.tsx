@@ -10,11 +10,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import { WithTransactionType } from 'UI/types';
 import {
   getTransactionStatus,
   getTransactionStatusText
 } from 'utils/transactions/transactionInfoHelpers';
+
+import { WithTransactionType } from '../../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 

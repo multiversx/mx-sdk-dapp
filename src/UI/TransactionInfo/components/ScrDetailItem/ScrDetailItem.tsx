@@ -11,11 +11,7 @@ import { DetailItem } from '../DetailItem';
 
 import styles from './styles.scss';
 
-export interface ScrDetailItemPropsType {
-  result: ResultType;
-}
-
-export const ScrDetailItem = ({ result }: ScrDetailItemPropsType) => (
+export const ScrDetailItem = ({ result }: { result: ResultType }) => (
   <DetailItem title='SC Result Hash' noBorder={true}>
     <div className={styles.contractDetailItem}>
       <Trim text={result.hash} />

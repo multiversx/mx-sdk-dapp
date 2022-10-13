@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -27,7 +27,7 @@ interface EventTopicsPropsType {
 }
 
 interface EventDataPropsType {
-  children: JSX.Element | JSX.Element[] | string;
+  children: ReactNode;
   label: string;
 }
 

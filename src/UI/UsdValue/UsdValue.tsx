@@ -8,7 +8,8 @@ import { WithClassnameType } from '../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-export interface UsdValuePropsType extends WithClassnameType {
+// TODO: Rename to "UsdValuePropsType" when dapp-core@3.0.0
+export interface UsdValueType extends WithClassnameType {
   amount: string;
   usd: number;
   decimals?: number;
@@ -23,7 +24,7 @@ export const UsdValue = ({
   addEqualSign,
   className,
   ...dataTestId
-}: UsdValuePropsType) => {
+}: UsdValueType) => {
   const value = getUsdValue({
     amount,
     usd,

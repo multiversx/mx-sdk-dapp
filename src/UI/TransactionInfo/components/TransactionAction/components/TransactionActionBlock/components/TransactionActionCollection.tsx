@@ -8,13 +8,11 @@ import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction
 import globalStyles from 'assets/sass/main.scss';
 import styles from '../styles.scss';
 
-export interface TransactionActionCollectionPropsType {
-  token: TokenArgumentType;
-}
-
 export const TransactionActionCollection = ({
   token
-}: TransactionActionCollectionPropsType) => {
+}: {
+  token: TokenArgumentType;
+}) => {
   if (!token.collection) {
     return null;
   }

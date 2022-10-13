@@ -1,26 +1,22 @@
 import React from 'react';
 
-import {
-  OperationType,
-  VisibleTransactionOperationType
-} from 'types/serverTransactions.types';
+import { VisibleTransactionOperationType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
-import { WithTransactionType } from 'UI/types';
 
 import { DetailedItem } from './DetailedItem';
 import { OperationToken } from './OperationToken';
+import {
+  WithOperationType,
+  WithTransactionType
+} from '../../../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
-
-export interface OperationRowPropsType extends WithTransactionType {
-  operation: OperationType;
-}
 
 export const OperationRow = ({
   operation,
   transaction
-}: OperationRowPropsType) => {
+}: WithTransactionType & WithOperationType) => {
   switch (operation.type) {
     case VisibleTransactionOperationType.nft:
     case VisibleTransactionOperationType.esdt:

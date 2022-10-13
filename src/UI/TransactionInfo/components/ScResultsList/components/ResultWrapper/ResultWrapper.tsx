@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './styles.scss';
 
 export interface ResultWrapperPropsType {
-  children: JSX.Element | JSX.Element[] | string;
+  children: ReactNode;
   label: string;
 }
 

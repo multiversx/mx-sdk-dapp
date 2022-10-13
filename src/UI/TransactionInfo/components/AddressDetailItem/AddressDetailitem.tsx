@@ -4,7 +4,7 @@ import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { ScAddressIcon } from 'UI/TransactionsTable/components';
 import { Trim } from 'UI/Trim';
-import { addressIsValid } from 'utils';
+import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 
 import { DetailItem } from '../DetailItem';

@@ -2,15 +2,17 @@ import React from 'react';
 import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { StatusIconType } from './transactionStatusToast.types';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionStatusToastStyles.scss';
 
-type StatusIconProps = {
+export interface StatusIconPropsType {
   type: StatusIconType;
-};
+}
 
-export const StatusIcon = ({ type }: StatusIconProps) => {
+export const StatusIcon = ({ type }: StatusIconPropsType) => {
   switch (type) {
     case StatusIconType.INFO:
       return (
@@ -23,6 +25,7 @@ export const StatusIcon = ({ type }: StatusIconProps) => {
           <FontAwesomeIcon icon={faInfo} className={styles.svg} size='5x' />
         </div>
       );
+
     case StatusIconType.WARNING:
       return (
         <div
@@ -35,6 +38,7 @@ export const StatusIcon = ({ type }: StatusIconProps) => {
           <FontAwesomeIcon icon={faWarning} className={styles.svg} size='5x' />
         </div>
       );
+
     case StatusIconType.ERROR:
       return (
         <div

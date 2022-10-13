@@ -1,15 +1,13 @@
 export type SessionKeyType = 'address' | 'shard' | 'toasts' | 'toastProgress';
 type ExpiresType = number | false;
 
-export const setItem = ({
-  key,
-  data,
-  expires
-}: {
+interface SetItemType {
   key: SessionKeyType;
   data: any;
   expires: ExpiresType;
-}) => {
+}
+
+export const setItem = ({ key, data, expires }: SetItemType) => {
   sessionStorage.setItem(
     String(key),
     JSON.stringify({

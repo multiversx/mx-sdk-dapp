@@ -5,12 +5,14 @@ import classNames from 'classnames';
 
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
-import { WithTransactionType } from 'UI/types';
+
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from '../transactionsTable.styles.scss';
+
+import { WithTransactionType } from '../../../../UI/types';
 
 interface TokenWrapperPropsType {
   children: ReactNode;

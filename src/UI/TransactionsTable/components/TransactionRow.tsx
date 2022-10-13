@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { WithTransactionType } from 'UI/types';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import {
   TransactionDirectionBadge,
@@ -12,6 +11,8 @@ import {
   TransactionShardsTransition,
   TransactionValue
 } from '.';
+
+import { WithTransactionType } from '../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';

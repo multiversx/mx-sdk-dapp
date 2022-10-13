@@ -14,7 +14,10 @@ import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import { CustomToastType, TransactionToastType } from 'types/toasts.types';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
 import { TransactionToast } from 'UI/TransactionsToastList/components/TransactionToast';
-import { deleteCustomToast, getIsTransactionPending } from 'utils';
+
+import { deleteCustomToast } from 'utils/toasts/customToastsActions';
+import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
+
 import { WithClassnameType } from '../types';
 import styles from './transactionsToastListStyles.scss';
 

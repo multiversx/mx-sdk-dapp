@@ -1,6 +1,6 @@
 import { DECIMALS } from 'constants/index';
 import { NftEnumType } from 'types/tokens.types';
-import { WithTransactionType } from 'UI/types';
+
 import { getTransactionTokens } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens';
 import {
   EgldValueDataType,
@@ -16,6 +16,8 @@ import {
   ACTIONS_WITH_VALUE_IN_ACTION_FIELD,
   ACTIONS_WITH_VALUE_IN_DATA_FIELD
 } from '../../constants';
+import { WithTransactionType } from '../../../../../UI/types';
+
 import {
   getValueFromActions,
   getValueFromDataField,

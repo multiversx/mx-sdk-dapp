@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
 import { WithClassnameType } from '../UI/types';
@@ -79,11 +79,11 @@ interface MultiEsdtScCallType {
 
 export type MultiEsdtTransactionType = MultiEsdtType | MultiEsdtScCallType;
 
-export type MultiSignTransactionType = {
+export interface MultiSignTransactionType {
   multiTxData?: string;
   transactionIndex: number;
   transaction: Transaction;
-};
+}
 
 export interface TokenOptionType {
   name: string;
@@ -174,7 +174,7 @@ export interface SignModalPropsType extends WithClassnameType {
   transactions: Transaction[];
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
-  title?: React.ReactNode;
+  title?: ReactNode;
 }
 
 export interface CustomTransactionInformation {
@@ -193,7 +193,7 @@ export type GetTransactionsByHashesType = (
   pendingTransactions: PendingTransactionsType
 ) => Promise<GetTransactionsByHashesReturnType>;
 
-export type GetTransactionsByHashesReturnType = {
+export interface GetTransactionsByHashesReturnType {
   hash: string;
   invalidTransaction: boolean;
   status: TransactionServerStatusesEnum;
@@ -203,9 +203,11 @@ export type GetTransactionsByHashesReturnType = {
   data: string;
   previousStatus: string;
   hasStatusChanged: boolean;
-}[];
+}
+[];
 
-export type PendingTransactionsType = {
+export interface PendingTransactionsType {
   hash: string;
   previousStatus: string;
-}[];
+}
+[];

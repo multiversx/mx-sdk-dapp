@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, ReactNode } from 'react';
 import classNames from 'classnames';
 
 import { useGetLoginInfo } from 'hooks';
@@ -10,7 +10,8 @@ import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import styles from './unlockPageStyles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-export interface UnlockPagePropsType {
+// TODO: Rename to "UnlockPagePropsType" when dapp-core@3.0.0
+export interface Props {
   title?: string;
   className?: string;
   loginRoute: string;
@@ -19,7 +20,7 @@ export interface UnlockPagePropsType {
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;
-  description?: string | React.ReactNode;
+  description?: string | ReactNode;
 }
 
 export const UnlockPage = ({

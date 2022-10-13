@@ -1,7 +1,6 @@
 import React from 'react';
 
-import { WithTransactionType } from 'UI/types';
-
+import { WithTransactionType } from '../../../../../UI/types';
 import { DataField } from '../../DataField';
 import { DetailItem } from '../../DetailItem';
 

@@ -18,7 +18,7 @@ export const TimeAgo = ({
 }: TimeAgoPropsType) => {
   const result = timeAgo(value * 1000, short);
 
-  const render = tooltip ? (
+  const component = tooltip ? (
     <span
       title={getHumanReadableTimeFormat({
         value,
@@ -33,5 +33,5 @@ export const TimeAgo = ({
     <span data-testid={`timeAgo-${value}`}>{result}</span>
   );
 
-  return <div className={styles.transactionCell}>{render}</div>;
+  return <div className={styles.transactionCell}>{component}</div>;
 };

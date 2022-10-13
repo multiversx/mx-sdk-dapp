@@ -5,7 +5,7 @@ import { TransactionDetailsType } from 'UI/TransactionDetails';
 import { ComponentTypeWithChildren } from '../types';
 import { TransactionToastContentProps } from './TransactionToastContent';
 
-export type TransactionToastDefaultProps = {
+export interface TransactionToastDefaultProps {
   toastId: string;
   transactions?: SignedTransactionType[];
   status?: TransactionBatchStatusesEnum;
@@ -14,21 +14,21 @@ export type TransactionToastDefaultProps = {
   endTimeProgress?: number;
   startTimestamp?: number;
   onDelete?: (toastId: string) => void;
-};
+}
 
-export type TransactionToastContentElementsProps = {
+export interface TransactionToastContentElementsProps {
   TransactionToastStatusIcon?: ComponentTypeWithChildren<FontAwesomeIconProps>;
   CustomCloseButton?: ComponentTypeWithChildren<{
     onClick?: () => void;
     className?: string;
   }>;
   TransactionDetails?: ComponentTypeWithChildren<TransactionDetailsType>;
-};
+}
 
-export type TransactionToastCustomizationProps = {
+export interface TransactionToastCustomizationProps {
   TransactionToastContentCustomElements?: TransactionToastContentElementsProps;
   TransactionToastContent?: ComponentTypeWithChildren<
     TransactionToastContentProps
   >;
   Progress?: ComponentTypeWithChildren<ProgressProps>;
-};
+}

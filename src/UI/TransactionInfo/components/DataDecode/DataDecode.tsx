@@ -5,7 +5,10 @@ import classNames from 'classnames';
 
 import { N_A } from 'constants/index';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
-import { useDataDecode, DataDecodeType } from 'utils';
+import {
+  useDataDecode,
+  DataDecodeType
+} from 'utils/transactions/transactionInfoHelpers/useDataDecode';
 
 import styles from './styles.scss';
 

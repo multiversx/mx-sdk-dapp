@@ -3,9 +3,10 @@ import classNames from 'classnames';
 
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim/Trim';
-import { WithTransactionType } from 'UI/types';
 
 import { TransactionIcon } from './TransactionIcon';
+
+import { WithTransactionType } from '../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';

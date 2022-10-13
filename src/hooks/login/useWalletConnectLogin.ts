@@ -16,7 +16,9 @@ import {
 } from 'reduxStore/slices';
 import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { getIsLoggedIn, logout } from 'utils';
+
+import { logout } from 'utils/logout';
+import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;

@@ -18,11 +18,11 @@ import {
   SignTransactionsPropsType,
   TransactionTypesEnum
 } from 'types';
-import {
-  getNetworkConfig,
-  getTokenFromData,
-  parseMultiEsdtTransferData
-} from 'utils';
+
+import { getNetworkConfig } from 'utils/network/getNetworkConfig';
+import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
+import { getTokenFromData } from 'utils/transactions/getTokenFromData';
+
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
