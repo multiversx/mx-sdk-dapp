@@ -101,7 +101,7 @@ export async function signTransactions({
       iconClassName: 'text-danger',
       title: 'An error occurred',
       description:
-        'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed end of this week. Please check again later.'
+        'One of the selected tokens is temporarily immovable due to a pending ESDT protocol upgrade being deployed on October 19th. Please check again later.'
     };
 
     store.dispatch(setNotificationModal(notificationPayload));
