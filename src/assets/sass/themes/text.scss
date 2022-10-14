@@ -24,7 +24,6 @@
   max-width: none;
 }
 
-
 .text-justify {
   text-align: justify;
 }
@@ -71,6 +70,10 @@
   color: $text-muted;
 }
 
+.text-success {
+  color: #28a745;
+}
+
 // Alignment
 .text-justify {
   text-align: justify;
@@ -95,8 +98,15 @@
 .text-black-50 {
   color: rgba($black, 0.5);
 }
+
 .text-white-50 {
   color: rgba($white, 0.5);
+}
+
+.text-lg-right {
+  @media (min-width: 992px) {
+    text-align: right;
+  }
 }
 
 // Misc

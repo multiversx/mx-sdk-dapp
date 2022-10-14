@@ -1,7 +1,8 @@
 import { Transaction } from '@elrondnetwork/erdjs';
+
 import { LoginMethodsEnum } from 'types';
 
-export type SignPropsType = {
+export interface SignPropsType {
   handleClose: () => void;
   error: string | null;
   sessionId?: string;
@@ -10,14 +11,14 @@ export type SignPropsType = {
   callbackRoute: string;
   className?: string;
   verifyReceiverScam?: boolean;
-};
+}
 
 export type ScreenType = (signProps: SignPropsType) => JSX.Element;
 
-export type CustomConfirmScreensType = {
+export interface CustomConfirmScreensType {
   Ledger?: ScreenType;
   Extension?: ScreenType;
   WalletConnect?: ScreenType;
   Wallet?: ScreenType;
   Extra?: ScreenType;
-};
+}

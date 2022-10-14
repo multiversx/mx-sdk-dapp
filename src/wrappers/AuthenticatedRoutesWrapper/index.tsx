@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   isAccountLoadingSelector,
@@ -16,7 +16,7 @@ export const AuthenticatedRoutesWrapper = ({
   unlockRoute,
   onRedirect
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   routes: RouteType[];
   unlockRoute: string;
   onRedirect?: (unlockRoute?: string) => void;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Address } from '@elrondnetwork/erdjs/out';
+
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
@@ -10,7 +11,7 @@ import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { getAccountShard } from 'utils/account/getAccountShard';
 import { logout } from 'utils/logout';
 
-interface AppInitializerPropsType {
+export interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   children: any;
   externalProvider?: IDappProvider;

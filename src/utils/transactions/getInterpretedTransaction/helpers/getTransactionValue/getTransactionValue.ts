@@ -1,6 +1,6 @@
 import { DECIMALS } from 'constants/index';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
+
 import { getTransactionTokens } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens';
 import {
   EgldValueDataType,
@@ -9,12 +9,15 @@ import {
 } from 'utils/transactions/getInterpretedTransaction/helpers/types';
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
+
 import {
   ACTIONS_WITH_EGLD_VALUE,
   ACTIONS_WITH_MANDATORY_OPERATIONS,
   ACTIONS_WITH_VALUE_IN_ACTION_FIELD,
   ACTIONS_WITH_VALUE_IN_DATA_FIELD
 } from '../../constants';
+import { WithTransactionType } from '../../../../../UI/types';
+
 import {
   getValueFromActions,
   getValueFromDataField,
@@ -29,27 +32,33 @@ export interface GetTransactionValueReturnType {
   nftValueData?: NFTValueDataType;
 }
 
+export interface GetTransactionValueType extends WithTransactionType {
+  hideMultipleBadge?: boolean;
+}
+
 export const getTransactionValue = ({
   transaction,
   hideMultipleBadge
-}: {
-  transaction: InterpretedTransactionType;
-  hideMultipleBadge?: boolean;
-}): GetTransactionValueReturnType => {
+}: GetTransactionValueType): GetTransactionValueReturnType => {
   if (transaction.action) {
     if (ACTIONS_WITH_EGLD_VALUE.includes(transaction.action.name)) {
       return getEgldValueData(transaction.value);
     }
+
     if (ACTIONS_WITH_VALUE_IN_DATA_FIELD.includes(transaction.action.name)) {
       return getValueFromDataField(transaction);
     }
+
     if (ACTIONS_WITH_MANDATORY_OPERATIONS.includes(transaction.action.name)) {
       return getValueFromOperations(transaction);
     }
+
     if (ACTIONS_WITH_VALUE_IN_ACTION_FIELD.includes(transaction.action.name)) {
       return getValueFromActions(transaction);
     }
+
     const transactionTokens = getTransactionTokens(transaction);
+
     if (transactionTokens.length) {
       const txToken = transactionTokens[0];
       const isNft = Object.values(NftEnumType).includes(
@@ -57,7 +66,6 @@ export const getTransactionValue = ({
       );
 
       const hasTitleText = !hideMultipleBadge && transactionTokens.length > 1;
-
       const titleText = hasTitleText ? getTitleText(transactionTokens) : '';
 
       if (isNft) {

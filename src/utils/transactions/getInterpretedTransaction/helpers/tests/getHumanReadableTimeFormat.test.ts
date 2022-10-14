@@ -2,7 +2,9 @@ import { getHumanReadableTimeFormat } from '../getHumanReadableTimeFormat';
 
 describe('getHumanReadableTimeFormat', () => {
   it('returns full readable date, non-UTC', () => {
-    const value = new Date(1993, 3, 23, 8, 33, 12).getTime() / 1000; // UNIX timestamp
+    const date = new Date(1993, 3, 23, 8, 33, 12);
+    const value = date.getTime() / 1000; // UNIX timestamp
+    const hours = date.getUTCHours();
     const noSeconds = false;
     const utc = false;
 
@@ -12,11 +14,13 @@ describe('getHumanReadableTimeFormat', () => {
       utc
     });
 
-    expect(result).toEqual('Apr 23, 1993 08:33:12 AM');
+    expect(result).toEqual(`Apr 23, 1993 0${hours}:33:12 AM`);
   });
 
   it('returns readable date without seconds, non-UTC', () => {
-    const value = new Date(1993, 3, 23, 8, 33, 12).getTime() / 1000; // UNIX timestamp
+    const date = new Date(1993, 3, 23, 8, 33, 12);
+    const value = date.getTime() / 1000; // UNIX timestamp
+    const hours = date.getUTCHours();
     const noSeconds = true;
     const utc = false;
 
@@ -26,7 +30,7 @@ describe('getHumanReadableTimeFormat', () => {
       utc
     });
 
-    expect(result).toEqual('Apr 23, 1993 08:33 AM');
+    expect(result).toEqual(`Apr 23, 1993 0${hours}:33 AM`);
   });
 
   it('returns full readable date in UTC', () => {
@@ -34,6 +38,7 @@ describe('getHumanReadableTimeFormat', () => {
     const value = date.getTime() / 1000; // UNIX timestamp
     const noSeconds = false;
     const utc = true;
+    const hours = date.getUTCHours();
 
     const result = getHumanReadableTimeFormat({
       value,
@@ -41,7 +46,7 @@ describe('getHumanReadableTimeFormat', () => {
       utc
     });
 
-    expect(result).toEqual(`Apr 23, 1993 0${date.getUTCHours()}:33:12 AM UTC`);
+    expect(result).toEqual(`Apr 23, 1993 0${hours}:33:12 AM UTC`);
   });
 
   it('returns full readable date without seconds in UTC', () => {
@@ -49,6 +54,7 @@ describe('getHumanReadableTimeFormat', () => {
     const value = date.getTime() / 1000; // UNIX timestamp
     const noSeconds = true;
     const utc = true;
+    const hours = date.getUTCHours();
 
     const result = getHumanReadableTimeFormat({
       value,
@@ -56,6 +62,6 @@ describe('getHumanReadableTimeFormat', () => {
       utc
     });
 
-    expect(result).toEqual(`Apr 23, 1993 0${date.getUTCHours()}:33 AM UTC`);
+    expect(result).toEqual(`Apr 23, 1993 0${hours}:33 AM UTC`);
   });
 });

@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import { EventType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { Trim } from 'UI/Trim';
@@ -11,26 +13,42 @@ import {
 import { getEventListInitialDecodeMethod } from 'utils/transactions/transactionInfoHelpers/getEventListInitialDecodeMethod';
 import { DataDecode } from '../DataDecode';
 
-const EventTopics = ({
-  topics,
-  identifier
-}: {
+import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
+
+export interface EventsListPropsType {
+  events: EventType[];
+  id?: string;
+}
+
+interface EventTopicsPropsType {
   topics: EventType['topics'];
   identifier?: string;
-}) => {
+}
+
+interface EventDataPropsType {
+  children: ReactNode;
+  label: string;
+}
+
+const EventTopics = ({ topics, identifier }: EventTopicsPropsType) => {
   const mergedTopics = topics.filter((topic) => topic).join('\n');
 
   return <DataDecode value={mergedTopics} identifier={identifier} />;
 };
 
-export const EventsList = ({
-  events,
-  id
-}: {
-  events: EventType[];
-  id?: string;
-}) => {
-  const ref = React.useRef<HTMLDivElement>(null);
+const EventData = ({ label, children }: EventDataPropsType) => (
+  <div className={classNames(globalStyles.row, styles.row)}>
+    <div className={classNames(globalStyles.colSm2, styles.label)}>{label}</div>
+
+    <div className={classNames(globalStyles.colSm10, styles.data)}>
+      {children}
+    </div>
+  </div>
+);
+
+export const EventsList = ({ events, id }: EventsListPropsType) => {
+  const ref = useRef<HTMLDivElement>(null);
 
   const initialDecodeMethod = getEventListInitialDecodeMethod();
 
@@ -44,68 +62,50 @@ export const EventsList = ({
   }, []);
 
   return (
-    <div className='events-list detailed-list d-flex flex-column mt-1'>
-      {events.map((event: EventType, i) => {
+    <div className={styles.events}>
+      {events.map((event: EventType, index) => {
         const dataHexValue = getEventListDataHexValue(event);
         const highlightTx = getEventListHighlight(event, id);
 
         return (
           <div
-            key={i}
-            className={`detailed-item d-flex border-left border-bottom ml-3 py-3 ${
-              highlightTx ? 'highlighted' : ''
-            }`}
+            key={index}
+            className={styles.event}
             {...(highlightTx ? { ref } : {})}
           >
-            <div className='transaction-icon'>
+            <div className={styles.icon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className='detailed-item-content'>
+            <div className={styles.content}>
               {event.address != null && (
-                <div className='row mb-3 d-flex flex-column flex-sm-row'>
-                  <div className='col-sm-2 col-left'>Address</div>
-                  <div className='col-sm-10 d-flex align-items-center'>
-                    <Trim text={event.address} />
-                    <CopyButton
-                      text={event.address}
-                      className='side-action ml-2'
-                    />
-                  </div>
-                </div>
+                <EventData label='Hash'>
+                  <Trim text={event.address} className={styles.hash} />
+
+                  <CopyButton text={event.address} className={styles.copy} />
+                </EventData>
               )}
 
               {event.identifier != null && (
-                <div className='row mb-3 d-flex flex-column flex-sm-row'>
-                  <div className='col-sm-2 col-left'>Identifier</div>
-                  <div className='col-sm-10 d-flex align-items-center'>
-                    {event.identifier}
-                  </div>
-                </div>
+                <EventData label='Identifier'>{event.identifier}</EventData>
               )}
 
               {event.topics != null && event.topics.length > 0 && (
-                <div className='row mb-3 d-flex flex-column flex-sm-row'>
-                  <div className='col-sm-2 col-left'>Topics</div>
-                  <div className='col-sm-10 d-flex flex-column'>
-                    <EventTopics
-                      topics={event.topics}
-                      identifier={event.identifier}
-                    />
-                  </div>
-                </div>
+                <EventData label='Topics'>
+                  <EventTopics
+                    topics={event.topics}
+                    identifier={event.identifier}
+                  />
+                </EventData>
               )}
 
               {event.data != null && (
-                <div className='row mb-3 d-flex flex-column flex-sm-row'>
-                  <div className='col-sm-2 col-left'>Data</div>
-                  <div className='col-sm-10 d-flex flex-column'>
-                    <DataDecode
-                      value={dataHexValue}
-                      {...(highlightTx ? { initialDecodeMethod } : {})}
-                    />
-                  </div>
-                </div>
+                <EventData label='Data'>
+                  <DataDecode
+                    value={dataHexValue}
+                    {...(highlightTx ? { initialDecodeMethod } : {})}
+                  />
+                </EventData>
               )}
             </div>
           </div>

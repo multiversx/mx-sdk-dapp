@@ -23,7 +23,9 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { SignedTransactionsBodyType } from 'types/transactions.types';
-import { safeRedirect, setNonce } from 'utils';
+
+import { safeRedirect } from 'utils/redirect';
+import { setNonce } from 'utils/account/setNonce';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: (

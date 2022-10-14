@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { getWebsocketUrl } from 'utils';
+
+import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
 
 export function useGetWebsocketUrl(apiAddress: string) {
   const [url, setUrl] = useState<string>();

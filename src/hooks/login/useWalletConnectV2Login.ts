@@ -27,7 +27,8 @@ import {
   LoginMethodsEnum,
   DappCoreWCV2CustomMethodsEnum
 } from 'types/enums.types';
-import { getIsLoggedIn, logout } from 'utils';
+import { logout } from 'utils/logout';
+import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
 
@@ -42,7 +43,7 @@ export enum WalletConnectV2Error {
   errorLogout = 'Unable to remove existing pairing'
 }
 
-interface InitWalletConnectV2Type {
+export interface InitWalletConnectV2Type {
   logoutRoute: string;
   token?: string;
   callbackRoute?: string;

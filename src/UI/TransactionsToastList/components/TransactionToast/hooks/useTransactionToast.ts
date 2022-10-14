@@ -3,13 +3,16 @@ import { useGetTransactionDisplayInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { TransactionBatchStatusesEnum } from 'types';
+
+import { getAreTransactionsOnSameShard } from 'utils/transactions/getAreTransactionsOnSameShard';
 import {
-  getAreTransactionsOnSameShard,
   getIsTransactionPending,
-  getIsTransactionTimedOut,
-  getUnixTimestamp,
-  getUnixTimestampWithAddedMilliseconds
-} from 'utils';
+  getIsTransactionTimedOut
+} from 'utils/transactions/transactionStateByStatus';
+
+import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
+import { getUnixTimestampWithAddedMilliseconds } from 'utils/dateTime/getUnixTimestampWithAddedMilliseconds';
+
 import styles from '../styles.scss';
 import { TransactionToastDefaultProps } from '../transactionToast.type';
 import { getToastDataStateByStatus } from '../utils';

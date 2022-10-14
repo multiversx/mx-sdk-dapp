@@ -1,16 +1,13 @@
 import React from 'react';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+
+import { WithTransactionType } from '../../../../../UI/types';
 import { DataField } from '../../DataField';
 import { DetailItem } from '../../DetailItem';
 
 export const TransactionInfoInputData = ({
   transaction
-}: {
-  transaction: InterpretedTransactionType;
-}) => {
-  return (
-    <DetailItem title='Input Data' className='data-field'>
-      <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
-    </DetailItem>
-  );
-};
+}: WithTransactionType) => (
+  <DetailItem title='Input Data'>
+    <DataField data={transaction.data} scamInfo={transaction.scamInfo} />
+  </DetailItem>
+);

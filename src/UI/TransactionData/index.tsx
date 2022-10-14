@@ -1,23 +1,27 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { N_A } from 'constants/index';
-import { decodePart } from 'utils';
+import { decodePart } from 'utils/decoders/decodePart';
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
+
+export interface TransactionDataPropsType extends WithClassnameType {
+  data: string;
+  highlight?: string;
+  isScCall?: boolean;
+}
 
 export const TransactionData = ({
   data,
   highlight,
   isScCall,
   className = 'dapp-transaction-data'
-}: {
-  data: string;
-  highlight?: string;
-  isScCall?: boolean;
-} & WithClassnameType) => {
+}: TransactionDataPropsType) => {
   let output = <>{data}</>;
 
   const [encodedScCall, ...remainingDataFields] =
@@ -75,7 +79,11 @@ export const TransactionData = ({
           )}
         >
           <span
-            className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
+            className={classNames(
+              globalStyles.formLabel,
+              globalStyles.textSecondary,
+              globalStyles.dBlock
+            )}
           >
             SC Call
           </span>
@@ -106,14 +114,24 @@ export const TransactionData = ({
         )}
       >
         <span
-          className={`${globalStyles.formLabel} ${globalStyles.textSecondary} ${globalStyles.dBlock}`}
+          className={classNames(
+            globalStyles.formLabel,
+            globalStyles.textSecondary,
+            globalStyles.dBlock
+          )}
         >
           Data
         </span>
 
         <div
           data-testid='confirmData'
-          className={`${globalStyles.textarea} ${globalStyles.formControl} ${globalStyles.mt1} ${globalStyles.textBreak} ${globalStyles.w100}`}
+          className={classNames(
+            globalStyles.textarea,
+            globalStyles.formControl,
+            globalStyles.mt1,
+            globalStyles.textBreak,
+            globalStyles.w100
+          )}
         >
           {data ? output : N_A}
         </div>

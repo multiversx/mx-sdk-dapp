@@ -2,7 +2,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { successfulTransactionsSelector } from 'reduxStore/selectors';
 import { SignedTransactionsType, SignedTransactionsBodyType } from 'types';
 
-interface useGetSuccessfulTransactionsReturnType {
+export interface useGetSuccessfulTransactionsReturnType {
   successfulTransactions: SignedTransactionsType;
   successfulTransactionsArray: [string, SignedTransactionsBodyType][];
   hasSuccessfulTransactions: boolean;

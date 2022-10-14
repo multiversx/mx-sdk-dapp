@@ -1,36 +1,57 @@
 import React from 'react';
 import { faSpinner, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import { N_A } from 'constants/index';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
+
+import { WithTransactionType } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
-export const TransactionInfoAge = ({
-  transaction
-}: {
-  transaction: InterpretedTransactionType;
-}) => {
+import globalStyles from 'assets/sass/main.scss';
+
+export const TransactionInfoAge = ({ transaction }: WithTransactionType) => {
   const { pending } = getTransactionStatus(transaction);
+
   return (
     <DetailItem title='Age'>
       {transaction.timestamp != null ? (
         <div
-          className='d-flex flex-wrap align-items-center'
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.flexWrap,
+            globalStyles.alignItemsCenter
+          )}
           data-testid='transactionAge'
         >
           {pending ? (
             <FontAwesomeIcon
               icon={faSpinner}
-              className='mr-2 text-secondary fa-spin slow-spin'
+              className={classNames(
+                globalStyles.mr2,
+                globalStyles.textSecondary,
+                'fa-spin',
+                'slow-spin'
+              )}
             />
           ) : (
-            <FontAwesomeIcon icon={faClock} className='mr-2 text-secondary' />
+            <FontAwesomeIcon
+              icon={faClock}
+              className={classNames(
+                globalStyles.mr2,
+                globalStyles.textSecondary
+              )}
+            />
           )}
-          <TimeAgo value={transaction.timestamp} short />{' '}
-          <span className='text-secondary'>
+
+          <TimeAgo value={transaction.timestamp} short={true} />
+
+          <span
+            className={classNames(globalStyles.textSecondary, globalStyles.ml2)}
+          >
             (
             {getHumanReadableTimeFormat({
               value: transaction.timestamp,
@@ -40,7 +61,7 @@ export const TransactionInfoAge = ({
           </span>
         </div>
       ) : (
-        <span className='text-secondary'>{N_A}</span>
+        <span className={globalStyles.textSecondary}>{N_A}</span>
       )}
     </DetailItem>
   );

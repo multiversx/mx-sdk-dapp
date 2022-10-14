@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import classNames from 'classnames';
+
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { failTransactionToastSelector } from 'reduxStore/selectors';
 import {
@@ -7,17 +8,19 @@ import {
   removeFailTransactionToast
 } from 'reduxStore/slices';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
+
 import { WithClassnameType } from '../../UI/types';
 import { StatusMessageComponent } from './StatusMessageComponent';
 import { StatusIconType } from './transactionStatusToast.types';
+
 import styles from './transactionStatusToastStyles.scss';
 
-type ErrorToastProps = {
+export interface ErrorToastPropsType extends WithClassnameType {
   type?: StatusIconType;
   message: string;
   duration?: number;
   onDelete?: () => void;
-} & WithClassnameType;
+}
 
 export const FailedTransactionStatusToast = ({
   message,
@@ -25,7 +28,7 @@ export const FailedTransactionStatusToast = ({
   onDelete,
   type = StatusIconType.WARNING,
   className = 'dapp-failed-transaction-status-toast'
-}: ErrorToastProps) => {
+}: ErrorToastPropsType) => {
   const dispatch = useDispatch();
   const failToast = useSelector(failTransactionToastSelector);
 

@@ -1,25 +1,24 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
+
 import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
 
-type TransactionToastWrapperProps = {
+export interface TransactionToastWrapperPropsType {
   className?: string;
-  children?: React.ReactNode;
-};
+  children?: ReactNode;
+}
 
 export const TransactionToastWrapper = ({
   className = 'dapp-transaction-toast-wrapper',
   children
-}: TransactionToastWrapperProps) => {
-  return (
-    <div
-      className={classNames(
-        wrapperStyles.toasts,
-        wrapperStyles.toastWrapper,
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
+}: TransactionToastWrapperPropsType) => (
+  <div
+    className={classNames(
+      wrapperStyles.toasts,
+      wrapperStyles.toastWrapper,
+      className
+    )}
+  >
+    {children}
+  </div>
+);

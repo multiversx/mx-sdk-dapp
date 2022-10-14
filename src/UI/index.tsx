@@ -12,6 +12,7 @@ export * from './SignTransactionsModals';
 export * from './SignTransactionsModals/SignWithDeviceModal';
 export * from './SignTransactionsModals/SignWithExtensionModal';
 export * from './SignTransactionsModals/SignWithLedgerModal';
+export * from './TransactionInfo';
 export * from './TransactionsToastList';
 export * from './TransactionsToastList/components';
 export * from './Trim';

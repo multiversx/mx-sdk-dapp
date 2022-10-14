@@ -1,31 +1,36 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 
-import {
-  InterpretedTransactionType,
-  TransactionDirectionEnum
-} from 'types/serverTransactions.types';
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
+
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 
-type TransactionReceiverProps = {
-  transaction: InterpretedTransactionType;
+import { WithTransactionType } from '../../../UI/types';
+
+import globalStyles from 'assets/sass/main.scss';
+import styles from './transactionsTable.styles.scss';
+
+export interface TransactionReceiverPropsType extends WithTransactionType {
   showLockedAccounts?: boolean;
-};
+}
 
 export const TransactionReceiver = ({
   transaction,
   showLockedAccounts
-}: TransactionReceiverProps) => {
+}: TransactionReceiverPropsType) => {
   const directionIn =
     transaction.transactionDetails.direction === TransactionDirectionEnum.IN;
 
   return (
     <div
-      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.alignItemsCenter,
+        styles.transactionCell
+      )}
       data-testid='transactionReceiver'
     >
       {showLockedAccounts && (
@@ -34,17 +39,32 @@ export const TransactionReceiver = ({
           tokenId={transaction.tokenIdentifier ?? ''}
         />
       )}
+
       <ScAddressIcon initiator={transaction.receiver} />
+
       {directionIn ? (
-        <AccountName
-          address={transaction.receiver}
-          assets={transaction.receiverAssets}
-        />
+        <div
+          className={classNames(
+            globalStyles.w100,
+            styles.transactionCellMargin,
+            styles.transactionCellOverflow
+          )}
+        >
+          <AccountName
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+          />
+        </div>
       ) : (
         <ExplorerLink
           page={transaction.links.receiverLink ?? ''}
           data-testid='receiverLink'
-          className={globalStyles.trimWrapper}
+          className={classNames(
+            globalStyles.w100,
+            styles.transactionCellMargin,
+            styles.transactionCellOverflow,
+            styles.transactionCellLink
+          )}
         >
           <AccountName
             address={transaction.receiver}

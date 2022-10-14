@@ -1,7 +1,9 @@
 import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
 import { EngineTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
 
-export type DappOptions = { callbackUrl?: string };
+export interface DappOptions {
+  callbackUrl?: string;
+}
 
 export interface IDappProvider {
   init?(): Promise<boolean>;
