@@ -11,13 +11,11 @@ export const SignWithDeviceModal = ({
   handleClose,
   error,
   className = 'dapp-device-modal',
-  modalContentClassName,
   verifyReceiverScam = true,
   title = 'Confirm transaction'
 }: SignModalPropsType) => {
   const {
     onSignTransaction,
-    onNext,
     onPrev,
     allTransactions,
     waitingForDevice,
@@ -46,21 +44,17 @@ export const SignWithDeviceModal = ({
     >
       <div className={classes.cardBody}>
         <SignStep
-          {...{
-            onSignTransaction,
-            onNext,
-            onPrev,
-            allTransactions,
-            waitingForDevice,
-            isLastTransaction,
-            currentStep,
-            callbackRoute,
-            currentTransaction,
-            handleClose: onAbort,
-            modalContentClassName,
-            error,
-            title
-          }}
+          onSignTransaction={onSignTransaction}
+          allTransactions={allTransactions}
+          onPrev={onPrev}
+          waitingForDevice={waitingForDevice}
+          currentStep={currentStep}
+          isLastTransaction={isLastTransaction}
+          callbackRoute={callbackRoute}
+          currentTransaction={currentTransaction}
+          handleClose={onAbort}
+          error={error}
+          title={title}
         />
       </div>
     </ModalContainer>

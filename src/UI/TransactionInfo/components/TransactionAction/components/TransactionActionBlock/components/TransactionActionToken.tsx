@@ -1,10 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { DECIMALS } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
 import { TransactionActionTokenReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export const TransactionActionToken = ({
   tokenExplorerLink,
@@ -20,7 +22,7 @@ export const TransactionActionToken = ({
   return (
     <>
       {showFormattedAmount && (
-        <div className='mr-1 text-truncate'>
+        <div className={globalStyles.textTruncate}>
           <FormatAmount
             value={token.value}
             digits={2}
@@ -31,12 +33,20 @@ export const TransactionActionToken = ({
           />
         </div>
       )}
+
       <ExplorerLink
         page={tokenExplorerLink}
-        className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
         data-testid='tokenExplorerLink'
+        className={classNames(globalStyles.dFlex, {
+          [globalStyles.sideLink]: token.svgUrl
+        })}
       >
-        <div className='d-flex align-items-center symbol'>
+        <div
+          className={classNames(
+            globalStyles.dFlex,
+            globalStyles.alignItemsCenter
+          )}
+        >
           {token.svgUrl && (
             <img
               src={token.svgUrl}

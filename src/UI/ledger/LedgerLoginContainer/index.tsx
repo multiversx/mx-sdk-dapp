@@ -1,18 +1,22 @@
 import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import globalStyles from 'assets/sass/main.scss';
+import classNames from 'classnames';
+
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
+
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
 import { WithClassnameType } from '../../types';
 
+import globalStyles from 'assets/sass/main.scss';
+
 const ledgerWaitingText = 'Waiting for device';
 
-interface LedgerLoginContainerPropsType extends WithClassnameType {
+export interface LedgerLoginContainerPropsType extends WithClassnameType {
   callbackRoute?: string;
   wrapContentInsideModal?: boolean;
   token?: string;
@@ -29,8 +33,9 @@ export const LedgerLoginContainer = ({
   token
 }: LedgerLoginContainerPropsType) => {
   const classes = {
-    spinner: `fa-spin ${globalStyles.textPrimary}`
+    spinner: classNames(globalStyles.textPrimary, 'fa-spin')
   };
+
   const { ledgerAccount } = useGetAccountInfo();
   const [
     onStartLogin,

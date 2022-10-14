@@ -2,7 +2,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { pendingSignedTransactionsSelector } from 'reduxStore/selectors';
 import { SignedTransactionsType, SignedTransactionsBodyType } from 'types';
 
-interface UseGetPendingTransactionsReturnType {
+export interface UseGetPendingTransactionsReturnType {
   pendingTransactions: SignedTransactionsType;
   pendingTransactionsArray: [string, SignedTransactionsBodyType][];
   hasPendingTransactions: boolean;

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './signWithExtensionModalStyles.scss';
 
 export const SignWithExtensionModal = ({
@@ -36,8 +38,8 @@ export const SignWithExtensionModal = ({
     ? 'Check your Elrond Wallet Extension to sign the transactions'
     : 'Check your Elrond Wallet Extension to sign the transaction';
 
-  const close = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const close = (event: MouseEvent) => {
+    event.preventDefault();
     handleClose();
     clearTransactionsToSignWithWarning(sessionId);
   };

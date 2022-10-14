@@ -1,18 +1,22 @@
 import React from 'react';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+import classNames from 'classnames';
+
 import { DetailItem } from '../../DetailItem';
+import { WithTransactionType } from '../../../../../UI/types';
 import { TransactionStatus } from '../../TransactionStatus';
 
-export const TransactionInfoStatus = ({
-  transaction
-}: {
-  transaction: InterpretedTransactionType;
-}) => {
-  return (
-    <DetailItem title='Status'>
-      <div className='d-flex flex-wrap align-items-center'>
-        <TransactionStatus transaction={transaction} />
-      </div>
-    </DetailItem>
-  );
-};
+import globalStyles from 'assets/sass/main.scss';
+
+export const TransactionInfoStatus = ({ transaction }: WithTransactionType) => (
+  <DetailItem title='Status'>
+    <div
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.alignItemsCenter,
+        globalStyles.flexWrap
+      )}
+    >
+      <TransactionStatus transaction={transaction} />
+    </div>
+  </DetailItem>
+);

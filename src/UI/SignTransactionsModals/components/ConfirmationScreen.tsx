@@ -10,17 +10,17 @@ import {
   TransactionStatusToastType
 } from './TransactionStatusToast';
 
-type ExtraConfirmationScreenProps = {
+export interface ExtraConfirmationScreenPropsType {
   Screen?: (signProps: SignPropsType) => JSX.Element;
   verifyReceiverScam?: boolean;
   className?: string;
-};
+}
 
 export const ConfirmationScreen = ({
   Screen,
   verifyReceiverScam,
   className
-}: ExtraConfirmationScreenProps) => {
+}: ExtraConfirmationScreenPropsType) => {
   if (!Screen) {
     return null;
   }

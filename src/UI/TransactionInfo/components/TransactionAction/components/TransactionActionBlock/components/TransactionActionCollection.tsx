@@ -1,7 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/explorerUrlBuilder';
+
+import globalStyles from 'assets/sass/main.scss';
+import styles from '../styles.scss';
 
 export const TransactionActionCollection = ({
   token
@@ -15,12 +20,22 @@ export const TransactionActionCollection = ({
   return (
     <ExplorerLink
       page={explorerUrlBuilder.collectionDetails(token.collection)}
-      className={`d-flex ${token.svgUrl ? 'side-link' : ''}`}
+      className={classNames(styles.transactionActionCollection)}
     >
-      <div className='d-flex align-items-center symbol'>
-        {token.svgUrl && (
-          <img src={token.svgUrl} alt={token.name} className='side-icon mr-1' />
+      <div
+        className={classNames(
+          globalStyles.dFlex,
+          globalStyles.alignItemsCenter
         )}
+      >
+        {token.svgUrl && (
+          <img
+            src={token.svgUrl}
+            alt={token.name}
+            className={classNames(globalStyles.sideIcon, globalStyles.mr1)}
+          />
+        )}
+
         <span>{token.ticker}</span>
       </div>
     </ExplorerLink>

@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, MouseEvent } from 'react';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
+
 import Lighting from 'assets/icons/lightning.svg';
-import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
-import { isMobileEnvironment } from 'utils';
+
+import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
 import { WithClassnameType } from '../../types';
 import { Pairinglist } from './PairingList';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectLoginModalPropsType extends WithClassnameType {
@@ -83,20 +86,50 @@ export const WalletConnectLoginContainer = ({
 
   const generatedClasses = {
     loginText: globalStyles.textLeft,
-    container: `${globalStyles.mAuto} ${styles.loginContainer}`,
-    card: `${globalStyles.card} ${globalStyles.my3} ${globalStyles.textCenter}`,
-    cardBody: `${globalStyles.cardBody} ${globalStyles.p4} ${globalStyles.mxLg4}`,
-    qrCodeSvgContainer: `${globalStyles.qrCodeSvgContainer} ${globalStyles.mxAuto} ${globalStyles.mb3}`,
+    container: classNames(globalStyles.mAuto, styles.loginContainer),
+    card: classNames(
+      globalStyles.card,
+      globalStyles.my3,
+      globalStyles.textCenter
+    ),
+    cardBody: classNames(
+      globalStyles.cardBody,
+      globalStyles.p4,
+      globalStyles.mxLg4
+    ),
+    qrCodeSvgContainer: classNames(
+      globalStyles.qrCodeSvgContainer,
+      globalStyles.mxAuto,
+      globalStyles.mb3
+    ),
     title: globalStyles.mb3,
-    leadText: `${globalStyles.lead} ${globalStyles.mb0}`,
-    mobileLoginButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.dInlineFlex} ${globalStyles.alignItemsCenter} ${globalStyles.px4} ${globalStyles.my4}`,
+    leadText: classNames(globalStyles.lead, globalStyles.mb0),
+    mobileLoginButton: classNames(
+      globalStyles.btn,
+      globalStyles.btnPrimary,
+      globalStyles.dInlineFlex,
+      globalStyles.alignItemsCenter,
+      globalStyles.px4,
+      globalStyles.my4
+    ),
     mobileLoginButtonIcon: globalStyles.mr2,
-    errorMessage: `${globalStyles.textDanger} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`,
-    legacyMessageContainer: `${globalStyles.linkStyle} ${globalStyles.mt4} ${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.alignItemsCenter}`
+    errorMessage: classNames(
+      globalStyles.textDanger,
+      globalStyles.dFlex,
+      globalStyles.justifyContentCenter,
+      globalStyles.alignItemsCenter
+    ),
+    legacyMessageContainer: classNames(
+      globalStyles.linkStyle,
+      globalStyles.mt4,
+      globalStyles.dFlex,
+      globalStyles.justifyContentCenter,
+      globalStyles.alignItemsCenter
+    )
   };
 
-  const onVersionSwitch = (e: React.MouseEvent) => {
-    e.preventDefault();
+  const onVersionSwitch = (event: MouseEvent) => {
+    event.preventDefault();
     setDisplayWalletConnectV2(false);
     setShowLegacySwitch(false);
   };
@@ -162,9 +195,11 @@ export const WalletConnectLoginContainer = ({
           <h4 className={classNames([globalStyles.h4, globalStyles.title])}>
             {title}
           </h4>
+
           {isMobileDevice ? (
             <>
               <p className={generatedClasses.leadText}>{loginButtonText}</p>
+
               <a
                 id='accessWalletBtn'
                 data-testid='accessWalletBtn'
@@ -186,6 +221,7 @@ export const WalletConnectLoginContainer = ({
           ) : (
             <p className={generatedClasses.leadText}>{lead}</p>
           )}
+
           {activePairings.length > 0 && (
             <Pairinglist
               activePairings={activePairings}
@@ -194,6 +230,7 @@ export const WalletConnectLoginContainer = ({
               className={className}
             />
           )}
+
           {isWalletConnectV2 && showLegacySwitch && (
             <a
               href='/#'
@@ -203,8 +240,10 @@ export const WalletConnectLoginContainer = ({
               {legacyMessage}
             </a>
           )}
+
           <div>
             {error && <p className={generatedClasses.errorMessage}>{error}</p>}
+
             {walletConnectErrorV2 && (
               <p className={generatedClasses.errorMessage}>
                 {walletConnectErrorV2}

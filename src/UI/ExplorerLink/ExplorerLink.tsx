@@ -2,10 +2,24 @@ import React, { PropsWithChildren } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { getExplorerLink } from 'utils/transactions/getInterpretedTransaction/helpers/getExplorerLink';
+
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './explorerLinkStyles.scss';
+
+export interface ExplorerLinkPropsType
+  extends PropsWithChildren,
+    WithClassnameType {
+  page: string;
+  text?: any;
+  title?: string;
+  onClick?: () => void;
+  'data-testid'?: string;
+}
 
 export const ExplorerLink = ({
   page,
@@ -13,14 +27,7 @@ export const ExplorerLink = ({
   className = 'dapp-explorer-link',
   children,
   ...rest
-}: {
-  page: string;
-  text?: any;
-  title?: string;
-  onClick?: () => void;
-  'data-testid'?: string;
-} & PropsWithChildren &
-  WithClassnameType) => {
+}: ExplorerLinkPropsType) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
@@ -38,7 +45,7 @@ export const ExplorerLink = ({
     <a
       href={link}
       target='_blank'
-      className={classNames(styles.link, className)}
+      className={classNames(styles.link, globalStyles.ml2, className)}
       rel='noreferrer'
       {...rest}
     >

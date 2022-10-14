@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import { useEffect, useState, SetStateAction, Dispatch } from 'react';
+
 import { DecodeMethodEnum } from 'types';
 import { decodeForDisplay } from './decodeForDisplay';
 
@@ -6,7 +7,7 @@ export interface DataDecodeType {
   value: string;
   className?: string;
   initialDecodeMethod?: DecodeMethodEnum | string;
-  setDecodeMethod?: React.Dispatch<React.SetStateAction<string>>;
+  setDecodeMethod?: Dispatch<SetStateAction<string>>;
   identifier?: string;
 }
 
@@ -35,7 +36,7 @@ export const useDataDecode = ({
   setDecodeMethod,
   identifier
 }: DataDecodeType) => {
-  const [activeKey, setActiveKey] = React.useState(
+  const [activeKey, setActiveKey] = useState(
     initialDecodeMethod &&
       Object.values<string>(DecodeMethodEnum).includes(initialDecodeMethod)
       ? initialDecodeMethod

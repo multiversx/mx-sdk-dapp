@@ -1,26 +1,22 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
-import styles from './transactionsTable.styles.scss';
 
-type TransactionDirectionBadgePropsType = {
-  transaction: InterpretedTransactionType;
-};
+import { WithTransactionType } from '../../../UI/types';
+
+import styles from './transactionsTable.styles.scss';
+import globalStyles from 'assets/sass/main.scss';
 
 export const TransactionDirectionBadge = ({
   transaction
-}: TransactionDirectionBadgePropsType) => {
-  return (
-    <div className={globalStyles.dFlex}>
-      <span
-        className={classNames(
-          styles.directionBadge,
-          transaction.transactionDetails.direction?.toLowerCase()
-        )}
-      >
-        {transaction.transactionDetails.direction?.toUpperCase()}
-      </span>
-    </div>
-  );
-};
+}: WithTransactionType) => (
+  <div className={globalStyles.dFlex}>
+    <span
+      className={classNames(
+        styles.directionBadge,
+        transaction.transactionDetails.direction?.toLowerCase()
+      )}
+    >
+      {transaction.transactionDetails.direction?.toUpperCase()}
+    </span>
+  </div>
+);

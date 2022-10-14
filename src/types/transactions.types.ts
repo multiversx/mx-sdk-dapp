@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactNode } from 'react';
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
 import { WithClassnameType } from '../UI/types';
@@ -79,11 +79,11 @@ interface MultiEsdtScCallType {
 
 export type MultiEsdtTransactionType = MultiEsdtType | MultiEsdtScCallType;
 
-export type MultiSignTransactionType = {
+export interface MultiSignTransactionType {
   multiTxData?: string;
   transactionIndex: number;
   transaction: Transaction;
-};
+}
 
 export interface TokenOptionType {
   name: string;
@@ -174,7 +174,7 @@ export interface SignModalPropsType extends WithClassnameType {
   transactions: Transaction[];
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
-  title?: React.ReactNode;
+  title?: ReactNode;
 }
 
 export interface CustomTransactionInformation {

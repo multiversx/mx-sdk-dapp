@@ -66,6 +66,7 @@ export const ExtensionLoginButton: (
           <div className={classes.noExtensionButtonTitle}>
             Maiar DeFi Wallet
           </div>
+
           <FontAwesomeIcon
             className={classes.noExtensionButtonIcon}
             icon={faArrowRight}

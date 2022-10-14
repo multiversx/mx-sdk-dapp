@@ -1,5 +1,3 @@
-import React from 'react';
+import { PropsWithChildren, ComponentType } from 'react';
 
-export type ComponentTypeWithChildren<T> = React.ComponentType<
-  React.PropsWithChildren<T>
->;
+export type ComponentTypeWithChildren<T> = ComponentType<PropsWithChildren<T>>;

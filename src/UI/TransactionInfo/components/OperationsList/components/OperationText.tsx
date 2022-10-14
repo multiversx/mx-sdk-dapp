@@ -1,20 +1,21 @@
 import React from 'react';
+
 import {
-  InterpretedTransactionType,
-  OperationType,
   TransactionDirectionEnum,
   TransactionOperationActionTypeEnum
 } from 'types/serverTransactions.types';
 import { getOperationDirection } from 'utils/transactions/transactionInfoHelpers/getOperationDirection';
+
 import { OperationBlock } from './OperationBlock';
+import {
+  WithOperationType,
+  WithTransactionType
+} from '../../../../../UI/types';
 
 export const OperationText = ({
   operation,
   transaction
-}: {
-  operation: OperationType;
-  transaction: InterpretedTransactionType;
-}) => {
+}: WithTransactionType & WithOperationType) => {
   const { direction } = getOperationDirection({
     operation,
     address: transaction.sender

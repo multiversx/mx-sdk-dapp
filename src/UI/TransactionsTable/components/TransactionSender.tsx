@@ -1,33 +1,37 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 
-import {
-  InterpretedTransactionType,
-  TransactionDirectionEnum
-} from 'types/serverTransactions.types';
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { addressIsValid } from 'utils/account/addressIsValid';
+
+import { WithTransactionType } from '../../../UI/types';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 import { ShardSpan } from './ShardSpan';
 
-type TransactionSenderProps = {
-  transaction: InterpretedTransactionType;
+import globalStyles from 'assets/sass/main.scss';
+import styles from './transactionsTable.styles.scss';
+
+export interface TransactionSenderPropsType extends WithTransactionType {
   showLockedAccounts?: boolean;
-};
+}
 
 export const TransactionSender = ({
   transaction,
   showLockedAccounts
-}: TransactionSenderProps) => {
+}: TransactionSenderPropsType) => {
   const directionOut =
     transaction.transactionDetails.direction === TransactionDirectionEnum.OUT;
 
   return (
     <div
-      className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
+      className={classNames(
+        globalStyles.dFlex,
+        globalStyles.alignItemsCenter,
+        styles.transactionCell
+      )}
       data-testid='transactionSender'
     >
       {showLockedAccounts && (
@@ -36,29 +40,40 @@ export const TransactionSender = ({
           tokenId={transaction.tokenIdentifier ?? ''}
         />
       )}
+
       <ScAddressIcon initiator={transaction.sender} />
+
       {directionOut ? (
-        <AccountName
-          address={transaction.sender}
-          assets={transaction.senderAssets}
-        />
-      ) : (
-        <>
-          {addressIsValid(transaction.sender) ? (
-            <ExplorerLink
-              page={transaction.links.senderLink ?? ''}
-              data-testid='senderLink'
-              className={globalStyles.trimWrapper}
-            >
-              <AccountName
-                address={transaction.sender}
-                assets={transaction.senderAssets}
-              />
-            </ExplorerLink>
-          ) : (
-            <ShardSpan shard={transaction.sender} />
+        <div
+          className={classNames(
+            globalStyles.w100,
+            styles.transactionCellOverflow,
+            styles.transactionCellMargin
           )}
-        </>
+        >
+          <AccountName
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+          />
+        </div>
+      ) : addressIsValid(transaction.sender) ? (
+        <ExplorerLink
+          page={transaction.links.senderLink ?? ''}
+          data-testid='senderLink'
+          className={classNames(
+            globalStyles.w100,
+            styles.transactionCellOverflow,
+            styles.transactionCellMargin,
+            styles.transactionCellLink
+          )}
+        >
+          <AccountName
+            address={transaction.sender}
+            assets={transaction.senderAssets}
+          />
+        </ExplorerLink>
+      ) : (
+        <ShardSpan shard={transaction.sender} />
       )}
     </div>
   );

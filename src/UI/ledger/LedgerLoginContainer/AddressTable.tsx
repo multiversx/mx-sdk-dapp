@@ -6,17 +6,19 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { PageState } from 'UI/PageState';
+
 import { WithClassnameType } from '../../types';
 import { AddressRow } from './AddressRow';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './addressTableStyles.scss';
 
 const LEDGER_WAITING_TEXT = 'Waiting for device';
-
 const ADDRESSES_PER_PAGE = 10;
 
-interface AddressTablePropsType extends WithClassnameType {
+export interface AddressTablePropsType extends WithClassnameType {
   loading: boolean;
   accounts: string[];
   startIndex: number;
@@ -40,14 +42,36 @@ export const AddressTable = ({
 }: AddressTablePropsType) => {
   const classes = {
     wrapper: classNames(globalStyles.card, globalStyles.px4, className),
-    cardBody: `${globalStyles.cardBody} ${globalStyles.p4}`,
+    cardBody: classNames(globalStyles.cardBody, globalStyles.p4),
     tableWrapper: globalStyles.tableResponsive,
-    tableContent: `${styles.ledgerAddressTable} ${globalStyles.table} ${globalStyles.m0} ${globalStyles.borderBottom}`,
-    tableHeader: `${globalStyles.py2} ${globalStyles.textBlack50} ${globalStyles.borderBottom}`,
-    tableHeaderText: `${globalStyles.textLeft} ${globalStyles.border0}`,
-    buttonsWrapper: `${globalStyles.dFlex} ${globalStyles.justifyContentCenter} ${globalStyles.mt2}`,
-    arrowButton: `${globalStyles.btn} ${globalStyles.btnLink} ${globalStyles.mx2}`,
-    confirmButton: `${globalStyles.btn} ${globalStyles.btnPrimary} ${globalStyles.px4} ${globalStyles.mt4}`
+    tableContent: classNames(
+      styles.ledgerAddressTable,
+      globalStyles.table,
+      globalStyles.m0,
+      globalStyles.borderBottom
+    ),
+    tableHeader: classNames(
+      globalStyles.py2,
+      globalStyles.textBlack50,
+      globalStyles.borderBottom
+    ),
+    tableHeaderText: classNames(globalStyles.textLeft, globalStyles.border0),
+    buttonsWrapper: classNames(
+      globalStyles.dFlex,
+      globalStyles.justifyContentCenter,
+      globalStyles.mt2
+    ),
+    arrowButton: classNames(
+      globalStyles.btn,
+      globalStyles.btnLink,
+      globalStyles.mx2
+    ),
+    confirmButton: classNames(
+      globalStyles.btn,
+      globalStyles.btnPrimary,
+      globalStyles.px4,
+      globalStyles.mt4
+    )
   };
 
   useEffect(() => {
@@ -88,9 +112,11 @@ export const AddressTable = ({
                     <th className={classes.tableHeaderText}>#</th>
                   </tr>
                 </thead>
+
                 <tbody data-testid='addressesTable'>
                   {accounts.map((address, index) => {
                     const key = index + startIndex * ADDRESSES_PER_PAGE;
+
                     return (
                       <AddressRow
                         key={key}
@@ -104,6 +130,7 @@ export const AddressTable = ({
                 </tbody>
               </table>
             </div>
+
             <div className={classes.buttonsWrapper}>
               <button
                 type='button'
@@ -114,6 +141,7 @@ export const AddressTable = ({
               >
                 <FontAwesomeIcon size='sm' icon={faChevronLeft} /> Prev
               </button>
+
               <button
                 type='button'
                 className={classNames(
@@ -126,6 +154,7 @@ export const AddressTable = ({
                 Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
               </button>
             </div>
+
             <div className={globalStyles.centering}>
               <button
                 className={classes.confirmButton}

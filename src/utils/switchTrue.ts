@@ -1,4 +1,4 @@
-interface SwitchTrueType {
+export interface SwitchTrueType {
   default: any;
   [key: string]: any;
 }

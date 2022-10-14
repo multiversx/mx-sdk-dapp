@@ -1,4 +1,4 @@
-export type DappModalConfig = {
+export interface DappModalConfig {
   showHeader?: boolean;
   showFooter?: boolean;
   headerText?: string;
@@ -11,9 +11,9 @@ export type DappModalConfig = {
   modalFooterClassName?: string;
   customModalHeader?: JSX.Element;
   customModalFooter?: JSX.Element;
-};
+}
 
-export type DappModalInteractionConfig = {
+export interface DappModalInteractionConfig {
   openOnMount?: boolean;
   visible?: boolean;
-};
+}

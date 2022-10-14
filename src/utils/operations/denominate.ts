@@ -3,14 +3,14 @@ import { formatAmount } from './formatAmount';
 
 let deprecationMessageDisplayed = false;
 
-export type DenominateType = {
+export interface DenominateType {
   input: string;
   denomination?: number;
   decimals?: number;
   showIsLessThanDecimalsLabel?: boolean;
   showLastNonZeroDecimal?: boolean;
   addCommas?: boolean;
-};
+}
 
 /**
  * !!! This function is deprecated. Please use formatAmount instead.

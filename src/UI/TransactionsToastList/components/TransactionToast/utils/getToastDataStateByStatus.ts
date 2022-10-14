@@ -10,14 +10,14 @@ import {
   TransactionsDisplayInfoType
 } from 'types';
 
-export type ToastDataState = {
+export interface ToastDataState {
   id: string;
   icon: IconDefinition;
   hasCloseButton: boolean;
   title: string;
   iconClassName: string;
   expires?: number | boolean;
-};
+}
 
 interface GetToastsOptionsDataPropsType {
   status?: TransactionBatchStatusesEnum;

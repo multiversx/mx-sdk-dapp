@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export function getRemainingTime(ms: number) {
   const days = Math.floor(ms / (24 * 60 * 60 * 1000));
   const daysms = ms % (24 * 60 * 60 * 1000);
@@ -50,20 +48,40 @@ function getShortDateTimeFormat(datetime: string) {
   return datetime;
 }
 
-export function timeRemaining(duration: number, short = true) {
-  const startDate = moment.utc();
-  const endDate = moment.utc().add(duration, 'seconds');
-  const diffInMs = Math.max(endDate.diff(startDate), 0);
-  const remaining = getRemainingTime(diffInMs);
+const getUTCDateNow = (date = new Date(), extendedSeconds = 0) =>
+  Date.UTC(
+    date.getUTCFullYear(),
+    date.getUTCMonth(),
+    date.getUTCDate(),
+    date.getUTCHours(),
+    date.getUTCMinutes(),
+    date.getUTCSeconds() + extendedSeconds,
+    date.getUTCMilliseconds()
+  );
 
+function getUTCdiffInMs(duration: number) {
+  const date = new Date();
+  const startDate = getUTCDateNow(date);
+  const endDate = getUTCDateNow(date, duration);
+  const diffInMs = Math.max(endDate - startDate, 0);
+  return diffInMs;
+}
+
+export function timeRemaining(duration: number, short = true) {
+  const diffInMs = getUTCdiffInMs(duration);
+  const remaining = getRemainingTime(diffInMs);
   return short ? getShortDateTimeFormat(remaining) : remaining;
 }
 
-export function timeAgo(timestamp: number, short = true) {
-  const dateNow = moment.utc();
-  const txtTime = moment.utc(timestamp);
-  const diffInMs = Math.max(dateNow.diff(txtTime), 0);
+function getDifferenceInMs(timestamp: number) {
+  const dateNow = new Date().getTime();
+  const difference = dateNow - timestamp;
+  const diffInMs = Math.max(difference, 0);
+  return diffInMs;
+}
 
+export function timeAgo(timestamp: number, short = true) {
+  const diffInMs = getDifferenceInMs(timestamp);
   const remaining = getRemainingTime(diffInMs);
 
   return short ? getShortDateTimeFormat(remaining) : remaining;

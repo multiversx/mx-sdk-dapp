@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   DappModal,
   DappModalConfig,
@@ -7,15 +7,15 @@ import {
 } from 'UI/DappModal';
 import { WithClassnameType } from '../types';
 
-export const ModalContainer = (
-  props: {
-    children: React.ReactNode;
-    onClose?: () => void;
-    modalConfig?: DappModalConfig;
-    modalInteractionConfig?: DappModalInteractionConfig;
-    visible?: boolean;
-  } & WithClassnameType
-) => {
+export interface ModalContainerPropsType extends WithClassnameType {
+  children: ReactNode;
+  onClose?: () => void;
+  modalConfig?: DappModalConfig;
+  modalInteractionConfig?: DappModalInteractionConfig;
+  visible?: boolean;
+}
+
+export const ModalContainer = (props: ModalContainerPropsType) => {
   const { handleHideModal: onHide, visible, config } = useDappModal({
     modalConfig: props.modalConfig,
     config: {
@@ -33,9 +33,7 @@ export const ModalContainer = (
     <DappModal
       onHide={hideModalHandler}
       visible={visible}
-      config={{
-        ...config
-      }}
+      config={config}
       className={props.className}
     >
       {props.children}
