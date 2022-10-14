@@ -193,7 +193,7 @@ export type GetTransactionsByHashesType = (
   pendingTransactions: PendingTransactionsType
 ) => Promise<GetTransactionsByHashesReturnType>;
 
-export interface GetTransactionsByHashesReturnType {
+export type GetTransactionsByHashesReturnType = {
   hash: string;
   invalidTransaction: boolean;
   status: TransactionServerStatusesEnum;
@@ -203,11 +203,9 @@ export interface GetTransactionsByHashesReturnType {
   data: string;
   previousStatus: string;
   hasStatusChanged: boolean;
-}
-[];
+}[];
 
-export interface PendingTransactionsType {
+export type PendingTransactionsType = {
   hash: string;
   previousStatus: string;
-}
-[];
+}[];
