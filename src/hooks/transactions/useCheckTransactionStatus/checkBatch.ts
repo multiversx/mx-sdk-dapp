@@ -21,7 +21,7 @@ import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
 
-interface TransactionStatusTrackerPropsType {
+export interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionBatch: SignedTransactionsBodyType;
   getTransactionsByHash?: GetTransactionsByHashesType;

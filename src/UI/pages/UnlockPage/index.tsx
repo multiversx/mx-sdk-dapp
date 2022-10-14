@@ -32,7 +32,7 @@ export const UnlockPage = ({
   WalletConnectLoginButtonText = 'Maiar',
   ExtensionLoginButtonText = 'Extension',
   WebWalletLoginButtonText = 'Web wallet'
-}: UnlockPagePropsType) => {
+}: Props) => {
   const generatedClasses = {
     wrapper: classNames(
       styles.home,

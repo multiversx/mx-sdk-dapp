@@ -7,7 +7,7 @@ import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 
-interface UseWebWalletLoginPropsType {
+export interface UseWebWalletLoginPropsType {
   callbackRoute: string;
   token?: string;
   redirectDelayMilliseconds?: number;

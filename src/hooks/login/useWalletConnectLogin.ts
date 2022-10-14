@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider';
+
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -23,7 +24,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
 
-interface InitWalletConnectType {
+export interface InitWalletConnectType {
   logoutRoute: string;
   callbackRoute?: string;
   token?: string;

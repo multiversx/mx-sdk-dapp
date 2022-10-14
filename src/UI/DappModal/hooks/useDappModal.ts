@@ -11,7 +11,7 @@ import {
   DappModalInteractionConfig
 } from '../dappModal.types';
 
-interface UseDappModalProps {
+export interface UseDappModalProps {
   config?: DappModalInteractionConfig;
   modalConfig?: DappModalConfig;
 }

@@ -11,17 +11,15 @@ import { WithClassnameType } from '../types';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './explorerLinkStyles.scss';
 
-interface ExplorerLinkProps {
+export interface ExplorerLinkPropsType
+  extends PropsWithChildren,
+    WithClassnameType {
   page: string;
   text?: any;
   title?: string;
   onClick?: () => void;
   'data-testid'?: string;
 }
-
-export type ExplorerLinkPropsType = ExplorerLinkProps &
-  PropsWithChildren &
-  WithClassnameType;
 
 export const ExplorerLink = ({
   page,

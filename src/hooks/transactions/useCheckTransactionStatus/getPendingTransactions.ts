@@ -1,7 +1,7 @@
 import { SignedTransactionType } from 'types';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
-interface PendingTransactionType {
+export interface PendingTransactionType {
   hash: string;
   previousStatus: string;
 }

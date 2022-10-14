@@ -5,7 +5,7 @@ import { StatusIconType } from './transactionStatusToast.types';
 
 import styles from './transactionStatusToastStyles.scss';
 
-interface StatusMessageComponentPropsType {
+export interface StatusMessageComponentPropsType {
   type: StatusIconType;
   message?: string;
 }

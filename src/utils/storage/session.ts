@@ -1,7 +1,7 @@
 export type SessionKeyType = 'address' | 'shard' | 'toasts' | 'toastProgress';
 type ExpiresType = number | false;
 
-interface SetItemType {
+export interface SetItemType {
   key: SessionKeyType;
   data: any;
   expires: ExpiresType;
