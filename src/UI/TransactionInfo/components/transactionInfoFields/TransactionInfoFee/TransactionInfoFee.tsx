@@ -38,7 +38,7 @@ export const TransactionInfoFee = ({ transaction }: WithTransactionType) => {
     transaction.gasUsed != null ? (
       <>
         {transactionFee} {egldLabel}{' '}
-        <span className={styles.price}>{price}</span>
+        <span className={styles.price}>({price})</span>
       </>
     ) : (
       <span className={styles.price}>{N_A}</span>
