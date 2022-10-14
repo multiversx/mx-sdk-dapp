@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 export interface GetHumanReadableTimeFormatType {
   value: number;
   noSeconds?: boolean;
@@ -14,12 +12,17 @@ export function getHumanReadableTimeFormat({
   noSeconds,
   utc
 }: GetHumanReadableTimeFormatType) {
-  if (utc) {
-    return moment
-      .utc(value * 1000)
-      .format(`MMM DD, YYYY HH:mm${noSeconds ? '' : ':ss'} A UTC`);
-  }
-  return moment(value * 1000).format(
-    `MMM DD, YYYY HH:mm${noSeconds ? '' : ':ss'} A`
-  );
+  const utcDate = new Date(value * 1000);
+  const [, AmPm] = utcDate
+    .toLocaleString('en-US', { hour: 'numeric', hour12: true })
+    .split(' ');
+  const formatted = utcDate.toUTCString();
+  const [, date] = formatted.split(',');
+
+  const [day, month, year, time] = date.trim().split(' ');
+  const [hours, minutes, sec] = time.split(':');
+  const seconds = `:${sec}`;
+  const timeFormatted = `${hours}:${minutes}${noSeconds ? '' : seconds}`;
+  const utcSuffix = utc ? ' UTC' : '';
+  return `${month} ${day}, ${year} ${timeFormatted} ${AmPm}${utcSuffix}`;
 }
