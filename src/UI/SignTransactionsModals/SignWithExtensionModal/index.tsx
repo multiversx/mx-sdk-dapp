@@ -18,7 +18,6 @@ export const SignWithExtensionModal = ({
   className = 'dapp-extension-modal',
   modalContentClassName
 }: SignModalPropsType) => {
-  debugger;
   const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
 
   const classes = {
