@@ -1,11 +1,12 @@
 import React from 'react';
+
 import { getShardText } from 'utils/transactions/transactionInfoHelpers/getShardText';
 
-export interface ShardSpanType {
+export interface ShardSpanPropsType {
   shard: number | string;
   ['data-testid']?: string;
 }
 
-export const ShardSpan = ({ shard, ...rest }: ShardSpanType) => {
-  return <span {...rest}>{getShardText(shard)}</span>;
-};
+export const ShardSpan = ({ shard, ...rest }: ShardSpanPropsType) => (
+  <span {...rest}>{getShardText(shard)}</span>
+);

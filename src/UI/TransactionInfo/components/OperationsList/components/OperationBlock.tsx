@@ -1,12 +1,27 @@
 import React from 'react';
+import classNames from 'classnames';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+
+import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
+
 import { AccountName } from 'UI/TransactionsTable/components';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
+
+import { WithTransactionType } from '../../../../../UI/types';
+
+import globalStyles from 'assets/sass/main.scss';
+import styles from '../styles.scss';
+
+export interface OperationBlockPropsType extends WithTransactionType {
+  address: string;
+  action?: string;
+  isFullSize?: boolean;
+  direction?: string;
+}
 
 export const OperationBlock = ({
   address,
@@ -14,52 +29,67 @@ export const OperationBlock = ({
   action,
   isFullSize,
   direction
-}: {
-  address: string;
-  transaction: InterpretedTransactionType;
-  action?: string;
-  isFullSize?: boolean;
-  direction?: string;
-}) => {
+}: OperationBlockPropsType) => {
   let operationAssets;
+
   if (address === transaction.sender) {
     operationAssets = transaction.senderAssets;
   }
+
   if (address === transaction.receiver) {
     operationAssets = transaction.receiverAssets;
   }
+
+  const directions = {
+    [TransactionDirectionEnum.INTERNAL]: 'int',
+    [TransactionDirectionEnum.IN]: 'in',
+    [TransactionDirectionEnum.OUT]: 'out',
+    [TransactionDirectionEnum.SELF]: 'self'
+  };
+
   return (
     <div
-      className={`d-flex align-items-center ${
-        isFullSize
-          ? 'col-12'
-          : ` pr-xl-0 ${
-              operationAssets ? 'pl-3 mw-lg-6 mw-xl-3' : 'col-lg-6 col-xl-3'
-            }`
-      }`}
+      className={classNames(styles.operationBlock, {
+        [globalStyles.col12]: isFullSize,
+        [globalStyles.prXl0]: !isFullSize,
+        [globalStyles.pl3]: !isFullSize && operationAssets,
+        [globalStyles.colLg6]: !isFullSize && !operationAssets,
+        [globalStyles.colXl4]: !isFullSize && !operationAssets
+      })}
     >
       {direction && (
-        <div className={`direction-badge mr-2 ${direction.toLowerCase()}`}>
-          {direction.toUpperCase()}
+        <div
+          className={classNames(
+            styles.direction,
+            styles[directions[direction]]
+          )}
+        >
+          {directions[direction]}
         </div>
       )}
+
       {action && (
         <FontAwesomeIcon
           icon={faCaretRight}
           size='xs'
-          className='text-secondary mr-2'
+          className={classNames(globalStyles.textSecondary, globalStyles.mr2)}
         />
       )}
-      <div className='mr-2 text-nowrap'>{action ? action : ''}</div>
+
+      <div className={classNames(globalStyles.textNowrap, globalStyles.mr2)}>
+        {action || ''}
+      </div>
+
       {addressIsValid(address) ? (
         <>
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(address)}
-            className='trim-wrapper'
+            className={styles.explorer}
           >
             <AccountName address={address} assets={operationAssets} />
           </ExplorerLink>
-          <CopyButton text={address} className='side-action ml-2' />
+
+          <CopyButton text={address} className={styles.copy} />
         </>
       ) : (
         ''

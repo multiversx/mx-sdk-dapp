@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { SignedTransactionType } from 'types';
 import { TransactionDetails } from 'UI/TransactionDetails';
+
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
-import styles from './styles.scss';
 import { TransactionToastContentElementsProps } from './transactionToast.type';
 import { ToastDataState } from './utils';
 
-export type TransactionToastContentProps = {
+import styles from './styles.scss';
+import globalStyles from 'assets/sass/main.scss';
+
+// TODO: Rename to "TransactionToastContentPropsType" when dapp-core@3.0.0
+export interface TransactionToastContentProps {
   style: Record<string, string>;
   toastDataState: ToastDataState;
   transactions: SignedTransactionType[];
   showCloseButton?: boolean;
   onDeleteToast?: () => void;
-  toastTitle?: string | React.ReactNode;
+  toastTitle?: string | ReactNode;
   isTimedOut?: boolean;
   customElements?: TransactionToastContentElementsProps;
-};
+}
 
 export const TransactionToastContent = ({
   style,
@@ -57,6 +61,7 @@ export const TransactionToastContent = ({
           <h5 className={classNames([globalStyles.h5, style.mb4])}>
             {toastDataState.title}
           </h5>
+
           {showCloseButton && CustomCloseButton && (
             <CustomCloseButton
               className={styles.close}
@@ -68,11 +73,9 @@ export const TransactionToastContent = ({
         <div className={style.footer}>
           {TransactionDetails && (
             <TransactionDetails
-              {...{
-                transactions,
-                title: toastTitle,
-                isTimedOut
-              }}
+              transactions={transactions}
+              title={toastTitle}
+              isTimedOut={isTimedOut}
             />
           )}
         </div>

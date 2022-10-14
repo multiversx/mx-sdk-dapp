@@ -2,7 +2,7 @@ import { SignableMessage, Address } from '@elrondnetwork/erdjs';
 import { getAddress } from 'utils/account/getAddress';
 import { getAccountProvider } from 'providers';
 
-interface SignMessageType {
+export interface SignMessageType {
   message: string;
   callbackRoute?: string;
 }

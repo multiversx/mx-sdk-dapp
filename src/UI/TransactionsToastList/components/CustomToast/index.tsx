@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, ReactNode } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
+
 import { WithClassnameType } from '../../../types';
 import { ComponentTypeWithChildren } from '../types';
+
+import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
 import styles from './styles.scss';
 
-interface CustomToastType extends WithClassnameType {
+export interface CustomToastPropsType extends WithClassnameType {
   onDelete: () => void;
   message?: string;
-  messageComponent?: React.ReactNode;
+  messageComponent?: ReactNode;
   duration?: number;
   CustomCloseButton?: ComponentTypeWithChildren<{
     onClick?: () => void;
@@ -24,7 +26,7 @@ export const CustomToast = ({
   duration,
   CustomCloseButton,
   className = 'dapp-custom-toast'
-}: CustomToastType) => {
+}: CustomToastPropsType) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
     if (duration) {

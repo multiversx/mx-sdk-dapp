@@ -4,35 +4,43 @@ import { TokenArgumentType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
+
 import { TransactionActionBlock } from './TransactionActionBlock/index';
+
+import globalStyles from 'assets/sass/main.scss';
+import styles from './styles.scss';
+
+export interface ActionTokenPropsType {
+  token: TokenArgumentType;
+  noValue?: boolean;
+  showLastNonZeroDecimal?: boolean;
+}
 
 export const ActionToken = ({
   token,
   noValue,
   showLastNonZeroDecimal
-}: {
-  token: TokenArgumentType;
-  noValue?: boolean;
-  showLastNonZeroDecimal?: boolean;
-}) => {
-  if (
-    [
-      NftEnumType.MetaESDT.toString(),
-      NftEnumType.SemiFungibleESDT,
-      NftEnumType.NonFungibleESDT
-    ].includes(token.type)
-  ) {
+}: ActionTokenPropsType) => {
+  const isESDT = [
+    NftEnumType.MetaESDT.toString(),
+    NftEnumType.SemiFungibleESDT,
+    NftEnumType.NonFungibleESDT
+  ].includes(token.type);
+
+  if (isESDT) {
     switch (token.type) {
       case NftEnumType.SemiFungibleESDT: {
         const props = getTransactionActionNftText({
           token,
           showLastNonZeroDecimal
         });
+
         return (
-          <div>
-            <span>SFT quantity</span>
+          <div className={styles.group}>
+            <span className={globalStyles.mr1}>SFT quantity</span>
             <TransactionActionBlock.Nft {...props} badgeText={null} />
-            <span>of collection</span>
+
+            <span className={globalStyles.mr1}>of collection</span>
             <TransactionActionBlock.Collection token={token} />
           </div>
         );
@@ -46,10 +54,11 @@ export const ActionToken = ({
         });
 
         return (
-          <div>
-            <span>NFT</span>
+          <div className={styles.group}>
+            <span className={globalStyles.mr1}>NFT</span>
             <TransactionActionBlock.Nft {...props} badgeText={null} />
-            <span>of collection</span>
+
+            <span className={globalStyles.mr1}>of collection</span>
             <TransactionActionBlock.Collection token={token} />
           </div>
         );
@@ -74,6 +83,7 @@ export const ActionToken = ({
       noValue,
       showLastNonZeroDecimal
     });
+
     return (
       <TransactionActionBlock.Token {...props} showLastNonZeroDecimal={true} />
     );

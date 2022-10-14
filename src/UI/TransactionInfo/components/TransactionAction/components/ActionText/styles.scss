@@ -1,0 +1,51 @@
+.address {
+  display: flex;
+  align-items: center;
+
+  .explorer {
+    margin-left: 0 !important;
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+    color: #1f43f4 !important;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    span {
+      max-width: none;
+
+      [class*='left'] span,
+      [class*='right'] span {
+        font-size: 1rem;
+        color: #1f43f4 !important;
+      }
+
+      &:last-child {
+        color: #1f43f4 !important;
+      }
+    }
+  }
+}
+
+.token {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &.spaced {
+    @media (min-width: 992px) {
+      margin-right: 0.25rem;
+    }
+  }
+
+  .comma {
+    display: none;
+
+    @media (min-width: 992px) {
+      display: block;
+    }
+  }
+}

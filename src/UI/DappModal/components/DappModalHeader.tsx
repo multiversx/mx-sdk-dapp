@@ -2,17 +2,19 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
-import { WithClassnameType } from '../../types';
-import styles from '../dappModalStyles.scss';
 
-type DappModalHeaderProps = {
+import { WithClassnameType } from '../../types';
+
+import styles from '../dappModalStyles.scss';
+import globalStyles from 'assets/sass/main.scss';
+
+export interface DappModalHeaderPropsType extends WithClassnameType {
   visible?: boolean;
   headerText?: string;
   customHeader?: JSX.Element | string;
   closeButtonClassName?: string;
   onHide?: () => void;
-} & WithClassnameType;
+}
 
 export const DappModalHeader = ({
   visible,
@@ -21,7 +23,7 @@ export const DappModalHeader = ({
   className,
   closeButtonClassName,
   onHide
-}: DappModalHeaderProps) => {
+}: DappModalHeaderPropsType) => {
   if (!visible) {
     return null;
   }
@@ -35,8 +37,13 @@ export const DappModalHeader = ({
       <div className={styles.dappModalHeaderText}>{headerText}</div>
 
       <button
-        className={`${styles.dappModalCloseButton} ${globalStyles.btn} ${globalStyles.btnLight} ${closeButtonClassName}`}
         onClick={onHide}
+        className={classNames(
+          styles.dappModalCloseButton,
+          globalStyles.btn,
+          globalStyles.btnLight,
+          closeButtonClassName
+        )}
       >
         <FontAwesomeIcon size='lg' icon={faTimes} />
       </button>

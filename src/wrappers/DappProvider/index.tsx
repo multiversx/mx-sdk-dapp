@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactElement, ReactChildren } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -13,7 +13,7 @@ import { CustomComponents, CustomComponentsType } from './CustomComponents';
 import { setExternalProvider } from 'providers/accountProvider';
 
 export interface DappProviderPropsType {
-  children: React.ReactChildren | React.ReactElement;
+  children: ReactChildren | ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
   //we need the strings for autocomplete suggestions

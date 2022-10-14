@@ -27,7 +27,7 @@ export interface AccountType {
   assets?: AssetType;
 }
 
-export type ScamInfoType = {
+export interface ScamInfoType {
   type: string;
   info: string;
-};
+}

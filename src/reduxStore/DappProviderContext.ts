@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext } from 'react';
 import {
   createDispatchHook,
   createSelectorHook,
@@ -12,7 +12,7 @@ const defaultContextValue: ReactReduxContextValue = {
   subscription
 };
 
-export const DappCoreContext = React.createContext(defaultContextValue);
+export const DappCoreContext = createContext(defaultContextValue);
 
 export const useStore = createStoreHook(DappCoreContext);
 export const useDispatch = createDispatchHook(DappCoreContext);

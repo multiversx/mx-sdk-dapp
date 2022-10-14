@@ -15,7 +15,7 @@ function buildUrlParams(
   return { nextUrlParams, params };
 }
 
-interface ReplyUrlType {
+export interface ReplyUrlType {
   callbackUrl: string;
   urlParams?: { [key: string]: string };
 }

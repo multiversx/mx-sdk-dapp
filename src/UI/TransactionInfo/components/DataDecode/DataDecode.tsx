@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
 import { N_A } from 'constants/index';
 import { DecodeMethodEnum } from 'types/serverTransactions.types';
-import { useDataDecode, DataDecodeType } from 'utils';
+import {
+  useDataDecode,
+  DataDecodeType
+} from 'utils/transactions/transactionInfoHelpers/useDataDecode';
 
-export const DataDecode = (
-  props: DataDecodeType & {
-    className?: string;
-  }
-) => {
+import { WithClassnameType } from '../../../../UI/types';
+
+import styles from './styles.scss';
+
+export const DataDecode = (props: WithClassnameType & DataDecodeType) => {
   const { className, value } = props;
 
   const {
@@ -20,35 +25,36 @@ export const DataDecode = (
   } = useDataDecode(props);
 
   const showSelect = value && value !== N_A;
+  const onChange = (event: ChangeEvent<HTMLSelectElement>) =>
+    event ? setActiveKey(event.target.value) : DecodeMethodEnum.raw;
 
   return (
-    <div className='position-relative data-decode mt-1'>
-      <div className={`form-control textarea ${className ? className : ''}`}>
+    <div className={styles.decode}>
+      <div className={classNames(styles.textarea, className)}>
         {displayValue}
       </div>
 
       {showSelect && (
-        <select
-          className='position-absolute dropdown'
-          onChange={(e) => {
-            return e ? setActiveKey(e.target.value) : DecodeMethodEnum.raw;
-          }}
-        >
-          {decodeOptions.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+        <div className={styles.select}>
+          <select className={styles.dropdown} onChange={onChange}>
+            {decodeOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       )}
-      {validationWarnings.map((warning: string, i: number) => (
-        <div key={i} className='d-flex align-items-center mt-1 text-break-all'>
+
+      {validationWarnings.map((warning: string, index: number) => (
+        <div key={index} className={styles.warnings}>
           <FontAwesomeIcon
             icon={faExclamationTriangle}
+            className={styles.icon}
             size='xs'
-            className='text-warning mr-1'
           />
-          <small className='text-warning'> {warning}</small>
+
+          <small className={styles.warning}>{warning}</small>
         </div>
       ))}
     </div>

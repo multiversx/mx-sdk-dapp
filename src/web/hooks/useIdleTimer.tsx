@@ -6,7 +6,7 @@ import { logout as dappLogout } from 'utils/logout';
 const getTimeout = (minutes: number) => 1000 * 60 * minutes;
 const debounce = 500;
 
-interface IdleTimerType {
+export interface IdleTimerType {
   minutes?: number;
   onLogout?: (props?: any) => void;
 }

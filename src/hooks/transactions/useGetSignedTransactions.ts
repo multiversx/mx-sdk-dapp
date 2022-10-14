@@ -3,7 +3,7 @@ import { signedTransactionsSelector } from 'reduxStore/selectors';
 
 import { SignedTransactionsType, SignedTransactionsBodyType } from 'types';
 
-interface useGetSignedTransactionsReturnType {
+export interface useGetSignedTransactionsReturnType {
   signedTransactions: SignedTransactionsType;
   signedTransactionsArray: [string, SignedTransactionsBodyType][];
   hasSignedTransactions: boolean;
