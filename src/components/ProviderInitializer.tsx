@@ -32,7 +32,7 @@ import {
   setTokenLoginSignature
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { logout } from 'utils';
+import { logout } from 'utils/logout';
 import {
   getAddress,
   getAccount,

@@ -1,27 +1,35 @@
 import React from 'react';
+import classNames from 'classnames';
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons/faFileAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { isContract } from 'utils/smartContracts';
 
-interface ScAddressIconType {
+import globalStyles from 'assets/sass/main.scss';
+
+export interface ScAddressIconPropsType {
   initiator: string;
   secondInitiator?: string;
 }
 
-export const ScAddressIcon = ({
+const ScAddressIcon = ({
   initiator,
   secondInitiator
-}: ScAddressIconType) => {
+}: ScAddressIconPropsType) => {
   const showIcon = isContract(initiator) || isContract(secondInitiator ?? '');
 
-  return showIcon ? (
-    <FontAwesomeIcon
-      data-testid='scIcon'
-      title={'Smart Contract'}
-      icon={faFileAlt}
-      className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
-    />
-  ) : null;
+  if (showIcon) {
+    return (
+      <FontAwesomeIcon
+        title='Smart Contract'
+        icon={faFileAlt}
+        className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
+        data-testid='scIcon'
+      />
+    );
+  }
+
+  return null;
 };
+
+export { ScAddressIcon };

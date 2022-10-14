@@ -5,16 +5,15 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import lodash from 'lodash';
-import globalStyles from 'assets/sass/main.scss';
-import { InterpretedTransactionType } from 'types/serverTransactions.types';
+
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 
-interface TransactionIconType {
-  transaction: InterpretedTransactionType;
-}
+import { WithTransactionType } from '../../../UI/types';
 
-export const TransactionIcon = ({ transaction }: TransactionIconType) => {
+import globalStyles from 'assets/sass/main.scss';
+
+export const TransactionIcon = ({ transaction }: WithTransactionType) => {
   const transactionMessages = getTransactionMessages(transaction);
 
   const { failed, invalid, pending } = getTransactionStatus(transaction);

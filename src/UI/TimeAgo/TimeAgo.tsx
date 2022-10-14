@@ -1,12 +1,15 @@
 import React from 'react';
+
 import { timeAgo } from 'utils/operations/timeRemaining';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 
-export type TimeAgoPropsType = {
+import styles from '../TransactionsTable/components/transactionsTable.styles.scss';
+
+export interface TimeAgoPropsType {
   value: number;
   short?: boolean;
   tooltip?: boolean;
-};
+}
 
 export const TimeAgo = ({
   value,
@@ -15,7 +18,7 @@ export const TimeAgo = ({
 }: TimeAgoPropsType) => {
   const result = timeAgo(value * 1000, short);
 
-  return tooltip ? (
+  const component = tooltip ? (
     <span
       title={getHumanReadableTimeFormat({
         value,
@@ -29,4 +32,6 @@ export const TimeAgo = ({
   ) : (
     <span data-testid={`timeAgo-${value}`}>{result}</span>
   );
+
+  return <div className={styles.transactionCell}>{component}</div>;
 };

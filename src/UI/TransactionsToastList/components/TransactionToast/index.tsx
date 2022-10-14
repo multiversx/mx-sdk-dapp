@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+
 import { Progress } from 'UI/Progress';
+
 import { WithClassnameType } from '../../../types';
 import { useTransactionToast } from './hooks/useTransactionToast';
-import styles from './styles.scss';
 import {
   TransactionToastCustomizationProps,
   TransactionToastDefaultProps
@@ -10,12 +11,15 @@ import {
 import { TransactionToastContent } from './TransactionToastContent';
 import { TransactionToastWrapper } from './TransactionToastWrapper';
 
-export type TransactionToastPropsType = {
-  title?: string | React.ReactNode;
-  children?: React.ReactNode;
+import styles from './styles.scss';
+
+export interface TransactionToastPropsType
+  extends TransactionToastDefaultProps,
+    WithClassnameType {
+  title?: string | ReactNode;
+  children?: ReactNode;
   customization?: TransactionToastCustomizationProps;
-} & TransactionToastDefaultProps &
-  WithClassnameType;
+}
 
 export const TransactionToast = ({
   toastId,

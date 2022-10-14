@@ -267,7 +267,7 @@ export enum TransactionDirectionEnum {
   OUT = 'Out'
 }
 
-export type InterpretedTransactionType = {
+export interface InterpretedTransactionType extends ServerTransactionType {
   transactionDetails: {
     direction?: TransactionDirectionEnum;
     method: string;
@@ -281,7 +281,7 @@ export type InterpretedTransactionType = {
     receiverShardLink?: string;
     transactionLink?: string;
   };
-} & ServerTransactionType;
+}
 
 export enum DecodeMethodEnum {
   raw = 'raw',

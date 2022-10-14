@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './pageStateStyles.scss';
 
+// TODO: Rename to "PageStatePropsType" when dapp-core@3.0.0
 export interface PageStateProps extends WithClassnameType {
-  title?: React.ReactNode;
+  title?: ReactNode;
   icon?: IconProp | IconDefinition | null;
   iconClass?: string;
   dataTestId?: string;
   iconSize?: SizeProp;
   iconBgClass?: string;
-  action?: React.ReactNode;
-  description?: string | React.ReactNode;
+  action?: ReactNode;
+  description?: string | ReactNode;
 }
 
 export const PageState = ({
@@ -37,12 +40,9 @@ export const PageState = ({
       globalStyles.textCenter,
       className
     ),
-    iconContainer: classNames(
-      `${globalStyles.iconState} ${globalStyles.mxAuto}`,
-      {
-        [iconBgClass ?? '']: Boolean(iconBgClass)
-      }
-    ),
+    iconContainer: classNames(globalStyles.iconState, globalStyles.mxAuto, {
+      [iconBgClass ?? '']: Boolean(iconBgClass)
+    }),
     iconClass: classNames(iconClass != null && iconClass),
     title: classNames(globalStyles.h4, globalStyles.my4),
     description: globalStyles.mb3
@@ -59,9 +59,12 @@ export const PageState = ({
           />
         </span>
       )}
+
       {title && <p className={classes.title}>{title}</p>}
+
       {description && <div className={classes.description}>{description}</div>}
-      {action && <>{action}</>}
+
+      {action}
     </div>
   );
 };

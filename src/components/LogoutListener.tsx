@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useGetAccountInfo } from 'hooks';
-import { logout } from 'utils';
+import { logout } from 'utils/logout';
+
 import { localStorageKeys } from 'utils/storage/local';
 
 const { logoutEvent } = localStorageKeys;

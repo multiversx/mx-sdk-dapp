@@ -1,11 +1,14 @@
 import { Address, Transaction } from '@elrondnetwork/erdjs';
 import BigNumber from 'bignumber.js';
+
 import { GAS_LIMIT, GAS_PER_DATA_BYTE, GAS_PRICE } from 'constants/index';
 import { newTransaction } from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import { SendSimpleTransactionPropsType } from 'types';
-import { getAccount, getLatestNonce } from 'utils';
+
+import { getAccount } from 'utils/account/getAccount';
+import { getLatestNonce } from 'utils/account/getLatestNonce';
 
 enum ErrorCodesEnum {
   'invalidReceiver' = 'Invalid Receiver address',

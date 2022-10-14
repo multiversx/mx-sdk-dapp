@@ -1,0 +1,34 @@
+.contract-detail-item {
+  display: flex;
+  align-items: center;
+
+  span {
+    color: #1f43f4 !important;
+  }
+
+  .explorer {
+    margin-left: 0.5rem !important;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+    color: #cacbcc !important;
+
+    &:hover {
+      text-decoration: none;
+      color: #1f43f4 !important;
+    }
+  }
+
+  .copy {
+    margin-left: 0.5rem;
+
+    svg path {
+      fill: #cacbcc;
+      transition: all 200ms;
+
+      &:hover {
+        fill: #1f43f4;
+      }
+    }
+  }
+}

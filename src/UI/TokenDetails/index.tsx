@@ -1,30 +1,35 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import EgldIcon from 'assets/icons/EGLD.svg';
-import { getEgldLabel } from 'utils';
+import { getEgldLabel } from 'utils/network/getEgldLabel';
+
 import { WithClassnameType } from '../types';
-import styles from './tokenDetailsStyles.scss';
 import { Combined, Simple } from './TokenSymbol';
+
+import styles from './tokenDetailsStyles.scss';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');
+
   return identifier.includes('-')
     ? `${tokenParts[0]}-${tokenParts[1]}`
     : identifier;
 };
 
-type TokenIconProps = {
+export interface TokenIconPropsType {
   token: string;
   combined?: boolean | undefined;
   small?: boolean | undefined;
   tokenAvatar?: string;
-};
-type TokenIconType = TokenIconProps & {
+}
+
+export interface TokenIconType extends TokenIconPropsType {
   symbol: string;
   label: string;
   icon: () => JSX.Element;
-};
+}
 
 function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
   if (tokenAvatar) {
@@ -46,9 +51,9 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
   };
 };
 
-export class TokenDetails extends React.Component {
-  static Token = (props: TokenIconProps) => <>{props.token}</>;
-  static Symbol = (props: TokenIconProps) => (
+export class TokenDetails extends Component {
+  static Token = (props: TokenIconPropsType) => <>{props.token}</>;
+  static Symbol = (props: TokenIconPropsType) => (
     <>
       {
         getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
@@ -56,7 +61,7 @@ export class TokenDetails extends React.Component {
       }
     </>
   );
-  static Label = (props: TokenIconProps) => (
+  static Label = (props: TokenIconPropsType) => (
     <>
       {
         getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
@@ -64,7 +69,7 @@ export class TokenDetails extends React.Component {
       }
     </>
   );
-  static Icon = (props: TokenIconProps & WithClassnameType) => {
+  static Icon = (props: TokenIconPropsType & WithClassnameType) => {
     const Component: any =
       process.env.NODE_ENV !== 'test'
         ? getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)

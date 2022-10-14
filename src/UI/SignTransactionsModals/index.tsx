@@ -1,6 +1,8 @@
 import React, { useCallback } from 'react';
+
 import { useGetLoginInfo } from 'hooks';
 import { LoginMethodsEnum } from 'types';
+
 import { ConfirmationScreen } from './components/ConfirmationScreen';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
@@ -11,7 +13,7 @@ import {
   SignPropsType
 } from './types/signTransactionsModals.types';
 
-interface SignTransactionsPropsType {
+export interface SignTransactionsModalsPropsType {
   className?: string;
   CustomConfirmScreens?: CustomConfirmScreensType;
   verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
@@ -21,7 +23,7 @@ export const SignTransactionsModals = ({
   className,
   CustomConfirmScreens,
   verifyReceiverScam = true
-}: SignTransactionsPropsType) => {
+}: SignTransactionsModalsPropsType) => {
   const { loginMethod } = useGetLoginInfo();
 
   const ConfirmScreens: CustomConfirmScreensType = {

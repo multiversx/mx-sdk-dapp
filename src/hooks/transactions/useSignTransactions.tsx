@@ -33,12 +33,11 @@ import {
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
 import { getProviderType } from 'utils';
-import {
-  builtCallbackUrl,
-  getLatestNonce,
-  parseTransactionAfterSigning
-} from 'utils';
+import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
+import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getAccount } from 'utils/account/getAccount';
+
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 
 const setTransactionNonces = (

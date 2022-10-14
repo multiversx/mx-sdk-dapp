@@ -1,0 +1,44 @@
+.address-detail-item {
+  display: flex;
+  align-items: center;
+
+  .explorer {
+    margin-left: 0 !important;
+    position: relative;
+    display: flex;
+    max-width: 100%;
+    overflow: hidden;
+    color: #1f43f4 !important;
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    span {
+      max-width: none;
+
+      [class*='left'] span,
+      [class*='right'] span {
+        font-size: 1rem;
+        color: #1f43f4 !important;
+      }
+
+      &:last-child {
+        color: #1f43f4 !important;
+      }
+    }
+  }
+
+  .copy {
+    margin-left: 0.5rem;
+
+    svg path {
+      fill: #cacbcc;
+      transition: all 200ms;
+
+      &:hover {
+        fill: #1f43f4;
+      }
+    }
+  }
+}

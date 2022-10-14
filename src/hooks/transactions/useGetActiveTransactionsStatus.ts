@@ -6,7 +6,7 @@ import {
   timedOutTransactionsSelector
 } from 'reduxStore/selectors';
 
-interface UseGetActiveTransactionsStatusReturnType {
+export interface UseGetActiveTransactionsStatusReturnType {
   timedOut: boolean;
   fail: boolean;
   success: boolean;

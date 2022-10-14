@@ -1,15 +1,17 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+
 import { AssetType } from 'types/account.types';
 import { Trim } from 'UI/Trim/Trim';
 
-export type AccountNamePropsType = {
+import globalStyles from 'assets/sass/main.scss';
+
+export interface AccountNamePropsType {
   address: string;
   assets?: AssetType;
   color?: 'muted' | 'secondary' | string;
   ['data-testid']?: string;
-};
+}
 
 export const AccountName = ({
   address,

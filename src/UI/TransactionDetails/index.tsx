@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, ReactNode } from 'react';
 import {
   faCheck,
   faCircleNotch,
@@ -12,16 +12,17 @@ import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
 
-import { isServerTransactionPending } from 'utils';
+import { isServerTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 import styles from './transactionDetailsStyles.scss';
 
 export interface TransactionDetailsType {
-  title?: React.ReactNode;
+  title?: ReactNode;
   isTimedOut?: boolean;
   transactions?: SignedTransactionType[];
   className?: string;
 }
+
 export const TransactionDetails = ({
   title,
   transactions,
