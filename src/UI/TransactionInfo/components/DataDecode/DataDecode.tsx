@@ -14,7 +14,9 @@ import { WithClassnameType } from '../../../../UI/types';
 
 import styles from './styles.scss';
 
-export const DataDecode = (props: WithClassnameType & DataDecodeType) => {
+export type DataDecodePropsType = WithClassnameType & DataDecodeType;
+
+export const DataDecode = (props: DataDecodePropsType) => {
   const { className, value } = props;
 
   const {
