@@ -1,8 +1,8 @@
-export type GetHumanReadableTimeFormatType = {
+export interface GetHumanReadableTimeFormatType {
   value: number;
   noSeconds?: boolean;
   utc?: boolean;
-};
+}
 
 /**
  * @param value - UNIX timestamp
