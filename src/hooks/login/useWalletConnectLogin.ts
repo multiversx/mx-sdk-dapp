@@ -21,7 +21,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { optionalRedirect } from 'utils/internal';
 import Timeout = NodeJS.Timeout;
 
-interface InitWalletConnectType {
+export interface InitWalletConnectType {
   logoutRoute: string;
   callbackRoute?: string;
   token?: string;
