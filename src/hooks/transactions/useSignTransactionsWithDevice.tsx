@@ -109,6 +109,7 @@ export function useSignTransactionsWithDevice({
   }
 
   async function handleSignTransaction(transaction: Transaction) {
+    debugger;
     return await provider.signTransaction(transaction);
   }
 

@@ -14,6 +14,7 @@ export const SignWithDeviceModal = ({
   verifyReceiverScam = true,
   title = 'Confirm transaction'
 }: SignModalPropsType) => {
+  debugger;
   const {
     onSignTransaction,
     onPrev,

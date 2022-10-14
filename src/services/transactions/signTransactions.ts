@@ -2,6 +2,7 @@ import { Transaction } from '@elrondnetwork/erdjs/out/transaction';
 import axios from 'axios';
 import BigNumber from 'bignumber.js';
 import { NFTS_ENDPOINT } from 'apiCalls';
+import globalStyles from 'assets/sass/main.scss';
 import { GAS_LIMIT } from 'constants/index';
 
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
@@ -20,13 +21,11 @@ import {
 } from 'types';
 
 import { getNetworkConfig } from 'utils/network/getNetworkConfig';
-import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
 import { getTokenFromData } from 'utils/transactions/getTokenFromData';
+import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
 
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
-
-import globalStyles from 'assets/sass/main.scss';
 
 function extractedNftIds(transactions: Transaction[]) {
   let ids: string[] = [];

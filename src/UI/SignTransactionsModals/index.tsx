@@ -48,7 +48,7 @@ export const SignTransactionsModals = ({
         />
       );
     },
-    [verifyReceiverScam, className]
+    [verifyReceiverScam, className, loginMethod]
   );
 
   switch (loginMethod) {
