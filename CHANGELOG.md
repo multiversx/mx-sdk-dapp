@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[2.1.0](https://github.com/ElrondNetwork/dapp-core/pull/443)] - 2022-10-14
 - [Fix Trim Component on Safari on iOS 16](https://github.com/ElrondNetwork/dapp-core/pull/435)
 - [Removed moment dependency](https://github.com/ElrondNetwork/dapp-core/pull/439)
 - [Fixed type definitions](https://github.com/ElrondNetwork/dapp-core/pull/406)
