@@ -10,13 +10,11 @@ import {
   DataDecodeType
 } from 'utils/transactions/transactionInfoHelpers/useDataDecode';
 
+import { WithClassnameType } from '../../../../UI/types';
+
 import styles from './styles.scss';
 
-export interface DataDecodePropsType extends DataDecodeType {
-  className?: string;
-}
-
-export const DataDecode = (props: DataDecodePropsType) => {
+export const DataDecode = (props: WithClassnameType & DataDecodeType) => {
   const { className, value } = props;
 
   const {

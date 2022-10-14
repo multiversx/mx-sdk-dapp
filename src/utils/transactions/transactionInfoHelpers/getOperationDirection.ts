@@ -2,14 +2,10 @@ import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 
 import { WithOperationType } from '../../../UI/types';
 
-interface GetOperationDirectionType extends WithOperationType {
-  address: string;
-}
-
 export const getOperationDirection = ({
   operation,
   address
-}: GetOperationDirectionType) => {
+}: { address: string } & WithOperationType) => {
   const directionOut = address === operation.sender;
   const directionIn = address === operation.receiver;
   const directionSelf = directionOut && directionIn;

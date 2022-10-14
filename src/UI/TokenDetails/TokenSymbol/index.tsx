@@ -14,6 +14,7 @@ export interface CombinedPropsType extends WithClassnameType {
   children: ReactNode;
 }
 
+// TODO: Rename to "Simple" into something more relevant when dapp-core@3.0.0
 export const Simple = ({
   children,
   className = 'dapp-simple-token-symbol'
@@ -21,6 +22,7 @@ export const Simple = ({
   <div className={classNames(styles.tokenSymbol, className)}>{children}</div>
 );
 
+// TODO: Rename to "Combined" into something more relevant when dapp-core@3.0.0
 export const Combined = ({
   small,
   children,

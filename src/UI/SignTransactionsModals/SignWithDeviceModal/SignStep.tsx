@@ -24,7 +24,7 @@ import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 import globalStyles from 'assets/sass/main.scss';
 
 // TODO: Rename to "SignStepPropsType" when dapp-core@3.0.0
-export interface SignStepProps extends WithClassnameType {
+export interface SignStepType extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;
   handleClose: () => void;
@@ -50,7 +50,7 @@ export const SignStep = ({
   isLastTransaction,
   currentStep,
   className
-}: SignStepProps) => {
+}: SignStepType) => {
   const egldLabel = getEgldLabel();
 
   if (!currentTransaction) {

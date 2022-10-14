@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-interface GetHumanReadableTimeFormatType {
+export interface GetHumanReadableTimeFormatType {
   value: number;
   noSeconds?: boolean;
   utc?: boolean;

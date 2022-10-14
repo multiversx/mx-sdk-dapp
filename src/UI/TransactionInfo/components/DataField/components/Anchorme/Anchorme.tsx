@@ -4,7 +4,7 @@ import anchorme from 'anchorme';
 import { AnchorProps, LinkComponent } from './anchorme.types';
 import { Link } from './Link';
 
-interface AnchormePropsType extends AnchorProps {
+export interface AnchormePropsType extends AnchorProps {
   children: string;
   linkComponent?: LinkComponent;
 }
@@ -40,7 +40,7 @@ const Anchorme = ({ children, ...rest }: AnchormePropsType) => {
 
   const parsedText = useMemo(() => parse(), [parse]);
 
-  return parsedText;
+  return <>{parsedText}</>;
 };
 
 export default memo(Anchorme);

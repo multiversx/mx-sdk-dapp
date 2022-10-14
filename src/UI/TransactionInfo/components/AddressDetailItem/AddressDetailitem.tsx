@@ -11,11 +11,7 @@ import { DetailItem } from '../DetailItem';
 
 import styles from './styles.scss';
 
-export interface AddressDetailItemPropsType {
-  address: string;
-}
-
-export const AddressDetailItem = ({ address }: AddressDetailItemPropsType) => (
+export const AddressDetailItem = ({ address }: { address: string }) => (
   <DetailItem title='Address' noBorder={true}>
     <div className={styles.addressDetailItem}>
       <ScAddressIcon initiator={address} />
