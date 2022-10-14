@@ -1,4 +1,4 @@
-export type GetHumanReadableTimeFormatPropsType = {
+export type GetHumanReadableTimeFormatType = {
   value: number;
   noSeconds?: boolean;
   utc?: boolean;
@@ -11,7 +11,7 @@ export function getHumanReadableTimeFormat({
   value,
   noSeconds,
   utc
-}: GetHumanReadableTimeFormatPropsType) {
+}: GetHumanReadableTimeFormatType) {
   const utcDate = new Date(value * 1000);
   const [, AmPm] = utcDate
     .toLocaleString('en-US', { hour: 'numeric', hour12: true })
