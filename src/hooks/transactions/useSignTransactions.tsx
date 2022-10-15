@@ -152,7 +152,6 @@ export const useSignTransactions = () => {
     }
 
     try {
-      debugger;
       const signedTransactions: Transaction[] = await provider.signTransactions(
         transactions
       );
@@ -229,7 +228,8 @@ export const useSignTransactions = () => {
 
       const isSigningWithProvider = ![
         LoginMethodsEnum.wallet,
-        LoginMethodsEnum.ledger
+        LoginMethodsEnum.ledger,
+        LoginMethodsEnum.extra // lipsea
       ].includes(providerType);
 
       const latestNonce = getLatestNonce(account);
