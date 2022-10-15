@@ -229,7 +229,7 @@ export const useSignTransactions = () => {
       const isSigningWithProvider = ![
         LoginMethodsEnum.wallet,
         LoginMethodsEnum.ledger,
-        LoginMethodsEnum.extra // lipsea
+        LoginMethodsEnum.extra
       ].includes(providerType);
 
       const latestNonce = getLatestNonce(account);
