@@ -148,6 +148,10 @@ export class EmptyProvider implements IDappProvider {
       notInitializedError(`sendSessionEvent with options: ${options}`)
     );
   }
+
+  ping?(): Promise<boolean> {
+    return Promise.resolve(false);
+  }
 }
 
 export const emptyProvider = new EmptyProvider();
