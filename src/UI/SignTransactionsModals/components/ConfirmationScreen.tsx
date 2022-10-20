@@ -34,6 +34,7 @@ export const ConfirmationScreen = ({
     onAbort,
     canceledTransactionsMessage
   } = useSignTransactions();
+
   const signTransactionsError = useGetSignTransactionsError();
   const { providerType } = useGetAccountProvider();
 
