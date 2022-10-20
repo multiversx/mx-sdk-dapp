@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Fixed transaciton signing with extra provider](https://github.com/ElrondNetwork/dapp-core/pull/444)
+- [Changed TimeAgo `div` tag to `span`](https://github.com/ElrondNetwork/dapp-core/pull/445)
 
 ## [[2.1.1](https://github.com/ElrondNetwork/dapp-core/pull/447)] - 2022-10-20
 
