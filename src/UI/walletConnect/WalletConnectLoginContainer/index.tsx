@@ -79,9 +79,18 @@ export const WalletConnectLoginContainer = ({
   );
   const isMobileDevice = isMobileEnvironment();
   const activePairings = displayWalletConnectV2
-    ? wcPairings?.filter(
-        (pairing) => Boolean(pairing.active) && pairing.peerMetadata
-      ) ?? []
+    ? wcPairings?.filter((pairing) => {
+        const hasLaterEntry = wcPairings.some(
+          (pairing2) =>
+            pairing.peerMetadata?.name === pairing2?.peerMetadata?.name &&
+            pairing.peerMetadata?.url === pairing2?.peerMetadata?.url &&
+            pairing.expiry < pairing2.expiry
+        );
+
+        return (
+          Boolean(pairing.active) && pairing.peerMetadata && !hasLaterEntry
+        );
+      }) ?? []
     : [];
 
   const generatedClasses = {

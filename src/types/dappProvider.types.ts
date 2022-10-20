@@ -38,4 +38,5 @@ export interface IDappProvider {
   sendCustomRequest?(options?: {
     request: EngineTypes.RequestParams['request'];
   }): Promise<any>;
+  ping?(): Promise<boolean>;
 }

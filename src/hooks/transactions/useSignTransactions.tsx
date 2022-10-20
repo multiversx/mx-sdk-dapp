@@ -33,10 +33,10 @@ import {
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
 import { getProviderType } from 'utils';
-import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
-import { getLatestNonce } from 'utils/account/getLatestNonce';
-import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getAccount } from 'utils/account/getAccount';
+import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
+import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 
@@ -50,6 +50,7 @@ const setTransactionNonces = (
     return tx;
   });
 };
+
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
@@ -227,7 +228,8 @@ export const useSignTransactions = () => {
 
       const isSigningWithProvider = ![
         LoginMethodsEnum.wallet,
-        LoginMethodsEnum.ledger
+        LoginMethodsEnum.ledger,
+        LoginMethodsEnum.extra
       ].includes(providerType);
 
       const latestNonce = getLatestNonce(account);
