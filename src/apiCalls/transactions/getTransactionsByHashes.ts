@@ -17,6 +17,7 @@ export async function getTransactionsByHashes(
       withScResults: true
     }
   });
+
   return pendingTransactions.map(({ hash, previousStatus }) => {
     const txOnNetwork = responseData.find(
       (txResponse: any) => txResponse?.txHash === hash
@@ -24,14 +25,14 @@ export async function getTransactionsByHashes(
 
     return {
       hash,
-      data: txOnNetwork.data,
+      data: txOnNetwork?.data,
       invalidTransaction: txOnNetwork == null,
-      status: txOnNetwork.status,
-      results: txOnNetwork.results,
-      sender: txOnNetwork.sender,
+      status: txOnNetwork?.status,
+      results: txOnNetwork?.results,
+      sender: txOnNetwork?.sender,
       receiver: txOnNetwork?.receiver,
       previousStatus,
-      hasStatusChanged: txOnNetwork.status !== previousStatus
+      hasStatusChanged: txOnNetwork && txOnNetwork.status !== previousStatus
     };
   });
 }
