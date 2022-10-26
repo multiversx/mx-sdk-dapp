@@ -6,14 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
 - [Fixed throwing console exception on searching for transaction](https://github.com/ElrondNetwork/dapp-core/pull/449)
+- [Updated WalletConnect provider to 2.1.0-beta.3](https://github.com/ElrondNetwork/dapp-core/pull/450)
 
 ## [[2.1.1](https://github.com/ElrondNetwork/dapp-core/pull/448)] - 2022-10-20
+
 - [Fixed transaciton signing with extra provider](https://github.com/ElrondNetwork/dapp-core/pull/444)
 - [Changed TimeAgo `div` tag to `span`](https://github.com/ElrondNetwork/dapp-core/pull/445)
 - [Updated WalletConnect provider to 2.1.0-beta.2, added ping helper, show only latest pairing per app](https://github.com/ElrondNetwork/dapp-core/pull/446)
-
-
 
 ## [[2.1.0](https://github.com/ElrondNetwork/dapp-core/pull/443)] - 2022-10-14
 
