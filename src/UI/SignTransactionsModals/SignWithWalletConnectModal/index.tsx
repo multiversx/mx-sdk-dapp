@@ -77,7 +77,7 @@ export const SignWithWalletConnectModal = ({
             onClick={close}
             className={classes.closeBtn}
           >
-            Close
+            Cancel
           </button>
         }
       />

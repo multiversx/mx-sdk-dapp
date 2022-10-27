@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import {
   PairingTypes,
   SessionEventTypes,
-  WalletConnectProviderV2
+  WalletConnectV2Provider
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -194,7 +194,7 @@ export const useWalletConnectV2Login = ({
       onClientEvent: handleOnEvent
     };
 
-    const newProvider = new WalletConnectProviderV2(
+    const newProvider = new WalletConnectV2Provider(
       providerHandlers,
       chainId,
       walletConnectV2RelayAddress,
