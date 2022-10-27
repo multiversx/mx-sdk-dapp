@@ -5,7 +5,7 @@ import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
 import {
   EngineTypes,
   WalletConnectProvider,
-  WalletConnectProviderV2
+  WalletConnectV2Provider
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
@@ -22,7 +22,7 @@ export const getProviderType = <TProvider extends Object>(
       return LoginMethodsEnum.wallet;
     case WalletConnectProvider:
       return LoginMethodsEnum.walletconnect;
-    case WalletConnectProviderV2:
+    case WalletConnectV2Provider:
       return LoginMethodsEnum.walletconnectv2;
     case HWProvider:
       return LoginMethodsEnum.ledger;
