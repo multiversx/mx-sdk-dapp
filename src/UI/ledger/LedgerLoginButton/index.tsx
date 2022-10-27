@@ -3,21 +3,21 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
+import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
 
-export interface LedgerLoginButtonPropsType extends WithClassnameType {
-  token?: string;
+export interface LedgerLoginButtonPropsType
+  extends WithClassnameType,
+    OnProviderLoginType {
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   children?: ReactNode;
   modalClassName?: string;
   buttonClassName?: string;
-  callbackRoute?: string;
   loginButtonText?: string;
   wrapContentInsideModal?: boolean;
   hideButtonWhenModalOpens?: boolean;
-  onLoginRedirect?: (callbackRoute: string) => void;
   disabled?: boolean;
 }
 

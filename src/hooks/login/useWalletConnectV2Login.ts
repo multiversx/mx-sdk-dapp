@@ -22,15 +22,15 @@ import {
   setTokenLoginSignature,
   setWalletConnectLogin
 } from 'reduxStore/slices';
-import { LoginHookGenericStateType } from 'types';
 import {
   LoginMethodsEnum,
   DappCoreWCV2CustomMethodsEnum
 } from 'types/enums.types';
-import { logout } from 'utils/logout';
-import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
+import { logout } from 'utils/logout';
+import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -43,12 +43,9 @@ export enum WalletConnectV2Error {
   errorLogout = 'Unable to remove existing pairing'
 }
 
-export interface InitWalletConnectV2Type {
+export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute: string;
-  token?: string;
-  callbackRoute?: string;
   events?: string[];
-  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -169,7 +166,11 @@ export const useWalletConnectV2Login = ({
       }
 
       dispatch(loginAction(loginActionData));
-      optionalRedirect(callbackRoute, onLoginRedirect);
+      optionalRedirect({
+        callbackRoute,
+        onLoginRedirect,
+        options: { address, signature }
+      });
     } catch (err) {
       setError(WalletConnectV2Error.invalidAddress);
       console.error(err);

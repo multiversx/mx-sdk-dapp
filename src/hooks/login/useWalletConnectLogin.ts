@@ -15,20 +15,17 @@ import {
   setTokenLoginSignature,
   setWalletConnectLogin
 } from 'reduxStore/slices';
-import { LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 
-import { logout } from 'utils/logout';
-import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
+import { logout } from 'utils/logout';
 import Timeout = NodeJS.Timeout;
+import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 
-export interface InitWalletConnectType {
+export interface InitWalletConnectType extends OnProviderLoginType {
   logoutRoute: string;
-  callbackRoute?: string;
-  token?: string;
-  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface WalletConnectLoginHookCustomStateType {
@@ -184,7 +181,11 @@ export const useWalletConnectLogin = ({
         }, 150000);
       });
 
-      optionalRedirect(callbackRoute, onLoginRedirect);
+      optionalRedirect({
+        callbackRoute,
+        onLoginRedirect,
+        options: { address, signature }
+      });
     } catch (err) {
       setError('Invalid address');
       console.error(err);

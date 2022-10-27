@@ -4,16 +4,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
+import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import styles from './extensionLoginButtonStyles.scss';
 
-export interface ExtensionLoginButtonPropsType extends WithClassnameType {
-  token?: string;
+export interface ExtensionLoginButtonPropsType
+  extends WithClassnameType,
+    OnProviderLoginType {
   children?: ReactNode;
   buttonClassName?: string;
-  callbackRoute?: string;
   loginButtonText?: string;
-  onLoginRedirect?: (callbackRoute: string) => void;
   disabled?: boolean;
 }
 

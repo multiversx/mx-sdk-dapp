@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
+import { OnProviderLoginType } from '../../../types';
 import { LoginButton } from '../../LoginButton/LoginButton';
 
-export interface WebWalletLoginButtonPropsType {
-  token?: string;
+export interface WebWalletLoginButtonPropsType
+  extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
   className?: string;
-  callbackRoute: string;
   buttonClassName?: string;
   children?: ReactNode;
   loginButtonText?: string;

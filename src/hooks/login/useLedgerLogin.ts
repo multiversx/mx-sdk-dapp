@@ -12,9 +12,13 @@ import {
   setTokenLogin,
   updateLedgerAccount
 } from 'reduxStore/slices';
-import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
+import {
+  InitiateLoginFunctionType,
+  LoginHookGenericStateType,
+  OnProviderLoginType
+} from '../../types';
 import { getIsLoggedIn } from '../../utils';
 
 const failInitializeErrorText =
@@ -22,11 +26,8 @@ const failInitializeErrorText =
 
 const defaultAddressesPerPage = 10;
 
-export interface UseLedgerLoginPropsType {
-  callbackRoute?: string;
+export interface UseLedgerLoginPropsType extends OnProviderLoginType {
   addressesPerPage?: number;
-  token?: string;
-  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export interface SelectedAddress {
@@ -103,7 +104,11 @@ export function useLedgerLogin({
       );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
-    optionalRedirect(callbackRoute, onLoginRedirect);
+    optionalRedirect({
+      callbackRoute,
+      onLoginRedirect,
+      options: { address, signature }
+    });
   }
 
   const onLoginFailed = (err: any, customMessage = '') => {
@@ -250,7 +255,10 @@ export function useLedgerLogin({
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
-        optionalRedirect(callbackRoute, onLoginRedirect);
+        optionalRedirect({
+          callbackRoute,
+          onLoginRedirect
+        });
       } else {
         if (accounts?.length > 0) {
           setShowAddressList(true);
