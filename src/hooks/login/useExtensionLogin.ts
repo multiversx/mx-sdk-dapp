@@ -6,16 +6,14 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setTokenLogin } from 'reduxStore/slices';
-import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
+import {
+  InitiateLoginFunctionType,
+  LoginHookGenericStateType,
+  OnProviderLoginType
+} from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-
-interface UseExtensionLoginPropsType {
-  callbackRoute?: string;
-  token?: string;
-  onLoginRedirect?: (callbackRoute: string) => void;
-}
 
 export type UseExtensionLoginReturnType = [
   InitiateLoginFunctionType,
@@ -26,7 +24,7 @@ export const useExtensionLogin = ({
   callbackRoute,
   token,
   onLoginRedirect
-}: UseExtensionLoginPropsType): UseExtensionLoginReturnType => {
+}: OnProviderLoginType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
@@ -83,7 +81,11 @@ export const useExtensionLogin = ({
         loginAction({ address, loginMethod: LoginMethodsEnum.extension })
       );
 
-      optionalRedirect(callbackRoute, onLoginRedirect);
+      optionalRedirect({
+        callbackRoute,
+        onLoginRedirect,
+        options: { signature, address }
+      });
     } catch (error) {
       console.error('error loging in', error);
       // TODO: can be any or typed error

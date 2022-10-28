@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './loginButtonStyles.scss';
 
 export interface LoginButtonPropsType extends WithClassnameType {
