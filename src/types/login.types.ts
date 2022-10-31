@@ -25,5 +25,8 @@ export type OnLoginRedirectType = (
 export interface OnProviderLoginType {
   callbackRoute?: string;
   token?: string;
+  /**
+   * If specified, `onLoginRedirect` will overwrite callbackRoute default navigation
+   */
   onLoginRedirect?: OnLoginRedirectType;
 }
