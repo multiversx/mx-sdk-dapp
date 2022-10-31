@@ -1,20 +1,32 @@
+import { OnLoginRedirectOptionsType, OnProviderLoginType } from '../../types';
 import { safeRedirect } from '../redirect';
 
-export function optionalRedirect(
-  callbackUrl?: string,
-  onLoginRedirect?: (callbackRoute: string) => void
-) {
-  const shouldRedirect = Boolean(callbackUrl);
+interface OptionalRedirectType extends Omit<OnProviderLoginType, 'token'> {
+  options?: OnLoginRedirectOptionsType;
+}
 
-  if (shouldRedirect && callbackUrl != null) {
+const DEFAULT_TIMEOUT = 200;
+
+export function optionalRedirect({
+  callbackRoute,
+  onLoginRedirect,
+  options
+}: OptionalRedirectType) {
+  const shouldRedirect = Boolean(callbackRoute);
+
+  const hasOnLoginRedirect = typeof onLoginRedirect === 'function';
+
+  const timeout = hasOnLoginRedirect ? 0 : DEFAULT_TIMEOUT;
+
+  if (shouldRedirect && callbackRoute != null) {
     setTimeout(() => {
-      if (!window.location.pathname.includes(callbackUrl)) {
-        if (typeof onLoginRedirect === 'function') {
-          onLoginRedirect(callbackUrl);
-        } else {
-          safeRedirect(callbackUrl);
-        }
+      // if onLoginRedirect is defined, it has priority over safeRedirect
+      if (hasOnLoginRedirect) {
+        return onLoginRedirect(callbackRoute, options);
       }
-    }, 200);
+      if (!window.location.pathname.includes(callbackRoute)) {
+        safeRedirect(callbackRoute);
+      }
+    }, timeout);
   }
 }
