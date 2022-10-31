@@ -3,13 +3,16 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { setTokenLogin, setWalletLogin } from 'reduxStore/slices';
-import { InitiateLoginFunctionType, LoginHookGenericStateType } from 'types';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
+import {
+  InitiateLoginFunctionType,
+  LoginHookGenericStateType,
+  OnProviderLoginType
+} from '../../types';
 
-export interface UseWebWalletLoginPropsType {
-  callbackRoute: string;
-  token?: string;
+export interface UseWebWalletLoginPropsType
+  extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
   redirectDelayMilliseconds?: number;
 }
 

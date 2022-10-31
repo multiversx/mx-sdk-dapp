@@ -1,10 +1,13 @@
 import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
+import { OnProviderLoginType } from '../../../types';
 import { LoginButton } from '../../LoginButton/LoginButton';
-import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 import { WithClassnameType } from '../../types';
+import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 
-export interface WalletConnectLoginButtonPropsType extends WithClassnameType {
+export interface WalletConnectLoginButtonPropsType
+  extends WithClassnameType,
+    OnProviderLoginType {
   onModalOpens?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   children?: ReactNode;
@@ -12,14 +15,11 @@ export interface WalletConnectLoginButtonPropsType extends WithClassnameType {
   title?: string;
   modalClassName?: string;
   logoutRoute?: string;
-  callbackRoute?: string;
   loginButtonText?: string;
   buttonClassName?: string;
   wrapContentInsideModal?: boolean;
   hideButtonWhenModalOpens?: boolean;
-  token?: string;
   isWalletConnectV2?: boolean;
-  onLoginRedirect?: (callbackRoute: string) => void;
   disabled?: boolean;
 }
 
