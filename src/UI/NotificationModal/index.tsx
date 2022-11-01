@@ -31,27 +31,22 @@ export function NotificationModal() {
 
   return (
     <ModalContainer onClose={clearNotification} visible>
-      <>
-        <PageState
-          icon={icon}
-          iconClass={notification?.iconClassName}
-          iconBgClass={classNames(
-            globalStyles.p4,
-            globalStyles.roundedBgCircle
-          )}
-          iconSize='3x'
-          title={notification?.title}
-          description={notification?.description}
-          action={
-            <button
-              className={classNames(globalStyles.btn, globalStyles.btnPrimary)}
-              onClick={onDone}
-            >
-              Done
-            </button>
-          }
-        />
-      </>
+      <PageState
+        icon={icon}
+        iconClass={notification?.iconClassName}
+        iconBgClass={classNames(globalStyles.p4, globalStyles.roundedBgCircle)}
+        iconSize='3x'
+        title={notification?.title}
+        description={notification?.description}
+        action={
+          <button
+            className={classNames(globalStyles.btn, globalStyles.btnPrimary)}
+            onClick={onDone}
+          >
+            Done
+          </button>
+        }
+      />
     </ModalContainer>
   );
 }
