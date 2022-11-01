@@ -2,12 +2,11 @@ import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { useGetNotification } from 'hooks';
 import { NotificationTypesEnum } from 'types';
 import { ModalContainer } from '../ModalContainer';
 import { PageState } from '../PageState';
-
-import globalStyles from 'assets/sass/main.scss';
 
 const notificationTypesToIcons = {
   [NotificationTypesEnum.warning]: faExclamationTriangle
@@ -26,8 +25,12 @@ export function NotificationModal() {
     ? notificationTypesToIcons[type] || defaultIcon
     : null;
 
+  if (!notification) {
+    return null;
+  }
+
   return (
-    <ModalContainer onClose={clearNotification} visible={Boolean(notification)}>
+    <ModalContainer onClose={clearNotification} visible>
       <PageState
         icon={icon}
         iconClass={notification?.iconClassName}
