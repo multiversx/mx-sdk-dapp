@@ -63,6 +63,7 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const [error, setError] = useState<string | null>(null);
+  const isSigningRef = useRef(false);
 
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const signTransactionsCancelMessage = useSelector(
@@ -129,6 +130,9 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
   };
 
   const signTransactionsWithProvider = async () => {
+    if (isSigningRef.current) {
+      return;
+    }
     const {
       sessionId,
       transactions,
@@ -157,9 +161,11 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
     }
 
     try {
+      isSigningRef.current = true;
       const signedTransactions: Transaction[] = await provider.signTransactions(
         transactions
       );
+      isSigningRef.current = false;
 
       const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
         signedTransactions
@@ -186,6 +192,8 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
 
       dispatch(moveTransactionsToSignedState(payload));
     } catch (error) {
+      isSigningRef.current = false;
+
       const errorMessage =
         (error as Error)?.message || (error as string) || ERROR_SIGNING_TX;
       console.error(errorMessage);
