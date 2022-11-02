@@ -51,7 +51,12 @@ const setTransactionNonces = (
   });
 };
 
-export const useSignTransactions = () => {
+interface UseSignTransactionsPropsType {
+  isExtraProviderValid?: boolean;
+}
+
+export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
+  const isExtraProviderValid = props?.isExtraProviderValid ?? false;
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
@@ -234,11 +239,15 @@ export const useSignTransactions = () => {
       }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const isSigningWithProvider = ![
+      const invalidProviders = [
         LoginMethodsEnum.wallet,
-        LoginMethodsEnum.ledger,
-        LoginMethodsEnum.extra
-      ].includes(providerType);
+        LoginMethodsEnum.ledger
+      ];
+      if (!isExtraProviderValid) {
+        invalidProviders.push(LoginMethodsEnum.extra);
+      }
+
+      const isSigningWithProvider = !invalidProviders.includes(providerType);
 
       const latestNonce = getLatestNonce(account);
       const mappedTransactions = setTransactionNonces(

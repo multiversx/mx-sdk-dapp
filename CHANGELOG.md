@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Changed `useSignTransaction` hook to prevent multiple sign requests on same transactions](https://github.com/ElrondNetwork/dapp-core/pull/458)
+- [Changed `Notification` component to render only of content is present](https://github.com/ElrondNetwork/dapp-core/pull/456)
+
 ## [[2.1.3](https://github.com/ElrondNetwork/dapp-core/pull/455)] - 2022-10-31
 - [Changed `onLoginRedirect` callback logic to overwrite callbackRoute navigation](https://github.com/ElrondNetwork/dapp-core/pull/454)
 - [Changed `onLoginRedirect` function to allow sending signature and address params](https://github.com/ElrondNetwork/dapp-core/pull/453)
