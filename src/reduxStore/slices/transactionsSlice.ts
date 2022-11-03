@@ -211,6 +211,9 @@ export const transactionsSlice = createSlice({
       return initialState;
     });
     builder.addCase(REHYDRATE, (state, action: any) => {
+      // cancel message does not persist between page reloads
+      state.signTransactionsCancelMessage = null;
+
       if (!action.payload?.transactions) {
         return;
       }
