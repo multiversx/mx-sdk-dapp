@@ -26,20 +26,15 @@ export const useSignTransactionsCommonData = () => {
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
   );
-  console.log(112, signTransactionsCancelMessage);
 
   const hasTransactions = Boolean(transactionsToSign?.transactions);
 
   const clearTransactionStatusMessage = () => {
-    console.log('\x1b[42m%s\x1b[0m', 'this is clearTransactionStatusMessage');
-
     setError(null);
     dispatch(setSignTransactionsCancelMessage(null));
   };
 
   const onAbort = (sessionId?: string) => {
-    console.log('\x1b[42m%s\x1b[0m', 'this is abort');
-
     clearTransactionStatusMessage();
     clearSignInfo(sessionId);
   };
@@ -48,7 +43,6 @@ export const useSignTransactionsCommonData = () => {
 
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
-    console.log('\x1b[42m%s\x1b[0m', 'this is clearSignInfo');
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
