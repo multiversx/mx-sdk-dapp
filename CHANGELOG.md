@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[2.1.6](https://github.com/ElrondNetwork/dapp-core/pull/463)] - 2022-11-03
+- [Removed `signTransactionsCancelMessage` from persisted state](https://github.com/ElrondNetwork/dapp-core/pull/462)
+
 ## [[2.1.5](https://github.com/ElrondNetwork/dapp-core/pull/459)] - 2022-11-02
 - [Changed `useSignTransaction` hook to prevent multiple sign requests on same transactions](https://github.com/ElrondNetwork/dapp-core/pull/458)
 ## [[2.1.4](https://github.com/ElrondNetwork/dapp-core/pull/457)] - 2022-11-01
