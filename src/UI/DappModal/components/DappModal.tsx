@@ -2,13 +2,12 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 
+import { WithClassnameType } from '../../types';
 import { DappModalConfig } from '../dappModal.types';
+import styles from '../dappModalStyles.scss';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
-import { WithClassnameType } from '../../types';
-
-import styles from '../dappModalStyles.scss';
 
 export interface DappModalPropsType extends WithClassnameType {
   id?: string;
@@ -83,6 +82,6 @@ export const DappModal = ({
         />
       </div>
     </div>,
-    parentElement ?? document.body
+    parentElement ?? document?.body
   );
 };
