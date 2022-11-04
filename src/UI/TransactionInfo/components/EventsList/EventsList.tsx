@@ -3,6 +3,7 @@ import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { EventType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { Trim } from 'UI/Trim';
@@ -13,7 +14,6 @@ import {
 import { getEventListInitialDecodeMethod } from 'utils/transactions/transactionInfoHelpers/getEventListInitialDecodeMethod';
 import { DataDecode } from '../DataDecode';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './styles.scss';
 
 export interface EventsListPropsType {
@@ -54,7 +54,7 @@ export const EventsList = ({ events, id }: EventsListPropsType) => {
 
   useEffect(() => {
     if (ref.current && ref.current !== null) {
-      window.scrollTo({
+      window?.scrollTo({
         top: ref.current.getBoundingClientRect().top - 70,
         behavior: 'smooth'
       });

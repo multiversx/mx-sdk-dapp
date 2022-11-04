@@ -19,8 +19,8 @@ export const Trim = ({
   color
 }: TrimType) => {
   const [overflow, setOverflow] = useState(false);
-  const trimRef = useRef(document.createElement('span'));
-  const hiddenTextRef = useRef(document.createElement('span'));
+  const trimRef = useRef(document?.createElement('span'));
+  const hiddenTextRef = useRef(document?.createElement('span'));
 
   const listener = useCallback(
     debounce(() => {
