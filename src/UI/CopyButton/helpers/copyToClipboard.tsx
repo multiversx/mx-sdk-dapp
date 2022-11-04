@@ -1,21 +1,21 @@
 function fallbackCopyTextToClipboard(text: string) {
   let success = false;
 
-  const textArea = document.createElement('textarea');
+  const textArea = document?.createElement('textarea');
   textArea.value = text;
   textArea.style.position = 'fixed';
-  document.body.appendChild(textArea);
+  document?.body.appendChild(textArea);
   textArea.focus();
   textArea.select();
 
   try {
-    document.execCommand('copy');
+    document?.execCommand('copy');
     success = true;
   } catch (err) {
     console.error('Fallback: Oops, unable to copy', err);
   }
 
-  document.body.removeChild(textArea);
+  document?.body.removeChild(textArea);
 
   return success;
 }

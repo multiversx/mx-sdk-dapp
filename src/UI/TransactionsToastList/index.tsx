@@ -201,6 +201,6 @@ export const TransactionsToastList = ({
       {customToastsList}
       {transactionsToastsList}
     </div>,
-    parentElement || document.body
+    parentElement || document?.body
   );
 };

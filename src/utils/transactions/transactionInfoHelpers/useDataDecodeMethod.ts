@@ -15,7 +15,7 @@ export const useDataDecodeMethod = () => {
     if (decodeMethod && decodeMethod !== DecodeMethodEnum.raw) {
       window.history.replaceState(
         {},
-        document.title,
+        document?.title,
         `${pathname}#${decodeMethod}`
       );
     }

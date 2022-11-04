@@ -12,11 +12,11 @@ import {
   getScResultsHighlight
 } from 'utils/transactions/transactionInfoHelpers/index';
 
-import ResultWrapper from './components/ResultWrapper/ResultWrapper';
-import ResultSender from './components/ResultSender/ResultSender';
+import ResultData from './components/ResultData/ResultData';
 import ResultHash from './components/ResultHash/ResultHash';
 import ResultReceiver from './components/ResultReceiver/ResultReceiver';
-import ResultData from './components/ResultData/ResultData';
+import ResultSender from './components/ResultSender/ResultSender';
+import ResultWrapper from './components/ResultWrapper/ResultWrapper';
 
 import styles from './styles.scss';
 
@@ -32,7 +32,7 @@ export const ScResultsList = ({ results }: ScResultsListPropsType) => {
 
   useEffect(() => {
     if (ref.current && ref.current !== null) {
-      window.scrollTo({
+      window?.scrollTo({
         top: ref.current.getBoundingClientRect().top - 70,
         behavior: 'smooth'
       });
