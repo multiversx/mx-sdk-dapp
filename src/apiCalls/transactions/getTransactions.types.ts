@@ -9,5 +9,8 @@ export interface GetTransactionsType {
   condition?: 'should' | 'must';
   before?: number;
   withScResults?: boolean;
+  /**
+   * Search in data object
+   */
   search?: string;
 }
