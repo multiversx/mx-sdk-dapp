@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[2.1.8](https://github.com/ElrondNetwork/dapp-core/pull/469)] - 2022-11-10
+## [[2.1.8](https://github.com/ElrondNetwork/dapp-core/pull/470)] - 2022-11-10
 - [Added fix for missing `transaction.operations`](https://github.com/ElrondNetwork/dapp-core/pull/468)
 - [Added `search` param to get transactions API](https://github.com/ElrondNetwork/dapp-core/pull/467)
 
