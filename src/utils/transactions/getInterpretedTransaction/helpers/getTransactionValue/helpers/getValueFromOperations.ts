@@ -26,7 +26,6 @@ export function getValueFromOperations(
     }
   } catch (err) {
     logError(transaction.txHash);
-  } finally {
-    return getEgldValueData(transaction.value);
   }
+  return getEgldValueData(transaction.value);
 }
