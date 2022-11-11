@@ -209,3 +209,9 @@ export type PendingTransactionsType = {
   hash: string;
   previousStatus: string;
 }[];
+
+export interface TransactionLinkType {
+  link: string;
+  label: string;
+  address: string;
+}
