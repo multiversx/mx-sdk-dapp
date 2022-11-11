@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[2.1.10](https://github.com/ElrondNetwork/dapp-core/pull/473)] - 2022-11-11
+- [Fixed `getTrimmedHash` helper](https://github.com/ElrondNetwork/dapp-core/pull/473)
 ## [[2.1.9](https://github.com/ElrondNetwork/dapp-core/pull/472)] - 2022-11-11
 - [Added `getTransactionLinkWithLabel` helper](https://github.com/ElrondNetwork/dapp-core/pull/471)
 
