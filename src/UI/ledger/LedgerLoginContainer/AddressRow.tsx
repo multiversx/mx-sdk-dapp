@@ -1,12 +1,12 @@
 import React, { useEffect, useState, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
+import { getTrimmedHash } from 'utils';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { WithClassnameType } from '../../types';
-
-import globalStyles from 'assets/sass/main.scss';
 
 export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
@@ -14,13 +14,6 @@ export interface AddressRowPropsType extends WithClassnameType {
   address: string;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
 }
-
-// TODO: why not use Trim component?
-const trimHash = (hash: string, keep = 10) => {
-  const start = hash.substring(0, keep);
-  const end = hash.substring(hash.length - keep);
-  return `${start}...${end}`;
-};
 
 const noBalance = '...';
 
@@ -95,7 +88,7 @@ export const AddressRow = ({
                 globalStyles.textNowrap
               )}
             >
-              <span>{trimHash(address)}</span>
+              <span>{getTrimmedHash(address)}</span>
             </div>
           </label>
         </div>
