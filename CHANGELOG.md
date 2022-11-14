@@ -6,6 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[2.1.10](https://github.com/ElrondNetwork/dapp-core/pull/473)] - 2022-11-11
+- [Fixed `getTrimmedHash` helper](https://github.com/ElrondNetwork/dapp-core/pull/473)
+## [[2.1.9](https://github.com/ElrondNetwork/dapp-core/pull/472)] - 2022-11-11
+- [Added `getTransactionLinkWithLabel` helper](https://github.com/ElrondNetwork/dapp-core/pull/471)
+
+## [[2.1.8](https://github.com/ElrondNetwork/dapp-core/pull/470)] - 2022-11-10
+- [Added fix for missing `transaction.operations`](https://github.com/ElrondNetwork/dapp-core/pull/468)
+- [Added `search` param to get transactions API](https://github.com/ElrondNetwork/dapp-core/pull/467)
+
+## [[2.1.7](https://github.com/ElrondNetwork/dapp-core/pull/465)] - 2022-11-04
+- [Added `window` and `document` guards for undefined](https://github.com/ElrondNetwork/dapp-core/pull/464)
+
+## [[2.1.6](https://github.com/ElrondNetwork/dapp-core/pull/463)] - 2022-11-03
 - [Removed `signTransactionsCancelMessage` from persisted state](https://github.com/ElrondNetwork/dapp-core/pull/462)
 - [Changed `useSignTransactions` being called for ledger and extra provider](https://github.com/ElrondNetwork/dapp-core/pull/461)
 

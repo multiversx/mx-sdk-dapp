@@ -4,22 +4,28 @@ import { getEgldValueData } from './getEgldValueData';
 
 let warningLogged = false;
 
+const logError = (hash: string) => {
+  if (!warningLogged) {
+    console.error(
+      `Operations field missing for txHash: ${hash}.
+        Unable to compute value field.`
+    );
+    warningLogged = true;
+  }
+};
+
 export function getValueFromOperations(
   transaction: InterpretedTransactionType
 ) {
-  if (transaction.operations) {
-    const [operation] = getVisibleOperations(transaction);
-    return getEgldValueData(operation.value);
-  } else {
-    if (!warningLogged) {
-      console.error(
-        `Operations field missing for txHash: ${transaction.txHash}.
-          Unable to compute value field.`
-      );
-      warningLogged = true;
+  try {
+    if (transaction.operations) {
+      const [operation] = getVisibleOperations(transaction);
+      return getEgldValueData(operation?.value);
+    } else {
+      logError(transaction.txHash);
     }
+  } catch (err) {
+    logError(transaction.txHash);
   }
-
-  // fallback on transaction value
   return getEgldValueData(transaction.value);
 }

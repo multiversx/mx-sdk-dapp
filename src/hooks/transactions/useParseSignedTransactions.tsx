@@ -33,7 +33,7 @@ export function useParseSignedTransactions(
             })
           );
           onAbort();
-          history.pushState({}, document.title, '?');
+          history.pushState({}, document?.title, '?');
           return;
         }
         if (signedTransactions.length > 0) {
@@ -46,7 +46,7 @@ export function useParseSignedTransactions(
               )
             })
           );
-          history.pushState({}, document.title, '?');
+          history.pushState({}, document?.title, '?');
         }
       }
     }

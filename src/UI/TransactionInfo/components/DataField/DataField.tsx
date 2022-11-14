@@ -1,6 +1,7 @@
 import React, { MouseEvent, useState } from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { N_A } from 'constants/index';
 import { ScamInfoType } from 'types/account.types';
 import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/index';
@@ -9,7 +10,6 @@ import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFl
 import { useDataDecodeMethod } from 'utils/transactions/transactionInfoHelpers/useDataDecodeMethod';
 import { Anchorme, ModalLink } from './components';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './dataField.module.scss';
 
 const DISPLAYED_DATA_LENGTH = 1000000;

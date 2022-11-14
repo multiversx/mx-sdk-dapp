@@ -24,8 +24,8 @@ import {
 } from 'types/enums.types';
 import { SignedTransactionsBodyType } from 'types/transactions.types';
 
-import { safeRedirect } from 'utils/redirect';
 import { setNonce } from 'utils/account/setNonce';
+import { safeRedirect } from 'utils/redirect';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: (
@@ -123,7 +123,7 @@ export const TransactionSender = ({
 
         optionalRedirect(sessionInformation);
 
-        history.pushState({}, document.title, '?');
+        history.pushState({}, document?.title, '?');
       } catch (error) {
         console.error('Unable to send transactions', error);
         dispatch(

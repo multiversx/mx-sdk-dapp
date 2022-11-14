@@ -32,7 +32,6 @@ import {
   setTokenLoginSignature
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { logout } from 'utils/logout';
 import {
   getAddress,
   getAccount,
@@ -40,6 +39,7 @@ import {
   newWalletProvider,
   getLedgerConfiguration
 } from 'utils/account';
+import { logout } from 'utils/logout';
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -181,7 +181,7 @@ export function ProviderInitializer() {
     const { pathname } = window.location;
     const newSearch = newUrlParams ? `?${newUrlParams}` : '';
     const fullPath = pathname ? `${pathname}${newSearch}` : './';
-    window.history.replaceState({}, document.title, fullPath);
+    window.history.replaceState({}, document?.title, fullPath);
   }
 
   async function getInitializedHwWalletProvider() {
