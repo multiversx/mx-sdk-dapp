@@ -18,7 +18,7 @@ import { getIsTransactionPending } from 'utils/transactions/transactionStateBySt
 
 import { WithClassnameType } from '../types';
 import {
-  IconToast,
+  CustomToast,
   TransactionToastGuard,
   TransactionToastGuardPropsType
 } from './components';
@@ -114,7 +114,7 @@ export const TransactionsToastList = ({
   );
 
   const customToastsList = customToasts.map((props) => (
-    <IconToast
+    <CustomToast
       key={props.toastId}
       {...props}
       onDelete={() => handleDeleteCustomToast(props.toastId)}

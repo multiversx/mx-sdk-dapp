@@ -10,17 +10,17 @@ import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.s
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import { getUnixTimestampWithAddedMilliseconds } from 'utils/dateTime/getUnixTimestampWithAddedMilliseconds';
 import { WithClassnameType } from '../../../types';
-import styles from '../TransactionToast/transactionToast.styles.scss';
 import {
   DefaultToastDeleteButton,
   TransactionToastWrapper
-} from './../TransactionToast/components';
+} from '../TransactionToast/components';
+import styles from '../TransactionToast/transactionToast.styles.scss';
 
 export interface IconToastPropsType extends CustomToastType, WithClassnameType {
   onDelete: () => void;
 }
 
-export const IconToast = ({
+export const CustomToast = ({
   title = '',
   duration,
   message,
