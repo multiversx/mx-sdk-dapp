@@ -18,7 +18,6 @@ import styles from '../TransactionToast/transactionToast.styles.scss';
 
 export interface IconToastPropsType extends IconToastType, WithClassnameType {
   onDelete: () => void;
-  messageComponent?: ReactNode;
 }
 
 export const IconToast = ({
