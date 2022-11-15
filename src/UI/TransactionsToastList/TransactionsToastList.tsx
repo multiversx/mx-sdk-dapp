@@ -46,8 +46,9 @@ export const TransactionsToastList = ({
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
 
-  const signedTransactionsFromStore = useGetSignedTransactions()
-    .signedTransactions;
+  const {
+    signedTransactions: signedTransactionsFromStore
+  } = useGetSignedTransactions();
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
