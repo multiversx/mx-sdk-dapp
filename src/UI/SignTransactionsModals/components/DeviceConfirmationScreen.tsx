@@ -2,7 +2,7 @@ import React from 'react';
 import {
   useGetAccountProvider,
   useGetSignTransactionsError,
-  useSignTransactions
+  useSignTransactionsCommonData
 } from 'hooks';
 import { SignPropsType } from 'UI/SignTransactionsModals/types/signTransactionsModals.types';
 import { ExtraConfirmationScreenPropsType } from './confirmationScreen.types';
@@ -11,7 +11,7 @@ import {
   TransactionStatusToastType
 } from './TransactionStatusToast';
 
-export const ConfirmationScreen = ({
+export const DeviceConfirmationScreen = ({
   Screen,
   verifyReceiverScam,
   className
@@ -21,20 +21,18 @@ export const ConfirmationScreen = ({
   }
 
   const {
-    callbackRoute,
-    transactions,
+    transactionsToSign,
     error,
-    sessionId,
     hasTransactions,
     onAbort,
     canceledTransactionsMessage
-  } = useSignTransactions();
+  } = useSignTransactionsCommonData();
 
   const signTransactionsError = useGetSignTransactionsError();
   const { providerType } = useGetAccountProvider();
 
   const handleClose = () => {
-    onAbort(sessionId);
+    onAbort(transactionsToSign?.sessionId);
   };
 
   const signError = error || signTransactionsError;
@@ -42,10 +40,11 @@ export const ConfirmationScreen = ({
   const signProps: SignPropsType = {
     handleClose,
     error: signError,
-    sessionId,
-    transactions: transactions!,
+    sessionId: transactionsToSign?.sessionId,
+    transactions: transactionsToSign?.transactions ?? [],
     providerType,
-    callbackRoute,
+    callbackRoute:
+      transactionsToSign?.callbackRoute || window.location.pathname,
     className,
     verifyReceiverScam
   };

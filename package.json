@@ -1,6 +1,6 @@
 {
   "name": "@elrondnetwork/dapp-core",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "A library to hold the main logic for a dapp on the Elrond Network",
   "author": "ElrondNetwork",
   "license": "GPL-3.0-or-later",
@@ -79,8 +79,8 @@
     "transaction"
   ],
   "peerDependencies": {
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
+    "@types/react": "18.0.24",
+    "@types/react-dom": "18.0.8",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },

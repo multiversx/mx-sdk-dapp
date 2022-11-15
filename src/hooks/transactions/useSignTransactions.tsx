@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
@@ -17,8 +17,7 @@ import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTra
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   addressSelector,
-  signTransactionsCancelMessageSelector,
-  transactionsToSignSelector
+  signTransactionsCancelMessageSelector
 } from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
@@ -39,6 +38,7 @@ import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
+import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
 const setTransactionNonces = (
   latestNonce: number,
@@ -51,35 +51,26 @@ const setTransactionNonces = (
   });
 };
 
-interface UseSignTransactionsPropsType {
-  isExtraProviderValid?: boolean;
-}
-
-export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
-  const isExtraProviderValid = props?.isExtraProviderValid ?? false;
+export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const address = useSelector(addressSelector);
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
-  const [error, setError] = useState<string | null>(null);
   const isSigningRef = useRef(false);
 
-  const transactionsToSign = useSelector(transactionsToSignSelector);
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
   );
-  const hasTransactions = Boolean(transactionsToSign?.transactions);
 
-  const clearTransactionStatusMessage = () => {
-    setError(null);
-    dispatch(setSignTransactionsCancelMessage(null));
-  };
-
-  const onAbort = (sessionId?: string) => {
-    clearTransactionStatusMessage();
-    clearSignInfo(sessionId);
-  };
+  const {
+    transactionsToSign,
+    error,
+    setError,
+    hasTransactions,
+    onAbort,
+    clearTransactionStatusMessage
+  } = useSignTransactionsCommonData();
 
   useParseSignedTransactions(onAbort);
 
@@ -100,7 +91,6 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
     const isTxCancelled = errorMessage.includes(TRANSACTION_CANCELLED);
-
     clearSignInfo(sessionId);
 
     /*
@@ -239,16 +229,6 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
       }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const invalidProviders = [
-        LoginMethodsEnum.wallet,
-        LoginMethodsEnum.ledger
-      ];
-      if (!isExtraProviderValid) {
-        invalidProviders.push(LoginMethodsEnum.extra);
-      }
-
-      const isSigningWithProvider = !invalidProviders.includes(providerType);
-
       const latestNonce = getLatestNonce(account);
       const mappedTransactions = setTransactionNonces(
         latestNonce,
@@ -256,11 +236,10 @@ export const useSignTransactions = (props?: UseSignTransactionsPropsType) => {
       );
 
       if (isSigningWithWebWallet) {
-        signWithWallet(mappedTransactions, sessionId, callbackRoute);
+        return signWithWallet(mappedTransactions, sessionId, callbackRoute);
       }
-      if (isSigningWithProvider) {
-        signTransactionsWithProvider();
-      }
+
+      signTransactionsWithProvider();
     } catch (err) {
       const defaultErrorMessage = (err as Error)?.message;
       const errorMessage = defaultErrorMessage || ERROR_SIGNING;
