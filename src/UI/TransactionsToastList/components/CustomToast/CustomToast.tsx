@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from 'react';
+import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { AVERAGE_TX_DURATION_MS } from 'constants/index';
-
 import { CustomToastType } from 'types/toasts.types';
 import { Progress } from 'UI/Progress';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
@@ -27,8 +27,8 @@ export const CustomToast = ({
   status,
   className = 'dapp-custom-toast',
   onDelete,
-  icon,
-  iconClassName
+  icon = faInfo,
+  iconClassName = 'warning'
 }: IconToastPropsType) => {
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined;
