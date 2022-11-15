@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, ReactNode } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
