@@ -2,6 +2,13 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 
 export interface CustomToastType {
   toastId: string;
+  message: string;
+  duration?: number;
+  type?: string;
+}
+
+export interface IconToastType {
+  toastId: string;
   title?: string;
   message: string;
   /**

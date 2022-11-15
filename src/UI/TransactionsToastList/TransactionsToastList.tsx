@@ -5,6 +5,7 @@ import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransac
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   customToastsSelector,
+  iconToastsSelector,
   transactionToastsSelector
 } from 'reduxStore/selectors/toastsSelectors';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
@@ -19,6 +20,7 @@ import { getIsTransactionPending } from 'utils/transactions/transactionStateBySt
 import { WithClassnameType } from '../types';
 import {
   CustomToast,
+  IconToast,
   TransactionToastGuard,
   TransactionToastGuardPropsType
 } from './components';
@@ -43,6 +45,7 @@ export const TransactionsToastList = ({
   parentElement
 }: TransactionsToastListPropsType) => {
   const customToasts = useSelector(customToastsSelector);
+  const iconToasts = useSelector(iconToastsSelector);
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
 
@@ -122,6 +125,15 @@ export const TransactionsToastList = ({
     />
   ));
 
+  const iconToastsList = iconToasts.map((props) => (
+    <IconToast
+      key={props.toastId}
+      {...props}
+      onDelete={() => handleDeleteCustomToast(props.toastId)}
+      className={customToastClassName}
+    />
+  ));
+
   const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());
 
@@ -159,6 +171,7 @@ export const TransactionsToastList = ({
   return createPortal(
     <div className={classNames(styles.toasts, className)}>
       {customToastsList}
+      {iconToastsList}
       {MemoizedTransactionsToastsList}
     </div>,
     parentElement || document?.body
