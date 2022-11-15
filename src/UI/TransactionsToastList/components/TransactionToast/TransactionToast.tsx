@@ -29,10 +29,7 @@ export const TransactionToast = ({
   lifetimeAfterSuccess,
   status,
   transactions,
-  customization = {
-    TransactionToastContent,
-    Progress
-  }
+  customization
 }: TransactionToastPropsType) => {
   const {
     progress,
