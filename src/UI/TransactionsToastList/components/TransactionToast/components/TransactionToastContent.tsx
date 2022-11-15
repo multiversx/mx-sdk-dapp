@@ -6,10 +6,10 @@ import globalStyles from 'assets/sass/main.scss';
 import { SignedTransactionType } from 'types';
 import { TransactionDetails } from 'UI/TransactionDetails';
 
+import styles from '../transactionToast.styles.scss';
 import { TransactionToastContentElementsProps } from '../transactionToast.type';
 import { ToastDataState } from '../utils';
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
-import styles from './transactionToaststyles.scss';
 
 // TODO: Rename to "TransactionToastContentPropsType" when dapp-core@3.0.0
 export interface TransactionToastContentProps {

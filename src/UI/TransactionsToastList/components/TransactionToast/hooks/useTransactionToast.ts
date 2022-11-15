@@ -12,7 +12,7 @@ import {
   getIsTransactionTimedOut
 } from 'utils/transactions/transactionStateByStatus';
 
-import styles from '../styles.scss';
+import styles from '../transactionToast.styles.scss';
 import { TransactionToastDefaultProps } from '../transactionToast.type';
 import { getToastDataStateByStatus } from '../utils';
 
