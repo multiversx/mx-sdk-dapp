@@ -109,12 +109,9 @@ export const TransactionsToastList = ({
       transactionsToasts,
       signedTransactionsToRender,
       successfulToastLifetime,
-      handleDeleteTransactionToast,
-      TransactionToastGuard
+      handleDeleteTransactionToast
     ]
   );
-
-  console.log({ customToasts });
 
   const customToastsList = customToasts.map((props) => (
     <IconToast
