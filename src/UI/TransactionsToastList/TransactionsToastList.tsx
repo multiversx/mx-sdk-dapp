@@ -11,14 +11,14 @@ import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import { removeSignedTransaction } from 'services';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
-import { CustomToastType, TransactionToastType } from 'types/toasts.types';
-import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
+import { TransactionToastType } from 'types/toasts.types';
 
 import { deleteCustomToast } from 'utils/toasts/customToastsActions';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 import { WithClassnameType } from '../types';
 import {
+  IconToast,
   TransactionToastGuard,
   TransactionToastGuardPropsType
 } from './components';
@@ -114,17 +114,16 @@ export const TransactionsToastList = ({
     ]
   );
 
-  const customToastsList = customToasts.map(
-    ({ toastId, duration, message = '' }: CustomToastType) => (
-      <CustomToast
-        key={toastId}
-        message={message}
-        duration={duration}
-        onDelete={() => handleDeleteCustomToast(toastId)}
-        className={customToastClassName}
-      />
-    )
-  );
+  console.log({ customToasts });
+
+  const customToastsList = customToasts.map((props) => (
+    <IconToast
+      key={props.toastId}
+      {...props}
+      onDelete={() => handleDeleteCustomToast(props.toastId)}
+      className={customToastClassName}
+    />
+  ));
 
   const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());

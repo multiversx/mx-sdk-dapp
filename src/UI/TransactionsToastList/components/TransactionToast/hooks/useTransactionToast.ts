@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { AVERAGE_TX_DURATION_MS, CROSS_SHARD_ROUNDS } from 'constants/index';
 import { useGetTransactionDisplayInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
@@ -15,9 +16,6 @@ import {
 import styles from '../transactionToast.styles.scss';
 import { TransactionToastDefaultProps } from '../transactionToast.type';
 import { getToastDataStateByStatus } from '../utils';
-
-const AVERAGE_TX_DURATION_MS = 6000;
-const CROSS_SHARD_ROUNDS = 5;
 
 export const useTransactionToast = ({
   toastId,

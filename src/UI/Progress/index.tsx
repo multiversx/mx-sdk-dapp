@@ -33,7 +33,7 @@ export const Progress = ({
     const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
     const unixNow = Math.floor(Date.now() / 1000);
     const remaining = progress
-      ? ((progress.endTime - unixNow) * 100) / totalSeconds
+      ? ((progress.endTime - unixNow) * 1000000) / totalSeconds
       : 0;
 
     const currentRemaining =
