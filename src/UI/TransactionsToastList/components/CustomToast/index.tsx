@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
+import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles.scss';
 import { WithClassnameType } from '../../../types';
 import { ComponentTypeWithChildren } from '../types';
 

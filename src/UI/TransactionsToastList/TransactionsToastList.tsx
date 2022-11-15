@@ -19,7 +19,7 @@ import { deleteCustomToast } from 'utils/toasts/customToastsActions';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 import { WithClassnameType } from '../types';
-import styles from './transactionsToastListStyles.scss';
+import styles from './transactionsToastList.styles.scss';
 
 export interface TransactionsToastListPropsType extends WithClassnameType {
   toastProps?: any;
