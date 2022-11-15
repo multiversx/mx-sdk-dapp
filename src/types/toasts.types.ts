@@ -15,8 +15,10 @@ export interface IconToastType {
    * Information showing up above main message
    */
   status?: string;
+  /**
+   * Duration in miliseconds
+   */
   duration?: number;
-  type?: string;
   icon?: IconDefinition;
   iconClassName?: string;
 }
