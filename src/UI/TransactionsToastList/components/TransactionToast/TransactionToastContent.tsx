@@ -2,15 +2,14 @@ import React, { ReactNode } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { SignedTransactionType } from 'types';
 import { TransactionDetails } from 'UI/TransactionDetails';
 
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
+import styles from './styles.scss';
 import { TransactionToastContentElementsProps } from './transactionToast.type';
 import { ToastDataState } from './utils';
-
-import styles from './styles.scss';
-import globalStyles from 'assets/sass/main.scss';
 
 // TODO: Rename to "TransactionToastContentPropsType" when dapp-core@3.0.0
 export interface TransactionToastContentProps {

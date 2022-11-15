@@ -3,10 +3,10 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
 import { WithClassnameType } from '../../../types';
 import { ComponentTypeWithChildren } from '../types';
 
-import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
 import styles from './styles.scss';
 
 export interface CustomToastPropsType extends WithClassnameType {

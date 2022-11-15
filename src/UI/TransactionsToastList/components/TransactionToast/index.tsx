@@ -4,14 +4,13 @@ import { Progress } from 'UI/Progress';
 
 import { WithClassnameType } from '../../../types';
 import { useTransactionToast } from './hooks/useTransactionToast';
+import styles from './styles.scss';
 import {
   TransactionToastCustomizationProps,
   TransactionToastDefaultProps
 } from './transactionToast.type';
 import { TransactionToastContent } from './TransactionToastContent';
 import { TransactionToastWrapper } from './TransactionToastWrapper';
-
-import styles from './styles.scss';
 
 export interface TransactionToastPropsType
   extends TransactionToastDefaultProps,
