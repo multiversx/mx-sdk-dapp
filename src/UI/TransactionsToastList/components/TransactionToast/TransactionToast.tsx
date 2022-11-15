@@ -50,8 +50,9 @@ export const TransactionToast = ({
     onDelete
   });
 
-  const ProgressComponent = customization.Progress!;
-  const TransactionToastContentComponent = customization.TransactionToastContent!;
+  const ProgressComponent = customization?.Progress ?? Progress;
+  const TransactionToastContentComponent =
+    customization?.TransactionToastContent ?? TransactionToastContent;
 
   return (
     <TransactionToastWrapper className={className}>
