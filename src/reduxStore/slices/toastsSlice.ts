@@ -42,7 +42,7 @@ export const toastsSlice = createSlice({
     },
     addIconToast: (
       state: ToastsSliceState,
-      action: PayloadAction<CustomToastType>
+      action: PayloadAction<IconToastType>
     ) => {
       state.iconToasts.push({
         ...action.payload,
