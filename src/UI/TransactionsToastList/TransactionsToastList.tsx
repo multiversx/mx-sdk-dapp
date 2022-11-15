@@ -15,6 +15,7 @@ import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import { TransactionToastType } from 'types/toasts.types';
 
 import { deleteCustomToast } from 'utils/toasts/customToastsActions';
+import { deleteIconToast } from 'utils/toasts/iconToastsActions';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 import { WithClassnameType } from '../types';
@@ -64,6 +65,10 @@ export const TransactionsToastList = ({
 
   const handleDeleteCustomToast = (toastId: string) => {
     deleteCustomToast(toastId);
+  };
+
+  const handleDeleteIconToast = (toastId: string) => {
+    deleteIconToast(toastId);
   };
 
   const handleDeleteTransactionToast = (toastId: string) => {
@@ -129,7 +134,7 @@ export const TransactionsToastList = ({
     <IconToast
       key={props.toastId}
       {...props}
-      onDelete={() => handleDeleteCustomToast(props.toastId)}
+      onDelete={() => handleDeleteIconToast(props.toastId)}
       className={customToastClassName}
     />
   ));
