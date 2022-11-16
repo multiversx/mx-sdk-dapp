@@ -5,25 +5,18 @@ import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import {
   CustomToastType,
   FailTransactionToastType,
-  IconToastType,
   TransactionToastType
 } from '../../types/toasts.types';
 import { logoutAction } from '../commonActions';
 
-export interface IconToastSliceType extends IconToastType {
-  type: ToastsEnum.icon;
-}
-
 export interface ToastsSliceState {
   customToasts: CustomToastType[];
-  iconToasts: IconToastSliceType[];
   transactionToasts: TransactionToastType[];
   failTransactionToast: FailTransactionToastType | null;
 }
 
 const initialState: ToastsSliceState = {
   customToasts: [],
-  iconToasts: [],
   transactionToasts: [],
   failTransactionToast: null
 };
@@ -44,17 +37,7 @@ export const toastsSlice = createSlice({
           `custom-toast-${state.customToasts.length + 1}`
       });
     },
-    addIconToast: (
-      state: ToastsSliceState,
-      action: PayloadAction<IconToastType>
-    ) => {
-      state.iconToasts.push({
-        ...action.payload,
-        type: ToastsEnum.icon,
-        toastId:
-          action.payload.toastId || `icon-toast-${state.iconToasts.length + 1}`
-      });
-    },
+
     removeCustomToast: (
       state: ToastsSliceState,
       action: PayloadAction<string>
@@ -63,14 +46,7 @@ export const toastsSlice = createSlice({
         (toast) => toast.toastId !== action.payload
       );
     },
-    removeIconToast: (
-      state: ToastsSliceState,
-      action: PayloadAction<string>
-    ) => {
-      state.iconToasts = state.iconToasts.filter(
-        (toast) => toast.toastId !== action.payload
-      );
-    },
+
     addTransactionToast: (
       state: ToastsSliceState,
       action: PayloadAction<string>
@@ -114,8 +90,6 @@ export const toastsSlice = createSlice({
 export const {
   addCustomToast,
   removeCustomToast,
-  addIconToast,
-  removeIconToast,
   addTransactionToast,
   removeTransactionToast,
   addFailTransactionToast,

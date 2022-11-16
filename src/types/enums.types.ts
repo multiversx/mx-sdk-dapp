@@ -46,7 +46,6 @@ export enum EnvironmentsEnum {
 
 export enum ToastsEnum {
   custom = 'custom',
-  icon = 'icon',
   transaction = 'transaction'
 }
 

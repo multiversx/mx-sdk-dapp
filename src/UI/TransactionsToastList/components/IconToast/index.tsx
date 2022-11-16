@@ -1,1 +1,1 @@
-export * from './IconToast';
+export * from '../CustomToast/components/IconToast';
