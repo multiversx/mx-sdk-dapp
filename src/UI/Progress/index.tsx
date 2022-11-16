@@ -9,7 +9,7 @@ import styles from './progressStyles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
-export interface ProgressProps extends WithClassnameType {
+export interface ProgressPropsType extends WithClassnameType {
   id: string;
   done: boolean;
   children: ReactNode;
@@ -27,7 +27,7 @@ export const Progress = ({
   done,
   expiresIn = 10 * 60,
   className = 'dapp-progress'
-}: ProgressProps) => {
+}: ProgressPropsType) => {
   const initialData = useMemo(() => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
     const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
