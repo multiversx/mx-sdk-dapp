@@ -15,7 +15,6 @@ import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
 import { TransactionToastType } from 'types/toasts.types';
 
 import { deleteCustomToast } from 'utils/toasts/customToastsActions';
-import { deleteIconToast } from 'utils/toasts/iconToastsActions';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 import { WithClassnameType } from '../types';
@@ -65,10 +64,6 @@ export const TransactionsToastList = ({
 
   const handleDeleteCustomToast = (toastId: string) => {
     deleteCustomToast(toastId);
-  };
-
-  const handleDeleteIconToast = (toastId: string) => {
-    deleteIconToast(toastId);
   };
 
   const handleDeleteTransactionToast = (toastId: string) => {
@@ -130,15 +125,6 @@ export const TransactionsToastList = ({
     />
   ));
 
-  const iconToastsList = iconToasts.map((props) => (
-    <IconToast
-      key={props.toastId}
-      {...props}
-      onDelete={() => handleDeleteIconToast(props.toastId)}
-      className={customToastClassName}
-    />
-  ));
-
   const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());
 
@@ -176,7 +162,6 @@ export const TransactionsToastList = ({
   return createPortal(
     <div className={classNames(styles.toasts, className)}>
       {customToastsList}
-      {iconToastsList}
       {MemoizedTransactionsToastsList}
     </div>,
     parentElement || document?.body
