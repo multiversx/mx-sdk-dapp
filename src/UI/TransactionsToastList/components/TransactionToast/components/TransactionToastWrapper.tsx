@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import wrapperStyles from 'UI/TransactionsToastList/transactionsToastListStyles.scss';
+import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles.scss';
 
 export interface TransactionToastWrapperPropsType {
   className?: string;

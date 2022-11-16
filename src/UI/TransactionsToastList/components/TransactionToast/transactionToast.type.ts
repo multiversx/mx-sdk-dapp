@@ -3,7 +3,7 @@ import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
 import { ProgressProps } from 'UI/Progress';
 import { TransactionDetailsType } from 'UI/TransactionDetails';
 import { ComponentTypeWithChildren } from '../types';
-import { TransactionToastContentProps } from './TransactionToastContent';
+import { TransactionToastContentProps } from './components/TransactionToastContent';
 
 export interface TransactionToastDefaultProps {
   toastId: string;

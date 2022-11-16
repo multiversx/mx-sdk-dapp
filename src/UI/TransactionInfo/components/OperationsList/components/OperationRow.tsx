@@ -1,17 +1,16 @@
 import React from 'react';
 
+import globalStyles from 'assets/sass/main.scss';
 import { VisibleTransactionOperationType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
 
-import { DetailedItem } from './DetailedItem';
-import { OperationToken } from './OperationToken';
 import {
   WithOperationType,
   WithTransactionType
 } from '../../../../../UI/types';
-
-import globalStyles from 'assets/sass/main.scss';
+import { DetailedItem } from './DetailedItem';
+import { OperationToken } from './OperationToken';
 
 export const OperationRow = ({
   operation,
