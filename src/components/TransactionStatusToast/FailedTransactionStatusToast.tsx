@@ -54,6 +54,7 @@ export const FailedTransactionStatusToast = ({
     failToast && (
       <CustomToast
         {...failToast}
+        toastId='failed-status-toast'
         duration={duration}
         messageComponent={
           <StatusMessageComponent type={type} message={message} />
