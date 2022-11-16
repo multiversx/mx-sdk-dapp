@@ -8,7 +8,6 @@ import {
   removeFailTransactionToast
 } from 'reduxStore/slices';
 import { CustomToast } from 'UI/TransactionsToastList/components/CustomToast';
-
 import { WithClassnameType } from '../../UI/types';
 import { StatusMessageComponent } from './StatusMessageComponent';
 import { StatusIconType } from './transactionStatusToast.types';
@@ -55,6 +54,7 @@ export const FailedTransactionStatusToast = ({
     failToast && (
       <CustomToast
         {...failToast}
+        toastId='failed-status-toast'
         duration={duration}
         messageComponent={
           <StatusMessageComponent type={type} message={message} />

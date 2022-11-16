@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transactionStatus';
 import { ToastsEnum } from 'types';
+import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import {
   CustomToastType,
   FailTransactionToastType,
   TransactionToastType
-} from 'types/toasts.types';
-import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
+} from '../../types/toasts.types';
 import { logoutAction } from '../commonActions';
 
 export interface ToastsSliceState {
@@ -37,6 +37,7 @@ export const toastsSlice = createSlice({
           `custom-toast-${state.customToasts.length + 1}`
       });
     },
+
     removeCustomToast: (
       state: ToastsSliceState,
       action: PayloadAction<string>
@@ -45,6 +46,7 @@ export const toastsSlice = createSlice({
         (toast) => toast.toastId !== action.payload
       );
     },
+
     addTransactionToast: (
       state: ToastsSliceState,
       action: PayloadAction<string>

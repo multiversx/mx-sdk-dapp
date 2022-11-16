@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[2.1.12](https://github.com/ElrondNetwork/dapp-core/pull/476)] - 2022-11-16
+- [Added icon functionality to custom toast](https://github.com/ElrondNetwork/dapp-core/pull/475)
 ## [[2.1.11](https://github.com/ElrondNetwork/dapp-core/pull/474)] - 2022-11-15
 - [Changed `ConfirmationScreen` calling sign hooks depeding on device](https://github.com/ElrondNetwork/dapp-core/pull/461)
 - [Updated legacy peers type definitions](https://github.com/ElrondNetwork/dapp-core/pull/460)
