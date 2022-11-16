@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Toast progress bar exceeding boundaries fix](https://github.com/ElrondNetwork/dapp-core/pull/477)
+- [Fixed the toast progress bar exceeding boundaries](https://github.com/ElrondNetwork/dapp-core/pull/477)
 
 ## [[2.1.12](https://github.com/ElrondNetwork/dapp-core/pull/476)] - 2022-11-16
 
