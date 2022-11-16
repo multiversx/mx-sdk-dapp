@@ -13,5 +13,6 @@
     background-color: $gray-700;
     opacity: 0.25;
     transition: width 0.6s ease;
+    max-width: calc(100% + 1rem);
   }
 }

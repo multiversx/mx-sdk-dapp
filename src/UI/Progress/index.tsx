@@ -9,6 +9,7 @@ import styles from './progressStyles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
+// TODO: Rename to "ProgressPropsType" when dapp-core@3.0.0
 export interface ProgressProps extends WithClassnameType {
   id: string;
   done: boolean;
