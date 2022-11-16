@@ -5,7 +5,6 @@ import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransac
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   customToastsSelector,
-  iconToastsSelector,
   transactionToastsSelector
 } from 'reduxStore/selectors/toastsSelectors';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
@@ -20,7 +19,6 @@ import { getIsTransactionPending } from 'utils/transactions/transactionStateBySt
 import { WithClassnameType } from '../types';
 import {
   CustomToast,
-  IconToast,
   TransactionToastGuard,
   TransactionToastGuardPropsType
 } from './components';
@@ -45,7 +43,6 @@ export const TransactionsToastList = ({
   parentElement
 }: TransactionsToastListPropsType) => {
   const customToasts = useSelector(customToastsSelector);
-  const iconToasts = useSelector(iconToastsSelector);
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
 

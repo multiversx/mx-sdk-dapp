@@ -1,11 +1,9 @@
-import React, { useMemo } from 'react';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React from 'react';
 import classNames from 'classnames';
 
 import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles.scss';
 
-import { useMemoizedCloseButton, useRemoveCustomToast } from '../helpers';
+import { useMemoizedCloseButton } from '../helpers';
 import { CustomToastPropsType } from './../customToast.types';
 
 export const SimpleToast = ({

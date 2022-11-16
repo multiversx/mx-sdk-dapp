@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { TransactionToastWrapper } from '../../TransactionToast/components';
+import styles from '../../TransactionToast/transactionToast.styles.scss';
 import { CustomToastPropsType } from '../customToast.types';
 import { useMemoizedCloseButton } from '../helpers';
-import styles from '../TransactionToast/transactionToast.styles.scss';
 
 export const IconToast = ({
   message,

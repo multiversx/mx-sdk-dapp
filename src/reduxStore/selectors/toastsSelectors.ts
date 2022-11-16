@@ -8,11 +8,6 @@ export const customToastsSelector = createDeepEqualSelector(
   (state) => state.customToasts
 );
 
-export const iconToastsSelector = createDeepEqualSelector(
-  toastsSliceSelector,
-  (state) => state.iconToasts
-);
-
 export const transactionToastsSelector = createDeepEqualSelector(
   toastsSliceSelector,
   (state) => state.transactionToasts
