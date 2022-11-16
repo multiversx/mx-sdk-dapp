@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[2.1.12](https://github.com/ElrondNetwork/dapp-core/pull/476)] - 2022-11-16
 - [Added icon functionality to custom toast](https://github.com/ElrondNetwork/dapp-core/pull/475)
 ## [[2.1.11](https://github.com/ElrondNetwork/dapp-core/pull/474)] - 2022-11-15
 - [Changed `ConfirmationScreen` calling sign hooks depeding on device](https://github.com/ElrondNetwork/dapp-core/pull/461)
