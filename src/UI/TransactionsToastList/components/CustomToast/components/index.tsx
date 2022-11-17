@@ -1,2 +1,2 @@
 export * from './SimpleToast';
-export * from './IconToast/IconToast';
+export * from './IconToast';
