@@ -13,10 +13,9 @@ import globalStyles from 'assets/sass/main.scss';
 import { TransactionServerStatusesEnum } from 'types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import styles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { Trim } from 'UI/Trim';
 import { isServerTransactionPending } from 'utils/transactions/transactionStateByStatus';
-
-import styles from './../transactionDetails.styles.scss';
 
 const iconSuccessData = {
   icon: faCheck

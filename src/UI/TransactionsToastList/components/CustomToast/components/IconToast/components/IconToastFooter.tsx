@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
-import styles from '../../../../TransactionToast/transactionToast.styles.scss';
+import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
 import { MessageIconToastPropsType } from '../../../customToast.types';
 
 export const IconToastFooter = ({

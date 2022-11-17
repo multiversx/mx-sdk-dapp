@@ -5,8 +5,8 @@ import { TransactionServerStatusesEnum } from 'types';
 import { TransactionDetailsBody } from 'UI/TransactionDetails/components';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { TransactionValue } from 'UI/TransactionsTable/components/TransactionValue';
+import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
 import { getInterpretedTransaction } from 'utils';
-import styles from '../../../../TransactionToast/transactionToast.styles.scss';
 import { TransactionIconToastPropsType } from '../../../customToast.types';
 
 export const TransactionToastFooter = ({

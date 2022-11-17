@@ -3,13 +3,17 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { TransactionToastWrapper } from '../../../TransactionToast/components';
-import styles from '../../../TransactionToast/transactionToast.styles.scss';
+import {
+  useMemoizedCloseButton,
+  getIsTransaction
+} from 'UI/TransactionsToastList/components/CustomToast/helpers';
+import { TransactionToastWrapper } from 'UI/TransactionsToastList/components/TransactionToast/components';
+import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
 import {
   MessageIconToastPropsType,
   TransactionIconToastPropsType
 } from '../../customToast.types';
-import { getIsTransaction, useMemoizedCloseButton } from '../../helpers';
+
 import { IconToastFooter, TransactionToastFooter } from './components';
 
 export const IconToast = (
