@@ -1,12 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { DECIMALS } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
 import { TransactionActionTokenReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
-
-import globalStyles from 'assets/sass/main.scss';
 
 export const TransactionActionToken = ({
   tokenExplorerLink,

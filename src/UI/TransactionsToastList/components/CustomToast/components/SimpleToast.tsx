@@ -23,8 +23,10 @@ export const SimpleToast = ({
         className
       )}
     >
-      {closeButton}
-      {messageComponent ? messageComponent : message}
+      <>
+        {closeButton}
+        {messageComponent ? messageComponent : message}
+      </>
     </div>
   );
 };
