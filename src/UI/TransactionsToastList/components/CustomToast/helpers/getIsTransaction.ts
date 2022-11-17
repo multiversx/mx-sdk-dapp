@@ -3,7 +3,7 @@ import { RawTransactionType } from 'types';
 
 export function getIsTransaction<T>(transaction: T) {
   try {
-    const rawTransaction: RawTransactionType = transaction as any;
+    const rawTransaction = transaction as RawTransactionType;
     const validTransaction = newTransaction({
       ...rawTransaction,
       // API transactions do not have chainID
