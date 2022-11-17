@@ -1,14 +1,27 @@
 import { ReactNode } from 'react';
-import { CustomToastType } from '../../../../types/toasts.types';
+import {
+  MessageCustomToastType,
+  MessageIconToastType,
+  TransactionIconToastType
+} from '../../../../types/toasts.types';
 import { WithClassnameType } from '../../../types';
 import { ComponentTypeWithChildren } from '../types';
 
-export interface CustomToastPropsType
-  extends CustomToastType,
-    WithClassnameType {
+type SharedCustomToastPropsType = WithClassnameType & {
   onDelete: () => void;
   messageComponent?: ReactNode;
   CustomCloseButton?: ComponentTypeWithChildren<{
     onClick?: () => void;
   }>;
-}
+};
+
+export type MessageCustomToastPropsType = SharedCustomToastPropsType &
+  MessageCustomToastType;
+export type MessageIconToastPropsType = SharedCustomToastPropsType &
+  MessageIconToastType;
+export type TransactionIconToastPropsType = SharedCustomToastPropsType &
+  TransactionIconToastType;
+export type CustomToastPropsType =
+  | MessageCustomToastPropsType
+  | MessageIconToastPropsType
+  | TransactionIconToastPropsType;

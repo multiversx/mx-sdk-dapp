@@ -10,13 +10,13 @@ import {
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 
+import { WithTransactionType } from '../../../../../UI/types';
 import {
   ACTIONS_WITH_EGLD_VALUE,
   ACTIONS_WITH_MANDATORY_OPERATIONS,
   ACTIONS_WITH_VALUE_IN_ACTION_FIELD,
   ACTIONS_WITH_VALUE_IN_DATA_FIELD
 } from '../../constants';
-import { WithTransactionType } from '../../../../../UI/types';
 
 import {
   getValueFromActions,
@@ -116,5 +116,6 @@ export const getTransactionValue = ({
       };
     }
   }
+
   return getEgldValueData(transaction.value);
 };
