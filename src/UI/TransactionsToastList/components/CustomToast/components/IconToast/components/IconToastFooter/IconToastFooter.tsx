@@ -22,7 +22,7 @@ export const IconToastFooter = (props: IconToastPropsType) => {
     return <ComponentToastFooter {...props} />;
   }
   return (
-    <SharedToastFooter {...props}>
+    <SharedToastFooter>
       <></>
     </SharedToastFooter>
   );
