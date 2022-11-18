@@ -1,16 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
-import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
 import { MessageIconToastPropsType } from '../../../customToast.types';
+import { SharedToastFooter } from './SharedToastFooter';
 
-export const IconToastFooter = ({
-  className,
-  message,
-  status
-}: MessageIconToastPropsType) => {
+export const IconToastFooter = (props: MessageIconToastPropsType) => {
+  const { className, message, status } = props;
   return (
-    <div className={styles.footer}>
+    <SharedToastFooter {...props}>
       <>
         {status && (
           <div className={transactionDetailsStyles.status}>{status}</div>
@@ -21,6 +18,6 @@ export const IconToastFooter = ({
           {message}
         </div>
       </>
-    </div>
+    </SharedToastFooter>
   );
 };

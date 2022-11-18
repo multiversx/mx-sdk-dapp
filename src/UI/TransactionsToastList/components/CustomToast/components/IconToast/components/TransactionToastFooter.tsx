@@ -5,14 +5,14 @@ import { TransactionServerStatusesEnum } from 'types';
 import { TransactionDetailsBody } from 'UI/TransactionDetails/components';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { TransactionValue } from 'UI/TransactionsTable/components/TransactionValue';
-import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
 import { getInterpretedTransaction } from 'utils';
 import { TransactionIconToastPropsType } from '../../../customToast.types';
+import { SharedToastFooter } from './SharedToastFooter';
 
-export const TransactionToastFooter = ({
-  className,
-  transaction
-}: TransactionIconToastPropsType) => {
+export const TransactionToastFooter = (
+  props: TransactionIconToastPropsType
+) => {
+  const { className, transaction } = props;
   const { address } = useGetAccount();
   const {
     network: { explorerAddress }
@@ -25,7 +25,7 @@ export const TransactionToastFooter = ({
   });
 
   return (
-    <div className={styles.footer}>
+    <SharedToastFooter {...props}>
       <>
         <div className={transactionDetailsStyles.status}>
           <TransactionValue transaction={interpretedTransaction} />
@@ -38,6 +38,6 @@ export const TransactionToastFooter = ({
           }
         />
       </>
-    </div>
+    </SharedToastFooter>
   );
 };

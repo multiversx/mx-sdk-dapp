@@ -10,29 +10,54 @@ import {
 import { TransactionToastWrapper } from 'UI/TransactionsToastList/components/TransactionToast/components';
 import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
 import {
+  ComponentIconToastPropsType,
   MessageIconToastPropsType,
   TransactionIconToastPropsType
 } from '../../customToast.types';
 
-import { IconToastFooter, TransactionToastFooter } from './components';
+import {
+  IconToastFooter,
+  TransactionToastFooter,
+  ComponentToastFooter,
+  SharedToastFooter
+} from './components';
 
-export const IconToast = (
-  props: MessageIconToastPropsType | TransactionIconToastPropsType
-) => {
+export type IconToastPropsType =
+  | MessageIconToastPropsType
+  | TransactionIconToastPropsType
+  | ComponentIconToastPropsType;
+
+const Footer = (props: IconToastPropsType) => {
+  const { transaction, message, component } = props;
+  const isTransaction = transaction && getIsTransaction(transaction);
+
+  if (isTransaction) {
+    return <TransactionToastFooter {...props} />;
+  }
+  if (message) {
+    return <IconToastFooter {...props} />;
+  }
+  if (component !== undefined) {
+    return <ComponentToastFooter {...props} />;
+  }
+  return (
+    <SharedToastFooter {...props}>
+      <></>
+    </SharedToastFooter>
+  );
+};
+
+export const IconToast = (props: IconToastPropsType) => {
   const {
-    message,
     className = 'dapp-custom-toast',
     onDelete,
     icon = faInfo,
     iconClassName,
     title = '',
-    transaction,
     CustomCloseButton
   } = props;
 
   const closeButton = useMemoizedCloseButton({ onDelete, CustomCloseButton });
-
-  const isTransaction = transaction && getIsTransaction(transaction);
 
   return (
     <TransactionToastWrapper className={className}>
@@ -53,9 +78,7 @@ export const IconToast = (
 
             {closeButton}
           </div>
-
-          {isTransaction && <TransactionToastFooter {...props} />}
-          {message && <IconToastFooter {...props} />}
+          <Footer {...props} />
         </div>
       </div>
     </TransactionToastWrapper>
