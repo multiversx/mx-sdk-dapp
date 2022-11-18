@@ -21,9 +21,5 @@ export const IconToastFooter = (props: IconToastPropsType) => {
   if (component !== undefined) {
     return <ComponentToastFooter {...props} />;
   }
-  return (
-    <SharedToastFooter>
-      <></>
-    </SharedToastFooter>
-  );
+  return <SharedToastFooter />;
 };
