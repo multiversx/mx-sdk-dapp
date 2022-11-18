@@ -8,7 +8,6 @@ import { CustomToastPropsType } from './../customToast.types';
 
 export const SimpleToast = ({
   onDelete,
-  toastId,
   message,
   messageComponent,
   CustomCloseButton,
@@ -23,7 +22,6 @@ export const SimpleToast = ({
         wrapperStyles.toastWrapper,
         className
       )}
-      id={toastId}
     >
       <>
         {closeButton}

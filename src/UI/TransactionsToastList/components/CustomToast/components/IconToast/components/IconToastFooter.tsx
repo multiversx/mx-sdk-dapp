@@ -7,7 +7,7 @@ import { SharedToastFooter } from './SharedToastFooter';
 export const IconToastFooter = (props: MessageIconToastPropsType) => {
   const { className, message, status } = props;
   return (
-    <SharedToastFooter {...props}>
+    <SharedToastFooter>
       <>
         {status && (
           <div className={transactionDetailsStyles.status}>{status}</div>

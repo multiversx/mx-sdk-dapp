@@ -9,7 +9,7 @@ export const CustomToast = (props: CustomToastPropsType) => {
   useRemoveCustomToast({ duration, onDelete });
 
   return (
-    <div id={props.toastId}>
+    <div>
       {props.icon ? <IconToast {...props} /> : <SimpleToast {...props} />}
     </div>
   );

@@ -25,7 +25,7 @@ export const TransactionToastFooter = (
   });
 
   return (
-    <SharedToastFooter {...props}>
+    <SharedToastFooter>
       <>
         <div className={transactionDetailsStyles.status}>
           <TransactionValue transaction={interpretedTransaction} />
