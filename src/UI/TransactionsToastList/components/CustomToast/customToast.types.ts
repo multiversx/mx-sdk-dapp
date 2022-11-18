@@ -29,8 +29,3 @@ export type CustomToastPropsType =
   | MessageIconToastPropsType
   | ComponentIconToastPropsType
   | TransactionIconToastPropsType;
-
-export interface UseRenderToastComponentType {
-  component: ComponentIconToastType['component'];
-  toastId: ComponentIconToastType['toastId'];
-}
