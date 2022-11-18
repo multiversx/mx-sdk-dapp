@@ -22,7 +22,6 @@ import {
   TransactionToastGuard,
   TransactionToastGuardPropsType
 } from './components';
-import { TransactionReceivedToast } from './TransactionReceivedToast';
 import styles from './transactionsToastList.styles.scss';
 
 export interface TransactionsToastListPropsType extends WithClassnameType {
@@ -161,7 +160,6 @@ export const TransactionsToastList = ({
     <div className={classNames(styles.toasts, className)}>
       {customToastsList}
       {MemoizedTransactionsToastsList}
-      <TransactionReceivedToast />
     </div>,
     parentElement || document?.body
   );

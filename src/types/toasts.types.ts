@@ -69,8 +69,3 @@ export interface FailTransactionToastType {
   message: string;
   duration?: number;
 }
-
-export enum ComponentIconEventsEnum {
-  onMount = 'onMount',
-  onUnmount = 'onUnmount'
-}
