@@ -1,4 +1,4 @@
 export * from './TransactionToastFooter';
-export * from './IconToastFooter';
+export * from './MessageIconToastFooter';
 export * from './ComponentToastFooter';
 export * from './SharedToastFooter';

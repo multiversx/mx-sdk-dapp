@@ -6,7 +6,7 @@ import { TransactionDetailsBody } from 'UI/TransactionDetails/components';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { TransactionValue } from 'UI/TransactionsTable/components/TransactionValue';
 import { getInterpretedTransaction } from 'utils';
-import { TransactionIconToastPropsType } from '../../../customToast.types';
+import { TransactionIconToastPropsType } from '../../../../../customToast.types';
 import { SharedToastFooter } from './SharedToastFooter';
 
 export const TransactionToastFooter = (

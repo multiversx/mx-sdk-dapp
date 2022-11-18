@@ -1,10 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
-import { MessageIconToastPropsType } from '../../../customToast.types';
+import { MessageIconToastPropsType } from '../../../../../customToast.types';
 import { SharedToastFooter } from './SharedToastFooter';
 
-export const IconToastFooter = (props: MessageIconToastPropsType) => {
+export const MessageIconToastFooter = (props: MessageIconToastPropsType) => {
   const { className, message, status } = props;
   return (
     <SharedToastFooter>

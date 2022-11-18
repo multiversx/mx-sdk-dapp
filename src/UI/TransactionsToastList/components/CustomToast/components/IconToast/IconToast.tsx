@@ -3,49 +3,11 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import {
-  useMemoizedCloseButton,
-  getIsTransaction
-} from 'UI/TransactionsToastList/components/CustomToast/helpers';
+import { useMemoizedCloseButton } from 'UI/TransactionsToastList/components/CustomToast/helpers';
 import { TransactionToastWrapper } from 'UI/TransactionsToastList/components/TransactionToast/components';
 import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
-import {
-  ComponentIconToastPropsType,
-  MessageIconToastPropsType,
-  TransactionIconToastPropsType
-} from '../../customToast.types';
-
-import {
-  IconToastFooter,
-  TransactionToastFooter,
-  ComponentToastFooter,
-  SharedToastFooter
-} from './components';
-
-export type IconToastPropsType =
-  | MessageIconToastPropsType
-  | TransactionIconToastPropsType
-  | ComponentIconToastPropsType;
-
-const Footer = (props: IconToastPropsType) => {
-  const { transaction, message, component } = props;
-  const isTransaction = transaction && getIsTransaction(transaction);
-
-  if (isTransaction) {
-    return <TransactionToastFooter {...props} />;
-  }
-  if (message) {
-    return <IconToastFooter {...props} />;
-  }
-  if (component !== undefined) {
-    return <ComponentToastFooter {...props} />;
-  }
-  return (
-    <SharedToastFooter {...props}>
-      <></>
-    </SharedToastFooter>
-  );
-};
+import { IconToastFooter } from './components/IconToastFooter';
+import { IconToastPropsType } from './iconToast.types';
 
 export const IconToast = (props: IconToastPropsType) => {
   const {
@@ -78,7 +40,7 @@ export const IconToast = (props: IconToastPropsType) => {
 
             {closeButton}
           </div>
-          <Footer {...props} />
+          <IconToastFooter {...props} />
         </div>
       </div>
     </TransactionToastWrapper>

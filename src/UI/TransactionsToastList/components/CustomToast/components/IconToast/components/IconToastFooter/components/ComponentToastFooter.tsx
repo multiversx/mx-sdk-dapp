@@ -1,6 +1,6 @@
 import React from 'react';
 import { getRegisteredCustomIconComponents } from 'utils/toasts/customToastsActions';
-import { ComponentIconToastPropsType } from '../../../customToast.types';
+import { ComponentIconToastPropsType } from '../../../../../customToast.types';
 import { SharedToastFooter } from './SharedToastFooter';
 
 export const ComponentToastFooter = (props: ComponentIconToastPropsType) => {
