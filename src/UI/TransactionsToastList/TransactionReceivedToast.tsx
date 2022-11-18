@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faArrowAltCircleDown } from '@fortawesome/free-solid-svg-icons';
 import ReactDOM from 'react-dom';
+import { ComponentIconEventsEnum } from 'types/toasts.types';
 import { getCustomToastFooterId } from 'UI/TransactionsToastList/components/CustomToast/components/IconToast/helpers/getCustomToastFooterId';
-import { useCustomIconComponentActions } from 'utils/toasts/useCustomIconComponentActions';
+import {
+  addNewCustomToast,
+  getRegisteredCustomIconComponents
+} from 'utils/toasts/customToastsActions';
 
-const NewButton = () => {
+const NewButton = ({ id }: { id: string }) => {
   const onClick = () => {
     console.log('this is my action');
   };
   return (
     <div className='btn btn-danger' onClick={onClick}>
-      This is new buttonab
+      ID: {id}
     </div>
   );
 };
@@ -24,6 +28,8 @@ export const PortalButton = ({
 }) => {
   const element = document.getElementById(getCustomToastFooterId(id));
 
+  console.log(id, element);
+
   if (!element || !component) {
     return null;
   }
@@ -34,39 +40,50 @@ export const PortalButton = ({
 };
 
 export const TransactionReceivedToast = () => {
-  const [element, setElement] = useState({
+  const [state, setState] = useState({
     toastId: '',
     component: () => <></>
   });
-  const customIconComponentActions = useCustomIconComponentActions();
+
+  const onEvent = (event: Event) => {
+    const toastId = (event as CustomEvent)?.detail;
+    // setTimeout(() => {
+    setState({
+      toastId,
+      component: getRegisteredCustomIconComponents(toastId)
+    });
+    // });
+  };
+
+  useEffect(() => {
+    document.addEventListener(ComponentIconEventsEnum.onMount, onEvent);
+    return () => {
+      document.removeEventListener(ComponentIconEventsEnum.onMount, onEvent);
+    };
+  }, []);
 
   return (
     <>
       <button
         className='btn btn-warning btn-lg'
         onClick={() => {
-          const id = customIconComponentActions.addNewCustomToast({
-            toastId: Date.now().toString(),
-            component: NewButton,
+          const toastId = Date.now().toString();
+          addNewCustomToast({
+            toastId,
+            component: () => <NewButton id={toastId} />,
             duration: 100000000,
             type: 'custom',
-            title: 'Container notification',
+            title: 'Container notification ' + toastId,
             icon: faArrowAltCircleDown,
             iconClassName: 'bg-success'
-          });
-          setTimeout(() => {
-            setElement({
-              toastId: String(id?.toastId),
-              component: NewButton
-            });
           });
         }}
       >
         ADD Notification1
       </button>
 
-      {element.toastId && (
-        <PortalButton id={element.toastId} component={element.component} />
+      {state.toastId && (
+        <PortalButton id={state.toastId} component={state.component} />
       )}
     </>
   );
