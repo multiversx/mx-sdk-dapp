@@ -3,36 +3,23 @@ import { faInfo } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import {
-  useMemoizedCloseButton,
-  getIsTransaction
-} from 'UI/TransactionsToastList/components/CustomToast/helpers';
+import { useMemoizedCloseButton } from 'UI/TransactionsToastList/components/CustomToast/helpers';
 import { TransactionToastWrapper } from 'UI/TransactionsToastList/components/TransactionToast/components';
 import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
-import {
-  MessageIconToastPropsType,
-  TransactionIconToastPropsType
-} from '../../customToast.types';
+import { IconToastFooter } from './components/IconToastFooter';
+import { IconToastPropsType } from './iconToast.types';
 
-import { IconToastFooter, TransactionToastFooter } from './components';
-
-export const IconToast = (
-  props: MessageIconToastPropsType | TransactionIconToastPropsType
-) => {
+export const IconToast = (props: IconToastPropsType) => {
   const {
-    message,
     className = 'dapp-custom-toast',
     onDelete,
     icon = faInfo,
     iconClassName,
     title = '',
-    transaction,
     CustomCloseButton
   } = props;
 
   const closeButton = useMemoizedCloseButton({ onDelete, CustomCloseButton });
-
-  const isTransaction = transaction && getIsTransaction(transaction);
 
   return (
     <TransactionToastWrapper className={className}>
@@ -53,9 +40,7 @@ export const IconToast = (
 
             {closeButton}
           </div>
-
-          {isTransaction && <TransactionToastFooter {...props} />}
-          {message && <IconToastFooter {...props} />}
+          <IconToastFooter {...props} />
         </div>
       </div>
     </TransactionToastWrapper>
