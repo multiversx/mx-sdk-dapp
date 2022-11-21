@@ -8,16 +8,14 @@ export const MessageIconToastFooter = (props: MessageIconToastPropsType) => {
   const { className, message, status } = props;
   return (
     <SharedToastFooter>
-      <>
-        {status && (
-          <div className={transactionDetailsStyles.status}>{status}</div>
-        )}
-        <div
-          className={classNames(transactionDetailsStyles.container, className)}
-        >
-          {message}
-        </div>
-      </>
+      {status && (
+        <div className={transactionDetailsStyles.status}>{status}</div>
+      )}
+      <div
+        className={classNames(transactionDetailsStyles.container, className)}
+      >
+        {message}
+      </div>
     </SharedToastFooter>
   );
 };
