@@ -3,8 +3,8 @@ import classNames from 'classnames';
 
 import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles.scss';
 
+import { CustomToastPropsType } from '../customToast.types';
 import { useMemoizedCloseButton } from '../helpers';
-import { CustomToastPropsType } from './../customToast.types';
 
 export const SimpleToast = ({
   onDelete,
