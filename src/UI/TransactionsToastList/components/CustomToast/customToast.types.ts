@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import {
+  ComponentIconToastType,
   MessageCustomToastType,
   MessageIconToastType,
   TransactionIconToastType
@@ -21,7 +22,10 @@ export type MessageIconToastPropsType = SharedCustomToastPropsType &
   MessageIconToastType;
 export type TransactionIconToastPropsType = SharedCustomToastPropsType &
   TransactionIconToastType;
+export type ComponentIconToastPropsType = SharedCustomToastPropsType &
+  ComponentIconToastType;
 export type CustomToastPropsType =
   | MessageCustomToastPropsType
   | MessageIconToastPropsType
+  | ComponentIconToastPropsType
   | TransactionIconToastPropsType;

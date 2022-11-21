@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { REHYDRATE } from 'redux-persist';
 import { TRANSACTION_STATUS_TOAST_ID } from 'constants/transactionStatus';
 import { ToastsEnum } from 'types';
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
@@ -83,6 +84,13 @@ export const toastsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
       return initialState;
+    });
+    builder.addCase(REHYDRATE, (state, action: any) => {
+      const excludeComponentToasts =
+        action.customToasts?.filter(
+          (toast: CustomToastType) => !('component' in toast)
+        ) ?? [];
+      state.customToasts = excludeComponentToasts;
     });
   }
 });

@@ -5,14 +5,14 @@ import { TransactionServerStatusesEnum } from 'types';
 import { TransactionDetailsBody } from 'UI/TransactionDetails/components';
 import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { TransactionValue } from 'UI/TransactionsTable/components/TransactionValue';
-import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
+import { TransactionIconToastPropsType } from 'UI/TransactionsToastList/components/CustomToast/customToast.types';
 import { getInterpretedTransaction } from 'utils';
-import { TransactionIconToastPropsType } from '../../../customToast.types';
+import { SharedToastFooter } from './SharedToastFooter';
 
-export const TransactionToastFooter = ({
-  className,
-  transaction
-}: TransactionIconToastPropsType) => {
+export const TransactionToastFooter = (
+  props: TransactionIconToastPropsType
+) => {
+  const { className, transaction } = props;
   const { address } = useGetAccount();
   const {
     network: { explorerAddress }
@@ -25,19 +25,15 @@ export const TransactionToastFooter = ({
   });
 
   return (
-    <div className={styles.footer}>
-      <>
-        <div className={transactionDetailsStyles.status}>
-          <TransactionValue transaction={interpretedTransaction} />
-        </div>
-        <TransactionDetailsBody
-          className={className}
-          hash={interpretedTransaction.txHash}
-          status={
-            interpretedTransaction.status as TransactionServerStatusesEnum
-          }
-        />
-      </>
-    </div>
+    <SharedToastFooter>
+      <div className={transactionDetailsStyles.status}>
+        <TransactionValue transaction={interpretedTransaction} />
+      </div>
+      <TransactionDetailsBody
+        className={className}
+        hash={interpretedTransaction.txHash}
+        status={interpretedTransaction.status as TransactionServerStatusesEnum}
+      />
+    </SharedToastFooter>
   );
 };
