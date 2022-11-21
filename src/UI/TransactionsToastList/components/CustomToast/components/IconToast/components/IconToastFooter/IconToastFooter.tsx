@@ -18,6 +18,7 @@ export const IconToastFooter = (props: IconToastPropsType) => {
   if (message) {
     return <MessageIconToastFooter {...props} />;
   }
+  // a null component means footer needs to search for it in componentsDictionary
   if (component !== undefined) {
     return <ComponentToastFooter {...props} />;
   }
