@@ -26,18 +26,14 @@ export const TransactionToastFooter = (
 
   return (
     <SharedToastFooter>
-      <>
-        <div className={transactionDetailsStyles.status}>
-          <TransactionValue transaction={interpretedTransaction} />
-        </div>
-        <TransactionDetailsBody
-          className={className}
-          hash={interpretedTransaction.txHash}
-          status={
-            interpretedTransaction.status as TransactionServerStatusesEnum
-          }
-        />
-      </>
+      <div className={transactionDetailsStyles.status}>
+        <TransactionValue transaction={interpretedTransaction} />
+      </div>
+      <TransactionDetailsBody
+        className={className}
+        hash={interpretedTransaction.txHash}
+        status={interpretedTransaction.status as TransactionServerStatusesEnum}
+      />
     </SharedToastFooter>
   );
 };
