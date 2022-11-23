@@ -2,7 +2,7 @@ import { fallbackNetworkConfigurations } from 'constants/network';
 import { EnvironmentsEnum, NetworkType } from 'types';
 import { getServerConfiguration } from './getServerConfiguration';
 
-interface GetServerConfigurationForEnvironmentOptionsType {
+export interface GetServerConfigurationForEnvironmentOptionsType {
   apiAddress?: string;
 }
 
