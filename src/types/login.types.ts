@@ -1,5 +1,3 @@
-import { NativeAuthType } from '../services/nativeAuth';
-
 export interface LoginHookGenericStateType {
   error: string;
   loginFailed: boolean;
@@ -24,21 +22,22 @@ export type OnLoginRedirectType = (
   options?: OnLoginRedirectOptionsType
 ) => void;
 
-interface SharedProviderLoginType {
+export interface NativeAuthType {
+  hostname?: string;
+  apiAddress?: string;
+  expirySeconds?: number;
+}
+
+export interface OnProviderLoginType {
   callbackRoute?: string;
-  onLoginRedirect?: OnLoginRedirectType;
-}
-
-interface ProviderTokenLoginType extends SharedProviderLoginType {
   token?: string;
-  nativeAuthConfig?: never;
+  /**
+   * If specified, `onLoginRedirect` will overwrite callbackRoute default navigation
+   */
+  onLoginRedirect?: OnLoginRedirectType;
+  /**
+   * If set to `true`, will fallback on default configuration
+   * If token is specified, nativeAuth will skip fetching token
+   */
+  nativeAuth?: NativeAuthType | true;
 }
-
-interface ProviderNativeAuthLoginType extends SharedProviderLoginType {
-  token?: never;
-  nativeAuthConfig: NativeAuthType;
-}
-
-export type OnProviderLoginType =
-  | ProviderTokenLoginType
-  | ProviderNativeAuthLoginType;

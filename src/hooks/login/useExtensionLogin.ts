@@ -14,7 +14,7 @@ import {
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { useNativeAuth } from './useNativeAuth';
+import { useNativeAuthService } from './useNativeAuthService';
 
 export type UseExtensionLoginReturnType = [
   InitiateLoginFunctionType,
@@ -24,12 +24,13 @@ export type UseExtensionLoginReturnType = [
 export const useExtensionLogin = ({
   callbackRoute,
   token,
-  nativeAuthConfig,
+  nativeAuth,
   onLoginRedirect
 }: OnProviderLoginType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const nativeAuth = useNativeAuth(nativeAuthConfig);
+  const hasNativeAuth = nativeAuth != null;
+  const nativeAuthService = useNativeAuthService(nativeAuth);
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
@@ -57,8 +58,8 @@ export const useExtensionLogin = ({
         `${window.location.origin}${callbackRoute ?? window.location.pathname}`
       );
 
-      if (nativeAuthConfig) {
-        tokenToSign = await nativeAuth.getLoginToken();
+      if (hasNativeAuth) {
+        tokenToSign = await nativeAuthService.getLoginToken();
       }
 
       const providerLoginData = {
@@ -79,8 +80,8 @@ export const useExtensionLogin = ({
       }
 
       if (signature && tokenToSign) {
-        nativeAuthConfig
-          ? nativeAuth.setNativeAuthTokenLogin({ address, signature })
+        hasNativeAuth
+          ? nativeAuthService.setNativeAuthTokenLogin({ address, signature })
           : dispatch(
               setTokenLogin({
                 loginToken: tokenToSign,

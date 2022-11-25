@@ -1,5 +1,5 @@
+import { NativeAuthType } from 'types';
 import { encodeValue, getLatestBlockHash } from './helpers';
-import { NativeAuthType } from './nativeAuth.types';
 
 export const defaultNativeAuthConfig = {
   hostname: typeof window !== 'undefined' ? window.location.hostname : '',

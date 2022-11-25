@@ -4,19 +4,19 @@ import { useGetAccount, useGetAccountProvider } from 'hooks/account';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
-import {
-  defaultNativeAuthConfig,
-  nativeAuth,
-  NativeAuthType
-} from 'services/nativeAuth';
+import { defaultNativeAuthConfig, nativeAuth } from 'services/nativeAuth';
+import { OnProviderLoginType, NativeAuthType } from 'types';
 
-export const useNativeAuth = (config?: NativeAuthType) => {
+export const useNativeAuthService = (
+  config?: OnProviderLoginType['nativeAuth']
+) => {
   const network = useSelector(networkSelector);
+  const nativeAuthConfig = config === true ? defaultNativeAuthConfig : config;
   const configuration: NativeAuthType = {
-    hostname: config?.hostname ?? defaultNativeAuthConfig.hostname,
+    hostname: nativeAuthConfig?.hostname ?? defaultNativeAuthConfig.hostname,
     expirySeconds:
-      config?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
-    apiAddress: config?.apiAddress ?? network.apiAddress
+      nativeAuthConfig?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
+    apiAddress: nativeAuthConfig?.apiAddress ?? network.apiAddress
   };
   const client = nativeAuth(configuration);
   const { address } = useGetAccount();
