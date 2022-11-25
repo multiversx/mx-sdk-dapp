@@ -6,6 +6,7 @@ import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelector
 import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setNotificationModal,
+  setSignTransactionsCancelMessage,
   setTransactionsDisplayInfo,
   setTransactionsToSign
 } from 'reduxStore/slices';
@@ -71,6 +72,7 @@ export async function signTransactions({
     customTransactionInformation,
     transactions: transactionsPayload.map((tx) => tx.toPlainObject())
   };
+  store.dispatch(setSignTransactionsCancelMessage(null));
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
   store.dispatch(
     setTransactionsDisplayInfo({ sessionId, transactionsDisplayInfo })
