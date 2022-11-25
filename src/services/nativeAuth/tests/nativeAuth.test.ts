@@ -32,7 +32,7 @@ describe('Native Auth', () => {
     it('Latest block should return signable token', async () => {
       const client = nativeAuth({
         hostname: HOST,
-        apiUrl: 'https://api.elrond.com'
+        apiAddress: 'https://api.elrond.com'
       });
 
       onLatestBlockHashGet(mock).reply(200, [{ hash: BLOCK_HASH }]);
@@ -47,7 +47,7 @@ describe('Native Auth', () => {
 
       const client = nativeAuth({
         hostname: HOST,
-        apiUrl: 'https://api.elrond.com'
+        apiAddress: 'https://api.elrond.com'
       });
 
       await expect(client.initialize()).rejects.toThrow();
@@ -56,10 +56,14 @@ describe('Native Auth', () => {
     it('Generate Access token', () => {
       const client = nativeAuth({
         hostname: HOST,
-        apiUrl: 'https://api.elrond.com'
+        apiAddress: 'https://api.elrond.com'
       });
 
-      const accessToken = client.getToken(ADDRESS, TOKEN, SIGNATURE);
+      const accessToken = client.getToken({
+        address: ADDRESS,
+        token: TOKEN,
+        signature: SIGNATURE
+      });
 
       expect(accessToken).toStrictEqual(ACCESS_TOKEN);
     });

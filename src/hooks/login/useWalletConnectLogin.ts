@@ -24,9 +24,9 @@ import { logout } from 'utils/logout';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 
-export interface InitWalletConnectType extends OnProviderLoginType {
+export type InitWalletConnectType = OnProviderLoginType & {
   logoutRoute: string;
-}
+};
 
 export interface WalletConnectLoginHookCustomStateType {
   uriDeepLink: string;

@@ -26,9 +26,9 @@ const failInitializeErrorText =
 
 const defaultAddressesPerPage = 10;
 
-export interface UseLedgerLoginPropsType extends OnProviderLoginType {
+export type UseLedgerLoginPropsType = OnProviderLoginType & {
   addressesPerPage?: number;
-}
+};
 
 export interface SelectedAddress {
   address: string;

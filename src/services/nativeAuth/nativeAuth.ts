@@ -1,30 +1,34 @@
 import { encodeValue, getLatestBlockHash } from './helpers';
+import { NativeAuthType } from './nativeAuth.types';
 
-export interface NativeAuthType {
-  hostname?: string;
-  apiUrl: string;
-  expirySeconds?: number;
-}
+export const defaultNativeAuthConfig = {
+  hostname: typeof window !== 'undefined' ? window.location.hostname : '',
+  apiAddress: 'https://api.elrond.com',
+  expirySeconds: 60 * 60 * 24
+};
 
 export const nativeAuth = ({
-  hostname = typeof window !== 'undefined' ? window.location.hostname : '',
-  apiUrl = 'https://api.elrond.com',
-  expirySeconds = 60 * 60 * 24
+  hostname = defaultNativeAuthConfig.hostname,
+  apiAddress = defaultNativeAuthConfig.apiAddress,
+  expirySeconds = defaultNativeAuthConfig.expirySeconds
 }: NativeAuthType) => {
-  const getToken = (
-    address: string,
-    token: string,
-    signature: string
-  ): string => {
+  const getToken = ({
+    address,
+    token,
+    signature
+  }: {
+    address: string;
+    token: string;
+    signature: string;
+  }): string => {
     const encodedAddress = encodeValue(address);
     const encodedToken = encodeValue(token);
-
     const accessToken = `${encodedAddress}.${encodedToken}.${signature}`;
     return accessToken;
   };
 
   const initialize = async (extraInfo: any = {}): Promise<string> => {
-    const blockHash = await getLatestBlockHash(apiUrl);
+    const blockHash = await getLatestBlockHash(apiAddress);
     const encodedExtraInfo = encodeValue(JSON.stringify(extraInfo));
     const host = encodeValue(hostname);
 
