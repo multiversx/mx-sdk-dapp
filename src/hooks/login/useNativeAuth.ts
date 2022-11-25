@@ -41,7 +41,7 @@ export const useNativeAuth = (config?: NativeAuthType) => {
       throw 'Must call getLoginToken first';
     }
 
-    const accessToken = client.getToken({
+    const nativeAuthToken = client.getToken({
       address,
       token: loginTokenRef.current,
       signature
@@ -51,7 +51,7 @@ export const useNativeAuth = (config?: NativeAuthType) => {
       setTokenLogin({
         loginToken: loginTokenRef.current,
         signature,
-        accessToken
+        nativeAuthToken
       })
     );
   };

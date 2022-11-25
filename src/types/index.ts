@@ -13,7 +13,7 @@ export interface RouteType {
 export interface TokenLoginType {
   loginToken: string;
   signature?: string;
-  accessToken?: string;
+  nativeAuthToken?: string;
 }
 
 export * from './transactions.types';
