@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { ReactNode } from 'react';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -8,13 +8,14 @@ import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import styles from './extensionLoginButton.styles.scss';
 
-export type ExtensionLoginButtonPropsType = WithClassnameType &
-  OnProviderLoginType &
-  PropsWithChildren & {
-    buttonClassName?: string;
-    loginButtonText?: string;
-    disabled?: boolean;
-  };
+export interface ExtensionLoginButtonPropsType
+  extends WithClassnameType,
+    OnProviderLoginType {
+  children?: ReactNode;
+  buttonClassName?: string;
+  loginButtonText?: string;
+  disabled?: boolean;
+}
 
 export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
@@ -24,6 +25,7 @@ export const ExtensionLoginButton: (
   children,
   callbackRoute,
   buttonClassName,
+  nativeAuth,
   loginButtonText = 'Maiar DeFi Wallet',
   onLoginRedirect,
   disabled
@@ -31,7 +33,8 @@ export const ExtensionLoginButton: (
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
     token,
-    onLoginRedirect
+    onLoginRedirect,
+    nativeAuth
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
