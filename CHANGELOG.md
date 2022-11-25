@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[2.1.15](https://github.com/ElrondNetwork/dapp-core/pull/486)] - 2022-11-21
+- [Fixed sign new transaction with Ledger after cancelling transaction](https://github.com/ElrondNetwork/dapp-core/pull/485)
 ## [[2.1.14](https://github.com/ElrondNetwork/dapp-core/pull/482)] - 2022-11-21
 - [Added custom toast to for displaying components](https://github.com/ElrondNetwork/dapp-core/pull/481)
 
