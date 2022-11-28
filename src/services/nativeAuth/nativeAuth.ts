@@ -4,7 +4,7 @@ import { encodeValue, getLatestBlockHash } from './helpers';
 export const defaultNativeAuthConfig = {
   hostname: typeof window !== 'undefined' ? window.location.hostname : '',
   apiAddress: 'https://api.elrond.com',
-  expirySeconds: 60 * 60 * 24
+  expirySeconds: 60 * 60 * 24 // one day
 };
 
 export const nativeAuth = ({
@@ -29,7 +29,9 @@ export const nativeAuth = ({
 
   const initialize = async (extraInfo: any = {}): Promise<string> => {
     const blockHash = await getLatestBlockHash(apiAddress);
-    const encodedExtraInfo = encodeValue(JSON.stringify(extraInfo));
+    const encodedExtraInfo = encodeValue(
+      JSON.stringify({ ...extraInfo, asd: 'asd' })
+    );
     const host = encodeValue(hostname);
 
     return `${host}.${blockHash}.${expirySeconds}.${encodedExtraInfo}`;
