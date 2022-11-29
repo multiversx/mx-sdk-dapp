@@ -43,10 +43,10 @@ export enum WalletConnectV2Error {
   errorLogout = 'Unable to remove existing pairing'
 }
 
-export type InitWalletConnectV2Type = OnProviderLoginType & {
+export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute: string;
   events?: string[];
-};
+}
 
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string;
