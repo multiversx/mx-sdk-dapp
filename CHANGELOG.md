@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[2.1.16](https://github.com/ElrondNetwork/dapp-core/pull/490)] - 2022-11-29
 - [Fixed logging out with wallet provider](https://github.com/ElrondNetwork/dapp-core/pull/489)
 - [Added `status` param to `getTransactions` API](https://github.com/ElrondNetwork/dapp-core/pull/488)
 
