@@ -4,6 +4,7 @@ import { LOGOUT_ACTION_NAME } from 'constants/index';
 import { deriveIsLoggedIn } from 'reduxStore/selectors/helpers';
 import { invalidateLoginSession } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
+import { getIsTokenExpired } from 'services/nativeAuth/methods';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
@@ -32,6 +33,13 @@ export const loginSessionMiddleware: any = (store: any) => (
   if (loginTimestamp == null) {
     return setLoginExpiresAt(getNewLoginExpiresTimestamp());
   }
+
+  const nativeAuthToken = appState.loginInfo.tokenLogin?.nativeAuthToken;
+
+  if (getIsTokenExpired(nativeAuthToken)) {
+    return setLoginExpiresAt(getNewLoginExpiresTimestamp());
+  }
+
   const now = Date.now();
   const isExpired = loginTimestamp - now < 0;
   if (isExpired) {
