@@ -5,22 +5,23 @@ import { LoginButton } from '../../LoginButton/LoginButton';
 import { WithClassnameType } from '../../types';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 
-export type WalletConnectLoginButtonPropsType = WithClassnameType &
-  OnProviderLoginType & {
-    onModalOpens?: (props?: any) => void;
-    onModalCloses?: (props?: any) => void;
-    children?: ReactNode;
-    lead?: string;
-    title?: string;
-    modalClassName?: string;
-    logoutRoute?: string;
-    loginButtonText?: string;
-    buttonClassName?: string;
-    wrapContentInsideModal?: boolean;
-    hideButtonWhenModalOpens?: boolean;
-    isWalletConnectV2?: boolean;
-    disabled?: boolean;
-  };
+export interface WalletConnectLoginButtonPropsType
+  extends WithClassnameType,
+    OnProviderLoginType {
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  lead?: string;
+  title?: string;
+  modalClassName?: string;
+  logoutRoute?: string;
+  loginButtonText?: string;
+  buttonClassName?: string;
+  wrapContentInsideModal?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  isWalletConnectV2?: boolean;
+  disabled?: boolean;
+}
 
 export const WalletConnectLoginButton = ({
   children,
