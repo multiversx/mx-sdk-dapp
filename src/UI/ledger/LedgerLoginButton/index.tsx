@@ -7,18 +7,19 @@ import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
 
-export type LedgerLoginButtonPropsType = WithClassnameType &
-  OnProviderLoginType & {
-    onModalOpens?: (props?: any) => void;
-    onModalCloses?: (props?: any) => void;
-    children?: ReactNode;
-    modalClassName?: string;
-    buttonClassName?: string;
-    loginButtonText?: string;
-    wrapContentInsideModal?: boolean;
-    hideButtonWhenModalOpens?: boolean;
-    disabled?: boolean;
-  };
+export interface LedgerLoginButtonPropsType
+  extends WithClassnameType,
+    OnProviderLoginType {
+  onModalOpens?: (props?: any) => void;
+  onModalCloses?: (props?: any) => void;
+  children?: ReactNode;
+  modalClassName?: string;
+  buttonClassName?: string;
+  loginButtonText?: string;
+  wrapContentInsideModal?: boolean;
+  hideButtonWhenModalOpens?: boolean;
+  disabled?: boolean;
+}
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
