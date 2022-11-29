@@ -49,9 +49,15 @@ export async function logout(
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
     const url = needsCallbackUrl ? window.location.origin : callbackUrl;
 
-    await provider.logout({ callbackUrl: url });
-
-    redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
+    if (isWalletProvider) {
+      // allow Redux clearing it's state before navigation
+      setTimeout(() => {
+        provider.logout({ callbackUrl: url });
+      });
+    } else {
+      await provider.logout({ callbackUrl: url });
+      redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
+    }
   } catch (err) {
     console.error('error logging out', err);
   }

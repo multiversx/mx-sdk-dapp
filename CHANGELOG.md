@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[2.1.16](https://github.com/ElrondNetwork/dapp-core/pull/490)] - 2022-11-29
+- [Fixed logging out with wallet provider](https://github.com/ElrondNetwork/dapp-core/pull/489)
+- [Added `status` param to `getTransactions` API](https://github.com/ElrondNetwork/dapp-core/pull/488)
+
 ## [[2.1.15](https://github.com/ElrondNetwork/dapp-core/pull/486)] - 2022-11-21
 - [Fixed sign new transaction with Ledger after cancelling transaction](https://github.com/ElrondNetwork/dapp-core/pull/485)
 ## [[2.1.14](https://github.com/ElrondNetwork/dapp-core/pull/482)] - 2022-11-21
