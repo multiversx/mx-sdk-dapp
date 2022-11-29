@@ -1,3 +1,5 @@
+import { TransactionServerStatusesEnum } from 'types';
+
 export interface GetTransactionsType {
   apiAddress: string;
   apiTimeout?: string | number;
@@ -9,6 +11,7 @@ export interface GetTransactionsType {
   condition?: 'should' | 'must';
   before?: number;
   withScResults?: boolean;
+  status?: TransactionServerStatusesEnum;
   /**
    * Search in data object
    */
