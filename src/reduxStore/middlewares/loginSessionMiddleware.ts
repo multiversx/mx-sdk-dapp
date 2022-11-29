@@ -35,8 +35,9 @@ export const loginSessionMiddleware: any = (store: any) => (
   }
 
   const nativeAuthToken = appState.loginInfo.tokenLogin?.nativeAuthToken;
+  const isNativeAuthTokenExpired = getIsTokenExpired(nativeAuthToken);
 
-  if (getIsTokenExpired(nativeAuthToken)) {
+  if (isNativeAuthTokenExpired) {
     return setLoginExpiresAt(getNewLoginExpiresTimestamp());
   }
 
