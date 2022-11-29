@@ -1,5 +1,6 @@
 import { NativeAuthType } from 'types';
 import { encodeValue, getLatestBlockHash } from './helpers';
+import { getToken, getIsTokenExpired } from './methods';
 
 export const defaultNativeAuthConfig = {
   hostname: typeof window !== 'undefined' ? window.location.hostname : '',
@@ -12,33 +13,19 @@ export const nativeAuth = ({
   apiAddress = defaultNativeAuthConfig.apiAddress,
   expirySeconds = defaultNativeAuthConfig.expirySeconds
 }: NativeAuthType) => {
-  const getToken = ({
-    address,
-    token,
-    signature
-  }: {
-    address: string;
-    token: string;
-    signature: string;
-  }): string => {
-    const encodedAddress = encodeValue(address);
-    const encodedToken = encodeValue(token);
-    const accessToken = `${encodedAddress}.${encodedToken}.${signature}`;
-    return accessToken;
-  };
-
   const initialize = async (extraInfo: any = {}): Promise<string> => {
-    const blockHash = await getLatestBlockHash(apiAddress);
+    const { hash, timestamp } = await getLatestBlockHash(apiAddress);
     const encodedExtraInfo = encodeValue(
-      JSON.stringify({ ...extraInfo, asd: 'asd' })
+      JSON.stringify({ ...extraInfo, ...(timestamp ? { timestamp } : {}) })
     );
     const host = encodeValue(hostname);
 
-    return `${host}.${blockHash}.${expirySeconds}.${encodedExtraInfo}`;
+    return `${host}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
 
   return {
     initialize,
-    getToken
+    getToken,
+    getIsTokenExpired
   };
 };
