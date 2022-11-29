@@ -20,6 +20,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
+import { useNativeAuthService } from './useNativeAuthService';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -59,11 +60,15 @@ export function useLedgerLogin({
   callbackRoute,
   token,
   addressesPerPage = defaultAddressesPerPage,
+  nativeAuth,
   onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
+  const hasNativeAuth = nativeAuth != null;
+  const nativeAuthService = useNativeAuthService(nativeAuth);
+  let tokenToSign = token;
 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -95,13 +100,15 @@ export function useLedgerLogin({
 
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
-    if (signature) {
-      dispatch(
-        setTokenLogin({
-          loginToken: String(token),
-          signature
-        })
-      );
+    if (signature && tokenToSign) {
+      hasNativeAuth
+        ? nativeAuthService.setNativeAuthTokenLogin({ address, signature })
+        : dispatch(
+            setTokenLogin({
+              loginToken: tokenToSign,
+              signature
+            })
+          );
     }
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
     optionalRedirect({
@@ -128,10 +135,14 @@ export function useLedgerLogin({
     }
     const { index } = selectedAddress;
 
-    if (token) {
+    if (hasNativeAuth) {
+      tokenToSign = await nativeAuthService.getLoginToken();
+    }
+
+    if (tokenToSign) {
       try {
         const loginInfo = await hwWalletProvider.tokenLogin({
-          token: Buffer.from(`${token}{}`),
+          token: Buffer.from(`${tokenToSign}{}`),
           addressIndex: index
         });
         dispatchLoginActions({
