@@ -10,6 +10,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types';
+import { useNativeAuthService } from './useNativeAuthService';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
@@ -24,6 +25,7 @@ export type UseWebWalletLoginReturnType = [
 export const useWebWalletLogin = ({
   callbackRoute,
   token,
+  nativeAuth,
   redirectDelayMilliseconds = 100
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
@@ -31,6 +33,12 @@ export const useWebWalletLogin = ({
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
+  const hasNativeAuth = nativeAuth != null;
+  const nativeAuthService = useNativeAuthService(nativeAuth);
+  let tokenToSign = token;
+  const nativeAuthConfig = hasNativeAuth
+    ? nativeAuthService.configuration
+    : undefined;
 
   async function initiateLogin() {
     if (isLoggedIn) {
@@ -47,9 +55,18 @@ export const useWebWalletLogin = ({
         expires: expires
       };
 
+      if (hasNativeAuth) {
+        tokenToSign = await nativeAuthService.getLoginToken();
+      }
+
       dispatch(setWalletLogin(walletLoginData));
-      if (token) {
-        dispatch(setTokenLogin({ loginToken: token }));
+      if (tokenToSign) {
+        dispatch(
+          setTokenLogin({
+            loginToken: tokenToSign,
+            nativeAuthConfig
+          })
+        );
       }
 
       const callbackUrl: string = encodeURIComponent(
@@ -57,7 +74,7 @@ export const useWebWalletLogin = ({
       );
       const loginData = {
         callbackUrl: callbackUrl,
-        ...(token && { token }),
+        ...(tokenToSign && { token: tokenToSign }),
         redirectDelayMilliseconds
       };
 

@@ -1,3 +1,5 @@
+import { NativeAuthConfigType } from './login.types';
+
 export interface WalletConnectSignatureType {
   id?: number;
   jsonrpc?: string;
@@ -14,6 +16,10 @@ export interface TokenLoginType {
   loginToken: string;
   signature?: string;
   nativeAuthToken?: string;
+  /**
+   * config to be restored when web wallet provider returns url signature
+   */
+  nativeAuthConfig?: NativeAuthConfigType;
 }
 
 export * from './transactions.types';

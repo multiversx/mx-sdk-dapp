@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setLoginExpiresAt, getNewLoginExpiresTimestamp } from 'storage/local';
-import { TokenLoginType } from 'types';
+import { NativeAuthConfigType, TokenLoginType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   loginAction,
@@ -60,6 +60,19 @@ export const loginInfoSlice = createSlice({
     ) => {
       state.tokenLogin = action.payload;
     },
+
+    setTokenLoginNativeAuthConfig: (
+      state: LoginInfoStateType,
+      action: PayloadAction<{
+        nativeAuthConfig: NativeAuthConfigType;
+        loginToken: string;
+      }>
+    ) => {
+      state.tokenLogin = {
+        loginToken: action.payload.loginToken,
+        nativeAuthConfig: action.payload.nativeAuthConfig
+      };
+    },
     setTokenLoginSignature: (
       state: LoginInfoStateType,
       action: PayloadAction<string>
@@ -113,6 +126,7 @@ export const {
   setLedgerLogin,
   setTokenLogin,
   setTokenLoginSignature,
+  setTokenLoginNativeAuthConfig,
   setWalletLogin,
   invalidateLoginSession
 } = loginInfoSlice.actions;

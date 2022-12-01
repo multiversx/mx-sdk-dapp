@@ -100,16 +100,23 @@ export function useLedgerLogin({
 
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
-    if (signature && tokenToSign) {
-      hasNativeAuth
-        ? nativeAuthService.setNativeAuthTokenLogin({ address, signature })
-        : dispatch(
-            setTokenLogin({
-              loginToken: tokenToSign,
-              signature
-            })
-          );
+    if (signature && tokenToSign && !hasNativeAuth) {
+      dispatch(
+        setTokenLogin({
+          loginToken: tokenToSign,
+          signature
+        })
+      );
     }
+
+    if (signature && tokenToSign && hasNativeAuth) {
+      nativeAuthService.setNativeAuthTokenLogin({
+        address,
+        signature,
+        token: tokenToSign
+      });
+    }
+
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
     optionalRedirect({
       callbackRoute,

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
+import { useNativeAuthService } from 'hooks/login/useNativeAuthService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -19,7 +20,8 @@ import {
   walletConnectLoginSelector,
   walletLoginSelector,
   ledgerLoginSelector,
-  isLoggedInSelector
+  isLoggedInSelector,
+  tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -29,7 +31,8 @@ import {
   setLedgerAccount,
   setWalletLogin,
   setChainID,
-  setTokenLoginSignature
+  setTokenLoginSignature,
+  setTokenLogin
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -45,6 +48,7 @@ export function ProviderInitializer() {
   const network = useSelector(networkSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
+  const tokenLogin = useSelector(tokenLoginSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
@@ -55,6 +59,9 @@ export function ProviderInitializer() {
     dataEnabled: boolean;
   }>();
 
+  const hasNativeAuth = tokenLogin?.nativeAuthConfig != null;
+  const tokenToSign = tokenLogin?.loginToken;
+  const nativeAuthService = useNativeAuthService(tokenLogin?.nativeAuthConfig);
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -136,29 +143,54 @@ export function ProviderInitializer() {
   async function tryAuthenticateWalletUser() {
     const provider = newWalletProvider(network.walletAddress);
     setAccountProvider(provider);
-    if (walletLogin != null) {
-      try {
-        const address = await getAddress();
-        if (address) {
-          dispatch(
-            loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
-          );
-          const account = await getAccount(address);
-          if (account) {
-            dispatch(
-              setAccount({
-                ...account,
-                nonce: getLatestNonce(account)
-              })
-            );
-          }
-        }
-        parseWalletSignature();
-      } catch (e) {
-        console.error('Failed authenticating wallet user ', e);
-      }
-      dispatch(setWalletLogin(null));
+
+    if (walletLogin == null) {
+      return;
     }
+
+    try {
+      const address = await getAddress();
+      const { clearWalletLoginHistory, signature } = parseWalletSignature();
+
+      if (!address) {
+        return clearWalletLoginHistory();
+      }
+
+      if (signature && tokenToSign && !hasNativeAuth) {
+        dispatch(
+          setTokenLogin({
+            loginToken: tokenToSign,
+            signature
+          })
+        );
+      }
+
+      if (signature && tokenToSign && hasNativeAuth) {
+        nativeAuthService.setNativeAuthTokenLogin({
+          address,
+          signature,
+          token: tokenToSign
+        });
+      }
+
+      const account = await getAccount(address);
+      if (account) {
+        dispatch(
+          setAccount({
+            ...account,
+            nonce: getLatestNonce(account)
+          })
+        );
+      }
+
+      clearWalletLoginHistory();
+
+      dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
+    } catch (e) {
+      console.error('Failed authenticating wallet user ', e);
+    }
+
+    dispatch(setWalletLogin(null));
   }
 
   function parseWalletSignature() {
@@ -170,10 +202,10 @@ export function ProviderInitializer() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { signature, loginToken, address, ...remainingParams } = params;
 
-    if (signature) {
-      dispatch(setTokenLoginSignature(signature));
-    }
-    clearWalletLoginHistory(remainingParams);
+    return {
+      signature,
+      clearWalletLoginHistory: () => clearWalletLoginHistory(remainingParams)
+    };
   }
 
   function clearWalletLoginHistory(remainingParams: any) {
