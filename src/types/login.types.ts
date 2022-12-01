@@ -22,7 +22,7 @@ export type OnLoginRedirectType = (
   options?: OnLoginRedirectOptionsType
 ) => void;
 
-export interface NativeAuthType {
+export interface NativeAuthConfigType {
   hostname?: string;
   apiAddress?: string;
   expirySeconds?: number;
@@ -39,5 +39,5 @@ export interface OnProviderLoginType {
    * If set to `true`, will fallback on default configuration
    * If token is specified, nativeAuth will skip fetching token
    */
-  nativeAuth?: NativeAuthType | true;
+  nativeAuth?: NativeAuthConfigType | true;
 }

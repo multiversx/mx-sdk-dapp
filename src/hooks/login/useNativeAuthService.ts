@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { defaultNativeAuthConfig, nativeAuth } from 'services/nativeAuth';
-import { OnProviderLoginType, NativeAuthType } from 'types';
+import { OnProviderLoginType, NativeAuthConfigType } from 'types';
 
 export const useNativeAuthService = (
   config?: OnProviderLoginType['nativeAuth']
 ) => {
   const network = useSelector(networkSelector);
   const nativeAuthConfig = config === true ? defaultNativeAuthConfig : config;
-  const configuration: NativeAuthType = {
+  const configuration: NativeAuthConfigType = {
     hostname: nativeAuthConfig?.hostname ?? defaultNativeAuthConfig.hostname,
     expirySeconds:
       nativeAuthConfig?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
