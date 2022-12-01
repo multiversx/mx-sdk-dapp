@@ -15,10 +15,7 @@ import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import {
-  addressSelector,
-  signTransactionsCancelMessageSelector
-} from 'reduxStore/selectors';
+import { signTransactionsCancelMessageSelector } from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
@@ -32,32 +29,20 @@ import {
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
 import { getProviderType } from 'utils';
-import { getAccount } from 'utils/account/getAccount';
-import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
+import { useSetTransactionNonces } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
-
-const setTransactionNonces = (
-  latestNonce: number,
-  transactions: Array<Transaction>
-): Array<Transaction> => {
-  return transactions.map((tx: Transaction, index: number) => {
-    tx.setNonce(latestNonce + index);
-
-    return tx;
-  });
-};
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
-  const address = useSelector(addressSelector);
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
+  const setTransactionNonces = useSetTransactionNonces();
 
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
@@ -223,20 +208,18 @@ export const useSignTransactions = () => {
     savedCallback.current = callbackRoute || window.location.pathname;
 
     try {
-      const account = await getAccount(address);
-      if (account == null) {
-        return;
-      }
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const latestNonce = getLatestNonce(account);
-      const mappedTransactions = setTransactionNonces(
-        latestNonce,
+      const transactionsWithIncrementalNonces = await setTransactionNonces(
         transactions
       );
 
       if (isSigningWithWebWallet) {
-        return signWithWallet(mappedTransactions, sessionId, callbackRoute);
+        return signWithWallet(
+          transactionsWithIncrementalNonces,
+          sessionId,
+          callbackRoute
+        );
       }
 
       signTransactionsWithProvider();
@@ -258,8 +241,10 @@ export const useSignTransactions = () => {
     }
   };
   useEffect(() => {
-    signTransactions();
-  }, [transactionsToSign]);
+    if (hasTransactions) {
+      signTransactions();
+    }
+  }, [transactionsToSign, hasTransactions]);
 
   return {
     error,
