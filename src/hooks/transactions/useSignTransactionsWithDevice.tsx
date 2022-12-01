@@ -5,10 +5,7 @@ import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import {
-  egldLabelSelector,
-  transactionsToSignSelector
-} from 'reduxStore/selectors';
+import { egldLabelSelector } from 'reduxStore/selectors';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsError
@@ -24,6 +21,7 @@ import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
+import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -50,7 +48,11 @@ export function useSignTransactionsWithDevice({
   onCancel,
   verifyReceiverScam = true
 }: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType {
-  const transactionsToSign = useSelector(transactionsToSignSelector);
+  const {
+    transactionsToSign,
+    hasTransactions
+  } = useSignTransactionsCommonData();
+
   const egldLabel = useSelector(egldLabelSelector);
   const {
     account: { address }
@@ -115,7 +117,7 @@ export function useSignTransactionsWithDevice({
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
-    transactionsToSign: transactions,
+    transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),
     onCancel: handleCancel,

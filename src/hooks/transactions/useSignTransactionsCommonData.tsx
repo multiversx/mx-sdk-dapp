@@ -1,7 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { Transaction } from '@elrondnetwork/erdjs/out';
 import { TRANSACTION_STATUS_TOAST_ID } from 'constants/index';
+import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 
@@ -16,18 +18,39 @@ import {
   removeCustomToast,
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
+import { useSetTransactionNonces } from './helpers';
 
 export const useSignTransactionsCommonData = () => {
   const dispatch = useDispatch();
   const { provider } = useGetAccountProvider();
+  const { nonce } = useGetAccount();
   const [error, setError] = useState<string | null>(null);
+  const [hasTransactions, setHasTransactions] = useState<boolean>();
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
 
+  const setTransactionNonces = useSetTransactionNonces();
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
   );
 
-  const hasTransactions = Boolean(transactionsToSign?.transactions);
+  const updateTransactionNonces = async () => {
+    const hasTransactionsToSign = Boolean(transactionsToSign?.transactions);
+    const transactionsWithFixedNonce = transactionsToSign?.transactions ?? [];
+
+    if (hasTransactionsToSign) {
+      const transactionsWithIncrementalNonces = await setTransactionNonces(
+        transactionsWithFixedNonce
+      );
+      setTransactions(transactionsWithIncrementalNonces);
+    }
+
+    setHasTransactions(hasTransactionsToSign);
+  };
+
+  useEffect(() => {
+    updateTransactionNonces();
+  }, [transactionsToSign, nonce]);
 
   const clearTransactionStatusMessage = () => {
     setError(null);
@@ -63,6 +86,11 @@ export const useSignTransactionsCommonData = () => {
     onAbort,
     setError,
     hasTransactions,
-    transactionsToSign
+    transactionsToSign: transactionsToSign
+      ? {
+          ...transactionsToSign,
+          transactions
+        }
+      : transactionsToSign
   };
 };
