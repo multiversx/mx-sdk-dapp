@@ -9,7 +9,6 @@ import { ledgerAccountSelector } from 'reduxStore/selectors';
 import {
   setLedgerAccount,
   setLedgerLogin,
-  setTokenLogin,
   updateLedgerAccount
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -21,6 +20,7 @@ import {
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
 import { useNativeAuthService } from './useNativeAuthService';
+import { useSetTokenLogin } from './useSetTokenLogin';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -68,6 +68,7 @@ export function useLedgerLogin({
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = nativeAuth != null;
   const nativeAuthService = useNativeAuthService(nativeAuth);
+  const setTokenLogin = useSetTokenLogin();
   let tokenToSign = token;
 
   const [error, setError] = useState('');
@@ -100,24 +101,12 @@ export function useLedgerLogin({
 
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
-    if (signature && tokenToSign && !hasNativeAuth) {
-      dispatch(
-        setTokenLogin({
-          loginToken: tokenToSign,
-          signature
-        })
-      );
-    }
-
-    if (signature && tokenToSign && hasNativeAuth) {
-      nativeAuthService.setNativeAuthTokenLogin({
-        address,
-        signature,
-        token: tokenToSign
-      });
+    if (signature && tokenToSign) {
+      setTokenLogin({ signature, address, tokenToSign });
     }
 
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
+
     optionalRedirect({
       callbackRoute,
       onLoginRedirect,

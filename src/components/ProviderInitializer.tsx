@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
-import { useNativeAuthService } from 'hooks/login/useNativeAuthService';
+import { useSetTokenLogin } from 'hooks/login/useSetTokenLogin';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -30,9 +30,7 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID,
-  setTokenLoginSignature,
-  setTokenLogin
+  setChainID
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -59,10 +57,9 @@ export function ProviderInitializer() {
     dataEnabled: boolean;
   }>();
 
-  const hasNativeAuth = tokenLogin?.nativeAuthConfig != null;
   const tokenToSign = tokenLogin?.loginToken;
-  const nativeAuthService = useNativeAuthService(tokenLogin?.nativeAuthConfig);
   const dispatch = useDispatch();
+  const setTokenLogin = useSetTokenLogin();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
     ? walletConnectLogin
@@ -156,21 +153,8 @@ export function ProviderInitializer() {
         return clearWalletLoginHistory();
       }
 
-      if (signature && tokenToSign && !hasNativeAuth) {
-        dispatch(
-          setTokenLogin({
-            loginToken: tokenToSign,
-            signature
-          })
-        );
-      }
-
-      if (signature && tokenToSign && hasNativeAuth) {
-        nativeAuthService.setNativeAuthTokenLogin({
-          address,
-          signature,
-          token: tokenToSign
-        });
+      if (signature && tokenToSign) {
+        setTokenLogin({ signature, address, tokenToSign });
       }
 
       const account = await getAccount(address);
