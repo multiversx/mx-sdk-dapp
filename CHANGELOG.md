@@ -7,19 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated WalletConnect provider to 2.1.0-beta.5](https://github.com/ElrondNetwork/dapp-core/pull/494)
+
 ## [[2.1.17](https://github.com/ElrondNetwork/dapp-core/pull/493)] - 2022-12-01
+
 - [Fixed setting incremental nonces when signing with ledger](https://github.com/ElrondNetwork/dapp-core/pull/492)
 
 ## [[2.1.16](https://github.com/ElrondNetwork/dapp-core/pull/490)] - 2022-11-29
+
 - [Fixed logging out with wallet provider](https://github.com/ElrondNetwork/dapp-core/pull/489)
 - [Added `status` param to `getTransactions` API](https://github.com/ElrondNetwork/dapp-core/pull/488)
 
 ## [[2.1.15](https://github.com/ElrondNetwork/dapp-core/pull/486)] - 2022-11-21
+
 - [Fixed sign new transaction with Ledger after cancelling transaction](https://github.com/ElrondNetwork/dapp-core/pull/485)
+
 ## [[2.1.14](https://github.com/ElrondNetwork/dapp-core/pull/482)] - 2022-11-21
+
 - [Added custom toast to for displaying components](https://github.com/ElrondNetwork/dapp-core/pull/481)
 
 ## [[2.1.13](https://github.com/ElrondNetwork/dapp-core/pull/479)] - 2022-11-17
+
 - [Changed custom toast to display transaction objects](https://github.com/ElrondNetwork/dapp-core/pull/478)
 - [Fixed the toast progress bar exceeding boundaries](https://github.com/ElrondNetwork/dapp-core/pull/477)
 
