@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[2.1.17](https://github.com/ElrondNetwork/dapp-core/pull/491)] - 2022-12-01
+## [[2.1.17](https://github.com/ElrondNetwork/dapp-core/pull/493)] - 2022-12-01
 - [Fixed setting incremental nonces when signing with ledger](https://github.com/ElrondNetwork/dapp-core/pull/492)
 
 ## [[2.1.16](https://github.com/ElrondNetwork/dapp-core/pull/490)] - 2022-11-29
