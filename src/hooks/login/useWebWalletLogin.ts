@@ -66,7 +66,7 @@ export const useWebWalletLogin = ({
       );
       const loginData = {
         callbackUrl: callbackUrl,
-        ...(token && { token: token }),
+        ...(token && { token }),
         redirectDelayMilliseconds
       };
 

@@ -234,7 +234,7 @@ export const useWalletConnectV2Login = ({
       }
 
       try {
-        await providerRef.current?.login({ approval, token: token });
+        await providerRef.current?.login({ approval, token });
       } catch (err) {
         console.warn(WalletConnectV2Error.userRejectedExisting, err);
 
@@ -289,7 +289,7 @@ export const useWalletConnectV2Login = ({
       }
 
       try {
-        await providerRef.current?.login({ approval, token: tokenToSign });
+        await providerRef.current?.login({ approval, token });
       } catch (err) {
         console.warn(WalletConnectV2Error.userRejected, err);
 

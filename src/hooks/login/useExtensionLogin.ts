@@ -63,7 +63,7 @@ export const useExtensionLogin = ({
 
       const providerLoginData = {
         callbackUrl,
-        ...(token && { token: token })
+        ...(token && { token })
       };
 
       await provider.login(providerLoginData);
