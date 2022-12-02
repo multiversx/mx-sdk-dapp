@@ -1,30 +1,53 @@
+import { useRef } from 'react';
 import { Address, SignableMessage } from '@elrondnetwork/erdjs';
 import { useGetAccount } from 'hooks/account';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors';
+import { networkSelector, tokenLoginSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { nativeAuth } from 'services/nativeAuth';
 import { getNativeAuthConfig } from 'services/nativeAuth/methods';
 import { OnProviderLoginType } from 'types';
 
-export const useNativeAuthService = (
+const getApiAddress = (
+  apiAddress: string,
   config?: OnProviderLoginType['nativeAuth']
 ) => {
-  const network = useSelector(networkSelector);
+  if (!config) {
+    return null;
+  }
+  if (config === true) {
+    return apiAddress;
+  }
+  return config.apiAddress ?? apiAddress;
+};
 
-  const apiAddress =
-    config === true
-      ? network.apiAddress
-      : config?.apiAddress ?? network.apiAddress;
+export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
+  const network = useSelector(networkSelector);
+  const tokenLogin = useSelector(tokenLoginSelector);
+  const tokenRef = useRef(tokenLogin?.loginToken);
+
+  const apiAddress = getApiAddress(network.apiAddress, config);
 
   const configuration = getNativeAuthConfig({
     ...(config === true ? {} : config),
-    apiAddress
+    ...(apiAddress ? { apiAddress } : {})
   });
+
+  const hasNativeAuth = Boolean(config);
 
   const client = nativeAuth(configuration);
   const { address } = useGetAccount();
   const dispatch = useDispatch();
+
+  const setLoginToken = (loginToken: string) => {
+    tokenRef.current = loginToken;
+    dispatch(
+      setTokenLogin({
+        loginToken,
+        ...(apiAddress ? { nativeAuthConfig: configuration } : {})
+      })
+    );
+  };
 
   const getLoginToken = async () => {
     const loginToken = await client.initialize();
@@ -34,27 +57,42 @@ export const useNativeAuthService = (
         loginToken
       })
     );
+    tokenRef.current = loginToken;
     return loginToken;
   };
 
-  const setNativeAuthTokenLogin = ({
+  const setTokenLoginInfo = ({
     address,
-    token,
     signature
   }: {
     address: string;
-    token: string;
     signature: string;
   }) => {
+    const loginToken = tokenRef.current;
+
+    if (!loginToken) {
+      throw 'LoginToken not found';
+    }
+
+    if (!hasNativeAuth) {
+      dispatch(
+        setTokenLogin({
+          loginToken,
+          signature
+        })
+      );
+      return;
+    }
+
     const nativeAuthToken = client.getToken({
       address,
-      token,
+      token: loginToken,
       signature
     });
 
     dispatch(
       setTokenLogin({
-        loginToken: token,
+        loginToken: loginToken,
         signature,
         nativeAuthToken
       })
@@ -71,22 +109,23 @@ export const useNativeAuthService = (
     ) => Promise<SignableMessage>;
   }) => {
     const loginToken = await getLoginToken();
+    tokenRef.current = loginToken;
     const messageToSign = new SignableMessage({
       address: new Address(address),
       message: Buffer.from(loginToken)
     });
     const signature = await signMessageCallback(messageToSign, {});
-    setNativeAuthTokenLogin({
+    setTokenLoginInfo({
       address,
-      token: loginToken,
       signature: (signature.toJSON() as any).signature
     });
   };
 
   return {
     configuration,
+    setLoginToken,
     getLoginToken,
-    setNativeAuthTokenLogin,
+    setTokenLoginInfo,
     refreshNativeAuthTokenLogin
   };
 };

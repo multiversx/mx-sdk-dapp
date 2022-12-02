@@ -10,7 +10,7 @@ import {
   walletConnectBridgeAddressSelector,
   walletConnectDeepLinkSelector
 } from 'reduxStore/selectors';
-import { setTokenLogin, setWalletConnectLogin } from 'reduxStore/slices';
+import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
@@ -19,8 +19,7 @@ import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
-import { useNativeAuthService } from './useNativeAuthService';
-import { useSetTokenLoginInfo } from './useSetTokenLoginInfo';
+import { useAuthService } from './useAuthService';
 
 export interface InitWalletConnectType extends OnProviderLoginType {
   logoutRoute: string;
@@ -48,8 +47,7 @@ export const useWalletConnectLogin = ({
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
   const hasNativeAuth = nativeAuth != null;
-  const nativeAuthService = useNativeAuthService(nativeAuth);
-  const setTokenLoginInfo = useSetTokenLoginInfo();
+  const authService = useAuthService(nativeAuth);
   let tokenToSign = token;
 
   const [error, setError] = useState<string>('');
@@ -169,7 +167,7 @@ export const useWalletConnectLogin = ({
       dispatch(setWalletConnectLogin(loginData));
 
       if (signature) {
-        setTokenLoginInfo({ signature, address });
+        authService.setTokenLoginInfo({ signature, address });
       }
 
       dispatch(loginAction(loginActionData));
@@ -189,7 +187,7 @@ export const useWalletConnectLogin = ({
         options: { address, signature }
       });
     } catch (err) {
-      setError('Invalid address');
+      setError('Invalid address v1');
       console.error(err);
     }
   }
@@ -240,9 +238,9 @@ export const useWalletConnectLogin = ({
     }
 
     if (hasNativeAuth) {
-      tokenToSign = await nativeAuthService.getLoginToken();
+      tokenToSign = await authService.getLoginToken();
     } else {
-      dispatch(setTokenLogin({ loginToken: tokenToSign }));
+      authService.setLoginToken(tokenToSign);
     }
 
     const wcUriWithToken = `${uri}&token=${tokenToSign}`;

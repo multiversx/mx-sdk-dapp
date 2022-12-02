@@ -1,10 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { useGetAccountInfo } from 'hooks';
-import { WithClassnameType } from '../../types';
-
 import globalStyles from 'assets/sass/main.scss';
+import { useGetAccountInfo } from 'hooks';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { tokenLoginSelector } from 'reduxStore/selectors';
+import { WithClassnameType } from '../../types';
 
 export interface ConfirmAddressPropsType extends WithClassnameType {
   token?: string;
@@ -17,6 +18,8 @@ export const ConfirmAddress = ({
   className = 'dapp-ledger-confirm-address'
 }: ConfirmAddressPropsType) => {
   const { ledgerAccount } = useGetAccountInfo();
+  const tokenLogin = useSelector(tokenLoginSelector);
+  const loginToken = tokenLogin?.loginToken ?? token;
 
   return (
     <div className={classNames(globalStyles.mAuto, className)}>
@@ -54,7 +57,7 @@ export const ConfirmAddress = ({
             {ledgerAccount ? ledgerAccount.address : ''}
           </p>
 
-          {token && (
+          {loginToken && (
             <>
               <p>and Auth Token</p>
 
@@ -65,12 +68,12 @@ export const ConfirmAddress = ({
                   globalStyles.rounded,
                   globalStyles.p2
                 )}
-              >{`${token}{}`}</p>
+              >{`${loginToken}{}`}</p>
             </>
           )}
 
           <p className={globalStyles.m0}>
-            {token
+            {loginToken
               ? 'are the one shown on your Ledger device screen now.'
               : 'is the one shown on your Ledger device screen now.'}
           </p>
@@ -79,7 +82,11 @@ export const ConfirmAddress = ({
 
           <p>
             Or, if it does not match, close this page and{' '}
-            <a href='https://help.elrond.com/en/' target='_blank'>
+            <a
+              href='https://help.elrond.com/en/'
+              target='_blank'
+              rel='noreferrer'
+            >
               contact support
             </a>
             .

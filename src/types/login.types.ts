@@ -39,5 +39,5 @@ export interface OnProviderLoginType {
    * If set to `true`, will fallback on default configuration
    * If token is specified, nativeAuth will skip fetching token
    */
-  nativeAuth?: NativeAuthConfigType | true;
+  nativeAuth?: NativeAuthConfigType | boolean;
 }

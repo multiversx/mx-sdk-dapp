@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
-import { useSetTokenLoginInfo } from 'hooks/login/useSetTokenLoginInfo';
+import { useAuthService } from 'hooks/login/useAuthService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -20,7 +20,8 @@ import {
   walletConnectLoginSelector,
   walletLoginSelector,
   ledgerLoginSelector,
-  isLoggedInSelector
+  isLoggedInSelector,
+  tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -54,9 +55,13 @@ export function ProviderInitializer() {
     version: string;
     dataEnabled: boolean;
   }>();
+  const tokenLogin = useSelector(tokenLoginSelector);
+  const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
+  const authService = useAuthService(
+    nativeAuthConfig ? nativeAuthConfig : false
+  );
 
   const dispatch = useDispatch();
-  const setTokenLoginInfo = useSetTokenLoginInfo();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
     ? walletConnectLogin
@@ -151,7 +156,7 @@ export function ProviderInitializer() {
       }
 
       if (signature) {
-        setTokenLoginInfo({ signature, address });
+        authService.setTokenLoginInfo({ signature, address });
       }
 
       const account = await getAccount(address);

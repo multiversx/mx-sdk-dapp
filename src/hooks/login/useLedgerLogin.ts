@@ -19,8 +19,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
-import { useNativeAuthService } from './useNativeAuthService';
-import { useSetTokenLoginInfo } from './useSetTokenLoginInfo';
+import { useAuthService } from './useAuthService';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -67,8 +66,7 @@ export function useLedgerLogin({
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = nativeAuth != null;
-  const nativeAuthService = useNativeAuthService(nativeAuth);
-  const setTokenLoginInfo = useSetTokenLoginInfo();
+  const authService = useAuthService(nativeAuth);
   let tokenToSign = token;
 
   const [error, setError] = useState('');
@@ -102,7 +100,7 @@ export function useLedgerLogin({
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
     if (signature) {
-      setTokenLoginInfo({ signature, address });
+      authService.setTokenLoginInfo({ signature, address });
     }
 
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
@@ -131,8 +129,10 @@ export function useLedgerLogin({
     }
     const { index } = selectedAddress;
 
+    console.log({ hasNativeAuth });
+
     if (hasNativeAuth) {
-      tokenToSign = await nativeAuthService.getLoginToken();
+      tokenToSign = await authService.getLoginToken();
     }
 
     if (tokenToSign) {

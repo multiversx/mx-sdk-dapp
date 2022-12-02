@@ -13,8 +13,7 @@ import {
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { useNativeAuthService } from './useNativeAuthService';
-import { useSetTokenLoginInfo } from './useSetTokenLoginInfo';
+import { useAuthService } from './useAuthService';
 
 export type UseExtensionLoginReturnType = [
   InitiateLoginFunctionType,
@@ -30,8 +29,7 @@ export const useExtensionLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
-  const nativeAuthService = useNativeAuthService(nativeAuth);
-  const setTokenLoginInfo = useSetTokenLoginInfo();
+  const authService = useAuthService(nativeAuth);
   let tokenToSign = token;
 
   const dispatch = useDispatch();
@@ -60,7 +58,7 @@ export const useExtensionLogin = ({
       );
 
       if (hasNativeAuth) {
-        tokenToSign = await nativeAuthService.getLoginToken();
+        tokenToSign = await authService.getLoginToken();
       }
 
       const providerLoginData = {
@@ -80,8 +78,13 @@ export const useExtensionLogin = ({
         return;
       }
 
-      if (signature && tokenToSign) {
-        setTokenLoginInfo({ signature, address, token: tokenToSign });
+      // console.log({ signature, address, tokenToSign });
+
+      if (signature) {
+        authService.setTokenLoginInfo({
+          signature,
+          address
+        });
       }
 
       dispatch(

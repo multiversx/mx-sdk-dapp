@@ -29,7 +29,8 @@ export const LedgerLoginContainer = ({
   wrapContentInsideModal = true,
   onClose,
   onLoginRedirect,
-  token
+  token,
+  nativeAuth
 }: LedgerLoginContainerPropsType) => {
   const classes = {
     spinner: classNames(globalStyles.textPrimary, 'fa-spin')
@@ -49,7 +50,7 @@ export const LedgerLoginContainer = ({
       startIndex,
       selectedAddress
     }
-  ] = useLedgerLogin({ callbackRoute, token, onLoginRedirect });
+  ] = useLedgerLogin({ callbackRoute, token, onLoginRedirect, nativeAuth });
 
   function getContent() {
     if (isLoading) {
