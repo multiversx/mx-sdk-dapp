@@ -41,14 +41,14 @@ export const useWalletConnectLogin = ({
   logoutRoute,
   callbackRoute,
   nativeAuth,
-  token,
+  token: tokenToSign,
   onLoginRedirect
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
   const hasNativeAuth = nativeAuth != null;
   const authService = useAuthService(nativeAuth);
-  let tokenToSign = token;
+  let token = tokenToSign;
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
@@ -81,7 +81,7 @@ export const useWalletConnectLogin = ({
 
   useUpdateEffect(() => {
     generateWcUri();
-  }, [token]);
+  }, [tokenToSign]);
 
   useUpdateEffect(() => {
     providerRef.current = provider;
@@ -232,18 +232,18 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    if (!tokenToSign) {
+    if (!token) {
       setWcUri(uri);
       return;
     }
 
     if (hasNativeAuth) {
-      tokenToSign = await authService.getLoginToken();
+      token = await authService.getLoginToken();
     } else {
-      authService.setLoginToken(tokenToSign);
+      authService.setLoginToken(token);
     }
 
-    const wcUriWithToken = `${uri}&token=${tokenToSign}`;
+    const wcUriWithToken = `${uri}&token=${token}`;
 
     setWcUri(wcUriWithToken);
   }

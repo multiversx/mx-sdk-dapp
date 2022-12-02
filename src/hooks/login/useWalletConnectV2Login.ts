@@ -63,14 +63,14 @@ export type WalletConnectV2LoginHookReturnType = [
 export const useWalletConnectV2Login = ({
   callbackRoute,
   logoutRoute,
-  token,
+  token: tokenToSign,
   nativeAuth,
   onLoginRedirect
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
   const authService = useAuthService(nativeAuth);
-  let tokenToSign = token;
+  let token = tokenToSign;
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
@@ -99,7 +99,7 @@ export const useWalletConnectV2Login = ({
 
   useUpdateEffect(() => {
     generateWcUri();
-  }, [token]);
+  }, [tokenToSign]);
 
   useUpdateEffect(() => {
     providerRef.current = provider;
@@ -228,13 +228,13 @@ export const useWalletConnectV2Login = ({
       });
 
       if (hasNativeAuth) {
-        tokenToSign = await authService.getLoginToken();
-      } else if (tokenToSign) {
-        authService.setLoginToken(tokenToSign);
+        token = await authService.getLoginToken();
+      } else if (token) {
+        authService.setLoginToken(token);
       }
 
       try {
-        await providerRef.current?.login({ approval, token: tokenToSign });
+        await providerRef.current?.login({ approval, token: token });
       } catch (err) {
         console.warn(WalletConnectV2Error.userRejectedExisting, err);
 
@@ -283,13 +283,13 @@ export const useWalletConnectV2Login = ({
       setWcUri(uri);
 
       if (hasNativeAuth) {
-        tokenToSign = await authService.getLoginToken();
-      } else if (tokenToSign) {
-        authService.setLoginToken(tokenToSign);
+        token = await authService.getLoginToken();
+      } else if (token) {
+        authService.setLoginToken(token);
       }
 
       try {
-        await providerRef.current?.login({ approval, token });
+        await providerRef.current?.login({ approval, token: tokenToSign });
       } catch (err) {
         console.warn(WalletConnectV2Error.userRejected, err);
 

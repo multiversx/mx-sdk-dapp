@@ -22,7 +22,7 @@ export type UseExtensionLoginReturnType = [
 
 export const useExtensionLogin = ({
   callbackRoute,
-  token,
+  token: tokenToSign,
   nativeAuth,
   onLoginRedirect
 }: OnProviderLoginType): UseExtensionLoginReturnType => {
@@ -30,7 +30,7 @@ export const useExtensionLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
   const authService = useAuthService(nativeAuth);
-  let tokenToSign = token;
+  let token = tokenToSign;
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
@@ -58,12 +58,12 @@ export const useExtensionLogin = ({
       );
 
       if (hasNativeAuth) {
-        tokenToSign = await authService.getLoginToken();
+        token = await authService.getLoginToken();
       }
 
       const providerLoginData = {
         callbackUrl,
-        ...(tokenToSign && { token: tokenToSign })
+        ...(token && { token: token })
       };
 
       await provider.login(providerLoginData);

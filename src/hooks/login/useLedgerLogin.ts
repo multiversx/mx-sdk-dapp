@@ -57,7 +57,7 @@ export type LedgerLoginHookReturnType = [
 
 export function useLedgerLogin({
   callbackRoute,
-  token,
+  token: tokenToSign,
   addressesPerPage = defaultAddressesPerPage,
   nativeAuth,
   onLoginRedirect
@@ -67,7 +67,7 @@ export function useLedgerLogin({
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = nativeAuth != null;
   const authService = useAuthService(nativeAuth);
-  let tokenToSign = token;
+  let token = tokenToSign;
 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -130,13 +130,13 @@ export function useLedgerLogin({
     const { index } = selectedAddress;
 
     if (hasNativeAuth) {
-      tokenToSign = await authService.getLoginToken();
+      token = await authService.getLoginToken();
     }
 
-    if (tokenToSign) {
+    if (token) {
       try {
         const loginInfo = await hwWalletProvider.tokenLogin({
-          token: Buffer.from(`${tokenToSign}{}`),
+          token: Buffer.from(`${token}{}`),
           addressIndex: index
         });
         dispatchLoginActions({
