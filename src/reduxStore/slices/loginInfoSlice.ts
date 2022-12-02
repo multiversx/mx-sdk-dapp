@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setLoginExpiresAt, getNewLoginExpiresTimestamp } from 'storage/local';
-import { NativeAuthConfigType, TokenLoginType } from 'types';
+import { TokenLoginType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   loginAction,

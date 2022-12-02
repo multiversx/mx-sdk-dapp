@@ -5,7 +5,6 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { setTokenLogin } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,

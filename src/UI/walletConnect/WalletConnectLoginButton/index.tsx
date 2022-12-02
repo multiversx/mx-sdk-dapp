@@ -37,6 +37,7 @@ export const WalletConnectLoginButton = ({
   modalClassName,
   lead = 'Scan the QR code using Maiar',
   token,
+  nativeAuth,
   hideButtonWhenModalOpens = false,
   isWalletConnectV2 = false,
   onLoginRedirect,
@@ -80,6 +81,7 @@ export const WalletConnectLoginButton = ({
           className={modalClassName}
           logoutRoute={logoutRoute}
           lead={lead}
+          nativeAuth={nativeAuth}
           wrapContentInsideModal={wrapContentInsideModal}
           isWalletConnectV2={isWalletConnectV2}
           onClose={handleCloseModal}

@@ -17,11 +17,7 @@ import {
   walletConnectV2ProjectIdSelector,
   walletConnectV2RelaySelector
 } from 'reduxStore/selectors/networkConfigSelectors';
-import {
-  setTokenLogin,
-  setTokenLoginSignature,
-  setWalletConnectLogin
-} from 'reduxStore/slices';
+import { setTokenLogin, setWalletConnectLogin } from 'reduxStore/slices';
 import {
   LoginMethodsEnum,
   DappCoreWCV2CustomMethodsEnum
@@ -31,6 +27,8 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
+import { useNativeAuthService } from './useNativeAuthService';
+import { useSetTokenLoginInfo } from './useSetTokenLoginInfo';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -67,9 +65,14 @@ export const useWalletConnectV2Login = ({
   callbackRoute,
   logoutRoute,
   token,
+  nativeAuth,
   onLoginRedirect
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
+  const hasNativeAuth = nativeAuth != null;
+  const nativeAuthService = useNativeAuthService(nativeAuth);
+  const setTokenLoginInfo = useSetTokenLoginInfo();
+  let tokenToSign = token;
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
@@ -146,7 +149,6 @@ export const useWalletConnectV2Login = ({
       }
 
       const signature = await provider.getSignature();
-      const hasSignature = Boolean(signature);
       const loginActionData = {
         address: address,
         loginMethod: LoginMethodsEnum.walletconnectv2
@@ -158,11 +160,10 @@ export const useWalletConnectV2Login = ({
         callbackRoute: callbackRoute ?? window.location.href
       };
 
-      if (hasSignature) {
-        dispatch(setWalletConnectLogin(loginData));
-        dispatch(setTokenLoginSignature(signature));
-      } else {
-        dispatch(setWalletConnectLogin(loginData));
+      dispatch(setWalletConnectLogin(loginData));
+
+      if (signature) {
+        setTokenLoginInfo({ signature, address });
       }
 
       dispatch(loginAction(loginActionData));
@@ -227,12 +228,15 @@ export const useWalletConnectV2Login = ({
         topic: pairing.topic,
         methods: dappMethods
       });
-      if (token) {
-        dispatch(setTokenLogin({ loginToken: token }));
+
+      if (hasNativeAuth) {
+        tokenToSign = await nativeAuthService.getLoginToken();
+      } else if (tokenToSign) {
+        dispatch(setTokenLogin({ loginToken: tokenToSign }));
       }
 
       try {
-        await providerRef.current?.login({ approval, token });
+        await providerRef.current?.login({ approval, token: tokenToSign });
       } catch (err) {
         console.warn(WalletConnectV2Error.userRejectedExisting, err);
 
@@ -279,8 +283,11 @@ export const useWalletConnectV2Login = ({
       }
 
       setWcUri(uri);
-      if (token) {
-        dispatch(setTokenLogin({ loginToken: token }));
+
+      if (hasNativeAuth) {
+        tokenToSign = await nativeAuthService.getLoginToken();
+      } else if (tokenToSign) {
+        dispatch(setTokenLogin({ loginToken: tokenToSign }));
       }
 
       try {
