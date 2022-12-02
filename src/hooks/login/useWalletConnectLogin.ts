@@ -19,7 +19,7 @@ import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
-import { useAuthService } from './useAuthService';
+import { useLoginService } from './useLoginService';
 
 export interface InitWalletConnectType extends OnProviderLoginType {
   logoutRoute: string;
@@ -47,7 +47,7 @@ export const useWalletConnectLogin = ({
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
   const hasNativeAuth = nativeAuth != null;
-  const authService = useAuthService(nativeAuth);
+  const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
 
   const [error, setError] = useState<string>('');
@@ -167,7 +167,7 @@ export const useWalletConnectLogin = ({
       dispatch(setWalletConnectLogin(loginData));
 
       if (signature) {
-        authService.setTokenLoginInfo({ signature, address });
+        loginService.setTokenLoginInfo({ signature, address });
       }
 
       dispatch(loginAction(loginActionData));
@@ -238,9 +238,9 @@ export const useWalletConnectLogin = ({
     }
 
     if (hasNativeAuth) {
-      token = await authService.getLoginToken();
+      token = await loginService.getNativeAuthLoginToken();
     }
-    authService.setLoginToken(token);
+    loginService.setLoginToken(token);
 
     const wcUriWithToken = `${uri}&token=${token}`;
 

@@ -10,7 +10,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types';
-import { useAuthService } from './useAuthService';
+import { useLoginService } from './useLoginService';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
@@ -34,7 +34,7 @@ export const useWebWalletLogin = ({
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = Boolean(nativeAuth);
-  const authService = useAuthService(nativeAuth);
+  const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
 
   async function initiateLogin() {
@@ -53,11 +53,11 @@ export const useWebWalletLogin = ({
       };
 
       if (hasNativeAuth) {
-        token = await authService.getLoginToken();
+        token = await loginService.getNativeAuthLoginToken();
       }
 
       if (token) {
-        authService.setLoginToken(token);
+        loginService.setLoginToken(token);
       }
 
       dispatch(setWalletLogin(walletLoginData));

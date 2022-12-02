@@ -27,7 +27,7 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
-import { useAuthService } from './useAuthService';
+import { useLoginService } from './useLoginService';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -69,7 +69,7 @@ export const useWalletConnectV2Login = ({
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
-  const authService = useAuthService(nativeAuth);
+  const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
 
   const [error, setError] = useState<string>('');
@@ -161,7 +161,7 @@ export const useWalletConnectV2Login = ({
       dispatch(setWalletConnectLogin(loginData));
 
       if (signature) {
-        authService.setTokenLoginInfo({ signature, address });
+        loginService.setTokenLoginInfo({ signature, address });
       }
 
       dispatch(loginAction(loginActionData));
@@ -228,10 +228,10 @@ export const useWalletConnectV2Login = ({
       });
 
       if (hasNativeAuth) {
-        token = await authService.getLoginToken();
+        token = await loginService.getNativeAuthLoginToken();
       }
       if (token) {
-        authService.setLoginToken(token);
+        loginService.setLoginToken(token);
       }
 
       try {
@@ -284,11 +284,11 @@ export const useWalletConnectV2Login = ({
       setWcUri(uri);
 
       if (hasNativeAuth) {
-        token = await authService.getLoginToken();
+        token = await loginService.getNativeAuthLoginToken();
       }
 
       if (token) {
-        authService.setLoginToken(token);
+        loginService.setLoginToken(token);
       }
 
       try {

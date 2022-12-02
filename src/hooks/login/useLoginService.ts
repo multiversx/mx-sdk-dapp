@@ -21,7 +21,7 @@ const getApiAddress = (
   return config.apiAddress ?? apiAddress;
 };
 
-export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
+export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
   const network = useSelector(networkSelector);
   const tokenLogin = useSelector(tokenLoginSelector);
   const tokenRef = useRef(tokenLogin?.loginToken);
@@ -49,7 +49,7 @@ export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
     );
   };
 
-  const getLoginToken = async () => {
+  const getNativeAuthLoginToken = async () => {
     const loginToken = await client.initialize();
     return loginToken;
   };
@@ -101,7 +101,7 @@ export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
       options: Record<any, any>
     ) => Promise<SignableMessage>;
   }) => {
-    const loginToken = await getLoginToken();
+    const loginToken = await getNativeAuthLoginToken();
     tokenRef.current = loginToken;
     const messageToSign = new SignableMessage({
       address: new Address(address),
@@ -117,7 +117,7 @@ export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
   return {
     configuration,
     setLoginToken,
-    getLoginToken,
+    getNativeAuthLoginToken,
     setTokenLoginInfo,
     refreshNativeAuthTokenLogin
   };

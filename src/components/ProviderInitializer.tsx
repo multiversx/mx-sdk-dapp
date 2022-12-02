@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
-import { useAuthService } from 'hooks/login/useAuthService';
+import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -57,7 +57,7 @@ export function ProviderInitializer() {
   }>();
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
-  const authService = useAuthService(
+  const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
 
@@ -156,7 +156,7 @@ export function ProviderInitializer() {
       }
 
       if (signature) {
-        authService.setTokenLoginInfo({ signature, address });
+        loginService.setTokenLoginInfo({ signature, address });
       }
 
       const account = await getAccount(address);
