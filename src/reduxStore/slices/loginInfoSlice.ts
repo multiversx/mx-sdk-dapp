@@ -61,18 +61,6 @@ export const loginInfoSlice = createSlice({
       state.tokenLogin = action.payload;
     },
 
-    setTokenLoginNativeAuthConfig: (
-      state: LoginInfoStateType,
-      action: PayloadAction<{
-        nativeAuthConfig: NativeAuthConfigType;
-        loginToken: string;
-      }>
-    ) => {
-      state.tokenLogin = {
-        loginToken: action.payload.loginToken,
-        nativeAuthConfig: action.payload.nativeAuthConfig
-      };
-    },
     setTokenLoginSignature: (
       state: LoginInfoStateType,
       action: PayloadAction<string>
@@ -126,7 +114,6 @@ export const {
   setLedgerLogin,
   setTokenLogin,
   setTokenLoginSignature,
-  setTokenLoginNativeAuthConfig,
   setWalletLogin,
   invalidateLoginSession
 } = loginInfoSlice.actions;

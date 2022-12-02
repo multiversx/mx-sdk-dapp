@@ -2,10 +2,7 @@ import { Address, SignableMessage } from '@elrondnetwork/erdjs';
 import { useGetAccount } from 'hooks/account';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
-import {
-  setTokenLogin,
-  setTokenLoginNativeAuthConfig
-} from 'reduxStore/slices';
+import { setTokenLogin } from 'reduxStore/slices';
 import { nativeAuth } from 'services/nativeAuth';
 import { getNativeAuthConfig } from 'services/nativeAuth/methods';
 import { OnProviderLoginType } from 'types';
@@ -32,7 +29,7 @@ export const useNativeAuthService = (
   const getLoginToken = async () => {
     const loginToken = await client.initialize();
     dispatch(
-      setTokenLoginNativeAuthConfig({
+      setTokenLogin({
         nativeAuthConfig: configuration,
         loginToken
       })
