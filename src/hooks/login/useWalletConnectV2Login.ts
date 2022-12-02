@@ -229,7 +229,8 @@ export const useWalletConnectV2Login = ({
 
       if (hasNativeAuth) {
         token = await authService.getLoginToken();
-      } else if (token) {
+      }
+      if (token) {
         authService.setLoginToken(token);
       }
 
@@ -284,7 +285,9 @@ export const useWalletConnectV2Login = ({
 
       if (hasNativeAuth) {
         token = await authService.getLoginToken();
-      } else if (token) {
+      }
+
+      if (token) {
         authService.setLoginToken(token);
       }
 

@@ -131,6 +131,7 @@ export function useLedgerLogin({
 
     if (hasNativeAuth) {
       token = await authService.getLoginToken();
+      authService.setLoginToken(token);
     }
 
     if (token) {

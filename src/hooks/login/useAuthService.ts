@@ -51,13 +51,6 @@ export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
 
   const getLoginToken = async () => {
     const loginToken = await client.initialize();
-    dispatch(
-      setTokenLogin({
-        nativeAuthConfig: configuration,
-        loginToken
-      })
-    );
-    tokenRef.current = loginToken;
     return loginToken;
   };
 
@@ -71,7 +64,7 @@ export const useAuthService = (config?: OnProviderLoginType['nativeAuth']) => {
     const loginToken = tokenRef.current;
 
     if (!loginToken) {
-      throw 'LoginToken not found';
+      throw 'Token not found. Call `setLoginToken` first.';
     }
 
     if (!hasNativeAuth) {

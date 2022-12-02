@@ -56,10 +56,11 @@ export const useWebWalletLogin = ({
         token = await authService.getLoginToken();
       }
 
-      dispatch(setWalletLogin(walletLoginData));
       if (token) {
         authService.setLoginToken(token);
       }
+
+      dispatch(setWalletLogin(walletLoginData));
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`
