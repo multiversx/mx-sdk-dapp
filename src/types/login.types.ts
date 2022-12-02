@@ -37,7 +37,6 @@ export interface OnProviderLoginType {
   onLoginRedirect?: OnLoginRedirectType;
   /**
    * If set to `true`, will fallback on default configuration
-   * If token is specified, nativeAuth will skip fetching token
    */
   nativeAuth?: NativeAuthConfigType | boolean;
 }

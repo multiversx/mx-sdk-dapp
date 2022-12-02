@@ -187,7 +187,7 @@ export const useWalletConnectLogin = ({
         options: { address, signature }
       });
     } catch (err) {
-      setError('Invalid address v1');
+      setError('Invalid address');
       console.error(err);
     }
   }

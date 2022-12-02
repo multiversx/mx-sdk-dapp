@@ -78,8 +78,6 @@ export const useExtensionLogin = ({
         return;
       }
 
-      // console.log({ signature, address, tokenToSign });
-
       if (signature) {
         authService.setTokenLoginInfo({
           signature,

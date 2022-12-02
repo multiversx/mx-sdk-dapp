@@ -129,8 +129,6 @@ export function useLedgerLogin({
     }
     const { index } = selectedAddress;
 
-    console.log({ hasNativeAuth });
-
     if (hasNativeAuth) {
       tokenToSign = await authService.getLoginToken();
     }

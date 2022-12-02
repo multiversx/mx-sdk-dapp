@@ -30,7 +30,7 @@ import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useAuthService } from './useAuthService';
 
 export enum WalletConnectV2Error {
-  invalidAddress = 'Invalid address v2',
+  invalidAddress = 'Invalid address',
   invalidConfig = 'Invalid WalletConnect setup',
   invalidTopic = 'Expired connection',
   sessionExpired = 'Unable to connect to existing session',
