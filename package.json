@@ -11,6 +11,9 @@
   "engines": {
     "node": ">=16"
   },
+  "publishConfig": {
+    "@maximechbt:registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "start": "yarn watch",
     "build:types": "tsc --project tsconfig.json",
