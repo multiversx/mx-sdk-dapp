@@ -2,26 +2,25 @@ import React from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
 
+import { OnProviderLoginType } from '../../../types';
+import { WithClassnameType } from '../../types';
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
-import { WithClassnameType } from '../../types';
-
-import globalStyles from 'assets/sass/main.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
-export interface LedgerLoginContainerPropsType extends WithClassnameType {
-  callbackRoute?: string;
+export interface LedgerLoginContainerPropsType
+  extends OnProviderLoginType,
+    WithClassnameType {
   wrapContentInsideModal?: boolean;
-  token?: string;
   onClose?: () => void;
-  onLoginRedirect?: (callbackRoute: string) => void;
 }
 
 export const LedgerLoginContainer = ({

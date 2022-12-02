@@ -36,6 +36,7 @@ export const useWebWalletLogin = ({
   const hasNativeAuth = nativeAuth != null;
   const nativeAuthService = useNativeAuthService(nativeAuth);
   let tokenToSign = token;
+
   const nativeAuthConfig = hasNativeAuth
     ? nativeAuthService.configuration
     : undefined;

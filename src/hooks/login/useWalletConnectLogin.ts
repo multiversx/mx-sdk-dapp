@@ -10,11 +10,7 @@ import {
   walletConnectBridgeAddressSelector,
   walletConnectDeepLinkSelector
 } from 'reduxStore/selectors';
-import {
-  setTokenLogin,
-  setTokenLoginSignature,
-  setWalletConnectLogin
-} from 'reduxStore/slices';
+import { setTokenLogin, setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
@@ -23,6 +19,8 @@ import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
+import { useNativeAuthService } from './useNativeAuthService';
+import { useSetTokenLoginInfo } from './useSetTokenLoginInfo';
 
 export interface InitWalletConnectType extends OnProviderLoginType {
   logoutRoute: string;
@@ -43,11 +41,16 @@ export type WalletConnectLoginHookReturnType = [
 export const useWalletConnectLogin = ({
   logoutRoute,
   callbackRoute,
+  nativeAuth,
   token,
   onLoginRedirect
 }: InitWalletConnectType): WalletConnectLoginHookReturnType => {
   const dispatch = useDispatch();
   const heartbeatInterval = 15000;
+  const hasNativeAuth = nativeAuth != null;
+  const nativeAuthService = useNativeAuthService(nativeAuth);
+  const setTokenLoginInfo = useSetTokenLoginInfo();
+  let tokenToSign = token;
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
@@ -152,7 +155,6 @@ export const useWalletConnectLogin = ({
       }
 
       const signature = await provider.getSignature();
-      const hasSignature = Boolean(signature);
       const loginActionData = {
         address: address,
         loginMethod: LoginMethodsEnum.walletconnect
@@ -164,12 +166,12 @@ export const useWalletConnectLogin = ({
         callbackRoute: callbackRoute ?? window.location.href
       };
 
-      if (hasSignature) {
-        dispatch(setWalletConnectLogin(loginData));
-        dispatch(setTokenLoginSignature(signature));
-      } else {
-        dispatch(setWalletConnectLogin(loginData));
+      dispatch(setWalletConnectLogin(loginData));
+
+      if (signature) {
+        setTokenLoginInfo({ signature, address });
       }
+
       dispatch(loginAction(loginActionData));
 
       provider.walletConnector.on('heartbeat', () => {
@@ -232,15 +234,20 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    if (!token) {
+    if (!tokenToSign) {
       setWcUri(uri);
       return;
     }
 
-    const wcUriWithToken = `${uri}&token=${token}`;
+    if (hasNativeAuth) {
+      tokenToSign = await nativeAuthService.getLoginToken();
+    } else {
+      dispatch(setTokenLogin({ loginToken: tokenToSign }));
+    }
+
+    const wcUriWithToken = `${uri}&token=${tokenToSign}`;
 
     setWcUri(wcUriWithToken);
-    dispatch(setTokenLogin({ loginToken: token }));
   }
 
   const loginFailed = Boolean(error);

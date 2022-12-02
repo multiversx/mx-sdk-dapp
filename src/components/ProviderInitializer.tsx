@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
-import { useSetTokenLogin } from 'hooks/login/useSetTokenLogin';
+import { useSetTokenLoginInfo } from 'hooks/login/useSetTokenLoginInfo';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -20,8 +20,7 @@ import {
   walletConnectLoginSelector,
   walletLoginSelector,
   ledgerLoginSelector,
-  isLoggedInSelector,
-  tokenLoginSelector
+  isLoggedInSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -46,7 +45,6 @@ export function ProviderInitializer() {
   const network = useSelector(networkSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
-  const tokenLogin = useSelector(tokenLoginSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
@@ -57,9 +55,8 @@ export function ProviderInitializer() {
     dataEnabled: boolean;
   }>();
 
-  const tokenToSign = tokenLogin?.loginToken;
   const dispatch = useDispatch();
-  const setTokenLogin = useSetTokenLogin();
+  const setTokenLoginInfo = useSetTokenLoginInfo();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
     ? walletConnectLogin
@@ -153,8 +150,8 @@ export function ProviderInitializer() {
         return clearWalletLoginHistory();
       }
 
-      if (signature && tokenToSign) {
-        setTokenLogin({ signature, address, tokenToSign });
+      if (signature) {
+        setTokenLoginInfo({ signature, address });
       }
 
       const account = await getAccount(address);

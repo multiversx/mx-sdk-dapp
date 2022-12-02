@@ -5,6 +5,7 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
+import { setTokenLogin } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -14,7 +15,7 @@ import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { useNativeAuthService } from './useNativeAuthService';
-import { useSetTokenLogin } from './useSetTokenLogin';
+import { useSetTokenLoginInfo } from './useSetTokenLoginInfo';
 
 export type UseExtensionLoginReturnType = [
   InitiateLoginFunctionType,
@@ -31,11 +32,11 @@ export const useExtensionLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
   const nativeAuthService = useNativeAuthService(nativeAuth);
-  const setTokenLogin = useSetTokenLogin();
+  const setTokenLoginInfo = useSetTokenLoginInfo();
+  let tokenToSign = token;
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
-  let tokenToSign = token;
 
   async function initiateLogin() {
     if (isLoggedIn) {
@@ -81,7 +82,7 @@ export const useExtensionLogin = ({
       }
 
       if (signature && tokenToSign) {
-        setTokenLogin({ signature, address, tokenToSign });
+        setTokenLoginInfo({ signature, address, token: tokenToSign });
       }
 
       dispatch(

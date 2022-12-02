@@ -3,7 +3,7 @@ import { tokenLoginSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { useNativeAuthService } from './useNativeAuthService';
 
-export const useSetTokenLogin = () => {
+export const useSetTokenLoginInfo = () => {
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthService = useNativeAuthService(tokenLogin?.nativeAuthConfig);
   const dispatch = useDispatch();
@@ -12,26 +12,25 @@ export const useSetTokenLogin = () => {
   return ({
     signature,
     address,
-    tokenToSign
+    token = ''
   }: {
     signature: string;
     address: string;
-    tokenToSign: string;
+    token?: string;
   }) => {
-    if (signature && tokenToSign && !hasNativeAuth) {
+    const loginToken = tokenLogin?.loginToken ?? token;
+    if (!hasNativeAuth) {
       dispatch(
         setTokenLogin({
-          loginToken: tokenToSign,
+          loginToken,
           signature
         })
       );
-    }
-
-    if (signature && tokenToSign && hasNativeAuth) {
+    } else {
       nativeAuthService.setNativeAuthTokenLogin({
         address,
         signature,
-        token: tokenToSign
+        token: loginToken
       });
     }
   };
