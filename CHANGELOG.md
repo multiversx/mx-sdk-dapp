@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+- [Fixed web-wallet login on FireFox](https://github.com/ElrondNetwork/dapp-core/pull/497)
 ## [[2.1.18](https://github.com/ElrondNetwork/dapp-core/pull/495)] - 2022-12-01
 
 - [Updated WalletConnect provider to 2.1.0-beta.5](https://github.com/ElrondNetwork/dapp-core/pull/494)
