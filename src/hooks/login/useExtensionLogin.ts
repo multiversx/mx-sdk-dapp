@@ -5,7 +5,6 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { setTokenLogin } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -14,6 +13,7 @@ import {
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
+import { useLoginService } from './useLoginService';
 
 export type UseExtensionLoginReturnType = [
   InitiateLoginFunctionType,
@@ -22,11 +22,16 @@ export type UseExtensionLoginReturnType = [
 
 export const useExtensionLogin = ({
   callbackRoute,
-  token,
+  token: tokenToSign,
+  nativeAuth,
   onLoginRedirect
 }: OnProviderLoginType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const hasNativeAuth = nativeAuth != null;
+  const loginService = useLoginService(nativeAuth);
+  let token = tokenToSign;
+
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
 
@@ -51,6 +56,12 @@ export const useExtensionLogin = ({
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute ?? window.location.pathname}`
       );
+
+      if (hasNativeAuth) {
+        token = await loginService.getNativeAuthLoginToken();
+        loginService.setLoginToken(token);
+      }
+
       const providerLoginData = {
         callbackUrl,
         ...(token && { token })
@@ -69,12 +80,10 @@ export const useExtensionLogin = ({
       }
 
       if (signature) {
-        dispatch(
-          setTokenLogin({
-            loginToken: String(token),
-            signature
-          })
-        );
+        loginService.setTokenLoginInfo({
+          signature,
+          address
+        });
       }
 
       dispatch(
