@@ -16,5 +16,5 @@ module.exports = {
     uint8arrays: '<rootDir>/node_modules/uint8arrays/cjs/src',
     multiformats: '<rootDir>/node_modules/multiformats/cjs/src'
   },
-  setupFiles: ['<rootDir>/src/setupTests.js']
+  setupFilesAfterEnv: ['<rootDir>/src/setupTests.js']
 };

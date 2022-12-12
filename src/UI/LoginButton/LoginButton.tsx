@@ -20,6 +20,7 @@ export const LoginButton = ({
   className = 'dapp-login-button',
   btnClassName = 'dapp-default-login-button',
   disabled,
+  'data-testid': dataTestId,
   children
 }: LoginButtonPropsType) => {
   const classes = {
@@ -39,7 +40,12 @@ export const LoginButton = ({
   };
 
   return (
-    <button disabled={disabled} className={classes.wrapper} onClick={onLogin}>
+    <button
+      data-testid={dataTestId}
+      disabled={disabled}
+      className={classes.wrapper}
+      onClick={onLogin}
+    >
       {children || <span className={classes.loginText}>{text}</span>}
     </button>
   );
