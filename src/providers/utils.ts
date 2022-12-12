@@ -13,7 +13,7 @@ import { LoginMethodsEnum } from 'types/enums.types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
-export const getProviderType = <TProvider extends Record<string, string>>(
+export const getProviderType = <TProvider extends Object>(
   provider?: TProvider | null
 ): LoginMethodsEnum => {
   switch (provider?.constructor) {

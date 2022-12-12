@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
-import { setTokenLogin, setWalletLogin } from 'reduxStore/slices';
+import { setWalletLogin } from 'reduxStore/slices';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import {
@@ -10,6 +10,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types';
+import { useLoginService } from './useLoginService';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
@@ -23,7 +24,8 @@ export type UseWebWalletLoginReturnType = [
 
 export const useWebWalletLogin = ({
   callbackRoute,
-  token,
+  token: tokenToSign,
+  nativeAuth,
   redirectDelayMilliseconds = 100
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
@@ -31,6 +33,9 @@ export const useWebWalletLogin = ({
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
+  const hasNativeAuth = Boolean(nativeAuth);
+  const loginService = useLoginService(nativeAuth);
+  let token = tokenToSign;
 
   async function initiateLogin() {
     if (isLoggedIn) {
@@ -47,10 +52,15 @@ export const useWebWalletLogin = ({
         expires: expires
       };
 
-      dispatch(setWalletLogin(walletLoginData));
-      if (token) {
-        dispatch(setTokenLogin({ loginToken: token }));
+      if (hasNativeAuth) {
+        token = await loginService.getNativeAuthLoginToken();
       }
+
+      if (token) {
+        loginService.setLoginToken(token);
+      }
+
+      dispatch(setWalletLogin(walletLoginData));
 
       const callbackUrl: string = encodeURIComponent(
         `${window.location.origin}${callbackRoute}`

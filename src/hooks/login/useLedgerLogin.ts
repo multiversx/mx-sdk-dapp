@@ -9,7 +9,6 @@ import { ledgerAccountSelector } from 'reduxStore/selectors';
 import {
   setLedgerAccount,
   setLedgerLogin,
-  setTokenLogin,
   updateLedgerAccount
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -20,6 +19,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
+import { useLoginService } from './useLoginService';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure Elrond app is open';
@@ -57,13 +57,17 @@ export type LedgerLoginHookReturnType = [
 
 export function useLedgerLogin({
   callbackRoute,
-  token,
+  token: tokenToSign,
   addressesPerPage = defaultAddressesPerPage,
+  nativeAuth,
   onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
+  const hasNativeAuth = nativeAuth != null;
+  const loginService = useLoginService(nativeAuth);
+  let token = tokenToSign;
 
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -73,10 +77,8 @@ export function useLedgerLogin({
   const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [
-    selectedAddress,
-    setSelectedAddress
-  ] = useState<SelectedAddress | null>(null);
+  const [selectedAddress, setSelectedAddress] =
+    useState<SelectedAddress | null>(null);
 
   const [showAddressList, setShowAddressList] = useState(false);
 
@@ -96,14 +98,11 @@ export function useLedgerLogin({
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
     if (signature) {
-      dispatch(
-        setTokenLogin({
-          loginToken: String(token),
-          signature
-        })
-      );
+      loginService.setTokenLoginInfo({ signature, address });
     }
+
     dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.ledger }));
+
     optionalRedirect({
       callbackRoute,
       onLoginRedirect,
@@ -127,6 +126,11 @@ export function useLedgerLogin({
       return false;
     }
     const { index } = selectedAddress;
+
+    if (hasNativeAuth) {
+      token = await loginService.getNativeAuthLoginToken();
+      loginService.setLoginToken(token);
+    }
 
     if (token) {
       try {
