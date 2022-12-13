@@ -7,7 +7,7 @@ export interface GetIsTokenExpiredReturnType {
   secondsUntilExpires?: number;
 }
 
-export const getIsTokenExpired = (
+export const getTokenExpiration = (
   token?: string
 ): GetIsTokenExpiredReturnType => {
   const decodedToken = decodeNativeAuthToken(token);

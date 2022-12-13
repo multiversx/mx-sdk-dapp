@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useGetAccountInfo, useGetLoginInfo } from 'hooks';
-import { getIsTokenExpired } from 'services/nativeAuth/methods';
+import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { logout } from 'utils/logout';
 
 export const useNativeAuthLogout = () => {
@@ -12,7 +12,7 @@ export const useNativeAuthLogout = () => {
     isExpired: isNativeAuthTokenExpired,
     secondsUntilExpires,
     expiresAt
-  } = getIsTokenExpired(tokenLogin?.nativeAuthToken);
+  } = getTokenExpiration(tokenLogin?.nativeAuthToken);
 
   const plannedLogoutRef = useRef('');
   const timeoutRef = useRef<NodeJS.Timeout>();

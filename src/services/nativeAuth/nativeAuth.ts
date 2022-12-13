@@ -1,6 +1,6 @@
 import { NativeAuthConfigType } from 'types';
 import { encodeValue, getLatestBlockHash } from './helpers';
-import { getToken, getIsTokenExpired, getNativeAuthConfig } from './methods';
+import { getToken, getTokenExpiration, getNativeAuthConfig } from './methods';
 
 export const nativeAuth = (config?: NativeAuthConfigType) => {
   const { hostname, apiAddress, expirySeconds } = getNativeAuthConfig(config);
@@ -19,6 +19,6 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     getNativeAuthConfig,
     initialize,
     getToken,
-    getIsTokenExpired
+    getTokenExpiration
   };
 };
