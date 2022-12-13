@@ -4,7 +4,9 @@ import { decodeNativeAuthToken } from '../helpers/decodeNativeAuthToken';
 export const getIsTokenExpired = (token?: string) => {
   const decodedToken = decodeNativeAuthToken(token);
   if (!decodedToken) {
-    return false;
+    return {
+      isExpired: false
+    };
   }
 
   const unixNow = getUnixTimestamp();
@@ -13,12 +15,16 @@ export const getIsTokenExpired = (token?: string) => {
   const timestamp: number = extraInfo.timestamp;
 
   if (!timestamp) {
-    return false;
+    return {
+      isExpired: false
+    };
   }
 
   const expiresAt = timestamp + ttl;
 
   const isExpired = unixNow > expiresAt;
 
-  return isExpired;
+  const secondsUntilExpires = expiresAt - unixNow;
+
+  return { isExpired, expiresAt, secondsUntilExpires };
 };

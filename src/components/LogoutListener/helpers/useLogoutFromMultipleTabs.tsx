@@ -1,13 +1,12 @@
 import { useEffect } from 'react';
 import { useGetAccountInfo } from 'hooks';
 import { logout } from 'utils/logout';
-
 import { localStorageKeys } from 'utils/storage/local';
 
 const { logoutEvent } = localStorageKeys;
 const storageKey = 'storage';
 
-export const LogoutListener = () => {
+export const useLogoutFromMultipleTabs = () => {
   const { address } = useGetAccountInfo();
 
   useEffect(() => {
@@ -32,6 +31,4 @@ export const LogoutListener = () => {
       window.removeEventListener(storageKey, receiveMessage);
     };
   }, [address]);
-
-  return null;
 };
