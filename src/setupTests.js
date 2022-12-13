@@ -20,7 +20,6 @@ afterAll(() => server.close());
 
 window.scrollTo = jest.fn();
 
-// TODO: check
 jest.mock('./utils/network/getEgldLabel', () => {
   return {
     __esModule: true, // this property makes it work
@@ -49,7 +48,7 @@ jest.mock('./hooks/useGetNetworkConfig', () => {
   };
 });
 
-// resplves import error
+// resolves import error
 jest.mock(
   '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider',
   () => {
