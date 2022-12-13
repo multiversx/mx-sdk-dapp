@@ -4,12 +4,12 @@ import { LOGOUT_ACTION_NAME } from 'constants/index';
 import { deriveIsLoggedIn } from 'reduxStore/selectors/helpers';
 import { invalidateLoginSession } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
-import { getIsTokenExpired } from 'services/nativeAuth/methods';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
 import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
 
 const whitelistedActions = [LOGOUT_ACTION_NAME];
+let invalidatedSession = false;
 
 const throttledSetNewExpires = throttle(() => {
   setLoginExpiresAt(getNewLoginExpiresTimestamp());
@@ -37,21 +37,20 @@ export const loginSessionMiddleware: any =
       return setLoginExpiresAt(getNewLoginExpiresTimestamp());
     }
 
-    const nativeAuthToken = appState.loginInfo.tokenLogin?.nativeAuthToken;
-    const isNativeAuthTokenExpired = getIsTokenExpired(nativeAuthToken);
-
+    // create a unique key for this account and it's allowed session
     const now = Date.now();
     const isExpired = loginTimestamp - now < 0;
-    if (isExpired || isNativeAuthTokenExpired) {
-      return setTimeout(async () => {
-        console.log('session expired');
-        try {
-          store.dispatch(invalidateLoginSession());
-        } catch (err) {
-          console.error('error logging out', err);
-        }
+
+    if (isExpired && !invalidatedSession) {
+      setTimeout(() => {
+        invalidatedSession = true;
+        store.dispatch(invalidateLoginSession());
       }, 1000);
     } else {
+      if (invalidatedSession) {
+        invalidatedSession = false;
+      }
+
       throttledSetNewExpires();
     }
     return next(action);

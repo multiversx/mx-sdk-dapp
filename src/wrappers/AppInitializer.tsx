@@ -91,10 +91,10 @@ export function AppInitializer({
   }, [customNetworkConfig, environment]);
 
   useEffect(() => {
-    if (isLoginSessionInvalid) {
+    if (account.address && isLoginSessionInvalid) {
       logout();
     }
-  }, [isLoginSessionInvalid]);
+  }, [isLoginSessionInvalid, account.address]);
 
   return initialized ? <>{children}</> : null;
 }
