@@ -1247,12 +1247,12 @@
     "@walletconnect/utils" "2.1.4"
     bech32 "1.1.4"
 
-"@elrondnetwork/erdjs-web-wallet-provider@2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.1.1.tgz#a9653e9e34b1e77a80ef7412b21c3125367f1f2f"
-  integrity sha512-QFNPBFDSpVifui8VpD+295hzcuP6ebVV/r9ZB7mWUwqRFP+pfwuabyaG4ypapSidDOYgwHAggBi0/wlIcSiaMw==
+"@elrondnetwork/erdjs-web-wallet-provider@2.1.2":
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/@elrondnetwork/erdjs-web-wallet-provider/-/erdjs-web-wallet-provider-2.1.2.tgz#b13c7294e37ed21b4b2d9fc30e4b7dc93fab3d6e"
+  integrity sha512-GtRcrYPQQ7Rv0jA8WBBLQ9IVYSTychx4TjmHRCfr2U+XagNx6aiIWHqxW5zqLdRTAkBHLfLqcxcvSPoTh0LWCg==
   dependencies:
-    qs "6.10.1"
+    qs "6.10.3"
 
 "@elrondnetwork/erdjs@11.0.0":
   version "11.0.0"
@@ -12849,13 +12849,6 @@ qrcode@1.5.0:
     encode-utf8 "^1.0.3"
     pngjs "^5.0.0"
     yargs "^15.3.1"
-
-qs@6.10.1:
-  version "6.10.1"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
-  integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
-  dependencies:
-    side-channel "^1.0.4"
 
 qs@6.10.3:
   version "6.10.3"
