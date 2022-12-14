@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[2.2.0](https://github.com/ElrondNetwork/dapp-core/pull/500)] - 2022-12-07
+## [[2.2.0](https://github.com/ElrondNetwork/dapp-core/pull/507)] - 2022-12-14
 - [Added Axios interceptor wrapper to be used with `nativeAuth`](https://github.com/ElrondNetwork/dapp-core/pull/506)
 - [Changed `signTransactions.ts` import to resolve Next.js support](https://github.com/ElrondNetwork/dapp-core/pull/505)
 - [Upgraded `@elrondnetwork/erdjs-web-wallet-provider` to vesion 2.1.2](https://github.com/ElrondNetwork/dapp-core/pull/503)
