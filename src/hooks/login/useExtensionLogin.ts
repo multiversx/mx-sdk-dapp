@@ -59,6 +59,9 @@ export const useExtensionLogin = ({
 
       if (hasNativeAuth) {
         token = await loginService.getNativeAuthLoginToken();
+      }
+
+      if (token) {
         loginService.setLoginToken(token);
       }
 

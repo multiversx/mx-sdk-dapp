@@ -129,10 +129,10 @@ export function useLedgerLogin({
 
     if (hasNativeAuth) {
       token = await loginService.getNativeAuthLoginToken();
-      loginService.setLoginToken(token);
     }
 
     if (token) {
+      loginService.setLoginToken(token);
       try {
         const loginInfo = await hwWalletProvider.tokenLogin({
           token: Buffer.from(`${token}{}`),
