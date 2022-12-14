@@ -3,7 +3,7 @@ import { render } from '@testing-library/react';
 import { getMockTransactionByIndex } from 'UI/TransactionsTable/components/tests/getMockTransactionByIndex';
 import { TransactionAction } from '../TransactionAction';
 
-describe('TransactionInfoFee tests', () => {
+describe('TransactionAction tests', () => {
   it('should display fee', () => {
     const methods = render(
       <TransactionAction transaction={getMockTransactionByIndex(0)} />

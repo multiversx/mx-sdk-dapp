@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
+import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -19,7 +20,8 @@ import {
   walletConnectLoginSelector,
   walletLoginSelector,
   ledgerLoginSelector,
-  isLoggedInSelector
+  isLoggedInSelector,
+  tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -28,8 +30,7 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID,
-  setTokenLoginSignature
+  setChainID
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -55,6 +56,11 @@ export function ProviderInitializer() {
       version: string;
       dataEnabled: boolean;
     }>();
+  const tokenLogin = useSelector(tokenLoginSelector);
+  const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
+  const loginService = useLoginService(
+    nativeAuthConfig ? nativeAuthConfig : false
+  );
 
   const dispatch = useDispatch();
 
@@ -137,29 +143,41 @@ export function ProviderInitializer() {
   async function tryAuthenticateWalletUser() {
     const provider = newWalletProvider(network.walletAddress);
     setAccountProvider(provider);
-    if (walletLogin != null) {
-      try {
-        const address = await getAddress();
-        if (address) {
-          dispatch(
-            loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
-          );
-          const account = await getAccount(address);
-          if (account) {
-            dispatch(
-              setAccount({
-                ...account,
-                nonce: getLatestNonce(account)
-              })
-            );
-          }
-        }
-        parseWalletSignature();
-      } catch (e) {
-        console.error('Failed authenticating wallet user ', e);
-      }
-      dispatch(setWalletLogin(null));
+
+    if (walletLogin == null) {
+      return;
     }
+
+    try {
+      const address = await getAddress();
+      const { clearWalletLoginHistory, signature } = parseWalletSignature();
+
+      if (!address) {
+        return clearWalletLoginHistory();
+      }
+
+      if (signature) {
+        loginService.setTokenLoginInfo({ signature, address });
+      }
+
+      const account = await getAccount(address);
+      if (account) {
+        dispatch(
+          setAccount({
+            ...account,
+            nonce: getLatestNonce(account)
+          })
+        );
+      }
+
+      clearWalletLoginHistory();
+
+      dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
+    } catch (e) {
+      console.error('Failed authenticating wallet user ', e);
+    }
+
+    dispatch(setWalletLogin(null));
   }
 
   function parseWalletSignature() {
@@ -171,10 +189,10 @@ export function ProviderInitializer() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { signature, loginToken, address, ...remainingParams } = params;
 
-    if (signature) {
-      dispatch(setTokenLoginSignature(signature));
-    }
-    clearWalletLoginHistory(remainingParams);
+    return {
+      signature,
+      clearWalletLoginHistory: () => clearWalletLoginHistory(remainingParams)
+    };
   }
 
   function clearWalletLoginHistory(remainingParams: any) {
@@ -224,6 +242,7 @@ export function ProviderInitializer() {
     try {
       const address = await getAddress();
       const provider = ExtensionProvider.getInstance().setAddress(address);
+
       const success = await provider.init();
 
       if (success) {

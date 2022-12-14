@@ -20,11 +20,13 @@ export const WebWalletLoginButton: (
   className = 'dapp-web-wallet-login',
   callbackRoute,
   buttonClassName,
+  nativeAuth,
   loginButtonText = 'Elrond Web Wallet',
   disabled
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({
     callbackRoute,
+    nativeAuth,
     token
   });
 

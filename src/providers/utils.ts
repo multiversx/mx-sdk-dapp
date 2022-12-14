@@ -2,11 +2,10 @@ import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
-import {
-  EngineTypes,
-  WalletConnectProvider,
-  WalletConnectV2Provider
-} from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { EngineTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectProvider';
+import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
+
 import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
 import { IDappProvider } from 'types';

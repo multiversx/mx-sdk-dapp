@@ -1,5 +1,4 @@
 import BigNumber from 'bignumber.js';
-import globalStyles from 'assets/sass/main.scss';
 import { GAS_LIMIT } from 'constants/index';
 
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
@@ -43,7 +42,7 @@ export async function signTransactions({
   if (!hasSufficientFunds) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,
-      iconClassName: globalStyles.textWarning,
+      iconClassName: 'text-warning',
       title: 'Insufficient EGLD funds',
       description: 'Current EGLD balance cannot cover the transaction fees.'
     };
@@ -58,7 +57,7 @@ export async function signTransactions({
   if (!hasValidChainId) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,
-      iconClassName: globalStyles.textWarning,
+      iconClassName: 'text-warning',
       title: 'Network change detected',
       description: 'The application tried to change the transaction network'
     };

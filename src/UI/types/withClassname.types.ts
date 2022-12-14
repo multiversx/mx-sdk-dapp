@@ -5,6 +5,7 @@ import {
 
 export interface WithClassnameType {
   className?: string;
+  'data-testid'?: string;
 }
 
 export interface WithTransactionType {

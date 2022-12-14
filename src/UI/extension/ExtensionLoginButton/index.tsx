@@ -6,7 +6,8 @@ import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
-import styles from './extensionLoginButtonStyles.scss';
+import { getIsExtensionAvailable } from '../helpers';
+import styles from './extensionLoginButton.styles.scss';
 
 export interface ExtensionLoginButtonPropsType
   extends WithClassnameType,
@@ -17,6 +18,8 @@ export interface ExtensionLoginButtonPropsType
   disabled?: boolean;
 }
 
+const isExtensionAvailable = getIsExtensionAvailable();
+
 export const ExtensionLoginButton: (
   props: ExtensionLoginButtonPropsType
 ) => JSX.Element = ({
@@ -25,14 +28,17 @@ export const ExtensionLoginButton: (
   children,
   callbackRoute,
   buttonClassName,
+  nativeAuth,
   loginButtonText = 'Maiar DeFi Wallet',
   onLoginRedirect,
-  disabled
+  disabled,
+  'data-testid': dataTestId = 'extensionLoginButton'
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
     token,
-    onLoginRedirect
+    onLoginRedirect,
+    nativeAuth
   });
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
@@ -50,7 +56,7 @@ export const ExtensionLoginButton: (
     onInitiateLogin();
   };
 
-  return !window.elrondWallet ? (
+  return !isExtensionAvailable ? (
     <a
       rel='noreferrer'
       href={
@@ -81,6 +87,7 @@ export const ExtensionLoginButton: (
       btnClassName={buttonClassName}
       text={loginButtonText}
       disabled={disabled}
+      data-testid={dataTestId}
     >
       {children}
     </LoginButton>
