@@ -231,14 +231,15 @@ export const useWalletConnectLogin = ({
       return;
     }
 
+    if (hasNativeAuth) {
+      token = await loginService.getNativeAuthLoginToken();
+    }
+
     if (!token) {
       setWcUri(uri);
       return;
     }
 
-    if (hasNativeAuth) {
-      token = await loginService.getNativeAuthLoginToken();
-    }
     loginService.setLoginToken(token);
 
     const wcUriWithToken = `${uri}&token=${token}`;

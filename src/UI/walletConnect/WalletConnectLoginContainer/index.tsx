@@ -70,6 +70,7 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
+    nativeAuth,
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
