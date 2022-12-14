@@ -1,7 +1,7 @@
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import { decodeNativeAuthToken } from '../helpers/decodeNativeAuthToken';
 
-export interface GetIsTokenExpiredReturnType {
+export interface GetTokenExpirationReturnType {
   isExpired: boolean;
   expiresAt?: number;
   secondsUntilExpires?: number;
@@ -9,7 +9,7 @@ export interface GetIsTokenExpiredReturnType {
 
 export const getTokenExpiration = (
   token?: string
-): GetIsTokenExpiredReturnType => {
+): GetTokenExpirationReturnType => {
   const decodedToken = decodeNativeAuthToken(token);
   if (!decodedToken) {
     return {
