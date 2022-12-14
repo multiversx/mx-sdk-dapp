@@ -1,7 +1,6 @@
 import { RootState } from 'reduxStore/store';
-import { LoginMethodsEnum } from 'types/enums.types';
 import { addressSelector } from './accountInfoSelectors';
-import { createDeepEqualSelector } from './helpers';
+import { createDeepEqualSelector, deriveIsLoggedIn } from './helpers';
 
 export const loginInfoSelector = (state: RootState) => state.loginInfo;
 
@@ -13,8 +12,7 @@ export const loginMethodSelector = createDeepEqualSelector(
 export const isLoggedInSelector = createDeepEqualSelector(
   loginInfoSelector,
   addressSelector,
-  (state, address) =>
-    state.loginMethod != LoginMethodsEnum.none && Boolean(address)
+  (state, address) => deriveIsLoggedIn(state.loginMethod, address)
 );
 
 export const walletConnectLoginSelector = createDeepEqualSelector(
@@ -35,4 +33,9 @@ export const walletLoginSelector = createDeepEqualSelector(
 export const isLoginSessionInvalidSelector = createDeepEqualSelector(
   loginInfoSelector,
   (state) => state.isLoginSessionInvalid
+);
+
+export const tokenLoginSelector = createDeepEqualSelector(
+  loginInfoSelector,
+  (state) => state.tokenLogin
 );

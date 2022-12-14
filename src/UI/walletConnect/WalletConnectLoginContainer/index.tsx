@@ -3,29 +3,29 @@ import classNames from 'classnames';
 import QRCode from 'qrcode';
 
 import Lighting from 'assets/icons/lightning.svg';
+import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { Loader } from 'UI/Loader';
 import { ModalContainer } from 'UI/ModalContainer';
 
 import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
+import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { Pairinglist } from './PairingList';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './walletConnectLoginContainerStyles.scss';
 
-export interface WalletConnectLoginModalPropsType extends WithClassnameType {
+export interface WalletConnectLoginModalPropsType
+  extends OnProviderLoginType,
+    WithClassnameType {
   lead?: string;
   title?: string;
   legacyMessage?: string;
   logoutRoute?: string;
-  callbackRoute?: string;
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
   isWalletConnectV2?: boolean;
-  token?: string;
-  onLoginRedirect?: (callbackRoute: string) => void;
   onClose?: () => void;
 }
 
@@ -40,6 +40,7 @@ export const WalletConnectLoginContainer = ({
   wrapContentInsideModal = true,
   isWalletConnectV2 = false,
   token,
+  nativeAuth,
   onClose,
   onLoginRedirect
 }: WalletConnectLoginModalPropsType) => {
@@ -51,6 +52,7 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
+    nativeAuth,
     onLoginRedirect
   });
   const [
@@ -68,15 +70,14 @@ export const WalletConnectLoginContainer = ({
     logoutRoute,
     callbackRoute,
     token,
+    nativeAuth,
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-  const [displayWalletConnectV2, setDisplayWalletConnectV2] = useState<boolean>(
-    isWalletConnectV2
-  );
-  const [showLegacySwitch, setShowLegacySwitch] = useState<boolean>(
-    isWalletConnectV2
-  );
+  const [displayWalletConnectV2, setDisplayWalletConnectV2] =
+    useState<boolean>(isWalletConnectV2);
+  const [showLegacySwitch, setShowLegacySwitch] =
+    useState<boolean>(isWalletConnectV2);
   const isMobileDevice = isMobileEnvironment();
   const activePairings = displayWalletConnectV2
     ? wcPairings?.filter((pairing) => {

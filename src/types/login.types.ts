@@ -22,6 +22,12 @@ export type OnLoginRedirectType = (
   options?: OnLoginRedirectOptionsType
 ) => void;
 
+export interface NativeAuthConfigType {
+  hostname?: string;
+  apiAddress?: string;
+  expirySeconds?: number;
+}
+
 export interface OnProviderLoginType {
   callbackRoute?: string;
   token?: string;
@@ -29,4 +35,8 @@ export interface OnProviderLoginType {
    * If specified, `onLoginRedirect` will overwrite callbackRoute default navigation
    */
   onLoginRedirect?: OnLoginRedirectType;
+  /**
+   * If set to `true`, will fallback on default configuration
+   */
+  nativeAuth?: NativeAuthConfigType | boolean;
 }

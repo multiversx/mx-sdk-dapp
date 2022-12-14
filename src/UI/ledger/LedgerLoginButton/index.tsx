@@ -26,6 +26,7 @@ export const LedgerLoginButton: (
 ) => JSX.Element = ({
   token,
   callbackRoute,
+  nativeAuth,
   children,
   onModalOpens,
   onModalCloses,
@@ -77,6 +78,7 @@ export const LedgerLoginButton: (
           className={modalClassName}
           callbackRoute={callbackRoute}
           token={token}
+          nativeAuth={nativeAuth}
           wrapContentInsideModal={wrapContentInsideModal}
           onClose={handleCloseModal}
           onLoginRedirect={onLoginRedirect}
