@@ -292,7 +292,7 @@ you can easily import and use them.
   className='ledger-login-modal',
   wrapContentInsideModal={wrapContentInsideModal}
   redirectAfterLogin={redirectAfterLogin}
-  token={token}
+  nativeAuth
   onClose={onClose}
   onLoginRedirect={onLoginRedirect}
   />
@@ -301,6 +301,34 @@ you can easily import and use them.
 All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
 The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
 
+If you need to authenticate some requests, you can provide the `nativeAuth` flag to your login buttons. It comes as a boolean or as a configuration object. This token will be available in `useGetLoginInfo` hook later, inside `tokenLogin.nativeAuthToken`. If you need to use an interceptor for your requests, make sure to check out the implementation of `AxiosInterceptorContext`. Use it like: 
+
+```typescript
+import { AxiosInterceptorContext } from '@elrondnetwork/dapp-core/wrappers/AxiosInterceptorContext';
+```
+```jsx
+<AxiosInterceptorContext.Provider>
+      <AxiosInterceptorContext.Interceptor
+        authenticatedDomanis={['https://my-api.com']}
+      >
+        <Router>
+          <DappProvider environment={EnvironmentsEnum.devnet}>
+            <>
+              <AxiosInterceptorContext.Listener />
+              {/* 
+              // other components below
+              */}
+              <TransactionsToastList />
+              <NotificationModal />
+              <SignTransactionsModals />
+
+              <Routes>...</Routes> 
+            </>
+          </DappProvider>
+        </Router>
+      </AxiosInterceptorContext.Interceptor>
+    </AxiosInterceptorContext.Provider>
+```
 
 Another handly component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
