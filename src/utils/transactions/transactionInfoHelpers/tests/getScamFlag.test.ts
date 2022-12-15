@@ -1,7 +1,7 @@
 import { getScamFlag } from '../getScamFlag';
 
 describe('scamDetect tests', () => {
-  const output = '[Message hidden due to suspicious content - ';
+  const output = 'Message hidden due to suspicious content - ';
   const strings: { [key: string]: string[] } = {
     '👉 link.com': ['👉 link.com', ''],
     'first-link.com or 🎉 second-link.com 🎉': [
@@ -17,18 +17,24 @@ describe('scamDetect tests', () => {
       'access: 👉 www.lottery-elrond.com',
       ' - Scam report'
     ],
-    '[...] 🅻🅾🆃🆃🅴🆁🆈': ['[...] 🅻🅾🆃🆃🅴🆁🆈', 'Lottery scam report']
+    '[...] 🅻🅾🆃🆃🅴🆁🆈': ['[...] 🅻🅾🆃🆃🅴🆁🆈', 'Lottery scam report'],
+    'Cool nft': ['Cool nft', '', 'yes']
   };
   for (let i = 0; i < Object.keys(strings).length; i++) {
-    const input = Object.keys(strings)[i];
-    const [msg, reason] = strings[input];
-    test(`anonymize ${input} -> ${msg}`, () => {
-      const { output: result, stringWithLinks } = getScamFlag(input, {
-        info: reason,
-        type: msg
+    const inputMessage = Object.keys(strings)[i];
+    const [msg, reason, isNsfw] = strings[inputMessage];
+
+    test(`anonymize ${inputMessage} -> ${msg}`, () => {
+      const { message: result, textWithLinks } = getScamFlag({
+        message: inputMessage,
+        scamInfo: {
+          info: reason,
+          type: msg
+        },
+        isNsfw: Boolean(isNsfw)
       });
-      expect(result).toEqual(output + reason + ']');
-      expect(stringWithLinks).toEqual(msg);
+      expect(result).toEqual(`${output}${reason}`);
+      expect(textWithLinks).toEqual(msg);
     });
   }
 });

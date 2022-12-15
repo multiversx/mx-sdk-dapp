@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { LinkComponent, LinkComponentProps } from './anchorme.types';
+import { LinkComponent, LinkComponentProps } from './linkified.types';
 import { getProtocol, truncateText } from './utils';
 
 export interface LinkPropsType extends LinkComponentProps {

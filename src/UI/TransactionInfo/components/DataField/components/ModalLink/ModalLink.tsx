@@ -3,10 +3,9 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { DappModal } from 'UI/DappModal/components/DappModal';
-import { LinkComponentProps } from '../Anchorme/anchorme.types';
-
 import globalStyles from 'assets/sass/main.scss';
+import { DappModal } from 'UI/DappModal/components/DappModal';
+import { LinkComponentProps } from '../Linkified/linkified.types';
 
 export const ModalLink = (props: LinkComponentProps) => {
   const [show, setShow] = useState(false);
