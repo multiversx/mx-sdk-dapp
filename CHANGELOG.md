@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Changed logging in logic to allow signing custom token](https://github.com/ElrondNetwork/dapp-core/pull/509)
 - [Security issue fixed by substituting `anchorme` with linkify.js and fixed `getScamFlag` logic](https://github.com/ElrondNetwork/dapp-core/pull/508)
 
 ## [[2.2.0](https://github.com/ElrondNetwork/dapp-core/pull/507)] - 2022-12-14
