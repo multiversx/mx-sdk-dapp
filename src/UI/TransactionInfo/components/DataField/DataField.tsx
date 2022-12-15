@@ -8,7 +8,7 @@ import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/index';
 import { truncate } from 'utils/operations/truncate';
 import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
 import { useDataDecodeMethod } from 'utils/transactions/transactionInfoHelpers/useDataDecodeMethod';
-import { Anchorme, ModalLink } from './components';
+import { Linkified, ModalLink } from './components';
 
 import styles from './dataField.module.scss';
 
@@ -29,7 +29,10 @@ export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
   };
 
   const dataString = data ? Buffer.from(data, 'base64').toString() : N_A;
-  const { stringWithLinks, output, found } = getScamFlag(dataString, scamInfo);
+  const { textWithLinks, message, isSuspicious } = getScamFlag({
+    message: dataString,
+    scamInfo
+  });
 
   return (
     <>
@@ -41,23 +44,23 @@ export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
             globalStyles.mt1
           )}
         >
-          <Anchorme
+          <Linkified
             linkComponent={ModalLink}
             target='_blank'
             rel='noreferrer noopener'
           >
-            {stringWithLinks}
-          </Anchorme>
+            {textWithLinks}
+          </Linkified>
         </div>
       ) : (
         <DataDecode
-          value={truncate(output, DISPLAYED_DATA_LENGTH)}
+          value={truncate(message, DISPLAYED_DATA_LENGTH)}
           initialDecodeMethod={initialDecodeMethod}
           setDecodeMethod={setDecodeMethod}
         />
       )}
 
-      {found && (
+      {isSuspicious && (
         <a
           href='/#'
           onClick={show}
