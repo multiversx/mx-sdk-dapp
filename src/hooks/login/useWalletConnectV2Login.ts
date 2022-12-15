@@ -226,7 +226,7 @@ export const useWalletConnectV2Login = ({
         methods: dappMethods
       });
 
-      if (hasNativeAuth) {
+      if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
       }
       if (token) {
@@ -282,7 +282,7 @@ export const useWalletConnectV2Login = ({
 
       setWcUri(uri);
 
-      if (hasNativeAuth) {
+      if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
       }
 
