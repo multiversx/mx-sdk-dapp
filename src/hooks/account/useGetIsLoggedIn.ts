@@ -1,6 +1,6 @@
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { isLoggedInSelector } from 'reduxStore/selectors';
+import { useGetLoginInfo } from './useGetLoginInfo';
 
 export const useGetIsLoggedIn = () => {
-  return useSelector(isLoggedInSelector);
+  const { isLoggedIn } = useGetLoginInfo();
+  return isLoggedIn;
 };

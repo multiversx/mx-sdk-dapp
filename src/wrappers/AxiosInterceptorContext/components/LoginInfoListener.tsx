@@ -1,10 +1,12 @@
 import React, { PropsWithChildren, useEffect } from 'react';
-import { useGetAccount, useGetLoginInfo } from 'hooks';
+import { useGetAccount } from 'hooks';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { loginInfoSelector } from 'reduxStore/selectors';
 import { useAxiosInterceptorContext } from './AxiosInterceptorContextProvider';
 
 export const LoginInfoListener = ({ children }: PropsWithChildren) => {
   const { address } = useGetAccount();
-  const loginInfo = useGetLoginInfo();
+  const loginInfo = useSelector(loginInfoSelector);
 
   const { setLoginInfo, setAddress } = useAxiosInterceptorContext();
 

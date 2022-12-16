@@ -37,8 +37,6 @@ export const AxiosInterceptor = ({
 
     requestIdRef.current = axios.interceptors.request.use(
       async (config) => {
-        console.log(authenticatedDomanis);
-
         if (authenticatedDomanis.includes(String(config?.baseURL))) {
           config.headers = {
             Authorization: `Bearer ${bearerToken}`
