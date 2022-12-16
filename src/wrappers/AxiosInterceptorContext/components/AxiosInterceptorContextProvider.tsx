@@ -11,14 +11,12 @@ import { deriveIsLoggedIn } from 'reduxStore/selectors/helpers';
 import { RootState, store } from 'reduxStore/store';
 import { LoginInfoStateType } from '../../../reduxStore/slices/loginInfoSlice';
 
-export type AuthStateType = {
-  loginInfo: LoginInfoStateType & { isLoggedIn: boolean };
-};
-
-export interface AxiosInterceptorContextPropsType extends AuthStateType {
+export interface AxiosInterceptorContextPropsType {
   address?: string;
+  isLoggedIn: boolean;
   setAddress: Dispatch<SetStateAction<string | undefined>>;
-  setLoginInfo: (props: AuthStateType['loginInfo']) => void;
+  loginInfo: LoginInfoStateType;
+  setLoginInfo: (props: LoginInfoStateType) => void;
 }
 
 export interface AxiosInterceptorContextProviderPropsType {
@@ -49,18 +47,16 @@ export function AxiosInterceptorContextProvider({
 }: AxiosInterceptorContextProviderPropsType) {
   const [address, setAddress] = useState<string>();
 
-  const loginData = loginInfoSelector(appState);
-
-  const [loginInfo, setLoginInfo] = useState<AuthStateType['loginInfo']>({
-    ...loginData,
-    isLoggedIn: deriveIsLoggedIn(loginData.loginMethod, address)
-  });
+  const [loginInfo, setLoginInfo] = useState<LoginInfoStateType>(
+    loginInfoSelector(appState)
+  );
 
   const value: AxiosInterceptorContextPropsType = {
     address,
     setAddress,
+    isLoggedIn: deriveIsLoggedIn(loginInfo.loginMethod, address),
     loginInfo,
-    setLoginInfo: (data: AuthStateType['loginInfo']) => setLoginInfo(data)
+    setLoginInfo: (data: LoginInfoStateType) => setLoginInfo(data)
   };
 
   return (
@@ -71,5 +67,12 @@ export function AxiosInterceptorContextProvider({
 }
 
 export function useAxiosInterceptorContext(): AxiosInterceptorContextPropsType {
-  return useContext(AxiosInterceptorContext);
+  const context = useContext(AxiosInterceptorContext);
+
+  if (context === undefined || Object.values(context).length === 0) {
+    throw new Error(
+      'useAxiosInterceptorContext must be used within an AxiosInterceptorContextProvider'
+    );
+  }
+  return context;
 }
