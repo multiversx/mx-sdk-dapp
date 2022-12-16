@@ -87,4 +87,10 @@ describe('ExtensionLoginButton tests', () => {
       expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
+  /**
+   * TODO:
+   * - add test for unable to get block
+   * - add test for custom token sent & nativeAuth
+   * - add test for custom invalid token sent & nativeAuth
+   */
 });
