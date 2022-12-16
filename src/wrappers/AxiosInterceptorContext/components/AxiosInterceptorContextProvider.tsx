@@ -8,8 +8,8 @@ import React, {
 } from 'react';
 import { loginInfoSelector } from 'reduxStore/selectors';
 import { deriveIsLoggedIn } from 'reduxStore/selectors/helpers';
-import { LoginInfoStateType } from 'reduxStore/slices';
 import { RootState, store } from 'reduxStore/store';
+import { LoginInfoStateType } from '../../../reduxStore/slices/loginInfoSlice';
 
 export type AuthStateType = {
   loginInfo: LoginInfoStateType & { isLoggedIn: boolean };
@@ -21,7 +21,7 @@ export interface AxiosInterceptorContextPropsType extends AuthStateType {
   setLoginInfo: (props: AuthStateType['loginInfo']) => void;
 }
 
-interface AxiosInterceptorContextProviderPropsType {
+export interface AxiosInterceptorContextProviderPropsType {
   children: ReactNode;
 }
 

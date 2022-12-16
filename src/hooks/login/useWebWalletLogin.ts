@@ -52,7 +52,7 @@ export const useWebWalletLogin = ({
         expires: expires
       };
 
-      if (hasNativeAuth) {
+      if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
       }
 

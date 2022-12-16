@@ -231,7 +231,7 @@ export const useWalletConnectLogin = ({
       return;
     }
 
-    if (hasNativeAuth) {
+    if (hasNativeAuth && !token) {
       token = await loginService.getNativeAuthLoginToken();
     }
 

@@ -57,7 +57,7 @@ export const useExtensionLogin = ({
         `${window.location.origin}${callbackRoute ?? window.location.pathname}`
       );
 
-      if (hasNativeAuth) {
+      if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
       }
 
