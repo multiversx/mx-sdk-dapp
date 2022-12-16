@@ -1,4 +1,4 @@
-import anchorme from 'anchorme';
+import * as linkify from 'linkifyjs';
 
 const protocolRegex = /^((file:\/\/\/)|(https?:|ftps?:)\/\/|(mailto:))/i;
 
@@ -7,7 +7,9 @@ const hasProtocol = (input: string) => protocolRegex.test(input);
 export const getProtocol = (input: string): string => {
   if (hasProtocol(input)) return '';
 
-  return anchorme.validate.email(input) ? 'mailto:' : 'http://';
+  return linkify.find(input).some((link) => link.type === 'email')
+    ? 'mailto:'
+    : 'http://';
 };
 
 export const truncateText = (input: string, maxLength: number): string => {

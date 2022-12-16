@@ -127,7 +127,7 @@ export function useLedgerLogin({
     }
     const { index } = selectedAddress;
 
-    if (hasNativeAuth) {
+    if (hasNativeAuth && !token) {
       token = await loginService.getNativeAuthLoginToken();
     }
 

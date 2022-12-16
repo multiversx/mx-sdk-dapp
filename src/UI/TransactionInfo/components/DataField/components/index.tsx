@@ -1,2 +1,2 @@
-export * from './Anchorme';
+export * from './Linkified';
 export * from './ModalLink';

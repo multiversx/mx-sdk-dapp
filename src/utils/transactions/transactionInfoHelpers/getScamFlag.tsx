@@ -1,61 +1,77 @@
-import anchorme from 'anchorme';
-import { ScamInfoType } from 'types/account.types';
+import * as linkify from 'linkifyjs';
+import {
+  SuspiciousLinkType,
+  SuspiciousLinkPropsType,
+  TextWithLinksType
+} from 'types';
 
-const cleanLink = (input: string) =>
-  input.toLocaleLowerCase().replace(/[^\x00-\x7F]/g, '');
+export const getTextWithLinks = (text: string): TextWithLinksType => {
+  const links = linkify.find(text);
 
-export const getScamFlag = (
-  input: string,
-  scamInfo?: ScamInfoType
-): { output: string; stringWithLinks: string; found: boolean } => {
-  if (!scamInfo) {
-    return { output: input, stringWithLinks: '', found: false };
-  } else {
-    const output = `[Message hidden due to suspicious content - ${scamInfo.info}]`;
-    if (input.length > 1000) {
-      return { output, stringWithLinks: input, found: true };
-    }
-
-    const clean = cleanLink(input.normalize('NFKC'));
-    const allLinks = anchorme.list(clean);
-
-    const parts = [];
-
-    if (allLinks.length > 0) {
-      let remainingOutput = input;
-
-      allLinks.forEach((entry, index) => {
-        const { string: foundLink } = entry;
-        let firstPart = '';
-        let lastPart = '';
-        const link = foundLink;
-
-        for (let i = 0; i < remainingOutput.length; i++) {
-          const start = remainingOutput.slice(i);
-          const [newFoundLink] = anchorme.list(cleanLink(start));
-          if (newFoundLink && foundLink === newFoundLink.string) {
-            firstPart = remainingOutput.substring(0, i);
-          }
-        }
-        for (let i = input.length; i > 0; i--) {
-          const start = remainingOutput.slice(0, i);
-          const [newFoundLink] = anchorme.list(cleanLink(start));
-          if (newFoundLink && foundLink === newFoundLink.string) {
-            lastPart = remainingOutput.substring(i);
-          }
-        }
-        parts.push(firstPart);
-        parts.push(link);
-        remainingOutput = lastPart;
-
-        if (index === allLinks.length - 1) {
-          parts.push(lastPart);
-        }
-      });
-    } else {
-      parts.push(input);
-    }
-
-    return { output, stringWithLinks: parts.join(''), found: true };
+  // If no links are present in the text, return the text unmodified
+  if (!links.length) {
+    return {
+      textWithLinks: text,
+      hasLinks: false
+    };
   }
+
+  let textWithLinks = text;
+
+  // Replace the previous links in text with normalized links
+  for (const link of links) {
+    const previousLink = text.substring(link.start, link.end);
+    textWithLinks = textWithLinks.replace(previousLink, link.value);
+  }
+
+  return {
+    textWithLinks,
+    hasLinks: true
+  };
+};
+
+/**
+ * @description It checks if an asset contains suspicious info
+ * If it contains text with links inside, it contains scam info, or it is marked as NSFW,
+ * then it has suspicious info and may be a scam
+ */
+export const getScamFlag = ({
+  message,
+  scamInfo,
+  isNsfw,
+  uris,
+  messagePrefix = 'Message hidden due to suspicious content - '
+}: SuspiciousLinkPropsType): SuspiciousLinkType => {
+  const outputMessage = `${messagePrefix}${
+    scamInfo?.info ?? 'suspicious content'
+  }`;
+  const { textWithLinks, hasLinks } = getTextWithLinks(message);
+
+  if (hasLinks || isNsfw || scamInfo) {
+    return {
+      message: outputMessage,
+      textWithLinks,
+      isSuspicious: true
+    };
+  }
+
+  if (uris?.length) {
+    for (const uri of uris) {
+      const suspiciousInfo = getScamFlag({ message: uri, messagePrefix });
+
+      if (suspiciousInfo.isSuspicious) {
+        return suspiciousInfo;
+      }
+    }
+  }
+
+  if (!hasLinks && !scamInfo && !isNsfw) {
+    return {
+      message: '',
+      textWithLinks,
+      isSuspicious: false
+    };
+  }
+
+  return { message: outputMessage, textWithLinks, isSuspicious: true };
 };

@@ -1,11 +1,11 @@
 import { HTMLProps, ElementType } from 'react';
 
-export type AnchorProps = Omit<HTMLProps<HTMLAnchorElement>, 'href'> & {
+export type LinkifiedProps = Omit<HTMLProps<HTMLAnchorElement>, 'href'> & {
   truncate?: number;
 };
 
 export type LinkComponentProps = {
   href: string;
-} & AnchorProps;
+} & LinkifiedProps;
 
 export type LinkComponent = ElementType<LinkComponentProps>;

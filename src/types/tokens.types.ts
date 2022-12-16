@@ -86,6 +86,7 @@ export enum NftEnumType {
   SemiFungibleESDT = 'SemiFungibleESDT',
   MetaESDT = 'MetaESDT'
 }
+
 export interface NftType {
   identifier: string;
   collection: string;
