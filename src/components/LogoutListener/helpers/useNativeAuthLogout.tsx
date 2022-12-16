@@ -1,12 +1,14 @@
 import { useEffect, useRef } from 'react';
 import BigNumber from 'bignumber.js';
-import { useGetAccountInfo, useGetLoginInfo } from 'hooks';
+import { useGetAccountInfo } from 'hooks';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { logout } from 'utils/logout';
 
 export const useNativeAuthLogout = () => {
   const { address } = useGetAccountInfo();
-  const { tokenLogin } = useGetLoginInfo();
+  const { tokenLogin } = useSelector(loginInfoSelector);
 
   const {
     isExpired: isNativeAuthTokenExpired,
