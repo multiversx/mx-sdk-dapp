@@ -24,6 +24,7 @@ export function optionalRedirect({
       if (hasOnLoginRedirect) {
         return onLoginRedirect(callbackRoute, options);
       }
+
       if (!window.location.pathname.includes(callbackRoute)) {
         safeRedirect(callbackRoute);
       }

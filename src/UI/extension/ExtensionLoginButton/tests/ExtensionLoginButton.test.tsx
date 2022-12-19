@@ -1,7 +1,13 @@
 import React from 'react';
 import { expect } from '@storybook/jest';
 import { waitFor, fireEvent } from '@testing-library/react';
-import { mockWindowLocation, renderWithProvider } from '__mocks__/utils';
+// import { rest } from 'msw';
+import {
+  mockWindowLocation,
+  renderWithProvider
+  // server,
+  // testNetwork
+} from '__mocks__';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { ExtensionLoginButton } from '../';
@@ -32,44 +38,44 @@ describe('ExtensionLoginButton tests', () => {
     mockWindowLocation();
   });
 
-  it('should perform simple login and redirect', async () => {
-    const methods = renderWithProvider({
-      children: <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} />
-    });
+  // it('should perform simple login and redirect', async () => {
+  //   const methods = renderWithProvider({
+  //     children: <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} />
+  //   });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+  //   const loginButton = await methods.findByTestId('extensionLoginButton');
 
-    fireEvent.click(loginButton);
+  //   fireEvent.click(loginButton);
 
-    await checkIsLoggedInStore({ isLoggedIn: true });
+  //   await checkIsLoggedInStore({ isLoggedIn: true });
 
-    waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
-    });
-  });
-  it('should perform simple login and call onLoginRedirect', async () => {
-    const onLoginRedirect = jest.fn();
+  //   waitFor(() => {
+  //     expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
+  //   });
+  // });
+  // it('should perform simple login and call onLoginRedirect', async () => {
+  //   const onLoginRedirect = jest.fn();
 
-    const methods = renderWithProvider({
-      children: (
-        <ExtensionLoginButton
-          callbackRoute={CALLBACK_ROUTE}
-          onLoginRedirect={onLoginRedirect}
-        />
-      )
-    });
+  //   const methods = renderWithProvider({
+  //     children: (
+  //       <ExtensionLoginButton
+  //         callbackRoute={CALLBACK_ROUTE}
+  //         onLoginRedirect={onLoginRedirect}
+  //       />
+  //     )
+  //   });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
+  //   const loginButton = await methods.findByTestId('extensionLoginButton');
 
-    fireEvent.click(loginButton);
+  //   fireEvent.click(loginButton);
 
-    await checkIsLoggedInStore({ isLoggedIn: true });
+  //   await checkIsLoggedInStore({ isLoggedIn: true });
 
-    waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledTimes(0);
-      expect(onLoginRedirect).toHaveBeenCalledTimes(1);
-    });
-  });
+  //   waitFor(() => {
+  //     expect(window.location.assign).toHaveBeenCalledTimes(0);
+  //     expect(onLoginRedirect).toHaveBeenCalledTimes(1);
+  //   });
+  // });
   it('should perform login with nativeAuth', async () => {
     const methods = renderWithProvider({
       children: (
@@ -87,9 +93,32 @@ describe('ExtensionLoginButton tests', () => {
       expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
+  // it('should not perform nativeAuth login when block call fails', async () => {
+  //   const blocksError = [
+  //     rest.get(`${testNetwork.apiAddress}/blocks`, (_req, res, ctx) =>
+  //       res(ctx.status(500), ctx.json(null))
+  //     )
+  //   ];
+  //   server.use(...blocksError);
+
+  //   const methods = renderWithProvider({
+  //     children: (
+  //       <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
+  //     )
+  //   });
+
+  //   const loginButton = await methods.findByTestId('extensionLoginButton');
+
+  //   const consoleWarnSpy = jest.spyOn(console, 'warn');
+
+  //   fireEvent.click(loginButton);
+
+  //   waitFor(() => {
+  //     expect(consoleWarnSpy).toHaveBeenCalledWith('Login cancelled.');
+  //   });
+  // });
   /**
    * TODO:
-   * - add test for unable to get block
    * - add test for custom token sent & nativeAuth
    * - add test for custom invalid token sent & nativeAuth
    */

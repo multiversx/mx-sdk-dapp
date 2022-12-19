@@ -6,6 +6,7 @@ export const ExtensionProvider = {
 
     const provider = {
       init: async () => true,
+      logout: async () => true,
       login: async ({ token }: { token?: string }) => {
         if (token) {
           signature =

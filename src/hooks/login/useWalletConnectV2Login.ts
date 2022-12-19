@@ -228,7 +228,13 @@ export const useWalletConnectV2Login = ({
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
+        // fetchig block failed
+        if (!token) {
+          console.warn('Login cancelled.');
+          return;
+        }
       }
+
       if (token) {
         loginService.setLoginToken(token);
       }
@@ -284,6 +290,11 @@ export const useWalletConnectV2Login = ({
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
+        // fetchig block failed
+        if (!token) {
+          console.warn('Login cancelled.');
+          return;
+        }
       }
 
       if (token) {

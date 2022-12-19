@@ -50,8 +50,13 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
   };
 
   const getNativeAuthLoginToken = async () => {
-    const loginToken = await client.initialize();
-    return loginToken;
+    try {
+      const loginToken = await client.initialize();
+      return loginToken;
+    } catch (error) {
+      console.error('Unable to get block. Login failed.', error);
+      return;
+    }
   };
 
   const setTokenLoginInfo = ({
@@ -103,6 +108,9 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
   }) => {
     const loginToken = await getNativeAuthLoginToken();
     tokenRef.current = loginToken;
+    if (!loginToken) {
+      return;
+    }
     const messageToSign = new SignableMessage({
       address: new Address(address),
       message: Buffer.from(loginToken)
