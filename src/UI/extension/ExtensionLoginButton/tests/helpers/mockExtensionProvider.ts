@@ -6,7 +6,6 @@ export const ExtensionProvider = {
 
     const provider = {
       init: async () => true,
-      logout: async () => true,
       login: async ({ token }: { token?: string }) => {
         if (token) {
           signature =
@@ -17,7 +16,8 @@ export const ExtensionProvider = {
             'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3'
         };
       },
-      setAddress: () => provider
+      setAddress: () => provider,
+      logout: () => true
     };
 
     Object.defineProperty(provider, 'account', {
