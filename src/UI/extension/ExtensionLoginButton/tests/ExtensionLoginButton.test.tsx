@@ -48,7 +48,7 @@ describe('ExtensionLoginButton tests', () => {
 
     fireEvent.click(loginButton);
 
-    await checkIsLoggedInStore({ isLoggedIn: true });
+    await checkIsLoggedInStore();
 
     waitFor(() => {
       expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
@@ -70,7 +70,7 @@ describe('ExtensionLoginButton tests', () => {
 
     fireEvent.click(loginButton);
 
-    await checkIsLoggedInStore({ isLoggedIn: true });
+    await checkIsLoggedInStore();
 
     waitFor(() => {
       expect(window.location.assign).toHaveBeenCalledTimes(0);
