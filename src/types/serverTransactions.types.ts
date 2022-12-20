@@ -72,7 +72,7 @@ export enum TransactionActionsEnum {
   unbondFarm = 'unbondFarm',
   ping = 'ping',
   lockTokens = 'lockTokens',
-  'migrateOldTokens' = 'migrateOldTokens'
+  migrateOldTokens = 'migrateOldTokens'
 }
 
 export enum TransactionActionCategoryEnum {
