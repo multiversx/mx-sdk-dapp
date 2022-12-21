@@ -1,16 +1,23 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { N_A } from 'constants/index';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
-export const TransactionInfoValue = ({ transaction }: WithTransactionType) => {
+export const TransactionInfoValue = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => {
   const egldLabel = getEgldLabel();
   const formattedTxValue = formatAmount({
     input: transaction.value,
@@ -24,7 +31,7 @@ export const TransactionInfoValue = ({ transaction }: WithTransactionType) => {
   });
 
   return (
-    <DetailItem title='Value' className={styles.value}>
+    <DetailItem title='Value' className={classNames(styles.value, className)}>
       <span data-testid='transactionInfoValue'>
         {formattedTxValue} {egldLabel}{' '}
         <span className={styles.price}>

@@ -12,22 +12,25 @@ import {
   TransactionValue
 } from '.';
 
-import { WithTransactionType } from '../../../UI/types';
+import { WithClassnameType, WithTransactionType } from '../../../UI/types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
-export interface TransactionRowPropsType extends WithTransactionType {
+export interface TransactionRowPropsType
+  extends WithTransactionType,
+    WithClassnameType {
   showDirectionCol?: boolean;
   showLockedAccounts?: boolean;
 }
 
 export const TransactionRow = ({
+  className,
   transaction,
   showDirectionCol,
   showLockedAccounts
 }: TransactionRowPropsType) => (
-  <tr className={classNames({ new: transaction.isNew })}>
+  <tr className={classNames(className, { new: transaction.isNew })}>
     <td>
       <TransactionHash transaction={transaction} />
     </td>

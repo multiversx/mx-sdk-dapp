@@ -3,21 +3,26 @@ import { faSpinner, faClock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { N_A } from 'constants/index';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
-import globalStyles from 'assets/sass/main.scss';
-
-export const TransactionInfoAge = ({ transaction }: WithTransactionType) => {
+export const TransactionInfoAge = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => {
   const { pending } = getTransactionStatus(transaction);
 
   return (
-    <DetailItem title='Age'>
+    <DetailItem className={className} title='Age'>
       {transaction.timestamp != null ? (
         <div
           className={classNames(

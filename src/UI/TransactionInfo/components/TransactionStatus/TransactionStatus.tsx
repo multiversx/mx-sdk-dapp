@@ -9,15 +9,14 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import {
   getTransactionStatus,
   getTransactionStatusText
 } from 'utils/transactions/transactionInfoHelpers';
 
-import { WithTransactionType } from '../../../../UI/types';
-
-import globalStyles from 'assets/sass/main.scss';
+import { WithClassnameType, WithTransactionType } from '../../../../UI/types';
 
 export const getStatusIconAndColor = (
   transaction: InterpretedTransactionType
@@ -25,9 +24,8 @@ export const getStatusIconAndColor = (
   let Icon = () => <></>;
   let color = '';
 
-  const { failed, invalid, pending, success } = getTransactionStatus(
-    transaction
-  );
+  const { failed, invalid, pending, success } =
+    getTransactionStatus(transaction);
 
   if (transaction.pendingResults) {
     color = globalStyles.textWarning;
@@ -85,7 +83,10 @@ export const getStatusIconAndColor = (
   };
 };
 
-export const TransactionStatus = ({ transaction }: WithTransactionType) => {
+export const TransactionStatus = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => {
   const { Icon } = getStatusIconAndColor(transaction);
 
   return (
@@ -94,7 +95,8 @@ export const TransactionStatus = ({ transaction }: WithTransactionType) => {
         globalStyles.dFlex,
         globalStyles.alignItemsCenter,
         globalStyles.textCapitalize,
-        globalStyles.mr2
+        globalStyles.mr2,
+        className
       )}
     >
       <Icon />

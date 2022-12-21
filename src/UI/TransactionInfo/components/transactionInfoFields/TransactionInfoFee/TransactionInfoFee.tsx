@@ -1,5 +1,6 @@
 import React from 'react';
 
+import classNames from 'classnames';
 import { N_A } from 'constants/index';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
@@ -7,12 +8,18 @@ import { getUsdValue } from 'utils/operations/getUsdValue';
 import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/getTransactionFee';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
-export const TransactionInfoFee = ({ transaction }: WithTransactionType) => {
+export const TransactionInfoFee = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => {
   const egldLabel = getEgldLabel();
   const txFee = getTransactionFee(transaction);
 
@@ -45,7 +52,10 @@ export const TransactionInfoFee = ({ transaction }: WithTransactionType) => {
     );
 
   return (
-    <DetailItem title='Transaction Fee' className={styles.fee}>
+    <DetailItem
+      title='Transaction Fee'
+      className={classNames(styles.fee, className)}
+    >
       <span data-testid='transactionInfoFee'>{fee}</span>
     </DetailItem>
   );

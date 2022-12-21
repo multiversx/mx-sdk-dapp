@@ -2,15 +2,19 @@ import React from 'react';
 
 import { N_A } from 'constants/index';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithTransactionType,
+  WithClassnameType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
 export const TransactionInfoGasLimit = ({
+  className,
   transaction
-}: WithTransactionType) => (
-  <DetailItem title='Gas Limit'>
+}: WithTransactionType & WithClassnameType) => (
+  <DetailItem className={className} title='Gas Limit'>
     {transaction.gasLimit != null ? (
       transaction.gasLimit.toLocaleString('en')
     ) : (

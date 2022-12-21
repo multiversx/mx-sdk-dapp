@@ -1,12 +1,16 @@
 import React from 'react';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 import { ScResultsList } from '../../ScResultsList/ScResultsList';
 
 export const TransactionInfoScResults = ({
+  className,
   transaction
-}: WithTransactionType) => {
+}: WithTransactionType & WithClassnameType) => {
   const showResults = transaction.results && transaction.results?.length > 0;
 
   if (!showResults) {
@@ -14,7 +18,7 @@ export const TransactionInfoScResults = ({
   }
 
   return (
-    <DetailItem title='Smart Contract Results'>
+    <DetailItem className={className} title='Smart Contract Results'>
       <ScResultsList results={transaction.results ?? []} />
     </DetailItem>
   );
