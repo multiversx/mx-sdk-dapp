@@ -15,7 +15,7 @@ import { ExtensionLoginButton } from '../';
 import { checkIsLoggedInStore } from './helpers';
 
 jest.mock('@elrondnetwork/erdjs-extension-provider', () => {
-  const { ExtensionProvider } = require('./helpers/mockExtensionProvider');
+  const { ExtensionProvider } = require('./mocks/mockExtensionProvider');
   return {
     __esModule: true,
     ExtensionProvider
