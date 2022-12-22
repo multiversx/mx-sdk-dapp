@@ -1,6 +1,12 @@
 import { parseAmount } from '../parseAmount';
 
 describe('parseAmount tests', () => {
+  it('returns empty string for no amount', () => {
+    expect(parseAmount('')).toBe('');
+  });
+  it('returns empty string for invalid number', () => {
+    expect(parseAmount('some number')).toBe('');
+  });
   it('adds 18 zeros', () => {
     expect(parseAmount('10')).toBe('10000000000000000000');
   });
