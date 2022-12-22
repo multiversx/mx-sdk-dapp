@@ -10,6 +10,7 @@ import { setupServer } from 'msw/node';
 import { testAddress, testNetwork } from './accountConfig';
 import {
   account,
+  blocks,
   dappConfig,
   networkConfig,
   socketResponse,
@@ -44,7 +45,8 @@ const handlers = [
   rest.get(
     `${testNetwork.apiAddress}/accounts/${testAddress}`,
     mockResponse(account)
-  )
+  ),
+  rest.get(`${testNetwork.apiAddress}/blocks`, mockResponse(blocks))
 ];
 
 // This configures a request mocking server with the given request handlers.
