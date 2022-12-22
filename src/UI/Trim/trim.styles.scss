@@ -92,17 +92,17 @@
 }
 
 a:hover > .trim span {
-  color: $link-hover-color !important;
+  color: $link-hover-color;
   &.hidden-text-ref {
-    color: transparent !important;
+    color: transparent;
   }
 }
 
 a > .trim span,
 .text-primary > .trim span {
-  color: $primary !important;
+  color: $primary;
   &.hidden-text-ref {
-    color: transparent !important;
+    color: transparent;
   }
 }
 

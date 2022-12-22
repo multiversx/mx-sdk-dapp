@@ -6,8 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[2.2.3](https://github.com/ElrondNetwork/dapp-core/pull/510)] - 2022-12-16
+- [Fixed login on nativeAuth block failed](https://github.com/ElrondNetwork/dapp-core/pull/516)
+- [Changed CSS to exclude `!important;` and added className to transaction info components](https://github.com/ElrondNetwork/dapp-core/pull/517)
+- [Added missing actions to TransactionActionsEnum `AxiosInterceptorContext` response](https://github.com/ElrondNetwork/dapp-core/pull/518)
 ## [[2.2.2](https://github.com/ElrondNetwork/dapp-core/pull/512)] - 2022-12-16
 - [Fixed loginHooks to have same response and changed `AxiosInterceptorContext` response](https://github.com/ElrondNetwork/dapp-core/pull/511)
+
 
 ## [[2.2.1](https://github.com/ElrondNetwork/dapp-core/pull/510)] - 2022-12-16
 - [Changed logging in logic to allow signing custom token](https://github.com/ElrondNetwork/dapp-core/pull/509)

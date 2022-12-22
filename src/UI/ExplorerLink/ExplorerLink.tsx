@@ -2,13 +2,13 @@ import React, { PropsWithChildren } from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { getExplorerLink } from 'utils/transactions/getInterpretedTransaction/helpers/getExplorerLink';
 
 import { WithClassnameType } from '../types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './explorerLinkStyles.scss';
 
 export interface ExplorerLinkPropsType

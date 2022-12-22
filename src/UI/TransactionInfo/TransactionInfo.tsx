@@ -3,6 +3,7 @@ import React from 'react';
 import { WithTransactionType } from '../../UI/types';
 
 import {
+  TransactionInfoFee,
   TransactionInfoValue,
   TransactionInfoStatus,
   TransactionInfoAge,
@@ -20,7 +21,6 @@ import {
   TransactionInfoInputData,
   TransactionInfoHash
 } from './components';
-import { TransactionInfoFee } from './components/transactionInfoFields/TransactionInfoFee';
 
 export const TransactionInfo = ({ transaction }: WithTransactionType) => (
   <>

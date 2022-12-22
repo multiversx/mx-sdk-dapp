@@ -3,8 +3,8 @@
   align-items: center;
 
   .explorer {
-    margin-left: 0 !important;
-    text-decoration: none !important;
+    margin-left: 0;
+    text-decoration: none;
     position: relative;
     display: flex;
     max-width: 100%;
@@ -18,11 +18,11 @@
       [class*='left'] span,
       [class*='right'] span {
         font-size: 1rem;
-        color: #1f43f4 !important;
+        color: #1f43f4;
       }
 
       &:last-child {
-        color: #1f43f4 !important;
+        color: #1f43f4;
       }
     }
 

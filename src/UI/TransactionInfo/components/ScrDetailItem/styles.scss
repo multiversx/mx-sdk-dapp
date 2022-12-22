@@ -3,19 +3,19 @@
   align-items: center;
 
   span {
-    color: #1f43f4 !important;
+    color: #1f43f4;
   }
 
   .explorer {
-    margin-left: 0.5rem !important;
+    margin-left: 0.5rem;
     position: relative;
     display: flex;
     overflow: hidden;
-    color: #cacbcc !important;
+    color: #cacbcc;
 
     &:hover {
       text-decoration: none;
-      color: #1f43f4 !important;
+      color: #1f43f4;
     }
   }
 

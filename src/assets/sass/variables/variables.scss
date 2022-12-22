@@ -22,18 +22,18 @@ $gray-700: #495057 !default;
 $gray-800: #343a40 !default;
 $gray-900: #212529 !default;
 
-$headings-font-weight: 300 !important;
-$primary: #1b46c2;
+$headings-font-weight: 300 !default;
+$primary: #1b46c2 !default;
 $secondary: #6c757d !default;
-$light: #fafafa;
-$a: #1392ff;
-$success: #5cb85c;
+$light: #fafafa !default;
+$a: #1392ff !default;
+$success: #5cb85c !default;
 $info: #17a2b8 !default;
-$warning: #f0ad4e;
-$danger: #d9534f;
+$warning: #f0ad4e !default;
+$danger: #d9534f !default;
 
-$buttonBorderColorHoverAndFocus: #0062cc;
-$buttonBorderColorDefault: #007bff;
+$buttonBorderColorHoverAndFocus: #0062cc !default;
+$buttonBorderColorDefault: #007bff !default;
 
 $spacer: 1rem !default;
 $spacers: () !default;
@@ -55,17 +55,17 @@ $spacers: map-merge(
     )
   ),
   $spacers
-);
+) !default;
 
-$spacer-val: $spacer * 1.7;
+$spacer-val: $spacer * 1.7 !default;
 // SPACING
 $spacers: (
   spacer: (
     $spacer-val
   )
-);
+) !default;
 
-$modal-lg: 565px;
+$modal-lg: 565px !default;
 
 @function toRem($value) {
   $remValue: calc($value / 14) + rem;
@@ -86,10 +86,9 @@ $grays: map-merge(
     '900': $gray-900
   ),
   $grays
-);
+) !default;
 
-
-$muted: #cacbcc;
+$muted: #cacbcc !default;
 $link-color: $blue !default;
 $link-decoration: none !default;
 $link-hover-color: darken($blue, 15%) !default;
@@ -97,7 +96,7 @@ $link-hover-decoration: underline !default;
 
 $border-width: 1px !default;
 $border-color: $gray-300 !default;
-$border-color-alt: $border-color;
+$border-color-alt: $border-color !default;
 
 $border-radius: 0.25rem !default;
 $border-radius-lg: 0.3rem !default;
@@ -126,10 +125,9 @@ $grid-columns: 12 !default;
 $grid-gutter-width: 30px !default;
 $grid-row-columns: 6 !default;
 
-
 $standard-box-shadow: red !default; // sidebar, navbar, cards
 // NAVBAR
-$main-navbar-box-shadow: 0 0.75rem 1.875rem 0 rgba($standard-box-shadow, 0.05);
+$main-navbar-box-shadow: 0 0.75rem 1.875rem 0 rgba($standard-box-shadow, 0.05) !default;
 
 // Cards
 $card-spacer-y: 0.75rem !default;
@@ -143,9 +141,9 @@ $card-height: null !default;
 $card-color: null !default;
 $card-bg: $white !default;
 
-$card-small-box-shadow: $main-navbar-box-shadow;
-$card-cap-bg: $card-bg;
-$card-headings-font-weight: 400;
+$card-small-box-shadow: $main-navbar-box-shadow !default;
+$card-cap-bg: $card-bg !default;
+$card-headings-font-weight: 400 !default;
 
 $card-img-overlay-padding: 1.25rem !default;
 
@@ -209,23 +207,23 @@ $font-weight-bold: 700 !default;
 $font-weight-bolder: bolder !default;
 
 $btn-link-disabled-color: $gray-600 !default;
-$btn-transition:              color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out !default;
+$btn-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+  border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !default;
 
-
-$input-btn-focus-width:       .2rem !default;
+$input-btn-focus-width: 0.2rem !default;
 
 // Badges
 
-$badge-font-size:                   75% !default;
-$badge-font-weight:                 $font-weight-bold !default;
-$badge-padding-y:                   .25em !default;
-$badge-padding-x:                   .4em !default;
-$badge-border-radius:               $border-radius !default;
+$badge-font-size: 75% !default;
+$badge-font-weight: $font-weight-bold !default;
+$badge-padding-y: 0.25em !default;
+$badge-padding-x: 0.4em !default;
+$badge-border-radius: $border-radius !default;
 
-$badge-transition:                  $btn-transition !default;
-$badge-focus-width:                 $input-btn-focus-width !default;
+$badge-transition: $btn-transition !default;
+$badge-focus-width: $input-btn-focus-width !default;
 
-$badge-pill-padding-x:              .6em !default;
+$badge-pill-padding-x: 0.6em !default;
 // Use a higher than normal value to ensure completely rounded edges when
 // customizing padding or font-size on labels.
-$badge-pill-border-radius:          10rem !default;
+$badge-pill-border-radius: 10rem !default;

@@ -15,8 +15,8 @@
         display: flex;
         max-width: 100%;
         overflow: hidden;
-        color: #1f43f4 !important;
-        margin-left: 0 !important;
+        color: #1f43f4;
+        margin-left: 0;
 
         &:hover {
           text-decoration: none;
@@ -28,11 +28,11 @@
           [class*='left'] span,
           [class*='right'] span {
             font-size: 1rem;
-            color: #1f43f4 !important;
+            color: #1f43f4;
           }
 
           &:last-child {
-            color: #1f43f4 !important;
+            color: #1f43f4;
           }
         }
       }
@@ -51,7 +51,7 @@
       }
 
       .shard {
-        color: #1f43f4 !important;
+        color: #1f43f4;
         text-decoration: none;
         flex-shrink: 0;
         margin-left: 0;

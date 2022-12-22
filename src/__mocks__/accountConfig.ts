@@ -2,7 +2,7 @@ import { fallbackNetworkConfigurations } from 'constants/network';
 import { EnvironmentsEnum } from 'types';
 
 export const testAddress =
-  'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx';
+  'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3';
 
 export const testNetwork =
   fallbackNetworkConfigurations[EnvironmentsEnum.devnet];

@@ -1,14 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
-import { WithTransactionType } from '../../../../../UI/types';
 import { TransactionStatus } from '../../TransactionStatus';
 
-import globalStyles from 'assets/sass/main.scss';
-
-export const TransactionInfoStatus = ({ transaction }: WithTransactionType) => (
-  <DetailItem title='Status'>
+export const TransactionInfoStatus = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => (
+  <DetailItem className={className} title='Status'>
     <div
       className={classNames(
         globalStyles.dFlex,

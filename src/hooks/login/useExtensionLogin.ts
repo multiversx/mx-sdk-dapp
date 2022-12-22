@@ -59,6 +59,12 @@ export const useExtensionLogin = ({
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
+
+        // Fetching block failed
+        if (!token) {
+          console.warn('Fetching block failed. Login cancelled.');
+          return;
+        }
       }
 
       if (token) {

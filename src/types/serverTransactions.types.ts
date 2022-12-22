@@ -70,7 +70,9 @@ export enum TransactionActionsEnum {
   claimDualYield = 'claimDualYield',
   claimDualYieldProxy = 'claimDualYieldProxy',
   unbondFarm = 'unbondFarm',
-  ping = 'ping'
+  ping = 'ping',
+  lockTokens = 'lockTokens',
+  migrateOldTokens = 'migrateOldTokens'
 }
 
 export enum TransactionActionCategoryEnum {

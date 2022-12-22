@@ -54,6 +54,11 @@ export const useWebWalletLogin = ({
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
+        // Fetching block failed
+        if (!token) {
+          console.warn('Login cancelled.');
+          return;
+        }
       }
 
       if (token) {

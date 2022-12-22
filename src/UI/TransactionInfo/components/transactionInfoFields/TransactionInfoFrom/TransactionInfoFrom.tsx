@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React from 'react';
 
 import { CopyButton } from 'UI/CopyButton';
@@ -9,13 +10,19 @@ import {
 } from 'UI/TransactionsTable/components';
 import { addressIsValid } from 'utils/account/addressIsValid';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
-export const TransactionInfoFrom = ({ transaction }: WithTransactionType) => (
-  <DetailItem title='From' className={styles.from}>
+export const TransactionInfoFrom = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => (
+  <DetailItem title='From' className={classNames(styles.from, className)}>
     <div className={styles.wrapper}>
       <ScAddressIcon initiator={transaction.sender} />
 
