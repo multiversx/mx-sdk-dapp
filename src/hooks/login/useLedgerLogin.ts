@@ -129,9 +129,9 @@ export function useLedgerLogin({
 
     if (hasNativeAuth && !token) {
       token = await loginService.getNativeAuthLoginToken();
-      // fetchig block failed
+      // Fetching block failed
       if (!token) {
-        console.warn('Fetchig block failed. Login cancelled.');
+        console.warn('Fetching block failed. Login cancelled.');
         return;
       }
     }
