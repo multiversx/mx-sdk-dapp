@@ -1,11 +1,17 @@
 import React from 'react';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 import { NonceMessage } from '../../NonceMessage/NonceMessage';
 
-export const TransactionInfoNonce = ({ transaction }: WithTransactionType) => (
-  <DetailItem title='Nonce'>
+export const TransactionInfoNonce = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => (
+  <DetailItem className={className} title='Nonce'>
     <>
       {transaction.nonce}
 

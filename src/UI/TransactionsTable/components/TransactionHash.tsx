@@ -1,17 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim/Trim';
 
+import { WithClassnameType, WithTransactionType } from '../../../UI/types';
 import { TransactionIcon } from './TransactionIcon';
 
-import { WithTransactionType } from '../../../UI/types';
-
-import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
-export const TransactionHash = ({ transaction }: WithTransactionType) => {
+export const TransactionHash = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => {
   const transactionHashLink = `/transactions/${
     transaction.originalTxHash
       ? `${transaction.originalTxHash}#${transaction.txHash}`
@@ -23,7 +25,8 @@ export const TransactionHash = ({ transaction }: WithTransactionType) => {
       className={classNames(
         globalStyles.dFlex,
         globalStyles.alignItemsCenter,
-        styles.transactionCell
+        styles.transactionCell,
+        className
       )}
     >
       <TransactionIcon transaction={transaction} />

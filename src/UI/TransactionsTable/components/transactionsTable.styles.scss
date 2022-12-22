@@ -7,8 +7,8 @@
   color: #000;
 
   .transactions-table-header {
-    border-bottom: none !important;
-    border-radius: 0.75rem !important;
+    border-bottom: none;
+    border-radius: 0.75rem;
     padding: 1.75rem 2rem;
 
     h6 {
@@ -30,14 +30,14 @@
 
       th {
         white-space: nowrap;
-        padding: 0.75rem !important;
+        padding: 0.75rem;
         background-color: #fbfbfb;
         border: 0;
         vertical-align: middle;
         font-weight: 400;
 
         &:first-child {
-          padding-left: 2rem !important;
+          padding-left: 2rem;
         }
       }
 
@@ -47,7 +47,7 @@
         white-space: nowrap;
 
         &:first-child {
-          padding-left: 1.25rem !important;
+          padding-left: 1.25rem;
         }
       }
 
@@ -58,7 +58,7 @@
         color: #000;
 
         a {
-          color: #1f43f4 !important;
+          color: #1f43f4;
           font-weight: 500;
         }
       }
@@ -69,11 +69,11 @@
         [class*='left'] span,
         [class*='right'] span {
           font-size: 1rem;
-          color: #1f43f4 !important;
+          color: #1f43f4;
         }
 
         [class*='ellipsis'] {
-          color: #1f43f4 !important;
+          color: #1f43f4;
         }
       }
 

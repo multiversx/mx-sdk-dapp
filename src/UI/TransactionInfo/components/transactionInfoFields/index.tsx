@@ -2,6 +2,7 @@ export * from './TransactionInfoHash';
 export * from './TransactionInfoAge';
 export * from './TransactionInfoStatus';
 export * from './TransactionInfoMiniblock';
+export * from './TransactionInfoFee';
 export * from './TransactionInfoFrom';
 export * from './TransactionInfoTo';
 export * from './TransactionInfoValue';

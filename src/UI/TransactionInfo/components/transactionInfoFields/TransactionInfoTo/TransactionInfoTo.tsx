@@ -2,6 +2,7 @@ import React from 'react';
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import classNames from 'classnames';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -10,18 +11,24 @@ import { AccountName, ShardSpan } from 'UI/TransactionsTable/components';
 import { isContract } from 'utils/smartContracts';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
-export const TransactionInfoTo = ({ transaction }: WithTransactionType) => {
+export const TransactionInfoTo = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => {
   const transactionMessages = getTransactionMessages(transaction);
   const isReverted =
     transaction.status === TransactionServerStatusesEnum.rewardReverted;
 
   return (
-    <DetailItem title='To' className={styles.to}>
+    <DetailItem title='To' className={classNames(styles.to, className)}>
       <div className={styles.wrapper} data-testid='transactionTo'>
         <div className={styles.content}>
           {isContract(transaction.receiver) && (

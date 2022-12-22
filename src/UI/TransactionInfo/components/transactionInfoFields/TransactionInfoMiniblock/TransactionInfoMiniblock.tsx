@@ -7,15 +7,19 @@ import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
 export const TransactionInfoMiniblock = ({
+  className,
   transaction
-}: WithTransactionType) => (
-  <DetailItem title='Miniblock'>
+}: WithTransactionType & WithClassnameType) => (
+  <DetailItem className={className} title='Miniblock'>
     <div className={styles.miniblock}>
       {transaction.miniBlockHash ? (
         <>

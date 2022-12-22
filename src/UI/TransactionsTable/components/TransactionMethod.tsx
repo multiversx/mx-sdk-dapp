@@ -1,15 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
-import { WithTransactionType } from '../../../UI/types';
+import { WithClassnameType, WithTransactionType } from '../../../UI/types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
-export const TransactionMethod = ({ transaction }: WithTransactionType) => (
-  <div className={styles.transactionCell}>
+export const TransactionMethod = ({
+  className,
+  transaction
+}: WithTransactionType & WithClassnameType) => (
+  <div className={classNames(styles.transactionCell, className)}>
     <span
       title={transaction.action?.description}
       className={classNames(

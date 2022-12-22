@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## [[2.2.2](https://github.com/ElrondNetwork/dapp-core/pull/512)] - 2022-12-16
 - [Fixed loginHooks to have same response and changed `AxiosInterceptorContext` response](https://github.com/ElrondNetwork/dapp-core/pull/511)
+- [Changed CSS to exclude `!important;` and added className to transaction info components](https://github.com/ElrondNetwork/dapp-core/pull/517)
 
 ## [[2.2.1](https://github.com/ElrondNetwork/dapp-core/pull/510)] - 2022-12-16
 - [Changed logging in logic to allow signing custom token](https://github.com/ElrondNetwork/dapp-core/pull/509)

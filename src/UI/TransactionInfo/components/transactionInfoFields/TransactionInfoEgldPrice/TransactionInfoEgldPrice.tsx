@@ -3,15 +3,19 @@ import React from 'react';
 import { N_A } from 'constants/index';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 
-import { WithTransactionType } from '../../../../../UI/types';
+import {
+  WithClassnameType,
+  WithTransactionType
+} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
 
 export const TransactionInfoEgldPrice = ({
+  className,
   transaction
-}: WithTransactionType) => (
-  <DetailItem title='EGLD Price'>
+}: WithTransactionType & WithClassnameType) => (
+  <DetailItem className={className} title='EGLD Price'>
     {transaction.price != null ? (
       getUsdValue({ amount: '1', usd: transaction.price })
     ) : (
