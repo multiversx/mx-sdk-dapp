@@ -235,7 +235,7 @@ export const useWalletConnectLogin = ({
       token = await loginService.getNativeAuthLoginToken();
       // fetchig block failed
       if (!token) {
-        console.warn('Login cancelled.');
+        console.warn('Fetchig block failed. Login cancelled.');
         return;
       }
     }
