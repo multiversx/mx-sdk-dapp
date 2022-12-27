@@ -2,7 +2,8 @@ import { getUnixTimestamp } from 'utils/dateTime';
 
 export const localStorageKeys = {
   loginExpiresAt: 'dapp-core-login-expires-at',
-  logoutEvent: 'dapp-core-logout-event'
+  logoutEvent: 'dapp-core-logout-event',
+  logoutWarningDismissed: 'dapp-core-logout-warning-dimissed'
 } as const;
 
 type LocalValueType = keyof typeof localStorageKeys;

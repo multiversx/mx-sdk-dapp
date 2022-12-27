@@ -1,3 +1,4 @@
 export * from './getTokenExpiration';
-export * from './getToken';
+export * from './getTokenExpirationTime';
 export * from './getNativeAuthConfig';
+export * from './getToken';
