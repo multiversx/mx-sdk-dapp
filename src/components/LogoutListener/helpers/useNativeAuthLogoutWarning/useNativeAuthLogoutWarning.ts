@@ -8,7 +8,7 @@ import { addNewCustomToast, storage } from 'utils';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { localStorageKeys } from 'utils/storage/local';
 
-import { TIME_TO_SHOW_WARNING_BEFORE_LOGOUT } from '../../constants';
+import { tokenExpierationToastWarningSeconds } from '../../constants';
 import { getHumanReadableTokenExpirationTime } from './helpers';
 
 export const useNativeAuthLogoutWarning = () => {
@@ -35,7 +35,7 @@ export const useNativeAuthLogoutWarning = () => {
       clearTimeout(warningLogoutTimeoutRef.current);
 
       const logoutWarningOffsetSeconds = new BigNumber(
-        TIME_TO_SHOW_WARNING_BEFORE_LOGOUT
+        tokenExpierationToastWarningSeconds
       );
 
       const logoutWarningOffsetMilliseconds =
