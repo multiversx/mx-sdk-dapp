@@ -1,6 +1,8 @@
 import BigNumber from 'bignumber.js';
 
-export const getTokenExpirationTime = (milliseconds: BigNumber) => {
+export const getHumanReadableTokenExpirationTime = (
+  milliseconds: BigNumber
+) => {
   const seconds = new BigNumber(milliseconds)
     .dividedBy(1000)
     .integerValue(BigNumber.ROUND_FLOOR);

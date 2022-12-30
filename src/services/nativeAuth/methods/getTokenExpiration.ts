@@ -11,6 +11,7 @@ export const getTokenExpiration = (
   token?: string
 ): GetTokenExpirationReturnType => {
   const decodedToken = decodeNativeAuthToken(token);
+
   if (!decodedToken) {
     return {
       isExpired: false
