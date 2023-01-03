@@ -46,15 +46,14 @@ export const SignWithWalletConnectModal = ({
   );
 
   const close = async () => {
-    handleClose();
     clearTransactionsToSignWithWarning(sessionId);
-
     await cancelWalletConnectAction();
+    handleClose();
   };
 
   return (
     <ModalContainer
-      onClose={close}
+      onClose={handleClose}
       modalConfig={{
         modalDialogClassName: classes.wrapper
       }}
