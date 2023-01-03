@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { WalletConnectV2ProviderErrorMessagesEnum } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -66,6 +67,8 @@ export const useSignTransactions = () => {
     dispatch(clearTransactionsInfoForSessionId(sessionId));
     dispatch(removeCustomToast(TRANSACTION_STATUS_TOAST_ID));
 
+    isSigningRef.current = false;
+
     if (!isExtensionProvider) {
       return;
     }
@@ -87,7 +90,18 @@ export const useSignTransactions = () => {
       return;
     }
 
-    setError(errorMessage);
+    const isSigningWithWalletConnectV2 =
+      providerType === LoginMethodsEnum.walletconnectv2;
+    if (
+      isSigningWithWalletConnectV2 &&
+      !Object.values(WalletConnectV2ProviderErrorMessagesEnum).includes(
+        errorMessage as WalletConnectV2ProviderErrorMessagesEnum
+      )
+    ) {
+      setError(WalletConnectV2ProviderErrorMessagesEnum.connectionError);
+    } else {
+      setError(errorMessage);
+    }
   };
 
   const signWithWallet = (
