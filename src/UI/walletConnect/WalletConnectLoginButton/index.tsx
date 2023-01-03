@@ -1,4 +1,5 @@
 import React, { ReactNode, useState } from 'react';
+import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
 import { useDappModal } from 'UI/DappModal';
 import { OnProviderLoginType } from '../../../types';
 import { LoginButton } from '../../LoginButton/LoginButton';
@@ -21,6 +22,7 @@ export interface WalletConnectLoginButtonPropsType
   hideButtonWhenModalOpens?: boolean;
   isWalletConnectV2?: boolean;
   disabled?: boolean;
+  walletConnectV2Options?: WalletConnectV2Provider['options'];
 }
 
 export const WalletConnectLoginButton = ({
@@ -41,7 +43,8 @@ export const WalletConnectLoginButton = ({
   hideButtonWhenModalOpens = false,
   isWalletConnectV2 = false,
   onLoginRedirect,
-  disabled
+  disabled,
+  walletConnectV2Options
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -86,6 +89,7 @@ export const WalletConnectLoginButton = ({
           isWalletConnectV2={isWalletConnectV2}
           onClose={handleCloseModal}
           onLoginRedirect={onLoginRedirect}
+          walletConnectV2Options={walletConnectV2Options}
         />
       )}
     </>

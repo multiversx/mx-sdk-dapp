@@ -1,6 +1,8 @@
-import { useRef, useState } from 'react';
-import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
-import { SessionEventTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { useRef, useState, useEffect } from 'react';
+import {
+  SessionEventTypes,
+  PairingTypes
+} from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
@@ -42,6 +44,7 @@ export enum WalletConnectV2Error {
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute: string;
   events?: string[];
+  walletConnectV2Options?: WalletConnectV2Provider['options'];
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -64,7 +67,8 @@ export const useWalletConnectV2Login = ({
   logoutRoute,
   token: tokenToSign,
   nativeAuth,
-  onLoginRedirect
+  onLoginRedirect,
+  walletConnectV2Options
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
@@ -73,6 +77,7 @@ export const useWalletConnectV2Login = ({
 
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [wcPairings, setWcPairings] = useState<
     PairingTypes.Struct[] | undefined
   >([]);
@@ -87,12 +92,11 @@ export const useWalletConnectV2Login = ({
   const providerRef = useRef<any>(provider);
   const canLoginRef = useRef<boolean>(true);
 
-  const hasWcUri = Boolean(wcUri);
   const dappMethods: string[] = [
     DappCoreWCV2CustomMethodsEnum.erd_cancelAction
   ];
-  const isLoading = !hasWcUri;
-  const uriDeepLink = hasWcUri
+
+  const uriDeepLink = !isLoading
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
     : '';
 
@@ -103,6 +107,10 @@ export const useWalletConnectV2Login = ({
   useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
+
+  useEffect(() => {
+    setIsLoading(Boolean(wcUri));
+  }, [wcUri]);
 
   const handleOnLogout = () => {
     logout(logoutRoute);
@@ -176,14 +184,8 @@ export const useWalletConnectV2Login = ({
   }
 
   async function initiateLogin(loginProvider = true) {
-    const shouldGenerateWcUri = loginProvider && !wcUri;
-    if (
-      !walletConnectV2ProjectId ||
-      !walletConnectV2RelayAddress ||
-      (providerRef?.current?.isInitialized?.() && !shouldGenerateWcUri)
-    ) {
+    if (!walletConnectV2ProjectId || !walletConnectV2RelayAddress) {
       setError(WalletConnectV2Error.invalidConfig);
-
       return;
     }
 
@@ -197,7 +199,8 @@ export const useWalletConnectV2Login = ({
       providerHandlers,
       chainId,
       walletConnectV2RelayAddress,
-      walletConnectV2ProjectId
+      walletConnectV2ProjectId,
+      walletConnectV2Options
     );
 
     await newProvider.init();
@@ -242,7 +245,8 @@ export const useWalletConnectV2Login = ({
       try {
         await providerRef.current?.login({ approval, token });
       } catch (err) {
-        console.warn(WalletConnectV2Error.userRejectedExisting, err);
+        setError(WalletConnectV2Error.userRejectedExisting);
+        setIsLoading(true);
 
         await initiateLogin();
       }
@@ -304,7 +308,8 @@ export const useWalletConnectV2Login = ({
       try {
         await providerRef.current?.login({ approval, token });
       } catch (err) {
-        console.warn(WalletConnectV2Error.userRejected, err);
+        setError(WalletConnectV2Error.userRejected);
+        setIsLoading(true);
 
         await initiateLogin();
       }
