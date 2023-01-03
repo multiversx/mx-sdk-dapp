@@ -20,12 +20,10 @@ fs.readFile(file, 'utf8', function (err, data) {
   const replacement = `## [Unreleased]
 ## [[${packageJson.version}](https://github.com/ElrondNetwork/dapp-core/pull/${
     latestPr + 1
-  })] - ${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getDate()}
+  })] - ${date.toISOString().split('T')[0]}
   `;
 
   var result = data.replace('## [Unreleased]', replacement);
-
-  console.log(result);
 
   fs.writeFileSync(file, result, 'utf8', function (err) {
     if (err) {
