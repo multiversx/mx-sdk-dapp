@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 
 import { getHumanReadableTokenExpirationTime } from '../helpers';
 
-describe('Test the "getHumanReadableTokenExpirationTime" helper function.', () => {
+describe('Test the "getHumanReadableTokenExpirationTime" helper functionality.', () => {
   test('The given input is extremely small.', () => {
     const input = new BigNumber(14);
     const output = getHumanReadableTokenExpirationTime(input);
