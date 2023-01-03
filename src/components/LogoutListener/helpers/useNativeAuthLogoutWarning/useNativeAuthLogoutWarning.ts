@@ -4,9 +4,8 @@ import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
-import { addNewCustomToast, storage } from 'utils';
+import { addNewCustomToast } from 'utils';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
-import { localStorageKeys } from 'utils/storage/local';
 
 import { getHumanReadableTokenExpirationTime } from './helpers';
 
@@ -30,10 +29,7 @@ export const useNativeAuthLogoutWarning = () => {
     }
 
     // Handle the logout warning popup.
-    if (
-      !storage.local.getItem(localStorageKeys.logoutWarningDismissed) &&
-      tokenLogin?.nativeAuthConfig?.tokenExpirationToastWarningSeconds
-    ) {
+    if (tokenLogin?.nativeAuthConfig?.tokenExpirationToastWarningSeconds) {
       clearTimeout(warningLogoutTimeoutRef.current);
 
       const logoutWarningOffsetSeconds = new BigNumber(
@@ -63,16 +59,6 @@ export const useNativeAuthLogoutWarning = () => {
           title: 'Session Expiration Warning',
           icon: faRefresh,
           message: `Your token will expire in ${readableMinutesUntilLogout}!`
-        });
-
-        storage.local.setItem({
-          key: localStorageKeys.logoutWarningDismissed,
-          data: true,
-          expires: millisecondsUntilLogout
-            .plus(Date.now())
-            .dividedBy(1000)
-            .integerValue(BigNumber.ROUND_FLOOR)
-            .toNumber()
         });
       }, timeoutUntilLogoutWarning);
     }
