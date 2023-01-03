@@ -16,7 +16,8 @@ import {
   chainIDSelector,
   walletConnectDeepLinkSelector,
   walletConnectV2ProjectIdSelector,
-  walletConnectV2RelaySelector
+  walletConnectV2RelaySelector,
+  walletConnectV2OptionsSelector
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import {
@@ -44,7 +45,6 @@ export enum WalletConnectV2Error {
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute: string;
   events?: string[];
-  walletConnectV2Options?: WalletConnectV2Provider['options'];
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -67,8 +67,7 @@ export const useWalletConnectV2Login = ({
   logoutRoute,
   token: tokenToSign,
   nativeAuth,
-  onLoginRedirect,
-  walletConnectV2Options
+  onLoginRedirect
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
@@ -87,6 +86,7 @@ export const useWalletConnectV2Login = ({
   const walletConnectV2ProjectId = useSelector(
     walletConnectV2ProjectIdSelector
   );
+  const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
   const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);

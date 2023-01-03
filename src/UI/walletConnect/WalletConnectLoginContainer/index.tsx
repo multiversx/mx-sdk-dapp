@@ -1,5 +1,4 @@
 import React, { useEffect, useState, MouseEvent } from 'react';
-import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
 
@@ -27,7 +26,6 @@ export interface WalletConnectLoginModalPropsType
   loginButtonText: string;
   wrapContentInsideModal?: boolean;
   isWalletConnectV2?: boolean;
-  walletConnectV2Options?: WalletConnectV2Provider['options'];
   onClose?: () => void;
 }
 
@@ -44,8 +42,7 @@ export const WalletConnectLoginContainer = ({
   token,
   nativeAuth,
   onClose,
-  onLoginRedirect,
-  walletConnectV2Options
+  onLoginRedirect
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnect,
@@ -74,8 +71,7 @@ export const WalletConnectLoginContainer = ({
     callbackRoute,
     token,
     nativeAuth,
-    onLoginRedirect,
-    walletConnectV2Options
+    onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
   const [displayWalletConnectV2, setDisplayWalletConnectV2] = useState<boolean>(
