@@ -1,11 +1,7 @@
 name: Publish dapp-core
 
 on:
-  push:
-      branches: [ag-npm-publish]
-    repository_dispatch:
-      types: deploy-production
-    workflow_dispatch:
+  workflow_dispatch:
 
 permissions:
   contents: write
