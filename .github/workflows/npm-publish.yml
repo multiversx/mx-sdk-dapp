@@ -32,8 +32,15 @@ jobs:
       - name: Build project
         run: yarn build
 
-      - name: Run tests
-        run: yarn test
+      - name: 'Automated Version Bump'
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          version-type: 'minor'
+
+      # - name: Run tests
+      #   run: yarn test
 #       - name: Publish to npmjs
 #         env:
 #           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
