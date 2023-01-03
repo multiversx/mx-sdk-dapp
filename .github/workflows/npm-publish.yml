@@ -27,7 +27,7 @@ jobs:
         run: npm install -g yarn
 
       - name: Install dependencies
-        run: yarn install s
+        run: yarn install
 
       - name: Build project
         run: yarn build
