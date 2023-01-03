@@ -9,6 +9,8 @@ const setNewAccount = async () => {
   try {
     const address = await getAddress();
     try {
+      console.log('\x1b[42m%s\x1b[0m', 'setNewAccount');
+
       const account = await getAccount(address);
       if (account != null) {
         const accountData = {

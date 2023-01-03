@@ -61,7 +61,6 @@ export function ProviderInitializer() {
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
-
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -85,9 +84,12 @@ export function ProviderInitializer() {
   useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
+
   useEffect(() => {
+    console.log(address);
+
     fetchAccount();
-  }, [address, isLoggedIn]);
+  }, [address]);
 
   useEffect(() => {
     // prevent balance double fetching by handling ledgerAccount data separately
@@ -120,8 +122,10 @@ export function ProviderInitializer() {
 
   async function fetchAccount() {
     dispatch(setIsAccountLoading(true));
-    if (address && isLoggedIn) {
+    if (address) {
       try {
+        console.log('\x1b[42m%s\x1b[0m', '???');
+
         const account = await getAccount(address);
         if (account) {
           dispatch(
@@ -160,17 +164,19 @@ export function ProviderInitializer() {
         loginService.setTokenLoginInfo({ signature, address });
       }
 
-      const account = await getAccount(address);
-      if (account) {
-        dispatch(
-          setAccount({
-            ...account,
-            nonce: getLatestNonce(account)
-          })
-        );
-      }
+      // const account = await getAccount(address);
+      // if (account) {
+      //   dispatch(
+      //     setAccount({
+      //       ...account,
+      //       nonce: getLatestNonce(account)
+      //     })
+      //   );
+      // }
 
       clearWalletLoginHistory();
+
+      // walletInitializedRef.current = true;
 
       dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
     } catch (e) {

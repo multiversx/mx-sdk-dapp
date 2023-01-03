@@ -65,17 +65,7 @@ export function AppInitializer({
     await initializeNetwork();
 
     setInitialized(true);
-
-    getAccountShard();
   }
-
-  useEffect(() => {
-    if (!address) {
-      return;
-    }
-
-    getAccountShard();
-  }, [address]);
 
   useEffect(() => {
     if (address) {
