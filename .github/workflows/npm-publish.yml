@@ -23,14 +23,14 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
 
-      - name: Setup yarn
-        run: npm install -g yarn
+      # - name: Setup yarn
+      #   run: npm install -g yarn
 
-      - name: Install dependencies
-        run: yarn install
+      # - name: Install dependencies
+      #   run: yarn install
 
-      - name: Build project
-        run: yarn build
+      # - name: Build project
+      #   run: yarn build
 
       - name: 'Automated Version Bump'
         uses: 'phips28/gh-action-bump-version@master'
