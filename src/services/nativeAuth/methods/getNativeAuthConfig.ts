@@ -3,7 +3,8 @@ import { NativeAuthConfigType } from 'types';
 const defaultNativeAuthConfig = {
   hostname: typeof window !== 'undefined' ? window.location.hostname : '',
   apiAddress: 'https://api.elrond.com',
-  expirySeconds: 60 * 60 * 24 // one day
+  expirySeconds: 60 * 60 * 24, // one day
+  tokenExpirationToastWarningSeconds: 5 * 60 // five minutes
 };
 
 export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
@@ -15,7 +16,10 @@ export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
     hostname: config?.hostname ?? defaultNativeAuthConfig.hostname,
     expirySeconds:
       config?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
-    apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress
+    apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress,
+    tokenExpirationToastWarningSeconds:
+      config?.tokenExpirationToastWarningSeconds ??
+      defaultNativeAuthConfig.tokenExpirationToastWarningSeconds
   };
 
   return nativeAuthConfig;

@@ -26,6 +26,12 @@ export interface NativeAuthConfigType {
   hostname?: string;
   apiAddress?: string;
   expirySeconds?: number;
+  /**
+   * Displays a logout toast warning before token expiration. Defaults to 5 minutes.
+   *
+   * If set to `null`, will not trigger any warning.
+   */
+  tokenExpirationToastWarningSeconds?: number | null;
 }
 
 export interface OnProviderLoginType {
