@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 
 import { WithClassnameType } from '../../types';
-
-import globalStyles from 'assets/sass/main.scss';
 
 export interface PairingListPropsType extends WithClassnameType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
@@ -42,6 +43,7 @@ export const Pairinglist = ({
       globalStyles.p2
     ),
     pairImage: globalStyles.pairImage,
+    pairLoader: globalStyles.pairLoader,
     pairRemove: globalStyles.pairRemove,
     pairDetails: classNames(
       globalStyles.dFlex,
@@ -50,6 +52,11 @@ export const Pairinglist = ({
       globalStyles.ml3
     )
   };
+
+  const [topicLoading, setTopicLoading] = useState<string>('');
+  useEffect(() => {
+    setTopicLoading('');
+  }, [activePairings]);
 
   return (
     <div className={classes.pairsContainer}>
@@ -62,6 +69,7 @@ export const Pairinglist = ({
             key={pairing.topic}
             onClick={() => {
               connectExisting(pairing);
+              setTopicLoading(pairing.topic);
             }}
             className={classes.pairButton}
           >
@@ -77,16 +85,34 @@ export const Pairinglist = ({
 
             {pairing.peerMetadata && (
               <>
-                {pairing.peerMetadata?.icons?.[0] && (
-                  <img
-                    src={pairing.peerMetadata.icons[0]}
-                    alt={pairing.peerMetadata.name}
-                    className={classes.pairImage}
+                {topicLoading === pairing.topic ? (
+                  <FontAwesomeIcon
+                    icon={faCircleNotch}
+                    className={classNames(
+                      globalStyles.textPrimary,
+                      globalStyles.pairLoader,
+                      'fa-spin',
+                      'slow-spin'
+                    )}
                   />
+                ) : (
+                  <>
+                    {pairing.peerMetadata?.icons?.[0] && (
+                      <img
+                        src={pairing.peerMetadata.icons[0]}
+                        alt={pairing.peerMetadata.name}
+                        className={classes.pairImage}
+                      />
+                    )}
+                  </>
                 )}
 
                 <div className={classes.pairDetails}>
-                  <strong>{pairing.peerMetadata.name}</strong>
+                  <strong>
+                    {topicLoading === pairing.topic
+                      ? `Confirm on ${pairing.peerMetadata.name}`
+                      : pairing.peerMetadata.name}
+                  </strong>
 
                   <span>{pairing.peerMetadata.description}</span>
 
