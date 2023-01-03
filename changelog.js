@@ -81,5 +81,4 @@ function runInWorkspace(command, args) {
       }
     });
   });
-  //return execa(command, args, { cwd: workspace });
 }
