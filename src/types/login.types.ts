@@ -31,7 +31,7 @@ export interface NativeAuthConfigType {
    *
    * If set to `null`, will not trigger any warning.
    */
-  tokenExpierationToastWarningSeconds?: number | null;
+  tokenExpirationToastWarningSeconds?: number | null;
 }
 
 export interface OnProviderLoginType {

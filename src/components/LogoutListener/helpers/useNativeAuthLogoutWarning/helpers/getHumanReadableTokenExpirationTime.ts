@@ -11,8 +11,8 @@ export const getHumanReadableTokenExpirationTime = (
     .dividedBy(60)
     .integerValue(BigNumber.ROUND_FLOOR);
 
-  const overOneMinute = minutes.modulo(60).gt(1);
-  const underOneMinute = minutes.modulo(60).lt(1);
+  const overOneMinute = minutes.modulo(60).isGreaterThan(1);
+  const underOneMinute = minutes.modulo(60).isLessThan(1);
 
   if (overOneMinute) {
     return `${minutes} minutes`;

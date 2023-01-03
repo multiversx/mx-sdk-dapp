@@ -8,7 +8,6 @@ import { addNewCustomToast, storage } from 'utils';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import { localStorageKeys } from 'utils/storage/local';
 
-import { tokenExpierationToastWarningSeconds } from '../../constants';
 import { getHumanReadableTokenExpirationTime } from './helpers';
 
 export const useNativeAuthLogoutWarning = () => {
@@ -26,16 +25,19 @@ export const useNativeAuthLogoutWarning = () => {
     const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
-    if (!secondsUntilExpires || secondsUntilExpiresBN.lte(0)) {
+    if (!secondsUntilExpires || secondsUntilExpiresBN.isLessThanOrEqualTo(0)) {
       return;
     }
 
     // Handle the logout warning popup.
-    if (!storage.local.getItem(localStorageKeys.logoutWarningDismissed)) {
+    if (
+      !storage.local.getItem(localStorageKeys.logoutWarningDismissed) &&
+      tokenLogin?.nativeAuthConfig?.tokenExpirationToastWarningSeconds
+    ) {
       clearTimeout(warningLogoutTimeoutRef.current);
 
       const logoutWarningOffsetSeconds = new BigNumber(
-        tokenExpierationToastWarningSeconds
+        tokenLogin.nativeAuthConfig.tokenExpirationToastWarningSeconds
       );
 
       const logoutWarningOffsetMilliseconds =
@@ -49,9 +51,10 @@ export const useNativeAuthLogoutWarning = () => {
         millisecondsUntilLogout
       );
 
-      const timeoutUntilLogoutWarning = millisecondsUntilLogoutWarning.lte(0)
-        ? 0
-        : millisecondsUntilLogoutWarning.toNumber();
+      const timeoutUntilLogoutWarning =
+        millisecondsUntilLogoutWarning.isLessThanOrEqualTo(0)
+          ? 0
+          : millisecondsUntilLogoutWarning.toNumber();
 
       warningLogoutTimeoutRef.current = setTimeout(() => {
         addNewCustomToast({
@@ -77,7 +80,7 @@ export const useNativeAuthLogoutWarning = () => {
     return () => {
       clearTimeout(warningLogoutTimeoutRef.current);
     };
-  }, [expiresAt, address]);
+  }, [expiresAt, address, tokenLogin?.nativeAuthConfig]);
 
   return null;
 };
