@@ -1,6 +1,11 @@
-import { useLogoutFromMultipleTabs, useNativeAuthLogout } from './helpers';
+import {
+  useLogoutFromMultipleTabs,
+  useNativeAuthLogout,
+  useNativeAuthLogoutWarning
+} from './helpers';
 
 export const LogoutListener = () => {
+  useNativeAuthLogoutWarning();
   useLogoutFromMultipleTabs();
   useNativeAuthLogout();
 
