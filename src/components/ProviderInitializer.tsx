@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
@@ -32,10 +32,12 @@ import {
   setWalletLogin,
   setChainID
 } from 'reduxStore/slices';
+import { AccountType } from 'types/account.types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   getAddress,
   getAccount,
+  getLatestNonce,
   newWalletProvider,
   getLedgerConfiguration
 } from 'utils/account';
@@ -60,6 +62,7 @@ export function ProviderInitializer() {
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
+  const initializedAccountRef = useRef<AccountType | null>(null);
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -119,22 +122,33 @@ export function ProviderInitializer() {
 
   async function fetchAccount() {
     dispatch(setIsAccountLoading(true));
-    if (address) {
-      try {
-        const account = await getAccount(address);
-        if (account) {
-          dispatch(
-            setAccount({
-              ...account,
-              address,
-              nonce: account.nonce.valueOf()
-            })
-          );
-        }
-      } catch (e) {
-        dispatch(setAccountLoadingError('Failed getting account'));
-        console.error('Failed getting account ', e);
+    if (initializedAccountRef.current) {
+      // account was recently initialized, skip refetching
+      initializedAccountRef.current = null;
+      return;
+    }
+
+    if (!address) {
+      return;
+    }
+
+    try {
+      const account = await getAccount(address);
+
+      if (!account) {
+        return;
       }
+
+      dispatch(
+        setAccount({
+          ...account,
+          address,
+          nonce: account.nonce.valueOf()
+        })
+      );
+    } catch (e) {
+      dispatch(setAccountLoadingError('Failed getting account'));
+      console.error('Failed getting account ', e);
     }
     dispatch(setIsAccountLoading(false));
   }
@@ -159,12 +173,16 @@ export function ProviderInitializer() {
         loginService.setTokenLoginInfo({ signature, address });
       }
 
-      clearWalletLoginHistory();
+      const account = await getAccount(address);
+      if (account) {
+        initializedAccountRef.current = {
+          ...account,
+          nonce: getLatestNonce(account)
+        };
+        dispatch(setAccount(initializedAccountRef.current));
+      }
 
-      /**
-       * `fetchAccount()` will get balance and set account loading to `false`
-       */
-      dispatch(setIsAccountLoading(true));
+      clearWalletLoginHistory();
 
       dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
     } catch (e) {
