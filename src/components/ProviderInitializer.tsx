@@ -32,7 +32,6 @@ import {
   setWalletLogin,
   setChainID
 } from 'reduxStore/slices';
-import { AccountType } from 'types/account.types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   getAddress,
@@ -62,7 +61,7 @@ export function ProviderInitializer() {
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
-  const initializedAccountRef = useRef<AccountType | null>(null);
+  const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -124,31 +123,28 @@ export function ProviderInitializer() {
     dispatch(setIsAccountLoading(true));
     if (initializedAccountRef.current) {
       // account was recently initialized, skip refetching
-      initializedAccountRef.current = null;
+      initializedAccountRef.current = false;
+      dispatch(setIsAccountLoading(false));
       return;
     }
 
-    if (!address) {
-      return;
-    }
+    if (address) {
+      try {
+        const account = await getAccount(address);
 
-    try {
-      const account = await getAccount(address);
-
-      if (!account) {
-        return;
+        if (account) {
+          dispatch(
+            setAccount({
+              ...account,
+              address,
+              nonce: account.nonce.valueOf()
+            })
+          );
+        }
+      } catch (e) {
+        dispatch(setAccountLoadingError('Failed getting account'));
+        console.error('Failed getting account ', e);
       }
-
-      dispatch(
-        setAccount({
-          ...account,
-          address,
-          nonce: account.nonce.valueOf()
-        })
-      );
-    } catch (e) {
-      dispatch(setAccountLoadingError('Failed getting account'));
-      console.error('Failed getting account ', e);
     }
     dispatch(setIsAccountLoading(false));
   }
@@ -175,16 +171,23 @@ export function ProviderInitializer() {
 
       const account = await getAccount(address);
       if (account) {
-        initializedAccountRef.current = {
-          ...account,
-          nonce: getLatestNonce(account)
-        };
-        dispatch(setAccount(initializedAccountRef.current));
+        initializedAccountRef.current = true;
+        dispatch(setIsAccountLoading(true));
+
+        dispatch(
+          loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+        );
+
+        dispatch(
+          setAccount({
+            ...account,
+            nonce: getLatestNonce(account)
+          })
+        );
+        dispatch(setIsAccountLoading(false));
       }
 
       clearWalletLoginHistory();
-
-      dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
     } catch (e) {
       console.error('Failed authenticating wallet user ', e);
     }
