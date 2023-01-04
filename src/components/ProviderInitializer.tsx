@@ -36,7 +36,6 @@ import { LoginMethodsEnum } from 'types/enums.types';
 import {
   getAddress,
   getAccount,
-  getLatestNonce,
   newWalletProvider,
   getLedgerConfiguration
 } from 'utils/account';
@@ -124,8 +123,6 @@ export function ProviderInitializer() {
     dispatch(setIsAccountLoading(true));
     if (address) {
       try {
-        console.log('\x1b[42m%s\x1b[0m', '???');
-
         const account = await getAccount(address);
         if (account) {
           dispatch(
@@ -164,19 +161,12 @@ export function ProviderInitializer() {
         loginService.setTokenLoginInfo({ signature, address });
       }
 
-      // const account = await getAccount(address);
-      // if (account) {
-      //   dispatch(
-      //     setAccount({
-      //       ...account,
-      //       nonce: getLatestNonce(account)
-      //     })
-      //   );
-      // }
-
       clearWalletLoginHistory();
 
-      // walletInitializedRef.current = true;
+      /**
+       * `fetchAccount()` will get balance and set account loading to `false`
+       */
+      dispatch(setIsAccountLoading(true));
 
       dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
     } catch (e) {
