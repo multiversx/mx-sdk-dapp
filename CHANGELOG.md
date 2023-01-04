@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed fetching account twice on login. Populate shard from account.](https://github.com/ElrondNetwork/dapp-core/pull/530)
+
 ## [[2.2.5](https://github.com/ElrondNetwork/dapp-core/pull/526)] - 2022-12-30
 - [Refetch account data on network change](https://github.com/ElrondNetwork/dapp-core/pull/526)
 ## [[2.2.4](https://github.com/ElrondNetwork/dapp-core/pull/525)] - 2022-12-28
