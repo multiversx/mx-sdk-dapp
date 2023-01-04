@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
-import { getAccountShard } from 'utils/account/getAccountShard';
 import { logout } from 'utils/logout';
 
 export interface AppInitializerPropsType {
