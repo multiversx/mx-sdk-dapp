@@ -6,13 +6,16 @@ import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles
 export interface TransactionToastWrapperPropsType {
   className?: string;
   children?: ReactNode;
+  id?: string;
 }
 
 export const TransactionToastWrapper = ({
   className = 'dapp-transaction-toast-wrapper',
-  children
+  children,
+  id
 }: TransactionToastWrapperPropsType) => (
   <div
+    id={id}
     className={classNames(
       wrapperStyles.toasts,
       wrapperStyles.toastWrapper,

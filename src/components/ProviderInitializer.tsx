@@ -85,10 +85,8 @@ export function ProviderInitializer() {
   }, [loginMethod]);
 
   useEffect(() => {
-    console.log(address);
-
     fetchAccount();
-  }, [address]);
+  }, [address, network]);
 
   useEffect(() => {
     // prevent balance double fetching by handling ledgerAccount data separately

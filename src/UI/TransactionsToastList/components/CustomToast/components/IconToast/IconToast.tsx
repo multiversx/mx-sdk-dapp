@@ -16,13 +16,14 @@ export const IconToast = (props: IconToastPropsType) => {
     icon = faInfo,
     iconClassName,
     title = '',
+    toastId,
     CustomCloseButton
   } = props;
 
   const closeButton = useMemoizedCloseButton({ onDelete, CustomCloseButton });
 
   return (
-    <TransactionToastWrapper className={className}>
+    <TransactionToastWrapper className={className} id={toastId}>
       <div className={styles.content}>
         <div className={styles.left}>
           <div className={classNames(styles.icon, iconClassName)}>

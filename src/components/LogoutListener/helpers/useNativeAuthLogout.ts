@@ -17,7 +17,7 @@ export const useNativeAuthLogout = () => {
   } = getTokenExpiration(tokenLogin?.nativeAuthToken);
 
   const plannedLogoutRef = useRef('');
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const logoutTimeoutRef = useRef<NodeJS.Timeout>();
 
   // logout if token is expired
   useEffect(() => {
@@ -28,6 +28,7 @@ export const useNativeAuthLogout = () => {
 
   // plan logout for existing token
   useEffect(() => {
+    // Handle the actual logout functionality.
     const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
     const plannedLogoutKey = `${address}_${expiresAt}`;
     const plannedLogoutSet = plannedLogoutRef.current === plannedLogoutKey;
@@ -41,15 +42,15 @@ export const useNativeAuthLogout = () => {
 
     plannedLogoutRef.current = plannedLogoutKey;
 
-    clearTimeout(timeoutRef.current);
-    const milisecondsUntilLogout = secondsUntilExpiresBN.times(1000).toNumber();
+    clearTimeout(logoutTimeoutRef.current);
+    const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
-    timeoutRef.current = setTimeout(() => {
+    logoutTimeoutRef.current = setTimeout(() => {
       logout();
-    }, milisecondsUntilLogout);
+    }, millisecondsUntilLogout.toNumber());
 
     return () => {
-      clearTimeout(timeoutRef.current);
+      clearTimeout(logoutTimeoutRef.current);
     };
   }, [expiresAt, address]);
 
