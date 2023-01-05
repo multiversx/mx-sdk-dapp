@@ -92,12 +92,13 @@ export const useSignTransactions = () => {
 
     const isSigningWithWalletConnectV2 =
       providerType === LoginMethodsEnum.walletconnectv2;
-    if (
+    const isNoKnownErrorAndWalletConnectV2 =
       isSigningWithWalletConnectV2 &&
       !Object.values(WalletConnectV2ProviderErrorMessagesEnum).includes(
         errorMessage as WalletConnectV2ProviderErrorMessagesEnum
-      )
-    ) {
+      );
+
+    if (isNoKnownErrorAndWalletConnectV2) {
       setError(WalletConnectV2ProviderErrorMessagesEnum.connectionError);
     } else {
       setError(errorMessage);
@@ -156,17 +157,16 @@ export const useSignTransactions = () => {
       );
       isSigningRef.current = false;
 
-      const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
-        signedTransactions
-      );
+      const shouldMoveTransactionsToSignedState =
+        getShouldMoveTransactionsToSignedState(signedTransactions);
 
       if (!shouldMoveTransactionsToSignedState) {
         return;
       }
 
-      const signedTransactionsArray = Object.values(
-        signedTransactions
-      ).map((tx) => parseTransactionAfterSigning(tx));
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,

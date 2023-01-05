@@ -12,8 +12,8 @@ import { SignModalPropsType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
+import { WalletConnectConnectionStatus } from 'UI/walletConnect/WalletConnectConnectionStatus';
 import { getProviderType } from 'utils';
-import { WalletConnectConnectionStatus } from '../components';
 
 import styles from './signWithWalletConnectModalStyles.scss';
 
@@ -25,7 +25,8 @@ export const SignWithWalletConnectModal = ({
   className = 'dapp-wallet-connect-modal',
   modalContentClassName
 }: SignModalPropsType) => {
-  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
+  const clearTransactionsToSignWithWarning =
+    useClearTransactionsToSignWithWarning();
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
 
@@ -49,9 +50,8 @@ export const SignWithWalletConnectModal = ({
     hasMultipleTransactions ? 's' : ''
   }`;
 
-  const { cancelWalletConnectAction } = useCancelWalletConnectAction(
-    CANCEL_ACTION_NAME
-  );
+  const { cancelWalletConnectAction } =
+    useCancelWalletConnectAction(CANCEL_ACTION_NAME);
 
   const close = async () => {
     clearTransactionsToSignWithWarning(sessionId);

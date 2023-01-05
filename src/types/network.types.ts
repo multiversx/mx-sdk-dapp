@@ -12,7 +12,7 @@ export interface BaseNetworkType {
   explorerAddress: string;
   apiTimeout: string;
   walletConnectV2ProjectId?: string;
-  walletConnectV2Options?: any;
+  walletConnectV2Options?: Record<string, any>;
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {
