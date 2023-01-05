@@ -1,10 +1,6 @@
 name: Publish dapp-core
 
 on:
-  push:
-    branches: [master]
-  repository_dispatch:
-    types: publish-npm
   workflow_dispatch:
 
 permissions:
@@ -29,10 +25,24 @@ jobs:
       - name: Install dependencies
         run: yarn install
 
+      - name: Run tests
+        run: yarn test
+
       - name: Build project
         run: yarn build
 
-      - name: Publish to npmjs
+      - name: 'Automated Version Bump'
+        uses: 'phips28/gh-action-bump-version@master'
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: cd dist && npm publish
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          minor-wording: 'MINOR'
+          major-wording: 'MAJOR'
+          patch-wording: 'PATCH'
+          rc-wording: 'RC-RELEASE'
+          tag-prefix: 'v'
+
+      - name: Changelog
+        run: node changelog.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
