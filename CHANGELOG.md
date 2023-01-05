@@ -7,10 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed fetching account twice on login. Populate shard from account.](https://github.com/ElrondNetwork/dapp-core/pull/530)
 - [Updated WalletConnect provider to 2.1.0-beta.6 and stability fixes](https://github.com/ElrondNetwork/dapp-core/pull/529)
-
-## [[2.2.5](https://github.com/ElrondNetwork/dapp-core/pull/526)] - 2022-12-30
-
 - [Refetch account data on network change](https://github.com/ElrondNetwork/dapp-core/pull/526)
 
 ## [[2.2.4](https://github.com/ElrondNetwork/dapp-core/pull/525)] - 2022-12-28

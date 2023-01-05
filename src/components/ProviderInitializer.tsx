@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
 import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
@@ -61,7 +61,7 @@ export function ProviderInitializer() {
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
-
+  const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
 
   const { callbackRoute, logoutRoute } = walletConnectLogin
@@ -85,9 +85,10 @@ export function ProviderInitializer() {
   useEffect(() => {
     initializeProvider();
   }, [loginMethod]);
+
   useEffect(() => {
     fetchAccount();
-  }, [address, isLoggedIn, network]);
+  }, [address, network]);
 
   useEffect(() => {
     // prevent balance double fetching by handling ledgerAccount data separately
@@ -120,9 +121,17 @@ export function ProviderInitializer() {
 
   async function fetchAccount() {
     dispatch(setIsAccountLoading(true));
-    if (address && isLoggedIn) {
+    if (initializedAccountRef.current) {
+      // account was recently initialized, skip refetching
+      initializedAccountRef.current = false;
+      dispatch(setIsAccountLoading(false));
+      return;
+    }
+
+    if (address) {
       try {
         const account = await getAccount(address);
+
         if (account) {
           dispatch(
             setAccount({
@@ -162,17 +171,23 @@ export function ProviderInitializer() {
 
       const account = await getAccount(address);
       if (account) {
+        initializedAccountRef.current = true;
+        dispatch(setIsAccountLoading(true));
+
+        dispatch(
+          loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+        );
+
         dispatch(
           setAccount({
             ...account,
             nonce: getLatestNonce(account)
           })
         );
+        dispatch(setIsAccountLoading(false));
       }
 
       clearWalletLoginHistory();
-
-      dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.wallet }));
     } catch (e) {
       console.error('Failed authenticating wallet user ', e);
     }

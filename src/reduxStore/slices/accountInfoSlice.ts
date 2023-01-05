@@ -80,6 +80,7 @@ export const accountInfoSlice = createSlice({
       state.accounts = {
         [state.address]: isSameAddress ? action.payload : emptyAccount
       };
+      state.shard = action.payload.shard;
       state.isAccountLoading = false;
       state.accountLoadingError = null;
     },
@@ -163,12 +164,8 @@ export const accountInfoSlice = createSlice({
       }
 
       const { account: accountInfo } = action.payload;
-      const {
-        address,
-        shard,
-        accounts,
-        publicKey
-      } = accountInfo as AccountInfoSliceType;
+      const { address, shard, accounts, publicKey } =
+        accountInfo as AccountInfoSliceType;
       state.address = address;
       state.shard = shard;
       const isAddressInAccounts = accounts && address in accounts;
