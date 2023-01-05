@@ -92,7 +92,8 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
       setTokenLogin({
         loginToken: loginToken,
         signature,
-        nativeAuthToken
+        nativeAuthToken,
+        ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })
     );
   };

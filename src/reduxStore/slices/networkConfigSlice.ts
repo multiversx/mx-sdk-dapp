@@ -19,6 +19,7 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   walletConnectBridgeAddress: '',
   walletConnectV2RelayAddress: '',
   walletConnectV2ProjectId: '',
+  walletConnectV2Options: {},
   walletAddress: '',
   apiAddress: '',
   explorerAddress: '',

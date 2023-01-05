@@ -11,12 +11,14 @@ export const SimpleToast = ({
   message,
   messageComponent,
   CustomCloseButton,
-  className = 'dapp-custom-toast'
+  className = 'dapp-custom-toast',
+  toastId
 }: CustomToastPropsType) => {
   const closeButton = useMemoizedCloseButton({ onDelete, CustomCloseButton });
 
   return (
     <div
+      id={toastId}
       className={classNames(
         wrapperStyles.toasts,
         wrapperStyles.toastWrapper,
