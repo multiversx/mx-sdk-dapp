@@ -74,10 +74,12 @@ export const WalletConnectLoginContainer = ({
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-  const [displayWalletConnectV2, setDisplayWalletConnectV2] =
-    useState<boolean>(isWalletConnectV2);
-  const [showLegacySwitch, setShowLegacySwitch] =
-    useState<boolean>(isWalletConnectV2);
+  const [displayWalletConnectV2, setDisplayWalletConnectV2] = useState<boolean>(
+    isWalletConnectV2
+  );
+  const [showLegacySwitch, setShowLegacySwitch] = useState<boolean>(
+    isWalletConnectV2
+  );
   const isMobileDevice = isMobileEnvironment();
   const activePairings = displayWalletConnectV2
     ? wcPairings?.filter((pairing) => {

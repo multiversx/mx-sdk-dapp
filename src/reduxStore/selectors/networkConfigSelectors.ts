@@ -23,6 +23,11 @@ export const walletConnectV2ProjectIdSelector = createDeepEqualSelector(
   (state) => state.network.walletConnectV2ProjectId
 );
 
+export const walletConnectV2OptionsSelector = createDeepEqualSelector(
+  networkConfigSelector,
+  (state) => state.network.walletConnectV2Options
+);
+
 export const walletConnectDeepLinkSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.network.walletConnectDeepLink

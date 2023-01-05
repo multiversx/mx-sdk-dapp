@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Transaction } from '@elrondnetwork/erdjs';
 
 import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { WalletConnectV2ProviderErrorMessagesEnum } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -13,6 +14,7 @@ import {
 } from 'constants/index';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { getProviderType } from 'providers/utils';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { signTransactionsCancelMessageSelector } from 'reduxStore/selectors';
@@ -28,7 +30,7 @@ import {
   LoginMethodsEnum,
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
-import { getProviderType } from 'utils';
+
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
@@ -66,6 +68,8 @@ export const useSignTransactions = () => {
     dispatch(clearTransactionsInfoForSessionId(sessionId));
     dispatch(removeCustomToast(TRANSACTION_STATUS_TOAST_ID));
 
+    isSigningRef.current = false;
+
     if (!isExtensionProvider) {
       return;
     }
@@ -87,7 +91,19 @@ export const useSignTransactions = () => {
       return;
     }
 
-    setError(errorMessage);
+    const isSigningWithWalletConnectV2 =
+      providerType === LoginMethodsEnum.walletconnectv2;
+    const isNoKnownErrorAndWalletConnectV2 =
+      isSigningWithWalletConnectV2 &&
+      !Object.values(WalletConnectV2ProviderErrorMessagesEnum).includes(
+        errorMessage as WalletConnectV2ProviderErrorMessagesEnum
+      );
+
+    if (isNoKnownErrorAndWalletConnectV2) {
+      setError(WalletConnectV2ProviderErrorMessagesEnum.connectionError);
+    } else {
+      setError(errorMessage);
+    }
   };
 
   const signWithWallet = (
@@ -142,17 +158,16 @@ export const useSignTransactions = () => {
       );
       isSigningRef.current = false;
 
-      const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
-        signedTransactions
-      );
+      const shouldMoveTransactionsToSignedState =
+        getShouldMoveTransactionsToSignedState(signedTransactions);
 
       if (!shouldMoveTransactionsToSignedState) {
         return;
       }
 
-      const signedTransactionsArray = Object.values(
-        signedTransactions
-      ).map((tx) => parseTransactionAfterSigning(tx));
+      const signedTransactionsArray = Object.values(signedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,
