@@ -8,12 +8,12 @@ import { CANCEL_ACTION_NAME } from 'constants/index';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
+import { getProviderType } from 'providers/utils';
 import { SignModalPropsType } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { WalletConnectConnectionStatus } from 'UI/walletConnect/WalletConnectConnectionStatus';
-import { getProviderType } from 'utils';
 
 import styles from './signWithWalletConnectModalStyles.scss';
 
