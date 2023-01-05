@@ -1,4 +1,4 @@
-name: Publish dapp-core
+name: Pre release dapp-core
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ permissions:
   contents: write
 
 jobs:
-  publish-npm:
+  prerelease-npm:
     runs-on: ubuntu-latest
     permissions:
       contents: write
