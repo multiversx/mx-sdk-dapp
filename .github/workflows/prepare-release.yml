@@ -9,9 +9,7 @@ permissions:
 jobs:
   prerelease-npm:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
+    permissions: write-all
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v1
