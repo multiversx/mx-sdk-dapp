@@ -23,7 +23,6 @@ jobs:
         uses: devops-infra/action-pull-request@v0.5.3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          source_branch: development
           target_branch: master
           title: New release
           body: '**Automated pull request**'
