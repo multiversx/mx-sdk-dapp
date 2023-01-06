@@ -25,5 +25,4 @@ jobs:
           commit-message: update changelog
           title: Update Changelog
           body: Update changelog to reflect release changes
-          branch: ag-auto-pr
-          base: master
+          branch: master
