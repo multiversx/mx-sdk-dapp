@@ -26,3 +26,6 @@ jobs:
           title: Update Changelog
           body: Update changelog to reflect release changes
           branch: master
+          team-reviewers: |
+            owners
+            maintainers
