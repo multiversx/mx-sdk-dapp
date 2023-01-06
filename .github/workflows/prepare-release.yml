@@ -20,6 +20,6 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Create pull request
-      run: gh pr create -B master -H ag-auto-pr --title 'Merge ag-auto-pr into master' --body 'Created by Github action'
-      env:
+        run: gh pr create -B master -H ag-auto-pr --title 'Merge ag-auto-pr into master' --body 'Created by Github action'
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
