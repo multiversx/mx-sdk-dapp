@@ -19,13 +19,12 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v4
+      - name: Run the Action
+        uses: devops-infra/action-pull-request@v0.5.3
         with:
-          commit-message: update changelog
-          title: Update Changelog
-          body: Update changelog to reflect release changes
-          branch: master
-          team-reviewers: |
-            owners
-            maintainers
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          source_branch: development
+          target_branch: master
+          title: New release
+          body: '**Automated pull request**'
+          ignore_users: 'dependabot'
