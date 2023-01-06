@@ -19,30 +19,10 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
 
-      - name: Setup yarn
-        run: npm install -g yarn
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Run tests
-        run: yarn test
-
-      - name: Build project
-        run: yarn build
-
-      - name: 'Automated Version Bump'
-        uses: 'phips28/gh-action-bump-version@master'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
         with:
-          minor-wording: 'MINOR'
-          major-wording: 'MAJOR'
-          patch-wording: 'PATCH'
-          rc-wording: 'RC-RELEASE'
-          tag-prefix: 'v'
-
-      - name: Changelog
-        run: node changelog.js
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: update changelog
+          title: Update Changelog
+          body: Update changelog to reflect release changes
+          base: master
