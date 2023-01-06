@@ -26,4 +26,5 @@ jobs:
           target_branch: master
           title: New release
           body: '**Automated pull request**'
+          get_diff: true
           ignore_users: 'dependabot'
