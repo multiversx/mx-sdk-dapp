@@ -27,5 +27,4 @@ jobs:
           title: New release
           body: '**Automated pull request**'
           get_diff: true
-          allow_no_diff: true
           ignore_users: 'dependabot'
