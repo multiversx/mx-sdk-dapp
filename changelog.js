@@ -71,15 +71,12 @@ const pushChanges = async () => {
   await runInWorkspace('git', [
     'config',
     'user.name',
-    `"${process.env.GITHUB_USER || 'Automated Changelog'}"`
+    `"${'Automated Changelog'}"`
   ]);
   await runInWorkspace('git', [
     'config',
     'user.email',
-    `"${
-      process.env.GITHUB_EMAIL ||
-      'gh-action-changelog-edit@users.noreply.github.com'
-    }"`
+    `"${'gh-action-changelog-edit@users.noreply.github.com'}"`
   ]);
 
   const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
