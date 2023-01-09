@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -50,8 +51,12 @@ export const FailedTransactionStatusToast = ({
     return () => handleDelete();
   }, []);
 
-  return (
-    failToast && (
+  if (!failToast) {
+    return null;
+  }
+
+  return createPortal(
+    <div className={classNames(styles.toasts, className)}>
       <CustomToast
         {...failToast}
         toastId='failed-status-toast'
@@ -62,6 +67,7 @@ export const FailedTransactionStatusToast = ({
         onDelete={handleDelete}
         className={classNames(styles.transactionsStatusToast, className)}
       />
-    )
+    </div>,
+    document?.body
   );
 };
