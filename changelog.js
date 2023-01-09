@@ -10,7 +10,7 @@ const file = './CHANGELOG.md';
 
 const createPullRequest = async () => {
   const octokit = new Octokit({
-    auth: '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'
+    auth: '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'
   });
 
   try {
