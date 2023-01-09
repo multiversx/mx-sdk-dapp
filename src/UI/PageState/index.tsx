@@ -9,7 +9,7 @@ import { WithClassnameType } from '../types';
 import globalStyles from 'assets/sass/main.scss';
 import styles from './pageStateStyles.scss';
 
-// TODO: Rename to "PageStatePropsType" when dapp-core@3.0.0
+// TODO: Rename to "PageStatePropsType" when mx-sdk-dapp@3.0.0
 export interface PageStateProps extends WithClassnameType {
   title?: ReactNode;
   icon?: IconProp | IconDefinition | null;

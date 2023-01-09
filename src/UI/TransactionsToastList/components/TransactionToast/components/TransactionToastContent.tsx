@@ -11,7 +11,7 @@ import { TransactionToastContentElementsProps } from '../transactionToast.type';
 import { ToastDataState } from '../utils';
 import { DefaultToastDeleteButton } from './DefaultToastDeleteButton';
 
-// TODO: Rename to "TransactionToastContentPropsType" when dapp-core@3.0.0
+// TODO: Rename to "TransactionToastContentPropsType" when mx-sdk-dapp@3.0.0
 export interface TransactionToastContentProps {
   style: Record<string, string>;
   toastDataState: ToastDataState;

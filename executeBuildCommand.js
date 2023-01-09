@@ -82,7 +82,7 @@ module.exports = function esbuildWrapper(buildType = 'esm') {
           .then(() => {
             console.log(
               '\x1b[36m%s\x1b[0m',
-              `[${new Date().toLocaleTimeString()}] Dapp-core build succeeded for ${format} types`
+              `[${new Date().toLocaleTimeString()}] mx-sdk-dapp build succeeded for ${format} types`
             );
           })
           .catch(() => process.exit(1));

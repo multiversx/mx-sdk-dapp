@@ -38,7 +38,7 @@ yarn add @multiversx/mx-sdk-dapp --no-optional
 
 # Usage
 
-mx-sdk-dapp aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with a new application or integrate dapp-core into an existing application.
+mx-sdk-dapp aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with a new application or integrate mx-sdk-dapp into an existing application.
 
 This library covers two main areas: **User Identity** and **Transactions**. The API for interacting with library's logic is exposed via hooks and methods that can be called for logging in the user, getting the status of the user or sending transactions.
 
