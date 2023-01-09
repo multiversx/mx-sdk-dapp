@@ -68,18 +68,6 @@ const editChangeLog = async (pullRequestUrl) => {
 };
 
 const pushChanges = async () => {
-  // await runInWorkspace('git', [
-  //   'config',
-  //   'user.name',
-  //   `"${'Automated Changelog'}"`
-  // ]);
-  // await runInWorkspace('git', [
-  //   'config',
-  //   'user.email',
-  //   `"${'gh-action-changelog-edit@users.noreply.github.com'}"`
-  // ]);
-
-  // const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
   await runInWorkspace('git', ['commit', '-a', '-m', 'update changelog']);
   await runInWorkspace('git', ['push']);
 };
@@ -112,11 +100,11 @@ function runInWorkspace(command, args) {
 }
 
 const init = async () => {
-  // await incrementNpmversion();
-  // const prUrl = await createPullRequest();
-  // await editChangeLog(prUrl);
+  const prUrl = await createPullRequest();
+  await incrementNpmversion();
+  await editChangeLog(prUrl);
   await pushChanges();
-  // console.log(`PR created: ${prUrl}`);
+  console.log(`PR created: ${prUrl}`);
 };
 
 init();
