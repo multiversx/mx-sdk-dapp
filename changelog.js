@@ -120,7 +120,7 @@ const init = async () => {
   const prUrl = await createPullRequest();
   await editChangeLog(prUrl);
   await pushChanges();
-  console.log(`PR created: ${prUrl}`);
+  // console.log(`PR created: ${prUrl}`);
 };
 
 init();
