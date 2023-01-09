@@ -18,8 +18,8 @@ const createPullRequest = async () => {
       owner: 'multiversx',
       repo: 'mx-sdk-dapp',
       title: 'testPR',
-      head: 'master',
-      base: 'development',
+      head: 'ag-auto-pr',
+      base: 'master',
       body: 'Update changelog',
       maintainer_can_modify: true
     });
