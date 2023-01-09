@@ -3,7 +3,7 @@ import { HWProvider } from '@multiversx/erdjs-hw-provider';
 import {
   WalletConnectProvider,
   WalletConnectV2Provider
-} from '@multiversx/erdjs-wallet-connect-provider';
+} from '@elrondnetwork/erdjs-wallet-connect-provider';
 import { WalletProvider } from '@multiversx/erdjs-web-wallet-provider';
 import { IDappProvider } from 'types';
 import { emptyProvider } from './utils';

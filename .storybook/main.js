@@ -20,9 +20,9 @@ module.exports = {
 
     // walletConnectV2Provider has compliation errors for storybook
     config.resolve.alias[
-      '@multiversx/erdjs-wallet-connect-provider/out/walletConnectV2Provider'
+      'elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider'
     ] = require.resolve(
-      '@multiversx/erdjs-wallet-connect-provider/out/walletConnectProvider'
+      '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectProvider'
     );
 
     config.node = {

@@ -50,7 +50,7 @@ jest.mock('./hooks/useGetNetworkConfig', () => {
 
 // resolves import error
 jest.mock(
-  '@multiversx/erdjs-wallet-connect-provider/out/walletConnectV2Provider',
+  '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider',
   () => {
     return {
       __esModule: true

@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import {
   SessionEventTypes,
   PairingTypes
-} from '@multiversx/erdjs-wallet-connect-provider';
-import { WalletConnectV2Provider } from '@multiversx/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
+} from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
