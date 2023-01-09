@@ -27,7 +27,7 @@
     "emitDeclarationOnly": true,
     "resolveJsonModule": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "release-tools", "changelog.js"],
   "exclude": ["node_modules", "dist"],
   "paths": {
     "apiCalls/*": ["./src/apiCalls/*"],

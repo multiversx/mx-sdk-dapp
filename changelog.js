@@ -1,39 +1,71 @@
 const { spawn } = require('child_process');
+var fs = require('fs');
+const { Octokit } = require('@octokit/rest');
 
 var packageJson = require('./package.json');
-var fs = require('fs');
 const workspace = process.env.GITHUB_WORKSPACE;
 const date = new Date();
 
 const file = './CHANGELOG.md';
 
-fs.readFile(file, 'utf8', function (err, data) {
-  if (err) {
-    return console.log(err);
+const createPullRequest = async () => {
+  const octokit = new Octokit({
+    auth: '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'
+  });
+
+  try {
+    const { data } = await octokit.pulls.create({
+      owner: 'multiversx',
+      repo: 'mx-sdk-dapp',
+      title: 'testPR',
+      head: 'master',
+      base: 'development',
+      body: 'Update changelog',
+      maintainer_can_modify: true
+    });
+    return data.url;
+  } catch (error) {
+    throw new Error(error);
   }
+};
 
-  const [latestPr] = data
-    .split('/pull/')
-    .map((el) => parseInt(el.split(')\n')[0]))
-    .filter((el) => el)
-    .sort()
-    .reverse();
+const incrementNpmversion = async () => {
+  await runInWorkspace('npm', [
+    'version',
+    'patch',
+    '--force',
+    '--no-git-tag-version'
+  ]);
+};
 
-  const replacement = `## [Unreleased]
-## [[${packageJson.version}](https://github.com/ElrondNetwork/dapp-core/pull/${
-    latestPr + 1
-  })] - ${date.toISOString().split('T')[0]}
-  `;
-
-  var result = data.replace('## [Unreleased]', replacement);
-
-  fs.writeFileSync(file, result, 'utf8', function (err) {
+const editChangeLog = async (pullRequestUrl) => {
+  fs.readFile(file, 'utf8', function (err, data) {
     if (err) {
       return console.log(err);
     }
+
+    const [latestPr] = data
+      .split('/pull/')
+      .map((el) => parseInt(el.split(')\n')[0]))
+      .filter((el) => el)
+      .sort()
+      .reverse();
+
+    const replacement = `## [Unreleased]
+  ## [[${packageJson.version}](${pullRequestUrl})] - ${
+      date.toISOString().split('T')[0]
+    }
+    `;
+
+    var result = data.replace('## [Unreleased]', replacement);
+
+    fs.writeFileSync(file, result, 'utf8', function (err) {
+      if (err) {
+        return console.log(err);
+      }
+    });
   });
-  pushChanges();
-});
+};
 
 const pushChanges = async () => {
   await runInWorkspace('git', [
@@ -75,10 +107,20 @@ function runInWorkspace(command, args) {
           resolve();
         } else {
           reject(
-            `${errorMessages.join('')}${EOL}${command} exited with code ${code}`
+            `${errorMessages.join('')}${command} exited with code ${code}`
           );
         }
       }
     });
   });
 }
+
+const init = async () => {
+  await incrementNpmversion();
+  const prUrl = await createPullRequest();
+  await editChangeLog(prUrl);
+  await pushChanges();
+  console.log(`PR created: ${prUrl}`);
+};
+
+init();
