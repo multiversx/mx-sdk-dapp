@@ -5,15 +5,11 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
 import { CANCEL_ACTION_NAME } from 'constants/index';
-import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
-import { getProviderType } from 'providers/utils';
 import { SignModalPropsType } from 'types';
-import { LoginMethodsEnum } from 'types/enums.types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
-import { WalletConnectConnectionStatus } from 'UI/walletConnect/WalletConnectConnectionStatus';
 
 import styles from './signWithWalletConnectModalStyles.scss';
 
@@ -27,8 +23,6 @@ export const SignWithWalletConnectModal = ({
 }: SignModalPropsType) => {
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
-  const { provider } = useGetAccountProvider();
-  const providerType = getProviderType(provider);
 
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
@@ -43,8 +37,6 @@ export const SignWithWalletConnectModal = ({
   };
 
   const hasMultipleTransactions = transactions && transactions?.length > 1;
-  const isSigningWithWalletConnectV2 =
-    providerType === LoginMethodsEnum.walletconnectv2;
 
   const description = `Check your phone to sign the transaction${
     hasMultipleTransactions ? 's' : ''
@@ -58,16 +50,6 @@ export const SignWithWalletConnectModal = ({
     await cancelWalletConnectAction();
     handleClose();
   };
-
-  const Description = () => (
-    <>
-      {isSigningWithWalletConnectV2 ? (
-        <WalletConnectConnectionStatus description={description} />
-      ) : (
-        description
-      )}
-    </>
-  );
 
   return (
     <ModalContainer
@@ -86,7 +68,7 @@ export const SignWithWalletConnectModal = ({
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
         title='Confirm on Maiar'
-        description={error ? error : <Description />}
+        description={error ? error : description}
         action={
           <button
             id='closeButton'
