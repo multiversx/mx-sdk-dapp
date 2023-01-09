@@ -18,7 +18,7 @@ describe('TransactionInfoTo tests', () => {
     );
 
     expect(transactionToExplorerLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/accounts/erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqz8llllsh6u4jp'
+      'http://devnet-explorer.multiversx.com/accounts/erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqz8llllsh6u4jp'
     );
 
     const transactionToAccount = methods.getByTestId('transactionToAccount');

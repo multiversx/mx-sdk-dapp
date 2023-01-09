@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@multiversx/erdjs';
 
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { WalletConnectV2ProviderErrorMessagesEnum } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { ExtensionProvider } from '@multiversx/erdjs-extension-provider';
+import { WalletConnectV2ProviderErrorMessagesEnum } from '@multiversx/erdjs-wallet-connect-provider';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,

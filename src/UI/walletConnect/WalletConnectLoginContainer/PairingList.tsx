@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { PairingTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { PairingTypes } from '@multiversx/erdjs-wallet-connect-provider';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';

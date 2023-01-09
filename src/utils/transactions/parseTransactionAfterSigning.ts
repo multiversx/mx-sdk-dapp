@@ -1,5 +1,5 @@
-import { PlainSignedTransaction } from '@elrondnetwork/erdjs-web-wallet-provider/out/plainSignedTransaction';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { PlainSignedTransaction } from '@multiversx/erdjs-web-wallet-provider/out/plainSignedTransaction';
+import { Transaction } from '@multiversx/erdjs/out';
 import { newTransaction } from 'models';
 import { SignedTransactionType } from 'types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
