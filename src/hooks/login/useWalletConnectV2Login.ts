@@ -109,7 +109,7 @@ export const useWalletConnectV2Login = ({
   }, [provider]);
 
   useEffect(() => {
-    setIsLoading(Boolean(wcUri));
+    setIsLoading(!Boolean(wcUri));
   }, [wcUri]);
 
   const handleOnLogout = () => {
