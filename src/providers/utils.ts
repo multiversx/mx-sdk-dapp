@@ -1,7 +1,7 @@
 import { SignableMessage, Transaction } from '@multiversx/erdjs';
 import { ExtensionProvider } from '@multiversx/erdjs-extension-provider';
 import { HWProvider } from '@multiversx/erdjs-hw-provider';
-import { IHWElrondApp } from '@multiversx/erdjs-hw-provider/out/interface';
+import { IHWWalletApp } from '@multiversx/erdjs-hw-provider/out/interface';
 import { EngineTypes } from '@multiversx/erdjs-wallet-connect-provider';
 import { WalletConnectProvider } from '@multiversx/erdjs-wallet-connect-provider/out/walletConnectProvider';
 import { WalletConnectV2Provider } from '@multiversx/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
@@ -43,7 +43,7 @@ export const getLedgerConfiguration = async (
   if (!initializedHwWalletP.isInitialized()) {
     throw new Error('Unable to get version. Provider not initialized');
   }
-  const hwApp: IHWElrondApp = (initializedHwWalletP as any).hwApp;
+  const hwApp: IHWWalletApp = (initializedHwWalletP as any).hwApp;
   const { contractData, version } = await hwApp.getAppConfiguration();
   const dataEnabled = contractData === LEDGER_CONTRACT_DATA_ENABLED_VALUE;
   return { version, dataEnabled };
