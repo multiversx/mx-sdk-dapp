@@ -116,9 +116,9 @@ function runInWorkspace(command, args) {
 }
 
 const init = async () => {
-  await incrementNpmversion();
-  const prUrl = await createPullRequest();
-  await editChangeLog(prUrl);
+  // await incrementNpmversion();
+  // const prUrl = await createPullRequest();
+  // await editChangeLog(prUrl);
   await pushChanges();
   // console.log(`PR created: ${prUrl}`);
 };
