@@ -81,8 +81,8 @@ const pushChanges = async () => {
 
   // const remoteRepo = `https://${process.env.GITHUB_ACTOR}:${process.env.GITHUB_TOKEN}@github.com/${process.env.GITHUB_REPOSITORY}.git`;
   await runInWorkspace('git', ['commit', '-a', '-m', 'update changelog']);
-  // await runInWorkspace('git', ['push', remoteRepo, '--follow-tags']);
-  // await runInWorkspace('git', ['push', remoteRepo, '--tags']);
+  await runInWorkspace('git', ['push', '--follow-tags']);
+  await runInWorkspace('git', ['push', '--tags']);
 };
 
 function runInWorkspace(command, args) {
