@@ -43,7 +43,8 @@ export const FailedTransactionStatusToast = ({
     dispatch(
       addFailTransactionToast({
         message,
-        duration
+        duration,
+        toastId: 'failed-status-toast'
       })
     );
 

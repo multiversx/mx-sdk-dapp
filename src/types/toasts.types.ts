@@ -1,4 +1,5 @@
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
 import { ServerTransactionType } from './serverTransactions.types';
 
 interface SharedCustomToast {
@@ -65,7 +66,8 @@ export interface TransactionToastType {
 }
 
 export interface FailTransactionToastType {
-  toastId?: string;
+  toastId: string;
   message: string;
   duration?: number;
+  type?: StatusIconType;
 }

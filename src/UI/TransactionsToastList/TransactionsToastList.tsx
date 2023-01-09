@@ -5,9 +5,11 @@ import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransac
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   customToastsSelector,
+  failTransactionToastSelector,
   transactionToastsSelector
 } from 'reduxStore/selectors/toastsSelectors';
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
+
 import { store } from 'reduxStore/store';
 import { removeSignedTransaction } from 'services';
 import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
@@ -23,6 +25,10 @@ import {
   TransactionToastGuardPropsType
 } from './components';
 import styles from './transactionsToastList.styles.scss';
+import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
+// import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
+// import { StatusMessageComponent } from 'components/TransactionStatusToast/StatusMessageComponent';
+// import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
 
 export interface TransactionsToastListPropsType extends WithClassnameType {
   toastProps?: any;
@@ -43,12 +49,13 @@ export const TransactionsToastList = ({
   parentElement
 }: TransactionsToastListPropsType) => {
   const customToasts = useSelector(customToastsSelector);
+  // @ts-ignore
+  const failedTransactionToast = useSelector(failTransactionToastSelector);
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
 
-  const {
-    signedTransactions: signedTransactionsFromStore
-  } = useGetSignedTransactions();
+  const { signedTransactions: signedTransactionsFromStore } =
+    useGetSignedTransactions();
 
   const signedTransactionsToRender =
     signedTransactions || signedTransactionsFromStore;
@@ -121,6 +128,34 @@ export const TransactionsToastList = ({
       className={customToastClassName}
     />
   ));
+
+  // const failedTransactionToastComponent = (
+  //   <CustomToast
+  //     {...failedTransactionToast}
+  //     toastId='failed-status-toast'
+  //     duration={20000}
+  //     messageComponent={
+  //       <StatusMessageComponent
+  //         type={StatusIconType.WARNING}
+  //         message={message}
+  //       />
+  //     }
+  //     // onDelete={handleDelete}
+  //     className={classNames(styles.transactionsStatusToast, className)}
+  //     onDelete={console.log}
+  //   />
+  // );
+
+  console.log({ failedTransactionToast });
+
+  if (failedTransactionToast) {
+    customToastsList.push(
+      <FailedTransactionStatusToast
+        key='failed-status-toast'
+        {...failedTransactionToast}
+      />
+    );
+  }
 
   const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());
