@@ -1,10 +1,10 @@
 {
   "name": "@multiversx/dapp-core",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
-  "repository": "https://github.com/multiversx/mx-sdk-dapp",
+  "repository": "multiversx/mx-sdk-dapp",
   "main": "./__commonjs",
   "browser": "./",
   "react-native": "./",

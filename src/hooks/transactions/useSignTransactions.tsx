@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import { Transaction } from '@multiversx/erdjs';
 
 import { ExtensionProvider } from '@multiversx/erdjs-extension-provider';
-import { WalletConnectV2ProviderErrorMessagesEnum } from '@elrondnetwork/erdjs-wallet-connect-provider';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -79,6 +78,13 @@ export const useSignTransactions = () => {
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
+    const isSigningWithWalletConnectV2 =
+      providerType === LoginMethodsEnum.walletconnectv2;
+
+    if (isSigningWithWalletConnectV2) {
+      errorMessage = TRANSACTION_CANCELLED;
+    }
+
     const isTxCancelled = errorMessage.includes(TRANSACTION_CANCELLED);
     clearSignInfo(sessionId);
 
@@ -91,19 +97,7 @@ export const useSignTransactions = () => {
       return;
     }
 
-    const isSigningWithWalletConnectV2 =
-      providerType === LoginMethodsEnum.walletconnectv2;
-    const isNoKnownErrorAndWalletConnectV2 =
-      isSigningWithWalletConnectV2 &&
-      !Object.values(WalletConnectV2ProviderErrorMessagesEnum).includes(
-        errorMessage as WalletConnectV2ProviderErrorMessagesEnum
-      );
-
-    if (isNoKnownErrorAndWalletConnectV2) {
-      setError(WalletConnectV2ProviderErrorMessagesEnum.connectionError);
-    } else {
-      setError(errorMessage);
-    }
+    setError(errorMessage);
   };
 
   const signWithWallet = (
