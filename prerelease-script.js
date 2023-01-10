@@ -75,7 +75,7 @@ const pushChanges = async () => {
 function runInWorkspace(command, args) {
   return new Promise((resolve, reject) => {
     console.log('runInWorkspace | command:', command, 'args:', args);
-    const child = spawn(command, args, { cwd: workspace });
+    const child = spawn(command, args, { cwd: undefined });
     let isDone = false;
     const errorMessages = [];
     child.on('error', (error) => {
