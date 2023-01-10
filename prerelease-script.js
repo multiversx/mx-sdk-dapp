@@ -1,5 +1,5 @@
 const { spawn } = require('child_process');
-var fs = require('fs');
+const fs = require('fs');
 const { Octokit } = require('@octokit/rest');
 
 const date = new Date();
