@@ -1,4 +1,4 @@
-import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
+import { SignableMessage, Transaction } from '@multiversx/erdjs';
 import { EngineTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
 
 export interface DappOptions {

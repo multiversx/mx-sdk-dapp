@@ -1,44 +1,44 @@
 
-# dapp-core
+# mx-sdk-dapp
 
-> A library that holds the core functional logic of a dapp on the Elrond Network
+> A library that holds the core functional logic of a dapp on the MultiversX blockchain
 
-[![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/@elrondnetwork/dapp-core) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/@multiversx/mx-sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-See [Dapp template](https://dapp-template.elrond.com/) for live demo or checkout usage in the [Github repo](https://github.com/ElrondNetwork/dapp-template)
+See [Dapp template](https://dapp-template.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
 
 # Installation
 
 The library can be installed via npm or yarn.
 
 ```bash
-npm install @elrondnetwork/dapp-core
+npm install @multiversx/mx-sdk-dapp
 ```
 
 or
 
 ```bash
-yarn add @elrondnetwork/dapp-core
+yarn add @multiversx/mx-sdk-dapp
 ```
 
-If you need only the dapp-core basic logic, without the additional UI, consider using the `--no-optional` flag.
+If you need only the mx-sdk-dapp basic logic, without the additional UI, consider using the `--no-optional` flag.
 This will not install the packages needed for the optional UI components.
 
 ```bash
-npm install @elrondnetwork/dapp-core --no-optional
+npm install @multiversx/mx-sdk-dapp --no-optional
 ```
 
 or
 
 ```bash
-yarn add @elrondnetwork/dapp-core --no-optional
+yarn add @multiversx/mx-sdk-dapp --no-optional
 ```
 
-### **If you're transitioning from dapp-core 1.x to dapp-core 2.0, please read the [Migration guide](https://github.com/ElrondNetwork/dapp-core/wiki/Migration-guide-2.0)**
+### **If you're transitioning from dapp-core 1.x to @multiversx/mx-sdk-dapp (dapp-core 2.0), please read the [Migration guide](https://github.com/multiversx/mx-sdk-dapp/wiki/Migration-guide-2.0)**
 
 # Usage
 
-dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the Elrond Network, allowing developers to easily get started with a new application or integrate dapp-core into an existing application.
+mx-sdk-dapp aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with a new application or integrate mx-sdk-dapp into an existing application.
 
 This library covers two main areas: **User Identity** and **Transactions**. The API for interacting with library's logic is exposed via hooks and methods that can be called for logging in the user, getting the status of the user or sending transactions.
 
@@ -46,7 +46,7 @@ However, to simplify usage even further, the library also comes with a default U
 
 The default UI is exposed via the `UI` module.
 
-`import * as DappUI from "@elrondnetwork/dapp-core/UI";`
+`import * as DappUI from "@multiversx/mx-sdk-dapp/UI";`
 
 **Please be aware that this style of importing might also import unused code.**
 
@@ -54,9 +54,9 @@ The default UI is exposed via the `UI` module.
 To reduce the amount of dead code, you can use named imports for each component like
 
 ```typescript
-import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages";
+import { UnlockPage } from "@multiversx/mx-sdk-dapp/UI/pages";
 or
-import { UnlockPage } from "@elrondnetwork/dapp-core/UI/pages/UnlockPage";
+import { UnlockPage } from "@multiversx/mx-sdk-dapp/UI/pages/UnlockPage";
 ```
 
 More on this below.
@@ -90,9 +90,9 @@ You need to wrap your application with the **DappProvider** component, which is 
 - import the Provider:
 
 ```typescript
-import { DappProvider } from '@elrondnetwork/dapp-core/wrappers/DappProvider';
+import { DappProvider } from '@multiversx/mx-sdk-dapp/wrappers/DappProvider';
 or
-import { DappProvider } from '@elrondnetwork/dapp-core/wrappers';
+import { DappProvider } from '@multiversx/mx-sdk-dapp/wrappers';
 ```
 - Wrap your application with this Provider.
 
@@ -142,7 +142,7 @@ when something happens inside the app:
 - `TransactionsToastList` will display new transactions in nice toasts at the bottom of the screen. This component is fully customizable.
 
 ```jsx
-  import {TransactionsToastList} from "@elrondnetwork/dapp-core/UI/TransactionsToastList";
+  import {TransactionsToastList} from "@multiversx/mx-sdk-dapp/UI/TransactionsToastList";
 
   <App>
     <TransactionsToastList
@@ -160,7 +160,7 @@ when something happens inside the app:
 **Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
 
 ```jsx
-  import {SignTransactionsModals} from "@elrondnetwork/dapp-core/UI/SignTransactionsModals";
+  import {SignTransactionsModals} from "@multiversx/mx-sdk-dapp/UI/SignTransactionsModals";
 
   <App>
     <SignTransactionsModals />
@@ -171,7 +171,7 @@ when something happens inside the app:
 `NotificationModal` Will show a modal to the user with various warnings and errors.
 
 ```jsx
-  import {NotificationModal} from "@elrondnetwork/dapp-core/UI/NotificationModal";
+  import {NotificationModal} from "@multiversx/mx-sdk-dapp/UI/NotificationModal";
 
   <App>
     <NotificationModal />
@@ -185,16 +185,16 @@ If you want to show custom notifications, you can use the `useGetNotification` h
 
 ## User Identity
 
-Dapp-core makes logging in and persisting user's session easy and hassle-free.
+mx-sdk-dapp makes logging in and persisting user's session easy and hassle-free.
 
 A handy component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
-Import from dapp-core:
+Import from mx-sdk-dapp:
 
 ```typescript
-import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
+import { AuthenticatedRoutesWrapper } from '@multiversx/mx-sdk-dapp/wrappers/AuthenticatedRoutesWrapper';
 or
-import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers';
+import { AuthenticatedRoutesWrapper } from '@multiversx/mx-sdk-dapp/wrappers';
 ```
 
 Use with routes:
@@ -301,10 +301,10 @@ you can easily import and use them.
 All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
 The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
 
-If you need to authenticate some requests, you can provide the `nativeAuth` flag to your login buttons. It comes as a boolean or as a configuration object. This token will be available in `useGetLoginInfo` hook later, inside `tokenLogin.nativeAuthToken`. If you need to use an interceptor for your requests, make sure to check out the implementation of `AxiosInterceptorContext`. Use it like: 
+If you need to authenticate some requests, you can provide the `nativeAuth` flag to your login buttons. It comes as a boolean or as a configuration object. This token will be available in `useGetLoginInfo` hook later, inside `tokenLogin.nativeAuthToken`. If you need to use an interceptor for your requests, make sure to check out the implementation of `AxiosInterceptorContext`. Use it like:
 
 ```typescript
-import { AxiosInterceptorContext } from '@elrondnetwork/dapp-core/wrappers/AxiosInterceptorContext';
+import { AxiosInterceptorContext } from '@multiversx/mx-sdk-dapp/wrappers/AxiosInterceptorContext';
 ```
 ```jsx
 <AxiosInterceptorContext.Provider>
@@ -315,14 +315,14 @@ import { AxiosInterceptorContext } from '@elrondnetwork/dapp-core/wrappers/Axios
           <DappProvider environment={EnvironmentsEnum.devnet}>
             <>
               <AxiosInterceptorContext.Listener />
-              {/* 
+              {/*
               // other components below
               */}
               <TransactionsToastList />
               <NotificationModal />
               <SignTransactionsModals />
 
-              <Routes>...</Routes> 
+              <Routes>...</Routes>
             </>
           </DappProvider>
         </Router>
@@ -332,10 +332,10 @@ import { AxiosInterceptorContext } from '@elrondnetwork/dapp-core/wrappers/Axios
 
 Another handly component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
 
-Import from dapp-core:
+Import from mx-sdk-dapp:
 
 ```typescript
-import { AuthenticatedRoutesWrapper } from '@elrondnetwork/dapp-core/wrappers/AuthenticatedRoutesWrapper';
+import { AuthenticatedRoutesWrapper } from '@multiversx/mx-sdk-dapp/wrappers/AuthenticatedRoutesWrapper';
 ```
 
 Use with routes:
@@ -372,15 +372,15 @@ Login hooks
 
 This area covers the login hooks, which expose a trigger function and the login data, ready to be rendered.
 
-These hooks are exposed as named exports, which can be imported from dapp-core:
+These hooks are exposed as named exports, which can be imported from mx-sdk-dapp:
 
 ```typescript
-import { useExtensionLogin, useWalletConnectLogin, useLedgerLogin, useWebWalletLogin } from '@elrondnetwork/dapp-core/hooks';
+import { useExtensionLogin, useWalletConnectLogin, useLedgerLogin, useWebWalletLogin } from '@multiversx/mx-sdk-dapp/hooks';
 or
-import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login/useExtensionLogin';
-import { useWalletConnectLogin } from '@elrondnetwork/dapp-core/hooks/login/useWebWalletLogin';
-import { useLedgerLogin } from '@elrondnetwork/dapp-core/hooks/login/useLedgerLogin';
-import { useWebWalletLogin } from '@elrondnetwork/dapp-core/hooks/login/useWebWalletLogin';
+import { useExtensionLogin } from '@multiversx/mx-sdk-dapp/hooks/login/useExtensionLogin';
+import { useWalletConnectLogin } from '@multiversx/mx-sdk-dapp/hooks/login/useWebWalletLogin';
+import { useLedgerLogin } from '@multiversx/mx-sdk-dapp/hooks/login/useLedgerLogin';
+import { useWebWalletLogin } from '@multiversx/mx-sdk-dapp/hooks/login/useWebWalletLogin';
 ```
 
 There are 4 available hooks:
@@ -471,7 +471,7 @@ There are 2 ways of reading the user current state: hooks (to be used inside com
 
 ## Transactions
 
-The dapp-core library exposes a straight-forward way of sending transactions and tracking their status, with a couple of handy UI components;
+The mx-sdk-dapp library exposes a straight-forward way of sending transactions and tracking their status, with a couple of handy UI components;
 
 <details><summary>
 Sending Transactions
@@ -481,7 +481,7 @@ Sending Transactions
 
 The API for sending transactions is a function called **sendTransactions**:
 
-`import { sendTransactions } from "@elrondnetwork/dapp-core";`
+`import { sendTransactions } from "@multiversx/mx-sdk-dapp";`
 
 It can be used to send a transaction with minimum information:
 
@@ -603,7 +603,7 @@ Tracking a transaction
 The library exposes a hook called useTrackTransactionStatus;
 
 ```typescript
-import {useTrackTransactionStatus} from @elrondnetwork/dapp-core/hooks;
+import {useTrackTransactionStatus} from @multiversx/mx-sdk-dapp/hooks;
 
 const transactionStatus = useTrackTransactionStatus({
   transactionId: sessionId,
@@ -637,7 +637,7 @@ Tracking transactions' statuses
 
 ### Tracking transactions' statuses
 
-Dapp-core also exposes a number of handy hooks for tracking all, pending, failed, successful and timed out transactions.
+mx-sdk-dapp also exposes a number of handy hooks for tracking all, pending, failed, successful and timed out transactions.
 
 Use:
 
@@ -668,7 +668,7 @@ Transaction Toasts UI
 
 ### Transaction Toasts UI
 
-dapp-core also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
+mx-sdk-dapp also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
 
 The toasts list is exposed via **TransactionsToastList** UI component and can be used just by rendering it inside the application.
 `TransactionToastList` component renders also custom toasts. A custom toast can be added using the util function: `addNewCustomToast` and can be removed using `deleteCustomToast`
@@ -708,7 +708,7 @@ Removing transactions manually
   </summary>
 
 ### Removing transactions manually
-Dapp-core takes care to change transactions' statuses and removes them when needed,
+mx-sdk-dapp takes care to change transactions' statuses and removes them when needed,
 but if you need to do this manually, you can use the exposed functions for this:
 
 ```typescript
@@ -723,17 +723,17 @@ but if you need to do this manually, you can use the exposed functions for this:
 
 # Unit testing with Jest
 
-The dapp-core library exposes bundles for both CommonJS and ESModules, however, in some enviornments, Jest might require manual mapping of the CommonJS output. To implement it, add the following snippet inside your jest config file.
+The mx-sdk-dapp library exposes bundles for both CommonJS and ESModules, however, in some enviornments, Jest might require manual mapping of the CommonJS output. To implement it, add the following snippet inside your jest config file.
 
 ```javascript
 moduleNameMapper: {
-    '@elrondnetwork/dapp-core/(.*)':
-      '<rootDir>/node_modules/@elrondnetwork/dapp-core/__commonjs/$1.js'
+    '@multiversx/mx-sdk-dapp/(.*)':
+      '<rootDir>/node_modules/@multiversx/mx-sdk-dapp/__commonjs/$1.js'
 }
 ```
-# Dapp-core exports
+# mx-sdk-dapp exports
 
-Since version 2.0, dapp-core does not have a default export object.
+Since version 2.0, mx-sdk-dapp does not have a default export object.
 You have to import everything from its own separate module. Below you can find all the exports.
 
 You can either import everything from a module, or if you really want to make sure you're not importing anything
@@ -744,12 +744,12 @@ You can either go into their specific folder in the module for extra trimming, o
 for example, these 2 imports are both valid:
 
 ```typescript
-import { useExtensionLogin, useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks';
+import { useExtensionLogin, useGetAccountInfo } from '@multiversx/mx-sdk-dapp/hooks';
 ```
 and
 ```typescript
-import { useExtensionLogin } from '@elrondnetwork/dapp-core/hooks/login';
-import { useGetAccountInfo } from '@elrondnetwork/dapp-core/hooks/account';
+import { useExtensionLogin } from '@multiversx/mx-sdk-dapp/hooks/login';
+import { useGetAccountInfo } from '@multiversx/mx-sdk-dapp/hooks/account';
 
 ```
 
@@ -766,7 +766,7 @@ import {
   mnemonicWords,
   ledgerErrorCodes,
   fallbackNetworkConfigurations
- } from '@elrondnetwork/dapp-core/constants';
+ } from '@multiversx/mx-sdk-dapp/constants';
 ```
 
 ## hooks exports
@@ -779,7 +779,7 @@ import {
   useLedgerLogin,
   useWalletConnectLogin,
   useWebWalletLogin
-} from '@elrondnetwork/dapp-core/hooks/login';
+} from '@multiversx/mx-sdk-dapp/hooks/login';
 ```
 
 ### Account
@@ -790,7 +790,7 @@ import {
   useGetAccountProvider,
   useGetLoginInfo,
   useGetWebsocketSignalTimestamp // get a Date.now() timestamp every time a change occurs on the account on network
- } from '@elrondnetwork/dapp-core/hooks/account';
+ } from '@multiversx/mx-sdk-dapp/hooks/account';
 ```
 
 ### Transactions
@@ -814,7 +814,7 @@ import {
   useSignTransactions,
   useSignTransactionsWithDevice,
   useSignTransactionsWithLedger,
-} from '@elrondnetwork/dapp-core/hooks/transactions';
+} from '@multiversx/mx-sdk-dapp/hooks/transactions';
 ```
 
 ### Misc
@@ -824,7 +824,7 @@ import {
   useGetNetworkConfig,
   useGetNotification,
   useUpdateEffect
-} from '@elrondnetwork/dapp-core/hooks';
+} from '@multiversx/mx-sdk-dapp/hooks';
 ```
 
 ## services exports
@@ -839,7 +839,7 @@ import {
   sendTransactions,
   signTransactions,
   calcTotalFee
-} from '@elrondnetwork/dapp-core/services';
+} from '@multiversx/mx-sdk-dapp/services';
 ```
 
 ## utils exports
@@ -858,7 +858,7 @@ import {
   refreshAccount,
   setNonce,
   signMessage
-} from '@elrondnetwork/dapp-core/utils/account';
+} from '@multiversx/mx-sdk-dapp/utils/account';
 ```
 
 ### Operations
@@ -869,7 +869,7 @@ import {
   formatAmount,
   nominate,
   getUsdValue,
-} from '@elrondnetwork/dapp-core/utils/operations';
+} from '@multiversx/mx-sdk-dapp/utils/operations';
 ```
 
 ### Transactions
@@ -880,7 +880,7 @@ import {
   isTokenTransfer,
   parseMultiEsdtTransferData,
   parseTransactionAfterSigning,
-} from '@elrondnetwork/dapp-core/utils/transactions';
+} from '@multiversx/mx-sdk-dapp/utils/transactions';
 ```
 
 ### Validation
@@ -892,7 +892,7 @@ import {
  stringIsInteger,
  isContract,
  isStringBase64,
-} from '@elrondnetwork/dapp-core/utils';
+} from '@multiversx/mx-sdk-dapp/utils';
 ```
 
 ### Misc
@@ -906,7 +906,7 @@ import {
   getIsLoggedIn,
   isSelfESDTContract,
   getAddressFromDataField,
-} from '@elrondnetwork/dapp-core/utils';
+} from '@multiversx/mx-sdk-dapp/utils';
 ```
 
 ## Wrappers
@@ -916,7 +916,7 @@ import {
   DappProvider,
   AuthenticatedRoutesWrapper,
   AppInitializer,
-} from '@elrondnetwork/dapp-core/wrappers';
+} from '@multiversx/mx-sdk-dapp/wrappers';
 ```
 
 ## Web-specific imports
@@ -924,7 +924,7 @@ import {
 ```typescript
 import {
   useIdleTimer
-} from '@elrondnetwork/dapp-core/web';
+} from '@multiversx/mx-sdk-dapp/web';
 ```
 
 
@@ -951,15 +951,15 @@ import {
   UsdValue,
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
-} from '@elrondnetwork/dapp-core/UI';
+} from '@multiversx/mx-sdk-dapp/UI';
 ```
 
 or
 
 ```typescript
-import { CopyButton } from '@elrondnetwork/dapp-core/UI/CopyButton';
-import { FormatAmount } from '@elrondnetwork/dapp-core/UI/FormatAmount';
-import { ExplorerLink } from '@elrondnetwork/dapp-core/UI/ExplorerLink';
+import { CopyButton } from '@multiversx/mx-sdk-dapp/UI/CopyButton';
+import { FormatAmount } from '@multiversx/mx-sdk-dapp/UI/FormatAmount';
+import { ExplorerLink } from '@multiversx/mx-sdk-dapp/UI/ExplorerLink';
 
 etc
 ```
@@ -977,13 +977,13 @@ However, certain architectural decisions that we made do not work out of the box
 Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
 
 We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
-Until then, you can use @elrondnetwork/erdjs libraries and @walletconnect to connect to Maiar.
+Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to Maiar.
 There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
 
 
 ## Roadmap
 
-See the [open issues](https://github.com/ElrondNetwork/dapp-core/issues) for a list of proposed features (and known issues).
+See the [open issues](https://github.com/multiversx/mx-sdk-dapp/issues) for a list of proposed features (and known issues).
 
 ## Contributing
 
@@ -996,10 +996,6 @@ One can contribute by creating _pull requests_, or by opening _issues_ for disco
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## Developers
-
-The [Elrond Team](https://elrond.com/team/).
 
 ## License
 

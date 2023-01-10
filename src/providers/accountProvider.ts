@@ -1,10 +1,10 @@
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { ExtensionProvider } from '@multiversx/erdjs-extension-provider';
+import { HWProvider } from '@multiversx/erdjs-hw-provider';
 import {
   WalletConnectProvider,
   WalletConnectV2Provider
 } from '@elrondnetwork/erdjs-wallet-connect-provider';
-import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
+import { WalletProvider } from '@multiversx/erdjs-web-wallet-provider';
 import { IDappProvider } from 'types';
 import { emptyProvider } from './utils';
 

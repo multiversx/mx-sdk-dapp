@@ -7,7 +7,7 @@ import { WithClassnameType } from '../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-// TODO: Rename to "IconStatePropsType" when dapp-core@3.0.0
+// TODO: Rename to "IconStatePropsType" when mx-sdk-dapp@3.0.0
 export interface IconStateProps extends WithClassnameType {
   icon: IconProp;
   iconSize?: '2x' | '3x' | '5x';

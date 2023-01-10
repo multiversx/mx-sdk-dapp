@@ -40,7 +40,7 @@ describe('TransactionsValue tests', () => {
     expect(nftBadge.textContent).toBe('NFT');
     expect(nftExplorerLink.textContent).toBe('ARTCRAFT-322c6e-11');
     expect(nftExplorerLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/nfts/ARTCRAFT-322c6e-11'
+      'http://devnet-explorer.multiversx.com/nfts/ARTCRAFT-322c6e-11'
     );
     expect(nftFormattedAmount).toBe(null);
   });
@@ -58,7 +58,7 @@ describe('TransactionsValue tests', () => {
     expect(nftFormattedAmount.textContent).toBe('0.09');
     expect(nftExplorerLink.textContent).toBe('LKMEX');
     expect(nftExplorerLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/nfts/LKMEX-aab910-03'
+      'http://devnet-explorer.multiversx.com/nfts/LKMEX-aab910-03'
     );
     expect(transactionValueIcon).toBeDefined();
     expect(transactionValueIcon.innerHTML).toContain(
@@ -77,7 +77,7 @@ describe('TransactionsValue tests', () => {
     expect(tokenFormattedAmount.textContent).toBe('1.00');
     expect(tokenExplorerLink.textContent).toBe('WEGLD');
     expect(tokenExplorerLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/tokens/WEGLD-bd4d79'
+      'http://devnet-explorer.multiversx.com/tokens/WEGLD-bd4d79'
     );
     expect(transactionValueIcon).toBeDefined();
     expect(transactionValueIcon.innerHTML).toContain(

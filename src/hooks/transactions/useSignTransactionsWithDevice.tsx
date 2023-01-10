@@ -1,4 +1,4 @@
-import { Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@multiversx/erdjs';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';

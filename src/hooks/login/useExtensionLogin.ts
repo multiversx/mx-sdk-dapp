@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
+import { ExtensionProvider } from '@multiversx/erdjs-extension-provider';
 
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';

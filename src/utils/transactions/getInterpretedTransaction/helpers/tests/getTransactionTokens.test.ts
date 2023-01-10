@@ -32,7 +32,7 @@ describe('getTransactionTokens', () => {
               name: 'WrappedEGLD',
               ticker: 'WEGLD',
               svgUrl:
-                'https://devnet-media.elrond.com/tokens/asset/WEGLD-d7c6bb/logo.svg',
+                'https://devnet-media.multiversx.com/tokens/asset/WEGLD-d7c6bb/logo.svg',
               token: 'WEGLD-d7c6bb',
               decimals: 18,
               value: '1000000000000000000'
@@ -42,7 +42,7 @@ describe('getTransactionTokens', () => {
               name: 'WrappedUSDC',
               ticker: 'USDC',
               svgUrl:
-                'https://devnet-media.elrond.com/tokens/asset/USDC-8d4068/logo.svg',
+                'https://devnet-media.multiversx.com/tokens/asset/USDC-8d4068/logo.svg',
               token: 'USDC-8d4068',
               decimals: 6,
               value: '45117988'

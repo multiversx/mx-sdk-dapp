@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@multiversx/erdjs';
 import {
   MultiSignTransactionType,
   TransactionDataTokenType,
