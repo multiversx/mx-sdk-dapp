@@ -35,8 +35,8 @@ export const SignWithExtensionModal = ({
   const description = error
     ? error
     : transactions && transactions.length > 1
-    ? 'Check your Elrond Wallet Extension to sign the transactions'
-    : 'Check your Elrond Wallet Extension to sign the transaction';
+    ? 'Check your MultiversX Wallet Extension to sign the transactions'
+    : 'Check your MultiversX Wallet Extension to sign the transaction';
 
   const close = (event: MouseEvent) => {
     event.preventDefault();

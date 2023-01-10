@@ -1,4 +1,4 @@
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { Transaction } from '@multiversx/erdjs/out';
 import {
   SendTransactionReturnType,
   SendTransactionsPropsType,

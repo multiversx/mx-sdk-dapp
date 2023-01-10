@@ -3,9 +3,9 @@ import {
   TransactionPayload,
   TransactionVersion,
   Address
-} from '@elrondnetwork/erdjs';
-import { TokenPayment } from '@elrondnetwork/erdjs';
-import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers';
+} from '@multiversx/erdjs';
+import { TokenPayment } from '@multiversx/erdjs';
+import { NetworkConfig } from '@multiversx/erdjs-network-providers';
 import { GAS_LIMIT, GAS_PRICE, ZERO } from 'constants/index';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
 

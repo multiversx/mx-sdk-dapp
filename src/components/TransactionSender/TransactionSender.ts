@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
-import { Address } from '@elrondnetwork/erdjs';
-import { Transaction } from '@elrondnetwork/erdjs/out';
-import { Signature } from '@elrondnetwork/erdjs/out/signature';
+import { Address } from '@multiversx/erdjs';
+import { Transaction } from '@multiversx/erdjs/out';
+import { Signature } from '@multiversx/erdjs/out/signature';
 
 import {
   sendSignedTransactions as defaultSendSignedTxs,
