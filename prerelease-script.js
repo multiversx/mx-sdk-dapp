@@ -1,3 +1,4 @@
+require('dotenv').config();
 const { spawn } = require('child_process');
 const fs = require('fs');
 const { Octokit } = require('@octokit/rest');
@@ -8,7 +9,7 @@ const file = './CHANGELOG.md';
 
 const createPullRequest = async () => {
   const octokit = new Octokit({
-    auth: '[YOUR_GITHUB_TOKEN]'
+    auth: process.env.GITHUB_TOKEN
   });
 
   try {
