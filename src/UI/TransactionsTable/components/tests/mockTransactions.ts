@@ -11,7 +11,7 @@ export default [
     receiverAssets: {
       name: 'Staking: ARC Stake',
       description:
-        'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+        'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
       tags: ['staking', 'provider'],
       iconPng:
         'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -56,7 +56,7 @@ export default [
         senderAssets: {
           name: 'Staking: ARC Stake',
           description:
-            'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+            'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
           tags: ['staking', 'provider'],
           iconPng:
             'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -67,9 +67,9 @@ export default [
             'Smart contract containing all staked eGLD on the network',
           tags: ['system', 'staking'],
           iconPng:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.png',
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
           iconSvg:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.svg'
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.svg'
         },
         prevTxHash:
           '5996572de1fc5df2c456602467e8cc1a446b8145ae79df8f6c670e0732ab3b04',
@@ -94,7 +94,7 @@ export default [
         senderAssets: {
           name: 'Staking: ARC Stake',
           description:
-            'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+            'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
           tags: ['staking', 'provider'],
           iconPng:
             'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -131,7 +131,7 @@ export default [
       addressAssets: {
         name: 'Staking: ARC Stake',
         description:
-          'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+          'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
         tags: ['staking', 'provider'],
         iconPng:
           'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -158,7 +158,7 @@ export default [
         senderAssets: {
           name: 'Staking: ARC Stake',
           description:
-            'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+            'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
           tags: ['staking', 'provider'],
           iconPng:
             'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -169,9 +169,9 @@ export default [
             'Smart contract containing all staked eGLD on the network',
           tags: ['system', 'staking'],
           iconPng:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.png',
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
           iconSvg:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.svg'
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.svg'
         },
         value: '14167802221131358682'
       }
@@ -189,7 +189,7 @@ export default [
     receiverAssets: {
       name: 'Staking: ARC Stake',
       description:
-        'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+        'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
       tags: ['staking', 'provider'],
       iconPng:
         'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -230,7 +230,7 @@ export default [
     receiverAssets: {
       name: 'Staking: ARC Stake',
       description:
-        'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+        'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
       tags: ['staking', 'provider'],
       iconPng:
         'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -270,7 +270,7 @@ export default [
     receiverAssets: {
       name: 'Staking: ARC Stake',
       description:
-        'ARC Staking provides staking services on the Elrond Blockchain, the most advanced blockchain platform in the world.',
+        'ARC Staking provides staking services on the MultiversX Blockchain, the most advanced blockchain platform in the world.',
       tags: ['staking', 'provider'],
       iconPng:
         'https://s3.amazonaws.com/keybase_processed_uploads/d7555347e2e2dc7c68974d39f8e7b405_360_360.jpg'
@@ -351,7 +351,7 @@ export default [
     receiverAssets: {
       name: 'Staking: Unity Stake',
       description:
-        'We are a dedicated Elrond Network staking provider aiming to make things as simple and safe as possible by providing personal and caring support.',
+        'We are a dedicated MultiversX staking provider aiming to make things as simple and safe as possible by providing personal and caring support.',
       tags: ['staking', 'provider'],
       iconPng:
         'https://s3.amazonaws.com/keybase_processed_uploads/4dd9f0dc7321d396f61f271951bba405_360_360.jpg'
@@ -413,7 +413,7 @@ export default [
             name: 'LockedMEX',
             ticker: 'LKMEX',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKMEX-aab910/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKMEX-aab910/logo.svg',
             collection: 'LKMEX-aab910',
             decimals: 18,
             identifier: 'LKMEX-aab910-03',
@@ -424,7 +424,7 @@ export default [
             name: 'LockedMEX',
             ticker: 'LKMEX',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKMEX-aab910/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKMEX-aab910/logo.svg',
             collection: 'LKMEX-aab910',
             decimals: 18,
             identifier: 'LKMEX-aab910-0d3d',
@@ -473,7 +473,7 @@ export default [
             name: 'LockedLPStaked',
             ticker: 'LKFARM',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
             collection: 'LKFARM-9d1ea8',
             decimals: 18,
             identifier: 'LKFARM-9d1ea8-126c17',
@@ -523,7 +523,7 @@ export default [
             name: 'WrappedEGLD',
             ticker: 'WEGLD',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/WEGLD-bd4d79/logo.svg',
+              'https://media.multiversx.com/tokens/asset/WEGLD-bd4d79/logo.svg',
             token: 'WEGLD-bd4d79',
             decimals: 18,
             value: '1000000000000000000'
@@ -532,7 +532,7 @@ export default [
             type: 'FungibleESDT',
             name: 'MEX',
             ticker: 'MEX',
-            svgUrl: 'https://media.elrond.com/tokens/asset/MEX-455c57/logo.svg',
+            svgUrl: 'https://media.multiversx.com/tokens/asset/MEX-455c57/logo.svg',
             token: 'MEX-455c57',
             decimals: 18,
             value: '281066754391919467235791'
@@ -627,7 +627,7 @@ export default [
             name: 'WrappedUSDC',
             ticker: 'USDC',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/USDC-c76f1f/logo.svg',
+              'https://media.multiversx.com/tokens/asset/USDC-c76f1f/logo.svg',
             token: 'USDC-c76f1f',
             decimals: 6,
             value: '2950000000'
@@ -675,7 +675,7 @@ export default [
             name: 'WrappedEGLD',
             ticker: 'WEGLD',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/WEGLD-bd4d79/logo.svg',
+              'https://media.multiversx.com/tokens/asset/WEGLD-bd4d79/logo.svg',
             token: 'WEGLD-bd4d79',
             decimals: 18,
             value: '4966564627912948179'
@@ -724,7 +724,7 @@ export default [
             name: 'LockedLPStaked',
             ticker: 'LKFARM',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
             collection: 'LKFARM-9d1ea8',
             decimals: 18,
             identifier: 'LKFARM-9d1ea8-016711',
@@ -741,9 +741,9 @@ export default [
           name: 'Maiar Exchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.png',
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
           iconSvg:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.svg'
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.svg'
         }
       }
     }
@@ -782,7 +782,7 @@ export default [
             name: 'WrappedEGLD',
             ticker: 'WEGLD',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/WEGLD-bd4d79/logo.svg',
+              'https://media.multiversx.com/tokens/asset/WEGLD-bd4d79/logo.svg',
             token: 'WEGLD-bd4d79',
             decimals: 18,
             value: '309893556225986569'
@@ -791,7 +791,7 @@ export default [
             type: 'FungibleESDT',
             name: 'MEX',
             ticker: 'MEX',
-            svgUrl: 'https://media.elrond.com/tokens/asset/MEX-455c57/logo.svg',
+            svgUrl: 'https://media.multiversx.com/tokens/asset/MEX-455c57/logo.svg',
             token: 'MEX-455c57',
             decimals: 18,
             value: '88246977342390371665220'
@@ -841,7 +841,7 @@ export default [
             name: 'LockedLPStaked',
             ticker: 'LKFARM',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
             collection: 'LKFARM-9d1ea8',
             decimals: 18,
             identifier: 'LKFARM-9d1ea8-016a31',
@@ -858,9 +858,9 @@ export default [
           name: 'Maiar Exchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.png',
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
           iconSvg:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.svg'
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.svg'
         }
       }
     }
@@ -899,7 +899,7 @@ export default [
             name: 'EGLDMEXLP',
             ticker: 'EGLDMEX',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/EGLDMEX-0be9e5/logo.svg',
+              'https://media.multiversx.com/tokens/asset/EGLDMEX-0be9e5/logo.svg',
             token: 'EGLDMEX-0be9e5',
             decimals: 18,
             value: '61229451140721546841'
@@ -948,7 +948,7 @@ export default [
             name: 'LockedMEX',
             ticker: 'LKMEX',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKMEX-aab910/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKMEX-aab910/logo.svg',
             collection: 'LKMEX-aab910',
             decimals: 18,
             identifier: 'LKMEX-aab910-04',
@@ -965,9 +965,9 @@ export default [
           name: 'Maiar Exchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.png',
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
           iconSvg:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.svg'
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.svg'
         }
       }
     }
@@ -1009,7 +1009,7 @@ export default [
             name: 'EGLDMEXLP',
             ticker: 'EGLDMEX',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/EGLDMEX-0be9e5/logo.svg',
+              'https://media.multiversx.com/tokens/asset/EGLDMEX-0be9e5/logo.svg',
             token: 'EGLDMEX-0be9e5',
             decimals: 18,
             value: '297000000000000000'
@@ -1059,7 +1059,7 @@ export default [
             name: 'LockedLPStaked',
             ticker: 'LKFARM',
             svgUrl:
-              'https://media.elrond.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
+              'https://media.multiversx.com/tokens/asset/LKFARM-9d1ea8/logo.svg',
             collection: 'LKFARM-9d1ea8',
             decimals: 18,
             identifier: 'LKFARM-9d1ea8-7ff1',
@@ -1076,9 +1076,9 @@ export default [
           name: 'Maiar Exchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.png',
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
           iconSvg:
-            'https://raw.githubusercontent.com/ElrondNetwork/assets/master/accounts/icons/elrond.svg'
+            'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.svg'
         }
       }
     }

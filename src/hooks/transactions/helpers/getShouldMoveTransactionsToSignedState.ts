@@ -1,4 +1,4 @@
-import { Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@multiversx/erdjs';
 import { transactionsToSignSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 

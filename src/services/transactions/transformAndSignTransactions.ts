@@ -1,4 +1,4 @@
-import { Address, Transaction } from '@elrondnetwork/erdjs';
+import { Address, Transaction } from '@multiversx/erdjs';
 import BigNumber from 'bignumber.js';
 
 import { GAS_LIMIT, GAS_PER_DATA_BYTE, GAS_PRICE } from 'constants/index';

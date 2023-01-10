@@ -15,12 +15,12 @@ describe('TransactionShardsTransition tests', () => {
     expect(shardFromLink.textContent).toBe('Shard 1');
 
     expect(shardFromLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/transactions?sendershard=1'
+      'http://devnet-explorer.multiversx.com/transactions?sendershard=1'
     );
 
     expect(shardToLink.textContent).toBe('Metachain');
     expect(shardToLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/transactions?receivershard=4294967295'
+      'http://devnet-explorer.multiversx.com/transactions?receivershard=4294967295'
     );
   });
 });
