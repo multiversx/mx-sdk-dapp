@@ -15,7 +15,7 @@ const createPullRequest = async () => {
     const { data } = await octokit.pulls.create({
       owner: 'multiversx',
       repo: 'mx-sdk-dapp',
-      title: 'testPR',
+      title: 'New version release',
       head: 'development',
       base: 'master',
       body: 'Update changelog, increment version, create PR',
