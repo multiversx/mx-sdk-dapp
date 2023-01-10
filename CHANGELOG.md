@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[rebranding elrond -> multiversx](https://github.com/ElrondNetwork/dapp-core/pull/531)] - 2023-01-10
+## [[rebranding elrond -> multiversx](https://github.com/multiversx/mx-sdk-dapp/pull/531)] - 2023-01-10
 
 ## [[2.2.6](https://github.com/multiversx//mx-sdk-dapp/pull/531)] - 2023-01-09
 
