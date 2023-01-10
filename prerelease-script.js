@@ -71,12 +71,6 @@ const pushChanges = async () => {
   await runInWorkspace('git', ['push']);
 };
 
-function sleep(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 function runInWorkspace(command, args) {
   return new Promise((resolve, reject) => {
     console.log('runInWorkspace | command:', command, 'args:', args);
