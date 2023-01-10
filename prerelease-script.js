@@ -52,7 +52,7 @@ const editChangeLog = async (pullRequestUrl) => {
       .reverse();
 
     const replacement = `## [Unreleased]
-  ## [[${packageJson.version}](${pullRequestUrl})] - ${
+## [[${packageJson.version}](${pullRequestUrl})] - ${
       date.toISOString().split('T')[0]
     }
     `;
