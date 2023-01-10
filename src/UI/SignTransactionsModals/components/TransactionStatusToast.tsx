@@ -6,7 +6,7 @@ import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from 'constants/index';
 
 import { WithClassnameType } from '../../types';
 
-// TODO: Rename to "TransactionStatusToastPropsType" when dapp-core@3.0.0
+// TODO: Rename to "TransactionStatusToastPropsType" whenmx-sdk-dapp@3.0.0
 export interface TransactionStatusToastType extends WithClassnameType {
   signError: string | null;
   canceledTransactionsMessage: string | null;

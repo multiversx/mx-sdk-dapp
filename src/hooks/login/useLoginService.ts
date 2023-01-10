@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Address, SignableMessage } from '@elrondnetwork/erdjs';
+import { Address, SignableMessage } from '@multiversx/erdjs';
 import { useGetAccount } from 'hooks/account';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector, tokenLoginSelector } from 'reduxStore/selectors';

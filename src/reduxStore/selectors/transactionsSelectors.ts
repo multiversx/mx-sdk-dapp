@@ -1,4 +1,4 @@
-import { Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@multiversx/erdjs';
 import { newTransaction } from 'models/newTransaction';
 import {
   CustomTransactionInformation,

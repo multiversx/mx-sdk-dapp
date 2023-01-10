@@ -1,4 +1,4 @@
-import { Address } from '@elrondnetwork/erdjs';
+import { Address } from '@multiversx/erdjs';
 
 function canTransformToPublicKey(address: string) {
   try {

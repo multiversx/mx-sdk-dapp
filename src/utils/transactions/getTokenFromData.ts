@@ -1,4 +1,4 @@
-import { Address } from '@elrondnetwork/erdjs';
+import { Address } from '@multiversx/erdjs';
 import BigNumber from 'bignumber.js';
 import { TransactionTypesEnum } from 'types/enums.types';
 import { addressIsValid } from 'utils/account/addressIsValid';

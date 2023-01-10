@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactNode } from 'react';
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@multiversx/erdjs/out';
 import {
   faExclamationTriangle,
   faTimes
@@ -23,7 +23,7 @@ import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
 import globalStyles from 'assets/sass/main.scss';
 
-// TODO: Rename to "SignStepPropsType" when dapp-core@3.0.0
+// TODO: Rename to "SignStepPropsType" when mx-sdk-dapp@3.0.0
 export interface SignStepType extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;

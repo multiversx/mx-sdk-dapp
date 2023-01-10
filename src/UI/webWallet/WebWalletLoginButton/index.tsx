@@ -21,7 +21,7 @@ export const WebWalletLoginButton: (
   callbackRoute,
   buttonClassName,
   nativeAuth,
-  loginButtonText = 'Elrond Web Wallet',
+  loginButtonText = 'MultiversX Web Wallet',
   disabled
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({

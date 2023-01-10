@@ -83,7 +83,7 @@ export const ConfirmAddress = ({
           <p>
             Or, if it does not match, close this page and{' '}
             <a
-              href='https://help.elrond.com/en/'
+              href='https://help.multiversx.com/en/'
               target='_blank'
               rel='noreferrer'
             >

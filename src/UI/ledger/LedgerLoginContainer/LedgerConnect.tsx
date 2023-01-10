@@ -48,7 +48,7 @@ export const LedgerConnect = ({
             </h4>
 
             <p className={classNames(globalStyles.lead, globalStyles.mb4)}>
-              Unlock your device &amp; open the Elrond App.
+              Unlock your device &amp; open the MultiversX App.
             </p>
           </>
         )}
