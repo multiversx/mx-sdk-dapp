@@ -6,9 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[2.2.8](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/556)] - 2023-01-11
+- [Created first version of @multiversx/sdk-dapp](https://github.com/multiversx/mx-sdk-dapp/pull/538)
+
 ## [[2.2.7](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/554)] - 2023-01-10
-
-
 - [Changed branding from elrond to multiversx](https://github.com/multiversx/mx-sdk-dapp/pull/538)
 
 ## [[2.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/531)] - 2023-01-09
