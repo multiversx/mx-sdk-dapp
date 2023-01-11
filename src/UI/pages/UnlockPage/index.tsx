@@ -10,7 +10,7 @@ import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 import styles from './unlockPageStyles.scss';
 import globalStyles from 'assets/sass/main.scss';
 
-// TODO: Rename to "UnlockPagePropsType" when mx-sdk-dapp@3.0.0
+// TODO: Rename to "UnlockPagePropsType" when sdk-dapp@3.0.0
 export interface Props {
   title?: string;
   className?: string;
