@@ -141,7 +141,6 @@
     "**/*.d.ts"
   ],
   "dependencies": {
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.5",
     "@multiversx/erdjs": "11.1.3",
     "@multiversx/erdjs-extension-provider": "2.0.6",
     "@multiversx/erdjs-hw-provider": "3.0.0",
