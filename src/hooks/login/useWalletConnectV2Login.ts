@@ -101,6 +101,14 @@ export const useWalletConnectV2Login = ({
     : '';
 
   useUpdateEffect(() => {
+    if(!tokenToSign) {
+      return;
+    }
+
+    generateWcUri();
+  }, [tokenToSign]);
+
+  useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
 
