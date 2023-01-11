@@ -14,7 +14,7 @@ import { store } from 'reduxStore/store';
 import { ExtensionLoginButton } from '../';
 import { checkIsLoggedInStore } from './helpers';
 
-jest.mock('@multiversx/erdjs-extension-provider', () => {
+jest.mock('@multiversx/sdk-extension-provider', () => {
   const { ExtensionProvider } = require('./mocks/mockExtensionProvider');
   return {
     __esModule: true,

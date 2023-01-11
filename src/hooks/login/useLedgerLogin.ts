@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HWProvider } from '@multiversx/erdjs-hw-provider';
+import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { getLedgerConfiguration } from 'providers';
 import { setAccountProvider } from 'providers/accountProvider';
