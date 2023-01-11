@@ -1,7 +1,7 @@
-require('dotenv').config();
 const { spawn } = require('child_process');
 const fs = require('fs');
 const { Octokit } = require('@octokit/rest');
+require('dotenv').config();
 
 const date = new Date();
 
@@ -33,7 +33,7 @@ const incrementNpmversion = async () => {
     'version',
     'patch',
     '--force',
-    '--no-git-tag-version'
+    '--tag-version-prefix=v'
   ]);
 };
 
@@ -100,15 +100,27 @@ function runInWorkspace(command, args) {
 }
 
 const init = async () => {
+  let prUrl;
   try {
-    const prUrl = await createPullRequest();
+    prUrl = await createPullRequest();
     await incrementNpmversion();
     await editChangeLog(prUrl);
-    await pushChanges();
-    console.log(`PR created: ${prUrl}`);
   } catch (error) {
-    throw error;
+    await runInWorkspace('git', ['checkout', 'package.json']);
+    await runInWorkspace('git', ['checkout', 'CHANGELOG.md']);
+    console.error(error);
+    if (prUrl) {
+      console.log(
+        '\n\n Some error occured, please delete the PR manually: ',
+        prUrl,
+        '\n\n'
+      );
+    }
+
+    return;
   }
+  console.log('Pull request created:', prUrl);
+  await pushChanges();
 };
 
 init();
