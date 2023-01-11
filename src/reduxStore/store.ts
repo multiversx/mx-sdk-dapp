@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-// @ts-ignore
 import { createSubscription } from 'react-redux/lib/utils/Subscription';
 import { setAccount, setAccountNonce } from 'reduxStore/slices';
 import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
