@@ -9,7 +9,7 @@ const file = './CHANGELOG.md';
 
 const createPullRequest = async () => {
   const octokit = new Octokit({
-    auth: 'process.env.GITHUB_TOKEN'
+    auth: process.env.GITHUB_TOKEN
   });
 
   try {
@@ -52,7 +52,7 @@ const editChangeLog = async (pullRequestUrl) => {
       .reverse();
 
     const replacement = `## [Unreleased]
-  ## [[${packageJson.version}](${pullRequestUrl})] - ${
+## [[${packageJson.version}](${pullRequestUrl})] - ${
       date.toISOString().split('T')[0]
     }
     `;
@@ -75,7 +75,7 @@ const pushChanges = async () => {
 function runInWorkspace(command, args) {
   return new Promise((resolve, reject) => {
     console.log('runInWorkspace | command:', command, 'args:', args);
-    const child = spawn(command, args, { cwd: undefined });
+    const child = spawn(command, args, { cwd: workspace });
     let isDone = false;
     const errorMessages = [];
     child.on('error', (error) => {
@@ -107,6 +107,7 @@ const init = async () => {
     await editChangeLog(prUrl);
     console.log(`PR created: ${prUrl}`);
   } catch (error) {
+    throw error;
     await runInWorkspace('git', ['checkout', 'package.json']);
     await runInWorkspace('git', ['checkout', 'CHANGELOG.md']);
     console.error(error);
