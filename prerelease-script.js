@@ -33,7 +33,7 @@ const incrementNpmversion = async () => {
     'version',
     'patch',
     '--force',
-    '--no-git-tag-version'
+    '--tag-version-prefix=v'
   ]);
 };
 
@@ -75,7 +75,7 @@ const pushChanges = async () => {
 function runInWorkspace(command, args) {
   return new Promise((resolve, reject) => {
     console.log('runInWorkspace | command:', command, 'args:', args);
-    const child = spawn(command, args, { cwd: workspace });
+    const child = spawn(command, args, { cwd: undefined });
     let isDone = false;
     const errorMessages = [];
     child.on('error', (error) => {
@@ -102,12 +102,11 @@ function runInWorkspace(command, args) {
 const init = async () => {
   let prUrl;
   try {
-    prUrl = await createPullRequest();
+    // prUrl = await createPullRequest();
     await incrementNpmversion();
     await editChangeLog(prUrl);
     console.log(`PR created: ${prUrl}`);
   } catch (error) {
-    throw error;
     await runInWorkspace('git', ['checkout', 'package.json']);
     await runInWorkspace('git', ['checkout', 'CHANGELOG.md']);
     console.error(error);
@@ -122,7 +121,7 @@ const init = async () => {
     return;
   }
   console.log('Pull request created:', prUrl);
-  await pushChanges();
+  // await pushChanges();
 };
 
 init();
