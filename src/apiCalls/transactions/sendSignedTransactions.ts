@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/erdjs';
+import { Transaction } from '@multiversx/sdk-core';
 import axios from 'axios';
 import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';

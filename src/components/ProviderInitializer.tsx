@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExtensionProvider } from '@multiversx/erdjs-extension-provider';
-import { HWProvider } from '@multiversx/erdjs-hw-provider';
+import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';

@@ -1,5 +1,5 @@
 import React, { MouseEvent, ReactNode } from 'react';
-import { Address } from '@multiversx/erdjs/out';
+import { Address } from '@multiversx/sdk-core/out';
 import {
   faExclamationTriangle,
   faTimes
