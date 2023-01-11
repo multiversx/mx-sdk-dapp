@@ -1,6 +1,7 @@
 const { spawn } = require('child_process');
 const fs = require('fs');
 const { Octokit } = require('@octokit/rest');
+require('dotenv').config();
 
 const date = new Date();
 
@@ -8,7 +9,7 @@ const file = './CHANGELOG.md';
 
 const createPullRequest = async () => {
   const octokit = new Octokit({
-    auth: '[YOUR_GITHUB_TOKEN]'
+    auth: 'process.env.GITHUB_TOKEN'
   });
 
   try {
@@ -74,7 +75,7 @@ const pushChanges = async () => {
 function runInWorkspace(command, args) {
   return new Promise((resolve, reject) => {
     console.log('runInWorkspace | command:', command, 'args:', args);
-    const child = spawn(command, args, { cwd: workspace });
+    const child = spawn(command, args, { cwd: undefined });
     let isDone = false;
     const errorMessages = [];
     child.on('error', (error) => {
@@ -99,15 +100,28 @@ function runInWorkspace(command, args) {
 }
 
 const init = async () => {
+  let prUrl;
   try {
-    const prUrl = await createPullRequest();
+    prUrl = await createPullRequest();
     await incrementNpmversion();
     await editChangeLog(prUrl);
-    await pushChanges();
     console.log(`PR created: ${prUrl}`);
   } catch (error) {
-    throw error;
+    await runInWorkspace('git', ['checkout', 'package.json']);
+    await runInWorkspace('git', ['checkout', 'CHANGELOG.md']);
+    console.error(error);
+    if (prUrl) {
+      console.log(
+        '\n\n Some error occured, please delete the PR manually: ',
+        prUrl,
+        '\n\n'
+      );
+    }
+
+    return;
   }
+  console.log('Pull request created:', prUrl);
+  await pushChanges();
 };
 
 init();
