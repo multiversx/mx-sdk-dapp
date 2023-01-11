@@ -57,18 +57,12 @@ export const fallbackNetworkConfigurations: Record<
   }
 };
 
-const {
-  chainId: DEVNET_CHAIN_ID,
-  egldLabel: DEVNET_EGLD_LABEL
-} = fallbackNetworkConfigurations[EnvironmentsEnum.devnet];
-const {
-  chainId: TESTNET_CHAIN_ID,
-  egldLabel: TESTNET_EGLD_LABEL
-} = fallbackNetworkConfigurations[EnvironmentsEnum.testnet];
-const {
-  chainId: MAINNET_CHAIN_ID,
-  egldLabel: MAINNET_EGLD_LABEL
-} = fallbackNetworkConfigurations[EnvironmentsEnum.mainnet];
+const { chainId: DEVNET_CHAIN_ID, egldLabel: DEVNET_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.devnet];
+const { chainId: TESTNET_CHAIN_ID, egldLabel: TESTNET_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.testnet];
+const { chainId: MAINNET_CHAIN_ID, egldLabel: MAINNET_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.mainnet];
 
 export {
   DEVNET_CHAIN_ID,
