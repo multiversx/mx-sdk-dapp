@@ -102,10 +102,9 @@ function runInWorkspace(command, args) {
 const init = async () => {
   let prUrl;
   try {
-    // prUrl = await createPullRequest();
+    prUrl = await createPullRequest();
     await incrementNpmversion();
     await editChangeLog(prUrl);
-    console.log(`PR created: ${prUrl}`);
   } catch (error) {
     await runInWorkspace('git', ['checkout', 'package.json']);
     await runInWorkspace('git', ['checkout', 'CHANGELOG.md']);
@@ -121,7 +120,7 @@ const init = async () => {
     return;
   }
   console.log('Pull request created:', prUrl);
-  // await pushChanges();
+  await pushChanges();
 };
 
 init();
