@@ -58,7 +58,7 @@ jest.mock(
   }
 );
 
-jest.mock('react-redux/es/utils/Subscription', () => {
+jest.mock('react-redux/lib/utils/Subscription', () => {
   const { createSubscription } = require('./__mocks__');
   return {
     __esModule: true,
