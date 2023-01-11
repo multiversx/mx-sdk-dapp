@@ -1,4 +1,4 @@
-import { Address } from '@multiversx/erdjs';
+import { Address } from '@multiversx/sdk-core';
 
 export class TransactionParameter {
   sender: Address;

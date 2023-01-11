@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/erdjs';
+import { Transaction } from '@multiversx/sdk-core';
 import { newTransaction } from 'models/newTransaction';
 import {
   CustomTransactionInformation,

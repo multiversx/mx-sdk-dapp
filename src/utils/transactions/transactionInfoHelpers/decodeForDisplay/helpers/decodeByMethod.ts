@@ -1,4 +1,4 @@
-import { Address } from '@multiversx/erdjs/out';
+import { Address } from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
 import {
   DecodeMethodEnum,

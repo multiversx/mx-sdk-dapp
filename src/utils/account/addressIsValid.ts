@@ -1,4 +1,4 @@
-import { Address } from '@multiversx/erdjs';
+import { Address } from '@multiversx/sdk-core';
 
 function canTransformToPublicKey(address: string) {
   try {

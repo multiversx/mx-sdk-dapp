@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/erdjs';
+import { Transaction } from '@multiversx/sdk-core';
 
 import { LoginMethodsEnum } from 'types';
 

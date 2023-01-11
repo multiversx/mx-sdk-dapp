@@ -1,4 +1,4 @@
-import { Address } from '@multiversx/erdjs';
+import { Address } from '@multiversx/sdk-core';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 import { ZERO } from 'constants/index';
