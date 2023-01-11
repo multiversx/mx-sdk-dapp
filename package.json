@@ -1,5 +1,5 @@
 {
-  "name": "@multiversx/mx-sdk-dapp",
+  "name": "@multiversx/sdk-dapp",
   "version": "2.2.7",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
@@ -132,16 +132,6 @@
     "qrcode": "1.5.0",
     "swr": "1.1.2"
   },
-  "size-limit": [
-    {
-      "path": "dist/mx-sdk-dapp.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/mx-sdk-dapp.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "files": [
     "*.js",
     "*.js",

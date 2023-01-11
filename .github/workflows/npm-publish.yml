@@ -1,4 +1,4 @@
-name: Publish mx-sdk-dapp
+name: Publish sdk-dapp
 
 on:
   push:

@@ -9,7 +9,7 @@ import styles from './progressStyles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
-// TODO: Rename to "ProgressPropsType" when mx-sdk-dapp@3.0.0
+// TODO: Rename to "ProgressPropsType" when sdk-dapp@3.0.0
 export interface ProgressProps extends WithClassnameType {
   id: string;
   done: boolean;

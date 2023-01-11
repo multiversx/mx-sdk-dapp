@@ -28,18 +28,18 @@ function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
 }
 
 const transactionsInfoPersistConfig = getSessionStoragePersistConfig(
-  'mx-sdk-dapp-transactionsInfo'
+  'sdk-dapp-transactionsInfo'
 );
 const transactionsReducerPersistConfig = getSessionStoragePersistConfig(
-  'mx-sdk-dapp-transactions',
+  'sdk-dapp-transactions',
   [ReducersEnum.transactionsToSign]
 );
 const toastsReducerPersistConfig = getSessionStoragePersistConfig(
-  'mx-sdk-dapp-toasts'
+  'sdk-dapp-toasts'
 );
 
 const localStoragePersistConfig: PersistConfig<any> = {
-  key: 'mx-sdk-dapp-store',
+  key: 'sdk-dapp-store',
   version: 2,
   storage: reduxPersistLocalStorage,
   whitelist: [
