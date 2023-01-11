@@ -78,9 +78,9 @@ export const useWalletConnectLogin = ({
     return () => clearInterval(interval);
   }, [provider]);
 
-  useUpdateEffect(() => {
-    generateWcUri();
-  }, [tokenToSign]);
+  // useUpdateEffect(() => {
+  //   generateWcUri();
+  // }, [tokenToSign]);
 
   useUpdateEffect(() => {
     providerRef.current = provider;
