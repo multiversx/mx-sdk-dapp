@@ -100,10 +100,6 @@ export const useWalletConnectV2Login = ({
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
     : '';
 
-  // useUpdateEffect(() => {
-  //   generateWcUri();
-  // }, [tokenToSign]);
-
   useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
