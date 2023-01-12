@@ -17,7 +17,7 @@ describe('TransactionsHash tests', () => {
 
     expect(hash.textContent).toContain(resultHash);
     expect(transactionLink.getAttribute('href')).toBe(
-      'http://devnet-explorer.elrond.com/transactions/' + resultHash
+      'http://devnet-explorer.multiversx.com/transactions/' + resultHash
     );
   });
 });

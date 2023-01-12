@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
@@ -264,7 +264,7 @@ export function ProviderInitializer() {
         setAccountProvider(provider);
       } else {
         console.error(
-          'Could not initialise extension, make sure Elrond wallet extension is installed.'
+          'Could not initialise extension, make sure MultiversX wallet extension is installed.'
         );
       }
     } catch (err) {

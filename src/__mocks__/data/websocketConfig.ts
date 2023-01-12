@@ -1,1 +1,1 @@
-export const websocketConfig = { url: 'devnet-socket-api.elrond.com' };
+export const websocketConfig = { url: 'devnet-socket-api.multiversx.com' };

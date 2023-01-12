@@ -17,7 +17,7 @@ describe('getNetworkLink', () => {
   });
 
   it('compose link using explorer address and "to" parameter', () => {
-    const explorerAddress = 'http://devnet-explorer.elrond.com';
+    const explorerAddress = 'http://devnet-explorer.multiversx.com';
     const to = '/address';
 
     const result = getExplorerLink({ explorerAddress, to });

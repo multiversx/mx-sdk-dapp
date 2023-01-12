@@ -50,7 +50,7 @@ jest.mock('./hooks/useGetNetworkConfig', () => {
 
 // resolves import error
 jest.mock(
-  '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider',
+  '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider',
   () => {
     return {
       __esModule: true
@@ -58,7 +58,7 @@ jest.mock(
   }
 );
 
-jest.mock('react-redux/es/utils/Subscription', () => {
+jest.mock('react-redux/lib/utils/Subscription', () => {
   const { createSubscription } = require('./__mocks__');
   return {
     __esModule: true,

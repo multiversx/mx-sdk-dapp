@@ -20,7 +20,7 @@ fs.readFile(file, 'utf8', function (err, data) {
     .reverse();
 
   const replacement = `## [Unreleased]
-## [[${packageJson.version}](https://github.com/ElrondNetwork/dapp-core/pull/${
+## [[${packageJson.version}](https://github.com/multiversx/mx-sdk-dapp/pull/${
     latestPr + 1
   })] - ${date.toISOString().split('T')[0]}
   `;

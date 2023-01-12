@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectProvider';
+import { WalletConnectProvider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectProvider';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -79,6 +79,10 @@ export const useWalletConnectLogin = ({
   }, [provider]);
 
   useUpdateEffect(() => {
+    if(!tokenToSign) {
+      return;
+    }
+
     generateWcUri();
   }, [tokenToSign]);
 

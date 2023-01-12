@@ -1,12 +1,12 @@
-import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
-import { IHWElrondApp } from '@elrondnetwork/erdjs-hw-provider/out/interface';
-import { EngineTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
-import { WalletConnectProvider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectProvider';
-import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
+import { SignableMessage, Transaction } from '@multiversx/sdk-core';
+import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { HWProvider } from '@multiversx/sdk-hw-provider';
+import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
+import { EngineTypes } from '@multiversx/sdk-wallet-connect-provider';
+import { WalletConnectProvider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectProvider';
+import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
-import { WalletProvider } from '@elrondnetwork/erdjs-web-wallet-provider';
+import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -43,7 +43,7 @@ export const getLedgerConfiguration = async (
   if (!initializedHwWalletP.isInitialized()) {
     throw new Error('Unable to get version. Provider not initialized');
   }
-  const hwApp: IHWElrondApp = (initializedHwWalletP as any).hwApp;
+  const hwApp: IHWWalletApp = (initializedHwWalletP as any).hwApp;
   const { contractData, version } = await hwApp.getAppConfiguration();
   const dataEnabled = contractData === LEDGER_CONTRACT_DATA_ENABLED_VALUE;
   return { version, dataEnabled };

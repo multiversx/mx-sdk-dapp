@@ -1,5 +1,5 @@
 import { createMigrate, persistReducer } from 'redux-persist';
-import { PersistConfig } from 'redux-persist/es/types';
+import { PersistConfig } from 'redux-persist/lib/types';
 import reduxPersistLocalStorage from 'redux-persist/lib/storage';
 import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
 import getRootReducer from 'reduxStore/reducers';
@@ -28,18 +28,18 @@ function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
 }
 
 const transactionsInfoPersistConfig = getSessionStoragePersistConfig(
-  'dapp-core-transactionsInfo'
+  'sdk-dapp-transactionsInfo'
 );
 const transactionsReducerPersistConfig = getSessionStoragePersistConfig(
-  'dapp-core-transactions',
+  'sdk-dapp-transactions',
   [ReducersEnum.transactionsToSign]
 );
 const toastsReducerPersistConfig = getSessionStoragePersistConfig(
-  'dapp-core-toasts'
+  'sdk-dapp-toasts'
 );
 
 const localStoragePersistConfig: PersistConfig<any> = {
-  key: 'dapp-core-store',
+  key: 'sdk-dapp-store',
   version: 2,
   storage: reduxPersistLocalStorage,
   whitelist: [

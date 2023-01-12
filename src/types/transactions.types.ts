@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
-import { Address, Transaction } from '@elrondnetwork/erdjs';
-import { IPlainTransactionObject } from '@elrondnetwork/erdjs/out/interface';
+import { Address, Transaction } from '@multiversx/sdk-core';
+import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 import { WithClassnameType } from '../UI/types';
 import {
   TransactionBatchStatusesEnum,

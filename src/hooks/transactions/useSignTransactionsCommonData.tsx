@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-import { ExtensionProvider } from '@elrondnetwork/erdjs-extension-provider';
-import { Transaction } from '@elrondnetwork/erdjs/out';
+import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { Transaction } from '@multiversx/sdk-core/out';
 import { TRANSACTION_STATUS_TOAST_ID } from 'constants/index';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';

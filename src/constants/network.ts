@@ -13,12 +13,12 @@ export const fallbackNetworkConfigurations: Record<
     digits: '4',
     gasPerDataByte: '1500',
     walletConnectDeepLink:
-      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
+      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
     walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
-    walletAddress: 'https://devnet-wallet.elrond.com',
-    apiAddress: 'https://devnet-api.elrond.com',
-    explorerAddress: 'http://devnet-explorer.elrond.com',
+    walletAddress: 'https://devnet-wallet.multiversx.com',
+    apiAddress: 'https://devnet-api.multiversx.com',
+    explorerAddress: 'http://devnet-explorer.multiversx.com',
     apiTimeout: '4000'
   },
   testnet: {
@@ -30,12 +30,12 @@ export const fallbackNetworkConfigurations: Record<
     digits: '4',
     gasPerDataByte: '1500',
     walletConnectDeepLink:
-      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
+      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
     walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
-    walletAddress: 'https://testnet-wallet.elrond.com',
-    apiAddress: 'https://testnet-api.elrond.com',
-    explorerAddress: 'http://testnet-explorer.elrond.com',
+    walletAddress: 'https://testnet-wallet.multiversx.com',
+    apiAddress: 'https://testnet-api.multiversx.com',
+    explorerAddress: 'http://testnet-explorer.multiversx.com',
     apiTimeout: '4000'
   },
   mainnet: {
@@ -47,28 +47,22 @@ export const fallbackNetworkConfigurations: Record<
     digits: '4',
     gasPerDataByte: '1500',
     walletConnectDeepLink:
-      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://maiar.com/',
+      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',
     walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
     walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
-    walletAddress: 'https://wallet.elrond.com',
-    apiAddress: 'https://api.elrond.com',
-    explorerAddress: 'https://explorer.elrond.com',
+    walletAddress: 'https://wallet.multiversx.com',
+    apiAddress: 'https://api.multiversx.com',
+    explorerAddress: 'https://explorer.multiversx.com',
     apiTimeout: '4000'
   }
 };
 
-const {
-  chainId: DEVNET_CHAIN_ID,
-  egldLabel: DEVNET_EGLD_LABEL
-} = fallbackNetworkConfigurations[EnvironmentsEnum.devnet];
-const {
-  chainId: TESTNET_CHAIN_ID,
-  egldLabel: TESTNET_EGLD_LABEL
-} = fallbackNetworkConfigurations[EnvironmentsEnum.testnet];
-const {
-  chainId: MAINNET_CHAIN_ID,
-  egldLabel: MAINNET_EGLD_LABEL
-} = fallbackNetworkConfigurations[EnvironmentsEnum.mainnet];
+const { chainId: DEVNET_CHAIN_ID, egldLabel: DEVNET_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.devnet];
+const { chainId: TESTNET_CHAIN_ID, egldLabel: TESTNET_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.testnet];
+const { chainId: MAINNET_CHAIN_ID, egldLabel: MAINNET_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.mainnet];
 
 export {
   DEVNET_CHAIN_ID,

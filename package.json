@@ -1,10 +1,10 @@
 {
-  "name": "@elrondnetwork/dapp-core",
-  "version": "2.2.5",
-  "description": "A library to hold the main logic for a dapp on the Elrond Network",
-  "author": "ElrondNetwork",
+  "name": "@multiversx/sdk-dapp",
+  "version": "2.2.8",
+  "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
+  "author": "MultiversX",
   "license": "GPL-3.0-or-later",
-  "repository": "ElrondNetwork/dapp-core",
+  "repository": "multiversx/mx-sdk-dapp",
   "main": "./__commonjs",
   "browser": "./",
   "react-native": "./",
@@ -24,10 +24,12 @@
     "test:coverage": "jest --coverage",
     "storybook": "start-storybook -p 6006",
     "test-storybook": "test-storybook",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "pre-release": "node prerelease-script.js"
   },
   "devDependencies": {
     "@babel/core": "7.20.5",
+    "@octokit/rest": "19.0.5",
     "@storybook/addon-actions": "6.5.14",
     "@storybook/addon-essentials": "6.5.14",
     "@storybook/addon-interactions": "6.5.14",
@@ -57,6 +59,7 @@
     "babel-loader": "8.3.0",
     "better-sqlite3": "7.6.2",
     "css-loader": "5.2.6",
+    "dotenv": "16.0.3",
     "esbuild": "0.14.47",
     "esbuild-node-externals": "1.4.1",
     "esbuild-plugin-svgr": "1.0.1",
@@ -99,7 +102,7 @@
     "typescript": "4.7.3"
   },
   "keywords": [
-    "elrond",
+    "multiversx",
     "blockchain",
     "dapp",
     "smart-contract",
@@ -129,16 +132,6 @@
     "qrcode": "1.5.0",
     "swr": "1.1.2"
   },
-  "size-limit": [
-    {
-      "path": "dist/dapp-core.cjs.production.min.js",
-      "limit": "10 KB"
-    },
-    {
-      "path": "dist/dapp-core.esm.js",
-      "limit": "10 KB"
-    }
-  ],
   "files": [
     "*.js",
     "*.js",
@@ -147,12 +140,12 @@
     "**/*.d.ts"
   ],
   "dependencies": {
-    "@elrondnetwork/erdjs": "11.0.0",
-    "@elrondnetwork/erdjs-extension-provider": "2.0.5",
-    "@elrondnetwork/erdjs-hw-provider": "2.0.4",
-    "@elrondnetwork/erdjs-network-providers": "0.1.6",
-    "@elrondnetwork/erdjs-wallet-connect-provider": "2.1.0-beta.6",
-    "@elrondnetwork/erdjs-web-wallet-provider": "2.1.2",
+    "@multiversx/sdk-core": "11.2.0",
+    "@multiversx/sdk-hw-provider": "3.0.1",
+    "@multiversx/sdk-network-providers": "1.2.1",
+    "@multiversx/sdk-extension-provider": "2.0.7",
+    "@multiversx/sdk-web-wallet-provider": "2.1.4",
+    "@multiversx/sdk-wallet-connect-provider": "2.1.0-beta.5",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",

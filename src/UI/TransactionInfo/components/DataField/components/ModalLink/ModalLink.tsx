@@ -50,8 +50,8 @@ export const ModalLink = (props: LinkComponentProps) => {
 
             <div className={globalStyles.mxAuto}>
               <p>
-                This link is not part of Elrond. Do not enter your private
-                words, your keystore file or any of your Elrond account
+                This link is not part of MultiversX. Do not enter your private
+                words, your keystore file or any of your MultiversX account
                 information.
               </p>
             </div>

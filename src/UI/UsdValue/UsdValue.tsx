@@ -8,7 +8,7 @@ import { WithClassnameType } from '../types';
 
 import globalStyles from 'assets/sass/main.scss';
 
-// TODO: Rename to "UsdValuePropsType" when dapp-core@3.0.0
+// TODO: Rename to "UsdValuePropsType" when sdk-dapp@3.0.0
 export interface UsdValueType extends WithClassnameType {
   amount: string;
   usd: number;

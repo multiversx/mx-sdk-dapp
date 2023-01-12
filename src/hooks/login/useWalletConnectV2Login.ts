@@ -2,8 +2,8 @@ import { useRef, useState, useEffect } from 'react';
 import {
   SessionEventTypes,
   PairingTypes
-} from '@elrondnetwork/erdjs-wallet-connect-provider';
-import { WalletConnectV2Provider } from '@elrondnetwork/erdjs-wallet-connect-provider/out/walletConnectV2Provider';
+} from '@multiversx/sdk-wallet-connect-provider';
+import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -101,6 +101,10 @@ export const useWalletConnectV2Login = ({
     : '';
 
   useUpdateEffect(() => {
+    if(!tokenToSign) {
+      return;
+    }
+
     generateWcUri();
   }, [tokenToSign]);
 
@@ -109,7 +113,7 @@ export const useWalletConnectV2Login = ({
   }, [provider]);
 
   useEffect(() => {
-    setIsLoading(Boolean(wcUri));
+    setIsLoading(!Boolean(wcUri));
   }, [wcUri]);
 
   const handleOnLogout = () => {

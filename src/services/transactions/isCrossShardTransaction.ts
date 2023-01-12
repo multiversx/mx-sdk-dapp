@@ -1,4 +1,4 @@
-import { Address } from '@elrondnetwork/erdjs/out';
+import { Address } from '@multiversx/sdk-core/out';
 
 import { getShardOfAddress } from 'utils/account/getShardOfAddress';
 

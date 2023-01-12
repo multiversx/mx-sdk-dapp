@@ -1,5 +1,5 @@
-import { SignableMessage, Transaction } from '@elrondnetwork/erdjs';
-import { EngineTypes } from '@elrondnetwork/erdjs-wallet-connect-provider';
+import { SignableMessage, Transaction } from '@multiversx/sdk-core';
+import { EngineTypes } from '@multiversx/sdk-wallet-connect-provider';
 
 export interface DappOptions {
   callbackUrl?: string;

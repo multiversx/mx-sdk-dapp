@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { HWProvider } from '@elrondnetwork/erdjs-hw-provider';
+import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { getLedgerConfiguration } from 'providers';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -22,7 +22,7 @@ import { getIsLoggedIn } from '../../utils';
 import { useLoginService } from './useLoginService';
 
 const failInitializeErrorText =
-  'Could not initialise ledger app, make sure Elrond app is open';
+  'Could not initialise ledger app, make sure MultiversX app is open';
 
 const defaultAddressesPerPage = 10;
 
@@ -150,7 +150,7 @@ export function useLedgerLogin({
           signature: loginInfo.signature.hex()
         });
       } catch (err) {
-        onLoginFailed(err, '. Update Elrond App to continue.');
+        onLoginFailed(err, '. Update MultiversX App to continue.');
       }
     } else {
       try {

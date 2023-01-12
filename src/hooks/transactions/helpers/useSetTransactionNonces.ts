@@ -1,4 +1,4 @@
-import { Transaction } from '@elrondnetwork/erdjs';
+import { Transaction } from '@multiversx/sdk-core';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { addressSelector } from 'reduxStore/selectors';
 import { getAccount } from 'utils/account/getAccount';

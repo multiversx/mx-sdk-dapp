@@ -1,4 +1,4 @@
-name: Pre release dapp-core
+name: Pre release sdk-dapp
 
 on:
   workflow_dispatch:

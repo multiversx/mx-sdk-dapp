@@ -1,4 +1,4 @@
-import { SignableMessage, Address } from '@elrondnetwork/erdjs';
+import { SignableMessage, Address } from '@multiversx/sdk-core';
 import { getAddress } from 'utils/account/getAddress';
 import { getAccountProvider } from 'providers';
 

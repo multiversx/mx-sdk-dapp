@@ -2,10 +2,10 @@ import {
   Transaction,
   TransactionPayload,
   TransactionVersion,
-  Address
-} from '@elrondnetwork/erdjs';
-import { TokenPayment } from '@elrondnetwork/erdjs';
-import { NetworkConfig } from '@elrondnetwork/erdjs-network-providers';
+  Address,
+  TokenPayment
+} from '@multiversx/sdk-core';
+import { NetworkConfig } from '@multiversx/sdk-network-providers';
 import { GAS_LIMIT, GAS_PRICE, ZERO } from 'constants/index';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
 

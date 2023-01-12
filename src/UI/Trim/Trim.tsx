@@ -5,7 +5,7 @@ import debounce from 'lodash.debounce';
 import { WithClassnameType } from '../types';
 import styles from './trim.styles.scss';
 
-// TODO: Rename to "TrimPropsType" when dapp-core@3.0.0
+// TODO: Rename to "TrimPropsType" when sdk-dapp@3.0.0
 export interface TrimType extends WithClassnameType {
   text: string;
   dataTestId?: string;

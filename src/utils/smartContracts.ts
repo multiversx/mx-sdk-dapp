@@ -1,4 +1,4 @@
-import { Address, TransactionPayload } from '@elrondnetwork/erdjs';
+import { Address, TransactionPayload } from '@multiversx/sdk-core';
 import { TypesOfSmartContractCallsEnum } from 'types';
 import { addressIsValid } from './account/addressIsValid';
 import { isStringBase64 } from './decoders/base64Utils';

@@ -13,8 +13,8 @@ describe('scamDetect tests', () => {
     'http://google.com?asd=true': ['http://google.com?asd=true', ''],
     'http://www1.google.com': ['http://www1.google.com', ''],
     'http://www.google.ceva.com': ['http://www.google.ceva.com', ''],
-    'access: 👉 www.lottery-elrond.com': [
-      'access: 👉 www.lottery-elrond.com',
+    'access: 👉 www.lottery-multiversx.com': [
+      'access: 👉 www.lottery-multiversx.com',
       ' - Scam report'
     ],
     '[...] 🅻🅾🆃🆃🅴🆁🆈': ['[...] 🅻🅾🆃🆃🅴🆁🆈', 'Lottery scam report'],
