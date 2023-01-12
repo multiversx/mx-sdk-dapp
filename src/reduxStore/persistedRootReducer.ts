@@ -1,5 +1,5 @@
 import { createMigrate, persistReducer } from 'redux-persist';
-import { PersistConfig } from 'redux-persist/es/types';
+import { PersistConfig } from 'redux-persist/lib/types';
 import reduxPersistLocalStorage from 'redux-persist/lib/storage';
 import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
 import getRootReducer from 'reduxStore/reducers';
