@@ -1,9 +1,10 @@
 import { createMigrate, persistReducer } from 'redux-persist';
-import { PersistConfig } from 'redux-persist/lib/types';
 import reduxPersistLocalStorage from 'redux-persist/lib/storage';
 import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
+import { PersistConfig } from 'redux-persist/lib/types';
 import getRootReducer from 'reduxStore/reducers';
 import { defaultNetwork } from 'reduxStore/slices';
+import { signedMessageInfoReducer } from 'reduxStore/slices/signedMessageInfoSlice';
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
@@ -34,8 +35,10 @@ const transactionsReducerPersistConfig = getSessionStoragePersistConfig(
   'sdk-dapp-transactions',
   [ReducersEnum.transactionsToSign]
 );
-const toastsReducerPersistConfig = getSessionStoragePersistConfig(
-  'sdk-dapp-toasts'
+const toastsReducerPersistConfig =
+  getSessionStoragePersistConfig('sdk-dapp-toasts');
+const signedMessageInfoersistConfig = getSessionStoragePersistConfig(
+  'sdk-dapp-signedMessageInfo'
 );
 
 const localStoragePersistConfig: PersistConfig<any> = {
@@ -59,6 +62,10 @@ const sessionStorageReducers = {
   [ReducersEnum.transactionsInfo]: persistReducer(
     transactionsInfoPersistConfig,
     transactionsInfo
+  ),
+  [ReducersEnum.signedMessageInfo]: persistReducer(
+    signedMessageInfoersistConfig,
+    signedMessageInfoReducer
   )
 };
 

@@ -1,4 +1,5 @@
 import { NativeAuthConfigType } from './login.types';
+export * from './signedMessage.types';
 
 export interface WalletConnectSignatureType {
   id?: number;

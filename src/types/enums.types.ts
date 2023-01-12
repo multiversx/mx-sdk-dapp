@@ -8,6 +8,13 @@ export enum TransactionServerStatusesEnum {
   rewardReverted = 'reward-reverted'
 }
 
+export enum SignedMessageStatusesEnum {
+  pending = 'pending',
+  failed = 'failed',
+  signed = 'signed',
+  cancelled = 'cancelled'
+}
+
 export enum TransactionBatchStatusesEnum {
   signed = 'signed',
   cancelled = 'cancelled',
