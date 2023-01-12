@@ -2,7 +2,7 @@ name: Publish sdk-dapp
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   repository_dispatch:
     types: publish-npm
   workflow_dispatch:
