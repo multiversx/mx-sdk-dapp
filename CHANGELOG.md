@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.2.9](https://github.com/multiversx/mx-sdk-dapp/pull/576)] - 2023-01-12
+    
 
 - [[partially support for nextjs](https://github.com/multiversx/mx-sdk-dapp/pull/559)]
 
