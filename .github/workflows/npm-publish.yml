@@ -20,7 +20,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Get package info
         id: package
-        uses: andreigiura/action-nodejs-package-info@v1.0.1
+        uses: andreigiura/action-nodejs-package-info@v1.0.2
       - run: |
           echo "result ${{ steps.package.outputs.is-prerelease }}"
           echo "is-release-candidate: ${{ steps.package.outputs.is-release-candidate }}"
