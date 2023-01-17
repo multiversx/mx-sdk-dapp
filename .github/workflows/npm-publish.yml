@@ -31,5 +31,5 @@ jobs:
       - name: Publish to npmjs
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ !steps.package.outputs.is-prerelease == 'false' }}
+        if: ${{ steps.package.outputs.is-prerelease == 'false' }}
         run: cd dist && npm publish --dry-run
