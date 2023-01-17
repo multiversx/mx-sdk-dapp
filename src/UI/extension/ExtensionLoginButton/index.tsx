@@ -61,8 +61,8 @@ export const ExtensionLoginButton: (
       rel='noreferrer'
       href={
         isFirefox
-          ? 'https://addons.mozilla.org/en-US/firefox/addon/maiar-defi-wallet/'
-          : 'https://chrome.google.com/webstore/detail/dngmlblcodfobpdpecaadgfbcggfjfnm?authuser=0&hl=en'
+          ? 'https://addons.mozilla.org/en-US/firefox/addon/multiversx-defi-wallet'
+          : 'https://chrome.google.com/webstore/detail/multiversx-defi-wallet/dngmlblcodfobpdpecaadgfbcggfjfnm'
       }
       target='_blank'
       className={classes.noExtensionButtonWrapper}
