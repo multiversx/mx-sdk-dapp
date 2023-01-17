@@ -17,6 +17,7 @@ jobs:
       contents: write
       packages: write
     steps:
+      - uses: actions/checkout@v3
       - uses: kevin-bronsdijk/npm-pre-release-packages-detection-action@v1.0.0
         id: npmprerelease
         with:
