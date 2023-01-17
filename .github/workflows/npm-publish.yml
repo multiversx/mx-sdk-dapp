@@ -24,10 +24,14 @@ jobs:
       - run: |
           echo "result ${{ steps.package.outputs.is-prerelease }}"
           echo "is-release-candidate: ${{ steps.package.outputs.is-release-candidate }}"
-      - name: Publish to npmjs
+      - name: Publish to npmjs next version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease}}
         run: cd dist && npm publish --dry-run --tag next
-        if: ${{ !steps.package.outputs.is-prerelease}}
+
+      - name: Publish to npmjs
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+        if: ${{ steps.package.outputs.is-prerelease}}
         run: cd dist && npm publish --dry-run
