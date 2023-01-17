@@ -1890,10 +1890,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-2.0.7.tgz#8f854053d2b56adc278afbb597375b34a043a906"
   integrity sha512-t7CabgUk/hPhMYVpqGPMdEVDqOo6RrRKmru6nXKpWZHdeQZZV52zeVVC8VRgqwG5mNwAkCrALLvz7UiV/ZLfIg==
 
-"@multiversx/sdk-hw-provider@3.0.2-alpha.2":
-  version "3.0.2-alpha.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-hw-provider/-/sdk-hw-provider-3.0.2-alpha.2.tgz#1a8506de394b5826ddcb4d9ebde7ca989e61706b"
-  integrity sha512-13Yy5nHYCrOed5OqoT4hrff4wEJpPM3/SS2Gs/tobqKPM8JGYpRFCtWmLzkQSCWWuwvOqXTLLXKKmdecx1tJYQ==
+"@multiversx/sdk-hw-provider@3.0.2-alpha.3":
+  version "3.0.2-alpha.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-hw-provider/-/sdk-hw-provider-3.0.2-alpha.3.tgz#dddc8d43684450e69aa398d0767bae1667d92687"
+  integrity sha512-xpeTxH8vqerDuJQ5KNsPreVDJu/m0GDbswOooQ4RoPSK9WEWRuRu5+UoXFXtyngbGIkSDOGhaP45lt+8k4p9VQ==
   dependencies:
     "@ledgerhq/devices" "7.0.6"
     "@ledgerhq/errors" "6.12.2"
