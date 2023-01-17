@@ -21,18 +21,15 @@ jobs:
       - name: Get package info
         id: package
         uses: andreigiura/action-nodejs-package-info@v1.0.2
-      - run: |
-          echo "result ${{ steps.package.outputs.is-prerelease }}"
-          echo "is-release-candidate: ${{ steps.package.outputs.is-release-candidate }}"
 
       - name: Publish to npmjs next version
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.package.outputs.is-prerelease == "true"}}
+        if: ${{ steps.package.outputs.is-prerelease}}
         run: cd dist && npm publish --dry-run --tag next
 
       - name: Publish to npmjs
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        if: ${{ steps.package.outputs.is-prerelease == "false"}}
+        if: ${{ !steps.package.outputs.is-prerelease}}
         run: cd dist && npm publish --dry-run
