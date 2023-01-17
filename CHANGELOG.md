@@ -6,8 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## [[v2.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/586)] - 2023-01-17
+## [[v2.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
     
+
+- [[Fix ledger address table display issue](https://github.com/multiversx/mx-sdk-dapp/pull/590)]
+
+## [[v2.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/586)] - 2023-01-17
+
 - [[Revert "increase hw-provider package version"](https://github.com/multiversx/mx-sdk-dapp/pull/585)]
 
 ## [[v2.2.10-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/584)] - 2023-01-17

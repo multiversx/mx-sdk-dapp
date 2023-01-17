@@ -1684,6 +1684,16 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@ledgerhq/devices@7.0.6":
+  version "7.0.6"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-7.0.6.tgz#222debb302fc51a29c068076fe5cdb76f6b48fac"
+  integrity sha512-trEqJqgXuXLgb228c6kJdur0idTVxtofy8NxumvsspZKh5x/pHJX8EoNxWX91Pg7H3AA+jxLEeRvAjNDVDJgGQ==
+  dependencies:
+    "@ledgerhq/errors" "^6.12.2"
+    "@ledgerhq/logs" "^6.10.1"
+    rxjs "6"
+    semver "^7.3.5"
+
 "@ledgerhq/devices@^5.51.1":
   version "5.51.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-5.51.1.tgz#d741a4a5d8f17c2f9d282fd27147e6fe1999edb7"
@@ -1704,7 +1714,7 @@
     rxjs "6"
     semver "^7.3.5"
 
-"@ledgerhq/devices@^7.0.7":
+"@ledgerhq/devices@^7.0.6", "@ledgerhq/devices@^7.0.7":
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/@ledgerhq/devices/-/devices-7.0.7.tgz#3499304a1c9d3aa7399de2ad390719bef5d1e89c"
   integrity sha512-PZ9TtaTGBYUm/g0qNKPbECZt7DDNvqM3ILS5wAtOMna2cBR+mrywUGXrkjuOWlHpuqZ8wenaAKveQBbzF2ba8w==
@@ -1714,12 +1724,17 @@
     rxjs "6"
     semver "^7.3.5"
 
+"@ledgerhq/errors@6.12.2":
+  version "6.12.2"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.12.2.tgz#d12143caa49db8ae0c8c6ec6b2fb38f719f85630"
+  integrity sha512-qYTkxlWHVItxPAb9pQewfVoN8nFvvFYzWEyzVRX/NuO/g3JKL5kef5lLuqTtUIFOvFROMLi3EBxU+vbvV0ktow==
+
 "@ledgerhq/errors@^5.34.0", "@ledgerhq/errors@^5.50.0":
   version "5.50.0"
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-5.50.0.tgz#e3a6834cb8c19346efca214c1af84ed28e69dad9"
   integrity sha512-gu6aJ/BHuRlpU7kgVpy2vcYk6atjB4iauP2ymF7Gk0ez0Y/6VSMVSJvubeEQN+IV60+OBK0JgeIZG7OiHaw8ow==
 
-"@ledgerhq/errors@^6.10.0", "@ledgerhq/errors@^6.12.3":
+"@ledgerhq/errors@^6.10.0", "@ledgerhq/errors@^6.12.2", "@ledgerhq/errors@^6.12.3":
   version "6.12.3"
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.12.3.tgz#a610caae1eeeb7cb038525e5212fe03217dda683"
   integrity sha512-djiMSgB/7hnK3aLR/c5ZMMivxjcI7o2+y3VKcsZZpydPoVf9+FXqeJPRfOwmJ0JxbQ//LinUfWpIfHew8LkaVw==
@@ -1754,6 +1769,15 @@
     "@ledgerhq/hw-transport" "^6.11.2"
     "@ledgerhq/logs" "^6.10.0"
 
+"@ledgerhq/hw-transport@6.27.9":
+  version "6.27.9"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.27.9.tgz#f5a4a055ba7b9aa18e62032e6fa16227251d0e2e"
+  integrity sha512-Po0eFWyH3C6I5oxLW3t/jtjqFJdF6/zmF9WL3n5lvSVbtmilPGz2IFOwHoz/XWSwM4PLwV6JXgFBIC6h6UNn/Q==
+  dependencies:
+    "@ledgerhq/devices" "^7.0.6"
+    "@ledgerhq/errors" "^6.12.2"
+    events "^3.3.0"
+
 "@ledgerhq/hw-transport@^5.34.0":
   version "5.51.1"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-5.51.1.tgz#8dd14a8e58cbee4df0c29eaeef983a79f5f22578"
@@ -1763,7 +1787,7 @@
     "@ledgerhq/errors" "^5.50.0"
     events "^3.3.0"
 
-"@ledgerhq/hw-transport@^6.11.2", "@ledgerhq/hw-transport@^6.27.2":
+"@ledgerhq/hw-transport@^6.11.2":
   version "6.27.10"
   resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-6.27.10.tgz#5fd702991c49e1db969cccfbf9fa51079ac742a6"
   integrity sha512-3cmwQZsiRKe6VcHA1kAtC8+Wt0xjCa9Y0TO/Ns2k4BmEhIlG143I4H1dJntkX6XhDpE1pK9Xn2niBQsTTeGhqA==
@@ -1866,12 +1890,14 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-2.0.7.tgz#8f854053d2b56adc278afbb597375b34a043a906"
   integrity sha512-t7CabgUk/hPhMYVpqGPMdEVDqOo6RrRKmru6nXKpWZHdeQZZV52zeVVC8VRgqwG5mNwAkCrALLvz7UiV/ZLfIg==
 
-"@multiversx/sdk-hw-provider@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-hw-provider/-/sdk-hw-provider-3.0.1.tgz#db93981c0822087d3fab525bac17988d2dfec702"
-  integrity sha512-p8qbgr0dKvu6N8MbTOGaEYZgSn+/JP0FyezZ+5/U/uBSLu4XbP+/sEs9+kTDUAUJ2vgvK/6FAWmGNwUs8MWcBg==
+"@multiversx/sdk-hw-provider@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-hw-provider/-/sdk-hw-provider-3.0.3.tgz#371924113dfda1ca3b63b35ca88409b902103c94"
+  integrity sha512-YGPiwnhMN/Eq05KjbbVvT+vOsNgQ4JUsQZVS8y0gc4V/dXe8Ud+Rw4loMJj1uSUiTNjTJA3bjnFPgIiK3a+VZA==
   dependencies:
-    "@ledgerhq/hw-transport" "^6.27.2"
+    "@ledgerhq/devices" "7.0.6"
+    "@ledgerhq/errors" "6.12.2"
+    "@ledgerhq/hw-transport" "6.27.9"
     "@ledgerhq/hw-transport-u2f" "5.36.0-deprecated"
     "@ledgerhq/hw-transport-webhid" "6.11.2"
     "@ledgerhq/hw-transport-webusb" "6.11.2"
@@ -11384,9 +11410,9 @@ minimatch@^3.0.2, minimatch@^3.0.4, minimatch@^3.1.1, minimatch@^3.1.2:
     brace-expansion "^1.1.7"
 
 minimatch@^5.0.1:
-  version "5.1.4"
-  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.1.4.tgz#4e2d39d872684e97b309a9104251c3f1aa4e9d1c"
-  integrity sha512-U0iNYXt9wALljzfnGkhFSy5sAC6/SCR3JrHrlsdJz4kF8MvhTRQNiC59iUi1iqsitV7abrNAJWElVL9pdnoUgw==
+  version "5.1.5"
+  resolved "https://registry.yarnpkg.com/minimatch/-/minimatch-5.1.5.tgz#cabd894be2c2091e01fd09211326dfd996ee022d"
+  integrity sha512-CI8wwdrll4ehjPAqs8TL8lBPyNnpZlQI02Wn8C1weNz/QbUbjh3OMxgMKSnvqfKFdLlks3EzHB9tO0BqGc3phQ==
   dependencies:
     brace-expansion "^2.0.1"
 
