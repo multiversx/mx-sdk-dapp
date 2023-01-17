@@ -26,7 +26,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease}}
-        run: echo ${{ steps.package.outputs.is-prerelease}} && cd dist && npm publish --dry-run --tag next
+        run: echo ${{ steps.package.outputs.is-prerelease === false}} && cd dist && npm publish --dry-run --tag next
 
       - name: Publish to npmjs
         env:
