@@ -21,4 +21,4 @@ jobs:
       - name: Get package info
         id: package
         uses: codex-team/action-nodejs-package-info@v1.1
-      - run: echo "is-release-candidate: ${{ steps.package.outputs.is-release-candidate }}"
+      - run: echo "result ${{ steps.package.outputs.is-release-candidate }}"
