@@ -6,10 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [[Change multiversX defi wallet store urls](https://github.com/multiversx/mx-sdk-dapp/pull/582)] 
+- [[Increase hw-provider package version](https://github.com/multiversx/mx-sdk-dapp/pull/583)]
+- [[Change multiversX defi wallet store urls](https://github.com/multiversx/mx-sdk-dapp/pull/582)]
 
 ## [[v2.2.9](https://github.com/multiversx/mx-sdk-dapp/pull/577)] - 2023-01-12
-    
+
 - [[Added partial support for Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/559)]
 
 ## [[2.2.8](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/557)] - 2023-01-12
