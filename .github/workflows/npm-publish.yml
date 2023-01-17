@@ -17,25 +17,8 @@ jobs:
       contents: write
       packages: write
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v1
+      - uses: kevin-bronsdijk/npm-pre-release-packages-detection-action@v1.0.0
+        id: npmprerelease
         with:
-          node-version: 16
-          registry-url: https://registry.npmjs.org/
-
-      - name: Setup yarn
-        run: npm install -g yarn
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Run tests
-        run: yarn test
-
-      - name: Build project
-        run: yarn build
-
-      - name: Publish to npmjs
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-        run: cd dist && npm publish
+          package-file-full-path: './package.json'
+      - run: echo "result ${{ steps.npmprerelease.outputs.found-pre-release }
