@@ -5,7 +5,7 @@ export const parseNavigationParams = (preserveParams: string[]) => {
 
   if (window?.location?.search) {
     const urlSearchParams = new URLSearchParams(window.location.search);
-    params = Object.fromEntries(urlSearchParams as any);
+    params = Object.fromEntries(urlSearchParams);
   }
 
   const remainingParams: Record<string, string> = {};
@@ -16,7 +16,7 @@ export const parseNavigationParams = (preserveParams: string[]) => {
   });
 
   return {
-    ...remainingParams,
+    remainingParams,
     clearNavigationHistory: () => clearNavigationHistory(params)
-  } as any;
+  };
 };

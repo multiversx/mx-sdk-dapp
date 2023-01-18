@@ -160,8 +160,10 @@ export function ProviderInitializer() {
 
     try {
       const address = await getAddress();
-      const { clearWalletLoginHistory: clearNavigationHistory, signature } =
-        parseNavigationParams(['signature', 'loginToken', 'address']);
+      const {
+        clearNavigationHistory,
+        remainingParams: { signature }
+      } = parseNavigationParams(['signature', 'loginToken', 'address']);
 
       if (!address) {
         return clearNavigationHistory();

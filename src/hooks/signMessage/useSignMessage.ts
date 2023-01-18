@@ -258,11 +258,7 @@ export const useSignMessage = () => {
   const parseSingnedMessageFromUrl = () => {
     if (search) {
       const {
-        signature,
-        sessionId,
-        status,
-        message,
-        callbackUrl,
+        remainingParams: { signature, sessionId, status, message, callbackUrl },
         clearNavigationHistory
       } = parseNavigationParams(Object.values(SignedMessageQueryParamsEnum));
 
@@ -270,7 +266,7 @@ export const useSignMessage = () => {
         setCurrentSessionId(sessionId);
 
         setSignedSessionFromUrl({
-          status,
+          status: status as SignedMessageStatusesEnum,
           sessionId,
           signature,
           message,
