@@ -25,17 +25,13 @@ import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useGetSignMessageInfoStatus } from './useGetSignedMessageStatus';
 
 export interface CancelPropsType {
-  callbackUrl?: string;
-  sessionId: string;
+  callbackRoute?: string;
   errorMessage: string;
 }
 
 export interface SignedMessageParamsType {
   status: SignedMessageStatusesEnum;
-  sessionId: string;
   signature: string;
-  message: string;
-  callbackUrl?: string;
 }
 
 /**
@@ -52,6 +48,7 @@ export const useSignMessage = () => {
   const { isPending, errorMessage } = useGetSignMessageInfoStatus();
   const { search } = window.location;
   const { provider, providerType } = useGetAccountProvider();
+  const isWalletLogin = providerType === LoginMethodsEnum.wallet;
 
   // Clears the state
   const onAbort = () => {
@@ -60,28 +57,22 @@ export const useSignMessage = () => {
 
   // Cancel signing
   const onCancel = ({
-    callbackUrl,
-    sessionId,
+    callbackRoute,
     errorMessage = CANCELLED
   }: CancelPropsType) => {
     const isCancelled = errorMessage.includes(CANCELLED);
+    const sessionId = Date.now().toString();
 
-    if (sessionId !== currentSessionId) {
+    if (!currentSession) {
       setCurrentSessionId(sessionId);
     }
 
     dispatch(
-      setSignSessionState({
-        errorMessage,
-        isSigning: false
-      })
-    );
-
-    dispatch(
       setSignSession({
+        errorMessage,
         sessionId,
         signedSession: {
-          callbackUrl,
+          callbackUrl: callbackRoute,
           status: isCancelled
             ? SignedMessageStatusesEnum.cancelled
             : SignedMessageStatusesEnum.failed
@@ -108,31 +99,39 @@ export const useSignMessage = () => {
       );
     }
 
-    return `${callbackUrl.pathname}${callbackUrl.search}`;
+    return `${isWalletLogin ? window.location.origin : ''}${
+      callbackUrl.pathname
+    }${callbackUrl.search}`;
   };
 
   const checkProviderIsInitialized = async () => {
-    if (providerType !== LoginMethodsEnum.wallet) {
-      try {
-        const isProviderInitialized = await provider?.init?.();
+    if (isWalletLogin) {
+      return;
+    }
 
-        if (!isProviderInitialized) {
-          throw Error(PROVIDER_NOT_INITIALIZED);
-        }
-      } catch (error) {
-        const errorMessage =
-          (error as Error)?.message ||
-          (error as string) ||
-          PROVIDER_NOT_INITIALIZED;
+    try {
+      const isProviderInitialized = await provider?.init?.();
 
-        throw Error(errorMessage);
+      if (!isProviderInitialized) {
+        throw Error(PROVIDER_NOT_INITIALIZED);
       }
+    } catch (error) {
+      const errorMessage =
+        (error as Error)?.message ||
+        (error as string) ||
+        PROVIDER_NOT_INITIALIZED;
+
+      throw Error(errorMessage);
     }
   };
 
-  const signMessage = async (props: SignMessageType) => {
-    dispatch(setSignSessionState({ isSigning: true }));
+  const signMessageWithWallet = (props: SignMessageType) => {
+    return provider.signMessage(props.message as any, {
+      callbackUrl: encodeURIComponent(String(props.callbackRoute))
+    });
+  };
 
+  const signMessage = async (props: SignMessageType) => {
     const sessionId = Date.now().toString();
     setCurrentSessionId(sessionId);
 
@@ -141,13 +140,30 @@ export const useSignMessage = () => {
       sessionId
     );
 
+    dispatch(
+      setSignSession({
+        sessionId,
+        signedSession: {
+          status: SignedMessageStatusesEnum.pending,
+          message: props.message,
+          callbackUrl: callbackRoute
+        }
+      })
+    );
+
+    if (isWalletLogin) {
+      return signMessageWithWallet({
+        ...props,
+        callbackRoute
+      });
+    }
+
     try {
       await checkProviderIsInitialized();
     } catch (error) {
       return onCancel({
         errorMessage: String(error),
-        callbackUrl: callbackRoute,
-        sessionId
+        callbackRoute
       });
     }
 
@@ -158,7 +174,7 @@ export const useSignMessage = () => {
       });
 
       if (signedMessage.signature) {
-        dispatch(
+        return dispatch(
           setSignSession({
             sessionId,
             signedSession: {
@@ -169,14 +185,11 @@ export const useSignMessage = () => {
             }
           })
         );
-
-        return dispatch(setSignSessionState({ isSigning: false }));
       }
 
       return onCancel({
         errorMessage: CANCELLED,
-        callbackUrl: callbackRoute,
-        sessionId
+        callbackRoute
       });
     } catch (error) {
       const errorMessage =
@@ -184,69 +197,8 @@ export const useSignMessage = () => {
 
       return onCancel({
         errorMessage,
-        callbackUrl: callbackRoute,
-        sessionId
+        callbackRoute
       });
-    }
-  };
-
-  // Init signed session based on URL params in web wallet
-  const setSignedSessionFromUrl = ({
-    status,
-    message,
-    sessionId,
-    signature,
-    callbackUrl
-  }: SignedMessageParamsType) => {
-    if (!sessionId) {
-      return;
-    }
-
-    const session = signedMessageInfo.signedSessions[sessionId];
-
-    if (session) {
-      if (
-        [
-          SignedMessageStatusesEnum.cancelled,
-          SignedMessageStatusesEnum.failed
-        ].includes(status)
-      ) {
-        // Failed to sign message
-        return onCancel({
-          errorMessage:
-            status === SignedMessageStatusesEnum.cancelled
-              ? CANCELLED
-              : ERROR_SIGNING,
-          sessionId
-        });
-      }
-
-      if (signature && status === SignedMessageStatusesEnum.signed) {
-        // Message was signed successfully
-        return dispatch(
-          setSignSession({
-            sessionId,
-            signedSession: {
-              signature,
-              status
-            }
-          })
-        );
-      }
-    }
-
-    if (message) {
-      // Message sign request through hook
-      return dispatch(
-        setSignSession({
-          sessionId,
-          signedSession: {
-            message,
-            status: SignedMessageStatusesEnum.pending,
-            callbackUrl
-          }
-        })
-      );
     }
   };
 
@@ -258,25 +210,45 @@ export const useSignMessage = () => {
   const parseSingnedMessageFromUrl = () => {
     if (search) {
       const {
-        remainingParams: { signature, sessionId, status, message, callbackUrl },
+        remainingParams: { signature, sessionId, status },
         clearNavigationHistory
       } = parseNavigationParams(Object.values(SignedMessageQueryParamsEnum));
 
-      if (sessionId) {
-        setCurrentSessionId(sessionId);
-
-        setSignedSessionFromUrl({
-          status: status as SignedMessageStatusesEnum,
-          sessionId,
-          signature,
-          message,
-          callbackUrl
-        });
-
-        if (signature ?? status) {
-          clearNavigationHistory();
-        }
+      if (!sessionId) {
+        return;
       }
+
+      setCurrentSessionId(sessionId);
+
+      if (
+        [
+          SignedMessageStatusesEnum.cancelled,
+          SignedMessageStatusesEnum.failed
+        ].includes(status as SignedMessageStatusesEnum)
+      ) {
+        // Failed to sign message
+        return onCancel({
+          errorMessage:
+            status === SignedMessageStatusesEnum.cancelled
+              ? CANCELLED
+              : ERROR_SIGNING
+        });
+      }
+
+      if (signature && status === SignedMessageStatusesEnum.signed) {
+        // Message was signed successfully
+        return dispatch(
+          setSignSession({
+            sessionId: currentSessionId,
+            signedSession: {
+              signature,
+              status
+            }
+          })
+        );
+      }
+
+      clearNavigationHistory();
     }
   };
 

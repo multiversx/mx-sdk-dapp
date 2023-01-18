@@ -4,6 +4,7 @@ import { logoutAction } from '../commonActions';
 
 export interface SignedSessionPayloadType {
   sessionId: string;
+  errorMessage?: string;
   signedSession: SignedSessionType;
 }
 
@@ -47,11 +48,12 @@ export const signedMessageInfoSlice = createSlice({
       state: SignedMessageInfoStateType,
       action: PayloadAction<SignedSessionPayloadType>
     ) => {
-      const { sessionId, signedSession } = action.payload;
+      const { sessionId, signedSession, errorMessage } = action.payload;
 
       return {
         ...state,
-        isSigning: false,
+        errorMessage: errorMessage ?? state.errorMessage,
+        isSigning: signedSession.status === SignedMessageStatusesEnum.pending,
         signedSessions: {
           ...state.signedSessions,
           [sessionId]: signedSession
