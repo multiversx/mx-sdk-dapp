@@ -6,19 +6,21 @@ import dappModal from './slices/dappModalsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
 import networkConfig from './slices/networkConfigSlice';
+import { signedMessageInfoReducer } from './slices/signedMessageInfoSlice';
 import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
 
 const reducers = {
   [ReducersEnum.account]: account,
-  [ReducersEnum.networkConfig]: networkConfig,
+  [ReducersEnum.dappModal]: dappModal,
   [ReducersEnum.loginInfo]: loginInfo,
   [ReducersEnum.modals]: modals,
-  [ReducersEnum.dappModal]: dappModal,
+  [ReducersEnum.networkConfig]: networkConfig,
+  [ReducersEnum.signedMessageInfo]: signedMessageInfoReducer,
   [ReducersEnum.toasts]: toasts,
-  [ReducersEnum.transactions]: transactions,
-  [ReducersEnum.transactionsInfo]: transactionsInfo
+  [ReducersEnum.transactionsInfo]: transactionsInfo,
+  [ReducersEnum.transactions]: transactions
 };
 
 const getRootReducer = (customReducers = {}) =>

@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/592)] - 2023-01-17
+- [Created `useSignMessage` hook to support message signing](https://github.com/multiversx/mx-sdk-dapp/pull/578)
+
 ## [[v2.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
     
 
