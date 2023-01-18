@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
     
+
 - [[Fix ledger address table display issue](https://github.com/multiversx/mx-sdk-dapp/pull/590)]
 
 ## [[v2.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/586)] - 2023-01-17
