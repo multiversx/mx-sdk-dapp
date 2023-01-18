@@ -6,5 +6,6 @@ export function useGetNotification() {
   const notification = useSelector(notificationModalSelector);
   const dispatch = useDispatch();
   const clearNotification = () => dispatch(clearNotificationModal());
+
   return { notification, clearNotification };
 }
