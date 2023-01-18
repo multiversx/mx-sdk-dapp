@@ -17,11 +17,11 @@ import {
   SignedMessageQueryParamsEnum,
   SignedMessageStatusesEnum
 } from 'types';
-import { parseNavigationParams } from 'utils';
 import {
   signMessage as signMessageWithProvider,
   SignMessageType
 } from 'utils/account/signMessage';
+import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useGetSignMessageInfoStatus } from './useGetSignedMessageStatus';
 
 export interface CancelPropsType {

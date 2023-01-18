@@ -33,7 +33,6 @@ import {
   setChainID
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { parseNavigationParams } from 'utils';
 import {
   getAddress,
   getAccount,
@@ -42,6 +41,7 @@ import {
   getLedgerConfiguration
 } from 'utils/account';
 import { logout } from 'utils/logout';
+import { parseNavigationParams } from 'utils/parseNavigationParams';
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
