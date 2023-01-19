@@ -53,7 +53,7 @@ export const useNativeAuthLogout = () => {
     return () => {
       clearTimeout(logoutTimeoutRef.current);
     };
-  }, [expiresAt, address]);
+  }, [expiresAt, address, autoLogoutCallbackUrl]);
 
   return null;
 };
