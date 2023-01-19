@@ -28,7 +28,7 @@ export const DappProvider = ({
   externalProvider,
   environment,
   customComponents,
-  autoLogoutCallbackUrl
+  autoLogoutCallbackUrl = window.location.origin
 }: DappProviderPropsType) => {
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
