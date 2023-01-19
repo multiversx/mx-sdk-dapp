@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useGetAccountInfo } from 'hooks';
 import { logout } from 'utils/logout';
 import { localStorageKeys } from 'utils/storage/local';
-import { useSelector } from 'react-redux';
+import { useSelector } from 'reduxStore/DappProviderContext';
 import { autoLogoutCallbackUrlSelector } from 'reduxStore/selectors';
 
 const { logoutEvent } = localStorageKeys;
@@ -33,5 +33,5 @@ export const useLogoutFromMultipleTabs = () => {
     return () => {
       window.removeEventListener(storageKey, receiveMessage);
     };
-  }, [address]);
+  }, [address, autoLogoutCallbackUrl]);
 };

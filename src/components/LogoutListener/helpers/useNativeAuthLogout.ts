@@ -25,7 +25,7 @@ export const useNativeAuthLogout = () => {
     if (address && isNativeAuthTokenExpired) {
       logout(autoLogoutCallbackUrl);
     }
-  }, [isNativeAuthTokenExpired, address]);
+  }, [isNativeAuthTokenExpired, address, autoLogoutCallbackUrl]);
 
   // plan logout for existing token
   useEffect(() => {
