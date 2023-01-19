@@ -19,6 +19,7 @@ export interface DappProviderPropsType {
   //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
+  autoLogoutCallbackUrl?: string;
 }
 
 export const DappProvider = ({
@@ -26,7 +27,8 @@ export const DappProvider = ({
   customNetworkConfig = {},
   externalProvider,
   environment,
-  customComponents
+  customComponents,
+  autoLogoutCallbackUrl
 }: DappProviderPropsType) => {
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
@@ -43,6 +45,7 @@ export const DappProvider = ({
         <AppInitializer
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
+          autoLogoutCallbackUrl={autoLogoutCallbackUrl}
         >
           <ProviderInitializer />
           <CustomComponents customComponents={customComponents} />

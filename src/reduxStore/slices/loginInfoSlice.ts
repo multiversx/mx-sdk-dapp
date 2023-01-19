@@ -32,6 +32,7 @@ export interface LoginInfoStateType {
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
+  autoLogoutCallbackUrl?: string;
 }
 
 const initialState: LoginInfoStateType = {
@@ -88,7 +89,13 @@ export const loginInfoSlice = createSlice({
     },
     invalidateLoginSession: (state: LoginInfoStateType) => {
       state.isLoginSessionInvalid = true;
-    }
+    },
+    setAutoLogoutCallbackUrl: (
+      state: LoginInfoStateType,
+      action: PayloadAction<string | undefined>
+    ) => {
+      state.autoLogoutCallbackUrl = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
@@ -114,7 +121,8 @@ export const {
   setTokenLogin,
   setTokenLoginSignature,
   setWalletLogin,
-  invalidateLoginSession
+  invalidateLoginSession,
+  setAutoLogoutCallbackUrl
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;

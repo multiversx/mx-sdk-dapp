@@ -9,18 +9,21 @@ import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSel
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils/logout';
+import { setAutoLogoutCallbackUrl } from 'reduxStore/slices/loginInfoSlice';
 
 export interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   children: any;
   externalProvider?: IDappProvider;
   environment: EnvironmentsEnum;
+  autoLogoutCallbackUrl?: string;
 }
 
 export function AppInitializer({
   customNetworkConfig = {},
   children,
-  environment
+  environment,
+  autoLogoutCallbackUrl,
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
@@ -61,6 +64,7 @@ export function AppInitializer({
   }
 
   async function initializeApp() {
+    dispatch(setAutoLogoutCallbackUrl(autoLogoutCallbackUrl))
     await initializeNetwork();
 
     setInitialized(true);
@@ -70,20 +74,21 @@ export function AppInitializer({
     if (address) {
       const pubKey = new Address(address).hex();
       if (pubKey !== publicKey) {
-        logout();
+        logout(autoLogoutCallbackUrl);
       }
     }
-  }, [address, publicKey]);
+  }, [address, publicKey, autoLogoutCallbackUrl]);
 
   useEffect(() => {
     initializeApp();
-  }, [customNetworkConfig, environment]);
+  }, [customNetworkConfig, environment, autoLogoutCallbackUrl]);
 
   useEffect(() => {
     if (account.address && isLoginSessionInvalid) {
-      logout();
+      logout(autoLogoutCallbackUrl);
     }
-  }, [isLoginSessionInvalid, account.address]);
+  }, [isLoginSessionInvalid, account.address, autoLogoutCallbackUrl]);
 
   return initialized ? <>{children}</> : null;
 }
+

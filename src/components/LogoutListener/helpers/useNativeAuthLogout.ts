@@ -2,13 +2,14 @@ import { useEffect, useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { loginInfoSelector } from 'reduxStore/selectors';
+import { autoLogoutCallbackUrlSelector, loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { logout } from 'utils/logout';
 
 export const useNativeAuthLogout = () => {
   const { address } = useGetAccountInfo();
   const { tokenLogin } = useSelector(loginInfoSelector);
+  const autoLogoutCallbackUrl = useSelector(autoLogoutCallbackUrlSelector);
 
   const {
     isExpired: isNativeAuthTokenExpired,
@@ -22,7 +23,7 @@ export const useNativeAuthLogout = () => {
   // logout if token is expired
   useEffect(() => {
     if (address && isNativeAuthTokenExpired) {
-      logout();
+      logout(autoLogoutCallbackUrl);
     }
   }, [isNativeAuthTokenExpired, address]);
 
@@ -46,7 +47,7 @@ export const useNativeAuthLogout = () => {
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     logoutTimeoutRef.current = setTimeout(() => {
-      logout();
+      logout(autoLogoutCallbackUrl);
     }, millisecondsUntilLogout.toNumber());
 
     return () => {
