@@ -21,7 +21,8 @@ import {
   walletLoginSelector,
   ledgerLoginSelector,
   isLoggedInSelector,
-  tokenLoginSelector
+  tokenLoginSelector,
+  logoutRouteSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -41,6 +42,7 @@ import {
   getLedgerConfiguration
 } from 'utils/account';
 import { logout } from 'utils/logout';
+import { parseNavigationParams } from 'utils/parseNavigationParams';
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -51,6 +53,7 @@ export function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const logoutRoute = useSelector(logoutRouteSelector);
   const [ledgerData, setLedgerData] =
     useState<{
       version: string;
@@ -64,18 +67,18 @@ export function ProviderInitializer() {
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
 
-  const { callbackRoute, logoutRoute } = walletConnectLogin
+  const { callbackRoute, logoutRoute: wcLogoutRoute } = walletConnectLogin
     ? walletConnectLogin
     : { callbackRoute: '', logoutRoute: '' };
 
   const [initWalletLoginProvider] = useWalletConnectLogin({
     callbackRoute,
-    logoutRoute
+    logoutRoute: wcLogoutRoute
   });
 
   const [initWalletConnectV2LoginProvider] = useWalletConnectV2Login({
     callbackRoute,
-    logoutRoute
+    logoutRoute: wcLogoutRoute
   });
 
   useEffect(() => {
@@ -159,10 +162,13 @@ export function ProviderInitializer() {
 
     try {
       const address = await getAddress();
-      const { clearWalletLoginHistory, signature } = parseWalletSignature();
+      const {
+        clearNavigationHistory,
+        remainingParams: { signature }
+      } = parseNavigationParams(['signature', 'loginToken', 'address']);
 
       if (!address) {
-        return clearWalletLoginHistory();
+        return clearNavigationHistory();
       }
 
       if (signature) {
@@ -187,38 +193,12 @@ export function ProviderInitializer() {
         dispatch(setIsAccountLoading(false));
       }
 
-      clearWalletLoginHistory();
+      clearNavigationHistory();
     } catch (e) {
       console.error('Failed authenticating wallet user ', e);
     }
 
     dispatch(setWalletLogin(null));
-  }
-
-  function parseWalletSignature() {
-    let params: any = {};
-    if (window?.location?.search) {
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      params = Object.fromEntries(urlSearchParams as any);
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { signature, loginToken, address, ...remainingParams } = params;
-
-    return {
-      signature,
-      clearWalletLoginHistory: () => clearWalletLoginHistory(remainingParams)
-    };
-  }
-
-  function clearWalletLoginHistory(remainingParams: any) {
-    const newUrlParams = new URLSearchParams(remainingParams).toString();
-    const { pathname } = window.location;
-    const newSearch = newUrlParams ? `?${newUrlParams}` : '';
-    const fullPath = pathname ? `${pathname}${newSearch}` : './';
-
-    setTimeout(() => {
-      window.history.replaceState({}, document?.title, fullPath);
-    });
   }
 
   async function getInitializedHwWalletProvider() {
@@ -229,7 +209,7 @@ export function ProviderInitializer() {
     }
     if (!isInitialized && isLoggedIn) {
       console.warn('Could not initialise ledger app');
-      logout();
+      logout(logoutRoute);
       return;
     }
     if (ledgerLogin?.index != null) {
@@ -249,7 +229,7 @@ export function ProviderInitializer() {
       setLedgerData(ledgerConfig);
     } catch (err) {
       console.error('Could not initialise ledger app', err);
-      logout();
+      logout(logoutRoute);
     }
   }
 

@@ -1,4 +1,5 @@
 export const ERROR_SIGNING = 'error when signing';
+export const CANCELLED = 'cancelled';
 export const TRANSACTION_CANCELLED = 'Transaction canceled';
 export const ERROR_SIGNING_TX = 'error signing transaction';
 export const PROVIDER_NOT_INITIALIZED = 'provider not initialized';
