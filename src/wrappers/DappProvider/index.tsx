@@ -1,4 +1,4 @@
-import React, { ReactElement, ReactChildren } from 'react';
+import React, { ReactElement } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
@@ -12,13 +12,18 @@ import { AppInitializer } from 'wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 import { setExternalProvider } from 'providers/accountProvider';
 
+export type DappConfigType = {
+  logoutRoute?: string;
+}
+
 export interface DappProviderPropsType {
-  children: ReactChildren | ReactElement;
+  children: React.ReactNode | ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
   //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
+  dappConfig?: DappConfigType;
 }
 
 export const DappProvider = ({
@@ -26,7 +31,8 @@ export const DappProvider = ({
   customNetworkConfig = {},
   externalProvider,
   environment,
-  customComponents
+  customComponents,
+  dappConfig
 }: DappProviderPropsType) => {
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
@@ -43,6 +49,7 @@ export const DappProvider = ({
         <AppInitializer
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
+          logoutRoute={dappConfig?.logoutRoute}
         >
           <ProviderInitializer />
           <CustomComponents customComponents={customComponents} />

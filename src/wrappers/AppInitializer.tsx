@@ -9,18 +9,21 @@ import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSel
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils/logout';
+import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
 
 export interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   children: any;
   externalProvider?: IDappProvider;
   environment: EnvironmentsEnum;
+  logoutRoute?: string;
 }
 
 export function AppInitializer({
   customNetworkConfig = {},
   children,
-  environment
+  environment,
+  logoutRoute,
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
@@ -61,6 +64,7 @@ export function AppInitializer({
   }
 
   async function initializeApp() {
+    dispatch(setLogoutRoute(logoutRoute));
     await initializeNetwork();
 
     setInitialized(true);
@@ -70,20 +74,21 @@ export function AppInitializer({
     if (address) {
       const pubKey = new Address(address).hex();
       if (pubKey !== publicKey) {
-        logout();
+        logout(logoutRoute);
       }
     }
-  }, [address, publicKey]);
+  }, [address, publicKey, logoutRoute]);
 
   useEffect(() => {
     initializeApp();
-  }, [customNetworkConfig, environment]);
+  }, [customNetworkConfig, environment, logoutRoute]);
 
   useEffect(() => {
     if (account.address && isLoginSessionInvalid) {
-      logout();
+      logout(logoutRoute);
     }
-  }, [isLoginSessionInvalid, account.address]);
+  }, [isLoginSessionInvalid, account.address, logoutRoute]);
 
   return initialized ? <>{children}</> : null;
 }
+
