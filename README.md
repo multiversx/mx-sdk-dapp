@@ -99,7 +99,8 @@ import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 ```jsx
 <DappProvider
     environment="devnet"
-    customNetworkConfig={customNetworkConfig}
+    customNetworkConfig={customNetworkConfig} // optional
+    dappConfig={dappConfig} // optional
 >
 ```
 `environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet` (also configured in `EnvironmentsEnum`)
@@ -126,6 +127,13 @@ This allows using different APIs and different connection providers to configure
 }
 ```
 
+DappProvider also accepts an optional `dappConfig` object.
+
+```typescript
+{
+  logoutRoute?: string;  // a route to redirect after auto-logout (session expired, native auth token expired or idle app). Default value: window.location.origin
+}
+```
 
   </details>
 

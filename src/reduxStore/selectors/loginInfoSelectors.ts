@@ -39,3 +39,8 @@ export const tokenLoginSelector = createDeepEqualSelector(
   loginInfoSelector,
   (state) => state.tokenLogin
 );
+
+export const logoutRouteSelector = createDeepEqualSelector(
+  loginInfoSelector,
+  (state) => state.logoutRoute
+);

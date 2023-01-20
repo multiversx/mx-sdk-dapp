@@ -2,13 +2,14 @@ import { useEffect, useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { loginInfoSelector } from 'reduxStore/selectors';
+import { logoutRouteSelector, loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { logout } from 'utils/logout';
 
 export const useNativeAuthLogout = () => {
   const { address } = useGetAccountInfo();
   const { tokenLogin } = useSelector(loginInfoSelector);
+  const logoutRoute = useSelector(logoutRouteSelector);
 
   const {
     isExpired: isNativeAuthTokenExpired,
@@ -22,9 +23,9 @@ export const useNativeAuthLogout = () => {
   // logout if token is expired
   useEffect(() => {
     if (address && isNativeAuthTokenExpired) {
-      logout();
+      logout(logoutRoute);
     }
-  }, [isNativeAuthTokenExpired, address]);
+  }, [isNativeAuthTokenExpired, address, logoutRoute]);
 
   // plan logout for existing token
   useEffect(() => {
@@ -46,13 +47,13 @@ export const useNativeAuthLogout = () => {
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     logoutTimeoutRef.current = setTimeout(() => {
-      logout();
+      logout(logoutRoute);
     }, millisecondsUntilLogout.toNumber());
 
     return () => {
       clearTimeout(logoutTimeoutRef.current);
     };
-  }, [expiresAt, address]);
+  }, [expiresAt, address, logoutRoute]);
 
   return null;
 };
