@@ -12,7 +12,7 @@ import { AppInitializer } from 'wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 import { setExternalProvider } from 'providers/accountProvider';
 
-export type DappConfig = {
+export type DappConfigType = {
   logoutRoute?: string;
 }
 
@@ -23,7 +23,7 @@ export interface DappProviderPropsType {
   //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
-  dappConfig?: DappConfig;
+  dappConfig?: DappConfigType;
 }
 
 export const DappProvider = ({
