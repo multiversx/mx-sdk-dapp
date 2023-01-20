@@ -22,7 +22,7 @@ import {
   ledgerLoginSelector,
   isLoggedInSelector,
   tokenLoginSelector,
-  autoLogoutCallbackUrlSelector
+  logoutRouteSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -52,7 +52,7 @@ export function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const autoLogoutCallbackUrl = useSelector(autoLogoutCallbackUrlSelector);
+  const logoutRoute = useSelector(logoutRouteSelector);
   const [ledgerData, setLedgerData] =
     useState<{
       version: string;
@@ -66,18 +66,18 @@ export function ProviderInitializer() {
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
 
-  const { callbackRoute, logoutRoute } = walletConnectLogin
+  const { callbackRoute, logoutRoute: wcLogoutRoute } = walletConnectLogin
     ? walletConnectLogin
     : { callbackRoute: '', logoutRoute: '' };
 
   const [initWalletLoginProvider] = useWalletConnectLogin({
     callbackRoute,
-    logoutRoute
+    logoutRoute: wcLogoutRoute
   });
 
   const [initWalletConnectV2LoginProvider] = useWalletConnectV2Login({
     callbackRoute,
-    logoutRoute
+    logoutRoute: wcLogoutRoute
   });
 
   useEffect(() => {
@@ -231,7 +231,7 @@ export function ProviderInitializer() {
     }
     if (!isInitialized && isLoggedIn) {
       console.warn('Could not initialise ledger app');
-      logout(autoLogoutCallbackUrl);
+      logout(logoutRoute);
       return;
     }
     if (ledgerLogin?.index != null) {
@@ -251,7 +251,7 @@ export function ProviderInitializer() {
       setLedgerData(ledgerConfig);
     } catch (err) {
       console.error('Could not initialise ledger app', err);
-      logout(autoLogoutCallbackUrl);
+      logout(logoutRoute);
     }
   }
 

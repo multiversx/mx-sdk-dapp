@@ -3,14 +3,14 @@ import { useGetAccountInfo } from 'hooks';
 import { logout } from 'utils/logout';
 import { localStorageKeys } from 'utils/storage/local';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { autoLogoutCallbackUrlSelector } from 'reduxStore/selectors';
+import { logoutRouteSelector } from 'reduxStore/selectors';
 
 const { logoutEvent } = localStorageKeys;
 const storageKey = 'storage';
 
 export const useLogoutFromMultipleTabs = () => {
   const { address } = useGetAccountInfo();
-  const autoLogoutCallbackUrl = useSelector(autoLogoutCallbackUrlSelector);
+  const logoutRoute = useSelector(logoutRouteSelector);
 
   useEffect(() => {
     const receiveMessage = (ev: StorageEvent) => {
@@ -22,7 +22,7 @@ export const useLogoutFromMultipleTabs = () => {
         const { data } = JSON.parse(ev.newValue);
 
         if (data === address) {
-          logout(autoLogoutCallbackUrl);
+          logout(logoutRoute);
         }
       } catch (err) {
         return;
@@ -33,5 +33,5 @@ export const useLogoutFromMultipleTabs = () => {
     return () => {
       window.removeEventListener(storageKey, receiveMessage);
     };
-  }, [address, autoLogoutCallbackUrl]);
+  }, [address, logoutRoute]);
 };

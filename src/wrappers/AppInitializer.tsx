@@ -9,21 +9,21 @@ import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSel
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils/logout';
-import { setAutoLogoutCallbackUrl } from 'reduxStore/slices/loginInfoSlice';
+import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
 
 export interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   children: any;
   externalProvider?: IDappProvider;
   environment: EnvironmentsEnum;
-  autoLogoutCallbackUrl?: string;
+  logoutRoute?: string;
 }
 
 export function AppInitializer({
   customNetworkConfig = {},
   children,
   environment,
-  autoLogoutCallbackUrl,
+  logoutRoute,
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
@@ -64,7 +64,7 @@ export function AppInitializer({
   }
 
   async function initializeApp() {
-    dispatch(setAutoLogoutCallbackUrl(autoLogoutCallbackUrl))
+    dispatch(setLogoutRoute(logoutRoute))
     await initializeNetwork();
 
     setInitialized(true);
@@ -74,20 +74,20 @@ export function AppInitializer({
     if (address) {
       const pubKey = new Address(address).hex();
       if (pubKey !== publicKey) {
-        logout(autoLogoutCallbackUrl);
+        logout(logoutRoute);
       }
     }
-  }, [address, publicKey, autoLogoutCallbackUrl]);
+  }, [address, publicKey, logoutRoute]);
 
   useEffect(() => {
     initializeApp();
-  }, [customNetworkConfig, environment, autoLogoutCallbackUrl]);
+  }, [customNetworkConfig, environment, logoutRoute]);
 
   useEffect(() => {
     if (account.address && isLoginSessionInvalid) {
-      logout(autoLogoutCallbackUrl);
+      logout(logoutRoute);
     }
-  }, [isLoginSessionInvalid, account.address, autoLogoutCallbackUrl]);
+  }, [isLoginSessionInvalid, account.address, logoutRoute]);
 
   return initialized ? <>{children}</> : null;
 }

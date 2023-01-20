@@ -40,7 +40,7 @@ export const tokenLoginSelector = createDeepEqualSelector(
   (state) => state.tokenLogin
 );
 
-export const autoLogoutCallbackUrlSelector = createDeepEqualSelector(
+export const logoutRouteSelector = createDeepEqualSelector(
   loginInfoSelector,
-  (state) => state.autoLogoutCallbackUrl
+  (state) => state.logoutRoute
 );

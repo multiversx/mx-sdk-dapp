@@ -2,14 +2,14 @@ import { useEffect, useRef } from 'react';
 import BigNumber from 'bignumber.js';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { autoLogoutCallbackUrlSelector, loginInfoSelector } from 'reduxStore/selectors';
+import { logoutRouteSelector, loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { logout } from 'utils/logout';
 
 export const useNativeAuthLogout = () => {
   const { address } = useGetAccountInfo();
   const { tokenLogin } = useSelector(loginInfoSelector);
-  const autoLogoutCallbackUrl = useSelector(autoLogoutCallbackUrlSelector);
+  const logoutRoute = useSelector(logoutRouteSelector);
 
   const {
     isExpired: isNativeAuthTokenExpired,
@@ -23,9 +23,9 @@ export const useNativeAuthLogout = () => {
   // logout if token is expired
   useEffect(() => {
     if (address && isNativeAuthTokenExpired) {
-      logout(autoLogoutCallbackUrl);
+      logout(logoutRoute);
     }
-  }, [isNativeAuthTokenExpired, address, autoLogoutCallbackUrl]);
+  }, [isNativeAuthTokenExpired, address, logoutRoute]);
 
   // plan logout for existing token
   useEffect(() => {
@@ -47,13 +47,13 @@ export const useNativeAuthLogout = () => {
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     logoutTimeoutRef.current = setTimeout(() => {
-      logout(autoLogoutCallbackUrl);
+      logout(logoutRoute);
     }, millisecondsUntilLogout.toNumber());
 
     return () => {
       clearTimeout(logoutTimeoutRef.current);
     };
-  }, [expiresAt, address, autoLogoutCallbackUrl]);
+  }, [expiresAt, address, logoutRoute]);
 
   return null;
 };

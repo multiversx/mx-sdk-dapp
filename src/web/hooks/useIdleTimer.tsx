@@ -3,7 +3,7 @@ import { useClosureRef } from 'components/TransactionsTracker/useClosureRef';
 import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
 import { logout as dappLogout } from 'utils/logout';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import { autoLogoutCallbackUrlSelector } from 'reduxStore/selectors';
+import { logoutRouteSelector } from 'reduxStore/selectors';
 
 const getTimeout = (minutes: number) => 1000 * 60 * minutes;
 const debounce = 500;
@@ -16,14 +16,14 @@ export interface IdleTimerType {
 export const useIdleTimer = ({ minutes = 10, onLogout }: IdleTimerType) => {
   const isLoggedIn = useGetIsLoggedIn();
   const isLoggedInRef = useClosureRef(isLoggedIn);
-  const autoLogoutCallbackUrl = useSelector(autoLogoutCallbackUrlSelector);
+  const logoutRoute = useSelector(logoutRouteSelector);
 
   const logout = onLogout || dappLogout;
   const timeout = getTimeout(minutes);
 
   const onIdle = () => {
     if (isLoggedInRef.current) {
-      logout(autoLogoutCallbackUrl);
+      logout(logoutRoute);
     }
   };
 
