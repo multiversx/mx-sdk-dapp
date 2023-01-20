@@ -42,6 +42,7 @@ import {
   getLedgerConfiguration
 } from 'utils/account';
 import { logout } from 'utils/logout';
+import { parseNavigationParams } from 'utils/parseNavigationParams';
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -161,10 +162,13 @@ export function ProviderInitializer() {
 
     try {
       const address = await getAddress();
-      const { clearWalletLoginHistory, signature } = parseWalletSignature();
+      const {
+        clearNavigationHistory,
+        remainingParams: { signature }
+      } = parseNavigationParams(['signature', 'loginToken', 'address']);
 
       if (!address) {
-        return clearWalletLoginHistory();
+        return clearNavigationHistory();
       }
 
       if (signature) {
@@ -189,38 +193,12 @@ export function ProviderInitializer() {
         dispatch(setIsAccountLoading(false));
       }
 
-      clearWalletLoginHistory();
+      clearNavigationHistory();
     } catch (e) {
       console.error('Failed authenticating wallet user ', e);
     }
 
     dispatch(setWalletLogin(null));
-  }
-
-  function parseWalletSignature() {
-    let params: any = {};
-    if (window?.location?.search) {
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      params = Object.fromEntries(urlSearchParams as any);
-    }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { signature, loginToken, address, ...remainingParams } = params;
-
-    return {
-      signature,
-      clearWalletLoginHistory: () => clearWalletLoginHistory(remainingParams)
-    };
-  }
-
-  function clearWalletLoginHistory(remainingParams: any) {
-    const newUrlParams = new URLSearchParams(remainingParams).toString();
-    const { pathname } = window.location;
-    const newSearch = newUrlParams ? `?${newUrlParams}` : '';
-    const fullPath = pathname ? `${pathname}${newSearch}` : './';
-
-    setTimeout(() => {
-      window.history.replaceState({}, document?.title, fullPath);
-    });
   }
 
   async function getInitializedHwWalletProvider() {
