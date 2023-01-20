@@ -64,7 +64,7 @@ export function AppInitializer({
   }
 
   async function initializeApp() {
-    dispatch(setLogoutRoute(logoutRoute))
+    dispatch(setLogoutRoute(logoutRoute));
     await initializeNetwork();
 
     setInitialized(true);

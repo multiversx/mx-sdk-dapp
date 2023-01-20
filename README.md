@@ -131,7 +131,7 @@ DappProvider also accepts an optional `dappConfig` object.
 
 ```typescript
 {
-  logoutRoute?: string;  // a route to redirect after auto-logout (session expired, native auth token expired or idle app). Default value: window.location.origin
+  logoutRoute?: string;  // a route to redirect after auto-logout (session expired, native auth token expired or idle app)
 }
 ```
 

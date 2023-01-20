@@ -32,9 +32,7 @@ export const DappProvider = ({
   externalProvider,
   environment,
   customComponents,
-  dappConfig = {
-    logoutRoute: window.location.origin
-  }
+  dappConfig
 }: DappProviderPropsType) => {
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
@@ -51,7 +49,7 @@ export const DappProvider = ({
         <AppInitializer
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
-          logoutRoute={dappConfig.logoutRoute}
+          logoutRoute={dappConfig?.logoutRoute}
         >
           <ProviderInitializer />
           <CustomComponents customComponents={customComponents} />
