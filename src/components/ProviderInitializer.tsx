@@ -39,7 +39,8 @@ import {
   getAccount,
   getLatestNonce,
   newWalletProvider,
-  getLedgerConfiguration
+  getLedgerConfiguration,
+  emptyProvider
 } from 'utils/account';
 import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
@@ -168,6 +169,8 @@ export function ProviderInitializer() {
       } = parseNavigationParams(['signature', 'loginToken', 'address']);
 
       if (!address) {
+        setAccountProvider(emptyProvider);
+        dispatch(setWalletLogin(null));
         return clearNavigationHistory();
       }
 
