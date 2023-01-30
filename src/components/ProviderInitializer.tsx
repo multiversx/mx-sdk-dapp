@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
+import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
@@ -255,6 +256,25 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setOperaProvider() {
+    try {
+      const address = await getAddress();
+      const provider = OperaProvider.getInstance().setAddress(address);
+
+      const success = await provider.init();
+
+      if (success) {
+        setAccountProvider(provider);
+      } else {
+        console.error(
+          'Could not initialise opera crypto wallet, make sure that opera crypto wallet is installed.'
+        );
+      }
+    } catch (err) {
+      console.error('Unable to login to OperaProvider', err);
+    }
+  }
+
   function initializeProvider() {
     if (loginMethod == null) {
       return;
@@ -277,6 +297,11 @@ export function ProviderInitializer() {
 
       case LoginMethodsEnum.extension: {
         setExtensionProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.opera: {
+        setOperaProvider();
         break;
       }
 

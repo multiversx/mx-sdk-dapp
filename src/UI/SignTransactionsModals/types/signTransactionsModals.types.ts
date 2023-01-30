@@ -18,6 +18,7 @@ export type ScreenType = (signProps: SignPropsType) => JSX.Element;
 export interface CustomConfirmScreensType {
   Ledger?: ScreenType;
   Extension?: ScreenType;
+  Opera?: ScreenType;
   WalletConnect?: ScreenType;
   Wallet?: ScreenType;
   Extra?: ScreenType;

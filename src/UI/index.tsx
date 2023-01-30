@@ -3,6 +3,7 @@ export * from './Denominate';
 export * from './FormatAmount';
 export * from './ExplorerLink';
 export * from './extension/ExtensionLoginButton';
+export * from './operaWallet/OperaWalletLoginButton';
 export * from './ledger/LedgerLoginButton';
 export * from './ledger/LedgerLoginContainer';
 export * from './NotificationModal';
