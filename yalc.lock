@@ -1,8 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@multiversx/sdk-opera-provider": {
-      "signature": "0571014dcf87565677e865c961dbf93e"
-    }
-  }
-}
