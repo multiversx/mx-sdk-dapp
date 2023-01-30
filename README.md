@@ -154,8 +154,8 @@ when something happens inside the app:
 
   <App>
     <TransactionsToastList
-      toastId?: string,
-      title: string,
+      toastId?: string
+      title: string
       className?: string
     />
     <Content/>
@@ -281,10 +281,10 @@ you can easily import and use them.
 <WalletConnectLoginContainer
   callbackRoute={callbackRoute}
   loginButtonText="Login with Maiar"
-  title='Maiar Login',
-  logoutRoute='/unlock',
-  className='wallect-connect-login-modal',
-  lead='Scan the QR code using Maiar',
+  title='Maiar Login'
+  logoutRoute='/unlock'
+  className='wallect-connect-login-modal'
+  lead='Scan the QR code using Maiar'
   wrapContentInsideModal={wrapContentInsideModal}
   redirectAfterLogin={redirectAfterLogin}
   token={token}
@@ -297,13 +297,20 @@ you can easily import and use them.
 ```jsx
 <LedgerLoginContainer
   callbackRoute={callbackRoute}
-  className='ledger-login-modal',
+  className='ledger-login-modal'
   wrapContentInsideModal={wrapContentInsideModal}
   redirectAfterLogin={redirectAfterLogin}
   nativeAuth
   onClose={onClose}
   onLoginRedirect={onLoginRedirect}
   />
+```
+
+```jsx
+<WebWalletLoginButton
+  callbackRoute="/dashboard"
+  loginButtonText="Web Wallet login"
+>
 ```
 
 All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
@@ -959,6 +966,7 @@ import {
   UsdValue,
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
+  WebWalletLoginButton,
 } from '@multiversx/sdk-dapp/UI';
 ```
 
