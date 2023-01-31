@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.3.3](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-01-31
+- [Fixed erronated publish 2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/604)
 ## [[v2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/603)] - 2023-01-31
 - [Extracted ledger address screens control to separate hook](https://github.com/multiversx/mx-sdk-dapp/pull/602)
 
