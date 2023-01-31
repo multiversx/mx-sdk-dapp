@@ -1,15 +1,10 @@
 import { useState } from 'react';
 import {
   InitiateLoginFunctionType,
-  LoginHookGenericStateType,
-  OnProviderLoginType
+  LoginHookGenericStateType
 } from '../../types';
 
 const defaultAddressesPerPage = 10;
-
-export interface UseLedgerLoginPropsType extends OnProviderLoginType {
-  addressesPerPage?: number;
-}
 
 export interface SelectedAddress {
   address: string;
