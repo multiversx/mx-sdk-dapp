@@ -33,7 +33,7 @@ export type LedgerLoginHookReturnType = [
   LedgerLoginHookCustomStateType
 ];
 
-export function useAddressScreens() {
+export const useAddressScreens = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -44,19 +44,19 @@ export function useAddressScreens() {
 
   const [showAddressList, setShowAddressList] = useState(false);
 
-  function onSelectAddress(newSelectedAddress: SelectedAddress | null) {
+  const onSelectAddress = (newSelectedAddress: SelectedAddress | null) => {
     setSelectedAddress(newSelectedAddress);
-  }
+  };
 
-  function onGoToNextPage() {
+  const onGoToNextPage = () => {
     setSelectedAddress(null);
     setStartIndex((current) => current + 1);
-  }
+  };
 
-  function onGoToPrevPage() {
+  const onGoToPrevPage = () => {
     setSelectedAddress(null);
     setStartIndex((current) => (current === 0 ? 0 : current - 1));
-  }
+  };
 
   return {
     accounts,
@@ -74,4 +74,4 @@ export function useAddressScreens() {
     setError,
     defaultAddressesPerPage
   };
-}
+};
