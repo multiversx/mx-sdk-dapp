@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Add sanitize callback URL utils function](https://github.com/multiversx/mx-sdk-dapp/pull/605)
+- [Sanitize web wallet login callback URL](https://github.com/multiversx/mx-sdk-dapp/pull/605)
 
 ## [[v2.3.3](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-01-31
 - [Fixed erronated publish 2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/604)
