@@ -68,13 +68,13 @@ export const useWebWalletLogin = ({
 
       dispatch(setWalletLogin(walletLoginData));
 
-      callbackRoute = sanitizeCallbackUrl(callbackRoute ?? "");
-      const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
+      const sanitizedCallbackUrl = sanitizeCallbackUrl(`${window.location.origin}${callbackRoute}`);
+      const callbackUrl = encodeURIComponent(
+        sanitizedCallbackUrl
       );
 
       const loginData = {
-        callbackUrl: callbackUrl,
+        callbackUrl,
         ...(token && { token }),
         redirectDelayMilliseconds
       };
