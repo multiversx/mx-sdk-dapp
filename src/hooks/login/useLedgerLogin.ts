@@ -19,12 +19,11 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
+import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
 
 const failInitializeErrorText =
   'Could not initialise ledger app, make sure MultiversX app is open';
-
-const defaultAddressesPerPage = 10;
 
 export interface UseLedgerLoginPropsType extends OnProviderLoginType {
   addressesPerPage?: number;
@@ -58,7 +57,7 @@ export type LedgerLoginHookReturnType = [
 export function useLedgerLogin({
   callbackRoute,
   token: tokenToSign,
-  addressesPerPage = defaultAddressesPerPage,
+  addressesPerPage: configuredAddressesPerPage,
   nativeAuth,
   onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
@@ -69,18 +68,29 @@ export function useLedgerLogin({
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
 
-  const [error, setError] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const {
+    accounts,
+    setAccounts,
+    isLoading,
+    setIsLoading,
+    setShowAddressList,
+    showAddressList,
+    startIndex,
+    selectedAddress,
+    onGoToPrevPage,
+    onGoToNextPage,
+    onSelectAddress,
+    error,
+    setError,
+    defaultAddressesPerPage
+  } = useAddressScreens();
+
+  const addressesPerPage =
+    configuredAddressesPerPage ?? defaultAddressesPerPage;
 
   const hwWalletP = new HWProvider();
-  const [startIndex, setStartIndex] = useState(0);
-  const [accounts, setAccounts] = useState<string[]>([]);
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
-  const [selectedAddress, setSelectedAddress] =
-    useState<SelectedAddress | null>(null);
-
-  const [showAddressList, setShowAddressList] = useState(false);
 
   function dispatchLoginActions({
     provider,
@@ -283,20 +293,6 @@ export function useLedgerLogin({
     } finally {
       setIsLoading(false);
     }
-  }
-
-  function onSelectAddress(newSelectedAddress: SelectedAddress | null) {
-    setSelectedAddress(newSelectedAddress);
-  }
-
-  function onGoToNextPage() {
-    setSelectedAddress(null);
-    setStartIndex((current) => current + 1);
-  }
-
-  function onGoToPrevPage() {
-    setSelectedAddress(null);
-    setStartIndex((current) => (current === 0 ? 0 : current - 1));
   }
 
   useEffect(() => {
