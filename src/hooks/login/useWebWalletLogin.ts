@@ -11,6 +11,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { useLoginService } from './useLoginService';
+import { sanitizeCallbackUrl } from '../../utils/sanitizeCallbackUrl';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
@@ -67,11 +68,13 @@ export const useWebWalletLogin = ({
 
       dispatch(setWalletLogin(walletLoginData));
 
-      const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
+      const sanitizedCallbackUrl = sanitizeCallbackUrl(`${window.location.origin}${callbackRoute}`);
+      const callbackUrl = encodeURIComponent(
+        sanitizedCallbackUrl
       );
+
       const loginData = {
-        callbackUrl: callbackUrl,
+        callbackUrl,
         ...(token && { token }),
         redirectDelayMilliseconds
       };
