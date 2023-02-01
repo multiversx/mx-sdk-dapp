@@ -31,7 +31,8 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID, setTokenLogin
+  setChainID,
+  setTokenLogin
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -170,7 +171,7 @@ export function ProviderInitializer() {
 
       if (!address) {
         setAccountProvider(emptyProvider);
-        dispatch(setTokenLogin(null))
+        dispatch(setTokenLogin(null));
         dispatch(setWalletLogin(null));
         return clearNavigationHistory();
       }
