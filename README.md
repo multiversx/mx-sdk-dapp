@@ -152,14 +152,17 @@ when something happens inside the app:
 ```jsx
   import {TransactionsToastList} from "@multiversx/sdk-dapp/UI/TransactionsToastList";
 
-  <App>
-    <TransactionsToastList
-      toastId?: string
-      title: string
-      className?: string
-    />
-    <Content/>
-  </App>
+  // all properties are optional
+  <TransactionsToastList
+    className = 'transactions-toast-list'
+    transactionToastClassName="transactions-toast-class"
+    successfulToastLifetime={30000}
+    parentElement={
+      /*
+        React NodeElement where the toast will be rendered
+        */
+    }
+  />
 
 ```
 
