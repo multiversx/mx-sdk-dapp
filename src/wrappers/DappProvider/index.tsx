@@ -15,13 +15,13 @@ import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export type DappConfigType = {
   logoutRoute?: string;
+  shouldUseWebViewProvider?: boolean;
 };
 
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
-  shouldUseWebViewProvider?: boolean;
   //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
@@ -32,7 +32,6 @@ export const DappProvider = ({
   children,
   customNetworkConfig = {},
   externalProvider,
-  shouldUseWebViewProvider,
   environment,
   customComponents,
   dappConfig
@@ -45,7 +44,7 @@ export const DappProvider = ({
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
   }
-  if (shouldUseWebViewProvider) {
+  if (dappConfig?.shouldUseWebViewProvider) {
     setExternalProvider(webviewProvider);
   }
 

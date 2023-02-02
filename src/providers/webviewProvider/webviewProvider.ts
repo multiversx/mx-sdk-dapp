@@ -31,11 +31,13 @@ export const webviewProvider: any = {
             }
             const { message, type } = eventData;
             if (type === WebViewProviderResponseEnums.loginResponse) {
-              const { accessToken, error } = message;
-              loginWithNativeAuthToken(accessToken);
-              resolve(accessToken);
               try {
+                const { accessToken, error } = message;
                 if (!error) {
+                  loginWithNativeAuthToken(accessToken);
+                  resolve(accessToken);
+                } else {
+                  reject(error);
                 }
               } catch (err) {
                 alert(err);
@@ -104,6 +106,8 @@ export const webviewProvider: any = {
                       Transaction.fromPlainObject(tx)
                     )
                   );
+                } else {
+                  reject(error);
                 }
               } catch (err) {
                 alert(err);
@@ -124,5 +128,3 @@ export const webviewProvider: any = {
     return response[0];
   }
 };
-
-export default webviewProvider;
