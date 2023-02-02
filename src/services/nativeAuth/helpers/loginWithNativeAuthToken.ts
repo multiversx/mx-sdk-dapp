@@ -20,7 +20,6 @@ export function loginWithNativeAuthToken(token: string, dispatch?: any) {
         nativeAuthToken: token
       })
     );
+    dispatchFn(loginAction({ address, loginMethod: LoginMethodsEnum.extra }));
   }
-
-  dispatchFn(loginAction({ address, loginMethod: LoginMethodsEnum.extra }));
 }
