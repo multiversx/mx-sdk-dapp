@@ -4,22 +4,24 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { ProviderInitializer } from 'components/ProviderInitializer';
 
+import { setExternalProvider } from 'providers/accountProvider';
+import { webviewProvider } from 'providers/webviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { AppInitializer } from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
-import { setExternalProvider } from 'providers/accountProvider';
 
 export type DappConfigType = {
   logoutRoute?: string;
-}
+};
 
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
+  shouldUseWebViewProvider?: boolean;
   //we need the strings for autocomplete suggestions
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
@@ -30,6 +32,7 @@ export const DappProvider = ({
   children,
   customNetworkConfig = {},
   externalProvider,
+  shouldUseWebViewProvider,
   environment,
   customComponents,
   dappConfig
@@ -41,6 +44,9 @@ export const DappProvider = ({
 
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
+  }
+  if (shouldUseWebViewProvider) {
+    setExternalProvider(webviewProvider);
   }
 
   return (

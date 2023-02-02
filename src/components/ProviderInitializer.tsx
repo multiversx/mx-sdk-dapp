@@ -43,6 +43,7 @@ import {
 } from 'utils/account';
 import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
+import { useWebViewLogin } from '../hooks/login/useWebViewLogin';
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -66,6 +67,8 @@ export function ProviderInitializer() {
   );
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
+
+  useWebViewLogin();
 
   const { callbackRoute, logoutRoute: wcLogoutRoute } = walletConnectLogin
     ? walletConnectLogin
