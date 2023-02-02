@@ -66,12 +66,18 @@ export const useWebWalletLogin = ({
         loginService.setLoginToken(token);
       }
 
-      dispatch(setWalletLogin(walletLoginData));
+      const targetUrl = `${window.location.origin}${callbackRoute}`;
+      const params = new URLSearchParams(document.location.search);
 
-      const sanitizedCallbackUrl = sanitizeCallbackUrl(`${window.location.origin}${callbackRoute}`);
-      const callbackUrl = encodeURIComponent(
-        sanitizedCallbackUrl
-      );
+      // skip login when an address param is prefilled in URL
+      const skipLogin = params.get('address');
+
+      if (!skipLogin) {
+        dispatch(setWalletLogin(walletLoginData));
+      }
+
+      const sanitizedCallbackUrl = sanitizeCallbackUrl(targetUrl);
+      const callbackUrl = encodeURIComponent(sanitizedCallbackUrl);
 
       const loginData = {
         callbackUrl,
