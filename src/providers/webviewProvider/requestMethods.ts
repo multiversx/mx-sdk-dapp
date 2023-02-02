@@ -1,4 +1,4 @@
-import { PlatformsEnum, WebViewProviderRequestEnums } from "types/index";
+import { PlatformsEnum, WebViewProviderRequestEnums } from 'types/index';
 
 export const requestMethods = {
   signTransactions: {
@@ -10,7 +10,7 @@ export const requestMethods = {
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signTransactionsRequest,
-          message,
+          message
         })
       ),
 
@@ -18,9 +18,9 @@ export const requestMethods = {
       (window as any)?.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signTransactionsRequest,
-          message,
+          message
         })
-      ),
+      )
   },
   signMessage: {
     [PlatformsEnum.ios]: (message: string) =>
@@ -29,51 +29,47 @@ export const requestMethods = {
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signMessageRequest,
-          message,
+          message
         })
       ),
     [PlatformsEnum.web]: (message: any) =>
       (window as any)?.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signMessageRequest,
-          message,
+          message
         })
-      ),
+      )
   },
   logout: {
     [PlatformsEnum.ios]: () =>
       (window as any).webkit.messageHandlers.logout.postMessage(),
-    [PlatformsEnum.reactNative]: (message: any) =>
+    [PlatformsEnum.reactNative]: () =>
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
-          type: WebViewProviderRequestEnums.logoutRequest,
-          message,
+          type: WebViewProviderRequestEnums.logoutRequest
         })
       ),
-    [PlatformsEnum.web]: (message: any) =>
+    [PlatformsEnum.web]: () =>
       (window as any)?.postMessage(
         JSON.stringify({
-          type: WebViewProviderRequestEnums.logoutRequest,
-          message,
+          type: WebViewProviderRequestEnums.logoutRequest
         })
-      ),
+      )
   },
   login: {
     [PlatformsEnum.ios]: () =>
       (window as any).webkit.messageHandlers.login.postMessage(),
-    [PlatformsEnum.reactNative]: (message: any) =>
+    [PlatformsEnum.reactNative]: () =>
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
-          type: WebViewProviderRequestEnums.loginRequest,
-          message,
+          type: WebViewProviderRequestEnums.loginRequest
         })
       ),
-    [PlatformsEnum.web]: (message: any) =>
+    [PlatformsEnum.web]: () =>
       (window as any)?.postMessage(
         JSON.stringify({
-          type: WebViewProviderRequestEnums.loginRequest,
-          message,
+          type: WebViewProviderRequestEnums.loginRequest
         })
-      ),
-  },
+      )
+  }
 };

@@ -1,6 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { WebViewProviderResponseEnums } from 'types/index';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
+import { loginWithNativeAuthToken } from '../../services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { requestMethods } from './requestMethods';
 
 const notInitializedError = (caller: string) => () => {
@@ -13,12 +14,49 @@ export const webviewProvider: any = {
   init: async () => {
     return true;
   },
-  login: notInitializedError('login'),
+  login: async () => {
+    try {
+      requestMethods.login[currentPlatform]();
+      const waitForNewToken: Promise<string> = new Promise(
+        (resolve, reject) => {
+          document.addEventListener('message', handleTokenReceived);
+          window.addEventListener('message', handleTokenReceived);
+
+          function handleTokenReceived(event: any) {
+            let eventData = event.data;
+            try {
+              eventData = JSON.parse(eventData);
+            } catch (err) {
+              console.error('error parsing response');
+            }
+            const { message, type } = eventData;
+            if (type === WebViewProviderResponseEnums.loginResponse) {
+              const { accessToken, error } = message;
+              loginWithNativeAuthToken(accessToken);
+              resolve(accessToken);
+              try {
+                if (!error) {
+                }
+              } catch (err) {
+                alert(err);
+                reject('Unable to liogin');
+              }
+            }
+            document.removeEventListener('message', handleTokenReceived);
+          }
+        }
+      );
+      return await waitForNewToken;
+    } catch (err) {
+      alert('error');
+      console.log('error loggin in', err);
+      throw err;
+    }
+  },
   logout: () => {
+    requestMethods.logout[currentPlatform]();
     return new Promise((resolve) => {
       resolve(true);
-
-      // reject("TODO: implement");
     });
   },
   getAddress: notInitializedError('getAddress'),
