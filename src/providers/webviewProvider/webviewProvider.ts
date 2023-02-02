@@ -1,7 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core';
+import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { WebViewProviderResponseEnums } from 'types/index';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
-import { loginWithNativeAuthToken } from '../../services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { requestMethods } from './requestMethods';
 
 const notInitializedError = (caller: string) => () => {

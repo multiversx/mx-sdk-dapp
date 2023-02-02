@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 
 import { useDispatch } from 'reduxStore/DappProviderContext';
 
-import { loginWithNativeAuthToken } from '../../services/nativeAuth/helpers/loginWithNativeAuthToken';
+import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 
 export function useWebViewLogin() {
   const dispatch = useDispatch();
