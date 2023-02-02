@@ -7,6 +7,7 @@ import {
   IDENTITIES_ENDPOINT,
   LOCKED_ACCOUNTS_ENDPOINT,
   LOGS_ENDPOINT,
+  MINIBLOCKS_ENDPOINT,
   NFTS_ENDPOINT,
   NODES_ENDPOINT,
   PROVIDERS_ENDPOINT,
@@ -53,5 +54,6 @@ export const explorerUrlBuilder = {
   nftDetails: (identifier: string) => `/${NFTS_ENDPOINT}/${identifier}`,
   providerDetails: (address: string) => `/${PROVIDERS_ENDPOINT}/${address}`,
   providerDetailsTransactions: (address: string) =>
-    `/${PROVIDERS_ENDPOINT}/${address}/${TRANSACTIONS_ENDPOINT}`
+    `/${PROVIDERS_ENDPOINT}/${address}/${TRANSACTIONS_ENDPOINT}`,
+  miniblockDetails: (hash: string) => `/${MINIBLOCKS_ENDPOINT}/${hash}`
 };
