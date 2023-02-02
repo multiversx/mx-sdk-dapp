@@ -12,7 +12,6 @@ import {
 } from '../../types';
 import { useLoginService } from './useLoginService';
 import { sanitizeCallbackUrl } from '../../utils/sanitizeCallbackUrl';
-import { useSearchParams } from 'react-router-dom';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
