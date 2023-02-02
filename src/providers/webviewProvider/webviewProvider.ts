@@ -9,6 +9,24 @@ const notInitializedError = (caller: string) => () => {
 };
 
 const currentPlatform = detectCurrentPlatform();
+export const targetOrigin = window.parent.origin;
+
+const handleWaitForMessage = (cb: (eventData: any) => void) => {
+  const handleMessageReceived = (event: any) => {
+    let eventData = event.data;
+    if (event.target.origin != targetOrigin) {
+      return;
+    }
+    try {
+      eventData = JSON.parse(eventData);
+      cb(eventData);
+    } catch (err) {
+      console.error('error parsing response');
+    }
+  };
+  document.addEventListener('message', handleMessageReceived);
+  window.addEventListener('message', handleMessageReceived);
+};
 
 export const webviewProvider: any = {
   init: async () => {
@@ -19,16 +37,7 @@ export const webviewProvider: any = {
       requestMethods.login[currentPlatform]();
       const waitForNewToken: Promise<string> = new Promise(
         (resolve, reject) => {
-          document.addEventListener('message', handleTokenReceived);
-          window.addEventListener('message', handleTokenReceived);
-
-          function handleTokenReceived(event: any) {
-            let eventData = event.data;
-            try {
-              eventData = JSON.parse(eventData);
-            } catch (err) {
-              console.error('error parsing response');
-            }
+          function handleTokenReceived(eventData: any) {
             const { message, type } = eventData;
             if (type === WebViewProviderResponseEnums.loginResponse) {
               try {
@@ -46,6 +55,7 @@ export const webviewProvider: any = {
             }
             document.removeEventListener('message', handleTokenReceived);
           }
+          handleWaitForMessage(handleTokenReceived);
         }
       );
       return await waitForNewToken;
@@ -72,9 +82,6 @@ export const webviewProvider: any = {
       requestMethods.signTransactions[currentPlatform](plainTransactions);
       const waitForSignedTransactionsResponse: Promise<Transaction[]> =
         new Promise((resolve, reject) => {
-          document.addEventListener('message', handleSignResponse);
-          window.addEventListener('message', handleSignResponse);
-
           (window as any).transactionsSigned = (txs: any, error: string) => {
             txs = JSON.parse(txs);
             if (error) {
@@ -86,13 +93,7 @@ export const webviewProvider: any = {
             (window as any).transactionsSigned = null;
           };
 
-          function handleSignResponse(event: any) {
-            let eventData = event.data;
-            try {
-              eventData = JSON.parse(eventData);
-            } catch (err) {
-              console.error('error parsing response');
-            }
+          function handleSignResponse(eventData: any) {
             const { message, type } = eventData;
             if (
               type === WebViewProviderResponseEnums.signTransactionsResponse
@@ -116,6 +117,7 @@ export const webviewProvider: any = {
             }
             document.removeEventListener('message', handleSignResponse);
           }
+          handleWaitForMessage(handleSignResponse);
         });
       return await waitForSignedTransactionsResponse;
     } catch (err) {

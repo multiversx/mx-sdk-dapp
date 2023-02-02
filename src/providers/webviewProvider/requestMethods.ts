@@ -1,17 +1,20 @@
 import { PlatformsEnum, WebViewProviderRequestEnums } from 'types/index';
+import { targetOrigin } from './webviewProvider';
 
 export const requestMethods = {
   signTransactions: {
     [PlatformsEnum.ios]: (transactions: any) =>
       (window as any).webkit.messageHandlers.signTransactions.postMessage(
-        transactions
+        transactions,
+        targetOrigin
       ),
     [PlatformsEnum.reactNative]: (message: any) =>
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signTransactionsRequest,
           message
-        })
+        }),
+        targetOrigin
       ),
 
     [PlatformsEnum.web]: (message: any) =>
@@ -19,7 +22,8 @@ export const requestMethods = {
         JSON.stringify({
           type: WebViewProviderRequestEnums.signTransactionsRequest,
           message
-        })
+        }),
+        targetOrigin
       )
   },
   signMessage: {
@@ -30,14 +34,16 @@ export const requestMethods = {
         JSON.stringify({
           type: WebViewProviderRequestEnums.signMessageRequest,
           message
-        })
+        }),
+        targetOrigin
       ),
     [PlatformsEnum.web]: (message: any) =>
       (window as any)?.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signMessageRequest,
           message
-        })
+        }),
+        targetOrigin
       )
   },
   logout: {
@@ -47,13 +53,15 @@ export const requestMethods = {
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.logoutRequest
-        })
+        }),
+        targetOrigin
       ),
     [PlatformsEnum.web]: () =>
       (window as any)?.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.logoutRequest
-        })
+        }),
+        targetOrigin
       )
   },
   login: {
@@ -63,13 +71,15 @@ export const requestMethods = {
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.loginRequest
-        })
+        }),
+        targetOrigin
       ),
     [PlatformsEnum.web]: () =>
       (window as any)?.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.loginRequest
-        })
+        }),
+        targetOrigin
       )
   }
 };
