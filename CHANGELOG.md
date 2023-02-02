@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-02
+- [Skip login when address is prefilled](https://github.com/multiversx/mx-sdk-dapp/pull/607)
+
 ## [[v2.3.4](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-01
 - [Sanitize web wallet login callback URL](https://github.com/multiversx/mx-sdk-dapp/pull/605)
 
