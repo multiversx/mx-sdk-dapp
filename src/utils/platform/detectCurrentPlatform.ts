@@ -1,6 +1,6 @@
 import { PlatformsEnum } from 'types/enums.types';
 
-export function detectCurrentPlatform() {
+export const detectCurrentPlatform = () => {
   if ((window as any)?.ReactNativeWebView) {
     return PlatformsEnum.reactNative;
   }
@@ -8,4 +8,4 @@ export function detectCurrentPlatform() {
     return PlatformsEnum.ios;
   }
   return PlatformsEnum.web;
-}
+};
