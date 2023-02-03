@@ -31,6 +31,7 @@ export interface LoginInfoStateType {
   tokenLogin: TokenLoginType | null;
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
+  operaLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
 }
@@ -42,6 +43,7 @@ const initialState: LoginInfoStateType = {
   tokenLogin: null,
   walletLogin: null,
   extensionLogin: null,
+  operaLogin: null,
   isLoginSessionInvalid: false
 };
 
@@ -95,7 +97,7 @@ export const loginInfoSlice = createSlice({
       action: PayloadAction<string | undefined>
     ) => {
       state.logoutRoute = action.payload;
-    },
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {

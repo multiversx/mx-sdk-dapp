@@ -1,6 +1,7 @@
 export enum TransactionServerStatusesEnum {
   pending = 'pending',
   fail = 'fail',
+  failed = 'failed',
   invalid = 'invalid',
   success = 'success',
   executed = 'executed',
@@ -30,6 +31,7 @@ export enum LoginMethodsEnum {
   walletconnectv2 = 'walletconnectv2',
   wallet = 'wallet',
   extension = 'extension',
+  opera = 'opera',
   extra = 'extra',
   none = ''
 }
