@@ -5,6 +5,7 @@ import { LoginMethodsEnum } from 'types';
 
 import { ConfirmationScreen, DeviceConfirmationScreen } from './components';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
+import { SignWithExtraModal } from './SignWithExtraModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithOperaModal } from './SignWithOperaModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
@@ -37,7 +38,7 @@ export const SignTransactionsModals = ({
     // The logic for redirecting to the web wallet is placed in the ConfirmationScreen component,
     // so we have to render that component when we are logged in with the web wallet provider
     Wallet: () => <></>,
-    Extra: CustomConfirmScreens?.Extra
+    Extra: CustomConfirmScreens?.Extra ?? SignWithExtraModal
   };
 
   const renderScreen = useCallback(
