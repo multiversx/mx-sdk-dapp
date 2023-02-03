@@ -8,26 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [[v2.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-03
+
 - [Add support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
+- [Extension and WalletConnect login rebranding](https://github.com/multiversx/mx-sdk-dapp/pull/611)
 
 ## [[v2.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-02
+
 - [Skip login when address is prefilled](https://github.com/multiversx/mx-sdk-dapp/pull/607)
 
 ## [[v2.3.4](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-01
+
 - [Sanitize web wallet login callback URL](https://github.com/multiversx/mx-sdk-dapp/pull/605)
 
 ## [[v2.3.3](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-01-31
-- [Fixed erronated publish 2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/604)
-## [[v2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/603)] - 2023-01-31
-- [Extracted ledger address screens control to separate hook](https://github.com/multiversx/mx-sdk-dapp/pull/602)
 
+- [Fixed erronated publish 2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/604)
+
+## [[v2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/603)] - 2023-01-31
+
+- [Extracted ledger address screens control to separate hook](https://github.com/multiversx/mx-sdk-dapp/pull/602)
 
 ## [[v2.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/599)] - 2023-01-26
 
 - [Added support to not show meridiem by default in `getHumanReadableTimeFormat` util function](https://github.com/multiversx/mx-sdk-dapp/pull/597)
 - [Fixed web wallet cancelled login](https://github.com/multiversx/mx-sdk-dapp/pull/598)
-
-- [Add support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
 
 ## [[v2.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/596)] - 2023-01-20
 
@@ -35,10 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Fixed imports for React Native support](https://github.com/multiversx/mx-sdk-dapp/pull/595)
 
 ## [[v2.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/592)] - 2023-01-17
+
 - [Created `useSignMessage` hook to support message signing](https://github.com/multiversx/mx-sdk-dapp/pull/578)
 
 ## [[v2.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
-
 
 - [Fix ledger address table display issue](https://github.com/multiversx/mx-sdk-dapp/pull/590)
 
@@ -56,9 +60,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Added partial support for Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/559)
 
 ## [[2.2.8](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/557)] - 2023-01-12
+
 - [Created first version of @multiversx/sdk-dapp](https://github.com/multiversx/mx-sdk-dapp/pull/538)
 
 ## [[2.2.7](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/554)] - 2023-01-10
+
 - [Changed branding from elrond to multiversx](https://github.com/multiversx/mx-sdk-dapp/pull/538)
 
 ## [[2.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/531)] - 2023-01-09
