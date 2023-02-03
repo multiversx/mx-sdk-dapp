@@ -9,7 +9,8 @@ const notInitializedError = (caller: string) => () => {
 };
 
 const currentPlatform = detectCurrentPlatform();
-export const targetOrigin = window.parent.origin;
+export const targetOrigin =
+  typeof window != 'undefined' ? window?.parent?.origin ?? '*' : '*';
 
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
