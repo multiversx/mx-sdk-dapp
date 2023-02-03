@@ -4,17 +4,19 @@ import { PersistGate } from 'redux-persist/integration/react';
 
 import { ProviderInitializer } from 'components/ProviderInitializer';
 
+import { setExternalProvider } from 'providers/accountProvider';
+import { webviewProvider } from 'providers/webviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { AppInitializer } from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
-import { setExternalProvider } from 'providers/accountProvider';
 
 export type DappConfigType = {
   logoutRoute?: string;
-}
+  shouldUseWebViewProvider?: boolean;
+};
 
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
@@ -41,6 +43,9 @@ export const DappProvider = ({
 
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
+  }
+  if (dappConfig?.shouldUseWebViewProvider) {
+    setExternalProvider(webviewProvider);
   }
 
   return (
