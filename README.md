@@ -1,4 +1,3 @@
-
 # sdk-dapp
 
 > A library that holds the core functional logic of a dapp on the MultiversX blockchain
@@ -50,13 +49,12 @@ The default UI is exposed via the `UI` module.
 
 **Please be aware that this style of importing might also import unused code.**
 
-
 To reduce the amount of dead code, you can use named imports for each component like
 
 ```typescript
-import { UnlockPage } from "@multiversx/sdk-dapp/UI/pages";
-or
-import { UnlockPage } from "@multiversx/sdk-dapp/UI/pages/UnlockPage";
+import { UnlockPage } from '@multiversx/sdk-dapp/UI/pages';
+or;
+import { UnlockPage } from '@multiversx/sdk-dapp/UI/pages/UnlockPage';
 ```
 
 More on this below.
@@ -65,7 +63,7 @@ More on this below.
 
 There are a couple of requirements that need to be met for the application to work properly.
 
-***If you experience bugs, please make sure that you read these, before opening an issue***
+**_If you experience bugs, please make sure that you read these, before opening an issue_**
 
 <details>
   <summary>
@@ -91,9 +89,10 @@ You need to wrap your application with the **DappProvider** component, which is 
 
 ```typescript
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider';
-or
+or;
 import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 ```
+
 - Wrap your application with this Provider.
 
 ```jsx
@@ -103,6 +102,7 @@ import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
     dappConfig={dappConfig} // optional
 >
 ```
+
 `environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet` (also configured in `EnvironmentsEnum`)
 
 DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
@@ -171,23 +171,23 @@ when something happens inside the app:
 **Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
 
 ```jsx
-  import {SignTransactionsModals} from "@multiversx/sdk-dapp/UI/SignTransactionsModals";
+import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals';
 
-  <App>
-    <SignTransactionsModals />
-    <Content/>
-  </App>
+<App>
+  <SignTransactionsModals />
+  <Content />
+</App>;
 ```
 
 `NotificationModal` Will show a modal to the user with various warnings and errors.
 
 ```jsx
-  import {NotificationModal} from "@multiversx/sdk-dapp/UI/NotificationModal";
+import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal';
 
-  <App>
-    <NotificationModal />
-    <Content/>
-  </App>
+<App>
+  <NotificationModal />
+  <Content />
+</App>;
 ```
 
 If you want to show custom notifications, you can use the `useGetNotification` hook to get the notifications (like insufficient funds, errors etc).
@@ -204,19 +204,16 @@ Import from sdk-dapp:
 
 ```typescript
 import { AuthenticatedRoutesWrapper } from '@multiversx/sdk-dapp/wrappers/AuthenticatedRoutesWrapper';
-or
+or;
 import { AuthenticatedRoutesWrapper } from '@multiversx/sdk-dapp/wrappers';
 ```
 
 Use with routes:
 
 ```jsx
-  <AuthenticatedRoutesWrapper
-    routes={routes}
-    unlockRoute="/unlock"
-  >
-    {appContent}
-  </AuthenticatedRoutesWrapper>
+<AuthenticatedRoutesWrapper routes={routes} unlockRoute='/unlock'>
+  {appContent}
+</AuthenticatedRoutesWrapper>
 ```
 
 **routes** should be an array with objects with a signature similar to this:
@@ -253,9 +250,9 @@ example:
 
 ```jsx
 <ExtensionLoginButton
-  callbackRoute="/dashboard"
-  buttonClassName="extension-login"
-  loginButtonText="Extension login"
+  callbackRoute='/dashboard'
+  buttonClassName='extension-login'
+  loginButtonText='Extension login'
 />
 ```
 
@@ -283,18 +280,18 @@ you can easily import and use them.
 ```jsx
 <WalletConnectLoginContainer
   callbackRoute={callbackRoute}
-  loginButtonText="Login with Maiar"
-  title='Maiar Login'
+  loginButtonText='Login with xPortal'
+  title='xPortal Login'
   logoutRoute='/unlock'
   className='wallect-connect-login-modal'
-  lead='Scan the QR code using Maiar'
+  lead='Scan the QR code using xPortal'
   wrapContentInsideModal={wrapContentInsideModal}
   redirectAfterLogin={redirectAfterLogin}
   token={token}
   onLoginRedirect={onLoginRedirect}
   onClose={onClose}
   isWalletConnectV2={true} // by default is false and will use walletconnect version 1
-  />
+/>
 ```
 
 ```jsx
@@ -306,7 +303,7 @@ you can easily import and use them.
   nativeAuth
   onClose={onClose}
   onLoginRedirect={onLoginRedirect}
-  />
+/>
 ```
 
 ```jsx
@@ -324,28 +321,29 @@ If you need to authenticate some requests, you can provide the `nativeAuth` flag
 ```typescript
 import { AxiosInterceptorContext } from '@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext';
 ```
+
 ```jsx
 <AxiosInterceptorContext.Provider>
-      <AxiosInterceptorContext.Interceptor
-        authenticatedDomanis={['https://my-api.com']}
-      >
-        <Router>
-          <DappProvider environment={EnvironmentsEnum.devnet}>
-            <>
-              <AxiosInterceptorContext.Listener />
-              {/*
+  <AxiosInterceptorContext.Interceptor
+    authenticatedDomanis={['https://my-api.com']}
+  >
+    <Router>
+      <DappProvider environment={EnvironmentsEnum.devnet}>
+        <>
+          <AxiosInterceptorContext.Listener />
+          {/*
               // other components below
               */}
-              <TransactionsToastList />
-              <NotificationModal />
-              <SignTransactionsModals />
+          <TransactionsToastList />
+          <NotificationModal />
+          <SignTransactionsModals />
 
-              <Routes>...</Routes>
-            </>
-          </DappProvider>
-        </Router>
-      </AxiosInterceptorContext.Interceptor>
-    </AxiosInterceptorContext.Provider>
+          <Routes>...</Routes>
+        </>
+      </DappProvider>
+    </Router>
+  </AxiosInterceptorContext.Interceptor>
+</AxiosInterceptorContext.Provider>
 ```
 
 Another handly component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
@@ -359,12 +357,9 @@ import { AuthenticatedRoutesWrapper } from '@multiversx/sdk-dapp/wrappers/Authen
 Use with routes:
 
 ```jsx
-<AuthenticatedRoutesWrapper
-    routes={routes}
-    unlockRoute={routeNames.unlock}
-  >
-    {appContent}
-  </AuthenticatedRoutesWrapper>
+<AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.unlock}>
+  {appContent}
+</AuthenticatedRoutesWrapper>
 ```
 
 **routes** should be an array with objects with a signature similar to this:
@@ -393,8 +388,13 @@ This area covers the login hooks, which expose a trigger function and the login 
 These hooks are exposed as named exports, which can be imported from sdk-dapp:
 
 ```typescript
-import { useExtensionLogin, useWalletConnectLogin, useLedgerLogin, useWebWalletLogin } from '@multiversx/sdk-dapp/hooks';
-or
+import {
+  useExtensionLogin,
+  useWalletConnectLogin,
+  useLedgerLogin,
+  useWebWalletLogin
+} from '@multiversx/sdk-dapp/hooks';
+or;
 import { useExtensionLogin } from '@multiversx/sdk-dapp/hooks/login/useExtensionLogin';
 import { useWalletConnectLogin } from '@multiversx/sdk-dapp/hooks/login/useWebWalletLogin';
 import { useLedgerLogin } from '@multiversx/sdk-dapp/hooks/login/useLedgerLogin';
@@ -413,10 +413,11 @@ All hooks have the same response signature:
 return type is as follows:
 
 ```typescript
-const [initiateLogin, genericLoginReturnType, customLoginReturnType] = useLoginHook({
+const [initiateLogin, genericLoginReturnType, customLoginReturnType] =
+  useLoginHook({
     callbackRoute,
     logoutRoute,
-    onLoginRedirect,
+    onLoginRedirect
   });
 ```
 
@@ -471,10 +472,11 @@ Once logged in, the user's session is persisted and can be read and deleted via 
 For logging out, the library exposes a simple function called **logout**, which can be called to clear the user data.
 
 the function accepts 2 arguments:
+
 - `callbackUrl: string (optional)` the url to redirect the user to after logging him out
 - `onRedirect: (callbackUrl: string) => void (optional)` a function that will be called instead of redirecting the user.
-This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
-*Important* this function will not be called for web wallet logout
+  This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
+  _Important_ this function will not be called for web wallet logout
 
 You can opt-in for using the `useIdleTimer` hook, which logs out the user after a period of inactivity (default set to 10 minutes). Optionally it accepts an `onLogout` function that fulfills your dapp's specific logout business logic. Make sure to call the above `logout` function inside this `onLogout` callback.
 
@@ -526,7 +528,7 @@ It returns a Promise that will be fulfilled with `{error?: string; sessionId: st
 
 `sessionId` is the transaction's batch id which can be used to track a transaction's status and react to it.
 
-**Important! For the transaction to be signed, you will have to use either  `SignTransactionsModals` defined above, in the `Prerequisites` section,
+**Important! For the transaction to be signed, you will have to use either `SignTransactionsModals` defined above, in the `Prerequisites` section,
 or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
 
 </details>
@@ -538,21 +540,21 @@ Transaction Signing Flow
 ### Transaction Signing Flow
 
 Once a transaction has been submitted, you have to use either the `SignTransactionsModals` or the `useSignTransactions` hook,
-for the user to be prompted in his provider (Extension, Maiar etc) to sign the transaction.
+for the user to be prompted in his provider (Extension, xPortal Mobile Wallet etc) to sign the transaction.
 
 If you don't want to use the default modals that appear for the user when the signing process happens,
 you have to use the `useSignTransactions` hook to sign those transactions.
 
 ```typescript
- const {
-    callbackRoute,
-    transactions,
-    error,
-    sessionId,
-    onAbort,
-    hasTransactions,
-    canceledTransactionsMessage
-  } = useSignTransactions();
+const {
+  callbackRoute,
+  transactions,
+  error,
+  sessionId,
+  onAbort,
+  hasTransactions,
+  canceledTransactionsMessage
+} = useSignTransactions();
 ```
 
 This hook will let you know if there are any transactions and you can programmatically abort the signing process.
@@ -562,7 +564,7 @@ We suggest displaying a message on the screen that confirms the transaction that
 You can also get the provider via
 
 ```typescript
-  const { providerType, provider } = useGetAccountProvider();
+const { providerType, provider } = useGetAccountProvider();
 ```
 
 and use that to display an appropriate message to the user.
@@ -636,12 +638,12 @@ transactionStatus has the following information about the transaction:
 ```typescript
 {
   isPending,
-  isSuccessful,
-  isFailed,
-  isCancelled,
-  errorMessage,
-  status,
-  transactions
+    isSuccessful,
+    isFailed,
+    isCancelled,
+    errorMessage,
+    status,
+    transactions;
 }
 ```
 
@@ -695,7 +697,7 @@ When `TransactionToastList` is also used for displaying custom toasts, is enough
 
 ```jsx
 <App>
-  <Router/>
+  <Router />
   <TransactionsToastList />
 </App>
 ```
@@ -703,6 +705,7 @@ When `TransactionToastList` is also used for displaying custom toasts, is enough
 **Important**: This has to be inside the `<DappProvider/>` children.
 
 In case you don't want to use `TransactionToastList` and just display a custom toast, then you have to import `CustomToast` component
+
 ```jsx
 const customToast = addNewCustomToast(
   {
@@ -726,15 +729,15 @@ Removing transactions manually
   </summary>
 
 ### Removing transactions manually
+
 sdk-dapp takes care to change transactions' statuses and removes them when needed,
 but if you need to do this manually, you can use the exposed functions for this:
 
 ```typescript
-  removeTransactionsToSign(sessionId);
-  removeSignedTransaction(sessionId);
-  removeAllTransactionsToSign();
-  removeAllSignedTransactions();
-
+removeTransactionsToSign(sessionId);
+removeSignedTransaction(sessionId);
+removeAllTransactionsToSign();
+removeAllSignedTransactions();
 ```
 
 </details>
@@ -749,6 +752,7 @@ moduleNameMapper: {
       '<rootDir>/node_modules/@multiversx/sdk-dapp/__commonjs/$1.js'
 }
 ```
+
 # sdk-dapp exports
 
 Since version 2.0, sdk-dapp does not have a default export object.
@@ -762,13 +766,17 @@ You can either go into their specific folder in the module for extra trimming, o
 for example, these 2 imports are both valid:
 
 ```typescript
-import { useExtensionLogin, useGetAccountInfo } from '@multiversx/sdk-dapp/hooks';
+import {
+  useExtensionLogin,
+  useGetAccountInfo
+} from '@multiversx/sdk-dapp/hooks';
 ```
+
 and
+
 ```typescript
 import { useExtensionLogin } from '@multiversx/sdk-dapp/hooks/login';
 import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks/account';
-
 ```
 
 ## constants exports
@@ -784,7 +792,7 @@ import {
   mnemonicWords,
   ledgerErrorCodes,
   fallbackNetworkConfigurations
- } from '@multiversx/sdk-dapp/constants';
+} from '@multiversx/sdk-dapp/constants';
 ```
 
 ## hooks exports
@@ -801,6 +809,7 @@ import {
 ```
 
 ### Account
+
 ```typescript
 import {
   useGetAccount, // if you only need the account as on network
@@ -808,34 +817,33 @@ import {
   useGetAccountProvider,
   useGetLoginInfo,
   useGetWebsocketSignalTimestamp // get a Date.now() timestamp every time a change occurs on the account on network
- } from '@multiversx/sdk-dapp/hooks/account';
+} from '@multiversx/sdk-dapp/hooks/account';
 ```
 
 ### Transactions
+
 ```typescript
 import {
   useCheckTransactionStatus,
-
   useGetActiveTransactionsStatus,
   useGetFailedTransactions,
   useGetPendingTransactions,
   useGetSignedTransactions,
   useGetSignTransactionsError,
   useGetSuccessfulTransactions,
-
   useGetTokenDetails,
   useGetTransactionDisplayInfo,
   useParseMultiEsdtTransferData,
-
   useParseSignedTransactions,
   useSignMultipleTransactions,
   useSignTransactions,
   useSignTransactionsWithDevice,
-  useSignTransactionsWithLedger,
+  useSignTransactionsWithLedger
 } from '@multiversx/sdk-dapp/hooks/transactions';
 ```
 
 ### Misc
+
 ```typescript
 import {
   useDebounce,
@@ -886,7 +894,7 @@ import {
   calculateFeeLimit,
   formatAmount,
   nominate,
-  getUsdValue,
+  getUsdValue
 } from '@multiversx/sdk-dapp/utils/operations';
 ```
 
@@ -897,7 +905,7 @@ import {
   getTokenFromData,
   isTokenTransfer,
   parseMultiEsdtTransferData,
-  parseTransactionAfterSigning,
+  parseTransactionAfterSigning
 } from '@multiversx/sdk-dapp/utils/transactions';
 ```
 
@@ -905,11 +913,11 @@ import {
 
 ```typescript
 import {
- getIdentifierType,
- stringIsFloat,
- stringIsInteger,
- isContract,
- isStringBase64,
+  getIdentifierType,
+  stringIsFloat,
+  stringIsInteger,
+  isContract,
+  isStringBase64
 } from '@multiversx/sdk-dapp/utils';
 ```
 
@@ -923,7 +931,7 @@ import {
   getTokenFromData,
   getIsLoggedIn,
   isSelfESDTContract,
-  getAddressFromDataField,
+  getAddressFromDataField
 } from '@multiversx/sdk-dapp/utils';
 ```
 
@@ -933,18 +941,15 @@ import {
 import {
   DappProvider,
   AuthenticatedRoutesWrapper,
-  AppInitializer,
+  AppInitializer
 } from '@multiversx/sdk-dapp/wrappers';
 ```
 
 ## Web-specific imports
 
 ```typescript
-import {
-  useIdleTimer
-} from '@multiversx/sdk-dapp/web';
+import { useIdleTimer } from '@multiversx/sdk-dapp/web';
 ```
-
 
 ## UI
 
@@ -969,7 +974,7 @@ import {
   UsdValue,
   WalletConnectLoginButton,
   WalletConnectLoginContainer,
-  WebWalletLoginButton,
+  WebWalletLoginButton
 } from '@multiversx/sdk-dapp/UI';
 ```
 
@@ -980,15 +985,14 @@ import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
 import { FormatAmount } from '@multiversx/sdk-dapp/UI/FormatAmount';
 import { ExplorerLink } from '@multiversx/sdk-dapp/UI/ExplorerLink';
 
-etc
+etc;
 ```
 
 **Important**: `shouldRenderDefaultCss` was removed from all components.
 
-
 ## React Native support
 
-We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with Maiar.
+We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with xPortal Mobile Wallet.
 
 You can use this library for its utility functions, like "formatAmount, parseAmount", mnemonic words list or its constants.
 
@@ -996,9 +1000,8 @@ However, certain architectural decisions that we made do not work out of the box
 Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
 
 We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
-Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to Maiar.
+Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to xPortal Mobile Wallet.
 There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
-
 
 ## Roadmap
 

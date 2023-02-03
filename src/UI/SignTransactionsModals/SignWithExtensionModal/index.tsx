@@ -18,7 +18,8 @@ export const SignWithExtensionModal = ({
   className = 'dapp-extension-modal',
   modalContentClassName
 }: SignModalPropsType) => {
-  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
+  const clearTransactionsToSignWithWarning =
+    useClearTransactionsToSignWithWarning();
 
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.extension, className),
@@ -60,7 +61,7 @@ export const SignWithExtensionModal = ({
         className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
-        title='Confirm on Maiar DeFi Wallet'
+        title='Confirm on MultiversX DeFi Wallet'
         description={description}
         action={
           <button
