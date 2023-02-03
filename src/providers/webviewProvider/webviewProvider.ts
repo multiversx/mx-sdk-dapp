@@ -59,7 +59,7 @@ export const webviewProvider: any = {
       );
       return await waitForNewToken;
     } catch (err) {
-      console.log('error logging in', err);
+      console.error('error logging in', err);
       throw err;
     }
   },
@@ -118,7 +118,7 @@ export const webviewProvider: any = {
         });
       return await waitForSignedTransactionsResponse;
     } catch (err) {
-      console.log('error sending transaction', err);
+      console.error('error sending transaction', err);
       throw err;
     }
   },
