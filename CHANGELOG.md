@@ -27,8 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Added support to not show meridiem by default in `getHumanReadableTimeFormat` util function](https://github.com/multiversx/mx-sdk-dapp/pull/597)
 - [Fixed web wallet cancelled login](https://github.com/multiversx/mx-sdk-dapp/pull/598)
 
-- [Add support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
-
 ## [[v2.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/596)] - 2023-01-20
 
 - [Add support for autoLogout callback url](https://github.com/multiversx/mx-sdk-dapp/pull/594)
