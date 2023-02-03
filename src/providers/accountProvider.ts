@@ -1,5 +1,6 @@
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
+import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import {
   WalletConnectProvider,
   WalletConnectV2Provider
@@ -13,6 +14,7 @@ type ProvidersType =
   | ExtensionProvider
   | WalletProvider
   | HWProvider
+  | OperaProvider
   | WalletConnectProvider
   | WalletConnectV2Provider;
 

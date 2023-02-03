@@ -94,6 +94,7 @@ export interface TokenArgumentType {
   providerName?: string;
   providerAvatar?: string;
   svgUrl?: string;
+  valueUSD?: string;
 }
 
 export interface TransactionActionType {
@@ -158,6 +159,9 @@ export interface OperationType {
   data?: string;
   message?: string;
   svgUrl?: string;
+  senderAssets?: AssetType;
+  receiverAssets?: AssetType;
+  valueUSD?: string;
 }
 
 export interface LogType {
@@ -206,6 +210,7 @@ export interface ResultType {
   logs?: ResultLogType;
   senderAssets?: AssetType;
   receiverAssets?: AssetType;
+  miniBlockHash?: string;
 }
 
 export interface ReceiptType {
