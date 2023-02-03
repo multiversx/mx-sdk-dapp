@@ -29,7 +29,7 @@ export const ExtensionLoginButton: (
   callbackRoute,
   buttonClassName,
   nativeAuth,
-  loginButtonText = 'Maiar DeFi Wallet',
+  loginButtonText = 'MultiversX DeFi Wallet',
   onLoginRedirect,
   disabled,
   'data-testid': dataTestId = 'extensionLoginButton'
@@ -70,7 +70,7 @@ export const ExtensionLoginButton: (
       {children || (
         <div className={classes.noExtensionButtonContent}>
           <div className={classes.noExtensionButtonTitle}>
-            Maiar DeFi Wallet
+            MultiversX DeFi Wallet
           </div>
 
           <FontAwesomeIcon

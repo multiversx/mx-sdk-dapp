@@ -79,7 +79,7 @@ export const useWalletConnectLogin = ({
   }, [provider]);
 
   useUpdateEffect(() => {
-    if(!tokenToSign) {
+    if (!tokenToSign) {
       return;
     }
 
@@ -178,7 +178,7 @@ export const useWalletConnectLogin = ({
       provider.walletConnector.on('heartbeat', () => {
         clearInterval(heartbeatDisconnectInterval);
         heartbeatDisconnectInterval = setInterval(() => {
-          console.log('Maiar Wallet Connection Lost');
+          console.log('xPortal Mobile Wallet Connection Lost');
           handleOnLogout();
           clearInterval(heartbeatDisconnectInterval);
         }, 150000);
