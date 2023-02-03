@@ -6,12 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.5.0](https://github.com/multiversx/mx-sdk-dapp/pull/615)] - 2023-02-04
 - [Fix sign transactions with web wallet when data field is empty](https://github.com/multiversx/mx-sdk-dapp/pull/614)
 - [Added missing attributes of transaction types](https://github.com/multiversx/mx-sdk-dapp/pull/613)
 - [Add Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)
 - [Add default SignTransactionModal for extra provider](https://github.com/multiversx/mx-sdk-dapp/pull/612)
 
-## [[v2.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-03
+## [[v2.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/610)] - 2023-02-03
 
 - [Add support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
 - [Extension and WalletConnect login rebranding](https://github.com/multiversx/mx-sdk-dapp/pull/611)
