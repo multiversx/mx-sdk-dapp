@@ -57,7 +57,7 @@ export const loginInfoSlice = createSlice({
     },
     setTokenLogin: (
       state: LoginInfoStateType,
-      action: PayloadAction<TokenLoginType>
+      action: PayloadAction<TokenLoginType | null>
     ) => {
       state.tokenLogin = action.payload;
     },

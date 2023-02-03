@@ -31,7 +31,8 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID
+  setChainID,
+  setTokenLogin
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -39,7 +40,8 @@ import {
   getAccount,
   getLatestNonce,
   newWalletProvider,
-  getLedgerConfiguration
+  getLedgerConfiguration,
+  emptyProvider
 } from 'utils/account';
 import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
@@ -171,6 +173,9 @@ export function ProviderInitializer() {
       } = parseNavigationParams(['signature', 'loginToken', 'address']);
 
       if (!address) {
+        setAccountProvider(emptyProvider);
+        dispatch(setTokenLogin(null));
+        dispatch(setWalletLogin(null));
         return clearNavigationHistory();
       }
 

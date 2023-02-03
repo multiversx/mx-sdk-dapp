@@ -49,8 +49,7 @@ export const webviewProvider: any = {
                   reject(error);
                 }
               } catch (err) {
-                alert(err);
-                reject('Unable to liogin');
+                reject('Unable to login');
               }
             }
             document.removeEventListener('message', handleTokenReceived);
@@ -60,8 +59,7 @@ export const webviewProvider: any = {
       );
       return await waitForNewToken;
     } catch (err) {
-      alert('error');
-      console.log('error loggin in', err);
+      console.log('error logging in', err);
       throw err;
     }
   },
@@ -111,7 +109,6 @@ export const webviewProvider: any = {
                   reject(error);
                 }
               } catch (err) {
-                alert(err);
                 reject('Unable to sign');
               }
             }
