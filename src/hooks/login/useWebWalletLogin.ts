@@ -11,6 +11,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { useLoginService } from './useLoginService';
+import { sanitizeCallbackUrl } from '../../utils/sanitizeCallbackUrl';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
@@ -65,13 +66,21 @@ export const useWebWalletLogin = ({
         loginService.setLoginToken(token);
       }
 
-      dispatch(setWalletLogin(walletLoginData));
+      const targetUrl = `${window.location.origin}${callbackRoute}`;
+      const params = new URLSearchParams(document.location.search);
 
-      const callbackUrl: string = encodeURIComponent(
-        `${window.location.origin}${callbackRoute}`
-      );
+      // skip login when an address param is prefilled in URL
+      const skipLogin = params.get('address');
+
+      if (!skipLogin) {
+        dispatch(setWalletLogin(walletLoginData));
+      }
+
+      const sanitizedCallbackUrl = sanitizeCallbackUrl(targetUrl);
+      const callbackUrl = encodeURIComponent(sanitizedCallbackUrl);
+
       const loginData = {
-        callbackUrl: callbackUrl,
+        callbackUrl,
         ...(token && { token }),
         redirectDelayMilliseconds
       };

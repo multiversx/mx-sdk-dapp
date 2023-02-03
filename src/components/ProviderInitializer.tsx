@@ -32,7 +32,8 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID
+  setChainID,
+  setTokenLogin
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -45,6 +46,7 @@ import {
 } from 'utils/account';
 import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
+import { useWebViewLogin } from '../hooks/login/useWebViewLogin';
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
@@ -68,6 +70,8 @@ export function ProviderInitializer() {
   );
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
+
+  useWebViewLogin();
 
   const { callbackRoute, logoutRoute: wcLogoutRoute } = walletConnectLogin
     ? walletConnectLogin
@@ -171,6 +175,7 @@ export function ProviderInitializer() {
 
       if (!address) {
         setAccountProvider(emptyProvider);
+        dispatch(setTokenLogin(null));
         dispatch(setWalletLogin(null));
         return clearNavigationHistory();
       }
