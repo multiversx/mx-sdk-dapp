@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Add Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)
 ## [[v2.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-03
 
 - [Add support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)

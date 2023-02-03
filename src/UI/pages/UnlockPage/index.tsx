@@ -1,14 +1,15 @@
 import React, { useEffect, ReactNode } from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
+import { OperaWalletLoginButton } from 'UI/operaWallet/OperaWalletLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 
 import styles from './unlockPageStyles.scss';
-import globalStyles from 'assets/sass/main.scss';
 
 // TODO: Rename to "UnlockPagePropsType" when sdk-dapp@3.0.0
 export interface Props {
@@ -17,6 +18,7 @@ export interface Props {
   loginRoute: string;
   LedgerLoginButtonText?: string;
   ExtensionLoginButtonText?: string;
+  OperaWalletLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;
@@ -31,6 +33,7 @@ export const UnlockPage = ({
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'xPortal Mobile Wallet',
   ExtensionLoginButtonText = 'Extension',
+  OperaWalletLoginButtonText = 'Opera Crypto Wallet',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
   const generatedClasses = {
@@ -79,6 +82,11 @@ export const UnlockPage = ({
             <ExtensionLoginButton
               callbackRoute={loginRoute}
               loginButtonText={ExtensionLoginButtonText}
+            />
+
+            <OperaWalletLoginButton
+              callbackRoute={loginRoute}
+              loginButtonText={OperaWalletLoginButtonText}
             />
 
             <WebWalletLoginButton
