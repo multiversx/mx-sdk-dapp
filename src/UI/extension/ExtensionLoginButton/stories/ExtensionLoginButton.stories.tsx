@@ -22,7 +22,7 @@ export const ExtensionLoginButton = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 
 ExtensionLoginButton.args = {
-  loginButtonText: 'Maiar DeFi Wallet',
+  loginButtonText: 'MultiversX DeFi Wallet',
   onLoginRedirect: jest.fn(),
   'data-testid': 'extension-login-button'
 };

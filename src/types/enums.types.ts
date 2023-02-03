@@ -75,3 +75,20 @@ export enum TransactionsDefaultTitles {
 export enum DappCoreWCV2CustomMethodsEnum {
   erd_cancelAction = 'erd_cancelAction'
 }
+export enum PlatformsEnum {
+  ios = 'ios',
+  reactNative = 'reactNative',
+  web = 'web'
+}
+
+export enum WebViewProviderRequestEnums {
+  signTransactionsRequest = 'SIGN_TRANSACTIONS_REQUEST',
+  signMessageRequest = 'SIGN_MESSAGE_REQUEST',
+  loginRequest = 'LOGIN_REQUEST',
+  logoutRequest = 'LOGOUT_REQUEST'
+}
+export enum WebViewProviderResponseEnums {
+  signTransactionsResponse = 'SIGN_TRANSACTIONS_RESPONSE',
+  signMessageResponse = 'SIGN_MESSAGE_RESPONSE',
+  loginResponse = 'LOGIN_RESPONSE'
+}

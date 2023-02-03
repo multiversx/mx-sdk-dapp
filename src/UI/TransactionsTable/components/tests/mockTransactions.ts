@@ -42,8 +42,7 @@ export default [
     },
     results: [
       {
-        hash:
-          '8970fe5f5548caa994e495798ee1874b07f4ac2156d6a3a9636f450211350784',
+        hash: '8970fe5f5548caa994e495798ee1874b07f4ac2156d6a3a9636f450211350784',
         timestamp: 1640702304,
         nonce: 0,
         gasLimit: 0,
@@ -80,8 +79,7 @@ export default [
           '432d6b8022301b67f1d76b5a96d525758e934b026128251d7ad462edb003c4b9'
       },
       {
-        hash:
-          'd4d84be4aa09cf5d45f79ffed87c971e5d883e7581d31e00d585f65b2da0564d',
+        hash: 'd4d84be4aa09cf5d45f79ffed87c971e5d883e7581d31e00d585f65b2da0564d',
         timestamp: 1640702316,
         nonce: 242,
         gasLimit: 0,
@@ -108,8 +106,7 @@ export default [
         miniBlockHash:
           '578fc3b632fa3899ae00a6c7c399bb80d9b8f3e7c9e9396f6730efa73900cf3e',
         logs: {
-          id:
-            'd4d84be4aa09cf5d45f79ffed87c971e5d883e7581d31e00d585f65b2da0564d',
+          id: 'd4d84be4aa09cf5d45f79ffed87c971e5d883e7581d31e00d585f65b2da0564d',
           address:
             'erd1zwq3qaa3vk5suenlkj4cf0ullwefa6h3n2394k25pxv4sz0pwhhsj9u9vk',
           events: [
@@ -317,8 +314,7 @@ export default [
     value: '0',
     fee: '227877000000000',
     timestamp: 1639488690,
-    data:
-      'RVNEVE5GVFRyYW5zZmVyQDQxNTI1NDQzNTI0MTQ2NTQyZDMzMzIzMjYzMzY2NUAxMUAwMUA3MTc3YjMwYjU0OGM3N2VjMjVlNzQ2NmYwMzg2ZjZlNGQ0NmFlNGZhMzk3Mzg0ZGEzYmVkYWQxNmEwNTA0NzA3',
+    data: 'RVNEVE5GVFRyYW5zZmVyQDQxNTI1NDQzNTI0MTQ2NTQyZDMzMzIzMjYzMzY2NUAxMUAwMUA3MTc3YjMwYjU0OGM3N2VjMjVlNzQ2NmYwMzg2ZjZlNGQ0NmFlNGZhMzk3Mzg0ZGEzYmVkYWQxNmEwNTA0NzA3',
     action: {
       category: 'esdtNft',
       name: 'transfer',
@@ -398,8 +394,7 @@ export default [
     value: '0',
     fee: '501802590000000',
     timestamp: 1638461436,
-    data:
-      'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDA5MDU2ZjAwMTEwMWI2ZTE1MTgwNDQwNjRiNDhjMmU0ZmI0OTJjZDg4NTQ4M0AwMkA0YzRiNGQ0NTU4MmQ2MTYxNjIzOTMxMzBAMDNAMDEzZmJlODVlZGM5MDAwMEA0YzRiNGQ0NTU4MmQ2MTYxNjIzOTMxMzBAMGQzZEAxMTJkNmFiZGQ5NWUxZDVlNDBANmQ2NTcyNjc2NTRjNmY2MzZiNjU2NDQxNzM3MzY1NzQ1NDZmNmI2NTZlNzM=',
+    data: 'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDA5MDU2ZjAwMTEwMWI2ZTE1MTgwNDQwNjRiNDhjMmU0ZmI0OTJjZDg4NTQ4M0AwMkA0YzRiNGQ0NTU4MmQ2MTYxNjIzOTMxMzBAMDNAMDEzZmJlODVlZGM5MDAwMEA0YzRiNGQ0NTU4MmQ2MTYxNjIzOTMxMzBAMGQzZEAxMTJkNmFiZGQ5NWUxZDVlNDBANmQ2NTcyNjc2NTRjNmY2MzZiNjU2NDQxNzM3MzY1NzQ1NDZmNmI2NTZlNzM=',
     function: 'mergeLockedAssetTokens',
     action: {
       category: 'mex',
@@ -435,7 +430,7 @@ export default [
           'erd1qqqqqqqqqqqqqpgqjpt0qqgsrdhp2xqygpjtfrpwf76f9nvg2jpsg4q7th',
         functionName: 'mergeLockedAssetTokens',
         receiverAssets: {
-          name: 'Maiar Exchange: Locked asset Contract',
+          name: 'xExchange: Locked asset Contract',
           tags: ['mex', 'lockedasset']
         }
       }
@@ -460,8 +455,7 @@ export default [
     value: '0',
     fee: '248631000000000',
     timestamp: 1638384762,
-    data:
-      'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDEyNmMxN0AxNTU1ODA4OWJkYmJmNmI5QGNjZmUxOTY4N2JkN2QxMjgwZTY1YTQ3ZTI5NDI0OGE3ODhiNjFkZmUxYTIyNDRmODBhNDEwMTEyMDFlN2MwMTU=',
+    data: 'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDEyNmMxN0AxNTU1ODA4OWJkYmJmNmI5QGNjZmUxOTY4N2JkN2QxMjgwZTY1YTQ3ZTI5NDI0OGE3ODhiNjFkZmUxYTIyNDRmODBhNDEwMTEyMDFlN2MwMTU=',
     action: {
       category: 'esdtNft',
       name: 'transfer',
@@ -495,7 +489,7 @@ export default [
     nonce: 864,
     receiver: 'erd1qqqqqqqqqqqqqpgqa0fsfshnff4n76jhcye6k7uvd7qacsq42jpsp6shh2',
     receiverAssets: {
-      name: 'Maiar Exchange: MEX/WEGLD Liquidity Pool',
+      name: 'xExchange: MEX/WEGLD Liquidity Pool',
       tags: ['mex', 'liquiditypool']
     },
     receiverShard: 1,
@@ -508,8 +502,7 @@ export default [
     value: '0',
     fee: '350496370000000',
     timestamp: 1637433108,
-    data:
-      'RVNEVFRyYW5zZmVyQDU3NDU0NzRjNDQyZDYyNjQzNDY0MzczOUAwZGUwYjZiM2E3NjQwMDAwQDczNzc2MTcwNTQ2ZjZiNjU2ZTczNDY2OTc4NjU2NDQ5NmU3MDc1NzRANGQ0NTU4MmQzNDM1MzU2MzM1MzdAM2I4NGE4YzZmYmY2YjJhZDA5Y2Y=',
+    data: 'RVNEVFRyYW5zZmVyQDU3NDU0NzRjNDQyZDYyNjQzNDY0MzczOUAwZGUwYjZiM2E3NjQwMDAwQDczNzc2MTcwNTQ2ZjZiNjU2ZTczNDY2OTc4NjU2NDQ5NmU3MDc1NzRANGQ0NTU4MmQzNDM1MzU2MzM1MzdAM2I4NGE4YzZmYmY2YjJhZDA5Y2Y=',
     function: 'swapTokensFixedInput',
     action: {
       category: 'mex',
@@ -532,7 +525,8 @@ export default [
             type: 'FungibleESDT',
             name: 'MEX',
             ticker: 'MEX',
-            svgUrl: 'https://media.multiversx.com/tokens/asset/MEX-455c57/logo.svg',
+            svgUrl:
+              'https://media.multiversx.com/tokens/asset/MEX-455c57/logo.svg',
             token: 'MEX-455c57',
             decimals: 18,
             value: '281066754391919467235791'
@@ -543,7 +537,7 @@ export default [
         functionName: 'swapTokensFixedInput',
         functionArgs: ['4d45582d343535633537', '3b84a8c6fbf6b2ad09cf'],
         receiverAssets: {
-          name: 'Maiar Exchange: MEX/WEGLD Liquidity Pool',
+          name: 'xExchange: MEX/WEGLD Liquidity Pool',
           tags: ['mex', 'liquiditypool']
         }
       }
@@ -661,8 +655,7 @@ export default [
     value: '0',
     fee: '183008200000000',
     timestamp: 1637433108,
-    data:
-      'RVNEVFRyYW5zZmVyQDU3NDU0NzRjNDQyZDYyNjQzNDY0MzczOUA0NGVjYzgzNzEwYzU3OWQzQDc1NmU3NzcyNjE3MDQ1Njc2YzY0',
+    data: 'RVNEVFRyYW5zZmVyQDU3NDU0NzRjNDQyZDYyNjQzNDY0MzczOUA0NGVjYzgzNzEwYzU3OWQzQDc1NmU3NzcyNjE3MDQ1Njc2YzY0',
     function: 'unwrapEgld',
     action: {
       category: 'mex',
@@ -710,8 +703,7 @@ export default [
     value: '0',
     fee: '903081640000000',
     timestamp: 1637433108,
-    data:
-      'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDAxNjcxMUA3MDlhNWYxNjJiOGM3YmU2QDAwMDAwMDAwMDAwMDAwMDAwNTAwMWUyYTE0MjhkZDFlM2E1MTQ2YjM5NjBkOWUwZjRhNTAzNjk5MDRlZTU0ODNANjM2YzYxNjk2ZDUyNjU3NzYxNzI2NDczNTA3MjZmNzg3OUAwMDAwMDAwMDAwMDAwMDAwMDUwMDI2NzUxODkzZDY3ODliZTllNWE5OTg2M2JhOWVlYWE4MDg4ZGQyNWY1NDgz',
+    data: 'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDAxNjcxMUA3MDlhNWYxNjJiOGM3YmU2QDAwMDAwMDAwMDAwMDAwMDAwNTAwMWUyYTE0MjhkZDFlM2E1MTQ2YjM5NjBkOWUwZjRhNTAzNjk5MDRlZTU0ODNANjM2YzYxNjk2ZDUyNjU3NzYxNzI2NDczNTA3MjZmNzg3OUAwMDAwMDAwMDAwMDAwMDAwMDUwMDI2NzUxODkzZDY3ODliZTllNWE5OTg2M2JhOWVlYWE4MDg4ZGQyNWY1NDgz',
     function: 'claimRewardsProxy',
     action: {
       category: 'mex',
@@ -738,7 +730,7 @@ export default [
           '0000000000000000050026751893d6789be9e5a99863ba9eeaa8088dd25f5483'
         ],
         receiverAssets: {
-          name: 'Maiar Exchange: Proxy',
+          name: 'xExchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
             'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
@@ -767,8 +759,7 @@ export default [
     value: '0',
     fee: '508617670000000',
     timestamp: 1637433108,
-    data:
-      'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDBlYmQzMDRjMmYzNGE2YjNmNmE1N2MxMzNhYjdiOGM2ZjgxZGM0MDE1NTQ4M0AwMkA1NzQ1NDc0YzQ0MmQ2MjY0MzQ2NDM3MzlAQDA0NGNmNjhjMjkwODUwMDlANGQ0NTU4MmQzNDM1MzU2MzM1MzdAQDEyYWZlMGQzODQ2MTMzMjBjNTQ0QDYxNjQ2NDRjNjk3MTc1Njk2NDY5NzQ3OUAwNDQxZjQxNGZmYTk4MjZmQDEyODAwYTE5MTRmOWQzZTU5MDE3',
+    data: 'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDBlYmQzMDRjMmYzNGE2YjNmNmE1N2MxMzNhYjdiOGM2ZjgxZGM0MDE1NTQ4M0AwMkA1NzQ1NDc0YzQ0MmQ2MjY0MzQ2NDM3MzlAQDA0NGNmNjhjMjkwODUwMDlANGQ0NTU4MmQzNDM1MzU2MzM1MzdAQDEyYWZlMGQzODQ2MTMzMjBjNTQ0QDYxNjQ2NDRjNjk3MTc1Njk2NDY5NzQ3OUAwNDQxZjQxNGZmYTk4MjZmQDEyODAwYTE5MTRmOWQzZTU5MDE3',
     function: 'addLiquidity',
     action: {
       category: 'mex',
@@ -791,7 +782,8 @@ export default [
             type: 'FungibleESDT',
             name: 'MEX',
             ticker: 'MEX',
-            svgUrl: 'https://media.multiversx.com/tokens/asset/MEX-455c57/logo.svg',
+            svgUrl:
+              'https://media.multiversx.com/tokens/asset/MEX-455c57/logo.svg',
             token: 'MEX-455c57',
             decimals: 18,
             value: '88246977342390371665220'
@@ -802,7 +794,7 @@ export default [
         functionName: 'addLiquidity',
         functionArgs: ['0441f414ffa9826f', '12800a1914f9d3e59017'],
         receiverAssets: {
-          name: 'Maiar Exchange: MEX/WEGLD Liquidity Pool',
+          name: 'xExchange: MEX/WEGLD Liquidity Pool',
           tags: ['mex', 'liquiditypool']
         }
       }
@@ -827,8 +819,7 @@ export default [
     value: '0',
     fee: '753259780000000',
     timestamp: 1637433108,
-    data:
-      'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDAxNmEzMUAwYTAxMTBiYjNkMGZmNDJmN2ZlZDQ4QDAwMDAwMDAwMDAwMDAwMDAwNTAwMWUyYTE0MjhkZDFlM2E1MTQ2YjM5NjBkOWUwZjRhNTAzNjk5MDRlZTU0ODNANjM2ZjZkNzA2Zjc1NmU2NDUyNjU3NzYxNzI2NDczNTA3MjZmNzg3OUAwMDAwMDAwMDAwMDAwMDAwMDUwMDY1NmQwYWNjNTM1NjFjNWQ2ZjZmZDdkN2U4MmJmMTMyNDcwMTRmNjE1NDgz',
+    data: 'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDAxNmEzMUAwYTAxMTBiYjNkMGZmNDJmN2ZlZDQ4QDAwMDAwMDAwMDAwMDAwMDAwNTAwMWUyYTE0MjhkZDFlM2E1MTQ2YjM5NjBkOWUwZjRhNTAzNjk5MDRlZTU0ODNANjM2ZjZkNzA2Zjc1NmU2NDUyNjU3NzYxNzI2NDczNTA3MjZmNzg3OUAwMDAwMDAwMDAwMDAwMDAwMDUwMDY1NmQwYWNjNTM1NjFjNWQ2ZjZmZDdkN2U4MmJmMTMyNDcwMTRmNjE1NDgz',
     function: 'compoundRewardsProxy',
     action: {
       category: 'mex',
@@ -855,7 +846,7 @@ export default [
           '00000000000000000500656d0acc53561c5d6f6fd7d7e82bf13247014f615483'
         ],
         receiverAssets: {
-          name: 'Maiar Exchange: Proxy',
+          name: 'xExchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
             'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
@@ -884,8 +875,7 @@ export default [
     value: '0',
     fee: '438288610000000',
     timestamp: 1637433108,
-    data:
-      'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDAyNjc1MTg5M2Q2Nzg5YmU5ZTVhOTk4NjNiYTllZWFhODA4OGRkMjVmNTQ4M0AwMUA0NTQ3NGM0NDRkNDU1ODJkMzA2MjY1Mzk2NTM1QEAwMzUxYmFiNTY3YWFkODE2NTlANjU2ZTc0NjU3MjQ2NjE3MjZkNDE2ZTY0NGM2ZjYzNmI1MjY1Nzc2MTcyNjQ3Mw==',
+    data: 'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDAyNjc1MTg5M2Q2Nzg5YmU5ZTVhOTk4NjNiYTllZWFhODA4OGRkMjVmNTQ4M0AwMUA0NTQ3NGM0NDRkNDU1ODJkMzA2MjY1Mzk2NTM1QEAwMzUxYmFiNTY3YWFkODE2NTlANjU2ZTc0NjU3MjQ2NjE3MjZkNDE2ZTY0NGM2ZjYzNmI1MjY1Nzc2MTcyNjQ3Mw==',
     function: 'enterFarmAndLockRewards',
     action: {
       category: 'mex',
@@ -909,7 +899,7 @@ export default [
           'erd1qqqqqqqqqqqqqpgqye633y7k0zd7nedfnp3m48h24qygm5jl2jpslxallh',
         functionName: 'enterFarmAndLockRewards',
         receiverAssets: {
-          name: 'Maiar Exchange: EGLDMEXLPStaked Farm',
+          name: 'xExchange: EGLDMEXLPStaked Farm',
           tags: ['mex', 'farm']
         }
       }
@@ -934,8 +924,7 @@ export default [
     value: '0',
     fee: '738500590000000',
     timestamp: 1637433108,
-    data:
-      'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDAxZTJhMTQyOGRkMWUzYTUxNDZiMzk2MGQ5ZTBmNGE1MDM2OTkwNGVlNTQ4M0AwMUA0YzRiNGQ0NTU4MmQ2MTYxNjIzOTMxMzBAMDRAMDUxZDVkZDAzNjA3Y2ZhMmJlMDAwMEA2NTZlNzQ2NTcyNDY2MTcyNmQ1MDcyNmY3ODc5QDAwMDAwMDAwMDAwMDAwMDAwNTAwNjU2ZDBhY2M1MzU2MWM1ZDZmNmZkN2Q3ZTgyYmYxMzI0NzAxNGY2MTU0ODM=',
+    data: 'TXVsdGlFU0RUTkZUVHJhbnNmZXJAMDAwMDAwMDAwMDAwMDAwMDA1MDAxZTJhMTQyOGRkMWUzYTUxNDZiMzk2MGQ5ZTBmNGE1MDM2OTkwNGVlNTQ4M0AwMUA0YzRiNGQ0NTU4MmQ2MTYxNjIzOTMxMzBAMDRAMDUxZDVkZDAzNjA3Y2ZhMmJlMDAwMEA2NTZlNzQ2NTcyNDY2MTcyNmQ1MDcyNmY3ODc5QDAwMDAwMDAwMDAwMDAwMDAwNTAwNjU2ZDBhY2M1MzU2MWM1ZDZmNmZkN2Q3ZTgyYmYxMzI0NzAxNGY2MTU0ODM=',
     function: 'enterFarmProxy',
     action: {
       category: 'mex',
@@ -962,7 +951,7 @@ export default [
           '00000000000000000500656d0acc53561c5d6f6fd7d7e82bf13247014f615483'
         ],
         receiverAssets: {
-          name: 'Maiar Exchange: Proxy',
+          name: 'xExchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
             'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
@@ -982,7 +971,7 @@ export default [
     nonce: 806,
     receiver: 'erd1qqqqqqqqqqqqqpgqa0fsfshnff4n76jhcye6k7uvd7qacsq42jpsp6shh2',
     receiverAssets: {
-      name: 'Maiar Exchange: MEX/WEGLD Liquidity Pool',
+      name: 'xExchange: MEX/WEGLD Liquidity Pool',
       tags: ['mex', 'liquiditypool']
     },
     receiverShard: 1,
@@ -995,8 +984,7 @@ export default [
     value: '0',
     fee: '335673880000000',
     timestamp: 1637433042,
-    data:
-      'RVNEVFRyYW5zZmVyQDQ1NDc0YzQ0NGQ0NTU4MmQzMDYyNjUzOTY1MzVAMDQxZjI3ZWQyYTRhODAwMEA3MjY1NmQ2Zjc2NjU0YzY5NzE3NTY5NjQ2OTc0NzlAMDlhN2I0OTUyMDA1MmVkYkAyOWY1MTU3ODBmNDI1ZGYzNjMzMQ==',
+    data: 'RVNEVFRyYW5zZmVyQDQ1NDc0YzQ0NGQ0NTU4MmQzMDYyNjUzOTY1MzVAMDQxZjI3ZWQyYTRhODAwMEA3MjY1NmQ2Zjc2NjU0YzY5NzE3NTY5NjQ2OTc0NzlAMDlhN2I0OTUyMDA1MmVkYkAyOWY1MTU3ODBmNDI1ZGYzNjMzMQ==',
     function: 'removeLiquidity',
     action: {
       category: 'mex',
@@ -1020,7 +1008,7 @@ export default [
         functionName: 'removeLiquidity',
         functionArgs: ['09a7b49520052edb', '29f515780f425df36331'],
         receiverAssets: {
-          name: 'Maiar Exchange: MEX/WEGLD Liquidity Pool',
+          name: 'xExchange: MEX/WEGLD Liquidity Pool',
           tags: ['mex', 'liquiditypool']
         }
       }
@@ -1045,8 +1033,7 @@ export default [
     value: '0',
     fee: '870516310000000',
     timestamp: 1637433042,
-    data:
-      'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDdmZjFAMDExZmE2OWY4ZTdiMDgzNDBkMDAwMEAwMDAwMDAwMDAwMDAwMDAwMDUwMDFlMmExNDI4ZGQxZTNhNTE0NmIzOTYwZDllMGY0YTUwMzY5OTA0ZWU1NDgzQDY1Nzg2OTc0NDY2MTcyNmQ1MDcyNmY3ODc5QDAwMDAwMDAwMDAwMDAwMDAwNTAwNjU2ZDBhY2M1MzU2MWM1ZDZmNmZkN2Q3ZTgyYmYxMzI0NzAxNGY2MTU0ODM=',
+    data: 'RVNEVE5GVFRyYW5zZmVyQDRjNGI0NjQxNTI0ZDJkMzk2NDMxNjU2MTM4QDdmZjFAMDExZmE2OWY4ZTdiMDgzNDBkMDAwMEAwMDAwMDAwMDAwMDAwMDAwMDUwMDFlMmExNDI4ZGQxZTNhNTE0NmIzOTYwZDllMGY0YTUwMzY5OTA0ZWU1NDgzQDY1Nzg2OTc0NDY2MTcyNmQ1MDcyNmY3ODc5QDAwMDAwMDAwMDAwMDAwMDAwNTAwNjU2ZDBhY2M1MzU2MWM1ZDZmNmZkN2Q3ZTgyYmYxMzI0NzAxNGY2MTU0ODM=',
     function: 'exitFarmProxy',
     action: {
       category: 'mex',
@@ -1073,7 +1060,7 @@ export default [
           '00000000000000000500656d0acc53561c5d6f6fd7d7e82bf13247014f615483'
         ],
         receiverAssets: {
-          name: 'Maiar Exchange: Proxy',
+          name: 'xExchange: Proxy',
           tags: ['maiar', 'exchange', 'proxy'],
           iconPng:
             'https://raw.githubusercontent.com/MultiversX/assets/master/accounts/icons/multiversx.png',
@@ -1141,8 +1128,7 @@ export default [
     },
     results: [
       {
-        hash:
-          '03ec460f4037114403828f357dc91495149ab35c3556c6ad0155acd8c65c4b04',
+        hash: '03ec460f4037114403828f357dc91495149ab35c3556c6ad0155acd8c65c4b04',
         timestamp: 1664194968,
         nonce: 0,
         gasLimit: 0,
@@ -1161,8 +1147,7 @@ export default [
           '8da210d07a8e099ced579f7ff634b3159f9589cbad106c55c51b4e1c5bf98c7d'
       },
       {
-        hash:
-          'ff5d9b11e3fddf3ee4bdf3dec0e82915f1c0b36233e1d05366b9950d78f96fea',
+        hash: 'ff5d9b11e3fddf3ee4bdf3dec0e82915f1c0b36233e1d05366b9950d78f96fea',
         timestamp: 1664194968,
         nonce: 447,
         gasLimit: 0,
@@ -1229,8 +1214,7 @@ export default [
     },
     results: [
       {
-        hash:
-          '1bf45b782580cd035efdf600aafbfdd6d3fc437e93b4fb9219fe76f7526fad65',
+        hash: '1bf45b782580cd035efdf600aafbfdd6d3fc437e93b4fb9219fe76f7526fad65',
         timestamp: 1664178336,
         nonce: 0,
         gasLimit: 0,
@@ -1249,8 +1233,7 @@ export default [
           'e74217b57b02069cf1b3294db1acbce08c5174811464c283cd1c739dbbf27b74'
       },
       {
-        hash:
-          '5fef839b3abc2f07be0923acfcb086a19ad2cf9522e9cf2eee4f398c84b301ef',
+        hash: '5fef839b3abc2f07be0923acfcb086a19ad2cf9522e9cf2eee4f398c84b301ef',
         timestamp: 1664178348,
         nonce: 446,
         gasLimit: 0,
@@ -1310,8 +1293,7 @@ export default [
     },
     results: [
       {
-        hash:
-          '62ad6e43a172cfc39ae1620e61a0e200cb5cd51e9cf1675a19cc4963971fdc65',
+        hash: '62ad6e43a172cfc39ae1620e61a0e200cb5cd51e9cf1675a19cc4963971fdc65',
         timestamp: 1664202492,
         nonce: 0,
         gasLimit: 0,

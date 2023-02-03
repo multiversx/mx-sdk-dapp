@@ -32,10 +32,10 @@ export interface WalletConnectLoginModalPropsType
 export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText,
-  title = 'Maiar Login',
+  title = 'xPortal Login',
   logoutRoute = '/unlock',
   className = 'dapp-wallet-connect-login-modal',
-  lead = 'Scan the QR code using Maiar',
+  lead = 'Scan the QR code using xPortal Mobile Wallet',
   legacyMessage = 'Unable to login? Use the legacy version',
   wrapContentInsideModal = true,
   isWalletConnectV2 = false,
@@ -74,12 +74,10 @@ export const WalletConnectLoginContainer = ({
     onLoginRedirect
   });
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-  const [displayWalletConnectV2, setDisplayWalletConnectV2] = useState<boolean>(
-    isWalletConnectV2
-  );
-  const [showLegacySwitch, setShowLegacySwitch] = useState<boolean>(
-    isWalletConnectV2
-  );
+  const [displayWalletConnectV2, setDisplayWalletConnectV2] =
+    useState<boolean>(isWalletConnectV2);
+  const [showLegacySwitch, setShowLegacySwitch] =
+    useState<boolean>(isWalletConnectV2);
   const isMobileDevice = isMobileEnvironment();
   const activePairings = displayWalletConnectV2
     ? wcPairings?.filter((pairing) => {
@@ -271,7 +269,7 @@ export const WalletConnectLoginContainer = ({
     <ModalContainer
       onClose={onCloseModal}
       modalConfig={{
-        headerText: 'Login with Maiar',
+        headerText: 'Login with xPortal Mobile Wallet',
         showHeader: true,
         modalDialogClassName: className
       }}

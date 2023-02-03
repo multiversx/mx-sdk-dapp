@@ -1,7 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
 import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
-import { calculateFeeLimit } from 'utils/operations';
+import { calculateFeeLimit } from 'utils/operations/calculateFeeLimit';
 
 export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
   let totalFee = new BigNumber(0);
@@ -27,3 +27,4 @@ export function calcTotalFee(transactions: Transaction[], minGasLimit: number) {
 
   return totalFee;
 }
+
