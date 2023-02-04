@@ -28,7 +28,12 @@
     }
 
     .login-connect-container-icon {
-      margin: 100px 0;
+      max-width: 100%;
+      margin: 48px 0;
+
+      @media (min-width: 480px) {
+        margin: 100px 0;
+      }
     }
 
     .login-connect-container-footer {
@@ -49,6 +54,12 @@
         font-size: 18px;
         margin-top: 20px;
         font-weight: 500;
+
+        &:hover,
+        &:active,
+        &:focus {
+          text-decoration: none;
+        }
       }
     }
   }

@@ -1,22 +1,18 @@
 import React from 'react';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
-import { PageState } from 'UI/PageState';
 
-import { OnProviderLoginType } from '../../../types';
-import { WithClassnameType } from '../../types';
+import type { OnProviderLoginType } from '../../../types';
+import type { WithClassnameType } from '../../types';
+
 import { AddressTable } from './components/AddressTable';
 import { ConfirmAddress } from './components/ConfirmAddress';
+import { LedgerLoading } from './components/LedgerLoading';
 import { LedgerConnect } from './components/LedgerConnect';
 
 import styles from './ledgerLoginContainerStyles.scss';
-
-const ledgerWaitingText = 'Waiting for device';
 
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
@@ -34,10 +30,6 @@ export const LedgerLoginContainer = ({
   token,
   nativeAuth
 }: LedgerLoginContainerPropsType) => {
-  const classes = {
-    spinner: classNames(globalStyles.textPrimary, 'fa-spin')
-  };
-
   const { ledgerAccount } = useGetAccountInfo();
   const [
     onStartLogin,
@@ -54,10 +46,11 @@ export const LedgerLoginContainer = ({
     }
   ] = useLedgerLogin({ callbackRoute, token, onLoginRedirect, nativeAuth });
 
-  function getContent() {
-    if (true) {
-      return <PageState icon={faCircleNotch} iconClass={classes.spinner} />;
+  const getContent = () => {
+    if (isLoading) {
+      return <LedgerLoading />;
     }
+
     if (ledgerAccount != null && !error) {
       return <ConfirmAddress token={token} />;
     }
@@ -78,7 +71,7 @@ export const LedgerLoginContainer = ({
     }
 
     return <LedgerConnect onClick={onStartLogin} error={error} />;
-  }
+  };
 
   return wrapContentInsideModal ? (
     <ModalContainer

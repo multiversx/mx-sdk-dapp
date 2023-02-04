@@ -1,8 +1,8 @@
 import React, { useEffect, useState, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
+import { Trim } from 'UI/Trim';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
-import { getTrimmedHash } from 'utils';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
@@ -50,41 +50,39 @@ export const AddressRow = ({
   }, []);
 
   return (
-    <tr className={classNames(className, styles.ledgerTableAddressRow)}>
-      <td>
-        <div className={styles.ledgerTableAddressRowData}>
-          <input
-            type='radio'
-            id={`check_${index}`}
-            data-testid={`check_${index}`}
-            onChange={handleChange}
-            role='button'
-            checked={selectedAddress === address}
-            className={styles.ledgerTableAddressRowDataInput}
-          />
+    <div
+      className={classNames(className, styles.ledgerAddressTableBodyItem, {
+        [styles.ledgerAddressTableBodyItemSelected]: selectedAddress === address
+      })}
+    >
+      <div className={styles.ledgerAddressTableBodyItemData}>
+        <input
+          type='radio'
+          id={`check_${index}`}
+          data-testid={`check_${index}`}
+          onChange={handleChange}
+          role='button'
+          checked={selectedAddress === address}
+          className={styles.ledgerAddressTableBodyItemDataInput}
+        />
 
-          <label
-            htmlFor={`check_${index}`}
-            role='button'
-            data-testid={`label_${index}`}
-            className={styles.ledgerTableAddressRowDataLabel}
-          >
-            <div className={styles.ledgerTableAddressRowDataValue}>
-              <span>{getTrimmedHash(address)}</span>
-            </div>
-          </label>
-        </div>
-      </td>
+        <label
+          htmlFor={`check_${index}`}
+          role='button'
+          data-testid={`label_${index}`}
+          className={styles.ledgerAddressTableBodyItemDataLabel}
+        >
+          <div className={styles.ledgerAddressTableBodyItemDataValue}>
+            <Trim text={address} />
+          </div>
+        </label>
+      </div>
 
-      <td>
-        <div className={styles.ledgerTableAddressRowData}>
-          <FormatAmount value={balance} egldLabel={getEgldLabel()} />
-        </div>
-      </td>
+      <div className={styles.ledgerAddressTableBodyItemData}>
+        <FormatAmount value={balance} egldLabel={getEgldLabel()} />
+      </div>
 
-      <td>
-        <div className={styles.ledgerTableAddressRowData}>{index}</div>
-      </td>
-    </tr>
+      <div className={styles.ledgerAddressTableBodyItemData}>{index}</div>
+    </div>
   );
 };

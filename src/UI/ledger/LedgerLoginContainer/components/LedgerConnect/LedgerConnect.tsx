@@ -55,11 +55,9 @@ export const LedgerConnect = ({
           Connect Ledger
         </button>
 
-        {error && (
-          <a className={styles.loginConnectContainerLink} href='#'>
-            Having connection issues?
-          </a>
-        )}
+        <a className={styles.loginConnectContainerLink} href='#'>
+          Having connection issues?
+        </a>
       </div>
     </div>
   </div>

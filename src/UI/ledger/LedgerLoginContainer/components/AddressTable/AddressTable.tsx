@@ -1,22 +1,19 @@
 import React, { useEffect } from 'react';
 import {
   faChevronLeft,
-  faChevronRight,
-  faCircleNotch
+  faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { PageState } from 'UI/PageState';
-
 import type { WithClassnameType } from 'UI/types';
 
 import { AddressRow } from './components/AddressRow';
+import { LedgerLoading } from '../LedgerLoading';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './addressTableStyles.scss';
 
-const LEDGER_WAITING_TEXT = 'Waiting for device';
 const ADDRESSES_PER_PAGE = 10;
 
 export interface AddressTablePropsType extends WithClassnameType {
@@ -57,81 +54,93 @@ export const AddressTable = ({
   }, [accounts, selectedAddress, loading, startIndex]);
 
   if (loading) {
-    return (
-      <PageState
-        icon={faCircleNotch}
-        iconClass={classNames('fa-spin', globalStyles.textPrimary)}
-        title={LEDGER_WAITING_TEXT}
-      />
-    );
+    return <LedgerLoading />;
   }
+
+  const columns = ['Address', 'Balance', '#'];
+
   return (
-    <div className={classNames(styles.ledgerAddresses, className)}>
-      <div
-        className={styles.ledgerAddressesTableWrapper}
-        data-testid='ledgerAddresses'
-      >
-        <table className={styles.ledgerAddressesTable}>
-          <thead className={styles.ledgerAddressesTableHead}>
-            <tr>
-              <th className={styles.ledgerAddressesTableHeadCell}>Address</th>
-              <th className={styles.ledgerAddressesTableHeadCell}>Balance</th>
-              <th className={styles.ledgerAddressesTableHeadCell}>#</th>
-            </tr>
-          </thead>
+    <div className={classNames(styles.ledgerAddressTableWrapper, className)}>
+      <div className={styles.ledgerAddressTableTop}>
+        <div className={styles.ledgerAddressTableHeading}>
+          Access your wallet
+        </div>
 
-          <tbody data-testid='addressesTable'>
-            {accounts.map((address, index) => {
-              const key = index + startIndex * ADDRESSES_PER_PAGE;
+        <p className={styles.ledgerAddressTableDescription}>
+          Choose the wallet you want to access
+        </p>
+      </div>
 
-              return (
-                <AddressRow
-                  key={key}
-                  address={address}
-                  index={key}
-                  selectedAddress={selectedAddress}
-                  onSelectAddress={onSelectAddress}
-                />
-              );
+      <div className={styles.ledgerAddressTable}>
+        <div className={styles.ledgerAddressTableHeader}>
+          {columns.map((column) => (
+            <div key={column} className={styles.ledgerAddressTableHeaderItem}>
+              {column}
+            </div>
+          ))}
+        </div>
+
+        <div className={styles.ledgerAddressTableBody}>
+          {accounts.map((address, index) => (
+            <AddressRow
+              address={address}
+              key={index + startIndex * ADDRESSES_PER_PAGE}
+              index={index + startIndex * ADDRESSES_PER_PAGE}
+              selectedAddress={selectedAddress}
+              onSelectAddress={onSelectAddress}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className={styles.ledgerAddressTableBottom}>
+        <div className={styles.ledgerAddressTableNavigation}>
+          <button
+            type='button'
+            onClick={onGoToPrevPage}
+            data-testid='prevBtn'
+            className={classNames(styles.ledgerAddressTableNavigationButton, {
+              [styles.ledgerAddressTableNavigationButtonDisabled]:
+                startIndex === 0
             })}
-          </tbody>
-        </table>
-      </div>
+          >
+            <FontAwesomeIcon size='1x' icon={faChevronLeft} />
 
-      <div className={styles.ledgerAddressesNavigation}>
+            <span className={styles.ledgerAddressTableNavigationButtonLabel}>
+              Prev
+            </span>
+          </button>
+
+          <button
+            type='button'
+            onClick={onGoToNextPage}
+            data-testid='nextBtn'
+            className={classNames(styles.ledgerAddressTableNavigationButton, {
+              [styles.ledgerAddressTableNavigationButtonDisabled]:
+                accounts.length < 10
+            })}
+          >
+            <span className={styles.ledgerAddressTableNavigationButtonLabel}>
+              Next
+            </span>
+
+            <FontAwesomeIcon size='1x' icon={faChevronRight} />
+          </button>
+        </div>
+
         <button
-          type='button'
-          onClick={onGoToPrevPage}
-          data-testid='prevBtn'
-          className={classNames(styles.ledgerAddressesNavigationButton, {
-            [styles.ledgerAddressesNavigationButtonDisabled]: startIndex === 0
-          })}
+          disabled={selectedAddress === ''}
+          onClick={onConfirmSelectedAddress}
+          data-testid='confirmBtn'
+          className={classNames(
+            globalStyles.btn,
+            globalStyles.btnPrimary,
+            styles.ledgerAddressTableButton
+          )}
         >
-          <FontAwesomeIcon size='1x' icon={faChevronLeft} />
-        </button>
-
-        <button
-          type='button'
-          className={styles.ledgerAddressesNavigationButton}
-          onClick={onGoToNextPage}
-          data-testid='nextBtn'
-        >
-          <FontAwesomeIcon size='1x' icon={faChevronRight} />
+          Confirm
         </button>
       </div>
-
-      <button
-        disabled={selectedAddress === ''}
-        onClick={onConfirmSelectedAddress}
-        data-testid='confirmBtn'
-        className={classNames(
-          globalStyles.btn,
-          globalStyles.btnPrimary,
-          styles.ledgerAddressesButton
-        )}
-      >
-        Confirm
-      </button>
     </div>
   );
 };

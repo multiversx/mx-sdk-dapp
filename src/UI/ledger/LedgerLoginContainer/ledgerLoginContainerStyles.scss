@@ -9,26 +9,10 @@
     max-height: 100%;
     box-shadow: none;
     max-width: 420px;
-    // overflow: scroll;
-    // overflow-x: hidden;
 
-    // &::-webkit-scrollbar {
-    //   width: 6px;
-    // }
-
-    // &::-webkit-scrollbar-track {
-    //   background-color: transparent;
-    // }
-
-    // &::-webkit-scrollbar-thumb {
-    //   background-color: rgba(black, 0.25);
-    //   border-radius: 20px;
-
-    //   &:hover {
-    //     background-color: rgba(black, 0.25);
-    //     border-radius: 20px;
-    //   }
-    // }
+    @media (min-width: 768px) {
+      max-width: 730px;
+    }
 
     .ledger-modal-header {
       position: absolute;
@@ -55,6 +39,7 @@
       flex-direction: column;
       padding: 0;
       justify-content: center;
+      overflow: hidden;
     }
   }
 }

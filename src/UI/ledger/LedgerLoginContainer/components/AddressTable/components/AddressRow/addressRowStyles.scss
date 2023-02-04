@@ -1,63 +1,90 @@
-.ledger-table-address-row {
-  &:last-child .ledger-table-address-row-data:before {
-    content: none;
+@import 'assets/sass/variables/variables';
+
+.ledger-address-table-body-item {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+
+  &:not(.ledger-address-table-body-item-selected) {
+    color: $gray-600;
   }
 
-  td {
-    .ledger-table-address-row-data {
-      display: flex;
-      align-items: center;
-      padding: 12px;
-      line-height: 1;
+  .ledger-address-table-body-item-data {
+    font-size: 14px;
+    line-height: 1;
+    flex: 1;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    padding-right: 16px;
+
+    &:first-child {
+      width: 55%;
+      flex-basis: 55%;
+      max-width: 55%;
+    }
+
+    &:last-child {
+      width: 32px;
+      max-width: 32px;
+      flex-basis: 32px;
+      text-align: center;
       justify-content: center;
-      position: relative;
-
-      &:before {
-        background-color: black;
-        opacity: 0.25;
-        position: absolute;
-        left: 12px;
-        right: 12px;
-        top: 100%;
-        content: '';
-        height: 1px;
-      }
-
-      &:after {
-        background-color: black;
-        opacity: 0.25;
-        position: absolute;
-        bottom: 12px;
-        top: 12px;
-        left: 100%;
-        content: '';
-        width: 1px;
-      }
-
-      .ledger-table-address-row-data-label {
-        margin-bottom: 0;
-        margin-left: 8px;
-      }
-    }
-
-    &:first-child .ledger-table-address-row-data {
-      padding-left: 0;
-      justify-content: flex-start;
-
-      &:before {
-        left: 0;
-      }
-    }
-
-    &:last-child .ledger-table-address-row-data {
       padding-right: 0;
+    }
 
-      &:before {
-        right: 0;
+    .ledger-address-table-body-item-data-input {
+      position: relative;
+      width: 12px;
+      height: 12px;
+      margin-right: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+
+      @media (min-width: 480px) {
+        margin-right: 12px;
       }
 
-      &:after {
-        content: none;
+      &:before {
+        border: 2px solid $gray-500;
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      &:checked:before {
+        width: 12px;
+        height: 12px;
+        border: 4px solid $primary;
+      }
+    }
+
+    .ledger-address-table-body-item-data-label {
+      margin-bottom: 0;
+      flex: 1;
+      display: flex;
+
+      .ledger-address-table-body-item-data-value {
+        flex: 1;
+
+        & > span {
+          max-width: 84px;
+          display: flex;
+          align-items: flex-end;
+
+          @media (min-width: 480px) {
+            max-width: 112px;
+          }
+
+          @media (min-width: 768px) {
+            max-width: 260px;
+          }
+        }
       }
     }
   }
