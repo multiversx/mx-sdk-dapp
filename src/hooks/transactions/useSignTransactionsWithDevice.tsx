@@ -48,10 +48,8 @@ export function useSignTransactionsWithDevice({
   onCancel,
   verifyReceiverScam = true
 }: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType {
-  const {
-    transactionsToSign,
-    hasTransactions
-  } = useSignTransactionsCommonData();
+  const { transactionsToSign, hasTransactions } =
+    useSignTransactionsCommonData();
 
   const egldLabel = useSelector(egldLabelSelector);
   const {
@@ -59,7 +57,8 @@ export function useSignTransactionsWithDevice({
   } = useGetAccountInfo();
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
-  const clearTransactionsToSignWithWarning = useClearTransactionsToSignWithWarning();
+  const clearTransactionsToSignWithWarning =
+    useClearTransactionsToSignWithWarning();
 
   const {
     transactions,
@@ -69,6 +68,14 @@ export function useSignTransactionsWithDevice({
   } = transactionsToSign || {};
 
   function handleTransactionSignError(errorMessage: string) {
+    if (sessionId) {
+      dispatch(
+        moveTransactionsToSignedState({
+          sessionId,
+          status: TransactionBatchStatusesEnum.cancelled
+        })
+      );
+    }
     dispatch(setSignTransactionsError(errorMessage));
   }
 
@@ -76,9 +83,8 @@ export function useSignTransactionsWithDevice({
     callbackRoute != null && window.location.pathname.includes(callbackRoute);
 
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
-    const shouldMoveTransactionsToSignedState = getShouldMoveTransactionsToSignedState(
-      newSignedTransactions
-    );
+    const shouldMoveTransactionsToSignedState =
+      getShouldMoveTransactionsToSignedState(newSignedTransactions);
 
     if (!shouldMoveTransactionsToSignedState) {
       return;
