@@ -1,0 +1,145 @@
+.ledger-addresses {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+
+  .ledger-addresses-table-wrapper {
+    overflow-x: scroll;
+    padding-bottom: 16px;
+    overflow-y: hidden;
+
+    @media (min-width: 480px) {
+      padding-bottom: 0;
+    }
+
+    &::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(black, 0.25);
+      border-radius: 20px;
+
+      &:hover {
+        background-color: rgba(black, 0.25);
+        border-radius: 20px;
+      }
+    }
+
+    .ledger-addresses-table {
+      display: table;
+      width: 100%;
+
+      tr {
+        td:first-child,
+        th:first-child {
+          width: 100%;
+          page-break-inside: avoid !important;
+        }
+
+        td:not(:first-child),
+        th:not(:first-child) {
+          white-space: nowrap;
+        }
+      }
+
+      .ledger-addresses-table-head-cell {
+        padding: 12px;
+        line-height: 1;
+        font-size: 16px;
+        text-align: center;
+        position: relative;
+
+        &:first-child {
+          padding-left: 0;
+          text-align: left;
+
+          &:before {
+            left: 0;
+          }
+        }
+
+        &:last-child {
+          padding-right: 0;
+
+          &:before {
+            right: 0;
+          }
+
+          &:after {
+            content: none;
+          }
+        }
+
+        &:before {
+          background-color: black;
+          opacity: 0.25;
+          position: absolute;
+          left: 12px;
+          right: 12px;
+          top: 100%;
+          content: '';
+          height: 1px;
+        }
+
+        &:after {
+          background-color: black;
+          opacity: 0.25;
+          position: absolute;
+          bottom: 12px;
+          top: 12px;
+          left: 100%;
+          content: '';
+          width: 1px;
+        }
+      }
+    }
+  }
+
+  .ledger-addresses-navigation {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 16px;
+
+    @media (min-width: 480px) {
+      margin-top: 0;
+    }
+
+    .ledger-addresses-navigation-button {
+      padding: 0;
+      margin: 0;
+      font-weight: 700;
+      line-height: 1;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      border: none;
+      background-color: rgba(black, 0.25);
+
+      svg {
+        color: rgba(black, 0.5);
+      }
+
+      &.ledger-addresses-navigation-button-disabled {
+        pointer-events: none;
+        background-color: rgba(black, 0.0625);
+
+        svg {
+          color: rgba(black, 0.125);
+        }
+      }
+    }
+  }
+
+  .ledger-addresses-button {
+    align-self: center;
+    margin-top: 16px;
+    border-radius: 8px;
+    border: none;
+  }
+}

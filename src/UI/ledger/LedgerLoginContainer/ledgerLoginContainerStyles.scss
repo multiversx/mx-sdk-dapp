@@ -1,0 +1,60 @@
+.ledger-login-container {
+  padding: 48px 16px;
+
+  .ledger-modal-dialog-content {
+    border-radius: 24px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    max-height: 100%;
+    box-shadow: none;
+    max-width: 420px;
+    // overflow: scroll;
+    // overflow-x: hidden;
+
+    // &::-webkit-scrollbar {
+    //   width: 6px;
+    // }
+
+    // &::-webkit-scrollbar-track {
+    //   background-color: transparent;
+    // }
+
+    // &::-webkit-scrollbar-thumb {
+    //   background-color: rgba(black, 0.25);
+    //   border-radius: 20px;
+
+    //   &:hover {
+    //     background-color: rgba(black, 0.25);
+    //     border-radius: 20px;
+    //   }
+    // }
+
+    .ledger-modal-header {
+      position: absolute;
+      background-color: transparent;
+      padding: 0;
+      right: 20px;
+      top: 16px;
+
+      .ledger-modal-header-text {
+        display: none;
+      }
+
+      .ledger-modal-close-button {
+        float: none;
+        position: relative;
+        top: auto;
+        padding: 0;
+      }
+    }
+
+    .ledger-modal-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      justify-content: center;
+    }
+  }
+}

@@ -1,12 +1,14 @@
 import React, { useEffect, useState, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { getTrimmedHash } from 'utils';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
-import { WithClassnameType } from '../../types';
+
+import type { WithClassnameType } from 'UI/types';
+
+import styles from './addressRowStyles.scss';
 
 export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
@@ -48,16 +50,9 @@ export const AddressRow = ({
   }, []);
 
   return (
-    <tr className={className}>
-      <td className={globalStyles.textLeft}>
-        <div
-          className={classNames(
-            globalStyles.flexRow,
-            globalStyles.alignItemsStart,
-            globalStyles.textLeft,
-            globalStyles.formCheck
-          )}
-        >
+    <tr className={classNames(className, styles.ledgerTableAddressRow)}>
+      <td>
+        <div className={styles.ledgerTableAddressRowData}>
           <input
             type='radio'
             id={`check_${index}`}
@@ -65,40 +60,31 @@ export const AddressRow = ({
             onChange={handleChange}
             role='button'
             checked={selectedAddress === address}
-            className={classNames(
-              globalStyles.formCheckInput,
-              globalStyles.mr1
-            )}
+            className={styles.ledgerTableAddressRowDataInput}
           />
 
           <label
             htmlFor={`check_${index}`}
             role='button'
             data-testid={`label_${index}`}
-            className={classNames(
-              globalStyles.formCheckLabel,
-              globalStyles.textNowrap,
-              globalStyles.m0
-            )}
+            className={styles.ledgerTableAddressRowDataLabel}
           >
-            <div
-              className={classNames(
-                globalStyles.flexRow,
-                globalStyles.alignItemsCenter,
-                globalStyles.textNowrap
-              )}
-            >
+            <div className={styles.ledgerTableAddressRowDataValue}>
               <span>{getTrimmedHash(address)}</span>
             </div>
           </label>
         </div>
       </td>
 
-      <td className={globalStyles.textLeft}>
-        <FormatAmount value={balance} egldLabel={getEgldLabel()} />
+      <td>
+        <div className={styles.ledgerTableAddressRowData}>
+          <FormatAmount value={balance} egldLabel={getEgldLabel()} />
+        </div>
       </td>
 
-      <td className={globalStyles.textLeft}>{index}</td>
+      <td>
+        <div className={styles.ledgerTableAddressRowData}>{index}</div>
+      </td>
     </tr>
   );
 };

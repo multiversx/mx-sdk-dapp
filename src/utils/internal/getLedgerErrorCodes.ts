@@ -1,6 +1,6 @@
 import { ledgerErrorCodes } from 'constants/ledgerErrorCodes';
 
-const ledgerAppErrorText = 'Check if MultiversX app is open on Ledger';
+const ledgerAppErrorText = 'Check if the MultiversX app is open on Ledger';
 const notConnectedCode = 0x6e01;
 const wrongClaCode = 0x6e00;
 const inactiveAppCodes = [notConnectedCode, wrongClaCode];

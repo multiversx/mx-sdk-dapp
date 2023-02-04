@@ -10,9 +10,11 @@ import { PageState } from 'UI/PageState';
 
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
-import { AddressTable } from './AddressTable';
-import { ConfirmAddress } from './ConfirmAddress';
-import { LedgerConnect } from './LedgerConnect';
+import { AddressTable } from './components/AddressTable';
+import { ConfirmAddress } from './components/ConfirmAddress';
+import { LedgerConnect } from './components/LedgerConnect';
+
+import styles from './ledgerLoginContainerStyles.scss';
 
 const ledgerWaitingText = 'Waiting for device';
 
@@ -25,7 +27,7 @@ export interface LedgerLoginContainerPropsType
 
 export const LedgerLoginContainer = ({
   callbackRoute,
-  className = 'dapp-ledger-login-container',
+  className = styles.ledgerLoginContainer,
   wrapContentInsideModal = true,
   onClose,
   onLoginRedirect,
@@ -53,14 +55,8 @@ export const LedgerLoginContainer = ({
   ] = useLedgerLogin({ callbackRoute, token, onLoginRedirect, nativeAuth });
 
   function getContent() {
-    if (isLoading) {
-      return (
-        <PageState
-          icon={faCircleNotch}
-          iconClass={classes.spinner}
-          title={ledgerWaitingText}
-        />
-      );
+    if (true) {
+      return <PageState icon={faCircleNotch} iconClass={classes.spinner} />;
     }
     if (ledgerAccount != null && !error) {
       return <ConfirmAddress token={token} />;
@@ -90,7 +86,12 @@ export const LedgerLoginContainer = ({
       modalConfig={{
         headerText: 'Login with ledger',
         showHeader: true,
-        modalDialogClassName: className
+        modalDialogClassName: className,
+        modalContentClassName: styles.ledgerModalDialogContent,
+        modalHeaderClassName: styles.ledgerModalHeader,
+        modalHeaderTextClassName: styles.ledgerModalHeaderText,
+        modalCloseButtonClassName: styles.ledgerModalCloseButton,
+        modalBodyClassName: styles.ledgerModalBody
       }}
     >
       {getContent()}

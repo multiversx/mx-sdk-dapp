@@ -1,11 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
-import { WithClassnameType } from '../../types';
+
+import type { WithClassnameType } from 'UI/types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export interface ConfirmAddressPropsType extends WithClassnameType {
   token?: string;

@@ -1,0 +1,64 @@
+.ledger-table-address-row {
+  &:last-child .ledger-table-address-row-data:before {
+    content: none;
+  }
+
+  td {
+    .ledger-table-address-row-data {
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      line-height: 1;
+      justify-content: center;
+      position: relative;
+
+      &:before {
+        background-color: black;
+        opacity: 0.25;
+        position: absolute;
+        left: 12px;
+        right: 12px;
+        top: 100%;
+        content: '';
+        height: 1px;
+      }
+
+      &:after {
+        background-color: black;
+        opacity: 0.25;
+        position: absolute;
+        bottom: 12px;
+        top: 12px;
+        left: 100%;
+        content: '';
+        width: 1px;
+      }
+
+      .ledger-table-address-row-data-label {
+        margin-bottom: 0;
+        margin-left: 8px;
+      }
+    }
+
+    &:first-child .ledger-table-address-row-data {
+      padding-left: 0;
+      justify-content: flex-start;
+
+      &:before {
+        left: 0;
+      }
+    }
+
+    &:last-child .ledger-table-address-row-data {
+      padding-right: 0;
+
+      &:before {
+        right: 0;
+      }
+
+      &:after {
+        content: none;
+      }
+    }
+  }
+}

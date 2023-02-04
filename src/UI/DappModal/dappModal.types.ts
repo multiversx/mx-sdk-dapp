@@ -6,6 +6,7 @@ export interface DappModalConfig {
   modalDialogClassName?: string;
   modalContentClassName?: string;
   modalHeaderClassName?: string;
+  modalHeaderTextClassName?: string;
   modalCloseButtonClassName?: string;
   modalBodyClassName?: string;
   modalFooterClassName?: string;
