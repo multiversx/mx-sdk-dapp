@@ -6,14 +6,14 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
 
 import type { WithClassnameType } from '../../types';
-import type { innerLedgerComponentsClassNameType } from './types';
+import type { InnerLedgerComponentsClassesType } from './types';
 
 import styles from './confirmAddressStyles.scss';
 
 export interface ConfirmAddressPropsType extends WithClassnameType {
   token?: string;
   noBorder?: boolean;
-  confirmAddressComponentsClassName?: innerLedgerComponentsClassNameType;
+  confirmAddressComponentsClasses?: InnerLedgerComponentsClassesType;
   customContentComponent?: ReactNode;
 }
 
@@ -21,7 +21,7 @@ export const ConfirmAddress = ({
   token,
   className = 'dapp-ledger-confirm-address',
   customContentComponent,
-  confirmAddressComponentsClassName
+  confirmAddressComponentsClasses
 }: ConfirmAddressPropsType) => {
   const { ledgerAccount } = useGetAccountInfo();
   const tokenLogin = useSelector(tokenLoginSelector);
@@ -32,7 +32,7 @@ export const ConfirmAddress = ({
       <h4
         className={classNames(
           styles.ledgerConfirmAddressHeading,
-          confirmAddressComponentsClassName?.ledgerModalTitleClassName
+          confirmAddressComponentsClasses?.ledgerModalTitleClassName
         )}
       >
         Confirm Ledger Address
@@ -44,7 +44,7 @@ export const ConfirmAddress = ({
         <div
           className={classNames(
             styles.ledgerConfirmAddressDescription,
-            confirmAddressComponentsClassName?.ledgerModalConfirmDescriptionClassName
+            confirmAddressComponentsClasses?.ledgerModalConfirmDescriptionClassName
           )}
         >
           For security, please confirm that your address:
@@ -53,7 +53,7 @@ export const ConfirmAddress = ({
         <div
           className={classNames(
             styles.ledgerConfirmAddressData,
-            confirmAddressComponentsClassName?.ledgerModalConfirmDataClassName
+            confirmAddressComponentsClasses?.ledgerModalConfirmDataClassName
           )}
         >
           <>{ledgerAccount ?? ''}</>
@@ -65,7 +65,7 @@ export const ConfirmAddress = ({
           <div
             className={classNames(
               styles.ledgerConfirmAddressDescription,
-              confirmAddressComponentsClassName?.ledgerModalConfirmDescriptionClassName
+              confirmAddressComponentsClasses?.ledgerModalConfirmDescriptionClassName
             )}
           >
             and Auth Token:
@@ -75,7 +75,7 @@ export const ConfirmAddress = ({
             className={classNames(
               styles.ledgerConfirmAddressData,
               styles.ledgerConfirmAddressDataHighlighted,
-              confirmAddressComponentsClassName?.ledgerModalConfirmDataClassName
+              confirmAddressComponentsClasses?.ledgerModalConfirmDataClassName
             )}
           >
             {`${loginToken}{}`}
@@ -84,7 +84,7 @@ export const ConfirmAddress = ({
           <div
             className={classNames(
               styles.ledgerConfirmAddressDescription,
-              confirmAddressComponentsClassName?.ledgerModalConfirmDescriptionClassName
+              confirmAddressComponentsClasses?.ledgerModalConfirmDescriptionClassName
             )}
           >
             {loginToken
@@ -97,7 +97,7 @@ export const ConfirmAddress = ({
       <div
         className={classNames(
           styles.ledgerConfirmAddressFooter,
-          confirmAddressComponentsClassName?.ledgerModalConfirmFooterClassName
+          confirmAddressComponentsClasses?.ledgerModalConfirmFooterClassName
         )}
       >
         <div>Select Approve on your device to confirm.</div>

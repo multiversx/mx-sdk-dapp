@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import type { WithClassnameType } from '../../types';
-import type { innerLedgerComponentsClassNameType } from './types';
+import type { InnerLedgerComponentsClassesType } from './types';
 
 import { LedgerLoading } from './LedgerLoading';
 import { AddressRow } from './AddressRow';
@@ -29,7 +29,7 @@ export interface AddressTablePropsType extends WithClassnameType {
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
   customContentComponent?: ReactNode;
-  addressTableComponentsClassName?: innerLedgerComponentsClassNameType;
+  addressTableComponentsClasses?: InnerLedgerComponentsClassesType;
 }
 
 export const AddressTable = ({
@@ -42,7 +42,7 @@ export const AddressTable = ({
   onConfirmSelectedAddress,
   onSelectAddress,
   className = 'dapp-ledger-address-table',
-  addressTableComponentsClassName,
+  addressTableComponentsClasses,
   customContentComponent
 }: AddressTablePropsType) => {
   useEffect(() => {
@@ -67,7 +67,7 @@ export const AddressTable = ({
   const columns = [
     LedgerColumnsEnum.Address,
     LedgerColumnsEnum.Balance,
-    LedgerColumnsEnum['#']
+    LedgerColumnsEnum.Hash
   ];
 
   return (
@@ -76,7 +76,7 @@ export const AddressTable = ({
         <div
           className={classNames(
             styles.ledgerAddressTableHeading,
-            addressTableComponentsClassName?.ledgerModalTitleClassName
+            addressTableComponentsClasses?.ledgerModalTitleClassName
           )}
         >
           Access your wallet
@@ -85,7 +85,7 @@ export const AddressTable = ({
         <p
           className={classNames(
             styles.ledgerAddressTableDescription,
-            addressTableComponentsClassName?.ledgerModalSubtitleClassName
+            addressTableComponentsClasses?.ledgerModalSubtitleClassName
           )}
         >
           Choose the wallet you want to access
@@ -98,7 +98,7 @@ export const AddressTable = ({
         <div
           className={classNames(
             styles.ledgerAddressTableHeader,
-            addressTableComponentsClassName?.ledgerModalTableHeadClassName
+            addressTableComponentsClasses?.ledgerModalTableHeadClassName
           )}
         >
           {columns.map((column) => (
@@ -117,7 +117,7 @@ export const AddressTable = ({
               selectedAddress={selectedAddress}
               onSelectAddress={onSelectAddress}
               className={
-                addressTableComponentsClassName?.ledgerModalTableItemClassName
+                addressTableComponentsClasses?.ledgerModalTableItemClassName
               }
             />
           ))}
@@ -136,7 +136,7 @@ export const AddressTable = ({
                 [styles.ledgerAddressTableNavigationButtonDisabled]:
                   startIndex === 0
               },
-              addressTableComponentsClassName?.ledgerModalTableNavigationButtonClassName
+              addressTableComponentsClasses?.ledgerModalTableNavigationButtonClassName
             )}
           >
             <FontAwesomeIcon size='1x' icon={faChevronLeft} />
@@ -156,7 +156,7 @@ export const AddressTable = ({
                 [styles.ledgerAddressTableNavigationButtonDisabled]:
                   accounts.length < 10
               },
-              addressTableComponentsClassName?.ledgerModalTableNavigationButtonClassName
+              addressTableComponentsClasses?.ledgerModalTableNavigationButtonClassName
             )}
           >
             <span className={styles.ledgerAddressTableNavigationButtonLabel}>
@@ -175,7 +175,7 @@ export const AddressTable = ({
             globalStyles.btn,
             globalStyles.btnPrimary,
             styles.ledgerAddressTableButton,
-            addressTableComponentsClassName?.ledgerModalButtonClassName
+            addressTableComponentsClasses?.ledgerModalButtonClassName
           )}
         >
           Confirm

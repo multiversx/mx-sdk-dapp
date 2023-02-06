@@ -1,4 +1,4 @@
-export interface innerLedgerComponentsClassNameType {
+export interface InnerLedgerComponentsClassesType {
   ledgerModalTitleClassName?: string;
   ledgerModalSubtitleClassName?: string;
   ledgerModalButtonClassName?: string;

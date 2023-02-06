@@ -6,7 +6,7 @@ import { ModalContainer } from 'UI/ModalContainer';
 
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
-import type { innerLedgerComponentsClassNameType } from './types';
+import type { InnerLedgerComponentsClassesType } from './types';
 
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
@@ -23,7 +23,7 @@ export interface LedgerLoginContainerPropsType
   onClose?: () => void;
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
-  innerLedgerComponentsClassName?: innerLedgerComponentsClassNameType;
+  innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
 }
 
 export const LedgerLoginContainer = ({
@@ -36,7 +36,7 @@ export const LedgerLoginContainer = ({
   nativeAuth,
   customSpinnerComponent,
   customContentComponent,
-  innerLedgerComponentsClassName
+  innerLedgerComponentsClasses
 }: LedgerLoginContainerPropsType) => {
   const { ledgerAccount } = useGetAccountInfo();
   const [
@@ -59,7 +59,7 @@ export const LedgerLoginContainer = ({
       return (
         <LedgerLoading
           customSpinnerComponent={customSpinnerComponent}
-          ledgerLoadingComponentsClassName={innerLedgerComponentsClassName}
+          ledgerLoadingComponentsClasses={innerLedgerComponentsClasses}
           customContentComponent={customContentComponent}
         />
       );
@@ -69,7 +69,7 @@ export const LedgerLoginContainer = ({
       return (
         <ConfirmAddress
           token={token}
-          confirmAddressComponentsClassName={innerLedgerComponentsClassName}
+          confirmAddressComponentsClasses={innerLedgerComponentsClasses}
           customContentComponent={customContentComponent}
         />
       );
@@ -86,7 +86,7 @@ export const LedgerLoginContainer = ({
           startIndex={startIndex}
           selectedAddress={selectedAddress?.address}
           onConfirmSelectedAddress={onConfirmSelectedAddress}
-          addressTableComponentsClassName={innerLedgerComponentsClassName}
+          addressTableComponentsClasses={innerLedgerComponentsClasses}
           customContentComponent={customContentComponent}
         />
       );
@@ -96,7 +96,7 @@ export const LedgerLoginContainer = ({
       <LedgerConnect
         error={error}
         onClick={onStartLogin}
-        ledgerConnectComponentsClassName={innerLedgerComponentsClassName}
+        ledgerConnectComponentsClasses={innerLedgerComponentsClasses}
         customContentComponent={customContentComponent}
       />
     );
