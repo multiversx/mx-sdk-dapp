@@ -7,10 +7,10 @@ import { ModalContainer } from 'UI/ModalContainer';
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
 
-import { AddressTable } from './components/AddressTable';
-import { ConfirmAddress } from './components/ConfirmAddress';
-import { LedgerLoading } from './components/LedgerLoading';
-import { LedgerConnect } from './components/LedgerConnect';
+import { AddressTable } from './AddressTable';
+import { ConfirmAddress } from './ConfirmAddress';
+import { LedgerLoading } from './LedgerLoading';
+import { LedgerConnect } from './LedgerConnect';
 
 import styles from './ledgerLoginContainerStyles.scss';
 
