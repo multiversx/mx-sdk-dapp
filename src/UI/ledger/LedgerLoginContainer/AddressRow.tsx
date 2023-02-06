@@ -51,9 +51,14 @@ export const AddressRow = ({
 
   return (
     <div
-      className={classNames(className, styles.ledgerAddressTableBodyItem, {
-        [styles.ledgerAddressTableBodyItemSelected]: selectedAddress === address
-      })}
+      className={classNames(
+        styles.ledgerAddressTableBodyItem,
+        {
+          [styles.ledgerAddressTableBodyItemSelected]:
+            selectedAddress === address
+        },
+        className
+      )}
     >
       <div className={styles.ledgerAddressTableBodyItemData}>
         <input

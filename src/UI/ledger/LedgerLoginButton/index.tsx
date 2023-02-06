@@ -1,10 +1,14 @@
 import React, { ReactNode, useState } from 'react';
+
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
-import { OnProviderLoginType } from '../../../types';
-import { WithClassnameType } from '../../types';
+
+import type { OnProviderLoginType } from '../../../types';
+import type { WithClassnameType } from '../../types';
+import type { InnerLedgerComponentsClassNamesType } from '../LedgerLoginContainer/types';
+
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
 
 export interface LedgerLoginButtonPropsType
@@ -19,6 +23,8 @@ export interface LedgerLoginButtonPropsType
   wrapContentInsideModal?: boolean;
   hideButtonWhenModalOpens?: boolean;
   disabled?: boolean;
+  customSpinnerComponent?: ReactNode;
+  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
 }
 
 export const LedgerLoginButton: (
@@ -37,7 +43,9 @@ export const LedgerLoginButton: (
   wrapContentInsideModal = true,
   hideButtonWhenModalOpens = false,
   onLoginRedirect,
-  disabled
+  disabled,
+  customSpinnerComponent,
+  innerLedgerComponentsClassNames
 }) => {
   const isLoggedIn = useGetIsLoggedIn();
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
@@ -73,6 +81,7 @@ export const LedgerLoginButton: (
           {children}
         </LoginButton>
       )}
+
       {canShowLoginModal && (
         <LedgerLoginContainer
           className={modalClassName}
@@ -82,6 +91,8 @@ export const LedgerLoginButton: (
           wrapContentInsideModal={wrapContentInsideModal}
           onClose={handleCloseModal}
           onLoginRedirect={onLoginRedirect}
+          customSpinnerComponent={customSpinnerComponent}
+          innerLedgerComponentsClassNames={innerLedgerComponentsClassNames}
         />
       )}
     </>

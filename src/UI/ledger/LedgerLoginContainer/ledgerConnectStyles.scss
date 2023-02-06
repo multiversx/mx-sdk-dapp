@@ -2,6 +2,7 @@
 
 .login-connect-container {
   color: inherit;
+  width: 100%;
 
   .login-connect-container-content {
     text-align: center;
@@ -28,11 +29,12 @@
     }
 
     .login-connect-container-icon {
-      max-width: 100%;
-      margin: 48px 0;
+      width: 100%;
+      max-width: 288px;
+      margin: 48px auto;
 
       @media (min-width: 480px) {
-        margin: 100px 0;
+        margin: 100px auto;
       }
     }
 

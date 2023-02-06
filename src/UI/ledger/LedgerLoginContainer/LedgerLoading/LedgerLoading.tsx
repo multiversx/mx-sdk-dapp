@@ -4,23 +4,51 @@ import classNames from 'classnames';
 
 import { PageState } from 'UI/PageState';
 
+import type { LedgerLoadingPropsType } from './types';
+
 import globals from 'assets/sass/main.scss';
 import styles from './ledgerLoadingStyles.scss';
 
-export const LedgerLoading = () => (
-  <div className={styles.ledgerLoadingWrapper}>
-    <div className={styles.ledgerLoadingHeading}>Waiting for device...</div>
+export const LedgerLoading = (props: LedgerLoadingPropsType) => {
+  const {
+    customSpinnerComponent,
+    innerLedgerComponentsClassNames,
+    customContentComponent
+  } = props;
 
-    <p className={styles.ledgerLoadingDescription}>
-      It may take a few seconds...
-    </p>
+  return (
+    <div className={styles.ledgerLoadingWrapper}>
+      <div
+        className={classNames(
+          styles.ledgerLoadingHeading,
+          innerLedgerComponentsClassNames?.modalLedgerTitleClassName
+        )}
+      >
+        Waiting for device...
+      </div>
 
-    <div className={styles.ledgerLoadingSpinner}>
-      <PageState
-        iconSize='10x'
-        icon={faCircleNotch}
-        iconClass={classNames('fa-spin', globals.textPrimary)}
-      />
+      <p
+        className={classNames(
+          styles.ledgerLoadingDescription,
+          innerLedgerComponentsClassNames?.modalLedgerSubtitleClassName
+        )}
+      >
+        It may take a few seconds...
+      </p>
+
+      {customContentComponent}
+
+      <div className={styles.ledgerLoadingSpinner}>
+        {customSpinnerComponent ? (
+          customSpinnerComponent
+        ) : (
+          <PageState
+            iconSize='10x'
+            icon={faCircleNotch}
+            iconClass={classNames('fa-spin', globals.textPrimary)}
+          />
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};

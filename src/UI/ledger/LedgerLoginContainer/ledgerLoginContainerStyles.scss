@@ -1,6 +1,10 @@
 .ledger-login-container {
   padding: 48px 16px;
 
+  @media (min-width: 768px) {
+    padding: 48px 40px;
+  }
+
   .ledger-modal-dialog-content {
     border-radius: 24px;
     border: none;

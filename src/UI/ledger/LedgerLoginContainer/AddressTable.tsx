@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import {
   faChevronLeft,
   faChevronRight
@@ -7,9 +7,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import type { WithClassnameType } from 'UI/types';
+import type { InnerLedgerComponentsClassNamesType } from './types';
 
-import { AddressRow } from './components/AddressRow';
-import { LedgerLoading } from '../LedgerLoading';
+import { LedgerLoading } from './LedgerLoading';
+import { AddressRow } from './AddressRow';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './addressTableStyles.scss';
@@ -25,6 +26,8 @@ export interface AddressTablePropsType extends WithClassnameType {
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
+  customContentComponent?: ReactNode;
+  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
 }
 
 export const AddressTable = ({
@@ -36,7 +39,9 @@ export const AddressTable = ({
   onGoToNextPage,
   onConfirmSelectedAddress,
   onSelectAddress,
-  className = 'dapp-ledger-address-table'
+  className = 'dapp-ledger-address-table',
+  innerLedgerComponentsClassNames,
+  customContentComponent
 }: AddressTablePropsType) => {
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
@@ -62,17 +67,34 @@ export const AddressTable = ({
   return (
     <div className={classNames(styles.ledgerAddressTableWrapper, className)}>
       <div className={styles.ledgerAddressTableTop}>
-        <div className={styles.ledgerAddressTableHeading}>
+        <div
+          className={classNames(
+            styles.ledgerAddressTableHeading,
+            innerLedgerComponentsClassNames?.modalLedgerTitleClassName
+          )}
+        >
           Access your wallet
         </div>
 
-        <p className={styles.ledgerAddressTableDescription}>
+        <p
+          className={classNames(
+            styles.ledgerAddressTableDescription,
+            innerLedgerComponentsClassNames?.modalLedgerSubtitleClassName
+          )}
+        >
           Choose the wallet you want to access
         </p>
       </div>
 
+      {customContentComponent}
+
       <div className={styles.ledgerAddressTable}>
-        <div className={styles.ledgerAddressTableHeader}>
+        <div
+          className={classNames(
+            styles.ledgerAddressTableHeader,
+            innerLedgerComponentsClassNames?.modalLedgerTableHeadClassName
+          )}
+        >
           {columns.map((column) => (
             <div key={column} className={styles.ledgerAddressTableHeaderItem}>
               {column}
@@ -88,6 +110,9 @@ export const AddressTable = ({
               index={index + startIndex * ADDRESSES_PER_PAGE}
               selectedAddress={selectedAddress}
               onSelectAddress={onSelectAddress}
+              className={
+                innerLedgerComponentsClassNames?.modalLedgerTableItemClassName
+              }
             />
           ))}
         </div>
@@ -135,7 +160,8 @@ export const AddressTable = ({
           className={classNames(
             globalStyles.btn,
             globalStyles.btnPrimary,
-            styles.ledgerAddressTableButton
+            styles.ledgerAddressTableButton,
+            innerLedgerComponentsClassNames?.modalLedgerButtonClassName
           )}
         >
           Confirm
