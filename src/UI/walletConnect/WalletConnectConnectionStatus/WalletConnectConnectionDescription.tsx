@@ -2,9 +2,11 @@ import React, { ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+import { WithClassnameType } from '../../types';
+
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { WithClassnameType } from 'UI/types';
 
 export interface WalletConnectConnectionStatusType {
   icon?: IconProp | IconDefinition | null;

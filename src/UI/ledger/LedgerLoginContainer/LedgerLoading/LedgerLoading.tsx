@@ -12,7 +12,7 @@ import styles from './ledgerLoadingStyles.scss';
 export const LedgerLoading = (props: LedgerLoadingPropsType) => {
   const {
     customSpinnerComponent,
-    innerLedgerComponentsClassNames,
+    ledgerLoadingComponentsClassName,
     customContentComponent
   } = props;
 
@@ -21,7 +21,7 @@ export const LedgerLoading = (props: LedgerLoadingPropsType) => {
       <div
         className={classNames(
           styles.ledgerLoadingHeading,
-          innerLedgerComponentsClassNames?.modalLedgerTitleClassName
+          ledgerLoadingComponentsClassName?.ledgerModalTitleClassName
         )}
       >
         Waiting for device...
@@ -30,7 +30,7 @@ export const LedgerLoading = (props: LedgerLoadingPropsType) => {
       <p
         className={classNames(
           styles.ledgerLoadingDescription,
-          innerLedgerComponentsClassNames?.modalLedgerSubtitleClassName
+          ledgerLoadingComponentsClassName?.ledgerModalSubtitleClassName
         )}
       >
         It may take a few seconds...

@@ -6,11 +6,13 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import type { WithClassnameType } from 'UI/types';
-import type { InnerLedgerComponentsClassNamesType } from './types';
+import type { WithClassnameType } from '../../types';
+import type { innerLedgerComponentsClassNameType } from './types';
 
 import { LedgerLoading } from './LedgerLoading';
 import { AddressRow } from './AddressRow';
+
+import { LedgerColumnsEnum } from './enums';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './addressTableStyles.scss';
@@ -27,7 +29,7 @@ export interface AddressTablePropsType extends WithClassnameType {
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
   customContentComponent?: ReactNode;
-  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
+  addressTableComponentsClassName?: innerLedgerComponentsClassNameType;
 }
 
 export const AddressTable = ({
@@ -40,7 +42,7 @@ export const AddressTable = ({
   onConfirmSelectedAddress,
   onSelectAddress,
   className = 'dapp-ledger-address-table',
-  innerLedgerComponentsClassNames,
+  addressTableComponentsClassName,
   customContentComponent
 }: AddressTablePropsType) => {
   useEffect(() => {
@@ -62,7 +64,11 @@ export const AddressTable = ({
     return <LedgerLoading />;
   }
 
-  const columns = ['Address', 'Balance', '#'];
+  const columns = [
+    LedgerColumnsEnum.Address,
+    LedgerColumnsEnum.Balance,
+    LedgerColumnsEnum['#']
+  ];
 
   return (
     <div className={classNames(styles.ledgerAddressTableWrapper, className)}>
@@ -70,7 +76,7 @@ export const AddressTable = ({
         <div
           className={classNames(
             styles.ledgerAddressTableHeading,
-            innerLedgerComponentsClassNames?.modalLedgerTitleClassName
+            addressTableComponentsClassName?.ledgerModalTitleClassName
           )}
         >
           Access your wallet
@@ -79,7 +85,7 @@ export const AddressTable = ({
         <p
           className={classNames(
             styles.ledgerAddressTableDescription,
-            innerLedgerComponentsClassNames?.modalLedgerSubtitleClassName
+            addressTableComponentsClassName?.ledgerModalSubtitleClassName
           )}
         >
           Choose the wallet you want to access
@@ -92,7 +98,7 @@ export const AddressTable = ({
         <div
           className={classNames(
             styles.ledgerAddressTableHeader,
-            innerLedgerComponentsClassNames?.modalLedgerTableHeadClassName
+            addressTableComponentsClassName?.ledgerModalTableHeadClassName
           )}
         >
           {columns.map((column) => (
@@ -111,7 +117,7 @@ export const AddressTable = ({
               selectedAddress={selectedAddress}
               onSelectAddress={onSelectAddress}
               className={
-                innerLedgerComponentsClassNames?.modalLedgerTableItemClassName
+                addressTableComponentsClassName?.ledgerModalTableItemClassName
               }
             />
           ))}
@@ -124,10 +130,14 @@ export const AddressTable = ({
             type='button'
             onClick={onGoToPrevPage}
             data-testid='prevBtn'
-            className={classNames(styles.ledgerAddressTableNavigationButton, {
-              [styles.ledgerAddressTableNavigationButtonDisabled]:
-                startIndex === 0
-            })}
+            className={classNames(
+              styles.ledgerAddressTableNavigationButton,
+              {
+                [styles.ledgerAddressTableNavigationButtonDisabled]:
+                  startIndex === 0
+              },
+              addressTableComponentsClassName?.ledgerModalTableNavigationButtonClassName
+            )}
           >
             <FontAwesomeIcon size='1x' icon={faChevronLeft} />
 
@@ -140,10 +150,14 @@ export const AddressTable = ({
             type='button'
             onClick={onGoToNextPage}
             data-testid='nextBtn'
-            className={classNames(styles.ledgerAddressTableNavigationButton, {
-              [styles.ledgerAddressTableNavigationButtonDisabled]:
-                accounts.length < 10
-            })}
+            className={classNames(
+              styles.ledgerAddressTableNavigationButton,
+              {
+                [styles.ledgerAddressTableNavigationButtonDisabled]:
+                  accounts.length < 10
+              },
+              addressTableComponentsClassName?.ledgerModalTableNavigationButtonClassName
+            )}
           >
             <span className={styles.ledgerAddressTableNavigationButtonLabel}>
               Next
@@ -161,7 +175,7 @@ export const AddressTable = ({
             globalStyles.btn,
             globalStyles.btnPrimary,
             styles.ledgerAddressTableButton,
-            innerLedgerComponentsClassNames?.modalLedgerButtonClassName
+            addressTableComponentsClassName?.ledgerModalButtonClassName
           )}
         >
           Confirm

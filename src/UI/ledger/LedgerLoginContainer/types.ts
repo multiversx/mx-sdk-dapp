@@ -1,13 +1,14 @@
-export interface InnerLedgerComponentsClassNamesType {
-  modalLedgerTitleClassName?: string;
-  modalLedgerSubtitleClassName?: string;
-  modalLedgerButtonClassName?: string;
-  modalLedgerFooterLinkClassName?: string;
-  modalLedgerErrorClassName?: string;
-  modalLedgerIconClassName?: string;
-  modalLedgerTableHeadClassName?: string;
-  modalLedgerTableItemClassName?: string;
-  modalLedgerConfirmDataClassName?: string;
-  modalLedgerConfirmFooterClassName?: string;
-  modalLedgerConfirmDescriptionClassName?: string;
+export interface innerLedgerComponentsClassNameType {
+  ledgerModalTitleClassName?: string;
+  ledgerModalSubtitleClassName?: string;
+  ledgerModalButtonClassName?: string;
+  ledgerModalFooterLinkClassName?: string;
+  ledgerModalErrorClassName?: string;
+  ledgerModalIconClassName?: string;
+  ledgerModalTableHeadClassName?: string;
+  ledgerModalTableItemClassName?: string;
+  ledgerModalTableNavigationButtonClassName?: string;
+  ledgerModalConfirmDataClassName?: string;
+  ledgerModalConfirmFooterClassName?: string;
+  ledgerModalConfirmDescriptionClassName?: string;
 }

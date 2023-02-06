@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react';
-import type { InnerLedgerComponentsClassNamesType } from '../types';
+import type { innerLedgerComponentsClassNameType } from '../types';
 
 export interface LedgerLoadingPropsType {
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
-  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
+  ledgerLoadingComponentsClassName?: innerLedgerComponentsClassNameType;
 }

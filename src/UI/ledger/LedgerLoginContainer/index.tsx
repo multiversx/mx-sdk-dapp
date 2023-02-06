@@ -6,7 +6,7 @@ import { ModalContainer } from 'UI/ModalContainer';
 
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
-import type { InnerLedgerComponentsClassNamesType } from './types';
+import type { innerLedgerComponentsClassNameType } from './types';
 
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
@@ -14,6 +14,7 @@ import { LedgerLoading } from './LedgerLoading';
 import { LedgerConnect } from './LedgerConnect';
 
 import styles from './ledgerLoginContainerStyles.scss';
+import classNames from 'classnames';
 
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
@@ -22,12 +23,12 @@ export interface LedgerLoginContainerPropsType
   onClose?: () => void;
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
-  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
+  innerLedgerComponentsClassName?: innerLedgerComponentsClassNameType;
 }
 
 export const LedgerLoginContainer = ({
   callbackRoute,
-  className = styles.ledgerLoginContainer,
+  className = 'dapp-ledger-login-container',
   wrapContentInsideModal = true,
   onClose,
   onLoginRedirect,
@@ -35,7 +36,7 @@ export const LedgerLoginContainer = ({
   nativeAuth,
   customSpinnerComponent,
   customContentComponent,
-  innerLedgerComponentsClassNames
+  innerLedgerComponentsClassName
 }: LedgerLoginContainerPropsType) => {
   const { ledgerAccount } = useGetAccountInfo();
   const [
@@ -58,7 +59,7 @@ export const LedgerLoginContainer = ({
       return (
         <LedgerLoading
           customSpinnerComponent={customSpinnerComponent}
-          innerLedgerComponentsClassNames={innerLedgerComponentsClassNames}
+          ledgerLoadingComponentsClassName={innerLedgerComponentsClassName}
           customContentComponent={customContentComponent}
         />
       );
@@ -68,7 +69,7 @@ export const LedgerLoginContainer = ({
       return (
         <ConfirmAddress
           token={token}
-          innerLedgerComponentsClassNames={innerLedgerComponentsClassNames}
+          confirmAddressComponentsClassName={innerLedgerComponentsClassName}
           customContentComponent={customContentComponent}
         />
       );
@@ -85,7 +86,7 @@ export const LedgerLoginContainer = ({
           startIndex={startIndex}
           selectedAddress={selectedAddress?.address}
           onConfirmSelectedAddress={onConfirmSelectedAddress}
-          innerLedgerComponentsClassNames={innerLedgerComponentsClassNames}
+          addressTableComponentsClassName={innerLedgerComponentsClassName}
           customContentComponent={customContentComponent}
         />
       );
@@ -95,7 +96,7 @@ export const LedgerLoginContainer = ({
       <LedgerConnect
         error={error}
         onClick={onStartLogin}
-        innerLedgerComponentsClassNames={innerLedgerComponentsClassNames}
+        ledgerConnectComponentsClassName={innerLedgerComponentsClassName}
         customContentComponent={customContentComponent}
       />
     );
@@ -107,12 +108,12 @@ export const LedgerLoginContainer = ({
       modalConfig={{
         headerText: 'Login with ledger',
         showHeader: true,
-        modalDialogClassName: className,
         modalContentClassName: styles.ledgerModalDialogContent,
         modalHeaderClassName: styles.ledgerModalHeader,
         modalHeaderTextClassName: styles.ledgerModalHeaderText,
         modalCloseButtonClassName: styles.ledgerModalCloseButton,
-        modalBodyClassName: styles.ledgerModalBody
+        modalBodyClassName: styles.ledgerModalBody,
+        modalDialogClassName: classNames(styles.ledgerLoginContainer, className)
       }}
     >
       {getContent()}

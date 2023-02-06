@@ -3,8 +3,8 @@ import classNames from 'classnames';
 
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 
-import type { WithClassnameType } from 'UI/types';
-import type { InnerLedgerComponentsClassNamesType } from './types';
+import type { WithClassnameType } from '../../types';
+import type { innerLedgerComponentsClassNameType } from './types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './ledgerConnectStyles.scss';
@@ -14,7 +14,7 @@ export interface LedgerConnectPropsType extends WithClassnameType {
   error: string;
   connectPageContent?: ReactNode;
   customContentComponent?: ReactNode;
-  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
+  ledgerConnectComponentsClassName?: innerLedgerComponentsClassNameType;
 }
 
 export const LedgerConnect = ({
@@ -23,7 +23,7 @@ export const LedgerConnect = ({
   connectPageContent,
   customContentComponent,
   className = 'dapp-ledger-connect-button',
-  innerLedgerComponentsClassNames
+  ledgerConnectComponentsClassName
 }: LedgerConnectPropsType) => (
   <div className={classNames(styles.loginConnectContainer, className)}>
     <div className={styles.loginConnectContainerContent}>
@@ -34,7 +34,7 @@ export const LedgerConnect = ({
           <div
             className={classNames(
               styles.loginConnectContainerHeading,
-              innerLedgerComponentsClassNames?.modalLedgerTitleClassName
+              ledgerConnectComponentsClassName?.ledgerModalTitleClassName
             )}
           >
             Connect Ledger
@@ -43,7 +43,7 @@ export const LedgerConnect = ({
           <p
             className={classNames(
               styles.loginConnectContainerDescription,
-              innerLedgerComponentsClassNames?.modalLedgerSubtitleClassName
+              ledgerConnectComponentsClassName?.ledgerModalSubtitleClassName
             )}
           >
             Unlock your device &amp; open the MultiversX App
@@ -53,7 +53,7 @@ export const LedgerConnect = ({
             <p
               className={classNames(
                 styles.loginConnectContainerError,
-                innerLedgerComponentsClassNames?.modalLedgerErrorClassName
+                ledgerConnectComponentsClassName?.ledgerModalErrorClassName
               )}
             >
               {error}
@@ -65,7 +65,7 @@ export const LedgerConnect = ({
           <div
             className={classNames(
               styles.loginConnectContainerIcon,
-              innerLedgerComponentsClassNames?.modalLedgerIconClassName
+              ledgerConnectComponentsClassName?.ledgerModalIconClassName
             )}
           >
             <LedgerLogo />
@@ -81,7 +81,7 @@ export const LedgerConnect = ({
             globalStyles.btn,
             globalStyles.btnPrimary,
             styles.loginConnectContainerButton,
-            innerLedgerComponentsClassNames?.modalLedgerButtonClassName
+            ledgerConnectComponentsClassName?.ledgerModalButtonClassName
           )}
         >
           Connect Ledger
@@ -91,7 +91,7 @@ export const LedgerConnect = ({
           href='#'
           className={classNames(
             styles.loginConnectContainerLink,
-            innerLedgerComponentsClassNames?.modalLedgerFooterLinkClassName
+            ledgerConnectComponentsClassName?.ledgerModalFooterLinkClassName
           )}
         >
           Having connection issues?

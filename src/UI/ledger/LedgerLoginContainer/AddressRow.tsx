@@ -6,7 +6,7 @@ import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
-import type { WithClassnameType } from 'UI/types';
+import type { WithClassnameType } from '../../types';
 
 import styles from './addressRowStyles.scss';
 

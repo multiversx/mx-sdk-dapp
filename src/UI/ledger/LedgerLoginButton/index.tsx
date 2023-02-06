@@ -7,7 +7,7 @@ import { LoginButton } from 'UI/LoginButton/LoginButton';
 
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
-import type { InnerLedgerComponentsClassNamesType } from '../LedgerLoginContainer/types';
+import type { innerLedgerComponentsClassNameType } from '../LedgerLoginContainer/types';
 
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
 
@@ -24,7 +24,7 @@ export interface LedgerLoginButtonPropsType
   hideButtonWhenModalOpens?: boolean;
   disabled?: boolean;
   customSpinnerComponent?: ReactNode;
-  innerLedgerComponentsClassNames?: InnerLedgerComponentsClassNamesType;
+  innerLedgerComponentsClassName?: innerLedgerComponentsClassNameType;
 }
 
 export const LedgerLoginButton: (
@@ -45,7 +45,7 @@ export const LedgerLoginButton: (
   onLoginRedirect,
   disabled,
   customSpinnerComponent,
-  innerLedgerComponentsClassNames
+  innerLedgerComponentsClassName
 }) => {
   const isLoggedIn = useGetIsLoggedIn();
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
@@ -92,7 +92,7 @@ export const LedgerLoginButton: (
           onClose={handleCloseModal}
           onLoginRedirect={onLoginRedirect}
           customSpinnerComponent={customSpinnerComponent}
-          innerLedgerComponentsClassNames={innerLedgerComponentsClassNames}
+          innerLedgerComponentsClassName={innerLedgerComponentsClassName}
         />
       )}
     </>
