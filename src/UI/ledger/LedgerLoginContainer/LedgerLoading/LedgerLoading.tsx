@@ -1,18 +1,25 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import { PageState } from 'UI/PageState';
 
-import type { LedgerLoadingPropsType } from './types';
+import type { InnerLedgerComponentsClassesType } from '../types';
 
 import globals from 'assets/sass/main.scss';
 import styles from './ledgerLoadingStyles.scss';
 
+export interface LedgerLoadingPropsType
+  extends InnerLedgerComponentsClassesType {
+  customSpinnerComponent?: ReactNode;
+  customContentComponent?: ReactNode;
+}
+
 export const LedgerLoading = (props: LedgerLoadingPropsType) => {
   const {
     customSpinnerComponent,
-    ledgerLoadingComponentsClasses,
+    ledgerModalTitleClassName,
+    ledgerModalSubtitleClassName,
     customContentComponent
   } = props;
 
@@ -21,7 +28,7 @@ export const LedgerLoading = (props: LedgerLoadingPropsType) => {
       <div
         className={classNames(
           styles.ledgerLoadingHeading,
-          ledgerLoadingComponentsClasses?.ledgerModalTitleClassName
+          ledgerModalTitleClassName
         )}
       >
         Waiting for device...
@@ -30,7 +37,7 @@ export const LedgerLoading = (props: LedgerLoadingPropsType) => {
       <p
         className={classNames(
           styles.ledgerLoadingDescription,
-          ledgerLoadingComponentsClasses?.ledgerModalSubtitleClassName
+          ledgerModalSubtitleClassName
         )}
       >
         It may take a few seconds...

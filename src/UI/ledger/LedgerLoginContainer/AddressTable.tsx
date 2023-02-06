@@ -19,7 +19,9 @@ import styles from './addressTableStyles.scss';
 
 const ADDRESSES_PER_PAGE = 10;
 
-export interface AddressTablePropsType extends WithClassnameType {
+export interface AddressTablePropsType
+  extends WithClassnameType,
+    InnerLedgerComponentsClassesType {
   loading: boolean;
   accounts: string[];
   startIndex: number;
@@ -29,7 +31,6 @@ export interface AddressTablePropsType extends WithClassnameType {
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
   customContentComponent?: ReactNode;
-  addressTableComponentsClasses?: InnerLedgerComponentsClassesType;
 }
 
 export const AddressTable = ({
@@ -42,8 +43,13 @@ export const AddressTable = ({
   onConfirmSelectedAddress,
   onSelectAddress,
   className = 'dapp-ledger-address-table',
-  addressTableComponentsClasses,
-  customContentComponent
+  customContentComponent,
+  ledgerModalTitleClassName,
+  ledgerModalSubtitleClassName,
+  ledgerModalTableHeadClassName,
+  ledgerModalTableItemClassName,
+  ledgerModalButtonClassName,
+  ledgerModalTableNavigationButtonClassName
 }: AddressTablePropsType) => {
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
@@ -76,7 +82,7 @@ export const AddressTable = ({
         <div
           className={classNames(
             styles.ledgerAddressTableHeading,
-            addressTableComponentsClasses?.ledgerModalTitleClassName
+            ledgerModalTitleClassName
           )}
         >
           Access your wallet
@@ -85,7 +91,7 @@ export const AddressTable = ({
         <p
           className={classNames(
             styles.ledgerAddressTableDescription,
-            addressTableComponentsClasses?.ledgerModalSubtitleClassName
+            ledgerModalSubtitleClassName
           )}
         >
           Choose the wallet you want to access
@@ -98,7 +104,7 @@ export const AddressTable = ({
         <div
           className={classNames(
             styles.ledgerAddressTableHeader,
-            addressTableComponentsClasses?.ledgerModalTableHeadClassName
+            ledgerModalTableHeadClassName
           )}
         >
           {columns.map((column) => (
@@ -116,9 +122,7 @@ export const AddressTable = ({
               index={index + startIndex * ADDRESSES_PER_PAGE}
               selectedAddress={selectedAddress}
               onSelectAddress={onSelectAddress}
-              className={
-                addressTableComponentsClasses?.ledgerModalTableItemClassName
-              }
+              className={ledgerModalTableItemClassName}
             />
           ))}
         </div>
@@ -136,7 +140,7 @@ export const AddressTable = ({
                 [styles.ledgerAddressTableNavigationButtonDisabled]:
                   startIndex === 0
               },
-              addressTableComponentsClasses?.ledgerModalTableNavigationButtonClassName
+              ledgerModalTableNavigationButtonClassName
             )}
           >
             <FontAwesomeIcon size='1x' icon={faChevronLeft} />
@@ -156,7 +160,7 @@ export const AddressTable = ({
                 [styles.ledgerAddressTableNavigationButtonDisabled]:
                   accounts.length < 10
               },
-              addressTableComponentsClasses?.ledgerModalTableNavigationButtonClassName
+              ledgerModalTableNavigationButtonClassName
             )}
           >
             <span className={styles.ledgerAddressTableNavigationButtonLabel}>
@@ -175,7 +179,7 @@ export const AddressTable = ({
             globalStyles.btn,
             globalStyles.btnPrimary,
             styles.ledgerAddressTableButton,
-            addressTableComponentsClasses?.ledgerModalButtonClassName
+            ledgerModalButtonClassName
           )}
         >
           Confirm

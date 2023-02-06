@@ -54,13 +54,29 @@ export const LedgerLoginContainer = ({
     }
   ] = useLedgerLogin({ callbackRoute, token, onLoginRedirect, nativeAuth });
 
+  const {
+    ledgerModalTitleClassName,
+    ledgerModalSubtitleClassName,
+    ledgerModalConfirmDescriptionClassName,
+    ledgerModalConfirmDataClassName,
+    ledgerModalConfirmFooterClassName,
+    ledgerModalErrorClassName,
+    ledgerModalIconClassName,
+    ledgerModalButtonClassName,
+    ledgerModalFooterLinkClassName,
+    ledgerModalTableHeadClassName,
+    ledgerModalTableItemClassName,
+    ledgerModalTableNavigationButtonClassName
+  } = innerLedgerComponentsClasses || {};
+
   const getContent = () => {
     if (isLoading) {
       return (
         <LedgerLoading
           customSpinnerComponent={customSpinnerComponent}
-          ledgerLoadingComponentsClasses={innerLedgerComponentsClasses}
           customContentComponent={customContentComponent}
+          ledgerModalTitleClassName={ledgerModalTitleClassName}
+          ledgerModalSubtitleClassName={ledgerModalSubtitleClassName}
         />
       );
     }
@@ -69,8 +85,12 @@ export const LedgerLoginContainer = ({
       return (
         <ConfirmAddress
           token={token}
-          confirmAddressComponentsClasses={innerLedgerComponentsClasses}
           customContentComponent={customContentComponent}
+          ledgerModalConfirmDataClassName={ledgerModalConfirmDataClassName}
+          ledgerModalConfirmFooterClassName={ledgerModalConfirmFooterClassName}
+          ledgerModalConfirmDescriptionClassName={
+            ledgerModalConfirmDescriptionClassName
+          }
         />
       );
     }
@@ -86,8 +106,15 @@ export const LedgerLoginContainer = ({
           startIndex={startIndex}
           selectedAddress={selectedAddress?.address}
           onConfirmSelectedAddress={onConfirmSelectedAddress}
-          addressTableComponentsClasses={innerLedgerComponentsClasses}
           customContentComponent={customContentComponent}
+          ledgerModalTitleClassName={ledgerModalTitleClassName}
+          ledgerModalSubtitleClassName={ledgerModalSubtitleClassName}
+          ledgerModalTableHeadClassName={ledgerModalTableHeadClassName}
+          ledgerModalTableItemClassName={ledgerModalTableItemClassName}
+          ledgerModalButtonClassName={ledgerModalButtonClassName}
+          ledgerModalTableNavigationButtonClassName={
+            ledgerModalTableNavigationButtonClassName
+          }
         />
       );
     }
@@ -96,8 +123,13 @@ export const LedgerLoginContainer = ({
       <LedgerConnect
         error={error}
         onClick={onStartLogin}
-        ledgerConnectComponentsClasses={innerLedgerComponentsClasses}
         customContentComponent={customContentComponent}
+        ledgerModalTitleClassName={ledgerModalTitleClassName}
+        ledgerModalSubtitleClassName={ledgerModalSubtitleClassName}
+        ledgerModalErrorClassName={ledgerModalErrorClassName}
+        ledgerModalIconClassName={ledgerModalIconClassName}
+        ledgerModalButtonClassName={ledgerModalButtonClassName}
+        ledgerModalFooterLinkClassName={ledgerModalFooterLinkClassName}
       />
     );
   };

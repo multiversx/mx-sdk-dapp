@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/619)] - 2023-02-06
 
-- [Breaking change: Ledger authentication panel layout](https://github.com/multiversx/mx-sdk-dapp/pull/619)
+- [Breaking change: Ledger authentication panel layout. For easy adjustments, hook up to the various element class names that became available with this version, in order to fix colors and have more customization accesibility, and have the container be at least 730px on dekstop for the addresses not to break.](https://github.com/multiversx/mx-sdk-dapp/pull/619)
 
 ## [[v2.5.1](https://github.com/multiversx/mx-sdk-dapp/pull/618)] - 2023-02-04
 
