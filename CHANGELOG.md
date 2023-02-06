@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/619)] - 2023-02-06
 
 - [Breaking change: **Ledger authentication panel layout**.
+
   Migration guide:
 - Use `innerLedgerComponentsClasses` for styling Ledger screens.
 - Addresses will trim if container is < 730px, needs to be at least that size.](https://github.com/multiversx/mx-sdk-dapp/pull/619)
