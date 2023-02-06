@@ -13,6 +13,7 @@ export interface DappModalHeaderPropsType extends WithClassnameType {
   headerText?: string;
   customHeader?: JSX.Element | string;
   closeButtonClassName?: string;
+  headerTextClassName?: string;
   onHide?: () => void;
 }
 
@@ -22,6 +23,7 @@ export const DappModalHeader = ({
   customHeader,
   className,
   closeButtonClassName,
+  headerTextClassName,
   onHide
 }: DappModalHeaderPropsType) => {
   if (!visible) {
@@ -34,7 +36,11 @@ export const DappModalHeader = ({
     </div>
   ) : (
     <div className={classNames(styles.dappModalHeader, className)}>
-      <div className={styles.dappModalHeaderText}>{headerText}</div>
+      <div
+        className={classNames(styles.dappModalHeaderText, headerTextClassName)}
+      >
+        {headerText}
+      </div>
 
       <button
         onClick={onHide}

@@ -46,6 +46,7 @@ export const DappModal = ({
     modalDialogClassName = 'dapp-modal-dialog',
     modalContentClassName = 'dapp-modal-dialog-content',
     modalHeaderClassName = 'dapp-modal-dialog-header',
+    modalHeaderTextClassName = 'dapp-modal-dialog-header-text',
     modalCloseButtonClassName = 'dapp-modal-dialog-close-button',
     modalBodyClassName = 'dapp-modal-dialog-content-body',
     modalFooterClassName = 'dapp-modal-dialog-footer',
@@ -68,6 +69,7 @@ export const DappModal = ({
           headerText={headerText}
           customHeader={customModalHeader}
           className={modalHeaderClassName}
+          headerTextClassName={modalHeaderTextClassName}
           closeButtonClassName={modalCloseButtonClassName}
           onHide={onHide}
         />

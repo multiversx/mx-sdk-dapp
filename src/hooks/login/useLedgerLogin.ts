@@ -22,8 +22,7 @@ import { getIsLoggedIn } from '../../utils';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
 
-const failInitializeErrorText =
-  'Could not initialise ledger app, make sure MultiversX app is open';
+const failInitializeErrorText = 'Check if the MultiversX App is open on Ledger';
 
 export interface UseLedgerLoginPropsType extends OnProviderLoginType {
   addressesPerPage?: number;

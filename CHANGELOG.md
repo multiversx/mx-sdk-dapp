@@ -6,10 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/619)] - 2023-02-06
+
+- [Breaking change: **Ledger authentication panel layout**.
+
+  Migration guide:
+- Use `innerLedgerComponentsClasses` for styling Ledger screens.
+- Addresses will trim if container is < 730px, needs to be at least that size.](https://github.com/multiversx/mx-sdk-dapp/pull/619)
+
 ## [[v2.5.1](https://github.com/multiversx/mx-sdk-dapp/pull/618)] - 2023-02-04
+
 - [Fixed ledger cancelled transactions state](https://github.com/multiversx/mx-sdk-dapp/pull/617)
 
 ## [[v2.5.0](https://github.com/multiversx/mx-sdk-dapp/pull/615)] - 2023-02-04
+
 - [Fix sign transactions with web wallet when data field is empty](https://github.com/multiversx/mx-sdk-dapp/pull/614)
 - [Added missing attributes of transaction types](https://github.com/multiversx/mx-sdk-dapp/pull/613)
 - [Add Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)

@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import {
   faChevronLeft,
-  faChevronRight,
-  faCircleNotch
+  faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { PageState } from 'UI/PageState';
+import type { WithClassnameType } from '../../types';
 
-import { WithClassnameType } from '../../types';
+import { LedgerLoading } from './LedgerLoading';
 import { AddressRow } from './AddressRow';
+
+import { LedgerColumnsEnum } from './enums';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './addressTableStyles.scss';
 
-const LEDGER_WAITING_TEXT = 'Waiting for device';
 const ADDRESSES_PER_PAGE = 10;
 
 export interface AddressTablePropsType extends WithClassnameType {
@@ -27,6 +27,17 @@ export interface AddressTablePropsType extends WithClassnameType {
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
+  customContentComponent?: ReactNode;
+  addressTableClassNames?: {
+    ledgerModalTitleClassName?: string;
+    ledgerModalSubtitleClassName?: string;
+    ledgerModalTableHeadClassName?: string;
+    ledgerModalTableItemClassName?: string;
+    ledgerModalButtonClassName?: string;
+    ledgerModalTableNavigationButtonClassName?: string;
+    ledgerModalTableSelectedItemClassName?: string;
+    ledgerModalTableNavigationButtonDisabledClassName?: string;
+  };
 }
 
 export const AddressTable = ({
@@ -38,41 +49,20 @@ export const AddressTable = ({
   onGoToNextPage,
   onConfirmSelectedAddress,
   onSelectAddress,
-  className = 'dapp-ledger-address-table'
+  className = 'dapp-ledger-address-table',
+  customContentComponent,
+  addressTableClassNames
 }: AddressTablePropsType) => {
-  const classes = {
-    wrapper: classNames(globalStyles.card, globalStyles.px4, className),
-    cardBody: classNames(globalStyles.cardBody, globalStyles.p4),
-    tableWrapper: globalStyles.tableResponsive,
-    tableContent: classNames(
-      styles.ledgerAddressTable,
-      globalStyles.table,
-      globalStyles.m0,
-      globalStyles.borderBottom
-    ),
-    tableHeader: classNames(
-      globalStyles.py2,
-      globalStyles.textBlack50,
-      globalStyles.borderBottom
-    ),
-    tableHeaderText: classNames(globalStyles.textLeft, globalStyles.border0),
-    buttonsWrapper: classNames(
-      globalStyles.dFlex,
-      globalStyles.justifyContentCenter,
-      globalStyles.mt2
-    ),
-    arrowButton: classNames(
-      globalStyles.btn,
-      globalStyles.btnLink,
-      globalStyles.mx2
-    ),
-    confirmButton: classNames(
-      globalStyles.btn,
-      globalStyles.btnPrimary,
-      globalStyles.px4,
-      globalStyles.mt4
-    )
-  };
+  const {
+    ledgerModalTitleClassName,
+    ledgerModalSubtitleClassName,
+    ledgerModalTableHeadClassName,
+    ledgerModalTableItemClassName,
+    ledgerModalButtonClassName,
+    ledgerModalTableNavigationButtonClassName,
+    ledgerModalTableSelectedItemClassName,
+    ledgerModalTableNavigationButtonDisabledClassName
+  } = addressTableClassNames || {};
 
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
@@ -90,84 +80,129 @@ export const AddressTable = ({
   }, [accounts, selectedAddress, loading, startIndex]);
 
   if (loading) {
-    return (
-      <PageState
-        icon={faCircleNotch}
-        iconClass={`fa-spin ${globalStyles.textPrimary}`}
-        title={LEDGER_WAITING_TEXT}
-      />
-    );
+    return <LedgerLoading />;
   }
+
+  const columns = [
+    LedgerColumnsEnum.Address,
+    LedgerColumnsEnum.Balance,
+    LedgerColumnsEnum.Hash
+  ];
+
   return (
-    <>
-      <div className={globalStyles.mAuto}>
-        <div className={classes.wrapper}>
-          <div className={classes.cardBody}>
-            <div className={classes.tableWrapper} data-testid='ledgerAddresses'>
-              <table className={classes.tableContent}>
-                <thead className={classes.tableHeader}>
-                  <tr>
-                    <th className={classes.tableHeaderText}>Address</th>
-                    <th className={classes.tableHeaderText}>Balance</th>
-                    <th className={classes.tableHeaderText}>#</th>
-                  </tr>
-                </thead>
+    <div className={classNames(styles.ledgerAddressTableWrapper, className)}>
+      <div className={styles.ledgerAddressTableTop}>
+        <div
+          className={classNames(
+            styles.ledgerAddressTableHeading,
+            ledgerModalTitleClassName
+          )}
+        >
+          Access your wallet
+        </div>
 
-                <tbody data-testid='addressesTable'>
-                  {accounts.map((address, index) => {
-                    const key = index + startIndex * ADDRESSES_PER_PAGE;
+        <p
+          className={classNames(
+            styles.ledgerAddressTableDescription,
+            ledgerModalSubtitleClassName
+          )}
+        >
+          Choose the wallet you want to access
+        </p>
+      </div>
 
-                    return (
-                      <AddressRow
-                        key={key}
-                        address={address}
-                        index={key}
-                        selectedAddress={selectedAddress}
-                        onSelectAddress={onSelectAddress}
-                      />
-                    );
-                  })}
-                </tbody>
-              </table>
+      {customContentComponent}
+
+      <div className={styles.ledgerAddressTable}>
+        <div
+          className={classNames(
+            styles.ledgerAddressTableHeader,
+            ledgerModalTableHeadClassName
+          )}
+        >
+          {columns.map((column) => (
+            <div key={column} className={styles.ledgerAddressTableHeaderItem}>
+              {column}
             </div>
+          ))}
+        </div>
 
-            <div className={classes.buttonsWrapper}>
-              <button
-                type='button'
-                className={classes.arrowButton}
-                onClick={onGoToPrevPage}
-                data-testid='prevBtn'
-                disabled={startIndex === 0}
-              >
-                <FontAwesomeIcon size='sm' icon={faChevronLeft} /> Prev
-              </button>
-
-              <button
-                type='button'
-                className={classNames(
-                  classes.arrowButton,
-                  globalStyles.linkSecondStyle
-                )}
-                onClick={onGoToNextPage}
-                data-testid='nextBtn'
-              >
-                Next <FontAwesomeIcon size='sm' icon={faChevronRight} />
-              </button>
-            </div>
-
-            <div className={globalStyles.centering}>
-              <button
-                className={classes.confirmButton}
-                disabled={selectedAddress === ''}
-                onClick={onConfirmSelectedAddress}
-                data-testid='confirmBtn'
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
+        <div className={styles.ledgerAddressTableBody}>
+          {accounts.map((address, index) => (
+            <AddressRow
+              address={address}
+              key={index + startIndex * ADDRESSES_PER_PAGE}
+              index={index + startIndex * ADDRESSES_PER_PAGE}
+              selectedAddress={selectedAddress}
+              onSelectAddress={onSelectAddress}
+              className={ledgerModalTableItemClassName}
+              ledgerModalTableSelectedItemClassName={
+                ledgerModalTableSelectedItemClassName
+              }
+            />
+          ))}
         </div>
       </div>
-    </>
+
+      <div className={styles.ledgerAddressTableBottom}>
+        <div className={styles.ledgerAddressTableNavigation}>
+          <button
+            type='button'
+            onClick={onGoToPrevPage}
+            data-testid='prevBtn'
+            className={classNames(
+              styles.ledgerAddressTableNavigationButton,
+              {
+                [ledgerModalTableNavigationButtonDisabledClassName ?? '']:
+                  startIndex === 0,
+                [styles.ledgerAddressTableNavigationButtonDisabled]:
+                  startIndex === 0
+              },
+              ledgerModalTableNavigationButtonClassName
+            )}
+          >
+            <FontAwesomeIcon size='1x' icon={faChevronLeft} />
+
+            <span className={styles.ledgerAddressTableNavigationButtonLabel}>
+              Prev
+            </span>
+          </button>
+
+          <button
+            type='button'
+            onClick={onGoToNextPage}
+            data-testid='nextBtn'
+            className={classNames(
+              styles.ledgerAddressTableNavigationButton,
+              {
+                [styles.ledgerAddressTableNavigationButtonDisabled]:
+                  accounts.length < 10
+              },
+              ledgerModalTableNavigationButtonClassName
+            )}
+          >
+            <span className={styles.ledgerAddressTableNavigationButtonLabel}>
+              Next
+            </span>
+
+            <FontAwesomeIcon size='1x' icon={faChevronRight} />
+          </button>
+        </div>
+
+        <button
+          disabled={selectedAddress === ''}
+          onClick={onConfirmSelectedAddress}
+          data-testid='confirmBtn'
+          className={classNames(
+            globalStyles.btn,
+            globalStyles.btnPrimary,
+            styles.ledgerAddressTableButton,
+            ledgerModalButtonClassName
+          )}
+        >
+          Access Wallet
+        </button>
+      </div>
+    </div>
   );
 };

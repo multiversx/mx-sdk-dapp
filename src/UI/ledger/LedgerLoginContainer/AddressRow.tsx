@@ -1,18 +1,21 @@
 import React, { useEffect, useState, SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
+import { Trim } from 'UI/Trim';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
-import { getTrimmedHash } from 'utils';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
-import { WithClassnameType } from '../../types';
+
+import type { WithClassnameType } from '../../types';
+
+import styles from './addressRowStyles.scss';
 
 export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
   index: number;
   address: string;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
+  ledgerModalTableSelectedItemClassName?: string;
 }
 
 const noBalance = '...';
@@ -22,7 +25,8 @@ export const AddressRow = ({
   index,
   selectedAddress,
   onSelectAddress,
-  className = 'dapp-ledger-address-row'
+  className = 'dapp-ledger-address-row',
+  ledgerModalTableSelectedItemClassName
 }: AddressRowPropsType) => {
   const [balance, setBalance] = useState(noBalance);
 
@@ -48,57 +52,46 @@ export const AddressRow = ({
   }, []);
 
   return (
-    <tr className={className}>
-      <td className={globalStyles.textLeft}>
-        <div
-          className={classNames(
-            globalStyles.flexRow,
-            globalStyles.alignItemsStart,
-            globalStyles.textLeft,
-            globalStyles.formCheck
-          )}
+    <div
+      className={classNames(
+        styles.ledgerAddressTableBodyItem,
+        {
+          [ledgerModalTableSelectedItemClassName ?? '']:
+            selectedAddress === address,
+          [styles.ledgerAddressTableBodyItemSelected]:
+            selectedAddress === address
+        },
+        className
+      )}
+    >
+      <div className={styles.ledgerAddressTableBodyItemData}>
+        <input
+          type='radio'
+          id={`check_${index}`}
+          data-testid={`check_${index}`}
+          onChange={handleChange}
+          role='button'
+          checked={selectedAddress === address}
+          className={styles.ledgerAddressTableBodyItemDataInput}
+        />
+
+        <label
+          htmlFor={`check_${index}`}
+          role='button'
+          data-testid={`label_${index}`}
+          className={styles.ledgerAddressTableBodyItemDataLabel}
         >
-          <input
-            type='radio'
-            id={`check_${index}`}
-            data-testid={`check_${index}`}
-            onChange={handleChange}
-            role='button'
-            checked={selectedAddress === address}
-            className={classNames(
-              globalStyles.formCheckInput,
-              globalStyles.mr1
-            )}
-          />
+          <div className={styles.ledgerAddressTableBodyItemDataValue}>
+            <Trim text={address} />
+          </div>
+        </label>
+      </div>
 
-          <label
-            htmlFor={`check_${index}`}
-            role='button'
-            data-testid={`label_${index}`}
-            className={classNames(
-              globalStyles.formCheckLabel,
-              globalStyles.textNowrap,
-              globalStyles.m0
-            )}
-          >
-            <div
-              className={classNames(
-                globalStyles.flexRow,
-                globalStyles.alignItemsCenter,
-                globalStyles.textNowrap
-              )}
-            >
-              <span>{getTrimmedHash(address)}</span>
-            </div>
-          </label>
-        </div>
-      </td>
-
-      <td className={globalStyles.textLeft}>
+      <div className={styles.ledgerAddressTableBodyItemData}>
         <FormatAmount value={balance} egldLabel={getEgldLabel()} />
-      </td>
+      </div>
 
-      <td className={globalStyles.textLeft}>{index}</td>
-    </tr>
+      <div className={styles.ledgerAddressTableBodyItemData}>{index}</div>
+    </div>
   );
 };
