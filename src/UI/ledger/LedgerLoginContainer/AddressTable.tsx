@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import type { WithClassnameType } from '../../types';
-import type { InnerLedgerComponentsClassesType } from './types';
 
 import { LedgerLoading } from './LedgerLoading';
 import { AddressRow } from './AddressRow';
@@ -19,9 +18,7 @@ import styles from './addressTableStyles.scss';
 
 const ADDRESSES_PER_PAGE = 10;
 
-export interface AddressTablePropsType
-  extends WithClassnameType,
-    InnerLedgerComponentsClassesType {
+export interface AddressTablePropsType extends WithClassnameType {
   loading: boolean;
   accounts: string[];
   startIndex: number;
@@ -31,6 +28,16 @@ export interface AddressTablePropsType
   onGoToNextPage: () => void;
   onConfirmSelectedAddress: () => void;
   customContentComponent?: ReactNode;
+  addressTableClassNames?: {
+    ledgerModalTitleClassName?: string;
+    ledgerModalSubtitleClassName?: string;
+    ledgerModalTableHeadClassName?: string;
+    ledgerModalTableItemClassName?: string;
+    ledgerModalButtonClassName?: string;
+    ledgerModalTableNavigationButtonClassName?: string;
+    ledgerModalTableSelectedItemClassName?: string;
+    ledgerModalTableNavigationButtonDisabledClassName?: string;
+  };
 }
 
 export const AddressTable = ({
@@ -44,15 +51,19 @@ export const AddressTable = ({
   onSelectAddress,
   className = 'dapp-ledger-address-table',
   customContentComponent,
-  ledgerModalTitleClassName,
-  ledgerModalSubtitleClassName,
-  ledgerModalTableHeadClassName,
-  ledgerModalTableItemClassName,
-  ledgerModalButtonClassName,
-  ledgerModalTableNavigationButtonClassName,
-  ledgerModalTableSelectedItemClassName,
-  ledgerModalTableNavigationButtonDisabledClassName
+  addressTableClassNames
 }: AddressTablePropsType) => {
+  const {
+    ledgerModalTitleClassName,
+    ledgerModalSubtitleClassName,
+    ledgerModalTableHeadClassName,
+    ledgerModalTableItemClassName,
+    ledgerModalButtonClassName,
+    ledgerModalTableNavigationButtonClassName,
+    ledgerModalTableSelectedItemClassName,
+    ledgerModalTableNavigationButtonDisabledClassName
+  } = addressTableClassNames || {};
+
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
 

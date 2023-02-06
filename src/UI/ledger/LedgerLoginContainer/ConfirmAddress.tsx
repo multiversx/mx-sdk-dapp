@@ -6,28 +6,35 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
 
 import type { WithClassnameType } from '../../types';
-import type { InnerLedgerComponentsClassesType } from './types';
 
 import styles from './confirmAddressStyles.scss';
 
-export interface ConfirmAddressPropsType
-  extends WithClassnameType,
-    InnerLedgerComponentsClassesType {
+export interface ConfirmAddressPropsType extends WithClassnameType {
   token?: string;
   noBorder?: boolean;
   customContentComponent?: ReactNode;
+  confirmAddressClassNames?: {
+    ledgerModalTitleClassName?: string;
+    ledgerModalConfirmDescriptionClassName?: string;
+    ledgerModalConfirmDataClassName?: string;
+    ledgerModalConfirmFooterClassName?: string;
+  };
 }
 
 export const ConfirmAddress = ({
   token,
   className = 'dapp-ledger-confirm-address',
   customContentComponent,
-  ledgerModalTitleClassName,
-  ledgerModalConfirmDescriptionClassName,
-  ledgerModalConfirmDataClassName,
-  ledgerModalConfirmFooterClassName
+  confirmAddressClassNames
 }: ConfirmAddressPropsType) => {
   const { ledgerAccount } = useGetAccountInfo();
+  const {
+    ledgerModalTitleClassName,
+    ledgerModalConfirmDescriptionClassName,
+    ledgerModalConfirmDataClassName,
+    ledgerModalConfirmFooterClassName
+  } = confirmAddressClassNames || {};
+
   const tokenLogin = useSelector(tokenLoginSelector);
   const loginToken = tokenLogin?.loginToken ?? token;
 

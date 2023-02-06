@@ -4,24 +4,25 @@ import classNames from 'classnames';
 
 import { PageState } from 'UI/PageState';
 
-import type { InnerLedgerComponentsClassesType } from '../types';
-
 import globals from 'assets/sass/main.scss';
 import styles from './ledgerLoadingStyles.scss';
 
-export interface LedgerLoadingPropsType
-  extends InnerLedgerComponentsClassesType {
+export interface LedgerLoadingPropsType {
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
+  ledgerLoadingClassNames?: {
+    ledgerModalTitleClassName?: string;
+    ledgerModalSubtitleClassName?: string;
+  };
 }
 
-export const LedgerLoading = (props: LedgerLoadingPropsType) => {
-  const {
-    customSpinnerComponent,
-    ledgerModalTitleClassName,
-    ledgerModalSubtitleClassName,
-    customContentComponent
-  } = props;
+export const LedgerLoading = ({
+  customSpinnerComponent,
+  ledgerLoadingClassNames,
+  customContentComponent
+}: LedgerLoadingPropsType) => {
+  const { ledgerModalSubtitleClassName, ledgerModalTitleClassName } =
+    ledgerLoadingClassNames || {};
 
   return (
     <div className={styles.ledgerLoadingWrapper}>

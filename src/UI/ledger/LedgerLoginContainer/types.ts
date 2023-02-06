@@ -1,16 +1,11 @@
+import { AddressTablePropsType } from './AddressTable';
+import { ConfirmAddressPropsType } from './ConfirmAddress';
+import { LedgerConnectPropsType } from './LedgerConnect';
+import { LedgerLoadingPropsType } from './LedgerLoading';
+
 export interface InnerLedgerComponentsClassesType {
-  ledgerModalTitleClassName?: string;
-  ledgerModalSubtitleClassName?: string;
-  ledgerModalButtonClassName?: string;
-  ledgerModalFooterLinkClassName?: string;
-  ledgerModalErrorClassName?: string;
-  ledgerModalIconClassName?: string;
-  ledgerModalTableHeadClassName?: string;
-  ledgerModalTableItemClassName?: string;
-  ledgerModalTableNavigationButtonClassName?: string;
-  ledgerModalTableNavigationButtonDisabledClassName?: string;
-  ledgerModalTableSelectedItemClassName?: string;
-  ledgerModalConfirmDataClassName?: string;
-  ledgerModalConfirmFooterClassName?: string;
-  ledgerModalConfirmDescriptionClassName?: string;
+  confirmAddressClassNames?: ConfirmAddressPropsType['confirmAddressClassNames'];
+  addressTableClassNames?: AddressTablePropsType['addressTableClassNames'];
+  ledgerLoadingClassNames?: LedgerLoadingPropsType['ledgerLoadingClassNames'];
+  ledgerConnectClassNames?: LedgerConnectPropsType['ledgerConnectClassNames'];
 }

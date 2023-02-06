@@ -7,17 +7,15 @@ import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
 import type { WithClassnameType } from '../../types';
-import type { InnerLedgerComponentsClassesType } from './types';
 
 import styles from './addressRowStyles.scss';
 
-export interface AddressRowPropsType
-  extends WithClassnameType,
-    InnerLedgerComponentsClassesType {
+export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
   index: number;
   address: string;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
+  ledgerModalTableSelectedItemClassName?: string;
 }
 
 const noBalance = '...';
