@@ -32,12 +32,9 @@
       color: $black;
       margin: 8px 0;
       word-break: break-word;
-
-      &.ledger-confirm-address-data-highlighted {
-        border-radius: 8px;
-        background-color: $gray-500;
-        padding: 12px;
-      }
+      background-color: $gray-500;
+      padding: 12px;
+      border-radius: 8px;
     }
   }
 

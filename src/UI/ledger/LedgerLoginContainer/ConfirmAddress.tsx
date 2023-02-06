@@ -78,7 +78,6 @@ export const ConfirmAddress = ({
           <div
             className={classNames(
               styles.ledgerConfirmAddressData,
-              styles.ledgerConfirmAddressDataHighlighted,
               ledgerModalConfirmDataClassName
             )}
           >

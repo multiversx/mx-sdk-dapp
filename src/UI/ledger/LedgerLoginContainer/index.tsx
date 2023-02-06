@@ -66,7 +66,9 @@ export const LedgerLoginContainer = ({
     ledgerModalFooterLinkClassName,
     ledgerModalTableHeadClassName,
     ledgerModalTableItemClassName,
-    ledgerModalTableNavigationButtonClassName
+    ledgerModalTableNavigationButtonClassName,
+    ledgerModalTableNavigationButtonDisabledClassName,
+    ledgerModalTableSelectedItemClassName
   } = innerLedgerComponentsClasses || {};
 
   const getContent = () => {
@@ -114,6 +116,12 @@ export const LedgerLoginContainer = ({
           ledgerModalButtonClassName={ledgerModalButtonClassName}
           ledgerModalTableNavigationButtonClassName={
             ledgerModalTableNavigationButtonClassName
+          }
+          ledgerModalTableSelectedItemClassName={
+            ledgerModalTableSelectedItemClassName
+          }
+          ledgerModalTableNavigationButtonDisabledClassName={
+            ledgerModalTableNavigationButtonDisabledClassName
           }
         />
       );

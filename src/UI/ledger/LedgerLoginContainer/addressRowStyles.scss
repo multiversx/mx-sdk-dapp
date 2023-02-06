@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   padding: 16px;
+  border-radius: 8px;
 
   &:not(.ledger-address-table-body-item-selected) {
     color: $gray-600;

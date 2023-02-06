@@ -7,10 +7,13 @@ import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
 import type { WithClassnameType } from '../../types';
+import type { InnerLedgerComponentsClassesType } from './types';
 
 import styles from './addressRowStyles.scss';
 
-export interface AddressRowPropsType extends WithClassnameType {
+export interface AddressRowPropsType
+  extends WithClassnameType,
+    InnerLedgerComponentsClassesType {
   selectedAddress?: string;
   index: number;
   address: string;
@@ -24,7 +27,8 @@ export const AddressRow = ({
   index,
   selectedAddress,
   onSelectAddress,
-  className = 'dapp-ledger-address-row'
+  className = 'dapp-ledger-address-row',
+  ledgerModalTableSelectedItemClassName
 }: AddressRowPropsType) => {
   const [balance, setBalance] = useState(noBalance);
 
@@ -54,6 +58,8 @@ export const AddressRow = ({
       className={classNames(
         styles.ledgerAddressTableBodyItem,
         {
+          [ledgerModalTableSelectedItemClassName ?? '']:
+            selectedAddress === address,
           [styles.ledgerAddressTableBodyItemSelected]:
             selectedAddress === address
         },

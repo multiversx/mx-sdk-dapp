@@ -8,6 +8,8 @@ export interface InnerLedgerComponentsClassesType {
   ledgerModalTableHeadClassName?: string;
   ledgerModalTableItemClassName?: string;
   ledgerModalTableNavigationButtonClassName?: string;
+  ledgerModalTableNavigationButtonDisabledClassName?: string;
+  ledgerModalTableSelectedItemClassName?: string;
   ledgerModalConfirmDataClassName?: string;
   ledgerModalConfirmFooterClassName?: string;
   ledgerModalConfirmDescriptionClassName?: string;

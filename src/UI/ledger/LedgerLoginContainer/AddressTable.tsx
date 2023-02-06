@@ -49,7 +49,9 @@ export const AddressTable = ({
   ledgerModalTableHeadClassName,
   ledgerModalTableItemClassName,
   ledgerModalButtonClassName,
-  ledgerModalTableNavigationButtonClassName
+  ledgerModalTableNavigationButtonClassName,
+  ledgerModalTableSelectedItemClassName,
+  ledgerModalTableNavigationButtonDisabledClassName
 }: AddressTablePropsType) => {
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
@@ -123,6 +125,9 @@ export const AddressTable = ({
               selectedAddress={selectedAddress}
               onSelectAddress={onSelectAddress}
               className={ledgerModalTableItemClassName}
+              ledgerModalTableSelectedItemClassName={
+                ledgerModalTableSelectedItemClassName
+              }
             />
           ))}
         </div>
@@ -137,6 +142,8 @@ export const AddressTable = ({
             className={classNames(
               styles.ledgerAddressTableNavigationButton,
               {
+                [ledgerModalTableNavigationButtonDisabledClassName ?? '']:
+                  startIndex === 0,
                 [styles.ledgerAddressTableNavigationButtonDisabled]:
                   startIndex === 0
               },
@@ -182,7 +189,7 @@ export const AddressTable = ({
             ledgerModalButtonClassName
           )}
         >
-          Confirm
+          Access Wallet
         </button>
       </div>
     </div>
