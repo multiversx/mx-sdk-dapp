@@ -2,7 +2,8 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
-import { WithClassnameType } from '../../types';
+
+import type { WithClassnameType } from '../../types';
 
 import globalStyles from 'assets/sass/main.scss';
 import styles from './ledgerConnectStyles.scss';
@@ -11,71 +12,108 @@ export interface LedgerConnectPropsType extends WithClassnameType {
   onClick: () => void;
   error: string;
   connectPageContent?: ReactNode;
+  customContentComponent?: ReactNode;
+  ledgerConnectClassNames?: {
+    ledgerModalTitleClassName?: string;
+    ledgerModalSubtitleClassName?: string;
+    ledgerModalErrorClassName?: string;
+    ledgerModalIconClassName?: string;
+    ledgerModalButtonClassName?: string;
+    ledgerModalFooterLinkClassName?: string;
+  };
 }
 
 export const LedgerConnect = ({
   onClick,
   error,
   connectPageContent,
-  className = 'dapp-ledger-connect-button'
-}: LedgerConnectPropsType) => (
-  <div
-    className={classNames(globalStyles.mAuto, styles.loginContainer, className)}
-  >
-    <div
-      className={classNames(
-        globalStyles.card,
-        globalStyles.my4,
-        globalStyles.textCenter,
-        globalStyles.border0
-      )}
-    >
-      <div
-        className={classNames(
-          globalStyles.cardBody,
-          globalStyles.p4,
-          globalStyles.mxLg4
-        )}
-      >
+  customContentComponent,
+  className = 'dapp-ledger-connect-button',
+  ledgerConnectClassNames
+}: LedgerConnectPropsType) => {
+  const {
+    ledgerModalTitleClassName,
+    ledgerModalSubtitleClassName,
+    ledgerModalErrorClassName,
+    ledgerModalIconClassName,
+    ledgerModalButtonClassName,
+    ledgerModalFooterLinkClassName
+  } = ledgerConnectClassNames || {};
+
+  return (
+    <div className={classNames(styles.loginConnectContainer, className)}>
+      <div className={styles.loginConnectContainerContent}>
         {connectPageContent ? (
           connectPageContent
         ) : (
           <>
-            <LedgerLogo className={globalStyles.mb4} />
-
-            <h4 className={classNames(globalStyles.h4, globalStyles.mb4)}>
+            <div
+              className={classNames(
+                styles.loginConnectContainerHeading,
+                ledgerModalTitleClassName
+              )}
+            >
               Connect Ledger
-            </h4>
+            </div>
 
-            <p className={classNames(globalStyles.lead, globalStyles.mb4)}>
-              Unlock your device &amp; open the MultiversX App.
+            <p
+              className={classNames(
+                styles.loginConnectContainerDescription,
+                ledgerModalSubtitleClassName
+              )}
+            >
+              Unlock your device &amp; open the MultiversX App
             </p>
+
+            {error && (
+              <p
+                className={classNames(
+                  styles.loginConnectContainerError,
+                  ledgerModalErrorClassName
+                )}
+              >
+                {error}
+              </p>
+            )}
+
+            {customContentComponent}
+
+            <div
+              className={classNames(
+                styles.loginConnectContainerIcon,
+                ledgerModalIconClassName
+              )}
+            >
+              <LedgerLogo />
+            </div>
           </>
         )}
 
-        <div>
-          {error && (
-            <p
-              className={classNames(
-                globalStyles.textDanger,
-                globalStyles.flexRow,
-                globalStyles.justifyContentCenter,
-                globalStyles.alignItemsCenter
-              )}
-            >
-              {error}
-            </p>
-          )}
-
+        <div className={styles.loginConnectContainerFooter}>
           <button
-            className={classNames(globalStyles.btn, globalStyles.btnPrimary)}
             onClick={onClick}
             data-testid='connectBtn'
+            className={classNames(
+              globalStyles.btn,
+              globalStyles.btnPrimary,
+              styles.loginConnectContainerButton,
+              ledgerModalButtonClassName
+            )}
           >
             Connect Ledger
           </button>
+
+          <a
+            href='#'
+            className={classNames(
+              styles.loginConnectContainerLink,
+              ledgerModalFooterLinkClassName
+            )}
+          >
+            Having connection issues?
+          </a>
         </div>
       </div>
     </div>
-  </div>
-);
+  );
+};

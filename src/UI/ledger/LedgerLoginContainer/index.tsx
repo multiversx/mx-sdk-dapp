@@ -1,26 +1,29 @@
-import React from 'react';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
-import classNames from 'classnames';
+import React, { ReactNode } from 'react';
 
-import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
-import { PageState } from 'UI/PageState';
 
-import { OnProviderLoginType } from '../../../types';
-import { WithClassnameType } from '../../types';
+import type { OnProviderLoginType } from '../../../types';
+import type { WithClassnameType } from '../../types';
+import type { InnerLedgerComponentsClassesType } from './types';
+
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
+import { LedgerLoading } from './LedgerLoading';
 import { LedgerConnect } from './LedgerConnect';
 
-const ledgerWaitingText = 'Waiting for device';
+import styles from './ledgerLoginContainerStyles.scss';
+import classNames from 'classnames';
 
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
     WithClassnameType {
   wrapContentInsideModal?: boolean;
   onClose?: () => void;
+  customSpinnerComponent?: ReactNode;
+  customContentComponent?: ReactNode;
+  innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
 }
 
 export const LedgerLoginContainer = ({
@@ -30,12 +33,11 @@ export const LedgerLoginContainer = ({
   onClose,
   onLoginRedirect,
   token,
-  nativeAuth
+  nativeAuth,
+  customSpinnerComponent,
+  customContentComponent,
+  innerLedgerComponentsClasses
 }: LedgerLoginContainerPropsType) => {
-  const classes = {
-    spinner: classNames(globalStyles.textPrimary, 'fa-spin')
-  };
-
   const { ledgerAccount } = useGetAccountInfo();
   const [
     onStartLogin,
@@ -52,18 +54,32 @@ export const LedgerLoginContainer = ({
     }
   ] = useLedgerLogin({ callbackRoute, token, onLoginRedirect, nativeAuth });
 
-  function getContent() {
+  const {
+    addressTableClassNames,
+    confirmAddressClassNames,
+    ledgerConnectClassNames,
+    ledgerLoadingClassNames
+  } = innerLedgerComponentsClasses || {};
+
+  const getContent = () => {
     if (isLoading) {
       return (
-        <PageState
-          icon={faCircleNotch}
-          iconClass={classes.spinner}
-          title={ledgerWaitingText}
+        <LedgerLoading
+          customSpinnerComponent={customSpinnerComponent}
+          customContentComponent={customContentComponent}
+          ledgerLoadingClassNames={ledgerLoadingClassNames}
         />
       );
     }
+
     if (ledgerAccount != null && !error) {
-      return <ConfirmAddress token={token} />;
+      return (
+        <ConfirmAddress
+          token={token}
+          customContentComponent={customContentComponent}
+          confirmAddressClassNames={confirmAddressClassNames}
+        />
+      );
     }
 
     if (showAddressList && !error) {
@@ -77,12 +93,21 @@ export const LedgerLoginContainer = ({
           startIndex={startIndex}
           selectedAddress={selectedAddress?.address}
           onConfirmSelectedAddress={onConfirmSelectedAddress}
+          customContentComponent={customContentComponent}
+          addressTableClassNames={addressTableClassNames}
         />
       );
     }
 
-    return <LedgerConnect onClick={onStartLogin} error={error} />;
-  }
+    return (
+      <LedgerConnect
+        error={error}
+        onClick={onStartLogin}
+        customContentComponent={customContentComponent}
+        ledgerConnectClassNames={ledgerConnectClassNames}
+      />
+    );
+  };
 
   return wrapContentInsideModal ? (
     <ModalContainer
@@ -90,7 +115,12 @@ export const LedgerLoginContainer = ({
       modalConfig={{
         headerText: 'Login with ledger',
         showHeader: true,
-        modalDialogClassName: className
+        modalContentClassName: styles.ledgerModalDialogContent,
+        modalHeaderClassName: styles.ledgerModalHeader,
+        modalHeaderTextClassName: styles.ledgerModalHeaderText,
+        modalCloseButtonClassName: styles.ledgerModalCloseButton,
+        modalBodyClassName: styles.ledgerModalBody,
+        modalDialogClassName: classNames(styles.ledgerLoginContainer, className)
       }}
     >
       {getContent()}

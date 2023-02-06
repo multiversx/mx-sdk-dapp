@@ -10,7 +10,7 @@ import globalStyles from 'assets/sass/main.scss';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { getProviderType } from 'providers/utils';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { WithClassnameType } from 'UI/types';
+import { WithClassnameType } from '../../types';
 import { timeoutPromise } from 'utils/asyncActions';
 import { WalletConnectConnectionDescription } from './WalletConnectConnectionDescription';
 import { WalletConnectConnectionHint } from './WalletConnectConnectionHint';
