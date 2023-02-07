@@ -95,7 +95,7 @@ export const AddressTable = ({
   useEffect(() => {
     const balancePromises = accounts.map((account) => fetchBalance(account));
     setAccountsWithBalance(
-      accounts.map((account) => ({ address: account, balance: '...?' }))
+      accounts.map((account) => ({ address: account, balance: '...' }))
     );
     Promise.all(balancePromises).then((balances) => {
       setAccountsWithBalance(balances);
