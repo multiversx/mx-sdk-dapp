@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import {
   faChevronLeft,
   faChevronRight
@@ -6,15 +6,16 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
+import { getAccountBalance } from 'utils';
 import type { WithClassnameType } from '../../types';
 
-import { LedgerLoading } from './LedgerLoading';
 import { AddressRow } from './AddressRow';
 
+import styles from './addressTableStyles.scss';
 import { LedgerColumnsEnum } from './enums';
 
-import globalStyles from 'assets/sass/main.scss';
-import styles from './addressTableStyles.scss';
+import { LedgerLoading } from './LedgerLoading';
 
 const ADDRESSES_PER_PAGE = 10;
 
@@ -63,7 +64,9 @@ export const AddressTable = ({
     ledgerModalTableSelectedItemClassName,
     ledgerModalTableNavigationButtonDisabledClassName
   } = addressTableClassNames || {};
-
+  const [accountsWithBalance, setAccountsWithBalance] = useState<
+    Array<{ address: string; balance: string }>
+  >([]);
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
 
@@ -78,6 +81,26 @@ export const AddressTable = ({
       onSelectAddress({ address, index });
     }
   }, [accounts, selectedAddress, loading, startIndex]);
+
+  const fetchBalance = async (address: string) => {
+    try {
+      const balance = await getAccountBalance(address);
+      return { address, balance };
+    } catch (err) {
+      console.error('error fetching balance', err);
+      throw accountsWithBalance;
+    }
+  };
+
+  useEffect(() => {
+    const balancePromises = accounts.map((account) => fetchBalance(account));
+    setAccountsWithBalance(
+      accounts.map((account) => ({ address: account, balance: '...' }))
+    );
+    Promise.all(balancePromises).then((balances) => {
+      setAccountsWithBalance(balances);
+    });
+  }, [accounts]);
 
   if (loading) {
     return <LedgerLoading />;
@@ -128,19 +151,21 @@ export const AddressTable = ({
         </div>
 
         <div className={styles.ledgerAddressTableBody}>
-          {accounts.map((address, index) => (
-            <AddressRow
-              address={address}
-              key={index + startIndex * ADDRESSES_PER_PAGE}
-              index={index + startIndex * ADDRESSES_PER_PAGE}
-              selectedAddress={selectedAddress}
-              onSelectAddress={onSelectAddress}
-              className={ledgerModalTableItemClassName}
-              ledgerModalTableSelectedItemClassName={
-                ledgerModalTableSelectedItemClassName
-              }
-            />
-          ))}
+          {accountsWithBalance &&
+            accountsWithBalance.map(({ address, balance }, index) => (
+              <AddressRow
+                address={address}
+                balance={balance}
+                key={index + startIndex * ADDRESSES_PER_PAGE}
+                index={index + startIndex * ADDRESSES_PER_PAGE}
+                selectedAddress={selectedAddress}
+                onSelectAddress={onSelectAddress}
+                className={ledgerModalTableItemClassName}
+                ledgerModalTableSelectedItemClassName={
+                  ledgerModalTableSelectedItemClassName
+                }
+              />
+            ))}
         </div>
       </div>
 
