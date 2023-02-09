@@ -1,9 +1,8 @@
-import React, { useEffect, useState, SyntheticEvent } from 'react';
+import React, { SyntheticEvent } from 'react';
 import classNames from 'classnames';
 
-import { Trim } from 'UI/Trim';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
-import { getAccountBalance } from 'utils/account/getAccountBalance';
+import { Trim } from 'UI/Trim';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
 import type { WithClassnameType } from '../../types';
@@ -14,22 +13,20 @@ export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
   index: number;
   address: string;
+  balance: string;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
   ledgerModalTableSelectedItemClassName?: string;
 }
 
-const noBalance = '...';
-
 export const AddressRow = ({
   address,
   index,
+  balance,
   selectedAddress,
   onSelectAddress,
   className = 'dapp-ledger-address-row',
   ledgerModalTableSelectedItemClassName
 }: AddressRowPropsType) => {
-  const [balance, setBalance] = useState(noBalance);
-
   const handleChange = (event: SyntheticEvent) => {
     const { checked } = event.target as HTMLInputElement;
 
@@ -37,19 +34,6 @@ export const AddressRow = ({
       onSelectAddress({ address, index });
     }
   };
-
-  const fetchBalance = async () => {
-    try {
-      const balance = await getAccountBalance(address);
-      setBalance(balance);
-    } catch (err) {
-      console.error('error fetching balance', err, balance);
-    }
-  };
-
-  useEffect(() => {
-    fetchBalance();
-  }, []);
 
   return (
     <div
