@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
     
 - [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
+## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
+    
+- [Fix addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 
 ## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/620)] - 2023-02-06
 
