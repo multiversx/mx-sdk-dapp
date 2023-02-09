@@ -5,10 +5,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EgldIcon from 'assets/icons/EGLD.svg';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
+import { getIdentifierType } from 'utils/validation/getIdentifierType';
 import { WithClassnameType } from '../types';
-import { Combined, Simple } from './TokenSymbol';
-
 import styles from './tokenDetailsStyles.scss';
+import { Combined, Simple } from './TokenSymbol';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
   const tokenParts = identifier.split('-');
@@ -32,7 +32,7 @@ export interface TokenIconType extends TokenIconPropsType {
 }
 
 function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
-  if (tokenAvatar) {
+  if (tokenAvatar && tokenAvatar !== 'undefined') {
     return <img className={styles.tokenSymbolCustomToken} src={tokenAvatar} />;
   }
   return isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faDiamond} />;
@@ -51,6 +51,12 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
   };
 };
 
+const getTokenIdentifier = (token: string) => {
+  const { isNft } = getIdentifierType(token);
+  const identifier = isNft ? token : getIdentifierWithoutNonce(token);
+  return identifier;
+};
+
 export class TokenDetails extends Component {
   static Token = (props: TokenIconPropsType) => <>{props.token}</>;
   static Symbol = (props: TokenIconPropsType) => (
@@ -61,19 +67,17 @@ export class TokenDetails extends Component {
       }
     </>
   );
-  static Label = (props: TokenIconPropsType) => (
-    <>
-      {
-        getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
-          .label
-      }
-    </>
-  );
+  static Label = (props: TokenIconPropsType) => {
+    return (
+      <>
+        {getDetails(getTokenIdentifier(props.token), props.tokenAvatar).label}
+      </>
+    );
+  };
   static Icon = (props: TokenIconPropsType & WithClassnameType) => {
     const Component: any =
       process.env.NODE_ENV !== 'test'
-        ? getDetails(getIdentifierWithoutNonce(props.token), props.tokenAvatar)
-            .icon
+        ? getDetails(getTokenIdentifier(props.token), props.tokenAvatar).icon
         : () => null;
 
     return (

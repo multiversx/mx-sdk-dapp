@@ -1,11 +1,12 @@
 import React, { MouseEvent, ReactNode } from 'react';
-import { Address } from '@multiversx/sdk-core/out';
 import {
   faExclamationTriangle,
   faTimes
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Address } from '@multiversx/sdk-core/out';
 
+import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
@@ -14,14 +15,13 @@ import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
 
-import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
+import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 
+import { getIdentifierType } from 'utils/validation/getIdentifierType';
 import { WithClassnameType } from '../../types';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
-
-import globalStyles from 'assets/sass/main.scss';
 
 // TODO: Rename to "SignStepPropsType" when sdk-dapp@3.0.0
 export interface SignStepType extends WithClassnameType {
@@ -60,14 +60,8 @@ export const SignStep = ({
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
 
-  const {
-    tokenId,
-    nonce,
-    amount,
-    type,
-    multiTxData,
-    receiver
-  } = currentTransaction.transactionTokenInfo;
+  const { tokenId, nonce, amount, type, multiTxData, receiver } =
+    currentTransaction.transactionTokenInfo;
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -93,8 +87,11 @@ export const SignStep = ({
     isLastTransaction && !waitingForDevice ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
+  const { isNft } = getIdentifierType(tokenId);
+
   // If the token has a nonce means that this is an NFT. Eg: TokenId=TOKEN-1hfr, nonce=123 => NFT id=TOKEN-1hfr-123
-  const nftId = `${tokenId}-${nonce}`;
+  const appendedNonce = nonce ? `-${nonce}` : '';
+  const nftId = `${tokenId}${appendedNonce}`;
 
   const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
     tokenId: nonce && nonce.length > 0 ? nftId : tokenId
@@ -113,6 +110,9 @@ export const SignStep = ({
   const scamReport = currentTransaction.receiverScamInfo;
   const showProgressSteps = allTransactions.length > 1;
   const classes = useSignStepsClasses(scamReport);
+
+  const token = isNft ? nftId : tokenId ?? egldLabel;
+  const shownAmount = isNft ? amount : formattedAmount;
 
   return (
     <PageState
@@ -162,12 +162,12 @@ export const SignStep = ({
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
-                      token={tokenId || egldLabel}
+                      token={token}
                     />
 
                     <div className={globalStyles.mr1}></div>
 
-                    <TokenDetails.Label token={tokenId || egldLabel} />
+                    <TokenDetails.Label token={token} />
                   </div>
                 </div>
 
@@ -175,9 +175,8 @@ export const SignStep = ({
                   <div className={classes.tokenAmountLabel}>Amount</div>
 
                   <div className={classes.tokenAmountValue}>
-                    <div className={globalStyles.mr1}>{formattedAmount}</div>
-
-                    <TokenDetails.Symbol token={tokenId || egldLabel} />
+                    <div className={globalStyles.mr1}>{shownAmount}</div>
+                    <TokenDetails.Symbol token={token} />
                   </div>
                 </div>
               </div>
