@@ -6,6 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/624)] - 2023-02-09
+- [Fixed NFT display in Sign screen](https://github.com/multiversx/mx-sdk-dapp/pull/623)
+
+## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
+    
+- [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
     
 - [Fix addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
@@ -26,12 +32,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Fix sign transactions with web wallet when data field is empty](https://github.com/multiversx/mx-sdk-dapp/pull/614)
 - [Added missing attributes of transaction types](https://github.com/multiversx/mx-sdk-dapp/pull/613)
-- [Add Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)
-- [Add default SignTransactionModal for extra provider](https://github.com/multiversx/mx-sdk-dapp/pull/612)
+- [Added Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)
+- [Added default SignTransactionModal for extra provider](https://github.com/multiversx/mx-sdk-dapp/pull/612)
 
 ## [[v2.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/610)] - 2023-02-03
 
-- [Add support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
+- [Added support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
 - [Extension and WalletConnect login rebranding](https://github.com/multiversx/mx-sdk-dapp/pull/611)
 
 ## [[v2.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-02
@@ -57,7 +63,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/596)] - 2023-01-20
 
-- [Add support for autoLogout callback url](https://github.com/multiversx/mx-sdk-dapp/pull/594)
+- [Added support for autoLogout callback url](https://github.com/multiversx/mx-sdk-dapp/pull/594)
 - [Fixed imports for React Native support](https://github.com/multiversx/mx-sdk-dapp/pull/595)
 
 ## [[v2.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/592)] - 2023-01-17
@@ -66,7 +72,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
 
-- [Fix ledger address table display issue](https://github.com/multiversx/mx-sdk-dapp/pull/590)
+- [Fixed ledger address table display issue](https://github.com/multiversx/mx-sdk-dapp/pull/590)
 
 ## [[v2.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/586)] - 2023-01-17
 
