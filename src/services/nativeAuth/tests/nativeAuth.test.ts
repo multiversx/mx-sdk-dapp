@@ -47,6 +47,10 @@ describe('Native Auth', () => {
     it('Internal server error', async () => {
       onLatestBlockHashGet(mock).reply(500);
 
+      //this will make sure to expire the cache
+      jest
+        .useFakeTimers()
+        .setSystemTime(new Date().setSeconds(new Date().getSeconds() + 60));
       const client = nativeAuth({
         hostname: HOST,
         apiAddress: 'https://api.multiversx.com'
