@@ -1,7 +1,7 @@
 import { NativeAuthConfigType } from 'types';
-import { getNativeAuthConfig } from './methods/getNativeAuthConfig';
 import { encodeValue } from './helpers/encodeValue';
 import { getLatestBlockHash } from './helpers/getLatestBlockHash';
+import { getNativeAuthConfig } from './methods/getNativeAuthConfig';
 import { getToken } from './methods/getToken';
 import { getTokenExpiration } from './methods/getTokenExpiration';
 
