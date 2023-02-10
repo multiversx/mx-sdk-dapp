@@ -6,14 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/626)] - 2023-02-10
+- [Add caching mechanism for block hash](https://github.com/multiversx/mx-sdk-dapp/pull/625)
+
 ## [[v2.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/624)] - 2023-02-09
 - [Fixed NFT display in Sign screen](https://github.com/multiversx/mx-sdk-dapp/pull/623)
 
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
-    
+
 - [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
-    
+
 - [Fix addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 
 ## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/620)] - 2023-02-06
