@@ -1,4 +1,3 @@
-
 .w-25 {
   width: 25%;
 }
@@ -39,13 +38,31 @@
   height: auto;
 }
 
-.mw-100 { max-width: 100%; }
-.mh-100 { max-height: 100%; }
+.mw-100 {
+  max-width: 100%;
+}
+.mh-100 {
+  max-height: 100%;
+}
 
 // Viewport additional helpers
 
-.min-vw-100 { min-width: 100vw; }
-.min-vh-100 { min-height: 100vh; }
+.min-vw-100 {
+  min-width: 100vw;
+}
+.min-vh-100 {
+  min-height: 100vh;
+}
 
-.vw-100 { width: 100vw; }
-.vh-100 { height: 100vh; }
+.vw-100 {
+  width: 100vw;
+}
+.vh-100 {
+  height: 100vh;
+}
+
+.w-md-auto {
+  @media (min-width: 768px) {
+    width: auto;
+  }
+}

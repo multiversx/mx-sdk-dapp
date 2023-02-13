@@ -19,12 +19,17 @@ const broadcastLogoutAcrossTabs = (address: string) => {
 
 export async function logout(
   callbackUrl?: string,
-  onRedirect?: (callbackUrl?: string) => void
+  onRedirect?: (callbackUrl?: string) => void,
+  shouldAttemptRelogin = true
 ) {
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isLoggedIn = getIsLoggedIn();
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
+
+  if (shouldAttemptRelogin && provider?.relogin != null) {
+    return await provider.relogin();
+  }
 
   if (!isLoggedIn || !provider) {
     redirectToCallbackUrl(callbackUrl, onRedirect, false);

@@ -39,4 +39,5 @@ export interface IDappProvider {
     request: EngineTypes.RequestParams['request'];
   }): Promise<any>;
   ping?(): Promise<boolean>;
+  relogin?: () => Promise<void>;
 }

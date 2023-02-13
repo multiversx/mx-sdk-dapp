@@ -86,10 +86,12 @@ export enum WebViewProviderRequestEnums {
   signTransactionsRequest = 'SIGN_TRANSACTIONS_REQUEST',
   signMessageRequest = 'SIGN_MESSAGE_REQUEST',
   loginRequest = 'LOGIN_REQUEST',
-  logoutRequest = 'LOGOUT_REQUEST'
+  logoutRequest = 'LOGOUT_REQUEST',
+  reloginRequest = 'RELOGIN_REQUEST'
 }
 export enum WebViewProviderResponseEnums {
   signTransactionsResponse = 'SIGN_TRANSACTIONS_RESPONSE',
   signMessageResponse = 'SIGN_MESSAGE_RESPONSE',
-  loginResponse = 'LOGIN_RESPONSE'
+  loginResponse = 'LOGIN_RESPONSE',
+  reloginResponse = 'RELOGIN_RESPONSE'
 }
