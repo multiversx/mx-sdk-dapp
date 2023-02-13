@@ -9,13 +9,13 @@ import type { WithClassnameType } from '../../types';
 import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectPairingListClassesType {
-  walletConnectPairingListLeadClassName?: string;
-  walletConnectPairingListWrapperClassName?: string;
-  walletConnectPairingListButtonClassName?: string;
-  walletConnectPairingListIconClassName?: string;
-  walletConnectPairingListLoaderClassName?: string;
-  walletConnectPairingListDetailsClassName?: string;
-  walletConnectPairingListRemoveClassName?: string;
+  leadClassName?: string;
+  wrapperClassName?: string;
+  buttonClassName?: string;
+  iconClassName?: string;
+  loaderClassName?: string;
+  detailsClassName?: string;
+  removeClassName?: string;
 }
 
 export interface PairingListPropsType extends WithClassnameType {
@@ -36,13 +36,13 @@ export const Pairinglist = ({
   const [topicLoading, setTopicLoading] = useState<string>('');
 
   const {
-    walletConnectPairingListLeadClassName,
-    walletConnectPairingListWrapperClassName,
-    walletConnectPairingListButtonClassName,
-    walletConnectPairingListIconClassName,
-    walletConnectPairingListLoaderClassName,
-    walletConnectPairingListDetailsClassName,
-    walletConnectPairingListRemoveClassName
+    leadClassName,
+    wrapperClassName,
+    buttonClassName,
+    iconClassName,
+    loaderClassName,
+    detailsClassName,
+    removeClassName
   } = pairingListClasses || {};
 
   useEffect(() => {
@@ -51,28 +51,15 @@ export const Pairinglist = ({
 
   return (
     <div className={classNames(styles.xPortalPairings, className)}>
-      <p
-        className={classNames(
-          styles.xPortalPairingsLead,
-          walletConnectPairingListLeadClassName
-        )}
-      >
+      <p className={classNames(styles.xPortalPairingsLead, leadClassName)}>
         or choose an existing pairing:
       </p>
 
-      <div
-        className={classNames(
-          styles.xPortalPairingsList,
-          walletConnectPairingListWrapperClassName
-        )}
-      >
+      <div className={classNames(styles.xPortalPairingsList, wrapperClassName)}>
         {activePairings.map((pairing) => (
           <button
             type='button'
-            className={classNames(
-              styles.xPortalPairingButton,
-              walletConnectPairingListButtonClassName
-            )}
+            className={classNames(styles.xPortalPairingButton, buttonClassName)}
             key={pairing.topic}
             onClick={() => {
               connectExisting(pairing);
@@ -88,7 +75,7 @@ export const Pairinglist = ({
                       'fa-spin',
                       'slow-spin',
                       styles.xPortalPairingLoader,
-                      walletConnectPairingListLoaderClassName
+                      loaderClassName
                     )}
                   />
                 ) : (
@@ -99,7 +86,7 @@ export const Pairinglist = ({
                         alt={pairing.peerMetadata.name}
                         className={classNames(
                           styles.xPortalPairingImage,
-                          walletConnectPairingListIconClassName
+                          iconClassName
                         )}
                       />
                     )}
@@ -109,7 +96,7 @@ export const Pairinglist = ({
                 <div
                   className={classNames(
                     styles.xPortalPairingDetails,
-                    walletConnectPairingListDetailsClassName
+                    detailsClassName
                   )}
                 >
                   <strong className={styles.xPortalPairingDetail}>
@@ -130,7 +117,7 @@ export const Pairinglist = ({
                 <div
                   className={classNames(
                     styles.xPortalPairingRemove,
-                    walletConnectPairingListRemoveClassName
+                    removeClassName
                   )}
                   onClick={(event) => {
                     event.stopPropagation();

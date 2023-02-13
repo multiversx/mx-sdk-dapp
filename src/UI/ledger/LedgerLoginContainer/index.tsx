@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
@@ -98,7 +98,11 @@ export const LedgerLoginContainer = ({
       }
     ];
 
-    const currentProgress = progressStep.find((step) => step.conditions);
+    const currentProgress = useMemo(
+      () => progressStep.find((step) => step.conditions),
+      []
+    );
+
     const percentage = currentProgress ? currentProgress.percentage : 33;
 
     if (!showProgressBar) {

@@ -299,7 +299,7 @@ export const WalletConnectLoginContainer = ({
     <ModalContainer
       onClose={onCloseModal}
       modalConfig={{
-        headerText: 'Login with using xPortal App',
+        headerText: 'Login using xPortal App',
         showHeader: true,
         modalContentClassName: styles.xPortalModalDialogContent,
         modalHeaderClassName: styles.xPortalModalHeader,

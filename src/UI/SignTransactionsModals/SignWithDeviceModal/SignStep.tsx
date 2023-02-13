@@ -226,11 +226,11 @@ export const SignStep = ({
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
-                      token={tokenId || egldLabel}
+                      token={tokenId ?? egldLabel}
                     />
 
                     <div className={globalStyles.mr2}></div>
-                    <TokenDetails.Label token={tokenId || egldLabel} />
+                    <TokenDetails.Label token={tokenId ?? egldLabel} />
                   </div>
                 </div>
               </div>
