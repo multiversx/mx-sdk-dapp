@@ -5,11 +5,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Address } from '@multiversx/sdk-core/out';
+import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
-import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
@@ -18,10 +18,26 @@ import { TransactionData } from 'UI/TransactionData';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+import { getIdentifierType } from 'utils';
 
-import { getIdentifierType } from 'utils/validation/getIdentifierType';
-import { WithClassnameType } from '../../types';
+import type { WithClassnameType } from '../../types';
+import type {
+  ActiveLedgerTransactionType,
+  MultiSignTransactionType
+} from 'types';
+
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+
+export interface SignStepInnerClassesType {
+  signStepButtonsWrapperClassName?: string;
+  signStepInputGroupClassName?: string;
+  signStepInputLabelClassName?: string;
+  signStepInputValueClassName?: string;
+  signStepErrorClassName?: string;
+  signStepScamAlertClassName?: string;
+  signStepButtonClassName?: string;
+  signStepProgressClassName?: string;
+}
 
 // TODO: Rename to "SignStepPropsType" when sdk-dapp@3.0.0
 export interface SignStepType extends WithClassnameType {
@@ -36,6 +52,7 @@ export interface SignStepType extends WithClassnameType {
   currentTransaction: ActiveLedgerTransactionType | null;
   allTransactions: MultiSignTransactionType[];
   isLastTransaction: boolean;
+  signStepInnerClasses?: SignStepInnerClassesType;
 }
 
 export const SignStep = ({
@@ -49,7 +66,8 @@ export const SignStep = ({
   allTransactions,
   isLastTransaction,
   currentStep,
-  className
+  className,
+  signStepInnerClasses
 }: SignStepType) => {
   const egldLabel = getEgldLabel();
 
@@ -59,6 +77,17 @@ export const SignStep = ({
 
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
+
+  const {
+    signStepButtonsWrapperClassName,
+    signStepInputGroupClassName,
+    signStepInputLabelClassName,
+    signStepInputValueClassName,
+    signStepErrorClassName,
+    signStepScamAlertClassName,
+    signStepButtonClassName,
+    signStepProgressClassName
+  } = signStepInnerClasses || {};
 
   const { tokenId, nonce, amount, type, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
@@ -130,19 +159,42 @@ export const SignStep = ({
                 <ProgressSteps
                   totalSteps={allTransactions.length}
                   currentStep={currentStep + 1} // currentStep starts at 0
-                  className={globalStyles.mb4}
+                  className={classNames(
+                    globalStyles.mb4,
+                    signStepProgressClassName
+                  )}
                 />
               )}
 
-              <div className={classes.formGroup} data-testid='transactionTitle'>
-                <div className={classes.formLabel}>To </div>
+              <div
+                data-testid='transactionTitle'
+                className={classNames(
+                  classes.formGroup,
+                  signStepInputGroupClassName
+                )}
+              >
+                <div
+                  className={classNames(
+                    classes.formLabel,
+                    signStepInputLabelClassName
+                  )}
+                >
+                  To
+                </div>
 
-                {multiTxData
-                  ? new Address(receiver).bech32()
-                  : currentTransaction.transaction.getReceiver().toString()}
+                <div className={signStepInputValueClassName}>
+                  {multiTxData
+                    ? new Address(receiver).bech32()
+                    : currentTransaction.transaction.getReceiver().toString()}
+                </div>
 
                 {scamReport && (
-                  <div className={classes.scamReport}>
+                  <div
+                    className={classNames(
+                      classes.scamReport,
+                      signStepScamAlertClassName
+                    )}
+                  >
                     <span>
                       <FontAwesomeIcon
                         icon={faExclamationTriangle}
@@ -155,61 +207,105 @@ export const SignStep = ({
                 )}
               </div>
 
-              <div className={classes.contentWrapper}>
-                <div className={classes.tokenWrapper}>
-                  <div className={classes.tokenLabel}>Token</div>
+              <div
+                className={classNames(
+                  classes.tokenWrapper,
+                  signStepInputGroupClassName
+                )}
+              >
+                <div
+                  className={classNames(
+                    classes.tokenLabel,
+                    signStepInputLabelClassName
+                  )}
+                >
+                  Token
+                </div>
 
+                <div className={signStepInputValueClassName}>
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
-                      token={token}
+                      token={tokenId || egldLabel}
                     />
 
-                    <div className={globalStyles.mr1}></div>
-
-                    <TokenDetails.Label token={token} />
-                  </div>
-                </div>
-
-                <div>
-                  <div className={classes.tokenAmountLabel}>Amount</div>
-
-                  <div className={classes.tokenAmountValue}>
-                    <div className={globalStyles.mr1}>{shownAmount}</div>
-                    <TokenDetails.Symbol token={token} />
+                    <div className={globalStyles.mr2}></div>
+                    <TokenDetails.Label token={tokenId || egldLabel} />
                   </div>
                 </div>
               </div>
 
-              <div className={classes.dataFormGroup}>
-                {currentTransaction.transaction.getData() && (
-                  <TransactionData
-                    isScCall={!tokenId}
-                    data={currentTransaction.transaction.getData().toString()}
-                    highlight={multiTxData}
-                  />
-                )}
+              <div className={signStepInputGroupClassName}>
+                <div
+                  className={classNames(
+                    classes.tokenAmountLabel,
+                    signStepInputLabelClassName
+                  )}
+                >
+                  Amount
+                </div>
+
+                <div
+                  className={classNames(
+                    classes.tokenAmountValue,
+                    signStepInputValueClassName
+                  )}
+                >
+                  {shownAmount}
+                </div>
               </div>
 
-              {error && <p className={classes.errorMessage}>{error}</p>}
+              {currentTransaction.transaction.getData() && (
+                <TransactionData
+                  isScCall={!tokenId}
+                  data={currentTransaction.transaction.getData().toString()}
+                  highlight={multiTxData}
+                  className={signStepInputGroupClassName}
+                  innerTransactionDataClasses={{
+                    transactionDataInputLabelClassName:
+                      signStepInputLabelClassName,
+                    transactionDataInputValueClassName:
+                      signStepInputValueClassName
+                  }}
+                />
+              )}
+
+              {error && (
+                <p
+                  className={classNames(
+                    classes.errorMessage,
+                    signStepErrorClassName
+                  )}
+                >
+                  {error}
+                </p>
+              )}
             </>
           )}
         </>
       }
       action={
-        <div className={classes.buttonsWrapper}>
+        <div
+          className={classNames(
+            classes.buttonsWrapper,
+            signStepButtonsWrapperClassName
+          )}
+        >
           <button
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
-            className={classes.cancelButton}
+            className={classNames(
+              classes.cancelButton,
+              signStepButtonClassName
+            )}
           >
             {isFirst ? 'Cancel' : 'Back'}
           </button>
 
           <button
             type='button'
-            className={classes.signButton}
+            className={classNames(classes.signButton, signStepButtonClassName)}
             id='signBtn'
             data-testid='signBtn'
             onClick={onSignTransaction}

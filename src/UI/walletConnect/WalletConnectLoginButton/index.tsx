@@ -1,9 +1,13 @@
 import React, { ReactNode, useState } from 'react';
+
 import { useDappModal } from 'UI/DappModal';
-import { OnProviderLoginType } from '../../../types';
-import { LoginButton } from '../../LoginButton/LoginButton';
-import { WithClassnameType } from '../../types';
+
+import type { OnProviderLoginType } from '../../../types';
+import type { WithClassnameType } from '../../types';
+import type { InnerWalletConnectComponentsClassesType } from '../types';
+
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+import { LoginButton } from '../../LoginButton/LoginButton';
 
 export interface WalletConnectLoginButtonPropsType
   extends WithClassnameType,
@@ -21,6 +25,9 @@ export interface WalletConnectLoginButtonPropsType
   hideButtonWhenModalOpens?: boolean;
   isWalletConnectV2?: boolean;
   disabled?: boolean;
+  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
+  customSpinnerComponent?: ReactNode;
+  showScamPhishingAlert?: boolean;
 }
 
 export const WalletConnectLoginButton = ({
@@ -29,19 +36,22 @@ export const WalletConnectLoginButton = ({
   onModalOpens,
   onModalCloses,
   loginButtonText = 'xPortal Mobile Wallet',
-  title = 'xPortal Login',
+  title = 'Login using xPortal App',
   logoutRoute = '/unlock',
   wrapContentInsideModal = true,
   buttonClassName = 'dapp-wallet-connect-login-button',
   className = 'dapp-wallet-connect-login',
   modalClassName,
-  lead = 'Scan the QR code using xPortal Mobile Wallet',
+  lead = 'Scan the QR code using the xPortal App',
   token,
   nativeAuth,
   hideButtonWhenModalOpens = false,
   isWalletConnectV2 = false,
   onLoginRedirect,
-  disabled
+  disabled,
+  innerWalletConnectComponentsClasses,
+  showScamPhishingAlert,
+  customSpinnerComponent
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
@@ -59,6 +69,7 @@ export const WalletConnectLoginButton = ({
   };
 
   const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
+
   return (
     <>
       {shouldRenderButton && (
@@ -72,6 +83,7 @@ export const WalletConnectLoginButton = ({
           {children}
         </LoginButton>
       )}
+
       {canShowLoginModal && (
         <WalletConnectLoginContainer
           callbackRoute={callbackRoute}
@@ -86,6 +98,11 @@ export const WalletConnectLoginButton = ({
           isWalletConnectV2={isWalletConnectV2}
           onClose={handleCloseModal}
           onLoginRedirect={onLoginRedirect}
+          showScamPhishingAlert={showScamPhishingAlert}
+          customSpinnerComponent={customSpinnerComponent}
+          innerWalletConnectComponentsClasses={
+            innerWalletConnectComponentsClasses
+          }
         />
       )}
     </>

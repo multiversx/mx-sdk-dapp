@@ -7,15 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/628)] - 2023-02-13
+
+- [Breaking change: **xPortal authentication panel layout and Sign Transaction panel layout**.
+
+  Migration guide:
+
+- Use `InnerWalletConnectComponentsClassesType` for styling xPortal screens and `signStepInnerClasses` for styling Sign Transaction modals.](https://github.com/multiversx/mx-sdk-dapp/pull/628)
+
 ## [[v2.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/626)] - 2023-02-10
+
 - [Add caching mechanism for block hash](https://github.com/multiversx/mx-sdk-dapp/pull/625)
 
 ## [[v2.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/624)] - 2023-02-09
+
 - [Fixed NFT display in Sign screen](https://github.com/multiversx/mx-sdk-dapp/pull/623)
 
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
 
 - [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
+
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
 
 - [Fix addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
@@ -25,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Breaking change: **Ledger authentication panel layout**.
 
   Migration guide:
+
 - Use `innerLedgerComponentsClasses` for styling Ledger screens.
 - Addresses will trim if container is < 730px, needs to be at least that size.](https://github.com/multiversx/mx-sdk-dapp/pull/619)
 

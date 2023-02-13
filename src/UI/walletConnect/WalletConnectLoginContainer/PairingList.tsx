@@ -1,98 +1,94 @@
 import React, { useState, useEffect } from 'react';
 import { PairingTypes } from '@multiversx/sdk-wallet-connect-provider';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 
-import { WithClassnameType } from '../../types';
+import type { WithClassnameType } from '../../types';
+
+import styles from './walletConnectLoginContainerStyles.scss';
+
+export interface WalletConnectPairingListClassesType {
+  walletConnectPairingListLeadClassName?: string;
+  walletConnectPairingListWrapperClassName?: string;
+  walletConnectPairingListButtonClassName?: string;
+  walletConnectPairingListIconClassName?: string;
+  walletConnectPairingListLoaderClassName?: string;
+  walletConnectPairingListDetailsClassName?: string;
+  walletConnectPairingListRemoveClassName?: string;
+}
 
 export interface PairingListPropsType extends WithClassnameType {
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   removeExistingPairing: (topic: string) => Promise<void>;
   activePairings: PairingTypes.Struct[];
   className: string;
+  pairingListClasses?: WalletConnectPairingListClassesType;
 }
 
 export const Pairinglist = ({
   connectExisting,
   removeExistingPairing,
   activePairings,
-  className = 'dapp-wallet-connect-pairing-list'
+  className = 'dapp-wallet-connect-pairing-list',
+  pairingListClasses
 }: PairingListPropsType) => {
-  const classes = {
-    pairsContainer: className,
-    leadText: '',
-    pairList: classNames(
-      globalStyles.dFlex,
-      globalStyles.flexColumn,
-      globalStyles.mt3,
-      globalStyles.pairList
-    ),
-    pairButton: classNames(
-      globalStyles.btn,
-      globalStyles.btnLight,
-      globalStyles.positionRelative,
-      globalStyles.dFlex,
-      globalStyles.flexRow,
-      globalStyles.alignItemsCenter,
-      globalStyles.textLeft,
-      globalStyles.border,
-      globalStyles.rounded,
-      globalStyles.mb2,
-      globalStyles.p2
-    ),
-    pairImage: globalStyles.pairImage,
-    pairLoader: globalStyles.pairLoader,
-    pairRemove: globalStyles.pairRemove,
-    pairDetails: classNames(
-      globalStyles.dFlex,
-      globalStyles.flexColumn,
-      globalStyles.alignItemsStart,
-      globalStyles.ml3
-    )
-  };
-
   const [topicLoading, setTopicLoading] = useState<string>('');
+
+  const {
+    walletConnectPairingListLeadClassName,
+    walletConnectPairingListWrapperClassName,
+    walletConnectPairingListButtonClassName,
+    walletConnectPairingListIconClassName,
+    walletConnectPairingListLoaderClassName,
+    walletConnectPairingListDetailsClassName,
+    walletConnectPairingListRemoveClassName
+  } = pairingListClasses || {};
+
   useEffect(() => {
     setTopicLoading('');
   }, [activePairings]);
 
   return (
-    <div className={classes.pairsContainer}>
-      <p className={classes.leadText}>or choose an existing pairing:</p>
+    <div className={classNames(styles.xPortalPairings, className)}>
+      <p
+        className={classNames(
+          styles.xPortalPairingsLead,
+          walletConnectPairingListLeadClassName
+        )}
+      >
+        or choose an existing pairing:
+      </p>
 
-      <div className={classes.pairList}>
+      <div
+        className={classNames(
+          styles.xPortalPairingsList,
+          walletConnectPairingListWrapperClassName
+        )}
+      >
         {activePairings.map((pairing) => (
           <button
             type='button'
+            className={classNames(
+              styles.xPortalPairingButton,
+              walletConnectPairingListButtonClassName
+            )}
             key={pairing.topic}
             onClick={() => {
               connectExisting(pairing);
               setTopicLoading(pairing.topic);
             }}
-            className={classes.pairButton}
           >
-            <div
-              className={classes.pairRemove}
-              onClick={(event) => {
-                event.stopPropagation();
-                removeExistingPairing(pairing.topic);
-              }}
-            >
-              <span aria-hidden='true'>×</span>
-            </div>
-
             {pairing.peerMetadata && (
               <>
                 {topicLoading === pairing.topic ? (
                   <FontAwesomeIcon
                     icon={faCircleNotch}
                     className={classNames(
-                      globalStyles.textPrimary,
-                      globalStyles.pairLoader,
                       'fa-spin',
-                      'slow-spin'
+                      'slow-spin',
+                      styles.xPortalPairingLoader,
+                      walletConnectPairingListLoaderClassName
                     )}
                   />
                 ) : (
@@ -101,22 +97,47 @@ export const Pairinglist = ({
                       <img
                         src={pairing.peerMetadata.icons[0]}
                         alt={pairing.peerMetadata.name}
-                        className={classes.pairImage}
+                        className={classNames(
+                          styles.xPortalPairingImage,
+                          walletConnectPairingListIconClassName
+                        )}
                       />
                     )}
                   </>
                 )}
 
-                <div className={classes.pairDetails}>
-                  <strong>
+                <div
+                  className={classNames(
+                    styles.xPortalPairingDetails,
+                    walletConnectPairingListDetailsClassName
+                  )}
+                >
+                  <strong className={styles.xPortalPairingDetail}>
                     {topicLoading === pairing.topic
                       ? `Confirm on ${pairing.peerMetadata.name}`
                       : pairing.peerMetadata.name}
                   </strong>
 
-                  <span>{pairing.peerMetadata.description}</span>
+                  <span className={styles.xPortalPairingDetail}>
+                    {pairing.peerMetadata.description}
+                  </span>
 
-                  <span>{pairing.peerMetadata.url}</span>
+                  <span className={styles.xPortalPairingDetail}>
+                    {pairing.peerMetadata.url}
+                  </span>
+                </div>
+
+                <div
+                  className={classNames(
+                    styles.xPortalPairingRemove,
+                    walletConnectPairingListRemoveClassName
+                  )}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeExistingPairing(pairing.topic);
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
                 </div>
               </>
             )}

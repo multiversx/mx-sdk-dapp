@@ -28,6 +28,7 @@ export const ProgressSteps = ({
         data-testid={`step${i}${isCurrentStep ? 'active' : ''}`}
         key={i}
         color={color}
+        className={isCurrentStep ? 'active' : ''}
       />
     );
   }

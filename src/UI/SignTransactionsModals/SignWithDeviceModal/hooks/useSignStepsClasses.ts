@@ -28,11 +28,7 @@ export const useSignStepsClasses = (scamReport: string | null = null) => {
         globalStyles.alignItemsStart
       ),
       tokenLabel: classNames(globalStyles.textSecondary, globalStyles.textLeft),
-      tokenValue: classNames(
-        globalStyles.dFlex,
-        globalStyles.alignItemsCenter,
-        globalStyles.mt1
-      ),
+      tokenValue: classNames(globalStyles.dFlex, globalStyles.alignItemsCenter),
       scamReport: globalStyles.textWarning,
       scamReportIcon: classNames(globalStyles.textWarning, globalStyles.mr1),
       tokenAmountLabel: classNames(

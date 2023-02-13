@@ -1,8 +1,10 @@
 import React, { ReactNode } from 'react';
+import classNames from 'classnames';
 
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
 import { ModalContainer } from 'UI/ModalContainer';
+import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
@@ -12,9 +14,9 @@ import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerLoading } from './LedgerLoading';
 import { LedgerConnect } from './LedgerConnect';
+import { LedgerProgressBar } from './LedgerProgressBar';
 
 import styles from './ledgerLoginContainerStyles.scss';
-import classNames from 'classnames';
 
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
@@ -24,6 +26,8 @@ export interface LedgerLoginContainerPropsType
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
+  showProgressBar?: boolean;
+  showScamPhishingAlert?: boolean;
 }
 
 export const LedgerLoginContainer = ({
@@ -36,7 +40,9 @@ export const LedgerLoginContainer = ({
   nativeAuth,
   customSpinnerComponent,
   customContentComponent,
-  innerLedgerComponentsClasses
+  innerLedgerComponentsClasses,
+  showProgressBar = true,
+  showScamPhishingAlert = true
 }: LedgerLoginContainerPropsType) => {
   const { ledgerAccount } = useGetAccountInfo();
   const [
@@ -58,8 +64,54 @@ export const LedgerLoginContainer = ({
     addressTableClassNames,
     confirmAddressClassNames,
     ledgerConnectClassNames,
-    ledgerLoadingClassNames
+    ledgerLoadingClassNames,
+    ledgerProgressBarClassNames,
+    ledgerScamPhishingAlertClassName
   } = innerLedgerComponentsClasses || {};
+
+  const getScamPhishingAlert = () => {
+    if (!showScamPhishingAlert) {
+      return null;
+    }
+
+    return (
+      <ScamPhishingAlert
+        url={window.location.origin}
+        className={ledgerScamPhishingAlertClassName}
+      />
+    );
+  };
+
+  const getProgressBar = () => {
+    const progressStep = [
+      {
+        percentage: 33,
+        conditions: !showAddressList && !ledgerAccount
+      },
+      {
+        conditions: showAddressList && !error && !ledgerAccount,
+        percentage: 66
+      },
+      {
+        conditions: ledgerAccount != null && !error,
+        percentage: 100
+      }
+    ];
+
+    const currentProgress = progressStep.find((step) => step.conditions);
+    const percentage = currentProgress ? currentProgress.percentage : 33;
+
+    if (!showProgressBar) {
+      return null;
+    }
+
+    return (
+      <LedgerProgressBar
+        percentage={percentage}
+        ledgerProgressBarClassNames={ledgerProgressBarClassNames}
+      />
+    );
+  };
 
   const getContent = () => {
     if (isLoading) {
@@ -123,9 +175,15 @@ export const LedgerLoginContainer = ({
         modalDialogClassName: classNames(styles.ledgerLoginContainer, className)
       }}
     >
+      {getScamPhishingAlert()}
+      {getProgressBar()}
       {getContent()}
     </ModalContainer>
   ) : (
-    getContent()
+    <>
+      {getScamPhishingAlert()}
+      {getProgressBar()}
+      {getContent()}
+    </>
   );
 };
