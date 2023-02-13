@@ -1,19 +1,23 @@
-import React, { useEffect, useState, MouseEvent } from 'react';
+import React, { useEffect, useState, MouseEvent, ReactNode } from 'react';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
 
-import Lighting from 'assets/icons/lightning.svg';
-import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
-import { Loader } from 'UI/Loader';
+import { PageState } from 'UI/PageState';
+import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 import { ModalContainer } from 'UI/ModalContainer';
-
 import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
-import { OnProviderLoginType } from '../../../types';
-import { WithClassnameType } from '../../types';
+import Lighting from 'assets/icons/lightning.svg';
+
+import type { InnerWalletConnectComponentsClassesType } from '../types';
+import type { OnProviderLoginType } from '../../../types';
+import type { WithClassnameType } from '../../types';
+
 import { Pairinglist } from './PairingList';
 
+import globalStyles from 'assets/sass/main.scss';
 import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectLoginModalPropsType
@@ -27,22 +31,28 @@ export interface WalletConnectLoginModalPropsType
   wrapContentInsideModal?: boolean;
   isWalletConnectV2?: boolean;
   onClose?: () => void;
+  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
+  customSpinnerComponent?: ReactNode;
+  showScamPhishingAlert?: boolean;
 }
 
 export const WalletConnectLoginContainer = ({
   callbackRoute,
-  loginButtonText,
-  title = 'xPortal Login',
+  loginButtonText = 'xPortal App',
+  title = 'Login using xPortal App',
   logoutRoute = '/unlock',
   className = 'dapp-wallet-connect-login-modal',
-  lead = 'Scan the QR code using xPortal Mobile Wallet',
+  lead = 'Scan the QR code using the xPortal App',
   legacyMessage = 'Unable to login? Use the legacy version',
   wrapContentInsideModal = true,
   isWalletConnectV2 = false,
   token,
   nativeAuth,
   onClose,
-  onLoginRedirect
+  onLoginRedirect,
+  innerWalletConnectComponentsClasses,
+  customSpinnerComponent,
+  showScamPhishingAlert = true
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnect,
@@ -55,6 +65,7 @@ export const WalletConnectLoginContainer = ({
     nativeAuth,
     onLoginRedirect
   });
+
   const [
     initLoginWithWalletConnectV2,
     { error: walletConnectErrorV2 },
@@ -73,11 +84,25 @@ export const WalletConnectLoginContainer = ({
     nativeAuth,
     onLoginRedirect
   });
+
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
   const [displayWalletConnectV2, setDisplayWalletConnectV2] =
     useState<boolean>(isWalletConnectV2);
   const [showLegacySwitch, setShowLegacySwitch] =
     useState<boolean>(isWalletConnectV2);
+
+  const {
+    containerScamPhishingAlertClassName,
+    containerTitleClassName,
+    containerSubtitleClassName,
+    containerErrorClassName,
+    containerQrCodeClassName,
+    containerLoaderClassName,
+    containerLegacyClassName,
+    containerButtonClassName,
+    walletConnectPairingListClassNames
+  } = innerWalletConnectComponentsClasses || {};
+
   const isMobileDevice = isMobileEnvironment();
   const activePairings = displayWalletConnectV2
     ? wcPairings?.filter((pairing) => {
@@ -93,50 +118,6 @@ export const WalletConnectLoginContainer = ({
         );
       }) ?? []
     : [];
-
-  const generatedClasses = {
-    loginText: globalStyles.textLeft,
-    container: classNames(globalStyles.mAuto, styles.loginContainer),
-    card: classNames(
-      globalStyles.card,
-      globalStyles.my3,
-      globalStyles.textCenter
-    ),
-    cardBody: classNames(
-      globalStyles.cardBody,
-      globalStyles.p4,
-      globalStyles.mxLg4
-    ),
-    qrCodeSvgContainer: classNames(
-      globalStyles.qrCodeSvgContainer,
-      globalStyles.mxAuto,
-      globalStyles.mb3
-    ),
-    title: globalStyles.mb3,
-    leadText: classNames(globalStyles.lead, globalStyles.mb0),
-    mobileLoginButton: classNames(
-      globalStyles.btn,
-      globalStyles.btnPrimary,
-      globalStyles.dInlineFlex,
-      globalStyles.alignItemsCenter,
-      globalStyles.px4,
-      globalStyles.my4
-    ),
-    mobileLoginButtonIcon: globalStyles.mr2,
-    errorMessage: classNames(
-      globalStyles.textDanger,
-      globalStyles.dFlex,
-      globalStyles.justifyContentCenter,
-      globalStyles.alignItemsCenter
-    ),
-    legacyMessageContainer: classNames(
-      globalStyles.linkStyle,
-      globalStyles.mt4,
-      globalStyles.dFlex,
-      globalStyles.justifyContentCenter,
-      globalStyles.alignItemsCenter
-    )
-  };
 
   const onVersionSwitch = (event: MouseEvent) => {
     event.preventDefault();
@@ -160,6 +141,7 @@ export const WalletConnectLoginContainer = ({
       const svg = await QRCode.toString(uri, {
         type: 'svg'
       });
+
       if (svg) {
         setQrCodeSvg(svg);
       }
@@ -188,90 +170,143 @@ export const WalletConnectLoginContainer = ({
   }, [displayWalletConnectV2]);
 
   const content = (
-    <div className={generatedClasses.container}>
-      <div className={generatedClasses.card}>
-        <div className={generatedClasses.cardBody}>
-          {qrCodeSvg ? (
-            <div
-              className={generatedClasses.qrCodeSvgContainer}
-              dangerouslySetInnerHTML={{
-                __html: qrCodeSvg
-              }}
-            />
-          ) : (
-            <Loader />
+    <>
+      {showScamPhishingAlert && (
+        <ScamPhishingAlert
+          url={window.location.origin}
+          className={containerScamPhishingAlertClassName}
+        />
+      )}
+
+      <div className={styles.xPortalContent}>
+        <div
+          className={classNames(
+            styles.xPortalContainerHeading,
+            containerTitleClassName
           )}
+        >
+          {title}
+        </div>
 
-          <h4 className={classNames([globalStyles.h4, globalStyles.title])}>
-            {title}
-          </h4>
-
-          {isMobileDevice ? (
-            <>
-              <p className={generatedClasses.leadText}>{loginButtonText}</p>
-
-              <a
-                id='accessWalletBtn'
-                data-testid='accessWalletBtn'
-                className={generatedClasses.mobileLoginButton}
-                href={uriDeepLink || walletConnectDeepLinkV2}
-                rel='noopener noreferrer nofollow'
-                target='_blank'
-              >
-                <Lighting
-                  className={generatedClasses.mobileLoginButtonIcon}
-                  style={{
-                    width: '0.9rem',
-                    height: '0.9rem'
-                  }}
-                />
-                {title}
-              </a>
-            </>
-          ) : (
-            <p className={generatedClasses.leadText}>{lead}</p>
+        <div
+          className={classNames(
+            styles.xPortalContainerSubheading,
+            containerSubtitleClassName
           )}
+        >
+          {lead}
+        </div>
 
-          {activePairings.length > 0 && (
-            <Pairinglist
-              activePairings={activePairings}
-              connectExisting={connectExisting}
-              removeExistingPairing={removeExistingPairing}
-              className={className}
-            />
-          )}
-
-          {isWalletConnectV2 && showLegacySwitch && (
-            <a
-              href='/#'
-              className={generatedClasses.legacyMessageContainer}
-              onClick={onVersionSwitch}
+        <div>
+          {error && (
+            <p
+              className={classNames(
+                styles.xPortalContainerError,
+                containerErrorClassName
+              )}
             >
-              {legacyMessage}
-            </a>
+              {error}
+            </p>
           )}
 
-          <div>
-            {error && <p className={generatedClasses.errorMessage}>{error}</p>}
+          {walletConnectErrorV2 && (
+            <p
+              className={classNames(
+                styles.xPortalContainerError,
+                containerErrorClassName
+              )}
+            >
+              {walletConnectErrorV2}
+            </p>
+          )}
+        </div>
 
-            {walletConnectErrorV2 && (
-              <p className={generatedClasses.errorMessage}>
-                {walletConnectErrorV2}
-              </p>
+        {qrCodeSvg ? (
+          <div
+            className={classNames(
+              styles.xPortalQrCode,
+              containerQrCodeClassName
+            )}
+            dangerouslySetInnerHTML={{
+              __html: qrCodeSvg
+            }}
+          />
+        ) : (
+          <div
+            className={classNames(
+              styles.xPortalLoader,
+              containerLoaderClassName
+            )}
+          >
+            {customSpinnerComponent ? (
+              customSpinnerComponent
+            ) : (
+              <PageState
+                iconSize='10x'
+                icon={faCircleNotch}
+                iconClass={classNames('fa-spin', globalStyles.textPrimary)}
+              />
             )}
           </div>
-        </div>
+        )}
+
+        {isMobileDevice && (
+          <a
+            id='accessWalletBtn'
+            data-testid='accessWalletBtn'
+            href={uriDeepLink || walletConnectDeepLinkV2}
+            rel='noopener noreferrer nofollow'
+            target='_blank'
+            className={classNames(
+              globalStyles.btn,
+              globalStyles.btnPrimary,
+              styles.xPortalContainerButton,
+              containerButtonClassName
+            )}
+          >
+            <Lighting className={styles.xPortalContainerButtonIcon} />
+            {loginButtonText}
+          </a>
+        )}
+
+        {activePairings.length > 0 && (
+          <Pairinglist
+            activePairings={activePairings}
+            connectExisting={connectExisting}
+            removeExistingPairing={removeExistingPairing}
+            className={className}
+            pairingListClasses={walletConnectPairingListClassNames}
+          />
+        )}
+
+        {isWalletConnectV2 && showLegacySwitch && (
+          <a
+            href='/#'
+            onClick={onVersionSwitch}
+            className={classNames(
+              styles.xPortalLegacyLink,
+              containerLegacyClassName
+            )}
+          >
+            {legacyMessage}
+          </a>
+        )}
       </div>
-    </div>
+    </>
   );
 
   return wrapContentInsideModal ? (
     <ModalContainer
       onClose={onCloseModal}
       modalConfig={{
-        headerText: 'Login with xPortal Mobile Wallet',
+        headerText: 'Login using xPortal App',
         showHeader: true,
-        modalDialogClassName: className
+        modalContentClassName: styles.xPortalModalDialogContent,
+        modalHeaderClassName: styles.xPortalModalHeader,
+        modalHeaderTextClassName: styles.xPortalModalHeaderText,
+        modalCloseButtonClassName: styles.xPortalModalCloseButton,
+        modalBodyClassName: styles.xPortalModalBody,
+        modalDialogClassName: styles.xPortalLoginContainer
       }}
       className={className}
     >

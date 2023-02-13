@@ -12,7 +12,7 @@
     flex-direction: column;
     max-height: 100%;
     box-shadow: none;
-    max-width: 420px;
+    max-width: 400px;
 
     @media (min-width: 768px) {
       max-width: 730px;
@@ -34,6 +34,11 @@
         position: relative;
         top: auto;
         padding: 0;
+        cursor: pointer;
+
+        &:hover {
+          background-color: transparent;
+        }
       }
     }
 

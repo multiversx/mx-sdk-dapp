@@ -25,6 +25,8 @@ export interface LedgerLoginButtonPropsType
   disabled?: boolean;
   customSpinnerComponent?: ReactNode;
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
+  showProgressBar?: boolean;
+  showScamPhishingAlert?: boolean;
 }
 
 export const LedgerLoginButton: (
@@ -45,7 +47,9 @@ export const LedgerLoginButton: (
   onLoginRedirect,
   disabled,
   customSpinnerComponent,
-  innerLedgerComponentsClasses
+  innerLedgerComponentsClasses,
+  showProgressBar = true,
+  showScamPhishingAlert = true
 }) => {
   const isLoggedIn = useGetIsLoggedIn();
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
@@ -93,6 +97,8 @@ export const LedgerLoginButton: (
           onLoginRedirect={onLoginRedirect}
           customSpinnerComponent={customSpinnerComponent}
           innerLedgerComponentsClasses={innerLedgerComponentsClasses}
+          showProgressBar={showProgressBar}
+          showScamPhishingAlert={showScamPhishingAlert}
         />
       )}
     </>

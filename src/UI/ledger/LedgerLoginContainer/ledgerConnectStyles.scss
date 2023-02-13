@@ -49,12 +49,17 @@
         line-height: 1;
         font-size: 16px;
         font-weight: 600;
+        width: 100%;
+
+        @media (min-width: 768px) {
+          width: auto;
+        }
       }
 
       .login-connect-container-link {
         line-height: 1;
         font-size: 18px;
-        margin-top: 20px;
+        margin-top: 32px;
         font-weight: 500;
 
         &:hover,
