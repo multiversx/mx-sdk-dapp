@@ -92,14 +92,14 @@ export const WalletConnectLoginContainer = ({
     useState<boolean>(isWalletConnectV2);
 
   const {
-    walletConnectContainerScamPhishingAlertClassName,
-    walletConnectContainerTitleClassName,
-    walletConnectContainerSubtitleClassName,
-    walletConnectContainerErrorClassName,
-    walletConnectContainerQrCodeClassName,
-    walletConnectContainerLoaderClassName,
-    walletConnectContainerLegacyClassName,
-    walletConnectContainerButtonClassName,
+    containerScamPhishingAlertClassName,
+    containerTitleClassName,
+    containerSubtitleClassName,
+    containerErrorClassName,
+    containerQrCodeClassName,
+    containerLoaderClassName,
+    containerLegacyClassName,
+    containerButtonClassName,
     walletConnectPairingListClassNames
   } = innerWalletConnectComponentsClasses || {};
 
@@ -174,7 +174,7 @@ export const WalletConnectLoginContainer = ({
       {showScamPhishingAlert && (
         <ScamPhishingAlert
           url={window.location.origin}
-          className={walletConnectContainerScamPhishingAlertClassName}
+          className={containerScamPhishingAlertClassName}
         />
       )}
 
@@ -182,7 +182,7 @@ export const WalletConnectLoginContainer = ({
         <div
           className={classNames(
             styles.xPortalContainerHeading,
-            walletConnectContainerTitleClassName
+            containerTitleClassName
           )}
         >
           {title}
@@ -191,7 +191,7 @@ export const WalletConnectLoginContainer = ({
         <div
           className={classNames(
             styles.xPortalContainerSubheading,
-            walletConnectContainerSubtitleClassName
+            containerSubtitleClassName
           )}
         >
           {lead}
@@ -202,7 +202,7 @@ export const WalletConnectLoginContainer = ({
             <p
               className={classNames(
                 styles.xPortalContainerError,
-                walletConnectContainerErrorClassName
+                containerErrorClassName
               )}
             >
               {error}
@@ -213,7 +213,7 @@ export const WalletConnectLoginContainer = ({
             <p
               className={classNames(
                 styles.xPortalContainerError,
-                walletConnectContainerErrorClassName
+                containerErrorClassName
               )}
             >
               {walletConnectErrorV2}
@@ -225,7 +225,7 @@ export const WalletConnectLoginContainer = ({
           <div
             className={classNames(
               styles.xPortalQrCode,
-              walletConnectContainerQrCodeClassName
+              containerQrCodeClassName
             )}
             dangerouslySetInnerHTML={{
               __html: qrCodeSvg
@@ -235,7 +235,7 @@ export const WalletConnectLoginContainer = ({
           <div
             className={classNames(
               styles.xPortalLoader,
-              walletConnectContainerLoaderClassName
+              containerLoaderClassName
             )}
           >
             {customSpinnerComponent ? (
@@ -261,7 +261,7 @@ export const WalletConnectLoginContainer = ({
               globalStyles.btn,
               globalStyles.btnPrimary,
               styles.xPortalContainerButton,
-              walletConnectContainerButtonClassName
+              containerButtonClassName
             )}
           >
             <Lighting className={styles.xPortalContainerButtonIcon} />
@@ -285,7 +285,7 @@ export const WalletConnectLoginContainer = ({
             onClick={onVersionSwitch}
             className={classNames(
               styles.xPortalLegacyLink,
-              walletConnectContainerLegacyClassName
+              containerLegacyClassName
             )}
           >
             {legacyMessage}

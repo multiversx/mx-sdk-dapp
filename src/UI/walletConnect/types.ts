@@ -1,13 +1,13 @@
 import type { WalletConnectPairingListClassesType } from './WalletConnectLoginContainer/PairingList';
 
 export interface InnerWalletConnectComponentsClassesType {
-  walletConnectContainerScamPhishingAlertClassName?: string;
-  walletConnectContainerTitleClassName?: string;
-  walletConnectContainerSubtitleClassName?: string;
-  walletConnectContainerErrorClassName?: string;
-  walletConnectContainerQrCodeClassName?: string;
-  walletConnectContainerLoaderClassName?: string;
-  walletConnectContainerLegacyClassName?: string;
-  walletConnectContainerButtonClassName?: string;
+  containerScamPhishingAlertClassName?: string;
+  containerTitleClassName?: string;
+  containerSubtitleClassName?: string;
+  containerErrorClassName?: string;
+  containerQrCodeClassName?: string;
+  containerLoaderClassName?: string;
+  containerLegacyClassName?: string;
+  containerButtonClassName?: string;
   walletConnectPairingListClassNames?: WalletConnectPairingListClassesType;
 }
