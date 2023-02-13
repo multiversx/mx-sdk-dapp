@@ -140,7 +140,7 @@ export const SignStep = ({
   const showProgressSteps = allTransactions.length > 1;
   const classes = useSignStepsClasses(scamReport);
 
-  const token = isNft ? nftId : tokenId ?? egldLabel;
+  const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
 
   return (
@@ -217,11 +217,11 @@ export const SignStep = ({
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
-                      token={tokenId || egldLabel}
+                      token={token}
                     />
 
                     <div className={globalStyles.mr2}></div>
-                    <TokenDetails.Label token={tokenId || egldLabel} />
+                    <TokenDetails.Label token={token} />
                   </div>
                 </div>
               </div>
