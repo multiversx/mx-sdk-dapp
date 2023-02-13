@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/631)] - 2023-02-13
 
-## [[v2.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/630)] - 2023-02-13
 - [Add the ability to relogin into dapps from xPortal](https://github.com/multiversx/mx-sdk-dapp/pull/629)
 - [Breaking change: **xPortal authentication panel layout and Sign Transaction panel layout**.
 
