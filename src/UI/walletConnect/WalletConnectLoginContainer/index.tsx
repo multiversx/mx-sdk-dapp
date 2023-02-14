@@ -92,6 +92,7 @@ export const WalletConnectLoginContainer = ({
     useState<boolean>(isWalletConnectV2);
 
   const {
+    containerContentClassName,
     containerScamPhishingAlertClassName,
     containerTitleClassName,
     containerSubtitleClassName,
@@ -178,7 +179,9 @@ export const WalletConnectLoginContainer = ({
         />
       )}
 
-      <div className={styles.xPortalContent}>
+      <div
+        className={classNames(styles.xPortalContent, containerContentClassName)}
+      >
         <div
           className={classNames(
             styles.xPortalContainerHeading,
