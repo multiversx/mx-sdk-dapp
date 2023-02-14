@@ -1,6 +1,7 @@
 import type { WalletConnectPairingListClassesType } from './WalletConnectLoginContainer/PairingList';
 
 export interface InnerWalletConnectComponentsClassesType {
+  containerContentClassName?: string;
   containerScamPhishingAlertClassName?: string;
   containerTitleClassName?: string;
   containerSubtitleClassName?: string;
