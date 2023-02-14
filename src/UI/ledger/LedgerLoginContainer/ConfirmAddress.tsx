@@ -18,6 +18,7 @@ export interface ConfirmAddressPropsType extends WithClassnameType {
     ledgerModalConfirmDescriptionClassName?: string;
     ledgerModalConfirmDataClassName?: string;
     ledgerModalConfirmFooterClassName?: string;
+    ledgerModalConfirmContentClassName?: string;
   };
 }
 
@@ -32,14 +33,21 @@ export const ConfirmAddress = ({
     ledgerModalTitleClassName,
     ledgerModalConfirmDescriptionClassName,
     ledgerModalConfirmDataClassName,
-    ledgerModalConfirmFooterClassName
+    ledgerModalConfirmFooterClassName,
+    ledgerModalConfirmContentClassName
   } = confirmAddressClassNames || {};
 
   const tokenLogin = useSelector(tokenLoginSelector);
   const loginToken = tokenLogin?.loginToken ?? token;
 
   return (
-    <div className={classNames(styles.ledgerConfirmAddress, className)}>
+    <div
+      className={classNames(
+        styles.ledgerConfirmAddress,
+        ledgerModalConfirmContentClassName,
+        className
+      )}
+    >
       <h4
         className={classNames(
           styles.ledgerConfirmAddressHeading,
