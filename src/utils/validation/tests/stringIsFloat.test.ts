@@ -1,6 +1,15 @@
 import { stringIsFloat } from '../stringIsFloat';
 
 describe('stringIsFloat tests', () => {
+  it('rejects undefined', () => {
+    expect(stringIsFloat(undefined as any)).toBe(false);
+  });
+  it('rejects object', () => {
+    expect(stringIsFloat({} as any)).toBe(false);
+  });
+  it('rejects null', () => {
+    expect(stringIsFloat(null as any)).toBe(false);
+  });
   it('allows valid numbers', () => {
     expect(stringIsFloat('1')).toBe(true);
   });
