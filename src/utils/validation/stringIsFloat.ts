@@ -5,6 +5,9 @@ export const stringIsFloat = (amount: string) => {
   if (isNaN(amount as any)) {
     return false;
   }
+  if (amount == null) {
+    return false;
+  }
   if (String(amount).includes('Infinity')) {
     return false;
   }
