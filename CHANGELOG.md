@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Upgrade fontawesome](https://github.com/multiversx/mx-sdk-dapp/pull/633)
+
 ## [[v2.7.1](https://github.com/multiversx/mx-sdk-dapp/pull/632)] - 2023-02-13
 
 - [Fixed ledger issues link](https://github.com/multiversx/mx-sdk-dapp/pull/632)
