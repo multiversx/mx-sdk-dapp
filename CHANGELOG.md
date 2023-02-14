@@ -9,24 +9,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Upgrade fontawesome](https://github.com/multiversx/mx-sdk-dapp/pull/633)
 
+## [[v2.7.1](https://github.com/multiversx/mx-sdk-dapp/pull/632)] - 2023-02-13
+
+- [Fixed ledger issues link](https://github.com/multiversx/mx-sdk-dapp/pull/632)
+## [[v2.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/631)] - 2023-02-13
+
+- [Added the ability to relogin into dapps from xPortal](https://github.com/multiversx/mx-sdk-dapp/pull/629)
+- [Breaking change: **xPortal authentication panel layout and Sign Transaction panel layout**.
+
+  Migration guide:
+
+- Use `InnerWalletConnectComponentsClassesType` for styling xPortal screens and `signStepInnerClasses` for styling Sign Transaction modals.](https://github.com/multiversx/mx-sdk-dapp/pull/628)
+
 ## [[v2.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/626)] - 2023-02-10
-- [Add caching mechanism for block hash](https://github.com/multiversx/mx-sdk-dapp/pull/625)
+
+- [Added caching mechanism for block hash](https://github.com/multiversx/mx-sdk-dapp/pull/625)
 
 ## [[v2.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/624)] - 2023-02-09
+
 - [Fixed NFT display in Sign screen](https://github.com/multiversx/mx-sdk-dapp/pull/623)
 
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
 
 - [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
+
 ## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
 
-- [Fix addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
+- [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 
 ## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/620)] - 2023-02-06
 
 - [Breaking change: **Ledger authentication panel layout**.
 
   Migration guide:
+
 - Use `innerLedgerComponentsClasses` for styling Ledger screens.
 - Addresses will trim if container is < 730px, needs to be at least that size.](https://github.com/multiversx/mx-sdk-dapp/pull/619)
 
@@ -36,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.5.0](https://github.com/multiversx/mx-sdk-dapp/pull/615)] - 2023-02-04
 
-- [Fix sign transactions with web wallet when data field is empty](https://github.com/multiversx/mx-sdk-dapp/pull/614)
+- [Fixed sign transactions with web wallet when data field is empty](https://github.com/multiversx/mx-sdk-dapp/pull/614)
 - [Added missing attributes of transaction types](https://github.com/multiversx/mx-sdk-dapp/pull/613)
 - [Added Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)
 - [Added default SignTransactionModal for extra provider](https://github.com/multiversx/mx-sdk-dapp/pull/612)

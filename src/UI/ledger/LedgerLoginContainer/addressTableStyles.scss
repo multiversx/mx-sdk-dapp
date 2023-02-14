@@ -114,5 +114,10 @@
     font-weight: 600;
     margin-top: 40px !important;
     transition: all 200ms ease;
+    width: 100%;
+
+    @media (min-width: 768px) {
+      width: auto;
+    }
   }
 }

@@ -2,6 +2,7 @@ import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { WebViewProviderResponseEnums } from 'types/index';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
+import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { requestMethods } from './requestMethods';
 
 const notInitializedError = (caller: string) => () => {
@@ -34,6 +35,11 @@ export const webviewProvider: any = {
     return true;
   },
   login: async () => {
+    return true;
+  },
+  //relogin is called instead of logout if the user is not actively requiring to be logged out
+  //for example, when the token expires, and this will regenerate the token, for a seamless experience
+  relogin: async () => {
     try {
       requestMethods.login[currentPlatform]();
       const waitForNewToken: Promise<string> = new Promise(
@@ -45,6 +51,7 @@ export const webviewProvider: any = {
                 const { accessToken, error } = message;
                 if (!error) {
                   loginWithNativeAuthToken(accessToken);
+                  setExternalProviderAsAccountProvider();
                   resolve(accessToken);
                 } else {
                   reject(error);

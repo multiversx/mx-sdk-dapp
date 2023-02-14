@@ -3,9 +3,9 @@ import classNames from 'classnames';
 
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 
+import globalStyles from 'assets/sass/main.scss';
 import type { WithClassnameType } from '../../types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './ledgerConnectStyles.scss';
 
 export interface LedgerConnectPropsType extends WithClassnameType {
@@ -104,7 +104,9 @@ export const LedgerConnect = ({
           </button>
 
           <a
-            href='#'
+            href='https://support.ledger.com/hc/en-us/articles/115005165269-Connection-issues-with-Windows-or-Linux'
+            target='_blank'
+            rel='noopener noreferrer'
             className={classNames(
               styles.loginConnectContainerLink,
               ledgerModalFooterLinkClassName

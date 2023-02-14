@@ -14,14 +14,24 @@ export interface TransactionDataPropsType extends WithClassnameType {
   data: string;
   highlight?: string;
   isScCall?: boolean;
+  innerTransactionDataClasses?: {
+    transactionDataInputLabelClassName?: string;
+    transactionDataInputValueClassName?: string;
+  };
 }
 
 export const TransactionData = ({
   data,
   highlight,
   isScCall,
-  className = 'dapp-transaction-data'
+  className = 'dapp-transaction-data',
+  innerTransactionDataClasses
 }: TransactionDataPropsType) => {
+  const {
+    transactionDataInputLabelClassName,
+    transactionDataInputValueClassName
+  } = innerTransactionDataClasses || {};
+
   let output = <>{data}</>;
 
   const [encodedScCall, ...remainingDataFields] =
@@ -82,7 +92,8 @@ export const TransactionData = ({
             className={classNames(
               globalStyles.formLabel,
               globalStyles.textSecondary,
-              globalStyles.dBlock
+              globalStyles.dBlock,
+              transactionDataInputLabelClassName
             )}
           >
             SC Call
@@ -96,7 +107,8 @@ export const TransactionData = ({
               globalStyles.formControl,
               globalStyles.mt1,
               globalStyles.textBreak,
-              globalStyles.w100
+              globalStyles.w100,
+              transactionDataInputValueClassName
             )}
           >
             {[decodePart(encodedScCall), ...remainingDataFields].join('@')}
@@ -117,7 +129,8 @@ export const TransactionData = ({
           className={classNames(
             globalStyles.formLabel,
             globalStyles.textSecondary,
-            globalStyles.dBlock
+            globalStyles.dBlock,
+            transactionDataInputLabelClassName
           )}
         >
           Data
@@ -130,7 +143,8 @@ export const TransactionData = ({
             globalStyles.formControl,
             globalStyles.mt1,
             globalStyles.textBreak,
-            globalStyles.w100
+            globalStyles.w100,
+            transactionDataInputValueClassName
           )}
         >
           {data ? output : N_A}

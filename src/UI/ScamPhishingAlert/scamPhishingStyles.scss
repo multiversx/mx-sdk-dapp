@@ -1,0 +1,35 @@
+@import 'assets/sass/variables/variables';
+
+.scam-phishing-alert {
+  text-align: center;
+  margin: 40px auto 0;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+  width: auto;
+  align-items: center;
+
+  .scam-phishing-alert-icon {
+    color: $primary;
+    margin-right: 8px;
+  }
+
+  .scam-phishing-alert-text {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+
+    @media (min-width: 576px) {
+      flex-direction: row;
+    }
+
+    strong {
+      color: $primary;
+    }
+
+    .scam-phishing-alert-prefix {
+      margin-left: 4px;
+    }
+  }
+}

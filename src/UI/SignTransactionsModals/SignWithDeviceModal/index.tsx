@@ -12,7 +12,8 @@ export const SignWithDeviceModal = ({
   error,
   className = 'dapp-device-modal',
   verifyReceiverScam = true,
-  title = 'Confirm transaction'
+  title = 'Confirm transaction',
+  signStepInnerClasses
 }: SignModalPropsType) => {
   const {
     onSignTransaction,
@@ -55,6 +56,7 @@ export const SignWithDeviceModal = ({
           handleClose={onAbort}
           error={error}
           title={title}
+          signStepInnerClasses={signStepInnerClasses}
         />
       </div>
     </ModalContainer>

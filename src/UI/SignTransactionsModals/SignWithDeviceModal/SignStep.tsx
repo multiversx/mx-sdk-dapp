@@ -5,11 +5,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Address } from '@multiversx/sdk-core/out';
+import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
-import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
@@ -18,10 +18,26 @@ import { TransactionData } from 'UI/TransactionData';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+import { getIdentifierType } from 'utils';
 
-import { getIdentifierType } from 'utils/validation/getIdentifierType';
-import { WithClassnameType } from '../../types';
+import type { WithClassnameType } from '../../types';
+import type {
+  ActiveLedgerTransactionType,
+  MultiSignTransactionType
+} from 'types';
+
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+
+export interface SignStepInnerClassesType {
+  buttonsWrapperClassName?: string;
+  inputGroupClassName?: string;
+  inputLabelClassName?: string;
+  inputValueClassName?: string;
+  errorClassName?: string;
+  scamAlertClassName?: string;
+  buttonClassName?: string;
+  progressClassName?: string;
+}
 
 // TODO: Rename to "SignStepPropsType" when sdk-dapp@3.0.0
 export interface SignStepType extends WithClassnameType {
@@ -36,6 +52,7 @@ export interface SignStepType extends WithClassnameType {
   currentTransaction: ActiveLedgerTransactionType | null;
   allTransactions: MultiSignTransactionType[];
   isLastTransaction: boolean;
+  signStepInnerClasses?: SignStepInnerClassesType;
 }
 
 export const SignStep = ({
@@ -49,7 +66,8 @@ export const SignStep = ({
   allTransactions,
   isLastTransaction,
   currentStep,
-  className
+  className,
+  signStepInnerClasses
 }: SignStepType) => {
   const egldLabel = getEgldLabel();
 
@@ -59,6 +77,17 @@ export const SignStep = ({
 
   const transactionData = currentTransaction.transaction.getData().toString();
   const { network } = useGetNetworkConfig();
+
+  const {
+    buttonsWrapperClassName,
+    inputGroupClassName,
+    inputLabelClassName,
+    inputValueClassName,
+    errorClassName,
+    scamAlertClassName,
+    buttonClassName,
+    progressClassName
+  } = signStepInnerClasses || {};
 
   const { tokenId, nonce, amount, type, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
@@ -111,7 +140,7 @@ export const SignStep = ({
   const showProgressSteps = allTransactions.length > 1;
   const classes = useSignStepsClasses(scamReport);
 
-  const token = isNft ? nftId : tokenId ?? egldLabel;
+  const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
 
   return (
@@ -130,19 +159,33 @@ export const SignStep = ({
                 <ProgressSteps
                   totalSteps={allTransactions.length}
                   currentStep={currentStep + 1} // currentStep starts at 0
-                  className={globalStyles.mb4}
+                  className={classNames(globalStyles.mb4, progressClassName)}
                 />
               )}
 
-              <div className={classes.formGroup} data-testid='transactionTitle'>
-                <div className={classes.formLabel}>To </div>
+              <div
+                data-testid='transactionTitle'
+                className={classNames(classes.formGroup, inputGroupClassName)}
+              >
+                <div
+                  className={classNames(classes.formLabel, inputLabelClassName)}
+                >
+                  To
+                </div>
 
-                {multiTxData
-                  ? new Address(receiver).bech32()
-                  : currentTransaction.transaction.getReceiver().toString()}
+                <div className={inputValueClassName}>
+                  {multiTxData
+                    ? new Address(receiver).bech32()
+                    : currentTransaction.transaction.getReceiver().toString()}
+                </div>
 
                 {scamReport && (
-                  <div className={classes.scamReport}>
+                  <div
+                    className={classNames(
+                      classes.scamReport,
+                      scamAlertClassName
+                    )}
+                  >
                     <span>
                       <FontAwesomeIcon
                         icon={faExclamationTriangle}
@@ -155,61 +198,95 @@ export const SignStep = ({
                 )}
               </div>
 
-              <div className={classes.contentWrapper}>
-                <div className={classes.tokenWrapper}>
-                  <div className={classes.tokenLabel}>Token</div>
+              <div
+                className={classNames(
+                  classes.tokenWrapper,
+                  inputGroupClassName
+                )}
+              >
+                <div
+                  className={classNames(
+                    classes.tokenLabel,
+                    inputLabelClassName
+                  )}
+                >
+                  Token
+                </div>
 
+                <div className={inputValueClassName}>
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
                       token={token}
                     />
 
-                    <div className={globalStyles.mr1}></div>
-
+                    <div className={globalStyles.mr2}></div>
                     <TokenDetails.Label token={token} />
                   </div>
                 </div>
+              </div>
 
-                <div>
-                  <div className={classes.tokenAmountLabel}>Amount</div>
+              <div className={inputGroupClassName}>
+                <div
+                  className={classNames(
+                    classes.tokenAmountLabel,
+                    inputLabelClassName
+                  )}
+                >
+                  Amount
+                </div>
 
-                  <div className={classes.tokenAmountValue}>
-                    <div className={globalStyles.mr1}>{shownAmount}</div>
-                    <TokenDetails.Symbol token={token} />
-                  </div>
+                <div
+                  className={classNames(
+                    classes.tokenAmountValue,
+                    inputValueClassName
+                  )}
+                >
+                  {shownAmount}
                 </div>
               </div>
 
-              <div className={classes.dataFormGroup}>
-                {currentTransaction.transaction.getData() && (
-                  <TransactionData
-                    isScCall={!tokenId}
-                    data={currentTransaction.transaction.getData().toString()}
-                    highlight={multiTxData}
-                  />
-                )}
-              </div>
+              {currentTransaction.transaction.getData() && (
+                <TransactionData
+                  isScCall={!tokenId}
+                  data={currentTransaction.transaction.getData().toString()}
+                  highlight={multiTxData}
+                  className={inputGroupClassName}
+                  innerTransactionDataClasses={{
+                    transactionDataInputLabelClassName: inputLabelClassName,
+                    transactionDataInputValueClassName: inputValueClassName
+                  }}
+                />
+              )}
 
-              {error && <p className={classes.errorMessage}>{error}</p>}
+              {error && (
+                <p className={classNames(classes.errorMessage, errorClassName)}>
+                  {error}
+                </p>
+              )}
             </>
           )}
         </>
       }
       action={
-        <div className={classes.buttonsWrapper}>
+        <div
+          className={classNames(
+            classes.buttonsWrapper,
+            buttonsWrapperClassName
+          )}
+        >
           <button
             id='closeButton'
             data-testid='closeButton'
             onClick={onCloseClick}
-            className={classes.cancelButton}
+            className={classNames(classes.cancelButton, buttonClassName)}
           >
             {isFirst ? 'Cancel' : 'Back'}
           </button>
 
           <button
             type='button'
-            className={classes.signButton}
+            className={classNames(classes.signButton, buttonClassName)}
             id='signBtn'
             data-testid='signBtn'
             onClick={onSignTransaction}
