@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.8.1](https://github.com/multiversx/mx-sdk-dapp/pull/636)] - 2023-02-14
+
 - [Fix mainnet EGLD Label](https://github.com/multiversx/mx-sdk-dapp/pull/635)
 
 ## [[v2.8.0](https://github.com/multiversx/mx-sdk-dapp/pull/634)] - 2023-02-14
