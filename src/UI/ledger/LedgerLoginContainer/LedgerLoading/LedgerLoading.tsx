@@ -13,6 +13,8 @@ export interface LedgerLoadingPropsType {
   ledgerLoadingClassNames?: {
     ledgerModalTitleClassName?: string;
     ledgerModalSubtitleClassName?: string;
+    ledgerLoadingWrapper?: string;
+    ledgerLoadingSpinner?: string;
   };
 }
 
@@ -21,11 +23,17 @@ export const LedgerLoading = ({
   ledgerLoadingClassNames,
   customContentComponent
 }: LedgerLoadingPropsType) => {
-  const { ledgerModalSubtitleClassName, ledgerModalTitleClassName } =
-    ledgerLoadingClassNames || {};
+  const {
+    ledgerModalSubtitleClassName,
+    ledgerModalTitleClassName,
+    ledgerLoadingWrapper,
+    ledgerLoadingSpinner
+  } = ledgerLoadingClassNames || {};
 
   return (
-    <div className={styles.ledgerLoadingWrapper}>
+    <div
+      className={classNames(styles.ledgerLoadingWrapper, ledgerLoadingWrapper)}
+    >
       <div
         className={classNames(
           styles.ledgerLoadingHeading,
@@ -46,7 +54,12 @@ export const LedgerLoading = ({
 
       {customContentComponent}
 
-      <div className={styles.ledgerLoadingSpinner}>
+      <div
+        className={classNames(
+          styles.ledgerLoadingSpinner,
+          ledgerLoadingSpinner
+        )}
+      >
         {customSpinnerComponent ? (
           customSpinnerComponent
         ) : (

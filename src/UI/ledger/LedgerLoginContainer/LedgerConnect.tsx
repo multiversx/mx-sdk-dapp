@@ -20,6 +20,8 @@ export interface LedgerConnectPropsType extends WithClassnameType {
     ledgerModalIconClassName?: string;
     ledgerModalButtonClassName?: string;
     ledgerModalFooterLinkClassName?: string;
+    ledgerModalFooterClassName?: string;
+    ledgerModalContentClassName?: string;
   };
 }
 
@@ -37,12 +39,19 @@ export const LedgerConnect = ({
     ledgerModalErrorClassName,
     ledgerModalIconClassName,
     ledgerModalButtonClassName,
-    ledgerModalFooterLinkClassName
+    ledgerModalFooterLinkClassName,
+    ledgerModalFooterClassName,
+    ledgerModalContentClassName
   } = ledgerConnectClassNames || {};
 
   return (
     <div className={classNames(styles.loginConnectContainer, className)}>
-      <div className={styles.loginConnectContainerContent}>
+      <div
+        className={classNames(
+          styles.loginConnectContainerContent,
+          ledgerModalContentClassName
+        )}
+      >
         {connectPageContent ? (
           connectPageContent
         ) : (
@@ -89,7 +98,12 @@ export const LedgerConnect = ({
           </>
         )}
 
-        <div className={styles.loginConnectContainerFooter}>
+        <div
+          className={classNames(
+            styles.loginConnectContainerFooter,
+            ledgerModalFooterClassName
+          )}
+        >
           <button
             onClick={onClick}
             data-testid='connectBtn'
