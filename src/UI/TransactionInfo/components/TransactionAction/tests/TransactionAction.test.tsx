@@ -12,7 +12,7 @@ describe('TransactionAction tests', () => {
     const transactionAction = methods.getByTestId('transactionAction');
 
     expect(transactionAction.textContent).toContain(
-      'Delegate14.167802221131358682 xEGLDto staking providerARC Stake'
+      'Delegate14.167802221131358682 EGLDto staking providerARC Stake'
     );
   });
 });

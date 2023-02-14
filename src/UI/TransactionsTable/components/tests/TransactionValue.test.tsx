@@ -5,15 +5,15 @@ import { getMockTransactionByIndex } from './getMockTransactionByIndex';
 
 describe('TransactionsValue tests', () => {
   const transactions: { [key: string]: string } = {
-    0: '14.16 xEGLD',
-    9: '1.00 xEGLD',
+    0: '14.16 EGLD',
+    9: '1.00 EGLD',
     // legacy delegation
-    19: '20.00 xEGLD', // unStake
-    22: '20.00 xEGLD', // unBond
+    19: '20.00 EGLD', // unStake
+    22: '20.00 EGLD', // unBond
     // stake transactions
-    1: '5.00 xEGLD', // unDelegate
-    20: '0.06 xEGLD', // claimRewards
-    21: '0.39 xEGLD' // reDelegateRewards
+    1: '5.00 EGLD', // unDelegate
+    20: '0.06 EGLD', // claimRewards
+    21: '0.39 EGLD' // reDelegateRewards
   };
 
   for (let i = 0; i < Object.keys(transactions).length; i++) {
