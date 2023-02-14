@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.8.2](https://github.com/multiversx/mx-sdk-dapp/pull/638)] - 2023-02-14
+
+- [Fixed `stringIsFloat` function](https://github.com/multiversx/mx-sdk-dapp/pull/638)
+
 
 ## [[v2.8.1](https://github.com/multiversx/mx-sdk-dapp/pull/637)] - 2023-02-14
 
