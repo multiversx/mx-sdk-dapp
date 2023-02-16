@@ -8,10 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-## [[v2.8.3](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-14
 
+
+## [[v2.8.3](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-14
+- [Changed `broadcastLogoutAcrossTabs` function to prevent logout for different address](https://github.com/multiversx/mx-sdk-dapp/pull/642)
 - [Added additional class support](https://github.com/multiversx/mx-sdk-dapp/pull/639)
 - [Changed transaction toast message displayed for 1 transaction](https://github.com/multiversx/mx-sdk-dapp/pull/641)
+
 ## [[v2.8.2](https://github.com/multiversx/mx-sdk-dapp/pull/638)] - 2023-02-14
 
 - [Fixed `stringIsFloat` function](https://github.com/multiversx/mx-sdk-dapp/pull/638)

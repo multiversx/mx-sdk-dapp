@@ -9,6 +9,13 @@ import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
 
 const broadcastLogoutAcrossTabs = (address: string) => {
+  const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
+  const { data } = storedData ? JSON.parse(storedData) : { data: address };
+
+  if (address !== data) {
+    return;
+  }
+
   storage.local.setItem({
     key: localStorageKeys.logoutEvent,
     data: address,
