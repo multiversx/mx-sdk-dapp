@@ -9,7 +9,7 @@ import { TransactionActionBlock } from 'UI/TransactionInfo/components/Transactio
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 
-const getTicker = (identifier: string) => {
+export const getTicker = (identifier: string) => {
   if (!identifier) return '';
 
   const arr = identifier.split('-');

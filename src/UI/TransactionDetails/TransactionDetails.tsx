@@ -29,9 +29,16 @@ export const TransactionDetails = ({
   const processedTransactionsStatus = useMemo(() => {
     const processedTransactions = transactions.filter(
       (tx) => !isServerTransactionPending(tx?.status)
-    );
+    ).length;
     const totalTransactions = transactions.length;
-    return `${processedTransactions.length} / ${totalTransactions} transactions processed`;
+
+    if (totalTransactions === 1 && processedTransactions === 1) {
+      return isServerTransactionPending(transactions[0].status)
+        ? 'Processing transaction'
+        : 'Transaction processed';
+    }
+
+    return `${processedTransactions} / ${totalTransactions} transactions processed`;
   }, [transactions]);
 
   return (
