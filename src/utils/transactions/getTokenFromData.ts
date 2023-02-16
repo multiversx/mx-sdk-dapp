@@ -9,7 +9,7 @@ const noData = {
   amount: ''
 };
 
-const decodeData = (data: string) => {
+export const decodeData = (data: string) => {
   const nonceIndex = 2;
   const amountIndex = 3;
   const parts = data.split('@');
@@ -19,9 +19,7 @@ const decodeData = (data: string) => {
   return decodedParts;
 };
 
-export function getTokenFromData(
-  data?: string
-): {
+export function getTokenFromData(data?: string): {
   tokenId: string;
   amount: string;
   collection?: string;
@@ -60,13 +58,8 @@ export function getTokenFromData(
 
   if (nftTransfer) {
     try {
-      const [
-        ,
-        /*ESDTNFTTransfer*/ collection,
-        nonce,
-        quantity,
-        receiver
-      ] = decodeData(data);
+      const [, /*ESDTNFTTransfer*/ collection, nonce, quantity, receiver] =
+        decodeData(data);
       if (
         [collection, nonce, quantity, receiver].every((el) => Boolean(el)) &&
         addressIsValid(new Address(receiver).bech32())
