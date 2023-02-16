@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-## [[v2.8.3](https://github.com/multiversx/mx-sdk-dapp/pull/640)] - 2023-02-14
+## [[v2.8.3](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-14
 
 - [Added additional class support](https://github.com/multiversx/mx-sdk-dapp/pull/639)
 - [Changed transaction toast message displayed for 1 transaction](https://github.com/multiversx/mx-sdk-dapp/pull/641)
