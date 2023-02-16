@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [[v2.8.5](https://github.com/multiversx/mx-sdk-dapp/pull/644)] - 2023-02-16
+
+
 ## [[v2.8.4](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-16
 - [Added additional exports for redux store helpers](https://github.com/multiversx/mx-sdk-dapp/pull/643)
 - [Changed `broadcastLogoutAcrossTabs` function to prevent tab logout for different address](https://github.com/multiversx/mx-sdk-dapp/pull/642)
