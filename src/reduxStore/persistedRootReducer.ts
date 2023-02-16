@@ -19,7 +19,10 @@ const migrations: any = {
   }
 };
 
-function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
+export function getSessionStoragePersistConfig(
+  key: string,
+  blacklist: string[] = []
+) {
   return {
     key,
     version: 1,
@@ -41,7 +44,7 @@ const signedMessageInfoersistConfig = getSessionStoragePersistConfig(
   'sdk-dapp-signedMessageInfo'
 );
 
-const localStoragePersistConfig: PersistConfig<any> = {
+export const localStoragePersistConfig: PersistConfig<any> = {
   key: 'sdk-dapp-store',
   version: 2,
   storage: reduxPersistLocalStorage,
@@ -53,7 +56,8 @@ const localStoragePersistConfig: PersistConfig<any> = {
   ],
   migrate: createMigrate(migrations, { debug: false })
 };
-const sessionStorageReducers = {
+
+export const sessionStorageReducers = {
   [ReducersEnum.toasts]: persistReducer(toastsReducerPersistConfig, toasts),
   [ReducersEnum.transactions]: persistReducer(
     transactionsReducerPersistConfig,

@@ -6,7 +6,7 @@ import {
 
 import { WithTransactionType } from '../../../UI/types';
 
-const internalTransactionActions = [
+export const internalTransactionActions = [
   TransactionOperationActionTypeEnum.create,
   TransactionOperationActionTypeEnum.localMint,
   TransactionOperationActionTypeEnum.ESDTLocalMint,
@@ -81,11 +81,8 @@ export function useGetOperationList(props: OperationListType) {
     setIsExpanded((existing) => !existing);
   };
 
-  const {
-    displayedOperations,
-    showToggleButton,
-    toggleButtonText
-  } = getOperationList({ ...props, isExpanded });
+  const { displayedOperations, showToggleButton, toggleButtonText } =
+    getOperationList({ ...props, isExpanded });
 
   return {
     isExpanded,

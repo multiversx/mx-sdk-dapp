@@ -8,13 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [[v2.8.4](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-16
-
-- [Added exports to redux helpers](https://github.com/multiversx/mx-sdk-dapp/pull/643)
-
-
-## [[v2.8.3](https://github.com/multiversx/mx-sdk-dapp/pull/640)] - 2023-02-14
-
-- [Added additional class support](https://github.com/multiversx/mx-sdk-dapp/pull/639)
+- [Added additional exports for redux store helpers](https://github.com/multiversx/mx-sdk-dapp/pull/643)
+- [Changed `broadcastLogoutAcrossTabs` function to prevent tab logout for different address](https://github.com/multiversx/mx-sdk-dapp/pull/642)
+- [Changed transaction toast message displayed for 1 transaction](https://github.com/multiversx/mx-sdk-dapp/pull/641)
+- [Added additional class support for ledger](https://github.com/multiversx/mx-sdk-dapp/pull/639)
 
 ## [[v2.8.2](https://github.com/multiversx/mx-sdk-dapp/pull/638)] - 2023-02-14
 
