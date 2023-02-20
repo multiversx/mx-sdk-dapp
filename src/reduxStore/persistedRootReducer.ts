@@ -14,8 +14,10 @@ import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
 import { ReducersEnum } from 'types/reducers.types';
 
-const config = {
-  persistReducersToLocalStorage: true
+const config: {
+  persistReducersStorageType: 'localStorage' | 'sessionStorage';
+} = {
+  persistReducersStorageType: 'localStorage'
 };
 
 const persistMapping = {
@@ -112,7 +114,10 @@ const fullSessionReducers = {
   )
 };
 
-const persistedReducer = config.persistReducersToLocalStorage
+const isPersistToLocalStorage =
+  config.persistReducersStorageType === 'localStorage';
+
+const persistedReducer = isPersistToLocalStorage
   ? persistReducer(
       localStoragePersistConfig,
       getRootReducer(sessionStorageReducers)
