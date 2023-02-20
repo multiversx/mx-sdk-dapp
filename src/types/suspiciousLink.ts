@@ -11,7 +11,7 @@ export interface SuspiciousLinkPropsType {
   messagePrefix?: string;
   scamInfo?: ScamInfoType;
   isNsfw?: boolean;
-  uris?: string[];
+  verified?: boolean;
 }
 
 export interface TextWithLinksType {
