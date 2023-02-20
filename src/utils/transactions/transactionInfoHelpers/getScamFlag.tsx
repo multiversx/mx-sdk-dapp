@@ -39,9 +39,17 @@ export const getScamFlag = ({
   message,
   scamInfo,
   isNsfw,
-  uris,
+  verified,
   messagePrefix = 'Message hidden due to suspicious content - '
 }: SuspiciousLinkPropsType): SuspiciousLinkType => {
+  if (verified) {
+    return {
+      message: '',
+      textWithLinks: '',
+      isSuspicious: false
+    };
+  }
+
   const outputMessage = `${messagePrefix}${
     scamInfo?.info ?? 'suspicious content'
   }`;
@@ -55,23 +63,9 @@ export const getScamFlag = ({
     };
   }
 
-  if (uris?.length) {
-    for (const uri of uris) {
-      const suspiciousInfo = getScamFlag({ message: uri, messagePrefix });
-
-      if (suspiciousInfo.isSuspicious) {
-        return suspiciousInfo;
-      }
-    }
-  }
-
-  if (!hasLinks && !scamInfo && !isNsfw) {
-    return {
-      message: '',
-      textWithLinks,
-      isSuspicious: false
-    };
-  }
-
-  return { message: outputMessage, textWithLinks, isSuspicious: true };
+  return {
+    message: '',
+    textWithLinks,
+    isSuspicious: false
+  };
 };
