@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [[update native auth last block hash caching mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/645)] - 2023-02-20
+## [[v2.8.6](https://github.com/multiversx/mx-sdk-dapp/pull/647)] - 2023-02-20
+- [[Updated `nativeAuth` last block hash caching mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/645)
 - [Fixed `getScamFlag` method to skip uris and if verified](https://github.com/multiversx/mx-sdk-dapp/pull/646)
 
 
