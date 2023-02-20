@@ -4,11 +4,39 @@ import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
 import { PersistConfig } from 'redux-persist/lib/types';
 import getRootReducer from 'reduxStore/reducers';
 import { defaultNetwork } from 'reduxStore/slices';
+import account from 'reduxStore/slices/accountInfoSlice';
+import loginInfo from 'reduxStore/slices/loginInfoSlice';
+import modals from 'reduxStore/slices/modalsSlice';
+import networkConfig from 'reduxStore/slices/networkConfigSlice';
 import { signedMessageInfoReducer } from 'reduxStore/slices/signedMessageInfoSlice';
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
 import { ReducersEnum } from 'types/reducers.types';
+
+const config = {
+  persistToLocalStorage: true
+};
+
+const persistMapping = {
+  [ReducersEnum.account]: 'sdk-dapp-account',
+  [ReducersEnum.loginInfo]: 'sdk-dapp-login-info',
+  [ReducersEnum.modals]: 'sdk-dapp-modals',
+  [ReducersEnum.networkConfig]: 'sdk-dapp-network-config'
+};
+
+const accountReducerPersistConfig = getSessionStoragePersistConfig(
+  persistMapping[ReducersEnum.account]
+);
+const loginInfReducerPersistConfig = getSessionStoragePersistConfig(
+  persistMapping[ReducersEnum.loginInfo]
+);
+const modalsReducerPersistConfig = getSessionStoragePersistConfig(
+  persistMapping[ReducersEnum.modals]
+);
+const networkConfigReducerPersistConfig = getSessionStoragePersistConfig(
+  persistMapping[ReducersEnum.networkConfig]
+);
 
 const migrations: any = {
   2: (state: any) => {
@@ -19,10 +47,7 @@ const migrations: any = {
   }
 };
 
-export function getSessionStoragePersistConfig(
-  key: string,
-  blacklist: string[] = []
-) {
+function getSessionStoragePersistConfig(key: string, blacklist: string[] = []) {
   return {
     key,
     version: 1,
@@ -44,17 +69,17 @@ const signedMessageInfoersistConfig = getSessionStoragePersistConfig(
   'sdk-dapp-signedMessageInfo'
 );
 
-export const localStoragePersistConfig: PersistConfig<any> = {
+const localStoragePersistConfig: PersistConfig<any> = {
   key: 'sdk-dapp-store',
   version: 2,
   storage: reduxPersistLocalStorage,
-  whitelist: [
-    ReducersEnum.account,
-    ReducersEnum.loginInfo,
-    ReducersEnum.modals,
-    ReducersEnum.networkConfig
-  ],
+  whitelist: Object.keys(persistMapping),
   migrate: createMigrate(migrations, { debug: false })
+};
+
+const emptyLocalStoragePersistConfig = {
+  ...localStoragePersistConfig,
+  whitelist: []
 };
 
 export const sessionStorageReducers = {
@@ -73,7 +98,28 @@ export const sessionStorageReducers = {
   )
 };
 
-export default persistReducer(
-  localStoragePersistConfig,
-  getRootReducer(sessionStorageReducers)
-);
+const fullSessionReducers = {
+  ...sessionStorageReducers,
+  [ReducersEnum.account]: persistReducer(accountReducerPersistConfig, account),
+  [ReducersEnum.loginInfo]: persistReducer(
+    loginInfReducerPersistConfig,
+    loginInfo
+  ),
+  [ReducersEnum.modals]: persistReducer(modalsReducerPersistConfig, modals),
+  [ReducersEnum.networkConfig]: persistReducer(
+    networkConfigReducerPersistConfig,
+    networkConfig
+  )
+};
+
+const persistedReducer = config.persistToLocalStorage
+  ? persistReducer(
+      localStoragePersistConfig,
+      getRootReducer(sessionStorageReducers)
+    )
+  : persistReducer(
+      emptyLocalStoragePersistConfig,
+      getRootReducer(fullSessionReducers)
+    );
+
+export default persistedReducer;
