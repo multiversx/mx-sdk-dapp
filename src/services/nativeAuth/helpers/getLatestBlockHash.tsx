@@ -6,14 +6,14 @@ interface GetLatestBlockHashResponseType {
   timestamp: number;
 }
 
-const cachingDurationMS = 50000; // 50 seconds, a block hash is valid for 1 minute from its generation
+const cachingDurationMS = 40000; // 40 seconds, a block hash is valid for 1 minute from its generation
 let cachingExpiresAt: number | null = null;
-//this is an object with current so it doesn't get affected by closure and is always a fresh value
+//this is an object with .current, so it doesn't get affected by closure and is always a fresh value
 const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
   current: null
 };
 
-let isGeneratingNewToken = false;
+const isGeneratingNewToken: Record<string, boolean> = { current: false };
 
 export async function getLatestBlockHash(
   apiUrl: string
@@ -28,19 +28,19 @@ export async function getLatestBlockHash(
     return cachedResponse.current;
   } else {
     //this will prevent multiple calls to this function from generating multiple hashes
-    if (isGeneratingNewToken) {
+    if (isGeneratingNewToken.current) {
       //if there is already an await in progress for the API, just return a Promise that polls the cachedResponse object for the hash
       return await waitForGeneratedToken();
     }
     //lock the generation process
-    isGeneratingNewToken = true;
+    isGeneratingNewToken.current = true;
     //invalidate the previous cached response, this will also make sure that waitForGeneratedToken doesn't return the old value
     cachedResponse.current = null;
     const response = await getLatestBlockHashFromServer(apiUrl);
     //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
     cachedResponse.current = response;
     cachingExpiresAt = Date.now() + cachingDurationMS;
-    isGeneratingNewToken = false;
+    isGeneratingNewToken.current = false;
     return response;
   }
 }
@@ -71,6 +71,6 @@ async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> 
     timeoutRef = setTimeout(() => {
       clearInterval(retryIntervalRef);
       reject('could not generate new token');
-    }, 5000);
+    }, 10000);
   });
 }
