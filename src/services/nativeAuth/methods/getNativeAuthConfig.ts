@@ -14,6 +14,7 @@ export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
 
   const nativeAuthConfig = {
     hostname: config?.hostname ?? defaultNativeAuthConfig.hostname,
+    blockHashShard: config?.blockHashShard ?? null,
     expirySeconds:
       config?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
     apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress,
