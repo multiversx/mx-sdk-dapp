@@ -138,6 +138,10 @@ export const WalletConnectLoginContainer = ({
     }
 
     const uri = displayWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
+
+    // TODO - remove this
+    console.log('uri', uri);
+
     if (uri) {
       const svg = await QRCode.toString(uri, {
         type: 'svg'
