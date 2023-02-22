@@ -1,5 +1,7 @@
 import axios from 'axios';
+import throttle from 'lodash/throttle';
 import { BLOCKS_ENDPOINT } from 'apiCalls/endpoints';
+import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 
 interface GetLatestBlockHashResponseType {
   hash: string;
@@ -14,6 +16,24 @@ const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
 };
 
 const isGeneratingNewToken: Record<string, boolean> = { current: false };
+
+const getLatestBlockHashFromServer = retryMultipleTimes(
+  throttle(
+    async (
+      apiUrl: string,
+      blockHashShard: number
+    ): Promise<GetLatestBlockHashResponseType> => {
+      const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
+        `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
+          blockHashShard ? '&shard=' + blockHashShard : ''
+        }`
+      );
+      const [latestBlock] = data;
+      return latestBlock;
+    },
+    200
+  )
+);
 
 export async function getLatestBlockHash(
   apiUrl: string,
@@ -44,19 +64,6 @@ export async function getLatestBlockHash(
     isGeneratingNewToken.current = false;
     return response;
   }
-}
-
-async function getLatestBlockHashFromServer(
-  apiUrl: string,
-  blockHashShard?: number
-): Promise<GetLatestBlockHashResponseType> {
-  const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
-    `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
-      blockHashShard ? '&shard=' + blockHashShard : ''
-    }`
-  );
-  const [latestBlock] = data;
-  return latestBlock;
 }
 
 async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> {
