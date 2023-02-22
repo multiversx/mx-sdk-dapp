@@ -25,6 +25,8 @@
     "storybook": "start-storybook -p 6006",
     "test-storybook": "test-storybook",
     "build-storybook": "build-storybook",
+    "lint": "eslint --fix --ext js,ts,tsx src",
+    "postinstall": "husky install && husky add .husky/pre-push \"npm run lint && npm run build && npm run test\"",
     "pre-release": "node prerelease-script.js"
   },
   "devDependencies": {

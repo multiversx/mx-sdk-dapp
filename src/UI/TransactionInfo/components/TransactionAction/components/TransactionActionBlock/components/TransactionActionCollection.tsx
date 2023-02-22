@@ -1,11 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/explorerUrlBuilder';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from '../styles.scss';
 
 export const TransactionActionCollection = ({

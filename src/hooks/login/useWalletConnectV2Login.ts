@@ -101,7 +101,7 @@ export const useWalletConnectV2Login = ({
     : '';
 
   useUpdateEffect(() => {
-    if(!tokenToSign) {
+    if (!tokenToSign) {
       return;
     }
 

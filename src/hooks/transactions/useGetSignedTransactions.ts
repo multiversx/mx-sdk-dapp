@@ -11,10 +11,8 @@ export interface useGetSignedTransactionsReturnType {
 
 export function useGetSignedTransactions(): useGetSignedTransactionsReturnType {
   const signedTransactions = useSelector(signedTransactionsSelector);
-  const signedTransactionsArray: [
-    string,
-    SignedTransactionsBodyType
-  ][] = Object.entries(signedTransactions);
+  const signedTransactionsArray: [string, SignedTransactionsBodyType][] =
+    Object.entries(signedTransactions);
   const hasSignedTransactions = signedTransactionsArray?.length > 0;
   return {
     signedTransactions,
