@@ -1,5 +1,7 @@
 import axios from 'axios';
+import throttle from 'lodash/throttle';
 import { BLOCKS_ENDPOINT } from 'apiCalls/endpoints';
+import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 
 interface GetLatestBlockHashResponseType {
   hash: string;
@@ -15,8 +17,27 @@ const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
 
 const isGeneratingNewToken: Record<string, boolean> = { current: false };
 
+const getLatestBlockHashFromServer = retryMultipleTimes(
+  throttle(
+    async (
+      apiUrl: string,
+      blockHashShard: number
+    ): Promise<GetLatestBlockHashResponseType> => {
+      const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
+        `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
+          blockHashShard ? '&shard=' + blockHashShard : ''
+        }`
+      );
+      const [latestBlock] = data;
+      return latestBlock;
+    },
+    200
+  )
+);
+
 export async function getLatestBlockHash(
-  apiUrl: string
+  apiUrl: string,
+  blockHashShard?: number
 ): Promise<GetLatestBlockHashResponseType> {
   if (apiUrl == null) {
     throw new Error('missing api url');
@@ -36,23 +57,13 @@ export async function getLatestBlockHash(
     isGeneratingNewToken.current = true;
     //invalidate the previous cached response, this will also make sure that waitForGeneratedToken doesn't return the old value
     cachedResponse.current = null;
-    const response = await getLatestBlockHashFromServer(apiUrl);
+    const response = await getLatestBlockHashFromServer(apiUrl, blockHashShard);
     //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
     cachedResponse.current = response;
     cachingExpiresAt = Date.now() + cachingDurationMS;
     isGeneratingNewToken.current = false;
     return response;
   }
-}
-
-async function getLatestBlockHashFromServer(
-  apiUrl: string
-): Promise<GetLatestBlockHashResponseType> {
-  const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
-    `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp`
-  );
-  const [latestBlock] = data;
-  return latestBlock;
 }
 
 async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> {

@@ -38,15 +38,15 @@ export const signTransactionsCancelMessageSelector = createDeepEqualSelector(
   (state) => state.signTransactionsCancelMessage
 );
 
-const selectTxByStatus = (txStatusVerifier: typeof getIsTransactionPending) => (
-  signedTransactions: SignedTransactionsType
-) =>
-  Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
-    if (txStatusVerifier(txBody.status)) {
-      acc[sessionId] = txBody;
-    }
-    return acc;
-  }, {} as SignedTransactionsType);
+const selectTxByStatus =
+  (txStatusVerifier: typeof getIsTransactionPending) =>
+  (signedTransactions: SignedTransactionsType) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (txStatusVerifier(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {} as SignedTransactionsType);
 
 export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
