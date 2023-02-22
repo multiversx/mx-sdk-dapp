@@ -1,5 +1,4 @@
 import axios from 'axios';
-import throttle from 'lodash/throttle';
 import { BLOCKS_ENDPOINT } from 'apiCalls/endpoints';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 
@@ -18,21 +17,18 @@ const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
 const isGeneratingNewToken: Record<string, boolean> = { current: false };
 
 const getLatestBlockHashFromServer = retryMultipleTimes(
-  throttle(
-    async (
-      apiUrl: string,
-      blockHashShard: number
-    ): Promise<GetLatestBlockHashResponseType> => {
-      const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
-        `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
-          blockHashShard ? '&shard=' + blockHashShard : ''
-        }`
-      );
-      const [latestBlock] = data;
-      return latestBlock;
-    },
-    200
-  )
+  async (
+    apiUrl: string,
+    blockHashShard?: number
+  ): Promise<GetLatestBlockHashResponseType> => {
+    const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
+      `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
+        blockHashShard ? '&shard=' + blockHashShard : ''
+      }`
+    );
+    const [latestBlock] = data;
+    return latestBlock;
+  }
 );
 
 export async function getLatestBlockHash(
