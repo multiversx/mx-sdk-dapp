@@ -2,8 +2,8 @@ import type { ReactNode } from 'react';
 import type { Address, Transaction } from '@multiversx/sdk-core';
 import type { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
-import type { WithClassnameType } from '../UI/types';
 import type { SignStepInnerClassesType } from 'UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
+import type { WithClassnameType } from '../UI/types';
 import type {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum,
@@ -105,6 +105,8 @@ export interface SimpleTransactionType {
   chainID?: string;
   version?: number;
   options?: number;
+  guardian?: string;
+  guardianSignature: string | undefined;
 }
 
 export interface TransactionsDisplayInfoType {

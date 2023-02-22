@@ -29,13 +29,20 @@ export function newTransaction(rawTransaction: RawTransactionType) {
       ? { options: new TransactionOptions(rawTransaction.options) }
       : {})
   });
+  if (rawTransaction.guardian) {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
+    transaction.guardian = new Address(rawTransaction.guardian);
+  }
 
-  transaction.applySignature(
-    {
-      hex: () => rawTransaction.signature || ''
-    },
-    new Address(rawTransaction.sender)
-  );
+  if (rawTransaction.guardianSignature) {
+    transaction.applyGuardianSignature({
+      hex: () => rawTransaction.guardianSignature || ''
+    });
+  }
+  transaction.applySignature({
+    hex: () => rawTransaction.signature || ''
+  });
 
   return transaction;
 }

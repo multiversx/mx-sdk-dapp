@@ -42,7 +42,9 @@ export async function transformAndSignTransactions({
       version = 1,
       options,
       gasPrice = GAS_PRICE,
-      gasLimit = calculateGasLimit(tx.data)
+      gasLimit = calculateGasLimit(tx.data),
+      guardian,
+      guardianSignature
     } = tx;
     let validatedReceiver = receiver;
 
@@ -53,11 +55,10 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const storeChainId = chainIDSelector(store.getState())
-      .valueOf()
-      .toString();
+    const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
     const transactionsChainId = chainID || storeChainId;
-    return newTransaction({
+
+    const rawTx: any = {
       value,
       receiver: validatedReceiver,
       data,
@@ -67,7 +68,14 @@ export async function transformAndSignTransactions({
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
       version: version,
-      options
-    });
+      options,
+      guardianSignature
+    };
+
+    if (guardian) {
+      rawTx.guardian = guardian;
+    }
+
+    return newTransaction(rawTx);
   });
 }
