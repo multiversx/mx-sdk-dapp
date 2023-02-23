@@ -6,26 +6,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+- [Walletconnect V2 Multiple Namespaces](https://github.com/multiversx/mx-sdk-dapp/pull/657)
 - [Fixed native auth block hash race condition](https://github.com/multiversx/mx-sdk-dapp/pull/656)
 - [Fixed transaction toast progress animation](https://github.com/multiversx/mx-sdk-dapp/pull/654)
 
 ## [[v2.8.8](https://github.com/multiversx/mx-sdk-dapp/pull/652)] - 2023-02-22
+
 - [Add retry mechanism for block hash request](https://github.com/multiversx/mx-sdk-dapp/pull/651)
 
 ## [[v2.8.7](https://github.com/multiversx/mx-sdk-dapp/pull/649)] - 2023-02-20
+
 - [Add block hash shard to native auth config](https://github.com/multiversx/mx-sdk-dapp/pull/650)
-## [[v2.8.7](https://github.com/multiversx/mx-sdk-dapp/pull/649)] - 2023-02-20
 - [Changed persist config to local configuration](https://github.com/multiversx/mx-sdk-dapp/pull/648)
 
 ## [[v2.8.6](https://github.com/multiversx/mx-sdk-dapp/pull/647)] - 2023-02-20
+
 - [Updated `nativeAuth` last block hash caching mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/645)
 - [Fixed `getScamFlag` method to skip uris and if verified](https://github.com/multiversx/mx-sdk-dapp/pull/646)
 
-
 ## [[v2.8.5](https://github.com/multiversx/mx-sdk-dapp/pull/644)] - 2023-02-16
 
-
 ## [[v2.8.4](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-16
+
 - [Added additional exports for redux store helpers](https://github.com/multiversx/mx-sdk-dapp/pull/643)
 - [Changed `broadcastLogoutAcrossTabs` function to prevent tab logout for different address](https://github.com/multiversx/mx-sdk-dapp/pull/642)
 - [Changed transaction toast message displayed for 1 transaction](https://github.com/multiversx/mx-sdk-dapp/pull/641)
