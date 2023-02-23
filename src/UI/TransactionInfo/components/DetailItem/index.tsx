@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import styles from './detailItem.module.scss';
 import globalStyles from 'assets/sass/main.scss';
+import styles from './detailItem.module.scss';
 
 export interface DetailItemPropsType {
   children: ReactNode;

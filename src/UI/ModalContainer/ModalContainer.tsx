@@ -16,7 +16,11 @@ export interface ModalContainerPropsType extends WithClassnameType {
 }
 
 export const ModalContainer = (props: ModalContainerPropsType) => {
-  const { handleHideModal: onHide, visible, config } = useDappModal({
+  const {
+    handleHideModal: onHide,
+    visible,
+    config
+  } = useDappModal({
     modalConfig: props.modalConfig,
     config: {
       ...props.modalInteractionConfig,

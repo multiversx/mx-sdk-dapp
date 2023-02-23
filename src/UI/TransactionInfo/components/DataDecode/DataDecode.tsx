@@ -19,12 +19,8 @@ export type DataDecodePropsType = WithClassnameType & DataDecodeType;
 export const DataDecode = (props: DataDecodePropsType) => {
   const { className, value } = props;
 
-  const {
-    displayValue,
-    validationWarnings,
-    setActiveKey,
-    decodeOptions
-  } = useDataDecode(props);
+  const { displayValue, validationWarnings, setActiveKey, decodeOptions } =
+    useDataDecode(props);
 
   const showSelect = value && value !== N_A;
   const onChange = (event: ChangeEvent<HTMLSelectElement>) =>

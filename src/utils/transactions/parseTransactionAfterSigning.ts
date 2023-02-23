@@ -1,5 +1,5 @@
-import { PlainSignedTransaction } from '@multiversx/sdk-web-wallet-provider/out/plainSignedTransaction';
 import { Transaction } from '@multiversx/sdk-core/out';
+import { PlainSignedTransaction } from '@multiversx/sdk-web-wallet-provider/out/plainSignedTransaction';
 import { newTransaction } from 'models';
 import { SignedTransactionType } from 'types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';

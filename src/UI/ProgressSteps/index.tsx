@@ -1,8 +1,8 @@
 import React from 'react';
-import globalStyles from 'assets/sass/main.scss';
-import { Dot } from './Dot';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../types';
+import { Dot } from './Dot';
 
 export interface ProgressStepsType extends WithClassnameType {
   totalSteps: number;

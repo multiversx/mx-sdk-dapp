@@ -26,9 +26,11 @@ const executeAsyncCall = async (
   }
 };
 
-export const retryMultipleTimes = (
-  cb: (...args: any[]) => any,
-  options: Options = { retries: 5, delay: 500 }
-) => async (...args: any[]) => {
-  return executeAsyncCall(cb, options, args);
-};
+export const retryMultipleTimes =
+  (
+    cb: (...args: any[]) => any,
+    options: Options = { retries: 5, delay: 500 }
+  ) =>
+  async (...args: any[]) => {
+    return executeAsyncCall(cb, options, args);
+  };

@@ -10,21 +10,21 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
+import type {
+  ActiveLedgerTransactionType,
+  MultiSignTransactionType
+} from 'types';
 import { PageState } from 'UI/PageState';
 import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
 
+import { getIdentifierType } from 'utils';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
-import { getIdentifierType } from 'utils';
 
 import type { WithClassnameType } from '../../types';
-import type {
-  ActiveLedgerTransactionType,
-  MultiSignTransactionType
-} from 'types';
 
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 
