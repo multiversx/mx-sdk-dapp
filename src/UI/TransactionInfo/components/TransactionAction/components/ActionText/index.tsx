@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
+import globalStyles from 'assets/sass/main.scss';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
@@ -11,11 +12,10 @@ import { ScAddressIcon } from 'UI/TransactionsTable/components/ScAddressIcon';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 
-import { ActionToken } from '../ActionToken';
 import { WithTransactionType } from '../../../../../../UI/types';
+import { ActionToken } from '../ActionToken';
 
 import styles from './styles.scss';
-import globalStyles from 'assets/sass/main.scss';
 
 export interface ActionTextPropsType extends WithTransactionType {
   entry: any;

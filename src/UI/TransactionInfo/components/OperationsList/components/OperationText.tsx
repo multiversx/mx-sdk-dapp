@@ -6,11 +6,11 @@ import {
 } from 'types/serverTransactions.types';
 import { getOperationDirection } from 'utils/transactions/transactionInfoHelpers/getOperationDirection';
 
-import { OperationBlock } from './OperationBlock';
 import {
   WithOperationType,
   WithTransactionType
 } from '../../../../../UI/types';
+import { OperationBlock } from './OperationBlock';
 
 export const OperationText = ({
   operation,

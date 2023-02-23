@@ -43,7 +43,7 @@ export const ConfirmationScreen = ({
     handleClose,
     error: signError,
     sessionId,
-    transactions: transactions!,
+    transactions: transactions || [],
     providerType,
     callbackRoute,
     className,

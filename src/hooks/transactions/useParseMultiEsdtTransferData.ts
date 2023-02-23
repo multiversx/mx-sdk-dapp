@@ -32,9 +32,8 @@ interface UseParseMultiEsdtTransferDataReturnType {
 export function useParseMultiEsdtTransferData({
   transactions
 }: UseParseMultiEsdtTransferDataPropsType): UseParseMultiEsdtTransferDataReturnType {
-  const [parsedTransactionsByDataField, setParsedTransactions] = useState<
-    TransactionsDataTokensType
-  >({});
+  const [parsedTransactionsByDataField, setParsedTransactions] =
+    useState<TransactionsDataTokensType>({});
   const [allTransactions, setAllTransactions] = useState<
     MultiSignTransactionType[]
   >([]);

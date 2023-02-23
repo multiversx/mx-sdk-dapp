@@ -4,9 +4,9 @@ import { useGetTransactionDisplayInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { TransactionBatchStatusesEnum } from 'types';
-
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import { getUnixTimestampWithAddedMilliseconds } from 'utils/dateTime/getUnixTimestampWithAddedMilliseconds';
+import { MAX_REST } from 'utils/math';
 import { getAreTransactionsOnSameShard } from 'utils/transactions/getAreTransactionsOnSameShard';
 import {
   getIsTransactionPending,
@@ -50,7 +50,13 @@ export const useTransactionToast = ({
     return [startTime, endTime];
   }, []);
 
-  const progress = { startTime, endTime };
+  const progress = {
+    startTime,
+    endTime,
+    animationMax: areSameShardTransactions
+      ? MAX_REST
+      : CROSS_SHARD_ROUNDS * MAX_REST
+  };
 
   const isPending = getIsTransactionPending(status);
   const isTimedOut = getIsTransactionTimedOut(status);

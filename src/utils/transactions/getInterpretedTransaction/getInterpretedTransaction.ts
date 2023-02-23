@@ -34,9 +34,8 @@ export function getInterpretedTransaction({
 
   const direction = getTransactionTransferType(address, transaction, receiver);
   const method = getTransactionMethod(transaction);
-  const transactionTokens: TokenArgumentType[] = getTransactionTokens(
-    transaction
-  );
+  const transactionTokens: TokenArgumentType[] =
+    getTransactionTokens(transaction);
 
   const senderLink = getExplorerLink({
     explorerAddress,

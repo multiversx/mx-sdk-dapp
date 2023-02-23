@@ -1,14 +1,13 @@
 import React from 'react';
 
+import globalStyles from 'assets/sass/main.scss';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { getTransactionActionNftText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
 import { getTransactionActionTokenText } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
 
-import { TransactionActionBlock } from './TransactionActionBlock/index';
-
-import globalStyles from 'assets/sass/main.scss';
 import styles from './styles.scss';
+import { TransactionActionBlock } from './TransactionActionBlock/index';
 
 export interface ActionTokenPropsType {
   token: TokenArgumentType;

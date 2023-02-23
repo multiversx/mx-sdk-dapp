@@ -5,10 +5,7 @@ export const maxDecimals = (amount: string, customDecimals?: number) => {
   if (
     amount != null &&
     amount.toString().indexOf('.') >= 0 &&
-    (amount as any)
-      .toString()
-      .split('.')
-      .pop().length > decimals
+    (amount as any).toString().split('.').pop().length > decimals
   ) {
     return false;
   }

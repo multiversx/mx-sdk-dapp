@@ -3,10 +3,10 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../../types';
 
 import styles from '../dappModalStyles.scss';
-import globalStyles from 'assets/sass/main.scss';
 
 export interface DappModalHeaderPropsType extends WithClassnameType {
   visible?: boolean;
