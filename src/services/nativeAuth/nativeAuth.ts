@@ -14,16 +14,13 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     extraInfo: any = {},
     latestBlockInfo?: LatestBlockHashType
   ): Promise<string> => {
-    if (!apiAddress || !hostname) {
-      return '';
-    }
-
     const { hash, timestamp } =
-      latestBlockInfo ?? (await getLatestBlockHash(apiAddress, blockHashShard));
+      latestBlockInfo ??
+      (await getLatestBlockHash(apiAddress!, blockHashShard));
     const encodedExtraInfo = encodeValue(
       JSON.stringify({ ...extraInfo, ...(timestamp ? { timestamp } : {}) })
     );
-    const host = encodeValue(hostname);
+    const host = encodeValue(hostname!);
 
     return `${host}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
