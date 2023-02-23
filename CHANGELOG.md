@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Walletconnect V2 Multiple Namespaces](https://github.com/multiversx/mx-sdk-dapp/pull/657)
+
+## [[v2.8.10](https://github.com/multiversx/mx-sdk-dapp/pull/661)] - 2023-02-23
+
+- [Fixed native auth block hash race condition](https://github.com/multiversx/mx-sdk-dapp/pull/661)
+
+## [[v2.8.9](https://github.com/multiversx/mx-sdk-dapp/pull/656)] - 2023-02-23
+
 - [Fixed native auth block hash race condition](https://github.com/multiversx/mx-sdk-dapp/pull/656)
 - [Fixed transaction toast progress animation](https://github.com/multiversx/mx-sdk-dapp/pull/654)
 
