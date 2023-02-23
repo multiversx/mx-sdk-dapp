@@ -10,13 +10,13 @@ import {
   SignedTransactionsBodyType
 } from 'types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { refreshAccount } from 'utils/account';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'utils/transactions';
 
-import { refreshAccount } from 'utils/account';
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
@@ -48,13 +48,8 @@ function manageTransaction({
   customTransactionInformation,
   shouldRefreshBalance
 }: ManageTransactionType) {
-  const {
-    hash,
-    status,
-    results,
-    invalidTransaction,
-    hasStatusChanged
-  } = serverTransaction;
+  const { hash, status, results, invalidTransaction, hasStatusChanged } =
+    serverTransaction;
   try {
     if (timeouts.includes(hash)) {
       return;

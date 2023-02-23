@@ -1,3 +1,3 @@
 export const getUnixTimestampWithAddedSeconds = (addedSeconds: number) => {
-  return new Date().setSeconds(new Date().getSeconds() + addedSeconds) / 1000;
+  return new Date().setSeconds(new Date().getSeconds() + addedSeconds);
 };

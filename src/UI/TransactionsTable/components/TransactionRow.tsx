@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import {
   TransactionDirectionBadge,
@@ -14,7 +15,6 @@ import {
 
 import { WithClassnameType, WithTransactionType } from '../../../UI/types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
 export interface TransactionRowPropsType

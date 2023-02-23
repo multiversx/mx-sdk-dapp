@@ -1,6 +1,9 @@
 import React, { useEffect, useMemo, useRef, ReactNode } from 'react';
 import classNames from 'classnames';
-import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
+import {
+  getUnixTimestamp,
+  getUnixTimestampWithAddedSeconds
+} from 'utils/dateTime';
 import { logarithmicRest } from 'utils/math';
 import { storage } from 'utils/storage';
 
@@ -18,6 +21,7 @@ export interface ProgressProps extends WithClassnameType {
   progress: {
     startTime: number;
     endTime: number;
+    animationMax: number;
   };
 }
 
@@ -32,7 +36,7 @@ export const Progress = ({
   const initialData = useMemo(() => {
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
     const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
-    const unixNow = Math.floor(Date.now() / 1000);
+    const unixNow = getUnixTimestamp();
     const remaining = progress
       ? ((progress.endTime - unixNow) * 100) / totalSeconds
       : 0;
@@ -66,9 +70,8 @@ export const Progress = ({
   }, [progress, done]);
 
   function removeTxFromSession() {
-    const toastProgress: Record<number, number> = storage.session.getItem(
-      TOAST_PROGRESS_KEY
-    );
+    const toastProgress: Record<number, number> =
+      storage.session.getItem(TOAST_PROGRESS_KEY);
 
     const hasSessionStoredTx = Boolean(toastProgress?.[id]);
 
@@ -119,7 +122,7 @@ export const Progress = ({
   }
 
   function handleRunningProgress() {
-    const maxPercent = 90;
+    const maxPercent = 100;
     const perc = totalSeconds / maxPercent;
     const intMs = parseFloat(perc.toFixed(2)) * 1000;
 
@@ -131,7 +134,9 @@ export const Progress = ({
       const existing = percentRemainingRef.current;
 
       const decrement =
-        existing > 100 - maxPercent ? 1 : logarithmicRest(existing);
+        existing >= 100 - maxPercent
+          ? 1
+          : logarithmicRest(existing, progress.animationMax);
       const value = existing - decrement;
 
       updateTxFromSession(value);

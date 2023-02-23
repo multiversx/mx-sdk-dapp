@@ -1,8 +1,9 @@
 import React from 'react';
-import classNames from 'classnames';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -13,7 +14,6 @@ import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction
 
 import { WithTransactionType } from '../../../../../UI/types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from '../styles.scss';
 
 export interface OperationBlockPropsType extends WithTransactionType {

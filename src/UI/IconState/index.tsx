@@ -3,9 +3,8 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { WithClassnameType } from '../types';
-
 import globalStyles from 'assets/sass/main.scss';
+import { WithClassnameType } from '../types';
 
 // TODO: Rename to "IconStatePropsType" when sdk-dapp@3.0.0
 export interface IconStateProps extends WithClassnameType {

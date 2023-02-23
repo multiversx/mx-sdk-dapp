@@ -11,10 +11,8 @@ export interface useGetFailedTransactionsReturnType {
 //this is a hook to be able to take advantage of memoization offered by useSelector
 export function useGetFailedTransactions(): useGetFailedTransactionsReturnType {
   const failedTransactions = useSelector(failedTransactionsSelector);
-  const failedTransactionsArray: [
-    string,
-    SignedTransactionsBodyType
-  ][] = Object.entries(failedTransactions);
+  const failedTransactionsArray: [string, SignedTransactionsBodyType][] =
+    Object.entries(failedTransactions);
   const hasFailedTransactions = failedTransactionsArray?.length > 0;
   return {
     failedTransactions,
