@@ -106,7 +106,7 @@ export interface SimpleTransactionType {
   version?: number;
   options?: number;
   guardian?: string;
-  guardianSignature: string | undefined;
+  guardianSignature?: string | undefined;
 }
 
 export interface TransactionsDisplayInfoType {
