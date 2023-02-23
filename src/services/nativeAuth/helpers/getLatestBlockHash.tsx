@@ -2,7 +2,7 @@ import axios from 'axios';
 import { BLOCKS_ENDPOINT } from 'apiCalls/endpoints';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 
-interface GetLatestBlockHashResponseType {
+export interface LatestBlockHashType {
   hash: string;
   timestamp: number;
 }
@@ -10,7 +10,7 @@ interface GetLatestBlockHashResponseType {
 const cachingDurationMS = 30000; // 30 seconds, a block hash is valid for 1 minute from its generation
 let cachingExpiresAt: number | null = null;
 //this is an object with .current, so it doesn't get affected by closure and is always a fresh value
-const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
+const cachedResponse: Record<string, LatestBlockHashType | null> = {
   current: null
 };
 
@@ -20,8 +20,8 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
   async (
     apiUrl: string,
     blockHashShard?: number
-  ): Promise<GetLatestBlockHashResponseType> => {
-    const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
+  ): Promise<LatestBlockHashType> => {
+    const { data } = await axios.get<Array<LatestBlockHashType>>(
       `${apiUrl}/${BLOCKS_ENDPOINT}?from=3&size=1&fields=hash,timestamp${
         blockHashShard ? '&shard=' + blockHashShard : ''
       }`
@@ -34,7 +34,7 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
 export async function getLatestBlockHash(
   apiUrl: string,
   blockHashShard?: number
-): Promise<GetLatestBlockHashResponseType> {
+): Promise<LatestBlockHashType> {
   if (apiUrl == null) {
     throw new Error('missing api url');
   }
@@ -62,7 +62,7 @@ export async function getLatestBlockHash(
   }
 }
 
-async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> {
+async function waitForGeneratedToken(): Promise<LatestBlockHashType> {
   return new Promise((resolve, reject) => {
     let timeoutRef: string | number | NodeJS.Timeout | undefined = undefined;
     //this interval will check the cachedResponse object for the new token and return it when available

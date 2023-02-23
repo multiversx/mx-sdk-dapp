@@ -1,20 +1,25 @@
 import { NativeAuthConfigType } from 'types';
-import { encodeValue, getLatestBlockHash } from './helpers';
+import {
+  encodeValue,
+  getLatestBlockHash,
+  LatestBlockHashType
+} from './helpers';
 import { getNativeAuthConfig, getToken, getTokenExpiration } from './methods';
 
 export const nativeAuth = (config?: NativeAuthConfigType) => {
   const { hostname, apiAddress, expirySeconds, blockHashShard } =
     getNativeAuthConfig(config) as NativeAuthConfigType;
 
-  const initialize = async (extraInfo: any = {}): Promise<string> => {
+  const initialize = async (
+    extraInfo: any = {},
+    latestBlockInfo?: LatestBlockHashType
+  ): Promise<string> => {
     if (!apiAddress || !hostname) {
       return '';
     }
 
-    const { hash, timestamp } = await getLatestBlockHash(
-      apiAddress,
-      blockHashShard
-    );
+    const { hash, timestamp } =
+      latestBlockInfo ?? (await getLatestBlockHash(apiAddress, blockHashShard));
     const encodedExtraInfo = encodeValue(
       JSON.stringify({ ...extraInfo, ...(timestamp ? { timestamp } : {}) })
     );
