@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.8.10](https://github.com/multiversx/mx-sdk-dapp/pull/661)] - 2023-02-23
 
-- [Fixed native auth block hash race condition](https://github.com/multiversx/mx-sdk-dapp/pull/661)
+- [Fix husky crashing build](https://github.com/multiversx/mx-sdk-dapp/pull/661)
 
 ## [[v2.8.9](https://github.com/multiversx/mx-sdk-dapp/pull/656)] - 2023-02-23
 
