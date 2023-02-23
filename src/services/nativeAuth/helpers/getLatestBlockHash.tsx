@@ -7,7 +7,7 @@ interface GetLatestBlockHashResponseType {
   timestamp: number;
 }
 
-const cachingDurationMS = 40000; // 40 seconds, a block hash is valid for 1 minute from its generation
+const cachingDurationMS = 30000; // 30 seconds, a block hash is valid for 1 minute from its generation
 let cachingExpiresAt: number | null = null;
 //this is an object with .current, so it doesn't get affected by closure and is always a fresh value
 const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
@@ -22,7 +22,7 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
     blockHashShard?: number
   ): Promise<GetLatestBlockHashResponseType> => {
     const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
-      `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
+      `${apiUrl}/${BLOCKS_ENDPOINT}?from=3&size=1&fields=hash,timestamp${
         blockHashShard ? '&shard=' + blockHashShard : ''
       }`
     );
@@ -74,10 +74,10 @@ async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> 
         clearTimeout(timeoutRef);
       }
     }, 50);
-    //if this interval doesn't resolve for 5 seconds, cut out the interval and reject
+    //if this interval doesn't resolve for 30 seconds, cut out the interval and reject
     timeoutRef = setTimeout(() => {
       clearInterval(retryIntervalRef);
       reject('could not generate new token');
-    }, 10000);
+    }, cachingDurationMS);
   });
 }
