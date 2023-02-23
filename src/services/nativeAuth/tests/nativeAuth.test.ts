@@ -18,7 +18,7 @@ describe('Native Auth', () => {
 
   const onLatestBlockHashGet = function (mock: MockAdapter): RequestHandler {
     return mock.onGet(
-      'https://api.multiversx.com/blocks?size=1&fields=hash,timestamp'
+      'https://api.multiversx.com/blocks?from=3&size=1&fields=hash,timestamp'
     );
   };
 

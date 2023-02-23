@@ -69,9 +69,9 @@ async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> 
     const retryIntervalRef = setInterval(() => {
       if (cachedResponse.current != null) {
         //if there is a new token, resolve the promise and clear out all timeouts and intervals
-        resolve(cachedResponse.current);
         clearInterval(retryIntervalRef);
         clearTimeout(timeoutRef);
+        resolve(cachedResponse.current);
       }
     }, 50);
     //if this interval doesn't resolve for 30 seconds, cut out the interval and reject
