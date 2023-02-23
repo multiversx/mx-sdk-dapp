@@ -2,15 +2,15 @@ import axios from 'axios';
 import { BLOCKS_ENDPOINT } from 'apiCalls/endpoints';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 
-interface GetLatestBlockHashResponseType {
+export interface LatestBlockHashType {
   hash: string;
   timestamp: number;
 }
 
-const cachingDurationMS = 40000; // 40 seconds, a block hash is valid for 1 minute from its generation
+const cachingDurationMS = 30000; // 30 seconds, a block hash is valid for 1 minute from its generation
 let cachingExpiresAt: number | null = null;
 //this is an object with .current, so it doesn't get affected by closure and is always a fresh value
-const cachedResponse: Record<string, GetLatestBlockHashResponseType | null> = {
+const cachedResponse: Record<string, LatestBlockHashType | null> = {
   current: null
 };
 
@@ -20,9 +20,9 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
   async (
     apiUrl: string,
     blockHashShard?: number
-  ): Promise<GetLatestBlockHashResponseType> => {
-    const { data } = await axios.get<Array<GetLatestBlockHashResponseType>>(
-      `${apiUrl}/${BLOCKS_ENDPOINT}?size=1&fields=hash,timestamp${
+  ): Promise<LatestBlockHashType> => {
+    const { data } = await axios.get<Array<LatestBlockHashType>>(
+      `${apiUrl}/${BLOCKS_ENDPOINT}?from=3&size=1&fields=hash,timestamp${
         blockHashShard ? '&shard=' + blockHashShard : ''
       }`
     );
@@ -34,7 +34,7 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
 export async function getLatestBlockHash(
   apiUrl: string,
   blockHashShard?: number
-): Promise<GetLatestBlockHashResponseType> {
+): Promise<LatestBlockHashType> {
   if (apiUrl == null) {
     throw new Error('missing api url');
   }
@@ -62,22 +62,22 @@ export async function getLatestBlockHash(
   }
 }
 
-async function waitForGeneratedToken(): Promise<GetLatestBlockHashResponseType> {
+async function waitForGeneratedToken(): Promise<LatestBlockHashType> {
   return new Promise((resolve, reject) => {
     let timeoutRef: string | number | NodeJS.Timeout | undefined = undefined;
     //this interval will check the cachedResponse object for the new token and return it when available
     const retryIntervalRef = setInterval(() => {
       if (cachedResponse.current != null) {
         //if there is a new token, resolve the promise and clear out all timeouts and intervals
-        resolve(cachedResponse.current);
         clearInterval(retryIntervalRef);
         clearTimeout(timeoutRef);
+        resolve(cachedResponse.current);
       }
     }, 50);
-    //if this interval doesn't resolve for 5 seconds, cut out the interval and reject
+    //if this interval doesn't resolve for 30 seconds, cut out the interval and reject
     timeoutRef = setTimeout(() => {
       clearInterval(retryIntervalRef);
       reject('could not generate new token');
-    }, 10000);
+    }, cachingDurationMS);
   });
 }
