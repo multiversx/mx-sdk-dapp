@@ -20,20 +20,26 @@ export const getTitleText = (
   const tokensArray = transactionTokens.map((transactionToken) => {
     const { isNft } = getIdentifierType(transactionToken.type);
     if (isNft) {
-      const { badgeText, tokenFormattedAmount, tokenLinkText } =
-        getTransactionActionNftText({
-          token: transactionToken
-        });
+      const {
+        badgeText,
+        tokenFormattedAmount,
+        tokenLinkText
+      } = getTransactionActionNftText({
+        token: transactionToken
+      });
 
       const badge = badgeText != null ? `(${badgeText}) ` : '';
 
       const value = `${badge}${tokenFormattedAmount} ${tokenLinkText}`;
       return value;
     }
-    const { tokenFormattedAmount, tokenLinkText, token } =
-      getTransactionActionTokenText({
-        token: transactionToken as TokenArgumentType
-      });
+    const {
+      tokenFormattedAmount,
+      tokenLinkText,
+      token
+    } = getTransactionActionTokenText({
+      token: transactionToken as TokenArgumentType
+    });
 
     const identifier = token.collection ? token.identifier : token.token;
 

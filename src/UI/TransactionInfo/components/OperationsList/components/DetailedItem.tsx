@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import {
   WithOperationType,
   WithTransactionType
 } from '../../../../../UI/types';
 import { OperationText } from './OperationText';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export interface DetailedItemPropsType
   extends WithTransactionType,

@@ -1,9 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { AssetType } from 'types/account.types';
 import { Trim } from 'UI/Trim/Trim';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export interface AccountNamePropsType {
   address: string;

@@ -1,11 +1,11 @@
 import { useEffect, useRef } from 'react';
-import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import BigNumber from 'bignumber.js';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { addNewCustomToast } from 'utils';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 
 import { getHumanReadableTokenExpirationTime } from './helpers';
 

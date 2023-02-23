@@ -30,7 +30,8 @@ export function getAddress(): Promise<string> {
   return !getIsProviderEqualTo(LoginMethodsEnum.none) &&
     !getIsProviderEqualTo(LoginMethodsEnum.wallet) &&
     !getIsProviderEqualTo(LoginMethodsEnum.extra)
-    ? provider.getAddress()
+    ?
+      provider.getAddress()
     : new Promise((resolve) => {
         if (walletLogin != null) {
           const urlSearchParams = new URLSearchParams(search);

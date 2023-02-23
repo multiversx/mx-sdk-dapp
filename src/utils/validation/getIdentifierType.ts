@@ -7,7 +7,9 @@ const defaultResult = {
   isEgld: false
 };
 
-export function getIdentifierType(identifier?: string): {
+export function getIdentifierType(
+  identifier?: string
+): {
   isEsdt: boolean;
   isNft: boolean;
   isEgld: boolean;

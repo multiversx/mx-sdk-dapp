@@ -60,15 +60,20 @@ export function useSignMultipleTransactions({
   onGetScamAddressData
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
   const [currentStep, setCurrentStep] = useState(0);
-  const [signedTransactions, setSignedTransactions] =
-    useState<DeviceSignedTransactions>();
-  const [currentTransaction, setCurrentTransaction] =
-    useState<ActiveLedgerTransactionType | null>(null);
+  const [signedTransactions, setSignedTransactions] = useState<
+    DeviceSignedTransactions
+  >();
+  const [
+    currentTransaction,
+    setCurrentTransaction
+  ] = useState<ActiveLedgerTransactionType | null>(null);
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
 
-  const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions: transactionsToSign });
+  const {
+    getTxInfoByDataField,
+    allTransactions
+  } = useParseMultiEsdtTransferData({ transactions: transactionsToSign });
 
   const isLastTransaction = currentStep === allTransactions.length - 1;
 

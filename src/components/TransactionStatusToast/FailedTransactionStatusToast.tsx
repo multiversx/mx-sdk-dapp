@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import classNames from 'classnames';
 import { createPortal } from 'react-dom';
+import classNames from 'classnames';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { failTransactionToastSelector } from 'reduxStore/selectors';

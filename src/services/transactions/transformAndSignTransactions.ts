@@ -53,7 +53,9 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
+    const storeChainId = chainIDSelector(store.getState())
+      .valueOf()
+      .toString();
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
       value,

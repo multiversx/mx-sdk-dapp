@@ -2,9 +2,9 @@ import React, { ReactNode } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
-import globals from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 
+import globals from 'assets/sass/main.scss';
 import styles from './ledgerLoadingStyles.scss';
 
 export interface LedgerLoadingPropsType {

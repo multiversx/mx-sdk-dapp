@@ -7,8 +7,9 @@ import { LoginButton } from 'UI/LoginButton/LoginButton';
 
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
-import { LedgerLoginContainer } from '../LedgerLoginContainer';
 import type { InnerLedgerComponentsClassesType } from '../LedgerLoginContainer/types';
+
+import { LedgerLoginContainer } from '../LedgerLoginContainer';
 
 export interface LedgerLoginButtonPropsType
   extends WithClassnameType,

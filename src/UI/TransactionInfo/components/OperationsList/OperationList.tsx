@@ -1,13 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { OperationType } from 'types/serverTransactions.types';
 import {
   useGetOperationList,
   OperationListType
 } from 'utils/transactions/transactionInfoHelpers/useGetOperationList';
 import { OperationRow } from './components/OperationRow';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export const OperationsList = (props: OperationListType) => {
   const {

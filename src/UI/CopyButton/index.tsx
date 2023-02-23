@@ -4,8 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import classNames from 'classnames';
 import { WithClassnameType } from '../types';
-import styles from './copyButtonStyles.scss';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
+
+import styles from './copyButtonStyles.scss';
 
 export interface CopyButtonPropsType extends WithClassnameType {
   text: string;

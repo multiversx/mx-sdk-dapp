@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { ResultType } from 'types/serverTransactions.types';
 
 import { WithTransactionType } from '../../../../UI/types';
@@ -9,6 +8,8 @@ import { AddressDetailItem } from '../AddressDetailItem/AddressDetailitem';
 import { DetailItem } from '../DetailItem';
 import { EventsList } from '../EventsList/EventsList';
 import { ScrDetailItem } from '../ScrDetailItem/ScrDetailItem';
+
+import globalStyles from 'assets/sass/main.scss';
 
 const showResultsEvents = (result: ResultType) =>
   result?.logs?.events && result.logs.events?.length > 0;

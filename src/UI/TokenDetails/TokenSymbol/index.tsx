@@ -1,8 +1,9 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
-import styles from 'UI/TokenDetails/TokenSymbol/tokenSymbol.scss';
 import { WithClassnameType } from '../../types';
+
+import styles from 'UI/TokenDetails/TokenSymbol/tokenSymbol.scss';
 
 export interface SimplePropsType extends WithClassnameType {
   children: ReactNode;

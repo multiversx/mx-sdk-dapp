@@ -33,10 +33,8 @@ import {
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
-import {
-  useSetTransactionNonces,
-  getShouldMoveTransactionsToSignedState
-} from './helpers';
+import { useSetTransactionNonces } from './helpers';
+import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
 export const useSignTransactions = () => {
@@ -117,16 +115,15 @@ export const useSignTransactions = () => {
   };
 
   const signTransactionsWithProvider = async () => {
-    if (isSigningRef.current || !transactionsToSign) {
+    if (isSigningRef.current) {
       return;
     }
-
     const {
       sessionId,
       transactions,
       callbackRoute,
       customTransactionInformation
-    } = transactionsToSign;
+    } = transactionsToSign!;
     const { redirectAfterSign } = customTransactionInformation;
     const redirectRoute = callbackRoute || window.location.pathname;
     const isCurrentRoute = window.location.pathname.includes(redirectRoute);

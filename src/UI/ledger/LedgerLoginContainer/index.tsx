@@ -8,15 +8,15 @@ import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
+import type { InnerLedgerComponentsClassesType } from './types';
 
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
-import { LedgerConnect } from './LedgerConnect';
 import { LedgerLoading } from './LedgerLoading';
-import styles from './ledgerLoginContainerStyles.scss';
+import { LedgerConnect } from './LedgerConnect';
 import { LedgerProgressBar } from './LedgerProgressBar';
 
-import type { InnerLedgerComponentsClassesType } from './types';
+import styles from './ledgerLoginContainerStyles.scss';
 
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,

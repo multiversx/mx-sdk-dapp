@@ -6,11 +6,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import lodash from 'lodash';
 
-import globalStyles from 'assets/sass/main.scss';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 
 import { WithTransactionType } from '../../../UI/types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export const TransactionIcon = ({ transaction }: WithTransactionType) => {
   const transactionMessages = getTransactionMessages(transaction);

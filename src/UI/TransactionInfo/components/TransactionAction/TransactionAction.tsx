@@ -8,14 +8,13 @@ import { ActionText } from './components/ActionText';
 import styles from './styles.scss';
 
 export const TransactionAction = ({ transaction }: WithTransactionType) => {
-  const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> =
-    useMemo(() => {
-      if (transaction.action) {
-        return transactionActionUnwrapper(transaction.action);
-      }
+  const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> = useMemo(() => {
+    if (transaction.action) {
+      return transactionActionUnwrapper(transaction.action);
+    }
 
-      return [];
-    }, [transaction.action]);
+    return [];
+  }, [transaction.action]);
 
   return (
     <div data-testid='transactionAction' className={styles.action}>

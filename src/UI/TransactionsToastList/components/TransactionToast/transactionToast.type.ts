@@ -27,6 +27,8 @@ export interface TransactionToastContentElementsProps {
 
 export interface TransactionToastCustomizationProps {
   TransactionToastContentCustomElements?: TransactionToastContentElementsProps;
-  TransactionToastContent?: ComponentTypeWithChildren<TransactionToastContentProps>;
+  TransactionToastContent?: ComponentTypeWithChildren<
+    TransactionToastContentProps
+  >;
   Progress?: ComponentTypeWithChildren<ProgressProps>;
 }

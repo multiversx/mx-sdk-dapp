@@ -2,9 +2,9 @@ import React from 'react';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { Trim } from 'UI/Trim';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
-import { Trim } from 'UI/Trim';
 
 import ResultWrapper from '../ResultWrapper/ResultWrapper';
 

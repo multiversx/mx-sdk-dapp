@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { PairingTypes } from '@multiversx/sdk-wallet-connect-provider';
 import { faCircleNotch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { PairingTypes } from '@multiversx/sdk-wallet-connect-provider';
 import classNames from 'classnames';
 
 import type { WithClassnameType } from '../../types';

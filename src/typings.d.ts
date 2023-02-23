@@ -43,9 +43,7 @@ declare module 'react-redux/lib/utils/Subscription' {
     tryUnsubscribe: VoidFunc;
     getListeners: () => ListenerCollection;
   }
-  export declare function createSubscription(
-    store: any,
-    parentSub?: Subscription
-  ): Subscription;
+  export declare function createSubscription(store: any, parentSub?: Subscription): Subscription;
   export {};
+
 }

@@ -71,7 +71,9 @@ export const networkConfigSlice = createSlice({
   }
 });
 
-export const { initializeNetworkConfig, setChainID } =
-  networkConfigSlice.actions;
+export const {
+  initializeNetworkConfig,
+  setChainID
+} = networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

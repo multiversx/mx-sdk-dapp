@@ -1,8 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../types';
+
+import globalStyles from 'assets/sass/main.scss';
 
 export interface DotPropsType extends WithClassnameType {
   color: string;

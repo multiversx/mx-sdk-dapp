@@ -115,7 +115,9 @@ export function formatAmount({
               const noOfZerosAtEnd = digits - decimalSide.length;
 
               if (noOfZerosAtEnd > 0) {
-                const zeroPadding = Array(noOfZerosAtEnd).fill(0).join('');
+                const zeroPadding = Array(noOfZerosAtEnd)
+                  .fill(0)
+                  .join('');
                 decimalSide = `${decimalSide}${zeroPadding}`;
                 return `${numericPart}.${decimalSide}`;
               }

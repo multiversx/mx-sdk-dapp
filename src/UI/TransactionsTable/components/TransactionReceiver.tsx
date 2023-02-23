@@ -1,15 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 
-import { WithTransactionType } from '../../../UI/types';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 
+import { WithTransactionType } from '../../../UI/types';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
 export interface TransactionReceiverPropsType extends WithTransactionType {

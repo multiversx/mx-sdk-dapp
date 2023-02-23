@@ -6,10 +6,10 @@ import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
-import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { logout } from 'utils/logout';
+import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
 
 export interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
@@ -23,7 +23,7 @@ export function AppInitializer({
   customNetworkConfig = {},
   children,
   environment,
-  logoutRoute
+  logoutRoute,
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
@@ -91,3 +91,4 @@ export function AppInitializer({
 
   return initialized ? <>{children}</> : null;
 }
+

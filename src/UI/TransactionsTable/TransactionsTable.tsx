@@ -1,13 +1,14 @@
 import React, { ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
-import { useGetAccount, useGetNetworkConfig } from 'hooks';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction/getInterpretedTransaction';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionRow';
 
+import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction/getInterpretedTransaction';
+import { useGetAccount, useGetNetworkConfig } from 'hooks';
+
+import globalStyles from 'assets/sass/main.scss';
 import styles from './components/transactionsTable.styles.scss';
 
 export interface TransactionsTableType extends WithClassnameType {

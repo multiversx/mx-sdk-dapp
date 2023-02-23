@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
-import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faLock } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import styles from './scamPhishingStyles.scss';

@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { useGetAccountInfo } from 'hooks';
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { logoutRouteSelector } from 'reduxStore/selectors';
 import { logout } from 'utils/logout';
 import { localStorageKeys } from 'utils/storage/local';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { logoutRouteSelector } from 'reduxStore/selectors';
 
 const { logoutEvent } = localStorageKeys;
 const storageKey = 'storage';
