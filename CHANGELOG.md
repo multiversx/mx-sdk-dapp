@@ -5,6 +5,10 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- [No Extension button styling](https://github.com/multiversx/mx-sdk-dapp/pull/664)
+
 ## [[v2.9.0](https://github.com/multiversx/mx-sdk-dapp/pull/663)] - 2023-02-24
 
 - [Fixed data decode methods](https://github.com/multiversx/mx-sdk-dapp/pull/662)
