@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.9.1](https://github.com/multiversx/mx-sdk-dapp/pull/665)] - 2023-02-24
+
 - [Removed Extension button styling](https://github.com/multiversx/mx-sdk-dapp/pull/664)
 
 ## [[v2.9.0](https://github.com/multiversx/mx-sdk-dapp/pull/663)] - 2023-02-24
