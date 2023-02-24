@@ -93,7 +93,8 @@ export const useWalletConnectV2Login = ({
   const canLoginRef = useRef<boolean>(true);
 
   const dappMethods: string[] = [
-    DappCoreWCV2CustomMethodsEnum.erd_cancelAction
+    DappCoreWCV2CustomMethodsEnum.erd_cancelAction,
+    DappCoreWCV2CustomMethodsEnum.multiversx_cancelAction
   ];
 
   const uriDeepLink = !isLoading
