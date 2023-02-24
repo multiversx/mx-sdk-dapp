@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.9.2](https://github.com/multiversx/mx-sdk-dapp/pull/666)] - 2023-02-24
+- [Rewrite block hash logic to fix timing edge cases](https://github.com/multiversx/mx-sdk-dapp/pull/666)
+
 ## [[v2.9.1](https://github.com/multiversx/mx-sdk-dapp/pull/665)] - 2023-02-24
 
 - [Removed Extension button styling](https://github.com/multiversx/mx-sdk-dapp/pull/664)
 
 ## [[v2.9.0](https://github.com/multiversx/mx-sdk-dapp/pull/663)] - 2023-02-24
+
 
 - [Fixed data decode methods](https://github.com/multiversx/mx-sdk-dapp/pull/662)
 - [Walletconnect V2 Multiple Namespaces](https://github.com/multiversx/mx-sdk-dapp/pull/657)
