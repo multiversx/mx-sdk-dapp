@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
@@ -27,7 +26,7 @@ export const ExtensionLoginButton: (
   className = 'dapp-extension-login',
   children,
   callbackRoute,
-  buttonClassName,
+  buttonClassName = 'dapp-default-login-button',
   nativeAuth,
   loginButtonText = 'MultiversX DeFi Wallet',
   onLoginRedirect,
@@ -43,13 +42,20 @@ export const ExtensionLoginButton: (
 
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = {
-    noExtensionButtonWrapper: classNames(
+    wrapper: classNames(
+      globalStyles.btn,
+      globalStyles.btnPrimary,
+      globalStyles.px4,
+      globalStyles.m1,
+      globalStyles.mx3,
       styles.noExtensionButtonWrapper,
+      {
+        [buttonClassName]: buttonClassName != null
+      },
       className
     ),
-    noExtensionButtonContent: styles.noExtensionButtonContent,
-    noExtensionButtonTitle: styles.noExtensionButtonTitle,
-    noExtensionButtonIcon: styles.noExtensionButtonIcon
+    loginText: classNames(styles.loginText, styles.noExtensionButtonContent),
+    wrapperClassName: className
   };
 
   const handleLogin = () => {
@@ -65,20 +71,9 @@ export const ExtensionLoginButton: (
           : 'https://chrome.google.com/webstore/detail/multiversx-defi-wallet/dngmlblcodfobpdpecaadgfbcggfjfnm'
       }
       target='_blank'
-      className={classes.noExtensionButtonWrapper}
+      className={classes.wrapper}
     >
-      {children || (
-        <div className={classes.noExtensionButtonContent}>
-          <div className={classes.noExtensionButtonTitle}>
-            MultiversX DeFi Wallet
-          </div>
-
-          <FontAwesomeIcon
-            className={classes.noExtensionButtonIcon}
-            icon={faArrowRight}
-          />
-        </div>
-      )}
+      {children || <span className={classes.loginText}>{loginButtonText}</span>}
     </a>
   ) : (
     <LoginButton
