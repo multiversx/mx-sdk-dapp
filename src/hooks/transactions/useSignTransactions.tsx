@@ -255,6 +255,8 @@ export const useSignTransactions = () => {
   useEffect(() => {
     if (hasTransactions) {
       signTransactions();
+    } else {
+      isSigningRef.current = false;
     }
   }, [transactionsToSign, hasTransactions]);
 

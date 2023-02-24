@@ -1,18 +1,21 @@
-import { DecodeMethodEnum } from 'types/serverTransactions.types';
+import { DecodeMethodEnum, DecodedDisplayType } from 'types';
 import { decodeByMethod } from './decodeByMethod';
 import { getHexValidationWarnings } from './getHexValidationWarnings';
 import { getSmartDecodedParts } from './getSmartDecodedParts';
 
-export const getDisplayValueAndValidationWarnings = ({
-  parts,
-  decodeMethod,
-  identifier
-}: {
+interface GetDecodedPartsPropsType {
   parts: string[];
   decodeMethod: DecodeMethodEnum;
   identifier?: string;
-}) => {
-  let validationWarnings: string[] = [];
+  display: DecodedDisplayType;
+}
+
+export const getDisplayValueAndValidationWarnings = ({
+  parts,
+  decodeMethod,
+  identifier,
+  display
+}: GetDecodedPartsPropsType) => {
   const initialDecodedParts = parts.map((part, index) => {
     if (
       parts.length >= 2 &&
@@ -27,21 +30,20 @@ export const getDisplayValueAndValidationWarnings = ({
     } else {
       const hexValidationWarnings = getHexValidationWarnings(part);
       if (hexValidationWarnings.length) {
-        validationWarnings = hexValidationWarnings;
+        display.validationWarnings = Array.from(
+          new Set([...display.validationWarnings, ...hexValidationWarnings])
+        );
       }
 
       return decodeByMethod(part, decodeMethod);
     }
   });
 
-  const decodedParts =
-    decodeMethod === DecodeMethodEnum.smart
-      ? getSmartDecodedParts({
-          parts,
-          decodedParts: initialDecodedParts,
-          identifier
-        })
-      : initialDecodedParts;
-
-  return { displayValue: decodedParts.join('@'), validationWarnings };
+  return decodeMethod === DecodeMethodEnum.smart
+    ? getSmartDecodedParts({
+        parts,
+        decodedParts: initialDecodedParts,
+        identifier
+      })
+    : initialDecodedParts;
 };

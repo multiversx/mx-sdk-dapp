@@ -1,39 +1,36 @@
-import { DecodeMethodEnum } from 'types/serverTransactions.types';
-import { decodeByMethod } from './helpers/decodeByMethod';
-import { getDisplayValueAndValidationWarnings } from './helpers/getDisplayValueAndValidationWarnings';
-import { getSmartDecodedParts } from './helpers/getSmartDecodedParts';
+import {
+  DecodedDisplayType,
+  DecodeForDisplayPropsType,
+  DecodeMethodEnum
+} from 'types/serverTransactions.types';
+
+import {
+  decodeByMethod,
+  getDisplayValueAndValidationWarnings,
+  getSmartDecodedParts
+} from './helpers';
 
 export const decodeForDisplay = ({
   input,
   decodeMethod,
   identifier
-}: {
-  input: string;
-  decodeMethod: DecodeMethodEnum;
-  identifier?: string;
-}) => {
-  let display: {
-    displayValue: string;
-    validationWarnings: string[];
-  } = {
+}: DecodeForDisplayPropsType) => {
+  const display: DecodedDisplayType = {
     displayValue: '',
     validationWarnings: []
   };
 
-  const mustBedecoded = input.includes('@') || input.includes('\n');
-
-  if (!mustBedecoded) {
-    display.displayValue = decodeByMethod(input, decodeMethod);
-    return display;
-  }
-
   if (input.includes('@')) {
     const parts = input.split('@');
-    display = getDisplayValueAndValidationWarnings({
+    const decodedParts = getDisplayValueAndValidationWarnings({
       parts,
+      identifier,
       decodeMethod,
-      identifier
+      display
     });
+    display.displayValue = decodedParts.join('@');
+
+    return display;
   }
 
   if (input.includes('\n')) {
@@ -57,7 +54,11 @@ export const decodeForDisplay = ({
         : initialDecodedParts;
 
     display.displayValue = decodedParts.join('\n');
+
+    return display;
   }
+
+  display.displayValue = decodeByMethod(input, decodeMethod);
 
   return display;
 };
