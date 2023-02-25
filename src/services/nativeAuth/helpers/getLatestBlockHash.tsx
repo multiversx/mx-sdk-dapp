@@ -60,7 +60,7 @@ export async function getLatestBlockHash(
   requestPromise.current = getLatestBlockHashFromServer(apiUrl, blockHashShard);
   const response = await requestPromise.current;
   if (response == null) {
-    requestPromise.current;
+    requestPromise.current = null;
     throw new Error('could not get block hash');
   }
   //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
