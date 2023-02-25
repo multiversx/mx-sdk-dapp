@@ -2,7 +2,7 @@
 
 > A library that holds the core functional logic of a dapp on the MultiversX blockchain
 
-[![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@multiversx/sdk-dapp.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 See [Dapp template](https://dapp-template.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
 
