@@ -24,7 +24,7 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
   async (
     apiUrl: string,
     blockHashShard?: number
-  ): Promise<LatestBlockHashType> => {
+  ): Promise<LatestBlockHashType | null> => {
     //get the penultimate block hash (3 shards + the meta chain) to make sure that the block is seen by auth server
     const { data } = await axios.get<Array<LatestBlockHashType>>(
       `${apiUrl}/${BLOCKS_ENDPOINT}?from=${getBlockFromPosition}&size=1&fields=hash,timestamp${
@@ -58,17 +58,22 @@ export async function getLatestBlockHash(
 
   //if a promise is not in progress, get a new promise and add it to the promise
   requestPromise.current = getLatestBlockHashFromServer(apiUrl, blockHashShard);
-  const response = await requestPromise.current;
-  if (response == null) {
-    requestPromise.current = null;
-    throw new Error('could not get block hash');
-  }
-  //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
-  cachedResponse.current = {
-    hash: response.hash,
-    timestamp: response.timestamp
-  };
+  try {
+    const response = await requestPromise.current;
+    if (response == null) {
+      requestPromise.current = null;
+      throw new Error('could not get block hash');
+    }
+    //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
+    cachedResponse.current = {
+      hash: response.hash,
+      timestamp: response.timestamp
+    };
 
-  requestPromise.current = null;
-  return response;
+    requestPromise.current = null;
+    return response;
+  } catch (err) {
+    requestPromise.current = null;
+    return null as any;
+  }
 }
