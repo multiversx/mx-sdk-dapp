@@ -13,8 +13,7 @@ export const requestMethods = {
         JSON.stringify({
           type: WebViewProviderRequestEnums.signTransactionsRequest,
           message
-        }),
-        targetOrigin
+        })
       ),
 
     [PlatformsEnum.web]: (message: any) =>
@@ -34,8 +33,7 @@ export const requestMethods = {
         JSON.stringify({
           type: WebViewProviderRequestEnums.signMessageRequest,
           message
-        }),
-        targetOrigin
+        })
       ),
     [PlatformsEnum.web]: (message: any) =>
       (window as any)?.postMessage(
@@ -53,8 +51,7 @@ export const requestMethods = {
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.logoutRequest
-        }),
-        targetOrigin
+        })
       ),
     [PlatformsEnum.web]: () =>
       (window as any)?.postMessage(
@@ -71,8 +68,7 @@ export const requestMethods = {
       (window as any)?.ReactNativeWebView.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.loginRequest
-        }),
-        targetOrigin
+        })
       ),
     [PlatformsEnum.web]: () =>
       (window as any)?.postMessage(

@@ -2,7 +2,7 @@
 
 > A library that holds the core functional logic of a dapp on the MultiversX blockchain
 
-[![NPM](https://img.shields.io/npm/v/dapp-core.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@multiversx/sdk-dapp.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 See [Dapp template](https://dapp-template.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
 
@@ -119,7 +119,8 @@ This allows using different APIs and different connection providers to configure
   digits?: string;
   gasPerDataByte?: string;
   walletConnectDeepLink?: string; // a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
-  walletConnectBridgeAddresses?: string; // a string that is used to establish the connection to walletConnect library;
+  walletConnectBridgeAddresses?: string; // a string that is used to establish the connection to WalletConnect V1 library;
+  walletConnectV2ProjectId?: string; // a unique ProjectID needed to access the WalletConnect 2.0 Relay Cloud
   walletAddress?: string;
   apiAddress?: string;
   explorerAddress?: string;
@@ -1002,6 +1003,71 @@ Due to this, you cannot yet use the DappProvider wrapping logic in a React Nativ
 We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
 Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to xPortal Mobile Wallet.
 There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
+
+## WalletConnect 2.0 Setup
+
+Starting with the 2.0 version of the dApp SDK ( previously `@elrondnetwork/dapp-core@2.0.0` ) and `@multiversx/sdk-dapp@2.2.8` [WalletConnect 2.0](https://docs.walletconnect.com/2.0/) is available as a login and signing provider, allowing users to login by scanning a QR code with the Mobile App
+
+This is an implementation of [sdk-wallet-connect-provider](https://github.com/multiversx/mx-sdk-js-wallet-connect-provider/tree/providerV2) ( [docs](https://docs.multiversx.com/sdk-and-tools/sdk-js/sdk-js-signing-providers/#the-wallet-connect-provider) ) signing provider
+
+As WalletConnect 2.0 is not enabled by default there are a few steps needed to enable it:
+
+### Set the `walletConnectV2ProjectId`
+
+In the [DappProvider](#dappprovider) wrapper a `walletConnectV2ProjectId` must be provided in the `customNetworkConfig`
+
+The Project ID can be generated for free here: [https://cloud.walletconnect.com/sign-in](https://cloud.walletconnect.com/sign-in)
+
+```jsx
+<DappProvider
+    environment="devnet"
+    customNetworkConfig={{
+      name: 'customConfig',
+      walletConnectV2ProjectId: '9b1a9564f91...'
+    }}
+>
+```
+
+The WalletConnect Project ID grants you access to the [WalletConnect Cloud Relay](https://docs.walletconnect.com/2.0/cloud/relay) that securely manages communication between the device and the dApp.
+
+### Set the `isWalletConnectV2` flag
+
+Once the `walletConnectV2ProjectId` is set in the `DappProvider` global Context, the next step would be to activate the Walletconnect V2 functionality in the [Login UI](#login-ui).
+
+That means setting the `isWalletConnectV2` flag to `true` in the `<WalletConnectLoginButton>` component
+
+```jsx
+<WalletConnectLoginButton
+  callbackRoute='/dashboard'
+  loginButtonText='xPortal App'
+  isWalletConnectV2={true} // or simply isWalletConnectV2
+/>
+```
+
+Or, if you want access to the container without the button set the `isWalletConnectV2` flag to `true` in the `<WalletConnectLoginContainer>` component.
+
+```jsx
+<WalletConnectLoginContainer
+  callbackRoute={callbackRoute}
+  loginButtonText='Login with xPortal'
+  title='xPortal Login'
+  logoutRoute='/unlock'
+  className='wallect-connect-login-modal'
+  lead='Scan the QR code using xPortal'
+  wrapContentInsideModal={wrapContentInsideModal}
+  redirectAfterLogin={redirectAfterLogin}
+  token={token}
+  onLoginRedirect={onLoginRedirect}
+  onClose={onClose}
+  isWalletConnectV2={true} // or simply isWalletConnectV2
+/>
+```
+
+### That's it
+
+If the Project ID is valid and the `isWalletConnectV2` flag is `true` the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
+
+You can check out [this PR](https://github.com/multiversx/mx-template-dapp/commit/ca2826be499da892c1180d26f93e1497be77af09) on the [dApp Template](https://github.com/multiversx/mx-template-dapp) with the all the changes required to activate the updated functionality.
 
 ## Roadmap
 

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.9.3](https://github.com/multiversx/mx-sdk-dapp/pull/670)] - 2023-02-25
+- [Fix postMessage usage for Android](https://github.com/multiversx/mx-sdk-dapp/pull/671)
+- [Fix npm version displayed in readme](https://github.com/multiversx/mx-sdk-dapp/pull/669)
+- [Fix SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/667)
+
 ## [[v2.9.2](https://github.com/multiversx/mx-sdk-dapp/pull/666)] - 2023-02-24
 - [Rewrite block hash logic to fix timing edge cases](https://github.com/multiversx/mx-sdk-dapp/pull/666)
 

@@ -7,6 +7,7 @@ export interface LatestBlockHashType {
   timestamp: number;
 }
 
+const getBlockFromPosition = 4;
 const cachingDurationMs = 30000; // 30 seconds, a block hash is valid for 1 minute from its generation
 //this is an object with .current, so it doesn't get affected by closure and is always a fresh value
 const cachedResponse: Record<string, LatestBlockHashType | null> = {
@@ -23,9 +24,10 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
   async (
     apiUrl: string,
     blockHashShard?: number
-  ): Promise<LatestBlockHashType> => {
+  ): Promise<LatestBlockHashType | null> => {
+    //get the penultimate block hash (3 shards + the meta chain) to make sure that the block is seen by auth server
     const { data } = await axios.get<Array<LatestBlockHashType>>(
-      `${apiUrl}/${BLOCKS_ENDPOINT}?from=3&size=1&fields=hash,timestamp${
+      `${apiUrl}/${BLOCKS_ENDPOINT}?from=${getBlockFromPosition}&size=1&fields=hash,timestamp${
         blockHashShard ? '&shard=' + blockHashShard : ''
       }`
     );
@@ -44,7 +46,7 @@ export async function getLatestBlockHash(
 
   if (
     cachedResponse.current != null &&
-    cachedResponse.current.timestamp - Date.now() > 0
+    Date.now() < cachedResponse.current.timestamp * 1000 + cachingDurationMs
   ) {
     return cachedResponse.current;
   }
@@ -56,17 +58,22 @@ export async function getLatestBlockHash(
 
   //if a promise is not in progress, get a new promise and add it to the promise
   requestPromise.current = getLatestBlockHashFromServer(apiUrl, blockHashShard);
-  const response = await requestPromise.current;
-  if (response == null) {
-    requestPromise.current;
-    throw new Error('could not get block hash');
-  }
-  //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
-  cachedResponse.current = {
-    hash: response.hash,
-    timestamp: response.timestamp * 1000 + cachingDurationMs
-  };
+  try {
+    const response = await requestPromise.current;
+    if (response == null) {
+      requestPromise.current = null;
+      throw new Error('could not get block hash');
+    }
+    //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
+    cachedResponse.current = {
+      hash: response.hash,
+      timestamp: response.timestamp
+    };
 
-  requestPromise.current = null;
-  return response;
+    requestPromise.current = null;
+    return response;
+  } catch (err) {
+    requestPromise.current = null;
+    return null as any;
+  }
 }

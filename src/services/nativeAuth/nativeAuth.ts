@@ -18,8 +18,9 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
       return '';
     }
 
-    const { hash, timestamp } =
+    const response =
       latestBlockInfo ?? (await getLatestBlockHash(apiAddress, blockHashShard));
+    const { hash, timestamp } = response;
     const encodedExtraInfo = encodeValue(
       JSON.stringify({ ...extraInfo, ...(timestamp ? { timestamp } : {}) })
     );
