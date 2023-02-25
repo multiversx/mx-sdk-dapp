@@ -7,6 +7,7 @@ export interface LatestBlockHashType {
   timestamp: number;
 }
 
+const getBlockFromPosition = 4;
 const cachingDurationMs = 30000; // 30 seconds, a block hash is valid for 1 minute from its generation
 //this is an object with .current, so it doesn't get affected by closure and is always a fresh value
 const cachedResponse: Record<string, LatestBlockHashType | null> = {
@@ -24,8 +25,9 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
     apiUrl: string,
     blockHashShard?: number
   ): Promise<LatestBlockHashType> => {
+    //get the penultimate block hash (3 shards + the meta chain) to make sure that the block is seen by auth server
     const { data } = await axios.get<Array<LatestBlockHashType>>(
-      `${apiUrl}/${BLOCKS_ENDPOINT}?from=3&size=1&fields=hash,timestamp${
+      `${apiUrl}/${BLOCKS_ENDPOINT}?from=${getBlockFromPosition}&size=1&fields=hash,timestamp${
         blockHashShard ? '&shard=' + blockHashShard : ''
       }`
     );
