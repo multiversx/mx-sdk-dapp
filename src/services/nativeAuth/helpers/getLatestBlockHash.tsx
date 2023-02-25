@@ -44,7 +44,7 @@ export async function getLatestBlockHash(
 
   if (
     cachedResponse.current != null &&
-    cachedResponse.current.timestamp - Date.now() > 0
+    cachedResponse.current.timestamp * 1000 - cachingDurationMs - Date.now() > 0
   ) {
     return cachedResponse.current;
   }
@@ -64,7 +64,7 @@ export async function getLatestBlockHash(
   //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
   cachedResponse.current = {
     hash: response.hash,
-    timestamp: response.timestamp * 1000 + cachingDurationMs
+    timestamp: response.timestamp
   };
 
   requestPromise.current = null;
