@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.9.4](https://github.com/multiversx/mx-sdk-dapp/pull/673)] - 2023-02-26
+- [Fix message listening for Android](https://github.com/multiversx/mx-sdk-dapp/pull/672)
+
 ## [[v2.9.3](https://github.com/multiversx/mx-sdk-dapp/pull/670)] - 2023-02-25
 - [Fix postMessage usage for Android](https://github.com/multiversx/mx-sdk-dapp/pull/671)
 - [Fix npm version displayed in readme](https://github.com/multiversx/mx-sdk-dapp/pull/669)
