@@ -1,6 +1,6 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
-import { WebViewProviderResponseEnums } from 'types/index';
+import { PlatformsEnum, WebViewProviderResponseEnums } from 'types/index';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { requestMethods } from './requestMethods';
@@ -16,7 +16,7 @@ export const targetOrigin =
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
     let eventData = event.data;
-    if (event.target.origin != targetOrigin) {
+    if (event.target.origin != targetOrigin && currentPlatform != PlatformsEnum.reactNative) {
       return;
     }
     try {

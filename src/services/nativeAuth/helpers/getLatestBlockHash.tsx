@@ -44,9 +44,11 @@ export async function getLatestBlockHash(
     throw new Error('missing api url');
   }
 
+  const currentTimestampMs = Date.now();
   if (
     cachedResponse.current != null &&
-    Date.now() < cachedResponse.current.timestamp * 1000 + cachingDurationMs
+    currentTimestampMs <
+      cachedResponse.current.timestamp * 1000 + cachingDurationMs
   ) {
     return cachedResponse.current;
   }
