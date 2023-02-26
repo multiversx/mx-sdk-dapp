@@ -46,7 +46,8 @@ export async function getLatestBlockHash(
 
   if (
     cachedResponse.current != null &&
-    Date.now() < cachedResponse.current.timestamp * 1000 + cachingDurationMs
+    new Date().getTime() <
+      cachedResponse.current.timestamp * 1000 + cachingDurationMs
   ) {
     return cachedResponse.current;
   }
