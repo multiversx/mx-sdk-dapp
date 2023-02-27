@@ -13,15 +13,15 @@ export const decodeNativeAuthToken = (accessToken?: string) => {
     const [address, body, signature] = accessToken.split('.');
     const parsedAddress = decodeBase64(address);
     const parsedBody = decodeBase64(body);
-    const [host, blockHash, ttl, extraInfo] = parsedBody.split('.');
+    const [origin, blockHash, ttl, extraInfo] = parsedBody.split('.');
     const parsedExtraInfo = JSON.parse(decodeBase64(extraInfo));
-    const parsedHost = decodeBase64(host);
+    const parsedOrigin = decodeBase64(origin);
 
     const result = {
       ttl: Number(ttl),
       address: parsedAddress,
       extraInfo: parsedExtraInfo,
-      host: parsedHost,
+      origin: parsedOrigin,
       signature,
       blockHash,
       body: parsedBody

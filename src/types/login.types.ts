@@ -23,7 +23,7 @@ export type OnLoginRedirectType = (
 ) => void;
 
 export interface NativeAuthConfigType {
-  hostname?: string;
+  origin?: string;
   apiAddress?: string;
   expirySeconds?: number;
   blockHashShard?: number;
