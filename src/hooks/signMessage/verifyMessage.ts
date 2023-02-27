@@ -16,8 +16,8 @@ export const verifyMessage = (signedMessage: string) => {
   const verifier = new UserVerifier(publicKey);
 
   return {
-    verified: verifier.verify(signedM),
-    message: decodedMessage,
-    address: bech32Address
+    isVerified: verifier.verify(signedM),
+    message: decodedMessage.toString(),
+    address
   };
 };
