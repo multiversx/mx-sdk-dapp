@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Changed `host` and `hostname` to `origin` in `decodeNativeAuthToken` and `getNativeAuthConfig` return types. Added `authorizationInfo` prop in `ScamPhishinAlert` component](https://github.com/multiversx/mx-sdk-dapp/pull/673)
 
 ## [[v2.9.4](https://github.com/multiversx/mx-sdk-dapp/pull/673)] - 2023-02-26
 - [Fix message listening for Android](https://github.com/multiversx/mx-sdk-dapp/pull/672)
