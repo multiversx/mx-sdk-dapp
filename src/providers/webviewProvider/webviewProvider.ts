@@ -16,7 +16,10 @@ export const targetOrigin =
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
     let eventData = event.data;
-    if (event.target.origin != targetOrigin && currentPlatform != PlatformsEnum.reactNative) {
+    if (
+      event.target.origin != targetOrigin &&
+      currentPlatform != PlatformsEnum.reactNative
+    ) {
       return;
     }
     try {
