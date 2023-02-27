@@ -6,14 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.10.0](https://github.com/multiversx/mx-sdk-dapp/pull/677)] - 2023-02-27
+- [Changed `useVerifyMessage` into `verifyMessage` and update return value](https://github.com/multiversx/mx-sdk-dapp/pull/676)
+- [Updated `sdk-core` version](https://github.com/multiversx/mx-sdk-dapp/pull/674)
+
+- [Changed `host` and `hostname` to `origin` in `decodeNativeAuthToken` and `getNativeAuthConfig` return types. Added `authorizationInfo` prop in `ScamPhishinAlert` component](https://github.com/multiversx/mx-sdk-dapp/pull/673)
 
 ## [[v2.9.4](https://github.com/multiversx/mx-sdk-dapp/pull/673)] - 2023-02-26
-- [Fix message listening for Android](https://github.com/multiversx/mx-sdk-dapp/pull/672)
+- [Fixed message listening for Android](https://github.com/multiversx/mx-sdk-dapp/pull/672)
 
 ## [[v2.9.3](https://github.com/multiversx/mx-sdk-dapp/pull/670)] - 2023-02-25
-- [Fix postMessage usage for Android](https://github.com/multiversx/mx-sdk-dapp/pull/671)
-- [Fix npm version displayed in readme](https://github.com/multiversx/mx-sdk-dapp/pull/669)
-- [Fix SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/667)
+- [Fixed postMessage usage for Android](https://github.com/multiversx/mx-sdk-dapp/pull/671)
+- [Fixed npm version displayed in readme](https://github.com/multiversx/mx-sdk-dapp/pull/669)
+- [Fixed SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/667)
 
 ## [[v2.9.2](https://github.com/multiversx/mx-sdk-dapp/pull/666)] - 2023-02-24
 - [Rewrite block hash logic to fix timing edge cases](https://github.com/multiversx/mx-sdk-dapp/pull/666)
@@ -39,11 +44,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.8.8](https://github.com/multiversx/mx-sdk-dapp/pull/652)] - 2023-02-22
 
-- [Add retry mechanism for block hash request](https://github.com/multiversx/mx-sdk-dapp/pull/651)
+- [Added retry mechanism for block hash request](https://github.com/multiversx/mx-sdk-dapp/pull/651)
 
 ## [[v2.8.7](https://github.com/multiversx/mx-sdk-dapp/pull/649)] - 2023-02-20
 
-- [Add block hash shard to native auth config](https://github.com/multiversx/mx-sdk-dapp/pull/650)
+- [Added block hash shard to native auth config](https://github.com/multiversx/mx-sdk-dapp/pull/650)
 - [Changed persist config to local configuration](https://github.com/multiversx/mx-sdk-dapp/pull/648)
 
 ## [[v2.8.6](https://github.com/multiversx/mx-sdk-dapp/pull/647)] - 2023-02-20
