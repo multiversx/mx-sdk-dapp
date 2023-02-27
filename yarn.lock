@@ -1892,7 +1892,7 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@^11.4.1":
+"@multiversx/sdk-core@11.4.1":
   version "11.4.1"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-11.4.1.tgz#fbb3165107bb27ee8c5efbfe51b63936b4867ff4"
   integrity sha512-kGnSoEcygBUpOABJgpJIbeRBptQ54xq/OVHcw/pOAi0koLJHgu4xiwPihcsxMJ4jWN4PrWDy+zMo/ypeozYVGg==
