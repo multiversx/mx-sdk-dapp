@@ -1,11 +1,12 @@
 import React, { ReactNode, useState } from 'react';
 
+import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
+import { OnProviderLoginType } from 'types';
 import { useDappModal } from 'UI/DappModal';
 
-import type { OnProviderLoginType } from '../../../types';
 import { LoginButton } from '../../LoginButton/LoginButton';
-import type { WithClassnameType } from '../../types';
-import type { InnerWalletConnectComponentsClassesType } from '../types';
+import { WithClassnameType } from '../../types';
+import { InnerWalletConnectComponentsClassesType } from '../types';
 
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
 
@@ -55,6 +56,7 @@ export const WalletConnectLoginButton = ({
 }: WalletConnectLoginButtonPropsType) => {
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
   const handleOpenModal = () => {
     setCanShowLoginModal(true);
@@ -78,7 +80,7 @@ export const WalletConnectLoginButton = ({
           className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
-          disabled={disabled}
+          disabled={disabled || disabledConnectButton}
         >
           {children}
         </LoginButton>

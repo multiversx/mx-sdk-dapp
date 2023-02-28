@@ -2,8 +2,9 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
+import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
+import { OnProviderLoginType } from 'types';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
-import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { getIsExtensionAvailable } from '../helpers';
 import styles from './extensionLoginButton.styles.scss';
@@ -39,7 +40,7 @@ export const ExtensionLoginButton: (
     onLoginRedirect,
     nativeAuth
   });
-
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = {
     wrapper: classNames(
@@ -81,7 +82,7 @@ export const ExtensionLoginButton: (
       className={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
-      disabled={disabled}
+      disabled={disabled || disabledConnectButton}
       data-testid={dataTestId}
     >
       {children}

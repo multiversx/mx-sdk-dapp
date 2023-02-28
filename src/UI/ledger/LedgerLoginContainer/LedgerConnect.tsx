@@ -10,6 +10,7 @@ import styles from './ledgerConnectStyles.scss';
 
 export interface LedgerConnectPropsType extends WithClassnameType {
   onClick: () => void;
+  disabled?: boolean;
   error: string;
   connectPageContent?: ReactNode;
   customContentComponent?: ReactNode;
@@ -28,6 +29,7 @@ export interface LedgerConnectPropsType extends WithClassnameType {
 export const LedgerConnect = ({
   onClick,
   error,
+  disabled,
   connectPageContent,
   customContentComponent,
   className = 'dapp-ledger-connect-button',
@@ -106,6 +108,7 @@ export const LedgerConnect = ({
         >
           <button
             onClick={onClick}
+            disabled={disabled}
             data-testid='connectBtn'
             className={classNames(
               globalStyles.btn,

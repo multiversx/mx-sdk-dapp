@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
-import { OnProviderLoginType } from '../../../types';
+import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
+import { OnProviderLoginType } from 'types';
 import { LoginButton } from '../../LoginButton/LoginButton';
 
 export interface WebWalletLoginButtonPropsType
@@ -29,6 +30,7 @@ export const WebWalletLoginButton: (
     nativeAuth,
     token
   });
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
   const handleLogin = () => {
     onInitiateLogin();
@@ -40,7 +42,7 @@ export const WebWalletLoginButton: (
       className={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
-      disabled={disabled}
+      disabled={disabled || disabledConnectButton}
     >
       {children}
     </LoginButton>
