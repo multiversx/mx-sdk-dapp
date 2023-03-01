@@ -17,5 +17,5 @@ export const getIsNativeAuthSingingForbidden = (token?: string) => {
     return;
   }
 
-  return decoded.origin.startsWith(MULTIVERSX_ORIGIN);
+  return decoded.origin.toLowerCase().startsWith(MULTIVERSX_ORIGIN);
 };
