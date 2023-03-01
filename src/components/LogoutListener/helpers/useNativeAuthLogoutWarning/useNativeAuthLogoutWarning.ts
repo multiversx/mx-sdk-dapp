@@ -44,7 +44,7 @@ export const useNativeAuthLogoutWarning = () => {
         .minus(logoutWarningOffsetMilliseconds);
 
       const readableMinutesUntilLogout = getHumanReadableTokenExpirationTime(
-        millisecondsUntilLogout
+        millisecondsUntilLogout.toNumber()
       );
 
       const timeoutUntilLogoutWarning =

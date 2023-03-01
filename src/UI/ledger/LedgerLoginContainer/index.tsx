@@ -1,13 +1,15 @@
 import React, { ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
-
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
+import {
+  getIsNativeAuthSingingForbidden,
+  getAuthorizationInfo
+} from 'services/nativeAuth/helpers';
+import { OnProviderLoginType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
-
-import type { OnProviderLoginType } from '../../../types';
-import type { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../types';
 
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
@@ -69,14 +71,19 @@ export const LedgerLoginContainer = ({
     ledgerScamPhishingAlertClassName
   } = innerLedgerComponentsClasses || {};
 
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
+
   const getScamPhishingAlert = () => {
     if (!showScamPhishingAlert) {
       return null;
     }
 
+    const authorizationInfo = getAuthorizationInfo(token);
+
     return (
       <ScamPhishingAlert
         url={window.location.origin}
+        authorizationInfo={authorizationInfo}
         className={ledgerScamPhishingAlertClassName}
       />
     );
@@ -158,6 +165,7 @@ export const LedgerLoginContainer = ({
     return (
       <LedgerConnect
         error={error}
+        disabled={disabledConnectButton}
         onClick={onStartLogin}
         customContentComponent={customContentComponent}
         ledgerConnectClassNames={ledgerConnectClassNames}

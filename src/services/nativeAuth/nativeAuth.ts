@@ -24,9 +24,9 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     const encodedExtraInfo = encodeValue(
       JSON.stringify({ ...extraInfo, ...(timestamp ? { timestamp } : {}) })
     );
-    const host = encodeValue(origin);
+    const encodedOrigin = encodeValue(origin);
 
-    return `${host}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
+    return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
 
   return {
