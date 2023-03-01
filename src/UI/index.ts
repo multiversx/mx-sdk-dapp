@@ -7,6 +7,7 @@ export * from './operaWallet/OperaWalletLoginButton';
 export * from './ledger/LedgerLoginButton';
 export * from './ledger/LedgerLoginContainer';
 export * from './NotificationModal';
+export * from './GuardianModal';
 export * from './PageState';
 export * from './ProgressSteps';
 export * from './SignTransactionsModals';

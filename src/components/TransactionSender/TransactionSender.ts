@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction, TransactionOptions } from '@multiversx/sdk-core/out';
 import { Signature } from '@multiversx/sdk-core/out/signature';
-
 import {
   sendSignedTransactions as defaultSendSignedTxs,
   SendSignedTransactionsReturnType
@@ -47,9 +46,7 @@ export const TransactionSender = ({
 }: TransactionSenderType) => {
   const account = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
-
   const sendingRef = useRef(false);
-
   const dispatch = useDispatch();
 
   const clearSignInfo = () => {
@@ -62,30 +59,55 @@ export const TransactionSender = ({
       const sessionInformation = signedTransactions?.[sessionId];
       const skipSending =
         sessionInformation?.customTransactionInformation?.signWithoutSending;
-
       if (!sessionId || skipSending) {
         optionalRedirect(sessionInformation);
         continue;
       }
 
-      try {
-        const isSessionIdSigned =
-          signedTransactions[sessionId].status ===
-          TransactionBatchStatusesEnum.signed;
-        const shouldSendCurrentSession =
-          isSessionIdSigned && !sendingRef.current;
-        if (!shouldSendCurrentSession) {
-          continue;
-        }
-        const { transactions } = signedTransactions[sessionId];
+      const isSessionIdSigned =
+        signedTransactions[sessionId].status ===
+        TransactionBatchStatusesEnum.signed;
+      const shouldSendCurrentSession = isSessionIdSigned && !sendingRef.current;
+      if (!shouldSendCurrentSession) {
+        continue;
+      }
+      const { transactions } = signedTransactions[sessionId];
+      if (!transactions) {
+        continue;
+      }
 
-        if (!transactions) {
-          continue;
-        }
+      //Turn into function (helper)
+      const txsRequireGuardianSignature = transactions?.every(
+        (tx) =>
+          tx.options &&
+          tx.options === TransactionOptions.withTxGuardedOptions().valueOf() &&
+          !tx.guardianSignature &&
+          //string  setGuardin in const
+          (tx.data ? atob(tx.data) : '').indexOf('SetGuardian@') !== 0
+      );
+
+      if (txsRequireGuardianSignature) {
+        const { transactions } = signedTransactions[sessionId];
+        dispatch(
+          updateSignedTransactions({
+            sessionId,
+            status: TransactionBatchStatusesEnum.needsGuardianSignature,
+            transactions
+          })
+        );
+        optionalRedirect(sessionInformation);
+        continue;
+      }
+
+      try {
         sendingRef.current = true;
         const transactionsToSend = transactions.map((tx) => {
           const transactionObject = newTransaction(tx);
           const signature = new Signature(tx.signature);
+          if (txsRequireGuardianSignature) {
+            const guardianSignature = new Signature(tx.guardianSignature);
+            transactionObject.applyGuardianSignature(guardianSignature);
+          }
 
           transactionObject.applySignature(signature);
           return transactionObject;

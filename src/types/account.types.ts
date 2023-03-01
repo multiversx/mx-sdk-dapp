@@ -31,3 +31,17 @@ export interface ScamInfoType {
   type: string;
   info: string;
 }
+
+export interface GuardianDataType {
+  activeGuardian?: {
+    activationEpoch: number;
+    address: string;
+    serviceUID: string;
+  };
+  pendingGuardian?: {
+    activationEpoch: number;
+    address: string;
+    serviceUID: string;
+  };
+  guarded?: boolean | null;
+}

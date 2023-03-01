@@ -151,6 +151,7 @@
     "@reduxjs/toolkit": "1.8.2",
     "axios": "0.24.0",
     "bignumber.js": "9.x",
+    "formik": "^2.2.9",
     "linkify-react": "4.0.2",
     "linkifyjs": "4.0.2",
     "lodash.debounce": "4.0.8",

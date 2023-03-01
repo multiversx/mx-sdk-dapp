@@ -1,7 +1,15 @@
+import {
+  TransactionOptions,
+  TransactionVersion
+} from '@multiversx/sdk-core/out';
 import BigNumber from 'bignumber.js';
+import { getGuardianData } from 'apiCalls/configuration/getGuardianData';
 import { GAS_LIMIT } from 'constants/index';
 
-import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
+import {
+  accountBalanceSelector,
+  addressSelector
+} from 'reduxStore/selectors/accountInfoSelectors';
 import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setNotificationModal,
@@ -26,6 +34,7 @@ export async function signTransactions({
   transactionsDisplayInfo
 }: SignTransactionsPropsType): Promise<SendTransactionReturnType> {
   const appState = store.getState();
+  const address = addressSelector(store.getState());
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(appState);
   const storeChainId = chainIDSelector(appState);
@@ -65,11 +74,32 @@ export async function signTransactions({
     return { error: 'Invalid ChainID', sessionId: null };
   }
 
+  //move to account slice
+  const guardianData = await getGuardianData(address);
+
   const signTransactionsPayload = {
     sessionId,
     callbackRoute,
     customTransactionInformation,
-    transactions: transactionsPayload.map((tx) => tx.toPlainObject())
+    transactions: guardianData?.guarded
+      ? //TODO: refactor here, including gas limit
+        transactionsPayload.map((tx) => {
+          const plainTx = tx.toPlainObject();
+          plainTx.guardian = guardianData.activeGuardian?.address;
+          plainTx.gasLimit = 500000;
+          if (
+            (plainTx.data ? atob(plainTx.data) : '').indexOf('SetGuardian@') !==
+            0
+          ) {
+            plainTx.version = TransactionVersion.withTxOptions().valueOf();
+            plainTx.options =
+              TransactionOptions.withTxGuardedOptions().valueOf();
+          }
+          return {
+            ...plainTx
+          };
+        })
+      : transactionsPayload.map((tx) => tx.toPlainObject())
   };
   store.dispatch(setSignTransactionsCancelMessage(null));
   store.dispatch(setTransactionsToSign(signTransactionsPayload));

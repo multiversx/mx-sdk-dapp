@@ -21,7 +21,8 @@ export enum TransactionBatchStatusesEnum {
   success = 'success',
   sent = 'sent',
   fail = 'fail',
-  timedOut = 'timedOut'
+  timedOut = 'timedOut',
+  needsGuardianSignature = 'needsGuardianSignature'
 }
 
 export enum LoginMethodsEnum {
