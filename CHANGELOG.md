@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.10.3](https://github.com/multiversx/mx-sdk-dapp/pull/684)] - 2023-03-01
+## [[v2.10.3](https://github.com/multiversx/mx-sdk-dapp/pull/685)] - 2023-03-01
 
-- [Remove Bootstrap dependency for the 'authorizationInfo' text](https://github.com/multiversx/mx-sdk-dapp/pull/683)
+- [Remove Bootstrap dependency for the 'authorizationInfo' text](https://github.com/multiversx/mx-sdk-dapp/pull/684)
 
 ## [[v2.10.2](https://github.com/multiversx/mx-sdk-dapp/pull/682)] - 2023-03-01
 
