@@ -14,7 +14,7 @@ import { LoginMethodsEnum } from 'types/enums.types';
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 
-export const getProviderType = <TProvider extends Object>(
+export const getProviderType = <TProvider extends object>(
   provider?: TProvider | null
 ): LoginMethodsEnum => {
   switch (provider?.constructor) {

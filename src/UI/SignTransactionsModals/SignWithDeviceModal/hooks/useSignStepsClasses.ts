@@ -1,6 +1,6 @@
+import { useMemo } from 'react';
 import classNames from 'classnames';
 import globalStyles from '../../../../assets/sass/main.scss';
-import { useMemo } from 'react';
 
 export const useSignStepsClasses = (scamReport: string | null = null) => {
   return useMemo(

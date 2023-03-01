@@ -3,21 +3,21 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
 
+import Lighting from 'assets/icons/lightning.svg';
+import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
-import { ModalContainer } from 'UI/ModalContainer';
 import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
-import Lighting from 'assets/icons/lightning.svg';
 
-import type { InnerWalletConnectComponentsClassesType } from '../types';
 import type { OnProviderLoginType } from '../../../types';
 import type { WithClassnameType } from '../../types';
+import type { InnerWalletConnectComponentsClassesType } from '../types';
 
 import { Pairinglist } from './PairingList';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectLoginModalPropsType
@@ -138,6 +138,7 @@ export const WalletConnectLoginContainer = ({
     }
 
     const uri = displayWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
+
     if (uri) {
       const svg = await QRCode.toString(uri, {
         type: 'svg'

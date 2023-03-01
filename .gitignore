@@ -14,6 +14,7 @@ dist
 .idea/workspace.xml
 .rpt2_cache
 .yalc
+.husky
 
 # misc
 .DS_Store

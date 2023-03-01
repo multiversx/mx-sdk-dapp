@@ -3,11 +3,11 @@ import React, { ReactNode, useState } from 'react';
 import { useDappModal } from 'UI/DappModal';
 
 import type { OnProviderLoginType } from '../../../types';
+import { LoginButton } from '../../LoginButton/LoginButton';
 import type { WithClassnameType } from '../../types';
 import type { InnerWalletConnectComponentsClassesType } from '../types';
 
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
-import { LoginButton } from '../../LoginButton/LoginButton';
 
 export interface WalletConnectLoginButtonPropsType
   extends WithClassnameType,

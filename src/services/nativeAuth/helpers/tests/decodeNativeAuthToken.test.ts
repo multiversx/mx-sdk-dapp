@@ -14,7 +14,7 @@ describe('decodeNativeAuthToken tests', () => {
       extraInfo: {
         timestamp: 1669730934
       },
-      host: 'localhost',
+      origin: 'localhost',
       signature:
         '31c394d9b8532a412a707e22dbba20e87f3c9029df02b6b8d28857736059134419cf2ceb5340e83cab882d991771f629b2d4baca3d6f55a1ee31278a312f4707',
       ttl: 86400

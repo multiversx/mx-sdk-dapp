@@ -19,16 +19,18 @@ const executeAsyncCall = async (
         await sleep(options.delay);
       }
 
-      return executeAsyncCall(cb, options, args, retries + 1);
+      return await executeAsyncCall(cb, options, args, retries + 1);
     }
 
     return null;
   }
 };
 
-export const retryMultipleTimes = (
-  cb: (...args: any[]) => any,
-  options: Options = { retries: 5, delay: 500 }
-) => async (...args: any[]) => {
-  return executeAsyncCall(cb, options, args);
-};
+export const retryMultipleTimes =
+  (
+    cb: (...args: any[]) => any,
+    options: Options = { retries: 5, delay: 500 }
+  ) =>
+  async (...args: any[]) => {
+    return await executeAsyncCall(cb, options, args);
+  };

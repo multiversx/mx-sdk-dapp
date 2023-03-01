@@ -1,12 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { ZERO } from 'constants/index';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 
 import { WithClassnameType } from '../types';
-
-import globalStyles from 'assets/sass/main.scss';
 
 // TODO: Rename to "UsdValuePropsType" when sdk-dapp@3.0.0
 export interface UsdValueType extends WithClassnameType {

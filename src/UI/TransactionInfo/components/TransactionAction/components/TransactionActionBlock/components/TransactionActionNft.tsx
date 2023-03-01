@@ -1,13 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { TransactionActionNftReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
-import { NftBadge } from './NftBadge';
-
-import globalStyles from 'assets/sass/main.scss';
 import styles from '../styles.scss';
+import { NftBadge } from './NftBadge';
 
 export const TransactionActionNft = ({
   badgeText,

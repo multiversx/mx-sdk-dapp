@@ -4,9 +4,9 @@ import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { WithClassnameType } from '../types';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './pageStateStyles.scss';
 
 // TODO: Rename to "PageStatePropsType" when sdk-dapp@3.0.0

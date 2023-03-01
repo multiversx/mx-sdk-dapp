@@ -75,7 +75,7 @@ type Params<Key extends string = string> = {
 /**
  * A PathPattern is used to match on some portion of a URL pathname.
  */
- interface PathPattern<Path extends string = string> {
+interface PathPattern<Path extends string = string> {
   /**
    * A string to match against a URL pathname. May contain `:id`-style segments
    * to indicate placeholders for dynamic parameters. May also end with `/*` to
@@ -96,7 +96,7 @@ type Params<Key extends string = string> = {
 /**
  * A PathMatch contains info about how a PathPattern matched on a URL pathname.
  */
- interface PathMatch<ParamKey extends string = string> {
+interface PathMatch<ParamKey extends string = string> {
   /**
    * The names and values of dynamic parameters in the URL.
    */
@@ -172,7 +172,7 @@ export function matchPath<
     params,
     pathname: matchedPathname,
     pathnameBase,
-    pattern,
+    pattern
   };
 }
 
@@ -238,14 +238,3 @@ function safelyDecodeURIComponent(value: string, paramName: string) {
     return value;
   }
 }
-
-
-
-
-
-
-
-
-
-
-

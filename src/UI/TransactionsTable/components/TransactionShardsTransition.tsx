@@ -1,12 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import globalStyles from 'assets/sass/main.scss';
 import { ExplorerLink } from 'UI/ExplorerLink';
 
-import { ShardSpan } from './ShardSpan';
 import { WithTransactionType } from '../../../UI/types';
+import { ShardSpan } from './ShardSpan';
 
-import globalStyles from 'assets/sass/main.scss';
 import styles from './transactionsTable.styles.scss';
 
 export const TransactionShardsTransition = ({

@@ -10,8 +10,8 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types';
-import { useLoginService } from './useLoginService';
 import { sanitizeCallbackUrl } from '../../utils/sanitizeCallbackUrl';
+import { useLoginService } from './useLoginService';
 
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {

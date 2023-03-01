@@ -6,7 +6,7 @@ describe('Native Auth', () => {
   let mock: MockAdapter;
   const ADDRESS =
     'erd13rrn3fwjds8r5260n6q3pd2qa6wqkudrhczh26d957c0edyzermshds0k8';
-  const HOST = 'multiversx.com';
+  const ORIGIN = 'multiversx.com';
   const SIGNATURE =
     '4b445f287663b868e269aa0532c9fd73acb37cfd45f46e33995777e68e5ecc15d97318d9af09c4102f9b40ecf347a75e2d2e81acbcc3c72ae32fcf659c2acd0e';
   const BLOCK_HASH =
@@ -18,7 +18,7 @@ describe('Native Auth', () => {
 
   const onLatestBlockHashGet = function (mock: MockAdapter): RequestHandler {
     return mock.onGet(
-      'https://api.multiversx.com/blocks?size=1&fields=hash,timestamp'
+      'https://api.multiversx.com/blocks?from=4&size=1&fields=hash,timestamp'
     );
   };
 
@@ -33,7 +33,7 @@ describe('Native Auth', () => {
   describe('Client', () => {
     it('Latest block should return signable token', async () => {
       const client = nativeAuth({
-        hostname: HOST,
+        origin: ORIGIN,
         apiAddress: 'https://api.multiversx.com'
       });
 
@@ -52,7 +52,7 @@ describe('Native Auth', () => {
         .useFakeTimers()
         .setSystemTime(new Date().setSeconds(new Date().getSeconds() + 60));
       const client = nativeAuth({
-        hostname: HOST,
+        origin: ORIGIN,
         apiAddress: 'https://api.multiversx.com'
       });
 
@@ -61,7 +61,7 @@ describe('Native Auth', () => {
 
     it('Generate Access token', () => {
       const client = nativeAuth({
-        hostname: HOST,
+        origin: ORIGIN,
         apiAddress: 'https://api.multiversx.com'
       });
 

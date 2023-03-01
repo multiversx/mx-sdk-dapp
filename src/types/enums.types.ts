@@ -75,7 +75,8 @@ export enum TransactionsDefaultTitles {
 }
 
 export enum DappCoreWCV2CustomMethodsEnum {
-  erd_cancelAction = 'erd_cancelAction'
+  erd_cancelAction = 'erd_cancelAction',
+  multiversx_cancelAction = 'multiversx_cancelAction'
 }
 export enum PlatformsEnum {
   ios = 'ios',

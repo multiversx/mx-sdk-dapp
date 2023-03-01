@@ -1,12 +1,12 @@
 import React from 'react';
 
-import { AccountName, ScAddressIcon } from 'UI/TransactionsTable/components';
+import { AssetType } from 'types';
 import { CopyButton } from 'UI/CopyButton';
+import { AccountName, ScAddressIcon } from 'UI/TransactionsTable/components';
 
 import ResultWrapper from '../ResultWrapper/ResultWrapper';
 
 import styles from './styles.scss';
-import { AssetType } from 'types';
 
 export interface ResultReceiverPropsType {
   receiver: string;
