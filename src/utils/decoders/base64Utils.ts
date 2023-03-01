@@ -11,5 +11,9 @@ export function encodeToBase64(string: string) {
 }
 
 export function decodeBase64(string: string) {
+  if (!isStringBase64(string)) {
+    return string;
+  }
+
   return atob(string);
 }

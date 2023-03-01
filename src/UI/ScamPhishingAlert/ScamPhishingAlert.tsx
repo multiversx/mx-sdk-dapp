@@ -51,16 +51,20 @@ export const ScamPhishingAlert = (props: ScamPhishingAlertPropsType) => {
           )}
         >
           <span className={styles.scamPhishingAlertText}>
-            <span>Please confirm that you are indeed connecting to</span>
-            <span className={styles.scamPhishingAlertPrefix}>
-              <strong>https://</strong>
-              {sanitizedAuthUrl} for{' '}
-              <strong>{authorizationInfo.duration}</strong> and that you trust
-              this site.
-            </span>
+            Please confirm that you are indeed connecting to
+          </span>
+          <span
+            className={classNames(
+              styles.scamPhishingAlertText,
+              'd-flex flex-row'
+            )}
+          >
+            <strong>https://</strong>
+            <span className='text-nowrap'>{sanitizedAuthUrl} for</span>
+            <strong className='ms-1'>{authorizationInfo.duration}</strong>
           </span>
           <span className={styles.scamPhishingAlertText}>
-            You might be sharing sensitive data.
+            and that you trust this site. You might be sharing sensitive data.
           </span>
           <a href='https://multiversx.com/faq'>Learn more</a>
         </p>

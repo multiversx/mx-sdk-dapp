@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { useOperaLogin } from 'hooks';
+import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
@@ -30,6 +31,7 @@ export const OperaWalletLoginButton: (
   disabled,
   'data-testid': dataTestId = 'operaLoginButton'
 }) => {
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
   const [onInitiateLogin] = useOperaLogin({
     callbackRoute,
     token,
@@ -49,7 +51,7 @@ export const OperaWalletLoginButton: (
       className={className}
       btnClassName={buttonClassName}
       text={loginButtonText}
-      disabled={disabled}
+      disabled={disabled || disabledConnectButton}
       data-testid={dataTestId}
     >
       {children}

@@ -2,6 +2,7 @@ import React, { ReactNode, useState } from 'react';
 
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
+import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 
@@ -53,6 +54,7 @@ export const LedgerLoginButton: (
   const isLoggedIn = useGetIsLoggedIn();
   const [canShowLoginModal, setCanShowLoginModal] = useState(false);
   const { handleShowModal, handleHideModal } = useDappModal();
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
   function handleOpenModal() {
     if (isLoggedIn) {
@@ -79,7 +81,7 @@ export const LedgerLoginButton: (
           className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
-          disabled={disabled}
+          disabled={disabled || disabledConnectButton}
         >
           {children}
         </LoginButton>
