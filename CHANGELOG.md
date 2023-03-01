@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[v2.10.5](https://github.com/multiversx/mx-sdk-dapp/pull/690)] - 2023-03-07
 
 - [Fixed `sanitizeCallbackUrl` return value](https://github.com/multiversx/mx-sdk-dapp/pull/690)
+- [Fixed pending transaction toast animation](https://github.com/multiversx/mx-sdk-dapp/pull/681)
 
 ## [[v2.10.4](https://github.com/multiversx/mx-sdk-dapp/pull/686)] - 2023-03-02
 

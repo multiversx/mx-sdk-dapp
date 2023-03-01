@@ -31,16 +31,22 @@ export const TransactionToast = ({
   transactions,
   customization
 }: TransactionToastPropsType) => {
-  const { progress, isPending, isTimedOut, toastDataState, handleDeleteToast } =
-    useTransactionToast({
-      toastId,
-      transactions,
-      status,
-      lifetimeAfterSuccess,
-      startTimestamp,
-      endTimeProgress,
-      onDelete
-    });
+  const {
+    isCrossShard,
+    progress,
+    isPending,
+    isTimedOut,
+    toastDataState,
+    handleDeleteToast
+  } = useTransactionToast({
+    toastId,
+    transactions,
+    status,
+    lifetimeAfterSuccess,
+    startTimestamp,
+    endTimeProgress,
+    onDelete
+  });
 
   const ProgressComponent = customization?.Progress ?? Progress;
   const TransactionToastContentComponent =
@@ -54,6 +60,7 @@ export const TransactionToast = ({
         progress={progress}
         expiresIn={lifetimeAfterSuccess}
         done={!isPending || isTimedOut}
+        isCrossShard={isCrossShard}
       >
         <TransactionToastContentComponent
           style={styles}
