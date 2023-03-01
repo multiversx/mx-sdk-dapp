@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
-## [[v2.10.2](https://github.com/multiversx/mx-sdk-dapp/pull/682)] - 2023-02-27
+## [[v2.10.2](https://github.com/multiversx/mx-sdk-dapp/pull/682)] - 2023-03-01
 - [Added `decodeLoginToken` helper; Added `authorizationInfo` in `LedgerLoginContainer` and `WalletConnectLoginContainer`](https://github.com/multiversx/mx-sdk-dapp/pull/680)
 
 ## [[v2.10.1](https://github.com/multiversx/mx-sdk-dapp/pull/679)] - 2023-02-27
