@@ -95,7 +95,6 @@ export const TransactionSender = ({
             transactions
           })
         );
-        optionalRedirect(sessionInformation);
         continue;
       }
 

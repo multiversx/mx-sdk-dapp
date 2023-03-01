@@ -26,7 +26,7 @@ export function GuardianModal() {
 
   const transactionsNeedGuardianSignature = () => {
     return (
-      Object.keys(signedTransactions).length > 0 &&
+      Boolean(Object.keys(signedTransactions).length) &&
       Object.values(signedTransactions)?.some(
         (tx) =>
           tx.status === TransactionBatchStatusesEnum.needsGuardianSignature
@@ -57,11 +57,6 @@ export function GuardianModal() {
             status: TransactionBatchStatusesEnum.signed,
             transactions: signedByGuardianTransactions
           })
-        );
-
-        console.log(
-          'signedByGuardianTransactions',
-          signedByGuardianTransactions
         );
       }
     }
