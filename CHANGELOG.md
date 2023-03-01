@@ -7,27 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.10.3](https://github.com/multiversx/mx-sdk-dapp/pull/684)] - 2023-03-01
+
+- [Remove Bootstrap dependency for the 'authorizationInfo' text](https://github.com/multiversx/mx-sdk-dapp/pull/683)
 
 ## [[v2.10.2](https://github.com/multiversx/mx-sdk-dapp/pull/682)] - 2023-03-01
+
 - [Added `decodeLoginToken` helper; Added `authorizationInfo` in `LedgerLoginContainer` and `WalletConnectLoginContainer`](https://github.com/multiversx/mx-sdk-dapp/pull/680)
 
 ## [[v2.10.1](https://github.com/multiversx/mx-sdk-dapp/pull/679)] - 2023-02-27
+
 - [Changed `hostname` to `origin` in `defaultNativeAuthConfig`](https://github.com/multiversx/mx-sdk-dapp/pull/678)
 
 ## [[v2.10.0](https://github.com/multiversx/mx-sdk-dapp/pull/677)] - 2023-02-27
+
 - [Changed `useVerifyMessage` into `verifyMessage` and update return value](https://github.com/multiversx/mx-sdk-dapp/pull/676)
 - [Updated `sdk-core` version](https://github.com/multiversx/mx-sdk-dapp/pull/675)
 - [Changed `host` and `hostname` to `origin` in `decodeNativeAuthToken` and `getNativeAuthConfig` return types. Added `authorizationInfo` prop in `ScamPhishinAlert` component](https://github.com/multiversx/mx-sdk-dapp/pull/674)
 
 ## [[v2.9.4](https://github.com/multiversx/mx-sdk-dapp/pull/673)] - 2023-02-26
+
 - [Fixed message listening for Android](https://github.com/multiversx/mx-sdk-dapp/pull/672)
 
 ## [[v2.9.3](https://github.com/multiversx/mx-sdk-dapp/pull/670)] - 2023-02-25
+
 - [Fixed postMessage usage for Android](https://github.com/multiversx/mx-sdk-dapp/pull/671)
 - [Fixed npm version displayed in readme](https://github.com/multiversx/mx-sdk-dapp/pull/669)
 - [Fixed SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/667)
 
 ## [[v2.9.2](https://github.com/multiversx/mx-sdk-dapp/pull/666)] - 2023-02-24
+
 - [Rewrite block hash logic to fix timing edge cases](https://github.com/multiversx/mx-sdk-dapp/pull/666)
 
 ## [[v2.9.1](https://github.com/multiversx/mx-sdk-dapp/pull/665)] - 2023-02-24
@@ -35,7 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Removed Extension button styling](https://github.com/multiversx/mx-sdk-dapp/pull/664)
 
 ## [[v2.9.0](https://github.com/multiversx/mx-sdk-dapp/pull/663)] - 2023-02-24
-
 
 - [Fixed data decode methods](https://github.com/multiversx/mx-sdk-dapp/pull/662)
 - [Walletconnect V2 Multiple Namespaces](https://github.com/multiversx/mx-sdk-dapp/pull/657)

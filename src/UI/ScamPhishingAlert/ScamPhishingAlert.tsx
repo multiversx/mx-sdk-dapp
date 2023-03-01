@@ -5,9 +5,10 @@ import classNames from 'classnames';
 
 import styles from './scamPhishingStyles.scss';
 
-interface AuthorizationInfo {
+export interface AuthorizationInfo {
   url: string;
   duration: string;
+  className?: string;
 }
 
 export interface ScamPhishingAlertPropsType {
@@ -42,30 +43,31 @@ export const ScamPhishingAlert = (props: ScamPhishingAlertPropsType) => {
           </span>
         </span>
       </p>
-      {authorizationInfo?.url && (
+
+      {authorizationInfo && authorizationInfo.url && (
         <p
           className={classNames(
             styles.scamPhishingAlert,
-            'mt-2 column',
-            className
+            styles.scamPhishingAlertAuthorization,
+            authorizationInfo.className
           )}
         >
           <span className={styles.scamPhishingAlertText}>
             Please confirm that you are indeed connecting to
           </span>
-          <span
-            className={classNames(
-              styles.scamPhishingAlertText,
-              'd-flex flex-row'
-            )}
-          >
+
+          <span className={styles.scamPhishingAlertText}>
             <strong>https://</strong>
-            <span className='text-nowrap'>{sanitizedAuthUrl} for</span>
-            <strong className='ms-1'>{authorizationInfo.duration}</strong>
+            <span>{sanitizedAuthUrl} for</span>
+            <strong className={styles.scamPhishingAlertAuthorizationDuration}>
+              {authorizationInfo.duration}
+            </strong>
           </span>
+
           <span className={styles.scamPhishingAlertText}>
             and that you trust this site. You might be sharing sensitive data.
           </span>
+
           <a href='https://multiversx.com/faq'>Learn more</a>
         </p>
       )}
