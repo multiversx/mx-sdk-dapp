@@ -14,6 +14,7 @@ export function useGetPendingTransactions(): UseGetPendingTransactionsReturnType
   const pendingTransactionsArray: [string, SignedTransactionsBodyType][] =
     Object.entries(pendingTransactions);
   const hasPendingTransactions = pendingTransactionsArray?.length > 0;
+
   return {
     pendingTransactions,
     pendingTransactionsArray,
