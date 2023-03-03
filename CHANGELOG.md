@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.10.4](https://github.com/multiversx/mx-sdk-dapp/pull/686)] - 2023-03-02
+
+- [Added `useGetLastPendingTransactionHash` hook](https://github.com/multiversx/mx-sdk-dapp/pull/666)
+
 ## [[v2.10.3](https://github.com/multiversx/mx-sdk-dapp/pull/685)] - 2023-03-01
 
 - [Remove Bootstrap dependency for the 'authorizationInfo' text](https://github.com/multiversx/mx-sdk-dapp/pull/684)
