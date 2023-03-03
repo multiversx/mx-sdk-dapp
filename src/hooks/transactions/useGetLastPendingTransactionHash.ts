@@ -1,6 +1,7 @@
 import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import { TransactionServerStatusesEnum } from 'types';
 
+// TODO: Add `useGetBatchTransactionHashes`
 export const useGetLastPendingTransactionHash = (): string => {
   const { hasPendingTransactions, pendingTransactions } =
     useGetPendingTransactions();
