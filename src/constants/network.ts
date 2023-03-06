@@ -84,3 +84,5 @@ export const chainIdToEnvironment: Record<string, EnvironmentsEnum> = {
   [TESTNET_CHAIN_ID]: EnvironmentsEnum.testnet,
   [MAINNET_CHAIN_ID]: EnvironmentsEnum.mainnet
 };
+
+export const MULTIVERSX_ORIGIN = 'multiversx://';
