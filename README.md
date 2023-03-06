@@ -1006,7 +1006,7 @@ There are also guide for doing this from the [community](https://github.com/S4F-
 
 ## Next.js support
 
-If you are using [Next.js](https://nextjs.org/), make sure to ckeck out the [README](https://github.com/multiversx/mx-template-nextjs-dapp/blob/main/README.md) and implementation of the [Next.js Template dApp](https://github.com/multiversx/mx-template-nextjs-dapp).
+If you are using [Next.js](https://nextjs.org/), make sure to check out the [README](https://github.com/multiversx/mx-template-nextjs-dapp/blob/main/README.md) and implementation of the [Next.js Template dApp](https://github.com/multiversx/mx-template-nextjs-dapp).
 
 ## WalletConnect 2.0 Setup
 
