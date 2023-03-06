@@ -1004,6 +1004,10 @@ We have a couple of solutions in mind and are actively working on exploring ways
 Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to xPortal Mobile Wallet.
 There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
 
+## Next.js support
+
+If you are using [Next.js](https://nextjs.org/), make sure to check out the [README](https://github.com/multiversx/mx-template-nextjs-dapp/blob/main/README.md) and implementation of the [Next.js Template dApp](https://github.com/multiversx/mx-template-nextjs-dapp).
+
 ## WalletConnect 2.0 Setup
 
 Starting with the 2.0 version of the dApp SDK ( previously `@elrondnetwork/dapp-core@2.0.0` ) and `@multiversx/sdk-dapp@2.2.8` [WalletConnect 2.0](https://docs.walletconnect.com/2.0/) is available as a login and signing provider, allowing users to login by scanning a QR code with the Mobile App
