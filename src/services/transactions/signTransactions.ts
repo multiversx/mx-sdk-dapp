@@ -81,25 +81,22 @@ export async function signTransactions({
     sessionId,
     callbackRoute,
     customTransactionInformation,
-    transactions: guardianData?.guarded
-      ? //TODO: refactor here, including gas limit
-        transactionsPayload.map((tx) => {
-          const plainTx = tx.toPlainObject();
-          plainTx.guardian = guardianData.activeGuardian?.address;
-          plainTx.gasLimit = 500000;
-          if (
-            (plainTx.data ? atob(plainTx.data) : '').indexOf('SetGuardian@') !==
-            0
-          ) {
+    transactions:
+      guardianData?.guarded && !customTransactionInformation.forceNoCosign
+        ? //TODO: refactor here, including gas limit
+          transactionsPayload.map((tx) => {
+            const plainTx = tx.toPlainObject();
+            plainTx.guardian = guardianData.activeGuardian?.address;
+            plainTx.gasLimit = 500000;
             plainTx.version = TransactionVersion.withTxOptions().valueOf();
             plainTx.options =
               TransactionOptions.withTxGuardedOptions().valueOf();
-          }
-          return {
-            ...plainTx
-          };
-        })
-      : transactionsPayload.map((tx) => tx.toPlainObject())
+
+            return {
+              ...plainTx
+            };
+          })
+        : transactionsPayload.map((tx) => tx.toPlainObject())
   };
   store.dispatch(setSignTransactionsCancelMessage(null));
   store.dispatch(setTransactionsToSign(signTransactionsPayload));

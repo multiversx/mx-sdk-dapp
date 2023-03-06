@@ -81,9 +81,7 @@ export const TransactionSender = ({
         (tx) =>
           tx.options &&
           tx.options === TransactionOptions.withTxGuardedOptions().valueOf() &&
-          !tx.guardianSignature &&
-          //string  setGuardin in const
-          (tx.data ? atob(tx.data) : '').indexOf('SetGuardian@') !== 0
+          !tx.guardianSignature
       );
 
       if (txsRequireGuardianSignature) {

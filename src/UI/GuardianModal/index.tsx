@@ -89,7 +89,7 @@ export function GuardianModal() {
               />
 
               <button type='submit' className='btn  btn-primary'>
-                Unguard Account
+                2FA Confirm Transaction
               </button>
             </Form>
           </Formik>

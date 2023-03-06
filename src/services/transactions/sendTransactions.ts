@@ -15,7 +15,8 @@ export async function sendTransactions({
   signWithoutSending,
   completedTransactionsDelay,
   sessionInformation,
-  minGasLimit
+  minGasLimit,
+  forceNoCosign = false
 }: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
   try {
     const transactionsPayload = Array.isArray(transactions)
@@ -42,7 +43,8 @@ export async function sendTransactions({
         redirectAfterSign,
         completedTransactionsDelay,
         sessionInformation,
-        signWithoutSending
+        signWithoutSending,
+        forceNoCosign
       }
     });
   } catch (err) {

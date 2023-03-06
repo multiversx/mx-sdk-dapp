@@ -131,6 +131,7 @@ export interface SendTransactionsPropsType {
   redirectAfterSign?: boolean;
   signWithoutSending: boolean;
   completedTransactionsDelay?: number;
+  forceNoCosign?: boolean;
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
@@ -187,6 +188,7 @@ export interface CustomTransactionInformation {
   sessionInformation: any;
   completedTransactionsDelay?: number;
   signWithoutSending: boolean;
+  forceNoCosign?: boolean;
 }
 
 export interface SendTransactionReturnType {
