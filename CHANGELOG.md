@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.10.5](https://github.com/multiversx/mx-sdk-dapp/pull/687)] - 2023-03-07
+
+- [Fixed `sanitizeCallbackUrl` return value](https://github.com/multiversx/mx-sdk-dapp/pull/687)
+
 ## [[v2.10.4](https://github.com/multiversx/mx-sdk-dapp/pull/686)] - 2023-03-02
 
 - [Added `useGetLastPendingTransactionHash` hook](https://github.com/multiversx/mx-sdk-dapp/pull/666)
