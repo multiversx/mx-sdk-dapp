@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useRef, ReactNode } from 'react';
 import classNames from 'classnames';
+import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import {
-  getUnixTimestamp,
-  getUnixTimestampWithAddedSeconds
-} from 'utils/dateTime';
-import { logarithmicRest } from 'utils/math';
+  getRemainingValue,
+  PROGRESS_INTERVAL_DURATION_MS
+} from 'utils/progress/getRemainingValue';
 import { storage } from 'utils/storage';
 
 import { WithClassnameType } from '../types';
@@ -18,10 +18,10 @@ export interface ProgressProps extends WithClassnameType {
   done: boolean;
   children: ReactNode;
   expiresIn?: number;
+  isCrossShard?: boolean;
   progress: {
     startTime: number;
     endTime: number;
-    animationMax: number;
   };
 }
 
@@ -31,26 +31,19 @@ export const Progress = ({
   progress,
   done,
   expiresIn = 10 * 60,
-  className = 'dapp-progress'
+  className = 'dapp-progress',
+  isCrossShard = false
 }: ProgressProps) => {
-  const initialData = useMemo(() => {
+  const { currentRemaining, totalSeconds } = useMemo(() => {
+    const toastsProgress = storage.session.getItem(TOAST_PROGRESS_KEY) || {};
+    const currentToastProgress = toastsProgress[id];
     const totalSeconds = progress ? progress.endTime - progress.startTime : 0;
-    const toastProgress = storage.session.getItem(TOAST_PROGRESS_KEY);
-    const unixNow = getUnixTimestamp();
-    const remaining = progress
-      ? ((progress.endTime - unixNow) * 100) / totalSeconds
-      : 0;
 
-    const currentRemaining =
-      toastProgress && id in toastProgress ? toastProgress[id] : remaining;
-
-    return { currentRemaining, totalSeconds };
+    return { currentRemaining: currentToastProgress || 100, totalSeconds };
   }, []);
 
-  const { totalSeconds, currentRemaining } = initialData;
-
   const progressRef = useRef<HTMLDivElement | null>(null);
-  const intervalRef = useRef<NodeJS.Timer | undefined>();
+  const intervalRef = useRef<NodeJS.Timer>();
   const percentRemainingRef = useRef(currentRemaining);
 
   useEffect(() => {
@@ -102,6 +95,13 @@ export const Progress = ({
   }
 
   function handleFinishedProgress() {
+    if (percentRemainingRef.current < 100) {
+      // Prevent setting the progress to finished state at rerender
+      setPercentRemaining(0);
+
+      return;
+    }
+
     intervalRef.current = setInterval(() => {
       if (progressRef.current == null) {
         return;
@@ -118,30 +118,39 @@ export const Progress = ({
         updateTxFromSession(value);
         setPercentRemaining(value);
       }
-    }, 5);
+    }, PROGRESS_INTERVAL_DURATION_MS);
   }
 
   function handleRunningProgress() {
-    const maxPercent = 100;
-    const perc = totalSeconds / maxPercent;
-    const intMs = parseFloat(perc.toFixed(2)) * 1000;
+    const toastProgress: Record<number, number> =
+      storage.session.getItem(TOAST_PROGRESS_KEY) || {};
+    const currentToast = toastProgress[id];
+
+    if (currentToast === percentRemainingRef.current) {
+      // Set the remaining value before starting the interval
+      const value = getRemainingValue({
+        remaining: percentRemainingRef.current,
+        totalSeconds,
+        isCrossShard
+      });
+      setPercentRemaining(value);
+      updateTxFromSession(value);
+    }
 
     intervalRef.current = setInterval(() => {
       if (progressRef.current == null) {
         return;
       }
 
-      const existing = percentRemainingRef.current;
-
-      const decrement =
-        existing >= 100 - maxPercent
-          ? 1
-          : logarithmicRest(existing, progress.animationMax);
-      const value = existing - decrement;
+      const value = getRemainingValue({
+        remaining: percentRemainingRef.current,
+        totalSeconds,
+        isCrossShard
+      });
 
       updateTxFromSession(value);
       setPercentRemaining(value);
-    }, intMs);
+    }, PROGRESS_INTERVAL_DURATION_MS);
   }
 
   function setPercentRemaining(value: number) {

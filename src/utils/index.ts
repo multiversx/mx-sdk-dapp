@@ -10,6 +10,7 @@ export * from './math';
 export * from './network';
 export * from './operations';
 export * from './parseNavigationParams';
+export * from './progress';
 export * from './redirect';
 export * from './retryMultipleTimes';
 export * from './smartContracts';
