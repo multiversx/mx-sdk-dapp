@@ -15,7 +15,6 @@ import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import styles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { Trim } from 'UI/Trim';
-import { isServerTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 const iconSuccessData = {
   icon: faCheck
@@ -74,12 +73,10 @@ export const TransactionDetailsBody = ({
 
       <CopyButton text={hash} />
 
-      {!isServerTransactionPending(status) && (
-        <ExplorerLink
-          page={`/${TRANSACTIONS_ENDPOINT}/${hash}`}
-          className={globalStyles.ml2}
-        />
-      )}
+      <ExplorerLink
+        page={`/${TRANSACTIONS_ENDPOINT}/${hash}`}
+        className={globalStyles.ml2}
+      />
     </div>
   );
 };

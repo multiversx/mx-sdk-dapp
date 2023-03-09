@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.10.6](https://github.com/multiversx/mx-sdk-dapp/pull/692)] - 2023-03-09
+- [Changed `TransactionDetailsBody` to always show `ExplorerLink`](https://github.com/multiversx/mx-sdk-dapp/pull/691)
 
 ## [[v2.10.5](https://github.com/multiversx/mx-sdk-dapp/pull/690)] - 2023-03-07
 
