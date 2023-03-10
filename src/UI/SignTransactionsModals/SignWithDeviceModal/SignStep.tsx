@@ -173,7 +173,10 @@ export const SignStep = ({
                   To
                 </div>
 
-                <div className={inputValueClassName}>
+                <div
+                  className={inputValueClassName}
+                  data-testid='confirmReceiver'
+                >
                   {multiTxData
                     ? new Address(receiver).bech32()
                     : currentTransaction.transaction.getReceiver().toString()}
@@ -192,7 +195,9 @@ export const SignStep = ({
                         className={classes.scamReportIcon}
                       />
 
-                      <small>{scamReport}</small>
+                      <small data-testid='confirmScamReport'>
+                        {scamReport}
+                      </small>
                     </span>
                   </div>
                 )}
@@ -213,7 +218,7 @@ export const SignStep = ({
                   Token
                 </div>
 
-                <div className={inputValueClassName}>
+                <div className={inputValueClassName} data-testid='confirmToken'>
                   <div className={classes.tokenValue}>
                     <TokenDetails.Icon
                       tokenAvatar={tokenAvatar}
@@ -241,6 +246,7 @@ export const SignStep = ({
                     classes.tokenAmountValue,
                     inputValueClassName
                   )}
+                  data-testid='confirmAmount'
                 >
                   {shownAmount}
                 </div>
