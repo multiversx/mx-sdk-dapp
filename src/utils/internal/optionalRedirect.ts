@@ -25,7 +25,7 @@ export function optionalRedirect({
         return onLoginRedirect(callbackRoute, options);
       }
 
-      if (!window.location.pathname.includes(callbackRoute)) {
+      if (!window?.location.pathname.includes(callbackRoute)) {
         safeRedirect(callbackRoute);
       }
     }, timeout);

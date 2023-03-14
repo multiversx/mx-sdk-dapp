@@ -1,7 +1,7 @@
 import { DecodeMethodEnum } from 'types';
 
 export const getInitialScResultsDecodeMethod = () => {
-  const { hash } = window.location;
+  const hash = window?.location.hash;
 
   const initialDecodeMethod =
     hash.indexOf('/') > 0

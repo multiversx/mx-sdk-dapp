@@ -34,10 +34,10 @@ export const Trim = ({
   );
 
   const addWindowResizeListener = () => {
-    window.addEventListener('resize', listener);
+    window?.addEventListener('resize', listener);
 
     return () => {
-      window.removeEventListener('resize', listener);
+      window?.removeEventListener('resize', listener);
     };
   };
 

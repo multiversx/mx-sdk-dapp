@@ -29,9 +29,9 @@ export const useLogoutFromMultipleTabs = () => {
       }
     };
 
-    window.addEventListener(storageKey, receiveMessage);
+    window?.addEventListener(storageKey, receiveMessage);
     return () => {
-      window.removeEventListener(storageKey, receiveMessage);
+      window?.removeEventListener(storageKey, receiveMessage);
     };
   }, [address, logoutRoute]);
 };

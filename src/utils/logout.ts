@@ -59,7 +59,7 @@ export async function logout(
 
   try {
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
-    const url = needsCallbackUrl ? window.location.origin : callbackUrl;
+    const url = needsCallbackUrl ? window?.location.origin : callbackUrl;
 
     if (isWalletProvider) {
       // allow Redux clearing it's state before navigation
