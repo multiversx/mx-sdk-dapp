@@ -1,7 +1,6 @@
 import React, { ReactNode, useState } from 'react';
 
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from 'types';
 import { useDappModal } from 'UI/DappModal';
 
 import { LoginButton } from '../../LoginButton/LoginButton';
@@ -9,6 +8,7 @@ import { WithClassnameType } from '../../types';
 import { InnerWalletConnectComponentsClassesType } from '../types';
 
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
+import { OnProviderLoginType } from './../../../types';
 
 export interface WalletConnectLoginButtonPropsType
   extends WithClassnameType,

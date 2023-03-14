@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from 'types';
 import { LoginButton } from '../../LoginButton/LoginButton';
+import { OnProviderLoginType } from './../../../types';
 
 export interface WebWalletLoginButtonPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {

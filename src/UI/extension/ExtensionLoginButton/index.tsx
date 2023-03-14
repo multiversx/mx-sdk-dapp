@@ -3,10 +3,10 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from 'types';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { WithClassnameType } from '../../types';
 import { getIsExtensionAvailable } from '../helpers';
+import { OnProviderLoginType } from './../../../types';
 import styles from './extensionLoginButton.styles.scss';
 
 export interface ExtensionLoginButtonPropsType
