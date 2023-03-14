@@ -164,7 +164,7 @@ export const useWalletConnectLogin = ({
       const loginData = {
         logoutRoute: logoutRoute,
         loginType: 'walletConnect',
-        callbackRoute: callbackRoute ?? window.location.href
+        callbackRoute: callbackRoute ?? window?.location.href
       };
 
       dispatch(setWalletConnectLogin(loginData));

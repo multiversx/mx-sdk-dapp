@@ -11,7 +11,7 @@ import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactio
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
 ) {
-  const { search } = window.location;
+  const search = window?.location.search;
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
 

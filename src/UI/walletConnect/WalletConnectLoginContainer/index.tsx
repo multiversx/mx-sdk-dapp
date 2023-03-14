@@ -180,7 +180,7 @@ export const WalletConnectLoginContainer = ({
     <>
       {showScamPhishingAlert && (
         <ScamPhishingAlert
-          url={window.location.origin}
+          url={window?.location.origin}
           authorizationInfo={authorizationInfo}
           className={containerScamPhishingAlertClassName}
         />
