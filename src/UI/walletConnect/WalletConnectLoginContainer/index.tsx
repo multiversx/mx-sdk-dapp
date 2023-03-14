@@ -8,7 +8,6 @@ import globalStyles from 'assets/sass/main.scss';
 import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { getAuthorizationInfo } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
@@ -16,6 +15,7 @@ import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
 
 import { WithClassnameType } from '../../types';
 import { InnerWalletConnectComponentsClassesType } from '../types';
+import { OnProviderLoginType } from './../../../types';
 
 import { Pairinglist } from './PairingList';
 
@@ -180,7 +180,7 @@ export const WalletConnectLoginContainer = ({
     <>
       {showScamPhishingAlert && (
         <ScamPhishingAlert
-          url={window.location.origin}
+          url={window?.location.origin}
           authorizationInfo={authorizationInfo}
           className={containerScamPhishingAlertClassName}
         />

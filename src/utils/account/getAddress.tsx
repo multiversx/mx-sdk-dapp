@@ -10,7 +10,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { addressIsValid } from './addressIsValid';
 
 export function getAddress(): Promise<string> {
-  const { search } = window.location;
+  const search = window?.location.search;
   const appState = store.getState();
   const provider = getAccountProvider();
   const address = addressSelector(appState);
