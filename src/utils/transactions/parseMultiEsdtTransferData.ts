@@ -35,7 +35,7 @@ export function parseMultiEsdtTransferData(data?: string) {
                   rest[itemIndex] && rest[itemIndex].length
                     ? rest[itemIndex]
                     : '';
-                if (encodedNonce) {
+                if (encodedNonce && encodedNonce !== '00') {
                   transaction.nonce = encodedNonce;
                 } else {
                   transaction.type = TransactionTypesEnum.esdtTransaction;
