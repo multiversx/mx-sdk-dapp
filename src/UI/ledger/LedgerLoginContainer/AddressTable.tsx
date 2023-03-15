@@ -106,6 +106,14 @@ export const AddressTable = ({
     return <LedgerLoading />;
   }
 
+  const onConfirm = () => {
+    if (!selectedAddress) {
+      return;
+    }
+
+    onConfirmSelectedAddress();
+  };
+
   const columns = [
     LedgerColumnsEnum.Address,
     LedgerColumnsEnum.Balance,
@@ -215,8 +223,8 @@ export const AddressTable = ({
         </div>
 
         <button
-          disabled={selectedAddress === ''}
-          onClick={onConfirmSelectedAddress}
+          disabled={!selectedAddress}
+          onClick={onConfirm}
           data-testid='confirmBtn'
           className={classNames(
             globalStyles.btn,
