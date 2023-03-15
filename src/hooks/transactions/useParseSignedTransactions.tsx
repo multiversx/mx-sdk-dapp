@@ -17,6 +17,8 @@ export function useParseSignedTransactions(
 
   useEffect(() => {
     if (search != null) {
+      // TODO: use parseNavigationParams to keep original params after signing
+      // TODO: add tests
       const searchData = qs.parse(search.replace('?', ''));
 
       if (searchData && WALLET_SIGN_SESSION in searchData) {
@@ -33,6 +35,7 @@ export function useParseSignedTransactions(
             })
           );
           onAbort();
+          // TODO implement search and pathname restoration
           history.pushState({}, document?.title, '?');
           return;
         }
@@ -46,7 +49,10 @@ export function useParseSignedTransactions(
               )
             })
           );
-          history.pushState({}, document?.title, '?');
+
+          const pathname = window?.location.pathname ?? '/';
+          // TODO implement search restoration
+          history.pushState({}, document?.title, pathname + '?');
         }
       }
     }
