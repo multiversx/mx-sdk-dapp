@@ -6,10 +6,10 @@ import {
   getIsNativeAuthSingingForbidden,
   getAuthorizationInfo
 } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 import { WithClassnameType } from '../../types';
+import { OnProviderLoginType } from './../../../types';
 
 import { AddressTable } from './AddressTable';
 import { ConfirmAddress } from './ConfirmAddress';
@@ -82,7 +82,7 @@ export const LedgerLoginContainer = ({
 
     return (
       <ScamPhishingAlert
-        url={window.location.origin}
+        url={window?.location.origin}
         authorizationInfo={authorizationInfo}
         className={ledgerScamPhishingAlertClassName}
       />

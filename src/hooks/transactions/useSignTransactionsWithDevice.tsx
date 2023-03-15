@@ -80,7 +80,7 @@ export function useSignTransactionsWithDevice({
   }
 
   const locationIncludesCallbackRoute =
-    callbackRoute != null && window.location.pathname.includes(callbackRoute);
+    callbackRoute != null && window?.location.pathname.includes(callbackRoute);
 
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
     const shouldMoveTransactionsToSignedState =

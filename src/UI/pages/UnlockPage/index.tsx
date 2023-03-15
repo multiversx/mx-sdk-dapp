@@ -63,7 +63,7 @@ export const UnlockPage = ({
   const { isLoggedIn } = useGetLoginInfo();
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (isLoggedIn && window) {
       window.location.href = loginRoute;
     }
   }, [isLoggedIn]);

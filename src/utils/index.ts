@@ -11,6 +11,7 @@ export * from './network';
 export * from './operations';
 export * from './parseNavigationParams';
 export * from './progress';
+export * from './platform';
 export * from './redirect';
 export * from './retryMultipleTimes';
 export * from './smartContracts';

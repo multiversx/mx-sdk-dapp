@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
+import { CHROME_EXTENSION_LINK, FIREFOX_ADDON_LINK } from 'constants/index';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from 'types';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { WithClassnameType } from '../../types';
 import { getIsExtensionAvailable } from '../helpers';
+import { OnProviderLoginType } from './../../../types';
 import styles from './extensionLoginButton.styles.scss';
 
 export interface ExtensionLoginButtonPropsType
@@ -66,11 +67,7 @@ export const ExtensionLoginButton: (
   return !isExtensionAvailable ? (
     <a
       rel='noreferrer'
-      href={
-        isFirefox
-          ? 'https://addons.mozilla.org/en-US/firefox/addon/multiversx-defi-wallet'
-          : 'https://chrome.google.com/webstore/detail/multiversx-defi-wallet/dngmlblcodfobpdpecaadgfbcggfjfnm'
-      }
+      href={isFirefox ? FIREFOX_ADDON_LINK : CHROME_EXTENSION_LINK}
       target='_blank'
       className={classes.wrapper}
     >

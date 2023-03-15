@@ -1,3 +1,3 @@
 export const getIsExtensionAvailable = () => {
-  return Boolean(window.elrondWallet);
+  return Boolean(window?.elrondWallet);
 };
