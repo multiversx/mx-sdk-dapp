@@ -1,4 +1,4 @@
-import { decodeBase64 } from 'utils/decoders';
+import { decodeBase64 } from 'utils/decoders/base64Utils';
 import { DecodedLoginTokenType, decodeLoginToken } from './decodeLoginToken';
 
 function isString(x: any) {
