@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/702)
 ## [[v2.10.9](https://github.com/multiversx/mx-sdk-dapp/pull/698)] - 2023-03-15
 - [Fixed interpreting ESDT in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/697)
 ## [[v2.10.8](https://github.com/multiversx/mx-sdk-dapp/pull/696)] - 2023-03-14
