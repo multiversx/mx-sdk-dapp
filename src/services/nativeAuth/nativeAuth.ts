@@ -1,9 +1,10 @@
 import { NativeAuthConfigType } from 'types';
+import { encodeValue } from './helpers/encodeValue';
 import {
-  encodeValue,
   getLatestBlockHash,
   LatestBlockHashType
-} from './helpers';
+} from './helpers/getLatestBlockHash';
+
 import { getNativeAuthConfig, getToken, getTokenExpiration } from './methods';
 
 export const nativeAuth = (config?: NativeAuthConfigType) => {

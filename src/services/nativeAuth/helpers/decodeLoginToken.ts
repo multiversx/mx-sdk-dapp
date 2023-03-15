@@ -1,5 +1,5 @@
 import { isString } from 'lodash';
-import { decodeBase64 } from 'utils/decoders';
+import { decodeBase64 } from 'utils/decoders/base64Utils';
 
 export interface DecodedLoginTokenType {
   blockHash: string;
