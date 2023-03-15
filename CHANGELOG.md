@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Fixed clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/702)
+- [Fixed accessing wallet without keystore index in `AddressTable`](https://github.com/multiversx/mx-sdk-dapp/pull/701)
+## [[v2.10.10](https://github.com/multiversx/mx-sdk-dapp/pull/700)] - 2023-03-15
+- [Fix imports from native auth calling imports connected to redux store](https://github.com/multiversx/mx-sdk-dapp/pull/699)
 ## [[v2.10.9](https://github.com/multiversx/mx-sdk-dapp/pull/698)] - 2023-03-15
 - [Fixed interpreting ESDT in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/697)
 ## [[v2.10.8](https://github.com/multiversx/mx-sdk-dapp/pull/696)] - 2023-03-14
