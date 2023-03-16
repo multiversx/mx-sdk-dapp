@@ -1,11 +1,16 @@
 import { useEffect } from 'react';
-import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
+import {
+  WALLET_PROVIDER_CALLBACK_PARAM,
+  WalletProvider
+} from '@multiversx/sdk-web-wallet-provider';
 import qs from 'qs';
 import { DAPP_INIT_ROUTE, WALLET_SIGN_SESSION } from 'constants/index';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { moveTransactionsToSignedState } from 'reduxStore/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
+import { clearNavigationHistory } from 'utils/clearNavigationHistory';
+import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 
 export function useParseSignedTransactions(
@@ -17,8 +22,6 @@ export function useParseSignedTransactions(
 
   useEffect(() => {
     if (search != null) {
-      // TODO: use parseNavigationParams to keep original params after signing
-      // TODO: add tests
       const searchData = qs.parse(search.replace('?', ''));
 
       if (searchData && WALLET_SIGN_SESSION in searchData) {
@@ -35,7 +38,6 @@ export function useParseSignedTransactions(
             })
           );
           onAbort();
-          // TODO implement search and pathname restoration
           history.pushState({}, document?.title, '?');
           return;
         }
@@ -49,10 +51,17 @@ export function useParseSignedTransactions(
               )
             })
           );
+          const [transaction] = signedTransactions;
 
-          const pathname = window?.location.pathname ?? '/';
-          // TODO implement search restoration
-          history.pushState({}, document?.title, pathname + '?');
+          const { params } = parseNavigationParams([], {
+            removeParams: [
+              ...Object.keys(transaction),
+              WALLET_PROVIDER_CALLBACK_PARAM, // walletProviderStatus=transactionsSigned
+              WALLET_SIGN_SESSION // signSession
+            ]
+          });
+
+          clearNavigationHistory(params);
         }
       }
     }
