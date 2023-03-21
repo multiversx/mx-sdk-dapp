@@ -3,7 +3,8 @@ import {
   SessionEventTypes,
   PairingTypes
 } from '@multiversx/sdk-wallet-connect-provider';
-import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
+import { WalletConnectProvider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectProvider';
+// import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -13,11 +14,11 @@ import {
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
-  chainIDSelector,
+  // chainIDSelector,
   walletConnectDeepLinkSelector,
   walletConnectV2ProjectIdSelector,
-  walletConnectV2RelaySelector,
-  walletConnectV2OptionsSelector
+  walletConnectV2RelaySelector
+  // walletConnectV2OptionsSelector
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import {
@@ -86,8 +87,8 @@ export const useWalletConnectV2Login = ({
   const walletConnectV2ProjectId = useSelector(
     walletConnectV2ProjectIdSelector
   );
-  const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
-  const chainId = useSelector(chainIDSelector);
+  // const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
+  // const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);
   const canLoginRef = useRef<boolean>(true);
@@ -200,18 +201,12 @@ export const useWalletConnectV2Login = ({
       onClientEvent: handleOnEvent
     };
 
-    const newProvider = new WalletConnectV2Provider(
-      providerHandlers,
-      chainId,
-      walletConnectV2RelayAddress,
-      walletConnectV2ProjectId,
-      walletConnectV2Options
-    );
+    const newProvider = new WalletConnectProvider('', providerHandlers);
 
     await newProvider.init();
     canLoginRef.current = true;
     setAccountProvider(newProvider);
-    setWcPairings(newProvider.pairings);
+    setWcPairings([]);
     providerRef.current = newProvider;
     if (loginProvider) {
       generateWcUri();

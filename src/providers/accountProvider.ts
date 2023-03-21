@@ -2,8 +2,8 @@ import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import {
-  WalletConnectProvider,
-  WalletConnectV2Provider
+  WalletConnectProvider
+  // WalletConnectV2Provider
 } from '@multiversx/sdk-wallet-connect-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { IDappProvider } from 'types';
@@ -15,8 +15,8 @@ type ProvidersType =
   | WalletProvider
   | HWProvider
   | OperaProvider
-  | WalletConnectProvider
-  | WalletConnectV2Provider;
+  | WalletConnectProvider;
+// | WalletConnectV2Provider;
 
 let accountProvider: ProvidersType = emptyProvider;
 
