@@ -24,3 +24,12 @@ export const lastSignedSessionSelector = createDeepEqualSelector(
     return state.signedSessions[sessionIds[sessionIdsLength - 1]];
   }
 );
+
+export const lastSignedSessionId = createDeepEqualSelector(
+  signedMessageInfoSliceSelector,
+  (state: SignedMessageInfoStateType) => {
+    const sessionIds = Object.keys(state.signedSessions);
+    const sessionIdsLength = sessionIds.length;
+    return sessionIds.length > 0 ? sessionIds[sessionIdsLength - 1] : '';
+  }
+);
