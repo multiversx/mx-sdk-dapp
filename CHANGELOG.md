@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Optimized sign-message reducers](https://github.com/multiversx/mx-sdk-dapp/pull/707)
 ## [[v2.10.12](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-16
 - [Added existing params to clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/705)
 ## [[v2.10.11](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-15
