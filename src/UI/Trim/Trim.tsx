@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import debounce from 'lodash.debounce';
 
+import { ELLIPSIS } from 'constants/index';
+import { useDebounce } from 'hooks';
 import { WithClassnameType } from '../types';
 import styles from './trim.styles.scss';
 
@@ -18,20 +19,23 @@ export const Trim = ({
   dataTestId = 'trim-text-component',
   color
 }: TrimType) => {
+  const [debounce, setDebounce] = useState(0);
   const [overflow, setOverflow] = useState(false);
   const trimRef = useRef(document?.createElement('span'));
   const hiddenTextRef = useRef(document?.createElement('span'));
+  const debounceTracker = useDebounce(debounce, 300);
 
-  const listener = useCallback(
-    debounce(() => {
-      if (trimRef.current && hiddenTextRef.current) {
-        const diff =
-          hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;
-        setOverflow(diff > 1);
-      }
-    }, 300),
-    []
-  );
+  const onOverflowChange = () => {
+    if (trimRef.current && hiddenTextRef.current) {
+      const diff =
+        hiddenTextRef.current.offsetWidth - trimRef.current.offsetWidth;
+      setOverflow(diff > 1);
+    }
+  };
+
+  const listener = () => {
+    setDebounce(debounce + 1);
+  };
 
   const addWindowResizeListener = () => {
     window?.addEventListener('resize', listener);
@@ -44,20 +48,15 @@ export const Trim = ({
   useEffect(addWindowResizeListener);
 
   useEffect(() => {
-    listener();
-  }, []);
+    onOverflowChange();
+  }, [debounceTracker]);
 
   return (
     <span
       ref={trimRef}
-      className={classNames(
-        styles.trim,
-        color ?? '',
-        {
-          [styles.overflow]: overflow
-        },
-        className
-      )}
+      className={classNames(styles.trim, color, className, {
+        overflow: overflow
+      })}
       data-testid={dataTestId}
     >
       <span ref={hiddenTextRef} className={styles.hiddenTextRef}>
@@ -72,7 +71,7 @@ export const Trim = ({
             </span>
           </span>
 
-          <span className={styles.ellipsis}>...</span>
+          <span className={styles.ellipsis}>{ELLIPSIS}</span>
 
           <span className={styles.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
