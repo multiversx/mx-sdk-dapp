@@ -36,3 +36,4 @@ export const REFUNDED_GAS = 'refundedGas';
 export const N_A = 'N/A';
 
 export const ZERO = '0';
+export const ELLIPSIS = '...';
