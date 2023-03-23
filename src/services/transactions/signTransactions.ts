@@ -87,7 +87,7 @@ export async function signTransactions({
           transactionsPayload.map((tx) => {
             const plainTx = tx.toPlainObject();
             plainTx.guardian = guardianData.activeGuardian?.address;
-            plainTx.gasLimit = 500000;
+            // plainTx.gasLimit = 500000;  TODO: this commented allows custom gas limit from tx debug form. regular form will not work anymore
             plainTx.version = TransactionVersion.withTxOptions().valueOf();
             plainTx.options =
               TransactionOptions.withTxGuardedOptions().valueOf();
