@@ -5,7 +5,7 @@ import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { EngineTypes } from '@multiversx/sdk-wallet-connect-provider';
 import { WalletConnectProvider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectProvider';
-import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
+// import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
@@ -22,8 +22,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.wallet;
     case WalletConnectProvider:
       return LoginMethodsEnum.walletconnect;
-    case WalletConnectV2Provider:
-      return LoginMethodsEnum.walletconnectv2;
+    // case WalletConnectV2Provider:
+    //   return LoginMethodsEnum.walletconnectv2;
     case HWProvider:
       return LoginMethodsEnum.ledger;
     case ExtensionProvider:

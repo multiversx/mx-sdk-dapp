@@ -12,7 +12,6 @@ import {
 } from '../../types';
 import { sanitizeCallbackUrl } from '../../utils/sanitizeCallbackUrl';
 import { useLoginService } from './useLoginService';
-
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
   redirectDelayMilliseconds?: number;
