@@ -5,7 +5,7 @@
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
   "repository": "multiversx/mx-sdk-dapp",
-  "main": "./",
+  "main": "./__commonjs",
   "browser": "./",
   "react-native": "./",
   "engines": {
