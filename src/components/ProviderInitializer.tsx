@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
