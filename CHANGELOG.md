@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Fixed commonJS compilation to suit Jest testing](https://github.com/multiversx/mx-sdk-dapp/pull/711)
+- [Changed `ExplorerLink` icon](https://github.com/multiversx/mx-sdk-dapp/pull/710)
+- [Improved `Trim` debounce](https://github.com/multiversx/mx-sdk-dapp/pull/709)
+## [[v2.10.13](https://github.com/multiversx/mx-sdk-dapp/pull/708)] - 2023-03-22
+- [Optimized sign-message reducers](https://github.com/multiversx/mx-sdk-dapp/pull/707)
 ## [[v2.10.12](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-16
 - [Added existing params to clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/705)
 ## [[v2.10.11](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-15
