@@ -1,9 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import {
-  SessionEventTypes,
-  PairingTypes
-} from '@multiversx/sdk-wallet-connect-provider';
-import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -28,6 +23,11 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
+import {
+  WalletConnectV2Provider,
+  SessionEventTypes,
+  PairingTypes
+} from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
 

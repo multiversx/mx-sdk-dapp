@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { WalletConnectProvider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectProvider';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -16,6 +15,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
+import { WalletConnectProvider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';

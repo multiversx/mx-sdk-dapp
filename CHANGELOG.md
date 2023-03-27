@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed commonJS compilation to suit Jest testing](https://github.com/multiversx/mx-sdk-dapp/pull/711)
 - [Changed `ExplorerLink` icon](https://github.com/multiversx/mx-sdk-dapp/pull/710)
 - [Improved `Trim` debounce](https://github.com/multiversx/mx-sdk-dapp/pull/709)
 ## [[v2.10.13](https://github.com/multiversx/mx-sdk-dapp/pull/708)] - 2023-03-22

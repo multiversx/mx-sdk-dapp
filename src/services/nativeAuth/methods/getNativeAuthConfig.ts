@@ -11,7 +11,6 @@ export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
   if (config === true) {
     return defaultNativeAuthConfig;
   }
-
   const nativeAuthConfig = {
     origin: config?.origin ?? defaultNativeAuthConfig.origin,
     blockHashShard: config?.blockHashShard ?? null,
@@ -22,6 +21,5 @@ export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
       config?.tokenExpirationToastWarningSeconds ??
       defaultNativeAuthConfig.tokenExpirationToastWarningSeconds
   };
-
   return nativeAuthConfig;
 };
