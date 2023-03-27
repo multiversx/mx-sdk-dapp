@@ -5,37 +5,8 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector, tokenLoginSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { nativeAuth } from 'services/nativeAuth';
-// import { getNativeAuthConfig } from 'services/nativeAuth/methods';
+import { getNativeAuthConfig } from 'services/nativeAuth/methods';
 import { OnProviderLoginType } from 'types';
-import { NativeAuthConfigType } from 'types';
-
-const defaultNativeAuthConfig = {
-  origin: typeof window !== 'undefined' ? window?.location?.origin : '',
-  apiAddress: 'https://api.multiversx.com',
-  expirySeconds: 60 * 60 * 24, // one day
-  tokenExpirationToastWarningSeconds: 5 * 60 // five minutes
-};
-
-export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
-  if ('1' || config) {
-    return defaultNativeAuthConfig;
-  }
-  return defaultNativeAuthConfig;
-  // if (config === true) {
-  //   return defaultNativeAuthConfig;
-  // }
-  // const nativeAuthConfig = {
-  //   origin: config?.origin ?? defaultNativeAuthConfig.origin,
-  //   blockHashShard: config?.blockHashShard ?? null,
-  //   expirySeconds:
-  //     config?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
-  //   apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress,
-  //   tokenExpirationToastWarningSeconds:
-  //     config?.tokenExpirationToastWarningSeconds ??
-  //     defaultNativeAuthConfig.tokenExpirationToastWarningSeconds
-  // };
-  // return nativeAuthConfig;
-};
 
 const getApiAddress = (
   apiAddress: string,
@@ -50,31 +21,21 @@ const getApiAddress = (
   return config.apiAddress ?? apiAddress;
 };
 
-export const useLoginService1 = (props: any) => {
-  return props;
-};
-
-export const useLoginService = (
-  config?: OnProviderLoginType['nativeAuth']
-): any => {
+export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
   const network = useSelector(networkSelector);
   const tokenLogin = useSelector(tokenLoginSelector);
   const tokenRef = useRef(tokenLogin?.loginToken);
 
-  if ('1') {
-    return {};
-  }
-
   const apiAddress = getApiAddress(network.apiAddress, config);
 
-  // const configuration = getNativeAuthConfig({
-  //   ...(config === true ? {} : config),
-  //   ...(apiAddress ? { apiAddress } : {})
-  // });
+  const configuration = getNativeAuthConfig({
+    ...(config === true ? {} : config),
+    ...(apiAddress ? { apiAddress } : {})
+  });
 
   const hasNativeAuth = Boolean(config);
 
-  const client = nativeAuth(config as any);
+  const client = nativeAuth(configuration);
   const { address } = useGetAccount();
   const dispatch = useDispatch();
 
@@ -83,7 +44,7 @@ export const useLoginService = (
     dispatch(
       setTokenLogin({
         loginToken,
-        ...(apiAddress ? { nativeAuthConfig: config as any } : {})
+        ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })
     );
   };
@@ -132,7 +93,7 @@ export const useLoginService = (
         loginToken: loginToken,
         signature,
         nativeAuthToken,
-        ...(apiAddress ? { nativeAuthConfig: config as any } : {})
+        ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })
     );
   };
@@ -163,7 +124,7 @@ export const useLoginService = (
   };
 
   return {
-    configuration: config as any,
+    configuration,
     setLoginToken,
     getNativeAuthLoginToken,
     setTokenLoginInfo,
