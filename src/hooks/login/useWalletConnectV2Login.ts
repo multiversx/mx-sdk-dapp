@@ -1,10 +1,4 @@
 import { useRef, useState, useEffect } from 'react';
-import {
-  SessionEventTypes,
-  PairingTypes,
-  WalletConnectProvider
-} from '@multiversx/sdk-wallet-connect-provider';
-// import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -14,11 +8,11 @@ import {
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
-  // chainIDSelector,
+  chainIDSelector,
   walletConnectDeepLinkSelector,
   walletConnectV2ProjectIdSelector,
-  walletConnectV2RelaySelector
-  // walletConnectV2OptionsSelector
+  walletConnectV2RelaySelector,
+  walletConnectV2OptionsSelector
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import {
@@ -29,6 +23,11 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
+import {
+  WalletConnectV2Provider,
+  SessionEventTypes,
+  PairingTypes
+} from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
 
@@ -87,8 +86,8 @@ export const useWalletConnectV2Login = ({
   const walletConnectV2ProjectId = useSelector(
     walletConnectV2ProjectIdSelector
   );
-  // const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
-  // const chainId = useSelector(chainIDSelector);
+  const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
+  const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);
   const canLoginRef = useRef<boolean>(true);
@@ -201,12 +200,18 @@ export const useWalletConnectV2Login = ({
       onClientEvent: handleOnEvent
     };
 
-    const newProvider = new WalletConnectProvider('', providerHandlers);
+    const newProvider = new WalletConnectV2Provider(
+      providerHandlers,
+      chainId,
+      walletConnectV2RelayAddress,
+      walletConnectV2ProjectId,
+      walletConnectV2Options
+    );
 
     await newProvider.init();
     canLoginRef.current = true;
     setAccountProvider(newProvider);
-    // setWcPairings(newProvider.pairings);
+    setWcPairings(newProvider.pairings);
     providerRef.current = newProvider;
     if (loginProvider) {
       generateWcUri();

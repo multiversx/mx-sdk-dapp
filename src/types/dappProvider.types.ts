@@ -1,5 +1,5 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
-import { EngineTypes } from '@multiversx/sdk-wallet-connect-provider';
+import { EngineTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
 export interface DappOptions {
   callbackUrl?: string;

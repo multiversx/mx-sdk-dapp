@@ -1,6 +1,7 @@
 const svgrPlugin = require('esbuild-plugin-svgr');
 const esbuild = require('esbuild');
 const glob = require('glob');
+const { replace } = require('esbuild-plugin-replace');
 const plugin = require('node-stdlib-browser/helpers/esbuild/plugin');
 const stdLibBrowser = require('node-stdlib-browser');
 const { nodeExternalsPlugin } = require('esbuild-node-externals');
@@ -13,18 +14,23 @@ const buildTypes = {
     splitting: false,
     format: 'cjs',
     tsconfig: './tsconfig.cjs.json',
-    destination: '/__commonjs'
+    destination: '/__commonjs',
+    walletconnectMock: {
+      __sdkWalletconnectProvider: '__mocks__/sdkWalletconnectProvider'
+    }
   },
   esm: {
     splitting: true,
     format: 'esm',
     tsconfig: './tsconfig.json',
-    destination: ''
+    destination: '',
+    walletconnectMock: {}
   }
 };
 
 module.exports = function esbuildWrapper(buildType = 'esm') {
-  const { format, splitting, tsconfig, destination } = buildTypes[buildType];
+  const { format, splitting, tsconfig, destination, walletconnectMock } =
+    buildTypes[buildType];
 
   return function executeBuildCommand(customOptions = {}) {
     glob(
@@ -75,7 +81,8 @@ module.exports = function esbuildWrapper(buildType = 'esm') {
                   localsConvention: 'dashes',
                   generateScopedName: 'dapp-core-component__[name]__[local]'
                 })
-              })
+              }),
+              replace(walletconnectMock)
             ],
             ...customOptions
           })
