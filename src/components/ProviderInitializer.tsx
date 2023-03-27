@@ -326,5 +326,5 @@ export function ProviderInitializer() {
     }
   }
 
-  return <>ASD</>;
+  return null;
 }
