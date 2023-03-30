@@ -3,6 +3,8 @@ export const sanitizeCallbackUrl = (
   vulnerableItems: string[] = ['address']
 ) => {
   const url = new URL(targetURL);
+  console.log({ targetURL }, 11, url.origin, 12, url.protocol);
+
   const params = new URLSearchParams(url.search);
 
   vulnerableItems.forEach((vulnerableItem) => params.delete(vulnerableItem));
@@ -11,6 +13,10 @@ export const sanitizeCallbackUrl = (
 
   const pathname =
     url.pathname === '/' && !targetURL.endsWith('/') ? '' : url.pathname;
+
+  if (url.protocol === 'vscode:') {
+    return targetURL;
+  }
 
   return `${url.origin}${pathname}${questionMark}${params.toString()}`;
 };
