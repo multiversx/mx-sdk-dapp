@@ -105,6 +105,8 @@ export interface SimpleTransactionType {
   chainID?: string;
   version?: number;
   options?: number;
+  guardian?: string;
+  guardianSignature?: string;
 }
 
 export interface TransactionsDisplayInfoType {
