@@ -44,7 +44,7 @@ export const DeviceConfirmationScreen = ({
     transactions: transactionsToSign?.transactions ?? [],
     providerType,
     callbackRoute:
-      transactionsToSign?.callbackRoute || window.location.pathname,
+      transactionsToSign?.callbackRoute || window?.location.pathname,
     className,
     verifyReceiverScam
   };

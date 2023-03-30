@@ -142,13 +142,13 @@ export const TransactionsToastList = ({
   };
 
   useEffect(() => {
-    window.addEventListener(
+    window?.addEventListener(
       'beforeunload',
       clearNotPendingTransactionsFromStorage
     );
 
     return () => {
-      window.removeEventListener(
+      window?.removeEventListener(
         'beforeunload',
         clearNotPendingTransactionsFromStorage
       );

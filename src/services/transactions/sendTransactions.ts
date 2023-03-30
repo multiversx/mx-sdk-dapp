@@ -11,7 +11,7 @@ export async function sendTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
-  callbackRoute = window.location.pathname,
+  callbackRoute = window?.location.pathname,
   signWithoutSending,
   completedTransactionsDelay,
   sessionInformation,

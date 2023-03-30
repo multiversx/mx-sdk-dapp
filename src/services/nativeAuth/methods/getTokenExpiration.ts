@@ -1,5 +1,5 @@
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
-import { decodeNativeAuthToken } from '../helpers';
+import { decodeNativeAuthToken } from '../helpers/decodeNativeAuthToken';
 
 export interface GetTokenExpirationReturnType {
   isExpired: boolean;

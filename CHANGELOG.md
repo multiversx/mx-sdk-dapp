@@ -6,101 +6,136 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.10.16]](https://github.com/multiversx/mx-sdk-dapp/pull/718)] - 2023-03-30
+- [Fixed sanitizing VsCode callbackUrl](https://github.com/multiversx/mx-sdk-dapp/pull/717)
+- [Added missing endpoints](https://github.com/multiversx/mx-sdk-dapp/pull/716)
+## [[v2.10.15]](https://github.com/multiversx/mx-sdk-dapp/pull/715)] - 2023-03-28
+- [Added missing component for `DappProvider` instead of `index`](https://github.com/multiversx/mx-sdk-dapp/pull/715)
 
-## [[v2.10.4](https://github.com/multiversx/mx-sdk-dapp/pull/686)] - 2023-03-02
+## [[v2.10.14]](https://github.com/multiversx/mx-sdk-dapp/pull/714)] - 2023-03-28
+- [Added missing component files instead of `index`](https://github.com/multiversx/mx-sdk-dapp/pull/713)
+
+## [[v2.10.13]](https://github.com/multiversx/mx-sdk-dapp/pull/708)] - 2023-03-27
+- [Optimized sign-message reducers](https://github.com/multiversx/mx-sdk-dapp/pull/707)
+- [Fixed commonJS compilation to suit Jest testing](https://github.com/multiversx/mx-sdk-dapp/pull/711)
+- [Changed `ExplorerLink` icon](https://github.com/multiversx/mx-sdk-dapp/pull/710)
+- [Improved `Trim` debounce](https://github.com/multiversx/mx-sdk-dapp/pull/709)
+
+## [[v2.10.12]](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-16
+- [Added existing params to clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/705)
+## [[v2.10.11]](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-15
+- [Fixed clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/702)
+- [Fixed accessing wallet without keystore index in `AddressTable`](https://github.com/multiversx/mx-sdk-dapp/pull/701)
+## [[v2.10.10]](https://github.com/multiversx/mx-sdk-dapp/pull/700)] - 2023-03-15
+- [Fix imports from native auth calling imports connected to redux store](https://github.com/multiversx/mx-sdk-dapp/pull/699)
+## [[v2.10.9]](https://github.com/multiversx/mx-sdk-dapp/pull/698)] - 2023-03-15
+- [Fixed interpreting ESDT in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/697)
+## [[v2.10.8]](https://github.com/multiversx/mx-sdk-dapp/pull/696)] - 2023-03-14
+- [Fixed guard for undefined window object and type imports. Moved `getIsExtensionAvailable` to `utils/platform`](https://github.com/multiversx/mx-sdk-dapp/pull/695)
+## [[v2.10.7]](https://github.com/multiversx/mx-sdk-dapp/pull/694)] - 2023-03-10
+- [Added `data-testid` to Sign fields](https://github.com/multiversx/mx-sdk-dapp/pull/693)
+## [[v2.10.6]](https://github.com/multiversx/mx-sdk-dapp/pull/692)] - 2023-03-09
+- [Changed `TransactionDetailsBody` to always show `ExplorerLink`](https://github.com/multiversx/mx-sdk-dapp/pull/691)
+
+## [[v2.10.5]](https://github.com/multiversx/mx-sdk-dapp/pull/690)] - 2023-03-07
+
+- [Fixed `sanitizeCallbackUrl` return value](https://github.com/multiversx/mx-sdk-dapp/pull/690)
+- [Fixed pending transaction toast animation](https://github.com/multiversx/mx-sdk-dapp/pull/681)
+
+## [[v2.10.4]](https://github.com/multiversx/mx-sdk-dapp/pull/686)] - 2023-03-02
 
 - [Added `useGetLastPendingTransactionHash` hook](https://github.com/multiversx/mx-sdk-dapp/pull/666)
 
-## [[v2.10.3](https://github.com/multiversx/mx-sdk-dapp/pull/685)] - 2023-03-01
+## [[v2.10.3]](https://github.com/multiversx/mx-sdk-dapp/pull/685)] - 2023-03-01
 
 - [Remove Bootstrap dependency for the 'authorizationInfo' text](https://github.com/multiversx/mx-sdk-dapp/pull/684)
 
-## [[v2.10.2](https://github.com/multiversx/mx-sdk-dapp/pull/682)] - 2023-03-01
+## [[v2.10.2]](https://github.com/multiversx/mx-sdk-dapp/pull/682)] - 2023-03-01
 
 - [Added `decodeLoginToken` helper; Added `authorizationInfo` in `LedgerLoginContainer` and `WalletConnectLoginContainer`](https://github.com/multiversx/mx-sdk-dapp/pull/680)
 
-## [[v2.10.1](https://github.com/multiversx/mx-sdk-dapp/pull/679)] - 2023-02-27
+## [[v2.10.1]](https://github.com/multiversx/mx-sdk-dapp/pull/679)] - 2023-02-27
 
 - [Changed `hostname` to `origin` in `defaultNativeAuthConfig`](https://github.com/multiversx/mx-sdk-dapp/pull/678)
 
-## [[v2.10.0](https://github.com/multiversx/mx-sdk-dapp/pull/677)] - 2023-02-27
+## [[v2.10.0]](https://github.com/multiversx/mx-sdk-dapp/pull/677)] - 2023-02-27
 
 - [Changed `useVerifyMessage` into `verifyMessage` and update return value](https://github.com/multiversx/mx-sdk-dapp/pull/676)
 - [Updated `sdk-core` version](https://github.com/multiversx/mx-sdk-dapp/pull/675)
 - [Changed `host` and `hostname` to `origin` in `decodeNativeAuthToken` and `getNativeAuthConfig` return types. Added `authorizationInfo` prop in `ScamPhishinAlert` component](https://github.com/multiversx/mx-sdk-dapp/pull/674)
 
-## [[v2.9.4](https://github.com/multiversx/mx-sdk-dapp/pull/673)] - 2023-02-26
+## [[v2.9.4]](https://github.com/multiversx/mx-sdk-dapp/pull/673)] - 2023-02-26
 
 - [Fixed message listening for Android](https://github.com/multiversx/mx-sdk-dapp/pull/672)
 
-## [[v2.9.3](https://github.com/multiversx/mx-sdk-dapp/pull/670)] - 2023-02-25
+## [[v2.9.3]](https://github.com/multiversx/mx-sdk-dapp/pull/670)] - 2023-02-25
 
 - [Fixed postMessage usage for Android](https://github.com/multiversx/mx-sdk-dapp/pull/671)
 - [Fixed npm version displayed in readme](https://github.com/multiversx/mx-sdk-dapp/pull/669)
 - [Fixed SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/667)
 
-## [[v2.9.2](https://github.com/multiversx/mx-sdk-dapp/pull/666)] - 2023-02-24
+## [[v2.9.2]](https://github.com/multiversx/mx-sdk-dapp/pull/666)] - 2023-02-24
 
 - [Rewrite block hash logic to fix timing edge cases](https://github.com/multiversx/mx-sdk-dapp/pull/666)
 
-## [[v2.9.1](https://github.com/multiversx/mx-sdk-dapp/pull/665)] - 2023-02-24
+## [[v2.9.1]](https://github.com/multiversx/mx-sdk-dapp/pull/665)] - 2023-02-24
 
 - [Removed Extension button styling](https://github.com/multiversx/mx-sdk-dapp/pull/664)
 
-## [[v2.9.0](https://github.com/multiversx/mx-sdk-dapp/pull/663)] - 2023-02-24
+## [[v2.9.0]](https://github.com/multiversx/mx-sdk-dapp/pull/663)] - 2023-02-24
 
 - [Fixed data decode methods](https://github.com/multiversx/mx-sdk-dapp/pull/662)
 - [Walletconnect V2 Multiple Namespaces](https://github.com/multiversx/mx-sdk-dapp/pull/657)
 
-## [[v2.8.10](https://github.com/multiversx/mx-sdk-dapp/pull/661)] - 2023-02-23
+## [[v2.8.10]](https://github.com/multiversx/mx-sdk-dapp/pull/661)] - 2023-02-23
 
 - [Fix husky crashing build](https://github.com/multiversx/mx-sdk-dapp/pull/661)
 
-## [[v2.8.9](https://github.com/multiversx/mx-sdk-dapp/pull/656)] - 2023-02-23
+## [[v2.8.9]](https://github.com/multiversx/mx-sdk-dapp/pull/656)] - 2023-02-23
 
 - [Fixed native auth block hash race condition](https://github.com/multiversx/mx-sdk-dapp/pull/656)
 - [Fixed transaction toast progress animation](https://github.com/multiversx/mx-sdk-dapp/pull/654)
 
-## [[v2.8.8](https://github.com/multiversx/mx-sdk-dapp/pull/652)] - 2023-02-22
+## [[v2.8.8]](https://github.com/multiversx/mx-sdk-dapp/pull/652)] - 2023-02-22
 
 - [Added retry mechanism for block hash request](https://github.com/multiversx/mx-sdk-dapp/pull/651)
 
-## [[v2.8.7](https://github.com/multiversx/mx-sdk-dapp/pull/649)] - 2023-02-20
+## [[v2.8.7]](https://github.com/multiversx/mx-sdk-dapp/pull/649)] - 2023-02-20
 
 - [Added block hash shard to native auth config](https://github.com/multiversx/mx-sdk-dapp/pull/650)
 - [Changed persist config to local configuration](https://github.com/multiversx/mx-sdk-dapp/pull/648)
 
-## [[v2.8.6](https://github.com/multiversx/mx-sdk-dapp/pull/647)] - 2023-02-20
+## [[v2.8.6]](https://github.com/multiversx/mx-sdk-dapp/pull/647)] - 2023-02-20
 
 - [Updated `nativeAuth` last block hash caching mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/645)
 - [Fixed `getScamFlag` method to skip uris and if verified](https://github.com/multiversx/mx-sdk-dapp/pull/646)
 
-## [[v2.8.5](https://github.com/multiversx/mx-sdk-dapp/pull/644)] - 2023-02-16
+## [[v2.8.5]](https://github.com/multiversx/mx-sdk-dapp/pull/644)] - 2023-02-16
 
-## [[v2.8.4](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-16
+## [[v2.8.4]](https://github.com/multiversx/mx-sdk-dapp/pull/643)] - 2023-02-16
 
 - [Added additional exports for redux store helpers](https://github.com/multiversx/mx-sdk-dapp/pull/643)
 - [Changed `broadcastLogoutAcrossTabs` function to prevent tab logout for different address](https://github.com/multiversx/mx-sdk-dapp/pull/642)
 - [Changed transaction toast message displayed for 1 transaction](https://github.com/multiversx/mx-sdk-dapp/pull/641)
 - [Added additional class support for ledger](https://github.com/multiversx/mx-sdk-dapp/pull/639)
 
-## [[v2.8.2](https://github.com/multiversx/mx-sdk-dapp/pull/638)] - 2023-02-14
+## [[v2.8.2]](https://github.com/multiversx/mx-sdk-dapp/pull/638)] - 2023-02-14
 
 - [Fixed `stringIsFloat` function](https://github.com/multiversx/mx-sdk-dapp/pull/638)
 
-## [[v2.8.1](https://github.com/multiversx/mx-sdk-dapp/pull/637)] - 2023-02-14
+## [[v2.8.1]](https://github.com/multiversx/mx-sdk-dapp/pull/637)] - 2023-02-14
 
 - [Fix mainnet EGLD Label](https://github.com/multiversx/mx-sdk-dapp/pull/635)
 
-## [[v2.8.0](https://github.com/multiversx/mx-sdk-dapp/pull/634)] - 2023-02-14
+## [[v2.8.]](https://github.com/multiversx/mx-sdk-dapp/pull/634)] - 2023-02-14
 
 - [Upgrade fontawesome](https://github.com/multiversx/mx-sdk-dapp/pull/633)
 
-## [[v2.7.1](https://github.com/multiversx/mx-sdk-dapp/pull/632)] - 2023-02-13
+## [[v2.7.1]](https://github.com/multiversx/mx-sdk-dapp/pull/632)] - 2023-02-13
 
 - [Fixed ledger issues link](https://github.com/multiversx/mx-sdk-dapp/pull/632)
 
-## [[v2.7.0](https://github.com/multiversx/mx-sdk-dapp/pull/631)] - 2023-02-13
+## [[v2.7.0]](https://github.com/multiversx/mx-sdk-dapp/pull/631)] - 2023-02-13
 
 - [Added the ability to relogin into dapps from xPortal](https://github.com/multiversx/mx-sdk-dapp/pull/629)
 - [Breaking change: **xPortal authentication panel layout and Sign Transaction panel layout**.
@@ -109,23 +144,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use `InnerWalletConnectComponentsClassesType` for styling xPortal screens and `signStepInnerClasses` for styling Sign Transaction modals.](https://github.com/multiversx/mx-sdk-dapp/pull/628)
 
-## [[v2.6.3](https://github.com/multiversx/mx-sdk-dapp/pull/626)] - 2023-02-10
+## [[v2.6.3]](https://github.com/multiversx/mx-sdk-dapp/pull/626)] - 2023-02-10
 
 - [Added caching mechanism for block hash](https://github.com/multiversx/mx-sdk-dapp/pull/625)
 
-## [[v2.6.2](https://github.com/multiversx/mx-sdk-dapp/pull/624)] - 2023-02-09
+## [[v2.6.2]](https://github.com/multiversx/mx-sdk-dapp/pull/624)] - 2023-02-09
 
 - [Fixed NFT display in Sign screen](https://github.com/multiversx/mx-sdk-dapp/pull/623)
 
-## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
+## [[v2.6.1]](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
 
 - [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 
-## [[v2.6.1](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
+## [[v2.6.1]](https://github.com/multiversx/mx-sdk-dapp/pull/622)] - 2023-02-08
 
 - [Fixed addressTable component balance fetch](https://github.com/multiversx/mx-sdk-dapp/pull/621)
 
-## [[v2.6.0](https://github.com/multiversx/mx-sdk-dapp/pull/620)] - 2023-02-06
+## [[v2.6.0]](https://github.com/multiversx/mx-sdk-dapp/pull/620)] - 2023-02-06
 
 - [Breaking change: **Ledger authentication panel layout**.
 
@@ -134,53 +169,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use `innerLedgerComponentsClasses` for styling Ledger screens.
 - Addresses will trim if container is < 730px, needs to be at least that size.](https://github.com/multiversx/mx-sdk-dapp/pull/619)
 
-## [[v2.5.1](https://github.com/multiversx/mx-sdk-dapp/pull/618)] - 2023-02-04
+## [[v2.5.1]](https://github.com/multiversx/mx-sdk-dapp/pull/618)] - 2023-02-04
 
 - [Fixed ledger cancelled transactions state](https://github.com/multiversx/mx-sdk-dapp/pull/617)
 
-## [[v2.5.0](https://github.com/multiversx/mx-sdk-dapp/pull/615)] - 2023-02-04
+## [[v2.5.0]](https://github.com/multiversx/mx-sdk-dapp/pull/615)] - 2023-02-04
 
 - [Fixed sign transactions with web wallet when data field is empty](https://github.com/multiversx/mx-sdk-dapp/pull/614)
 - [Added missing attributes of transaction types](https://github.com/multiversx/mx-sdk-dapp/pull/613)
 - [Added Opera Crypto wallet provider - Beta](https://github.com/multiversx/mx-sdk-dapp/pull/600)
 - [Added default SignTransactionModal for extra provider](https://github.com/multiversx/mx-sdk-dapp/pull/612)
 
-## [[v2.4.0](https://github.com/multiversx/mx-sdk-dapp/pull/610)] - 2023-02-03
+## [[v2.4.0]](https://github.com/multiversx/mx-sdk-dapp/pull/610)] - 2023-02-03
 
 - [Added support for webview provider automatic login](https://github.com/multiversx/mx-sdk-dapp/pull/609)
 - [Extension and WalletConnect login rebranding](https://github.com/multiversx/mx-sdk-dapp/pull/611)
 
-## [[v2.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-02
+## [[v2.3.5]](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-02
 
 - [Skip login when address is prefilled](https://github.com/multiversx/mx-sdk-dapp/pull/607)
 
-## [[v2.3.4](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-01
+## [[v2.3.4]](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-02-01
 
 - [Sanitize web wallet login callback URL](https://github.com/multiversx/mx-sdk-dapp/pull/605)
 
-## [[v2.3.3](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-01-31
+## [[v2.3.3]](https://github.com/multiversx/mx-sdk-dapp/pull/604)] - 2023-01-31
 
 - [Fixed erronated publish 2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/604)
 
-## [[v2.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/603)] - 2023-01-31
+## [[v2.3.2]](https://github.com/multiversx/mx-sdk-dapp/pull/603)] - 2023-01-31
 
 - [Extracted ledger address screens control to separate hook](https://github.com/multiversx/mx-sdk-dapp/pull/602)
 
-## [[v2.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/599)] - 2023-01-26
+## [[v2.3.1]](https://github.com/multiversx/mx-sdk-dapp/pull/599)] - 2023-01-26
 
 - [Added support to not show meridiem by default in `getHumanReadableTimeFormat` util function](https://github.com/multiversx/mx-sdk-dapp/pull/597)
 - [Fixed web wallet cancelled login](https://github.com/multiversx/mx-sdk-dapp/pull/598)
 
-## [[v2.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/596)] - 2023-01-20
+## [[v2.3.0]](https://github.com/multiversx/mx-sdk-dapp/pull/596)] - 2023-01-20
 
 - [Added support for autoLogout callback url](https://github.com/multiversx/mx-sdk-dapp/pull/594)
 - [Fixed imports for React Native support](https://github.com/multiversx/mx-sdk-dapp/pull/595)
 
-## [[v2.2.12](https://github.com/multiversx/mx-sdk-dapp/pull/592)] - 2023-01-17
+## [[v2.2.12]](https://github.com/multiversx/mx-sdk-dapp/pull/592)] - 2023-01-17
 
 - [Created `useSignMessage` hook to support message signing](https://github.com/multiversx/mx-sdk-dapp/pull/578)
 
-## [[v2.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
+## [[v2.2.11]](https://github.com/multiversx/mx-sdk-dapp/pull/591)] - 2023-01-17
 
 - [Fixed ledger address table display issue](https://github.com/multiversx/mx-sdk-dapp/pull/590)
 
@@ -188,16 +223,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Revert "increase hw-provider package version"](https://github.com/multiversx/mx-sdk-dapp/pull/585)
 
-## [[v2.2.10-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/584)] - 2023-01-17
+## [[v2.2.10-alpha.0]](https://github.com/multiversx/mx-sdk-dapp/pull/584)] - 2023-01-17
 
 - [Increase hw-provider package version](https://github.com/multiversx/mx-sdk-dapp/pull/583)
 - [Change multiversX defi wallet store urls](https://github.com/multiversx/mx-sdk-dapp/pull/582)
 
-## [[v2.2.9](https://github.com/multiversx/mx-sdk-dapp/pull/577)] - 2023-01-12
+## [[v2.2.9]](https://github.com/multiversx/mx-sdk-dapp/pull/577)] - 2023-01-12
 
 - [Added partial support for Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/559)
 
-## [[2.2.8](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/557)] - 2023-01-12
+## [[2.2.8]](https://api.github.com/repos/multiversx/mx-sdk-dapp/pulls/557)] - 2023-01-12
 
 - [Created first version of @multiversx/sdk-dapp](https://github.com/multiversx/mx-sdk-dapp/pull/538)
 

@@ -6,7 +6,10 @@ import {
 } from 'constants/index';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { signedMessageInfoSliceSelector } from 'reduxStore/selectors';
+import {
+  lastSignedSessionId,
+  signedMessageInfoSliceSelector
+} from 'reduxStore/selectors';
 import {
   clearSignedMessageInfo,
   setSignSession,
@@ -46,9 +49,10 @@ export const useSignMessage = () => {
   const signedMessageInfo = useSelector(signedMessageInfoSliceSelector);
   const currentSession = signedMessageInfo.signedSessions[currentSessionId];
   const { isPending, errorMessage } = useGetSignMessageInfoStatus();
-  const { search } = window.location;
+  const search = window?.location.search;
   const { provider, providerType } = useGetAccountProvider();
   const isWalletLogin = providerType === LoginMethodsEnum.wallet;
+  const lastSignSession = useSelector(lastSignedSessionId);
 
   // Clears the state
   const onAbort = () => {
@@ -99,7 +103,7 @@ export const useSignMessage = () => {
       );
     }
 
-    return `${isWalletLogin ? window.location.origin : ''}${
+    return `${isWalletLogin ? window?.location.origin : ''}${
       callbackUrl.pathname
     }${callbackUrl.search}`;
   };
@@ -276,6 +280,6 @@ export const useSignMessage = () => {
     onAbort,
     onCancel,
     signMessage,
-    sessionId: currentSessionId
+    sessionId: currentSessionId || lastSignSession
   };
 };

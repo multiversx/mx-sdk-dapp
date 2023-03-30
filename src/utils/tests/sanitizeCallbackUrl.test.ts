@@ -1,6 +1,10 @@
 import { sanitizeCallbackUrl } from '../sanitizeCallbackUrl';
 
 describe('sanitizeLoginCallbackUrl tests', () => {
+  test('Keeps original URL unchanged', () => {
+    const result = sanitizeCallbackUrl('https://wallet.multiversx.com');
+    expect(result).toEqual('https://wallet.multiversx.com');
+  });
   test('remove "address" item from query params when this is the only query item', () => {
     const result = sanitizeCallbackUrl(
       'https://localhost:3000/feed?address=erd1-address'
@@ -21,5 +25,9 @@ describe('sanitizeLoginCallbackUrl tests', () => {
       ['address', 'vulnerableItem1', 'vulnerableItem2']
     );
     expect(result).toEqual('https://localhost:3000/feed?qp1=some-val&abc=123');
+  });
+  test('allow sanitize vscode origin', () => {
+    const result = sanitizeCallbackUrl('vscode://elrond.vscode-elrond-ide');
+    expect(result).toEqual('vscode://elrond.vscode-elrond-ide');
   });
 });

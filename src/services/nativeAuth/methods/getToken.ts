@@ -1,4 +1,4 @@
-import { encodeValue } from '../helpers';
+import { encodeValue } from '../helpers/encodeValue';
 
 export const getToken = ({
   address,

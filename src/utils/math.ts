@@ -1,12 +1,7 @@
-export const MAX_REST = 10;
-
-export const logarithmicRest = (position: number, maxp = MAX_REST) => {
-  const minp = 0;
-
-  const minv = Math.log(0.005);
-  const maxv = Math.log(5);
-
-  const scale = (maxv - minv) / (maxp - minp);
-
-  return Math.exp(minv + scale * (position - minp));
+/**
+ * Decreases the remaining animation of the transaction toast progressively
+ * @param positionPercent The toast animation position (%)
+ */
+export const progressiveDecrement = (positionPercent: number) => {
+  return Math.exp(positionPercent / 100);
 };

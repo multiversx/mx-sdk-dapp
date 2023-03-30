@@ -1,12 +1,12 @@
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
+import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
+import { IDappProvider } from 'types';
 import {
   WalletConnectProvider,
   WalletConnectV2Provider
-} from '@multiversx/sdk-wallet-connect-provider';
-import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
-import { IDappProvider } from 'types';
+} from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
 
 type ProvidersType =
