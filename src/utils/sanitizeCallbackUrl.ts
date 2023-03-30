@@ -3,7 +3,6 @@ export const sanitizeCallbackUrl = (
   vulnerableItems: string[] = ['address']
 ) => {
   const url = new URL(targetURL);
-  console.log({ targetURL }, 11, url.origin, 12, url.protocol);
 
   const params = new URLSearchParams(url.search);
 
