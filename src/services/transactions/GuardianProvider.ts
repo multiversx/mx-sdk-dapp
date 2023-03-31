@@ -55,17 +55,17 @@ class GuardianProvider {
       );
     }
 
-    transactions = transactions.map((tx) => {
+    const txToSend = transactions.map((tx) => {
       tx.version = TransactionVersion.withTxOptions();
       //add guardians feature options - in the next release of the SDK Core
       tx.setGasLimit(tx.getGasLimit().valueOf() + GUARDED_GAS_ADDITION);
-      return tx;
+      return tx.toPlainObject();
     });
 
     try {
       const response = await axios.post(
         `${this.guardianServiceApiUrl}/guardian/sign-multiple-transactions`,
-        { code, transactions },
+        { code, transactions: txToSend },
         { timeout: API_TIMEOUT }
       );
 
