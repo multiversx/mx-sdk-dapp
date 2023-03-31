@@ -1,4 +1,8 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import {
+  Transaction,
+  TransactionVersion,
+  TransactionOptions
+} from '@multiversx/sdk-core/out';
 import axios from 'axios';
 
 //TODO: to be moved
@@ -17,6 +21,7 @@ interface IRawAccount {
   developerReward: string;
   serviceUID: string;
 }
+const GUARDED_GAS_ADDITION = 50000;
 
 class GuardianProvider {
   private static _instance: GuardianProvider = new GuardianProvider();
@@ -49,6 +54,13 @@ class GuardianProvider {
         'Guardian provider not initialized, please call init first'
       );
     }
+
+    transactions = transactions.map((tx) => {
+      tx.version = TransactionVersion.withTxOptions();
+      //add guardians feature options - in the next release of the SDK Core
+      tx.setGasLimit(tx.getGasLimit().valueOf() + GUARDED_GAS_ADDITION);
+      return tx;
+    });
 
     try {
       const response = await axios.post(
