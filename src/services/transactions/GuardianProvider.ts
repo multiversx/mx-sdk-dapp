@@ -57,7 +57,7 @@ class GuardianProvider {
       tx.setGasLimit(tx.getGasLimit().valueOf() + GUARDED_GAS_ADDITION);
       const plainTx = tx.toPlainObject();
       plainTx.guardian = this._guardianAddress;
-      return tx.toPlainObject();
+      return plainTx;
     });
 
     try {
