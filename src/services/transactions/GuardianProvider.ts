@@ -1,8 +1,4 @@
-import {
-  Transaction,
-  TransactionVersion,
-  TransactionOptions
-} from '@multiversx/sdk-core/out';
+import { Transaction, TransactionVersion } from '@multiversx/sdk-core/out';
 import axios from 'axios';
 
 //TODO: to be moved
@@ -59,6 +55,8 @@ class GuardianProvider {
       tx.version = TransactionVersion.withTxOptions();
       //add guardians feature options - in the next release of the SDK Core
       tx.setGasLimit(tx.getGasLimit().valueOf() + GUARDED_GAS_ADDITION);
+      const plainTx = tx.toPlainObject();
+      plainTx.guardian = this._guardianAddress;
       return tx.toPlainObject();
     });
 
