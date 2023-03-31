@@ -20,7 +20,6 @@ interface IRawAccount {
 
 class GuardianProvider {
   private static _instance: GuardianProvider = new GuardianProvider();
-
   private guardianServiceApiUrl = '';
   private address = '';
   private _accountGuarded = false;
@@ -44,7 +43,7 @@ class GuardianProvider {
   public async applyGuardianSignature(
     transactions: Transaction[],
     code: string
-  ) {
+  ): Promise<Transaction[]> {
     if (!this._initialized) {
       throw new Error(
         'Guardian provider not initialized, please call init first'
@@ -58,7 +57,9 @@ class GuardianProvider {
         { timeout: API_TIMEOUT }
       );
 
-      return response.data.data.transactions;
+      return response.data.data.transactions.map((tx: any) => {
+        return Transaction.fromPlainObject(tx);
+      });
     } catch (error) {
       throw error;
     }
