@@ -18,9 +18,6 @@ interface IRawAccount {
   serviceUID: string;
 }
 
-const token =
-  'ZXJkMWR5ZmE5eG16MjhtZ2NocHY1dzg5Y3l4NmxzczhxdzlrNmM1bWRsZzRsYzV2ajRwcGhreXFyamVkYW0.YUhSMGNITTZMeTlwYm5SbGNtNWhiQzEzWVd4c1pYUXViWFZzZEdsMlpYSnplQzVqYjIwLmNkYWU5ZmM0ODM0ZTg0ZWU0YTIzYzcwYmIxNjI2ODgyNTQ0MzRmNjRhNTY3YzdkNDYyZjczYzRjNjllOThhNmUuODY0MDAuZXlKMGFXMWxjM1JoYlhBaU9qRTJPREF5TnpBMk9EbDk.7c75a57a9a78aa44b57581d4582513934f2cb2bc10c102e55d823392e46040acd6b6aae92f5fd1e3005f5e870aaa2d590674f2d26f250559fc99f65485451300';
-
 class GuardianProvider {
   private static _instance: GuardianProvider = new GuardianProvider();
 
@@ -89,10 +86,7 @@ class GuardianProvider {
       } = await axios.get(
         `${apiAddress}/address/${this.address}/guardian-data`,
         {
-          timeout: API_TIMEOUT,
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          timeout: API_TIMEOUT
         }
       );
 
