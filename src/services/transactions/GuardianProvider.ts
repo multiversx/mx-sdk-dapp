@@ -6,7 +6,7 @@ const MFA_SERVICES: { [key: string]: string } = {
   ServiceID: 'https://mx-mfa-auth.elrond.ro'
 };
 const API_TIMEOUT = 5000;
-interface IRawAccount {
+export interface IRawAccount {
   address: string;
   balance: string;
   nonce: number;
@@ -19,7 +19,7 @@ interface IRawAccount {
 }
 const GUARDED_GAS_ADDITION = 50000;
 
-class GuardianProvider {
+export class GuardianProvider {
   private static _instance: GuardianProvider = new GuardianProvider();
   private guardianServiceApiUrl = '';
   private address = '';
@@ -129,5 +129,3 @@ class GuardianProvider {
     return this._pendingGuardianAddress;
   }
 }
-
-export default GuardianProvider;
