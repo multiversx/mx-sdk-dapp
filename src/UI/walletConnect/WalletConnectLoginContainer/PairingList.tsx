@@ -6,6 +6,7 @@ import { PairingTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
 import type { WithClassnameType } from '../../types';
 
+import { ImageWithFallback } from './ImageWithFallback';
 import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectPairingListClassesType {
@@ -81,7 +82,7 @@ export const Pairinglist = ({
                 ) : (
                   <>
                     {pairing.peerMetadata?.icons?.[0] && (
-                      <img
+                      <ImageWithFallback
                         src={pairing.peerMetadata.icons[0]}
                         alt={pairing.peerMetadata.name}
                         className={classNames(
