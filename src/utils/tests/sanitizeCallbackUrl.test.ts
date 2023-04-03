@@ -26,4 +26,8 @@ describe('sanitizeLoginCallbackUrl tests', () => {
     );
     expect(result).toEqual('https://localhost:3000/feed?qp1=some-val&abc=123');
   });
+  test('allow sanitize vscode origin', () => {
+    const result = sanitizeCallbackUrl('vscode://elrond.vscode-elrond-ide');
+    expect(result).toEqual('vscode://elrond.vscode-elrond-ide');
+  });
 });
