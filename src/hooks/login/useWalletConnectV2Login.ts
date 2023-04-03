@@ -93,8 +93,7 @@ export const useWalletConnectV2Login = ({
   const canLoginRef = useRef<boolean>(true);
 
   const dappMethods: string[] = [
-    DappCoreWCV2CustomMethodsEnum.erd_cancelAction,
-    DappCoreWCV2CustomMethodsEnum.multiversx_cancelAction
+    DappCoreWCV2CustomMethodsEnum.mvx_cancelAction
   ];
 
   const uriDeepLink = !isLoading
@@ -117,12 +116,12 @@ export const useWalletConnectV2Login = ({
     setIsLoading(!Boolean(wcUri));
   }, [wcUri]);
 
-  const handleOnLogout = () => {
-    logout(logoutRoute);
+  const handleOnLogout = async () => {
+    await logout(logoutRoute);
   };
 
   const handleOnEvent = (event: SessionEventTypes['event']) => {
-    console.log('wc2 session event: ', event);
+    console.log('WalletConnect Session Event: ', event);
   };
 
   const cancelLogin = () => {
@@ -213,6 +212,7 @@ export const useWalletConnectV2Login = ({
     setAccountProvider(newProvider);
     setWcPairings(newProvider.pairings);
     providerRef.current = newProvider;
+
     if (loginProvider) {
       generateWcUri();
     }
@@ -229,11 +229,6 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      const { approval } = await providerRef.current?.connect({
-        topic: pairing.topic,
-        methods: dappMethods
-      });
-
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
         // Fetching block failed
@@ -241,11 +236,14 @@ export const useWalletConnectV2Login = ({
           console.warn('Fetching block failed. Login cancelled.');
           return;
         }
-      }
 
-      if (token) {
         loginService.setLoginToken(token);
       }
+
+      const { approval } = await providerRef.current?.connect({
+        topic: pairing.topic,
+        methods: dappMethods
+      });
 
       try {
         await providerRef.current?.login({ approval, token });
@@ -285,30 +283,33 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      const { uri, approval } = await providerRef.current?.connect({
-        methods: dappMethods
-      });
-
-      const hasUri = Boolean(uri);
-
-      if (!hasUri) {
-        return;
-      }
-
-      setWcUri(uri);
-
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
+
         // Fetching block failed
         if (!token) {
           console.warn('Fetching block failed. Login cancelled.');
           return;
         }
-      }
 
-      if (token) {
         loginService.setLoginToken(token);
       }
+
+      const { uri, approval } = await providerRef.current?.connect({
+        methods: dappMethods
+      });
+
+      console.log('WalletConnect uri: ', uri);
+
+      const hasUri = Boolean(uri);
+
+      if (!hasUri) {
+        setError(WalletConnectV2Error.connectError);
+
+        return;
+      }
+
+      setWcUri(uri);
 
       try {
         await providerRef.current?.login({ approval, token });
@@ -319,6 +320,7 @@ export const useWalletConnectV2Login = ({
         await initiateLogin();
       }
     } catch (err) {
+      setError(WalletConnectV2Error.connectError);
       console.error(WalletConnectV2Error.connectError, err);
     }
   }
