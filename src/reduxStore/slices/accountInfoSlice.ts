@@ -42,6 +42,7 @@ export interface AccountInfoSliceType {
 export const emptyAccount: AccountType = {
   balance: '...',
   address: '',
+  isGuarded: false,
   nonce: 0,
   txCount: 0,
   scrCount: 0,

@@ -4,6 +4,7 @@ import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
+import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { egldLabelSelector } from 'reduxStore/selectors';
 import {
@@ -36,12 +37,14 @@ export interface UseSignTransactionsWithDeviceReturnType {
   onNext: () => void;
   onPrev: () => void;
   onAbort: () => void;
+  onSetCode: (code: string) => void;
   waitingForDevice: boolean;
   isLastTransaction: boolean;
-  callbackRoute?: string;
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
   currentTransaction: ActiveLedgerTransactionType | null;
+
+  callbackRoute?: string;
 }
 
 export function useSignTransactionsWithDevice({
@@ -53,8 +56,9 @@ export function useSignTransactionsWithDevice({
 
   const egldLabel = useSelector(egldLabelSelector);
   const {
-    account: { address }
+    account: { address, isGuarded }
   } = useGetAccountInfo();
+  const { network } = useGetNetworkConfig();
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
@@ -122,6 +126,8 @@ export function useSignTransactionsWithDevice({
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
+    isGuarded,
+    apiAddress: network.apiAddress,
     egldLabel,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
