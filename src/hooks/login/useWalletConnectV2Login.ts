@@ -91,10 +91,10 @@ export const useWalletConnectV2Login = ({
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);
   const canLoginRef = useRef<boolean>(true);
+  const isInitialisingRef = useRef<boolean>(false);
 
   const dappMethods: string[] = [
-    DappCoreWCV2CustomMethodsEnum.erd_cancelAction,
-    DappCoreWCV2CustomMethodsEnum.multiversx_cancelAction
+    DappCoreWCV2CustomMethodsEnum.mvx_cancelAction
   ];
 
   const uriDeepLink = !isLoading
@@ -122,7 +122,7 @@ export const useWalletConnectV2Login = ({
   };
 
   const handleOnEvent = (event: SessionEventTypes['event']) => {
-    console.log('wc2 session event: ', event);
+    console.log('WalletConnect Session Event: ', event);
   };
 
   const cancelLogin = () => {
@@ -194,12 +194,17 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
+    if (isInitialisingRef.current) {
+      return;
+    }
+
     const providerHandlers = {
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout,
       onClientEvent: handleOnEvent
     };
 
+    isInitialisingRef.current = true;
     const newProvider = new WalletConnectV2Provider(
       providerHandlers,
       chainId,
@@ -209,6 +214,7 @@ export const useWalletConnectV2Login = ({
     );
 
     await newProvider.init();
+    isInitialisingRef.current = false;
     canLoginRef.current = true;
     setAccountProvider(newProvider);
     setWcPairings(newProvider.pairings);
@@ -274,7 +280,8 @@ export const useWalletConnectV2Login = ({
       console.error(WalletConnectV2Error.errorLogout, err);
       setError(WalletConnectV2Error.errorLogout);
     } finally {
-      setWcPairings(providerRef.current?.pairings);
+      const newPairings = await providerRef.current?.getPairings();
+      setWcPairings(newPairings);
     }
   }
 

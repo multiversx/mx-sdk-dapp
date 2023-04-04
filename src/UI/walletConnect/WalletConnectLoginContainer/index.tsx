@@ -1,11 +1,10 @@
-import React, { useEffect, useState, MouseEvent, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
 
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
-import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { getAuthorizationInfo } from 'services/nativeAuth/helpers';
 import { ModalContainer } from 'UI/ModalContainer';
@@ -40,13 +39,11 @@ export interface WalletConnectLoginModalPropsType
 export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText = 'xPortal App',
-  title = 'Login using xPortal App',
+  title = 'Login with the xPortal App',
   logoutRoute = '/unlock',
   className = 'dapp-wallet-connect-login-modal',
   lead = 'Scan the QR code using the xPortal App',
-  legacyMessage = 'Unable to login? Use the legacy version',
   wrapContentInsideModal = true,
-  isWalletConnectV2 = false,
   token,
   nativeAuth,
   onClose,
@@ -55,18 +52,6 @@ export const WalletConnectLoginContainer = ({
   customSpinnerComponent,
   showScamPhishingAlert = true
 }: WalletConnectLoginModalPropsType) => {
-  const [
-    initLoginWithWalletConnect,
-    { error },
-    { uriDeepLink, walletConnectUri, cancelLogin }
-  ] = useWalletConnectLogin({
-    logoutRoute,
-    callbackRoute,
-    token,
-    nativeAuth,
-    onLoginRedirect
-  });
-
   const [
     initLoginWithWalletConnectV2,
     { error: walletConnectErrorV2 },
@@ -87,10 +72,6 @@ export const WalletConnectLoginContainer = ({
   });
 
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
-  const [displayWalletConnectV2, setDisplayWalletConnectV2] =
-    useState<boolean>(isWalletConnectV2);
-  const [showLegacySwitch, setShowLegacySwitch] =
-    useState<boolean>(isWalletConnectV2);
 
   const {
     containerContentClassName,
@@ -100,77 +81,49 @@ export const WalletConnectLoginContainer = ({
     containerErrorClassName,
     containerQrCodeClassName,
     containerLoaderClassName,
-    containerLegacyClassName,
     containerButtonClassName,
     walletConnectPairingListClassNames
   } = innerWalletConnectComponentsClasses || {};
 
   const isMobileDevice = isMobileEnvironment();
-  const activePairings = displayWalletConnectV2
-    ? wcPairings?.filter((pairing) => {
-        const hasLaterEntry = wcPairings.some(
-          (pairing2) =>
-            pairing.peerMetadata?.name === pairing2?.peerMetadata?.name &&
-            pairing.peerMetadata?.url === pairing2?.peerMetadata?.url &&
-            pairing.expiry < pairing2.expiry
-        );
+  const activePairings =
+    wcPairings?.filter((pairing) => {
+      const hasLaterEntry = wcPairings.some(
+        (pairing2) =>
+          pairing.peerMetadata?.name === pairing2?.peerMetadata?.name &&
+          pairing.peerMetadata?.url === pairing2?.peerMetadata?.url &&
+          pairing.expiry < pairing2.expiry
+      );
 
-        return (
-          Boolean(pairing.active) && pairing.peerMetadata && !hasLaterEntry
-        );
-      }) ?? []
-    : [];
-
-  const onVersionSwitch = (event: MouseEvent) => {
-    event.preventDefault();
-    setDisplayWalletConnectV2(false);
-    setShowLegacySwitch(false);
-  };
+      return Boolean(pairing.active) && pairing.peerMetadata && !hasLaterEntry;
+    }) ?? [];
 
   const generateQRCode = async () => {
-    const canGenerateQRCodeForWC2 =
-      displayWalletConnectV2 && walletConnectUriV2;
-    const canGenerateQRCodeForWC1 = !displayWalletConnectV2 && walletConnectUri;
-    const canGenerateQRCode =
-      canGenerateQRCodeForWC2 || canGenerateQRCodeForWC1;
-
-    if (!canGenerateQRCode) {
+    if (!walletConnectUriV2) {
       return;
     }
 
-    const uri = displayWalletConnectV2 ? walletConnectUriV2 : walletConnectUri;
+    const svg = await QRCode.toString(walletConnectUriV2, {
+      type: 'svg'
+    });
 
-    if (uri) {
-      const svg = await QRCode.toString(uri, {
-        type: 'svg'
-      });
-
-      if (svg) {
-        setQrCodeSvg(svg);
-      }
+    if (svg) {
+      setQrCodeSvg(svg);
     }
   };
 
   const onCloseModal = () => {
-    if (displayWalletConnectV2) {
-      cancelLoginV2();
-    } else {
-      cancelLogin();
-    }
+    cancelLoginV2();
     onClose?.();
   };
 
   useEffect(() => {
     generateQRCode();
-  }, [displayWalletConnectV2, walletConnectUri, walletConnectUriV2]);
+  }, [walletConnectUriV2]);
 
   useEffect(() => {
-    if (displayWalletConnectV2) {
-      initLoginWithWalletConnectV2();
-    } else {
-      initLoginWithWalletConnect();
-    }
-  }, [displayWalletConnectV2]);
+    initLoginWithWalletConnectV2();
+  }, []);
 
   const authorizationInfo = showScamPhishingAlert
     ? getAuthorizationInfo(token)
@@ -208,17 +161,6 @@ export const WalletConnectLoginContainer = ({
         </div>
 
         <div>
-          {error && (
-            <p
-              className={classNames(
-                styles.xPortalContainerError,
-                containerErrorClassName
-              )}
-            >
-              {error}
-            </p>
-          )}
-
           {walletConnectErrorV2 && (
             <p
               className={classNames(
@@ -264,7 +206,7 @@ export const WalletConnectLoginContainer = ({
           <a
             id='accessWalletBtn'
             data-testid='accessWalletBtn'
-            href={uriDeepLink || walletConnectDeepLinkV2}
+            href={walletConnectDeepLinkV2}
             rel='noopener noreferrer nofollow'
             target='_blank'
             className={classNames(
@@ -288,19 +230,6 @@ export const WalletConnectLoginContainer = ({
             pairingListClasses={walletConnectPairingListClassNames}
           />
         )}
-
-        {isWalletConnectV2 && showLegacySwitch && (
-          <a
-            href='/#'
-            onClick={onVersionSwitch}
-            className={classNames(
-              styles.xPortalLegacyLink,
-              containerLegacyClassName
-            )}
-          >
-            {legacyMessage}
-          </a>
-        )}
       </div>
     </>
   );
@@ -309,7 +238,7 @@ export const WalletConnectLoginContainer = ({
     <ModalContainer
       onClose={onCloseModal}
       modalConfig={{
-        headerText: 'Login using xPortal App',
+        headerText: 'Login using the xPortal App',
         showHeader: true,
         modalContentClassName: styles.xPortalModalDialogContent,
         modalHeaderClassName: styles.xPortalModalHeader,

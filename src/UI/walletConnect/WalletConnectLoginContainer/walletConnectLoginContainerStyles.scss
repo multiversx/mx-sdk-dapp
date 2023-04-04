@@ -90,6 +90,7 @@
 
   .xPortal-loader {
     margin-top: 48px;
+    margin-bottom: 48px;
   }
 
   .xPortal-container-button {
@@ -148,6 +149,8 @@
 
       .xPortal-pairing-image {
         width: 48px;
+        height: auto;
+        max-height: 48px;
       }
 
       .xPortal-pairing-details {
