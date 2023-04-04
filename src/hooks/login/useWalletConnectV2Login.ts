@@ -91,6 +91,7 @@ export const useWalletConnectV2Login = ({
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const providerRef = useRef<any>(provider);
   const canLoginRef = useRef<boolean>(true);
+  const isInitialisingRef = useRef<boolean>(false);
 
   const dappMethods: string[] = [
     DappCoreWCV2CustomMethodsEnum.mvx_cancelAction
@@ -193,12 +194,17 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
+    if (isInitialisingRef.current) {
+      return;
+    }
+
     const providerHandlers = {
       onClientLogin: handleOnLogin,
       onClientLogout: handleOnLogout,
       onClientEvent: handleOnEvent
     };
 
+    isInitialisingRef.current = true;
     const newProvider = new WalletConnectV2Provider(
       providerHandlers,
       chainId,
@@ -208,6 +214,7 @@ export const useWalletConnectV2Login = ({
     );
 
     await newProvider.init();
+    isInitialisingRef.current = false;
     canLoginRef.current = true;
     setAccountProvider(newProvider);
     setWcPairings(newProvider.pairings);
