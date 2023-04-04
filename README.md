@@ -541,7 +541,7 @@ Transaction Signing Flow
 ### Transaction Signing Flow
 
 Once a transaction has been submitted, you have to use either the `SignTransactionsModals` or the `useSignTransactions` hook,
-for the user to be prompted in his provider (Extension, xPortal Mobile Wallet etc) to sign the transaction.
+for the user to be prompted in his provider (Extension, xPortal App etc) to sign the transaction.
 
 If you don't want to use the default modals that appear for the user when the signing process happens,
 you have to use the `useSignTransactions` hook to sign those transactions.
@@ -993,7 +993,7 @@ etc;
 
 ## React Native support
 
-We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with xPortal Mobile Wallet.
+We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with the xPortal App.
 
 You can use this library for its utility functions, like "formatAmount, parseAmount", mnemonic words list or its constants.
 
@@ -1001,7 +1001,7 @@ However, certain architectural decisions that we made do not work out of the box
 Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
 
 We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
-Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to xPortal Mobile Wallet.
+Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to the xPortal App.
 There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
 
 ## Next.js support
