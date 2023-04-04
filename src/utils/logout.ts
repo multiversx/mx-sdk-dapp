@@ -55,6 +55,8 @@ export async function logout(
     preventRedirects();
   }
 
+  store.dispatch(logoutAction());
+
   try {
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
     const url = needsCallbackUrl ? window?.location.origin : callbackUrl;
@@ -71,8 +73,6 @@ export async function logout(
   } catch (err) {
     console.error('error logging out', err);
   }
-
-  store.dispatch(logoutAction());
 }
 
 function redirectToCallbackUrl(
