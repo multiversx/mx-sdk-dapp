@@ -39,7 +39,7 @@ export interface WalletConnectLoginModalPropsType
 export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText = 'xPortal App',
-  title = 'Login using xPortal App',
+  title = 'Login with the xPortal App',
   logoutRoute = '/unlock',
   className = 'dapp-wallet-connect-login-modal',
   lead = 'Scan the QR code using the xPortal App',
@@ -238,7 +238,7 @@ export const WalletConnectLoginContainer = ({
     <ModalContainer
       onClose={onCloseModal}
       modalConfig={{
-        headerText: 'Login using xPortal App',
+        headerText: 'Login using the xPortal App',
         showHeader: true,
         modalContentClassName: styles.xPortalModalDialogContent,
         modalHeaderClassName: styles.xPortalModalHeader,

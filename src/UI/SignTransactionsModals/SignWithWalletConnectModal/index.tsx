@@ -86,7 +86,7 @@ export const SignWithWalletConnectModal = ({
         className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
-        title='Confirm on xPortal Mobile Wallet'
+        title='Confirm on the xPortal App'
         description={error ? error : <Description />}
         action={
           <button
