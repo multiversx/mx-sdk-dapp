@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.10.17]](https://github.com/multiversx/mx-sdk-dapp/pull/721)] - 2023-04-04
+
 - [WalletConnect V2 Updated MultiversX Namespace](https://github.com/multiversx/mx-sdk-dapp/pull/720)
 
 ## [[v2.10.16]](https://github.com/multiversx/mx-sdk-dapp/pull/718)] - 2023-03-30
