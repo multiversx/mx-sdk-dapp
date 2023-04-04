@@ -296,8 +296,6 @@ export const useWalletConnectV2Login = ({
         methods: dappMethods
       });
 
-      console.log('WalletConnect uri: ', uri);
-
       const hasUri = Boolean(uri);
 
       if (!hasUri) {

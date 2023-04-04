@@ -47,7 +47,7 @@ export const WalletConnectLoginButton = ({
   token,
   nativeAuth,
   hideButtonWhenModalOpens = false,
-  isWalletConnectV2 = false,
+  isWalletConnectV2 = true,
   onLoginRedirect,
   disabled,
   innerWalletConnectComponentsClasses,
