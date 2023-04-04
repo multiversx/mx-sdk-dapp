@@ -17,6 +17,7 @@ export const SignWithDeviceModal = ({
 }: SignModalPropsType) => {
   const {
     onSignTransaction,
+    onSetCode,
     onPrev,
     allTransactions,
     waitingForDevice,
@@ -48,6 +49,7 @@ export const SignWithDeviceModal = ({
           onSignTransaction={onSignTransaction}
           allTransactions={allTransactions}
           onPrev={onPrev}
+          onSetCode={onSetCode}
           waitingForDevice={waitingForDevice}
           currentStep={currentStep}
           isLastTransaction={isLastTransaction}
