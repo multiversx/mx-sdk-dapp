@@ -135,6 +135,13 @@ export interface SendTransactionsPropsType {
   sessionInformation?: any;
 }
 
+export interface SendBatchTransactionsPropsType {
+  transactions: SignedTransactionType[];
+  account: string;
+  sessionId: string;
+  apiAddress: string;
+}
+
 export interface SignTransactionsPropsType {
   transactions: Transaction[] | Transaction;
   minGasLimit?: number;
@@ -190,6 +197,11 @@ export interface CustomTransactionInformation {
 export interface SendTransactionReturnType {
   error?: string;
   sessionId: string | null;
+}
+
+export interface SendBatchTransactionReturnType {
+  error?: string;
+  batchId: string | null;
 }
 
 export type GetTransactionsByHashesType = (

@@ -20,5 +20,6 @@ export const SC_RESULTS_ENDPOINT = 'sc-results';
 export const STAKE_ENDPOINT = 'stake';
 export const TOKENS_ENDPOINT = 'tokens';
 export const TRANSACTIONS_COUNT_ENDPOINT = 'transactions/count';
+export const TRANSACTIONS_BATCH = 'transactions/batch';
 export const TRANSACTIONS_ENDPOINT = 'transactions';
 export const TRANSFERS_ENDPOINT = 'transfers';
