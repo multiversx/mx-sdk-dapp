@@ -50,7 +50,6 @@ export const GuardianScreen = ({
             onChange={onChange}
             onBlur={onBlur}
             autoComplete='off'
-            className={styles.ledgerAddressTableBodyItemData}
           />
         </div>
 

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import {
+  Address,
   Transaction,
   TransactionOptions,
   TransactionVersion
@@ -171,9 +172,12 @@ export function useSignMultipleTransactions({
 
     const transactionsWithVersionOptions = allSignedTransactions.map(
       (transaction) => {
+        transaction.setSender(Address.fromBech32(address));
+
         // TODO: to be removed when included in provider
         transaction.version = TransactionVersion.withTxOptions();
         transaction.options = TransactionOptions.withTxGuardedOptions();
+
         return transaction;
       }
     );
@@ -197,9 +201,13 @@ export function useSignMultipleTransactions({
         return;
       }
       const signature = currentTransaction.transaction.getSignature();
+
       if (signature.hex()) {
         if (!isLastTransaction) {
           setCurrentStep((exising) => exising + 1);
+        }
+        if (code) {
+          sign();
         }
       } else {
         // currently code doesn't reach here because getSignature throws error if none is found

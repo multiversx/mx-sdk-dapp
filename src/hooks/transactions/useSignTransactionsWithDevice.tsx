@@ -27,6 +27,11 @@ import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
   verifyReceiverScam?: boolean;
+  /**
+   * if transactions are already signed by guardian,
+   * setting `isGuarded` to `false` allows skipping the signing step
+   */
+  isGuarded?: boolean;
 }
 
 type DeviceSignedTransactions = Record<number, Transaction>;
@@ -47,22 +52,22 @@ export interface UseSignTransactionsWithDeviceReturnType {
   callbackRoute?: string;
 }
 
-export function useSignTransactionsWithDevice({
-  onCancel,
-  verifyReceiverScam = true
-}: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType {
+export function useSignTransactionsWithDevice(
+  props: UseSignTransactionsWithDevicePropsType
+): UseSignTransactionsWithDeviceReturnType {
+  const { onCancel, verifyReceiverScam = true } = props;
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
 
   const egldLabel = useSelector(egldLabelSelector);
-  const {
-    account: { address, isGuarded }
-  } = useGetAccountInfo();
+  const { account } = useGetAccountInfo();
+  const { address } = account;
   const { network } = useGetNetworkConfig();
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
+  const isGuarded = props.isGuarded ?? account.isGuarded;
 
   const {
     transactions,
