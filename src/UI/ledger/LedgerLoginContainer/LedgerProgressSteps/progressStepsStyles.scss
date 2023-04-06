@@ -1,0 +1,95 @@
+@import 'assets/sass/variables/variables';
+
+@keyframes example {
+  0% {
+    transform: scale(0.75);
+  }
+
+  75% {
+    transform: scale(1.25);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.ledger-progress-steps {
+  $step-size: 24px;
+  $total-steps: 3;
+  $total-length: min(400px, 75vw);
+  $step-spacing: 8px;
+  $line-length: calc(
+    (
+        $total-length - ($step-size * $total-steps) -
+          ($step-spacing * ($total-steps * 2 - 2))
+      ) / ($total-steps - 1)
+  );
+
+  position: relative;
+  margin: 40px auto 0;
+  display: flex;
+  align-items: center;
+  max-width: $total-length;
+  width: 75vw;
+  justify-content: space-between;
+
+  .ledger-progress-step-wrapper {
+    width: $step-size;
+    height: $step-size;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    &:before,
+    &:after {
+      content: '';
+      position: absolute;
+      left: calc(100% + $step-spacing);
+      width: $line-length;
+      height: 2px;
+      border-radius: 2px;
+      background-color: rgba($white, 0.5);
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    &:after {
+      width: 0;
+      background-color: $white;
+      transition: all 500ms ease-in-out;
+    }
+
+    &:last-child:before,
+    &:last-child:after {
+      content: none;
+    }
+
+    &.ledger-progress-step-extended:after {
+      width: $line-length;
+    }
+
+    .ledger-progress-step {
+      width: $step-size;
+      height: $step-size;
+      transition: all 500ms ease-in-out 500ms;
+      transform: scale(0.75);
+      transform-origin: center;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $gray-800;
+      background-color: rgba($white, 0.5);
+      line-height: 1;
+      font-weight: 700;
+
+      &.ledger-progress-step-active {
+        background-color: $white;
+        animation: example 500ms ease-in-out forwards;
+        animation-delay: 500ms;
+      }
+    }
+  }
+}

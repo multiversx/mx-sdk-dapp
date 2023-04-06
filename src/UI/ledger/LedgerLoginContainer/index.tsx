@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
@@ -16,7 +16,7 @@ import { ConfirmAddress } from './ConfirmAddress';
 import { LedgerConnect } from './LedgerConnect';
 import { LedgerLoading } from './LedgerLoading';
 import styles from './ledgerLoginContainerStyles.scss';
-import { LedgerProgressBar } from './LedgerProgressBar';
+import { LedgerProgressSteps } from './LedgerProgressSteps';
 
 import type { InnerLedgerComponentsClassesType } from './types';
 
@@ -67,7 +67,7 @@ export const LedgerLoginContainer = ({
     confirmAddressClassNames,
     ledgerConnectClassNames,
     ledgerLoadingClassNames,
-    ledgerProgressBarClassNames,
+    ledgerProgressStepsClassNames,
     ledgerScamPhishingAlertClassName
   } = innerLedgerComponentsClasses || {};
 
@@ -89,37 +89,34 @@ export const LedgerLoginContainer = ({
     );
   };
 
-  const getProgressBar = () => {
-    const progressStep = [
+  const getProgressSteps = () => {
+    const progressSteps = [
       {
-        percentage: 33,
-        conditions: !showAddressList && !ledgerAccount
+        count: 1,
+        active: !showAddressList && !ledgerAccount
       },
       {
-        conditions: showAddressList && !error && !ledgerAccount,
-        percentage: 66
+        active: showAddressList && !error && !ledgerAccount,
+        count: 2
       },
       {
-        conditions: ledgerAccount != null && !error,
-        percentage: 100
+        active: ledgerAccount != null && !error,
+        count: 3
       }
     ];
 
-    const currentProgress = useMemo(
-      () => progressStep.find((step) => step.conditions),
-      []
-    );
-
-    const percentage = currentProgress ? currentProgress.percentage : 33;
+    const currentProgress = progressSteps.find((step) => step.active);
+    const step = currentProgress ? currentProgress.count : 1;
 
     if (!showProgressBar) {
       return null;
     }
 
     return (
-      <LedgerProgressBar
-        percentage={percentage}
-        ledgerProgressBarClassNames={ledgerProgressBarClassNames}
+      <LedgerProgressSteps
+        active={step}
+        total={progressSteps.length}
+        ledgerProgressStepsClassNames={ledgerProgressStepsClassNames}
       />
     );
   };
@@ -188,13 +185,13 @@ export const LedgerLoginContainer = ({
       }}
     >
       {getScamPhishingAlert()}
-      {getProgressBar()}
+      {getProgressSteps()}
       {getContent()}
     </ModalContainer>
   ) : (
     <>
       {getScamPhishingAlert()}
-      {getProgressBar()}
+      {getProgressSteps()}
       {getContent()}
     </>
   );
