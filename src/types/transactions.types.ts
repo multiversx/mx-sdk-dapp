@@ -9,6 +9,7 @@ import type {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums.types';
+import { BatchTransactionsResponseType } from './serverTransactions.types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -135,13 +136,6 @@ export interface SendTransactionsPropsType {
   sessionInformation?: any;
 }
 
-export interface SendBatchTransactionsPropsType {
-  transactions: SignedTransactionType[];
-  account: string;
-  sessionId: string;
-  apiAddress: string;
-}
-
 export interface SignTransactionsPropsType {
   transactions: Transaction[] | Transaction;
   minGasLimit?: number;
@@ -202,6 +196,7 @@ export interface SendTransactionReturnType {
 export interface SendBatchTransactionReturnType {
   error?: string;
   batchId: string | null;
+  data?: BatchTransactionsResponseType | null;
 }
 
 export type GetTransactionsByHashesType = (

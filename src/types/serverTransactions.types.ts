@@ -1,5 +1,6 @@
 import { AssetType, ScamInfoType } from './account.types';
 import { EsdtEnumType, NftEnumType } from './tokens.types';
+import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
 //#region server trasactions
 export interface ScResultType {
@@ -309,3 +310,16 @@ export enum DecodeMethodEnum {
 }
 
 //#endregion
+
+export enum BatchTransactionStatus {
+  pending = 'pending',
+  success = 'success',
+  invalid = 'invalid',
+  dropped = 'dropped'
+}
+
+export interface BatchTransactionsResponseType {
+  id: string;
+  status: BatchTransactionStatus;
+  transactions: IPlainTransactionObject[];
+}

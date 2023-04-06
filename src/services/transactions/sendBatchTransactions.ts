@@ -1,15 +1,25 @@
 import {
+  BatchTransactionsResponseType,
   SendBatchTransactionReturnType,
-  SendBatchTransactionsPropsType
+  SignedTransactionType
 } from 'types';
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
+
+export interface SendBatchTransactionsPropsType {
+  transactions: SignedTransactionType[];
+  account: string;
+  sessionId: string;
+  apiAddress: string;
+  bearerToken: string;
+}
 
 export async function sendBatchTransactions({
   transactions,
   sessionId,
   account,
-  apiAddress
+  apiAddress,
+  bearerToken
 }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType> {
   try {
     const batchId = `${sessionId}-${account}`;
@@ -19,11 +29,16 @@ export async function sendBatchTransactions({
       id: batchId
     };
 
-    await axios.post(`${apiAddress}/${TRANSACTIONS_BATCH}`, payload, {
-      timeout: 3000
-    });
+    const response = await axios.post<BatchTransactionsResponseType>(
+      `${apiAddress}/${TRANSACTIONS_BATCH}`,
+      payload,
+      {
+        timeout: 3000,
+        headers: { Authorization: `Bearer ${bearerToken}` }
+      }
+    );
 
-    return { batchId };
+    return { batchId, data: response.data };
   } catch (err) {
     console.error('error sending batch transactions', err);
     return {
