@@ -1977,10 +1977,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-provider@2.2.1":
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-provider/-/sdk-web-wallet-provider-2.2.1.tgz#bc89e786cc2f25e74d4a1bdc5e708a8729cf217d"
-  integrity sha512-1cboGOzVY8UepE/XxNc5bzB7jVmVCdqyhdOcB0uIEBCGnZpQV0LxqAQIQ0a/aTP7GxYodrAwl5+3aEL+OlW3Lw==
+"@multiversx/sdk-web-wallet-provider@2.3.1-alpha.0":
+  version "2.3.1-alpha.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-provider/-/sdk-web-wallet-provider-2.3.1-alpha.0.tgz#45406f1c7e144438806868ec14054e16ee6c6152"
+  integrity sha512-KbSARh5+NBqwhxdIg8LvbsDQ9bTWrPxxmGegRDzfsdwAI48W6m81e+t2eM2Tj/PlkOptXReNmWRWD0Qf0BVlnQ==
   dependencies:
     qs "6.10.3"
 
