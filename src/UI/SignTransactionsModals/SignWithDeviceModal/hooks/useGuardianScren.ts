@@ -1,12 +1,6 @@
 import React, { useState } from 'react';
 
-export const useGuardianScren = ({
-  onSubmit,
-  onCancel
-}: {
-  onSubmit: (code: string) => void;
-  onCancel: () => void;
-}) => {
+export const useGuardianScren = () => {
   const [error, setError] = useState('');
   const [isTouched, setIsTouched] = useState(true);
   const [value, setValue] = useState('');
@@ -26,24 +20,6 @@ export const useGuardianScren = ({
     setError(checkValid(code));
   };
 
-  const hadleSubmit = () => {
-    const error = checkValid(value);
-    setError(error);
-    setIsTouched(true);
-    if (error) {
-      return;
-    }
-
-    onSubmit(value);
-  };
-
-  const handleClose = () => {
-    setValue('');
-    setError('');
-    setIsTouched(false);
-    onCancel();
-  };
-
   return {
     value,
     isValid: !error,
@@ -52,8 +28,6 @@ export const useGuardianScren = ({
     isTouched,
     setIsTouched,
     onChange,
-    onBlur,
-    hadleSubmit,
-    handleClose
+    onBlur
   };
 };

@@ -42,6 +42,7 @@ export function useParseSignedTransactions(
           return;
         }
         if (signedTransactions.length > 0) {
+          // TODO: check if the transactions are same as the ones in the redux store
           dispatch(
             moveTransactionsToSignedState({
               sessionId,

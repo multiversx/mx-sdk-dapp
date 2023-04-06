@@ -59,6 +59,7 @@ export function useSignMultipleTransactions({
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
   const [currentStep, setCurrentStep] = useState(0);
   const [code, setCode] = useState(''); // optional guadian code
+  const [codeError, setCodeError] = useState<string>();
   const [signedTransactions, setSignedTransactions] =
     useState<DeviceSignedTransactions>();
   const [currentTransaction, setCurrentTransaction] =
@@ -188,11 +189,11 @@ export function useSignMultipleTransactions({
         code
       );
       onTransactionsSignSuccess(allSignedTransactions);
+      reset();
     } catch (err) {
       console.error(err, 'guardian sign error');
-      onTransactionsSignError('Error while signing with guardian');
+      setCodeError('Error while signing with guardian');
     }
-    reset();
   }
 
   function signTx() {
@@ -273,6 +274,7 @@ export function useSignMultipleTransactions({
     waitingForDevice,
     onAbort: handleAbort,
     onSetCode: (code: string) => setCode(code),
+    codeError,
     isLastTransaction,
     isFirstTransaction: currentStep === 0,
     hasMultipleTransactions: allTransactions.length > 1,

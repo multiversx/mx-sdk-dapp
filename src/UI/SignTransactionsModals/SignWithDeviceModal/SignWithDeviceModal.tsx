@@ -18,6 +18,7 @@ export const SignWithDeviceModal = ({
   const {
     onSignTransaction,
     onSetCode,
+    codeError,
     onPrev,
     allTransactions,
     waitingForDevice,
@@ -50,6 +51,7 @@ export const SignWithDeviceModal = ({
           allTransactions={allTransactions}
           onPrev={onPrev}
           onSetCode={onSetCode}
+          codeError={codeError}
           waitingForDevice={waitingForDevice}
           currentStep={currentStep}
           isLastTransaction={isLastTransaction}

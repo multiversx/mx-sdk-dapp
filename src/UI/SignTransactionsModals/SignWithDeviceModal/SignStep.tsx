@@ -34,6 +34,7 @@ export interface SignStepType extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;
   onSetCode: (code: string) => void;
+  codeError?: string;
   handleClose: () => void;
   waitingForDevice: boolean;
   error: string | null;
@@ -51,6 +52,7 @@ export const SignStep = ({
   handleClose,
   onPrev,
   onSetCode,
+  codeError,
   title,
   waitingForDevice,
   currentTransaction,
@@ -82,6 +84,7 @@ export const SignStep = ({
     if (isFirst) {
       handleClose();
     } else {
+      onSetCode('');
       onPrev();
     }
   };
@@ -93,10 +96,6 @@ export const SignStep = ({
     if (signLastTransaction && isGuarded) {
       return setShowGuardianScreen(true);
     }
-  };
-
-  const onBack = () => {
-    setShowGuardianScreen(false);
   };
 
   const continueWithoutSigning =
@@ -131,7 +130,7 @@ export const SignStep = ({
       title={title || 'Confirm on Ledger'}
       description={
         showGuardianScreen ? (
-          <GuardianScreen onBack={onBack} onSetCode={onSetCode} />
+          <GuardianScreen onSetCode={onSetCode} codeError={codeError} />
         ) : (
           <SignStepBody {...signStepBodyProps} />
         )

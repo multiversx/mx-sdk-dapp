@@ -48,6 +48,7 @@ export interface UseSignTransactionsWithDeviceReturnType {
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
   currentTransaction: ActiveLedgerTransactionType | null;
+  codeError?: string;
 
   callbackRoute?: string;
 }
