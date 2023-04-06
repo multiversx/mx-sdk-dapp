@@ -50,14 +50,14 @@
       width: $line-length;
       height: 2px;
       border-radius: 2px;
-      background-color: rgba($white, 0.5);
+      background-color: $gray-500;
       top: 50%;
       transform: translateY(-50%);
     }
 
     &:after {
       width: 0;
-      background-color: $white;
+      background-color: $gray-700;
       transition: all 500ms ease-in-out;
     }
 
@@ -80,13 +80,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: $gray-800;
-      background-color: rgba($white, 0.5);
+      color: $white;
+      background-color: $gray-500;
       line-height: 1;
       font-weight: 700;
 
       &.ledger-progress-step-active {
-        background-color: $white;
+        background-color: $gray-700;
         animation: example 500ms ease-in-out forwards;
         animation-delay: 500ms;
       }
