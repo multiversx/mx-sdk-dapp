@@ -76,20 +76,16 @@ export const useTrackBatchTransactions = ({
         stopPollingRef.current = true;
       }
     },
-    []
+    [getBatchStatus, onSuccess, onFail, stopPollingRef.current]
   );
 
   const onMessage = useCallback(
     (message: string) => {
-      console.log({
-        message
-      });
-
-      if (message.includes('batchUpdated' || 'transactionCompleted')) {
+      if (message.includes('transactionCompleted')) {
         verifyBatchStatus({ batchId: batchId ?? '', wsMessage: message });
       }
     },
-    [getBatchStatus, batchId]
+    [verifyBatchStatus, batchId]
   );
 
   useRegisterWebsocketListener(onMessage);
@@ -101,7 +97,7 @@ export const useTrackBatchTransactions = ({
     return () => {
       clearInterval(interval);
     };
-  }, [onMessage]);
+  }, [onMessage, stopPollingRef.current]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -113,7 +109,7 @@ export const useTrackBatchTransactions = ({
     }, 6000);
 
     return () => clearInterval(interval);
-  }, [batchId, nativeAuthToken]);
+  }, [batchId, verifyBatchStatus, stopPollingRef.current]);
 
   return {
     getBatchStatus
