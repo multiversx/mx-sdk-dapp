@@ -19,11 +19,13 @@ export interface SignTransactionsModalsPropsType {
   className?: string;
   CustomConfirmScreens?: CustomConfirmScreensType;
   verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
+  guardianProvider?: SignPropsType['guardianProvider'];
 }
 
 export const SignTransactionsModals = ({
   className,
   CustomConfirmScreens,
+  guardianProvider,
   verifyReceiverScam = true
 }: SignTransactionsModalsPropsType) => {
   const { loginMethod } = useGetLoginInfo();
@@ -52,6 +54,7 @@ export const SignTransactionsModals = ({
           Screen={Screen}
           verifyReceiverScam={verifyReceiverScam}
           className={className}
+          guardianProvider={guardianProvider}
         />
       );
     },
