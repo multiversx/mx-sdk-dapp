@@ -12,6 +12,8 @@ import { signedMessageInfoReducer } from 'reduxStore/slices/signedMessageInfoSli
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
+import batchTransactions from 'reduxStore/slices/batchTransactionsSlice';
+import batchTransactionsInfo from 'reduxStore/slices/batchTransactionsInfoSlice';
 import { ReducersEnum } from 'types/reducers.types';
 
 const config: {
@@ -65,6 +67,14 @@ const transactionsReducerPersistConfig = getSessionStoragePersistConfig(
   'sdk-dapp-transactions',
   [ReducersEnum.transactionsToSign]
 );
+const batchTransactionsInfoReducerPersistConfig =
+  getSessionStoragePersistConfig('sdk-dapp-batchTransactionsInfo', [
+    ReducersEnum.batchTransactionsInfo
+  ]);
+const batchTransactionsReducerPersistConfig = getSessionStoragePersistConfig(
+  'sdk-dapp-batchTransactions',
+  [ReducersEnum.batchTransactions]
+);
 const toastsReducerPersistConfig =
   getSessionStoragePersistConfig('sdk-dapp-toasts');
 const signedMessageInfoersistConfig = getSessionStoragePersistConfig(
@@ -93,6 +103,14 @@ export const sessionStorageReducers = {
   [ReducersEnum.transactionsInfo]: persistReducer(
     transactionsInfoPersistConfig,
     transactionsInfo
+  ),
+  [ReducersEnum.batchTransactionsInfo]: persistReducer(
+    batchTransactionsInfoReducerPersistConfig,
+    batchTransactionsInfo
+  ),
+  [ReducersEnum.batchTransactions]: persistReducer(
+    batchTransactionsReducerPersistConfig,
+    batchTransactions
   ),
   [ReducersEnum.signedMessageInfo]: persistReducer(
     signedMessageInfoersistConfig,

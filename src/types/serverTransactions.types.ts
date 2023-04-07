@@ -322,4 +322,7 @@ export interface BatchTransactionsResponseType {
   id: string;
   status: BatchTransactionStatus;
   transactions: IPlainTransactionObject[];
+  error?: string;
+  message?: string;
+  statusCode?: string;
 }

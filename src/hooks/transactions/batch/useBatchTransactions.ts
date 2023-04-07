@@ -15,9 +15,9 @@ import {
 export const useBatchTransactions = () => {
   const dispatch = useDispatch();
 
-  const [signedTransactions, setSignedTransactions] = useState<
-    IPlainTransactionObject[]
-  >([]);
+  const [transactions, setTransactions] = useState<IPlainTransactionObject[]>(
+    []
+  );
   const [batchId, setBatchId] = useState<string>();
 
   const send = useCallback(async (params: SendBatchTransactionsPropsType) => {
@@ -30,13 +30,21 @@ export const useBatchTransactions = () => {
     }
 
     setBatchId(data?.id);
-    setSignedTransactions(data?.transactions ?? []);
+    setTransactions(data?.transactions ?? []);
 
     const isBatchSentSuccessful =
       data?.status === BatchTransactionStatus.success;
-    const isBatchStatusValid = data?.status !== BatchTransactionStatus.invalid;
+    const isBatchStatusValid =
+      isBatchSentSuccessful || data?.status !== BatchTransactionStatus.invalid;
 
-    if (Boolean(error) || !isBatchSentSuccessful || !isBatchStatusValid) {
+    console.log({
+      error,
+      data,
+      isBatchSentSuccessful,
+      isBatchStatusValid
+    });
+
+    if (Boolean(error) || !isBatchStatusValid) {
       console.error('Unable to send batch transactions');
       const sessionId = params?.sessionId;
       const batchId = data?.id ?? '';
@@ -53,6 +61,6 @@ export const useBatchTransactions = () => {
   return {
     send,
     batchId,
-    signedTransactions
+    transactions
   };
 };
