@@ -10,6 +10,8 @@ import styles from './../../../../ledger/LedgerLoginContainer/addressRowStyles.s
 
 const GUARDIAN_FIELD = 'guardian';
 
+export { GuardianScreenType };
+
 export const GuardianScreen = ({
   onSignTransaction,
   onPrev,
@@ -52,7 +54,6 @@ export const GuardianScreen = ({
         transactions as any,
         code
       );
-      // turn above array into object with transaction index  as key
       const newTransactions = guardedTransactions.reduce(
         (acc: Record<number, Transaction>, transaction: any, index: number) => {
           acc[index] = transaction;
@@ -60,7 +61,7 @@ export const GuardianScreen = ({
         },
         {} as typeof signedTransactions
       );
-      setSignedTransactions?.(newTransactions as any);
+      setSignedTransactions?.(newTransactions);
       onSignTransaction();
     } catch {
       setError('Error while signing with guardian');
