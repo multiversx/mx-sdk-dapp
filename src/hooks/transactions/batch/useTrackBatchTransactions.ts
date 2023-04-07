@@ -5,6 +5,7 @@ import { BatchTransactionStatus } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useBatchTransactionsStatus } from './useBatchTransactionsStatus';
+import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 
 type TrackBatchTransactionsStatusProps = {
   apiAddress: string;
@@ -22,7 +23,7 @@ export const useTrackBatchTransactions = ({
   useBatchTransactionsStatus({ batchId: batchId ?? '' });
 
   const dispatch = useDispatch();
-  const stopPollingRef = useRef<boolean>(false);
+  const stopPollingRef = useRef<boolean>(true);
 
   const { loginInfo } = useAxiosInterceptorContext();
   const nativeAuthToken = loginInfo?.tokenLogin?.nativeAuthToken;
@@ -43,16 +44,17 @@ export const useTrackBatchTransactions = ({
     [apiAddress, nativeAuthToken]
   );
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      if (stopPollingRef.current || !batchId) {
-        return;
-      }
+  // const verifyBatchTransactionsIndividually = useCallback(() => {}, []);
 
+  const verifyBatchStatus = useCallback(
+    async ({ batchId }: { batchId: string; wsMessage?: string }) => {
       const batchStatus = await getBatchStatus(batchId);
 
       if (batchStatus) {
         dispatch(updateBatchTransactions(batchStatus));
+      } else {
+        stopPollingRef.current = true;
+        return;
       }
 
       if (batchStatus?.status === BatchTransactionStatus.success) {
@@ -73,6 +75,41 @@ export const useTrackBatchTransactions = ({
       ) {
         stopPollingRef.current = true;
       }
+    },
+    []
+  );
+
+  const onMessage = useCallback(
+    (message: string) => {
+      console.log({
+        message
+      });
+
+      if (message.includes('batchUpdated' || 'transactionCompleted')) {
+        verifyBatchStatus({ batchId: batchId ?? '', wsMessage: message });
+      }
+    },
+    [getBatchStatus, batchId]
+  );
+
+  useRegisterWebsocketListener(onMessage);
+
+  useEffect(() => {
+    const interval = setTimeout(async () => {
+      stopPollingRef.current = false;
+    }, 30000);
+    return () => {
+      clearInterval(interval);
+    };
+  }, [onMessage]);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (stopPollingRef.current || !batchId) {
+        return;
+      }
+
+      verifyBatchStatus({ batchId });
     }, 6000);
 
     return () => clearInterval(interval);
