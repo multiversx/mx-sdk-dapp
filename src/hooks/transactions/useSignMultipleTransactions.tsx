@@ -168,8 +168,11 @@ export function useSignMultipleTransactions({
       return;
     }
 
-    const provider = GuardianProvider.getInstance();
-    await provider.init(address, String(apiAddress));
+    const provider = await GuardianProvider.createProvider(
+      address,
+      String(apiAddress),
+      { getNativeAuthToken: () => 'add native auth token here!!!!' }
+    );
 
     const transactionsWithVersionOptions = allSignedTransactions.map(
       (transaction) => {
@@ -184,10 +187,10 @@ export function useSignMultipleTransactions({
     );
 
     try {
-      allSignedTransactions = await provider.applyGuardianSignature(
-        transactionsWithVersionOptions,
+      allSignedTransactions = (await provider.applyGuardianSignature(
+        transactionsWithVersionOptions as any,
         code
-      );
+      )) as any;
       onTransactionsSignSuccess(allSignedTransactions);
       reset();
     } catch (err) {
