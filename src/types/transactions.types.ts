@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import type { Address, Transaction } from '@multiversx/sdk-core';
 import type { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
-import { GuardianProvider } from 'services/transactions/GuardianProvider';
+import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import type { SignStepInnerClassesType } from 'UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
 import type { WithClassnameType } from '../UI/types';
 import type {
@@ -180,7 +180,7 @@ export interface SignModalPropsType extends WithClassnameType {
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
   title?: ReactNode;
-  guardianProvider?: GuardianProvider;
+  guardianProvider?: GenericGuardianProvider;
   signStepInnerClasses?: SignStepInnerClassesType;
 }
 

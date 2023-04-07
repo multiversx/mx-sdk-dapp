@@ -1,4 +1,5 @@
 import { Transaction } from '@multiversx/sdk-core';
+import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
@@ -10,7 +11,6 @@ import {
   moveTransactionsToSignedState,
   setSignTransactionsError
 } from 'reduxStore/slices';
-import { GuardianProvider } from 'services/transactions/GuardianProvider';
 import {
   ActiveLedgerTransactionType,
   LoginMethodsEnum,
@@ -27,7 +27,7 @@ import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
   verifyReceiverScam?: boolean;
-  guardianProvider?: GuardianProvider;
+  guardianProvider?: GenericGuardianProvider;
 }
 
 type DeviceSignedTransactions = Record<number, Transaction>;
@@ -38,7 +38,7 @@ export interface UseSignTransactionsWithDeviceReturnType {
   onNext: () => void;
   onPrev: () => void;
   onAbort: () => void;
-  guardianProvider?: GuardianProvider;
+  guardianProvider?: GenericGuardianProvider;
   waitingForDevice: boolean;
   isLastTransaction: boolean;
   currentStep: number;

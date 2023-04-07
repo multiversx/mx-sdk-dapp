@@ -6,8 +6,8 @@ import {
   TransactionVersion
 } from '@multiversx/sdk-core';
 
+import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
-import { GuardianProvider } from 'services/transactions/GuardianProvider';
 import { ActiveLedgerTransactionType, ScamInfoType } from 'types';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
@@ -16,7 +16,7 @@ import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWi
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
-  guardianProvider?: GuardianProvider;
+  guardianProvider?: GenericGuardianProvider;
   verifyReceiverScam?: boolean;
   isLedger?: boolean;
   transactionsToSign?: Transaction[];

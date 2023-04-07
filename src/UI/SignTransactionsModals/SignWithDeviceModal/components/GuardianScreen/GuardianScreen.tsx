@@ -47,23 +47,20 @@ export const GuardianScreen = ({
   const onSubmit = async () => {
     try {
       const transactions = Object.values(signedTransactions);
+      // TODO remove any
       const guardedTransactions = await guardianProvider.applyGuardianSignature(
-        transactions,
+        transactions as any,
         code
       );
       // turn above array into object with transaction index  as key
       const newTransactions = guardedTransactions.reduce(
-        (
-          acc: Record<number, Transaction>,
-          transaction: Transaction,
-          index: number
-        ) => {
+        (acc: Record<number, Transaction>, transaction: any, index: number) => {
           acc[index] = transaction;
           return acc;
         },
         {} as typeof signedTransactions
       );
-      setSignedTransactions?.(newTransactions);
+      setSignedTransactions?.(newTransactions as any);
       onSignTransaction();
     } catch {
       setError('Error while signing with guardian');

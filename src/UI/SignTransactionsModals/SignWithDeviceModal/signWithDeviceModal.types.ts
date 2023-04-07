@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
-import { GuardianProvider } from 'services/transactions/GuardianProvider';
+import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import type {
   ActiveLedgerTransactionType,
   MultiSignTransactionType
@@ -23,7 +23,7 @@ export type DeviceSignedTransactions = Record<number, Transaction>;
 export interface GuardianScreenType extends WithClassnameType {
   onSignTransaction: () => void;
   onPrev: () => void;
-  guardianProvider?: GuardianProvider;
+  guardianProvider?: GenericGuardianProvider;
   title?: ReactNode;
   signStepInnerClasses?: SignStepInnerClassesType;
   signedTransactions?: DeviceSignedTransactions;
