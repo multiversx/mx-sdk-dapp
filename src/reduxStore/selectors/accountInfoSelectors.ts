@@ -66,3 +66,8 @@ export const websocketEventSelector = createDeepEqualSelector(
   privateAccountInfoSelector,
   (state) => state.websocketEvent
 );
+
+export const websocketBatchEventSelector = createDeepEqualSelector(
+  privateAccountInfoSelector,
+  (state) => state.websocketBatchEvent
+);

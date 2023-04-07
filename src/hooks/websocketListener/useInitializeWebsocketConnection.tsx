@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { setWebsocketEvent } from 'reduxStore/slices';
+import { setWebsocketBatchEvent, setWebsocketEvent } from 'reduxStore/slices';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
 import { useGetNetworkConfig } from '../useGetNetworkConfig';
@@ -10,11 +10,13 @@ import {
   websocketConnection,
   WebsocketConnectionStatusEnum
 } from './websocketConnection';
+import { BatchTransactionsWSResponseType } from 'types';
 
 const TIMEOUT = 3000;
 const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
 const MESSAGE_DELAY = 1000;
+const BATCH_UPDATED_EVENT = 'batchUpdated';
 
 export function useInitializeWebsocketConnection() {
   const timeout = useRef<NodeJS.Timeout | null>(null);
@@ -31,6 +33,15 @@ export function useInitializeWebsocketConnection() {
     }
     timeout.current = setTimeout(() => {
       dispatch(setWebsocketEvent(message));
+    }, MESSAGE_DELAY);
+  };
+
+  const handleBatchUpdate = (data: BatchTransactionsWSResponseType) => {
+    if (timeout.current) {
+      clearTimeout(timeout.current);
+    }
+    timeout.current = setTimeout(() => {
+      dispatch(setWebsocketBatchEvent(data));
     }, MESSAGE_DELAY);
   };
 
@@ -61,6 +72,13 @@ export function useInitializeWebsocketConnection() {
 
         websocketConnection.current.onAny((message) => {
           handleMessageReceived(message);
+        });
+
+        websocketConnection.current.on(BATCH_UPDATED_EVENT, (data) => {
+          console.log('batchUpdated', {
+            data
+          });
+          handleBatchUpdate(data);
         });
       },
       {

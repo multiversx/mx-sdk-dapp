@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
 import { useAxiosInterceptorContext } from 'wrappers';
-import { BatchTransactionStatus } from 'types';
+import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useBatchTransactionsStatus } from './useBatchTransactionsStatus';
@@ -47,7 +47,7 @@ export const useTrackBatchTransactions = ({
   // const verifyBatchTransactionsIndividually = useCallback(() => {}, []);
 
   const verifyBatchStatus = useCallback(
-    async ({ batchId }: { batchId: string; wsMessage?: string }) => {
+    async ({ batchId }: { batchId: string }) => {
       const batchStatus = await getBatchStatus(batchId);
 
       if (batchStatus) {
@@ -82,13 +82,24 @@ export const useTrackBatchTransactions = ({
   const onMessage = useCallback(
     (message: string) => {
       if (message.includes('transactionCompleted')) {
-        verifyBatchStatus({ batchId: batchId ?? '', wsMessage: message });
+        verifyBatchStatus({ batchId: batchId ?? '' });
       }
     },
     [verifyBatchStatus, batchId]
   );
 
-  useRegisterWebsocketListener(onMessage);
+  const onBatchUpdate = useCallback(
+    async (data: BatchTransactionsWSResponseType) => {
+      await verifyBatchStatus({ batchId: data.batchId });
+
+      // TODO
+      // Get every transaction from the batch and verify if it's completed
+      // If it's completed, update the transaction status in redux store to reflect the new status in the toast
+    },
+    [verifyBatchStatus, batchId]
+  );
+
+  useRegisterWebsocketListener(onMessage, onBatchUpdate);
 
   useEffect(() => {
     const interval = setTimeout(async () => {
