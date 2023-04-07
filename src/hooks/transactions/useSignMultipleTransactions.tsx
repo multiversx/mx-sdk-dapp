@@ -16,8 +16,7 @@ import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWi
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
-  isGuarded?: boolean;
-  apiAddress?: string;
+  guardianProvider?: GuardianProvider;
   verifyReceiverScam?: boolean;
   isLedger?: boolean;
   transactionsToSign?: Transaction[];
@@ -49,8 +48,7 @@ export function useSignMultipleTransactions({
   transactionsToSign,
   egldLabel,
   address,
-  isGuarded,
-  apiAddress,
+  guardianProvider,
   onCancel,
   onSignTransaction,
   onTransactionsSignError,
@@ -58,8 +56,6 @@ export function useSignMultipleTransactions({
   onGetScamAddressData
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
   const [currentStep, setCurrentStep] = useState(0);
-  const [code, setCode] = useState(''); // optional guadian code
-  const [codeError, setCodeError] = useState<string>();
   const [signedTransactions, setSignedTransactions] =
     useState<DeviceSignedTransactions>();
   const [currentTransaction, setCurrentTransaction] =
@@ -68,7 +64,16 @@ export function useSignMultipleTransactions({
   const [waitingForDevice, setWaitingForDevice] = useState(false);
 
   const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions: transactionsToSign });
+    useParseMultiEsdtTransferData({
+      transactions: guardianProvider
+        ? transactionsToSign?.map((transaction) => {
+            transaction.setSender(Address.fromBech32(address));
+            transaction.version = TransactionVersion.withTxOptions();
+            transaction.options = TransactionOptions.withTxGuardedOptions();
+            return transaction;
+          })
+        : transactionsToSign
+    });
 
   const isLastTransaction = currentStep === allTransactions.length - 1;
 
@@ -156,47 +161,19 @@ export function useSignMultipleTransactions({
       return;
     }
 
-    let allSignedTransactions = Object.values(newSignedTransactions);
+    const allSignedTransactions = Object.values(newSignedTransactions);
+    const allSignedByGuardian = guardianProvider
+      ? allSignedTransactions.every((tx) =>
+          Boolean(tx.getGuardianSignature().hex())
+        )
+      : true;
 
-    if (!isGuarded) {
-      onTransactionsSignSuccess(allSignedTransactions);
-      reset();
-    }
-
-    // handle guarded transactions
-    if (!code) {
+    if (!allSignedByGuardian) {
       return;
     }
 
-    const provider = await GuardianProvider.createProvider(
-      address,
-      String(apiAddress),
-      { getNativeAuthToken: () => 'add native auth token here!!!!' }
-    );
-
-    const transactionsWithVersionOptions = allSignedTransactions.map(
-      (transaction) => {
-        transaction.setSender(Address.fromBech32(address));
-
-        // TODO: to be removed when included in provider
-        transaction.version = TransactionVersion.withTxOptions();
-        transaction.options = TransactionOptions.withTxGuardedOptions();
-
-        return transaction;
-      }
-    );
-
-    try {
-      allSignedTransactions = (await provider.applyGuardianSignature(
-        transactionsWithVersionOptions as any,
-        code
-      )) as any;
-      onTransactionsSignSuccess(allSignedTransactions);
-      reset();
-    } catch (err) {
-      console.error(err, 'guardian sign error');
-      setCodeError('Error while signing with guardian');
-    }
+    onTransactionsSignSuccess(allSignedTransactions);
+    reset();
   }
 
   function signTx() {
@@ -206,17 +183,12 @@ export function useSignMultipleTransactions({
       }
       const signature = currentTransaction.transaction.getSignature();
 
-      if (signature.hex()) {
-        if (!isLastTransaction) {
-          setCurrentStep((exising) => exising + 1);
-        }
-        if (code) {
-          sign();
-        }
-      } else {
-        // currently code doesn't reach here because getSignature throws error if none is found
-        sign();
+      if (signature.hex() && !isLastTransaction) {
+        setCurrentStep((exising) => exising + 1);
+        return;
       }
+
+      sign();
     } catch {
       // the only way to check if tx has signature is with try catch
       sign();
@@ -276,14 +248,14 @@ export function useSignMultipleTransactions({
     onPrev,
     waitingForDevice,
     onAbort: handleAbort,
-    onSetCode: (code: string) => setCode(code),
-    codeError,
+    guardianProvider: guardianProvider,
     isLastTransaction,
     isFirstTransaction: currentStep === 0,
     hasMultipleTransactions: allTransactions.length > 1,
     shouldContinueWithoutSigning,
     currentStep,
     signedTransactions,
+    setSignedTransactions,
     currentTransaction
   };
 }

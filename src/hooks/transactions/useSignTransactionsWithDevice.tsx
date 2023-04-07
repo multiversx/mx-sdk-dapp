@@ -4,13 +4,13 @@ import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
-import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { egldLabelSelector } from 'reduxStore/selectors';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsError
 } from 'reduxStore/slices';
+import { GuardianProvider } from 'services/transactions/GuardianProvider';
 import {
   ActiveLedgerTransactionType,
   LoginMethodsEnum,
@@ -27,11 +27,7 @@ import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
   verifyReceiverScam?: boolean;
-  /**
-   * if transactions are already signed by guardian,
-   * setting `isGuarded` to `false` allows skipping the signing step
-   */
-  isGuarded?: boolean;
+  guardianProvider?: GuardianProvider;
 }
 
 type DeviceSignedTransactions = Record<number, Transaction>;
@@ -42,13 +38,15 @@ export interface UseSignTransactionsWithDeviceReturnType {
   onNext: () => void;
   onPrev: () => void;
   onAbort: () => void;
-  onSetCode: (code: string) => void;
+  guardianProvider?: GuardianProvider;
   waitingForDevice: boolean;
   isLastTransaction: boolean;
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
+  setSignedTransactions?: React.Dispatch<
+    React.SetStateAction<DeviceSignedTransactions | undefined>
+  >;
   currentTransaction: ActiveLedgerTransactionType | null;
-  codeError?: string;
 
   callbackRoute?: string;
 }
@@ -63,12 +61,10 @@ export function useSignTransactionsWithDevice(
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
   const { address } = account;
-  const { network } = useGetNetworkConfig();
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
-  const isGuarded = props.isGuarded ?? account.isGuarded;
 
   const {
     transactions,
@@ -132,9 +128,8 @@ export function useSignTransactionsWithDevice(
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
-    isGuarded,
-    apiAddress: network.apiAddress,
     egldLabel,
+    guardianProvider: props.guardianProvider,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),

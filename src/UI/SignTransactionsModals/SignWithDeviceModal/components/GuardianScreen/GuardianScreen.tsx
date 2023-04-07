@@ -1,52 +1,131 @@
-import React, { useEffect } from 'react';
-import { useGuardianScren } from '../../hooks';
-
-// TODO: @miro
+import React, { MouseEvent } from 'react';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { Transaction } from '@multiversx/sdk-core/out';
+import classNames from 'classnames';
+import globalStyles from 'assets/sass/main.scss';
+import { PageState } from 'UI/PageState';
+import { useGuardianScren, useSignStepsClasses } from '../../hooks';
+import { GuardianScreenType } from '../../signWithDeviceModal.types';
 import styles from './../../../../ledger/LedgerLoginContainer/addressRowStyles.scss';
 
 const GUARDIAN_FIELD = 'guardian';
 
-interface GuardianScreenPropsType {
-  codeError?: string;
-  onSetCode: (code: string) => void;
-}
-
 export const GuardianScreen = ({
-  codeError,
-  onSetCode
-}: GuardianScreenPropsType) => {
-  const { isValid, isTouched, error, setError, onChange, onBlur, value } =
-    useGuardianScren();
+  onSignTransaction,
+  onPrev,
+  guardianProvider,
+  title,
+  className,
+  signedTransactions,
+  setSignedTransactions,
+  signStepInnerClasses
+}: GuardianScreenType) => {
+  const classes = useSignStepsClasses();
 
-  useEffect(() => {
-    onSetCode(value);
-  }, [value]);
+  const {
+    isValid,
+    isTouched,
+    error,
+    setError,
+    onChange,
+    onBlur,
+    value: code
+  } = useGuardianScren();
 
-  useEffect(() => {
-    if (codeError) {
-      setError(codeError);
+  const { buttonsWrapperClassName, buttonClassName } =
+    signStepInnerClasses || {};
+
+  const onCloseClick = (event: MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    onPrev();
+  };
+
+  if (!guardianProvider || !signedTransactions) {
+    return null;
+  }
+
+  const onSubmit = async () => {
+    try {
+      const transactions = Object.values(signedTransactions);
+      const guardedTransactions = await guardianProvider.applyGuardianSignature(
+        transactions,
+        code
+      );
+      // turn above array into object with transaction index  as key
+      const newTransactions = guardedTransactions.reduce(
+        (
+          acc: Record<number, Transaction>,
+          transaction: Transaction,
+          index: number
+        ) => {
+          acc[index] = transaction;
+          return acc;
+        },
+        {} as typeof signedTransactions
+      );
+      setSignedTransactions?.(newTransactions);
+      onSignTransaction();
+    } catch {
+      setError('Error while signing with guardian');
     }
-  }, [codeError]);
+  };
 
   return (
-    <div className={styles.ledgerAddressTableBodyItem}>
-      <label htmlFor={GUARDIAN_FIELD}>Guardian Code</label>
+    <PageState
+      icon={error ? faTimes : null}
+      iconClass={classes.icon}
+      iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
+      iconSize='3x'
+      className={className}
+      title={title || 'Confirm on Ledger'}
+      description={
+        <div className={styles.ledgerAddressTableBodyItem}>
+          <label htmlFor={GUARDIAN_FIELD}>Guardian Code</label>
 
-      <div>
-        <input
-          type='text'
-          id={GUARDIAN_FIELD}
-          name={GUARDIAN_FIELD}
-          data-testid={GUARDIAN_FIELD}
-          required={true}
-          value={value}
-          onChange={onChange}
-          onBlur={onBlur}
-          autoComplete='off'
-        />
-      </div>
+          <div>
+            <input
+              type='text'
+              id={GUARDIAN_FIELD}
+              name={GUARDIAN_FIELD}
+              data-testid={GUARDIAN_FIELD}
+              required={true}
+              value={code}
+              onChange={onChange}
+              onBlur={onBlur}
+              autoComplete='off'
+            />
+          </div>
 
-      {!isValid && isTouched && <div>{error || codeError}</div>}
-    </div>
+          {!isValid && isTouched && <div>{error}</div>}
+        </div>
+      }
+      action={
+        <div
+          className={classNames(
+            classes.buttonsWrapper,
+            buttonsWrapperClassName
+          )}
+        >
+          <button
+            id='closeButton'
+            data-testid='closeButton'
+            onClick={onCloseClick}
+            className={classNames(classes.cancelButton, buttonClassName)}
+          >
+            Back
+          </button>
+
+          <button
+            type='button'
+            className={classNames(classes.signButton, buttonClassName)}
+            id='submitBtn'
+            data-testid='submitBtn'
+            onClick={onSubmit}
+          >
+            Submit
+          </button>
+        </div>
+      }
+    />
   );
 };

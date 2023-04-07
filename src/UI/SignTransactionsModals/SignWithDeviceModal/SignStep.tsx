@@ -1,15 +1,9 @@
-import React, { MouseEvent, ReactNode, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
-import { useGetAccount } from 'hooks';
-import type {
-  ActiveLedgerTransactionType,
-  MultiSignTransactionType
-} from 'types';
 import { PageState } from 'UI/PageState';
-import type { WithClassnameType } from '../../types';
 
 import {
   GuardianScreen,
@@ -17,53 +11,30 @@ import {
   SignStepBodyPropsType
 } from './components';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+import {
+  SignStepPropsType as SignStepType,
+  SignStepInnerClassesType
+} from './signWithDeviceModal.types';
 
-export interface SignStepInnerClassesType {
-  buttonsWrapperClassName?: string;
-  inputGroupClassName?: string;
-  inputLabelClassName?: string;
-  inputValueClassName?: string;
-  errorClassName?: string;
-  scamAlertClassName?: string;
-  buttonClassName?: string;
-  progressClassName?: string;
-}
+export { SignStepType, SignStepInnerClassesType };
 
-// TODO: Rename to "SignStepPropsType" when sdk-dapp@3.0.0
-export interface SignStepType extends WithClassnameType {
-  onSignTransaction: () => void;
-  onPrev: () => void;
-  onSetCode: (code: string) => void;
-  codeError?: string;
-  handleClose: () => void;
-  waitingForDevice: boolean;
-  error: string | null;
-  callbackRoute?: string;
-  title?: ReactNode;
-  currentStep: number;
-  currentTransaction: ActiveLedgerTransactionType | null;
-  allTransactions: MultiSignTransactionType[];
-  isLastTransaction: boolean;
-  signStepInnerClasses?: SignStepInnerClassesType;
-}
+export const SignStep = (props: SignStepType) => {
+  const {
+    onSignTransaction,
+    handleClose,
+    onPrev,
+    guardianProvider = null,
+    title,
+    waitingForDevice,
+    currentTransaction,
+    error,
+    allTransactions,
+    isLastTransaction,
+    currentStep,
+    className,
+    signStepInnerClasses
+  } = props;
 
-export const SignStep = ({
-  onSignTransaction,
-  handleClose,
-  onPrev,
-  onSetCode,
-  codeError,
-  title,
-  waitingForDevice,
-  currentTransaction,
-  error,
-  allTransactions,
-  isLastTransaction,
-  currentStep,
-  className,
-  signStepInnerClasses
-}: SignStepType) => {
-  const { isGuarded } = useGetAccount();
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
 
   if (!currentTransaction) {
@@ -84,7 +55,6 @@ export const SignStep = ({
     if (isFirst) {
       handleClose();
     } else {
-      onSetCode('');
       onPrev();
     }
   };
@@ -93,7 +63,7 @@ export const SignStep = ({
 
   const onSubmit = () => {
     onSignTransaction();
-    if (signLastTransaction && isGuarded) {
+    if (signLastTransaction && guardianProvider) {
       return setShowGuardianScreen(true);
     }
   };
@@ -104,9 +74,6 @@ export const SignStep = ({
   let signBtnLabel = 'Sign & Continue';
   signBtnLabel = waitingForDevice ? 'Check your Ledger' : signBtnLabel;
   signBtnLabel = signLastTransaction ? 'Sign & Submit' : signBtnLabel;
-  signBtnLabel =
-    signLastTransaction && isGuarded ? 'Sign & Continue' : signBtnLabel;
-
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
   const scamReport = currentTransaction.receiverScamInfo;
@@ -120,6 +87,10 @@ export const SignStep = ({
     signStepInnerClasses
   };
 
+  if (showGuardianScreen) {
+    return <GuardianScreen {...props} />;
+  }
+
   return (
     <PageState
       icon={error ? faTimes : null}
@@ -128,13 +99,7 @@ export const SignStep = ({
       iconSize='3x'
       className={className}
       title={title || 'Confirm on Ledger'}
-      description={
-        showGuardianScreen ? (
-          <GuardianScreen onSetCode={onSetCode} codeError={codeError} />
-        ) : (
-          <SignStepBody {...signStepBodyProps} />
-        )
-      }
+      description={<SignStepBody {...signStepBodyProps} />}
       action={
         <div
           className={classNames(
