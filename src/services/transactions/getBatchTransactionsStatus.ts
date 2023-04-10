@@ -14,7 +14,7 @@ export async function getBatchTransactionsStatus({
   address
 }: SendBatchTransactionsPropsType) {
   const { data } = await axios.get<BatchTransactionsResponseType>(
-    `${apiAddress}/${TRANSACTIONS_BATCH}/${address}${batchId}`,
+    `${apiAddress}/${TRANSACTIONS_BATCH}/${address}/${batchId}`,
     {
       timeout: 3000
     }

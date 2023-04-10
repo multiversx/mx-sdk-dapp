@@ -76,22 +76,14 @@ export const useTrackBatchTransactions = ({
     [getBatchStatus, onSuccess, onFail, stopPollingRef.current]
   );
 
-  const onMessage = useCallback(
-    (message: string) => {
-      if (message.includes('transactionCompleted')) {
-        verifyBatchStatus({ batchId: batchId ?? '' });
-      }
-    },
-    [verifyBatchStatus, batchId]
-  );
+  const onMessage = useCallback(() => {
+    // Do nothing, used for backwards compatibility to avoid breaking changes
+    // Will be removed in the next major release
+  }, []);
 
   const onBatchUpdate = useCallback(
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
-
-      // TODO
-      // Get every transaction from the batch and verify if it's completed
-      // If it's completed, update the transaction status in redux store to reflect the new status in the toast
 
       await checkBatchTransactionsStatuses({
         batchId: data.batchId,

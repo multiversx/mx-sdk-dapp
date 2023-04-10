@@ -1,7 +1,9 @@
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { useGetBatchesTransactions } from './useGetBatchesTransactions';
 import { checkBatch } from '../useCheckTransactionStatus/checkBatch';
-import { BatchTransactionStatus } from 'types';
+import { CustomTransactionInformation } from 'types';
+import { sequentialToFlatArray } from 'utils/transactions/sequentialToFlatArray';
+import { getIsSequential } from 'utils/transactions/getIsSequential';
 
 export function useCheckBatchTransactionsStatuses() {
   const { batches, batchTransactionsArray } = useGetBatchesTransactions();
@@ -9,36 +11,33 @@ export function useCheckBatchTransactionsStatuses() {
   async function checkBatchTransactionsStatuses(props?: {
     batchId: string;
     shouldRefreshBalance?: boolean;
+    customTransactionInformation?: CustomTransactionInformation;
   }) {
-    const pendingBatches = batchTransactionsArray.filter((batch) => {
-      const isPending =
-        batch.batchId != null &&
-        batch.batchId === props?.batchId &&
-        batches[batch.batchId].status === BatchTransactionStatus.pending;
-      return isPending;
-    });
+    const batch = batchTransactionsArray.find(
+      (batch) => batch.batchId === props?.batchId
+    );
 
     console.log('useCheckBatchTransactionsStatuses', {
       batches,
       batchTransactionsArray,
-      pendingBatches
+      batch
     });
 
-    if (pendingBatches.length > 0) {
-      for (const { batchId, transactions } of pendingBatches) {
-        console.log('checkBatchTransactionsStatuses - pending batches', {
-          batchId,
-          transactions
-        });
+    if (batch) {
+      const { batchId, transactions } = batch;
 
-        const sessionId = batchId.split('-')[0];
-        await checkBatch({
-          sessionId,
-          transactionBatch: {
-            transactions
-          }
-        });
-      }
+      const sessionId = batchId.split('-')[0];
+      const isSequential = getIsSequential({ transactions });
+      const transactionsArray = sequentialToFlatArray({ transactions });
+
+      await checkBatch({
+        sessionId,
+        transactionBatch: {
+          transactions: transactionsArray,
+          customTransactionInformation: props?.customTransactionInformation
+        },
+        isSequential
+      });
     }
     if (props?.shouldRefreshBalance) {
       refreshAccount();

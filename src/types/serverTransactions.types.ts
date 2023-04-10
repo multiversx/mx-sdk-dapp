@@ -321,7 +321,7 @@ export enum BatchTransactionStatus {
 export interface BatchTransactionsResponseType {
   id: string;
   status: BatchTransactionStatus;
-  transactions: SignedTransactionType[];
+  transactions: SignedTransactionType[] | SignedTransactionType[][];
   error?: string;
   message?: string;
   statusCode?: string;

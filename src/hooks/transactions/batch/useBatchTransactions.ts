@@ -3,8 +3,7 @@ import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
 } from 'services/transactions/sendBatchTransactions';
-import { BatchTransactionStatus } from 'types';
-import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
+import { BatchTransactionStatus, SignedTransactionType } from 'types';
 import { removeSignedTransaction } from 'services';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
@@ -15,9 +14,9 @@ import {
 export const useBatchTransactions = () => {
   const dispatch = useDispatch();
 
-  const [transactions, setTransactions] = useState<IPlainTransactionObject[]>(
-    []
-  );
+  const [transactions, setTransactions] = useState<
+    SignedTransactionType[] | SignedTransactionType[][]
+  >([]);
   const [batchId, setBatchId] = useState<string>();
 
   const send = useCallback(async (params: SendBatchTransactionsPropsType) => {

@@ -1,13 +1,16 @@
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { useGetBatchesTransactions } from './useGetBatchesTransactions';
 import { checkBatch } from '../useCheckTransactionStatus/checkBatch';
-import { BatchTransactionStatus } from 'types';
+import { BatchTransactionStatus, CustomTransactionInformation } from 'types';
+import { getIsSequential } from 'utils/transactions/getIsSequential';
+import { sequentialToFlatArray } from 'utils/transactions/sequentialToFlatArray';
 
 export function useCheckBatchesTransactionsStatuses() {
   const { batches, batchTransactionsArray } = useGetBatchesTransactions();
 
   async function checkBatchesTransactionsStatuses(props?: {
     shouldRefreshBalance?: boolean;
+    customTransactionInformation?: CustomTransactionInformation;
   }) {
     const pendingBatches = batchTransactionsArray.filter((batch) => {
       const isPending =
@@ -30,11 +33,16 @@ export function useCheckBatchesTransactionsStatuses() {
         });
 
         const sessionId = batchId.split('-')[0];
+        const isSequential = getIsSequential({ transactions });
+        const transactionsArray = sequentialToFlatArray({ transactions });
+
         await checkBatch({
           sessionId,
           transactionBatch: {
-            transactions
-          }
+            transactions: transactionsArray,
+            customTransactionInformation: props?.customTransactionInformation
+          },
+          isSequential
         });
       }
     }

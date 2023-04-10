@@ -7,7 +7,7 @@ import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
 
 export interface SendBatchTransactionsPropsType {
-  transactions: SignedTransactionType[];
+  transactions: SignedTransactionType[] | SignedTransactionType[][];
   account: string;
   sessionId: string;
   apiAddress: string;

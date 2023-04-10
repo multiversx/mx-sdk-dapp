@@ -6,5 +6,4 @@ export * from './signedMessageInfoSlice';
 export * from './toastsSlice';
 export * from './transactionsInfoSlice';
 export * from './transactionsSlice';
-export * from './batchTransactionsInfoSlice';
 export * from './batchTransactionsSlice';
