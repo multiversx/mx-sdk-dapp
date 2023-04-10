@@ -6,7 +6,7 @@ import { sequentialToFlatArray } from 'utils/transactions/sequentialToFlatArray'
 import { getIsSequential } from 'utils/transactions/getIsSequential';
 
 export function useCheckBatchTransactionsStatuses() {
-  const { batches, batchTransactionsArray } = useGetBatchesTransactions();
+  const { batchTransactionsArray } = useGetBatchesTransactions();
 
   async function checkBatchTransactionsStatuses(props?: {
     batchId: string;
@@ -16,12 +16,6 @@ export function useCheckBatchTransactionsStatuses() {
     const batch = batchTransactionsArray.find(
       (batch) => batch.batchId === props?.batchId
     );
-
-    console.log('useCheckBatchTransactionsStatuses', {
-      batches,
-      batchTransactionsArray,
-      batch
-    });
 
     if (batch) {
       const { batchId, transactions } = batch;

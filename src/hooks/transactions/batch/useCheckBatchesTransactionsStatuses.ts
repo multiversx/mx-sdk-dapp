@@ -19,19 +19,8 @@ export function useCheckBatchesTransactionsStatuses() {
       return isPending;
     });
 
-    console.log('useCheckBatchesTransactionsStatuses', {
-      batches,
-      batchTransactionsArray,
-      pendingBatches
-    });
-
     if (pendingBatches.length > 0) {
       for (const { batchId, transactions } of pendingBatches) {
-        console.log('checkBatchesTransactionsStatuses - pending batches', {
-          batchId,
-          transactions
-        });
-
         const sessionId = batchId.split('-')[0];
         const isSequential = getIsSequential({ transactions });
         const transactionsArray = sequentialToFlatArray({ transactions });

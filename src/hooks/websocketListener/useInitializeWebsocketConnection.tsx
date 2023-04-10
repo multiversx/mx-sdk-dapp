@@ -36,15 +36,6 @@ export function useInitializeWebsocketConnection() {
     }, MESSAGE_DELAY);
   };
 
-  const handleTransactionCompleted = (txHash: string) => {
-    if (timeout.current) {
-      clearTimeout(timeout.current);
-    }
-    timeout.current = setTimeout(() => {
-      dispatch(setWebsocketEvent(txHash));
-    }, MESSAGE_DELAY);
-  };
-
   const handleBatchUpdate = (data: BatchTransactionsWSResponseType) => {
     if (timeout.current) {
       clearTimeout(timeout.current);
@@ -83,22 +74,7 @@ export function useInitializeWebsocketConnection() {
           handleMessageReceived(message);
         });
 
-        websocketConnection.current.on(
-          'transactionCompleted',
-          (txHash: string) => {
-            console.log('transactionCompleted', {
-              txHash
-            });
-            handleTransactionCompleted(txHash);
-          }
-        );
-
-        websocketConnection.current.on(BATCH_UPDATED_EVENT, (data) => {
-          console.log('batchUpdated', {
-            data
-          });
-          handleBatchUpdate(data);
-        });
+        websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
       },
       {
         retries: 2,

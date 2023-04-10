@@ -104,11 +104,6 @@ function manageTransaction({
           customTransactionInformation?.completedTransactionsDelay
         );
       } else {
-        console.log('update tx status', {
-          sessionId,
-          status,
-          transactionHash: hash
-        });
         //otherwise, it will just trigger the change of status
         store.dispatch(
           updateSignedTransactionStatus({
@@ -148,24 +143,12 @@ export async function checkBatch({
 
     const transactionsArray = sequentialToFlatArray({ transactions });
 
-    console.log('checkBatch - pre', {
-      transactions,
-      transactionsArray
-    });
-
     const pendingTransactions = getPendingTransactions(
       transactionsArray,
       timeouts
     );
 
     const serverTransactions = await getTransactionsByHash(pendingTransactions);
-
-    console.log('checkBatch', {
-      sessionId,
-      transactionBatch: { transactions, customTransactionInformation },
-      pendingTransactions,
-      serverTransactions
-    });
 
     for (const serverTransaction of serverTransactions) {
       manageTransaction({
