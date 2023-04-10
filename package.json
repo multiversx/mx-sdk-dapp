@@ -145,7 +145,7 @@
   "dependencies": {
     "@multiversx/sdk-core": "12.0.1-beta.0",
     "@multiversx/sdk-extension-provider": "2.0.7",
-    "@multiversx/sdk-guardians-provider": "^0.0.1-alpha.1",
+    "@multiversx/sdk-guardians-provider": "0.0.1-alpha.2",
     "@multiversx/sdk-hw-provider": "3.0.3",
     "@multiversx/sdk-network-providers": "1.2.1",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
