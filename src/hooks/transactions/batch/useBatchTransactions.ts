@@ -36,13 +36,6 @@ export const useBatchTransactions = () => {
     const isBatchStatusValid =
       isBatchSentSuccessful || data?.status !== BatchTransactionStatus.invalid;
 
-    console.log({
-      error,
-      data,
-      isBatchSentSuccessful,
-      isBatchStatusValid
-    });
-
     if (Boolean(error) || !isBatchStatusValid) {
       console.error('Unable to send batch transactions');
       const sessionId = params?.sessionId;
