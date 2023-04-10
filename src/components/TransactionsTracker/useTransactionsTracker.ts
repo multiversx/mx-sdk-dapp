@@ -23,7 +23,7 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
   useRegisterWebsocketListener(onMessage);
 
   useEffect(() => {
-    const interval = setInterval(onMessage, 30000);
+    const interval = setTimeout(onMessage, 30000);
     return () => {
       clearInterval(interval);
     };

@@ -3,21 +3,20 @@ import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
 
 export interface SendBatchTransactionsPropsType {
-  batchId: string | null;
+  batchId: string;
+  address: string;
   apiAddress: string;
-  bearerToken: string;
 }
 
 export async function getBatchTransactionsStatus({
   apiAddress,
-  bearerToken,
-  batchId
+  batchId,
+  address
 }: SendBatchTransactionsPropsType) {
   const { data } = await axios.get<BatchTransactionsResponseType>(
-    `${apiAddress}/${TRANSACTIONS_BATCH}/${batchId}`,
+    `${apiAddress}/${TRANSACTIONS_BATCH}/${address}${batchId}`,
     {
-      timeout: 3000,
-      headers: { Authorization: `Bearer ${bearerToken}` }
+      timeout: 3000
     }
   );
   return data;

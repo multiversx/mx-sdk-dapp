@@ -11,15 +11,13 @@ export interface SendBatchTransactionsPropsType {
   account: string;
   sessionId: string;
   apiAddress: string;
-  bearerToken: string;
 }
 
 export async function sendBatchTransactions({
   transactions,
   sessionId,
   account,
-  apiAddress,
-  bearerToken
+  apiAddress
 }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType> {
   try {
     const batchId = `${sessionId}-${account}`;
@@ -33,8 +31,7 @@ export async function sendBatchTransactions({
       `${apiAddress}/${TRANSACTIONS_BATCH}`,
       payload,
       {
-        timeout: 3000,
-        headers: { Authorization: `Bearer ${bearerToken}` }
+        timeout: 3000
       }
     );
 

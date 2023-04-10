@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
-import { useAxiosInterceptorContext } from 'wrappers';
 import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
-import { useBatchTransactionsStatus } from './useBatchTransactionsStatus';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
+import { useCheckBatchTransactionsStatuses } from './useCheckBatchTransactionsStatuses';
+import { useGetAccount } from 'hooks/account';
 
 type TrackBatchTransactionsStatusProps = {
   apiAddress: string;
@@ -20,13 +20,12 @@ export const useTrackBatchTransactions = ({
   onSuccess,
   onFail
 }: TrackBatchTransactionsStatusProps) => {
-  useBatchTransactionsStatus({ batchId: batchId ?? '' });
+  const checkBatchTransactionsStatuses = useCheckBatchTransactionsStatuses();
 
   const dispatch = useDispatch();
   const stopPollingRef = useRef<boolean>(true);
 
-  const { loginInfo } = useAxiosInterceptorContext();
-  const nativeAuthToken = loginInfo?.tokenLogin?.nativeAuthToken;
+  const { address } = useGetAccount();
 
   const getBatchStatus = useCallback(
     async (id: string) => {
@@ -34,17 +33,15 @@ export const useTrackBatchTransactions = ({
         return await getBatchTransactionsStatus({
           apiAddress,
           batchId: id,
-          bearerToken: nativeAuthToken ?? ''
+          address
         });
       } catch (error) {
         console.error(error);
         return null;
       }
     },
-    [apiAddress, nativeAuthToken]
+    [apiAddress, address]
   );
-
-  // const verifyBatchTransactionsIndividually = useCallback(() => {}, []);
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
@@ -95,6 +92,11 @@ export const useTrackBatchTransactions = ({
       // TODO
       // Get every transaction from the batch and verify if it's completed
       // If it's completed, update the transaction status in redux store to reflect the new status in the toast
+
+      await checkBatchTransactionsStatuses({
+        batchId: data.batchId,
+        shouldRefreshBalance: true
+      });
     },
     [verifyBatchStatus, batchId]
   );
@@ -116,7 +118,11 @@ export const useTrackBatchTransactions = ({
         return;
       }
 
-      verifyBatchStatus({ batchId });
+      await verifyBatchStatus({ batchId });
+      await checkBatchTransactionsStatuses({
+        batchId,
+        shouldRefreshBalance: true
+      });
     }, 6000);
 
     return () => clearInterval(interval);

@@ -126,6 +126,13 @@ export async function checkBatch({
 
     const serverTransactions = await getTransactionsByHash(pendingTransactions);
 
+    console.log('checkBatch', {
+      sessionId,
+      transactionBatch: { transactions, customTransactionInformation },
+      pendingTransactions,
+      serverTransactions
+    });
+
     for (const serverTransaction of serverTransactions) {
       manageTransaction({
         serverTransaction,
