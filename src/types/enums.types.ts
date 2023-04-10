@@ -21,7 +21,8 @@ export enum TransactionBatchStatusesEnum {
   success = 'success',
   sent = 'sent',
   fail = 'fail',
-  timedOut = 'timedOut'
+  timedOut = 'timedOut',
+  invalid = 'invalid'
 }
 
 export enum LoginMethodsEnum {
@@ -70,7 +71,8 @@ export enum TransactionsDefaultTitles {
   success = 'Transaction successful',
   failed = 'Transaction failed',
   pending = 'Processing transaction',
-  timedOut = 'Transaction timed out'
+  timedOut = 'Transaction timed out',
+  invalid = 'Transaction invalid'
 }
 
 export enum DappCoreWCV2CustomMethodsEnum {
