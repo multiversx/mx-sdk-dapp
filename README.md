@@ -549,10 +549,10 @@ This hook returns a function that can be used to send a batch of transactions an
 
 It can be used to send a batch of transactions with minimum information:
 
-  **Important! Each transaction from the batch should be signed and should contain the sender**
+  **Important! Each transaction from the batch should be signed and should contain the sender.**
 
 ```typescript
-const { sessionId, error } = await sendBatchTransactions({
+const { batchId, error, data } = await sendBatchTransactions({
     transactions: [
         [{
           value: '1000000000000000000',
