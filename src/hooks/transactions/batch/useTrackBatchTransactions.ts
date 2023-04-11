@@ -4,9 +4,9 @@ import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { useUpdateBatchTransactionsStatuses } from './useUpdateBatchTransactionsStatuses';
+import { useUpdateBatch } from './useUpdateBatch';
 import { useGetAccount } from 'hooks/account';
-import { useGetBatchesTransactions } from './useGetBatchesTransactions';
+import { useGetBatches } from './useGetBatches';
 import {
   AVERAGE_TX_DURATION_MS,
   TRANSACTIONS_STATUS_POLLING_INTERVAL
@@ -28,8 +28,8 @@ export const useTrackBatchTransactions = ({
   const dispatch = useDispatch();
   const stopPollingRef = useRef<boolean>(true);
 
-  const updateBatchTransactionsStatuses = useUpdateBatchTransactionsStatuses();
-  const { batches } = useGetBatchesTransactions();
+  const updateBatchTransactionsStatuses = useUpdateBatch();
+  const { batches } = useGetBatches();
   const { address } = useGetAccount();
 
   const batchTransactions = useMemo(() => {

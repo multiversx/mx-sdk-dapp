@@ -1,6 +1,7 @@
 import { BatchTransactionsResponseType } from 'types';
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
+import { TIMEOUT } from 'constants/network';
 
 export interface SendBatchTransactionsPropsType {
   batchId: string;
@@ -16,7 +17,7 @@ export async function getBatchTransactionsStatus({
   const { data } = await axios.get<BatchTransactionsResponseType>(
     `${apiAddress}/${TRANSACTIONS_BATCH}/${address}/${batchId}`,
     {
-      timeout: 3000
+      timeout: TIMEOUT
     }
   );
   return data;

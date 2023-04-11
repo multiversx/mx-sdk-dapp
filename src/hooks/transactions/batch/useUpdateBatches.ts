@@ -1,10 +1,10 @@
 import { refreshAccount } from 'utils/account/refreshAccount';
-import { useGetBatchesTransactions } from './useGetBatchesTransactions';
+import { useGetBatches } from './useGetBatches';
 import { BatchTransactionStatus, CustomTransactionInformation } from 'types';
 import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
 
-export function useUpdateBatchesTransactionsStatuses() {
-  const { batches, batchTransactionsArray } = useGetBatchesTransactions();
+export function useUpdateBatches() {
+  const { batches, batchTransactionsArray } = useGetBatches();
 
   async function checkBatchesTransactionsStatuses(props?: {
     shouldRefreshBalance?: boolean;

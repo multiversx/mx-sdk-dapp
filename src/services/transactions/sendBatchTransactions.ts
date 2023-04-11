@@ -5,6 +5,7 @@ import {
 } from 'types';
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
+import { TIMEOUT } from 'constants/network';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[] | SignedTransactionType[][];
@@ -31,7 +32,7 @@ export async function sendBatchTransactions({
       `${apiAddress}/${TRANSACTIONS_BATCH}`,
       payload,
       {
-        timeout: 3000
+        timeout: TIMEOUT
       }
     );
 

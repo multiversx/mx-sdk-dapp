@@ -2,7 +2,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { batchesSelector } from 'reduxStore/selectors/batchTransactionsSelectors';
 import { useMemo } from 'react';
 
-export function useGetBatchesTransactions() {
+export function useGetBatches() {
   const batches = useSelector(batchesSelector);
   const batchTransactionsArray = useMemo(
     () =>

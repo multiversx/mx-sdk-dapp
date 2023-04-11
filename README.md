@@ -584,7 +584,7 @@ It returns a Promise that will be fulfilled with
   }
 ```
 
-- `batchId` is the transaction's batch id which can be used to track the transactions statuses (is composed of the `sessionId` and the `account addreess`).
+- `batchId` is the transaction's batch id which can be used to track the transactions statuses (is composed of the `sessionId` and the `account address`).
 - `error` is the http post batch transactions error message or a default error message.
 - `data` is the http post batch transactions data response.
 
@@ -757,9 +757,9 @@ It returns a Promise (`Promise<BatchTransactionsResponseType | null>`) that will
 Extra: to access all the batches there is `useGetBatchesTransactions` hook.
 
 ```typescript
-import { useGetBatchesTransactions } from "@multiversx/sdk-dapp/hooks/transactions/batch/useGetBatchesTransactions";
+import { useGetBatches } from "@multiversx/sdk-dapp/hooks/transactions/batch/useGetBatches";
 
-const { batches, batchTransactionsArray } = useGetBatchesTransactions();
+const { batches, batchTransactionsArray } = useGetBatches();
  ```
 
 - `batches` is an object with the batchId as key and the batch as value.
