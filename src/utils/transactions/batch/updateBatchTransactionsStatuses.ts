@@ -3,7 +3,7 @@ import { sequentialToFlatArray } from './sequentialToFlatArray';
 import { checkBatch } from 'hooks/transactions/useCheckTransactionStatus/checkBatch';
 import { CustomTransactionInformation, SignedTransactionType } from 'types';
 
-export async function checkSequentialTransactionsStatuses({
+export async function updateBatchTransactionsStatuses({
   sessionId,
   transactions,
   customTransactionInformation

@@ -1,7 +1,7 @@
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { useGetBatchesTransactions } from './useGetBatchesTransactions';
 import { CustomTransactionInformation } from 'types';
-import { checkSequentialTransactionsStatuses } from 'utils/transactions/batch/checkSequentialTransactionsStatuses';
+import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
 
 export function useCheckBatchTransactionsStatuses() {
   const { batchTransactionsArray } = useGetBatchesTransactions();
@@ -22,7 +22,7 @@ export function useCheckBatchTransactionsStatuses() {
     const { batchId, transactions } = batch;
     const [sessionId] = batchId.split('-');
 
-    await checkSequentialTransactionsStatuses({
+    await updateBatchTransactionsStatuses({
       sessionId,
       transactions,
       customTransactionInformation: props?.customTransactionInformation
