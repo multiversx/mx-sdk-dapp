@@ -17,7 +17,7 @@ import {
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
-import { sequentialToFlatArray } from 'utils/transactions/sequentialToFlatArray';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 
 export interface TransactionStatusTrackerPropsType {
   sessionId: string;

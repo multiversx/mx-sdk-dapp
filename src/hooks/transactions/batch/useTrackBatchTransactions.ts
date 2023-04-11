@@ -47,29 +47,37 @@ export const useTrackBatchTransactions = ({
     async ({ batchId }: { batchId: string }) => {
       const batchStatus = await getBatchStatus(batchId);
 
-      if (batchStatus) {
-        dispatch(updateBatchTransactions(batchStatus));
-      } else {
+      if (!batchStatus) {
         stopPollingRef.current = true;
         return;
       }
 
-      if (batchStatus?.status === BatchTransactionStatus.success) {
+      dispatch(updateBatchTransactions(batchStatus));
+
+      const isBatchSuccessful =
+        batchStatus?.status === BatchTransactionStatus.success;
+      const isBatchFailed =
+        batchStatus?.status === BatchTransactionStatus.invalid ||
+        batchStatus?.status === BatchTransactionStatus.dropped;
+      const isBatchNotFound =
+        Boolean(batchStatus?.statusCode) && Boolean(batchStatus?.message);
+
+      if (isBatchSuccessful) {
         stopPollingRef.current = true;
         onSuccess?.(batchId);
-      } else if (
-        batchStatus?.status === BatchTransactionStatus.invalid ||
-        batchStatus?.status === BatchTransactionStatus.dropped
-      ) {
+        return;
+      }
+
+      if (isBatchFailed) {
         stopPollingRef.current = true;
         onFail?.(
           batchId,
           `Error processing batch transactions. Status: ${batchStatus?.status}`
         );
-      } else if (
-        Boolean(batchStatus?.statusCode) &&
-        Boolean(batchStatus?.message)
-      ) {
+        return;
+      }
+
+      if (isBatchNotFound) {
         stopPollingRef.current = true;
       }
     },
@@ -78,7 +86,7 @@ export const useTrackBatchTransactions = ({
 
   const onMessage = useCallback(() => {
     // Do nothing, used for backwards compatibility to avoid breaking changes
-    // Will be removed in the next major release
+    // TODO: Will be removed in the next major release
   }, []);
 
   const onBatchUpdate = useCallback(
@@ -90,7 +98,7 @@ export const useTrackBatchTransactions = ({
         shouldRefreshBalance: true
       });
     },
-    [verifyBatchStatus, batchId]
+    [verifyBatchStatus, checkBatchTransactionsStatuses]
   );
 
   useRegisterWebsocketListener(onMessage, onBatchUpdate);

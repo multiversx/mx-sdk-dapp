@@ -5,5 +5,5 @@ export function getIsSequential({
 }: {
   transactions?: SignedTransactionType[] | SignedTransactionType[][];
 }) {
-  return transactions?.some((item) => Array.isArray(item));
+  return transactions?.some((transaction) => Array.isArray(transaction));
 }

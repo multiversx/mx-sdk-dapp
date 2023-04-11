@@ -8,7 +8,7 @@ import { removeSignedTransaction } from 'services';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   clearBatchTransactions,
-  updateBatchTransactions
+  setBatchTransactions
 } from 'reduxStore/slices';
 
 export const useBatchTransactions = () => {
@@ -25,7 +25,7 @@ export const useBatchTransactions = () => {
     const data = response?.data;
 
     if (data) {
-      dispatch(updateBatchTransactions(data));
+      dispatch(setBatchTransactions(data));
     }
 
     setBatchId(data?.id);

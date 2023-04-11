@@ -22,9 +22,7 @@ export const batchTransactionsSlice = createSlice({
       state: BatchTransactionsSliceStateType,
       action: PayloadAction<BatchTransactionsResponseType>
     ) => {
-      state[action.payload.id] = {
-        ...action.payload
-      };
+      state[action.payload.id] = action.payload;
     },
     clearBatchTransactions: (
       state: BatchTransactionsSliceStateType,

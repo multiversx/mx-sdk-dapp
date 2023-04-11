@@ -72,6 +72,7 @@ export enum TransactionsDefaultTitles {
   failed = 'Transaction failed',
   pending = 'Processing transaction',
   timedOut = 'Transaction timed out',
+  // Appears in batch transactions when the batch status is invalid (set the batch status to invalid for each transaction)
   invalid = 'Transaction invalid'
 }
 

@@ -1,9 +1,7 @@
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { useGetBatchesTransactions } from './useGetBatchesTransactions';
-import { checkBatch } from '../useCheckTransactionStatus/checkBatch';
 import { CustomTransactionInformation } from 'types';
-import { sequentialToFlatArray } from 'utils/transactions/sequentialToFlatArray';
-import { getIsSequential } from 'utils/transactions/getIsSequential';
+import { checkSequentialTransactionsStatuses } from 'utils/transactions/batch/checkSequentialTransactionsStatuses';
 
 export function useCheckBatchTransactionsStatuses() {
   const { batchTransactionsArray } = useGetBatchesTransactions();
@@ -17,22 +15,19 @@ export function useCheckBatchTransactionsStatuses() {
       (batch) => batch.batchId === props?.batchId
     );
 
-    if (batch) {
-      const { batchId, transactions } = batch;
-
-      const sessionId = batchId.split('-')[0];
-      const isSequential = getIsSequential({ transactions });
-      const transactionsArray = sequentialToFlatArray({ transactions });
-
-      await checkBatch({
-        sessionId,
-        transactionBatch: {
-          transactions: transactionsArray,
-          customTransactionInformation: props?.customTransactionInformation
-        },
-        isSequential
-      });
+    if (!batch) {
+      return;
     }
+
+    const { batchId, transactions } = batch;
+    const [sessionId] = batchId.split('-');
+
+    await checkSequentialTransactionsStatuses({
+      sessionId,
+      transactions,
+      customTransactionInformation: props?.customTransactionInformation
+    });
+
     if (props?.shouldRefreshBalance) {
       refreshAccount();
     }
