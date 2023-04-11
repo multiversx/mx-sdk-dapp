@@ -68,8 +68,10 @@ export function useSignMultipleTransactions({
       transactions: guardianProvider
         ? transactionsToSign?.map((transaction) => {
             transaction.setSender(Address.fromBech32(address));
-            transaction.version = TransactionVersion.withTxOptions();
-            transaction.options = TransactionOptions.withTxGuardedOptions();
+            transaction.setVersion(TransactionVersion.withTxOptions());
+            transaction.setOptions(
+              TransactionOptions.withOptions({ guarded: true })
+            );
             return transaction;
           })
         : transactionsToSign
@@ -164,7 +166,7 @@ export function useSignMultipleTransactions({
     const allSignedTransactions = Object.values(newSignedTransactions);
     const allSignedByGuardian = guardianProvider
       ? allSignedTransactions.every((tx) =>
-          Boolean(tx.getGuardianSignature().hex())
+          Boolean(tx.getGuardianSignature().toString('hex'))
         )
       : true;
 
@@ -183,7 +185,7 @@ export function useSignMultipleTransactions({
       }
       const signature = currentTransaction.transaction.getSignature();
 
-      if (signature.hex() && !isLastTransaction) {
+      if (signature.toString('hex') && !isLastTransaction) {
         setCurrentStep((exising) => exising + 1);
         return;
       }

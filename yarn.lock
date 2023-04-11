@@ -1897,10 +1897,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@12.0.1-beta.0":
-  version "12.0.1-beta.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.0.1-beta.0.tgz#402a16228434cf7a9568bf6036b60d8edaee78e7"
-  integrity sha512-92P1joaO8Vv7JbbeVqyrg9i9NPTlnbYrDEdh5qh85Qt7wlrMO97wXQOCNeomszgrN7dxtZnBOWwCmF2IzHDaJg==
+"@multiversx/sdk-core@12.1.0":
+  version "12.1.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.1.0.tgz#e692796769d47682ea1c2eeef5e30f14e5bf6fd3"
+  integrity sha512-WJ+Ox/en4BUUFkT8n/UzdNEVeB1nfetTf2HmifaiTSuoXvBb2KkdhCx37fU3udoildlFTgaWfr/k38C+p4zxqA==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     bech32 "1.1.4"
@@ -1923,10 +1923,10 @@
   dependencies:
     axios "^1.3.4"
 
-"@multiversx/sdk-hw-provider@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-hw-provider/-/sdk-hw-provider-3.0.3.tgz#371924113dfda1ca3b63b35ca88409b902103c94"
-  integrity sha512-YGPiwnhMN/Eq05KjbbVvT+vOsNgQ4JUsQZVS8y0gc4V/dXe8Ud+Rw4loMJj1uSUiTNjTJA3bjnFPgIiK3a+VZA==
+"@multiversx/sdk-hw-provider@4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-hw-provider/-/sdk-hw-provider-4.0.0.tgz#6425451455769a15214b98f6a4f14b11316d6ff6"
+  integrity sha512-VDHN4tkros3henkXFI0oM+EKrwtSKn20b9FSqlR41WQgausqF7J1L7ZzKf/TkK7TsfTn2PCT9osiosXvCJZGnA==
   dependencies:
     "@ledgerhq/devices" "7.0.6"
     "@ledgerhq/errors" "6.12.2"
@@ -1970,12 +1970,14 @@
     "@walletconnect/utils" "2.4.4"
     bech32 "1.1.4"
 
-"@multiversx/sdk-wallet@2.1.3":
-  version "2.1.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet/-/sdk-wallet-2.1.3.tgz#d93f8f58df2baa889bd5115704913dd54f48a0f6"
-  integrity sha512-cCCu3KowX14s6O5ATbZ3hkK6AYoy+lOSaw5IMqJTuTx9QsnFDgLW2G3GyFFueY66qti6fCVXXzWJZ4uGSnnmGQ==
+"@multiversx/sdk-wallet@^4.0.0":
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet/-/sdk-wallet-4.0.0.tgz#9c40cedd95baa861e0f55a9bb2a5657d7cc1d453"
+  integrity sha512-Fskqg9AGgqSIAgN+Ag9Y/DIoZRr4qgB0baVZ1nlXhgaRuM30v1UeW0TAIhuAbXkkMiTOJyLaCeebUDYy1VJgWA==
   dependencies:
     "@multiversx/sdk-bls-wasm" "0.3.5"
+    "@noble/ed25519" "1.7.3"
+    "@noble/hashes" "1.3.0"
     bech32 "1.1.4"
     bip39 "3.0.2"
     blake2b "2.1.3"
@@ -1992,6 +1994,16 @@
   integrity sha512-KbSARh5+NBqwhxdIg8LvbsDQ9bTWrPxxmGegRDzfsdwAI48W6m81e+t2eM2Tj/PlkOptXReNmWRWD0Qf0BVlnQ==
   dependencies:
     qs "6.10.3"
+
+"@noble/ed25519@1.7.3":
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/@noble/ed25519/-/ed25519-1.7.3.tgz#57e1677bf6885354b466c38e2b620c62f45a7123"
+  integrity sha512-iR8GBkDt0Q3GyaVcIu7mSsVIqnFbkbRzGLWlvhwunacoLwt4J3swfKhfaM6rN6WY+TBGoYT1GtT1mIh2/jGbRQ==
+
+"@noble/hashes@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@noble/hashes/-/hashes-1.3.0.tgz#085fd70f6d7d9d109671090ccae1d3bec62554a1"
+  integrity sha512-ilHEACi9DwqJB0pw7kv+Apvh50jiiSyR/cQ3y4W7lOR5mhvn/50FLUfsnfJz0BDZtl/RR16kXvptiv6q1msYZg==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
