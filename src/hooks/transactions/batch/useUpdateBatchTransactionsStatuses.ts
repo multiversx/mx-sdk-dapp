@@ -3,7 +3,7 @@ import { useGetBatchesTransactions } from './useGetBatchesTransactions';
 import { CustomTransactionInformation } from 'types';
 import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
 
-export function useCheckBatchTransactionsStatuses() {
+export function useUpdateBatchTransactionsStatuses() {
   const { batchTransactionsArray } = useGetBatchesTransactions();
 
   async function checkBatchTransactionsStatuses(props?: {

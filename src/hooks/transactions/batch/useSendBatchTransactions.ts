@@ -3,7 +3,7 @@ import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
 } from 'services/transactions/sendBatchTransactions';
-import { BatchTransactionStatus, SignedTransactionType } from 'types';
+import { BatchTransactionStatus } from 'types';
 import { removeSignedTransaction } from 'services';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
@@ -11,12 +11,8 @@ import {
   setBatchTransactions
 } from 'reduxStore/slices';
 
-export const useBatchTransactions = () => {
+export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();
-
-  const [transactions, setTransactions] = useState<
-    SignedTransactionType[] | SignedTransactionType[][]
-  >([]);
   const [batchId, setBatchId] = useState<string>();
 
   const send = useCallback(async (params: SendBatchTransactionsPropsType) => {
@@ -27,9 +23,7 @@ export const useBatchTransactions = () => {
     if (data) {
       dispatch(setBatchTransactions(data));
     }
-
     setBatchId(data?.id);
-    setTransactions(data?.transactions ?? []);
 
     const isBatchSentSuccessful =
       data?.status === BatchTransactionStatus.success;
@@ -52,7 +46,6 @@ export const useBatchTransactions = () => {
 
   return {
     send,
-    batchId,
-    transactions
+    batchId
   };
 };

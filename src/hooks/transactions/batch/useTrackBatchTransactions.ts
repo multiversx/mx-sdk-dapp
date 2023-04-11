@@ -1,11 +1,12 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
 import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { useCheckBatchTransactionsStatuses } from './useCheckBatchTransactionsStatuses';
+import { useUpdateBatchTransactionsStatuses } from './useUpdateBatchTransactionsStatuses';
 import { useGetAccount } from 'hooks/account';
+import { useGetBatchesTransactions } from './useGetBatchesTransactions';
 
 type TrackBatchTransactionsStatusProps = {
   apiAddress: string;
@@ -20,12 +21,28 @@ export const useTrackBatchTransactions = ({
   onSuccess,
   onFail
 }: TrackBatchTransactionsStatusProps) => {
-  const checkBatchTransactionsStatuses = useCheckBatchTransactionsStatuses();
-
   const dispatch = useDispatch();
   const stopPollingRef = useRef<boolean>(true);
 
+  const updateBatchTransactionsStatuses = useUpdateBatchTransactionsStatuses();
+  const { batches } = useGetBatchesTransactions();
   const { address } = useGetAccount();
+
+  const batchTransactions = useMemo(() => {
+    if (!batchId) {
+      return {};
+    }
+
+    return batches[batchId] ?? {};
+  }, [batchId, batches]);
+
+  const batchStatus = useMemo(() => {
+    if (!batchId) {
+      return '';
+    }
+
+    return batches[batchId]?.status ?? '';
+  }, [batchId, batches]);
 
   const getBatchStatus = useCallback(
     async (id: string) => {
@@ -93,12 +110,12 @@ export const useTrackBatchTransactions = ({
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
 
-      await checkBatchTransactionsStatuses({
+      await updateBatchTransactionsStatuses({
         batchId: data.batchId,
         shouldRefreshBalance: true
       });
     },
-    [verifyBatchStatus, checkBatchTransactionsStatuses]
+    [verifyBatchStatus, updateBatchTransactionsStatuses]
   );
 
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
@@ -119,7 +136,7 @@ export const useTrackBatchTransactions = ({
       }
 
       await verifyBatchStatus({ batchId });
-      await checkBatchTransactionsStatuses({
+      await updateBatchTransactionsStatuses({
         batchId,
         shouldRefreshBalance: true
       });
@@ -129,6 +146,8 @@ export const useTrackBatchTransactions = ({
   }, [batchId, verifyBatchStatus, stopPollingRef.current]);
 
   return {
-    getBatchStatus
+    getBatchStatus,
+    batchStatus,
+    batchTransactions
   };
 };
