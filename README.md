@@ -569,7 +569,7 @@ const { batchId, error, data } = await sendBatchTransactions({
           sender: "erd1..."
         }],
       ],
-      account: 'erd1...',
+      address: 'erd1...', // logged in user address
       sessionId: "123433533", // unix timestamp
       apiAddress: "https://api.multiversx.com",
     });
@@ -584,7 +584,7 @@ It returns a Promise that will be fulfilled with
   }
 ```
 
-- `batchId` is the transaction's batch id which can be used to track a batch transactions statuses and react to it (is composed of the `sessionId` and the `account addreess`).
+- `batchId` is the transaction's batch id which can be used to track the transactions statuses (is composed of the `sessionId` and the `account addreess`).
 - `error` is the http post batch transactions error message or a default error message.
 - `data` is the http post batch transactions data response.
 
@@ -713,10 +713,10 @@ It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sen
 </details>
 
 <details><summary>
-Tracking a batch transactions
+Tracking batch of transactions
   </summary>
 
-### Tracking a batch of transactions
+### Tracking batch transactions
 
 The library exposes a hook called `useTrackBatchTransactions`;
 

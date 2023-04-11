@@ -7,6 +7,10 @@ import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 import { useUpdateBatchTransactionsStatuses } from './useUpdateBatchTransactionsStatuses';
 import { useGetAccount } from 'hooks/account';
 import { useGetBatchesTransactions } from './useGetBatchesTransactions';
+import {
+  AVERAGE_TX_DURATION_MS,
+  TRANSACTIONS_STATUS_POLLING_INTERVAL
+} from 'constants/transactionStatus';
 
 type TrackBatchTransactionsStatusProps = {
   apiAddress: string;
@@ -123,7 +127,7 @@ export const useTrackBatchTransactions = ({
   useEffect(() => {
     const interval = setTimeout(async () => {
       stopPollingRef.current = false;
-    }, 30000);
+    }, TRANSACTIONS_STATUS_POLLING_INTERVAL);
     return () => {
       clearInterval(interval);
     };
@@ -140,7 +144,7 @@ export const useTrackBatchTransactions = ({
         batchId,
         shouldRefreshBalance: true
       });
-    }, 6000);
+    }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
   }, [batchId, verifyBatchStatus, stopPollingRef.current]);

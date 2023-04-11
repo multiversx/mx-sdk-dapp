@@ -8,7 +8,7 @@ import { TRANSACTIONS_BATCH } from 'apiCalls';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[] | SignedTransactionType[][];
-  account: string;
+  address: string;
   sessionId: string;
   apiAddress: string;
 }
@@ -16,11 +16,11 @@ export interface SendBatchTransactionsPropsType {
 export async function sendBatchTransactions({
   transactions,
   sessionId,
-  account,
+  address,
   apiAddress
 }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType> {
   try {
-    const batchId = `${sessionId}-${account}`;
+    const batchId = `${sessionId}-${address}`;
 
     const payload = {
       transactions: transactions,
