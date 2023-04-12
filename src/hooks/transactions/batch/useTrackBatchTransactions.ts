@@ -13,14 +13,12 @@ import {
 } from 'constants/transactionStatus';
 
 type TrackBatchTransactionsStatusProps = {
-  apiAddress: string;
   batchId: string | null;
   onSuccess?: (batchId: string | null) => void;
   onFail?: (batchId: string | null, errorMessage?: string) => void;
 };
 
 export const useTrackBatchTransactions = ({
-  apiAddress,
   batchId,
   onSuccess,
   onFail
@@ -52,7 +50,6 @@ export const useTrackBatchTransactions = ({
     async (id: string) => {
       try {
         return await getBatchTransactionsStatus({
-          apiAddress,
           batchId: id,
           address
         });
@@ -61,7 +58,7 @@ export const useTrackBatchTransactions = ({
         return null;
       }
     },
-    [apiAddress, address]
+    [address]
   );
 
   const verifyBatchStatus = useCallback(
