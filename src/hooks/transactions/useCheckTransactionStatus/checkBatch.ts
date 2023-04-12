@@ -3,9 +3,7 @@ import { updateSignedTransactionStatus } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import {
   GetTransactionsByHashesReturnType,
-  GetTransactionsByHashesType
-} from 'types';
-import {
+  GetTransactionsByHashesType,
   CustomTransactionInformation,
   SignedTransactionsBodyType
 } from 'types';
@@ -16,16 +14,17 @@ import {
   getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'utils/transactions';
-
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 
 export interface TransactionStatusTrackerPropsType {
   sessionId: string;
   transactionBatch: SignedTransactionsBodyType;
   getTransactionsByHash?: GetTransactionsByHashesType;
   shouldRefreshBalance?: boolean;
+  isSequential?: boolean;
 }
 
 interface RetriesType {
@@ -40,13 +39,15 @@ interface ManageTransactionType {
   sessionId: string;
   customTransactionInformation?: CustomTransactionInformation;
   shouldRefreshBalance?: boolean;
+  isSequential?: boolean;
 }
 
 function manageTransaction({
   serverTransaction,
   sessionId,
   customTransactionInformation,
-  shouldRefreshBalance
+  shouldRefreshBalance,
+  isSequential
 }: ManageTransactionType) {
   const { hash, status, results, invalidTransaction, hasStatusChanged } =
     serverTransaction;
@@ -62,10 +63,27 @@ function manageTransaction({
       return;
     }
 
-    if (invalidTransaction || getIsTransactionPending(status)) {
+    if (
+      (invalidTransaction && !isSequential) ||
+      getIsTransactionPending(status)
+    ) {
       retries[hash] = retries[hash] ? retries[hash] + 1 : 1;
       return;
     }
+
+    // The tx is from a sequential batch.
+    // If the transactions before this are not successful then it means that no other tx will be processed
+    if (isSequential && !status) {
+      store.dispatch(
+        updateSignedTransactionStatus({
+          sessionId,
+          status,
+          transactionHash: hash
+        })
+      );
+      return;
+    }
+
     if (hasStatusChanged) {
       if (
         getIsTransactionSuccessful(status) &&
@@ -115,14 +133,20 @@ export async function checkBatch({
   sessionId,
   transactionBatch: { transactions, customTransactionInformation },
   getTransactionsByHash = defaultGetTxByHash,
-  shouldRefreshBalance
+  shouldRefreshBalance,
+  isSequential
 }: TransactionStatusTrackerPropsType) {
   try {
     if (transactions == null) {
       return;
     }
 
-    const pendingTransactions = getPendingTransactions(transactions, timeouts);
+    const transactionsArray = sequentialToFlatArray({ transactions });
+
+    const pendingTransactions = getPendingTransactions(
+      transactionsArray,
+      timeouts
+    );
 
     const serverTransactions = await getTransactionsByHash(pendingTransactions);
 
@@ -131,7 +155,8 @@ export async function checkBatch({
         serverTransaction,
         sessionId,
         customTransactionInformation,
-        shouldRefreshBalance
+        shouldRefreshBalance,
+        isSequential
       });
     }
   } catch (error) {

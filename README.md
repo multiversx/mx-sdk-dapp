@@ -535,6 +535,66 @@ or the `useSignTransactions` hook defined below. If you don't use one of these, 
 </details>
 
 <details><summary>
+Sending Batch Transactions
+  </summary>
+
+### Sending Batch Transactions
+
+The API for sending batch transactions is a function called **sendBatchTransactions**:
+
+`import { sendBatchTransactions } from "@multiversx/sdk-dapp/services/transactions/sendBatchTransactions";`
+
+Also, there is a hook that exposes the same functionality: `useSendBatchTransactions`.
+This hook returns a function that can be used to send a batch of transactions and the `batchId` resulted after sending the transactions.
+
+It can be used to send a batch of transactions with minimum information:
+
+  **Important! Each transaction from the batch should be signed and should contain the sender.**
+
+```typescript
+const { batchId, error, data } = await sendBatchTransactions({
+    transactions: [
+        [{
+          value: '1000000000000000000',
+          data: 'ping',
+          receiver: contractAddress,
+          signature: "asjjsajdjhsajdhjs",
+          sender: "erd1..."
+        }],
+        [{
+          value: '1000000000000000000',
+          data: 'pong',
+          receiver: contractAddress,
+          signature: "asjjsajdjhsajdhjs",
+          sender: "erd1..."
+        }],
+      ],
+      address: 'erd1...', // logged in user address
+      sessionId: "123433533", // unix timestamp
+      apiAddress: "https://api.multiversx.com",
+    });
+```
+
+It returns a Promise that will be fulfilled with
+```
+  {
+    error?: string;
+    batchId: string | null;
+    data?: BatchTransactionsResponseType | null;
+  }
+```
+
+- `batchId` is the transaction's batch id which can be used to track the transactions statuses (is composed of the `sessionId` and the `account address`).
+- `error` is the http post batch transactions error message or a default error message.
+- `data` is the http post batch transactions data response.
+
+**Important! For the transaction to be signed, you will have to use either `SignTransactionsModals` defined above, in the `Prerequisites` section,
+or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
+
+
+</details>
+
+<details><summary>
 Transaction Signing Flow
   </summary>
 
@@ -649,6 +709,61 @@ transactionStatus has the following information about the transaction:
 ```
 
 It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sent, the hook will just return an empty object.
+
+</details>
+
+<details><summary>
+Tracking batch of transactions
+  </summary>
+
+### Tracking batch transactions
+
+The library exposes a hook called `useTrackBatchTransactions`;
+
+```typescript
+import { useTrackBatchTransactions } from "@multiversx/sdk-dapp/hooks/transactions/batch/useTrackBatchTransactions";
+
+const onSuccess = (batchId: string | null) => {
+  console.log("onSuccess", batchId);
+};
+const onFail = (batchId: string | null) => {
+  console.log("onFail", batchId);
+};
+
+const { getBatchStatus, batchStatus, batchTransactions } = useTrackBatchTransactions({
+  batchId,
+  apiAddress,
+  onSuccess,
+  onFail,
+});
+```
+
+- `getBatchStatus` is a function that can be used to get the batch status from the API on demand
+It returns a Promise (`Promise<BatchTransactionsResponseType | null>`) that will be fulfilled with
+```
+  {
+    id: string;
+    status: BatchTransactionStatus;
+    transactions: SignedTransactionType[] | SignedTransactionType[][];
+    error?: string;
+    message?: string;
+    statusCode?: string;
+  } | null
+```
+- `batchStatus` current batch status
+- `batchTransactions` the transactions in a batch. Each transaction has its own status.
+
+
+Extra: to access all the batches there is `useGetBatchesTransactions` hook.
+
+```typescript
+import { useGetBatches } from "@multiversx/sdk-dapp/hooks/transactions/batch/useGetBatches";
+
+const { batches, batchTransactionsArray } = useGetBatches();
+ ```
+
+- `batches` is an object with the batchId as key and the batch as value.
+- `batchTransactionsArray` is an array of objects containing batchId and batchTransactions.
 
 </details>
 

@@ -7,6 +7,7 @@ export enum ReducersEnum {
   signedMessageInfo = 'signedMessageInfo',
   toasts = 'toasts',
   transactions = 'transactions',
+  batchTransactions = 'batchTransactions',
   transactionsInfo = 'transactionsInfo',
   transactionsToSign = 'transactionsToSign'
 }
