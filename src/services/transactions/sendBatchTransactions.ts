@@ -6,6 +6,8 @@ import {
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
 import { TIMEOUT } from 'constants/network';
+import { networkConfigSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[] | SignedTransactionType[][];
@@ -20,6 +22,10 @@ export async function sendBatchTransactions({
   address,
   apiAddress
 }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType> {
+  const {
+    network: { apiTimeout }
+  } = networkConfigSelector(store.getState());
+
   try {
     const batchId = `${sessionId}-${address}`;
 
@@ -32,7 +38,7 @@ export async function sendBatchTransactions({
       `${apiAddress}/${TRANSACTIONS_BATCH}`,
       payload,
       {
-        timeout: TIMEOUT
+        timeout: Number(apiTimeout ?? TIMEOUT)
       }
     );
 
