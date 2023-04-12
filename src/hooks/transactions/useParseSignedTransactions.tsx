@@ -26,9 +26,12 @@ export function useParseSignedTransactions(
 
       if (searchData && WALLET_SIGN_SESSION in searchData) {
         const sessionId = String((searchData as any)[WALLET_SIGN_SESSION]);
+
         const signedTransactions = new WalletProvider(
           `${network.walletAddress}${DAPP_INIT_ROUTE}`
         ).getTransactionsFromWalletUrl();
+
+        console.log({ signedTransactions });
 
         if (searchData.status === TransactionBatchStatusesEnum.cancelled) {
           dispatch(

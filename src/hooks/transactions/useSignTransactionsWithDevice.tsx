@@ -1,6 +1,9 @@
 import { Transaction } from '@multiversx/sdk-core';
 import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
+import { WalletProvider } from '@multiversx/sdk-web-wallet-provider/out';
+import { ITransaction } from '@multiversx/sdk-web-wallet-provider/out/interface';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
+import { WALLET_SIGN_SESSION } from 'constants/index';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
@@ -17,12 +20,49 @@ import {
   MultiSignTransactionType,
   TransactionBatchStatusesEnum
 } from 'types';
+import { builtCallbackUrl } from 'utils';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
+
+class LedgerGuardianProvider extends WalletProvider {
+  /**
+   * Packs an array of {$link Transaction} and redirects to the correct transaction sigining hook
+   *
+   * @param transactions
+   * @param options
+   */
+  async guardTransactions(
+    transactions: ITransaction[],
+    options?: { callbackUrl?: string }
+  ): Promise<void> {
+    const jsonToSend: any = {};
+    transactions.map((tx) => {
+      const plainTx = WalletProvider.prepareWalletTransaction(tx);
+      for (const txProp in plainTx) {
+        if (
+          plainTx.hasOwnProperty(txProp) &&
+          !jsonToSend.hasOwnProperty(txProp)
+        ) {
+          jsonToSend[txProp] = [];
+        }
+
+        jsonToSend[txProp].push(plainTx[txProp]);
+      }
+    });
+
+    const redirectUrl = this['buildWalletUrl']({
+      endpoint: '',
+      callbackUrl: options?.callbackUrl,
+      params: jsonToSend
+    });
+
+    window.location.href = redirectUrl;
+  }
+}
 
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
@@ -91,6 +131,20 @@ export function useSignTransactionsWithDevice(
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
     const shouldMoveTransactionsToSignedState =
       getShouldMoveTransactionsToSignedState(newSignedTransactions);
+
+    const urlParams = { [WALLET_SIGN_SESSION]: String(sessionId) };
+    const callbackUrl = window?.location
+      ? `${window.location.origin}${callbackRoute}`
+      : `${callbackRoute}`;
+    const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
+
+    const guardianProvider = new LedgerGuardianProvider(
+      'http://localhost:3000'
+    );
+
+    guardianProvider.guardTransactions(newSignedTransactions, {
+      callbackUrl: encodeURIComponent(buildedCallbackUrl)
+    });
 
     if (!shouldMoveTransactionsToSignedState) {
       return;
