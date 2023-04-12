@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [Added Batch transactions support](https://github.com/multiversx/mx-sdk-dapp/pull/722)]
+- [Added Batch transactions support](https://github.com/multiversx/mx-sdk-dapp/pull/722)]
+- [Updated WalletConnect provider package](https://github.com/multiversx/mx-sdk-dapp/pull/726)]
 
 ## [[v2.10.17]](https://github.com/multiversx/mx-sdk-dapp/pull/721)] - 2023-04-04
 
