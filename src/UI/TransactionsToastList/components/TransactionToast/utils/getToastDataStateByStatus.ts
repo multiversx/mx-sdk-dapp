@@ -2,6 +2,7 @@ import {
   faCheck,
   faHourglass,
   faTimes,
+  faBan,
   IconDefinition
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -70,6 +71,16 @@ export const getToastDataStateByStatus = ({
     iconClassName: classes.danger
   };
 
+  const invalidToastData: ToastDataState = {
+    id: toastId,
+    icon: faBan,
+    title:
+      transactionDisplayInfo?.invalidMessage ??
+      TransactionsDefaultTitles.invalid,
+    hasCloseButton: true,
+    iconClassName: classes?.warning
+  };
+
   const timedOutToastData = {
     id: toastId,
     icon: faTimes,
@@ -91,6 +102,8 @@ export const getToastDataStateByStatus = ({
       return failToastData;
     case TransactionBatchStatusesEnum.timedOut:
       return timedOutToastData;
+    case TransactionBatchStatusesEnum.invalid:
+      return invalidToastData;
     default:
       return pendingToastData;
   }

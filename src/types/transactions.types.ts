@@ -9,6 +9,7 @@ import type {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums.types';
+import { BatchTransactionsResponseType } from './serverTransactions.types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -114,6 +115,7 @@ export interface TransactionsDisplayInfoType {
   submittedMessage?: string;
   transactionDuration?: number;
   timedOutMessage?: string;
+  invalidMessage?: string;
 }
 
 export interface SendSimpleTransactionPropsType {
@@ -190,6 +192,12 @@ export interface CustomTransactionInformation {
 export interface SendTransactionReturnType {
   error?: string;
   sessionId: string | null;
+}
+
+export interface SendBatchTransactionReturnType {
+  error?: string;
+  batchId: string | null;
+  data?: BatchTransactionsResponseType | null;
 }
 
 export type GetTransactionsByHashesType = (
