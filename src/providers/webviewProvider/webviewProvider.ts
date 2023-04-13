@@ -30,7 +30,9 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
     }
   };
   document.addEventListener('message', handleMessageReceived);
-  window.addEventListener('message', handleMessageReceived);
+  if (window) {
+    window.addEventListener('message', handleMessageReceived);
+  }
 };
 
 export const webviewProvider: any = {
