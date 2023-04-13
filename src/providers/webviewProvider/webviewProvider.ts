@@ -29,7 +29,9 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
       console.error('error parsing response');
     }
   };
-  document.addEventListener('message', handleMessageReceived);
+  if (document) {
+    document.addEventListener('message', handleMessageReceived);
+  }
   if (window) {
     window.addEventListener('message', handleMessageReceived);
   }
@@ -65,7 +67,9 @@ export const webviewProvider: any = {
                 reject('Unable to login');
               }
             }
-            document.removeEventListener('message', handleTokenReceived);
+            if (document) {
+              document.removeEventListener('message', handleTokenReceived);
+            }
           }
           handleWaitForMessage(handleTokenReceived);
         }
@@ -125,7 +129,9 @@ export const webviewProvider: any = {
                 reject('Unable to sign');
               }
             }
-            document.removeEventListener('message', handleSignResponse);
+            if (document) {
+              document.removeEventListener('message', handleSignResponse);
+            }
           }
           handleWaitForMessage(handleSignResponse);
         });
