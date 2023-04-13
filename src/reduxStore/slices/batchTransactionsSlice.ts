@@ -9,7 +9,7 @@ export interface BatchTransactionsSliceStateType {
 const initialState: BatchTransactionsSliceStateType = {};
 
 export const batchTransactionsSlice = createSlice({
-  name: 'dappConfigSlice',
+  name: 'batchTransactionsSlice',
   initialState,
   reducers: {
     setBatchTransactions: (
