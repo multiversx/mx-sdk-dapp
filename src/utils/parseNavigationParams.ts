@@ -6,7 +6,7 @@ interface ParseNavigationParamsOptionsType {
 }
 
 const defaultOptions: ParseNavigationParamsOptionsType = {
-  search: window ? window.location.search : '',
+  search: typeof window != 'undefined' ? window.location.search : '',
   removeParams: []
 };
 
@@ -20,7 +20,8 @@ export const parseNavigationParams = (
   options = defaultOptions
 ) => {
   let params: Record<string, string> = {};
-  const defaultSearch = window ? window.location.search : '';
+  const defaultSearch =
+    typeof window != 'undefined' ? window.location.search : '';
   const search = options.search ?? defaultSearch;
 
   if (search) {
