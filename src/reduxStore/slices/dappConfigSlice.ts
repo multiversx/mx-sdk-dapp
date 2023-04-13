@@ -4,7 +4,7 @@ import { logoutAction } from '../commonActions';
 
 export type DappConfigSliceStateType = DappConfigType | undefined;
 
-const initialState: DappConfigSliceStateType = undefined;
+const initialState: DappConfigSliceStateType = {};
 
 export const dappConfigSlice = createSlice({
   name: 'dappConfigSlice',
@@ -14,7 +14,7 @@ export const dappConfigSlice = createSlice({
       state: DappConfigSliceStateType,
       action: PayloadAction<DappConfigSliceStateType>
     ) => {
-      state = action.payload;
+      state = { ...state, ...action.payload };
     }
   },
   extraReducers: (builder) => {

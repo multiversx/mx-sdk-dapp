@@ -52,7 +52,7 @@ export const DappProvider = ({
         <AppInitializer
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
-          logoutRoute={dappConfig?.logoutRoute}
+          dappConfig={dappConfig}
         >
           <ProviderInitializer />
           <CustomComponents customComponents={customComponents} />
