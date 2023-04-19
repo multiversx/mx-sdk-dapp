@@ -1,133 +1,153 @@
-import React, { MouseEvent } from 'react';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Transaction } from '@multiversx/sdk-core/out';
-import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
-import { PageState } from 'UI/PageState';
-import { useGuardianScren, useSignStepsClasses } from '../../hooks';
-import { GuardianScreenType } from '../../signWithDeviceModal.types';
-import styles from './../../../../ledger/LedgerLoginContainer/addressRowStyles.scss';
-import TwoFactorAuthForm from './components/TwoFactorAuth';
+import React from 'react';
 
-const GUARDIAN_FIELD = 'guardian';
+import classNames from 'classnames';
+
+import { useGuardianScreen } from '../../hooks';
+import type { GuardianScreenType } from '../../signWithDeviceModal.types';
+
+import styles from './guardianScreenStyles.scss';
 
 export { GuardianScreenType };
 
-export const GuardianScreen = ({
-  onSignTransaction,
-  onPrev,
-  guardianProvider,
-  title,
-  className,
-  signedTransactions,
-  setSignedTransactions,
-  signStepInnerClasses
-}: GuardianScreenType) => {
-  const classes = useSignStepsClasses();
+const GUARDIAN_FIELD = 'guardian';
+const GUARDIAN_CODE_LENGTH = 8;
+
+export const GuardianScreen = (props: GuardianScreenType) => {
+  const longest = GUARDIAN_CODE_LENGTH > 8;
+  const long = GUARDIAN_CODE_LENGTH >= 7 && GUARDIAN_CODE_LENGTH <= 8;
+  const medium = Number(GUARDIAN_CODE_LENGTH) === 6;
+  const short = GUARDIAN_CODE_LENGTH < 6;
+  const half = short ? null : Math.floor(GUARDIAN_CODE_LENGTH / 2);
 
   const {
-    isValid,
-    isTouched,
-    error,
-    setError,
+    onSignTransaction,
+    onPrev,
+    guardianProvider,
+    signedTransactions,
+    setSignedTransactions
+  } = props;
+
+  const {
+    code,
+    // error,
+    required,
     onChange,
-    onBlur,
-    value: code
-  } = useGuardianScren();
-
-  const { buttonsWrapperClassName, buttonClassName } =
-    signStepInnerClasses || {};
-
-  const onCloseClick = (event: MouseEvent<HTMLElement>) => {
-    event.preventDefault();
-    onPrev();
-  };
+    onPaste,
+    onReset,
+    onSubmit,
+    allCharacters,
+    anyCharacter
+  } = useGuardianScreen({
+    onSignTransaction,
+    signedTransactions,
+    guardianProvider,
+    setSignedTransactions,
+    length: GUARDIAN_CODE_LENGTH
+  });
 
   if (!guardianProvider || !signedTransactions) {
     return null;
   }
 
-  const onSubmit = async () => {
-    try {
-      const transactions = Object.values(signedTransactions);
-      // TODO remove any
-      const guardedTransactions = await guardianProvider.applyGuardianSignature(
-        transactions as any,
-        code
-      );
-      const newTransactions = guardedTransactions.reduce(
-        (acc: Record<number, Transaction>, transaction: any, index: number) => {
-          acc[index] = transaction;
-          return acc;
-        },
-        {} as typeof signedTransactions
-      );
-      setSignedTransactions?.(newTransactions);
-      onSignTransaction();
-    } catch {
-      setError('Error while signing with guardian');
-    }
-  };
-
   return (
-    <>
-      {/* <TwoFactorAuthForm /> */}
-      <PageState
-        icon={error ? faTimes : null}
-        iconClass={classes.icon}
-        iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
-        iconSize='3x'
-        className={className}
-        title={title}
-        description={
-          <div className={styles.ledgerAddressTableBodyItem}>
-            <label htmlFor={GUARDIAN_FIELD}>Guardian Code</label>
+    <form className={styles.guardian}>
+      <div
+        className={classNames(styles.guardianField, {
+          [styles.guardianFieldLongest]: longest
+        })}
+      >
+        <label htmlFor={GUARDIAN_FIELD} className={styles.guardianLabel}>
+          Guardian Code
+        </label>
 
-            <div>
+        <div className={styles.guardianFields}>
+          {longest ? (
+            <div
+              className={classNames(styles.guardianInputWrapper, {
+                [styles.guardianInputWrapperLongest]: longest
+              })}
+            >
               <input
-                type='text'
+                value={code.get(0)}
                 id={GUARDIAN_FIELD}
                 name={GUARDIAN_FIELD}
                 data-testid={GUARDIAN_FIELD}
-                required={true}
-                value={code}
+                onPaste={onPaste}
                 onChange={onChange}
-                onBlur={onBlur}
+                type='text'
                 autoComplete='off'
+                className={classNames(styles.guardianInput, {
+                  [styles.guardianInputError]:
+                    !Boolean(code.get(0)) && Boolean(required),
+                  [styles.guardianInputLongest]: longest
+                })}
               />
             </div>
+          ) : (
+            Array.from({ length: GUARDIAN_CODE_LENGTH }).map((_, index) => (
+              <div
+                key={`input-code-${index}`}
+                className={classNames(
+                  styles.guardianInputWrapper,
+                  styles[`guardianInputWrapper${index}`],
+                  { [styles.guardianInputSeparator]: half === index + 1 },
+                  { [styles.guardianInputWrapperLong]: long },
+                  { [styles.guardianInputWrapperMedium]: medium }
+                )}
+              >
+                <input
+                  type='text'
+                  data-index={index}
+                  onChange={onChange}
+                  autoComplete='off'
+                  onPaste={onPaste}
+                  id={`${GUARDIAN_FIELD}-code-${index}`}
+                  name={`${GUARDIAN_FIELD}-code-${index}`}
+                  data-testid={`${GUARDIAN_FIELD}-code-${index}`}
+                  value={code.get(index)}
+                  className={classNames(
+                    styles.guardianInput,
+                    styles.guardianInputBox,
+                    {
+                      [styles.guardianInputError]:
+                        !Boolean(code.get(index)) && Boolean(required)
+                    }
+                  )}
+                />
+              </div>
+            ))
+          )}
+        </div>
 
-            {!isValid && isTouched && <div>{error}</div>}
-          </div>
-        }
-        action={
-          <div
-            className={classNames(
-              classes.buttonsWrapper,
-              buttonsWrapperClassName
-            )}
-          >
-            <button
-              id='closeButton'
-              data-testid='closeButton'
-              onClick={onCloseClick}
-              className={classNames(classes.cancelButton, buttonClassName)}
-            >
-              Back
-            </button>
+        <div
+          onClick={onReset}
+          className={classNames(styles.guardianReset, {
+            [styles.visible]: anyCharacter
+          })}
+        >
+          Reset
+        </div>
 
-            <button
-              type='button'
-              className={classNames(classes.signButton, buttonClassName)}
-              id='submitBtn'
-              data-testid='submitBtn'
-              onClick={onSubmit}
-            >
-              Submit
-            </button>
-          </div>
-        }
-      />
-    </>
+        <div
+          className={classNames(styles.guardianError, {
+            [styles.guardianErrorMedium]: medium,
+            [styles.guardianErrorLong]: long,
+            [styles.visible]: !allCharacters && required
+          })}
+        >
+          Required
+        </div>
+      </div>
+
+      <div className={styles.guardianButtons}>
+        <button onClick={onSubmit} className={styles.guardianSubmit}>
+          Submit
+        </button>
+
+        <button onClick={onPrev} className={styles.guardianBack}>
+          Back
+        </button>
+      </div>
+    </form>
   );
 };
