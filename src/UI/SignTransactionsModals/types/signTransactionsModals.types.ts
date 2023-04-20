@@ -1,7 +1,6 @@
 import { Transaction } from '@multiversx/sdk-core';
-import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 
-import { LoginMethodsEnum } from 'types';
+import { LoginMethodsEnum, SignModalPropsType } from 'types';
 
 export interface SignPropsType {
   handleClose: () => void;
@@ -12,7 +11,8 @@ export interface SignPropsType {
   callbackRoute: string;
   className?: string;
   verifyReceiverScam?: boolean;
-  guardianProvider?: GenericGuardianProvider;
+  isGuarded?: boolean;
+  GuardianScreen?: SignModalPropsType['GuardianScreen'];
 }
 
 export type ScreenType = (signProps: SignPropsType) => JSX.Element;

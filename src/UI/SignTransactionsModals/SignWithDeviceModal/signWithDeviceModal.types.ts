@@ -1,11 +1,13 @@
-import { ReactNode } from 'react';
-import { Transaction } from '@multiversx/sdk-core/out';
-import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import type {
   ActiveLedgerTransactionType,
+  DeviceSignedTransactions,
+  GuardianScreenType,
   MultiSignTransactionType
 } from 'types';
 import type { WithClassnameType } from '../../types';
+import { SignPropsType } from '../types/signTransactionsModals.types';
+
+export { DeviceSignedTransactions };
 
 export interface SignStepInnerClassesType {
   buttonsWrapperClassName?: string;
@@ -18,24 +20,11 @@ export interface SignStepInnerClassesType {
   progressClassName?: string;
 }
 
-export type DeviceSignedTransactions = Record<number, Transaction>;
-
-export interface GuardianScreenType extends WithClassnameType {
-  onSignTransaction: () => void;
-  onPrev: () => void;
-  guardianProvider?: GenericGuardianProvider;
-  title?: ReactNode;
-  signStepInnerClasses?: SignStepInnerClassesType;
-  signedTransactions?: DeviceSignedTransactions;
-  setSignedTransactions?: React.Dispatch<
-    React.SetStateAction<DeviceSignedTransactions | undefined>
-  >;
-}
-
 export interface SignStepPropsType
   extends WithClassnameType,
     GuardianScreenType {
   handleClose: () => void;
+  GuardianScreen?: SignPropsType['GuardianScreen'];
   waitingForDevice: boolean;
   error: string | null;
   callbackRoute?: string;

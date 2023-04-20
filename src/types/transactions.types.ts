@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 import type { Address, Transaction } from '@multiversx/sdk-core';
 import type { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
-import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import type { SignStepInnerClassesType } from 'UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
 import type { WithClassnameType } from '../UI/types';
 import type {
@@ -171,6 +170,19 @@ export interface SmartContractResult {
   returnMessage: string;
 }
 
+export type DeviceSignedTransactions = Record<number, Transaction>;
+
+export interface GuardianScreenType extends WithClassnameType {
+  onSignTransaction: () => void;
+  onPrev: () => void;
+  title?: ReactNode;
+  signStepInnerClasses?: SignStepInnerClassesType;
+  signedTransactions?: DeviceSignedTransactions;
+  setSignedTransactions?: React.Dispatch<
+    React.SetStateAction<DeviceSignedTransactions | undefined>
+  >;
+}
+
 export interface SignModalPropsType extends WithClassnameType {
   handleClose: () => void;
   error: string | null;
@@ -180,7 +192,8 @@ export interface SignModalPropsType extends WithClassnameType {
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
   title?: ReactNode;
-  guardianProvider?: GenericGuardianProvider;
+  isGuarded?: boolean;
+  GuardianScreen?: (signProps: GuardianScreenType) => JSX.Element;
   signStepInnerClasses?: SignStepInnerClassesType;
 }
 
