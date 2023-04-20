@@ -1,5 +1,4 @@
 import React from 'react';
-
 import classNames from 'classnames';
 
 import { useGuardianScreen } from '../../hooks';
@@ -9,10 +8,28 @@ import styles from './guardianScreenStyles.scss';
 
 export { GuardianScreenType };
 
+/*
+ * Declare here the constants for the guardian field (for single input only, not applicable for multiple boxes).
+ * Control here using the "GUARDIAN_CODE_LENGTH" variable the expected code length (will adapt the interface).
+ */
+
 const GUARDIAN_FIELD = 'guardian';
 const GUARDIAN_CODE_LENGTH = 8;
 
+/*
+ * Handle the component declaration, and export it.
+ */
+
 export const GuardianScreen = (props: GuardianScreenType) => {
+  /*
+   * Declare breakpoints and use them in various conditions.
+   * "longest" - code of 9 or above characters; will transform field into single input.
+   * "long" - code of 7 or 8 characters; will create a pair of three/four and four inputs.
+   * "medium" - code of 6 characters; will transform field into a pair of three inputs.
+   * "short" - code of below 6 characters; will generate as many inputs as characters, without pairing.
+   * "half" - only applicable to more than 5 characters, will appoximate down half of the total generated inputs.
+   */
+
   const longest = GUARDIAN_CODE_LENGTH > 8;
   const long = GUARDIAN_CODE_LENGTH >= 7 && GUARDIAN_CODE_LENGTH <= 8;
   const medium = Number(GUARDIAN_CODE_LENGTH) === 6;
@@ -29,7 +46,7 @@ export const GuardianScreen = (props: GuardianScreenType) => {
 
   const {
     code,
-    // error,
+    error,
     required,
     onChange,
     onPaste,
@@ -45,9 +62,26 @@ export const GuardianScreen = (props: GuardianScreenType) => {
     length: GUARDIAN_CODE_LENGTH
   });
 
+  /*
+   * Don't render anything if the account doesn't have a guardian.
+   * Most likely not the first failcheck.
+   */
+
   if (!guardianProvider || !signedTransactions) {
     return null;
   }
+
+  /*
+   * Retrieve the index of the given input (zero applicable if only one input for above 8 characters).
+   * Should return a boolean to toggle error if it's empty or if there's a general submitting error.
+   */
+
+  const isInputError = (index: number) =>
+    (!Boolean(code.get(index)) && Boolean(required)) || Boolean(error);
+
+  /*
+   * Return the rendered component.
+   */
 
   return (
     <form className={styles.guardian}>
@@ -77,8 +111,7 @@ export const GuardianScreen = (props: GuardianScreenType) => {
                 type='text'
                 autoComplete='off'
                 className={classNames(styles.guardianInput, {
-                  [styles.guardianInputError]:
-                    !Boolean(code.get(0)) && Boolean(required),
+                  [styles.guardianInputError]: isInputError(0),
                   [styles.guardianInputLongest]: longest
                 })}
               />
@@ -101,17 +134,14 @@ export const GuardianScreen = (props: GuardianScreenType) => {
                   onChange={onChange}
                   autoComplete='off'
                   onPaste={onPaste}
-                  id={`${GUARDIAN_FIELD}-code-${index}`}
-                  name={`${GUARDIAN_FIELD}-code-${index}`}
-                  data-testid={`${GUARDIAN_FIELD}-code-${index}`}
+                  id={`${GUARDIAN_FIELD}-${index}`}
+                  name={`${GUARDIAN_FIELD}-${index}`}
+                  data-testid={`${GUARDIAN_FIELD}-${index}`}
                   value={code.get(index)}
                   className={classNames(
                     styles.guardianInput,
                     styles.guardianInputBox,
-                    {
-                      [styles.guardianInputError]:
-                        !Boolean(code.get(index)) && Boolean(required)
-                    }
+                    { [styles.guardianInputError]: isInputError(index) }
                   )}
                 />
               </div>
@@ -122,7 +152,10 @@ export const GuardianScreen = (props: GuardianScreenType) => {
         <div
           onClick={onReset}
           className={classNames(styles.guardianReset, {
-            [styles.visible]: anyCharacter
+            [styles.guardianResetMedium]: medium,
+            [styles.guardianResetLong]: long,
+            [styles.visible]: anyCharacter,
+            [styles.error]: (!allCharacters && required) || Boolean(error)
           })}
         >
           Reset
@@ -130,12 +163,10 @@ export const GuardianScreen = (props: GuardianScreenType) => {
 
         <div
           className={classNames(styles.guardianError, {
-            [styles.guardianErrorMedium]: medium,
-            [styles.guardianErrorLong]: long,
-            [styles.visible]: !allCharacters && required
+            [styles.visible]: (!allCharacters && required) || Boolean(error)
           })}
         >
-          Required
+          {Boolean(error) ? error : 'Required'}
         </div>
       </div>
 

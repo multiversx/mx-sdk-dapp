@@ -9,6 +9,10 @@ import { Transaction } from '@multiversx/sdk-core/out';
 
 import type { GuardianScreenType } from '../signWithDeviceModal.types';
 
+/*
+ * Handle the hook properties types interface declaration.
+ */
+
 export interface GuardianScreenHookType {
   signedTransactions: GuardianScreenType['signedTransactions'];
   onSignTransaction: GuardianScreenType['onSignTransaction'];
@@ -17,13 +21,17 @@ export interface GuardianScreenHookType {
   length: number;
 }
 
+/*
+ * Handle the hook declaration.
+ */
+
 export const useGuardianScreen = (props: GuardianScreenHookType) => {
   const {
     signedTransactions,
     guardianProvider,
     setSignedTransactions,
     onSignTransaction,
-    length = 6
+    length
   } = props;
 
   const longest = length > 8;
@@ -35,12 +43,20 @@ export const useGuardianScreen = (props: GuardianScreenHookType) => {
   const [required, setRequired] = useState(false);
   const [code, setCode] = useState(initial);
 
+  /*
+   * Return a boolean of whether there's a character filled in every rendered input.
+   */
+
   const allCharacters = useMemo(() => {
     const characters = Array.from(code.values());
     const valid = characters.every((character) => Boolean(character));
 
     return valid;
   }, [code]);
+
+  /*
+   * Return a boolean of whether there's a any filled in any of the total inputs.
+   */
 
   const anyCharacter = useMemo(() => {
     const characters = Array.from(code.values());
@@ -49,11 +65,21 @@ export const useGuardianScreen = (props: GuardianScreenHookType) => {
     return valid;
   }, [code]);
 
+  /*
+   * Callback toggled when pressing the "Reset" button.
+   * Should reset the code, turn off the "required" state, and reset the possible error.
+   */
+
   const onReset = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
     setCode(initial);
     setRequired(false);
+    setError('');
   };
+
+  /*
+   * Get all input values, join into single string, then validate, and throw errors (if the case), or submit successfully.
+   */
 
   const onSubmit = async (event: MouseEvent<HTMLElement>) => {
     const value = Array.from(code.values()).join('');
@@ -88,13 +114,17 @@ export const useGuardianScreen = (props: GuardianScreenHookType) => {
         setSignedTransactions?.(newTransactions);
         onSignTransaction();
       } catch {
-        setError('Error while signing with guardian');
+        setError('Guardian signing error');
       }
     } else {
       event.preventDefault();
       setRequired(true);
     }
   };
+
+  /*
+   * Traverse the document tree from the current target as a source, and find the next input, and return it.
+   */
 
   const getSiblingInput = (target: EventTarget & HTMLInputElement) => {
     const parent = target.parentElement;
@@ -104,11 +134,20 @@ export const useGuardianScreen = (props: GuardianScreenHookType) => {
     return input;
   };
 
+  /*
+   * Callback toggled when inputting any value in any field.
+   * Should reset the error (if any), retrieve the current index through the dataset key, then set it to the Map in it's specific index.
+   * For the multiple input fields, get the sibling (next) input element, and focus for more input.
+   */
+
   const onChange = (event: ChangeEvent<HTMLInputElement>) => {
     const target = event.target;
     const value = longest ? target.value : target.value.slice(-1);
     const index = Number(target.dataset.index);
     const sibling = getSiblingInput(target);
+
+    event.preventDefault();
+    setError('');
 
     if (longest) {
       setCode(new Map(code.set(0, value)));
@@ -123,6 +162,11 @@ export const useGuardianScreen = (props: GuardianScreenHookType) => {
       }
     }
   };
+
+  /*
+   * Callback toggled when pasting into any of the input fields, working similar to the "onChange" callback.
+   * Has a mechanism to populate all further inputs, starting from the target, whichever that may be.
+   */
 
   const onPaste = (event: ClipboardEvent<HTMLInputElement>) => {
     const target = event.target as HTMLInputElement;
@@ -154,6 +198,10 @@ export const useGuardianScreen = (props: GuardianScreenHookType) => {
       return;
     }
   };
+
+  /*
+   * Return all callbacks, states and additional input checks.
+   */
 
   return {
     error,
