@@ -32,42 +32,26 @@
       line-height: 1;
       position: absolute;
       top: 100%;
-      right: 0;
+      left: 0;
       margin-top: $box-gap;
       color: var(--danger);
       font-size: 12px;
       opacity: 0;
       pointer-events: none;
-      transition: var(--transition);
-      transition-property: opacity;
 
       &.visible {
         opacity: 1;
         pointer-events: all;
       }
-
-      &.guardian-error-medium {
-        right: calc(100% - ((($box-size * 3) + ($box-gap * 2))));
-
-        @media (min-width: 576px) {
-          right: 0;
-        }
-      }
-
-      &.guardian-error-long {
-        right: calc(100% - ((($box-size * 4) + ($box-gap * 3))));
-
-        @media (min-width: 768px) {
-          right: 0;
-        }
-      }
     }
 
     .guardian-reset {
-      right: auto;
-      left: 0;
       color: var(--heading-color);
       cursor: pointer;
+
+      &.error {
+        top: calc(100% + 20px);
+      }
     }
 
     .guardian-input-wrapper {
@@ -79,46 +63,18 @@
 
           &.guardian-input-separator {
             width: $width;
-            margin-right: 0;
-          }
-
-          &.guardian-input-wrapper-medium {
-            @media (min-width: 576px) {
-              width: auto;
-            }
-
-            &.guardian-input-separator {
-              @media (min-width: 576px) {
-                margin-right: 32px;
-              }
-            }
-          }
-
-          &.guardian-input-wrapper-long {
-            @media (min-width: 768px) {
-              width: auto;
-            }
-
-            &.guardian-input-separator {
-              @media (min-width: 768px) {
-                margin-right: 32px;
-              }
-            }
           }
         }
       }
 
-      &.guardian-input-wrapper-medium {
+      &.guardian-input-wrapper-medium,
+      &.guardian-input-wrapper-long {
+        @media (min-width: 576px) {
+          width: auto !important;
+        }
+
         &:after {
           @media (min-width: 576px) {
-            content: '';
-          }
-        }
-      }
-
-      &.guardian-input-wrapper-long {
-        &:after {
-          @media (min-width: 768px) {
             content: '';
           }
         }
@@ -129,10 +85,14 @@
       }
 
       &.guardian-input-separator {
-        margin-right: 32px;
+        position: relative;
+
+        @media (min-width: 576px) {
+          margin-right: 20px;
+        }
 
         &:after {
-          width: 24px;
+          width: 12px;
           height: 2px;
           background-color: var(--action-bg-light);
           position: absolute;
