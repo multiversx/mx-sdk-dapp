@@ -5,11 +5,7 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { PageState } from 'UI/PageState';
 
-import {
-  GuardianScreen,
-  SignStepBody,
-  SignStepBodyPropsType
-} from './components';
+import { SignStepBody, SignStepBodyPropsType } from './components';
 import { useSignStepsClasses } from './hooks/useSignStepsClasses';
 import {
   SignStepPropsType as SignStepType,
@@ -23,7 +19,7 @@ export const SignStep = (props: SignStepType) => {
     onSignTransaction,
     handleClose,
     onPrev,
-    guardianProvider = null,
+    GuardianScreen,
     title,
     waitingForDevice,
     currentTransaction,
@@ -63,7 +59,7 @@ export const SignStep = (props: SignStepType) => {
 
   const onSubmit = () => {
     onSignTransaction();
-    if (signLastTransaction && guardianProvider) {
+    if (signLastTransaction && GuardianScreen) {
       return setShowGuardianScreen(true);
     }
   };
@@ -87,7 +83,7 @@ export const SignStep = (props: SignStepType) => {
     signStepInnerClasses
   };
 
-  if (showGuardianScreen) {
+  if (GuardianScreen && showGuardianScreen) {
     return <GuardianScreen {...props} />;
   }
 

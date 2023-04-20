@@ -2,8 +2,8 @@ import React from 'react';
 
 import classNames from 'classnames';
 
+import { GuardianScreenType } from 'types';
 import { useGuardianScreen } from '../../hooks';
-import type { GuardianScreenType } from '../../signWithDeviceModal.types';
 
 import styles from './guardianScreenStyles.scss';
 
@@ -22,7 +22,6 @@ export const GuardianScreen = (props: GuardianScreenType) => {
   const {
     onSignTransaction,
     onPrev,
-    guardianProvider,
     signedTransactions,
     setSignedTransactions
   } = props;
@@ -40,12 +39,11 @@ export const GuardianScreen = (props: GuardianScreenType) => {
   } = useGuardianScreen({
     onSignTransaction,
     signedTransactions,
-    guardianProvider,
     setSignedTransactions,
     length: GUARDIAN_CODE_LENGTH
   });
 
-  if (!guardianProvider || !signedTransactions) {
+  if (!signedTransactions) {
     return null;
   }
 

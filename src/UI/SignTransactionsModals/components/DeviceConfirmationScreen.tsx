@@ -13,6 +13,7 @@ import {
 
 export const DeviceConfirmationScreen = ({
   Screen,
+  GuardianScreen,
   verifyReceiverScam,
   className
 }: ExtraConfirmationScreenPropsType) => {
@@ -39,6 +40,7 @@ export const DeviceConfirmationScreen = ({
 
   const signProps: SignPropsType = {
     handleClose,
+    GuardianScreen,
     error: signError,
     sessionId: transactionsToSign?.sessionId,
     transactions: transactionsToSign?.transactions ?? [],

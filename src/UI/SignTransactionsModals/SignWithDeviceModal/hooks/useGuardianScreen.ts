@@ -6,13 +6,11 @@ import {
   useState
 } from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
-
-import type { GuardianScreenType } from '../signWithDeviceModal.types';
+import { GuardianScreenType } from 'types/transactions.types';
 
 export interface GuardianScreenHookType {
   signedTransactions: GuardianScreenType['signedTransactions'];
   onSignTransaction: GuardianScreenType['onSignTransaction'];
-  guardianProvider: GuardianScreenType['guardianProvider'];
   setSignedTransactions: GuardianScreenType['setSignedTransactions'];
   length: number;
 }
@@ -20,11 +18,13 @@ export interface GuardianScreenHookType {
 export const useGuardianScreen = (props: GuardianScreenHookType) => {
   const {
     signedTransactions,
-    guardianProvider,
     setSignedTransactions,
     onSignTransaction,
     length = 6
   } = props;
+
+  // TODO build in wallet
+  const guardianProvider: any = {};
 
   const longest = length > 8;
   const initial = new Map(

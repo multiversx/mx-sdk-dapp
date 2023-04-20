@@ -6,9 +6,12 @@ import {
   TransactionVersion
 } from '@multiversx/sdk-core';
 
-import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
-import { ActiveLedgerTransactionType, ScamInfoType } from 'types';
+import {
+  ActiveLedgerTransactionType,
+  DeviceSignedTransactions,
+  ScamInfoType
+} from 'types';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
@@ -16,7 +19,7 @@ import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWi
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
-  guardianProvider?: GenericGuardianProvider;
+  isGuarded?: boolean;
   verifyReceiverScam?: boolean;
   isLedger?: boolean;
   transactionsToSign?: Transaction[];
@@ -34,8 +37,6 @@ interface VerifiedAddressesType {
 }
 let verifiedAddresses: VerifiedAddressesType = {};
 
-type DeviceSignedTransactions = Record<number, Transaction>;
-
 export interface UseSignMultipleTransactionsReturnType
   extends Omit<UseSignTransactionsWithDeviceReturnType, 'callbackRoute'> {
   shouldContinueWithoutSigning: boolean;
@@ -48,7 +49,7 @@ export function useSignMultipleTransactions({
   transactionsToSign,
   egldLabel,
   address,
-  guardianProvider,
+  isGuarded,
   onCancel,
   onSignTransaction,
   onTransactionsSignError,
@@ -65,7 +66,7 @@ export function useSignMultipleTransactions({
 
   const { getTxInfoByDataField, allTransactions } =
     useParseMultiEsdtTransferData({
-      transactions: guardianProvider
+      transactions: isGuarded
         ? transactionsToSign?.map((transaction) => {
             transaction.setSender(Address.fromBech32(address));
             transaction.setVersion(TransactionVersion.withTxOptions());
@@ -164,7 +165,7 @@ export function useSignMultipleTransactions({
     }
 
     const allSignedTransactions = Object.values(newSignedTransactions);
-    const allSignedByGuardian = guardianProvider
+    const allSignedByGuardian = isGuarded
       ? allSignedTransactions.every((tx) =>
           Boolean(tx.getGuardianSignature().toString('hex'))
         )
@@ -250,7 +251,6 @@ export function useSignMultipleTransactions({
     onPrev,
     waitingForDevice,
     onAbort: handleAbort,
-    guardianProvider: guardianProvider,
     isLastTransaction,
     isFirstTransaction: currentStep === 0,
     hasMultipleTransactions: allTransactions.length > 1,
