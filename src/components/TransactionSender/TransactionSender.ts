@@ -26,6 +26,7 @@ import { SignedTransactionsBodyType } from 'types/transactions.types';
 
 import { setNonce } from 'utils/account/setNonce';
 import { safeRedirect } from 'utils/redirect';
+import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: (
@@ -122,8 +123,10 @@ export const TransactionSender = ({
         setNonce(account.nonce + transactions.length);
 
         optionalRedirect(sessionInformation);
-
-        history.pushState({}, document?.title, '?');
+        const [transaction] = transactionsToSend;
+        removeTransactionParamsFromUrl({
+          transaction
+        });
       } catch (error) {
         console.error('Unable to send transactions', error);
         dispatch(
