@@ -1,4 +1,5 @@
 import { clearNavigationHistory } from './clearNavigationHistory';
+import { isWindowAvailable } from './isWindowAvailable';
 
 interface ParseNavigationParamsOptionsType {
   search?: string;
@@ -6,7 +7,7 @@ interface ParseNavigationParamsOptionsType {
 }
 
 const defaultOptions: ParseNavigationParamsOptionsType = {
-  search: typeof window != 'undefined' ? window.location.search : '',
+  search: isWindowAvailable() ? window.location.search : '',
   removeParams: []
 };
 
@@ -20,8 +21,7 @@ export const parseNavigationParams = (
   options = defaultOptions
 ) => {
   let params: Record<string, string> = {};
-  const defaultSearch =
-    typeof window != 'undefined' ? window.location.search : '';
+  const defaultSearch = isWindowAvailable() ? window.location.search : '';
   const search = options.search ?? defaultSearch;
 
   if (search) {

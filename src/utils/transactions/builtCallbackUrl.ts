@@ -25,10 +25,12 @@ export function builtCallbackUrl({
   urlParams = {}
 }: ReplyUrlType) {
   let url = callbackUrl;
+
   if (Object.entries(urlParams).length > 0) {
     const { search, origin, pathname } = new URL(callbackUrl);
     const { nextUrlParams } = buildUrlParams(search, urlParams);
     url = `${origin}${pathname}?${nextUrlParams}`;
   }
+
   return url;
 }

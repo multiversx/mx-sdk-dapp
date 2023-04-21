@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react';
-import { faExternalLinkSquare } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
@@ -33,7 +33,10 @@ export const ExplorerLink = ({
   } = useGetNetworkConfig();
 
   const defaultContent = text ?? (
-    <FontAwesomeIcon icon={faExternalLinkSquare} className={styles.search} />
+    <FontAwesomeIcon
+      icon={faArrowUpRightFromSquare}
+      className={styles.search}
+    />
   );
 
   const link = getExplorerLink({
