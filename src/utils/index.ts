@@ -5,6 +5,7 @@ export * from './dateTime';
 export * from './decoders';
 export * from './environment';
 export * from './getIsLoggedIn';
+export * from './isWindowAvailable';
 export * from './logout';
 export * from './math';
 export * from './network';

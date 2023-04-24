@@ -11,6 +11,7 @@ import {
   logoutAction,
   LoginActionPayloadType
 } from '../commonActions';
+import { BatchTransactionsWSResponseType } from 'types';
 
 export interface LedgerAccountType {
   index: number;
@@ -36,6 +37,10 @@ export interface AccountInfoSliceType {
     timestamp: number;
     message: string;
   } | null;
+  websocketBatchEvent: {
+    timestamp: number;
+    data: BatchTransactionsWSResponseType;
+  } | null;
   accountLoadingError: string | null;
 }
 
@@ -52,6 +57,7 @@ export const emptyAccount: AccountType = {
 const initialState: AccountInfoSliceType = {
   address: '',
   websocketEvent: null,
+  websocketBatchEvent: null,
   accounts: { '': emptyAccount },
   ledgerAccount: null,
   publicKey: '',
@@ -141,6 +147,15 @@ export const accountInfoSlice = createSlice({
         timestamp: Date.now(),
         message: action.payload
       };
+    },
+    setWebsocketBatchEvent: (
+      state: AccountInfoSliceType,
+      action: PayloadAction<BatchTransactionsWSResponseType>
+    ) => {
+      state.websocketBatchEvent = {
+        timestamp: Date.now(),
+        data: action.payload
+      };
     }
   },
   extraReducers: (builder) => {
@@ -186,7 +201,8 @@ export const {
   setWalletConnectAccount,
   setIsAccountLoading,
   setAccountLoadingError,
-  setWebsocketEvent
+  setWebsocketEvent,
+  setWebsocketBatchEvent
 } = accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;

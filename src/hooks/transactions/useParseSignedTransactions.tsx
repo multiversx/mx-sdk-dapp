@@ -1,17 +1,13 @@
 import { useEffect } from 'react';
-import {
-  WALLET_PROVIDER_CALLBACK_PARAM,
-  WalletProvider
-} from '@multiversx/sdk-web-wallet-provider';
+import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import qs from 'qs';
 import { DAPP_INIT_ROUTE, WALLET_SIGN_SESSION } from 'constants/index';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import { moveTransactionsToSignedState } from 'reduxStore/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
-import { clearNavigationHistory } from 'utils/clearNavigationHistory';
-import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
@@ -41,9 +37,14 @@ export function useParseSignedTransactions(
             })
           );
           onAbort();
-          history.pushState({}, document?.title, '?');
+          const [transaction] = signedTransactions;
+          removeTransactionParamsFromUrl({
+            transaction,
+            search
+          });
           return;
         }
+
         if (signedTransactions.length > 0) {
           // TODO: check if the transactions are same as the ones in the redux store
           dispatch(
@@ -55,17 +56,12 @@ export function useParseSignedTransactions(
               )
             })
           );
+
           const [transaction] = signedTransactions;
-
-          const { params } = parseNavigationParams([], {
-            removeParams: [
-              ...Object.keys(transaction),
-              WALLET_PROVIDER_CALLBACK_PARAM, // walletProviderStatus=transactionsSigned
-              WALLET_SIGN_SESSION // signSession
-            ]
+          removeTransactionParamsFromUrl({
+            transaction,
+            search
           });
-
-          clearNavigationHistory(params);
         }
       }
     }

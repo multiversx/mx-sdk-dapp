@@ -21,7 +21,8 @@ export enum TransactionBatchStatusesEnum {
   success = 'success',
   sent = 'sent',
   fail = 'fail',
-  timedOut = 'timedOut'
+  timedOut = 'timedOut',
+  invalid = 'invalid'
 }
 
 export enum LoginMethodsEnum {
@@ -70,13 +71,15 @@ export enum TransactionsDefaultTitles {
   success = 'Transaction successful',
   failed = 'Transaction failed',
   pending = 'Processing transaction',
-  timedOut = 'Transaction timed out'
+  timedOut = 'Transaction timed out',
+  // Appears in batch transactions when the batch status is invalid (set the batch status to invalid for each transaction)
+  invalid = 'Transaction invalid'
 }
 
 export enum DappCoreWCV2CustomMethodsEnum {
-  erd_cancelAction = 'erd_cancelAction',
-  multiversx_cancelAction = 'multiversx_cancelAction'
+  mvx_cancelAction = 'mvx_cancelAction'
 }
+
 export enum PlatformsEnum {
   ios = 'ios',
   reactNative = 'reactNative',

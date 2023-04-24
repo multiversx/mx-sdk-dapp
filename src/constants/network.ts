@@ -86,3 +86,4 @@ export const chainIdToEnvironment: Record<string, EnvironmentsEnum> = {
 };
 
 export const MULTIVERSX_ORIGIN = 'multiversx://';
+export const TIMEOUT = 3000;

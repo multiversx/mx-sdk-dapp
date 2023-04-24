@@ -6,35 +6,73 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.11.3]](https://github.com/multiversx/mx-sdk-dapp/pull/737)] - 2023-04-21
+- [Added support for decoding login token within `decodeNativeAuthToken](https://github.com/multiversx/mx-sdk-dapp/pull/736)]
+- [Fixed transactions signing to prevent unnecessary clearing of URL search params](https://github.com/multiversx/mx-sdk-dapp/pull/735)]
+
+## [[v2.11.2]](https://github.com/multiversx/mx-sdk-dapp/pull/730)] - 2023-04-13
+- [Fixed access to window by checking type](https://github.com/multiversx/mx-sdk-dapp/pull/730)]
+
+## [[v2.11.1]](https://github.com/multiversx/mx-sdk-dapp/pull/729)] - 2023-04-13
+- [Fixed access to window object](https://github.com/multiversx/mx-sdk-dapp/pull/728)]
+
+## [[v2.11.0]](https://github.com/multiversx/mx-sdk-dapp/pull/725)] - 2023-04-12
+
+- [Added Batch transactions support](https://github.com/multiversx/mx-sdk-dapp/pull/722)]
+- [Updated WalletConnect provider package](https://github.com/multiversx/mx-sdk-dapp/pull/726)]
+
+## [[v2.10.17]](https://github.com/multiversx/mx-sdk-dapp/pull/721)] - 2023-04-04
+
+- [WalletConnect V2 Updated MultiversX Namespace](https://github.com/multiversx/mx-sdk-dapp/pull/720)
+
 ## [[v2.10.16]](https://github.com/multiversx/mx-sdk-dapp/pull/718)] - 2023-03-30
+
 - [Fixed sanitizing VsCode callbackUrl](https://github.com/multiversx/mx-sdk-dapp/pull/717)
 - [Added missing endpoints](https://github.com/multiversx/mx-sdk-dapp/pull/716)
+
 ## [[v2.10.15]](https://github.com/multiversx/mx-sdk-dapp/pull/715)] - 2023-03-28
+
 - [Added missing component for `DappProvider` instead of `index`](https://github.com/multiversx/mx-sdk-dapp/pull/715)
 
 ## [[v2.10.14]](https://github.com/multiversx/mx-sdk-dapp/pull/714)] - 2023-03-28
+
 - [Added missing component files instead of `index`](https://github.com/multiversx/mx-sdk-dapp/pull/713)
 
 ## [[v2.10.13]](https://github.com/multiversx/mx-sdk-dapp/pull/708)] - 2023-03-27
+
 - [Optimized sign-message reducers](https://github.com/multiversx/mx-sdk-dapp/pull/707)
 - [Fixed commonJS compilation to suit Jest testing](https://github.com/multiversx/mx-sdk-dapp/pull/711)
 - [Changed `ExplorerLink` icon](https://github.com/multiversx/mx-sdk-dapp/pull/710)
 - [Improved `Trim` debounce](https://github.com/multiversx/mx-sdk-dapp/pull/709)
 
 ## [[v2.10.12]](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-16
+
 - [Added existing params to clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/705)
+
 ## [[v2.10.11]](https://github.com/multiversx/mx-sdk-dapp/pull/703)] - 2023-03-15
+
 - [Fixed clearing URL after signing with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/702)
 - [Fixed accessing wallet without keystore index in `AddressTable`](https://github.com/multiversx/mx-sdk-dapp/pull/701)
+
 ## [[v2.10.10]](https://github.com/multiversx/mx-sdk-dapp/pull/700)] - 2023-03-15
+
 - [Fix imports from native auth calling imports connected to redux store](https://github.com/multiversx/mx-sdk-dapp/pull/699)
+
 ## [[v2.10.9]](https://github.com/multiversx/mx-sdk-dapp/pull/698)] - 2023-03-15
+
 - [Fixed interpreting ESDT in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/697)
+
 ## [[v2.10.8]](https://github.com/multiversx/mx-sdk-dapp/pull/696)] - 2023-03-14
+
 - [Fixed guard for undefined window object and type imports. Moved `getIsExtensionAvailable` to `utils/platform`](https://github.com/multiversx/mx-sdk-dapp/pull/695)
+
 ## [[v2.10.7]](https://github.com/multiversx/mx-sdk-dapp/pull/694)] - 2023-03-10
+
 - [Added `data-testid` to Sign fields](https://github.com/multiversx/mx-sdk-dapp/pull/693)
+
 ## [[v2.10.6]](https://github.com/multiversx/mx-sdk-dapp/pull/692)] - 2023-03-09
+
 - [Changed `TransactionDetailsBody` to always show `ExplorerLink`](https://github.com/multiversx/mx-sdk-dapp/pull/691)
 
 ## [[v2.10.5]](https://github.com/multiversx/mx-sdk-dapp/pull/690)] - 2023-03-07

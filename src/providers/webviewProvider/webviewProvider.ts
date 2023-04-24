@@ -1,6 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { PlatformsEnum, WebViewProviderResponseEnums } from 'types/index';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { requestMethods } from './requestMethods';
@@ -10,8 +11,9 @@ const notInitializedError = (caller: string) => () => {
 };
 
 const currentPlatform = detectCurrentPlatform();
-export const targetOrigin =
-  typeof window != 'undefined' ? window?.parent?.origin ?? '*' : '*';
+export const targetOrigin = isWindowAvailable()
+  ? window?.parent?.origin ?? '*'
+  : '*';
 
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
@@ -29,8 +31,12 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
       console.error('error parsing response');
     }
   };
-  document.addEventListener('message', handleMessageReceived);
-  window.addEventListener('message', handleMessageReceived);
+  if (document) {
+    document.addEventListener('message', handleMessageReceived);
+  }
+  if (window) {
+    window.addEventListener('message', handleMessageReceived);
+  }
 };
 
 export const webviewProvider: any = {
@@ -63,7 +69,9 @@ export const webviewProvider: any = {
                 reject('Unable to login');
               }
             }
-            document.removeEventListener('message', handleTokenReceived);
+            if (document) {
+              document.removeEventListener('message', handleTokenReceived);
+            }
           }
           handleWaitForMessage(handleTokenReceived);
         }
@@ -123,7 +131,9 @@ export const webviewProvider: any = {
                 reject('Unable to sign');
               }
             }
-            document.removeEventListener('message', handleSignResponse);
+            if (document) {
+              document.removeEventListener('message', handleSignResponse);
+            }
           }
           handleWaitForMessage(handleSignResponse);
         });

@@ -7,5 +7,6 @@ export * from './getTransactionLink';
 export * from './isTokenTransfer';
 export * from './parseMultiEsdtTransferData';
 export * from './parseTransactionAfterSigning';
+export * from './removeTransactionParamsFromUrl';
 export * from './transactionInfoHelpers';
 export * from './transactionStateByStatus';

@@ -10,6 +10,7 @@ import { signedMessageInfoReducer } from './slices/signedMessageInfoSlice';
 import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
+import batchTransactions from './slices/batchTransactionsSlice';
 
 const reducers = {
   [ReducersEnum.account]: account,
@@ -20,7 +21,8 @@ const reducers = {
   [ReducersEnum.signedMessageInfo]: signedMessageInfoReducer,
   [ReducersEnum.toasts]: toasts,
   [ReducersEnum.transactionsInfo]: transactionsInfo,
-  [ReducersEnum.transactions]: transactions
+  [ReducersEnum.transactions]: transactions,
+  [ReducersEnum.batchTransactions]: batchTransactions
 };
 
 const getRootReducer = (customReducers = {}) =>
