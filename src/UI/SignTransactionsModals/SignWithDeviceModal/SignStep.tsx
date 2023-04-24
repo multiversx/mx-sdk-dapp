@@ -80,11 +80,16 @@ export const SignStep = (props: SignStepType) => {
     error,
     allTransactions,
     currentStep,
+    isGuarded: Boolean(GuardianScreen),
     signStepInnerClasses
   };
 
+  const onGuardianScreenPrev = () => {
+    setShowGuardianScreen(false);
+  };
+
   if (GuardianScreen && showGuardianScreen) {
-    return <GuardianScreen {...props} />;
+    return <GuardianScreen {...props} onPrev={onGuardianScreenPrev} />;
   }
 
   return (
