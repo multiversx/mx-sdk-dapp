@@ -7,15 +7,21 @@ export interface GetTokenExpirationReturnType {
   secondsUntilExpires?: number;
 }
 
+const notFound = {
+  isExpired: false
+};
+
 export const getTokenExpiration = (
   token?: string
 ): GetTokenExpirationReturnType => {
+  if (!token) {
+    return notFound;
+  }
+
   const decodedToken = decodeNativeAuthToken(token);
 
   if (!decodedToken) {
-    return {
-      isExpired: false
-    };
+    return notFound;
   }
 
   const unixNow = getUnixTimestamp();
@@ -24,9 +30,7 @@ export const getTokenExpiration = (
   const timestamp = extraInfo?.timestamp;
 
   if (!timestamp) {
-    return {
-      isExpired: false
-    };
+    return notFound;
   }
 
   const expiresAt = timestamp + ttl;
