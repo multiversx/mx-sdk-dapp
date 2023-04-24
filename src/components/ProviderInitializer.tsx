@@ -167,10 +167,9 @@ export function ProviderInitializer() {
     }
 
     try {
-      const address = await getAddress();
       const {
         clearNavigationHistory,
-        remainingParams: { signature }
+        remainingParams: { signature, address }
       } = parseNavigationParams(['signature', 'loginToken', 'address']);
 
       if (!address) {
@@ -185,6 +184,7 @@ export function ProviderInitializer() {
       }
 
       const account = await getAccount(address);
+
       if (account) {
         initializedAccountRef.current = true;
         dispatch(setIsAccountLoading(true));
