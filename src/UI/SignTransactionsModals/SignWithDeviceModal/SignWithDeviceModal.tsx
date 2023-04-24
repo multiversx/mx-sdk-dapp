@@ -12,7 +12,6 @@ export const SignWithDeviceModal = ({
   error,
   className = 'dapp-device-modal',
   verifyReceiverScam = true,
-  isGuarded,
   GuardianScreen,
   title = 'Confirm transaction',
   signStepInnerClasses
@@ -31,8 +30,7 @@ export const SignWithDeviceModal = ({
     currentTransaction
   } = useSignTransactionsWithDevice({
     onCancel: handleClose,
-    verifyReceiverScam,
-    isGuarded
+    verifyReceiverScam
   });
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.walletConnect, className),

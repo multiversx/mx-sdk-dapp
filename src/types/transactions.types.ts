@@ -192,7 +192,6 @@ export interface SignModalPropsType extends WithClassnameType {
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
   title?: ReactNode;
-  isGuarded?: boolean;
   GuardianScreen?: (signProps: GuardianScreenType) => JSX.Element;
   signStepInnerClasses?: SignStepInnerClassesType;
 }
