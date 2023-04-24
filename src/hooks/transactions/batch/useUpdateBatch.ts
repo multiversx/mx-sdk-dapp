@@ -1,7 +1,7 @@
-import { refreshAccount } from 'utils/account/refreshAccount';
-import { useGetBatches } from './useGetBatches';
 import { CustomTransactionInformation } from 'types';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
+import { useGetBatches } from './useGetBatches';
 
 export function useUpdateBatch() {
   const { batchTransactionsArray } = useGetBatches();
