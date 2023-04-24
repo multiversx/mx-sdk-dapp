@@ -27,8 +27,6 @@ export function useParseSignedTransactions(
           `${network.walletAddress}${DAPP_INIT_ROUTE}`
         ).getTransactionsFromWalletUrl();
 
-        console.log({ signedTransactions });
-
         if (searchData.status === TransactionBatchStatusesEnum.cancelled) {
           dispatch(
             moveTransactionsToSignedState({

@@ -1,4 +1,3 @@
-import GenericGuardianProvider from '@multiversx/sdk-guardians-provider/out/genericGuardianProvider';
 import { SignPropsType } from '../types/signTransactionsModals.types';
 
 export interface ExtraConfirmationScreenPropsType {
@@ -6,5 +5,4 @@ export interface ExtraConfirmationScreenPropsType {
   GuardianScreen?: SignPropsType['GuardianScreen'];
   verifyReceiverScam?: boolean;
   className?: string;
-  guardianProvider?: GenericGuardianProvider;
 }
