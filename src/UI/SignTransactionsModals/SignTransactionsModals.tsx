@@ -20,7 +20,6 @@ export interface SignTransactionsModalsPropsType {
   CustomConfirmScreens?: CustomConfirmScreensType;
   verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
   GuardianScreen?: SignPropsType['GuardianScreen'];
-  isGuarded?: SignPropsType['isGuarded'];
 }
 
 export const SignTransactionsModals = ({
