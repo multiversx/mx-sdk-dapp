@@ -14,6 +14,7 @@ import {
 } from 'types';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+import { getAreAllTransactionsSignedByGuardian } from './helpers';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
 
 export interface UseSignMultipleTransactionsPropsType {
@@ -165,11 +166,11 @@ export function useSignMultipleTransactions({
     }
 
     const allSignedTransactions = Object.values(newSignedTransactions);
-    const allSignedByGuardian = isGuarded
-      ? allSignedTransactions.every((tx) =>
-          Boolean(tx.getGuardianSignature().toString('hex'))
-        )
-      : true;
+
+    const allSignedByGuardian = getAreAllTransactionsSignedByGuardian({
+      isGuarded,
+      transactions: allSignedTransactions
+    });
 
     if (!allSignedByGuardian) {
       return;
