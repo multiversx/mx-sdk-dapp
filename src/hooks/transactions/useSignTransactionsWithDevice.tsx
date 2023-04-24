@@ -21,13 +21,13 @@ import {
   DeviceSignedTransactions,
   LoginMethodsEnum,
   MultiSignTransactionType,
-  SignModalPropsType,
   TransactionBatchStatusesEnum
 } from 'types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { getAreAllTransactionsSignedByGuardian } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
@@ -35,7 +35,7 @@ import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
   verifyReceiverScam?: boolean;
-  isGuarded?: SignModalPropsType['isGuarded'];
+  hasGuardianScreen?: boolean;
 }
 
 export interface UseSignTransactionsWithDeviceReturnType {
@@ -58,13 +58,13 @@ export interface UseSignTransactionsWithDeviceReturnType {
 export function useSignTransactionsWithDevice(
   props: UseSignTransactionsWithDevicePropsType
 ): UseSignTransactionsWithDeviceReturnType {
-  const { onCancel, verifyReceiverScam = true, isGuarded } = props;
+  const { onCancel, verifyReceiverScam = true, hasGuardianScreen } = props;
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
 
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
-  const { address } = account;
+  const { address, isGuarded } = account;
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
@@ -100,8 +100,18 @@ export function useSignTransactionsWithDevice(
       return;
     }
 
-    // TODO: add condition for not signed transactions by guardian
-    if (isGuarded) {
+    const allSignedByGuardian = getAreAllTransactionsSignedByGuardian({
+      isGuarded,
+      transactions: newSignedTransactions
+    });
+
+    /**
+     * Redirect to wallet for signing if:
+     * - account is guarded &
+     * - 2FA will not be provided locally &
+     * - transactions were not signed by guardian
+     */
+    if (isGuarded && !hasGuardianScreen && !allSignedByGuardian) {
       const chainId = newSignedTransactions[0].getChainID().valueOf();
       const environment = getEnvironmentForChainId(chainId);
       const walletAddress =
@@ -151,6 +161,7 @@ export function useSignTransactionsWithDevice(
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
+    isGuarded,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),

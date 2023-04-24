@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  useGetAccount,
   useGetAccountProvider,
   useGetSignTransactionsError,
   useSignTransactionsCommonData
@@ -31,6 +32,7 @@ export const DeviceConfirmationScreen = ({
 
   const signTransactionsError = useGetSignTransactionsError();
   const { providerType } = useGetAccountProvider();
+  const { isGuarded } = useGetAccount();
 
   const handleClose = () => {
     onAbort(transactionsToSign?.sessionId);
@@ -41,6 +43,7 @@ export const DeviceConfirmationScreen = ({
   const signProps: SignPropsType = {
     handleClose,
     GuardianScreen,
+    isGuarded,
     error: signError,
     sessionId: transactionsToSign?.sessionId,
     transactions: transactionsToSign?.transactions ?? [],

@@ -40,12 +40,14 @@ export interface SignStepBodyPropsType {
   currentTransaction: ActiveLedgerTransactionType | null;
   allTransactions: MultiSignTransactionType[];
   signStepInnerClasses?: SignStepInnerClassesType;
+  isGuarded?: boolean;
 }
 
 export const SignStepBody = ({
   currentTransaction,
   error,
   allTransactions,
+  isGuarded,
   currentStep,
   signStepInnerClasses
 }: SignStepBodyPropsType) => {
@@ -93,8 +95,10 @@ export const SignStepBody = ({
     addCommas: true
   });
 
+  const extraGuardianStep = isGuarded ? 1 : 0;
+  const totalSteps = allTransactions.length + extraGuardianStep;
   const scamReport = currentTransaction.receiverScamInfo;
-  const showProgressSteps = allTransactions.length > 1;
+  const showProgressSteps = totalSteps > 1;
   const classes = useSignStepsClasses(scamReport);
 
   const token = isNft ? nftId : tokenId || egldLabel;
@@ -106,7 +110,7 @@ export const SignStepBody = ({
         <>
           {showProgressSteps && (
             <ProgressSteps
-              totalSteps={allTransactions.length}
+              totalSteps={totalSteps}
               currentStep={currentStep + 1} // currentStep starts at 0
               className={classNames(globalStyles.mb4, progressClassName)}
             />
