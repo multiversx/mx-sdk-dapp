@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
-
-import { useDispatch } from 'reduxStore/DappProviderContext';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { shouldUseWebViewProviderSelector } from 'reduxStore/selectors';
 
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 
 export function useWebViewLogin() {
   const dispatch = useDispatch();
+  const shouldUseWebViewProvider = useSelector(
+    shouldUseWebViewProviderSelector
+  );
 
   const search = typeof window !== 'undefined' ? window?.location?.search : '';
   const urlSearchParams = new URLSearchParams(search) as any;
@@ -14,6 +17,10 @@ export function useWebViewLogin() {
   const token = searchParams?.accessToken;
 
   useEffect(() => {
+    if (!shouldUseWebViewProvider) {
+      return;
+    }
+
     loginWithNativeAuthToken(token, dispatch);
-  }, [token]);
+  }, [token, shouldUseWebViewProvider]);
 }

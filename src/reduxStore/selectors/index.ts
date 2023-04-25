@@ -6,3 +6,4 @@ export * from './signedMessageInfoSelectors';
 export * from './toastsSelectors';
 export * from './transactionsInfoSelectors';
 export * from './transactionsSelectors';
+export * from './dappConfigSelector';

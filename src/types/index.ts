@@ -31,3 +31,4 @@ export * from './network.types';
 export * from './serverTransactions.types';
 export * from './suspiciousLink';
 export * from './transactions.types';
+export * from './dappConfig.types';
