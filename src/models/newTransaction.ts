@@ -34,13 +34,22 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     version: new TransactionVersion(rawTransaction.version ?? VERSION),
     ...(rawTransaction.options
       ? { options: new TransactionOptions(rawTransaction.options) }
+      : {}),
+    ...(rawTransaction.guardian
+      ? { guardian: new Address(rawTransaction.guardian) }
       : {})
   });
 
-  transaction.applySignature(
-    new Signature(rawTransaction.signature),
-    new Address(rawTransaction.sender)
-  );
+  if (rawTransaction.guardianSignature) {
+    transaction.applyGuardianSignature({
+      hex: () => rawTransaction.guardianSignature || ''
+    });
+  }
+
+  transaction.applySignature({
+    hex: () => rawTransaction.signature || ''
+  });
+  transaction.applySignature(new Signature(rawTransaction.signature));
 
   return transaction;
 }

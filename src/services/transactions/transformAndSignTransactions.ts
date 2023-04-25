@@ -42,7 +42,9 @@ export async function transformAndSignTransactions({
       version = 1,
       options,
       gasPrice = GAS_PRICE,
-      gasLimit = calculateGasLimit(tx.data)
+      gasLimit = calculateGasLimit(tx.data),
+      guardian,
+      guardianSignature
     } = tx;
     let validatedReceiver = receiver;
 
@@ -64,8 +66,10 @@ export async function transformAndSignTransactions({
       nonce: Number(nonce.valueOf().toString()),
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
-      version: version,
-      options
+      version,
+      options,
+      guardian,
+      guardianSignature
     });
   });
 }

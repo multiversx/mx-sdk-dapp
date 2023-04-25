@@ -106,6 +106,8 @@ export interface SimpleTransactionType {
   chainID?: string;
   version?: number;
   options?: number;
+  guardian?: string;
+  guardianSignature?: string;
 }
 
 export interface TransactionsDisplayInfoType {
@@ -170,6 +172,19 @@ export interface SmartContractResult {
   returnMessage: string;
 }
 
+export type DeviceSignedTransactions = Record<number, Transaction>;
+
+export interface GuardianScreenType extends WithClassnameType {
+  onSignTransaction: () => void;
+  onPrev: () => void;
+  title?: ReactNode;
+  signStepInnerClasses?: SignStepInnerClassesType;
+  signedTransactions?: DeviceSignedTransactions;
+  setSignedTransactions?: React.Dispatch<
+    React.SetStateAction<DeviceSignedTransactions | undefined>
+  >;
+}
+
 export interface SignModalPropsType extends WithClassnameType {
   handleClose: () => void;
   error: string | null;
@@ -179,6 +194,7 @@ export interface SignModalPropsType extends WithClassnameType {
   modalContentClassName?: string;
   verifyReceiverScam?: boolean;
   title?: ReactNode;
+  GuardianScreen?: (signProps: GuardianScreenType) => JSX.Element;
   signStepInnerClasses?: SignStepInnerClassesType;
 }
 

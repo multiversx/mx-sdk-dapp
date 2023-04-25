@@ -1,18 +1,26 @@
 import { useEffect, useState } from 'react';
-import { Transaction } from '@multiversx/sdk-core';
+import {
+  Address,
+  Transaction,
+  TransactionOptions,
+  TransactionVersion
+} from '@multiversx/sdk-core';
 
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import {
   ActiveLedgerTransactionType,
-  MultiSignTransactionType,
+  DeviceSignedTransactions,
   ScamInfoType
 } from 'types';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+import { getAreAllTransactionsSignedByGuardian } from './helpers';
+import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
 
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
+  isGuarded?: boolean;
   verifyReceiverScam?: boolean;
   isLedger?: boolean;
   transactionsToSign?: Transaction[];
@@ -30,22 +38,11 @@ interface VerifiedAddressesType {
 }
 let verifiedAddresses: VerifiedAddressesType = {};
 
-type DeviceSignedTransactions = Record<number, Transaction>;
-
-export interface UseSignMultipleTransactionsReturnType {
-  allTransactions: MultiSignTransactionType[];
-  onSignTransaction: () => void;
-  onNext: () => void;
-  onPrev: () => void;
-  onAbort: () => void;
-  waitingForDevice: boolean;
+export interface UseSignMultipleTransactionsReturnType
+  extends Omit<UseSignTransactionsWithDeviceReturnType, 'callbackRoute'> {
   shouldContinueWithoutSigning: boolean;
   isFirstTransaction: boolean;
-  isLastTransaction: boolean;
   hasMultipleTransactions: boolean;
-  currentStep: number;
-  signedTransactions?: DeviceSignedTransactions;
-  currentTransaction: ActiveLedgerTransactionType | null;
 }
 
 export function useSignMultipleTransactions({
@@ -53,6 +50,7 @@ export function useSignMultipleTransactions({
   transactionsToSign,
   egldLabel,
   address,
+  isGuarded,
   onCancel,
   onSignTransaction,
   onTransactionsSignError,
@@ -68,7 +66,18 @@ export function useSignMultipleTransactions({
   const [waitingForDevice, setWaitingForDevice] = useState(false);
 
   const { getTxInfoByDataField, allTransactions } =
-    useParseMultiEsdtTransferData({ transactions: transactionsToSign });
+    useParseMultiEsdtTransferData({
+      transactions: isGuarded
+        ? transactionsToSign?.map((transaction) => {
+            transaction.setSender(Address.fromBech32(address));
+            transaction.setVersion(TransactionVersion.withTxOptions());
+            transaction.setOptions(
+              TransactionOptions.withOptions({ guarded: true })
+            );
+            return transaction;
+          })
+        : transactionsToSign
+    });
 
   const isLastTransaction = currentStep === allTransactions.length - 1;
 
@@ -120,26 +129,15 @@ export function useSignMultipleTransactions({
   }
 
   async function sign() {
+    if (currentTransaction == null) {
+      return;
+    }
+
+    setWaitingForDevice(isLedger);
+
+    let signedTx: Transaction;
     try {
-      if (currentTransaction == null) {
-        return;
-      }
-
-      setWaitingForDevice(isLedger);
-
-      const signedTx = await onSignTransaction(currentTransaction.transaction);
-      const newSignedTx = { [currentStep]: signedTx };
-      const newSignedTransactions = signedTransactions
-        ? { ...signedTransactions, ...newSignedTx }
-        : newSignedTx;
-      setSignedTransactions(newSignedTransactions);
-      if (!isLastTransaction) {
-        setCurrentStep((exising) => exising + 1);
-        setWaitingForDevice(false);
-      } else if (newSignedTransactions) {
-        onTransactionsSignSuccess(Object.values(newSignedTransactions));
-        reset();
-      }
+      signedTx = await onSignTransaction(currentTransaction.transaction);
     } catch (err) {
       console.error(err, 'sign error');
       const { message } = err as any;
@@ -148,8 +146,38 @@ export function useSignMultipleTransactions({
         : null;
 
       reset();
-      onTransactionsSignError(errorMessage ?? message);
+      return onTransactionsSignError(errorMessage ?? message);
     }
+
+    const newSignedTx = { [currentStep]: signedTx };
+    const newSignedTransactions = signedTransactions
+      ? { ...signedTransactions, ...newSignedTx }
+      : newSignedTx;
+    setSignedTransactions(newSignedTransactions);
+
+    if (!isLastTransaction) {
+      setCurrentStep((exising) => exising + 1);
+      setWaitingForDevice(false);
+      return;
+    }
+
+    if (!newSignedTransactions) {
+      return;
+    }
+
+    const allSignedTransactions = Object.values(newSignedTransactions);
+
+    const allSignedByGuardian = getAreAllTransactionsSignedByGuardian({
+      isGuarded,
+      transactions: allSignedTransactions
+    });
+
+    if (!allSignedByGuardian) {
+      return;
+    }
+
+    onTransactionsSignSuccess(allSignedTransactions);
+    reset();
   }
 
   function signTx() {
@@ -158,14 +186,13 @@ export function useSignMultipleTransactions({
         return;
       }
       const signature = currentTransaction.transaction.getSignature();
-      if (signature.hex()) {
-        if (!isLastTransaction) {
-          setCurrentStep((exising) => exising + 1);
-        }
-      } else {
-        // currently code doesn't reach here because getSignature throws error if none is found
-        sign();
+
+      if (signature.toString('hex') && !isLastTransaction) {
+        setCurrentStep((exising) => exising + 1);
+        return;
       }
+
+      sign();
     } catch {
       // the only way to check if tx has signature is with try catch
       sign();
@@ -231,6 +258,7 @@ export function useSignMultipleTransactions({
     shouldContinueWithoutSigning,
     currentStep,
     signedTransactions,
+    setSignedTransactions,
     currentTransaction
   };
 }
