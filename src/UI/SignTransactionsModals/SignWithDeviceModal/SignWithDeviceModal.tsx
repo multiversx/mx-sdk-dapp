@@ -12,6 +12,7 @@ export const SignWithDeviceModal = ({
   error,
   className = 'dapp-device-modal',
   verifyReceiverScam = true,
+  GuardianScreen,
   title = 'Confirm transaction',
   signStepInnerClasses
 }: SignModalPropsType) => {
@@ -22,6 +23,8 @@ export const SignWithDeviceModal = ({
     waitingForDevice,
     onAbort,
     isLastTransaction,
+    signedTransactions,
+    setSignedTransactions,
     currentStep,
     callbackRoute,
     currentTransaction
@@ -48,6 +51,9 @@ export const SignWithDeviceModal = ({
           onSignTransaction={onSignTransaction}
           allTransactions={allTransactions}
           onPrev={onPrev}
+          GuardianScreen={GuardianScreen}
+          signedTransactions={signedTransactions}
+          setSignedTransactions={setSignedTransactions}
           waitingForDevice={waitingForDevice}
           currentStep={currentStep}
           isLastTransaction={isLastTransaction}

@@ -1,7 +1,7 @@
-import { getIsSequential } from './getIsSequential';
-import { sequentialToFlatArray } from './sequentialToFlatArray';
 import { checkBatch } from 'hooks/transactions/useCheckTransactionStatus/checkBatch';
 import { CustomTransactionInformation, SignedTransactionType } from 'types';
+import { getIsSequential } from './getIsSequential';
+import { sequentialToFlatArray } from './sequentialToFlatArray';
 
 export async function updateBatchTransactionsStatuses({
   sessionId,

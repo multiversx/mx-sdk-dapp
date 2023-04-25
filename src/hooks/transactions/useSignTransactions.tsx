@@ -108,9 +108,17 @@ export const useSignTransactions = () => {
     callbackRoute = ''
   ) => {
     const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
-    const callbackUrl = window?.location
-      ? `${window.location.origin}${callbackRoute}`
-      : `${callbackRoute}`;
+    let callbackUrl = callbackRoute;
+
+    if (window?.location) {
+      const searchParams = new URLSearchParams(window.location.search);
+      callbackUrl = `${window.location.origin}${callbackRoute}`;
+
+      searchParams.forEach((value, key) => {
+        urlParams[key] = value;
+      });
+    }
+
     const buildedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 
     provider.signTransactions(transactions, {

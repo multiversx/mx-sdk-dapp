@@ -25,6 +25,13 @@ export interface AccountType {
   isPayable?: boolean;
   isPayableBySmartContract?: boolean;
   assets?: AssetType;
+  isGuarded: boolean;
+  activeGuardianActivationEpoch?: number;
+  activeGuardianAddress?: string;
+  activeGuardianServiceUid?: string;
+  pendingGuardianActivationEpoch?: number;
+  pendingGuardianAddress?: string;
+  pendingGuardianServiceUid?: string;
 }
 
 export interface ScamInfoType {

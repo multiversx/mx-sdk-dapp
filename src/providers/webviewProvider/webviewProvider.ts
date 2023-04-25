@@ -1,6 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { PlatformsEnum, WebViewProviderResponseEnums } from 'types/index';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { requestMethods } from './requestMethods';
@@ -10,8 +11,9 @@ const notInitializedError = (caller: string) => () => {
 };
 
 const currentPlatform = detectCurrentPlatform();
-export const targetOrigin =
-  typeof window != 'undefined' ? window?.parent?.origin ?? '*' : '*';
+export const targetOrigin = isWindowAvailable()
+  ? window?.parent?.origin ?? '*'
+  : '*';
 
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
