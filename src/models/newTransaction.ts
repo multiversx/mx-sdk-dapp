@@ -40,9 +40,6 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     });
   }
 
-  transaction.applySignature({
-    hex: () => rawTransaction.signature || ''
-  });
   transaction.applySignature(new Signature(rawTransaction.signature));
 
   return transaction;
