@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
-import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
-import { useDispatch } from 'reduxStore/DappProviderContext';
-import { updateBatchTransactions } from 'reduxStore/slices';
-import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { useUpdateBatch } from './useUpdateBatch';
-import { useGetAccount } from 'hooks/account';
-import { useGetBatches } from './useGetBatches';
 import {
   AVERAGE_TX_DURATION_MS,
   TRANSACTIONS_STATUS_POLLING_INTERVAL
 } from 'constants/transactionStatus';
+import { useGetAccount } from 'hooks/account';
+import { useRegisterWebsocketListener } from 'hooks/websocketListener';
+import { useDispatch } from 'reduxStore/DappProviderContext';
+import { updateBatchTransactions } from 'reduxStore/slices';
+import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
+import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
+import { useGetBatches } from './useGetBatches';
+import { useUpdateBatch } from './useUpdateBatch';
 
 type TrackBatchTransactionsStatusProps = {
   batchId: string | null;

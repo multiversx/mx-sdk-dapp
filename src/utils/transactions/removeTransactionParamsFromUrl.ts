@@ -1,5 +1,5 @@
-import qs from 'qs';
 import { WALLET_PROVIDER_CALLBACK_PARAM } from '@multiversx/sdk-web-wallet-provider';
+import qs from 'qs';
 import { WALLET_SIGN_SESSION } from 'constants/index';
 import { clearNavigationHistory } from 'utils/clearNavigationHistory';
 import { isWindowAvailable } from 'utils/isWindowAvailable';

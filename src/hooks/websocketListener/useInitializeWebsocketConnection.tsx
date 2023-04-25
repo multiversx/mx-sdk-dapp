@@ -3,6 +3,7 @@ import { io } from 'socket.io-client';
 import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setWebsocketBatchEvent, setWebsocketEvent } from 'reduxStore/slices';
+import { BatchTransactionsWSResponseType } from 'types';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
 import { useGetNetworkConfig } from '../useGetNetworkConfig';
@@ -10,7 +11,6 @@ import {
   websocketConnection,
   WebsocketConnectionStatusEnum
 } from './websocketConnection';
-import { BatchTransactionsWSResponseType } from 'types';
 
 const TIMEOUT = 3000;
 const RECONNECTION_ATTEMPTS = 3;
