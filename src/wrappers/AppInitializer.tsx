@@ -6,9 +6,15 @@ import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
+import { setDappConfig } from 'reduxStore/slices';
 import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
 import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
-import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
+import {
+  CustomNetworkType,
+  DappConfigType,
+  EnvironmentsEnum,
+  IDappProvider
+} from 'types';
 import { logout } from 'utils/logout';
 
 export interface AppInitializerPropsType {
@@ -16,18 +22,19 @@ export interface AppInitializerPropsType {
   children: any;
   externalProvider?: IDappProvider;
   environment: EnvironmentsEnum;
-  logoutRoute?: string;
+  dappConfig?: DappConfigType;
 }
 
 export function AppInitializer({
   customNetworkConfig = {},
   children,
   environment,
-  logoutRoute
+  dappConfig
 }: AppInitializerPropsType) {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
   const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
+  const logoutRoute = dappConfig?.logoutRoute;
 
   const { address, publicKey } = account;
   const dispatch = useDispatch();
@@ -64,6 +71,7 @@ export function AppInitializer({
   }
 
   async function initializeApp() {
+    dispatch(setDappConfig(dappConfig));
     dispatch(setLogoutRoute(logoutRoute));
     await initializeNetwork();
 
@@ -81,7 +89,7 @@ export function AppInitializer({
 
   useEffect(() => {
     initializeApp();
-  }, [customNetworkConfig, environment, logoutRoute]);
+  }, [customNetworkConfig, environment, dappConfig]);
 
   useEffect(() => {
     if (account.address && isLoginSessionInvalid) {

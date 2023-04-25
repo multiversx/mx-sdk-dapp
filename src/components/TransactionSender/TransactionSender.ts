@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Address } from '@multiversx/sdk-core';
 import { Transaction } from '@multiversx/sdk-core/out';
-import { Signature } from '@multiversx/sdk-core/out/signature';
 
 import {
   sendSignedTransactions as defaultSendSignedTxs,
@@ -85,14 +83,7 @@ export const TransactionSender = ({
           continue;
         }
         sendingRef.current = true;
-        const transactionsToSend = transactions.map((tx) => {
-          const address = new Address(tx.sender);
-          const transactionObject = newTransaction(tx);
-          const signature = new Signature(tx.signature);
-
-          transactionObject.applySignature(signature, address);
-          return transactionObject;
-        });
+        const transactionsToSend = transactions.map((tx) => newTransaction(tx));
         const responseHashes = await sendSignedTransactionsAsync(
           transactionsToSend
         );

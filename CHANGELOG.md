@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.12.0]](https://github.com/multiversx/mx-sdk-dapp/pull/737)] - 2023-04-25
+- [Added `dappConfig` slice to control setting `webViewLogin`](https://github.com/multiversx/mx-sdk-dapp/pull/731)]
+- [Guardian screen pre-release](https://github.com/multiversx/mx-sdk-dapp/pull/739)]
+- [Fixed transactions data and signature parsing](https://github.com/multiversx/mx-sdk-dapp/pull/738)]
+
 ## [[v2.11.3]](https://github.com/multiversx/mx-sdk-dapp/pull/737)] - 2023-04-21
 - [Added support for decoding login token within `decodeNativeAuthToken](https://github.com/multiversx/mx-sdk-dapp/pull/736)]
 - [Fixed transactions signing to prevent unnecessary clearing of URL search params](https://github.com/multiversx/mx-sdk-dapp/pull/735)]

@@ -185,7 +185,7 @@ export const useSignMessage = () => {
               status: SignedMessageStatusesEnum.signed,
               callbackUrl: callbackRoute,
               message: props.message,
-              signature: signedMessage.signature.hex()
+              signature: signedMessage.signature.toString('hex')
             }
           })
         );

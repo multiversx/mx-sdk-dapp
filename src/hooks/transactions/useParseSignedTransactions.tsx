@@ -22,6 +22,7 @@ export function useParseSignedTransactions(
 
       if (searchData && WALLET_SIGN_SESSION in searchData) {
         const sessionId = String((searchData as any)[WALLET_SIGN_SESSION]);
+
         const signedTransactions = new WalletProvider(
           `${network.walletAddress}${DAPP_INIT_ROUTE}`
         ).getTransactionsFromWalletUrl();
@@ -43,6 +44,7 @@ export function useParseSignedTransactions(
         }
 
         if (signedTransactions.length > 0) {
+          // TODO: check if the transactions are same as the ones in the redux store
           dispatch(
             moveTransactionsToSignedState({
               sessionId,
