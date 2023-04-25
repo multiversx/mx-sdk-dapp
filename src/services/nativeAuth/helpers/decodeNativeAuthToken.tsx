@@ -20,27 +20,10 @@ export const decodeNativeAuthToken = (
 
   const parts = accessToken.split('.');
 
-  if (parts.length === 4) {
-    const parsedInitToken = decodeLoginToken(accessToken);
-
-    if (!parsedInitToken) {
-      return null;
-    }
-
-    const { ttl, extraInfo, origin, blockHash } = parsedInitToken;
-
-    return {
-      ttl,
-      extraInfo,
-      origin,
-      blockHash,
-      address: '',
-      body: accessToken,
-      signature: ''
-    };
-  }
-
   if (parts.length !== 3) {
+    console.error(
+      'Invalid nativeAuthToken. You may be trying to decode a loginToken. Try using decodeLoginToken method instead'
+    );
     return null;
   }
 
