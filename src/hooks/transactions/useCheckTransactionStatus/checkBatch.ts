@@ -14,10 +14,10 @@ import {
   getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'utils/transactions';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 
 export interface TransactionStatusTrackerPropsType {
   sessionId: string;

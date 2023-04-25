@@ -5,15 +5,22 @@ import {
   TransactionPayload,
   TransactionVersion
 } from '@multiversx/sdk-core';
+import { Signature } from '@multiversx/sdk-core/out/signature';
 import { GAS_LIMIT, GAS_PRICE, VERSION } from 'constants/index';
 import { RawTransactionType } from 'types';
-import { isStringBase64 } from 'utils/decoders/base64Utils';
+import { isStringBase64, isUtf8 } from '../utils';
 
 export function newTransaction(rawTransaction: RawTransactionType) {
   const { data } = rawTransaction;
-  const dataPayload = isStringBase64(data ?? '')
-    ? TransactionPayload.fromEncoded(data)
-    : new TransactionPayload(data);
+
+  let dataPayload = new TransactionPayload('');
+
+  if (data) {
+    const shouldEncode = isStringBase64(data) || isUtf8(data);
+    dataPayload = shouldEncode
+      ? new TransactionPayload(Buffer.from(data, 'base64'))
+      : new TransactionPayload(data);
+  }
 
   const transaction = new Transaction({
     value: rawTransaction.value.valueOf(),
@@ -42,6 +49,7 @@ export function newTransaction(rawTransaction: RawTransactionType) {
   transaction.applySignature({
     hex: () => rawTransaction.signature || ''
   });
+  transaction.applySignature(new Signature(rawTransaction.signature));
 
   return transaction;
 }

@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
-import { Signature } from '@multiversx/sdk-core/out/signature';
 
 import {
   sendSignedTransactions as defaultSendSignedTxs,
@@ -84,13 +83,7 @@ export const TransactionSender = ({
           continue;
         }
         sendingRef.current = true;
-        const transactionsToSend = transactions.map((tx) => {
-          const transactionObject = newTransaction(tx);
-          const signature = new Signature(tx.signature);
-
-          transactionObject.applySignature(signature);
-          return transactionObject;
-        });
+        const transactionsToSend = transactions.map((tx) => newTransaction(tx));
         const responseHashes = await sendSignedTransactionsAsync(
           transactionsToSend
         );
