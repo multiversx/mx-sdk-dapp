@@ -8,6 +8,8 @@ import {
   TransactionsTracker,
   TransactionsTrackerType
 } from 'components/TransactionsTracker';
+import { BatchTransactionsTracker } from 'components/BatchTransactionsTracker/BatchTransactionsTracker';
+import { AllBatchesTransactionsTracker } from 'hooks/transactions/batch/useAllBatchesTransactionsTracker';
 
 export interface CustomComponentsType {
   transactionSender?: {
@@ -18,6 +20,11 @@ export interface CustomComponentsType {
     component: typeof TransactionsTracker;
     props?: TransactionsTrackerType;
   };
+  batchTransactionsTracker?: {
+    component: typeof BatchTransactionsTracker;
+    enabled?: boolean;
+    props?: AllBatchesTransactionsTracker;
+  };
 }
 
 export function CustomComponents({
@@ -27,14 +34,25 @@ export function CustomComponents({
 }) {
   const transactionSender = customComponents?.transactionSender;
   const transactionTracker = customComponents?.transactionTracker;
+  const batchTransactionsTracker = customComponents?.batchTransactionsTracker;
 
   const TxSender = transactionSender?.component ?? TransactionSender;
   const TxTracker = transactionTracker?.component ?? TransactionsTracker;
+  const BatchTxsTracker =
+    batchTransactionsTracker?.component ?? BatchTransactionsTracker;
 
   return (
     <>
       <TxSender {...transactionSender?.props} />
-      <TxTracker {...transactionTracker?.props} />
+
+      {!Boolean(batchTransactionsTracker?.enabled) && (
+        <TxTracker {...transactionTracker?.props} />
+      )}
+
+      {Boolean(batchTransactionsTracker?.enabled) && (
+        <BatchTxsTracker {...batchTransactionsTracker?.props} />
+      )}
+
       <LogoutListener />
     </>
   );
