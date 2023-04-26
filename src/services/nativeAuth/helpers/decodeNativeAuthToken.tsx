@@ -24,7 +24,6 @@ export const decodeNativeAuthToken = (
     console.error(
       'Invalid nativeAuthToken. You may be trying to decode a loginToken. Try using decodeLoginToken method instead'
     );
-
     return null;
   }
 

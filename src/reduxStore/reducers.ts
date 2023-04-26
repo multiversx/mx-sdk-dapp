@@ -2,6 +2,8 @@ import { combineReducers } from '@reduxjs/toolkit';
 
 import { ReducersEnum } from 'types/reducers.types';
 import account from './slices/accountInfoSlice';
+import batchTransactions from './slices/batchTransactionsSlice';
+import dappConfig from './slices/dappConfigSlice';
 import dappModal from './slices/dappModalsSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
@@ -10,11 +12,11 @@ import { signedMessageInfoReducer } from './slices/signedMessageInfoSlice';
 import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
 import transactions from './slices/transactionsSlice';
-import batchTransactions from './slices/batchTransactionsSlice';
 
 const reducers = {
   [ReducersEnum.account]: account,
   [ReducersEnum.dappModal]: dappModal,
+  [ReducersEnum.dappConfig]: dappConfig,
   [ReducersEnum.loginInfo]: loginInfo,
   [ReducersEnum.modals]: modals,
   [ReducersEnum.networkConfig]: networkConfig,

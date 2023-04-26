@@ -8,7 +8,7 @@ export async function getAccountFromApi(address?: string) {
     return null;
   }
   const apiAddress = getCleanApiAddress();
-  const configUrl = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}`;
+  const configUrl = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
 
   try {
     const { data } = await axios.get<AccountType>(configUrl);

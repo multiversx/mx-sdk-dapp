@@ -5,6 +5,7 @@ import { PersistConfig } from 'redux-persist/lib/types';
 import getRootReducer from 'reduxStore/reducers';
 import { defaultNetwork } from 'reduxStore/slices';
 import account from 'reduxStore/slices/accountInfoSlice';
+import batchTransactions from 'reduxStore/slices/batchTransactionsSlice';
 import loginInfo from 'reduxStore/slices/loginInfoSlice';
 import modals from 'reduxStore/slices/modalsSlice';
 import networkConfig from 'reduxStore/slices/networkConfigSlice';
@@ -12,7 +13,6 @@ import { signedMessageInfoReducer } from 'reduxStore/slices/signedMessageInfoSli
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
 import transactions from 'reduxStore/slices/transactionsSlice';
-import batchTransactions from 'reduxStore/slices/batchTransactionsSlice';
 import { ReducersEnum } from 'types/reducers.types';
 
 const config: {

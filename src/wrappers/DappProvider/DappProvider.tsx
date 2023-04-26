@@ -9,14 +9,12 @@ import { webviewProvider } from 'providers/webviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
+import { DappConfigType } from 'types/dappConfig.types';
 import { AppInitializer } from 'wrappers/AppInitializer';
 
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
-export type DappConfigType = {
-  logoutRoute?: string;
-  shouldUseWebViewProvider?: boolean;
-};
+export { DappConfigType };
 
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
@@ -54,7 +52,7 @@ export const DappProvider = ({
         <AppInitializer
           environment={environment as EnvironmentsEnum}
           customNetworkConfig={customNetworkConfig}
-          logoutRoute={dappConfig?.logoutRoute}
+          dappConfig={dappConfig}
         >
           <ProviderInitializer />
           <CustomComponents customComponents={customComponents} />

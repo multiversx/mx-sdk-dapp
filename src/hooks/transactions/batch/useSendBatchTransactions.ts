@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react';
-import {
-  sendBatchTransactions,
-  SendBatchTransactionsPropsType
-} from 'services/transactions/sendBatchTransactions';
-import { BatchTransactionStatus } from 'types';
-import { removeSignedTransaction } from 'services';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   clearBatchTransactions,
   setBatchTransactions
 } from 'reduxStore/slices';
+import { removeSignedTransaction } from 'services';
+import {
+  sendBatchTransactions,
+  SendBatchTransactionsPropsType
+} from 'services/transactions/sendBatchTransactions';
+import { BatchTransactionStatus } from 'types';
 
 export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();

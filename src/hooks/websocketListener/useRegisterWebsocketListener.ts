@@ -4,8 +4,8 @@ import {
   websocketBatchEventSelector,
   websocketEventSelector
 } from 'reduxStore/selectors';
-import { useInitializeWebsocketConnection } from './useInitializeWebsocketConnection';
 import { BatchTransactionsWSResponseType } from 'types';
+import { useInitializeWebsocketConnection } from './useInitializeWebsocketConnection';
 
 export function useRegisterWebsocketListener(
   onMessage: (message: string) => void,

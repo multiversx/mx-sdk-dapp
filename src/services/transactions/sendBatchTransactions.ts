@@ -1,13 +1,13 @@
-import {
-  BatchTransactionsResponseType,
-  SendBatchTransactionReturnType,
-  SignedTransactionType
-} from 'types';
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
 import { TIMEOUT } from 'constants/network';
 import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
+import {
+  BatchTransactionsResponseType,
+  SendBatchTransactionReturnType,
+  SignedTransactionType
+} from 'types';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[] | SignedTransactionType[][];

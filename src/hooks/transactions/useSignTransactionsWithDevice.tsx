@@ -1,9 +1,15 @@
 import { Transaction } from '@multiversx/sdk-core';
+import { getEnvironmentForChainId } from 'apiCalls/configuration';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
+import {
+  WALLET_SIGN_SESSION,
+  fallbackNetworkConfigurations
+} from 'constants/index';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
+import { newWalletProvider } from 'providers/utils';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { egldLabelSelector } from 'reduxStore/selectors';
 import {
@@ -12,13 +18,16 @@ import {
 } from 'reduxStore/slices';
 import {
   ActiveLedgerTransactionType,
+  DeviceSignedTransactions,
   LoginMethodsEnum,
   MultiSignTransactionType,
   TransactionBatchStatusesEnum
 } from 'types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
+import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { getAreAllTransactionsSignedByGuardian } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
@@ -26,9 +35,8 @@ import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 export interface UseSignTransactionsWithDevicePropsType {
   onCancel: () => void;
   verifyReceiverScam?: boolean;
+  hasGuardianScreen?: boolean;
 }
-
-type DeviceSignedTransactions = Record<number, Transaction>;
 
 export interface UseSignTransactionsWithDeviceReturnType {
   allTransactions: MultiSignTransactionType[];
@@ -38,23 +46,25 @@ export interface UseSignTransactionsWithDeviceReturnType {
   onAbort: () => void;
   waitingForDevice: boolean;
   isLastTransaction: boolean;
-  callbackRoute?: string;
   currentStep: number;
   signedTransactions?: DeviceSignedTransactions;
+  setSignedTransactions?: React.Dispatch<
+    React.SetStateAction<DeviceSignedTransactions | undefined>
+  >;
   currentTransaction: ActiveLedgerTransactionType | null;
+  callbackRoute?: string;
 }
 
-export function useSignTransactionsWithDevice({
-  onCancel,
-  verifyReceiverScam = true
-}: UseSignTransactionsWithDevicePropsType): UseSignTransactionsWithDeviceReturnType {
+export function useSignTransactionsWithDevice(
+  props: UseSignTransactionsWithDevicePropsType
+): UseSignTransactionsWithDeviceReturnType {
+  const { onCancel, verifyReceiverScam = true, hasGuardianScreen } = props;
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
 
   const egldLabel = useSelector(egldLabelSelector);
-  const {
-    account: { address }
-  } = useGetAccountInfo();
+  const { account } = useGetAccountInfo();
+  const { address, isGuarded } = account;
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
@@ -90,6 +100,34 @@ export function useSignTransactionsWithDevice({
       return;
     }
 
+    const allSignedByGuardian = getAreAllTransactionsSignedByGuardian({
+      isGuarded,
+      transactions: newSignedTransactions
+    });
+
+    /**
+     * Redirect to wallet for signing if:
+     * - account is guarded &
+     * - 2FA will not be provided locally &
+     * - transactions were not signed by guardian
+     */
+    if (isGuarded && !hasGuardianScreen && !allSignedByGuardian) {
+      const chainId = newSignedTransactions[0].getChainID().valueOf();
+      const environment = getEnvironmentForChainId(chainId);
+      const walletAddress =
+        fallbackNetworkConfigurations[environment].walletAddress;
+      const walletProvider = newWalletProvider(walletAddress);
+      const urlParams = { [WALLET_SIGN_SESSION]: String(sessionId) };
+      const callbackUrl = window?.location
+        ? `${window.location.origin}${callbackRoute}`
+        : `${callbackRoute}`;
+      const builtedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
+
+      walletProvider.guardTransactions(newSignedTransactions, {
+        callbackUrl: encodeURIComponent(builtedCallbackUrl)
+      });
+    }
+
     if (sessionId) {
       dispatch(
         moveTransactionsToSignedState({
@@ -123,6 +161,7 @@ export function useSignTransactionsWithDevice({
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
+    isGuarded,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),

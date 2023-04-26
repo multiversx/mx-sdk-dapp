@@ -1,4 +1,4 @@
-import { TokenPayment } from '@multiversx/sdk-core';
+import { TokenTransfer } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
 import { DECIMALS, DIGITS, ZERO } from 'constants/index';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
@@ -39,11 +39,9 @@ export function formatAmount({
     pipe(modInput as string)
       // format
       .then(() =>
-        TokenPayment.fungibleFromBigInteger(
-          '',
-          modInput as string,
-          decimals
-        ).toRationalNumber()
+        TokenTransfer.fungibleFromBigInteger('', modInput as string, decimals)
+          .amountAsBigInteger.shiftedBy(-decimals)
+          .toFixed(decimals)
       )
 
       // format

@@ -1,7 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Address } from '@multiversx/sdk-core';
 import { Transaction } from '@multiversx/sdk-core/out';
-import { Signature } from '@multiversx/sdk-core/out/signature';
 
 import {
   sendSignedTransactions as defaultSendSignedTxs,
@@ -26,6 +24,7 @@ import { SignedTransactionsBodyType } from 'types/transactions.types';
 
 import { setNonce } from 'utils/account/setNonce';
 import { safeRedirect } from 'utils/redirect';
+import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 
 export interface TransactionSenderType {
   sendSignedTransactionsAsync?: (
@@ -84,14 +83,7 @@ export const TransactionSender = ({
           continue;
         }
         sendingRef.current = true;
-        const transactionsToSend = transactions.map((tx) => {
-          const address = new Address(tx.sender);
-          const transactionObject = newTransaction(tx);
-          const signature = new Signature(tx.signature);
-
-          transactionObject.applySignature(signature, address);
-          return transactionObject;
-        });
+        const transactionsToSend = transactions.map((tx) => newTransaction(tx));
         const responseHashes = await sendSignedTransactionsAsync(
           transactionsToSend
         );
@@ -122,8 +114,10 @@ export const TransactionSender = ({
         setNonce(account.nonce + transactions.length);
 
         optionalRedirect(sessionInformation);
-
-        history.pushState({}, document?.title, '?');
+        const [transaction] = transactionsToSend;
+        removeTransactionParamsFromUrl({
+          transaction
+        });
       } catch (error) {
         console.error('Unable to send transactions', error);
         dispatch(
