@@ -10,11 +10,9 @@ import { RawTransactionType } from 'types';
 import { getDataPayloadForTransaction } from 'utils/transactions/getDataPayloadForTransaction';
 
 export function newTransaction(rawTransaction: RawTransactionType) {
-  const { data } = rawTransaction;
-
   const transaction = new Transaction({
     value: rawTransaction.value.valueOf(),
-    data: getDataPayloadForTransaction(data),
+    data: getDataPayloadForTransaction(rawTransaction.data),
     nonce: rawTransaction.nonce.valueOf(),
     receiver: new Address(rawTransaction.receiver),
     sender: new Address(rawTransaction.sender),

@@ -1,25 +1,20 @@
 import { TransactionPayload } from '@multiversx/sdk-core/out';
-import { hasEmoji, isStringBase64, isUtf8 } from '../decoders';
-import { ESDTTransferTypes } from '../smartContracts';
+import { isStringBase64 } from '../decoders';
 
 /**
- * @description We need to check if the data field was already encoded, to prevent additional encoding
- *   It should prevent additional encoding for ESDT transfers, if data field is base64 encoded
- *   or if after decoding the data field from base64, it is a valid utf8 string or contains emoji
+ * @description We need to check if the data field was already encoded and to prevent additional encoding
+ * The TransactionPayload is used in the context of the Transaction class
+ * which must always have a non-encoded data field
+ *
+ * @see The tests for this function are in src/utils/transactions/tests/getDataPayloadForTransaction.test.ts
  * @param data - data field from transaction
  */
-export const getDataPayloadForTransaction = (data?: string) => {
+export const getDataPayloadForTransaction = (
+  data?: string
+): TransactionPayload => {
   const defaultData = data ?? '';
-  const decoded = Buffer.from(defaultData, 'base64').toString();
-  const isEsdtTransfer = ESDTTransferTypes.some((transferType) =>
-    defaultData.includes(transferType)
-  );
 
-  const shouldDecode =
-    !isEsdtTransfer &&
-    (isStringBase64(defaultData) || isUtf8(decoded) || hasEmoji(decoded));
-
-  return shouldDecode
-    ? TransactionPayload.fromEncoded(data)
-    : new TransactionPayload(data);
+  return isStringBase64(defaultData)
+    ? TransactionPayload.fromEncoded(defaultData)
+    : new TransactionPayload(defaultData);
 };
