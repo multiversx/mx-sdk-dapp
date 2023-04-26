@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { BatchTransactionsWSResponseType } from 'types';
+import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
@@ -9,6 +9,7 @@ import {
 } from 'constants/transactionStatus';
 import { useUpdateBatches } from './useUpdateBatches';
 import { useResolveBatchStatusResponse } from './useResolveBatchStatusResponse';
+import { useGetBatches } from './useGetBatches';
 
 export type AllBatchesTransactionsTracker = {
   onSuccess?: (batchId: string | null) => void;
@@ -22,7 +23,9 @@ export const useAllBatchesTransactionsTracker = ({
   const dispatch = useDispatch();
   const stopPollingRef = useRef<boolean>(true);
 
-  const updateBatchAllBatches = useUpdateBatches();
+  const { batches, batchTransactionsArray } = useGetBatches();
+
+  const updateAllBatches = useUpdateBatches();
   const resolveBatchStatusResponse = useResolveBatchStatusResponse();
 
   const verifyBatchStatus = useCallback(
@@ -60,11 +63,11 @@ export const useAllBatchesTransactionsTracker = ({
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
 
-      await updateBatchAllBatches({
+      await updateAllBatches({
         shouldRefreshBalance: true
       });
     },
-    [verifyBatchStatus, updateBatchAllBatches]
+    [verifyBatchStatus, updateAllBatches]
   );
 
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
@@ -76,7 +79,7 @@ export const useAllBatchesTransactionsTracker = ({
     return () => {
       clearInterval(interval);
     };
-  }, [onMessage, stopPollingRef.current]);
+  }, [stopPollingRef.current]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -84,11 +87,22 @@ export const useAllBatchesTransactionsTracker = ({
         return;
       }
 
-      await updateBatchAllBatches({
+      const pendingBatches = batchTransactionsArray.filter((batch) => {
+        const isPending =
+          batch.batchId != null &&
+          batches[batch.batchId]?.status === BatchTransactionStatus.pending;
+        return isPending;
+      });
+
+      for (const { batchId } of pendingBatches) {
+        await verifyBatchStatus({ batchId });
+      }
+
+      await updateAllBatches({
         shouldRefreshBalance: true
       });
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [verifyBatchStatus, stopPollingRef.current]);
+  }, [verifyBatchStatus, updateAllBatches]);
 };

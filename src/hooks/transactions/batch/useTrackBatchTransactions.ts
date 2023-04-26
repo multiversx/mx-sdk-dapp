@@ -98,7 +98,7 @@ export const useTrackBatchTransactions = ({
     return () => {
       clearInterval(interval);
     };
-  }, [onMessage, stopPollingRef.current]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -114,7 +114,7 @@ export const useTrackBatchTransactions = ({
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [batchId, verifyBatchStatus, stopPollingRef.current]);
+  }, [batchId, verifyBatchStatus, updateBatchTransactionsStatuses]);
 
   return {
     batchStatus,

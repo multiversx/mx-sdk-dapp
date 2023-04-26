@@ -13,7 +13,7 @@ export function useUpdateBatches() {
     const pendingBatches = batchTransactionsArray.filter((batch) => {
       const isPending =
         batch.batchId != null &&
-        batches[batch.batchId].status === BatchTransactionStatus.pending;
+        batches[batch.batchId]?.status === BatchTransactionStatus.pending;
       return isPending;
     });
 
