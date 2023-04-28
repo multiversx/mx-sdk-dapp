@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { useSignTransactionsWithDevice } from 'hooks';
+import { useGetAccount, useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { SignStep } from './SignStep';
@@ -16,6 +16,8 @@ export const SignWithDeviceModal = ({
   title = 'Confirm transaction',
   signStepInnerClasses
 }: SignModalPropsType) => {
+  const { address } = useGetAccount();
+
   const {
     onSignTransaction,
     onPrev,
@@ -48,6 +50,7 @@ export const SignWithDeviceModal = ({
     >
       <div className={classes.cardBody}>
         <SignStep
+          address={address}
           onSignTransaction={onSignTransaction}
           allTransactions={allTransactions}
           onPrev={onPrev}
