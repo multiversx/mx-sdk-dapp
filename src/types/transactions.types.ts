@@ -175,6 +175,7 @@ export interface SmartContractResult {
 export type DeviceSignedTransactions = Record<number, Transaction>;
 
 export interface GuardianScreenType extends WithClassnameType {
+  address: string;
   onSignTransaction: () => void;
   onPrev: () => void;
   title?: ReactNode;
