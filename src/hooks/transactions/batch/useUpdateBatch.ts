@@ -23,6 +23,7 @@ export function useUpdateBatch() {
     const [sessionId] = batchId.split('-');
 
     await updateBatchTransactionsStatuses({
+      batchId,
       sessionId,
       transactions,
       customTransactionInformation: props?.customTransactionInformation

@@ -51,7 +51,7 @@ export const useAllBatchesTransactionsTracker = ({
 
       stopPollingRef.current = true;
     },
-    [resolveBatchStatusResponse, onSuccess, onFail]
+    [dispatch, resolveBatchStatusResponse, onSuccess, onFail]
   );
 
   const onMessage = useCallback(() => {
@@ -62,28 +62,29 @@ export const useAllBatchesTransactionsTracker = ({
   const onBatchUpdate = useCallback(
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
-
-      await updateAllBatches({
-        shouldRefreshBalance: true
-      });
     },
-    [verifyBatchStatus, updateAllBatches]
+    [verifyBatchStatus]
   );
 
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
 
   useEffect(() => {
+    if (batchTransactionsArray.length === 0) {
+      return;
+    }
+
     const interval = setTimeout(async () => {
       stopPollingRef.current = false;
     }, TRANSACTIONS_STATUS_POLLING_INTERVAL);
     return () => {
       clearInterval(interval);
     };
-  }, []);
+  }, [batchTransactionsArray.length]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      if (stopPollingRef.current) {
+      if (stopPollingRef.current || batchTransactionsArray.length === 0) {
+        stopPollingRef.current = true;
         return;
       }
 
@@ -97,12 +98,14 @@ export const useAllBatchesTransactionsTracker = ({
       for (const { batchId } of pendingBatches) {
         await verifyBatchStatus({ batchId });
       }
-
-      await updateAllBatches({
-        shouldRefreshBalance: true
-      });
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [verifyBatchStatus, updateAllBatches, batches, batchTransactionsArray]);
+  }, [verifyBatchStatus, batches, batchTransactionsArray]);
+
+  useEffect(() => {
+    updateAllBatches({
+      shouldRefreshBalance: true
+    });
+  }, [batches, batchTransactionsArray]);
 };

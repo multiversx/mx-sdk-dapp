@@ -9,7 +9,7 @@ import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
 } from 'services/transactions/sendBatchTransactions';
-import { BatchTransactionStatus } from 'types';
+import { BatchTransactionStatus } from 'types/serverTransactions.types';
 
 export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();

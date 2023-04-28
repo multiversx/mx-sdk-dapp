@@ -6,5 +6,12 @@ export const batchTransactionsSelectors = (state: RootState) =>
 
 export const batchesSelector = createDeepEqualSelector(
   batchTransactionsSelectors,
-  (state) => state
+  (state) => {
+    const batches = {
+      ...state
+    };
+    delete batches._persist;
+
+    return batches;
+  }
 );

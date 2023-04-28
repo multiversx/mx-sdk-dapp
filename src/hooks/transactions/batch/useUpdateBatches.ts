@@ -1,40 +1,36 @@
-import { BatchTransactionStatus, CustomTransactionInformation } from 'types';
+import { CustomTransactionInformation } from 'types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
 import { useGetBatches } from './useGetBatches';
+import { useCallback } from 'react';
 
 export function useUpdateBatches() {
   const { batches, batchTransactionsArray } = useGetBatches();
 
-  async function checkBatchesTransactionsStatuses(props?: {
-    shouldRefreshBalance?: boolean;
-    customTransactionInformation?: CustomTransactionInformation;
-  }) {
-    const pendingBatches = batchTransactionsArray.filter((batch) => {
-      const isPending =
-        batch.batchId != null &&
-        batches[batch.batchId]?.status === BatchTransactionStatus.pending;
-      return isPending;
-    });
+  return useCallback(
+    async (props?: {
+      shouldRefreshBalance?: boolean;
+      customTransactionInformation?: CustomTransactionInformation;
+    }) => {
+      const pendingBatches = batchTransactionsArray.filter(
+        (batch) => batch.batchId != null && batches[batch.batchId]
+      );
 
-    if (pendingBatches.length === 0) {
-      return;
-    }
+      for (const { batchId, transactions } of pendingBatches) {
+        const [sessionId] = batchId.split('-');
 
-    for (const { batchId, transactions } of pendingBatches) {
-      const [sessionId] = batchId.split('-');
+        await updateBatchTransactionsStatuses({
+          batchId,
+          sessionId,
+          transactions,
+          customTransactionInformation: props?.customTransactionInformation
+        });
+      }
 
-      await updateBatchTransactionsStatuses({
-        sessionId,
-        transactions,
-        customTransactionInformation: props?.customTransactionInformation
-      });
-    }
-
-    if (props?.shouldRefreshBalance) {
-      refreshAccount();
-    }
-  }
-
-  return checkBatchesTransactionsStatuses;
+      if (props?.shouldRefreshBalance) {
+        refreshAccount();
+      }
+    },
+    [batches, batchTransactionsArray]
+  );
 }

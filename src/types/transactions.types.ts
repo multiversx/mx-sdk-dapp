@@ -24,6 +24,7 @@ export interface SignedTransactionsBodyType {
   errorMessage?: string;
   redirectRoute?: string;
   customTransactionInformation?: CustomTransactionInformation;
+  grouping?: number[][];
 }
 
 export interface SignedTransactionsType {

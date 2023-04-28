@@ -14,7 +14,6 @@ import {
   getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'utils/transactions';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
@@ -141,12 +140,7 @@ export async function checkBatch({
       return;
     }
 
-    const transactionsArray = sequentialToFlatArray({ transactions });
-
-    const pendingTransactions = getPendingTransactions(
-      transactionsArray,
-      timeouts
-    );
+    const pendingTransactions = getPendingTransactions(transactions, timeouts);
 
     const serverTransactions = await getTransactionsByHash(pendingTransactions);
 
