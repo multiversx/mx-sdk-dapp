@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.12.2]](https://github.com/multiversx/mx-sdk-dapp/pull/748)] - 2023-04-28
 - [Extend `GuardianScreenType` with `address`](https://github.com/multiversx/mx-sdk-dapp/pull/747)]
 - [Fixed transaction data parsing in `newTransaction` method](https://github.com/multiversx/mx-sdk-dapp/pull/744)]
 - [Fix setting `webviewProvider` overriding `externalProvider`](https://github.com/multiversx/mx-sdk-dapp/pull/746)]
