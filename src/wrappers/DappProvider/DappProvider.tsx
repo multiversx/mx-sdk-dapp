@@ -43,8 +43,7 @@ export const DappProvider = ({
 
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
-  }
-  if (dappConfig?.shouldUseWebViewProvider) {
+  } else if (dappConfig?.shouldUseWebViewProvider) {
     setExternalProvider(webviewProvider);
   }
 

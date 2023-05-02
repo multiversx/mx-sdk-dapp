@@ -14,6 +14,7 @@ export * from './parseNavigationParams';
 export * from './progress';
 export * from './platform';
 export * from './redirect';
+export * from './removeSearchParamsFromUrl';
 export * from './retryMultipleTimes';
 export * from './smartContracts';
 export * from './storage';
