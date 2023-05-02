@@ -59,7 +59,7 @@ export function useSignTransactionsWithDevice(
 
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
-  const { address, isGuarded } = account;
+  const { address, isGuarded, activeGuardianAddress } = account;
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
@@ -142,10 +142,11 @@ export function useSignTransactionsWithDevice(
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
-    isGuarded,
+    activeGuardianAddress,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),
+    hasGuardianScreen,
     onCancel: handleCancel,
     onSignTransaction: handleSignTransaction,
     onTransactionsSignError: handleTransactionSignError,

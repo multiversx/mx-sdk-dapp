@@ -20,7 +20,8 @@ import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWi
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
   address: string;
-  isGuarded?: boolean;
+  activeGuardianAddress?: string;
+  hasGuardianScreen?: boolean;
   verifyReceiverScam?: boolean;
   isLedger?: boolean;
   transactionsToSign?: Transaction[];
@@ -50,13 +51,15 @@ export function useSignMultipleTransactions({
   transactionsToSign,
   egldLabel,
   address,
-  isGuarded,
+  activeGuardianAddress,
+  hasGuardianScreen,
   onCancel,
   onSignTransaction,
   onTransactionsSignError,
   onTransactionsSignSuccess,
   onGetScamAddressData
 }: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
+  const isGuarded = Boolean(activeGuardianAddress);
   const [currentStep, setCurrentStep] = useState(0);
   const [signedTransactions, setSignedTransactions] =
     useState<DeviceSignedTransactions>();
@@ -67,13 +70,16 @@ export function useSignMultipleTransactions({
 
   const { getTxInfoByDataField, allTransactions } =
     useParseMultiEsdtTransferData({
-      transactions: isGuarded
+      transactions: activeGuardianAddress
         ? transactionsToSign?.map((transaction) => {
             transaction.setSender(Address.fromBech32(address));
             transaction.setVersion(TransactionVersion.withTxOptions());
-            transaction.setOptions(
-              TransactionOptions.withOptions({ guarded: true })
-            );
+            transaction.setGuardian(Address.fromBech32(activeGuardianAddress));
+            const options = {
+              guarded: true,
+              ...(isLedger ? { hashSign: true } : {})
+            };
+            transaction.setOptions(TransactionOptions.withOptions(options));
             return transaction;
           })
         : transactionsToSign
@@ -172,7 +178,7 @@ export function useSignMultipleTransactions({
       transactions: allSignedTransactions
     });
 
-    if (!allSignedByGuardian) {
+    if (!allSignedByGuardian && hasGuardianScreen) {
       return;
     }
 
