@@ -10,6 +10,7 @@ import {
 import { useUpdateBatches } from './useUpdateBatches';
 import { useResolveBatchStatusResponse } from './useResolveBatchStatusResponse';
 import { useGetBatches } from './useGetBatches';
+import { useUpdateBatch } from './useUpdateBatch';
 
 export type AllBatchesTransactionsTracker = {
   onSuccess?: (batchId: string | null) => void;
@@ -26,6 +27,7 @@ export const useAllBatchesTransactionsTracker = ({
   const { batches, batchTransactionsArray } = useGetBatches();
 
   const updateAllBatches = useUpdateBatches();
+  const updateBatch = useUpdateBatch();
   const resolveBatchStatusResponse = useResolveBatchStatusResponse();
 
   const verifyBatchStatus = useCallback(
@@ -62,6 +64,11 @@ export const useAllBatchesTransactionsTracker = ({
   const onBatchUpdate = useCallback(
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
+
+      await updateBatch({
+        batchId: data.batchId,
+        shouldRefreshBalance: true
+      });
     },
     [verifyBatchStatus]
   );
@@ -97,6 +104,11 @@ export const useAllBatchesTransactionsTracker = ({
 
       for (const { batchId } of pendingBatches) {
         await verifyBatchStatus({ batchId });
+
+        await updateBatch({
+          batchId,
+          shouldRefreshBalance: true
+        });
       }
     }, AVERAGE_TX_DURATION_MS);
 

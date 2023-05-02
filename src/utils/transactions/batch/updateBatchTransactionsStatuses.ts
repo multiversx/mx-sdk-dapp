@@ -35,19 +35,19 @@ export async function updateBatchTransactionsStatuses({
     return;
   }
 
+  for (const transaction of transactionsArray) {
+    const { hash, status } = transaction;
+
+    store.dispatch(
+      updateSignedTransactionStatus({
+        sessionId,
+        status,
+        transactionHash: hash
+      })
+    );
+  }
+
   if (batchIsSuccessful) {
-    for (const transaction of transactionsArray) {
-      const { hash, status } = transaction;
-
-      store.dispatch(
-        updateSignedTransactionStatus({
-          sessionId,
-          status,
-          transactionHash: hash
-        })
-      );
-    }
-
     store.dispatch(clearBatchTransactions({ batchId }));
     return;
   }
