@@ -1,17 +1,12 @@
 import { Transaction } from '@multiversx/sdk-core';
-import { getEnvironmentForChainId } from 'apiCalls/configuration';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
-import {
-  WALLET_SIGN_SESSION,
-  fallbackNetworkConfigurations
-} from 'constants/index';
+
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
-import { newWalletProvider } from 'providers/utils';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { egldLabelSelector } from 'reduxStore/selectors';
+import { egldLabelSelector, networkSelector } from 'reduxStore/selectors';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsError
@@ -25,9 +20,8 @@ import {
 } from 'types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
-import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
-import { getAreAllTransactionsSignedByGuardian } from './helpers';
+import { checkNeedsGuardianSigning } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
@@ -61,10 +55,11 @@ export function useSignTransactionsWithDevice(
   const { onCancel, verifyReceiverScam = true, hasGuardianScreen } = props;
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
+  const network = useSelector(networkSelector);
 
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
-  const { address, isGuarded } = account;
+  const { address, isGuarded, activeGuardianAddress } = account;
   const { provider } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
@@ -100,32 +95,18 @@ export function useSignTransactionsWithDevice(
       return;
     }
 
-    const allSignedByGuardian = getAreAllTransactionsSignedByGuardian({
-      isGuarded,
-      transactions: newSignedTransactions
-    });
-
-    /**
-     * Redirect to wallet for signing if:
-     * - account is guarded &
-     * - 2FA will not be provided locally &
-     * - transactions were not signed by guardian
-     */
-    if (isGuarded && !hasGuardianScreen && !allSignedByGuardian) {
-      const chainId = newSignedTransactions[0].getChainID().valueOf();
-      const environment = getEnvironmentForChainId(chainId);
-      const walletAddress =
-        fallbackNetworkConfigurations[environment].walletAddress;
-      const walletProvider = newWalletProvider(walletAddress);
-      const urlParams = { [WALLET_SIGN_SESSION]: String(sessionId) };
-      const callbackUrl = window?.location
-        ? `${window.location.origin}${callbackRoute}`
-        : `${callbackRoute}`;
-      const builtedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
-
-      walletProvider.guardTransactions(newSignedTransactions, {
-        callbackUrl: encodeURIComponent(builtedCallbackUrl)
+    const { needs2FaSigning, sendTransactionsToGuardian } =
+      checkNeedsGuardianSigning({
+        transactions: newSignedTransactions,
+        sessionId,
+        callbackRoute,
+        hasGuardianScreen,
+        isGuarded,
+        walletAddress: network.walletAddress
       });
+
+    if (needs2FaSigning) {
+      return sendTransactionsToGuardian();
     }
 
     if (sessionId) {
@@ -161,10 +142,11 @@ export function useSignTransactionsWithDevice(
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
-    isGuarded,
+    activeGuardianAddress,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),
+    hasGuardianScreen,
     onCancel: handleCancel,
     onSignTransaction: handleSignTransaction,
     onTransactionsSignError: handleTransactionSignError,

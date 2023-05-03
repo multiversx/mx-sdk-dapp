@@ -1,5 +1,9 @@
 import { useEffect, useRef } from 'react';
-import { Transaction } from '@multiversx/sdk-core';
+import {
+  Transaction,
+  TransactionOptions,
+  TransactionVersion
+} from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import {
@@ -11,12 +15,16 @@ import {
   TRANSACTION_STATUS_TOAST_ID,
   WALLET_SIGN_SESSION
 } from 'constants/index';
+import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import { getProviderType } from 'providers/utils';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { signTransactionsCancelMessageSelector } from 'reduxStore/selectors';
+import {
+  networkSelector,
+  signTransactionsCancelMessageSelector
+} from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
@@ -35,7 +43,8 @@ import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactio
 
 import {
   useSetTransactionNonces,
-  getShouldMoveTransactionsToSignedState
+  getShouldMoveTransactionsToSignedState,
+  checkNeedsGuardianSigning
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
@@ -43,9 +52,12 @@ export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const { provider } = useGetAccountProvider();
+  const network = useSelector(networkSelector);
+
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
   const setTransactionNonces = useSetTransactionNonces();
+  const { isGuarded } = useGetAccount();
 
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
@@ -161,7 +173,15 @@ export const useSignTransactions = () => {
     try {
       isSigningRef.current = true;
       const signedTransactions: Transaction[] = await provider.signTransactions(
-        transactions
+        isGuarded
+          ? transactions.map((transaction) => {
+              transaction.setVersion(TransactionVersion.withTxOptions());
+              transaction.setOptions(
+                TransactionOptions.withOptions({ guarded: true })
+              );
+              return transaction;
+            })
+          : transactions
       );
       isSigningRef.current = false;
 
@@ -175,6 +195,19 @@ export const useSignTransactions = () => {
       const signedTransactionsArray = Object.values(signedTransactions).map(
         (tx) => parseTransactionAfterSigning(tx)
       );
+
+      const { needs2FaSigning, sendTransactionsToGuardian } =
+        checkNeedsGuardianSigning({
+          transactions: signedTransactions,
+          sessionId,
+          callbackRoute,
+          isGuarded,
+          walletAddress: network.walletAddress
+        });
+
+      if (needs2FaSigning) {
+        return sendTransactionsToGuardian();
+      }
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,
