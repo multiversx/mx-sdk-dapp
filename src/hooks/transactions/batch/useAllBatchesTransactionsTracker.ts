@@ -1,5 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react';
-import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
+import { useCallback, useEffect, useMemo } from 'react';
+import {
+  BatchTransactionStatus,
+  BatchTransactionsWSResponseType,
+  SignedTransactionType
+} from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
@@ -7,10 +11,14 @@ import {
   AVERAGE_TX_DURATION_MS,
   TRANSACTIONS_STATUS_POLLING_INTERVAL
 } from 'constants/transactionStatus';
-import { useUpdateBatches } from './useUpdateBatches';
 import { useResolveBatchStatusResponse } from './useResolveBatchStatusResponse';
 import { useGetBatches } from './useGetBatches';
 import { useUpdateBatch } from './useUpdateBatch';
+import { checkBatch } from '../useCheckTransactionStatus/checkBatch';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
+import { getIsSequential } from 'utils/transactions/batch/getIsSequential';
+import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
+import { useGetSignedTransactions } from '../useGetSignedTransactions';
 
 export type AllBatchesTransactionsTracker = {
   onSuccess?: (batchId: string | null) => void;
@@ -22,13 +30,22 @@ export const useAllBatchesTransactionsTracker = ({
   onFail
 }: AllBatchesTransactionsTracker) => {
   const dispatch = useDispatch();
-  const stopPollingRef = useRef<boolean>(true);
-
+  const { signedTransactions } = useGetSignedTransactions();
   const { batches, batchTransactionsArray } = useGetBatches();
 
-  const updateAllBatches = useUpdateBatches();
   const updateBatch = useUpdateBatch();
   const resolveBatchStatusResponse = useResolveBatchStatusResponse();
+
+  const pendingBatches = useMemo(
+    () =>
+      batchTransactionsArray.filter((batch) => {
+        const isPending =
+          batch.batchId != null &&
+          batches[batch.batchId]?.status === BatchTransactionStatus.pending;
+        return isPending;
+      }),
+    [batchTransactionsArray]
+  );
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
@@ -36,7 +53,6 @@ export const useAllBatchesTransactionsTracker = ({
         await resolveBatchStatusResponse({ batchId });
 
       if (!statusResponse) {
-        stopPollingRef.current = true;
         return;
       }
 
@@ -50,8 +66,6 @@ export const useAllBatchesTransactionsTracker = ({
           `Error processing batch transactions. Status: ${statusResponse?.status}`
         );
       }
-
-      stopPollingRef.current = true;
     },
     [dispatch, resolveBatchStatusResponse, onSuccess, onFail]
   );
@@ -73,51 +87,117 @@ export const useAllBatchesTransactionsTracker = ({
     [verifyBatchStatus]
   );
 
-  useRegisterWebsocketListener(onMessage, onBatchUpdate);
+  const isBatchHanding = useCallback((batchId: string, olderThanMs: number) => {
+    const sessionTimestamp = parseInt(batchId.split('-')[0]);
 
-  useEffect(() => {
-    if (batchTransactionsArray.length === 0) {
-      return;
-    }
+    const diff = new Date().getTime() - sessionTimestamp;
 
-    const interval = setTimeout(async () => {
-      stopPollingRef.current = false;
-    }, TRANSACTIONS_STATUS_POLLING_INTERVAL);
-    return () => {
-      clearInterval(interval);
-    };
-  }, [batchTransactionsArray.length]);
+    return diff > olderThanMs;
+  }, []);
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      if (stopPollingRef.current || batchTransactionsArray.length === 0) {
-        stopPollingRef.current = true;
+  const checkHangingBatches = useCallback(async () => {
+    for (const { batchId, transactions } of pendingBatches) {
+      if (!isBatchHanding(batchId, TRANSACTIONS_STATUS_POLLING_INTERVAL)) {
+        continue;
+      }
+
+      const sessionId = batchId.split('-')[0];
+      if (!sessionId) {
+        continue;
+      }
+
+      const isSequential = getIsSequential({ transactions });
+      const transactionsArray = sequentialToFlatArray({ transactions });
+
+      await checkBatch({
+        sessionId,
+        transactionBatch: {
+          transactions: transactionsArray
+        },
+        isSequential
+      });
+
+      const sessionTransactions = signedTransactions[sessionId]?.transactions;
+      const batch = batches[batchId];
+      let status = batch.status;
+
+      if (!sessionTransactions) {
         return;
       }
 
-      const pendingBatches = batchTransactionsArray.filter((batch) => {
-        const isPending =
-          batch.batchId != null &&
-          batches[batch.batchId]?.status === BatchTransactionStatus.pending;
-        return isPending;
-      });
+      const { isPending, isSuccessful, isFailed, isIncompleteFailed } =
+        getTransactionsStatus({ transactions: sessionTransactions });
 
-      for (const { batchId } of pendingBatches) {
-        await verifyBatchStatus({ batchId });
-
-        await updateBatch({
-          batchId,
-          shouldRefreshBalance: true
-        });
+      if (isSequential) {
+        for (const group of transactions as SignedTransactionType[][]) {
+          for (const transaction of group) {
+            transaction.status =
+              sessionTransactions.find((tx) => tx.hash === transaction.hash)
+                ?.status || transaction.status;
+          }
+        }
+      } else {
+        for (const transaction of transactions as SignedTransactionType[]) {
+          transaction.status =
+            sessionTransactions.find((tx) => tx.hash === transaction.hash)
+              ?.status || transaction.status;
+        }
       }
+
+      switch (true) {
+        case isPending: {
+          status = BatchTransactionStatus.pending;
+          break;
+        }
+        case isSuccessful: {
+          status = BatchTransactionStatus.success;
+          break;
+        }
+        case isFailed:
+        case isIncompleteFailed: {
+          status = BatchTransactionStatus.invalid;
+          break;
+        }
+        default:
+          status = BatchTransactionStatus.dropped;
+      }
+
+      dispatch(
+        updateBatchTransactions({
+          ...batch,
+          status,
+          transactions
+        })
+      );
+    }
+  }, [isBatchHanding, pendingBatches, batches, signedTransactions, dispatch]);
+
+  const checkAllBatchStatusesOnPageLoad = useCallback(async () => {
+    for (const { batchId } of pendingBatches) {
+      await verifyBatchStatus({ batchId });
+
+      await updateBatch({
+        batchId,
+        shouldRefreshBalance: true
+      });
+    }
+  }, [pendingBatches]);
+
+  useRegisterWebsocketListener(onMessage, onBatchUpdate);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (batchTransactionsArray.length === 0) {
+        return;
+      }
+
+      checkHangingBatches();
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [verifyBatchStatus, batches, batchTransactionsArray]);
+  }, [verifyBatchStatus, batchTransactionsArray]);
 
   useEffect(() => {
-    updateAllBatches({
-      shouldRefreshBalance: true
-    });
-  }, [batches, batchTransactionsArray]);
+    checkAllBatchStatusesOnPageLoad();
+  }, [batchTransactionsArray]);
 };

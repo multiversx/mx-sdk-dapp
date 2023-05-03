@@ -1,4 +1,3 @@
-import { CustomTransactionInformation } from 'types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
 import { useGetBatches } from './useGetBatches';
@@ -8,10 +7,7 @@ export function useUpdateBatches() {
   const { batches, batchTransactionsArray } = useGetBatches();
 
   return useCallback(
-    async (props?: {
-      shouldRefreshBalance?: boolean;
-      customTransactionInformation?: CustomTransactionInformation;
-    }) => {
+    async (props?: { shouldRefreshBalance?: boolean }) => {
       const pendingBatches = batchTransactionsArray.filter(
         (batch) => batch.batchId != null && batches[batch.batchId]
       );
@@ -22,8 +18,7 @@ export function useUpdateBatches() {
         await updateBatchTransactionsStatuses({
           batchId,
           sessionId,
-          transactions,
-          customTransactionInformation: props?.customTransactionInformation
+          transactions
         });
       }
 
