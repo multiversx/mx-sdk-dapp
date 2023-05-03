@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   BatchTransactionStatus,
   BatchTransactionsWSResponseType,
@@ -36,16 +36,16 @@ export const useAllBatchesTransactionsTracker = ({
   const updateBatch = useUpdateBatch();
   const resolveBatchStatusResponse = useResolveBatchStatusResponse();
 
-  const pendingBatches = useMemo(
-    () =>
-      batchTransactionsArray.filter((batch) => {
-        const isPending =
-          batch.batchId != null &&
-          batches[batch.batchId]?.status === BatchTransactionStatus.pending;
-        return isPending;
-      }),
-    [batchTransactionsArray]
-  );
+  // const pendingBatches = useMemo(
+  //   () =>
+  //     batchTransactionsArray.filter((batch) => {
+  //       const isPending =
+  //         batch.batchId != null &&
+  //         batches[batch.batchId]?.status === BatchTransactionStatus.pending;
+  //       return isPending;
+  //     }),
+  //   [batchTransactionsArray]
+  // );
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
@@ -96,7 +96,7 @@ export const useAllBatchesTransactionsTracker = ({
   }, []);
 
   const checkHangingBatches = useCallback(async () => {
-    for (const { batchId, transactions } of pendingBatches) {
+    for (const { batchId, transactions } of batchTransactionsArray) {
       if (!isBatchHanding(batchId, TRANSACTIONS_STATUS_POLLING_INTERVAL)) {
         continue;
       }
@@ -170,10 +170,16 @@ export const useAllBatchesTransactionsTracker = ({
         })
       );
     }
-  }, [isBatchHanding, pendingBatches, batches, signedTransactions, dispatch]);
+  }, [
+    isBatchHanding,
+    batches,
+    batchTransactionsArray,
+    signedTransactions,
+    dispatch
+  ]);
 
   const checkAllBatchStatusesOnPageLoad = useCallback(async () => {
-    for (const { batchId } of pendingBatches) {
+    for (const { batchId } of batchTransactionsArray) {
       await verifyBatchStatus({ batchId });
 
       await updateBatch({
@@ -181,7 +187,7 @@ export const useAllBatchesTransactionsTracker = ({
         shouldRefreshBalance: true
       });
     }
-  }, [pendingBatches]);
+  }, [batchTransactionsArray, verifyBatchStatus, updateBatch]);
 
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
 
@@ -195,9 +201,9 @@ export const useAllBatchesTransactionsTracker = ({
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [verifyBatchStatus, batchTransactionsArray]);
+  }, [checkHangingBatches, batchTransactionsArray]);
 
   useEffect(() => {
     checkAllBatchStatusesOnPageLoad();
-  }, [batchTransactionsArray]);
+  }, [checkAllBatchStatusesOnPageLoad]);
 };
