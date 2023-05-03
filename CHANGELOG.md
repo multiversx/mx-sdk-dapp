@@ -6,13 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed setting `hasGuardianScreen` flag in `useSignTransactionsWithDevice`](https://github.com/multiversx/mx-sdk-dapp/pull/749)]
 ## [[v2.12.3]](https://github.com/multiversx/mx-sdk-dapp/pull/751)] - 2023-05-03
 - [Added `hashSign` option to ledger guarded transactions`](https://github.com/multiversx/mx-sdk-dapp/pull/750)]
 - [Fixed `signMessage` and `verifyMessage` did not receive correct params and did not clear state `onAbort`](https://github.com/multiversx/mx-sdk-dapp/pull/749)]
 ## [[v2.12.2]](https://github.com/multiversx/mx-sdk-dapp/pull/748)] - 2023-04-28
 - [Extend `GuardianScreenType` with `address`](https://github.com/multiversx/mx-sdk-dapp/pull/747)]
 - [Fixed transaction data parsing in `newTransaction` method](https://github.com/multiversx/mx-sdk-dapp/pull/744)]
-- [Fix setting `webviewProvider` overriding `externalProvider`](https://github.com/multiversx/mx-sdk-dapp/pull/746)]
+- [Fixed setting `webviewProvider` overriding `externalProvider`](https://github.com/multiversx/mx-sdk-dapp/pull/746)]
 - [Remove duplicate `applySignature` from `newTransaction`](https://github.com/multiversx/mx-sdk-dapp/pull/740)]
 
 ## [[v2.12.1]](https://github.com/multiversx/mx-sdk-dapp/pull/739)] - 2023-04-25
