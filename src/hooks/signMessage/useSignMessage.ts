@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { SignableMessage, Address } from '@multiversx/sdk-core';
 import {
   CANCELLED,
   ERROR_SIGNING,
@@ -25,6 +26,11 @@ import {
   SignMessageType
 } from 'utils/account/signMessage';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
+import {
+  getAccountProvider,
+  getAddress,
+  removeSearchParamsFromUrl
+} from '../../utils';
 import { useGetSignMessageInfoStatus } from './useGetSignedMessageStatus';
 
 export interface CancelPropsType {
@@ -57,6 +63,9 @@ export const useSignMessage = () => {
   // Clears the state
   const onAbort = () => {
     dispatch(clearSignedMessageInfo());
+    return removeSearchParamsFromUrl({
+      removeParams: Object.keys(SignedMessageQueryParamsEnum)
+    });
   };
 
   // Cancel signing
@@ -117,7 +126,7 @@ export const useSignMessage = () => {
       const isProviderInitialized = await provider?.init?.();
 
       if (!isProviderInitialized) {
-        throw Error(PROVIDER_NOT_INITIALIZED);
+        return;
       }
     } catch (error) {
       const errorMessage =
@@ -125,13 +134,23 @@ export const useSignMessage = () => {
         (error as string) ||
         PROVIDER_NOT_INITIALIZED;
 
-      throw Error(errorMessage);
+      console.error(errorMessage);
     }
   };
 
-  const signMessageWithWallet = (props: SignMessageType) => {
-    return provider.signMessage(props.message as any, {
-      callbackUrl: encodeURIComponent(String(props.callbackRoute))
+  const signMessageWithWallet = async ({
+    message,
+    callbackRoute
+  }: SignMessageType) => {
+    const address = await getAddress();
+    const provider = getAccountProvider();
+    const callbackUrl = encodeURIComponent(String(callbackRoute));
+    const signableMessage = new SignableMessage({
+      address: new Address(address),
+      message: Buffer.from(message, 'ascii')
+    });
+    return provider.signMessage(signableMessage, {
+      callbackUrl
     });
   };
 
@@ -211,7 +230,7 @@ export const useSignMessage = () => {
    * 1. Parse query params on hook redirect from dapp to web wallet
    * 2. Parse query params on hook reply back to dapp from web wallet
    */
-  const parseSingnedMessageFromUrl = () => {
+  const parseSignedMessageFromUrl = () => {
     if (search) {
       const {
         remainingParams: { signature, sessionId, status },
@@ -258,7 +277,7 @@ export const useSignMessage = () => {
 
   // Parse the signed message info from URL (after callback was triggered from provider)
   useEffect(() => {
-    parseSingnedMessageFromUrl();
+    parseSignedMessageFromUrl();
   }, [search]);
 
   // Reply to the dapp when message was signed, cancel, or failed
