@@ -48,8 +48,14 @@ function manageTransaction({
   shouldRefreshBalance,
   isSequential
 }: ManageTransactionType) {
-  const { hash, status, results, invalidTransaction, hasStatusChanged } =
-    serverTransaction;
+  const {
+    hash,
+    status,
+    inTransit,
+    results,
+    invalidTransaction,
+    hasStatusChanged
+  } = serverTransaction;
   try {
     if (timeouts.includes(hash)) {
       return;
@@ -77,7 +83,8 @@ function manageTransaction({
         updateSignedTransactionStatus({
           sessionId,
           status,
-          transactionHash: hash
+          transactionHash: hash,
+          inTransit
         })
       );
       return;
@@ -97,7 +104,8 @@ function manageTransaction({
               updateSignedTransactionStatus({
                 sessionId,
                 status: TransactionServerStatusesEnum.success,
-                transactionHash: hash
+                transactionHash: hash,
+                inTransit
               })
             ),
           customTransactionInformation?.completedTransactionsDelay
@@ -108,7 +116,8 @@ function manageTransaction({
           updateSignedTransactionStatus({
             sessionId,
             status,
-            transactionHash: hash
+            transactionHash: hash,
+            inTransit
           })
         );
       }

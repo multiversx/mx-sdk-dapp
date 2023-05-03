@@ -236,6 +236,7 @@ export interface ServerTransactionType {
   senderShard: number;
   signature: string;
   status: string;
+  inTransit?: boolean;
   timestamp: number;
   value: string;
   price: number;

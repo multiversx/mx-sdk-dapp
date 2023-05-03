@@ -24,7 +24,6 @@ export interface SignedTransactionsBodyType {
   errorMessage?: string;
   redirectRoute?: string;
   customTransactionInformation?: CustomTransactionInformation;
-  grouping?: number[][];
 }
 
 export interface SignedTransactionsType {
@@ -44,6 +43,7 @@ export type RawTransactionType = IPlainTransactionObject;
 export interface SignedTransactionType extends RawTransactionType {
   hash: string;
   status: TransactionServerStatusesEnum;
+  inTransit?: boolean;
   errorMessage?: string;
   customTransactionInformation?: CustomTransactionInformation;
 }
@@ -226,6 +226,7 @@ export type GetTransactionsByHashesReturnType = {
   hash: string;
   invalidTransaction: boolean;
   status: TransactionServerStatusesEnum;
+  inTransit?: boolean;
   results: SmartContractResult[];
   sender: string;
   receiver: string;
