@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed checking of base64 encoding in transaction data field](https://github.com/multiversx/mx-sdk-dapp/pull/755)]
 ## [[v2.12.4]](https://github.com/multiversx/mx-sdk-dapp/pull/750)] - 2023-05-03
 - [Fixed setting `hasGuardianScreen` flag in `useSignTransactionsWithDevice`](https://github.com/multiversx/mx-sdk-dapp/pull/749)]
 ## [[v2.12.3]](https://github.com/multiversx/mx-sdk-dapp/pull/751)] - 2023-05-03
