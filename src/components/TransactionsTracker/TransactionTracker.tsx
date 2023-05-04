@@ -1,11 +1,6 @@
-import {
-  useTransactionsTracker,
-  TransactionsTrackerType
-} from './useTransactionsTracker';
+import { useTransactionsTracker } from './useTransactionsTracker';
 
-export function TransactionsTracker({
-  getTransactionsByHash
-}: TransactionsTrackerType) {
-  useTransactionsTracker({ getTransactionsByHash });
+export function TransactionsTracker() {
+  useTransactionsTracker();
   return null;
 }

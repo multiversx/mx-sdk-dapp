@@ -13,6 +13,7 @@ import { SignedTransactionsBodyType } from 'types/transactions.types';
 import {
   clearAllTransactionsToSign,
   setTxSubmittedModal,
+  setBatchTransactions,
   updateSignedTransactions
 } from 'reduxStore/slices';
 import { setNonce } from 'utils/account/setNonce';
@@ -95,6 +96,8 @@ export const BatchTransactionsSender = () => {
         if (!response?.data?.transactions) {
           continue;
         }
+
+        dispatch(setBatchTransactions(response.data));
 
         const responseHashes = sequentialToFlatArray({
           transactions: response.data.transactions

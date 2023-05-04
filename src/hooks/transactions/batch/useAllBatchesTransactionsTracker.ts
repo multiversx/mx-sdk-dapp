@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef } from 'react';
 import { BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
-// @ts-ignore
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 import {
   AVERAGE_TX_DURATION_MS,
@@ -16,6 +15,8 @@ import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlat
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { useGetSignedTransactions } from '../useGetSignedTransactions';
 import { removeBatchTransactions } from 'services/transactions';
+import { useCheckTransactionStatus } from '../useCheckTransactionStatus';
+import { useGetPendingTransactions } from '../useGetPendingTransactions';
 
 export type AllBatchesTransactionsTracker = {
   onSuccess?: (batchId: string | null) => void;
@@ -30,6 +31,9 @@ export const useAllBatchesTransactionsTracker = ({
   const startPolling = useRef<boolean>(false);
 
   const { signedTransactions } = useGetSignedTransactions();
+  const { pendingTransactionsArray } = useGetPendingTransactions();
+  const checkTransactionsStatuses = useCheckTransactionStatus();
+
   const { batches, batchTransactionsArray } = useGetBatches();
 
   const updateBatch = useUpdateBatch();
@@ -84,13 +88,11 @@ export const useAllBatchesTransactionsTracker = ({
     ]
   );
 
-  // @ts-ignore
   const onMessage = useCallback(() => {
     // Do nothing, used for backwards compatibility to avoid breaking changes
     // TODO: Will be removed in the next major release
   }, []);
 
-  // @ts-ignore
   const onBatchUpdate = useCallback(
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
@@ -147,8 +149,10 @@ export const useAllBatchesTransactionsTracker = ({
     }
   }, [batchTransactionsArray, verifyBatchStatus]);
 
-  // useRegisterWebsocketListener(onMessage, onBatchUpdate);
+  // register ws listener
+  useRegisterWebsocketListener(onMessage, onBatchUpdate);
 
+  // Activate polling after 90 seconds (the fallback for ws connection failure)
   useEffect(() => {
     const interval = setTimeout(async () => {
       startPolling.current = true;
@@ -158,8 +162,10 @@ export const useAllBatchesTransactionsTracker = ({
   }, []);
 
   useEffect(() => {
+    // On page reload check all batches
     checkAllBatchStatusesOnPageLoad();
 
+    // Fallback (edge-case): in case of ws connection failure the toast should be resolved after a certain time (90seconds)
     const interval = setInterval(async () => {
       if (!startPolling.current) {
         return;
@@ -171,6 +177,7 @@ export const useAllBatchesTransactionsTracker = ({
     return () => clearInterval(interval);
   }, [checkAllBatchStatusesOnPageLoad]);
 
+  // Fallback (edge-case): in case of dropped transactions the toast should be resolved setting the status to failed after a certain time (10minutes)
   useEffect(() => {
     const interval = setInterval(async () => {
       checkHangingBatches();
@@ -178,4 +185,20 @@ export const useAllBatchesTransactionsTracker = ({
 
     return () => clearInterval(interval);
   }, [checkHangingBatches]);
+
+  // Fallback (edge-case): in case of pending transactions and no batch transactions found the toast should be resolved
+  useEffect(() => {
+    if (
+      pendingTransactionsArray.length > 0 &&
+      batchTransactionsArray.length === 0
+    ) {
+      checkTransactionsStatuses({
+        shouldRefreshBalance: true
+      });
+    }
+  }, [
+    pendingTransactionsArray,
+    batchTransactionsArray,
+    checkTransactionsStatuses
+  ]);
 };
