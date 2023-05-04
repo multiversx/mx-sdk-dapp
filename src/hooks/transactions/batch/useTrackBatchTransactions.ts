@@ -3,7 +3,7 @@ import { BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { useUpdateBatch } from './useUpdateBatch';
+import { useUpdateBatch } from './tracker/useUpdateBatch';
 import { useGetBatches } from './useGetBatches';
 import {
   AVERAGE_TX_DURATION_MS,

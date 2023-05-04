@@ -1,5 +1,5 @@
 import { refreshAccount } from 'utils/account/refreshAccount';
-import { useGetBatches } from './useGetBatches';
+import { useGetBatches } from '../useGetBatches';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { store } from 'reduxStore/store';
 import { updateSignedTransactionStatus } from 'reduxStore/slices';
