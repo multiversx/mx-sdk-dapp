@@ -18,10 +18,10 @@ export const useTransactionsToasts = () => {
 
       return {
         sessionId: toast.toastId,
-        baseTransactionsInfo: transactionsInfo[toast.toastId],
+        baseTransactionsInfo: transactionsInfo[toast.toastId] ?? {},
         customTransactionsInfo:
           signedTransactions[toast.toastId]?.customTransactionInformation
-            ?.sessionInformation,
+            ?.sessionInformation ?? {},
         status,
         isPending:
           status !== TransactionBatchStatusesEnum.success &&

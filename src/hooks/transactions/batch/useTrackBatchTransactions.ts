@@ -7,7 +7,7 @@ import { useUpdateBatch } from './useUpdateBatch';
 import { useGetBatches } from './useGetBatches';
 import {
   AVERAGE_TX_DURATION_MS,
-  TRANSACTIONS_STATUS_POLLING_INTERVAL
+  TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
 } from 'constants/transactionStatus';
 import { useResolveBatchStatusResponse } from './useResolveBatchStatusResponse';
 
@@ -94,7 +94,7 @@ export const useTrackBatchTransactions = ({
   useEffect(() => {
     const interval = setTimeout(async () => {
       stopPollingRef.current = false;
-    }, TRANSACTIONS_STATUS_POLLING_INTERVAL);
+    }, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
     return () => {
       clearInterval(interval);
     };

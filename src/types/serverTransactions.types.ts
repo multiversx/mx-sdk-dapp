@@ -316,7 +316,8 @@ export enum BatchTransactionStatus {
   pending = 'pending',
   success = 'success',
   invalid = 'invalid',
-  dropped = 'dropped'
+  dropped = 'dropped',
+  fail = 'fail'
 }
 
 export interface BatchTransactionsResponseType {

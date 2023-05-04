@@ -1,24 +1,23 @@
-import { useCallback, useEffect } from 'react';
-import {
-  BatchTransactionStatus,
-  BatchTransactionsWSResponseType,
-  SignedTransactionType
-} from 'types';
+import { useCallback, useEffect, useRef } from 'react';
+import { BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { updateBatchTransactions } from 'reduxStore/slices';
+import {
+  clearBatchTransactions,
+  updateBatchTransactions
+} from 'reduxStore/slices';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 import {
   AVERAGE_TX_DURATION_MS,
-  TRANSACTIONS_STATUS_POLLING_INTERVAL
+  TRANSACTIONS_STATUS_DROP_INTERVAL_MS,
+  TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
 } from 'constants/transactionStatus';
 import { useResolveBatchStatusResponse } from './useResolveBatchStatusResponse';
 import { useGetBatches } from './useGetBatches';
 import { useUpdateBatch } from './useUpdateBatch';
-import { checkBatch } from '../useCheckTransactionStatus/checkBatch';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
-import { getIsSequential } from 'utils/transactions/batch/getIsSequential';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { useGetSignedTransactions } from '../useGetSignedTransactions';
+import { store } from 'reduxStore/store';
 
 export type AllBatchesTransactionsTracker = {
   onSuccess?: (batchId: string | null) => void;
@@ -30,26 +29,17 @@ export const useAllBatchesTransactionsTracker = ({
   onFail
 }: AllBatchesTransactionsTracker) => {
   const dispatch = useDispatch();
+  const startPolling = useRef<boolean>(false);
+
   const { signedTransactions } = useGetSignedTransactions();
   const { batches, batchTransactionsArray } = useGetBatches();
 
   const updateBatch = useUpdateBatch();
   const resolveBatchStatusResponse = useResolveBatchStatusResponse();
 
-  // const pendingBatches = useMemo(
-  //   () =>
-  //     batchTransactionsArray.filter((batch) => {
-  //       const isPending =
-  //         batch.batchId != null &&
-  //         batches[batch.batchId]?.status === BatchTransactionStatus.pending;
-  //       return isPending;
-  //     }),
-  //   [batchTransactionsArray]
-  // );
-
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
-      const { statusResponse, isBatchSuccessful, isBatchFailed } =
+      const { statusResponse, isBatchFailed } =
         await resolveBatchStatusResponse({ batchId });
 
       if (!statusResponse) {
@@ -58,9 +48,24 @@ export const useAllBatchesTransactionsTracker = ({
 
       dispatch(updateBatchTransactions(statusResponse));
 
-      if (isBatchSuccessful) {
+      const sessionId = batchId.split('-')[0];
+      if (!sessionId) {
+        return;
+      }
+
+      await updateBatch({
+        batchId,
+        isBatchFailed,
+        shouldRefreshBalance: true
+      });
+
+      const { isSuccessful } = getTransactionsStatus({
+        transactions: signedTransactions[sessionId]?.transactions ?? []
+      });
+
+      if (isSuccessful) {
         onSuccess?.(batchId);
-      } else if (isBatchFailed) {
+      } else {
         onFail?.(
           batchId,
           `Error processing batch transactions. Status: ${statusResponse?.status}`
@@ -78,11 +83,6 @@ export const useAllBatchesTransactionsTracker = ({
   const onBatchUpdate = useCallback(
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
-
-      await updateBatch({
-        batchId: data.batchId,
-        shouldRefreshBalance: true
-      });
     },
     [verifyBatchStatus]
   );
@@ -97,7 +97,7 @@ export const useAllBatchesTransactionsTracker = ({
 
   const checkHangingBatches = useCallback(async () => {
     for (const { batchId, transactions } of batchTransactionsArray) {
-      if (!isBatchHanding(batchId, TRANSACTIONS_STATUS_POLLING_INTERVAL)) {
+      if (!isBatchHanding(batchId, TRANSACTIONS_STATUS_DROP_INTERVAL_MS)) {
         continue;
       }
 
@@ -106,69 +106,21 @@ export const useAllBatchesTransactionsTracker = ({
         continue;
       }
 
-      const isSequential = getIsSequential({ transactions });
-      const transactionsArray = sequentialToFlatArray({ transactions });
-
-      await checkBatch({
-        sessionId,
-        transactionBatch: {
-          transactions: transactionsArray
-        },
-        isSequential
+      await updateBatch({
+        batchId,
+        shouldRefreshBalance: true,
+        dropUnprocessedTransactions: true
       });
 
-      const sessionTransactions = signedTransactions[sessionId]?.transactions;
-      const batch = batches[batchId];
-      let status = batch.status;
+      const batchTransactionsArray = sequentialToFlatArray({ transactions });
 
-      if (!sessionTransactions) {
-        return;
+      const { isPending } = getTransactionsStatus({
+        transactions: batchTransactionsArray
+      });
+
+      if (!isPending) {
+        store.dispatch(clearBatchTransactions({ batchId }));
       }
-
-      const { isPending, isSuccessful, isFailed, isIncompleteFailed } =
-        getTransactionsStatus({ transactions: sessionTransactions });
-
-      if (isSequential) {
-        for (const group of transactions as SignedTransactionType[][]) {
-          for (const transaction of group) {
-            transaction.status =
-              sessionTransactions.find((tx) => tx.hash === transaction.hash)
-                ?.status || transaction.status;
-          }
-        }
-      } else {
-        for (const transaction of transactions as SignedTransactionType[]) {
-          transaction.status =
-            sessionTransactions.find((tx) => tx.hash === transaction.hash)
-              ?.status || transaction.status;
-        }
-      }
-
-      switch (true) {
-        case isPending: {
-          status = BatchTransactionStatus.pending;
-          break;
-        }
-        case isSuccessful: {
-          status = BatchTransactionStatus.success;
-          break;
-        }
-        case isFailed:
-        case isIncompleteFailed: {
-          status = BatchTransactionStatus.invalid;
-          break;
-        }
-        default:
-          status = BatchTransactionStatus.dropped;
-      }
-
-      dispatch(
-        updateBatchTransactions({
-          ...batch,
-          status,
-          transactions
-        })
-      );
     }
   }, [
     isBatchHanding,
@@ -181,15 +133,30 @@ export const useAllBatchesTransactionsTracker = ({
   const checkAllBatchStatusesOnPageLoad = useCallback(async () => {
     for (const { batchId } of batchTransactionsArray) {
       await verifyBatchStatus({ batchId });
-
-      await updateBatch({
-        batchId,
-        shouldRefreshBalance: true
-      });
     }
   }, [batchTransactionsArray, verifyBatchStatus, updateBatch]);
 
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
+
+  useEffect(() => {
+    const interval = setTimeout(async () => {
+      startPolling.current = true;
+    }, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      if (!startPolling.current || batchTransactionsArray.length === 0) {
+        return;
+      }
+
+      checkAllBatchStatusesOnPageLoad();
+    }, AVERAGE_TX_DURATION_MS);
+
+    return () => clearInterval(interval);
+  }, [checkAllBatchStatusesOnPageLoad, batchTransactionsArray]);
 
   useEffect(() => {
     const interval = setInterval(async () => {

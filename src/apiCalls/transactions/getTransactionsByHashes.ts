@@ -5,6 +5,7 @@ import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
 } from 'types/transactions.types';
+import { ServerTransactionType } from '../../types';
 
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType
@@ -35,4 +36,14 @@ export async function getTransactionsByHashes(
       hasStatusChanged: txOnNetwork && txOnNetwork.status !== previousStatus
     };
   });
+}
+
+export async function getTransactionByHashPromise(hash: string) {
+  const apiAddress = apiAddressSelector(store.getState());
+  return await axios.get<ServerTransactionType>(
+    `${apiAddress}/transactions/${hash}`,
+    {
+      timeout: 10000 // 10sec
+    }
+  );
 }

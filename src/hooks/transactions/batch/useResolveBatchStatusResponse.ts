@@ -23,6 +23,7 @@ export const useResolveBatchStatusResponse = () => {
         isBatchSuccessful:
           statusResponse?.status === BatchTransactionStatus.success,
         isBatchFailed:
+          statusResponse?.status === BatchTransactionStatus.fail ||
           statusResponse?.status === BatchTransactionStatus.invalid ||
           statusResponse?.status === BatchTransactionStatus.dropped,
         isBatchNotFound:
