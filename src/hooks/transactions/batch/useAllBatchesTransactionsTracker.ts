@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import {
-  clearBatchTransactions,
-  updateBatchTransactions
-} from 'reduxStore/slices';
+import { updateBatchTransactions } from 'reduxStore/slices';
+// @ts-ignore
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 import {
   AVERAGE_TX_DURATION_MS,
@@ -17,7 +15,7 @@ import { useUpdateBatch } from './useUpdateBatch';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { useGetSignedTransactions } from '../useGetSignedTransactions';
-import { store } from 'reduxStore/store';
+import { removeBatchTransactions } from 'services/transactions';
 
 export type AllBatchesTransactionsTracker = {
   onSuccess?: (batchId: string | null) => void;
@@ -59,7 +57,7 @@ export const useAllBatchesTransactionsTracker = ({
         shouldRefreshBalance: true
       });
 
-      const { isSuccessful } = getTransactionsStatus({
+      const { isSuccessful, isPending } = getTransactionsStatus({
         transactions: signedTransactions[sessionId]?.transactions ?? []
       });
 
@@ -71,15 +69,28 @@ export const useAllBatchesTransactionsTracker = ({
           `Error processing batch transactions. Status: ${statusResponse?.status}`
         );
       }
+
+      if (!isPending) {
+        removeBatchTransactions(batchId);
+      }
     },
-    [dispatch, resolveBatchStatusResponse, onSuccess, onFail]
+    [
+      dispatch,
+      resolveBatchStatusResponse,
+      updateBatch,
+      signedTransactions,
+      onSuccess,
+      onFail
+    ]
   );
 
+  // @ts-ignore
   const onMessage = useCallback(() => {
     // Do nothing, used for backwards compatibility to avoid breaking changes
     // TODO: Will be removed in the next major release
   }, []);
 
+  // @ts-ignore
   const onBatchUpdate = useCallback(
     async (data: BatchTransactionsWSResponseType) => {
       await verifyBatchStatus({ batchId: data.batchId });
@@ -119,7 +130,7 @@ export const useAllBatchesTransactionsTracker = ({
       });
 
       if (!isPending) {
-        store.dispatch(clearBatchTransactions({ batchId }));
+        removeBatchTransactions(batchId);
       }
     }
   }, [
@@ -134,9 +145,9 @@ export const useAllBatchesTransactionsTracker = ({
     for (const { batchId } of batchTransactionsArray) {
       await verifyBatchStatus({ batchId });
     }
-  }, [batchTransactionsArray, verifyBatchStatus, updateBatch]);
+  }, [batchTransactionsArray, verifyBatchStatus]);
 
-  useRegisterWebsocketListener(onMessage, onBatchUpdate);
+  // useRegisterWebsocketListener(onMessage, onBatchUpdate);
 
   useEffect(() => {
     const interval = setTimeout(async () => {
@@ -147,8 +158,10 @@ export const useAllBatchesTransactionsTracker = ({
   }, []);
 
   useEffect(() => {
+    checkAllBatchStatusesOnPageLoad();
+
     const interval = setInterval(async () => {
-      if (!startPolling.current || batchTransactionsArray.length === 0) {
+      if (!startPolling.current) {
         return;
       }
 
@@ -156,21 +169,13 @@ export const useAllBatchesTransactionsTracker = ({
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [checkAllBatchStatusesOnPageLoad, batchTransactionsArray]);
+  }, [checkAllBatchStatusesOnPageLoad]);
 
   useEffect(() => {
     const interval = setInterval(async () => {
-      if (batchTransactionsArray.length === 0) {
-        return;
-      }
-
       checkHangingBatches();
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [checkHangingBatches, batchTransactionsArray]);
-
-  useEffect(() => {
-    checkAllBatchStatusesOnPageLoad();
-  }, [checkAllBatchStatusesOnPageLoad]);
+  }, [checkHangingBatches]);
 };

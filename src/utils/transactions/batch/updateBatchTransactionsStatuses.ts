@@ -1,10 +1,8 @@
 import { SignedTransactionType, TransactionServerStatusesEnum } from 'types';
 import { sequentialToFlatArray } from './sequentialToFlatArray';
 import { store } from 'reduxStore/store';
-import {
-  clearBatchTransactions,
-  updateSignedTransactionStatus
-} from 'reduxStore/slices';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { removeBatchTransactions } from 'services/transactions';
 
 export function updateBatchTransactionsStatuses({
   batchId,
@@ -39,6 +37,6 @@ export function updateBatchTransactionsStatuses({
   }
 
   if (batchIsSuccessful) {
-    store.dispatch(clearBatchTransactions({ batchId }));
+    removeBatchTransactions(batchId);
   }
 }
