@@ -55,10 +55,10 @@ export const checkNeedsGuardianSigning = ({
   };
 
   const needs2FaSigning =
-    isGuarded && !hasGuardianScreen && !allSignedByGuardian && sessionId;
+    !hasGuardianScreen && !allSignedByGuardian && sessionId;
 
   return {
-    needs2FaSigning,
+    needs2FaSigning: isGuarded ? needs2FaSigning : false,
     sendTransactionsToGuardian
   };
 };
