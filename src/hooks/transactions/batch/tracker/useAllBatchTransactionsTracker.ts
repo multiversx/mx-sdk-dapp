@@ -1,18 +1,18 @@
 import { useCallback, useEffect } from 'react';
 import { BatchTransactionsWSResponseType } from 'types';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { useGetBatches } from './useGetBatches';
-import { useCheckPendingTransactionsFallback } from './tracker/useCheckPendingTransactionsFallback';
-import { useCheckHangingBatchesFallback } from './tracker/useCheckHangingBatchesFallback';
-import { useCheckBatchesOnWsFailureFallback } from './tracker/useCheckBatchesOnWsFailureFallback';
-import { useVerifyBatchStatus } from './tracker/useVerifyBatchStatus';
+import { useGetBatches } from '../useGetBatches';
+import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
+import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
+import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
+import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 export type BatchTransactionsTrackerProps = {
   onSuccess?: (batchId: string | null) => void;
   onFail?: (batchId: string | null, errorMessage?: string) => void;
 };
 
-export const useAllBatchesTransactionsTracker = ({
+export const useAllBatchTransactionsTracker = ({
   onSuccess,
   onFail
 }: BatchTransactionsTrackerProps) => {

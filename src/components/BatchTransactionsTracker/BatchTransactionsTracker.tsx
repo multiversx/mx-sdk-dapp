@@ -1,9 +1,9 @@
 import {
   BatchTransactionsTrackerProps,
-  useAllBatchesTransactionsTracker
-} from 'hooks/transactions/batch/useAllBatchesTransactionsTracker';
+  useAllBatchTransactionsTracker
+} from 'hooks/transactions/batch/tracker/useAllBatchTransactionsTracker';
 
 export function BatchTransactionsTracker(props: BatchTransactionsTrackerProps) {
-  useAllBatchesTransactionsTracker(props);
+  useAllBatchTransactionsTracker(props);
   return null;
 }
