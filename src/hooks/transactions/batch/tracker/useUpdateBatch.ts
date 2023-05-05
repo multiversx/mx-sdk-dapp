@@ -40,8 +40,6 @@ export function useUpdateBatch() {
         return;
       }
 
-      // drop toast transactions if batch failed
-      // iterate through all transactions in a batch and set toast status to fail
       if (props?.isBatchFailed) {
         for (const transaction of transactionsFlatArray) {
           store.dispatch(
@@ -55,8 +53,6 @@ export function useUpdateBatch() {
         return;
       }
 
-      // TODO check every transactions in a batch using the public API: /transactions/{txHash}
-      // iterate through all transactions in a batch and check if they are all successful and set isBatchSuccessful to true
       const { data, success } = await getTransactionsDetails(
         transactionsFlatArray.map(({ hash }) => hash)
       );
