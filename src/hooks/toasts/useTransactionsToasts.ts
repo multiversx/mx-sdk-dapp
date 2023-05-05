@@ -25,7 +25,8 @@ export const useTransactionsToasts = () => {
         status,
         isPending:
           status !== TransactionBatchStatusesEnum.success &&
-          status !== TransactionBatchStatusesEnum.fail
+          status !== TransactionBatchStatusesEnum.fail &&
+          status !== TransactionBatchStatusesEnum.cancelled
       };
     });
   }, [transactionsToasts, signedTransactions, transactionsInfo]);
@@ -35,6 +36,7 @@ export const useTransactionsToasts = () => {
   }, [transactionsToastsInfo]);
 
   return {
+    transactionsToastsInfo,
     pendingTransactionsToastsInfo
   };
 };
