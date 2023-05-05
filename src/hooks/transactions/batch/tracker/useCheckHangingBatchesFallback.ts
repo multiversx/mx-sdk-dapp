@@ -13,9 +13,14 @@ import { useUpdateBatch } from './useUpdateBatch';
  * Fallback mechanism to check hanging batches
  * Resolves the toast and set the status to failed for each transaction after a certain time (10minutes)
  * */
-export const useCheckHangingBatchesFallback = () => {
+export const useCheckHangingBatchesFallback = (props?: {
+  onSuccess?: (batchId: string | null) => void;
+  onFail?: (batchId: string | null, errorMessage?: string) => void;
+}) => {
   const { batchTransactionsArray } = useGetBatches();
   const updateBatch = useUpdateBatch();
+  const onSuccess = props?.onSuccess;
+  const onFail = props?.onFail;
 
   const isBatchHanding = useCallback((batchId: string, olderThanMs: number) => {
     const sessionTimestamp = parseInt(batchId.split('-')[0]);
@@ -44,15 +49,26 @@ export const useCheckHangingBatchesFallback = () => {
 
       const batchTransactionsArray = sequentialToFlatArray({ transactions });
 
-      const { isPending } = getTransactionsStatus({
+      const { isPending, isSuccessful, isFailed } = getTransactionsStatus({
         transactions: batchTransactionsArray
       });
 
       if (!isPending) {
         removeBatchTransactions(batchId);
+
+        if (isSuccessful) {
+          onSuccess?.(batchId);
+        }
+
+        if (isFailed) {
+          onFail?.(
+            batchId,
+            `Error processing batch transactions. Status: failed`
+          );
+        }
       }
     }
-  }, [isBatchHanding, batchTransactionsArray, updateBatch]);
+  }, [isBatchHanding, batchTransactionsArray, updateBatch, onSuccess, onFail]);
 
   useEffect(() => {
     const interval = setInterval(async () => {

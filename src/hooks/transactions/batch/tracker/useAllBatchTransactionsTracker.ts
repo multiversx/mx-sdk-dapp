@@ -47,9 +47,14 @@ export const useAllBatchTransactionsTracker = ({
     onSuccess,
     onFail
   });
-  // TODO should be added onSuccess and onFail callbacks ???
-  useCheckHangingBatchesFallback();
-  useCheckPendingTransactionsFallback();
+  useCheckHangingBatchesFallback({
+    onSuccess,
+    onFail
+  });
+  useCheckPendingTransactionsFallback({
+    onSuccess,
+    onFail
+  });
 
   useEffect(() => {
     checkAllBatches();

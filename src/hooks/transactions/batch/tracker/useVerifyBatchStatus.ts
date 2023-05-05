@@ -35,21 +35,23 @@ export const useVerifyBatchStatus = (props?: {
         return;
       }
 
-      const { isSuccessful, isPending } = getTransactionsStatus({
+      const { isSuccessful, isFailed, isPending } = getTransactionsStatus({
         transactions: signedTransactions[sessionId]?.transactions ?? []
       });
 
-      if (isSuccessful) {
-        onSuccess?.(batchId);
-      } else {
-        onFail?.(
-          batchId,
-          `Error processing batch transactions. Status: ${data?.statusResponse?.status}`
-        );
-      }
-
       if (!isPending) {
         removeBatchTransactions(batchId);
+
+        if (isSuccessful) {
+          onSuccess?.(batchId);
+        }
+
+        if (isFailed) {
+          onFail?.(
+            batchId,
+            `Error processing batch transactions. Status: ${data?.statusResponse?.status}`
+          );
+        }
       }
     },
     [
