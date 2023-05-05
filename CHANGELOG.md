@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Allow skip guradian for change guardian transaction](https://github.com/multiversx/mx-sdk-dapp/pull/761)
 ## [[v2.12.6]](https://github.com/multiversx/mx-sdk-dapp/pull/758)] - 2023-05-05
 - [Increment extension provider version](https://github.com/multiversx/mx-sdk-dapp/pull/758)
-
+ 
 ## [[v2.12.5]](https://github.com/multiversx/mx-sdk-dapp/pull/757)] - 2023-05-05
 - [Added `ledgerSignature` to assets in `TokenType`](https://github.com/multiversx/mx-sdk-dapp/pull/756)
 - [Fixed checking of base64 encoding in transaction data field](https://github.com/multiversx/mx-sdk-dapp/pull/755)
