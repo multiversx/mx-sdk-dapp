@@ -7,18 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## [[v2.12.5]](https://github.com/multiversx/mx-sdk-dapp/pull/757)] - 2023-05-05
-- [Added `ledgerSignature` to assets in `TokenType`](https://github.com/multiversx/mx-sdk-dapp/pull/756)]
-- [Fixed checking of base64 encoding in transaction data field](https://github.com/multiversx/mx-sdk-dapp/pull/755)]
+- [Added `ledgerSignature` to assets in `TokenType`](https://github.com/multiversx/mx-sdk-dapp/pull/756)
+- [Fixed checking of base64 encoding in transaction data field](https://github.com/multiversx/mx-sdk-dapp/pull/755)
+
 ## [[v2.12.4]](https://github.com/multiversx/mx-sdk-dapp/pull/750)] - 2023-05-03
-- [Fixed setting `hasGuardianScreen` flag in `useSignTransactionsWithDevice`](https://github.com/multiversx/mx-sdk-dapp/pull/749)]
+- [Fixed setting `hasGuardianScreen` flag in `useSignTransactionsWithDevice`](https://github.com/multiversx/mx-sdk-dapp/pull/749)
+
 ## [[v2.12.3]](https://github.com/multiversx/mx-sdk-dapp/pull/751)] - 2023-05-03
-- [Added `hashSign` option to ledger guarded transactions`](https://github.com/multiversx/mx-sdk-dapp/pull/750)]
-- [Fixed `signMessage` and `verifyMessage` did not receive correct params and did not clear state `onAbort`](https://github.com/multiversx/mx-sdk-dapp/pull/749)]
+- [Added `hashSign` option to ledger guarded transactions`](https://github.com/multiversx/mx-sdk-dapp/pull/750)
+- [Fixed `signMessage` and `verifyMessage` did not receive correct params and did not clear state `onAbort`](https://github.com/multiversx/mx-sdk-dapp/pull/749)
+
 ## [[v2.12.2]](https://github.com/multiversx/mx-sdk-dapp/pull/748)] - 2023-04-28
-- [Extend `GuardianScreenType` with `address`](https://github.com/multiversx/mx-sdk-dapp/pull/747)]
-- [Fixed transaction data parsing in `newTransaction` method](https://github.com/multiversx/mx-sdk-dapp/pull/744)]
-- [Fixed setting `webviewProvider` overriding `externalProvider`](https://github.com/multiversx/mx-sdk-dapp/pull/746)]
-- [Remove duplicate `applySignature` from `newTransaction`](https://github.com/multiversx/mx-sdk-dapp/pull/740)]
+- [Extend `GuardianScreenType` with `address`](https://github.com/multiversx/mx-sdk-dapp/pull/747)
+- [Fixed transaction data parsing in `newTransaction` method](https://github.com/multiversx/mx-sdk-dapp/pull/744)
+- [Fixed setting `webviewProvider` overriding `externalProvider`](https://github.com/multiversx/mx-sdk-dapp/pull/746)
+- [Remove duplicate `applySignature` from `newTransaction`](https://github.com/multiversx/mx-sdk-dapp/pull/740)
 
 ## [[v2.12.1]](https://github.com/multiversx/mx-sdk-dapp/pull/739)] - 2023-04-25
 - [Revert transaction data](https://github.com/multiversx/mx-sdk-dapp/pull/738)]
@@ -26,23 +29,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[v2.12.0]](https://github.com/multiversx/mx-sdk-dapp/pull/737)] - 2023-04-25
 
 - [Added `dappConfig` slice to control setting `webViewLogin`](https://github.com/multiversx/mx-sdk-dapp/pull/731)]
-- [Guardian screen pre-release](https://github.com/multiversx/mx-sdk-dapp/pull/739)]
-- [Fixed transactions data and signature parsing](https://github.com/multiversx/mx-sdk-dapp/pull/738)]
+- [Guardian screen pre-release](https://github.com/multiversx/mx-sdk-dapp/pull/739)
+- [Fixed transactions data and signature parsing](https://github.com/multiversx/mx-sdk-dapp/pull/738)
 
 ## [[v2.11.3]](https://github.com/multiversx/mx-sdk-dapp/pull/737)] - 2023-04-21
-- [Added support for decoding login token within `decodeNativeAuthToken](https://github.com/multiversx/mx-sdk-dapp/pull/736)]
-- [Fixed transactions signing to prevent unnecessary clearing of URL search params](https://github.com/multiversx/mx-sdk-dapp/pull/735)]
+- [Added support for decoding login token within `decodeNativeAuthToken](https://github.com/multiversx/mx-sdk-dapp/pull/736)
+- [Fixed transactions signing to prevent unnecessary clearing of URL search params](https://github.com/multiversx/mx-sdk-dapp/pull/735)
 
 ## [[v2.11.2]](https://github.com/multiversx/mx-sdk-dapp/pull/730)] - 2023-04-13
-- [Fixed access to window by checking type](https://github.com/multiversx/mx-sdk-dapp/pull/730)]
+- [Fixed access to window by checking type](https://github.com/multiversx/mx-sdk-dapp/pull/730)
 
 ## [[v2.11.1]](https://github.com/multiversx/mx-sdk-dapp/pull/729)] - 2023-04-13
-- [Fixed access to window object](https://github.com/multiversx/mx-sdk-dapp/pull/728)]
+- [Fixed access to window object](https://github.com/multiversx/mx-sdk-dapp/pull/728)
 
-## [[v2.11.0]](https://github.com/multiversx/mx-sdk-dapp/pull/725)] - 2023-04-12
+## [[v2.11.0]](https://github.com/multiversx/mx-sdk-dapp/pull/725) - 2023-04-12
 
-- [Added Batch transactions support](https://github.com/multiversx/mx-sdk-dapp/pull/722)]
-- [Updated WalletConnect provider package](https://github.com/multiversx/mx-sdk-dapp/pull/726)]
+- [Added Batch transactions support](https://github.com/multiversx/mx-sdk-dapp/pull/722)
+- [Updated WalletConnect provider package](https://github.com/multiversx/mx-sdk-dapp/pull/726)
 
 ## [[v2.10.17]](https://github.com/multiversx/mx-sdk-dapp/pull/721)] - 2023-04-04
 
