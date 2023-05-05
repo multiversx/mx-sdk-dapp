@@ -173,7 +173,7 @@ export const useSignTransactions = () => {
     try {
       isSigningRef.current = true;
       const signedTransactions: Transaction[] = await provider.signTransactions(
-        isGuarded
+        isGuarded && !customTransactionInformation.skipGuardian
           ? transactions.map((transaction) => {
               transaction.setVersion(TransactionVersion.withTxOptions());
               transaction.setOptions(
