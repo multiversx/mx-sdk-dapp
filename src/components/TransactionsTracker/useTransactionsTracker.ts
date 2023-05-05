@@ -10,6 +10,9 @@ export interface TransactionsTrackerType {
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
   const checkTransactionStatus = useCheckTransactionStatus();
 
+  const getTransactionsByHash =
+    props?.getTransactionsByHash ?? defaultGetTxByHash;
+
   const onMessage = () => {
     checkTransactionStatus({
       shouldRefreshBalance: true,
