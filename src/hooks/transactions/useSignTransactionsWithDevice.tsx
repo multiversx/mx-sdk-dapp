@@ -142,7 +142,10 @@ export function useSignTransactionsWithDevice(
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
-    activeGuardianAddress,
+    activeGuardianAddress:
+      isGuarded && customTransactionInformation?.skipGuardian
+        ? activeGuardianAddress
+        : undefined,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),
