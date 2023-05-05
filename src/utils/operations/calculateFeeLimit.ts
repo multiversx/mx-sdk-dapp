@@ -3,10 +3,8 @@ import {
   TransactionPayload,
   TransactionVersion,
   Address,
-  TokenTransfer,
-  TransactionOptions
+  TokenTransfer
 } from '@multiversx/sdk-core';
-import { Signature } from '@multiversx/sdk-core/out/signature';
 import { NetworkConfig } from '@multiversx/sdk-network-providers';
 import {
   EXTRA_GAS_LIMIT_GUARDED_TX,
@@ -46,7 +44,12 @@ export function calculateFeeLimit({
   chainId
 }: CalculateFeeLimitType) {
   const data = inputData || '';
-  const validGasLimit = stringIsInteger(gasLimit) ? gasLimit : minGasLimit;
+  const guardedTransactionGasLimit = isGuarded
+    ? minGasLimit + EXTRA_GAS_LIMIT_GUARDED_TX
+    : minGasLimit;
+  const validGasLimit = stringIsInteger(gasLimit)
+    ? gasLimit
+    : guardedTransactionGasLimit;
   const validGasPrice = stringIsFloat(gasPrice) ? gasPrice : defaultGasPrice;
   const transaction = new Transaction({
     nonce: 0,
@@ -59,17 +62,6 @@ export function calculateFeeLimit({
     chainID: chainId,
     version: new TransactionVersion(1)
   });
-
-  if (isGuarded) {
-    transaction.setGuardian(new Address(placeholderData.from));
-    transaction.applyGuardianSignature(
-      new Signature(placeholderData.guardianSignature)
-    );
-    transaction.setOptions(TransactionOptions.withOptions({ guarded: true }));
-    transaction.setGasLimit(
-      transaction.getGasLimit().valueOf() + EXTRA_GAS_LIMIT_GUARDED_TX
-    );
-  }
 
   const networkConfig = new NetworkConfig();
   networkConfig.MinGasLimit = parseInt(minGasLimit);
