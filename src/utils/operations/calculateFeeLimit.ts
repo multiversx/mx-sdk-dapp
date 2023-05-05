@@ -3,10 +3,17 @@ import {
   TransactionPayload,
   TransactionVersion,
   Address,
-  TokenPayment
+  TokenTransfer,
+  TransactionOptions
 } from '@multiversx/sdk-core';
+import { Signature } from '@multiversx/sdk-core/out/signature';
 import { NetworkConfig } from '@multiversx/sdk-network-providers';
-import { GAS_LIMIT, GAS_PRICE, ZERO } from 'constants/index';
+import {
+  EXTRA_GAS_LIMIT_GUARDED_TX,
+  GAS_LIMIT,
+  GAS_PRICE,
+  ZERO
+} from 'constants/index';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
 
 export interface CalculateFeeLimitType {
@@ -16,17 +23,22 @@ export interface CalculateFeeLimitType {
   gasPerDataByte: string;
   gasPriceModifier: string;
   chainId: string;
+  isGuarded?: boolean;
   minGasLimit?: string;
   defaultGasPrice?: string;
 }
 const placeholderData = {
   from: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa',
-  to: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa'
+  to: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa',
+  guardianSignature:
+    '22946258b3307f477003cfbe228d49a1c4dc1f139235fff1aedad65bc4051a11dd79be7979030284440611f25ed483fccaee0f18b03a513f48de91cdfacd000e'
 };
+
 export function calculateFeeLimit({
   minGasLimit = String(GAS_LIMIT),
   gasLimit,
   gasPrice,
+  isGuarded,
   data: inputData,
   gasPerDataByte,
   gasPriceModifier,
@@ -38,7 +50,7 @@ export function calculateFeeLimit({
   const validGasPrice = stringIsFloat(gasPrice) ? gasPrice : defaultGasPrice;
   const transaction = new Transaction({
     nonce: 0,
-    value: TokenPayment.egldFromAmount('0'),
+    value: TokenTransfer.egldFromAmount('0'),
     receiver: new Address(placeholderData.to),
     sender: new Address(placeholderData.to),
     gasPrice: parseInt(validGasPrice),
@@ -47,6 +59,17 @@ export function calculateFeeLimit({
     chainID: chainId,
     version: new TransactionVersion(1)
   });
+
+  if (isGuarded) {
+    transaction.setGuardian(new Address(placeholderData.from));
+    transaction.applyGuardianSignature(
+      new Signature(placeholderData.guardianSignature)
+    );
+    transaction.setOptions(TransactionOptions.withOptions({ guarded: true }));
+    transaction.setGasLimit(
+      transaction.getGasLimit().valueOf() + EXTRA_GAS_LIMIT_GUARDED_TX
+    );
+  }
 
   const networkConfig = new NetworkConfig();
   networkConfig.MinGasLimit = parseInt(minGasLimit);
