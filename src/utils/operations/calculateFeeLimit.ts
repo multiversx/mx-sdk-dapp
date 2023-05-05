@@ -27,9 +27,7 @@ export interface CalculateFeeLimitType {
 }
 const placeholderData = {
   from: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa',
-  to: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa',
-  guardianSignature:
-    '22946258b3307f477003cfbe228d49a1c4dc1f139235fff1aedad65bc4051a11dd79be7979030284440611f25ed483fccaee0f18b03a513f48de91cdfacd000e'
+  to: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa'
 };
 
 export function calculateFeeLimit({
