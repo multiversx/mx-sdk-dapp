@@ -27,6 +27,13 @@ describe('getDataPayloadForTransaction', () => {
     expect(result.toString()).toStrictEqual(decoded);
   });
 
+  it('should return the decoded base64 string of transaction sign data', async () => {
+    const data = 'bGVuZGVnYXRlQDAx';
+    const decoded = 'lendegate@01';
+    const result = getDataPayloadForTransaction(data);
+    expect(result.toString()).toStrictEqual(decoded);
+  });
+
   it('should return the decoded base64 string with chinese characters', async () => {
     const data = '5aeT5ZCN';
     const decoded = '姓名';

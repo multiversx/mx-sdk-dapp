@@ -1,6 +1,3 @@
-const ONLY_LETTERS_REGEX = /^[a-zA-Z]+(?: [a-zA-Z]+)*$/;
-const ONLY_NUMBERS_REGEX = /^\d+(?: \d+)*$/;
-
 /**
  * @description Checks if a string is base64 encoded
  * The detection difficulty stands in the format of an encoded string that initially had non-ASCII characters
@@ -14,7 +11,6 @@ const ONLY_NUMBERS_REGEX = /^\d+(?: \d+)*$/;
  * and, the encoded string format is also different from a regular base64 string (e.g. "GamRHHZiaUR3bjVtQQ==")
  *
  * Solution:
- * - if the string contains only letters, only numbers or spaces, it is definitely not an encoded string
  * - if any conversion fails (atob(), btoa() or Buffer.from()), it is definitely not an encoded string
  * - if atob() conversion is equal to Buffer.from() conversion
  * or the string is equal to btoa() conversion of atob(), it is a regular base64 string
@@ -23,27 +19,22 @@ const ONLY_NUMBERS_REGEX = /^\d+(?: \d+)*$/;
  * @param str
  */
 export function isStringBase64(str: string) {
-  if (ONLY_LETTERS_REGEX.test(str) || ONLY_NUMBERS_REGEX.test(str)) {
-    // If the string contains only letters or only numbers
-    // it is definitely not a base64 encoded string
-    return false;
-  }
-
   try {
-    // Try to decode the string and encode it back to base64
-    // If the result is equal to the initial string, it is a regular base64 string
+    // Try to decode the string and encode it back using base64 functions
     const atobDecoded = atob(str);
     const btoaEncoded = btoa(atobDecoded);
+    const bufferFromDecoded = Buffer.from(str, 'base64').toString();
+    const bufferFromEncoded = Buffer.from(bufferFromDecoded).toString('base64');
 
-    if (str === btoaEncoded) {
-      return true;
-    }
+    // If the result is equal to the initial string
+    const isEqualToInitialString =
+      str === btoaEncoded && str === bufferFromEncoded;
 
-    // Decode the string with Buffer.from() and compare it to the atob() conversion
-    // If the result is equal, it is a regular base64 string
-    const base64Decoded = Buffer.from(str, 'base64').toString();
+    // or the atob() conversion is equal to the Buffer.from('base64')
+    const isAtobEqualToBufferFrom = atobDecoded === bufferFromDecoded;
 
-    if (atobDecoded === base64Decoded) {
+    if (isEqualToInitialString || isAtobEqualToBufferFrom) {
+      // it is a regular base64 string
       return true;
     }
   } catch (e) {

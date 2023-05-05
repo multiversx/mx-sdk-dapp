@@ -18,6 +18,11 @@ describe('isStringBase64', () => {
     expect(result).toStrictEqual(true);
   });
 
+  it('should return true for base64 encoding of @', async () => {
+    const result = isStringBase64('bGVuZGVnYXRlQDAx');
+    expect(result).toStrictEqual(true);
+  });
+
   it('should return true for base64 encoding of chinese characters', async () => {
     const result = isStringBase64('5aeT5ZCN');
     expect(result).toStrictEqual(true);
@@ -28,8 +33,23 @@ describe('isStringBase64', () => {
     expect(result).toStrictEqual(false);
   });
 
+  it('should return false for simple lowercase letter word', async () => {
+    const result = isStringBase64('test');
+    expect(result).toStrictEqual(false);
+  });
+
   it('should return false for number', async () => {
     const result = isStringBase64('1231434');
+    expect(result).toStrictEqual(false);
+  });
+
+  it('should return false for simple letter word', async () => {
+    const result = isStringBase64('TeSt');
+    expect(result).toStrictEqual(false);
+  });
+
+  it('should return false for simple letter word with numbers', async () => {
+    const result = isStringBase64('TeSt123');
     expect(result).toStrictEqual(false);
   });
 
