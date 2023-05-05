@@ -32,7 +32,8 @@ export const SignWithDeviceModal = ({
     currentTransaction
   } = useSignTransactionsWithDevice({
     onCancel: handleClose,
-    verifyReceiverScam
+    verifyReceiverScam,
+    hasGuardianScreen: Boolean(GuardianScreen)
   });
   const classes = {
     wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
