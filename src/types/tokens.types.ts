@@ -52,6 +52,7 @@ export interface TokenType {
     social?: any;
     extraTokens?: string[];
     lockedAccounts?: { [key: string]: string };
+    ledgerSignature?: string;
   };
 }
 
