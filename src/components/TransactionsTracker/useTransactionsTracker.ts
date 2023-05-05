@@ -1,12 +1,19 @@
 import { useEffect } from 'react';
+import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import { useCheckTransactionStatus, useRegisterWebsocketListener } from 'hooks';
+import { GetTransactionsByHashesType } from 'types/transactions.types';
 
-export function useTransactionsTracker() {
+export interface TransactionsTrackerType {
+  getTransactionsByHash?: GetTransactionsByHashesType;
+}
+
+export function useTransactionsTracker(props?: TransactionsTrackerType) {
   const checkTransactionStatus = useCheckTransactionStatus();
 
   const onMessage = () => {
     checkTransactionStatus({
-      shouldRefreshBalance: true
+      shouldRefreshBalance: true,
+      getTransactionsByHash
     });
   };
 

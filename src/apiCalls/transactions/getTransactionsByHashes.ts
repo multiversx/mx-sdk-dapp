@@ -5,7 +5,7 @@ import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
 } from 'types/transactions.types';
-import { ServerTransactionType } from '../../types';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType

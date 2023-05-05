@@ -1,9 +1,11 @@
-import { useTransactionsTracker } from './useTransactionsTracker';
+import {
+  useTransactionsTracker,
+  TransactionsTrackerType
+} from './useTransactionsTracker';
 
-export interface TransactionsTrackerType {}
-
-// @ts-ignore
-export function TransactionsTracker(props?: TransactionsTrackerType) {
-  useTransactionsTracker();
+export function TransactionsTracker({
+  getTransactionsByHash
+}: TransactionsTrackerType) {
+  useTransactionsTracker({ getTransactionsByHash });
   return null;
 }
