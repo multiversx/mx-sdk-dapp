@@ -24,7 +24,6 @@ export const useCheckBatchesOnWsFailureFallback = (props?: {
     }
   }, [batchTransactionsArray, verifyBatchStatus]);
 
-  // Activate polling after 90 seconds (the fallback for ws connection failure)
   useEffect(() => {
     const interval = setTimeout(async () => {
       startPolling.current = true;

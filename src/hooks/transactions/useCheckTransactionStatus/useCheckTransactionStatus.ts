@@ -1,4 +1,5 @@
 import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
+import { GetTransactionsByHashesType } from 'types/transactions.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 import { checkBatch } from './checkBatch';
@@ -7,6 +8,7 @@ export function useCheckTransactionStatus() {
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
   async function checkTransactionStatus(props: {
+    getTransactionsByHash?: GetTransactionsByHashesType;
     shouldRefreshBalance?: boolean;
   }) {
     const pendingBatches = pendingTransactionsArray.filter(
