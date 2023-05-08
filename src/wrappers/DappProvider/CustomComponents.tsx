@@ -52,7 +52,7 @@ export function CustomComponents({
 
   return (
     <>
-      {!enableBatchTransactions && (
+      {!Boolean(enableBatchTransactions) && (
         <>
           <TxSender {...transactionSender?.props} />
           <TxTracker {...transactionTracker?.props} />

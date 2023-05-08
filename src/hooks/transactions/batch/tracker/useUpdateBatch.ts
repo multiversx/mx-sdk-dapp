@@ -17,11 +17,6 @@ export function useUpdateBatch() {
       dropUnprocessedTransactions?: boolean;
       shouldRefreshBalance?: boolean;
     }) => {
-      console.log({
-        batches,
-        batchTransactionsArray
-      });
-
       const batch = batchTransactionsArray.find(
         (batch) => batch.batchId === props?.batchId
       );

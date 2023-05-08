@@ -21,14 +21,13 @@ export const useResolveBatchStatusResponse = () => {
       return {
         statusResponse,
         isBatchSuccessful:
-          statusResponse?.status === BatchTransactionStatus.success,
+          statusResponse.status === BatchTransactionStatus.success,
         isBatchFailed:
-          statusResponse?.status === BatchTransactionStatus.fail ||
-          statusResponse?.status === BatchTransactionStatus.invalid ||
-          statusResponse?.status === BatchTransactionStatus.dropped,
+          statusResponse.status === BatchTransactionStatus.fail ||
+          statusResponse.status === BatchTransactionStatus.invalid ||
+          statusResponse.status === BatchTransactionStatus.dropped,
         isBatchNotFound:
-          Boolean(statusResponse?.statusCode) &&
-          Boolean(statusResponse?.message)
+          Boolean(statusResponse.statusCode) && Boolean(statusResponse.message)
       };
     },
     [getBatchStatus]

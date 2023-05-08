@@ -48,27 +48,25 @@ export const BatchTransactionsSender = () => {
     const sessionIds = Object.keys(signedTransactions);
 
     for (const sessionId of sessionIds) {
-      const sessionInformation = signedTransactions?.[sessionId];
+      const session = signedTransactions[sessionId];
 
-      if (!sessionId) {
-        optionalRedirect(sessionInformation);
+      if (!session || !sessionId) {
+        optionalRedirect(session);
+        continue;
+      }
+
+      const { transactions } = session;
+      if (!transactions) {
         continue;
       }
 
       try {
         const isSessionIdSigned =
-          signedTransactions[sessionId].status ===
-          TransactionBatchStatusesEnum.signed;
+          session.status === TransactionBatchStatusesEnum.signed;
         const shouldSendCurrentSession =
           isSessionIdSigned && !sendingRef.current;
 
         if (!shouldSendCurrentSession) {
-          continue;
-        }
-
-        const { transactions } = signedTransactions[sessionId];
-
-        if (!transactions) {
           continue;
         }
 
@@ -77,8 +75,8 @@ export const BatchTransactionsSender = () => {
         const defaultGrouping = [indexes];
 
         const grouping =
-          sessionInformation?.customTransactionInformation?.sessionInformation
-            ?.grouping ?? defaultGrouping;
+          session.customTransactionInformation?.sessionInformation?.grouping ??
+          defaultGrouping;
         const groupedTransactions = grouping?.map((item: number[]) =>
           item.map((index) => transactions[index])
         );
@@ -128,7 +126,7 @@ export const BatchTransactionsSender = () => {
         clearSignInfo();
         setNonce(nonce + transactions.length);
 
-        optionalRedirect(sessionInformation);
+        optionalRedirect(session);
         const [transaction] = transactions;
         removeTransactionParamsFromUrl({
           transaction

@@ -23,9 +23,9 @@ export const getTransactionsStatus = ({
     ({ status }) => status === TransactionServerStatusesEnum.success
   );
 
-  const isIncompleteFailed = hasUnrelatedTransactions
-    ? Boolean(!isPending && !allTxFailed && someTxFailed)
-    : false;
+  const isIncompleteFailed =
+    hasUnrelatedTransactions &&
+    Boolean(!isPending && !allTxFailed && someTxFailed);
 
   const isFailed = hasUnrelatedTransactions
     ? isIncompleteFailed
