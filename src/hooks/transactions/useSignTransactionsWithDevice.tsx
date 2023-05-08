@@ -139,13 +139,13 @@ export function useSignTransactionsWithDevice(
     return await provider.signTransaction(transaction);
   }
 
+  const allowGuardian = !customTransactionInformation?.skipGuardian;
+
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
     egldLabel,
     activeGuardianAddress:
-      isGuarded && customTransactionInformation?.skipGuardian
-        ? activeGuardianAddress
-        : undefined,
+      isGuarded && allowGuardian ? activeGuardianAddress : undefined,
     transactionsToSign: hasTransactions ? transactions : [],
     onGetScamAddressData: verifyReceiverScam ? getScamAddressData : null,
     isLedger: getIsProviderEqualTo(LoginMethodsEnum.ledger),
