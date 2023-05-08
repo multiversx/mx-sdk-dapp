@@ -15,6 +15,7 @@ export async function sendTransactions({
   signWithoutSending,
   completedTransactionsDelay,
   sessionInformation,
+  skipGuardian,
   minGasLimit
 }: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
   try {
@@ -42,6 +43,7 @@ export async function sendTransactions({
         redirectAfterSign,
         completedTransactionsDelay,
         sessionInformation,
+        skipGuardian,
         signWithoutSending
       }
     });

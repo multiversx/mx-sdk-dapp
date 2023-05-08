@@ -132,6 +132,7 @@ export interface SendTransactionsPropsType {
     | (Transaction | SimpleTransactionType)[];
   redirectAfterSign?: boolean;
   signWithoutSending: boolean;
+  skipGuardian?: boolean;
   completedTransactionsDelay?: number;
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
