@@ -113,8 +113,8 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<UpdateSignedTransactionsPayloadType>
     ) => {
       const { sessionId, status, errorMessage, transactions } = action.payload;
-      const transaction = state.signedTransactions[sessionId];
-      if (transaction != null) {
+      const session = state.signedTransactions[sessionId];
+      if (session != null) {
         state.signedTransactions[sessionId].status = status;
         if (errorMessage != null) {
           state.signedTransactions[sessionId].errorMessage = errorMessage;

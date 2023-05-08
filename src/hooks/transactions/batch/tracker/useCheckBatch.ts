@@ -13,11 +13,10 @@ export function useCheckBatch() {
         batchId
       });
 
-      if (!batchData.statusResponse) {
-        return null;
+      if (batchData.statusResponse) {
+        dispatch(updateBatchTransactions(batchData.statusResponse));
       }
 
-      dispatch(updateBatchTransactions(batchData.statusResponse));
       return batchData;
     },
     [dispatch, resolveBatchStatusResponse]

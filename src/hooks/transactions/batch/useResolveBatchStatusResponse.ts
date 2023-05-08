@@ -13,7 +13,7 @@ export const useResolveBatchStatusResponse = () => {
         return {
           statusResponse,
           isBatchSuccessful: false,
-          isBatchFailed: false,
+          isBatchFailed: true,
           isBatchNotFound: false
         };
       }

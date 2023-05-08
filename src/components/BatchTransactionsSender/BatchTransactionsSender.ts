@@ -4,22 +4,25 @@ import {
   accountSelector,
   signedTransactionsSelector
 } from 'reduxStore/selectors';
-import { sendBatchTransactions } from 'services/transactions/sendBatchTransactions';
-import {
-  TransactionBatchStatusesEnum,
-  TransactionServerStatusesEnum
-} from 'types/enums.types';
-import { SignedTransactionsBodyType } from 'types/transactions.types';
 import {
   clearAllTransactionsToSign,
   setTxSubmittedModal,
   setBatchTransactions,
   updateSignedTransactions
 } from 'reduxStore/slices';
+import { sendBatchTransactions } from 'services/transactions/sendBatchTransactions';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
+import {
+  SignedTransactionsBodyType,
+  SignedTransactionType
+} from 'types/transactions.types';
 import { setNonce } from 'utils/account/setNonce';
 import { safeRedirect } from 'utils/redirect';
-import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
+import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 
 /**
  * Function used to redirect after sending because of Safari cancelling async requests on page change
@@ -42,6 +45,30 @@ export const BatchTransactionsSender = () => {
   const clearSignInfo = () => {
     dispatch(clearAllTransactionsToSign());
     sendingRef.current = false;
+  };
+
+  const handleBatchErrors = ({
+    errorMessage,
+    sessionId,
+    transactions
+  }: {
+    errorMessage: string;
+    sessionId: string;
+    transactions: SignedTransactionType[];
+  }) => {
+    console.error('Unable to send transactions', errorMessage);
+    dispatch(
+      updateSignedTransactions({
+        sessionId,
+        status: TransactionBatchStatusesEnum.fail,
+        errorMessage,
+        transactions: transactions.map((transaction) => ({
+          ...transaction,
+          status: TransactionServerStatusesEnum.notExecuted
+        }))
+      })
+    );
+    clearSignInfo();
   };
 
   const handleSendTransactions = useCallback(async () => {
@@ -91,7 +118,12 @@ export const BatchTransactionsSender = () => {
           address
         });
 
-        if (!response?.data?.transactions) {
+        if (response?.error || !response?.data) {
+          handleBatchErrors({
+            errorMessage: response?.error ?? 'Send batch error',
+            sessionId,
+            transactions
+          });
           continue;
         }
 
@@ -132,15 +164,11 @@ export const BatchTransactionsSender = () => {
           transaction
         });
       } catch (error) {
-        console.error('Unable to send transactions', error);
-        dispatch(
-          updateSignedTransactions({
-            sessionId,
-            status: TransactionBatchStatusesEnum.fail,
-            errorMessage: (error as any).message
-          })
-        );
-        clearSignInfo();
+        handleBatchErrors({
+          errorMessage: (error as any).message,
+          sessionId,
+          transactions
+        });
       } finally {
         sendingRef.current = false;
       }

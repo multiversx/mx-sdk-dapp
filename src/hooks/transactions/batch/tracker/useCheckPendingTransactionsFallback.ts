@@ -57,5 +57,5 @@ export const useCheckPendingTransactionsFallback = (props?: {
 
   useEffect(() => {
     checkTransactions();
-  }, [checkTransactions]);
+  }, [checkTransactions, pendingTransactionsArray, batchTransactionsArray]);
 };
