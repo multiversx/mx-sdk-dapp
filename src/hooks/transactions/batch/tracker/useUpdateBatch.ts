@@ -8,7 +8,7 @@ import { getTransactionsDetails } from 'services/transactions/getTransactionsDet
 import { useCallback } from 'react';
 
 export function useUpdateBatch() {
-  const { batches, batchTransactionsArray } = useGetBatches();
+  const { batchTransactionsArray } = useGetBatches();
 
   return useCallback(
     async (props?: {
