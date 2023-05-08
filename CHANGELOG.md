@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Fixed incorrect returns of `signMessage`](https://github.com/multiversx/mx-sdk-dapp/pull/763)
+- [Fixed redirect to 2FA hook when `skipGuardian` is set](https://github.com/multiversx/mx-sdk-dapp/pull/766)
+- [Fixed incorrect returns of `signMessage`](https://github.com/multiversx/mx-sdk-dapp/pull/765)
 
 ## [[v2.12.8]](https://github.com/multiversx/mx-sdk-dapp/pull/762)] - 2023-05-08
 - [Fixed setting `skipGuardian` condtion](https://github.com/multiversx/mx-sdk-dapp/pull/761)

@@ -87,6 +87,8 @@ export function useSignTransactionsWithDevice(
   const locationIncludesCallbackRoute =
     callbackRoute != null && window?.location.pathname.includes(callbackRoute);
 
+  const allowGuardian = !customTransactionInformation?.skipGuardian;
+
   function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
     const shouldMoveTransactionsToSignedState =
       getShouldMoveTransactionsToSignedState(newSignedTransactions);
@@ -101,7 +103,7 @@ export function useSignTransactionsWithDevice(
         sessionId,
         callbackRoute,
         hasGuardianScreen,
-        isGuarded,
+        isGuarded: isGuarded && allowGuardian,
         walletAddress: network.walletAddress
       });
 
@@ -138,8 +140,6 @@ export function useSignTransactionsWithDevice(
   async function handleSignTransaction(transaction: Transaction) {
     return await provider.signTransaction(transaction);
   }
-
-  const allowGuardian = !customTransactionInformation?.skipGuardian;
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
     address,
