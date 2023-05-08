@@ -6,13 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.12.9]](https://github.com/multiversx/mx-sdk-dapp/pull/767)] - 2023-05-08
+- [Fixed redirect to 2FA hook when `skipGuardian` is set](https://github.com/multiversx/mx-sdk-dapp/pull/766)
+- [Fixed incorrect returns of `signMessage`](https://github.com/multiversx/mx-sdk-dapp/pull/765)
+
 ## [[v2.12.8]](https://github.com/multiversx/mx-sdk-dapp/pull/762)] - 2023-05-08
 - [Fixed setting `skipGuardian` condtion](https://github.com/multiversx/mx-sdk-dapp/pull/761)
+
 ## [[v2.12.7]](https://github.com/multiversx/mx-sdk-dapp/pull/762)] - 2023-05-05
 - [Allow skip guradian for change guardian transaction](https://github.com/multiversx/mx-sdk-dapp/pull/761)
+
 ## [[v2.12.6]](https://github.com/multiversx/mx-sdk-dapp/pull/758)] - 2023-05-05
 - [Increment extension provider version](https://github.com/multiversx/mx-sdk-dapp/pull/758)
- 
+
 ## [[v2.12.5]](https://github.com/multiversx/mx-sdk-dapp/pull/757)] - 2023-05-05
 - [Added `ledgerSignature` to assets in `TokenType`](https://github.com/multiversx/mx-sdk-dapp/pull/756)
 - [Fixed checking of base64 encoding in transaction data field](https://github.com/multiversx/mx-sdk-dapp/pull/755)

@@ -149,6 +149,7 @@ export const useSignMessage = () => {
       address: new Address(address),
       message: Buffer.from(message, 'ascii')
     });
+
     return provider.signMessage(signableMessage, {
       callbackUrl
     });
@@ -184,10 +185,12 @@ export const useSignMessage = () => {
     try {
       await checkProviderIsInitialized();
     } catch (error) {
-      return onCancel({
+      onCancel({
         errorMessage: String(error),
         callbackRoute
       });
+
+      return null;
     }
 
     try {
@@ -197,7 +200,7 @@ export const useSignMessage = () => {
       });
 
       if (signedMessage.signature) {
-        return dispatch(
+        dispatch(
           setSignSession({
             sessionId,
             signedSession: {
@@ -208,9 +211,11 @@ export const useSignMessage = () => {
             }
           })
         );
+
+        return signedMessage;
       }
 
-      return onCancel({
+      onCancel({
         errorMessage: CANCELLED,
         callbackRoute
       });
@@ -218,11 +223,13 @@ export const useSignMessage = () => {
       const errorMessage =
         (error as Error)?.message || (error as string) || ERROR_SIGNING;
 
-      return onCancel({
+      onCancel({
         errorMessage,
         callbackRoute
       });
     }
+
+    return null;
   };
 
   /**

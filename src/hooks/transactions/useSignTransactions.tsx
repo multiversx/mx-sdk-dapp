@@ -203,7 +203,7 @@ export const useSignTransactions = () => {
           transactions: signedTransactions,
           sessionId,
           callbackRoute,
-          isGuarded,
+          isGuarded: isGuarded && allowGuardian,
           walletAddress: network.walletAddress
         });
 
