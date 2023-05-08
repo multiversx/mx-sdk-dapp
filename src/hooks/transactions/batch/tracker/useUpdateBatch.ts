@@ -17,8 +17,12 @@ export function useUpdateBatch() {
       dropUnprocessedTransactions?: boolean;
       shouldRefreshBalance?: boolean;
     }) => {
+      if(!props) {
+        return;
+      }
+
       const batch = batchTransactionsArray.find(
-        (batch) => batch.batchId === props?.batchId
+        (batch) => batch.batchId === props.batchId
       );
       if (!batch) {
         return;
@@ -35,7 +39,7 @@ export function useUpdateBatch() {
         return;
       }
 
-      if (props?.isBatchFailed) {
+      if (props.isBatchFailed) {
         for (const transaction of transactionsFlatArray) {
           store.dispatch(
             updateSignedTransactionStatus({
@@ -57,7 +61,7 @@ export function useUpdateBatch() {
           const apiTx = data.find((tx) => tx.txHash === transaction.hash);
 
           if (!apiTx) {
-            if (props?.dropUnprocessedTransactions) {
+            if (props.dropUnprocessedTransactions) {
               store.dispatch(
                 updateSignedTransactionStatus({
                   sessionId,
@@ -79,7 +83,7 @@ export function useUpdateBatch() {
         }
       }
 
-      if (props?.shouldRefreshBalance) {
+      if (props.shouldRefreshBalance) {
         await refreshAccount();
       }
     },
