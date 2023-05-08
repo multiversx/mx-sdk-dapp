@@ -205,6 +205,10 @@ export interface CustomTransactionInformation {
   sessionInformation: any;
   completedTransactionsDelay?: number;
   signWithoutSending: boolean;
+  /**
+   * If true, the change guardian action will not trigger transaction version update
+   */
+  skipGuardian?: boolean;
 }
 
 export interface SendTransactionReturnType {
