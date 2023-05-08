@@ -105,7 +105,9 @@ export const BatchTransactionsSender = () => {
           session.customTransactionInformation?.sessionInformation?.grouping ??
           defaultGrouping;
         const groupedTransactions = grouping?.map((item: number[]) =>
-          item.map((index) => transactions[index])
+          item
+            .map((index) => transactions[index])
+            .filter((transaction) => Boolean(transaction))
         );
 
         if (!groupedTransactions) {
