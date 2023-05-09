@@ -170,10 +170,12 @@ export const useSignTransactions = () => {
       return;
     }
 
+    const allowGuardian = !customTransactionInformation.skipGuardian;
+
     try {
       isSigningRef.current = true;
       const signedTransactions: Transaction[] = await provider.signTransactions(
-        isGuarded && !customTransactionInformation.skipGuardian
+        isGuarded && allowGuardian
           ? transactions.map((transaction) => {
               transaction.setVersion(TransactionVersion.withTxOptions());
               transaction.setOptions(
@@ -201,7 +203,7 @@ export const useSignTransactions = () => {
           transactions: signedTransactions,
           sessionId,
           callbackRoute,
-          isGuarded,
+          isGuarded: isGuarded && allowGuardian,
           walletAddress: network.walletAddress
         });
 
