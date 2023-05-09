@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.13.0]](https://github.com/multiversx/mx-sdk-dapp/pull/770)] - 2023-05-09
 - [Added `getLedgerVersionOptions` helper](https://github.com/multiversx/mx-sdk-dapp/pull/769)
 - [Added `getWebviewToken` helper](https://github.com/multiversx/mx-sdk-dapp/pull/768)
 
