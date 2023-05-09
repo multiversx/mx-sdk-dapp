@@ -27,7 +27,8 @@ export function manageFailedTransactions({
       transactionHash: hash,
       sessionId,
       status: TransactionServerStatusesEnum.fail,
-      errorMessage: resultWithError?.returnMessage
+      errorMessage: resultWithError?.returnMessage,
+      inTransit: false
     })
   );
   store.dispatch(

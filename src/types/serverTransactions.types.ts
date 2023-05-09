@@ -236,6 +236,7 @@ export interface ServerTransactionType {
   senderShard: number;
   signature: string;
   status: string;
+  inTransit?: boolean;
   timestamp: number;
   value: string;
   price: number;
@@ -315,7 +316,8 @@ export enum BatchTransactionStatus {
   pending = 'pending',
   success = 'success',
   invalid = 'invalid',
-  dropped = 'dropped'
+  dropped = 'dropped',
+  fail = 'fail'
 }
 
 export interface BatchTransactionsResponseType {

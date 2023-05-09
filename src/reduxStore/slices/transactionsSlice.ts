@@ -34,6 +34,7 @@ export interface UpdateSignedTransactionStatusPayloadType {
   transactionHash: string;
   status: TransactionServerStatusesEnum;
   errorMessage?: string;
+  inTransit?: boolean;
 }
 
 export interface TransactionsSliceStateType {
@@ -112,8 +113,8 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<UpdateSignedTransactionsPayloadType>
     ) => {
       const { sessionId, status, errorMessage, transactions } = action.payload;
-      const transaction = state.signedTransactions[sessionId];
-      if (transaction != null) {
+      const session = state.signedTransactions[sessionId];
+      if (session != null) {
         state.signedTransactions[sessionId].status = status;
         if (errorMessage != null) {
           state.signedTransactions[sessionId].errorMessage = errorMessage;
@@ -127,7 +128,7 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
     ) => {
-      const { sessionId, status, errorMessage, transactionHash } =
+      const { sessionId, status, errorMessage, transactionHash, inTransit } =
         action.payload;
       const transactions = state.signedTransactions?.[sessionId]?.transactions;
       if (transactions != null) {
@@ -137,7 +138,8 @@ export const transactionsSlice = createSlice({
               return {
                 ...transaction,
                 status,
-                errorMessage
+                errorMessage,
+                inTransit
               };
             }
             return transaction;

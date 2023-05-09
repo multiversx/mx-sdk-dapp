@@ -1,26 +1,42 @@
-import { checkBatch } from 'hooks/transactions/useCheckTransactionStatus/checkBatch';
-import { CustomTransactionInformation, SignedTransactionType } from 'types';
-import { getIsSequential } from './getIsSequential';
+import { SignedTransactionType, TransactionServerStatusesEnum } from 'types';
 import { sequentialToFlatArray } from './sequentialToFlatArray';
+import { store } from 'reduxStore/store';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { removeBatchTransactions } from 'services/transactions';
 
-export async function updateBatchTransactionsStatuses({
+export function updateBatchTransactionsStatuses({
+  batchId,
   sessionId,
-  transactions,
-  customTransactionInformation
+  transactions
 }: {
+  batchId: string;
   sessionId: string;
   transactions: SignedTransactionType[] | SignedTransactionType[][];
-  customTransactionInformation?: CustomTransactionInformation;
 }) {
-  const isSequential = getIsSequential({ transactions });
   const transactionsArray = sequentialToFlatArray({ transactions });
 
-  await checkBatch({
-    sessionId,
-    transactionBatch: {
-      transactions: transactionsArray,
-      customTransactionInformation
-    },
-    isSequential
-  });
+  const batchIsSuccessful = transactionsArray.every(
+    (transaction) =>
+      transaction.status === TransactionServerStatusesEnum.success
+  );
+
+  if (transactionsArray.length === 0) {
+    return;
+  }
+
+  for (const transaction of transactionsArray) {
+    const { hash, status } = transaction;
+
+    store.dispatch(
+      updateSignedTransactionStatus({
+        sessionId,
+        status,
+        transactionHash: hash
+      })
+    );
+  }
+
+  if (batchIsSuccessful) {
+    removeBatchTransactions(batchId);
+  }
 }
