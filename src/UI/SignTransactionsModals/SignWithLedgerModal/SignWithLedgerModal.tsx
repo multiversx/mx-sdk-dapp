@@ -1,6 +1,6 @@
 import React from 'react';
-import { useGetAccountInfo } from 'hooks';
-import { SignModalPropsType } from 'types';
+import { useGetAccountInfo, useGetLoginInfo } from 'hooks';
+import { LoginMethodsEnum, SignModalPropsType } from 'types';
 import { getLedgerVersionOptions } from 'utils';
 import { SignWithDeviceModal } from '../SignWithDeviceModal';
 import { LedgerGuardianSigningModalError } from './LedgerGuardianSigningModalError';
@@ -10,11 +10,16 @@ export const SignWithLedgerModal = (props: SignModalPropsType) => {
     ledgerAccount,
     account: { isGuarded }
   } = useGetAccountInfo();
+  const { loginMethod } = useGetLoginInfo();
+
   const { ledgerWithGuardians } = getLedgerVersionOptions(
     ledgerAccount?.version ?? ''
   );
 
-  if (isGuarded && !ledgerWithGuardians) {
+  const isProviderAllowed =
+    loginMethod === LoginMethodsEnum.ledger ? ledgerWithGuardians : true;
+
+  if (isGuarded && !isProviderAllowed) {
     return <LedgerGuardianSigningModalError {...props} />;
   }
 
