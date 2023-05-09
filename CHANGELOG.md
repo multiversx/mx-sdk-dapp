@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Add batch transactions tracking mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/745)
+
 ## [[v2.13.0]](https://github.com/multiversx/mx-sdk-dapp/pull/770)] - 2023-05-09
 - [Added `getLedgerVersionOptions` helper](https://github.com/multiversx/mx-sdk-dapp/pull/769)
 - [Added `getWebviewToken` helper](https://github.com/multiversx/mx-sdk-dapp/pull/768)
