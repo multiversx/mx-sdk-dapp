@@ -14,7 +14,6 @@ import {
   getIsTransactionPending,
   getIsTransactionSuccessful
 } from 'utils/transactions';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
@@ -49,8 +48,14 @@ function manageTransaction({
   shouldRefreshBalance,
   isSequential
 }: ManageTransactionType) {
-  const { hash, status, results, invalidTransaction, hasStatusChanged } =
-    serverTransaction;
+  const {
+    hash,
+    status,
+    inTransit,
+    results,
+    invalidTransaction,
+    hasStatusChanged
+  } = serverTransaction;
   try {
     if (timeouts.includes(hash)) {
       return;
@@ -78,7 +83,8 @@ function manageTransaction({
         updateSignedTransactionStatus({
           sessionId,
           status,
-          transactionHash: hash
+          transactionHash: hash,
+          inTransit
         })
       );
       return;
@@ -98,7 +104,8 @@ function manageTransaction({
               updateSignedTransactionStatus({
                 sessionId,
                 status: TransactionServerStatusesEnum.success,
-                transactionHash: hash
+                transactionHash: hash,
+                inTransit
               })
             ),
           customTransactionInformation?.completedTransactionsDelay
@@ -109,7 +116,8 @@ function manageTransaction({
           updateSignedTransactionStatus({
             sessionId,
             status,
-            transactionHash: hash
+            transactionHash: hash,
+            inTransit
           })
         );
       }
@@ -141,12 +149,7 @@ export async function checkBatch({
       return;
     }
 
-    const transactionsArray = sequentialToFlatArray({ transactions });
-
-    const pendingTransactions = getPendingTransactions(
-      transactionsArray,
-      timeouts
-    );
+    const pendingTransactions = getPendingTransactions(transactions, timeouts);
 
     const serverTransactions = await getTransactionsByHash(pendingTransactions);
 
