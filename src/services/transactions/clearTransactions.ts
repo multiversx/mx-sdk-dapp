@@ -1,7 +1,8 @@
 import {
   clearSignedTransaction,
   clearAllTransactionsToSign,
-  clearAllSignedTransactions
+  clearAllSignedTransactions,
+  clearBatchTransactions
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 
@@ -18,4 +19,8 @@ export function removeAllSignedTransactions() {
 
 export function removeAllTransactionsToSign() {
   store.dispatch(clearAllTransactionsToSign());
+}
+
+export function removeBatchTransactions(batchId: string) {
+  store.dispatch(clearBatchTransactions({ batchId }));
 }

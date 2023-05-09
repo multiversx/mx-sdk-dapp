@@ -1,16 +1,15 @@
 import { useCallback, useEffect, useMemo, useRef } from 'react';
-import {
-  AVERAGE_TX_DURATION_MS,
-  TRANSACTIONS_STATUS_POLLING_INTERVAL
-} from 'constants/transactionStatus';
-import { useGetAccount } from 'hooks/account';
-import { useRegisterWebsocketListener } from 'hooks/websocketListener';
+import { BatchTransactionsWSResponseType } from 'types';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateBatchTransactions } from 'reduxStore/slices';
-import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
-import { BatchTransactionStatus, BatchTransactionsWSResponseType } from 'types';
+import { useRegisterWebsocketListener } from 'hooks/websocketListener';
+import { useUpdateBatch } from './tracker/useUpdateBatch';
 import { useGetBatches } from './useGetBatches';
-import { useUpdateBatch } from './useUpdateBatch';
+import {
+  AVERAGE_TX_DURATION_MS,
+  TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
+} from 'constants/transactionStatus';
+import { useResolveBatchStatusResponse } from './useResolveBatchStatusResponse';
 
 type TrackBatchTransactionsStatusProps = {
   batchId: string | null;
@@ -28,7 +27,6 @@ export const useTrackBatchTransactions = ({
 
   const updateBatchTransactionsStatuses = useUpdateBatch();
   const { batches } = useGetBatches();
-  const { address } = useGetAccount();
 
   const batchTransactions = useMemo(() => {
     if (!batchId) {
@@ -46,60 +44,32 @@ export const useTrackBatchTransactions = ({
     return batches[batchId]?.status ?? '';
   }, [batchId, batches]);
 
-  const getBatchStatus = useCallback(
-    async (id: string) => {
-      try {
-        return await getBatchTransactionsStatus({
-          batchId: id,
-          address
-        });
-      } catch (error) {
-        console.error(error);
-        return null;
-      }
-    },
-    [address]
-  );
+  const resolveBatchStatusResponse = useResolveBatchStatusResponse();
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
-      const batchStatus = await getBatchStatus(batchId);
+      const { statusResponse, isBatchSuccessful, isBatchFailed } =
+        await resolveBatchStatusResponse({ batchId });
 
-      if (!batchStatus) {
+      if (!statusResponse) {
         stopPollingRef.current = true;
         return;
       }
 
-      dispatch(updateBatchTransactions(batchStatus));
-
-      const isBatchSuccessful =
-        batchStatus?.status === BatchTransactionStatus.success;
-      const isBatchFailed =
-        batchStatus?.status === BatchTransactionStatus.invalid ||
-        batchStatus?.status === BatchTransactionStatus.dropped;
-      const isBatchNotFound =
-        Boolean(batchStatus?.statusCode) && Boolean(batchStatus?.message);
+      dispatch(updateBatchTransactions(statusResponse));
 
       if (isBatchSuccessful) {
-        stopPollingRef.current = true;
         onSuccess?.(batchId);
-        return;
-      }
-
-      if (isBatchFailed) {
-        stopPollingRef.current = true;
+      } else if (isBatchFailed) {
         onFail?.(
           batchId,
-          `Error processing batch transactions. Status: ${batchStatus?.status}`
+          `Error processing batch transactions. Status: ${statusResponse?.status}`
         );
-        return;
       }
 
-      if (isBatchNotFound) {
-        stopPollingRef.current = true;
-      }
+      stopPollingRef.current = true;
     },
-    [getBatchStatus, onSuccess, onFail, stopPollingRef.current]
+    [resolveBatchStatusResponse, onSuccess, onFail]
   );
 
   const onMessage = useCallback(() => {
@@ -124,11 +94,11 @@ export const useTrackBatchTransactions = ({
   useEffect(() => {
     const interval = setTimeout(async () => {
       stopPollingRef.current = false;
-    }, TRANSACTIONS_STATUS_POLLING_INTERVAL);
+    }, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
     return () => {
       clearInterval(interval);
     };
-  }, [onMessage, stopPollingRef.current]);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -144,10 +114,9 @@ export const useTrackBatchTransactions = ({
     }, AVERAGE_TX_DURATION_MS);
 
     return () => clearInterval(interval);
-  }, [batchId, verifyBatchStatus, stopPollingRef.current]);
+  }, [batchId, verifyBatchStatus, updateBatchTransactionsStatuses]);
 
   return {
-    getBatchStatus,
     batchStatus,
     batchTransactions
   };

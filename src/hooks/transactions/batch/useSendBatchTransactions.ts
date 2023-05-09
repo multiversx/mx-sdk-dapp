@@ -1,15 +1,15 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'reduxStore/DappProviderContext';
+import { setBatchTransactions } from 'reduxStore/slices';
 import {
-  clearBatchTransactions,
-  setBatchTransactions
-} from 'reduxStore/slices';
-import { removeSignedTransaction } from 'services';
+  removeBatchTransactions,
+  removeSignedTransaction
+} from 'services/transactions';
 import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
 } from 'services/transactions/sendBatchTransactions';
-import { BatchTransactionStatus } from 'types';
+import { BatchTransactionStatus } from 'types/serverTransactions.types';
 
 export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();
@@ -38,11 +38,7 @@ export const useSendBatchTransactions = () => {
         const batchId = data?.id ?? '';
 
         removeSignedTransaction(sessionId);
-        dispatch(
-          clearBatchTransactions({
-            batchId
-          })
-        );
+        removeBatchTransactions(batchId);
       }
 
       return response;
