@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Added `getLedgerVersionOptions` helper](https://github.com/multiversx/mx-sdk-dapp/pull/769)
+- [Added `getWebviewToken` helper](https://github.com/multiversx/mx-sdk-dapp/pull/768)
+
 ## [[v2.12.9]](https://github.com/multiversx/mx-sdk-dapp/pull/767)] - 2023-05-08
 - [Fixed redirect to 2FA hook when `skipGuardian` is set](https://github.com/multiversx/mx-sdk-dapp/pull/766)
 - [Fixed incorrect returns of `signMessage`](https://github.com/multiversx/mx-sdk-dapp/pull/765)
