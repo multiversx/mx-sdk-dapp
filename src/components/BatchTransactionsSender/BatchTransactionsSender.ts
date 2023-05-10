@@ -41,7 +41,6 @@ export const BatchTransactionsSender = () => {
   const signedTransactions = useSelector(signedTransactionsSelector);
 
   const sendingRef = useRef(false);
-  const sentSessionIds = useRef<string[]>([]);
 
   const clearSignInfo = () => {
     dispatch(clearAllTransactionsToSign());
@@ -83,13 +82,6 @@ export const BatchTransactionsSender = () => {
         continue;
       }
 
-      if (
-        // session.status === TransactionBatchStatusesEnum.sent ||
-        sentSessionIds.current.includes(sessionId)
-      ) {
-        continue;
-      }
-
       const { transactions } = session;
       if (!transactions) {
         continue;
@@ -122,8 +114,6 @@ export const BatchTransactionsSender = () => {
           continue;
         }
 
-        sentSessionIds.current.push(sessionId);
-        console.log('sentSessionIds', sentSessionIds.current);
         const response = await sendBatchTransactions({
           transactions: groupedTransactions,
           sessionId,

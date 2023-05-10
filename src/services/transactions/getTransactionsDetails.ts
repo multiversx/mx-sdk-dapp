@@ -8,10 +8,6 @@ export const getTransactionsDetails = async (txHashes: string[]) => {
   let retries = 4;
   let transactions: ServerTransactionType[] | undefined;
 
-  if (txHashes.length === 0) {
-    return { data: transactions, success: false };
-  }
-
   while (transactions === undefined && retries > 0) {
     try {
       await delayWithPromise(delayMs);
