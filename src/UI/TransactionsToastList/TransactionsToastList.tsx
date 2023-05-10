@@ -69,6 +69,14 @@ export const TransactionsToastList = ({
 
   const handleSignedTransactionsListUpdate = () => {
     for (const sessionId in signedTransactionsToRender) {
+      const session = signedTransactionsToRender[sessionId];
+      const skipSending =
+        session?.customTransactionInformation?.signWithoutSending;
+
+      if (skipSending) {
+        continue;
+      }
+
       const alreadyHasToastForThisTransaction = transactionsToasts.some(
         (toast: TransactionToastType): boolean => toast.toastId === sessionId
       );

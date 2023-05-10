@@ -1,7 +1,9 @@
 import { useCallback, useEffect } from 'react';
-import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
-import { useCheckTransactionStatus } from 'hooks/transactions/useCheckTransactionStatus';
 import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
+import { useCheckTransactionStatus } from 'hooks/transactions/useCheckTransactionStatus';
+import { checkBatch } from 'hooks/transactions/useCheckTransactionStatus/checkBatch';
+import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
+import { refreshAccount } from 'utils/account/refreshAccount';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 
 /**
@@ -24,13 +26,14 @@ export const useCheckPendingTransactionsFallback = (props?: {
       pendingTransactionsArray.length > 0 &&
       batchTransactionsArray.length === 0
     ) {
-      await checkTransactionsStatuses({
-        shouldRefreshBalance: true
-      });
+      for (const [sessionId, transactionBatch] of pendingTransactionsArray) {
+        await checkBatch({
+          sessionId,
+          transactionBatch
+        });
 
-      for (const [_, data] of pendingTransactionsArray) {
         const { isPending, isSuccessful, isFailed } = getTransactionsStatus({
-          transactions: data.transactions ?? []
+          transactions: transactionBatch.transactions ?? []
         });
 
         if (!isPending) {
@@ -41,11 +44,13 @@ export const useCheckPendingTransactionsFallback = (props?: {
           if (isFailed) {
             onFail?.(
               null,
-              `Error processing batch transactions. Status: failed`
+              'Error processing batch transactions. Status: failed'
             );
           }
         }
       }
+
+      await refreshAccount();
     }
   }, [
     pendingTransactionsArray,

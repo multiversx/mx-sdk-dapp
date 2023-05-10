@@ -13,6 +13,7 @@ import {
 } from 'types/enums.types';
 import {
   getIsTransactionFailed,
+  getIsTransactionNotExecuted,
   getIsTransactionSuccessful
 } from 'utils/transactions/transactionStateByStatus';
 import { logoutAction } from '../commonActions';
@@ -156,6 +157,13 @@ export const transactionsSlice = createSlice({
         ]?.transactions?.every((transaction) =>
           getIsTransactionFailed(transaction.status)
         );
+
+        const areTransactionsNotExecuted = state.signedTransactions[
+          sessionId
+        ]?.transactions?.every((transaction) =>
+          getIsTransactionNotExecuted(transaction.status)
+        );
+
         if (areTransactionsSuccessful) {
           state.signedTransactions[sessionId].status =
             TransactionBatchStatusesEnum.success;
@@ -163,6 +171,10 @@ export const transactionsSlice = createSlice({
         if (areTransactionsFailed) {
           state.signedTransactions[sessionId].status =
             TransactionBatchStatusesEnum.fail;
+        }
+        if (areTransactionsNotExecuted) {
+          state.signedTransactions[sessionId].status =
+            TransactionBatchStatusesEnum.invalid;
         }
       }
     },
