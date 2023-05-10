@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 
@@ -64,6 +65,7 @@ export function useSignTransactionsWithDevice(
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
+  const [isSignDisabled, setIsSignDisabled] = useState<boolean>();
 
   const {
     transactions,
@@ -108,6 +110,7 @@ export function useSignTransactionsWithDevice(
       });
 
     if (needs2FaSigning) {
+      setIsSignDisabled(true); // prevent user from pressing sign button again while page is redirecting
       return sendTransactionsToGuardian();
     }
 
@@ -155,5 +158,11 @@ export function useSignTransactionsWithDevice(
     onTransactionsSignError: handleTransactionSignError,
     onTransactionsSignSuccess: handleTransactionsSignSuccess
   });
-  return { ...signMultipleTxReturnValues, callbackRoute };
+
+  return {
+    ...signMultipleTxReturnValues,
+    callbackRoute,
+    waitingForDevice:
+      isSignDisabled ?? signMultipleTxReturnValues.waitingForDevice
+  };
 }
