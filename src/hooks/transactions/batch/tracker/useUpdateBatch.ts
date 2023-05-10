@@ -1,17 +1,96 @@
 import { useCallback } from 'react';
-import { useSelector } from 'reduxStore/DappProviderContext';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { signedTransactionsSelector } from 'reduxStore/selectors';
 import { updateSignedTransactionStatus } from 'reduxStore/slices';
-import { store } from 'reduxStore/store';
 import { getTransactionsDetails } from 'services/transactions/getTransactionsDetails';
-import { TransactionServerStatusesEnum } from 'types';
+import {
+  ServerTransactionType,
+  SignedTransactionType,
+  TransactionServerStatusesEnum
+} from 'types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { useGetBatches } from '../useGetBatches';
 
 export function useUpdateBatch() {
+  const dispatch = useDispatch();
   const { batchTransactionsArray } = useGetBatches();
   const signedTransactions = useSelector(signedTransactionsSelector);
+
+  const handleBatchErrors = useCallback(
+    ({
+      sessionId,
+      batchTransactions
+    }: {
+      sessionId: string;
+      batchTransactions: SignedTransactionType[];
+    }) => {
+      for (const transaction of batchTransactions) {
+        if (!signedTransactions) {
+          continue;
+        }
+
+        const signedTransaction = signedTransactions[
+          sessionId
+        ]?.transactions?.find((tx) => tx.signature === transaction.signature);
+
+        if (!signedTransaction) {
+          continue;
+        }
+
+        dispatch(
+          updateSignedTransactionStatus({
+            sessionId,
+            status: TransactionServerStatusesEnum.notExecuted,
+            transactionHash: signedTransaction.hash
+          })
+        );
+      }
+    },
+    [dispatch, signedTransactions]
+  );
+
+  const handleBatchSuccess = useCallback(
+    ({
+      sessionId,
+      dropUnprocessedTransactions,
+      serverTransactions,
+      batchTransactions
+    }: {
+      sessionId: string;
+      dropUnprocessedTransactions?: boolean;
+      serverTransactions: ServerTransactionType[];
+      batchTransactions: SignedTransactionType[];
+    }) => {
+      for (const transaction of batchTransactions) {
+        const apiTx = serverTransactions.find(
+          (tx) => tx.txHash === transaction.hash
+        );
+
+        if (!apiTx) {
+          if (dropUnprocessedTransactions) {
+            dispatch(
+              updateSignedTransactionStatus({
+                sessionId,
+                status: TransactionServerStatusesEnum.fail,
+                transactionHash: transaction.hash
+              })
+            );
+          }
+          continue;
+        }
+
+        dispatch(
+          updateSignedTransactionStatus({
+            sessionId,
+            status: apiTx.status as TransactionServerStatusesEnum,
+            transactionHash: transaction.hash
+          })
+        );
+      }
+    },
+    [dispatch]
+  );
 
   return useCallback(
     async (props?: {
@@ -44,7 +123,7 @@ export function useUpdateBatch() {
 
       if (props.isBatchFailed) {
         for (const transaction of transactionsFlatArray) {
-          store.dispatch(
+          dispatch(
             updateSignedTransactionStatus({
               sessionId,
               status: TransactionServerStatusesEnum.fail,
@@ -62,58 +141,23 @@ export function useUpdateBatch() {
       );
 
       if (success && data) {
-        for (const transaction of transactionsFlatArray) {
-          const apiTx = data.find((tx) => tx.txHash === transaction.hash);
-
-          if (!apiTx) {
-            if (props.dropUnprocessedTransactions) {
-              store.dispatch(
-                updateSignedTransactionStatus({
-                  sessionId,
-                  status: TransactionServerStatusesEnum.fail,
-                  transactionHash: transaction.hash
-                })
-              );
-            }
-            continue;
-          }
-
-          store.dispatch(
-            updateSignedTransactionStatus({
-              sessionId,
-              status: apiTx.status as TransactionServerStatusesEnum,
-              transactionHash: transaction.hash
-            })
-          );
-        }
+        handleBatchSuccess({
+          sessionId,
+          dropUnprocessedTransactions: props.dropUnprocessedTransactions,
+          serverTransactions: data,
+          batchTransactions: transactionsFlatArray
+        });
       } else {
-        for (const transaction of transactionsFlatArray) {
-          if (!signedTransactions) {
-            continue;
-          }
-
-          const signedTransaction = signedTransactions[
-            sessionId
-          ]?.transactions?.find((tx) => tx.signature === transaction.signature);
-
-          if (!signedTransaction) {
-            continue;
-          }
-
-          store.dispatch(
-            updateSignedTransactionStatus({
-              sessionId,
-              status: TransactionServerStatusesEnum.notExecuted,
-              transactionHash: signedTransaction.hash
-            })
-          );
-        }
+        handleBatchErrors({
+          sessionId,
+          batchTransactions: transactionsFlatArray
+        });
       }
 
       if (props.shouldRefreshBalance) {
         await refreshAccount();
       }
     },
-    [batchTransactionsArray]
+    [dispatch, batchTransactionsArray]
   );
 }
