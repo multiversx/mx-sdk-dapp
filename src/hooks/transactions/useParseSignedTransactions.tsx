@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
+import { WALLET_PROVIDER_CALLBACK_PARAM } from '@multiversx/sdk-web-wallet-provider';
 import qs from 'qs';
 import {
   DAPP_INIT_ROUTE,
@@ -13,6 +14,8 @@ import {
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
+import { SignedMessageQueryParamsEnum } from 'types/signedMessage.types';
+import { removeSearchParamsFromUrl } from 'utils/removeSearchParamsFromUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 
@@ -42,6 +45,14 @@ export function useParseSignedTransactions(
             })
           );
           onAbort();
+          removeSearchParamsFromUrl({
+            removeParams: [
+              ...Object.keys(SignedMessageQueryParamsEnum),
+              WALLET_PROVIDER_CALLBACK_PARAM,
+              WALLET_SIGN_SESSION
+            ],
+            search
+          });
           dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));
           return;
         }
