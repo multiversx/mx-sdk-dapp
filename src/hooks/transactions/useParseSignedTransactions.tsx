@@ -49,7 +49,8 @@ export function useParseSignedTransactions(
             removeParams: [
               ...Object.keys(SignedMessageQueryParamsEnum),
               WALLET_PROVIDER_CALLBACK_PARAM,
-              WALLET_SIGN_SESSION
+              WALLET_SIGN_SESSION,
+              'address'
             ],
             search
           });
