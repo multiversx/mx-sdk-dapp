@@ -1,14 +1,17 @@
-import { refreshAccount } from 'utils/account/refreshAccount';
-import { useGetBatches } from '../useGetBatches';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
-import { store } from 'reduxStore/store';
-import { updateSignedTransactionStatus } from 'reduxStore/slices';
-import { TransactionServerStatusesEnum } from 'types';
-import { getTransactionsDetails } from 'services/transactions/getTransactionsDetails';
 import { useCallback } from 'react';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { signedTransactionsSelector } from 'reduxStore/selectors';
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
+import { getTransactionsDetails } from 'services/transactions/getTransactionsDetails';
+import { TransactionServerStatusesEnum } from 'types';
+import { refreshAccount } from 'utils/account/refreshAccount';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
+import { useGetBatches } from '../useGetBatches';
 
 export function useUpdateBatch() {
   const { batchTransactionsArray } = useGetBatches();
+  const signedTransactions = useSelector(signedTransactionsSelector);
 
   return useCallback(
     async (props?: {
@@ -17,7 +20,7 @@ export function useUpdateBatch() {
       dropUnprocessedTransactions?: boolean;
       shouldRefreshBalance?: boolean;
     }) => {
-      if(!props) {
+      if (!props) {
         return;
       }
 
@@ -53,7 +56,9 @@ export function useUpdateBatch() {
       }
 
       const { data, success } = await getTransactionsDetails(
-        transactionsFlatArray.map(({ hash }) => hash)
+        transactionsFlatArray
+          .map(({ hash }) => hash)
+          .filter((hash) => Boolean(hash))
       );
 
       if (success && data) {
@@ -78,6 +83,28 @@ export function useUpdateBatch() {
               sessionId,
               status: apiTx.status as TransactionServerStatusesEnum,
               transactionHash: transaction.hash
+            })
+          );
+        }
+      } else {
+        for (const transaction of transactionsFlatArray) {
+          if (!signedTransactions) {
+            continue;
+          }
+
+          const signedTransaction = signedTransactions[
+            sessionId
+          ]?.transactions?.find((tx) => tx.signature === transaction.signature);
+
+          if (!signedTransaction) {
+            continue;
+          }
+
+          store.dispatch(
+            updateSignedTransactionStatus({
+              sessionId,
+              status: TransactionServerStatusesEnum.notExecuted,
+              transactionHash: signedTransaction.hash
             })
           );
         }
