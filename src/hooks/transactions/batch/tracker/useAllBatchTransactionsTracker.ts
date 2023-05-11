@@ -1,10 +1,11 @@
 import { useCallback, useEffect } from 'react';
-import { BatchTransactionsWSResponseType } from 'types';
+import { useGetAccount } from 'hooks/account';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { useGetBatches } from '../useGetBatches';
-import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
-import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
+import { BatchTransactionsWSResponseType } from 'types';
 import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
+import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
+import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 export type BatchTransactionsTrackerProps = {
@@ -16,7 +17,9 @@ export const useAllBatchTransactionsTracker = ({
   onSuccess,
   onFail
 }: BatchTransactionsTrackerProps) => {
-  const { batchTransactionsArray } = useGetBatches();
+  const { signedTransactionsArray } = useGetSignedTransactions();
+  const { address } = useGetAccount();
+
   const { verifyBatchStatus } = useVerifyBatchStatus({
     onSuccess,
     onFail
@@ -35,10 +38,15 @@ export const useAllBatchTransactionsTracker = ({
   );
 
   const checkAllBatches = useCallback(async () => {
-    for (const { batchId } of batchTransactionsArray) {
+    for (const [sessionId, session] of signedTransactionsArray) {
+      if (session.status !== 'sent') {
+        continue;
+      }
+
+      const batchId = `${sessionId}-${address}`;
       await verifyBatchStatus({ batchId });
     }
-  }, [batchTransactionsArray, verifyBatchStatus]);
+  }, [signedTransactionsArray, verifyBatchStatus, address]);
 
   // register ws listener
   useRegisterWebsocketListener(onMessage, onBatchUpdate);

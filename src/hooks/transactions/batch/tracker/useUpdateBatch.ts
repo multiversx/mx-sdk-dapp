@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { signedTransactionsSelector } from 'reduxStore/selectors';
+import { useGetAccount } from 'hooks/account';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateSignedTransactionStatus } from 'reduxStore/slices';
 import { getTransactionsDetails } from 'services/transactions/getTransactionsDetails';
 import {
@@ -9,46 +10,45 @@ import {
   TransactionServerStatusesEnum
 } from 'types';
 import { refreshAccount } from 'utils/account/refreshAccount';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
-import { useGetBatches } from '../useGetBatches';
 
 export function useUpdateBatch() {
   const dispatch = useDispatch();
-  const { batchTransactionsArray } = useGetBatches();
-  const signedTransactions = useSelector(signedTransactionsSelector);
+  const { signedTransactions, signedTransactionsArray } =
+    useGetSignedTransactions();
+  const { address } = useGetAccount();
 
-  const handleBatchErrors = useCallback(
-    ({
-      sessionId,
-      batchTransactions
-    }: {
-      sessionId: string;
-      batchTransactions: SignedTransactionType[];
-    }) => {
-      for (const transaction of batchTransactions) {
-        if (!signedTransactions) {
-          continue;
-        }
-
-        const signedTransaction = signedTransactions[
-          sessionId
-        ]?.transactions?.find((tx) => tx.signature === transaction.signature);
-
-        if (!signedTransaction) {
-          continue;
-        }
-
-        dispatch(
-          updateSignedTransactionStatus({
-            sessionId,
-            status: TransactionServerStatusesEnum.notExecuted,
-            transactionHash: signedTransaction.hash
-          })
-        );
-      }
-    },
-    [dispatch, signedTransactions]
-  );
+  // const handleBatchErrors = useCallback(
+  //   ({
+  //     sessionId,
+  //     batchTransactions
+  //   }: {
+  //     sessionId: string;
+  //     batchTransactions: SignedTransactionType[];
+  //   }) => {
+  //     for (const transaction of batchTransactions) {
+  //       if (!signedTransactions) {
+  //         continue;
+  //       }
+  //
+  //       const signedTransaction = signedTransactions[
+  //         sessionId
+  //       ]?.transactions?.find((tx) => tx.hash === transaction.hash);
+  //
+  //       if (!signedTransaction) {
+  //         continue;
+  //       }
+  //
+  //       dispatch(
+  //         updateSignedTransactionStatus({
+  //           sessionId,
+  //           status: TransactionServerStatusesEnum.notExecuted,
+  //           transactionHash: signedTransaction.hash
+  //         })
+  //       );
+  //     }
+  //   },
+  //   [dispatch, signedTransactions]
+  // );
 
   const handleBatchSuccess = useCallback(
     ({
@@ -103,26 +103,21 @@ export function useUpdateBatch() {
         return;
       }
 
-      const batch = batchTransactionsArray.find(
-        (batch) => batch.batchId === props.batchId
-      );
-      if (!batch) {
+      const sessionId = props.batchId.split('-')[0];
+      const session = signedTransactions[sessionId];
+
+      if (!session) {
         return;
       }
 
-      const { batchId, transactions } = batch;
-      const sessionId = batchId.split('-')[0];
-      if (!sessionId) {
-        return;
-      }
+      const { transactions } = session;
 
-      const transactionsFlatArray = sequentialToFlatArray({ transactions });
-      if (transactionsFlatArray.length === 0) {
+      if (!transactions || transactions.length === 0) {
         return;
       }
 
       if (props.isBatchFailed) {
-        for (const transaction of transactionsFlatArray) {
+        for (const transaction of transactions) {
           dispatch(
             updateSignedTransactionStatus({
               sessionId,
@@ -135,9 +130,7 @@ export function useUpdateBatch() {
       }
 
       const { data, success } = await getTransactionsDetails(
-        transactionsFlatArray
-          .map(({ hash }) => hash)
-          .filter((hash) => Boolean(hash))
+        transactions.map(({ hash }) => hash).filter((hash) => Boolean(hash))
       );
 
       if (success && data) {
@@ -145,19 +138,26 @@ export function useUpdateBatch() {
           sessionId,
           dropUnprocessedTransactions: props.dropUnprocessedTransactions,
           serverTransactions: data,
-          batchTransactions: transactionsFlatArray
-        });
-      } else {
-        handleBatchErrors({
-          sessionId,
-          batchTransactions: transactionsFlatArray
+          batchTransactions: transactions
         });
       }
+      // else {
+      //   handleBatchErrors({
+      //     sessionId,
+      //     batchTransactions: transactions
+      //   });
+      // }
 
       if (props.shouldRefreshBalance) {
         await refreshAccount();
       }
     },
-    [dispatch, batchTransactionsArray]
+    [
+      dispatch,
+      signedTransactionsArray,
+      address,
+      // handleBatchErrors,
+      handleBatchSuccess
+    ]
   );
 }

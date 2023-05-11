@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
-import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
-import { removeBatchTransactions } from 'services/transactions';
-import { useDispatch } from 'reduxStore/DappProviderContext';
-import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
-import { useUpdateBatch } from './useUpdateBatch';
 import { useResolveBatchStatusResponse } from 'hooks/transactions/batch/useResolveBatchStatusResponse';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
+import { useDispatch } from 'reduxStore/DappProviderContext';
+import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { useCheckBatch } from './useCheckBatch';
+import { useUpdateBatch } from './useUpdateBatch';
 
 export const useVerifyBatchStatus = (props?: {
   onSuccess?: (batchId: string | null) => void;
@@ -40,8 +39,6 @@ export const useVerifyBatchStatus = (props?: {
       });
 
       if (!isPending) {
-        removeBatchTransactions(batchId);
-
         if (isSuccessful) {
           onSuccess?.(batchId);
         }

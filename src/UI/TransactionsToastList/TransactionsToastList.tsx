@@ -71,7 +71,8 @@ export const TransactionsToastList = ({
     for (const sessionId in signedTransactionsToRender) {
       const session = signedTransactionsToRender[sessionId];
       const skipSending =
-        session?.customTransactionInformation?.signWithoutSending;
+        session?.customTransactionInformation?.signWithoutSending &&
+        !session?.customTransactionInformation?.forceBatchTracking;
 
       if (skipSending) {
         continue;

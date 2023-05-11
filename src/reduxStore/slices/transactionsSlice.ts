@@ -28,6 +28,7 @@ export interface UpdateSignedTransactionsPayloadType {
 export interface MoveTransactionsToSignedStatePayloadType
   extends SignedTransactionsBodyType {
   sessionId: string;
+  customTransactionInformation?: CustomTransactionInformation;
 }
 
 export interface UpdateSignedTransactionStatusPayloadType {
@@ -46,6 +47,11 @@ export interface TransactionsSliceStateType {
   customTransactionInformationForSessionId: {
     [sessionId: string]: CustomTransactionInformation;
   };
+}
+
+export interface SetCustomTransactionInformationPayloadType {
+  sessionId: string;
+  customTransactionInformation: CustomTransactionInformation;
 }
 
 const initialState: TransactionsSliceStateType = {
@@ -70,18 +76,30 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<MoveTransactionsToSignedStatePayloadType>
     ) => {
-      const { sessionId, transactions, errorMessage, status, redirectRoute } =
-        action.payload;
+      const {
+        sessionId,
+        transactions,
+        errorMessage,
+        status,
+        redirectRoute,
+        customTransactionInformation: overrideCustomTransactionInformation = {}
+      } = action.payload;
+
       const customTransactionInformation =
         state.customTransactionInformationForSessionId?.[sessionId] ||
         defaultCustomInformation;
+
       state.signedTransactions[sessionId] = {
         transactions,
         status,
         errorMessage,
         redirectRoute,
-        customTransactionInformation
+        customTransactionInformation: {
+          ...customTransactionInformation,
+          ...overrideCustomTransactionInformation
+        }
       };
+
       if (state?.transactionsToSign?.sessionId === sessionId) {
         state.transactionsToSign = initialState.transactionsToSign;
       }
@@ -190,6 +208,14 @@ export const transactionsSlice = createSlice({
 
       state.signTransactionsError = null;
     },
+    setCustomTransactionInformation: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<SetCustomTransactionInformationPayloadType>
+    ) => {
+      const { sessionId, customTransactionInformation } = action.payload;
+      state.customTransactionInformationForSessionId[sessionId] =
+        customTransactionInformation;
+    },
     clearAllTransactionsToSign: (state: TransactionsSliceStateType) => {
       state.transactionsToSign = initialState.transactionsToSign;
       state.signTransactionsError = null;
@@ -257,7 +283,8 @@ export const {
   clearTransactionToSign,
   setSignTransactionsError,
   setSignTransactionsCancelMessage,
-  moveTransactionsToSignedState
+  moveTransactionsToSignedState,
+  setCustomTransactionInformation
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
