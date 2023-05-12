@@ -9,7 +9,6 @@ import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   WalletConnectV2Provider,
-  WalletConnectProvider,
   EngineTypes
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
@@ -21,8 +20,6 @@ export const getProviderType = <TProvider extends object>(
   switch (provider?.constructor) {
     case WalletProvider:
       return LoginMethodsEnum.wallet;
-    case WalletConnectProvider:
-      return LoginMethodsEnum.walletconnect;
     case WalletConnectV2Provider:
       return LoginMethodsEnum.walletconnectv2;
     case HWProvider:

@@ -5,8 +5,7 @@ type PairingTypes = any;
 type EngineTypes = any;
 const WalletConnectMethodsEnum = {};
 const WalletConnectOptionalMethodsEnum = {};
-const WalletConnectProvider = EmptyProvider;
-const WalletConnectV2Provider = WalletConnectProvider;
+const WalletConnectV2Provider = EmptyProvider;
 
 export {
   EngineTypes,
@@ -14,6 +13,5 @@ export {
   SessionEventTypes,
   WalletConnectMethodsEnum,
   WalletConnectOptionalMethodsEnum,
-  WalletConnectProvider,
   WalletConnectV2Provider
 };

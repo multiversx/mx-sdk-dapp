@@ -7,7 +7,6 @@ import {
   Operation as WalletConnectMethodsEnum,
   OptionalOperation as WalletConnectOptionalMethodsEnum
 } from '@multiversx/sdk-wallet-connect-provider/out/operation';
-import { WalletConnectProvider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectProvider';
 import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 /**
@@ -19,6 +18,5 @@ export {
   SessionEventTypes,
   WalletConnectMethodsEnum,
   WalletConnectOptionalMethodsEnum,
-  WalletConnectProvider,
   WalletConnectV2Provider
 };

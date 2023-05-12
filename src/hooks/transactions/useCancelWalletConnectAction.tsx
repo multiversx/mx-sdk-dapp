@@ -11,37 +11,11 @@ export function useCancelWalletConnectAction(action?: string) {
       return;
     }
 
-    if (getIsProviderEqualTo(LoginMethodsEnum.walletconnect)) {
-      await cancelAction();
-    }
-
     if (getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)) {
       await cancelActionV2();
     }
 
     return;
-  }
-
-  async function cancelAction() {
-    try {
-      if (!provider || !getIsProviderEqualTo(LoginMethodsEnum.walletconnect)) {
-        return;
-      }
-
-      const isProviderConnected = await provider.isConnected();
-      if (!isProviderConnected) {
-        return;
-      }
-
-      const customMessage = {
-        method: 'erd_cancelAction',
-        params: { action }
-      };
-
-      await provider?.sendCustomMessage?.(customMessage);
-    } catch (error) {
-      console.warn('WalletConnect: Unable to send cancelAction event', error);
-    }
   }
 
   async function cancelActionV2() {
@@ -64,5 +38,5 @@ export function useCancelWalletConnectAction(action?: string) {
     }
   }
 
-  return { cancelAction, cancelActionV2, cancelWalletConnectAction };
+  return { cancelActionV2, cancelWalletConnectAction };
 }

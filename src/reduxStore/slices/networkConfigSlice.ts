@@ -44,21 +44,16 @@ export const networkConfigSlice = createSlice({
       state: NetworkConfigStateType,
       action: PayloadAction<NetworkType>
     ) => {
-      const walletConnectBridgeAddress = getRandomAddressFromNetwork(
-        action.payload.walletConnectBridgeAddresses
-      );
       const walletConnectV2RelayAddress = getRandomAddressFromNetwork(
         action.payload.walletConnectV2RelayAddresses
       );
       const network: BaseNetworkType = omit(
         action.payload,
-        'walletConnectBridgeAddresses',
         'walletConnectV2RelayAddresses'
       );
       state.network = {
         ...state.network,
         ...network,
-        walletConnectBridgeAddress,
         walletConnectV2RelayAddress
       };
     },

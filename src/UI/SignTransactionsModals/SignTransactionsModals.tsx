@@ -64,7 +64,6 @@ export const SignTransactionsModals = ({
   switch (loginMethod) {
     case LoginMethodsEnum.ledger:
       return renderScreen({ Screen: ConfirmScreens.Ledger, isDevice: true });
-    case LoginMethodsEnum.walletconnect:
     case LoginMethodsEnum.walletconnectv2:
       return renderScreen({ Screen: ConfirmScreens.WalletConnect });
     case LoginMethodsEnum.extension:

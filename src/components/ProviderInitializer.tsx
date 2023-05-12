@@ -4,7 +4,6 @@ import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
-import { useWalletConnectLogin } from 'hooks/login/useWalletConnectLogin';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
   setAccountProvider,
@@ -76,11 +75,6 @@ export function ProviderInitializer() {
   const { callbackRoute, logoutRoute: wcLogoutRoute } = walletConnectLogin
     ? walletConnectLogin
     : { callbackRoute: '', logoutRoute: '' };
-
-  const [initWalletLoginProvider] = useWalletConnectLogin({
-    callbackRoute,
-    logoutRoute: wcLogoutRoute
-  });
 
   const [initWalletConnectV2LoginProvider] = useWalletConnectV2Login({
     callbackRoute,
@@ -287,11 +281,6 @@ export function ProviderInitializer() {
     switch (loginMethod) {
       case LoginMethodsEnum.ledger: {
         setLedgerProvider();
-        break;
-      }
-
-      case LoginMethodsEnum.walletconnect: {
-        initWalletLoginProvider(false);
         break;
       }
 
