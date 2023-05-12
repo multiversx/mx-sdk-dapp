@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { apiAddressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
 } from 'types/transactions.types';
-import { ServerTransactionType } from 'types/serverTransactions.types';
 
 export async function getTransactionsByHashes(
   pendingTransactions: PendingTransactionsType

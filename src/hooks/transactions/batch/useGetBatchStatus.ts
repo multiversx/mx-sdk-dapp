@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
-import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
 import { useGetAccount } from 'hooks/account';
+import { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';
 
 export const useGetBatchStatus = () => {
   const { address } = useGetAccount();

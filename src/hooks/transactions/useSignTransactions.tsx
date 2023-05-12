@@ -68,6 +68,7 @@ export const useSignTransactions = () => {
     error,
     setError,
     hasTransactions,
+    preventNonceUpdate,
     onAbort,
     clearTransactionStatusMessage
   } = useSignTransactionsCommonData();
@@ -267,9 +268,9 @@ export const useSignTransactions = () => {
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const transactionsWithIncrementalNonces = await setTransactionNonces(
-        transactions
-      );
+      const transactionsWithIncrementalNonces = preventNonceUpdate
+        ? transactions
+        : await setTransactionNonces(transactions);
 
       if (isSigningWithWebWallet) {
         return signWithWallet(
