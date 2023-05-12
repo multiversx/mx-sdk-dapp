@@ -1,12 +1,12 @@
 import { useCallback, useEffect } from 'react';
-import { useGetBatches } from '../useGetBatches';
 import {
   AVERAGE_TX_DURATION_MS,
   TRANSACTIONS_STATUS_DROP_INTERVAL_MS
 } from 'constants/transactionStatus';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
-import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { removeBatchTransactions } from 'services/transactions';
+import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
+import { useGetBatches } from '../useGetBatches';
 import { useUpdateBatch } from './useUpdateBatch';
 
 /**
@@ -63,7 +63,7 @@ export const useCheckHangingBatchesFallback = (props?: {
         if (isFailed) {
           onFail?.(
             batchId,
-            `Error processing batch transactions. Status: failed`
+            'Error processing batch transactions. Status: failed'
           );
         }
       }

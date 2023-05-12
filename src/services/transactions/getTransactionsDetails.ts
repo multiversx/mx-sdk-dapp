@@ -1,7 +1,7 @@
-import { ServerTransactionType } from 'types';
-import { getTransactionByHashPromise } from 'apiCalls';
-import { delayWithPromise } from 'utils/delayWithPromise';
 import { TransactionStatus } from '@multiversx/sdk-network-providers';
+import { getTransactionByHashPromise } from 'apiCalls';
+import { ServerTransactionType } from 'types';
+import { delayWithPromise } from 'utils/delayWithPromise';
 
 export const getTransactionsDetails = async (txHashes: string[]) => {
   const delayMs = 3000;

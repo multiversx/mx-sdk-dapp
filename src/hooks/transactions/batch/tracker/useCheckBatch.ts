@@ -1,7 +1,7 @@
-import { updateBatchTransactions } from 'reduxStore/slices';
 import { useCallback } from 'react';
-import { useResolveBatchStatusResponse } from '../useResolveBatchStatusResponse';
 import { useDispatch } from 'reduxStore/DappProviderContext';
+import { updateBatchTransactions } from 'reduxStore/slices';
+import { useResolveBatchStatusResponse } from '../useResolveBatchStatusResponse';
 
 export function useCheckBatch() {
   const dispatch = useDispatch();
