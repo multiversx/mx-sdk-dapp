@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from 'react';
-import { BatchTransactionsWSResponseType } from 'types';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
+import { BatchTransactionsWSResponseType } from 'types';
 import { useGetBatches } from '../useGetBatches';
-import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
-import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
 import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
+import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
+import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 export type BatchTransactionsTrackerProps = {

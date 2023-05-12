@@ -1,7 +1,7 @@
 import { useCallback, useEffect } from 'react';
-import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
-import { useCheckTransactionStatus } from 'hooks/transactions/useCheckTransactionStatus';
 import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
+import { useCheckTransactionStatus } from 'hooks/transactions/useCheckTransactionStatus';
+import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 
 /**
@@ -41,7 +41,7 @@ export const useCheckPendingTransactionsFallback = (props?: {
           if (isFailed) {
             onFail?.(
               null,
-              `Error processing batch transactions. Status: failed`
+              'Error processing batch transactions. Status: failed'
             );
           }
         }

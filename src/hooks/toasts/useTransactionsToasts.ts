@@ -1,11 +1,11 @@
+import { useMemo } from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   transactionsInfoSelectors,
   transactionToastsSelector
 } from 'reduxStore/selectors';
-import { useMemo } from 'react';
-import { useGetSignedTransactions } from '../transactions';
 import { TransactionBatchStatusesEnum } from 'types';
+import { useGetSignedTransactions } from '../transactions';
 
 export const useTransactionsToasts = () => {
   const transactionsToasts = useSelector(transactionToastsSelector);

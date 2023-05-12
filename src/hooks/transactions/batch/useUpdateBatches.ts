@@ -1,7 +1,7 @@
+import { useCallback } from 'react';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { updateBatchTransactionsStatuses } from 'utils/transactions/batch/updateBatchTransactionsStatuses';
 import { useGetBatches } from './useGetBatches';
-import { useCallback } from 'react';
 
 export function useUpdateBatches() {
   const { batches, batchTransactionsArray } = useGetBatches();
