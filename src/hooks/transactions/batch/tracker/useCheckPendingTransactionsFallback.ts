@@ -1,10 +1,9 @@
 import { useCallback, useEffect } from 'react';
-import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
 import { useCheckTransactionStatus } from 'hooks/transactions/useCheckTransactionStatus';
 import { checkBatch } from 'hooks/transactions/useCheckTransactionStatus/checkBatch';
-import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
+import { useGetSignedTransactions } from '../../useGetSignedTransactions';
 
 /**
  * Fallback mechanism to check pending transactions in case of no batch transactions found
@@ -14,53 +13,42 @@ export const useCheckPendingTransactionsFallback = (props?: {
   onSuccess?: (batchId: string | null) => void;
   onFail?: (batchId: string | null, errorMessage?: string) => void;
 }) => {
-  const { pendingTransactionsArray } = useGetPendingTransactions();
+  const { signedTransactionsArray } = useGetSignedTransactions();
   const checkTransactionsStatuses = useCheckTransactionStatus();
-  const { batchTransactionsArray } = useGetBatches();
 
   const onSuccess = props?.onSuccess;
   const onFail = props?.onFail;
 
   const checkTransactions = useCallback(async () => {
-    if (
-      pendingTransactionsArray.length > 0 &&
-      batchTransactionsArray.length === 0
-    ) {
-      for (const [sessionId, transactionBatch] of pendingTransactionsArray) {
+    for (const [sessionId, session] of signedTransactionsArray) {
+      const { isPending, isSuccessful, isFailed } = getTransactionsStatus({
+        transactions: session.transactions ?? []
+      });
+      const completed = !isPending;
+
+      if (completed) {
+        if (isSuccessful) {
+          onSuccess?.(null);
+        }
+
+        if (isFailed) {
+          onFail?.(null, 'Error processing batch transactions. Status: failed');
+        }
+      } else {
         await checkBatch({
           sessionId,
-          transactionBatch
+          transactionBatch: session
         });
-
-        const { isPending, isSuccessful, isFailed } = getTransactionsStatus({
-          transactions: transactionBatch.transactions ?? []
-        });
-
-        if (!isPending) {
-          if (isSuccessful) {
-            onSuccess?.(null);
-          }
-
-          if (isFailed) {
-            onFail?.(
-              null,
-              'Error processing batch transactions. Status: failed'
-            );
-          }
-        }
       }
-
-      await refreshAccount();
     }
-  }, [
-    pendingTransactionsArray,
-    batchTransactionsArray,
-    checkTransactionsStatuses,
-    onSuccess,
-    onFail
-  ]);
+
+    await refreshAccount();
+  }, [signedTransactionsArray, checkTransactionsStatuses, onSuccess, onFail]);
 
   useEffect(() => {
+    console.log({
+      signedTransactionsArray
+    });
     checkTransactions();
-  }, [checkTransactions, pendingTransactionsArray, batchTransactionsArray]);
+  }, [signedTransactionsArray, checkTransactions]);
 };

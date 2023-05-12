@@ -1,6 +1,5 @@
 import { useCallback } from 'react';
 import { useGetAccount } from 'hooks/account';
-import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { updateSignedTransactionStatus } from 'reduxStore/slices';
 import { getTransactionsDetails } from 'services/transactions/getTransactionsDetails';
@@ -13,8 +12,6 @@ import { refreshAccount } from 'utils/account/refreshAccount';
 
 export function useUpdateBatch() {
   const dispatch = useDispatch();
-  const { signedTransactions, signedTransactionsArray } =
-    useGetSignedTransactions();
   const { address } = useGetAccount();
 
   // const handleBatchErrors = useCallback(
@@ -94,35 +91,23 @@ export function useUpdateBatch() {
 
   return useCallback(
     async (props?: {
-      batchId: string;
+      sessionId: string;
       isBatchFailed?: boolean;
       dropUnprocessedTransactions?: boolean;
       shouldRefreshBalance?: boolean;
+      transactions?: SignedTransactionType[];
     }) => {
       if (!props) {
         return;
       }
 
-      const sessionId = props.batchId.split('-')[0];
-      const session = signedTransactions[sessionId];
-
-      console.log({
-        props,
-        sessionId,
-        session
-      });
-
-      if (!session) {
-        return;
-      }
-
-      const { transactions } = session;
+      const { transactions, isBatchFailed, sessionId } = props;
 
       if (!transactions || transactions.length === 0) {
         return;
       }
 
-      if (props.isBatchFailed) {
+      if (isBatchFailed) {
         for (const transaction of transactions) {
           dispatch(
             updateSignedTransactionStatus({
@@ -160,7 +145,6 @@ export function useUpdateBatch() {
     },
     [
       dispatch,
-      signedTransactionsArray,
       address,
       // handleBatchErrors,
       handleBatchSuccess

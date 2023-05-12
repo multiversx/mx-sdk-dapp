@@ -29,8 +29,11 @@ export const useVerifyBatchStatus = (props?: {
         return;
       }
 
+      const sessionTransactions =
+        signedTransactions[sessionId]?.transactions ?? [];
+
       const { isSuccessful, isFailed, isPending } = getTransactionsStatus({
-        transactions: signedTransactions[sessionId]?.transactions ?? []
+        transactions: sessionTransactions
       });
       const completed = !isPending;
 
@@ -45,9 +48,10 @@ export const useVerifyBatchStatus = (props?: {
       } else {
         const data = await checkBatch({ batchId });
         await updateBatch({
-          batchId,
+          sessionId,
           isBatchFailed: data?.isBatchFailed,
-          shouldRefreshBalance: true
+          shouldRefreshBalance: true,
+          transactions: sessionTransactions
         });
       }
     },
