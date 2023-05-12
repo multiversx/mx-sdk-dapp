@@ -139,7 +139,6 @@ export interface SendTransactionsPropsType {
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
   sessionInformation?: any;
-  preventNonceUpdate?: boolean;
 }
 
 export interface SignTransactionsPropsType {
@@ -211,13 +210,6 @@ export interface CustomTransactionInformation {
    * If true, the change guardian action will not trigger transaction version update
    */
   skipGuardian?: boolean;
-  /**
-   * If true, the nonce will not be updated before signing
-   * because the nonce is already set in the transaction
-   * It is usually true when signing multiple transactions from web wallet sign hook
-   * and all transactions have their nonce specified
-   */
-  preventNonceUpdate?: boolean;
 }
 
 export interface SendTransactionReturnType {

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { Transaction } from '@multiversx/sdk-core/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
@@ -27,12 +27,24 @@ export const useSignTransactionsCommonData = () => {
   const [error, setError] = useState<string | null>(null);
   const [hasTransactions, setHasTransactions] = useState<boolean>();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [preventNonceUpdate, setPreventNonceUpdate] = useState<boolean>(false);
-
   const setTransactionNonces = useSetTransactionNonces();
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
+  );
+
+  /**
+   * If true, the nonce will not be updated before signing
+   * because the nonce is already set in the transaction
+   * It is usually true when signing multiple transactions from web wallet sign hook
+   * and all transactions have their nonce specified
+   */
+  const preventNonceUpdate = useMemo(
+    () =>
+      transactionsToSign?.transactions?.every(
+        (tx) => tx.getNonce().valueOf() != null
+      ),
+    [transactionsToSign]
   );
 
   const updateTransactionNonces = async () => {
@@ -40,8 +52,7 @@ export const useSignTransactionsCommonData = () => {
     const transactionsWithFixedNonce = transactionsToSign?.transactions ?? [];
 
     if (hasTransactionsToSign) {
-      if (transactionsToSign?.customTransactionInformation.preventNonceUpdate) {
-        setPreventNonceUpdate(true);
+      if (preventNonceUpdate) {
         setHasTransactions(hasTransactionsToSign);
         setTransactions(transactionsWithFixedNonce);
 

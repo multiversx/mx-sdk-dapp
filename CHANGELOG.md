@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.13.4]](https://github.com/multiversx/mx-sdk-dapp/pull/781)] - 2023-05-12
-- [Added flag to prevent updating nonce when signing transactions](https://github.com/multiversx/mx-sdk-dapp/pull/780)
+## [[v2.13.4]](https://github.com/multiversx/mx-sdk-dapp/pull/782)] - 2023-05-12
+- [Improve transaction nonce update management](https://github.com/multiversx/mx-sdk-dapp/pull/781)
+- [Prevent updating transaction nonce during signing if nonce is present](https://github.com/multiversx/mx-sdk-dapp/pull/780)
 
 ## [[v2.13.3]](https://github.com/multiversx/mx-sdk-dapp/pull/773)] - 2023-05-10
 - [Stop ledger double signing before leaving sign screen to 2FA hook](https://github.com/multiversx/mx-sdk-dapp/pull/777)
