@@ -35,7 +35,7 @@ export const useCheckHangingBatchesFallback = (props?: {
       }
 
       await updateBatch({
-        batchId,
+        sessionId,
         shouldRefreshBalance: true,
         dropUnprocessedTransactions: true
       });

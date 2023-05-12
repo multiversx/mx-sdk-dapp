@@ -16,7 +16,7 @@ export type BatchTransactionsTrackerProps = {
   onFail?: (batchId: string | null, errorMessage?: string) => void;
 };
 
-export const useAllBatchTransactionsTracker = ({
+export const useBatchTransactionsTracker = ({
   onSuccess,
   onFail
 }: BatchTransactionsTrackerProps) => {
