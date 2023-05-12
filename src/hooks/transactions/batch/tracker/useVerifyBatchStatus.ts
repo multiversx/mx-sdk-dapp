@@ -22,33 +22,33 @@ export const useVerifyBatchStatus = (props?: {
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
-      const data = await checkBatch({ batchId });
-      await updateBatch({
-        batchId,
-        isBatchFailed: data?.isBatchFailed,
-        shouldRefreshBalance: true
-      });
-
       const sessionId = batchId.split('-')[0];
-      if (!sessionId) {
+      const session = signedTransactions[sessionId];
+
+      if (!session) {
         return;
       }
 
       const { isSuccessful, isFailed, isPending } = getTransactionsStatus({
         transactions: signedTransactions[sessionId]?.transactions ?? []
       });
+      const completed = !isPending;
 
-      if (!isPending) {
+      if (completed) {
         if (isSuccessful) {
           onSuccess?.(batchId);
         }
 
         if (isFailed) {
-          onFail?.(
-            batchId,
-            `Error processing batch transactions. Status: ${data?.statusResponse?.status}`
-          );
+          onFail?.(batchId, 'Error processing batch transactions.');
         }
+      } else {
+        const data = await checkBatch({ batchId });
+        await updateBatch({
+          batchId,
+          isBatchFailed: data?.isBatchFailed,
+          shouldRefreshBalance: true
+        });
       }
     },
     [

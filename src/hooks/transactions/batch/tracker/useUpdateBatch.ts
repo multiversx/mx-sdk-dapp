@@ -106,6 +106,12 @@ export function useUpdateBatch() {
       const sessionId = props.batchId.split('-')[0];
       const session = signedTransactions[sessionId];
 
+      console.log({
+        props,
+        sessionId,
+        session
+      });
+
       if (!session) {
         return;
       }

@@ -2,7 +2,8 @@ import {
   clearSignedTransaction,
   clearAllTransactionsToSign,
   clearAllSignedTransactions,
-  clearBatchTransactions
+  clearBatchTransactions,
+  removeTransactionToast
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 
@@ -11,6 +12,11 @@ export function removeTransactionsToSign(sessionId: string) {
 }
 export function removeSignedTransaction(sessionId: string) {
   store.dispatch(clearSignedTransaction(sessionId));
+}
+
+export function deleteTransactionToast(sessionId: string) {
+  store.dispatch(removeTransactionToast(sessionId));
+  removeSignedTransaction(sessionId);
 }
 
 export function removeAllSignedTransactions() {
