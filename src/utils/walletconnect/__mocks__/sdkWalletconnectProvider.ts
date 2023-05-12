@@ -3,13 +3,17 @@ import { EmptyProvider } from 'providers';
 type SessionEventTypes = any;
 type PairingTypes = any;
 type EngineTypes = any;
+const WalletConnectMethodsEnum = {};
+const WalletConnectOptionalMethodsEnum = {};
 const WalletConnectProvider = EmptyProvider;
 const WalletConnectV2Provider = WalletConnectProvider;
 
 export {
-  SessionEventTypes,
-  PairingTypes,
-  WalletConnectV2Provider,
   EngineTypes,
-  WalletConnectProvider
+  PairingTypes,
+  SessionEventTypes,
+  WalletConnectMethodsEnum,
+  WalletConnectOptionalMethodsEnum,
+  WalletConnectProvider,
+  WalletConnectV2Provider
 };

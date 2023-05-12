@@ -15,15 +15,13 @@ import {
   walletConnectV2OptionsSelector
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
-import {
-  LoginMethodsEnum,
-  DappCoreWCV2CustomMethodsEnum
-} from 'types/enums.types';
+import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import {
+  WalletConnectOptionalMethodsEnum,
   WalletConnectV2Provider,
   SessionEventTypes,
   PairingTypes
@@ -94,7 +92,10 @@ export const useWalletConnectV2Login = ({
   const isInitialisingRef = useRef<boolean>(false);
 
   const dappMethods: string[] = [
-    DappCoreWCV2CustomMethodsEnum.mvx_cancelAction
+    WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
+    ...(hasNativeAuth
+      ? [WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN]
+      : [])
   ];
 
   const uriDeepLink = !isLoading
@@ -303,6 +304,7 @@ export const useWalletConnectV2Login = ({
       }
 
       setWcUri(uri);
+      console.log('WalletConnect uri: ', uri);
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();

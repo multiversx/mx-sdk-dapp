@@ -1,7 +1,7 @@
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { LoginMethodsEnum } from 'types';
-import { DappCoreWCV2CustomMethodsEnum } from 'types/enums.types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { WalletConnectOptionalMethodsEnum } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
 export function useCancelWalletConnectAction(action?: string) {
   const { provider } = useGetAccountProvider();
@@ -55,7 +55,7 @@ export function useCancelWalletConnectAction(action?: string) {
 
       await provider?.sendCustomRequest?.({
         request: {
-          method: DappCoreWCV2CustomMethodsEnum.mvx_cancelAction,
+          method: WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
           params: { action }
         }
       });
