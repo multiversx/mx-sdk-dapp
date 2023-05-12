@@ -27,6 +27,7 @@ export const useSignTransactionsCommonData = () => {
   const [error, setError] = useState<string | null>(null);
   const [hasTransactions, setHasTransactions] = useState<boolean>();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [preventNonceUpdate, setPreventNonceUpdate] = useState<boolean>(false);
 
   const setTransactionNonces = useSetTransactionNonces();
   const transactionsToSign = useSelector(transactionsToSignSelector);
@@ -39,9 +40,18 @@ export const useSignTransactionsCommonData = () => {
     const transactionsWithFixedNonce = transactionsToSign?.transactions ?? [];
 
     if (hasTransactionsToSign) {
+      if (transactionsToSign?.customTransactionInformation.preventNonceUpdate) {
+        setPreventNonceUpdate(true);
+        setHasTransactions(hasTransactionsToSign);
+        setTransactions(transactionsWithFixedNonce);
+
+        return;
+      }
+
       const transactionsWithIncrementalNonces = await setTransactionNonces(
         transactionsWithFixedNonce
       );
+
       setTransactions(transactionsWithIncrementalNonces);
     }
 
@@ -86,6 +96,7 @@ export const useSignTransactionsCommonData = () => {
     onAbort,
     setError,
     hasTransactions,
+    preventNonceUpdate,
     transactionsToSign: transactionsToSign
       ? {
           ...transactionsToSign,
