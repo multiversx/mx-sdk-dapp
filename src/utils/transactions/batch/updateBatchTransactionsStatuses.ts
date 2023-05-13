@@ -1,8 +1,8 @@
+import { updateSignedTransactionStatus } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
+import { removeBatchTransactions } from 'services/transactions';
 import { SignedTransactionType, TransactionServerStatusesEnum } from 'types';
 import { sequentialToFlatArray } from './sequentialToFlatArray';
-import { store } from 'reduxStore/store';
-import { updateSignedTransactionStatus } from 'reduxStore/slices';
-import { removeBatchTransactions } from 'services/transactions';
 
 export function updateBatchTransactionsStatuses({
   batchId,

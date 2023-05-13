@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
 import {
   AVERAGE_TX_DURATION_MS,
   TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
 } from 'constants/transactionStatus';
+import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 /**

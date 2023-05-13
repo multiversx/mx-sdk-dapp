@@ -1,4 +1,6 @@
 import React from 'react';
+import { BatchTransactionsSender } from 'components/BatchTransactionsSender';
+import { BatchTransactionsTracker } from 'components/BatchTransactionsTracker/BatchTransactionsTracker';
 import { LogoutListener } from 'components/LogoutListener';
 import {
   TransactionSender,
@@ -8,9 +10,7 @@ import {
   TransactionsTracker,
   TransactionsTrackerType
 } from 'components/TransactionsTracker';
-import { BatchTransactionsTracker } from 'components/BatchTransactionsTracker/BatchTransactionsTracker';
 import { BatchTransactionsTrackerProps } from 'hooks/transactions/batch/tracker/useAllBatchTransactionsTracker';
-import { BatchTransactionsSender } from 'components/BatchTransactionsSender';
 
 export interface CustomComponentsType {
   transactionSender?: {
