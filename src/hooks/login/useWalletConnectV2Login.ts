@@ -153,13 +153,13 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
-      const address = await provider.getAddress();
+      const address = await providerRef.current?.getAddress();
       if (!address) {
         console.warn('Login cancelled.');
         return;
       }
 
-      const signature = await provider.getSignature();
+      const signature = await providerRef.current?.getSignature();
       const loginActionData = {
         address: address,
         loginMethod: LoginMethodsEnum.walletconnectv2
@@ -199,27 +199,37 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
-    const providerHandlers = {
-      onClientLogin: handleOnLogin,
-      onClientLogout: handleOnLogout,
-      onClientEvent: handleOnEvent
-    };
-
     isInitialisingRef.current = true;
-    const newProvider = new WalletConnectV2Provider(
-      providerHandlers,
-      chainId,
-      walletConnectV2RelayAddress,
-      walletConnectV2ProjectId,
-      walletConnectV2Options
-    );
 
-    await newProvider.init();
+    if (providerRef.current?.walletConnector) {
+      providerRef.current.init();
+      setAccountProvider(providerRef.current);
+    } else {
+      const providerHandlers = {
+        onClientLogin: handleOnLogin,
+        onClientLogout: handleOnLogout,
+        onClientEvent: handleOnEvent
+      };
+
+      const newProvider = new WalletConnectV2Provider(
+        providerHandlers,
+        chainId,
+        walletConnectV2RelayAddress,
+        walletConnectV2ProjectId,
+        walletConnectV2Options
+      );
+
+      await newProvider.init();
+      setAccountProvider(newProvider);
+      if (loginProvider) {
+        setWcPairings(newProvider.pairings);
+      }
+      providerRef.current = newProvider;
+    }
+
     isInitialisingRef.current = false;
     canLoginRef.current = true;
-    setAccountProvider(newProvider);
-    setWcPairings(newProvider.pairings);
-    providerRef.current = newProvider;
+
     if (loginProvider) {
       generateWcUri();
     }
