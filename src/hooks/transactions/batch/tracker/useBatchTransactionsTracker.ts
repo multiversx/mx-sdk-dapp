@@ -8,7 +8,6 @@ import {
 } from 'types';
 import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
 import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
-// import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 export type BatchTransactionsTrackerProps = {
@@ -38,10 +37,6 @@ export const useBatchTransactionsTracker = ({
   };
 
   const checkAllBatches = async () => {
-    console.log({
-      signedTransactionsArray
-    });
-
     for (const [sessionId, session] of signedTransactionsArray) {
       if (
         session.status !== TransactionBatchStatusesEnum.sent &&
@@ -66,10 +61,6 @@ export const useBatchTransactionsTracker = ({
     onSuccess,
     onFail
   });
-  // useCheckPendingTransactionsFallback({
-  //   onSuccess,
-  //   onFail
-  // });
 
   useEffect(() => {
     checkAllBatches();

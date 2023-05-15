@@ -76,8 +76,6 @@ export const TransactionsToastList = ({
       const session = signedTransactionsToRender[sessionId];
       const skipSending =
         session?.customTransactionInformation?.signWithoutSending;
-      // &&
-      // !session?.customTransactionInformation?.forceBatchTracking;
 
       if (skipSending) {
         continue;
@@ -89,7 +87,6 @@ export const TransactionsToastList = ({
       );
 
       if (!alreadyHasToastForThisSession) {
-        console.log('added toast for session', sessionId);
         dispatch(addTransactionToast(sessionId));
       }
     }
@@ -154,7 +151,6 @@ export const TransactionsToastList = ({
       const isSigned = status === TransactionBatchStatusesEnum.signed;
 
       if (!isPending && !isSigned) {
-        console.log('clearNotPendingTransactionsFromStorage: removing toast');
         handleDeleteTransactionToast(transactionToast.toastId);
       }
     });

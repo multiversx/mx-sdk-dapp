@@ -207,7 +207,6 @@ export interface CustomTransactionInformation {
   sessionInformation: any;
   completedTransactionsDelay?: number;
   signWithoutSending: boolean;
-  forceBatchTracking?: boolean;
   /**
    * If true, the change guardian action will not trigger transaction version update
    */
