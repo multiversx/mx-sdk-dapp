@@ -1928,10 +1928,10 @@
   dependencies:
     bech32 "^2.0.0"
 
-"@multiversx/sdk-wallet-connect-provider@4.0.0-alpha.0":
-  version "4.0.0-alpha.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-4.0.0-alpha.0.tgz#a5711742faee1f2f082f1ff9061cec0d179f22d5"
-  integrity sha512-5TRKwT3zL0z1iwS8WSXmc3pDPeg6K6v3lTniMFXUbLQWnKGMgYW2iELC2uH2VDGKczuWhkxdDYuEThz1Y0UbsA==
+"@multiversx/sdk-wallet-connect-provider@4.0.0-alpha.1":
+  version "4.0.0-alpha.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-4.0.0-alpha.1.tgz#3aa6f986296d665bd67b3caf408cdc22b0696c91"
+  integrity sha512-m6nXWgprVkJ1Q7AuCDf18s+ysjJ0HU8GHR28b9tai/q06XrrIlaEd/SYZThaZ6BJ0vabEi7E9gjfkWcca0F+VA==
   dependencies:
     "@walletconnect/sign-client" "2.7.3"
     "@walletconnect/utils" "2.7.3"
@@ -8171,9 +8171,9 @@ fast-levenshtein@^2.0.6, fast-levenshtein@~2.0.6:
   integrity sha512-DCXu6Ifhqcks7TZKY3Hxp3y6qphY5SJZmrWMDrKcERSOXWQdMhU9Ig/PYrzyw/ul9jOIyh0N4M0tbC5hodg8dw==
 
 fast-redact@^3.0.0:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-3.1.2.tgz#d58e69e9084ce9fa4c1a6fa98a3e1ecf5d7839aa"
-  integrity sha512-+0em+Iya9fKGfEQGcd62Yv6onjBmmhV1uh86XVfOU8VwAe6kaFdQCWI9s0/Nnugx5Vd9tdbZ7e6gE2tR9dzXdw==
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/fast-redact/-/fast-redact-3.2.0.tgz#b1e2d39bc731376d28bde844454fa23e26919987"
+  integrity sha512-zaTadChr+NekyzallAMXATXLOR8MNx3zqpZ0MUF2aGf4EathnG0f32VLODNlY8IuGY3HoRO2L6/6fSzNsLaHIw==
 
 fastq@^1.6.0:
   version "1.15.0"
