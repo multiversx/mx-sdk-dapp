@@ -14,39 +14,6 @@ export function useUpdateBatch() {
   const dispatch = useDispatch();
   const { address } = useGetAccount();
 
-  // const handleBatchErrors = useCallback(
-  //   ({
-  //     sessionId,
-  //     batchTransactions
-  //   }: {
-  //     sessionId: string;
-  //     batchTransactions: SignedTransactionType[];
-  //   }) => {
-  //     for (const transaction of batchTransactions) {
-  //       if (!signedTransactions) {
-  //         continue;
-  //       }
-  //
-  //       const signedTransaction = signedTransactions[
-  //         sessionId
-  //       ]?.transactions?.find((tx) => tx.hash === transaction.hash);
-  //
-  //       if (!signedTransaction) {
-  //         continue;
-  //       }
-  //
-  //       dispatch(
-  //         updateSignedTransactionStatus({
-  //           sessionId,
-  //           status: TransactionServerStatusesEnum.notExecuted,
-  //           transactionHash: signedTransaction.hash
-  //         })
-  //       );
-  //     }
-  //   },
-  //   [dispatch, signedTransactions]
-  // );
-
   const handleBatchSuccess = useCallback(
     ({
       sessionId,
@@ -132,12 +99,6 @@ export function useUpdateBatch() {
           batchTransactions: transactions
         });
       }
-      // else {
-      //   handleBatchErrors({
-      //     sessionId,
-      //     batchTransactions: transactions
-      //   });
-      // }
 
       if (props.shouldRefreshBalance) {
         await refreshAccount();

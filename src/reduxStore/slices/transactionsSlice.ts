@@ -49,11 +49,6 @@ export interface TransactionsSliceStateType {
   };
 }
 
-export interface SetCustomTransactionInformationPayloadType {
-  sessionId: string;
-  customTransactionInformation: CustomTransactionInformation;
-}
-
 const initialState: TransactionsSliceStateType = {
   signedTransactions: {},
   transactionsToSign: null,
@@ -208,14 +203,6 @@ export const transactionsSlice = createSlice({
 
       state.signTransactionsError = null;
     },
-    setCustomTransactionInformation: (
-      state: TransactionsSliceStateType,
-      action: PayloadAction<SetCustomTransactionInformationPayloadType>
-    ) => {
-      const { sessionId, customTransactionInformation } = action.payload;
-      state.customTransactionInformationForSessionId[sessionId] =
-        customTransactionInformation;
-    },
     clearAllTransactionsToSign: (state: TransactionsSliceStateType) => {
       state.transactionsToSign = initialState.transactionsToSign;
       state.signTransactionsError = null;
@@ -283,8 +270,7 @@ export const {
   clearTransactionToSign,
   setSignTransactionsError,
   setSignTransactionsCancelMessage,
-  moveTransactionsToSignedState,
-  setCustomTransactionInformation
+  moveTransactionsToSignedState
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

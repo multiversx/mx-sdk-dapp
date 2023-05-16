@@ -5,8 +5,6 @@ import {
   updateSignedTransactionStatus,
   UpdateSignedTransactionStatusPayloadType,
   MoveTransactionsToSignedStatePayloadType,
-  SetCustomTransactionInformationPayloadType,
-  setCustomTransactionInformation,
   setTransactionsDisplayInfo,
   SetTransactionsInfoPayloadType
 } from 'reduxStore/slices';
@@ -28,12 +26,6 @@ export function updateSignedTransactionStatusState(
   payload: UpdateSignedTransactionStatusPayloadType
 ) {
   store.dispatch(updateSignedTransactionStatus(payload));
-}
-
-export function setCustomTransactionInformationState(
-  payload: SetCustomTransactionInformationPayloadType
-) {
-  store.dispatch(setCustomTransactionInformation(payload));
 }
 
 export function setTransactionsDisplayInfoState(
