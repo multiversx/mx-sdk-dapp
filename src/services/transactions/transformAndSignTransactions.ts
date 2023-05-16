@@ -28,7 +28,9 @@ function calculateGasLimit({
   isGuarded?: boolean;
 }) {
   const guardedAccountGasLimit = isGuarded ? EXTRA_GAS_LIMIT_GUARDED_TX : 0;
-  const bNconfigGasLimit = new BigNumber(GAS_LIMIT + guardedAccountGasLimit);
+  const bNconfigGasLimit = new BigNumber(GAS_LIMIT).plus(
+    guardedAccountGasLimit
+  );
   const bNgasPerDataByte = new BigNumber(GAS_PER_DATA_BYTE);
   const bNgasValue = data
     ? bNgasPerDataByte.times(Buffer.from(data).length)
