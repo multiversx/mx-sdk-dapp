@@ -8,8 +8,15 @@ const setTransactionNonces = (
   latestNonce: number,
   transactions: Array<Transaction>
 ): Array<Transaction> => {
+  if (transactions.length === 0) {
+    return transactions;
+  }
+
+  const firstTxNonce = transactions[0].getNonce().valueOf();
+  const computedNonce = firstTxNonce > latestNonce ? firstTxNonce : latestNonce;
+
   return transactions.map((tx: Transaction, index: number) => {
-    tx.setNonce(latestNonce + index);
+    tx.setNonce(computedNonce + index);
 
     return tx;
   });
