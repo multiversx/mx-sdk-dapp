@@ -15,7 +15,7 @@ enum ErrorCodesEnum {
   'unknownError' = 'Unknown Error. Please check the transactions and try again'
 }
 
-// TODO: replace with new erdjs function
+// TODO: add guarded account gas limit
 function calculateGasLimit(data?: string) {
   const bNconfigGasLimit = new BigNumber(GAS_LIMIT);
   const bNgasPerDataByte = new BigNumber(GAS_PER_DATA_BYTE);
@@ -44,7 +44,8 @@ export async function transformAndSignTransactions({
       gasPrice = GAS_PRICE,
       gasLimit = calculateGasLimit(tx.data),
       guardian,
-      guardianSignature
+      guardianSignature,
+      nonce: txNonce = 0
     } = tx;
     let validatedReceiver = receiver;
 
@@ -55,6 +56,8 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
+    const computedNonce = txNonce > nonce ? txNonce : nonce;
+
     const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
@@ -63,7 +66,7 @@ export async function transformAndSignTransactions({
       data,
       gasPrice,
       gasLimit: Number(gasLimit),
-      nonce: Number(nonce.valueOf().toString()),
+      nonce: Number(computedNonce.valueOf().toString()),
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
       version,
