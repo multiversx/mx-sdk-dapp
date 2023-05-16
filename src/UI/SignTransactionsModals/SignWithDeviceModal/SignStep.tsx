@@ -3,6 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+
 import { PageState } from 'UI/PageState';
 
 import { SignStepBody, SignStepBodyPropsType } from './components';

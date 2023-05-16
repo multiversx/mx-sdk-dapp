@@ -1,26 +1,27 @@
 import React from 'react';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import type {
   ActiveLedgerTransactionType,
   MultiSignTransactionType
 } from 'types';
-import { ProgressSteps } from 'UI/ProgressSteps';
 import { TokenDetails } from 'UI/TokenDetails';
 import { TransactionData } from 'UI/TransactionData';
-
 import { getIdentifierType } from 'utils';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 
 import { useSignStepsClasses } from '../hooks';
+import { ConfirmAmount } from './components/ConfirmAmount';
+import { ConfirmFee } from './components/ConfirmFee';
+import { ConfirmReceiver } from './components/ConfirmReceiver';
+import styles from './signStepBodyStyles.scss';
 
 export interface SignStepInnerClassesType {
   buttonsWrapperClassName?: string;
@@ -46,9 +47,6 @@ export interface SignStepBodyPropsType {
 export const SignStepBody = ({
   currentTransaction,
   error,
-  allTransactions,
-  isGuarded,
-  currentStep,
   signStepInnerClasses
 }: SignStepBodyPropsType) => {
   const egldLabel = getEgldLabel();
@@ -58,18 +56,22 @@ export const SignStepBody = ({
   }
 
   const { network } = useGetNetworkConfig();
-
   const {
     inputGroupClassName,
     inputLabelClassName,
     inputValueClassName,
     errorClassName,
-    scamAlertClassName,
-    progressClassName
+    scamAlertClassName
   } = signStepInnerClasses || {};
 
   const { tokenId, nonce, amount, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
+
+  console.log({
+    scamAlertClassName,
+    currentTransaction,
+    w: getIdentifierType(tokenId)
+  });
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -95,10 +97,7 @@ export const SignStepBody = ({
     addCommas: true
   });
 
-  const extraGuardianStep = isGuarded ? 1 : 0;
-  const totalSteps = allTransactions.length + extraGuardianStep;
   const scamReport = currentTransaction.receiverScamInfo;
-  const showProgressSteps = totalSteps > 1;
   const classes = useSignStepsClasses(scamReport);
 
   const token = isNft ? nftId : tokenId || egldLabel;
@@ -107,104 +106,71 @@ export const SignStepBody = ({
   return (
     <>
       {currentTransaction.transaction && (
-        <>
-          {showProgressSteps && (
-            <ProgressSteps
-              totalSteps={totalSteps}
-              currentStep={currentStep + 1} // currentStep starts at 0
-              className={classNames(globalStyles.mb4, progressClassName)}
+        <div className={styles.summary}>
+          <div className={styles.fields}>
+            <ConfirmReceiver
+              scamReport={scamReport}
+              receiver={
+                multiTxData
+                  ? new Address(receiver).bech32()
+                  : currentTransaction.transaction.getReceiver().toString()
+              }
             />
-          )}
 
-          <div
-            data-testid='transactionTitle'
-            className={classNames(classes.formGroup, inputGroupClassName)}
-          >
-            <div className={classNames(classes.formLabel, inputLabelClassName)}>
-              To
-            </div>
-
-            <div className={inputValueClassName} data-testid='confirmReceiver'>
-              {multiTxData
-                ? new Address(receiver).bech32()
-                : currentTransaction.transaction.getReceiver().toString()}
-            </div>
-
-            {scamReport && (
-              <div
-                className={classNames(classes.scamReport, scamAlertClassName)}
-              >
-                <span>
-                  <FontAwesomeIcon
-                    icon={faExclamationTriangle}
-                    className={classes.scamReportIcon}
+            <div className={styles.columns}>
+              {/* {!isNFT && (
+                <div className={styles.column}>
+                  <Confirm.Amount
+                    txType={txType}
+                    tokenId={tokenId}
+                    tokenDecimals={tokenDetails.decimals}
+                    amount={String(amountInfo.amount)}
+                    nft={nft}
+                    egldPriceInUsd={egldPriceInUsd}
+                    egldLabel={egldLabel}
+                    tokenLabel={tokenDetails.name}
+                    tokenAvatar={tokenDetails.assets?.svgUrl || ''}
                   />
+                </div>
+              )} */}
 
-                  <small data-testid='confirmScamReport'>{scamReport}</small>
-                </span>
+              <div className={styles.column}>
+                <ConfirmAmount
+                  tokenAvatar={tokenAvatar}
+                  amount={shownAmount}
+                  token={token}
+                />
               </div>
+
+              <div className={styles.column}>
+                <ConfirmFee
+                  tokenAvatar={tokenAvatar}
+                  egldLabel={egldLabel}
+                  transaction={currentTransaction.transaction}
+                />
+              </div>
+            </div>
+
+            {currentTransaction.transaction.getData() && (
+              <TransactionData
+                isScCall={!tokenId}
+                data={currentTransaction.transaction.getData().toString()}
+                highlight={multiTxData}
+                className={inputGroupClassName}
+                innerTransactionDataClasses={{
+                  transactionDataInputLabelClassName: inputLabelClassName,
+                  transactionDataInputValueClassName: inputValueClassName
+                }}
+              />
+            )}
+
+            {error && (
+              <p className={classNames(classes.errorMessage, errorClassName)}>
+                {error}
+              </p>
             )}
           </div>
-
-          <div
-            className={classNames(classes.tokenWrapper, inputGroupClassName)}
-          >
-            <div
-              className={classNames(classes.tokenLabel, inputLabelClassName)}
-            >
-              Token
-            </div>
-
-            <div className={inputValueClassName} data-testid='confirmToken'>
-              <div className={classes.tokenValue}>
-                <TokenDetails.Icon tokenAvatar={tokenAvatar} token={token} />
-
-                <div className={globalStyles.mr2}></div>
-                <TokenDetails.Label token={token} />
-              </div>
-            </div>
-          </div>
-
-          <div className={inputGroupClassName}>
-            <div
-              className={classNames(
-                classes.tokenAmountLabel,
-                inputLabelClassName
-              )}
-            >
-              Amount
-            </div>
-
-            <div
-              className={classNames(
-                classes.tokenAmountValue,
-                inputValueClassName
-              )}
-              data-testid='confirmAmount'
-            >
-              {shownAmount}
-            </div>
-          </div>
-
-          {currentTransaction.transaction.getData() && (
-            <TransactionData
-              isScCall={!tokenId}
-              data={currentTransaction.transaction.getData().toString()}
-              highlight={multiTxData}
-              className={inputGroupClassName}
-              innerTransactionDataClasses={{
-                transactionDataInputLabelClassName: inputLabelClassName,
-                transactionDataInputValueClassName: inputValueClassName
-              }}
-            />
-          )}
-
-          {error && (
-            <p className={classNames(classes.errorMessage, errorClassName)}>
-              {error}
-            </p>
-          )}
-        </>
+        </div>
       )}
     </>
   );

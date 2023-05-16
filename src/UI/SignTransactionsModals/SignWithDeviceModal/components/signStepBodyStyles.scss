@@ -1,0 +1,34 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+
+  .fields {
+    gap: 32px;
+    display: flex;
+    flex-direction: column;
+
+    .columns {
+      display: flex;
+      column-gap: 16px;
+      row-gap: 32px;
+      flex-wrap: wrap;
+      align-items: flex-start;
+
+      .column {
+        min-width: calc(50% - 8px);
+        text-align: left;
+      }
+    }
+  }
+
+  .buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 72px;
+
+    @media (min-width: 768px) {
+      margin-top: 80px;
+    }
+  }
+}
