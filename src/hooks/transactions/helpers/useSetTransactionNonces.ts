@@ -12,11 +12,13 @@ const setTransactionNonces = (
     return transactions;
   }
 
-  const firstTxNonce = transactions[0].getNonce().valueOf();
-  const computedNonce = firstTxNonce > latestNonce ? firstTxNonce : latestNonce;
-
   return transactions.map((tx: Transaction, index: number) => {
-    tx.setNonce(computedNonce + index);
+    const nextNonce = latestNonce + index;
+
+    const txNonce = tx.getNonce().valueOf();
+    const computedNonce = txNonce > nextNonce ? txNonce : nextNonce;
+
+    tx.setNonce(computedNonce);
 
     return tx;
   });

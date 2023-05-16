@@ -119,6 +119,11 @@ export const useSignTransactions = () => {
     sessionId: string,
     callbackRoute = ''
   ) => {
+    console.log('signWithWallet - abc', {
+      transactions,
+      sessionId
+    });
+
     const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
     let callbackUrl = callbackRoute;
 
