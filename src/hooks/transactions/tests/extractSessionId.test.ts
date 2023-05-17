@@ -24,4 +24,13 @@ describe('extractSessionId', () => {
 
     expect(result).toBeNull();
   });
+
+  test('should return null for a null or undefined batchId (js scenario)', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(extractSessionId(null)).toBeNull();
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    expect(extractSessionId(undefined)).toBeNull();
+  });
 });
