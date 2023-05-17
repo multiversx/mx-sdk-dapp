@@ -8,17 +8,18 @@ export interface ConfirmAmountPropsType {
   token: string;
   amount: string;
   tokenAvatar?: string;
+  tokenType: string;
 }
 
 export const ConfirmAmount = (props: ConfirmAmountPropsType) => {
-  const { token, tokenAvatar, amount } = props;
+  const { token, tokenAvatar, tokenType, amount } = props;
 
   return (
     <div className={styles.amount}>
       <span className={styles.label}>Amount</span>
 
       <div className={styles.token}>
-        <TokenAvatar type={''} avatar={tokenAvatar} />
+        <TokenAvatar type={tokenType} avatar={tokenAvatar} />
 
         <div className={styles.value}>
           {amount} <TokenDetails.Label token={token} />

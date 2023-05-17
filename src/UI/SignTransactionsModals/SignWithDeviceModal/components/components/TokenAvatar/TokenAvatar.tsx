@@ -1,13 +1,10 @@
 import React from 'react';
 import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import classNames from 'classnames';
-
-// import { TransactionTypeEnum } from 'types';
+import classNames from 'classnames';
 
 import MultiversXIcon from 'assets/icons/EGLD.svg';
-
-import { TransactionTypesEnum } from 'types';
+import { NftEnumType } from 'types/tokens.types';
 
 import styles from './tokenAvatarStyles.scss';
 
@@ -19,23 +16,21 @@ export interface TokenAvatarPropsType {
 export const TokenAvatar = (props: TokenAvatarPropsType) => {
   const { avatar, type } = props;
 
-  // console.log({ type, classNames });
+  if (type === NftEnumType.NonFungibleESDT) {
+    return (
+      <div className={classNames(styles.tokenAvatar, styles.tokenAvatarNFT)}>
+        NFT
+      </div>
+    );
+  }
 
-  //   if (type === TransactionTypeEnum.NonFungibleESDT) {
-  //     return (
-  //       <div className={classNames(styles.tokenAvatar, styles.tokenAvatarNFT)}>
-  //         NFT
-  //       </div>
-  //     );
-  //   }
-
-  //   if (type === TransactionTypeEnum.SemiFungibleESDT) {
-  //     return (
-  //       <div className={classNames(styles.tokenAvatar, styles.tokenAvatarSFT)}>
-  //         SFT
-  //       </div>
-  //     );
-  //   }
+  if (type === NftEnumType.SemiFungibleESDT) {
+    return (
+      <div className={classNames(styles.tokenAvatar, styles.tokenAvatarSFT)}>
+        SFT
+      </div>
+    );
+  }
 
   if (type === 'EGLD') {
     return (

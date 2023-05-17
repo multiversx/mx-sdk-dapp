@@ -76,7 +76,7 @@ export function useGetTokenDetails({
     ? selectedToken?.decimals
     : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
-  const tokenAvatar = selectedToken ? `${selectedToken?.assets?.svgUrl}` : '';
+  const tokenAvatar = selectedToken ? selectedToken?.assets?.svgUrl : '';
 
   const assets = selectedToken?.assets;
 

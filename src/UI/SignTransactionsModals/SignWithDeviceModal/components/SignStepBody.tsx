@@ -2,7 +2,7 @@ import React from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
+// import globalStyles from 'assets/sass/main.scss';
 
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
@@ -10,7 +10,8 @@ import type {
   ActiveLedgerTransactionType,
   MultiSignTransactionType
 } from 'types';
-import { TokenDetails } from 'UI/TokenDetails';
+// import { TokenDetails } from 'UI/TokenDetails';
+import { NftEnumType } from 'types/tokens.types';
 import { TransactionData } from 'UI/TransactionData';
 import { getIdentifierType } from 'utils';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
@@ -60,18 +61,12 @@ export const SignStepBody = ({
     inputGroupClassName,
     inputLabelClassName,
     inputValueClassName,
-    errorClassName,
-    scamAlertClassName
+    errorClassName
+    // scamAlertClassName
   } = signStepInnerClasses || {};
 
   const { tokenId, nonce, amount, multiTxData, receiver } =
     currentTransaction.transactionTokenInfo;
-
-  console.log({
-    scamAlertClassName,
-    currentTransaction,
-    w: getIdentifierType(tokenId)
-  });
 
   const isTokenTransaction = Boolean(
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
@@ -83,7 +78,7 @@ export const SignStepBody = ({
   const appendedNonce = nonce ? `-${nonce}` : '';
   const nftId = `${tokenId}${appendedNonce}`;
 
-  const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
+  const { tokenDecimals, tokenAvatar, type } = useGetTokenDetails({
     tokenId: nonce && nonce.length > 0 ? nftId : tokenId
   });
 
@@ -134,13 +129,16 @@ export const SignStepBody = ({
                 </div>
               )} */}
 
-              <div className={styles.column}>
-                <ConfirmAmount
-                  tokenAvatar={tokenAvatar}
-                  amount={shownAmount}
-                  token={token}
-                />
-              </div>
+              {type !== NftEnumType.NonFungibleESDT && (
+                <div className={styles.column}>
+                  <ConfirmAmount
+                    tokenAvatar={tokenAvatar}
+                    amount={shownAmount}
+                    token={token}
+                    tokenType={type ?? 'EGLD'}
+                  />
+                </div>
+              )}
 
               <div className={styles.column}>
                 <ConfirmFee
