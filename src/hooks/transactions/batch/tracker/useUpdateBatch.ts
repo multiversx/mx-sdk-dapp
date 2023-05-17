@@ -104,11 +104,6 @@ export function useUpdateBatch() {
         await refreshAccount();
       }
     },
-    [
-      dispatch,
-      address,
-      // handleBatchErrors,
-      handleBatchSuccess
-    ]
+    [dispatch, address, handleBatchSuccess]
   );
 }
