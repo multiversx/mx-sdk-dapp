@@ -25,12 +25,15 @@ describe('extractSessionId', () => {
     expect(result).toBeNull();
   });
 
-  test('should return null for a null or undefined batchId (js scenario)', () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(extractSessionId(null)).toBeNull();
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    expect(extractSessionId(undefined)).toBeNull();
+  test('should return null for batchId null', () => {
+    const result = extractSessionId(null as any);
+
+    expect(result).toBeNull();
+  });
+
+  test('should return null for batchId undefined', () => {
+    const result = extractSessionId(undefined as any);
+
+    expect(result).toBeNull();
   });
 });
