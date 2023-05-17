@@ -1,5 +1,5 @@
 import { Transaction } from '@multiversx/sdk-core';
-import { computeTransactionNonce } from '../../../services/transactions/computeTransactionNonce';
+import { computeTransactionNonce } from 'services/transactions/computeTransactionNonce';
 
 export const setTransactionNonces = (
   latestNonce: number,
