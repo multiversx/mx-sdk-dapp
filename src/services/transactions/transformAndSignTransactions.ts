@@ -46,7 +46,7 @@ export async function transformAndSignTransactions({
 }: SendSimpleTransactionPropsType): Promise<Transaction[]> {
   const address = addressSelector(store.getState());
   const account = await getAccount(address);
-  const nonce = getLatestNonce(account);
+  const accountNonce = getLatestNonce(account);
   return transactions.map((tx) => {
     const {
       value,
@@ -62,7 +62,7 @@ export async function transformAndSignTransactions({
       }),
       guardian,
       guardianSignature,
-      nonce: txNonce = 0
+      nonce: transactionNonce = 0
     } = tx;
     let validatedReceiver = receiver;
 
@@ -74,8 +74,8 @@ export async function transformAndSignTransactions({
     }
 
     const computedNonce = computeTransactionNonce({
-      accountNonce: nonce,
-      transactionNonce: txNonce
+      accountNonce,
+      transactionNonce
     });
 
     const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
