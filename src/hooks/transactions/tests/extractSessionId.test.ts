@@ -25,15 +25,10 @@ describe('extractSessionId', () => {
     expect(result).toBeNull();
   });
 
-  test('should return null for batchId null', () => {
-    const result = extractSessionId(null as any);
-
-    expect(result).toBeNull();
-  });
-
-  test('should return null for batchId undefined', () => {
-    const result = extractSessionId(undefined as any);
-
-    expect(result).toBeNull();
+  test('should return null for invalid batchId', () => {
+    [null, undefined, true, [], {}, NaN].forEach((invalidBatchId) => {
+      const result = extractSessionId(invalidBatchId as any);
+      expect(result).toBeNull();
+    });
   });
 });
