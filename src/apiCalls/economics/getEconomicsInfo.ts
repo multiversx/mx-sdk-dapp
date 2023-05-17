@@ -12,13 +12,16 @@ export interface EconomicsInfoType {
   topUpApr: number;
 }
 
+export function getEconomics(url = ECONOMICS_ENDPOINT) {
+  const apiAddress = getCleanApiAddress();
+  return axios.get<EconomicsInfoType>(url, {
+    baseURL: apiAddress
+  });
+}
+
 export async function getEconomicsInfo() {
   try {
-    const apiAddress = getCleanApiAddress();
-
-    const { data } = await axios.get<EconomicsInfoType>(ECONOMICS_ENDPOINT, {
-      baseURL: apiAddress
-    });
+    const { data } = await getEconomics();
     return data;
   } catch (err) {
     console.error('err fetching economics info', err);
