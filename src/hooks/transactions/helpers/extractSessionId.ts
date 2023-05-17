@@ -1,7 +1,7 @@
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 
 export const extractSessionId = (batchId: string) => {
-  if (!batchId) {
+  if (!batchId || typeof batchId !== 'string') {
     return null;
   }
 
