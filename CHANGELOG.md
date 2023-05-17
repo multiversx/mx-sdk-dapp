@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Added `type` to token data on sign screen, `getEconomicsInfo`, and `useGetEgldPrice` hook](https://github.com/multiversx/mx-sdk-dapp/pull/791)
+
+## [[v2.13.6]](https://github.com/multiversx/mx-sdk-dapp/pull/790)] - 2023-05-17
+- [Fix nonce management](https://github.com/multiversx/mx-sdk-dapp/pull/788)
+- [Guarded account `gasLimit` update in `s` helper](https://github.com/multiversx/mx-sdk-dapp/pull/789)
 - [Added flag `preventNonceUpdate` to prevent nonce update](https://github.com/multiversx/mx-sdk-dapp/pull/786)
 
 ## [[v2.13.5]](https://github.com/multiversx/mx-sdk-dapp/pull/784)] - 2023-05-13

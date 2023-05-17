@@ -1,7 +1,12 @@
 import { Address, Transaction } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
 
-import { GAS_LIMIT, GAS_PER_DATA_BYTE, GAS_PRICE } from 'constants/index';
+import {
+  EXTRA_GAS_LIMIT_GUARDED_TX,
+  GAS_LIMIT,
+  GAS_PER_DATA_BYTE,
+  GAS_PRICE
+} from 'constants/index';
 import { newTransaction } from 'models/newTransaction';
 import { addressSelector, chainIDSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
@@ -9,15 +14,24 @@ import { SendSimpleTransactionPropsType } from 'types';
 
 import { getAccount } from 'utils/account/getAccount';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { computeTransactionNonce } from './computeTransactionNonce';
 
 enum ErrorCodesEnum {
   'invalidReceiver' = 'Invalid Receiver address',
   'unknownError' = 'Unknown Error. Please check the transactions and try again'
 }
 
-// TODO: replace with new erdjs function
-function calculateGasLimit(data?: string) {
-  const bNconfigGasLimit = new BigNumber(GAS_LIMIT);
+function calculateGasLimit({
+  data,
+  isGuarded
+}: {
+  data?: string;
+  isGuarded?: boolean;
+}) {
+  const guardedAccountGasLimit = isGuarded ? EXTRA_GAS_LIMIT_GUARDED_TX : 0;
+  const bNconfigGasLimit = new BigNumber(GAS_LIMIT).plus(
+    guardedAccountGasLimit
+  );
   const bNgasPerDataByte = new BigNumber(GAS_PER_DATA_BYTE);
   const bNgasValue = data
     ? bNgasPerDataByte.times(Buffer.from(data).length)
@@ -32,7 +46,7 @@ export async function transformAndSignTransactions({
 }: SendSimpleTransactionPropsType): Promise<Transaction[]> {
   const address = addressSelector(store.getState());
   const account = await getAccount(address);
-  const nonce = getLatestNonce(account);
+  const accountNonce = getLatestNonce(account);
   return transactions.map((tx) => {
     const {
       value,
@@ -42,9 +56,13 @@ export async function transformAndSignTransactions({
       version = 1,
       options,
       gasPrice = GAS_PRICE,
-      gasLimit = calculateGasLimit(tx.data),
+      gasLimit = calculateGasLimit({
+        data: tx.data,
+        isGuarded: account?.isGuarded
+      }),
       guardian,
-      guardianSignature
+      guardianSignature,
+      nonce: transactionNonce = 0
     } = tx;
     let validatedReceiver = receiver;
 
@@ -55,6 +73,11 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
+    const computedNonce = computeTransactionNonce({
+      accountNonce,
+      transactionNonce
+    });
+
     const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
@@ -63,7 +86,7 @@ export async function transformAndSignTransactions({
       data,
       gasPrice,
       gasLimit: Number(gasLimit),
-      nonce: Number(nonce.valueOf().toString()),
+      nonce: Number(computedNonce.valueOf().toString()),
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
       version,
