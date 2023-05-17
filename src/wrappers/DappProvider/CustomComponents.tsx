@@ -10,7 +10,7 @@ import {
   TransactionsTracker,
   TransactionsTrackerType
 } from 'components/TransactionsTracker';
-import { BatchTransactionsTrackerProps } from 'hooks/transactions/batch/tracker/useAllBatchTransactionsTracker';
+import { BatchTransactionsTrackerProps } from 'hooks/transactions/batch/tracker/useBatchTransactionsTracker';
 
 export interface CustomComponentsType {
   transactionSender?: {

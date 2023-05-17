@@ -13,6 +13,7 @@ import {
 } from 'types/enums.types';
 import {
   getIsTransactionFailed,
+  getIsTransactionNotExecuted,
   getIsTransactionSuccessful
 } from 'utils/transactions/transactionStateByStatus';
 import { logoutAction } from '../commonActions';
@@ -27,6 +28,7 @@ export interface UpdateSignedTransactionsPayloadType {
 export interface MoveTransactionsToSignedStatePayloadType
   extends SignedTransactionsBodyType {
   sessionId: string;
+  customTransactionInformation?: CustomTransactionInformation;
 }
 
 export interface UpdateSignedTransactionStatusPayloadType {
@@ -69,18 +71,30 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<MoveTransactionsToSignedStatePayloadType>
     ) => {
-      const { sessionId, transactions, errorMessage, status, redirectRoute } =
-        action.payload;
+      const {
+        sessionId,
+        transactions,
+        errorMessage,
+        status,
+        redirectRoute,
+        customTransactionInformation: overrideCustomTransactionInformation = {}
+      } = action.payload;
+
       const customTransactionInformation =
         state.customTransactionInformationForSessionId?.[sessionId] ||
         defaultCustomInformation;
+
       state.signedTransactions[sessionId] = {
         transactions,
         status,
         errorMessage,
         redirectRoute,
-        customTransactionInformation
+        customTransactionInformation: {
+          ...customTransactionInformation,
+          ...overrideCustomTransactionInformation
+        }
       };
+
       if (state?.transactionsToSign?.sessionId === sessionId) {
         state.transactionsToSign = initialState.transactionsToSign;
       }
@@ -156,6 +170,13 @@ export const transactionsSlice = createSlice({
         ]?.transactions?.every((transaction) =>
           getIsTransactionFailed(transaction.status)
         );
+
+        const areTransactionsNotExecuted = state.signedTransactions[
+          sessionId
+        ]?.transactions?.every((transaction) =>
+          getIsTransactionNotExecuted(transaction.status)
+        );
+
         if (areTransactionsSuccessful) {
           state.signedTransactions[sessionId].status =
             TransactionBatchStatusesEnum.success;
@@ -163,6 +184,10 @@ export const transactionsSlice = createSlice({
         if (areTransactionsFailed) {
           state.signedTransactions[sessionId].status =
             TransactionBatchStatusesEnum.fail;
+        }
+        if (areTransactionsNotExecuted) {
+          state.signedTransactions[sessionId].status =
+            TransactionBatchStatusesEnum.invalid;
         }
       }
     },

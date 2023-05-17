@@ -1,10 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setBatchTransactions } from 'reduxStore/slices';
-import {
-  removeBatchTransactions,
-  removeSignedTransaction
-} from 'services/transactions';
+import { removeBatchTransactions } from 'services/transactions';
 import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
@@ -34,10 +31,7 @@ export const useSendBatchTransactions = () => {
 
       if (Boolean(error) || !isBatchStatusValid) {
         console.error('Unable to send batch transactions');
-        const sessionId = params?.sessionId;
         const batchId = data?.id ?? '';
-
-        removeSignedTransaction(sessionId);
         removeBatchTransactions(batchId);
       }
 
