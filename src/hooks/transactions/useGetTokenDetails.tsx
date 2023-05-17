@@ -3,6 +3,7 @@ import useSwr from 'swr';
 
 import { COLLECTIONS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
+import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
 export interface TokenAssets {
@@ -21,6 +22,7 @@ interface TokenOptionType {
   tokenDecimals: number;
   tokenAvatar: string;
   assets?: TokenAssets;
+  type?: NftEnumType;
   error?: string;
 }
 
@@ -29,6 +31,7 @@ interface TokenInfoResponse {
   name: string;
   ticker: string;
   decimals: number;
+  type?: NftEnumType;
   assets: TokenAssets;
 }
 
@@ -80,6 +83,7 @@ export function useGetTokenDetails({
   return {
     tokenDecimals: tokenDecimals,
     tokenLabel,
+    type: selectedToken?.type,
     tokenAvatar,
     assets,
     error

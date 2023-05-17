@@ -1,10 +1,13 @@
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useGetAccount } from 'hooks/account';
+import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
-import { BatchTransactionsWSResponseType } from 'types';
-import { useGetBatches } from '../useGetBatches';
+import {
+  BatchTransactionsWSResponseType,
+  TransactionBatchStatusesEnum
+} from 'types';
 import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
 import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
-import { useCheckPendingTransactionsFallback } from './useCheckPendingTransactionsFallback';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 export type BatchTransactionsTrackerProps = {
@@ -12,33 +15,40 @@ export type BatchTransactionsTrackerProps = {
   onFail?: (batchId: string | null, errorMessage?: string) => void;
 };
 
-export const useAllBatchTransactionsTracker = ({
+export const useBatchTransactionsTracker = ({
   onSuccess,
   onFail
 }: BatchTransactionsTrackerProps) => {
-  const { batchTransactionsArray } = useGetBatches();
+  const { signedTransactionsArray } = useGetSignedTransactions();
+  const { address } = useGetAccount();
+
   const { verifyBatchStatus } = useVerifyBatchStatus({
     onSuccess,
     onFail
   });
 
-  const onMessage = useCallback(() => {
+  const onMessage = () => {
     // Do nothing, used for backwards compatibility to avoid breaking changes
     // TODO: Will be removed in the next major release
-  }, []);
+  };
 
-  const onBatchUpdate = useCallback(
-    async (data: BatchTransactionsWSResponseType) => {
-      await verifyBatchStatus({ batchId: data.batchId });
-    },
-    [verifyBatchStatus]
-  );
+  const onBatchUpdate = async (data: BatchTransactionsWSResponseType) => {
+    await verifyBatchStatus({ batchId: data.batchId });
+  };
 
-  const checkAllBatches = useCallback(async () => {
-    for (const { batchId } of batchTransactionsArray) {
+  const checkAllBatches = async () => {
+    for (const [sessionId, session] of signedTransactionsArray) {
+      if (
+        session.status !== TransactionBatchStatusesEnum.sent &&
+        session.status !== TransactionBatchStatusesEnum.signed
+      ) {
+        continue;
+      }
+
+      const batchId = `${sessionId}-${address}`;
       await verifyBatchStatus({ batchId });
     }
-  }, [batchTransactionsArray, verifyBatchStatus]);
+  };
 
   // register ws listener
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
@@ -51,12 +61,8 @@ export const useAllBatchTransactionsTracker = ({
     onSuccess,
     onFail
   });
-  useCheckPendingTransactionsFallback({
-    onSuccess,
-    onFail
-  });
 
   useEffect(() => {
     checkAllBatches();
-  }, [checkAllBatches]);
+  }, []);
 };
