@@ -1,3 +1,5 @@
+import { stringIsInteger } from 'utils/validation/stringIsInteger';
+
 export const extractSessionId = (batchId: string) => {
   if (!batchId) {
     return null;
@@ -5,7 +7,7 @@ export const extractSessionId = (batchId: string) => {
 
   const timestamp = batchId.split('-')[0];
 
-  if (/^\d+$/.test(timestamp)) {
+  if (stringIsInteger(timestamp)) {
     return parseInt(timestamp, 10);
   }
 
