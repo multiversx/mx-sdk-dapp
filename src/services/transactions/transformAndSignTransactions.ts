@@ -60,7 +60,8 @@ export async function transformAndSignTransactions({
         isGuarded: account?.isGuarded
       }),
       guardian,
-      guardianSignature
+      guardianSignature,
+      nonce: txNonce = 0
     } = tx;
     let validatedReceiver = receiver;
 
@@ -71,6 +72,8 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
+    const computedNonce = txNonce > nonce ? txNonce : nonce;
+
     const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
@@ -79,7 +82,7 @@ export async function transformAndSignTransactions({
       data,
       gasPrice,
       gasLimit: Number(gasLimit),
-      nonce: Number(nonce.valueOf().toString()),
+      nonce: Number(computedNonce.valueOf().toString()),
       sender: new Address(address).hex(),
       chainID: transactionsChainId,
       version,

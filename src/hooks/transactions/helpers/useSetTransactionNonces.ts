@@ -3,17 +3,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { addressSelector } from 'reduxStore/selectors';
 import { getAccount } from 'utils/account/getAccount';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
-
-const setTransactionNonces = (
-  latestNonce: number,
-  transactions: Array<Transaction>
-): Array<Transaction> => {
-  return transactions.map((tx: Transaction, index: number) => {
-    tx.setNonce(latestNonce + index);
-
-    return tx;
-  });
-};
+import { setTransactionNonces } from './setTransactionNonces';
 
 export const useSetTransactionNonces = () => {
   const address = useSelector(addressSelector);
