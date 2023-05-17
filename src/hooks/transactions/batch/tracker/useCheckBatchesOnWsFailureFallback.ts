@@ -4,7 +4,8 @@ import {
   TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
 } from 'constants/transactionStatus';
 import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
-import { isOlderThan } from 'hooks/transactions/helpers/isOlderThan';
+import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
+import { timestampIsOlderThan } from 'hooks/transactions/helpers/timestampIsOlderThan';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 /**
@@ -20,9 +21,20 @@ export const useCheckBatchesOnWsFailureFallback = (props?: {
 
   const checkAllBatches = useCallback(async () => {
     for (const { batchId } of batchTransactionsArray) {
-      if (!isOlderThan(batchId, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS)) {
+      const sessionId = extractSessionId(batchId);
+      if (!sessionId) {
         continue;
       }
+
+      if (
+        !timestampIsOlderThan(
+          sessionId,
+          TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
+        )
+      ) {
+        continue;
+      }
+
       await verifyBatchStatus({ batchId });
     }
   }, [batchTransactionsArray, verifyBatchStatus]);

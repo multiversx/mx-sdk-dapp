@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 import { useResolveBatchStatusResponse } from 'hooks/transactions/batch/useResolveBatchStatusResponse';
+import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
@@ -22,7 +23,7 @@ export const useVerifyBatchStatus = (props?: {
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
-      const sessionId = batchId.split('-')[0];
+      const sessionId = extractSessionId(batchId)?.toString() ?? '';
       const session = signedTransactions[sessionId];
 
       if (!session) {
@@ -48,7 +49,7 @@ export const useVerifyBatchStatus = (props?: {
       } else {
         const data = await checkBatch({ batchId });
         await updateBatch({
-          sessionId,
+          sessionId: sessionId.toString(),
           isBatchFailed: data?.isBatchFailed,
           shouldRefreshBalance: true,
           transactions: sessionTransactions
