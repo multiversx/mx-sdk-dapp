@@ -1,4 +1,5 @@
 import { Transaction } from '@multiversx/sdk-core';
+import { computeTransactionNonce } from '../../../services/transactions/computeTransactionNonce';
 
 export const setTransactionNonces = (
   latestNonce: number,
@@ -12,8 +13,12 @@ export const setTransactionNonces = (
     const nextNonce = latestNonce + index;
 
     const txNonce = tx.getNonce().valueOf();
+
     // stop replacing nonce if transaction is configured with a higher nonce than the existing one
-    const computedNonce = txNonce > nextNonce ? txNonce : nextNonce;
+    const computedNonce = computeTransactionNonce({
+      accountNonce: nextNonce,
+      transactionNonce: txNonce
+    });
 
     tx.setNonce(computedNonce);
 

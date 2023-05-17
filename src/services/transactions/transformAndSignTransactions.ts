@@ -14,6 +14,7 @@ import { SendSimpleTransactionPropsType } from 'types';
 
 import { getAccount } from 'utils/account/getAccount';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { computeTransactionNonce } from './computeTransactionNonce';
 
 enum ErrorCodesEnum {
   'invalidReceiver' = 'Invalid Receiver address',
@@ -72,7 +73,10 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const computedNonce = txNonce > nonce ? txNonce : nonce;
+    const computedNonce = computeTransactionNonce({
+      accountNonce: nonce,
+      transactionNonce: txNonce
+    });
 
     const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
     const transactionsChainId = chainID || storeChainId;
