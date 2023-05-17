@@ -14,6 +14,7 @@ import { SendSimpleTransactionPropsType } from 'types';
 
 import { getAccount } from 'utils/account/getAccount';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { computeTransactionNonce } from './computeTransactionNonce';
 
 enum ErrorCodesEnum {
   'invalidReceiver' = 'Invalid Receiver address',
@@ -45,7 +46,7 @@ export async function transformAndSignTransactions({
 }: SendSimpleTransactionPropsType): Promise<Transaction[]> {
   const address = addressSelector(store.getState());
   const account = await getAccount(address);
-  const nonce = getLatestNonce(account);
+  const accountNonce = getLatestNonce(account);
   return transactions.map((tx) => {
     const {
       value,
@@ -61,7 +62,7 @@ export async function transformAndSignTransactions({
       }),
       guardian,
       guardianSignature,
-      nonce: txNonce = 0
+      nonce: transactionNonce = 0
     } = tx;
     let validatedReceiver = receiver;
 
@@ -72,7 +73,10 @@ export async function transformAndSignTransactions({
       throw ErrorCodesEnum.invalidReceiver;
     }
 
-    const computedNonce = txNonce > nonce ? txNonce : nonce;
+    const computedNonce = computeTransactionNonce({
+      accountNonce,
+      transactionNonce
+    });
 
     const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
     const transactionsChainId = chainID || storeChainId;

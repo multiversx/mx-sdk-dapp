@@ -1,7 +1,7 @@
 import { GAS_LIMIT, GAS_PRICE } from 'constants/index';
 import { newTransaction } from 'models/newTransaction';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
-import { setTransactionNonces } from '../helpers/setTransactionNonces';
+import { computeTransactionsNonce } from '../helpers/computeTransactionsNonce';
 
 const mockedTransactions = [
   {
@@ -45,11 +45,14 @@ const mockedTransactions = [
   }
 ];
 
-describe('setTransactionNonces', () => {
+describe('computeTransactionsNonce', () => {
   it('should return empty array if transactions array is empty', () => {
     const latestNonce = 123;
 
-    const result = setTransactionNonces(latestNonce, []);
+    const result = computeTransactionsNonce({
+      latestNonce,
+      transactions: []
+    });
 
     expect(result).toEqual([]);
   });
@@ -63,7 +66,10 @@ describe('setTransactionNonces', () => {
       return newTx;
     });
 
-    const result = setTransactionNonces(latestNonce, transactions);
+    const result = computeTransactionsNonce({
+      latestNonce,
+      transactions
+    });
 
     expect(transactions[0].setNonce).toHaveBeenCalledWith(123);
     expect(transactions[1].setNonce).toHaveBeenCalledWith(124);
@@ -81,7 +87,10 @@ describe('setTransactionNonces', () => {
       return newTx;
     });
 
-    const result = setTransactionNonces(latestNonce, transactions);
+    const result = computeTransactionsNonce({
+      latestNonce,
+      transactions
+    });
 
     expect(transactions[0].setNonce).toHaveBeenCalledWith(125);
     expect(transactions[1].setNonce).toHaveBeenCalledWith(126);
