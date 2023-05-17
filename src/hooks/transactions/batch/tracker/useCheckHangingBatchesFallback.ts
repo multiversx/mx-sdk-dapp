@@ -3,6 +3,8 @@ import {
   AVERAGE_TX_DURATION_MS,
   TRANSACTIONS_STATUS_DROP_INTERVAL_MS
 } from 'constants/transactionStatus';
+import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
+import { timestampIsOlderThan } from 'hooks/transactions/helpers/timestampIsOlderThan';
 import { removeBatchTransactions } from 'services/transactions';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
@@ -22,27 +24,21 @@ export const useCheckHangingBatchesFallback = (props?: {
   const onSuccess = props?.onSuccess;
   const onFail = props?.onFail;
 
-  const isBatchHanding = useCallback((batchId: string, olderThanMs: number) => {
-    const sessionTimestamp = parseInt(batchId.split('-')[0]);
-
-    const diff = new Date().getTime() - sessionTimestamp;
-
-    return diff > olderThanMs;
-  }, []);
-
   const checkHangingBatches = useCallback(async () => {
     for (const { batchId, transactions } of batchTransactionsArray) {
-      if (!isBatchHanding(batchId, TRANSACTIONS_STATUS_DROP_INTERVAL_MS)) {
-        continue;
-      }
-
-      const sessionId = batchId.split('-')[0];
+      const sessionId = extractSessionId(batchId);
       if (!sessionId) {
         continue;
       }
 
+      if (
+        !timestampIsOlderThan(sessionId, TRANSACTIONS_STATUS_DROP_INTERVAL_MS)
+      ) {
+        continue;
+      }
+
       await updateBatch({
-        batchId,
+        sessionId: sessionId.toString(),
         shouldRefreshBalance: true,
         dropUnprocessedTransactions: true
       });
@@ -68,7 +64,7 @@ export const useCheckHangingBatchesFallback = (props?: {
         }
       }
     }
-  }, [isBatchHanding, batchTransactionsArray, updateBatch, onSuccess, onFail]);
+  }, [batchTransactionsArray, updateBatch, onSuccess, onFail]);
 
   useEffect(() => {
     const interval = setInterval(async () => {

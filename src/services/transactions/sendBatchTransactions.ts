@@ -10,7 +10,7 @@ import {
 } from 'types';
 
 export interface SendBatchTransactionsPropsType {
-  transactions: SignedTransactionType[] | SignedTransactionType[][];
+  transactions: SignedTransactionType[][];
   address: string;
   sessionId: string;
 }

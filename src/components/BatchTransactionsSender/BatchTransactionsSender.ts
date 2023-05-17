@@ -77,8 +77,10 @@ export const BatchTransactionsSender = () => {
 
     for (const sessionId of sessionIds) {
       const session = signedTransactions[sessionId];
+      const skipSending =
+        session?.customTransactionInformation?.signWithoutSending;
 
-      if (!session || !sessionId) {
+      if (!session || !sessionId || skipSending) {
         optionalRedirect(session);
         continue;
       }
