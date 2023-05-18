@@ -28,13 +28,13 @@
           right: -20px;
           left: 28px;
           height: 2px;
-          background-color: var(--muted);
+          background-color: #737373;
           transition: all 200ms ease-out;
           border-radius: 2px;
         }
 
         &.active:after {
-          background-color: var(--body-color);
+          background-color: #e5e5e5;
         }
       }
     }
@@ -50,16 +50,16 @@
       font-weight: 900;
       font-family: 'Roobert Heavy', 'Inter', Roboto, sans-serif;
       color: black;
-      background-color: var(--muted);
+      background-color: #737373;
       transition: all 200ms ease-out;
       position: relative;
 
       &.active {
-        background-color: var(--body-color);
+        background-color: #e5e5e5;
       }
 
       .progress-step-check {
-        color: var(--green);
+        color: #4ade80;
         position: absolute;
         left: calc(100% + 8px);
         top: 50%;
@@ -72,15 +72,15 @@
       line-height: 1;
       position: relative;
       padding-bottom: 8px;
-      color: var(--muted);
+      color: #737373;
       font-size: 12px;
       flex: 1;
 
       &.active {
-        color: var(--body-color);
+        color: #e5e5e5;
 
         &:after {
-          background-color: var(--muted);
+          background-color: #737373;
         }
       }
 
@@ -112,7 +112,7 @@
         content: '';
         top: 100%;
         left: 0;
-        background-color: var(--action-bg);
+        background-color: #262626;
       }
     }
   }

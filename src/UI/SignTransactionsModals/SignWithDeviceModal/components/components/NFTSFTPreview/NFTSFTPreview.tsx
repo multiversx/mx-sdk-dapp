@@ -1,7 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { useGetNetworkConfig } from 'hooks';
 import { NftEnumType } from 'types/tokens.types';
+import {
+  explorerUrlBuilder,
+  getExplorerLink
+} from 'utils/transactions/getInterpretedTransaction/helpers';
 
 import styles from './NFTSFTPreviewStyles.scss';
 
@@ -18,10 +23,23 @@ export const NFTSFTPreview = ({
   tokenId,
   tokenAvatar
 }: NFTSFTPreviewPropsType) => {
+  const {
+    network: { explorerAddress }
+  } = useGetNetworkConfig();
+
   const badge = txType === NftEnumType.NonFungibleESDT ? 'NFT' : 'SFT';
+  const explorerLink = getExplorerLink({
+    explorerAddress,
+    to: explorerUrlBuilder.nftDetails(tokenId)
+  });
 
   return (
-    <div className={styles.preview}>
+    <a
+      href={explorerLink}
+      target='_blank'
+      className={styles.preview}
+      rel='noreferrer'
+    >
       <img src={tokenAvatar} className={styles.image} />
 
       <div className={styles.content}>
@@ -41,6 +59,6 @@ export const NFTSFTPreview = ({
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };

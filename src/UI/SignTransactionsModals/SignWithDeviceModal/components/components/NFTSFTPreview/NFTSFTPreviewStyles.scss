@@ -2,12 +2,9 @@
   border-radius: 8px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   overflow: hidden;
-  background-color: var(--dapp-form-nftsft-preview-bg);
-
-  &.clickable {
-    cursor: pointer;
-  }
+  background-color: #262626;
 
   .image {
     min-width: 64px;
@@ -35,10 +32,11 @@
         font-size: 12px;
         font-weight: 600;
         text-align: left;
+        color: #e5e5e5;
       }
 
       .identifier {
-        color: var(--dapp-form-placeholder-color);
+        color: #737373;
         font-size: 12px;
       }
     }
@@ -50,7 +48,7 @@
       padding: 4px 8px;
       text-transform: uppercase;
       border-radius: 4px;
-      background-color: var(--dapp-form-nftsft-preview-badge-bg);
+      background-color: #171717;
       position: relative;
 
       &:before {

@@ -13,10 +13,9 @@
 .title {
   margin-bottom: 32px;
   text-align: center;
-  font-family: var(--font-family);
   font-weight: 500;
   font-size: 24px;
-  color: var(--action-color);
+  color: #d4d4d4;
   line-height: 1.25;
 
   @media (min-width: 768px) {
@@ -74,7 +73,7 @@
     cursor: pointer;
     width: 32px;
     height: 32px;
-    color: var(--action-color);
+    color: #d4d4d4;
     transition: all 200ms ease-out;
     position: absolute;
     top: 16px;
@@ -96,14 +95,14 @@
 
     svg path {
       transition: all 200ms ease-out;
-      fill: var(--muted);
+      fill: #737373;
     }
 
     &:hover {
-      background-color: var(--action-bg);
+      background-color: #262626;
 
       svg path {
-        fill: var(--primary);
+        fill: #23f7dd;
       }
     }
   }
