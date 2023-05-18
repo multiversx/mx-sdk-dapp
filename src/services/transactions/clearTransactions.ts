@@ -1,3 +1,5 @@
+import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
+import { accountSelector } from 'reduxStore/selectors';
 import {
   clearSignedTransaction,
   clearAllTransactionsToSign,
@@ -12,6 +14,16 @@ export function removeTransactionsToSign(sessionId: string) {
 }
 export function removeSignedTransaction(sessionId: string) {
   store.dispatch(clearSignedTransaction(sessionId));
+
+  const account = accountSelector(store.getState());
+  store.dispatch(
+    clearBatchTransactions({
+      batchId: buildBatchId({
+        sessionId,
+        address: account?.address ?? ''
+      })
+    })
+  );
 }
 
 export function deleteTransactionToast(sessionId: string) {
