@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useGetAccount } from 'hooks/account';
+import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 import {
@@ -19,6 +20,7 @@ export const useBatchTransactionsTracker = ({
   onSuccess,
   onFail
 }: BatchTransactionsTrackerProps) => {
+  const { batches } = useGetBatches();
   const { signedTransactionsArray } = useGetSignedTransactions();
   const { address } = useGetAccount();
 
@@ -38,14 +40,16 @@ export const useBatchTransactionsTracker = ({
 
   const checkAllBatches = async () => {
     for (const [sessionId, session] of signedTransactionsArray) {
-      if (
-        session.status !== TransactionBatchStatusesEnum.sent &&
-        session.status !== TransactionBatchStatusesEnum.signed
-      ) {
+      const batchId = `${sessionId}-${address}`;
+
+      const batchDoesNotExists = !Boolean(batches[batchId]);
+      const isPending = session.status !== TransactionBatchStatusesEnum.sent; //&&
+      const isCompleted = !isPending;
+
+      if (isCompleted || batchDoesNotExists) {
         continue;
       }
 
-      const batchId = `${sessionId}-${address}`;
       await verifyBatchStatus({ batchId });
     }
   };
