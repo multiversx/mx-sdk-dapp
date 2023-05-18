@@ -10,6 +10,7 @@ import {
 import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
 import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
+import { buildBatchId } from '../../helpers/buildBatchId';
 
 export type BatchTransactionsTrackerProps = {
   onSuccess?: (batchId: string | null) => void;
@@ -40,7 +41,7 @@ export const useBatchTransactionsTracker = ({
 
   const checkAllBatches = async () => {
     for (const [sessionId, session] of signedTransactionsArray) {
-      const batchId = `${sessionId}-${address}`;
+      const batchId = buildBatchId(sessionId, address);
 
       const batchDoesNotExists = !Boolean(batches[batchId]);
       const isPending = session.status !== TransactionBatchStatusesEnum.sent;

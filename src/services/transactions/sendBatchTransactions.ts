@@ -8,6 +8,7 @@ import {
   SendBatchTransactionReturnType,
   SignedTransactionType
 } from 'types';
+import { buildBatchId } from '../../hooks/transactions/helpers/buildBatchId';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[][];
@@ -23,7 +24,7 @@ export async function sendBatchTransactions({
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
 
   try {
-    const batchId = `${sessionId}-${address}`;
+    const batchId = buildBatchId(sessionId, address);
 
     const payload = {
       transactions: transactions,
