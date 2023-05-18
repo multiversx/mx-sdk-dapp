@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
 import { TIMEOUT } from 'constants/network';
+import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
 import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import {
@@ -23,7 +24,10 @@ export async function sendBatchTransactions({
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
 
   try {
-    const batchId = `${sessionId}-${address}`;
+    const batchId = buildBatchId({
+      sessionId,
+      address
+    });
 
     const payload = {
       transactions: transactions,
