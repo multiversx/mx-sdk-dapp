@@ -6,7 +6,10 @@ describe('buildBatchId', () => {
     const address = 'erd1...';
     const expectedBatchId = '123-erd1...';
 
-    const result = buildBatchId(sessionId, address);
+    const result = buildBatchId({
+      sessionId,
+      address
+    });
 
     expect(result).toBe(expectedBatchId);
   });
@@ -16,7 +19,10 @@ describe('buildBatchId', () => {
     const address = 'erd1...';
     const expectedBatchId = '456-erd1...';
 
-    const result = buildBatchId(sessionId, address);
+    const result = buildBatchId({
+      sessionId,
+      address
+    });
 
     expect(result).toBe(expectedBatchId);
   });
