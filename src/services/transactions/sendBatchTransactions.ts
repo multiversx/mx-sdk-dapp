@@ -24,7 +24,10 @@ export async function sendBatchTransactions({
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
 
   try {
-    const batchId = buildBatchId(sessionId, address);
+    const batchId = buildBatchId({
+      sessionId,
+      address
+    });
 
     const payload = {
       transactions: transactions,

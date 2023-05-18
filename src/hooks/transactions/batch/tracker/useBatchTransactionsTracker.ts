@@ -41,7 +41,10 @@ export const useBatchTransactionsTracker = ({
 
   const checkAllBatches = async () => {
     for (const [sessionId, session] of signedTransactionsArray) {
-      const batchId = buildBatchId(sessionId, address);
+      const batchId = buildBatchId({
+        sessionId,
+        address
+      });
 
       const batchDoesNotExists = !Boolean(batches[batchId]);
       const isPending = session.status !== TransactionBatchStatusesEnum.sent;

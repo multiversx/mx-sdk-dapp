@@ -18,7 +18,10 @@ export function removeSignedTransaction(sessionId: string) {
   const account = accountSelector(store.getState());
   store.dispatch(
     clearBatchTransactions({
-      batchId: buildBatchId(sessionId, account?.address ?? '')
+      batchId: buildBatchId({
+        sessionId,
+        address: account?.address ?? ''
+      })
     })
   );
 }
