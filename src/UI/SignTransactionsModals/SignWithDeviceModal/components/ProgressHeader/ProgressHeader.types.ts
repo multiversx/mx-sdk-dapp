@@ -1,5 +1,7 @@
+import { ReactNode } from 'react';
+
 export interface ProgressHeaderStepType {
-  title?: string;
+  title?: ReactNode;
   active: boolean;
   completed?: boolean;
   hidden?: boolean;

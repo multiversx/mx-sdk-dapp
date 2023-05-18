@@ -1,5 +1,7 @@
 import React, { MouseEvent, useState } from 'react';
 
+import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { SignStepBody, SignStepBodyPropsType } from './components';
 import { ProgressHeader } from './components/ProgressHeader';
@@ -92,32 +94,57 @@ export const SignStep = (props: SignStepType) => {
 
   const steps: ProgressHeaderPropsType['steps'] = [
     {
-      title: 'Sign Transaction',
-      active: true
+      title: title || 'Sign Transaction',
+      active: !showGuardianScreen
     },
     {
       title: 'Confirm Transaction',
-      active: false,
+      active: showGuardianScreen,
       hidden: !signStepBodyProps.isGuarded
     }
   ];
+
+  const currentProgressStep = steps.find((step) => step.active);
 
   return (
     <div
       className={classNames(
         styles.modalLayoutContent,
         styles.spaced,
-        className
+        className,
+        { [styles.guarded]: signStepBodyProps.isGuarded }
       )}
     >
+      {showGuardianScreen && (
+        <div
+          onClick={onGuardianScreenPrev}
+          className={classNames(styles.modalLayoutHeadingIcon, styles.back)}
+        >
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </div>
+      )}
+
+      <div
+        onClick={onCloseClick}
+        className={classNames(styles.modalLayoutHeadingIcon, styles.close)}
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </div>
+
       {signStepBodyProps.isGuarded && (
         <ProgressHeader steps={steps} type='detailed' size='small' />
       )}
 
-      <div className={styles.title}>{title || 'Confirm on Ledger'}</div>
+      <div className={styles.title}>
+        {currentProgressStep?.title || 'Confirm on Ledger'}
+      </div>
 
       {GuardianScreen && showGuardianScreen ? (
-        <GuardianScreen {...props} onPrev={onGuardianScreenPrev} />
+        <GuardianScreen
+          {...props}
+          onPrev={onGuardianScreenPrev}
+          guardianFormDescription='Enter the code from your Authenticator app to verify this transaction.'
+        />
       ) : (
         <SignStepBody {...signStepBodyProps} />
       )}

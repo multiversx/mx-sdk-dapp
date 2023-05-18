@@ -39,6 +39,7 @@ interface TokenOptionType {
   assets?: TokenAssets;
   type?: NftEnumType;
   error?: string;
+  price?: number;
 }
 
 interface TokenInfoResponse {
@@ -49,6 +50,7 @@ interface TokenInfoResponse {
   type?: NftEnumType;
   assets: TokenAssets;
   media?: TokenMediaType[];
+  price: number;
 }
 
 const fetcher = (url: string) =>
@@ -101,14 +103,13 @@ export function useGetTokenDetails({
     ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0].thumbnailUrl
     : '';
 
-  const assets = selectedToken?.assets;
-
   return {
     tokenDecimals: tokenDecimals,
     tokenLabel,
     type: selectedToken?.type,
     tokenAvatar,
-    assets,
+    assets: selectedToken?.assets,
+    price: selectedToken?.price,
     error
   };
 }

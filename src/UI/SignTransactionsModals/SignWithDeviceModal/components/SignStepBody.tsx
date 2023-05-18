@@ -1,8 +1,8 @@
-import React, { MouseEvent, ReactNode } from 'react';
+import React, { MouseEvent } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import { useGetNetworkConfig } from 'hooks';
+import { useGetEgldPrice, useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import type {
   ActiveLedgerTransactionType,
@@ -74,7 +74,6 @@ export const SignStepBody = ({
     inputLabelClassName,
     inputValueClassName,
     errorClassName
-    // scamAlertClassName
   } = signStepInnerClasses || {};
 
   const { tokenId, nonce, amount, multiTxData, receiver } =
@@ -84,15 +83,16 @@ export const SignStepBody = ({
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
   );
 
-  const { isNft } = getIdentifierType(tokenId);
+  const { isNft, isEgld, isEsdt } = getIdentifierType(tokenId);
 
   // If the token has a nonce means that this is an NFT. Eg: TokenId=TOKEN-1hfr, nonce=123 => NFT id=TOKEN-1hfr-123
   const appendedNonce = nonce ? `-${nonce}` : '';
   const nftId = `${tokenId}${appendedNonce}`;
 
-  const { tokenDecimals, tokenAvatar, tokenLabel, type } = useGetTokenDetails({
-    tokenId: nonce && nonce.length > 0 ? nftId : tokenId
-  });
+  const { tokenDecimals, tokenAvatar, tokenLabel, type, price } =
+    useGetTokenDetails({
+      tokenId: nonce && nonce.length > 0 ? nftId : tokenId
+    });
 
   const formattedAmount = formatAmount({
     input: isTokenTransaction
@@ -114,6 +114,20 @@ export const SignStepBody = ({
     NftEnumType.NonFungibleESDT,
     NftEnumType.SemiFungibleESDT
   ].includes(type as NftEnumType);
+
+  const { price: EGLDPrice } = useGetEgldPrice();
+  let tokenPrice = 0;
+
+  if (isEgld && EGLDPrice) {
+    tokenPrice = EGLDPrice;
+  }
+
+  if (!isNFTorSFT && !isEgld && price) {
+    tokenPrice = price;
+  }
+
+  const shouldShowAmount =
+    isEgld || isEsdt || (Boolean(type) && type !== NftEnumType.NonFungibleESDT);
 
   return (
     <>
@@ -138,13 +152,14 @@ export const SignStepBody = ({
           />
 
           <div className={styles.columns}>
-            {type !== NftEnumType.NonFungibleESDT && (
+            {shouldShowAmount && (
               <div className={styles.column}>
                 <ConfirmAmount
                   tokenAvatar={tokenAvatar}
                   amount={shownAmount}
                   token={token}
-                  tokenType={type ?? 'EGLD'}
+                  tokenType={isEgld ? 'EGLD' : type ?? ''}
+                  tokenPrice={tokenPrice}
                 />
               </div>
             )}
