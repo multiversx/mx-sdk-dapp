@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { TRANSACTIONS_BATCH } from 'apiCalls';
 import { TIMEOUT } from 'constants/network';
+import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
 import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import {
@@ -8,7 +9,6 @@ import {
   SendBatchTransactionReturnType,
   SignedTransactionType
 } from 'types';
-import { buildBatchId } from '../../hooks/transactions/helpers/buildBatchId';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[][];

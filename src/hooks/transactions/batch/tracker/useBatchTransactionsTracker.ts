@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useGetAccount } from 'hooks/account';
 import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
+import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useRegisterWebsocketListener } from 'hooks/websocketListener';
 import {
@@ -10,7 +11,6 @@ import {
 import { useCheckBatchesOnWsFailureFallback } from './useCheckBatchesOnWsFailureFallback';
 import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
-import { buildBatchId } from '../../helpers/buildBatchId';
 
 export type BatchTransactionsTrackerProps = {
   onSuccess?: (batchId: string | null) => void;
