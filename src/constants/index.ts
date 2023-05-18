@@ -42,3 +42,5 @@ export const N_A = 'N/A';
 
 export const ZERO = '0';
 export const ELLIPSIS = '...';
+
+export const BATCH_TRANSACTIONS_ID_SEPARATOR = '-';
