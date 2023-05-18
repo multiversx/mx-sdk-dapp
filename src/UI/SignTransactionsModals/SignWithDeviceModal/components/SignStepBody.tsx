@@ -1,8 +1,6 @@
-import React from 'react';
+import React, { MouseEvent, ReactNode } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
-
-// import globalStyles from 'assets/sass/main.scss';
 
 import { useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
@@ -10,7 +8,6 @@ import type {
   ActiveLedgerTransactionType,
   MultiSignTransactionType
 } from 'types';
-// import { TokenDetails } from 'UI/TokenDetails';
 import { NftEnumType } from 'types/tokens.types';
 import { TransactionData } from 'UI/TransactionData';
 import { getIdentifierType } from 'utils';
@@ -19,9 +16,11 @@ import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 
 import { useSignStepsClasses } from '../hooks';
+import { SignStepPropsType } from '../signWithDeviceModal.types';
 import { ConfirmAmount } from './components/ConfirmAmount';
 import { ConfirmFee } from './components/ConfirmFee';
 import { ConfirmReceiver } from './components/ConfirmReceiver';
+import { NFTSFTPreview } from './components/NFTSFTPreview';
 import styles from './signStepBodyStyles.scss';
 
 export interface SignStepInnerClassesType {
@@ -43,12 +42,25 @@ export interface SignStepBodyPropsType {
   allTransactions: MultiSignTransactionType[];
   signStepInnerClasses?: SignStepInnerClassesType;
   isGuarded?: boolean;
+  waitingForDevice: SignStepPropsType['waitingForDevice'];
+  signBtnLabel: string;
+  buttonClassName: SignStepInnerClassesType['buttonClassName'];
+  buttonsWrapperClassName: SignStepInnerClassesType['buttonsWrapperClassName'];
+  onSubmit: () => void;
+  onCloseClick: (event: MouseEvent<HTMLElement>) => void;
 }
 
 export const SignStepBody = ({
   currentTransaction,
   error,
-  signStepInnerClasses
+  signStepInnerClasses,
+  onCloseClick,
+  onSubmit,
+  buttonClassName,
+  buttonsWrapperClassName,
+  signBtnLabel,
+  currentStep,
+  waitingForDevice
 }: SignStepBodyPropsType) => {
   const egldLabel = getEgldLabel();
 
@@ -78,7 +90,7 @@ export const SignStepBody = ({
   const appendedNonce = nonce ? `-${nonce}` : '';
   const nftId = `${tokenId}${appendedNonce}`;
 
-  const { tokenDecimals, tokenAvatar, type } = useGetTokenDetails({
+  const { tokenDecimals, tokenAvatar, tokenLabel, type } = useGetTokenDetails({
     tokenId: nonce && nonce.length > 0 ? nftId : tokenId
   });
 
@@ -98,78 +110,98 @@ export const SignStepBody = ({
   const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
 
+  const isNFTorSFT = [
+    NftEnumType.NonFungibleESDT,
+    NftEnumType.SemiFungibleESDT
+  ].includes(type as NftEnumType);
+
   return (
     <>
-      {currentTransaction.transaction && (
-        <div className={styles.summary}>
-          <div className={styles.fields}>
-            <ConfirmReceiver
-              scamReport={scamReport}
-              receiver={
-                multiTxData
-                  ? new Address(receiver).bech32()
-                  : currentTransaction.transaction.getReceiver().toString()
-              }
+      <div className={styles.summary}>
+        <div className={styles.fields}>
+          {isNFTorSFT && (
+            <NFTSFTPreview
+              txType={type as NftEnumType}
+              tokenLabel={tokenLabel}
+              tokenId={tokenId}
+              tokenAvatar={tokenAvatar}
             />
+          )}
 
-            <div className={styles.columns}>
-              {/* {!isNFT && (
-                <div className={styles.column}>
-                  <Confirm.Amount
-                    txType={txType}
-                    tokenId={tokenId}
-                    tokenDecimals={tokenDetails.decimals}
-                    amount={String(amountInfo.amount)}
-                    nft={nft}
-                    egldPriceInUsd={egldPriceInUsd}
-                    egldLabel={egldLabel}
-                    tokenLabel={tokenDetails.name}
-                    tokenAvatar={tokenDetails.assets?.svgUrl || ''}
-                  />
-                </div>
-              )} */}
+          <ConfirmReceiver
+            scamReport={scamReport}
+            receiver={
+              multiTxData
+                ? new Address(receiver).bech32()
+                : currentTransaction.transaction.getReceiver().toString()
+            }
+          />
 
-              {type !== NftEnumType.NonFungibleESDT && (
-                <div className={styles.column}>
-                  <ConfirmAmount
-                    tokenAvatar={tokenAvatar}
-                    amount={shownAmount}
-                    token={token}
-                    tokenType={type ?? 'EGLD'}
-                  />
-                </div>
-              )}
-
+          <div className={styles.columns}>
+            {type !== NftEnumType.NonFungibleESDT && (
               <div className={styles.column}>
-                <ConfirmFee
+                <ConfirmAmount
                   tokenAvatar={tokenAvatar}
-                  egldLabel={egldLabel}
-                  transaction={currentTransaction.transaction}
+                  amount={shownAmount}
+                  token={token}
+                  tokenType={type ?? 'EGLD'}
                 />
               </div>
-            </div>
+            )}
 
-            {currentTransaction.transaction.getData() && (
-              <TransactionData
-                isScCall={!tokenId}
-                data={currentTransaction.transaction.getData().toString()}
-                highlight={multiTxData}
-                className={inputGroupClassName}
-                innerTransactionDataClasses={{
-                  transactionDataInputLabelClassName: inputLabelClassName,
-                  transactionDataInputValueClassName: inputValueClassName
-                }}
+            <div className={styles.column}>
+              <ConfirmFee
+                tokenAvatar={tokenAvatar}
+                egldLabel={egldLabel}
+                transaction={currentTransaction.transaction}
               />
-            )}
-
-            {error && (
-              <p className={classNames(classes.errorMessage, errorClassName)}>
-                {error}
-              </p>
-            )}
+            </div>
           </div>
+
+          {currentTransaction.transaction.getData() && (
+            <TransactionData
+              isScCall={!tokenId}
+              data={currentTransaction.transaction.getData().toString()}
+              highlight={multiTxData}
+              className={inputGroupClassName}
+              innerTransactionDataClasses={{
+                transactionDataInputLabelClassName: inputLabelClassName,
+                transactionDataInputValueClassName: inputValueClassName
+              }}
+            />
+          )}
+
+          {error && (
+            <p className={classNames(classes.errorMessage, errorClassName)}>
+              {error}
+            </p>
+          )}
         </div>
-      )}
+      </div>
+
+      <div
+        className={classNames(classes.buttonsWrapper, buttonsWrapperClassName)}
+      >
+        <button
+          id='closeButton'
+          data-testid='closeButton'
+          onClick={onCloseClick}
+          className={classNames(classes.cancelButton, buttonClassName)}
+        >
+          {currentStep === 0 ? 'Cancel' : 'Back'}
+        </button>
+
+        <button
+          type='button'
+          className={classNames(classes.signButton, buttonClassName)}
+          id='signBtn'
+          data-testid='signBtn'
+          onClick={onSubmit}
+          disabled={waitingForDevice}
+        >
+          {signBtnLabel}
+        </button>
+      </div>
     </>
   );
 };

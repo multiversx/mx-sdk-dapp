@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { useGetEgldPrice } from 'hooks';
 import { TokenDetails } from 'UI/TokenDetails';
+import { UsdValue } from 'UI/UsdValue';
 import { TokenAvatar } from '../TokenAvatar';
 import styles from './confirmAmountStyles.scss';
 
@@ -11,8 +13,13 @@ export interface ConfirmAmountPropsType {
   tokenType: string;
 }
 
-export const ConfirmAmount = (props: ConfirmAmountPropsType) => {
-  const { token, tokenAvatar, tokenType, amount } = props;
+export const ConfirmAmount = ({
+  token,
+  tokenAvatar,
+  tokenType,
+  amount
+}: ConfirmAmountPropsType) => {
+  const { price } = useGetEgldPrice();
 
   return (
     <div className={styles.amount}>
@@ -25,6 +32,15 @@ export const ConfirmAmount = (props: ConfirmAmountPropsType) => {
           {amount} <TokenDetails.Label token={token} />
         </div>
       </div>
+
+      {price && (
+        <UsdValue
+          amount={amount}
+          usd={price}
+          data-testid='confirmUsdValue'
+          className={styles.price}
+        />
+      )}
     </div>
   );
 };

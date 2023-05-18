@@ -1,17 +1,15 @@
 import React, { MouseEvent, useState } from 'react';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
-
-import { PageState } from 'UI/PageState';
-
 import { SignStepBody, SignStepBodyPropsType } from './components';
-import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+import { ProgressHeader } from './components/ProgressHeader';
+import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
 import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
 } from './signWithDeviceModal.types';
+
+import styles from './signWithDeviceModalStyles.scss';
 
 export { SignStepType, SignStepInnerClassesType };
 
@@ -73,63 +71,56 @@ export const SignStep = (props: SignStepType) => {
   signBtnLabel = signLastTransaction ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
-  const scamReport = currentTransaction.receiverScamInfo;
-  const classes = useSignStepsClasses(scamReport);
-
   const signStepBodyProps: SignStepBodyPropsType = {
     currentTransaction,
     error,
     allTransactions,
     currentStep,
     isGuarded: Boolean(GuardianScreen),
-    signStepInnerClasses
+    waitingForDevice,
+    signBtnLabel,
+    signStepInnerClasses,
+    buttonsWrapperClassName,
+    buttonClassName,
+    onCloseClick,
+    onSubmit
   };
 
   const onGuardianScreenPrev = () => {
     setShowGuardianScreen(false);
   };
 
-  if (GuardianScreen && showGuardianScreen) {
-    return <GuardianScreen {...props} onPrev={onGuardianScreenPrev} />;
-  }
+  const steps: ProgressHeaderPropsType['steps'] = [
+    {
+      title: 'Sign Transaction',
+      active: true
+    },
+    {
+      title: 'Confirm Transaction',
+      active: false,
+      hidden: !signStepBodyProps.isGuarded
+    }
+  ];
 
   return (
-    <PageState
-      icon={error ? faTimes : null}
-      iconClass={classes.icon}
-      iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
-      iconSize='3x'
-      className={className}
-      title={title || 'Confirm on Ledger'}
-      description={<SignStepBody {...signStepBodyProps} />}
-      action={
-        <div
-          className={classNames(
-            classes.buttonsWrapper,
-            buttonsWrapperClassName
-          )}
-        >
-          <button
-            id='closeButton'
-            data-testid='closeButton'
-            onClick={onCloseClick}
-            className={classNames(classes.cancelButton, buttonClassName)}
-          >
-            {isFirst ? 'Cancel' : 'Back'}
-          </button>
+    <div
+      className={classNames(
+        styles.modalLayoutContent,
+        styles.spaced,
+        className
+      )}
+    >
+      {signStepBodyProps.isGuarded && (
+        <ProgressHeader steps={steps} type='detailed' size='small' />
+      )}
 
-          <button
-            type='button'
-            className={classNames(classes.signButton, buttonClassName)}
-            id='signBtn'
-            data-testid='signBtn'
-            onClick={onSubmit}
-            disabled={waitingForDevice}
-          >
-            {signBtnLabel}
-          </button>
-        </div>
-      }
-    />
+      <div className={styles.title}>{title || 'Confirm on Ledger'}</div>
+
+      {GuardianScreen && showGuardianScreen ? (
+        <GuardianScreen {...props} onPrev={onGuardianScreenPrev} />
+      ) : (
+        <SignStepBody {...signStepBodyProps} />
+      )}
+    </div>
   );
 };

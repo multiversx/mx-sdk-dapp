@@ -1,0 +1,118 @@
+.progress-steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 32px;
+
+  .progress-step {
+    text-align: left;
+    display: flex;
+    flex: 1;
+
+    &:last-child .progress-step-wrapper::after {
+      content: none !important;
+    }
+
+    .progress-step-wrapper {
+      transition: all 200ms ease-out;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+
+      &.detailed.collapsible:not(.completed) {
+        &:after {
+          content: '';
+          position: absolute;
+          top: 9px;
+          right: -20px;
+          left: 28px;
+          height: 2px;
+          background-color: var(--muted);
+          transition: all 200ms ease-out;
+          border-radius: 2px;
+        }
+
+        &.active:after {
+          background-color: var(--body-color);
+        }
+      }
+    }
+
+    .progress-step-index {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+      font-weight: 900;
+      font-family: 'Roobert Heavy', 'Inter', Roboto, sans-serif;
+      color: black;
+      background-color: var(--muted);
+      transition: all 200ms ease-out;
+      position: relative;
+
+      &.active {
+        background-color: var(--body-color);
+      }
+
+      .progress-step-check {
+        color: var(--green);
+        position: absolute;
+        left: calc(100% + 8px);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .progress-step-title {
+      margin-top: 8px;
+      line-height: 1;
+      position: relative;
+      padding-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      flex: 1;
+
+      &.active {
+        color: var(--body-color);
+
+        &:after {
+          background-color: var(--muted);
+        }
+      }
+
+      &.collapsible {
+        height: 12px;
+
+        .progress-step-title-text {
+          transition: all 200ms ease-out;
+          transform-origin: top left;
+          font-size: 0px;
+          display: block;
+          position: relative;
+        }
+
+        &.active .progress-step-title-text {
+          font-size: 14px;
+        }
+      }
+
+      &.collapsible::after {
+        content: none;
+      }
+
+      &:after {
+        width: 100%;
+        height: 1px;
+        transition: all 200ms ease-out;
+        position: absolute;
+        content: '';
+        top: 100%;
+        left: 0;
+        background-color: var(--action-bg);
+      }
+    }
+  }
+}

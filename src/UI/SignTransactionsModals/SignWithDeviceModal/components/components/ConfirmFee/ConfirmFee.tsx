@@ -1,14 +1,9 @@
 import React from 'react';
-
-// import { calculateFeeInFiat } from 'operations';
 import { Transaction } from '@multiversx/sdk-core/out';
-import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER, ZERO } from 'constants/index';
 
-// import { TransactionTypeEnum } from 'types';
+import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER, ZERO } from 'constants/index';
 import { useGetEgldPrice } from 'hooks';
 import { FormatAmount } from 'UI/FormatAmount';
-
-// import { TokenAvatar } from '../TokenAvatar';
 import { calculateFeeInFiat, calculateFeeLimit } from 'utils';
 
 import { TokenAvatar } from '../TokenAvatar';

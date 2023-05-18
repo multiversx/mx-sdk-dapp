@@ -1,10 +1,17 @@
 import axios from 'axios';
 import useSwr from 'swr';
 
-import { COLLECTIONS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
+import {
+  COLLECTIONS_ENDPOINT,
+  NFTS_ENDPOINT,
+  TOKENS_ENDPOINT
+} from 'apiCalls/endpoints';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
+
+const nftSftTokenParts = 3;
+const nftSftCollectionParts = 2;
 
 export interface TokenAssets {
   description: string;
@@ -15,6 +22,14 @@ export interface TokenAssets {
   social?: any;
   extraTokens?: string[];
   lockedAccounts?: { [key: string]: string };
+}
+
+export interface TokenMediaType {
+  url?: string;
+  originalUrl?: string;
+  thumbnailUrl?: string;
+  fileType?: string;
+  fileSize?: number;
 }
 
 interface TokenOptionType {
@@ -33,6 +48,7 @@ interface TokenInfoResponse {
   decimals: number;
   type?: NftEnumType;
   assets: TokenAssets;
+  media?: TokenMediaType[];
 }
 
 const fetcher = (url: string) =>
@@ -44,14 +60,19 @@ export function useGetTokenDetails({
   tokenId: string;
 }): TokenOptionType {
   const { network } = useGetNetworkConfig();
+  const { isNft } = getIdentifierType(tokenId);
 
-  const { isEsdt, isNft } = getIdentifierType(tokenId);
-  const tokenEndpoint = isEsdt ? TOKENS_ENDPOINT : COLLECTIONS_ENDPOINT;
-  let tokenIdentifier = tokenId;
+  const tokenParts = tokenId.split('-');
+  const tokenIdentifier = tokenId;
 
-  if (isNft) {
-    const [firstPart, secondPart] = tokenId.split('-');
-    tokenIdentifier = `${firstPart}-${secondPart}`;
+  let tokenEndpoint = TOKENS_ENDPOINT;
+
+  if (isNft && tokenParts.length === nftSftTokenParts) {
+    tokenEndpoint = NFTS_ENDPOINT;
+  }
+
+  if (isNft && tokenParts.length === nftSftCollectionParts) {
+    tokenEndpoint = COLLECTIONS_ENDPOINT;
   }
 
   const {
@@ -76,7 +97,9 @@ export function useGetTokenDetails({
     ? selectedToken?.decimals
     : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
-  const tokenAvatar = selectedToken ? selectedToken?.assets?.svgUrl : '';
+  const tokenAvatar = selectedToken
+    ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0].thumbnailUrl
+    : '';
 
   const assets = selectedToken?.assets;
 
