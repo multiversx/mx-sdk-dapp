@@ -43,7 +43,7 @@ export const useBatchTransactionsTracker = ({
       const batchId = `${sessionId}-${address}`;
 
       const batchDoesNotExists = !Boolean(batches[batchId]);
-      const isPending = session.status !== TransactionBatchStatusesEnum.sent; //&&
+      const isPending = session.status !== TransactionBatchStatusesEnum.sent;
       const isCompleted = !isPending;
 
       if (isCompleted || batchDoesNotExists) {
