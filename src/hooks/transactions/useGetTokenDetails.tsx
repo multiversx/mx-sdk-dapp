@@ -6,8 +6,6 @@ import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
-const nftSftTokenParts = 3;
-
 export interface TokenAssets {
   description: string;
   status: string;
@@ -59,12 +57,10 @@ export function useGetTokenDetails({
   const { network } = useGetNetworkConfig();
   const { isNft } = getIdentifierType(tokenId);
 
-  const tokenParts = tokenId.split('-');
   const tokenIdentifier = tokenId;
-
   let tokenEndpoint = TOKENS_ENDPOINT;
 
-  if (isNft && tokenParts.length === nftSftTokenParts) {
+  if (isNft) {
     tokenEndpoint = NFTS_ENDPOINT;
   }
 

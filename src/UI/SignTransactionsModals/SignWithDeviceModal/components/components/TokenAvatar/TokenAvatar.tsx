@@ -6,51 +6,44 @@ import classNames from 'classnames';
 import MultiversXIcon from 'assets/icons/EGLD.svg';
 import { NftEnumType } from 'types/tokens.types';
 
+import { getEgldLabel } from 'utils';
 import styles from './tokenAvatarStyles.scss';
 
 export interface TokenAvatarPropsType {
-  type?: NftEnumType | 'EGLD';
+  type?: NftEnumType | string;
   avatar?: string;
 }
 
 export const TokenAvatar = (props: TokenAvatarPropsType) => {
   const { avatar, type } = props;
 
-  if (type === NftEnumType.NonFungibleESDT) {
-    return (
-      <div className={classNames(styles.tokenAvatar, styles.tokenAvatarNFT)}>
-        NFT
-      </div>
-    );
-  }
+  const egldLabel = getEgldLabel();
+  const isNft = type === NftEnumType.NonFungibleESDT;
+  const isSft = type === NftEnumType.SemiFungibleESDT;
+  const isEgld = type === egldLabel;
 
-  if (type === NftEnumType.SemiFungibleESDT) {
-    return (
-      <div className={classNames(styles.tokenAvatar, styles.tokenAvatarSFT)}>
-        SFT
-      </div>
-    );
-  }
+  const tokenIcon = avatar ? (
+    <img src={avatar} />
+  ) : (
+    <FontAwesomeIcon icon={faDiamond} />
+  );
 
-  if (type === 'EGLD') {
+  if (isNft || isSft) {
     return (
-      <div className={styles.tokenAvatar}>
-        <MultiversXIcon />
-      </div>
-    );
-  }
-
-  if (avatar) {
-    return (
-      <div className={styles.tokenAvatar}>
-        <img src={avatar} />
+      <div
+        className={classNames(styles.tokenAvatar, {
+          [styles.tokenAvatarNft]: isNft,
+          [styles.tokenAvatarSft]: isSft
+        })}
+      >
+        {isNft ? 'NFT' : 'SFT'}
       </div>
     );
   }
 
   return (
     <div className={styles.tokenAvatar}>
-      <FontAwesomeIcon icon={faDiamond} />
+      {isEgld ? <MultiversXIcon /> : tokenIcon}
     </div>
   );
 };

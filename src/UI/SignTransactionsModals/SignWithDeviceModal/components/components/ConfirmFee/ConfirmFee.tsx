@@ -37,7 +37,7 @@ export const ConfirmFee = ({
       <span className={styles.label}>Fee</span>
 
       <div className={styles.token}>
-        <TokenAvatar type='EGLD' avatar={tokenAvatar} />
+        <TokenAvatar type={egldLabel} avatar={tokenAvatar} />
 
         <div className={styles.value}>
           <FormatAmount

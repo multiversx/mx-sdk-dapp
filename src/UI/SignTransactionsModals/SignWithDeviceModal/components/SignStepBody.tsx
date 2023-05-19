@@ -91,7 +91,7 @@ export const SignStepBody = ({
 
   const { tokenDecimals, tokenAvatar, tokenLabel, type, esdtPrice } =
     useGetTokenDetails({
-      tokenId: nonce && nonce.length > 0 ? nftId : tokenId
+      tokenId: nonce && nonce?.length > 0 ? nftId : tokenId
     });
 
   const formattedAmount = formatAmount({
@@ -160,7 +160,7 @@ export const SignStepBody = ({
                   tokenAvatar={tokenAvatar}
                   amount={shownAmount}
                   token={token}
-                  tokenType={isEgld ? 'EGLD' : type ?? undefined}
+                  tokenType={isEgld ? egldLabel : type ?? undefined}
                   tokenPrice={tokenPrice}
                 />
               </div>
