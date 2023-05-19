@@ -34,7 +34,7 @@ export const ConfirmAmount = ({
 
     {tokenPrice === null ? (
       <LoadingDots className={styles.price} />
-    ) : (
+    ) : tokenPrice === 0 ? null : (
       <UsdValue
         amount={amount}
         usd={tokenPrice}
