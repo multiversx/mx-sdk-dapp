@@ -8,21 +8,21 @@ import {
   getExplorerLink
 } from 'utils/transactions/getInterpretedTransaction/helpers';
 
-import styles from './NFTSFTPreviewStyles.scss';
+import styles from './NftSftPreviewStyles.scss';
 
-export interface NFTSFTPreviewPropsType {
+export interface NftSftPreviewPropsType {
   txType: NftEnumType;
   tokenLabel: string;
   tokenId: string;
   tokenAvatar: string;
 }
 
-export const NFTSFTPreview = ({
+export const NftSftPreview = ({
   txType,
   tokenLabel,
   tokenId,
   tokenAvatar
-}: NFTSFTPreviewPropsType) => {
+}: NftSftPreviewPropsType) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();

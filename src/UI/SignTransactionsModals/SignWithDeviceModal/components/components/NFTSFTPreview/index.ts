@@ -1,1 +1,1 @@
-export * from './NFTSFTPreview';
+export * from './NftSftPreview';

@@ -3,13 +3,13 @@ import { DIGITS, DECIMALS } from 'constants/index';
 import { formatAmount } from './formatAmount';
 import { getUsdValue } from './getUsdValue';
 
-export function calculateFeeInFiat({
+export const calculateFeeInFiat = ({
   feeLimit,
   egldPriceInUsd
 }: {
   feeLimit: string;
   egldPriceInUsd: number;
-}) {
+}) => {
   const amount = formatAmount({
     input: feeLimit,
     decimals: DECIMALS,
@@ -24,6 +24,4 @@ export function calculateFeeInFiat({
   })}`;
 
   return feeInFiat;
-}
-
-export default calculateFeeInFiat;
+};

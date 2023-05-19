@@ -9,7 +9,7 @@ import { NftEnumType } from 'types/tokens.types';
 import styles from './tokenAvatarStyles.scss';
 
 export interface TokenAvatarPropsType {
-  type: string;
+  type?: NftEnumType | 'EGLD';
   avatar?: string;
 }
 

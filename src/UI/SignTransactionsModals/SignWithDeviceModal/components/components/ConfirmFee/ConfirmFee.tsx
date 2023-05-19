@@ -4,6 +4,7 @@ import { Transaction } from '@multiversx/sdk-core/out';
 import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
 import { useGetEgldPrice } from 'hooks';
 import { FormatAmount } from 'UI/FormatAmount';
+import { LoadingDots } from 'UI/LoadingDots';
 import { calculateFeeInFiat, calculateFeeLimit } from 'utils';
 
 import { TokenAvatar } from '../TokenAvatar';
@@ -21,7 +22,6 @@ export const ConfirmFee = ({
   egldLabel
 }: FeePropsType) => {
   const { price } = useGetEgldPrice();
-  const feePrice = price || 0;
 
   const feeLimit = calculateFeeLimit({
     gasPerDataByte: String(GAS_PER_DATA_BYTE),
@@ -50,10 +50,14 @@ export const ConfirmFee = ({
       </div>
 
       <span className={styles.price}>
-        {calculateFeeInFiat({
-          feeLimit,
-          egldPriceInUsd: feePrice
-        })}
+        {price ? (
+          calculateFeeInFiat({
+            feeLimit,
+            egldPriceInUsd: price
+          })
+        ) : (
+          <LoadingDots />
+        )}
       </span>
     </div>
   );

@@ -20,7 +20,7 @@ import { SignStepPropsType } from '../signWithDeviceModal.types';
 import { ConfirmAmount } from './components/ConfirmAmount';
 import { ConfirmFee } from './components/ConfirmFee';
 import { ConfirmReceiver } from './components/ConfirmReceiver';
-import { NFTSFTPreview } from './components/NFTSFTPreview';
+import { NftSftPreview } from './components/NftSftPreview';
 import styles from './signStepBodyStyles.scss';
 
 export interface SignStepInnerClassesType {
@@ -89,7 +89,7 @@ export const SignStepBody = ({
   const appendedNonce = nonce ? `-${nonce}` : '';
   const nftId = `${tokenId}${appendedNonce}`;
 
-  const { tokenDecimals, tokenAvatar, tokenLabel, type, price } =
+  const { tokenDecimals, tokenAvatar, tokenLabel, type, esdtPrice } =
     useGetTokenDetails({
       tokenId: nonce && nonce.length > 0 ? nftId : tokenId
     });
@@ -110,20 +110,22 @@ export const SignStepBody = ({
   const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
 
-  const isNFTorSFT = [
-    NftEnumType.NonFungibleESDT,
-    NftEnumType.SemiFungibleESDT
-  ].includes(type as NftEnumType);
+  const isSft = type === NftEnumType.SemiFungibleESDT;
+  const isNftOrSft = type === NftEnumType.SemiFungibleESDT || isSft;
 
-  const { price: EGLDPrice } = useGetEgldPrice();
-  let tokenPrice = 0;
+  const { price: egldPrice } = useGetEgldPrice();
+  let tokenPrice = null;
 
-  if (isEgld && EGLDPrice) {
-    tokenPrice = EGLDPrice;
+  if (isEgld && egldPrice) {
+    tokenPrice = egldPrice;
   }
 
-  if (!isNFTorSFT && !isEgld && price) {
-    tokenPrice = price;
+  if (isNft) {
+    tokenPrice = 0;
+  }
+
+  if (isEsdt && type) {
+    tokenPrice = esdtPrice ?? 0;
   }
 
   const shouldShowAmount =
@@ -133,9 +135,9 @@ export const SignStepBody = ({
     <>
       <div className={styles.summary}>
         <div className={styles.fields}>
-          {isNFTorSFT && (
-            <NFTSFTPreview
-              txType={type as NftEnumType}
+          {isNftOrSft && (
+            <NftSftPreview
+              txType={type}
               tokenLabel={tokenLabel}
               tokenId={tokenId}
               tokenAvatar={tokenAvatar}
@@ -158,7 +160,7 @@ export const SignStepBody = ({
                   tokenAvatar={tokenAvatar}
                   amount={shownAmount}
                   token={token}
-                  tokenType={isEgld ? 'EGLD' : type ?? ''}
+                  tokenType={isEgld ? 'EGLD' : type ?? undefined}
                   tokenPrice={tokenPrice}
                 />
               </div>

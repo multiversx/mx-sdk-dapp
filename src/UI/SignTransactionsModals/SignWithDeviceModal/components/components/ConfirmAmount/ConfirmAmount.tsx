@@ -1,16 +1,17 @@
 import React from 'react';
 
+import { LoadingDots } from 'UI/LoadingDots';
 import { TokenDetails } from 'UI/TokenDetails';
 import { UsdValue } from 'UI/UsdValue';
-import { TokenAvatar } from '../TokenAvatar';
+import { TokenAvatar, TokenAvatarPropsType } from '../TokenAvatar';
 import styles from './confirmAmountStyles.scss';
 
 export interface ConfirmAmountPropsType {
   token: string;
   amount: string;
   tokenAvatar?: string;
-  tokenType: string;
-  tokenPrice: number;
+  tokenType: TokenAvatarPropsType['type'];
+  tokenPrice: number | null;
 }
 
 export const ConfirmAmount = ({
@@ -31,11 +32,15 @@ export const ConfirmAmount = ({
       </div>
     </div>
 
-    <UsdValue
-      amount={amount}
-      usd={tokenPrice}
-      data-testid='confirmUsdValue'
-      className={styles.price}
-    />
+    {tokenPrice === null ? (
+      <LoadingDots className={styles.price} />
+    ) : (
+      <UsdValue
+        amount={amount}
+        usd={tokenPrice}
+        data-testid='confirmUsdValue'
+        className={styles.price}
+      />
+    )}
   </div>
 );

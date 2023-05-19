@@ -1,17 +1,12 @@
 import axios from 'axios';
 import useSwr from 'swr';
 
-import {
-  COLLECTIONS_ENDPOINT,
-  NFTS_ENDPOINT,
-  TOKENS_ENDPOINT
-} from 'apiCalls/endpoints';
+import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
 const nftSftTokenParts = 3;
-const nftSftCollectionParts = 2;
 
 export interface TokenAssets {
   description: string;
@@ -39,7 +34,7 @@ interface TokenOptionType {
   assets?: TokenAssets;
   type?: NftEnumType;
   error?: string;
-  price?: number;
+  esdtPrice?: number;
 }
 
 interface TokenInfoResponse {
@@ -71,10 +66,6 @@ export function useGetTokenDetails({
 
   if (isNft && tokenParts.length === nftSftTokenParts) {
     tokenEndpoint = NFTS_ENDPOINT;
-  }
-
-  if (isNft && tokenParts.length === nftSftCollectionParts) {
-    tokenEndpoint = COLLECTIONS_ENDPOINT;
   }
 
   const {
@@ -109,7 +100,7 @@ export function useGetTokenDetails({
     type: selectedToken?.type,
     tokenAvatar,
     assets: selectedToken?.assets,
-    price: selectedToken?.price,
+    esdtPrice: selectedToken?.price,
     error
   };
 }
