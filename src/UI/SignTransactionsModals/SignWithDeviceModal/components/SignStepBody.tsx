@@ -1,26 +1,27 @@
-import React from 'react';
-import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import React, { MouseEvent } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
-import globalStyles from 'assets/sass/main.scss';
-import { useGetNetworkConfig } from 'hooks';
+import { useGetEgldPrice, useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import type {
   ActiveLedgerTransactionType,
   MultiSignTransactionType
 } from 'types';
-import { ProgressSteps } from 'UI/ProgressSteps';
-import { TokenDetails } from 'UI/TokenDetails';
+import { NftEnumType } from 'types/tokens.types';
 import { TransactionData } from 'UI/TransactionData';
-
 import { getIdentifierType } from 'utils';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 
 import { useSignStepsClasses } from '../hooks';
+import { SignStepPropsType } from '../signWithDeviceModal.types';
+import { ConfirmAmount } from './components/ConfirmAmount';
+import { ConfirmFee } from './components/ConfirmFee';
+import { ConfirmReceiver } from './components/ConfirmReceiver';
+import { NftSftPreview } from './components/NftSftPreview';
+import styles from './signStepBodyStyles.scss';
 
 export interface SignStepInnerClassesType {
   buttonsWrapperClassName?: string;
@@ -41,15 +42,25 @@ export interface SignStepBodyPropsType {
   allTransactions: MultiSignTransactionType[];
   signStepInnerClasses?: SignStepInnerClassesType;
   isGuarded?: boolean;
+  waitingForDevice: SignStepPropsType['waitingForDevice'];
+  signBtnLabel: string;
+  buttonClassName: SignStepInnerClassesType['buttonClassName'];
+  buttonsWrapperClassName: SignStepInnerClassesType['buttonsWrapperClassName'];
+  onSubmit: () => void;
+  onCloseClick: (event: MouseEvent<HTMLElement>) => void;
 }
 
 export const SignStepBody = ({
   currentTransaction,
   error,
-  allTransactions,
-  isGuarded,
+  signStepInnerClasses,
+  onCloseClick,
+  onSubmit,
+  buttonClassName,
+  buttonsWrapperClassName,
+  signBtnLabel,
   currentStep,
-  signStepInnerClasses
+  waitingForDevice
 }: SignStepBodyPropsType) => {
   const egldLabel = getEgldLabel();
 
@@ -58,14 +69,11 @@ export const SignStepBody = ({
   }
 
   const { network } = useGetNetworkConfig();
-
   const {
     inputGroupClassName,
     inputLabelClassName,
     inputValueClassName,
-    errorClassName,
-    scamAlertClassName,
-    progressClassName
+    errorClassName
   } = signStepInnerClasses || {};
 
   const { tokenId, nonce, amount, multiTxData, receiver } =
@@ -75,15 +83,16 @@ export const SignStepBody = ({
     tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
   );
 
-  const { isNft } = getIdentifierType(tokenId);
+  const { isNft, isEgld, isEsdt } = getIdentifierType(tokenId);
 
   // If the token has a nonce means that this is an NFT. Eg: TokenId=TOKEN-1hfr, nonce=123 => NFT id=TOKEN-1hfr-123
   const appendedNonce = nonce ? `-${nonce}` : '';
   const nftId = `${tokenId}${appendedNonce}`;
 
-  const { tokenDecimals, tokenAvatar } = useGetTokenDetails({
-    tokenId: nonce && nonce.length > 0 ? nftId : tokenId
-  });
+  const { tokenDecimals, tokenAvatar, tokenLabel, type, esdtPrice } =
+    useGetTokenDetails({
+      tokenId: nonce && nonce?.length > 0 ? nftId : tokenId
+    });
 
   const formattedAmount = formatAmount({
     input: isTokenTransaction
@@ -95,94 +104,71 @@ export const SignStepBody = ({
     addCommas: true
   });
 
-  const extraGuardianStep = isGuarded ? 1 : 0;
-  const totalSteps = allTransactions.length + extraGuardianStep;
   const scamReport = currentTransaction.receiverScamInfo;
-  const showProgressSteps = totalSteps > 1;
   const classes = useSignStepsClasses(scamReport);
 
   const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
 
+  const { price: egldPrice } = useGetEgldPrice();
+  let tokenPrice;
+
+  if (isEgld && egldPrice) {
+    tokenPrice = egldPrice;
+  }
+
+  if (isNft) {
+    tokenPrice = null;
+  }
+
+  if (isEsdt && type) {
+    tokenPrice = esdtPrice ?? null;
+  }
+
+  const shouldShowAmount =
+    isEgld || isEsdt || (Boolean(type) && type !== NftEnumType.NonFungibleESDT);
+
   return (
     <>
-      {currentTransaction.transaction && (
-        <>
-          {showProgressSteps && (
-            <ProgressSteps
-              totalSteps={totalSteps}
-              currentStep={currentStep + 1} // currentStep starts at 0
-              className={classNames(globalStyles.mb4, progressClassName)}
+      <div className={styles.summary}>
+        <div className={styles.fields}>
+          {isNft && type && (
+            <NftSftPreview
+              txType={type}
+              tokenLabel={tokenLabel}
+              tokenId={tokenId}
+              tokenAvatar={tokenAvatar}
             />
           )}
 
-          <div
-            data-testid='transactionTitle'
-            className={classNames(classes.formGroup, inputGroupClassName)}
-          >
-            <div className={classNames(classes.formLabel, inputLabelClassName)}>
-              To
-            </div>
-
-            <div className={inputValueClassName} data-testid='confirmReceiver'>
-              {multiTxData
+          <ConfirmReceiver
+            scamReport={scamReport}
+            receiver={
+              multiTxData
                 ? new Address(receiver).bech32()
-                : currentTransaction.transaction.getReceiver().toString()}
-            </div>
+                : currentTransaction.transaction.getReceiver().toString()
+            }
+          />
 
-            {scamReport && (
-              <div
-                className={classNames(classes.scamReport, scamAlertClassName)}
-              >
-                <span>
-                  <FontAwesomeIcon
-                    icon={faExclamationTriangle}
-                    className={classes.scamReportIcon}
-                  />
-
-                  <small data-testid='confirmScamReport'>{scamReport}</small>
-                </span>
+          <div className={styles.columns}>
+            {shouldShowAmount && (
+              <div className={styles.column}>
+                <ConfirmAmount
+                  tokenAvatar={tokenAvatar}
+                  amount={shownAmount}
+                  token={token}
+                  tokenType={isEgld ? egldLabel : type}
+                  tokenPrice={tokenPrice}
+                />
               </div>
             )}
-          </div>
 
-          <div
-            className={classNames(classes.tokenWrapper, inputGroupClassName)}
-          >
-            <div
-              className={classNames(classes.tokenLabel, inputLabelClassName)}
-            >
-              Token
-            </div>
-
-            <div className={inputValueClassName} data-testid='confirmToken'>
-              <div className={classes.tokenValue}>
-                <TokenDetails.Icon tokenAvatar={tokenAvatar} token={token} />
-
-                <div className={globalStyles.mr2}></div>
-                <TokenDetails.Label token={token} />
-              </div>
-            </div>
-          </div>
-
-          <div className={inputGroupClassName}>
-            <div
-              className={classNames(
-                classes.tokenAmountLabel,
-                inputLabelClassName
-              )}
-            >
-              Amount
-            </div>
-
-            <div
-              className={classNames(
-                classes.tokenAmountValue,
-                inputValueClassName
-              )}
-              data-testid='confirmAmount'
-            >
-              {shownAmount}
+            <div className={styles.column}>
+              <ConfirmFee
+                tokenAvatar={tokenAvatar}
+                egldLabel={egldLabel}
+                transaction={currentTransaction.transaction}
+              />
             </div>
           </div>
 
@@ -204,8 +190,32 @@ export const SignStepBody = ({
               {error}
             </p>
           )}
-        </>
-      )}
+        </div>
+      </div>
+
+      <div
+        className={classNames(classes.buttonsWrapper, buttonsWrapperClassName)}
+      >
+        <button
+          id='closeButton'
+          data-testid='closeButton'
+          onClick={onCloseClick}
+          className={classNames(classes.cancelButton, buttonClassName)}
+        >
+          {currentStep === 0 ? 'Cancel' : 'Back'}
+        </button>
+
+        <button
+          type='button'
+          className={classNames(classes.signButton, buttonClassName)}
+          id='signBtn'
+          data-testid='signBtn'
+          onClick={onSubmit}
+          disabled={waitingForDevice}
+        >
+          {signBtnLabel}
+        </button>
+      </div>
     </>
   );
 };
