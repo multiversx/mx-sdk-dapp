@@ -20,7 +20,7 @@ import { SignStepPropsType } from '../signWithDeviceModal.types';
 import { ConfirmAmount } from './components/ConfirmAmount';
 import { ConfirmFee } from './components/ConfirmFee';
 import { ConfirmReceiver } from './components/ConfirmReceiver';
-import { NftSftPreview } from './components/NftSftPreview';
+import { NftSftPreviewComponent } from './components/NftSftPreviewComponent';
 import styles from './signStepBodyStyles.scss';
 
 export interface SignStepInnerClassesType {
@@ -133,7 +133,7 @@ export const SignStepBody = ({
       <div className={styles.summary}>
         <div className={styles.fields}>
           {isNft && type && (
-            <NftSftPreview
+            <NftSftPreviewComponent
               txType={type}
               tokenLabel={tokenLabel}
               tokenId={tokenId}
