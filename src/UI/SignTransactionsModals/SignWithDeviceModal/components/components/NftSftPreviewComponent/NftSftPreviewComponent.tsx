@@ -8,7 +8,7 @@ import {
   getExplorerLink
 } from 'utils/transactions/getInterpretedTransaction/helpers';
 
-import styles from './NftSftPreview.styles.scss';
+import styles from './NftSftPreviewComponent.styles.scss';
 
 export interface NftSftPreviewPropsType {
   txType: NftEnumType;
@@ -17,7 +17,7 @@ export interface NftSftPreviewPropsType {
   tokenAvatar: string;
 }
 
-export const NftSftPreview = ({
+export const NftSftPreviewComponent = ({
   txType,
   tokenLabel,
   tokenId,
