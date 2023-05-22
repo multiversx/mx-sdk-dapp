@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix websocket reconnect issue](https://github.com/multiversx/mx-sdk-dapp/pull/797)
+
 ## [[v2.14.0]](https://github.com/multiversx/mx-sdk-dapp/pull/796)] - 2023-05-22
 
 - [Updated layout for the sign transaction flow](https://github.com/multiversx/mx-sdk-dapp/pull/795)
