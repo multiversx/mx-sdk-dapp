@@ -110,22 +110,19 @@ export const SignStepBody = ({
   const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
 
-  const isSft = type === NftEnumType.SemiFungibleESDT;
-  const isNftOrSft = type === NftEnumType.SemiFungibleESDT || isSft;
-
   const { price: egldPrice } = useGetEgldPrice();
-  let tokenPrice = null;
+  let tokenPrice;
 
   if (isEgld && egldPrice) {
     tokenPrice = egldPrice;
   }
 
   if (isNft) {
-    tokenPrice = 0;
+    tokenPrice = null;
   }
 
   if (isEsdt && type) {
-    tokenPrice = esdtPrice ?? 0;
+    tokenPrice = esdtPrice ?? null;
   }
 
   const shouldShowAmount =
@@ -135,7 +132,7 @@ export const SignStepBody = ({
     <>
       <div className={styles.summary}>
         <div className={styles.fields}>
-          {isNftOrSft && (
+          {isNft && type && (
             <NftSftPreview
               txType={type}
               tokenLabel={tokenLabel}
@@ -160,7 +157,7 @@ export const SignStepBody = ({
                   tokenAvatar={tokenAvatar}
                   amount={shownAmount}
                   token={token}
-                  tokenType={isEgld ? egldLabel : type ?? undefined}
+                  tokenType={isEgld ? egldLabel : type}
                   tokenPrice={tokenPrice}
                 />
               </div>

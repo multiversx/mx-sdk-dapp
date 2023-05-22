@@ -11,7 +11,7 @@ export interface ConfirmAmountPropsType {
   amount: string;
   tokenAvatar?: string;
   tokenType: TokenAvatarPropsType['type'];
-  tokenPrice: number | null;
+  tokenPrice?: number | null;
 }
 
 export const ConfirmAmount = ({
@@ -32,15 +32,15 @@ export const ConfirmAmount = ({
       </div>
     </div>
 
-    {tokenPrice === null ? (
-      <LoadingDots className={styles.price} />
-    ) : tokenPrice === 0 ? null : (
+    {tokenPrice === null ? null : tokenPrice ? (
       <UsdValue
         amount={amount}
         usd={tokenPrice}
         data-testid='confirmUsdValue'
         className={styles.price}
       />
+    ) : (
+      <LoadingDots className={styles.price} />
     )}
   </div>
 );

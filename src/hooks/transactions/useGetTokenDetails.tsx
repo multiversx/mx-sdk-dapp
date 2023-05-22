@@ -58,11 +58,7 @@ export function useGetTokenDetails({
   const { isNft } = getIdentifierType(tokenId);
 
   const tokenIdentifier = tokenId;
-  let tokenEndpoint = TOKENS_ENDPOINT;
-
-  if (isNft) {
-    tokenEndpoint = NFTS_ENDPOINT;
-  }
+  const tokenEndpoint = isNft ? NFTS_ENDPOINT : TOKENS_ENDPOINT;
 
   const {
     data: selectedToken,
