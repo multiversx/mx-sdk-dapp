@@ -8,7 +8,7 @@ import {
   getExplorerLink
 } from 'utils/transactions/getInterpretedTransaction/helpers';
 
-import styles from './NftSftPreviewStyles.scss';
+import styles from './NftSftPreview.styles.scss';
 
 export interface NftSftPreviewPropsType {
   txType: NftEnumType;
