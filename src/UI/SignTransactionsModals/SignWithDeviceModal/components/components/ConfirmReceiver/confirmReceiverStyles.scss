@@ -1,0 +1,20 @@
+.receiver {
+  text-align: left;
+
+  .value {
+    font-size: 16px;
+    word-break: break-all;
+    line-height: 1.5;
+    display: block;
+    color: #e5e5e5;
+  }
+
+  .label {
+    margin-bottom: 8px;
+    color: #a3a3a3;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 400;
+    display: block;
+  }
+}
