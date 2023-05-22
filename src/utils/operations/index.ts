@@ -8,3 +8,4 @@ export * from './pipe';
 export * from './timeRemaining';
 export * from './truncate';
 export * from './ledger';
+export * from './calculateFeeInFiat';
