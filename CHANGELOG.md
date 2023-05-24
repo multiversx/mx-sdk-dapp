@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed SignStepBody modularization](https://github.com/multiversx/mx-sdk-dapp/pull/800)
 
 ## [[v2.14.0]](https://github.com/multiversx/mx-sdk-dapp/pull/796)] - 2023-05-22
 
