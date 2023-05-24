@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { SignStepBody, SignStepBodyPropsType } from './components';
 import { ProgressHeader } from './components/ProgressHeader';
 import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
+import { useSignStepsClasses } from './hooks';
 import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
@@ -79,13 +80,7 @@ export const SignStep = (props: SignStepType) => {
     allTransactions,
     currentStep,
     isGuarded: Boolean(GuardianScreen),
-    waitingForDevice,
-    signBtnLabel,
-    signStepInnerClasses,
-    buttonsWrapperClassName,
-    buttonClassName,
-    onCloseClick,
-    onSubmit
+    signStepInnerClasses
   };
 
   const onGuardianScreenPrev = () => {
@@ -105,6 +100,8 @@ export const SignStep = (props: SignStepType) => {
   ];
 
   const currentProgressStep = steps.find((step) => step.active);
+  const scamReport = currentTransaction.receiverScamInfo;
+  const classes = useSignStepsClasses(scamReport);
 
   return (
     <div
@@ -146,7 +143,35 @@ export const SignStep = (props: SignStepType) => {
           guardianFormDescription='Enter the code from your Authenticator app to verify this transaction.'
         />
       ) : (
-        <SignStepBody {...signStepBodyProps} />
+        <>
+          <SignStepBody {...signStepBodyProps} />
+          <div
+            className={classNames(
+              classes.buttonsWrapper,
+              buttonsWrapperClassName
+            )}
+          >
+            <button
+              id='closeButton'
+              data-testid='closeButton'
+              onClick={onCloseClick}
+              className={classNames(classes.cancelButton, buttonClassName)}
+            >
+              {currentStep === 0 ? 'Cancel' : 'Back'}
+            </button>
+
+            <button
+              type='button'
+              className={classNames(classes.signButton, buttonClassName)}
+              id='signBtn'
+              data-testid='signBtn'
+              onClick={onSubmit}
+              disabled={waitingForDevice}
+            >
+              {signBtnLabel}
+            </button>
+          </div>
+        </>
       )}
     </div>
   );
