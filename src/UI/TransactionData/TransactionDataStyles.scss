@@ -1,0 +1,24 @@
+.data {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+
+  .label {
+    margin-bottom: 8px;
+    color: #a3a3a3;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 400;
+    display: block;
+  }
+
+  .value {
+    min-height: 80px;
+    font-size: 14px;
+    padding: 12px;
+    line-height: 1.25;
+    border-radius: 6px;
+    border: 1px solid #262626;
+    word-break: break-all;
+  }
+}

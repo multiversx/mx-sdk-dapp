@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ReactNode, Dispatch, SetStateAction } from 'react';
 import type { Address, Transaction } from '@multiversx/sdk-core';
 import type { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
@@ -109,6 +109,7 @@ export interface SimpleTransactionType {
   options?: number;
   guardian?: string;
   guardianSignature?: string;
+  nonce?: number;
 }
 
 export interface TransactionsDisplayInfoType {
@@ -183,8 +184,9 @@ export interface GuardianScreenType extends WithClassnameType {
   title?: ReactNode;
   signStepInnerClasses?: SignStepInnerClassesType;
   signedTransactions?: DeviceSignedTransactions;
-  setSignedTransactions?: React.Dispatch<
-    React.SetStateAction<DeviceSignedTransactions | undefined>
+  guardianFormDescription?: ReactNode;
+  setSignedTransactions?: Dispatch<
+    SetStateAction<DeviceSignedTransactions | undefined>
   >;
 }
 

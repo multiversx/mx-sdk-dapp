@@ -34,7 +34,9 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     });
   }
 
-  transaction.applySignature(new Signature(rawTransaction.signature));
+  if (rawTransaction.signature) {
+    transaction.applySignature(new Signature(rawTransaction.signature));
+  }
 
   return transaction;
 }

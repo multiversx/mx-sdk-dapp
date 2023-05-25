@@ -70,9 +70,7 @@ export function useInitializeWebsocketConnection() {
 
         websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
 
-        websocketConnection.current.onAny((message) => {
-          handleMessageReceived(message);
-        });
+        websocketConnection.current.onAny(handleMessageReceived);
 
         websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
       },
@@ -89,15 +87,17 @@ export function useInitializeWebsocketConnection() {
       address &&
       websocketConnection.status ===
         WebsocketConnectionStatusEnum.NOT_INITIALIZED &&
-      !websocketConnection.current
+      !websocketConnection.current?.active
     ) {
       initializeWebsocketConnection();
     }
-  }, [address, websocketConnection.current]);
+  }, [address, initializeWebsocketConnection]);
 
   useEffect(() => {
     return () => {
       websocketConnection.current?.close();
+      websocketConnection.status =
+        WebsocketConnectionStatusEnum.NOT_INITIALIZED;
       if (timeout.current) {
         clearTimeout(timeout.current);
       }

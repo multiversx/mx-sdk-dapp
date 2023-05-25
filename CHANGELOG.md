@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.14.1]](https://github.com/multiversx/mx-sdk-dapp/pull/801)] - 2023-05-24
+
+- [Fixed SignStepBody modularization](https://github.com/multiversx/mx-sdk-dapp/pull/800)
+
+## [[v2.14.0]](https://github.com/multiversx/mx-sdk-dapp/pull/796)] - 2023-05-22
+
+- [Fix websocket reconnect issue](https://github.com/multiversx/mx-sdk-dapp/pull/797)
+- [Updated layout for the sign transaction flow](https://github.com/multiversx/mx-sdk-dapp/pull/795)
+
+## [[v2.13.8]](https://github.com/multiversx/mx-sdk-dapp/pull/794)] - 2023-05-18
+
+- [Fix early check mechanism for batch transactions (batch transactions tracker)](https://github.com/multiversx/mx-sdk-dapp/pull/793)
+
+## [[v2.13.7]](https://github.com/multiversx/mx-sdk-dapp/pull/792)] - 2023-05-17
+
+- [Added `type` to token data on sign screen, `getEconomicsInfo`, and `useGetEgldPrice` hook](https://github.com/multiversx/mx-sdk-dapp/pull/791)
+- [Fix batch transactions fallbacks](https://github.com/multiversx/mx-sdk-dapp/pull/779)
+
+## [[v2.13.6]](https://github.com/multiversx/mx-sdk-dapp/pull/790)] - 2023-05-17
+
+- [Fix nonce management](https://github.com/multiversx/mx-sdk-dapp/pull/788)
+- [Guarded account `gasLimit` update in `s` helper](https://github.com/multiversx/mx-sdk-dapp/pull/789)
+- [Added flag `preventNonceUpdate` to prevent nonce update](https://github.com/multiversx/mx-sdk-dapp/pull/786)
+
 ## [[v2.13.5]](https://github.com/multiversx/mx-sdk-dapp/pull/784)] - 2023-05-13
 
 - [Revert nonce management solution](https://github.com/multiversx/mx-sdk-dapp/pull/781)

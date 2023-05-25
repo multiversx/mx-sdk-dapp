@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
 import { useResolveBatchStatusResponse } from 'hooks/transactions/batch/useResolveBatchStatusResponse';
+import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { removeBatchTransactions } from 'services/transactions';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { useCheckBatch } from './useCheckBatch';
 import { useUpdateBatch } from './useUpdateBatch';
@@ -23,35 +23,37 @@ export const useVerifyBatchStatus = (props?: {
 
   const verifyBatchStatus = useCallback(
     async ({ batchId }: { batchId: string }) => {
-      const data = await checkBatch({ batchId });
-      await updateBatch({
-        batchId,
-        isBatchFailed: data?.isBatchFailed,
-        shouldRefreshBalance: true
-      });
+      const sessionId = extractSessionId(batchId)?.toString() ?? '';
+      const session = signedTransactions[sessionId];
 
-      const sessionId = batchId.split('-')[0];
-      if (!sessionId) {
+      if (!session) {
         return;
       }
 
+      const sessionTransactions =
+        signedTransactions[sessionId]?.transactions ?? [];
+
       const { isSuccessful, isFailed, isPending } = getTransactionsStatus({
-        transactions: signedTransactions[sessionId]?.transactions ?? []
+        transactions: sessionTransactions
       });
+      const completed = !isPending;
 
-      if (!isPending) {
-        removeBatchTransactions(batchId);
-
+      if (completed) {
         if (isSuccessful) {
           onSuccess?.(batchId);
         }
 
         if (isFailed) {
-          onFail?.(
-            batchId,
-            `Error processing batch transactions. Status: ${data?.statusResponse?.status}`
-          );
+          onFail?.(batchId, 'Error processing batch transactions.');
         }
+      } else {
+        const data = await checkBatch({ batchId });
+        await updateBatch({
+          sessionId: sessionId.toString(),
+          isBatchFailed: data?.isBatchFailed,
+          shouldRefreshBalance: true,
+          transactions: sessionTransactions
+        });
       }
     },
     [

@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "2.14.0-alpha.2",
+  "version": "2.14.1",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -167,6 +167,6 @@
     "redux-persist": "6.0.0",
     "reselect": "4.0.0",
     "shx": "0.3.4",
-    "socket.io-client": "4.5.1"
+    "socket.io-client": "4.6.1"
   }
 }

@@ -2,9 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+
 import { N_A } from 'constants/index';
 import { decodePart } from 'utils/decoders/decodePart';
 import { WithClassnameType } from '../types';
+
+import styles from './TransactionDataStyles.scss';
 
 const allOccurences = (sourceStr: string, searchStr: string) =>
   [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
@@ -77,21 +80,10 @@ export const TransactionData = ({
   return (
     <>
       {encodedScCall && (
-        <div
-          className={classNames(
-            globalStyles.formGroup,
-            globalStyles.mb0,
-            globalStyles.dataField,
-            globalStyles.mw100,
-            globalStyles.w100,
-            className
-          )}
-        >
+        <div className={classNames(styles.data, className)}>
           <span
             className={classNames(
-              globalStyles.formLabel,
-              globalStyles.textSecondary,
-              globalStyles.dBlock,
+              styles.label,
               transactionDataInputLabelClassName
             )}
           >
@@ -101,12 +93,7 @@ export const TransactionData = ({
           <div
             data-testid='confirmScCall'
             className={classNames(
-              globalStyles.textarea,
-              globalStyles.scCall,
-              globalStyles.formControl,
-              globalStyles.mt1,
-              globalStyles.textBreak,
-              globalStyles.w100,
+              styles.value,
               transactionDataInputValueClassName
             )}
           >
@@ -114,21 +101,11 @@ export const TransactionData = ({
           </div>
         </div>
       )}
-      <div
-        className={classNames(
-          globalStyles.formGroup,
-          globalStyles.mb0,
-          globalStyles.dataField,
-          globalStyles.mw100,
-          globalStyles.w100,
-          className
-        )}
-      >
+
+      <div className={styles.data}>
         <span
           className={classNames(
-            globalStyles.formLabel,
-            globalStyles.textSecondary,
-            globalStyles.dBlock,
+            styles.label,
             transactionDataInputLabelClassName
           )}
         >
@@ -138,11 +115,7 @@ export const TransactionData = ({
         <div
           data-testid='confirmData'
           className={classNames(
-            globalStyles.textarea,
-            globalStyles.formControl,
-            globalStyles.mt1,
-            globalStyles.textBreak,
-            globalStyles.w100,
+            styles.value,
             transactionDataInputValueClassName
           )}
         >

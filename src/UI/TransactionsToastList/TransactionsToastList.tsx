@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
@@ -10,7 +10,11 @@ import {
 import { addTransactionToast, removeTransactionToast } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import { removeSignedTransaction } from 'services';
-import { SignedTransactionsBodyType, SignedTransactionsType } from 'types';
+import {
+  SignedTransactionsBodyType,
+  SignedTransactionsType,
+  TransactionBatchStatusesEnum
+} from 'types';
 import { TransactionToastType } from 'types/toasts.types';
 
 import { deleteCustomToast } from 'utils/toasts/customToastsActions';
@@ -67,21 +71,30 @@ export const TransactionsToastList = ({
     removeSignedTransaction(toastId);
   };
 
-  const handleSignedTransactionsListUpdate = () => {
+  const handleSignedTransactionsListUpdate = useCallback(() => {
     for (const sessionId in signedTransactionsToRender) {
-      const alreadyHasToastForThisTransaction = transactionsToasts.some(
-        (toast: TransactionToastType): boolean => toast.toastId === sessionId
+      const session = signedTransactionsToRender[sessionId];
+      const skipSending =
+        session?.customTransactionInformation?.signWithoutSending;
+
+      if (skipSending) {
+        continue;
+      }
+
+      const alreadyHasToastForThisSession = transactionsToasts.some(
+        (toast: TransactionToastType): boolean =>
+          `${toast.toastId}` === `${sessionId}`
       );
 
-      if (!alreadyHasToastForThisTransaction) {
+      if (!alreadyHasToastForThisSession) {
         dispatch(addTransactionToast(sessionId));
       }
     }
-  };
+  }, [dispatch, signedTransactionsToRender, transactionsToasts]);
 
   useEffect(() => {
     handleSignedTransactionsListUpdate();
-  }, [signedTransactionsToRender]);
+  }, [signedTransactionsToRender, handleSignedTransactionsListUpdate]);
 
   const MemoizedTransactionsToastsList = useMemo(
     () =>
@@ -108,7 +121,8 @@ export const TransactionsToastList = ({
       transactionsToasts,
       signedTransactionsToRender,
       successfulToastLifetime,
-      handleDeleteTransactionToast
+      handleDeleteTransactionToast,
+      transactionToastClassName
     ]
   );
 
@@ -134,8 +148,9 @@ export const TransactionsToastList = ({
 
       const { status } = currentTx;
       const isPending = getIsTransactionPending(status);
+      const isSigned = status === TransactionBatchStatusesEnum.signed;
 
-      if (!isPending) {
+      if (!isPending && !isSigned) {
         handleDeleteTransactionToast(transactionToast.toastId);
       }
     });

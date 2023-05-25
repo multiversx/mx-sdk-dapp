@@ -1,16 +1,18 @@
 import React, { MouseEvent, useState } from 'react';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
+
+import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
-import { PageState } from 'UI/PageState';
-
 import { SignStepBody, SignStepBodyPropsType } from './components';
-import { useSignStepsClasses } from './hooks/useSignStepsClasses';
+import { ProgressHeader } from './components/ProgressHeader';
+import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
+import { useSignStepsClasses } from './hooks';
 import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
 } from './signWithDeviceModal.types';
+
+import styles from './signWithDeviceModalStyles.scss';
 
 export { SignStepType, SignStepInnerClassesType };
 
@@ -72,9 +74,6 @@ export const SignStep = (props: SignStepType) => {
   signBtnLabel = signLastTransaction ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
 
-  const scamReport = currentTransaction.receiverScamInfo;
-  const classes = useSignStepsClasses(scamReport);
-
   const signStepBodyProps: SignStepBodyPropsType = {
     currentTransaction,
     error,
@@ -88,47 +87,92 @@ export const SignStep = (props: SignStepType) => {
     setShowGuardianScreen(false);
   };
 
-  if (GuardianScreen && showGuardianScreen) {
-    return <GuardianScreen {...props} onPrev={onGuardianScreenPrev} />;
-  }
+  const steps: ProgressHeaderPropsType['steps'] = [
+    {
+      title: title || 'Sign Transaction',
+      active: !showGuardianScreen
+    },
+    {
+      title: 'Confirm Transaction',
+      active: showGuardianScreen,
+      hidden: !signStepBodyProps.isGuarded
+    }
+  ];
+
+  const currentProgressStep = steps.find((step) => step.active);
+  const scamReport = currentTransaction.receiverScamInfo;
+  const classes = useSignStepsClasses(scamReport);
 
   return (
-    <PageState
-      icon={error ? faTimes : null}
-      iconClass={classes.icon}
-      iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
-      iconSize='3x'
-      className={className}
-      title={title || 'Confirm on Ledger'}
-      description={<SignStepBody {...signStepBodyProps} />}
-      action={
+    <div
+      className={classNames(
+        styles.modalLayoutContent,
+        styles.spaced,
+        className,
+        { [styles.guarded]: signStepBodyProps.isGuarded }
+      )}
+    >
+      {showGuardianScreen && (
         <div
-          className={classNames(
-            classes.buttonsWrapper,
-            buttonsWrapperClassName
-          )}
+          onClick={onGuardianScreenPrev}
+          className={classNames(styles.modalLayoutHeadingIcon, styles.back)}
         >
-          <button
-            id='closeButton'
-            data-testid='closeButton'
-            onClick={onCloseClick}
-            className={classNames(classes.cancelButton, buttonClassName)}
-          >
-            {isFirst ? 'Cancel' : 'Back'}
-          </button>
-
-          <button
-            type='button'
-            className={classNames(classes.signButton, buttonClassName)}
-            id='signBtn'
-            data-testid='signBtn'
-            onClick={onSubmit}
-            disabled={waitingForDevice}
-          >
-            {signBtnLabel}
-          </button>
+          <FontAwesomeIcon icon={faArrowLeft} />
         </div>
-      }
-    />
+      )}
+
+      <div
+        onClick={onCloseClick}
+        className={classNames(styles.modalLayoutHeadingIcon, styles.close)}
+      >
+        <FontAwesomeIcon icon={faTimes} />
+      </div>
+
+      {signStepBodyProps.isGuarded && (
+        <ProgressHeader steps={steps} type='detailed' size='small' />
+      )}
+
+      <div className={styles.title}>
+        {currentProgressStep?.title || 'Confirm on Ledger'}
+      </div>
+
+      {GuardianScreen && showGuardianScreen ? (
+        <GuardianScreen
+          {...props}
+          onPrev={onGuardianScreenPrev}
+          guardianFormDescription='Enter the code from your Authenticator app to verify this transaction.'
+        />
+      ) : (
+        <>
+          <SignStepBody {...signStepBodyProps} />
+          <div
+            className={classNames(
+              classes.buttonsWrapper,
+              buttonsWrapperClassName
+            )}
+          >
+            <button
+              id='closeButton'
+              data-testid='closeButton'
+              onClick={onCloseClick}
+              className={classNames(classes.cancelButton, buttonClassName)}
+            >
+              {currentStep === 0 ? 'Cancel' : 'Back'}
+            </button>
+
+            <button
+              type='button'
+              className={classNames(classes.signButton, buttonClassName)}
+              id='signBtn'
+              data-testid='signBtn'
+              onClick={onSubmit}
+              disabled={waitingForDevice}
+            >
+              {signBtnLabel}
+            </button>
+          </div>
+        </>
+      )}
+    </div>
   );
 };
