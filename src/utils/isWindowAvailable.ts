@@ -1,1 +1,2 @@
-export const isWindowAvailable = () => typeof window != 'undefined';
+export const isWindowAvailable = () =>
+  typeof window != 'undefined' && typeof window?.location != 'undefined';
