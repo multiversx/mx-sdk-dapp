@@ -10,7 +10,10 @@ import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
 } from 'services/transactions/sendBatchTransactions';
-import { TransactionBatchStatusesEnum } from 'types/enums.types';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
 import { BatchTransactionStatus } from 'types/serverTransactions.types';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 
@@ -33,13 +36,19 @@ export const useSendBatchTransactions = () => {
         };
 
         dispatch(setTxSubmittedModal(submittedModalPayload));
+
+        const transactions = sequentialToFlatArray({
+          transactions: params.transactions
+        }).map((transaction) => ({
+          ...transaction,
+          status: TransactionServerStatusesEnum.pending
+        }));
+
         dispatch(
           updateSignedTransactions({
             sessionId: params.sessionId,
             status: TransactionBatchStatusesEnum.sent,
-            transactions: sequentialToFlatArray({
-              transactions: data.transactions
-            })
+            transactions
           })
         );
       }
@@ -53,8 +62,7 @@ export const useSendBatchTransactions = () => {
 
       if (Boolean(error) || !isBatchStatusValid) {
         console.error('Unable to send batch transactions');
-        const batchId = data?.id ?? '';
-        removeBatchTransactions(batchId);
+        removeBatchTransactions(data?.id ?? '');
       }
 
       return response;
