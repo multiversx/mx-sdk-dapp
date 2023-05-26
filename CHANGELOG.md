@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix batch transactions payload after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
+
 ## [[v2.14.2]](https://github.com/multiversx/mx-sdk-dapp/pull/806)] - 2023-05-26
 
 - [Fix/window location for RN](https://github.com/multiversx/mx-sdk-dapp/pull/805)
