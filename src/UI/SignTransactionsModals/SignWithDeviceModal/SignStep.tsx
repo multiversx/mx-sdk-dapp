@@ -96,12 +96,12 @@ export const SignStep = (props: SignStepType) => {
   const defaultSignTitle =
     allTransactions.length > 1
       ? `Signing Transaction ${currentStep + 1} of ${allTransactions.length}`
-      : 'Sign Transaction';
+      : title || 'Sign Transaction';
 
   const isGuardianScreenVisible = GuardianScreen && showGuardianScreen;
   const signFlowTitle = isGuardianScreenVisible
     ? 'Verify Guardian'
-    : title || defaultSignTitle;
+    : defaultSignTitle;
 
   const steps: ProgressHeaderPropsType['steps'] = [
     {
