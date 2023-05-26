@@ -13595,8 +13595,8 @@
     "shallowequal" "^1.1.0"
     "throttle-debounce" "^3.0.1"
 
-"react@file:../mx-wallet-dapp/node_modules/react":
-  "resolved" "file:../mx-wallet-dapp/node_modules/react"
+"react@file:../mx-exchange-dapp/node_modules/react":
+  "resolved" "file:../mx-exchange-dapp/node_modules/react"
   "version" "18.2.0"
   dependencies:
     "loose-envify" "^1.1.0"
