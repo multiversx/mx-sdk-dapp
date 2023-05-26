@@ -1,12 +1,18 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'reduxStore/DappProviderContext';
-import { setBatchTransactions } from 'reduxStore/slices';
+import {
+  setBatchTransactions,
+  setTxSubmittedModal,
+  updateSignedTransactions
+} from 'reduxStore/slices';
 import { removeBatchTransactions } from 'services/transactions';
 import {
   sendBatchTransactions,
   SendBatchTransactionsPropsType
 } from 'services/transactions/sendBatchTransactions';
+import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { BatchTransactionStatus } from 'types/serverTransactions.types';
+import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 
 export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();
@@ -20,6 +26,22 @@ export const useSendBatchTransactions = () => {
 
       if (data) {
         dispatch(setBatchTransactions(data));
+
+        const submittedModalPayload = {
+          sessionId: params.sessionId,
+          submittedMessage: 'submitted'
+        };
+
+        dispatch(setTxSubmittedModal(submittedModalPayload));
+        dispatch(
+          updateSignedTransactions({
+            sessionId: params.sessionId,
+            status: TransactionBatchStatusesEnum.sent,
+            transactions: sequentialToFlatArray({
+              transactions: data.transactions
+            })
+          })
+        );
       }
       setBatchId(data?.id);
 
