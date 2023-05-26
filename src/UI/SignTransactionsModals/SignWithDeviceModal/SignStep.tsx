@@ -87,19 +87,34 @@ export const SignStep = (props: SignStepType) => {
     setShowGuardianScreen(false);
   };
 
+  const signTransactionNavigationTitle =
+    allTransactions.length > 1 ? 'Sign Transactions' : 'Sign Transaction';
+
+  const confirmTransactionNavigationTitle =
+    allTransactions.length > 1 ? 'Confirm Transactions' : 'Confirm Transaction';
+
+  const defaultSignTitle =
+    allTransactions.length > 1
+      ? `Signing Transaction ${currentStep + 1} of ${allTransactions.length}`
+      : 'Sign Transaction';
+
+  const isGuardianScreenVisible = GuardianScreen && showGuardianScreen;
+  const signFlowTitle = isGuardianScreenVisible
+    ? 'Verify Guardian'
+    : title || defaultSignTitle;
+
   const steps: ProgressHeaderPropsType['steps'] = [
     {
-      title: title || 'Sign Transaction',
+      title: signTransactionNavigationTitle,
       active: !showGuardianScreen
     },
     {
-      title: 'Confirm Transaction',
+      title: confirmTransactionNavigationTitle,
       active: showGuardianScreen,
       hidden: !signStepBodyProps.isGuarded
     }
   ];
 
-  const currentProgressStep = steps.find((step) => step.active);
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport);
 
@@ -112,7 +127,7 @@ export const SignStep = (props: SignStepType) => {
         { [styles.guarded]: signStepBodyProps.isGuarded }
       )}
     >
-      {showGuardianScreen && (
+      {isGuardianScreenVisible && (
         <div
           onClick={onGuardianScreenPrev}
           className={classNames(styles.modalLayoutHeadingIcon, styles.back)}
@@ -132,11 +147,9 @@ export const SignStep = (props: SignStepType) => {
         <ProgressHeader steps={steps} type='detailed' size='small' />
       )}
 
-      <div className={styles.title}>
-        {currentProgressStep?.title || 'Confirm on Ledger'}
-      </div>
+      <div className={styles.title}>{signFlowTitle || 'Confirm on Ledger'}</div>
 
-      {GuardianScreen && showGuardianScreen ? (
+      {isGuardianScreenVisible ? (
         <GuardianScreen
           {...props}
           onPrev={onGuardianScreenPrev}
