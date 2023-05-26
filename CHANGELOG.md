@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fix batch transactions payload after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
+- [Fix batch transactions state after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
 
 - [Fixed default sign step title override](https://github.com/multiversx/mx-sdk-dapp/pull/807)
 
