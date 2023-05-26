@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
 
+import { AxiosError } from 'axios';
 import {
   sendSignedTransactions as defaultSendSignedTxs,
   SendSignedTransactionsReturnType
@@ -119,12 +120,15 @@ export const TransactionSender = ({
           transaction
         });
       } catch (error) {
-        console.error('Unable to send transactions', error);
+        const errorMessage =
+          (error as AxiosError).response?.data?.message ??
+          (error as any).message;
+
         dispatch(
           updateSignedTransactions({
             sessionId,
             status: TransactionBatchStatusesEnum.fail,
-            errorMessage: (error as any).message
+            errorMessage
           })
         );
         clearSignInfo();
