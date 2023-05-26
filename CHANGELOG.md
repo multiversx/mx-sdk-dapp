@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added sign steps indexing to distinguish multiple transaction signing](https://github.com/multiversx/mx-sdk-dapp/pull/803)
+
 ## [[v2.14.1]](https://github.com/multiversx/mx-sdk-dapp/pull/801)] - 2023-05-24
 
 - [Fixed SignStepBody modularization](https://github.com/multiversx/mx-sdk-dapp/pull/800)
