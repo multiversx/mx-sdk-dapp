@@ -13,7 +13,12 @@ export const DefaultToastDeleteButton = ({
   onClick
 }: DefaultToastDeleteButtonPropsType) => {
   return (
-    <button type='button' className={className} onClick={onClick}>
+    <button
+      type='button'
+      className={className}
+      onClick={onClick}
+      data-testid='deletToastButton'
+    >
       <FontAwesomeIcon icon={faTimes} size='xs' />
     </button>
   );
