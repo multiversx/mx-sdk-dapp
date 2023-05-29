@@ -17,7 +17,7 @@ export const DefaultToastDeleteButton = ({
       type='button'
       className={className}
       onClick={onClick}
-      data-testid='deletToastButton'
+      data-testid='deleteToastButton'
     >
       <FontAwesomeIcon icon={faTimes} size='xs' />
     </button>
