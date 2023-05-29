@@ -57,7 +57,11 @@ export const TransactionDetailsBody = ({
   const icon = iconSrc?.icon ?? iconStatus?.icon;
 
   return (
-    <div className={classNames(styles.container, className)} key={hash}>
+    <div
+      className={classNames(styles.container, className)}
+      key={hash}
+      data-testid='transactionDetailsToastBody'
+    >
       {!isTimedOut && icon != null && (
         <FontAwesomeIcon
           icon={icon}
