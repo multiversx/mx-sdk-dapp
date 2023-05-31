@@ -8,11 +8,11 @@ import {
 import { getNativeAuthConfig, getToken, getTokenExpiration } from './methods';
 
 export const nativeAuth = (config?: NativeAuthConfigType) => {
-  const { origin, apiAddress, expirySeconds, blockHashShard } =
+  const { origin, apiAddress, expirySeconds, blockHashShard, extraInfo: extraInfoFromConfig } =
     getNativeAuthConfig(config) as NativeAuthConfigType;
 
   const initialize = async (
-    extraInfo: any = {},
+    extraInfo?: {[key: string]: string},
     latestBlockInfo?: LatestBlockHashType
   ): Promise<string> => {
     if (!apiAddress || !origin) {
@@ -23,7 +23,7 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
       latestBlockInfo ?? (await getLatestBlockHash(apiAddress, blockHashShard));
     const { hash, timestamp } = response;
     const encodedExtraInfo = encodeValue(
-      JSON.stringify({ ...extraInfo, ...(timestamp ? { timestamp } : {}) })
+      JSON.stringify({ ...(extraInfo ?? extraInfoFromConfig), ...(timestamp ? { timestamp } : {}) })
     );
     const encodedOrigin = encodeValue(origin);
 
