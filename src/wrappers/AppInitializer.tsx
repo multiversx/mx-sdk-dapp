@@ -18,15 +18,14 @@ import {
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { logout } from 'utils/logout';
 
-export interface AppInitializerPropsType {
+export interface UseAppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
   environment: EnvironmentsEnum;
   dappConfig?: DappConfigType;
 }
 
-export interface AppInitializerComponentPropsType
-  extends AppInitializerPropsType {
+export interface AppInitializerPropsType extends UseAppInitializerPropsType {
   children?: any;
 }
 
@@ -34,7 +33,7 @@ export const useAppInitializer = ({
   customNetworkConfig = {},
   environment,
   dappConfig
-}: AppInitializerPropsType) => {
+}: UseAppInitializerPropsType) => {
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
   const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
@@ -109,7 +108,7 @@ export function AppInitializer({
   children,
   environment,
   dappConfig
-}: AppInitializerComponentPropsType) {
+}: AppInitializerPropsType) {
   const { initialized } = useAppInitializer({
     customNetworkConfig,
     environment,
