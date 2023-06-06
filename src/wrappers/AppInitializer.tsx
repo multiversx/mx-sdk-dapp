@@ -15,8 +15,8 @@ import {
   EnvironmentsEnum,
   IDappProvider
 } from 'types';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { logout } from 'utils/logout';
-import { isWindowAvailable } from '../utils';
 
 export interface AppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
