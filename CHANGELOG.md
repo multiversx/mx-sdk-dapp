@@ -5,14 +5,26 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+## [[v2.14.5]](https://github.com/multiversx/mx-sdk-dapp/pull/814)] - 2023-06-01
+- [Added `data-testid` properties and improved `ConfirmAmount` component](https://github.com/multiversx/mx-sdk-dapp/pull/815)
+- [Added extraInfo param for generating nativeAuth token](https://github.com/multiversx/mx-sdk-dapp/pull/813)
+
 ## [[v2.14.4]](https://github.com/multiversx/mx-sdk-dapp/pull/812)] - 2023-05-29
+
 - [Added datatestids to toast elements](https://github.com/multiversx/mx-sdk-dapp/pull/811)
 - [Fixed ESDTNFTTransaction parsedTransaction not assigning multiTxData on return object](https://github.com/multiversx/mx-sdk-dapp/pull/810)
-
 
 ## [[v2.14.3]](https://github.com/multiversx/mx-sdk-dapp/pull/809)] - 2023-05-27
 
 - [Fixed batch transactions state after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
+
+- [Fixed default sign step title override](https://github.com/multiversx/mx-sdk-dapp/pull/807)
+
+## [[v2.14.3]](https://github.com/multiversx/mx-sdk-dapp/pull/809)] - 2023-05-27
+
+- [Fix batch transactions state after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
 
 - [Fixed default sign step title override](https://github.com/multiversx/mx-sdk-dapp/pull/807)
 
