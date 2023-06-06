@@ -7,6 +7,7 @@ import {
 } from 'reduxStore/selectors';
 
 import { RouteType } from 'types';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { safeRedirect } from 'utils/redirect';
 import { matchRoute } from './helpers/matchRoute';
 
@@ -28,10 +29,10 @@ export const AuthenticatedRoutesWrapper = ({
   const walletLogin = useSelector(walletLoginSelector);
 
   const getLocationPathname = () => {
-    if (typeof window === 'undefined') {
-      return '';
+    if (isWindowAvailable()) {
+      return window.location.pathname;
     }
-    return window.location.pathname;
+    return '';
   };
 
   const isOnAuthenticatedRoute = matchRoute(routes, getLocationPathname());
