@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 
 import { getServerConfiguration } from 'apiCalls';
@@ -116,8 +116,8 @@ export function AppInitializer({
   });
 
   if (!isWindowAvailable()) {
-    return <>{children}</>;
+    return children;
   }
 
-  return initialized ? <>{children}</> : null;
+  return initialized ? children : null;
 }

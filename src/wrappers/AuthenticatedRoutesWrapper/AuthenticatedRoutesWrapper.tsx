@@ -14,11 +14,13 @@ import { matchRoute } from './helpers/matchRoute';
 export const AuthenticatedRoutesWrapper = ({
   children,
   routes,
+  pathName,
   unlockRoute,
   onRedirect
 }: {
   children: ReactNode;
   routes: RouteType[];
+  pathName?: string;
   unlockRoute: string;
   onRedirect?: (unlockRoute?: string) => void;
 }) => {
@@ -35,7 +37,10 @@ export const AuthenticatedRoutesWrapper = ({
     return '';
   };
 
-  const isOnAuthenticatedRoute = matchRoute(routes, getLocationPathname());
+  const isOnAuthenticatedRoute = matchRoute(
+    routes,
+    pathName ?? getLocationPathname()
+  );
 
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
