@@ -27,7 +27,14 @@ export const AuthenticatedRoutesWrapper = ({
 
   const walletLogin = useSelector(walletLoginSelector);
 
-  const isOnAuthenticatedRoute = matchRoute(routes, window?.location.pathname);
+  const getLocationPathname = () => {
+    if (typeof window === 'undefined') {
+      return '';
+    }
+    return window.location.pathname;
+  };
+
+  const isOnAuthenticatedRoute = matchRoute(routes, getLocationPathname());
 
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
