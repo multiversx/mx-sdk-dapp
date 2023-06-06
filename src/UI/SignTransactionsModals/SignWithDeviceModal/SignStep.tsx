@@ -147,7 +147,9 @@ export const SignStep = (props: SignStepType) => {
         <ProgressHeader steps={steps} type='detailed' size='small' />
       )}
 
-      <div className={styles.title}>{signFlowTitle || 'Confirm on Ledger'}</div>
+      <div className={styles.title} data-testid='signStepTitle'>
+        {signFlowTitle || 'Confirm on Ledger'}
+      </div>
 
       {isGuardianScreenVisible ? (
         <GuardianScreen
