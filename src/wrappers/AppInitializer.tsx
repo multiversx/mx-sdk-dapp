@@ -15,7 +15,6 @@ import {
   EnvironmentsEnum,
   IDappProvider
 } from 'types';
-import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { logout } from 'utils/logout';
 
 export interface UseAppInitializerPropsType {
@@ -109,15 +108,17 @@ export function AppInitializer({
   environment,
   dappConfig
 }: AppInitializerPropsType) {
+  const [content, setContent] = useState(children);
+
   const { initialized } = useAppInitializer({
     customNetworkConfig,
     environment,
     dappConfig
   });
 
-  if (!isWindowAvailable()) {
-    return children;
-  }
+  useEffect(() => {
+    setContent(() => (initialized ? children : null));
+  }, [initialized, children]);
 
-  return initialized ? children : null;
+  return content;
 }
