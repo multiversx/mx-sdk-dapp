@@ -36,6 +36,7 @@ export const WalletConnectLoginButton = ({
   callbackRoute,
   onModalOpens,
   onModalCloses,
+  'data-testid': dataTestId,
   loginButtonText = 'xPortal App',
   title = 'Login with the xPortal App',
   logoutRoute = '/unlock',
@@ -80,6 +81,7 @@ export const WalletConnectLoginButton = ({
           className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          data-testid={dataTestId}
           disabled={disabled || disabledConnectButton}
         >
           {children}
