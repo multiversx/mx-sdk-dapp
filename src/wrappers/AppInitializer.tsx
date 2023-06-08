@@ -26,6 +26,7 @@ export interface UseAppInitializerPropsType {
 
 export interface AppInitializerPropsType extends UseAppInitializerPropsType {
   children?: any;
+  isSSR?: boolean;
 }
 
 export const useAppInitializer = ({
@@ -106,7 +107,8 @@ export function AppInitializer({
   customNetworkConfig = {},
   children,
   environment,
-  dappConfig
+  dappConfig,
+  isSSR
 }: AppInitializerPropsType) {
   const { initialized } = useAppInitializer({
     customNetworkConfig,
@@ -114,5 +116,5 @@ export function AppInitializer({
     dappConfig
   });
 
-  return initialized && children;
+  return isSSR ? children : initialized ? children : null;
 }
