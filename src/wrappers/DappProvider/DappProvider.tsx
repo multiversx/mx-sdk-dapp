@@ -11,8 +11,8 @@ import { persistor, store } from 'reduxStore/store';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { DappConfigType } from 'types/dappConfig.types';
 
-import { CustomComponents, CustomComponentsType } from './CustomComponents';
 import { isWindowAvailable } from 'utils/isWindowAvailable';
+import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export { DappConfigType };
 
