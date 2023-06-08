@@ -7,11 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.14.7]](https://github.com/multiversx/mx-sdk-dapp/pull/821)] - 2023-06-07
+- [Fix nextjs hydration issue (duplicate DOM nodes)](https://github.com/multiversx/mx-sdk-dapp/pull/820)
+
+## [[v2.14.6]](https://github.com/multiversx/mx-sdk-dapp/pull/819)] - 2023-06-06
+- [Fix children loading issue in NextJs when using DappProvider](https://github.com/multiversx/mx-sdk-dapp/pull/818)
+
+## [[v2.14.5]](https://github.com/multiversx/mx-sdk-dapp/pull/814)] - 2023-06-01
+- [Added `data-testid` properties and improved `ConfirmAmount` component](https://github.com/multiversx/mx-sdk-dapp/pull/815)
+- [Added extraInfo param for generating nativeAuth token](https://github.com/multiversx/mx-sdk-dapp/pull/813)
+
+## [[v2.14.4]](https://github.com/multiversx/mx-sdk-dapp/pull/812)] - 2023-05-29
+
+- [Added datatestids to toast elements](https://github.com/multiversx/mx-sdk-dapp/pull/811)
+- [Fixed ESDTNFTTransaction parsedTransaction not assigning multiTxData on return object](https://github.com/multiversx/mx-sdk-dapp/pull/810)
+
+## [[v2.14.3]](https://github.com/multiversx/mx-sdk-dapp/pull/809)] - 2023-05-27
+
+- [Fixed batch transactions state after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
+
+- [Fixed default sign step title override](https://github.com/multiversx/mx-sdk-dapp/pull/807)
+
+## [[v2.14.3]](https://github.com/multiversx/mx-sdk-dapp/pull/809)] - 2023-05-27
+
+- [Fix batch transactions state after sending](https://github.com/multiversx/mx-sdk-dapp/pull/808)
+
+- [Fixed default sign step title override](https://github.com/multiversx/mx-sdk-dapp/pull/807)
+
 ## [[v2.14.2]](https://github.com/multiversx/mx-sdk-dapp/pull/806)] - 2023-05-26
 
-- [Fix/window location for RN](https://github.com/multiversx/mx-sdk-dapp/pull/805)
+- [Fixed/window location for RN](https://github.com/multiversx/mx-sdk-dapp/pull/805)
 
-- [Fix toast progress for batch transactions when navigate across the app](https://github.com/multiversx/mx-sdk-dapp/pull/804)
+- [Fixed toast progress for batch transactions when navigate across the app](https://github.com/multiversx/mx-sdk-dapp/pull/804)
 
 - [Fixed failed transaction error message](https://github.com/multiversx/mx-sdk-dapp/pull/802)
 
@@ -23,12 +50,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.14.0]](https://github.com/multiversx/mx-sdk-dapp/pull/796)] - 2023-05-22
 
-- [Fix websocket reconnect issue](https://github.com/multiversx/mx-sdk-dapp/pull/797)
+- [Fixed websocket reconnect issue](https://github.com/multiversx/mx-sdk-dapp/pull/797)
 - [Updated layout for the sign transaction flow](https://github.com/multiversx/mx-sdk-dapp/pull/795)
 
 ## [[v2.13.8]](https://github.com/multiversx/mx-sdk-dapp/pull/794)] - 2023-05-18
 
-- [Fix early check mechanism for batch transactions (batch transactions tracker)](https://github.com/multiversx/mx-sdk-dapp/pull/793)
+- [Fixed early check mechanism for batch transactions (batch transactions tracker)](https://github.com/multiversx/mx-sdk-dapp/pull/793)
 
 ## [[v2.13.7]](https://github.com/multiversx/mx-sdk-dapp/pull/792)] - 2023-05-17
 
@@ -53,12 +80,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[v2.13.3]](https://github.com/multiversx/mx-sdk-dapp/pull/773)] - 2023-05-10
 
 - [Stop ledger double signing before leaving sign screen to 2FA hook](https://github.com/multiversx/mx-sdk-dapp/pull/777)
-- [Fix `dappConfig` not saved in redux store](https://github.com/multiversx/mx-sdk-dapp/pull/776)
-- [Fix cancel transactions flow with web wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/774)
+- [Fixed `dappConfig` not saved in redux store](https://github.com/multiversx/mx-sdk-dapp/pull/776)
+- [Fixed cancel transactions flow with web wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/774)
 
 ## [[v2.13.2]](https://github.com/multiversx/mx-sdk-dapp/pull/773)] - 2023-05-09
 
-- [Fix ledger guardian error activation condition in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/746)
+- [Fixed ledger guardian error activation condition in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/746)
 
 ## [[v2.13.1]](https://github.com/multiversx/mx-sdk-dapp/pull/772)] - 2023-05-09
 

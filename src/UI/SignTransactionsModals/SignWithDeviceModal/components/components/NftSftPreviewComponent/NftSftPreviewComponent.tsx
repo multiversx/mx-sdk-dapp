@@ -40,13 +40,17 @@ export const NftSftPreviewComponent = ({
       className={styles.preview}
       rel='noreferrer'
     >
-      <img src={tokenAvatar} className={styles.image} />
+      <img src={tokenAvatar} className={styles.image} alt={tokenLabel} />
 
       <div className={styles.content}>
         <div className={styles.left}>
-          <div className={styles.name}>{tokenLabel}</div>
+          <div className={styles.name} data-testid='nftLabel'>
+            {tokenLabel}
+          </div>
 
-          <div className={styles.identifier}>{tokenId}</div>
+          <div className={styles.identifier} data-testid='nftIdentifier'>
+            {tokenId}
+          </div>
         </div>
         <div className={styles.right}>
           <div

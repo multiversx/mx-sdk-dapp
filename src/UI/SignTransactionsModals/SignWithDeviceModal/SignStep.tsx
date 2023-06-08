@@ -96,12 +96,12 @@ export const SignStep = (props: SignStepType) => {
   const defaultSignTitle =
     allTransactions.length > 1
       ? `Signing Transaction ${currentStep + 1} of ${allTransactions.length}`
-      : 'Sign Transaction';
+      : title || 'Sign Transaction';
 
   const isGuardianScreenVisible = GuardianScreen && showGuardianScreen;
   const signFlowTitle = isGuardianScreenVisible
     ? 'Verify Guardian'
-    : title || defaultSignTitle;
+    : defaultSignTitle;
 
   const steps: ProgressHeaderPropsType['steps'] = [
     {
@@ -147,7 +147,9 @@ export const SignStep = (props: SignStepType) => {
         <ProgressHeader steps={steps} type='detailed' size='small' />
       )}
 
-      <div className={styles.title}>{signFlowTitle || 'Confirm on Ledger'}</div>
+      <div className={styles.title} data-testid='signStepTitle'>
+        {signFlowTitle || 'Confirm on Ledger'}
+      </div>
 
       {isGuardianScreenVisible ? (
         <GuardianScreen

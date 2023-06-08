@@ -42,7 +42,7 @@ export const TransactionToastContent = ({
   const CustomCloseButton = customElements?.CustomCloseButton;
 
   return (
-    <div className={style.content}>
+    <div className={style.content} data-testid='transactionToastContent'>
       <div className={style.left}>
         <div className={classNames(style.icon, toastDataState.iconClassName)}>
           {TransactionToastStatusIcon && (
@@ -57,7 +57,10 @@ export const TransactionToastContent = ({
 
       <div className={style.right}>
         <div className={style.heading}>
-          <h5 className={classNames([globalStyles.h5, style.mb4])}>
+          <h5
+            className={classNames([globalStyles.h5, style.mb4])}
+            data-testid='transactionToastTitle'
+          >
             {toastDataState.title}
           </h5>
 

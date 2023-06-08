@@ -19,7 +19,8 @@ export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
     apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress,
     tokenExpirationToastWarningSeconds:
       config?.tokenExpirationToastWarningSeconds ??
-      defaultNativeAuthConfig.tokenExpirationToastWarningSeconds
+      defaultNativeAuthConfig.tokenExpirationToastWarningSeconds,
+    extraInfo: config?.extraInfo ?? {}
   };
   return nativeAuthConfig;
 };

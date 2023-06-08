@@ -20,27 +20,31 @@ export const ConfirmAmount = ({
   tokenType,
   amount,
   tokenPrice
-}: ConfirmAmountPropsType) => (
-  <div className={styles.amount}>
-    <span className={styles.label}>Amount</span>
+}: ConfirmAmountPropsType) => {
+  const isValidTokenPrice = tokenPrice != null;
+  const isLoadingTokenPrice = !isValidTokenPrice && tokenPrice !== null;
 
-    <div className={styles.token}>
-      <TokenAvatar type={tokenType} avatar={tokenAvatar} />
+  return (
+    <div className={styles.amount}>
+      <span className={styles.label}>Amount</span>
 
-      <div className={styles.value}>
-        {amount} <TokenDetails.Label token={token} />
+      <div className={styles.token}>
+        <TokenAvatar type={tokenType} avatar={tokenAvatar} />
+
+        <div className={styles.value} data-testid='confirmAmount'>
+          {amount} <TokenDetails.Label token={token} />
+        </div>
       </div>
-    </div>
 
-    {tokenPrice === null ? null : tokenPrice ? (
-      <UsdValue
-        amount={amount}
-        usd={tokenPrice}
-        data-testid='confirmUsdValue'
-        className={styles.price}
-      />
-    ) : (
-      <LoadingDots className={styles.price} />
-    )}
-  </div>
-);
+      {isLoadingTokenPrice && <LoadingDots className={styles.price} />}
+      {isValidTokenPrice && (
+        <UsdValue
+          amount={amount}
+          usd={tokenPrice}
+          data-testid='confirmUsdValue'
+          className={styles.price}
+        />
+      )}
+    </div>
+  );
+};
