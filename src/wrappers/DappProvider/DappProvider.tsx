@@ -50,18 +50,20 @@ export const DappProvider = ({
   return (
     <Provider context={DappCoreContext} store={store}>
       <PersistGate persistor={persistor} loading={null}>
-        <AppInitializer
-          environment={environment as EnvironmentsEnum}
-          customNetworkConfig={customNetworkConfig}
-          dappConfig={dappConfig}
-        >
-          <ProviderInitializer />
-          <CustomComponents
-            customComponents={customComponents}
-            enableBatchTransactions={enableBatchTransactions}
-          />
-          {children}
-        </AppInitializer>
+        {() => (
+          <AppInitializer
+            environment={environment as EnvironmentsEnum}
+            customNetworkConfig={customNetworkConfig}
+            dappConfig={dappConfig}
+          >
+            <ProviderInitializer />
+            <CustomComponents
+              customComponents={customComponents}
+              enableBatchTransactions={enableBatchTransactions}
+            />
+            {children}
+          </AppInitializer>
+        )}
       </PersistGate>
     </Provider>
   );

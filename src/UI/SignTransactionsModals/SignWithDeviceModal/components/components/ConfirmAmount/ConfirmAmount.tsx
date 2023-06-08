@@ -8,7 +8,8 @@ import styles from './confirmAmountStyles.scss';
 
 export interface ConfirmAmountPropsType {
   token: string;
-  amount: string;
+  formattedAmount: string;
+  rawAmount: string;
   tokenAvatar?: string;
   tokenType: TokenAvatarPropsType['type'];
   tokenPrice?: number | null;
@@ -18,29 +19,34 @@ export const ConfirmAmount = ({
   token,
   tokenAvatar,
   tokenType,
-  amount,
+  formattedAmount,
+  rawAmount,
   tokenPrice
-}: ConfirmAmountPropsType) => (
-  <div className={styles.amount}>
-    <span className={styles.label}>Amount</span>
+}: ConfirmAmountPropsType) => {
+  const isValidTokenPrice = tokenPrice != null;
+  const isLoadingTokenPrice = !isValidTokenPrice && tokenPrice !== null;
 
-    <div className={styles.token}>
-      <TokenAvatar type={tokenType} avatar={tokenAvatar} />
+  return (
+    <div className={styles.amount}>
+      <span className={styles.label}>Amount</span>
 
-      <div className={styles.value}>
-        {amount} <TokenDetails.Label token={token} />
+      <div className={styles.token}>
+        <TokenAvatar type={tokenType} avatar={tokenAvatar} />
+
+        <div className={styles.value} data-testid='confirmAmount'>
+          {formattedAmount} <TokenDetails.Label token={token} />
+        </div>
       </div>
-    </div>
 
-    {tokenPrice === null ? null : tokenPrice ? (
-      <UsdValue
-        amount={amount}
-        usd={tokenPrice}
-        data-testid='confirmUsdValue'
-        className={styles.price}
-      />
-    ) : (
-      <LoadingDots className={styles.price} />
-    )}
-  </div>
-);
+      {isLoadingTokenPrice && <LoadingDots className={styles.price} />}
+      {isValidTokenPrice && (
+        <UsdValue
+          amount={rawAmount}
+          usd={tokenPrice}
+          data-testid='confirmUsdValue'
+          className={styles.price}
+        />
+      )}
+    </div>
+  );
+};
