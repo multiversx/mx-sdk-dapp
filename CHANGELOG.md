@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased] 
-- [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/825)
+- [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/827)
 ## [[v2.14.9]](https://github.com/multiversx/mx-sdk-dapp/pull/826)] - 2023-06-08
 - [Added datatestids to login buttons](https://github.com/multiversx/mx-sdk-dapp/pull/825)
 
