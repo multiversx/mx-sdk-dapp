@@ -80,15 +80,19 @@ export const SignStepBody = ({
       tokenId: nonce && nonce?.length > 0 ? nftId : tokenId
     });
 
-  const formattedAmount = formatAmount({
-    input: isTokenTransaction
-      ? amount
-      : currentTransaction.transaction.getValue().toString(),
-    decimals: isTokenTransaction ? tokenDecimals : Number(network.decimals),
-    digits: Number(network.digits),
-    showLastNonZeroDecimal: false,
-    addCommas: true
-  });
+  const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
+    formatAmount({
+      input: isTokenTransaction
+        ? amount
+        : currentTransaction.transaction.getValue().toString(),
+      decimals: isTokenTransaction ? tokenDecimals : Number(network.decimals),
+      digits: Number(network.digits),
+      showLastNonZeroDecimal: false,
+      addCommas
+    });
+
+  const formattedAmount = getFormattedAmount({ addCommas: true });
+  const rawAmount = getFormattedAmount({ addCommas: false });
 
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport);
@@ -140,7 +144,8 @@ export const SignStepBody = ({
             <div className={styles.column}>
               <ConfirmAmount
                 tokenAvatar={tokenAvatar}
-                amount={shownAmount}
+                formattedAmount={shownAmount}
+                rawAmount={rawAmount}
                 token={token}
                 tokenType={isEgld ? egldLabel : type}
                 tokenPrice={tokenPrice}

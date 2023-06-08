@@ -8,7 +8,8 @@ import styles from './confirmAmountStyles.scss';
 
 export interface ConfirmAmountPropsType {
   token: string;
-  amount: string;
+  formattedAmount: string;
+  rawAmount: string;
   tokenAvatar?: string;
   tokenType: TokenAvatarPropsType['type'];
   tokenPrice?: number | null;
@@ -18,7 +19,8 @@ export const ConfirmAmount = ({
   token,
   tokenAvatar,
   tokenType,
-  amount,
+  formattedAmount,
+  rawAmount,
   tokenPrice
 }: ConfirmAmountPropsType) => {
   const isValidTokenPrice = tokenPrice != null;
@@ -32,14 +34,14 @@ export const ConfirmAmount = ({
         <TokenAvatar type={tokenType} avatar={tokenAvatar} />
 
         <div className={styles.value} data-testid='confirmAmount'>
-          {amount} <TokenDetails.Label token={token} />
+          {formattedAmount} <TokenDetails.Label token={token} />
         </div>
       </div>
 
       {isLoadingTokenPrice && <LoadingDots className={styles.price} />}
       {isValidTokenPrice && (
         <UsdValue
-          amount={amount}
+          amount={rawAmount}
           usd={tokenPrice}
           data-testid='confirmUsdValue'
           className={styles.price}

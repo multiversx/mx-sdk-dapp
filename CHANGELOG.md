@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed miscalculation of USD value of amount in sign flow summary](https://github.com/multiversx/mx-sdk-dapp/pull/823)
+
 ## [[v2.14.7]](https://github.com/multiversx/mx-sdk-dapp/pull/821)] - 2023-06-07
+
 - [Fix nextjs hydration issue (duplicate DOM nodes)](https://github.com/multiversx/mx-sdk-dapp/pull/820)
 
 ## [[v2.14.6]](https://github.com/multiversx/mx-sdk-dapp/pull/819)] - 2023-06-06
+
 - [Fix children loading issue in NextJs when using DappProvider](https://github.com/multiversx/mx-sdk-dapp/pull/818)
 
 ## [[v2.14.5]](https://github.com/multiversx/mx-sdk-dapp/pull/814)] - 2023-06-01
+
 - [Added `data-testid` properties and improved `ConfirmAmount` component](https://github.com/multiversx/mx-sdk-dapp/pull/815)
 - [Added extraInfo param for generating nativeAuth token](https://github.com/multiversx/mx-sdk-dapp/pull/813)
 
