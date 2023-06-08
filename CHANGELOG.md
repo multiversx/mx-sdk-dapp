@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.14.8]](https://github.com/multiversx/mx-sdk-dapp/pull/824)] - 2023-06-08
+
 - [Fixed miscalculation of USD value of amount in sign flow summary](https://github.com/multiversx/mx-sdk-dapp/pull/823)
 
 ## [[v2.14.7]](https://github.com/multiversx/mx-sdk-dapp/pull/821)] - 2023-06-07
