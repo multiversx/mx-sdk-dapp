@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
-
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
@@ -26,7 +25,6 @@ export interface UseAppInitializerPropsType {
 
 export interface AppInitializerPropsType extends UseAppInitializerPropsType {
   children?: any;
-  isSSR?: boolean;
 }
 
 export const useAppInitializer = ({
@@ -107,14 +105,20 @@ export function AppInitializer({
   customNetworkConfig = {},
   children,
   environment,
-  dappConfig,
-  isSSR
+  dappConfig
 }: AppInitializerPropsType) {
+  const [isBrowser, setIsBrowser] = React.useState(false);
+
   const { initialized } = useAppInitializer({
     customNetworkConfig,
     environment,
     dappConfig
   });
 
-  return isSSR ? children : initialized ? children : null;
+  // This is a hack to allow the app to render on the server side
+  useEffect(() => {
+    setIsBrowser(true);
+  }, []);
+
+  return isBrowser ? (initialized ? children : null) : children;
 }
