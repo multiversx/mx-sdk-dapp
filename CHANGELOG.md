@@ -5,15 +5,25 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [Unreleased] 
+## [[v2.14.9]](https://github.com/multiversx/mx-sdk-dapp/pull/826)] - 2023-06-08
+- [Added datatestids to login buttons](https://github.com/multiversx/mx-sdk-dapp/pull/825)
+
+
+## [[v2.14.8]](https://github.com/multiversx/mx-sdk-dapp/pull/824)] - 2023-06-08
+
+- [Fixed miscalculation of USD value of amount in sign flow summary](https://github.com/multiversx/mx-sdk-dapp/pull/823)
 
 ## [[v2.14.7]](https://github.com/multiversx/mx-sdk-dapp/pull/821)] - 2023-06-07
+
 - [Fix nextjs hydration issue (duplicate DOM nodes)](https://github.com/multiversx/mx-sdk-dapp/pull/820)
 
 ## [[v2.14.6]](https://github.com/multiversx/mx-sdk-dapp/pull/819)] - 2023-06-06
+
 - [Fix children loading issue in NextJs when using DappProvider](https://github.com/multiversx/mx-sdk-dapp/pull/818)
 
 ## [[v2.14.5]](https://github.com/multiversx/mx-sdk-dapp/pull/814)] - 2023-06-01
+
 - [Added `data-testid` properties and improved `ConfirmAmount` component](https://github.com/multiversx/mx-sdk-dapp/pull/815)
 - [Added extraInfo param for generating nativeAuth token](https://github.com/multiversx/mx-sdk-dapp/pull/813)
 

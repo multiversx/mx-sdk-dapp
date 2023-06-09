@@ -30,6 +30,7 @@ export const UsdValue = ({
     decimals,
     addEqualSign: addEqualSign ?? true
   });
+
   const isAmountZero = `${amount}` === ZERO;
   const displayedValue = isAmountZero ? `= $${ZERO}` : value;
 
