@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
@@ -107,7 +107,7 @@ export function AppInitializer({
   environment,
   dappConfig
 }: AppInitializerPropsType) {
-  const [isBrowser, setIsBrowser] = React.useState(false);
+  const [isBrowser, setIsBrowser] = useState(false);
 
   const { initialized } = useAppInitializer({
     customNetworkConfig,
