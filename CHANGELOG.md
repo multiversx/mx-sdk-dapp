@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Fix double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/822)
+## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/831)] - 2023-06-13
+- [Fix double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/830)
 
 ## [[v2.14.10]](https://github.com/multiversx/mx-sdk-dapp/pull/828)] - 2023-06-09
 - [Fix infinite page reload using nextjs navigation](https://github.com/multiversx/mx-sdk-dapp/pull/822)
