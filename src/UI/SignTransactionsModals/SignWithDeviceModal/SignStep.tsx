@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,9 +35,35 @@ export const SignStep = (props: SignStepType) => {
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
 
+  // a unique mapping between nonce and step to prevent signing same transaction twice
+  const [nonceStepMap, setNonceStepMap] = useState<
+    Record<number, number | undefined>
+  >({});
+
   if (!currentTransaction) {
     return null;
   }
+
+  const currentNonce = currentTransaction.transaction.getNonce().valueOf();
+
+  useEffect(() => {
+    const isCurrentNonceRegistered = Object.keys(nonceStepMap).includes(
+      currentNonce.toString()
+    );
+    const isCurrentStepRegistered =
+      Object.values(nonceStepMap).includes(currentStep);
+
+    if (isCurrentNonceRegistered || isCurrentStepRegistered) {
+      return;
+    }
+
+    setNonceStepMap((existing) => {
+      return {
+        ...existing,
+        [currentNonce]: currentStep
+      };
+    });
+  }, [currentNonce, currentStep]);
 
   const transactionData = currentTransaction.transaction.getData().toString();
 
@@ -118,6 +144,8 @@ export const SignStep = (props: SignStepType) => {
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport);
 
+  const isSigningReady = nonceStepMap[currentNonce] === currentStep;
+
   return (
     <div
       className={classNames(
@@ -181,9 +209,9 @@ export const SignStep = (props: SignStepType) => {
               id='signBtn'
               data-testid='signBtn'
               onClick={onSubmit}
-              disabled={waitingForDevice}
+              disabled={waitingForDevice || !isSigningReady}
             >
-              {signBtnLabel}
+              {isSigningReady ? signBtnLabel : 'Loading...'}
             </button>
           </div>
         </>
