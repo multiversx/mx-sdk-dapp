@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/829)] - 2023-06-09
+- [Add-Server-Tx-Tracking](https://github.com/multiversx/mx-sdk-dapp/pull/829)
+
 ## [[v2.14.10]](https://github.com/multiversx/mx-sdk-dapp/pull/828)] - 2023-06-09
 - [Fix infinite page reload using nextjs navigation](https://github.com/multiversx/mx-sdk-dapp/pull/822)
 
