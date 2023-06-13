@@ -9,7 +9,7 @@ import type {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums.types';
-import { BatchTransactionsResponseType } from './serverTransactions.types';
+import { BatchTransactionsResponseType, ServerTransactionType } from './serverTransactions.types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -148,6 +148,15 @@ export interface SignTransactionsPropsType {
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   customTransactionInformation: CustomTransactionInformation;
+}
+
+export interface TrackTransactionsPropsType {
+  transactions: ServerTransactionType | ServerTransactionType[];
+  redirectAfterSign?: boolean;
+  completedTransactionsDelay?: number;
+  callbackRoute?: string;
+  transactionsDisplayInfo: TransactionsDisplayInfoType;
+  sessionInformation?: any;
 }
 
 export interface ActiveLedgerTransactionType {
