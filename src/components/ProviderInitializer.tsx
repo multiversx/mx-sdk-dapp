@@ -48,6 +48,8 @@ import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../hooks/login/useWebViewLogin';
 
+let initalizingLedger = false;
+
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
@@ -280,13 +282,15 @@ export function ProviderInitializer() {
     }
   }
 
-  function initializeProvider() {
-    if (loginMethod == null) {
+  async function initializeProvider() {
+    if (loginMethod == null || initalizingLedger) {
       return;
     }
     switch (loginMethod) {
       case LoginMethodsEnum.ledger: {
-        setLedgerProvider();
+        initalizingLedger = true;
+        await setLedgerProvider();
+        initalizingLedger = false;
         break;
       }
 

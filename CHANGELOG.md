@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Fixed possible invalid calls to network config endpoint](https://github.com/multiversx/mx-sdk-dapp/pull/832)
+- [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/827)
 ## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/831)] - 2023-06-13
 - [Fixed double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/830)
 
