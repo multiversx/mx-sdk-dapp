@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.14.12]](https://github.com/multiversx/mx-sdk-dapp/pull/833)] - 2023-06-14
 - [Fixed possible invalid calls to network config endpoint](https://github.com/multiversx/mx-sdk-dapp/pull/832)
 - [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/827)
 ## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/831)] - 2023-06-13
