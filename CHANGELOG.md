@@ -6,11 +6,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.14.12]](https://github.com/multiversx/mx-sdk-dapp/pull/833)] - 2023-06-14
+- [Fixed possible invalid calls to network config endpoint](https://github.com/multiversx/mx-sdk-dapp/pull/832)
+- [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/827)
 ## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/831)] - 2023-06-13
-- [Fix double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/830)
+- [Fixed double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/830)
 
 ## [[v2.14.10]](https://github.com/multiversx/mx-sdk-dapp/pull/828)] - 2023-06-09
-- [Fix infinite page reload using nextjs navigation](https://github.com/multiversx/mx-sdk-dapp/pull/822)
+- [Fixed infinite page reload using nextjs navigation](https://github.com/multiversx/mx-sdk-dapp/pull/822)
 
 ## [[v2.14.9]](https://github.com/multiversx/mx-sdk-dapp/pull/826)] - 2023-06-08
 - [Added datatestids to login buttons](https://github.com/multiversx/mx-sdk-dapp/pull/825)
