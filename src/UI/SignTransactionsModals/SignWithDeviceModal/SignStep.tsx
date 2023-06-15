@@ -16,6 +16,8 @@ import styles from './signWithDeviceModalStyles.scss';
 
 export { SignStepType, SignStepInnerClassesType };
 
+console.log('\x1b[42m%s\x1b[0m', 11);
+
 export const SignStep = (props: SignStepType) => {
   const {
     onSignTransaction,
@@ -35,8 +37,8 @@ export const SignStep = (props: SignStepType) => {
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
 
-  // a unique mapping between nonce and step to prevent signing same transaction twice
-  const [nonceStepMap, setNonceStepMap] = useState<
+  // a unique mapping between nonce + data and step to prevent signing same transaction twice
+  const [nonceDataStepMap, setNonceDataStepMap] = useState<
     Record<number, number | undefined>
   >({});
 
@@ -45,25 +47,27 @@ export const SignStep = (props: SignStepType) => {
   }
 
   const currentNonce = currentTransaction.transaction.getNonce().valueOf();
+  const currentNonceData = `${currentNonce.toString()}_${
+    currentTransaction.transactionTokenInfo.multiTxData
+  }`;
 
   useEffect(() => {
-    const isCurrentNonceRegistered = Object.keys(nonceStepMap).includes(
-      currentNonce.toString()
-    );
+    const isCurrentNonceRegistered =
+      Object.keys(nonceDataStepMap).includes(currentNonceData);
     const isCurrentStepRegistered =
-      Object.values(nonceStepMap).includes(currentStep);
+      Object.values(nonceDataStepMap).includes(currentStep);
 
     if (isCurrentNonceRegistered || isCurrentStepRegistered) {
       return;
     }
 
-    setNonceStepMap((existing) => {
+    setNonceDataStepMap((existing) => {
       return {
         ...existing,
-        [currentNonce]: currentStep
+        [currentNonceData]: currentStep
       };
     });
-  }, [currentNonce, currentStep]);
+  }, [currentNonceData, currentStep]);
 
   const transactionData = currentTransaction.transaction.getData().toString();
 
@@ -144,7 +148,7 @@ export const SignStep = (props: SignStepType) => {
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport);
 
-  const isSigningReady = nonceStepMap[currentNonce] === currentStep;
+  const isSigningReady = nonceDataStepMap[currentNonceData] === currentStep;
 
   return (
     <div
