@@ -16,8 +16,6 @@ import styles from './signWithDeviceModalStyles.scss';
 
 export { SignStepType, SignStepInnerClassesType };
 
-console.log('\x1b[42m%s\x1b[0m', 11);
-
 export const SignStep = (props: SignStepType) => {
   const {
     onSignTransaction,
