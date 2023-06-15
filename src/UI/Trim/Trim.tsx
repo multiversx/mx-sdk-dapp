@@ -9,14 +9,13 @@ import styles from './trim.styles.scss';
 // TODO: Rename to "TrimPropsType" when sdk-dapp@3.0.0
 export interface TrimType extends WithClassnameType {
   text: string;
-  dataTestId?: string;
   color?: 'muted' | 'secondary' | string;
 }
 
 export const Trim = ({
   text,
   className = 'dapp-trim',
-  dataTestId = 'trim-text-component',
+  'data-testid': dataTestId = 'trim-text-component',
   color
 }: TrimType) => {
   const [debounce, setDebounce] = useState(0);
