@@ -24,8 +24,7 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     expirySeconds,
     blockHashShard,
     gatewayUrl,
-    extraRequestHeaders,
-    ...extraInfoFromConfig
+    extraRequestHeaders
   });
 
   const initialize = async (
