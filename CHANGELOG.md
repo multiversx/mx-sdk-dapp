@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ## [[v2.14.13]](https://github.com/multiversx/mx-sdk-dapp/pull/835)] - 2023-06-15
 - [Fixed SignStep loading button for multiEsdtTransfers](https://github.com/multiversx/mx-sdk-dapp/pull/834)
+- [Replace local native auth service with mx-sdk-js-native-auth-client package](https://github.com/multiversx/mx-sdk-dapp/pull/837)
 
 ## [[v2.14.12]](https://github.com/multiversx/mx-sdk-dapp/pull/833)] - 2023-06-14
 - [Fixed possible invalid calls to network config endpoint](https://github.com/multiversx/mx-sdk-dapp/pull/832)
