@@ -1,11 +1,12 @@
+import { NativeAuthClient } from '@multiversx/sdk-native-auth-client';
+
 import { NativeAuthConfigType } from 'types';
-import { encodeValue } from './helpers/encodeValue';
 import {
   getLatestBlockHash,
   LatestBlockHashType
 } from './helpers/getLatestBlockHash';
 
-import { getNativeAuthConfig, getToken, getTokenExpiration } from './methods';
+import { getNativeAuthConfig, getTokenExpiration } from './methods';
 
 export const nativeAuth = (config?: NativeAuthConfigType) => {
   const {
@@ -13,8 +14,20 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     apiAddress,
     expirySeconds,
     blockHashShard,
-    extraInfo: extraInfoFromConfig
+    extraInfo: extraInfoFromConfig,
+    gatewayUrl,
+    extraRequestHeaders
   } = getNativeAuthConfig(config) as NativeAuthConfigType;
+
+  const nativeAuthClient = new NativeAuthClient({
+    origin,
+    apiUrl: apiAddress,
+    expirySeconds,
+    blockHashShard,
+    gatewayUrl,
+    extraRequestHeaders,
+    ...extraInfoFromConfig
+  });
 
   const initialize = async (
     extraInfo?: { [key: string]: string },
@@ -24,24 +37,42 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
       return '';
     }
 
+    const getBlockHash = (): Promise<string> =>
+      nativeAuthClient.getCurrentBlockHash();
+
     const response =
-      latestBlockInfo ?? (await getLatestBlockHash(apiAddress, blockHashShard));
+      latestBlockInfo ??
+      (await getLatestBlockHash(apiAddress, blockHashShard, getBlockHash));
+
     const { hash, timestamp } = response;
-    const encodedExtraInfo = encodeValue(
+    const encodedExtraInfo = nativeAuthClient.encodeValue(
       JSON.stringify({
         ...(extraInfo ?? extraInfoFromConfig),
         ...(timestamp ? { timestamp } : {})
       })
     );
-    const encodedOrigin = encodeValue(origin);
+    const encodedOrigin = nativeAuthClient.encodeValue(origin);
 
+    console.log(
+      `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`
+    );
     return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
+
+  const getCurrentToken = ({
+    address,
+    token,
+    signature
+  }: {
+    address: string;
+    token: string;
+    signature: string;
+  }): string => nativeAuthClient.getToken(address, token, signature);
 
   return {
     getNativeAuthConfig,
     initialize,
-    getToken,
+    getToken: getCurrentToken,
     getTokenExpiration
   };
 };

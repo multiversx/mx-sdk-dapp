@@ -23,8 +23,18 @@ const requestPromise: {
 const getLatestBlockHashFromServer = retryMultipleTimes(
   async (
     apiUrl: string,
-    blockHashShard?: number
+    blockHashShard?: number,
+    getBlockHash?: () => Promise<string>
   ): Promise<LatestBlockHashType | null> => {
+    // get current block hash
+    if (getBlockHash) {
+      const timestamp = Math.floor(Date.now() / 1000);
+
+      const hash = await getBlockHash();
+
+      return { hash, timestamp };
+    }
+
     //get the penultimate block hash (3 shards + the meta chain) to make sure that the block is seen by auth server
     const { data } = await axios.get<Array<LatestBlockHashType>>(
       `${apiUrl}/${BLOCKS_ENDPOINT}?from=${getBlockFromPosition}&size=1&fields=hash,timestamp${
@@ -38,7 +48,8 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
 
 export async function getLatestBlockHash(
   apiUrl: string,
-  blockHashShard?: number
+  blockHashShard?: number,
+  getBlockHash?: () => Promise<string>
 ): Promise<LatestBlockHashType> {
   if (apiUrl == null) {
     throw new Error('missing api url');
@@ -59,7 +70,12 @@ export async function getLatestBlockHash(
   }
 
   //if a promise is not in progress, get a new promise and add it to the promise
-  requestPromise.current = getLatestBlockHashFromServer(apiUrl, blockHashShard);
+  requestPromise.current = getLatestBlockHashFromServer(
+    apiUrl,
+    blockHashShard,
+    getBlockHash
+  );
+
   try {
     const response = await requestPromise.current;
     if (response == null) {

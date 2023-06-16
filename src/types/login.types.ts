@@ -27,6 +27,8 @@ export interface NativeAuthConfigType {
   apiAddress?: string;
   expirySeconds?: number;
   blockHashShard?: number;
+  gatewayUrl?: string;
+  extraRequestHeaders?: { [key: string]: string };
   extraInfo?: {
     [key: string]: string;
   };

@@ -13,14 +13,16 @@ export const getNativeAuthConfig = (config?: NativeAuthConfigType | true) => {
   }
   const nativeAuthConfig = {
     origin: config?.origin ?? defaultNativeAuthConfig.origin,
-    blockHashShard: config?.blockHashShard ?? null,
+    blockHashShard: config?.blockHashShard,
     expirySeconds:
       config?.expirySeconds ?? defaultNativeAuthConfig.expirySeconds,
     apiAddress: config?.apiAddress ?? defaultNativeAuthConfig.apiAddress,
     tokenExpirationToastWarningSeconds:
       config?.tokenExpirationToastWarningSeconds ??
       defaultNativeAuthConfig.tokenExpirationToastWarningSeconds,
-    extraInfo: config?.extraInfo ?? {}
+    extraInfo: config?.extraInfo ?? {},
+    gatewayUrl: config?.gatewayUrl,
+    extraRequestHeaders: config?.extraRequestHeaders ?? {}
   };
   return nativeAuthConfig;
 };
