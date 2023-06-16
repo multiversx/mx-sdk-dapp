@@ -29,7 +29,6 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
     // get current block hash
     if (getBlockHash) {
       const timestamp = Math.floor(Date.now() / 1000);
-
       const hash = await getBlockHash();
 
       return { hash, timestamp };

@@ -1,5 +1,4 @@
 import { NativeAuthClient } from '@multiversx/sdk-native-auth-client';
-
 import { NativeAuthConfigType } from 'types';
 import {
   getLatestBlockHash,
