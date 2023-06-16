@@ -45,6 +45,7 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
   }
 );
 
+// TODO: make getLatestBlockHash accept an object and make getBlockHash param mandatory (to replace axios call)
 export async function getLatestBlockHash(
   apiUrl: string,
   blockHashShard?: number,

@@ -55,7 +55,7 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
 
-  const getCurrentToken = ({
+  const getToken = ({
     address,
     token,
     signature
@@ -68,7 +68,7 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
   return {
     getNativeAuthConfig,
     initialize,
-    getToken: getCurrentToken,
+    getToken,
     getTokenExpiration
   };
 };
