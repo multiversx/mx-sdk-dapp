@@ -53,9 +53,6 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     );
     const encodedOrigin = nativeAuthClient.encodeValue(origin);
 
-    console.log(
-      `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`
-    );
     return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
 
