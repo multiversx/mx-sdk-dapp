@@ -9,6 +9,7 @@ on:
 
 jobs:
   test:
+    name: Run tests
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
