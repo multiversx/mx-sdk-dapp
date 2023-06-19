@@ -7,19 +7,18 @@ import { PageState } from 'UI/PageState';
 import { WithClassnameType } from '../types';
 
 export interface LoaderPropsType extends WithClassnameType {
-  dataTestId?: string;
   noText?: boolean;
 }
 
 export const Loader = ({
-  dataTestId = 'loader',
+  'data-testid': dataTestId = 'loader',
   noText = false,
   className = 'dapp-loader'
 }: LoaderPropsType) => (
   <PageState
     title={noText ? '' : 'Loading...'}
     iconBgClass={classNames(globalStyles.textPrimary, 'fa-spin')}
-    dataTestId={dataTestId}
+    data-testid={dataTestId}
     icon={faCircleNotch}
     className={className}
   />
