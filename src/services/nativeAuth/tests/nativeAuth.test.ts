@@ -24,12 +24,15 @@ describe('Native Auth', () => {
   let timestampSpy: jest.SpyInstance;
   const currentTimestamp = 1686847;
 
+  // Create and use the same instance of axios across all requests
+  const axiosAPI = axios.create();
+
   beforeEach(() => {
     timestampSpy = jest.spyOn(Date, 'now').mockReturnValue(currentTimestamp);
   });
 
   beforeAll(() => {
-    mock = new MockAdapter(axios);
+    mock = new MockAdapter(axiosAPI);
   });
 
   afterEach(() => {
