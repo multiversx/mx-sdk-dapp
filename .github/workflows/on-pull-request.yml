@@ -1,5 +1,10 @@
 name: Run tests
 
+on:
+  pull_request:
+    branches:
+      - development
+
 jobs:
   test:
     runs-on: ubuntu-latest
