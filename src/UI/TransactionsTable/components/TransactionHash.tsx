@@ -41,7 +41,7 @@ export const TransactionHash = ({
           styles.transactionCellLink
         )}
       >
-        <Trim text={transaction.txHash} dataTestId='transactionHash' />
+        <Trim text={transaction.txHash} data-testid='transactionHash' />
       </ExplorerLink>
     </div>
   );

@@ -9,7 +9,7 @@ export function FailedTransactions() {
       icon={faExchangeAlt}
       title='Unable to load transactions'
       className={globalStyles.myAuto}
-      dataTestId='errorScreen'
+      data-testid='errorScreen'
     />
   );
 }

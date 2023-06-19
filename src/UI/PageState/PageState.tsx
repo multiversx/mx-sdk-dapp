@@ -14,7 +14,6 @@ export interface PageStateProps extends WithClassnameType {
   title?: ReactNode;
   icon?: IconProp | IconDefinition | null;
   iconClass?: string;
-  dataTestId?: string;
   iconSize?: SizeProp;
   iconBgClass?: string;
   action?: ReactNode;
@@ -26,7 +25,7 @@ export const PageState = ({
   title,
   action,
   iconClass,
-  dataTestId,
+  'data-testid': dataTestId,
   description,
   iconBgClass,
   iconSize = '5x',

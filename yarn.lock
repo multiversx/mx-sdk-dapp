@@ -2014,6 +2014,13 @@
     buffer "6.0.3"
     platform "1.3.6"
 
+"@multiversx/sdk-native-auth-client@1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-native-auth-client/-/sdk-native-auth-client-1.0.4.tgz#54b4ef26303229f73a9f04b782f165aa57f458bd"
+  integrity sha512-Yz6lAWtGaUHoFma7DICQMr6ZKzNvusPq0eRNOXmTyW+9Zm9Gih2qUKFiIDEeEe6Fn9d6hO+ed20R4h3anYsxPw==
+  dependencies:
+    axios "0.24.0"
+
 "@multiversx/sdk-network-providers@1.2.1":
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-network-providers/-/sdk-network-providers-1.2.1.tgz#d1ae33ae30b93b8d8f0b87cefe8315ffefef39ef"
