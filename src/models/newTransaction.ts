@@ -4,7 +4,6 @@ import {
   TransactionOptions,
   TransactionVersion
 } from '@multiversx/sdk-core';
-import { Signature } from '@multiversx/sdk-core/out/signature';
 import { GAS_LIMIT, GAS_PRICE, VERSION } from 'constants/index';
 import { RawTransactionType } from 'types';
 import { getDataPayloadForTransaction } from 'utils/transactions/getDataPayloadForTransaction';
@@ -29,13 +28,13 @@ export function newTransaction(rawTransaction: RawTransactionType) {
   });
 
   if (rawTransaction.guardianSignature) {
-    transaction.applyGuardianSignature({
-      hex: () => rawTransaction.guardianSignature || ''
-    });
+    transaction.applySignature(
+      Buffer.from(rawTransaction.guardianSignature, 'hex')
+    );
   }
 
   if (rawTransaction.signature) {
-    transaction.applySignature(new Signature(rawTransaction.signature));
+    transaction.applySignature(Buffer.from(rawTransaction.signature, 'hex'));
   }
 
   return transaction;
