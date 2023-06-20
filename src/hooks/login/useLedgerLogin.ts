@@ -156,7 +156,7 @@ export function useLedgerLogin({
           address: loginInfo.address,
           provider: hwWalletProvider,
           index: index,
-          signature: loginInfo.signature.hex()
+          signature: loginInfo.signature.toString('hex')
         });
       } catch (err) {
         onLoginFailed(err, '. Update MultiversX App to continue.');
