@@ -4,9 +4,13 @@ on:
   pull_request:
     branches:
       - development
+    types:
+      - closed
 
 jobs:
   test:
+    name: Run tests
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
