@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.15.0]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-20
 - [Fix ledger init issue on Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/842)
 
 ## [[v2.15.0]](https://github.com/multiversx/mx-sdk-dapp/pull/835)] - 2023-06-19
