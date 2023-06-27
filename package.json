@@ -143,10 +143,11 @@
     "**/*.d.ts"
   ],
   "dependencies": {
-    "@multiversx/sdk-core": "12.1.0",
+    "@multiversx/sdk-core": "12.4.2",
     "@multiversx/sdk-extension-provider": "3.0.0-alpha.1",
-    "@multiversx/sdk-hw-provider": "4.0.0",
-    "@multiversx/sdk-network-providers": "1.2.1",
+    "@multiversx/sdk-hw-provider": "6.1.0",
+    "@multiversx/sdk-native-auth-client": "1.0.4",
+    "@multiversx/sdk-network-providers": "1.4.0",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.0.0",
     "@multiversx/sdk-web-wallet-provider": "2.4.0",

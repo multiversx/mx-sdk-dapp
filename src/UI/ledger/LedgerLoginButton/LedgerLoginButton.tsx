@@ -38,6 +38,7 @@ export const LedgerLoginButton: (
   children,
   onModalOpens,
   onModalCloses,
+  'data-testid': dataTestId,
   loginButtonText = 'Ledger',
   buttonClassName = 'dapp-ledger-login-button',
   className = 'dapp-ledger-login',
@@ -81,6 +82,7 @@ export const LedgerLoginButton: (
           className={className}
           btnClassName={buttonClassName}
           text={loginButtonText}
+          data-testid={dataTestId}
           disabled={disabled || disabledConnectButton}
         >
           {children}

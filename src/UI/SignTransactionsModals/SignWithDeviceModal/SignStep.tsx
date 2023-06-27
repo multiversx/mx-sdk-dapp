@@ -1,4 +1,4 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -35,9 +35,37 @@ export const SignStep = (props: SignStepType) => {
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
 
+  // a unique mapping between nonce + data and step to prevent signing same transaction twice
+  const [nonceDataStepMap, setNonceDataStepMap] = useState<
+    Record<number, number | undefined>
+  >({});
+
   if (!currentTransaction) {
     return null;
   }
+
+  const currentNonce = currentTransaction.transaction.getNonce().valueOf();
+  const currentNonceData = `${currentNonce.toString()}_${
+    currentTransaction.transactionTokenInfo.multiTxData
+  }`;
+
+  useEffect(() => {
+    const isCurrentNonceRegistered =
+      Object.keys(nonceDataStepMap).includes(currentNonceData);
+    const isCurrentStepRegistered =
+      Object.values(nonceDataStepMap).includes(currentStep);
+
+    if (isCurrentNonceRegistered || isCurrentStepRegistered) {
+      return;
+    }
+
+    setNonceDataStepMap((existing) => {
+      return {
+        ...existing,
+        [currentNonceData]: currentStep
+      };
+    });
+  }, [currentNonceData, currentStep]);
 
   const transactionData = currentTransaction.transaction.getData().toString();
 
@@ -118,6 +146,8 @@ export const SignStep = (props: SignStepType) => {
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport);
 
+  const isSigningReady = nonceDataStepMap[currentNonceData] === currentStep;
+
   return (
     <div
       className={classNames(
@@ -181,9 +211,9 @@ export const SignStep = (props: SignStepType) => {
               id='signBtn'
               data-testid='signBtn'
               onClick={onSubmit}
-              disabled={waitingForDevice}
+              disabled={waitingForDevice || !isSigningReady}
             >
-              {signBtnLabel}
+              {isSigningReady ? signBtnLabel : 'Loading...'}
             </button>
           </div>
         </>

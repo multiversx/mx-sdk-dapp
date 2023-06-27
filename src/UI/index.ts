@@ -24,5 +24,4 @@ export * from './walletConnect/WalletConnectLoginContainer';
 export * from './webWallet/WebWalletLoginButton';
 export * from './TransactionsTable';
 export * from './ScamPhishingAlert';
-export * from './ExplorerLink';
 export * from './TimeAgo';

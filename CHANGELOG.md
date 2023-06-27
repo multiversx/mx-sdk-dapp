@@ -6,6 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed AuthenticatedRoutesWrapper blocking render on failed wallet login attempt](https://github.com/multiversx/mx-sdk-dapp/pull/842)
+## [[v2.15.1]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-20
+- [Fixed ledger init issue on Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/842)
+
+## [[v2.15.0]](https://github.com/multiversx/mx-sdk-dapp/pull/835)] - 2023-06-19
+- [Added `on-pull-request.yml` script](https://github.com/multiversx/mx-sdk-dapp/pull/838)
+- [Changed local native auth service with mx-sdk-js-native-auth-client package](https://github.com/multiversx/mx-sdk-dapp/pull/837)
+- [Changed usage of `dataTestid` to `data-testid`](https://github.com/multiversx/mx-sdk-dapp/pull/836)
+
+## [[v2.14.13]](https://github.com/multiversx/mx-sdk-dapp/pull/835)] - 2023-06-15
+- [Fixed SignStep loading button for multiEsdtTransfers](https://github.com/multiversx/mx-sdk-dapp/pull/834)
+
+## [[v2.14.12]](https://github.com/multiversx/mx-sdk-dapp/pull/833)] - 2023-06-14
+- [Fixed possible invalid calls to network config endpoint](https://github.com/multiversx/mx-sdk-dapp/pull/832)
+- [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/827)
+## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/831)] - 2023-06-13
+- [Fixed double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/830)
+
+## [[v2.14.10]](https://github.com/multiversx/mx-sdk-dapp/pull/828)] - 2023-06-09
+- [Fixed infinite page reload using nextjs navigation](https://github.com/multiversx/mx-sdk-dapp/pull/822)
+
+## [[v2.14.9]](https://github.com/multiversx/mx-sdk-dapp/pull/826)] - 2023-06-08
+- [Added datatestids to login buttons](https://github.com/multiversx/mx-sdk-dapp/pull/825)
+
 
 ## [[v2.14.8]](https://github.com/multiversx/mx-sdk-dapp/pull/824)] - 2023-06-08
 
