@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   isAccountLoadingSelector,
@@ -47,18 +47,21 @@ export const AuthenticatedRoutesWrapper = ({
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
+  useEffect(() => {
+    if (!shouldRedirect) {
+      return;
+    }
+
+    if (onRedirect) {
+      return onRedirect(unlockRoute);
+    }
+
+    safeRedirect(unlockRoute);
+  }, [shouldRedirect, unlockRoute]);
+
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
 
   if (isAccountLoading || isValidWalletLoginAttempt) {
-    return null;
-  }
-
-  if (shouldRedirect) {
-    if (onRedirect) {
-      onRedirect(unlockRoute);
-    } else {
-      safeRedirect(unlockRoute);
-    }
     return null;
   }
 
