@@ -7,10 +7,9 @@ import {
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
-import { addressIsValid } from './addressIsValid';
+import { getSearchParamAddress } from './getSearchParamAddress';
 
 export function getAddress(): Promise<string> {
-  const search = window?.location.search;
   const appState = store.getState();
   const provider = getAccountProvider();
   const address = addressSelector(appState);
@@ -32,12 +31,9 @@ export function getAddress(): Promise<string> {
     !getIsProviderEqualTo(LoginMethodsEnum.extra)
     ? provider.getAddress()
     : new Promise((resolve) => {
-        if (walletLogin != null) {
-          const urlSearchParams = new URLSearchParams(search);
-          const params = Object.fromEntries(urlSearchParams as any);
-          if (addressIsValid(params.address)) {
-            resolve(params.address);
-          }
+        const searchParamAddress = getSearchParamAddress();
+        if (walletLogin != null && searchParamAddress) {
+          resolve(searchParamAddress);
         }
         if (loggedIn) {
           resolve(address);
