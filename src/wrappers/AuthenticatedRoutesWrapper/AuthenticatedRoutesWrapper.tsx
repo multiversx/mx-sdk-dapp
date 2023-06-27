@@ -47,12 +47,6 @@ export const AuthenticatedRoutesWrapper = ({
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
-  console.log({
-    isOnAuthenticatedRoute,
-    isLoggedIn,
-    shouldRedirect
-  });
-
   useEffect(() => {
     if (!shouldRedirect) {
       return;
@@ -66,12 +60,6 @@ export const AuthenticatedRoutesWrapper = ({
   }, [shouldRedirect, unlockRoute]);
 
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
-
-  console.log({
-    isAccountLoading,
-    isValidWalletLoginAttempt,
-    walletLogin
-  });
 
   if (isAccountLoading || isValidWalletLoginAttempt) {
     return null;
