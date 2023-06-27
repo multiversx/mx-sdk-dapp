@@ -2009,10 +2009,10 @@
   dependencies:
     bech32 "^2.0.0"
 
-"@multiversx/sdk-wallet-connect-provider@4.0.0-alpha.6":
-  version "4.0.0-alpha.6"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-4.0.0-alpha.6.tgz#b957bcef39a219da4e7a000e0b688f5a04035bf5"
-  integrity sha512-b0CbaEkrBRnC3FURkpAMCc3K2UK3sxy+tSEh3qEAb9HB5u8JNTcRryXhFq2GY2+SDuQmzbkl/5SvZUI3xUgDvg==
+"@multiversx/sdk-wallet-connect-provider@4.0.0-alpha.7":
+  version "4.0.0-alpha.7"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-4.0.0-alpha.7.tgz#7a9d459795f8dd1f48431bfce138395977ebbbc9"
+  integrity sha512-Sc00pd4H/Uj9EIR78gv/ZtVQUSUf1eCyfWPlYx/vfgmy0okQaWtZCi00rJY9LqO/uy+EfBSTo9RDeyx1O5ZpZA==
   dependencies:
     "@walletconnect/sign-client" "2.8.4"
     "@walletconnect/utils" "2.8.4"
@@ -14612,9 +14612,9 @@ terser@^4.1.2, terser@^4.6.3:
     source-map-support "~0.5.12"
 
 terser@^5.16.8, terser@^5.3.4:
-  version "5.18.1"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.18.1.tgz#6d8642508ae9fb7b48768e48f16d675c89a78460"
-  integrity sha512-j1n0Ao919h/Ai5r43VAnfV/7azUYW43GPxK7qSATzrsERfW7+y2QW9Cp9ufnRF5CQUWbnLSo7UJokSWCqg4tsQ==
+  version "5.18.2"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.18.2.tgz#ff3072a0faf21ffd38f99acc9a0ddf7b5f07b948"
+  integrity sha512-Ah19JS86ypbJzTzvUCX7KOsEIhDaRONungA4aYBjEP3JZRf4ocuDzTg4QWZnPn9DEMiMYGJPiSOy7aykoCc70w==
   dependencies:
     "@jridgewell/source-map" "^0.3.3"
     acorn "^8.8.2"
