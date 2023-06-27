@@ -1,4 +1,5 @@
 export * from './addressIsValid';
+export * from './getSearchParamAddress';
 export * from './getAccount';
 export * from './getAccountBalance';
 export * from './getAccountProviderType';
