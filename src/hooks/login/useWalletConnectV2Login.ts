@@ -92,11 +92,14 @@ export const useWalletConnectV2Login = ({
   const isInitialisingRef = useRef<boolean>(false);
 
   const dappMethods: string[] = [
-    WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
-    ...(hasNativeAuth
-      ? [WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN]
-      : [])
+    WalletConnectOptionalMethodsEnum.CANCEL_ACTION
   ];
+  if (tokenToSign) {
+    dappMethods.push(WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN);
+  }
+  if (hasNativeAuth) {
+    dappMethods.push(WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN);
+  }
 
   const uriDeepLink = !isLoading
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
