@@ -1,5 +1,5 @@
 import { Address, SignableMessage } from '@multiversx/sdk-core/out';
-import { UserPublicKey, UserVerifier } from '@multiversx/sdk-wallet';
+import { getVerifier } from './getVerifier';
 
 export const verifyMessage = (signedMessage: string) => {
   try {
@@ -13,14 +13,15 @@ export const verifyMessage = (signedMessage: string) => {
       message: decodedMessage,
       signature: decodedSignature
     });
-    const publicKey = new UserPublicKey(Address.fromString(address).pubkey());
-    const verifier = new UserVerifier(publicKey);
+
+    const verifier = getVerifier(address);
+    const isVerified = verifier.verify(
+      signedM.serializeForSigning(),
+      signedM.getSignature()
+    );
 
     return {
-      isVerified: verifier.verify(
-        signedM.serializeForSigning(),
-        signedM.getSignature()
-      ),
+      isVerified,
       message: decodedMessage.toString(),
       address
     };

@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect } from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   isAccountLoadingSelector,
@@ -7,6 +7,7 @@ import {
 } from 'reduxStore/selectors';
 
 import { RouteType } from 'types';
+import { getSearchParamAddress } from 'utils/account/getSearchParamAddress';
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { safeRedirect } from 'utils/redirect';
 import { matchRoute } from './helpers/matchRoute';
@@ -24,6 +25,7 @@ export const AuthenticatedRoutesWrapper = ({
   unlockRoute: string;
   onRedirect?: (unlockRoute?: string) => void;
 }) => {
+  const searchParamAddress = getSearchParamAddress();
   const isLoggedIn = useSelector(isLoggedInSelector);
 
   const isAccountLoading = useSelector(isAccountLoadingSelector);
@@ -45,16 +47,21 @@ export const AuthenticatedRoutesWrapper = ({
   const shouldRedirect =
     isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
 
-  if (isAccountLoading || walletLogin) {
-    return null;
-  }
-
-  if (shouldRedirect) {
-    if (onRedirect) {
-      onRedirect(unlockRoute);
-    } else {
-      safeRedirect(unlockRoute);
+  useEffect(() => {
+    if (!shouldRedirect) {
+      return;
     }
+
+    if (onRedirect) {
+      return onRedirect(unlockRoute);
+    }
+
+    safeRedirect(unlockRoute);
+  }, [shouldRedirect, unlockRoute]);
+
+  const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
+
+  if (isAccountLoading || isValidWalletLoginAttempt) {
     return null;
   }
 
