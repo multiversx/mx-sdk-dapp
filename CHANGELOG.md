@@ -6,7 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Fixed AuthenticatedRoutesWrapper blocking render on failed wallet login attempt](https://github.com/multiversx/mx-sdk-dapp/pull/842)
+## [[v2.15.2]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-27
+- [Fixed AuthenticatedRoutesWrapper redirect condition](https://github.com/multiversx/mx-sdk-dapp/pull/846)
+- [Fixed AuthenticatedRoutesWrapper blocking render on failed wallet login attempt](https://github.com/multiversx/mx-sdk-dapp/pull/845)
+- [Added `verifyMessage` test](https://github.com/multiversx/mx-sdk-dapp/pull/844)
 ## [[v2.15.1]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-20
 - [Fixed ledger init issue on Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/842)
 
