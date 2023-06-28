@@ -4,7 +4,7 @@ import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles
 import { ComponentIconToastPropsType } from '../customToast.types';
 import { useMemoizedCloseButton } from '../helpers';
 
-export const ComponentToast = ({
+export const CustomComponentToast = ({
   onDelete,
   message,
   component,

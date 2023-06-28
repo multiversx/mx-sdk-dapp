@@ -1,10 +1,6 @@
 import React from 'react';
-
-import { IconToast, SimpleToast, ComponentToast } from './components';
-import {
-  // ComponentIconToastPropsType,
-  CustomToastPropsType
-} from './customToast.types';
+import { IconToast, SimpleToast, CustomComponentToast } from './components';
+import { CustomToastPropsType } from './customToast.types';
 import { useRemoveCustomToast } from './helpers';
 
 export const CustomToast = (props: CustomToastPropsType) => {
@@ -12,7 +8,7 @@ export const CustomToast = (props: CustomToastPropsType) => {
   useRemoveCustomToast({ duration, onDelete });
 
   if (props.component) {
-    return <ComponentToast {...props} />;
+    return <CustomComponentToast {...props} />;
   }
 
   if (props.icon) {
