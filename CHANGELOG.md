@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ## [[v2.16.0]](https://github.com/multiversx/mx-sdk-dapp/pull/849)] - 2023-06-28
-- [Custom toast extensions](https://github.com/multiversx/mx-sdk-dapp/pull/848)
+- [Added support for component injection into custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/848)
 
 ## [[v2.15.2]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-27
 - [Fixed AuthenticatedRoutesWrapper redirect condition](https://github.com/multiversx/mx-sdk-dapp/pull/846)
