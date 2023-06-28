@@ -14,8 +14,6 @@ export const ComponentToast = ({
 }: ComponentIconToastPropsType) => {
   const closeButton = useMemoizedCloseButton({ onDelete, CustomCloseButton });
 
-  console.log(component);
-
   return (
     <div
       id={toastId}
@@ -27,7 +25,7 @@ export const ComponentToast = ({
     >
       <>
         {closeButton}
-        {component ? component : message}
+        {component ? component() : message}
       </>
     </div>
   );

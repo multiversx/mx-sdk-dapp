@@ -12,13 +12,7 @@ export const CustomToast = (props: CustomToastPropsType) => {
   useRemoveCustomToast({ duration, onDelete });
 
   if (props.component) {
-    const Component = props.component;
-    const newProps = {
-      ...props,
-      component: <Component />
-    } as any;
-
-    return <ComponentToast {...newProps} />;
+    return <ComponentToast {...props} />;
   }
 
   if (props.icon) {
