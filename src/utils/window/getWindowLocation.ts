@@ -1,12 +1,6 @@
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 
-type WindowLocationType =
-  | 'location'
-  | 'search'
-  | 'pathname'
-  | 'hash'
-  | 'origin'
-  | 'href';
+type WindowLocationType = 'search' | 'pathname' | 'hash' | 'origin' | 'href';
 
 export const getWindowLocation = (type: WindowLocationType): string => {
   const isAvailable = isWindowAvailable();
@@ -18,8 +12,6 @@ export const getWindowLocation = (type: WindowLocationType): string => {
   const { location } = window;
 
   switch (type) {
-    case 'location':
-      return location as unknown as string;
     case 'pathname':
       return location.pathname as unknown as string;
     case 'hash':

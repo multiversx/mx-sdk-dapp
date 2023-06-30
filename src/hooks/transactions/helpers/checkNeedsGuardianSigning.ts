@@ -7,6 +7,7 @@ import {
 
 import { newWalletProvider } from 'providers/utils';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
+import { getWindowLocation } from 'utils/window';
 import { getAreAllTransactionsSignedByGuardian } from './getAreAllTransactionsSignedByGuardian';
 
 interface SendTransactionsToGuardianType {
@@ -44,8 +45,9 @@ export const checkNeedsGuardianSigning = ({
       walletAddress ?? fallbackNetworkConfigurations[environment].walletAddress;
     const walletProvider = newWalletProvider(walletProviderAddress);
     const urlParams = { [WALLET_SIGN_SESSION]: String(sessionId) };
+    const origin = getWindowLocation('origin');
     const callbackUrl = window?.location
-      ? `${window.location.origin}${callbackRoute}`
+      ? `${origin}${callbackRoute}`
       : `${callbackRoute}`;
     const builtedCallbackUrl = builtCallbackUrl({ callbackUrl, urlParams });
 

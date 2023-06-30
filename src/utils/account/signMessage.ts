@@ -1,6 +1,7 @@
 import { SignableMessage, Address } from '@multiversx/sdk-core';
 import { getAccountProvider } from 'providers';
 import { getAddress } from 'utils/account/getAddress';
+import { getWindowLocation } from 'utils/window';
 
 export interface SignMessageType {
   message: string;
@@ -14,8 +15,9 @@ export const signMessage = async ({
   const address = await getAddress();
   const provider = getAccountProvider();
 
+  const origin = getWindowLocation('origin');
   const callbackUrl = window?.location
-    ? `${window.location.origin}${callbackRoute}`
+    ? `${origin}${callbackRoute}`
     : `${callbackRoute}`;
   const signableMessage = new SignableMessage({
     address: new Address(address),

@@ -124,8 +124,10 @@ export const useSignTransactions = () => {
     let callbackUrl = callbackRoute;
 
     if (window?.location) {
-      const searchParams = new URLSearchParams(window.location.search);
-      callbackUrl = `${window.location.origin}${callbackRoute}`;
+      const search = getWindowLocation('search');
+      const origin = getWindowLocation('origin');
+      const searchParams = new URLSearchParams(search);
+      callbackUrl = `${origin}${callbackRoute}`;
 
       searchParams.forEach((value, key) => {
         urlParams[key] = value;
