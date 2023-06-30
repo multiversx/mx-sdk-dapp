@@ -28,6 +28,7 @@ import {
   SessionEventTypes,
   PairingTypes
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
+import { getWindowLocation } from 'utils/window';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
 
@@ -167,7 +168,7 @@ export const useWalletConnectV2Login = ({
       const loginData = {
         logoutRoute: logoutRoute,
         loginType: 'walletconnectv2',
-        callbackRoute: callbackRoute ?? window?.location.href
+        callbackRoute: callbackRoute ?? getWindowLocation('href')
       };
 
       dispatch(setWalletConnectLogin(loginData));

@@ -7,6 +7,7 @@ import { getAddress } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
+import { getWindowLocation } from './window';
 
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
@@ -59,7 +60,7 @@ export async function logout(
 
   try {
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
-    const url = needsCallbackUrl ? window?.location.origin : callbackUrl;
+    const url = needsCallbackUrl ? getWindowLocation('origin') : callbackUrl;
 
     if (isWalletProvider) {
       // allow Redux clearing it's state before navigation

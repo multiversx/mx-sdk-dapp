@@ -1,3 +1,4 @@
+import { getWindowLocation } from 'utils/window';
 import { OnLoginRedirectOptionsType, OnProviderLoginType } from '../../types';
 import { safeRedirect } from '../redirect';
 
@@ -25,7 +26,8 @@ export function optionalRedirect({
         return onLoginRedirect(callbackRoute, options);
       }
 
-      if (!window?.location.pathname.includes(callbackRoute)) {
+      const pathname = getWindowLocation('pathname');
+      if (pathname.includes(callbackRoute)) {
         safeRedirect(callbackRoute);
       }
     }, timeout);

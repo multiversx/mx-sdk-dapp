@@ -6,6 +6,7 @@ import {
   useSignTransactionsCommonData
 } from 'hooks';
 import { SignPropsType } from 'UI/SignTransactionsModals/types/signTransactionsModals.types';
+import { getWindowLocation } from 'utils/window';
 import { ExtraConfirmationScreenPropsType } from './confirmationScreen.types';
 import {
   TransactionStatusToast,
@@ -49,7 +50,7 @@ export const DeviceConfirmationScreen = ({
     transactions: transactionsToSign?.transactions ?? [],
     providerType,
     callbackRoute:
-      transactionsToSign?.callbackRoute || window?.location.pathname,
+      transactionsToSign?.callbackRoute || getWindowLocation('pathname'),
     className,
     verifyReceiverScam
   };

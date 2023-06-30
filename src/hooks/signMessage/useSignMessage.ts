@@ -29,6 +29,7 @@ import { parseNavigationParams } from 'utils/parseNavigationParams';
 import {
   getAccountProvider,
   getAddress,
+  getWindowLocation,
   removeSearchParamsFromUrl
 } from '../../utils';
 import { useGetSignMessageInfoStatus } from './useGetSignedMessageStatus';
@@ -55,7 +56,7 @@ export const useSignMessage = () => {
   const signedMessageInfo = useSelector(signedMessageInfoSliceSelector);
   const currentSession = signedMessageInfo.signedSessions[currentSessionId];
   const { isPending, errorMessage } = useGetSignMessageInfoStatus();
-  const search = window?.location.search;
+  const search = getWindowLocation('search');
   const { provider, providerType } = useGetAccountProvider();
   const isWalletLogin = providerType === LoginMethodsEnum.wallet;
   const lastSignSession = useSelector(lastSignedSessionId);
@@ -112,9 +113,10 @@ export const useSignMessage = () => {
       );
     }
 
-    return `${isWalletLogin ? window?.location.origin : ''}${
-      callbackUrl.pathname
-    }${callbackUrl.search}`;
+    const origin = getWindowLocation('origin');
+    return `${isWalletLogin ? origin : ''}${callbackUrl.pathname}${
+      callbackUrl.search
+    }`;
   };
 
   const checkProviderIsInitialized = async () => {

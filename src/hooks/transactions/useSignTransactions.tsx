@@ -40,6 +40,7 @@ import {
 
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { getWindowLocation } from 'utils/window';
 
 import {
   useSetTransactionNonces,
@@ -150,8 +151,9 @@ export const useSignTransactions = () => {
       customTransactionInformation
     } = transactionsToSign;
     const { redirectAfterSign } = customTransactionInformation;
-    const redirectRoute = callbackRoute || window?.location.pathname;
-    const isCurrentRoute = window?.location.pathname.includes(redirectRoute);
+    const pathname = getWindowLocation('pathname');
+    const redirectRoute = callbackRoute || pathname;
+    const isCurrentRoute = pathname.includes(redirectRoute);
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {
@@ -262,7 +264,7 @@ export const useSignTransactions = () => {
      * the callback will go to undefined,
      * we save the most recent one for a valid transaction
      */
-    savedCallback.current = callbackRoute || window?.location.pathname;
+    savedCallback.current = callbackRoute || getWindowLocation('pathname');
 
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
