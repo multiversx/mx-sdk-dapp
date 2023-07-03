@@ -17,7 +17,10 @@ import {
 } from 'types';
 import { TransactionToastType } from 'types/toasts.types';
 
-import { deleteCustomToast } from 'utils/toasts/customToastsActions';
+import {
+  deleteCustomToast,
+  getRegisteredCustomIconComponents
+} from 'utils/toasts/customToastsActions';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
 import { WithClassnameType } from '../types';
@@ -36,6 +39,7 @@ export interface TransactionsToastListPropsType extends WithClassnameType {
   parentElement?: Element | DocumentFragment;
   transactionToastClassName?: string;
   customToastClassName?: string;
+  children?: React.ReactNode;
 }
 
 export const TransactionsToastList = ({
@@ -44,7 +48,8 @@ export const TransactionsToastList = ({
   customToastClassName,
   signedTransactions,
   successfulToastLifetime,
-  parentElement
+  parentElement,
+  children
 }: TransactionsToastListPropsType) => {
   const customToasts = useSelector(customToastsSelector);
   const transactionsToasts = useSelector(transactionToastsSelector);
@@ -126,14 +131,20 @@ export const TransactionsToastList = ({
     ]
   );
 
-  const customToastsList = customToasts.map((props) => (
-    <CustomToast
-      key={props.toastId}
-      {...props}
-      onDelete={() => handleDeleteCustomToast(props.toastId)}
-      className={customToastClassName}
-    />
-  ));
+  const customToastsList = customToasts.map((props) => {
+    const CustomComponent =
+      getRegisteredCustomIconComponents(props.toastId) ?? null;
+
+    return (
+      <CustomToast
+        key={props.toastId}
+        {...props}
+        component={CustomComponent as never}
+        onDelete={() => handleDeleteCustomToast(props.toastId)}
+        className={customToastClassName}
+      />
+    );
+  });
 
   const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());
@@ -174,6 +185,7 @@ export const TransactionsToastList = ({
     <div className={classNames(styles.toasts, className)}>
       {customToastsList}
       {MemoizedTransactionsToastsList}
+      {children}
     </div>,
     parentElement || document?.body
   );
