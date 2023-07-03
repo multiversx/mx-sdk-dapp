@@ -47,7 +47,7 @@ export const AddressTable = ({
   addressTableClassNames,
   className = 'dapp-ledger-address-table',
   customContentComponent,
-  dataTestId = 'addressTableModal',
+  dataTestId = 'addressTableContainer',
   loading,
   onConfirmSelectedAddress,
   onGoToNextPage,
@@ -133,7 +133,7 @@ export const AddressTable = ({
             styles.ledgerAddressTableHeading,
             ledgerModalTitleClassName
           )}
-          data-testid='addressTableModalTitle'
+          data-testid='addressTableContainerTitle'
         >
           Access your wallet
         </div>
@@ -143,7 +143,7 @@ export const AddressTable = ({
             styles.ledgerAddressTableDescription,
             ledgerModalSubtitleClassName
           )}
-          data-testid='addressTableModalSubTitle'
+          data-testid='addressTableContainerSubTitle'
         >
           Choose the wallet you want to access
         </p>
