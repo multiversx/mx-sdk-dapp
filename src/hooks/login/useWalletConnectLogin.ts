@@ -16,6 +16,7 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import { WalletConnectProvider } from 'utils/walletconnect/__sdkWalletconnectProvider';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import Timeout = NodeJS.Timeout;
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
@@ -164,7 +165,7 @@ export const useWalletConnectLogin = ({
       const loginData = {
         logoutRoute: logoutRoute,
         loginType: 'walletConnect',
-        callbackRoute: callbackRoute ?? window?.location.href
+        callbackRoute: callbackRoute ?? getWindowLocation().href
       };
 
       dispatch(setWalletConnectLogin(loginData));

@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+-- [Fix window undefined in NextJS apps](https://github.com/multiversx/mx-sdk-dapp/pull/852)
 
 ## [[v2.17.1]](https://github.com/multiversx/mx-sdk-dapp/pull/854)] - 2023-07-03
 - [Added `data-testid` to `AddressTable` component](https://github.com/multiversx/mx-sdk-dapp/pull/853)

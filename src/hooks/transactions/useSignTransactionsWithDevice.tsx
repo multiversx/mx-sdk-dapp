@@ -22,6 +22,7 @@ import {
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { checkNeedsGuardianSigning } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
@@ -86,8 +87,9 @@ export function useSignTransactionsWithDevice(
     dispatch(setSignTransactionsError(errorMessage));
   }
 
+  const { pathname } = getWindowLocation();
   const locationIncludesCallbackRoute =
-    callbackRoute != null && window?.location.pathname.includes(callbackRoute);
+    callbackRoute != null && pathname.includes(callbackRoute);
 
   const allowGuardian = !customTransactionInformation?.skipGuardian;
 
