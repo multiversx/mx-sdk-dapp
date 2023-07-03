@@ -28,5 +28,5 @@ export function useRegisterWebsocketListener(
     if (data) {
       onBatchMessage?.(data);
     }
-  }, [onMessage, websocketBatchEvent]);
+  }, [onBatchMessage, websocketBatchEvent]);
 }
