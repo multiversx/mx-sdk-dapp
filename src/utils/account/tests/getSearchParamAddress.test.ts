@@ -3,7 +3,10 @@ import { testAddress } from '__mocks__';
 import { getSearchParamAddress } from '../getSearchParamAddress';
 
 const createMockLocation = (search: string) => {
-  global.window = Object.create(window);
+  if (!global.window) {
+    global.window = Object.create(window);
+  }
+
   Object.defineProperty(window, 'location', {
     value: {
       search
@@ -31,13 +34,7 @@ describe('getSearchParamAddress', () => {
   });
 
   it('should return null if the address parameter is not provided', () => {
-    // Mock the window object and URLSearchParams
-    const mockLocation = {
-      search: ''
-    };
-    (global as any).window = {
-      location: mockLocation
-    };
+    createMockLocation('');
 
     const result = getSearchParamAddress();
 

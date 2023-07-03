@@ -20,15 +20,7 @@ import { LedgerLoading } from './LedgerLoading';
 const ADDRESSES_PER_PAGE = 10;
 
 export interface AddressTablePropsType extends WithClassnameType {
-  loading: boolean;
   accounts: string[];
-  startIndex: number;
-  selectedAddress?: string;
-  onSelectAddress: (address: { address: string; index: number } | null) => void;
-  onGoToPrevPage: () => void;
-  onGoToNextPage: () => void;
-  onConfirmSelectedAddress: () => void;
-  customContentComponent?: ReactNode;
   addressTableClassNames?: {
     ledgerModalTitleClassName?: string;
     ledgerModalSubtitleClassName?: string;
@@ -39,20 +31,30 @@ export interface AddressTablePropsType extends WithClassnameType {
     ledgerModalTableSelectedItemClassName?: string;
     ledgerModalTableNavigationButtonDisabledClassName?: string;
   };
+  customContentComponent?: ReactNode;
+  dataTestId?: string;
+  loading: boolean;
+  onConfirmSelectedAddress: () => void;
+  onGoToNextPage: () => void;
+  onGoToPrevPage: () => void;
+  onSelectAddress: (address: { address: string; index: number } | null) => void;
+  selectedAddress?: string;
+  startIndex: number;
 }
 
 export const AddressTable = ({
-  loading,
   accounts,
-  startIndex,
-  selectedAddress,
-  onGoToPrevPage,
-  onGoToNextPage,
-  onConfirmSelectedAddress,
-  onSelectAddress,
+  addressTableClassNames,
   className = 'dapp-ledger-address-table',
   customContentComponent,
-  addressTableClassNames
+  dataTestId = 'addressTableContainer',
+  loading,
+  onConfirmSelectedAddress,
+  onGoToNextPage,
+  onGoToPrevPage,
+  onSelectAddress,
+  selectedAddress,
+  startIndex
 }: AddressTablePropsType) => {
   const {
     ledgerModalTitleClassName,
@@ -121,13 +123,17 @@ export const AddressTable = ({
   ];
 
   return (
-    <div className={classNames(styles.ledgerAddressTableWrapper, className)}>
+    <div
+      className={classNames(styles.ledgerAddressTableWrapper, className)}
+      data-testid={dataTestId}
+    >
       <div className={styles.ledgerAddressTableTop}>
         <div
           className={classNames(
             styles.ledgerAddressTableHeading,
             ledgerModalTitleClassName
           )}
+          data-testid='addressTableContainerTitle'
         >
           Access your wallet
         </div>
@@ -137,6 +143,7 @@ export const AddressTable = ({
             styles.ledgerAddressTableDescription,
             ledgerModalSubtitleClassName
           )}
+          data-testid='addressTableContainerSubTitle'
         >
           Choose the wallet you want to access
         </p>
