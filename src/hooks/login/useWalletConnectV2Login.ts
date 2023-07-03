@@ -28,7 +28,7 @@ import {
   SessionEventTypes,
   PairingTypes
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
 

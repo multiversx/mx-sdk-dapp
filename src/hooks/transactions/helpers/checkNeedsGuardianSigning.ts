@@ -7,7 +7,7 @@ import {
 
 import { newWalletProvider } from 'providers/utils';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { getAreAllTransactionsSignedByGuardian } from './getAreAllTransactionsSignedByGuardian';
 
 interface SendTransactionsToGuardianType {

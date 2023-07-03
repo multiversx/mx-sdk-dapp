@@ -1,5 +1,5 @@
 import { NativeAuthConfigType } from 'types';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 const defaultNativeAuthConfig = {
   origin: getWindowLocation().origin,

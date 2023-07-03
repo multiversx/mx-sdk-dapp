@@ -1,4 +1,4 @@
-import { getWindowLocation } from './window';
+import { getWindowLocation } from './window/getWindowLocation';
 
 export const clearNavigationHistory = (remainingParams: any) => {
   const newUrlParams = new URLSearchParams(remainingParams).toString();

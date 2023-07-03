@@ -7,7 +7,7 @@ import { getAddress } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
-import { getWindowLocation } from './window';
+import { getWindowLocation } from './window/getWindowLocation';
 
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);

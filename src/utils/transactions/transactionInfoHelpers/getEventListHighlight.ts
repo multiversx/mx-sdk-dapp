@@ -1,5 +1,5 @@
 import { EventType } from 'types/serverTransactions.types';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 export const getEventListHighlight = (event: EventType, id?: string) => {
   const { hash } = getWindowLocation();

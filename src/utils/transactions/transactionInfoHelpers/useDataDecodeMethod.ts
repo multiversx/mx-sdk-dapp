@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DecodeMethodEnum } from 'types';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 export const useDataDecodeMethod = () => {
   const { hash, pathname } = getWindowLocation();

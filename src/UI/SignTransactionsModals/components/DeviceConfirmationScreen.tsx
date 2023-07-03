@@ -6,7 +6,7 @@ import {
   useSignTransactionsCommonData
 } from 'hooks';
 import { SignPropsType } from 'UI/SignTransactionsModals/types/signTransactionsModals.types';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { ExtraConfirmationScreenPropsType } from './confirmationScreen.types';
 import {
   TransactionStatusToast,

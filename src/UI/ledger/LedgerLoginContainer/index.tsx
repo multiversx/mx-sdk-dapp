@@ -8,7 +8,7 @@ import {
 } from 'services/nativeAuth/helpers';
 import { ModalContainer } from 'UI/ModalContainer';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { WithClassnameType } from '../../types';
 import { OnProviderLoginType } from './../../../types';
 

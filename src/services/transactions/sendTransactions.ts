@@ -4,7 +4,7 @@ import {
   SendTransactionsPropsType,
   SimpleTransactionType
 } from 'types';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { signTransactions } from './signTransactions';
 import { transformAndSignTransactions } from './transformAndSignTransactions';
 

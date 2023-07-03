@@ -26,10 +26,10 @@ import {
   SignMessageType
 } from 'utils/account/signMessage';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
   getAccountProvider,
   getAddress,
-  getWindowLocation,
   removeSearchParamsFromUrl
 } from '../../utils';
 import { useGetSignMessageInfoStatus } from './useGetSignedMessageStatus';

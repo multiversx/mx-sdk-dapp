@@ -1,7 +1,7 @@
 import { SignableMessage, Address } from '@multiversx/sdk-core';
 import { getAccountProvider } from 'providers';
 import { getAddress } from 'utils/account/getAddress';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 export interface SignMessageType {
   message: string;

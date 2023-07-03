@@ -1,4 +1,4 @@
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { OnLoginRedirectOptionsType, OnProviderLoginType } from '../../types';
 import { safeRedirect } from '../redirect';
 

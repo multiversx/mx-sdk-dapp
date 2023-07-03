@@ -1,4 +1,4 @@
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { addressIsValid } from './addressIsValid';
 
 export const getSearchParamAddress = () => {

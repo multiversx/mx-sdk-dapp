@@ -1,4 +1,4 @@
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 export const getScResultsHighlight = (resultHash: string) => {
   const { hash } = getWindowLocation();

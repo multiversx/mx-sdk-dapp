@@ -13,7 +13,7 @@ import {
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
 
 export type UseOperaLoginReturnType = [

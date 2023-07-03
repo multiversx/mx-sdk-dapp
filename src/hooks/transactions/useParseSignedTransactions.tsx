@@ -18,7 +18,7 @@ import { SignedMessageQueryParamsEnum } from 'types/signedMessage.types';
 import { removeSearchParamsFromUrl } from 'utils/removeSearchParamsFromUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
-import { getWindowLocation } from 'utils/window';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
