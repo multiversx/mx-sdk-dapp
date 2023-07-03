@@ -12,7 +12,7 @@ export async function sendTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
-  callbackRoute = getWindowLocation('pathname'),
+  callbackRoute = getWindowLocation().pathname,
   signWithoutSending,
   completedTransactionsDelay,
   sessionInformation,

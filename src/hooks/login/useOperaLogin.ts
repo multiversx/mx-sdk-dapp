@@ -54,8 +54,7 @@ export const useOperaLogin = ({
         return;
       }
 
-      const origin = getWindowLocation('origin');
-      const pathname = getWindowLocation('pathname');
+      const { origin, pathname } = getWindowLocation();
       const callbackUrl: string = encodeURIComponent(
         `${origin}${callbackRoute ?? pathname}`
       );

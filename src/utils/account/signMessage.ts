@@ -15,7 +15,7 @@ export const signMessage = async ({
   const address = await getAddress();
   const provider = getAccountProvider();
 
-  const origin = getWindowLocation('origin');
+  const { origin } = getWindowLocation();
   const callbackUrl = window?.location
     ? `${origin}${callbackRoute}`
     : `${callbackRoute}`;

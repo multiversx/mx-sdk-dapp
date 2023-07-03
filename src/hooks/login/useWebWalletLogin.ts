@@ -67,7 +67,7 @@ export const useWebWalletLogin = ({
         loginService.setLoginToken(token);
       }
 
-      const origin = getWindowLocation('origin');
+      const { origin } = getWindowLocation();
       const targetUrl = window?.location
         ? `${origin}${callbackRoute}`
         : `${callbackRoute}`;

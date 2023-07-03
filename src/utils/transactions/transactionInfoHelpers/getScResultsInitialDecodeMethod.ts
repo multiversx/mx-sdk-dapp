@@ -2,7 +2,7 @@ import { DecodeMethodEnum } from 'types';
 import { getWindowLocation } from 'utils/window';
 
 export const getInitialScResultsDecodeMethod = () => {
-  const hash = getWindowLocation('hash');
+  const { hash } = getWindowLocation();
 
   const initialDecodeMethod =
     hash.indexOf('/') > 0

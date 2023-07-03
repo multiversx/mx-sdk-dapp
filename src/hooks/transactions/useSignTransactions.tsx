@@ -124,8 +124,7 @@ export const useSignTransactions = () => {
     let callbackUrl = callbackRoute;
 
     if (window?.location) {
-      const search = getWindowLocation('search');
-      const origin = getWindowLocation('origin');
+      const { search, origin } = getWindowLocation();
       const searchParams = new URLSearchParams(search);
       callbackUrl = `${origin}${callbackRoute}`;
 
@@ -153,7 +152,7 @@ export const useSignTransactions = () => {
       customTransactionInformation
     } = transactionsToSign;
     const { redirectAfterSign } = customTransactionInformation;
-    const pathname = getWindowLocation('pathname');
+    const { pathname } = getWindowLocation();
     const redirectRoute = callbackRoute || pathname;
     const isCurrentRoute = pathname.includes(redirectRoute);
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
@@ -266,7 +265,7 @@ export const useSignTransactions = () => {
      * the callback will go to undefined,
      * we save the most recent one for a valid transaction
      */
-    savedCallback.current = callbackRoute || getWindowLocation('pathname');
+    savedCallback.current = callbackRoute || getWindowLocation().pathname;
 
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;

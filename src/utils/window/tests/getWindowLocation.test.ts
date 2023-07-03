@@ -19,7 +19,7 @@ describe('Get window location', () => {
   it('Window should be undefined', () => {
     windowSpy.mockImplementation(() => undefined);
 
-    const search = getWindowLocation('search');
+    const { search } = getWindowLocation();
     expect(search).toStrictEqual('');
   });
 
@@ -30,7 +30,7 @@ describe('Get window location', () => {
       }
     }));
 
-    const search = getWindowLocation('search');
+    const { search } = getWindowLocation();
     expect(search).toStrictEqual(searchMock);
   });
 
@@ -41,8 +41,8 @@ describe('Get window location', () => {
       }
     }));
 
-    const search = getWindowLocation('pathname');
-    expect(search).toStrictEqual(pathnameMock);
+    const { pathname } = getWindowLocation();
+    expect(pathname).toStrictEqual(pathnameMock);
   });
 
   it('Window should return origin', () => {
@@ -52,8 +52,8 @@ describe('Get window location', () => {
       }
     }));
 
-    const search = getWindowLocation('origin');
-    expect(search).toStrictEqual(originMock);
+    const { origin } = getWindowLocation();
+    expect(origin).toStrictEqual(originMock);
   });
 
   it('Window should return hash', () => {
@@ -63,8 +63,8 @@ describe('Get window location', () => {
       }
     }));
 
-    const search = getWindowLocation('hash');
-    expect(search).toStrictEqual(hashMock);
+    const { hash } = getWindowLocation();
+    expect(hash).toStrictEqual(hashMock);
   });
 
   it('Window should return href', () => {
@@ -74,7 +74,7 @@ describe('Get window location', () => {
       }
     }));
 
-    const search = getWindowLocation('href');
-    expect(search).toStrictEqual(hrefMock);
+    const { href } = getWindowLocation();
+    expect(href).toStrictEqual(hrefMock);
   });
 });

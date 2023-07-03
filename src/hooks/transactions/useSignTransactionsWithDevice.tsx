@@ -87,7 +87,7 @@ export function useSignTransactionsWithDevice(
     dispatch(setSignTransactionsError(errorMessage));
   }
 
-  const pathname = getWindowLocation('pathname');
+  const { pathname } = getWindowLocation();
   const locationIncludesCallbackRoute =
     callbackRoute != null && pathname.includes(callbackRoute);
 

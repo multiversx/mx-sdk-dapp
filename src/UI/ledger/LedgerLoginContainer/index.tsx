@@ -83,7 +83,7 @@ export const LedgerLoginContainer = ({
 
     return (
       <ScamPhishingAlert
-        url={getWindowLocation('origin')}
+        url={getWindowLocation().origin}
         authorizationInfo={authorizationInfo}
         className={ledgerScamPhishingAlertClassName}
       />

@@ -23,7 +23,7 @@ import { getWindowLocation } from 'utils/window';
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
 ) {
-  const search = getWindowLocation('search');
+  const { search } = getWindowLocation();
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
 

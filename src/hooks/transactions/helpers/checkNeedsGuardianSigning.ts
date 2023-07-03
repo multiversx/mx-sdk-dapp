@@ -45,7 +45,7 @@ export const checkNeedsGuardianSigning = ({
       walletAddress ?? fallbackNetworkConfigurations[environment].walletAddress;
     const walletProvider = newWalletProvider(walletProviderAddress);
     const urlParams = { [WALLET_SIGN_SESSION]: String(sessionId) };
-    const origin = getWindowLocation('origin');
+    const { origin } = getWindowLocation();
     const callbackUrl = window?.location
       ? `${origin}${callbackRoute}`
       : `${callbackRoute}`;

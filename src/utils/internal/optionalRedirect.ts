@@ -26,7 +26,7 @@ export function optionalRedirect({
         return onLoginRedirect(callbackRoute, options);
       }
 
-      const pathname = getWindowLocation('pathname');
+      const { pathname } = getWindowLocation();
       if (pathname.includes(callbackRoute)) {
         safeRedirect(callbackRoute);
       }

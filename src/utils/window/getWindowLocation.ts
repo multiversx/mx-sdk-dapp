@@ -1,27 +1,35 @@
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 
-type WindowLocationType = 'search' | 'pathname' | 'hash' | 'origin' | 'href';
+type GetWindowLocationType = {
+  pathname: string;
+  hash: string;
+  origin: string;
+  href: string;
+  search: string;
+};
 
-export const getWindowLocation = (type: WindowLocationType): string => {
+export const getWindowLocation = (): GetWindowLocationType => {
   const isAvailable = isWindowAvailable();
 
   if (!isAvailable) {
-    return '';
+    return {
+      pathname: '',
+      hash: '',
+      origin: '',
+      href: '',
+      search: ''
+    };
   }
 
-  const { location } = window;
+  const {
+    location: { pathname, hash, origin, href, search }
+  } = window;
 
-  switch (type) {
-    case 'pathname':
-      return location.pathname as unknown as string;
-    case 'hash':
-      return location.hash as unknown as string;
-    case 'origin':
-      return location.origin as unknown as string;
-    case 'href':
-      return location.href as unknown as string;
-    case 'search':
-    default:
-      return location.search as unknown as string;
-  }
+  return {
+    pathname,
+    hash,
+    origin,
+    href,
+    search
+  };
 };

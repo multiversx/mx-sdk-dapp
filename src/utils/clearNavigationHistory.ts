@@ -2,7 +2,7 @@ import { getWindowLocation } from './window';
 
 export const clearNavigationHistory = (remainingParams: any) => {
   const newUrlParams = new URLSearchParams(remainingParams).toString();
-  const pathname = getWindowLocation('pathname');
+  const { pathname } = getWindowLocation();
   const newSearch = newUrlParams ? `?${newUrlParams}` : '';
   const fullPath = pathname ? `${pathname}${newSearch}` : './';
 

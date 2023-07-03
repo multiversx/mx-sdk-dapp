@@ -56,7 +56,7 @@ export const useSignMessage = () => {
   const signedMessageInfo = useSelector(signedMessageInfoSliceSelector);
   const currentSession = signedMessageInfo.signedSessions[currentSessionId];
   const { isPending, errorMessage } = useGetSignMessageInfoStatus();
-  const search = getWindowLocation('search');
+  const { search, origin } = getWindowLocation();
   const { provider, providerType } = useGetAccountProvider();
   const isWalletLogin = providerType === LoginMethodsEnum.wallet;
   const lastSignSession = useSelector(lastSignedSessionId);
@@ -113,7 +113,6 @@ export const useSignMessage = () => {
       );
     }
 
-    const origin = getWindowLocation('origin');
     return `${isWalletLogin ? origin : ''}${callbackUrl.pathname}${
       callbackUrl.search
     }`;

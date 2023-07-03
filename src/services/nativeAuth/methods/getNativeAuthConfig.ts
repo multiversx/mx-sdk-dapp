@@ -2,7 +2,7 @@ import { NativeAuthConfigType } from 'types';
 import { getWindowLocation } from 'utils/window';
 
 const defaultNativeAuthConfig = {
-  origin: getWindowLocation('origin'),
+  origin: getWindowLocation().origin,
   apiAddress: 'https://api.multiversx.com',
   expirySeconds: 60 * 60 * 24, // one day
   tokenExpirationToastWarningSeconds: 5 * 60 // five minutes

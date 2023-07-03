@@ -3,8 +3,7 @@ import { DecodeMethodEnum } from 'types';
 import { getWindowLocation } from 'utils/window';
 
 export const useDataDecodeMethod = () => {
-  const hash = getWindowLocation('hash');
-  const pathname = getWindowLocation('pathname');
+  const { hash, pathname } = getWindowLocation();
   const hashDecodeMethod = hash.replace('#', '');
   const initialDecodeMethod =
     hashDecodeMethod &&
