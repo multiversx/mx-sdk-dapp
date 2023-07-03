@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## [[v2.17.0]](https://github.com/multiversx/mx-sdk-dapp/pull/851)] - 2023-06-30
+- [Added `data-testid` to `AddressTable` component](https://github.com/multiversx/mx-sdk-dapp/pull/853)
 - [Update fontawesome to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/850)
 
 ## [[v2.16.0]](https://github.com/multiversx/mx-sdk-dapp/pull/849)] - 2023-06-28
