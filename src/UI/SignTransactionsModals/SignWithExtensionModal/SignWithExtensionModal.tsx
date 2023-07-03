@@ -1,4 +1,5 @@
 import React from 'react';
+import ExtensionIcon from 'assets/icons/extension-preview.svg';
 import { SignModalPropsType } from 'types';
 
 import {
@@ -7,16 +8,18 @@ import {
 } from '../components';
 
 export const SignWithExtensionModal = (props: SignModalPropsType) => {
-  const description = props.error
-    ? props.error
-    : props.transactions?.length > 1
-    ? 'Check your MultiversX Wallet Extension to sign the transactions'
-    : 'Check your MultiversX Wallet Extension to sign the transaction';
+  const transactionLabel =
+    props.transactions?.length === 1 ? 'transaction' : 'transactions';
 
   const waitingScreenProps: SignWaitingScreenModalPropsType = {
     ...props,
-    description,
-    title: 'Confirm on MultiversX DeFi Wallet'
+    providerIcon: <ExtensionIcon />,
+    description: props.error || (
+      <div>
+        You can now confirm the {transactionLabel} on your{' '}
+        <span>DeFi Wallet</span>.
+      </div>
+    )
   };
 
   return <SignWaitingScreenModal {...waitingScreenProps} />;

@@ -1,11 +1,65 @@
-.extension-modal {
-  color: inherit;
-}
+.signWaitingScreen {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  width: 100%;
+  padding: 56px 40px 80px;
 
-.modal-container {
-  color: inherit;
-}
+  .signWaitingScreenClose {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 1;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    color: #d4d4d4;
+    transition: all 200ms ease-out;
 
-.extension {
-  color: inherit;
+    svg path {
+      transition: all 200ms ease-out;
+      fill: #737373;
+    }
+
+    &:hover {
+      background-color: #262626;
+
+      svg path {
+        fill: #23f7dd;
+      }
+    }
+  }
+
+  .signWaitingScreenImageWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+    height: 300px;
+
+    svg {
+      max-width: 100%;
+      max-height: 100%;
+      width: auto;
+      height: auto;
+    }
+  }
+
+  .signWaitingScreenText {
+    font-size: 24px;
+    line-height: 1.25;
+    text-align: center;
+    font-weight: 500;
+    color: #a3a3a3;
+    max-width: 440px;
+    margin: 0 auto;
+
+    span {
+      color: #fafafa;
+    }
+  }
 }

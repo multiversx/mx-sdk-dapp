@@ -85,6 +85,54 @@ export const WalletConnectConnectionStatus = ({
     return null;
   }
 
+  return (
+    <>
+      <WalletConnectConnectionDescription
+        className={className}
+        icon={faCircleNotch}
+        iconClassName={classNames(
+          globalStyles.textPrimary,
+          'fa-spin',
+          'slow-spin'
+        )}
+        description='Checking the connection...'
+        details={
+          <div className={classNames(globalStyles.mt3)}>{description}</div>
+        }
+      />
+
+      <WalletConnectConnectionDescription
+        className={className}
+        icon={faCircleNotch}
+        iconClassName={classNames(
+          globalStyles.textPrimary,
+          'fa-spin',
+          'slow-spin'
+        )}
+        description='Checking the connection...'
+        details={<WalletConnectConnectionHint />}
+      />
+
+      <WalletConnectConnectionDescription
+        className={className}
+        icon={faCheckCircle}
+        iconClassName={classNames(globalStyles.textSuccess)}
+        description='Connected'
+        details={
+          <div className={classNames(globalStyles.mt3)}>{description}</div>
+        }
+      />
+
+      <WalletConnectConnectionDescription
+        className={className}
+        icon={faTimes}
+        iconClassName={classNames(globalStyles.textDanger)}
+        description='Unable to establish a connection with the device.'
+        details={<WalletConnectConnectionHint />}
+      />
+    </>
+  );
+
   switch (connectionStatus) {
     case WalletConnectConnectionStatusEnum.pending:
       return (
