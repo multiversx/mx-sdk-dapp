@@ -17,9 +17,11 @@ const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
 const MESSAGE_DELAY = 1000;
 const BATCH_UPDATED_EVENT = 'batchUpdated';
+const DISCONNECT = 'disconnect';
 
 export function useInitializeWebsocketConnection() {
-  const timeout = useRef<NodeJS.Timeout | null>(null);
+  const messageTimeout = useRef<NodeJS.Timeout | null>(null);
+  const batchTimeout = useRef<NodeJS.Timeout | null>(null);
 
   const { address } = useGetAccount();
 
@@ -28,19 +30,19 @@ export function useInitializeWebsocketConnection() {
   const { network } = useGetNetworkConfig();
 
   const handleMessageReceived = (message: string) => {
-    if (timeout.current) {
-      clearTimeout(timeout.current);
+    if (messageTimeout.current) {
+      clearTimeout(messageTimeout.current);
     }
-    timeout.current = setTimeout(() => {
+    messageTimeout.current = setTimeout(() => {
       dispatch(setWebsocketEvent(message));
     }, MESSAGE_DELAY);
   };
 
   const handleBatchUpdate = (data: BatchTransactionsWSResponseType) => {
-    if (timeout.current) {
-      clearTimeout(timeout.current);
+    if (batchTimeout.current) {
+      clearTimeout(batchTimeout.current);
     }
-    timeout.current = setTimeout(() => {
+    batchTimeout.current = setTimeout(() => {
       dispatch(setWebsocketBatchEvent(data));
     }, MESSAGE_DELAY);
   };
@@ -73,6 +75,12 @@ export function useInitializeWebsocketConnection() {
         websocketConnection.current.onAny(handleMessageReceived);
 
         websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
+
+        websocketConnection.current.on(DISCONNECT, () => {
+          console.warn('Websocket disconnected. Trying to reconnect...');
+          websocketConnection.current?.close();
+          websocketConnection.current?.connect();
+        });
       },
       {
         retries: 2,
@@ -98,8 +106,8 @@ export function useInitializeWebsocketConnection() {
       websocketConnection.current?.close();
       websocketConnection.status =
         WebsocketConnectionStatusEnum.NOT_INITIALIZED;
-      if (timeout.current) {
-        clearTimeout(timeout.current);
+      if (messageTimeout.current) {
+        clearTimeout(messageTimeout.current);
       }
     };
   }, []);
