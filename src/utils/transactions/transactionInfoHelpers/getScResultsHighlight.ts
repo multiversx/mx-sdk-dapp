@@ -1,5 +1,7 @@
+import { getWindowLocation } from 'utils/window/getWindowLocation';
+
 export const getScResultsHighlight = (resultHash: string) => {
-  const hash = window?.location.hash;
+  const { hash } = getWindowLocation();
   const formattedHash = hash
     .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)
     .replace('#', '');

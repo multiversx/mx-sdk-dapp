@@ -7,11 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.17.2]](https://github.com/multiversx/mx-sdk-dapp/pull/856)] - 2023-07-04
+- [Fix WS reconnect](https://github.com/multiversx/mx-sdk-dapp/pull/857)
+- [Fix window undefined in NextJS apps](https://github.com/multiversx/mx-sdk-dapp/pull/852)
+
 ## [[v2.17.1]](https://github.com/multiversx/mx-sdk-dapp/pull/854)] - 2023-07-03
 - [Added `data-testid` to `AddressTable` component](https://github.com/multiversx/mx-sdk-dapp/pull/853)
 
 ## [[v2.17.0]](https://github.com/multiversx/mx-sdk-dapp/pull/851)] - 2023-06-30
 - [Update fontawesome to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/850)
+
+- [Fix batch transactions status update when the WS response is received](https://github.com/multiversx/mx-sdk-dapp/pull/855)
 
 ## [[v2.16.0]](https://github.com/multiversx/mx-sdk-dapp/pull/849)] - 2023-06-28
 - [Added support for component injection into custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/848)

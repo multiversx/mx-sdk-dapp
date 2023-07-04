@@ -11,6 +11,7 @@ import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 import { WithClassnameType } from '../../types';
 import { InnerWalletConnectComponentsClassesType } from '../types';
@@ -133,7 +134,7 @@ export const WalletConnectLoginContainer = ({
     <>
       {showScamPhishingAlert && (
         <ScamPhishingAlert
-          url={window?.location.origin}
+          url={getWindowLocation().origin}
           authorizationInfo={authorizationInfo}
           className={containerScamPhishingAlertClassName}
         />
