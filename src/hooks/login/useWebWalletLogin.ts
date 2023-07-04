@@ -5,6 +5,7 @@ import { networkSelector } from 'reduxStore/selectors';
 import { setWalletLogin } from 'reduxStore/slices';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -66,8 +67,9 @@ export const useWebWalletLogin = ({
         loginService.setLoginToken(token);
       }
 
+      const { origin } = getWindowLocation();
       const targetUrl = window?.location
-        ? `${window.location.origin}${callbackRoute}`
+        ? `${origin}${callbackRoute}`
         : `${callbackRoute}`;
       const params = new URLSearchParams(document.location.search);
 

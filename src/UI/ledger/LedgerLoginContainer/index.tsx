@@ -8,6 +8,7 @@ import {
 } from 'services/nativeAuth/helpers';
 import { ModalContainer } from 'UI/ModalContainer';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
+import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { WithClassnameType } from '../../types';
 import { OnProviderLoginType } from './../../../types';
 
@@ -82,7 +83,7 @@ export const LedgerLoginContainer = ({
 
     return (
       <ScamPhishingAlert
-        url={window?.location.origin}
+        url={getWindowLocation().origin}
         authorizationInfo={authorizationInfo}
         className={ledgerScamPhishingAlertClassName}
       />
