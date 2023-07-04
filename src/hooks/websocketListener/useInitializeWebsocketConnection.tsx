@@ -17,6 +17,7 @@ const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
 const MESSAGE_DELAY = 1000;
 const BATCH_UPDATED_EVENT = 'batchUpdated';
+const CONNECT = 'connect';
 const DISCONNECT = 'disconnect';
 
 export function useInitializeWebsocketConnection() {
@@ -76,7 +77,7 @@ export function useInitializeWebsocketConnection() {
 
         websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
 
-        websocketConnection.current.on('connect', () => {
+        websocketConnection.current.on(CONNECT, () => {
           console.log('Websocket connected.');
         });
 
