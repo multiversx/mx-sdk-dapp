@@ -207,36 +207,43 @@ export const useWalletConnectV2Login = ({
 
     if (providerRef.current?.walletConnector) {
       providerRef.current.init();
+
       setAccountProvider(providerRef.current);
-    } else {
-      const providerHandlers = {
-        onClientLogin: handleOnLogin,
-        onClientLogout: handleOnLogout,
-        onClientEvent: handleOnEvent
-      };
+      isInitialisingRef.current = false;
+      canLoginRef.current = true;
 
-      const newProvider = new WalletConnectV2Provider(
-        providerHandlers,
-        chainId,
-        walletConnectV2RelayAddress,
-        walletConnectV2ProjectId,
-        walletConnectV2Options
-      );
-
-      await newProvider.init();
-      setAccountProvider(newProvider);
       if (loginProvider) {
-        setWcPairings(newProvider.pairings);
+        generateWcUri();
       }
-      providerRef.current = newProvider;
+
+      return;
     }
 
+    const providerHandlers = {
+      onClientLogin: handleOnLogin,
+      onClientLogout: handleOnLogout,
+      onClientEvent: handleOnEvent
+    };
+    const newProvider = new WalletConnectV2Provider(
+      providerHandlers,
+      chainId,
+      walletConnectV2RelayAddress,
+      walletConnectV2ProjectId,
+      walletConnectV2Options
+    );
+    await newProvider.init();
+
+    setAccountProvider(newProvider);
+    providerRef.current = newProvider;
     isInitialisingRef.current = false;
     canLoginRef.current = true;
 
     if (loginProvider) {
+      setWcPairings(newProvider.pairings);
       generateWcUri();
     }
+
+    return;
   }
 
   async function connectExisting(pairing: PairingTypes.Struct) {
