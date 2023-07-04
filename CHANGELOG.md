@@ -7,9 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.17.2]](https://github.com/multiversx/mx-sdk-dapp/pull/856)] - 2023-07-04
 - [Fix WS reconnect](https://github.com/multiversx/mx-sdk-dapp/pull/857)
-
-## [[v2.17.2]](https://github.com/multiversx/mx-sdk-dapp/pull/856)] - 2023-07-03
 - [Fix window undefined in NextJS apps](https://github.com/multiversx/mx-sdk-dapp/pull/852)
 
 ## [[v2.17.1]](https://github.com/multiversx/mx-sdk-dapp/pull/854)] - 2023-07-03
