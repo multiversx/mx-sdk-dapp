@@ -76,9 +76,14 @@ export function useInitializeWebsocketConnection() {
 
         websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
 
+        websocketConnection.current.on('connect', () => {
+          console.log('Websocket connected.');
+        });
+
         websocketConnection.current.on(DISCONNECT, () => {
           console.warn('Websocket disconnected. Trying to reconnect...');
           setTimeout(() => {
+            console.log('Reconnecting...');
             websocketConnection.current?.connect();
           }, RETRY_INTERVAL);
         });
