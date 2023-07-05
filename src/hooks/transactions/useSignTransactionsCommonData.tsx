@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { Transaction } from '@multiversx/sdk-core/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
-// import { CANCEL_TRANSACTION_TOAST_ID } from 'constants/index';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -15,7 +14,6 @@ import {
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
-  // removeCustomToast,
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import { useSetTransactionNonces } from './helpers';
@@ -70,7 +68,6 @@ export const useSignTransactionsCommonData = () => {
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
-    // dispatch(removeCustomToast(CANCEL_TRANSACTION_TOAST_ID));
 
     if (!isExtensionProvider) {
       return;
