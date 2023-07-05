@@ -19,7 +19,8 @@ import { TransactionToastType } from 'types/toasts.types';
 
 import {
   deleteCustomToast,
-  getRegisteredCustomIconComponents
+  getRegisteredCustomIconComponents,
+  getRegisteredToastCloseHandler
 } from 'utils/toasts/customToastsActions';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 
@@ -134,13 +135,17 @@ export const TransactionsToastList = ({
   const customToastsList = customToasts.map((props) => {
     const CustomComponent =
       getRegisteredCustomIconComponents(props.toastId) ?? null;
+    const onCloseHandler = getRegisteredToastCloseHandler(props.toastId);
 
     return (
       <CustomToast
         key={props.toastId}
         {...props}
         component={CustomComponent as never}
-        onDelete={() => handleDeleteCustomToast(props.toastId)}
+        onDelete={() => {
+          handleDeleteCustomToast(props.toastId);
+          onCloseHandler?.();
+        }}
         className={customToastClassName}
       />
     );
