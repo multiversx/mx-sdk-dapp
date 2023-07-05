@@ -1965,10 +1965,10 @@
     keccak "3.0.2"
     protobufjs "6.11.3"
 
-"@multiversx/sdk-extension-provider@3.0.0-alpha.1":
-  version "3.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-3.0.0-alpha.1.tgz#52b788a4a1f5df4094dbb230e6d6f545de4a13d3"
-  integrity sha512-4/yxx2B8cE3k41m4ssoAAnYmz2ni66ydn4CglqfhXBk8mmatFwvvcW62Wb6GGKztvmvUeUOeN39g2VWlag78yA==
+"@multiversx/sdk-extension-provider@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-3.0.0.tgz#e0e178ee5555f9440457547759621f5c3152c5fa"
+  integrity sha512-xNHLShzimYbMXqEJoiNyB4fNOXQUwSJCzt9FiOA4GdxucJnCgIM25mXtSj2I93cz+KD39QgRjEYep+li/lykOw==
 
 "@multiversx/sdk-hw-provider@6.1.0":
   version "6.1.0"

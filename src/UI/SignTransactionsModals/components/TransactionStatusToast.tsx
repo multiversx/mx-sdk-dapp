@@ -12,7 +12,7 @@ import { dappConfigSelector } from 'reduxStore/selectors';
 import { addNewCustomToast } from 'utils/toasts/customToastsActions';
 import { WithClassnameType } from '../../types';
 
-// TODO: Rename to "TransactionStatusToastPropsType" when sdk-dapp@3.0.0
+// TODO: Rename to "TransanmctionStatusToastPropsType" when sdk-dapp@3.0.0
 export interface TransactionStatusToastType extends WithClassnameType {
   signError: string | null;
   canceledTransactionsMessage: string | null;
