@@ -2,7 +2,10 @@ import React, { useEffect, useMemo } from 'react';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { StatusMessageComponent } from 'components/TransactionStatusToast/StatusMessageComponent';
 import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
-import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from 'constants/index';
+import {
+  CANCEL_TRANSACTION_TOAST_ID,
+  DEFAULT_TRANSACTION_STATUS_MESSAGE
+} from 'constants/index';
 import { useGetToasts } from 'hooks/toasts/useGetToasts';
 import { addNewCustomToast } from 'utils/toasts/customToastsActions';
 import { WithClassnameType } from '../../types';
@@ -41,10 +44,12 @@ export const TransactionStatusToast = ({
 
   useEffect(() => {
     if (
-      !customToasts.find((toast) => toast.toastId === 'failed-status-toast')
+      !customToasts.find(
+        (toast) => toast.toastId === CANCEL_TRANSACTION_TOAST_ID
+      )
     ) {
       addNewCustomToast({
-        toastId: 'failed-status-toast',
+        toastId: CANCEL_TRANSACTION_TOAST_ID,
         title: 'Transaction canceled',
         duration: 20000,
         component: () => (
