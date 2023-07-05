@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.18.1]](https://github.com/multiversx/mx-sdk-dapp/pull/862)] - 2023-07-05
+
+- [Fix cancel transaction toast - close behavior. Add support for onClose handlers on custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/861)
+
 ## [[v2.18.0]](https://github.com/multiversx/mx-sdk-dapp/pull/860)] - 2023-07-05
 
 - [Fix cancel transaction toast. Display the toast in the same container as the transaction toasts](https://github.com/multiversx/mx-sdk-dapp/pull/859)

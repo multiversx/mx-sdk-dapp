@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "2.18.0",
+  "version": "2.18.1",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -144,7 +144,7 @@
   ],
   "dependencies": {
     "@multiversx/sdk-core": "12.4.2",
-    "@multiversx/sdk-extension-provider": "3.0.0-alpha.1",
+    "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.1.0",
     "@multiversx/sdk-native-auth-client": "1.0.4",
     "@multiversx/sdk-network-providers": "1.4.0",

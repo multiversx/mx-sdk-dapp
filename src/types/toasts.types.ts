@@ -8,6 +8,7 @@ interface SharedCustomToast {
    */
   duration?: number;
   type?: string;
+  onClose?: () => void;
 }
 export interface MessageCustomToastType extends SharedCustomToast {
   message: string;

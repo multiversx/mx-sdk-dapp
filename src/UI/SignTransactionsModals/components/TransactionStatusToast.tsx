@@ -52,10 +52,9 @@ export const TransactionStatusToast = ({
         dappConfig.cancelTransactionToastDuration ??
         CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
       component: () => <StatusMessageComponent type={type} message={message} />,
+      onClose: () => onDelete(),
       icon: faWarning
     });
-
-    return () => onDelete();
   }, []);
 
   return null;
