@@ -28,7 +28,7 @@ export function newTransaction(rawTransaction: RawTransactionType) {
   });
 
   if (rawTransaction.guardianSignature) {
-    transaction.applySignature(
+    transaction.applyGuardianSignature(
       Buffer.from(rawTransaction.guardianSignature, 'hex')
     );
   }

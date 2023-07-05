@@ -1,7 +1,7 @@
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { LoginMethodsEnum } from 'types';
-import { DappCoreWCV2CustomMethodsEnum } from 'types/enums.types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import { WalletConnectOptionalMethodsEnum } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
 export function useCancelWalletConnectAction(action?: string) {
   const { provider } = useGetAccountProvider();
@@ -11,37 +11,11 @@ export function useCancelWalletConnectAction(action?: string) {
       return;
     }
 
-    if (getIsProviderEqualTo(LoginMethodsEnum.walletconnect)) {
-      await cancelAction();
-    }
-
     if (getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)) {
       await cancelActionV2();
     }
 
     return;
-  }
-
-  async function cancelAction() {
-    try {
-      if (!provider || !getIsProviderEqualTo(LoginMethodsEnum.walletconnect)) {
-        return;
-      }
-
-      const isProviderConnected = await provider.isConnected();
-      if (!isProviderConnected) {
-        return;
-      }
-
-      const customMessage = {
-        method: 'erd_cancelAction',
-        params: { action }
-      };
-
-      await provider?.sendCustomMessage?.(customMessage);
-    } catch (error) {
-      console.warn('WalletConnect: Unable to send cancelAction event', error);
-    }
   }
 
   async function cancelActionV2() {
@@ -55,7 +29,7 @@ export function useCancelWalletConnectAction(action?: string) {
 
       await provider?.sendCustomRequest?.({
         request: {
-          method: DappCoreWCV2CustomMethodsEnum.mvx_cancelAction,
+          method: WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
           params: { action }
         }
       });
@@ -64,5 +38,5 @@ export function useCancelWalletConnectAction(action?: string) {
     }
   }
 
-  return { cancelAction, cancelActionV2, cancelWalletConnectAction };
+  return { cancelActionV2, cancelWalletConnectAction };
 }
