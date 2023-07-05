@@ -20,6 +20,7 @@ export interface ErrorToastPropsType extends WithClassnameType {
   message: string;
   duration?: number;
   onDelete?: () => void;
+  cancelTransactionToastContainer?: Element;
 }
 
 export const FailedTransactionStatusToast = ({
@@ -27,7 +28,8 @@ export const FailedTransactionStatusToast = ({
   duration = 20000,
   onDelete,
   type = StatusIconType.WARNING,
-  className = 'dapp-failed-transaction-status-toast'
+  className = 'dapp-failed-transaction-status-toast',
+  cancelTransactionToastContainer = document?.body
 }: ErrorToastPropsType) => {
   const dispatch = useDispatch();
   const failToast = useSelector(failTransactionToastSelector);
@@ -68,6 +70,6 @@ export const FailedTransactionStatusToast = ({
         className={classNames(styles.transactionsStatusToast, className)}
       />
     </div>,
-    document?.body
+    cancelTransactionToastContainer
   );
 };

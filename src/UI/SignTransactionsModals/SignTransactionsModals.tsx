@@ -20,12 +20,14 @@ export interface SignTransactionsModalsPropsType {
   CustomConfirmScreens?: CustomConfirmScreensType;
   verifyReceiverScam?: SignPropsType['verifyReceiverScam'];
   GuardianScreen?: SignPropsType['GuardianScreen'];
+  cancelTransactionToastContainer?: Element;
 }
 
 export const SignTransactionsModals = ({
   className,
   CustomConfirmScreens,
   GuardianScreen,
+  cancelTransactionToastContainer,
   verifyReceiverScam = true
 }: SignTransactionsModalsPropsType) => {
   const { loginMethod } = useGetLoginInfo();
@@ -55,6 +57,7 @@ export const SignTransactionsModals = ({
           GuardianScreen={GuardianScreen}
           verifyReceiverScam={verifyReceiverScam}
           className={className}
+          cancelTransactionToastContainer={cancelTransactionToastContainer}
         />
       );
     },

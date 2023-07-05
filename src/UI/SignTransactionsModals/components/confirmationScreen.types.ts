@@ -5,4 +5,5 @@ export interface ExtraConfirmationScreenPropsType {
   GuardianScreen?: SignPropsType['GuardianScreen'];
   verifyReceiverScam?: boolean;
   className?: string;
+  cancelTransactionToastContainer?: Element;
 }
