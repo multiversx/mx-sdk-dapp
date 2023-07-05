@@ -76,10 +76,6 @@ export enum TransactionsDefaultTitles {
   invalid = 'Transaction invalid'
 }
 
-export enum DappCoreWCV2CustomMethodsEnum {
-  mvx_cancelAction = 'mvx_cancelAction'
-}
-
 export enum PlatformsEnum {
   ios = 'ios',
   reactNative = 'reactNative',

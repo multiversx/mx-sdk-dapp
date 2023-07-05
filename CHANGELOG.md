@@ -7,48 +7,67 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.18.0]](https://github.com/multiversx/mx-sdk-dapp/pull/860)] - 2023-07-05
+
+- [Fix cancel transaction toast. Display the toast in the same container as the transaction toasts](https://github.com/multiversx/mx-sdk-dapp/pull/859)
+
+- [Updated @multiversx/sdk-wallet-connect-provider to 4.0.0, Removed WalletConnect V1 Support](https://github.com/multiversx/mx-sdk-dapp/pull/785)
+
 ## [[v2.17.2]](https://github.com/multiversx/mx-sdk-dapp/pull/856)] - 2023-07-04
+
 - [Fix WS reconnect](https://github.com/multiversx/mx-sdk-dapp/pull/857)
 - [Fix window undefined in NextJS apps](https://github.com/multiversx/mx-sdk-dapp/pull/852)
 
 ## [[v2.17.1]](https://github.com/multiversx/mx-sdk-dapp/pull/854)] - 2023-07-03
+
 - [Added `data-testid` to `AddressTable` component](https://github.com/multiversx/mx-sdk-dapp/pull/853)
 
 ## [[v2.17.0]](https://github.com/multiversx/mx-sdk-dapp/pull/851)] - 2023-06-30
+
 - [Update fontawesome to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/850)
 
 - [Fix batch transactions status update when the WS response is received](https://github.com/multiversx/mx-sdk-dapp/pull/855)
 
 ## [[v2.16.0]](https://github.com/multiversx/mx-sdk-dapp/pull/849)] - 2023-06-28
+
 - [Added support for component injection into custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/848)
 
 ## [[v2.15.2]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-27
+
 - [Fixed AuthenticatedRoutesWrapper redirect condition](https://github.com/multiversx/mx-sdk-dapp/pull/846)
 - [Fixed AuthenticatedRoutesWrapper blocking render on failed wallet login attempt](https://github.com/multiversx/mx-sdk-dapp/pull/845)
 - [Added `verifyMessage` test](https://github.com/multiversx/mx-sdk-dapp/pull/844)
+
 ## [[v2.15.1]](https://github.com/multiversx/mx-sdk-dapp/pull/843)] - 2023-06-20
+
 - [Fixed ledger init issue on Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/842)
 
 ## [[v2.15.0]](https://github.com/multiversx/mx-sdk-dapp/pull/835)] - 2023-06-19
+
 - [Added `on-pull-request.yml` script](https://github.com/multiversx/mx-sdk-dapp/pull/838)
 - [Changed local native auth service with mx-sdk-js-native-auth-client package](https://github.com/multiversx/mx-sdk-dapp/pull/837)
 - [Changed usage of `dataTestid` to `data-testid`](https://github.com/multiversx/mx-sdk-dapp/pull/836)
 
 ## [[v2.14.13]](https://github.com/multiversx/mx-sdk-dapp/pull/835)] - 2023-06-15
+
 - [Fixed SignStep loading button for multiEsdtTransfers](https://github.com/multiversx/mx-sdk-dapp/pull/834)
 
 ## [[v2.14.12]](https://github.com/multiversx/mx-sdk-dapp/pull/833)] - 2023-06-14
+
 - [Fixed possible invalid calls to network config endpoint](https://github.com/multiversx/mx-sdk-dapp/pull/832)
 - [Fixed double setting of ledger provider on page reload](https://github.com/multiversx/mx-sdk-dapp/pull/827)
+
 ## [[v2.14.11]](https://github.com/multiversx/mx-sdk-dapp/pull/831)] - 2023-06-13
+
 - [Fixed double signing same transaction in SignStep](https://github.com/multiversx/mx-sdk-dapp/pull/830)
 
 ## [[v2.14.10]](https://github.com/multiversx/mx-sdk-dapp/pull/828)] - 2023-06-09
+
 - [Fixed infinite page reload using nextjs navigation](https://github.com/multiversx/mx-sdk-dapp/pull/822)
 
 ## [[v2.14.9]](https://github.com/multiversx/mx-sdk-dapp/pull/826)] - 2023-06-08
-- [Added datatestids to login buttons](https://github.com/multiversx/mx-sdk-dapp/pull/825)
 
+- [Added datatestids to login buttons](https://github.com/multiversx/mx-sdk-dapp/pull/825)
 
 ## [[v2.14.8]](https://github.com/multiversx/mx-sdk-dapp/pull/824)] - 2023-06-08
 

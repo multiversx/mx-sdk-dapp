@@ -1,9 +1,15 @@
-import React, { useMemo } from 'react';
-
-import { FailedTransactionStatusToast } from 'components/TransactionStatusToast/FailedTransactionStatusToast';
+import React, { useEffect, useMemo } from 'react';
+import { faWarning } from '@fortawesome/free-solid-svg-icons';
+import { StatusMessageComponent } from 'components/TransactionStatusToast/StatusMessageComponent';
 import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
-import { DEFAULT_TRANSACTION_STATUS_MESSAGE } from 'constants/index';
-
+import {
+  CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
+  CANCEL_TRANSACTION_TOAST_ID,
+  DEFAULT_TRANSACTION_STATUS_MESSAGE
+} from 'constants/index';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { dappConfigSelector } from 'reduxStore/selectors';
+import { addNewCustomToast } from 'utils/toasts/customToastsActions';
 import { WithClassnameType } from '../../types';
 
 // TODO: Rename to "TransactionStatusToastPropsType" when sdk-dapp@3.0.0
@@ -16,9 +22,10 @@ export interface TransactionStatusToastType extends WithClassnameType {
 export const TransactionStatusToast = ({
   signError,
   canceledTransactionsMessage,
-  onDelete,
-  className
+  onDelete
 }: TransactionStatusToastType) => {
+  const dappConfig = useSelector(dappConfigSelector);
+
   const message = useMemo(() => {
     return (
       signError ||
@@ -37,12 +44,19 @@ export const TransactionStatusToast = ({
     return StatusIconType.INFO;
   }, [signError, canceledTransactionsMessage]);
 
-  return (
-    <FailedTransactionStatusToast
-      message={message}
-      type={type}
-      onDelete={onDelete}
-      className={className}
-    />
-  );
+  useEffect(() => {
+    addNewCustomToast({
+      toastId: `${CANCEL_TRANSACTION_TOAST_ID}-${Date.now()}`,
+      title: 'Transaction canceled',
+      duration:
+        dappConfig.cancelTransactionToastDuration ??
+        CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
+      component: () => <StatusMessageComponent type={type} message={message} />,
+      icon: faWarning
+    });
+
+    return () => onDelete();
+  }, []);
+
+  return null;
 };
