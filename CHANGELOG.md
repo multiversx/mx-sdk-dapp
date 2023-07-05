@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix cancel transaction toast. Display the toast in the same container as the transaction toasts](https://github.com/multiversx/mx-sdk-dapp/pull/859)
+
 ## [[v2.17.2]](https://github.com/multiversx/mx-sdk-dapp/pull/856)] - 2023-07-04
 - [Fix WS reconnect](https://github.com/multiversx/mx-sdk-dapp/pull/857)
 - [Fix window undefined in NextJS apps](https://github.com/multiversx/mx-sdk-dapp/pull/852)
