@@ -12,7 +12,6 @@ export interface TransactionStatusToastType extends WithClassnameType {
   signError: string | null;
   canceledTransactionsMessage: string | null;
   onDelete: () => void;
-  cancelTransactionToastContainer?: Element;
 }
 
 export const TransactionStatusToast = ({

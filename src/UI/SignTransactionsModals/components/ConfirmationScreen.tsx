@@ -14,8 +14,7 @@ import {
 export const ConfirmationScreen = ({
   Screen,
   verifyReceiverScam,
-  className,
-  cancelTransactionToastContainer
+  className
 }: ExtraConfirmationScreenPropsType) => {
   if (!Screen) {
     return null;
@@ -54,8 +53,7 @@ export const ConfirmationScreen = ({
   const transactionStatusToastProps: TransactionStatusToastType = {
     signError,
     canceledTransactionsMessage,
-    onDelete: handleClose,
-    cancelTransactionToastContainer
+    onDelete: handleClose
   };
 
   const shouldShowTransactionStatusToast =

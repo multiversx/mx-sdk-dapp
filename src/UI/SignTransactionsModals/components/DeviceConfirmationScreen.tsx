@@ -17,8 +17,7 @@ export const DeviceConfirmationScreen = ({
   Screen,
   GuardianScreen,
   verifyReceiverScam,
-  className,
-  cancelTransactionToastContainer
+  className
 }: ExtraConfirmationScreenPropsType) => {
   if (!Screen) {
     return null;
@@ -59,8 +58,7 @@ export const DeviceConfirmationScreen = ({
   const transactionStatusToastProps: TransactionStatusToastType = {
     signError,
     canceledTransactionsMessage,
-    onDelete: handleClose,
-    cancelTransactionToastContainer
+    onDelete: handleClose
   };
 
   const shouldShowTransactionStatusToast =
