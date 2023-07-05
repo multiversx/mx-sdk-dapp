@@ -3,9 +3,12 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { StatusMessageComponent } from 'components/TransactionStatusToast/StatusMessageComponent';
 import { StatusIconType } from 'components/TransactionStatusToast/transactionStatusToast.types';
 import {
+  CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
   CANCEL_TRANSACTION_TOAST_ID,
   DEFAULT_TRANSACTION_STATUS_MESSAGE
 } from 'constants/index';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { dappConfigSelector } from 'reduxStore/selectors';
 import { addNewCustomToast } from 'utils/toasts/customToastsActions';
 import { WithClassnameType } from '../../types';
 
@@ -21,6 +24,8 @@ export const TransactionStatusToast = ({
   canceledTransactionsMessage,
   onDelete
 }: TransactionStatusToastType) => {
+  const dappConfig = useSelector(dappConfigSelector);
+
   const message = useMemo(() => {
     return (
       signError ||
@@ -43,7 +48,9 @@ export const TransactionStatusToast = ({
     addNewCustomToast({
       toastId: `${CANCEL_TRANSACTION_TOAST_ID}-${Date.now()}`,
       title: 'Transaction canceled',
-      duration: 20000,
+      duration:
+        dappConfig.cancelTransactionToastDuration ??
+        CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
       component: () => <StatusMessageComponent type={type} message={message} />,
       icon: faWarning
     });
