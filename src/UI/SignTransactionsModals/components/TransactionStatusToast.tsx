@@ -6,7 +6,6 @@ import {
   CANCEL_TRANSACTION_TOAST_ID,
   DEFAULT_TRANSACTION_STATUS_MESSAGE
 } from 'constants/index';
-import { useGetToasts } from 'hooks/toasts/useGetToasts';
 import { addNewCustomToast } from 'utils/toasts/customToastsActions';
 import { WithClassnameType } from '../../types';
 
@@ -22,8 +21,6 @@ export const TransactionStatusToast = ({
   canceledTransactionsMessage,
   onDelete
 }: TransactionStatusToastType) => {
-  const { customToasts } = useGetToasts();
-
   const message = useMemo(() => {
     return (
       signError ||
@@ -43,24 +40,16 @@ export const TransactionStatusToast = ({
   }, [signError, canceledTransactionsMessage]);
 
   useEffect(() => {
-    if (
-      !customToasts.find(
-        (toast) => toast.toastId === CANCEL_TRANSACTION_TOAST_ID
-      )
-    ) {
-      addNewCustomToast({
-        toastId: CANCEL_TRANSACTION_TOAST_ID,
-        title: 'Transaction canceled',
-        duration: 20000,
-        component: () => (
-          <StatusMessageComponent type={type} message={message} />
-        ),
-        icon: faWarning
-      });
-    }
+    addNewCustomToast({
+      toastId: `${CANCEL_TRANSACTION_TOAST_ID}-${Date.now()}`,
+      title: 'Transaction canceled',
+      duration: 20000,
+      component: () => <StatusMessageComponent type={type} message={message} />,
+      icon: faWarning
+    });
 
     return () => onDelete();
-  }, [customToasts, type, message, onDelete]);
+  }, []);
 
   return null;
 };

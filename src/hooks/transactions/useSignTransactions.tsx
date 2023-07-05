@@ -12,7 +12,7 @@ import {
   MISSING_PROVIDER_MESSAGE,
   PROVIDER_NOT_INITIALIZED,
   TRANSACTION_CANCELLED,
-  TRANSACTION_STATUS_TOAST_ID,
+  // CANCEL_TRANSACTION_TOAST_ID,
   WALLET_SIGN_SESSION
 } from 'constants/index';
 import { useGetAccount } from 'hooks/account';
@@ -30,7 +30,7 @@ import {
   clearTransactionsInfoForSessionId,
   moveTransactionsToSignedState,
   MoveTransactionsToSignedStatePayloadType,
-  removeCustomToast,
+  // removeCustomToast,
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import {
@@ -80,7 +80,7 @@ export const useSignTransactions = () => {
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
-    dispatch(removeCustomToast(TRANSACTION_STATUS_TOAST_ID));
+    // dispatch(removeCustomToast(CANCEL_TRANSACTION_TOAST_ID));
 
     isSigningRef.current = false;
 
