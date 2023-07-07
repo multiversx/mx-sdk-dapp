@@ -8,6 +8,7 @@ interface SharedCustomToast {
    */
   duration?: number;
   type?: string;
+  onClose?: () => void;
 }
 export interface MessageCustomToastType extends SharedCustomToast {
   message: string;
@@ -62,10 +63,4 @@ export interface TransactionToastType {
   toastId: string;
   startTimestamp: number;
   type: string;
-}
-
-export interface FailTransactionToastType {
-  toastId?: string;
-  message: string;
-  duration?: number;
 }

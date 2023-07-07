@@ -4,7 +4,7 @@
 
 [![NPM](https://img.shields.io/npm/v/@multiversx/sdk-dapp.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
-See [Dapp template](https://dapp-template.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
+See [Dapp template](https://template-dapp.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
 
 # Installation
 
@@ -119,7 +119,6 @@ This allows using different APIs and different connection providers to configure
   digits?: string;
   gasPerDataByte?: string;
   walletConnectDeepLink?: string; // a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
-  walletConnectBridgeAddresses?: string; // a string that is used to establish the connection to WalletConnect V1 library;
   walletConnectV2ProjectId?: string; // a unique ProjectID needed to access the WalletConnect 2.0 Relay Cloud
   walletAddress?: string;
   apiAddress?: string;
@@ -291,7 +290,6 @@ you can easily import and use them.
   token={token}
   onLoginRedirect={onLoginRedirect}
   onClose={onClose}
-  isWalletConnectV2={true} // by default is false and will use walletconnect version 1
 />
 ```
 
@@ -391,13 +389,13 @@ These hooks are exposed as named exports, which can be imported from sdk-dapp:
 ```typescript
 import {
   useExtensionLogin,
-  useWalletConnectLogin,
+  useWalletConnectV2Login,
   useLedgerLogin,
   useWebWalletLogin
 } from '@multiversx/sdk-dapp/hooks';
 or;
 import { useExtensionLogin } from '@multiversx/sdk-dapp/hooks/login/useExtensionLogin';
-import { useWalletConnectLogin } from '@multiversx/sdk-dapp/hooks/login/useWebWalletLogin';
+import { useWalletConnectV2Login } from '@multiversx/sdk-dapp/hooks/login/useWalletConnectV2Login';
 import { useLedgerLogin } from '@multiversx/sdk-dapp/hooks/login/useLedgerLogin';
 import { useWebWalletLogin } from '@multiversx/sdk-dapp/hooks/login/useWebWalletLogin';
 ```
@@ -405,7 +403,7 @@ import { useWebWalletLogin } from '@multiversx/sdk-dapp/hooks/login/useWebWallet
 There are 4 available hooks:
 
 - useExtensionLogin
-- useWalletConnectLogin
+- useWalletConnectV2Login
 - useLedgerLogin
 - useWebWalletLogin
 
@@ -438,9 +436,9 @@ const [initiateLogin, genericLoginReturnType, customLoginReturnType] =
 
   - null for useExtensionLogin;
 
-  - null for useWebWalletConnect;
+  - null for useWebWalletLogin;
 
-  - `{ uriDeepLink: string, qrCodeSvg: svgElement }` for useWalletConnectLogin;
+  - `{ uriDeepLink: string, qrCodeSvg: svgElement }` for useWalletConnectV2Login;
 
   -
 
@@ -804,7 +802,7 @@ import {
 import {
   useExtensionLogin,
   useLedgerLogin,
-  useWalletConnectLogin,
+  useWalletConnectV2Login,
   useWebWalletLogin
 } from '@multiversx/sdk-dapp/hooks/login';
 ```
@@ -1012,9 +1010,9 @@ If you are using [Next.js](https://nextjs.org/), make sure to check out the [REA
 
 Starting with the 2.0 version of the dApp SDK ( previously `@elrondnetwork/dapp-core@2.0.0` ) and `@multiversx/sdk-dapp@2.2.8` [WalletConnect 2.0](https://docs.walletconnect.com/2.0/) is available as a login and signing provider, allowing users to login by scanning a QR code with the Mobile App
 
-This is an implementation of [sdk-wallet-connect-provider](https://github.com/multiversx/mx-sdk-js-wallet-connect-provider/tree/providerV2) ( [docs](https://docs.multiversx.com/sdk-and-tools/sdk-js/sdk-js-signing-providers/#the-wallet-connect-provider) ) signing provider
+This is an implementation of [sdk-wallet-connect-provider](https://github.com/multiversx/mx-sdk-js-wallet-connect-provider) ( [docs](https://docs.multiversx.com/sdk-and-tools/sdk-js/sdk-js-signing-providers/#the-wallet-connect-provider) ) signing provider
 
-As WalletConnect 2.0 is not enabled by default there are a few steps needed to enable it:
+As a ProjectID is needed for the complete functionality, the following change is needed:
 
 ### Set the `walletConnectV2ProjectId`
 
@@ -1034,44 +1032,7 @@ The Project ID can be generated for free here: [https://cloud.walletconnect.com/
 
 The WalletConnect Project ID grants you access to the [WalletConnect Cloud Relay](https://docs.walletconnect.com/2.0/cloud/relay) that securely manages communication between the device and the dApp.
 
-### Set the `isWalletConnectV2` flag
-
-Once the `walletConnectV2ProjectId` is set in the `DappProvider` global Context, the next step would be to activate the Walletconnect V2 functionality in the [Login UI](#login-ui).
-
-That means setting the `isWalletConnectV2` flag to `true` in the `<WalletConnectLoginButton>` component
-
-```jsx
-<WalletConnectLoginButton
-  callbackRoute='/dashboard'
-  loginButtonText='xPortal App'
-  isWalletConnectV2={true} // or simply isWalletConnectV2
-/>
-```
-
-Or, if you want access to the container without the button set the `isWalletConnectV2` flag to `true` in the `<WalletConnectLoginContainer>` component.
-
-```jsx
-<WalletConnectLoginContainer
-  callbackRoute={callbackRoute}
-  loginButtonText='Login with xPortal'
-  title='xPortal Login'
-  logoutRoute='/unlock'
-  className='wallect-connect-login-modal'
-  lead='Scan the QR code using xPortal'
-  wrapContentInsideModal={wrapContentInsideModal}
-  redirectAfterLogin={redirectAfterLogin}
-  token={token}
-  onLoginRedirect={onLoginRedirect}
-  onClose={onClose}
-  isWalletConnectV2={true} // or simply isWalletConnectV2
-/>
-```
-
-### That's it
-
-If the Project ID is valid and the `isWalletConnectV2` flag is `true` the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
-
-You can check out [this PR](https://github.com/multiversx/mx-template-dapp/commit/ca2826be499da892c1180d26f93e1497be77af09) on the [dApp Template](https://github.com/multiversx/mx-template-dapp) with the all the changes required to activate the updated functionality.
+If the Project ID is valid, the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
 
 ## Roadmap
 

@@ -12,8 +12,3 @@ export const transactionToastsSelector = createDeepEqualSelector(
   toastsSliceSelector,
   (state) => state.transactionToasts
 );
-
-export const failTransactionToastSelector = createDeepEqualSelector(
-  toastsSliceSelector,
-  (state) => state.failTransactionToast
-);

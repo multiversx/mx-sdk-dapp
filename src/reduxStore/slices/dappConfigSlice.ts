@@ -15,9 +15,14 @@ export const dappConfigSlice = createSlice({
       action: PayloadAction<DappConfigSliceStateType>
     ) => {
       if (state && action.payload) {
-        const { logoutRoute, shouldUseWebViewProvider } = action.payload;
+        const {
+          logoutRoute,
+          shouldUseWebViewProvider,
+          cancelTransactionToastDuration
+        } = action.payload;
         state.logoutRoute = logoutRoute;
         state.shouldUseWebViewProvider = shouldUseWebViewProvider;
+        state.cancelTransactionToastDuration = cancelTransactionToastDuration;
       } else {
         state = action.payload;
       }
