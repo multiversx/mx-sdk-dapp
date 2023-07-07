@@ -88,6 +88,7 @@ export enum PlatformsEnum {
 
 export enum WebViewProviderRequestEnums {
   signTransactionsRequest = 'SIGN_TRANSACTIONS_REQUEST',
+  signTransactionsWithGuardianResponse = 'SIGN_TRANSACTIONS_WITH_GUARDIAN_RESPONSE',
   signMessageRequest = 'SIGN_MESSAGE_REQUEST',
   loginRequest = 'LOGIN_REQUEST',
   logoutRequest = 'LOGOUT_REQUEST',
