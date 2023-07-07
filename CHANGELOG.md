@@ -8,9 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -- [Added `signTransactionsWithGuardianResponse` to WebViewProviderRequestEnums](https://github.com/multiversx/mx-sdk-dapp/pull/852)
 
-## [[v2.17.2]](https://github.com/multiversx/mx-sdk-dapp/pull/856)] - 2023-07-03
--- [Fixed window undefined in NextJS apps](https://github.com/multiversx/mx-sdk-dapp/pull/852)
-
 ## [[v2.18.1]](https://github.com/multiversx/mx-sdk-dapp/pull/862)] - 2023-07-05
 
 - [Fix cancel transaction toast - close behavior. Add support for onClose handlers on custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/861)
