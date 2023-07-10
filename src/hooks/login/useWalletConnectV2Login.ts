@@ -326,6 +326,10 @@ export const useWalletConnectV2Login = ({
 
       setWcUri(uri);
 
+      if (walletConnectV2Options?.logger === 'debug') {
+        console.log('WalletConnect uri: ', uri);
+      }
+
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
         // Fetching block failed
