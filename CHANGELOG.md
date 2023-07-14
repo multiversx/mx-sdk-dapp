@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-- [Updated @multiversx/sdk-wallet-connect-provider to 4.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/866)
 -- [Log the uri on debug env for WalletConnect](https://github.com/multiversx/mx-sdk-dapp/pull/865)
 
 ## [[v2.18.2]](https://github.com/multiversx/mx-sdk-dapp/pull/864)] - 2023-07-07
