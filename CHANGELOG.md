@@ -6,7 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-## [[v2.18.2]](https://github.com/multiversx/mx-sdk-dapp/pull/863)] - 2023-07-07
+
+## [[v2.18.3]](https://github.com/multiversx/mx-sdk-dapp/pull/867)] - 2023-07-14
+
+-- [Updated @multiversx/sdk-wallet-connect-provider to 4.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/866)
+-- [Log the uri on debug env for WalletConnect](https://github.com/multiversx/mx-sdk-dapp/pull/865)
+
+## [[v2.18.2]](https://github.com/multiversx/mx-sdk-dapp/pull/864)] - 2023-07-07
+
 -- [Added `signTransactionsWithGuardianResponse` to WebViewProviderRequestEnums](https://github.com/multiversx/mx-sdk-dapp/pull/863)
 
 ## [[v2.18.1]](https://github.com/multiversx/mx-sdk-dapp/pull/862)] - 2023-07-05

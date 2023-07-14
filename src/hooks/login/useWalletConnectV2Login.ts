@@ -147,6 +147,10 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
+      if (isInitialisingRef.current) {
+        return;
+      }
+
       if (!canLoginRef.current) {
         try {
           await providerRef.current?.logout();
@@ -188,7 +192,7 @@ export const useWalletConnectV2Login = ({
         options: { address, signature }
       });
     } catch (err) {
-      setError(WalletConnectV2Error.invalidAddress);
+      setError(WalletConnectV2Error.userRejected);
       console.error(err);
     }
   }
@@ -325,6 +329,10 @@ export const useWalletConnectV2Login = ({
       }
 
       setWcUri(uri);
+
+      if (walletConnectV2Options?.logger === 'debug') {
+        console.log('WalletConnect uri: ', uri);
+      }
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
