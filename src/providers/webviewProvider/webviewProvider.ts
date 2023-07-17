@@ -114,25 +114,22 @@ export const webviewProvider: any = {
 
           function handleSignMessageResponse(eventData: any) {
             const { message, type } = eventData;
-            if (type === WebViewProviderResponseEnums.signMessageResponse) {
+            if (
+              type === WebViewProviderResponseEnums.signMessageResponse &&
+              message != null
+            ) {
               const { signedMessage, error } = message;
 
-              try {
-                if (!error) {
-                  resolve(signedMessage);
-                } else {
-                  reject(error);
-                }
-              } catch (err) {
-                reject('Unable to sign');
+              if (!error) {
+                resolve(signedMessage);
+              } else {
+                reject(error);
               }
             }
-            if (document) {
-              document.removeEventListener(
-                messageType,
-                handleSignMessageResponse
-              );
-            }
+            document?.removeEventListener(
+              messageType,
+              handleSignMessageResponse
+            );
           }
           handleWaitForMessage(handleSignMessageResponse);
         }
