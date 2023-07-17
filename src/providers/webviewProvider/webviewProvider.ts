@@ -15,6 +15,8 @@ export const targetOrigin = isWindowAvailable()
   ? window?.parent?.origin ?? '*'
   : '*';
 
+const messageType = 'message';
+
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
     let eventData = event.data;
@@ -32,10 +34,10 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
     }
   };
   if (document) {
-    document.addEventListener('message', handleMessageReceived);
+    document.addEventListener(messageType, handleMessageReceived);
   }
   if (window) {
-    window.addEventListener('message', handleMessageReceived);
+    window.addEventListener(messageType, handleMessageReceived);
   }
 };
 
@@ -70,7 +72,7 @@ export const webviewProvider: any = {
               }
             }
             if (document) {
-              document.removeEventListener('message', handleTokenReceived);
+              document.removeEventListener(messageType, handleTokenReceived);
             }
           }
           handleWaitForMessage(handleTokenReceived);
@@ -92,7 +94,55 @@ export const webviewProvider: any = {
   isInitialized: () => true,
   isConnected: async () => true,
   sendTransaction: notInitializedError('sendTransaction'),
-  signMessage: notInitializedError('signMessage'),
+  signMessage: async (message: string) => {
+    try {
+      requestMethods.signMessage[currentPlatform](message);
+      const waitForSignedMessageResponse: Promise<string> = new Promise(
+        (resolve, reject) => {
+          (window as any).signMessageResponse = (
+            signedMessage: string,
+            error: string
+          ) => {
+            if (error) {
+              reject(error);
+              (window as any).signMessageResponse = null;
+              return;
+            }
+            resolve(signedMessage);
+            (window as any).signMessageResponse = null;
+          };
+
+          function handleSignMessageResponse(eventData: any) {
+            const { message, type } = eventData;
+            if (type === WebViewProviderResponseEnums.signMessageResponse) {
+              const { signedMessage, error } = message;
+
+              try {
+                if (!error) {
+                  resolve(signedMessage);
+                } else {
+                  reject(error);
+                }
+              } catch (err) {
+                reject('Unable to sign');
+              }
+            }
+            if (document) {
+              document.removeEventListener(
+                messageType,
+                handleSignMessageResponse
+              );
+            }
+          }
+          handleWaitForMessage(handleSignMessageResponse);
+        }
+      );
+      return await waitForSignedMessageResponse;
+    } catch (err) {
+      console.error('error sending transaction', err);
+      throw err;
+    }
+  },
   signTransactions: async (transactions: Transaction[]) => {
     try {
       const plainTransactions = transactions.map((tx) => tx.toPlainObject());
@@ -110,7 +160,7 @@ export const webviewProvider: any = {
             (window as any).transactionsSigned = null;
           };
 
-          function handleSignResponse(eventData: any) {
+          function handleSignTransactionResponse(eventData: any) {
             const { message, type } = eventData;
             if (
               type === WebViewProviderResponseEnums.signTransactionsResponse
@@ -132,10 +182,13 @@ export const webviewProvider: any = {
               }
             }
             if (document) {
-              document.removeEventListener('message', handleSignResponse);
+              document.removeEventListener(
+                messageType,
+                handleSignTransactionResponse
+              );
             }
           }
-          handleWaitForMessage(handleSignResponse);
+          handleWaitForMessage(handleSignTransactionResponse);
         });
       return await waitForSignedTransactionsResponse;
     } catch (err) {
