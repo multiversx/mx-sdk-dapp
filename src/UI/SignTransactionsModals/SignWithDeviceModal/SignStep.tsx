@@ -1,12 +1,13 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
-
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+
+import globalStyles from '../../../assets/sass/main.scss';
+
 import { SignStepBody, SignStepBodyPropsType } from './components';
 import { ProgressHeader } from './components/ProgressHeader';
 import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
-import { useSignStepsClasses } from './hooks';
 import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
@@ -78,6 +79,7 @@ export const SignStep = (props: SignStepType) => {
 
   const onCloseClick = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
+
     if (isFirst) {
       handleClose();
     } else {
@@ -143,9 +145,6 @@ export const SignStep = (props: SignStepType) => {
     }
   ];
 
-  const scamReport = currentTransaction.receiverScamInfo;
-  const classes = useSignStepsClasses(scamReport);
-
   const isSigningReady = nonceDataStepMap[currentNonceData] === currentStep;
 
   return (
@@ -190,24 +189,26 @@ export const SignStep = (props: SignStepType) => {
       ) : (
         <>
           <SignStepBody {...signStepBodyProps} />
+
           <div
-            className={classNames(
-              classes.buttonsWrapper,
-              buttonsWrapperClassName
-            )}
+            className={classNames(styles.signButtons, buttonsWrapperClassName)}
           >
             <button
               id='closeButton'
               data-testid='closeButton'
               onClick={onCloseClick}
-              className={classNames(classes.cancelButton, buttonClassName)}
+              className={classNames(styles.signButtonCancel, buttonClassName)}
             >
               {currentStep === 0 ? 'Cancel' : 'Back'}
             </button>
 
             <button
               type='button'
-              className={classNames(classes.signButton, buttonClassName)}
+              className={classNames(
+                globalStyles.btnPrimary,
+                styles.signButtonSubmit,
+                buttonClassName
+              )}
               id='signBtn'
               data-testid='signBtn'
               onClick={onSubmit}

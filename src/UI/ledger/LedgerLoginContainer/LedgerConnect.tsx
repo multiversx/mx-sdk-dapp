@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 
 import globalStyles from 'assets/sass/main.scss';
-import type { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../types';
 
 import styles from './ledgerConnectStyles.scss';
 
