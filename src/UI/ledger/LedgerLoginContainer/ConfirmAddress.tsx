@@ -5,7 +5,7 @@ import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
 
-import type { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../types';
 
 import styles from './confirmAddressStyles.scss';
 

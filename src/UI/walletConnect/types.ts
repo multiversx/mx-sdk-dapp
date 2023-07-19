@@ -1,4 +1,4 @@
-import type { WalletConnectPairingListClassesType } from './WalletConnectLoginContainer/PairingList';
+import { WalletConnectPairingListClassesType } from './WalletConnectLoginContainer/PairingList';
 
 export interface InnerWalletConnectComponentsClassesType {
   containerContentClassName?: string;

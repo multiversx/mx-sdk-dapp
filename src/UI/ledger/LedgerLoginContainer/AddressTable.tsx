@@ -8,7 +8,7 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
 import { getAccountBalance } from 'utils';
-import type { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../types';
 
 import { AddressRow } from './AddressRow';
 

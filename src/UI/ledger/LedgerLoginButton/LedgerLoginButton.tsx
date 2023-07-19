@@ -6,10 +6,10 @@ import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 
-import type { OnProviderLoginType } from '../../../types';
-import type { WithClassnameType } from '../../types';
+import { OnProviderLoginType } from '../../../types';
+import { WithClassnameType } from '../../types';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import type { InnerLedgerComponentsClassesType } from '../LedgerLoginContainer/types';
+import { InnerLedgerComponentsClassesType } from '../LedgerLoginContainer/types';
 
 export interface LedgerLoginButtonPropsType
   extends WithClassnameType,

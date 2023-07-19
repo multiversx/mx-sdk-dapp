@@ -19,7 +19,7 @@ import { LedgerLoading } from './LedgerLoading';
 import styles from './ledgerLoginContainerStyles.scss';
 import { LedgerProgressBar } from './LedgerProgressBar';
 
-import type { InnerLedgerComponentsClassesType } from './types';
+import { InnerLedgerComponentsClassesType } from './types';
 
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
@@ -79,7 +79,10 @@ export const LedgerLoginContainer = ({
       return null;
     }
 
-    const authorizationInfo = getAuthorizationInfo(token);
+    const authorizationInfo = getAuthorizationInfo(
+      token,
+      ledgerScamPhishingAlertClassName
+    );
 
     return (
       <ScamPhishingAlert

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.18.4]](https://github.com/multiversx/mx-sdk-dapp/pull/870)] - 2023-07-18
+
+- [Fixed styles for the first sign screen buttons](https://github.com/multiversx/mx-sdk-dapp/pull/869)
+- [Add support for signing messages with webviewProvider](https://github.com/multiversx/mx-sdk-dapp/pull/868)
+
 ## [[v2.18.3]](https://github.com/multiversx/mx-sdk-dapp/pull/867)] - 2023-07-14
 
 -- [Updated @multiversx/sdk-wallet-connect-provider to 4.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/866)

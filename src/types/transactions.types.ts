@@ -1,10 +1,10 @@
-import type { ReactNode, Dispatch, SetStateAction } from 'react';
-import type { Address, Transaction } from '@multiversx/sdk-core';
-import type { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
+import { ReactNode, Dispatch, SetStateAction } from 'react';
+import { Address, Transaction } from '@multiversx/sdk-core';
+import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
-import type { SignStepInnerClassesType } from 'UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
-import type { WithClassnameType } from '../UI/types';
-import type {
+import { SignStepInnerClassesType } from 'UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
+import { WithClassnameType } from '../UI/types';
+import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum,
   TransactionTypesEnum

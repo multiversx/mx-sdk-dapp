@@ -1,10 +1,10 @@
-import type {
+import {
   ActiveLedgerTransactionType,
   DeviceSignedTransactions,
   GuardianScreenType,
   MultiSignTransactionType
 } from 'types';
-import type { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../types';
 import { SignPropsType } from '../types/signTransactionsModals.types';
 
 export { DeviceSignedTransactions };
