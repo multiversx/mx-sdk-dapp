@@ -79,7 +79,10 @@ export const LedgerLoginContainer = ({
       return null;
     }
 
-    const authorizationInfo = getAuthorizationInfo(token);
+    const authorizationInfo = getAuthorizationInfo(
+      token,
+      ledgerScamPhishingAlertClassName
+    );
 
     return (
       <ScamPhishingAlert

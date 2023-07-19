@@ -1,9 +1,13 @@
 import { getHumanReadableTokenExpirationTime } from 'components/LogoutListener/helpers/useNativeAuthLogoutWarning/helpers';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
+import { WithClassnameType } from 'UI/types';
 import { decodeLoginToken } from './decodeLoginToken';
 
-export const getAuthorizationInfo = (token?: string) => {
+export const getAuthorizationInfo = (
+  token?: string,
+  className?: WithClassnameType['className']
+) => {
   const tokenLogin = useSelector(tokenLoginSelector);
   const loginToken = tokenLogin?.loginToken ?? token;
 
@@ -18,6 +22,7 @@ export const getAuthorizationInfo = (token?: string) => {
   }
 
   return {
+    className,
     url: decoded.origin,
     duration: getHumanReadableTokenExpirationTime(decoded.ttl * 1000)
   };
