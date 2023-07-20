@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@babel/core": "7.20.5",
+    "@ledgerhq/hw-transport-mocker": "6.27.17",
     "@octokit/rest": "19.0.5",
     "@storybook/addon-actions": "6.5.14",
     "@storybook/addon-essentials": "6.5.14",
@@ -145,7 +146,7 @@
   "dependencies": {
     "@multiversx/sdk-core": "12.4.2",
     "@multiversx/sdk-extension-provider": "3.0.0",
-    "@multiversx/sdk-hw-provider": "6.1.0",
+    "@multiversx/sdk-hw-provider": "6.2.0",
     "@multiversx/sdk-native-auth-client": "1.0.4",
     "@multiversx/sdk-network-providers": "1.4.0",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
