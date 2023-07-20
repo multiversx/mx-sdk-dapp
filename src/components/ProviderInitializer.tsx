@@ -217,9 +217,11 @@ export function ProviderInitializer() {
       logout(logoutRoute);
       return;
     }
+
     if (ledgerLogin?.index != null) {
-      hwWalletP.addressIndex = ledgerLogin.index;
+      await hwWalletP.setAddressIndex(ledgerLogin.index);
     }
+
     return hwWalletP;
   }
 
