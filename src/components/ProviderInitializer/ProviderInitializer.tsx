@@ -1,7 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
-import { HWProvider } from '@multiversx/sdk-hw-provider';
-import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
@@ -45,7 +42,8 @@ import {
 } from 'utils/account';
 import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
-import { useWebViewLogin } from '../hooks/login/useWebViewLogin';
+import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
+import { getExtensionProvider, getHwWalletProvider } from './helpers';
 
 let initalizingLedger = false;
 
@@ -207,19 +205,12 @@ export function ProviderInitializer() {
   }
 
   async function getInitializedHwWalletProvider() {
-    const hwWalletP = new HWProvider();
-    let isInitialized = hwWalletP.isInitialized();
-    if (!isInitialized) {
-      isInitialized = await hwWalletP.init();
-    }
-    if (!isInitialized && isLoggedIn) {
+    const hwWalletP = await getHwWalletProvider(ledgerLogin?.index);
+
+    if (!hwWalletP && isLoggedIn) {
       console.warn('Could not initialise ledger app');
       logout(logoutRoute);
-      return;
-    }
-
-    if (ledgerLogin?.index != null) {
-      await hwWalletP.setAddressIndex(ledgerLogin.index);
+      return null;
     }
 
     return hwWalletP;
@@ -241,40 +232,18 @@ export function ProviderInitializer() {
   }
 
   async function setExtensionProvider() {
-    try {
-      const address = await getAddress();
-      const provider = ExtensionProvider.getInstance().setAddress(address);
-
-      const success = await provider.init();
-
-      if (success) {
-        setAccountProvider(provider);
-      } else {
-        console.error(
-          'Could not initialise extension, make sure MultiversX wallet extension is installed.'
-        );
-      }
-    } catch (err) {
-      console.error('Unable to login to ExtensionProvider', err);
+    const address = await getAddress();
+    const provider = await getExtensionProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
     }
   }
 
   async function setOperaProvider() {
-    try {
-      const address = await getAddress();
-      const provider = OperaProvider.getInstance().setAddress(address);
-
-      const success = await provider.init();
-
-      if (success) {
-        setAccountProvider(provider);
-      } else {
-        console.error(
-          'Could not initialise opera crypto wallet, make sure that opera crypto wallet is installed.'
-        );
-      }
-    } catch (err) {
-      console.error('Unable to login to OperaProvider', err);
+    const address = await getAddress();
+    const provider = await getExtensionProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
     }
   }
 
