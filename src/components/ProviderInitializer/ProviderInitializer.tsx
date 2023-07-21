@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
@@ -18,8 +18,7 @@ import {
   walletLoginSelector,
   ledgerLoginSelector,
   isLoggedInSelector,
-  tokenLoginSelector,
-  logoutRouteSelector
+  tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
@@ -37,13 +36,12 @@ import {
   getAccount,
   getLatestNonce,
   newWalletProvider,
-  getLedgerConfiguration,
   emptyProvider
 } from 'utils/account';
-import { logout } from 'utils/logout';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
-import { getExtensionProvider, getHwWalletProvider } from './helpers';
+import { getExtensionProvider } from './helpers';
+import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
 
@@ -56,12 +54,7 @@ export function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const logoutRoute = useSelector(logoutRouteSelector);
-  const [ledgerData, setLedgerData] =
-    useState<{
-      version: string;
-      dataEnabled: boolean;
-    }>();
+
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
   const loginService = useLoginService(
@@ -69,6 +62,7 @@ export function ProviderInitializer() {
   );
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
+  const { setLedgerProvider, ledgerData } = useSetLedgerProvider();
 
   useWebViewLogin();
 
@@ -202,33 +196,6 @@ export function ProviderInitializer() {
     }
 
     dispatch(setWalletLogin(null));
-  }
-
-  async function getInitializedHwWalletProvider() {
-    const hwWalletP = await getHwWalletProvider(ledgerLogin?.index);
-
-    if (!hwWalletP && isLoggedIn) {
-      console.warn('Could not initialise ledger app');
-      logout(logoutRoute);
-      return null;
-    }
-
-    return hwWalletP;
-  }
-
-  async function setLedgerProvider() {
-    try {
-      const hwWalletP = await getInitializedHwWalletProvider();
-      if (!hwWalletP) {
-        return;
-      }
-      const ledgerConfig = await getLedgerConfiguration(hwWalletP);
-      setAccountProvider(hwWalletP);
-      setLedgerData(ledgerConfig);
-    } catch (err) {
-      console.error('Could not initialise ledger app', err);
-      logout(logoutRoute);
-    }
   }
 
   async function setExtensionProvider() {

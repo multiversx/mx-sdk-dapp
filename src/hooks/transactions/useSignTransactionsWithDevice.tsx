@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 
+import { useSetLedgerProvider } from 'components/ProviderInitializer/hooks';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
@@ -58,11 +59,12 @@ export function useSignTransactionsWithDevice(
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
   const network = useSelector(networkSelector);
+  const { setLedgerProvider } = useSetLedgerProvider();
 
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
   const { address, isGuarded, activeGuardianAddress } = account;
-  const { provider } = useGetAccountProvider();
+  const { provider, providerType } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
@@ -142,8 +144,17 @@ export function useSignTransactionsWithDevice(
     clearTransactionsToSignWithWarning(sessionId);
   }
 
+  async function getProvider() {
+    const isConnected = await provider.isConnected();
+    if (providerType === LoginMethodsEnum.ledger && !isConnected) {
+      await setLedgerProvider();
+    }
+    return provider;
+  }
+
   async function handleSignTransaction(transaction: Transaction) {
-    return await provider.signTransaction(transaction);
+    const connectedProvider = await getProvider();
+    return await connectedProvider.signTransaction(transaction);
   }
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
