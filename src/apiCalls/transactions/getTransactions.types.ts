@@ -11,6 +11,7 @@ export interface GetTransactionsType {
   condition?: 'should' | 'must';
   before?: number;
   withScResults?: boolean;
+  withUsername?: boolean;
   status?: TransactionServerStatusesEnum;
   /**
    * Search in data object
