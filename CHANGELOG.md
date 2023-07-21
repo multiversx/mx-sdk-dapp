@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Added ledger transport mock](https://github.com/multiversx/mx-sdk-dapp/pull/871)
+- [Fixed clear navigation url after signing a message](https://github.com/multiversx/mx-sdk-dapp/pull/872)
 
 ## [[v2.18.4]](https://github.com/multiversx/mx-sdk-dapp/pull/870)] - 2023-07-18
 
