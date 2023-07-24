@@ -23,7 +23,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { checkNeedsGuardianSigning } from './helpers';
+import { checkNeedsGuardianSigning, useGetLedgerProvider } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
@@ -58,11 +58,12 @@ export function useSignTransactionsWithDevice(
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
   const network = useSelector(networkSelector);
+  const getLedgerProvider = useGetLedgerProvider();
 
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
   const { address, isGuarded, activeGuardianAddress } = account;
-  const { provider } = useGetAccountProvider();
+  const { provider, providerType } = useGetAccountProvider();
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
@@ -143,7 +144,12 @@ export function useSignTransactionsWithDevice(
   }
 
   async function handleSignTransaction(transaction: Transaction) {
-    return await provider.signTransaction(transaction);
+    const connectedProvider =
+      providerType !== LoginMethodsEnum.ledger
+        ? provider
+        : await getLedgerProvider();
+
+    return await connectedProvider.signTransaction(transaction);
   }
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
