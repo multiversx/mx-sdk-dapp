@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { WithClassnameType } from '../../types';
 
 import styles from './ledgerConnectStyles.scss';
@@ -109,7 +110,7 @@ export const LedgerConnect = ({
           <button
             onClick={onClick}
             disabled={disabled}
-            data-testid='connectBtn'
+            data-testid={DataTestIdsEnum.ledgerConnectBtn}
             className={classNames(
               globalStyles.btn,
               globalStyles.btnPrimary,

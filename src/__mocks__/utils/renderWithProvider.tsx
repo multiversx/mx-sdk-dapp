@@ -5,7 +5,7 @@ import { EnvironmentsEnum } from 'types';
 
 import { DappProvider } from 'wrappers/DappProvider';
 
-interface RenderType extends RenderResult {
+export interface RenderType extends RenderResult {
   history: MemoryHistory;
 }
 
@@ -16,7 +16,8 @@ export const renderWithProvider = ({
   route?: string;
 }): RenderType => {
   const history = createMemoryHistory({ initialEntries: [route] });
-  const methods = {
+
+  return {
     ...render(
       <DappProvider environment={EnvironmentsEnum.devnet}>
         <>{children}</>
@@ -24,6 +25,4 @@ export const renderWithProvider = ({
     ),
     history
   };
-
-  return methods;
 };

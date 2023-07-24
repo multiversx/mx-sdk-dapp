@@ -38,6 +38,7 @@ export interface TransactionSenderType {
  */
 const optionalRedirect = (sessionInformation: SignedTransactionsBodyType) => {
   const redirectRoute = sessionInformation.redirectRoute;
+
   if (redirectRoute) {
     safeRedirect(redirectRoute);
   }
