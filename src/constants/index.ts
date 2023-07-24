@@ -1,11 +1,12 @@
+export * from './dataTestIds.enum';
 export * from './errorsMessages';
-export * from './network';
-export * from './ledgerErrorCodes';
-export * from './mnemonicWords';
-export * from './transactionStatus';
-export * from './web-wallet.constants';
 export * from './extension.constants';
 export * from './ledger.constants';
+export * from './ledgerErrorCodes';
+export * from './mnemonicWords';
+export * from './network';
+export * from './transactionStatus';
+export * from './web-wallet.constants';
 
 export const GAS_PRICE_MODIFIER = 0.01;
 export const GAS_PER_DATA_BYTE = 1_500;

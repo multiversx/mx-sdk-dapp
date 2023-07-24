@@ -50,7 +50,7 @@ describe.skip('OperaLoginButton tests', () => {
 
     await checkIsLoggedInStore();
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
@@ -72,7 +72,7 @@ describe.skip('OperaLoginButton tests', () => {
 
     await checkIsLoggedInStore();
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(window.location.assign).toHaveBeenCalledTimes(0);
       expect(onLoginRedirect).toHaveBeenCalledTimes(1);
     });
@@ -90,7 +90,7 @@ describe.skip('OperaLoginButton tests', () => {
 
     fireEvent.click(loginButton);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(consoleWarnSpy).toHaveBeenCalledWith(tokenLogin);
       expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
@@ -115,7 +115,7 @@ describe.skip('OperaLoginButton tests', () => {
 
     fireEvent.click(loginButton);
 
-    waitFor(() => {
+    await waitFor(() => {
       expect(consoleWarnSpy).toHaveBeenCalledWith('Login cancelled.');
     });
   });

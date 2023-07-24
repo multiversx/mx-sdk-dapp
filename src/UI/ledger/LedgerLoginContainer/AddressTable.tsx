@@ -7,7 +7,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
-import { getAccountBalance } from 'utils';
+import { DataTestIdsEnum } from 'constants/index';
+import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { WithClassnameType } from '../../types';
 
 import { AddressRow } from './AddressRow';
@@ -47,7 +48,7 @@ export const AddressTable = ({
   addressTableClassNames,
   className = 'dapp-ledger-address-table',
   customContentComponent,
-  dataTestId = 'addressTableContainer',
+  dataTestId = DataTestIdsEnum.addressTableContainer,
   loading,
   onConfirmSelectedAddress,
   onGoToNextPage,
@@ -133,7 +134,7 @@ export const AddressTable = ({
             styles.ledgerAddressTableHeading,
             ledgerModalTitleClassName
           )}
-          data-testid='addressTableContainerTitle'
+          data-testid={`${dataTestId}Title`}
         >
           Access your wallet
         </div>
@@ -143,7 +144,7 @@ export const AddressTable = ({
             styles.ledgerAddressTableDescription,
             ledgerModalSubtitleClassName
           )}
-          data-testid='addressTableContainerSubTitle'
+          data-testid={`${dataTestId}SubTitle`}
         >
           Choose the wallet you want to access
         </p>
@@ -232,7 +233,7 @@ export const AddressTable = ({
         <button
           disabled={!selectedAddress}
           onClick={onConfirm}
-          data-testid='confirmBtn'
+          data-testid={DataTestIdsEnum.confirmBtn}
           className={classNames(
             globalStyles.btn,
             globalStyles.btnPrimary,
