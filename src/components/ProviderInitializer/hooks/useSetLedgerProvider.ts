@@ -28,6 +28,10 @@ async function getHwWalletProvider(ledgerLoginIndex?: number) {
   return hwWalletP;
 }
 
+type SetLedgerProviderType = {
+  isRelogin?: boolean;
+};
+
 export const useSetLedgerProvider = () => {
   const logoutRoute = useSelector(logoutRouteSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
@@ -39,31 +43,35 @@ export const useSetLedgerProvider = () => {
       dataEnabled: boolean;
     }>();
 
-  async function getInitializedHwWalletProvider() {
-    const hwWalletP = await getHwWalletProvider(ledgerLogin?.index);
+  async function setLedgerProvider(props?: SetLedgerProviderType) {
+    let hwWalletP: HWProvider | null = null;
 
-    if (!hwWalletP && isLoggedIn) {
-      console.warn('Could not initialise ledger app');
-      logout(logoutRoute);
-      return null;
-    }
+    const shouldLogout = isLoggedIn && !props?.isRelogin;
 
-    return hwWalletP;
-  }
-
-  async function setLedgerProvider() {
     try {
-      const hwWalletP = await getInitializedHwWalletProvider();
+      hwWalletP = await getHwWalletProvider(ledgerLogin?.index);
+
       if (!hwWalletP) {
+        console.warn('Could not initialise ledger app');
+
+        if (shouldLogout) {
+          logout(logoutRoute);
+        }
         return;
       }
+
       const ledgerConfig = await getLedgerConfiguration(hwWalletP);
       setAccountProvider(hwWalletP);
       setLedgerData(ledgerConfig);
+
+      return hwWalletP;
     } catch (err) {
       console.error('Could not initialise ledger app', err);
-      logout(logoutRoute);
+      if (shouldLogout) {
+        logout(logoutRoute);
+      }
     }
+    return null;
   }
 
   return { setLedgerProvider, ledgerData };

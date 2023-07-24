@@ -24,7 +24,7 @@ import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { safeRedirect } from 'utils/redirect';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { checkNeedsGuardianSigning } from './helpers';
+import { checkNeedsGuardianSigning, useGetLedgerProvider } from './helpers';
 import { getShouldMoveTransactionsToSignedState } from './helpers/getShouldMoveTransactionsToSignedState';
 import { useClearTransactionsToSignWithWarning } from './helpers/useClearTransactionsToSignWithWarning';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
@@ -60,6 +60,7 @@ export function useSignTransactionsWithDevice(
     useSignTransactionsCommonData();
   const network = useSelector(networkSelector);
   const { setLedgerProvider } = useSetLedgerProvider();
+  const getLedgerProvider = useGetLedgerProvider();
 
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
@@ -144,16 +145,12 @@ export function useSignTransactionsWithDevice(
     clearTransactionsToSignWithWarning(sessionId);
   }
 
-  async function getProvider() {
-    const isConnected = await provider.isConnected();
-    if (providerType === LoginMethodsEnum.ledger && !isConnected) {
-      await setLedgerProvider();
-    }
-    return provider;
-  }
-
   async function handleSignTransaction(transaction: Transaction) {
-    const connectedProvider = await getProvider();
+    const connectedProvider =
+      providerType !== LoginMethodsEnum.ledger
+        ? provider
+        : await getLedgerProvider();
+
     return await connectedProvider.signTransaction(transaction);
   }
 
