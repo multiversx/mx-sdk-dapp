@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 
-import { useSetLedgerProvider } from 'components/ProviderInitializer/hooks';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
@@ -59,7 +58,6 @@ export function useSignTransactionsWithDevice(
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
   const network = useSelector(networkSelector);
-  const { setLedgerProvider } = useSetLedgerProvider();
   const getLedgerProvider = useGetLedgerProvider();
 
   const egldLabel = useSelector(egldLabelSelector);
