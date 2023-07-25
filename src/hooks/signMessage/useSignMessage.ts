@@ -258,7 +258,7 @@ export const useSignMessage = () => {
         ].includes(status as SignedMessageStatusesEnum)
       ) {
         // Failed to sign message
-        return onCancel({
+        onCancel({
           errorMessage:
             status === SignedMessageStatusesEnum.cancelled
               ? CANCELLED
@@ -268,7 +268,7 @@ export const useSignMessage = () => {
 
       if (signature && status === SignedMessageStatusesEnum.signed) {
         // Message was signed successfully
-        return dispatch(
+        dispatch(
           setSignSession({
             sessionId: currentSessionId,
             signedSession: {

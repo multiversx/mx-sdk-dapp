@@ -1,27 +1,21 @@
 import React from 'react';
 import { expect } from '@storybook/jest';
-import { fireEvent, waitFor } from '@testing-library/react';
+import { waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import {
   mockWindowLocation,
   renderWithProvider,
   server,
-  testAddress,
-  testNetwork
+  testNetwork,
+  testAddress
 } from '__mocks__';
+
 import { logoutAction } from 'reduxStore/commonActions';
 import * as actions from 'reduxStore/slices/loginInfoSlice';
 import { store } from 'reduxStore/store';
-import { ExtensionLoginButton } from '../';
-import { checkIsLoggedInStore } from './helpers';
-
-jest.mock('@multiversx/sdk-extension-provider', () => {
-  const { ExtensionProvider } = require('./mocks/mockExtensionProvider');
-  return {
-    __esModule: true,
-    ExtensionProvider
-  };
-});
+import { LedgerLoginButton } from '../LedgerLoginButton';
+import { checkIsLoggedInStore, ledgerLogin } from './helpers';
+import { mockLedgerProvider } from './mocks';
 
 const CALLBACK_ROUTE = '/dashboard';
 
@@ -48,21 +42,25 @@ const tokenLoginWithSignature = {
     'ZXJkMWRtOXV4cGY1YXdrbjd1aGp1N3pqbjlsZGUwZGhhaHkwcWF4cXFsdTI2eGN1dXcyN3FxcnNxZm1lajM.YUhSMGNEb3ZMMnh2WTJGc2FHOXpkQS5mZmY2N2QzMTQ3NmFkOTIwZDUzMDkzYTNhNGMyMTc4ZTE5ODE3OWIzNTY1NmVlZWZhNDE5MTA3ZmE3MThiNzgwLjg2NDAwLmV5SjBhVzFsYzNSaGJYQWlPakUyT1RBeE9EUXpNVE45.e4c98dd01020118b13db9dd5db9e5b56ff0c4a0141306918a9d3eea964a21ada5d566f58cdf6c921ed3405bf5685d1e87545dbcc86ea3c27a43aa3abee8c2b0e'
 };
 
-describe('ExtensionLoginButton tests', () => {
-  beforeEach(() => {
+describe('LedgerLoginButton tests', () => {
+  beforeEach(async () => {
     store.dispatch(logoutAction());
     mockWindowLocation();
   });
 
   it('should perform simple login and redirect', async () => {
+    await mockLedgerProvider();
+
     const methods = renderWithProvider({
-      children: <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} />
+      children: (
+        <LedgerLoginButton
+          wrapContentInsideModal={false}
+          callbackRoute={CALLBACK_ROUTE}
+        />
+      )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
-
-    fireEvent.click(loginButton);
-
+    await ledgerLogin(methods);
     await checkIsLoggedInStore();
 
     await waitFor(() => {
@@ -75,17 +73,15 @@ describe('ExtensionLoginButton tests', () => {
 
     const methods = renderWithProvider({
       children: (
-        <ExtensionLoginButton
+        <LedgerLoginButton
+          wrapContentInsideModal={false}
           callbackRoute={CALLBACK_ROUTE}
           onLoginRedirect={onLoginRedirect}
         />
       )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
-
-    fireEvent.click(loginButton);
-
+    await ledgerLogin(methods);
     await checkIsLoggedInStore();
 
     await waitFor(() => {
@@ -101,15 +97,18 @@ describe('ExtensionLoginButton tests', () => {
   it('should perform login with nativeAuth', async () => {
     const methods = renderWithProvider({
       children: (
-        <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
+        <LedgerLoginButton
+          wrapContentInsideModal={false}
+          callbackRoute={CALLBACK_ROUTE}
+          nativeAuth
+        />
       )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
     const setTokenLoginSpy = jest.spyOn(actions, 'setTokenLogin');
     jest.spyOn(Date, 'now').mockReturnValue(1690184313013); // 2023-07-24T11:00
 
-    fireEvent.click(loginButton);
+    await ledgerLogin(methods);
 
     await waitFor(() => {
       expect(setTokenLoginSpy).toHaveBeenCalledTimes(2);
@@ -117,6 +116,7 @@ describe('ExtensionLoginButton tests', () => {
         1,
         tokenLoginWithoutSignature
       );
+
       expect(setTokenLoginSpy).toHaveBeenNthCalledWith(
         2,
         tokenLoginWithSignature
@@ -136,13 +136,15 @@ describe('ExtensionLoginButton tests', () => {
 
     const methods = renderWithProvider({
       children: (
-        <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
+        <LedgerLoginButton
+          wrapContentInsideModal={false}
+          callbackRoute={CALLBACK_ROUTE}
+          nativeAuth
+        />
       )
     });
 
-    const loginButton = await methods.findByTestId('extensionLoginButton');
-
-    fireEvent.click(loginButton);
+    await ledgerLogin(methods);
 
     await waitFor(() => {
       expect(window.location.assign).toHaveBeenCalledTimes(0);

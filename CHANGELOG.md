@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.18.5]](https://github.com/multiversx/mx-sdk-dapp/pull/875)] - 2023-07-24
+- [Fixed `optionalRedirect` `setTimout` usage and window redirect](https://github.com/multiversx/mx-sdk-dapp/pull/873)
+- [Fixed ledger signing reconnect](https://github.com/multiversx/mx-sdk-dapp/pull/874)
+- [Added ledger transport mock](https://github.com/multiversx/mx-sdk-dapp/pull/871)
+- [Fixed clear navigation url after signing a message](https://github.com/multiversx/mx-sdk-dapp/pull/872)
+
 ## [[v2.18.4]](https://github.com/multiversx/mx-sdk-dapp/pull/870)] - 2023-07-18
 
 - [Fixed styles for the first sign screen buttons](https://github.com/multiversx/mx-sdk-dapp/pull/869)
