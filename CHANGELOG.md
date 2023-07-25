@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Fixed NextJS provider double mounting](https://github.com/multiversx/mx-sdk-dapp/pull/874)
+- [Fixed NextJS provider double mounting](https://github.com/multiversx/mx-sdk-dapp/pull/876)
 
 ## [[v2.18.5]](https://github.com/multiversx/mx-sdk-dapp/pull/875)] - 2023-07-24
 - [Fixed `optionalRedirect` `setTimout` usage and window redirect](https://github.com/multiversx/mx-sdk-dapp/pull/873)
