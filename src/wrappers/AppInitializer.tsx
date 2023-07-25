@@ -14,6 +14,7 @@ import {
   EnvironmentsEnum,
   IDappProvider
 } from 'types';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { logout } from 'utils/logout';
 
 export interface UseAppInitializerPropsType {
@@ -101,6 +102,8 @@ export const useAppInitializer = ({
   return { initialized };
 };
 
+const isServer = !isWindowAvailable();
+
 export function AppInitializer({
   customNetworkConfig = {},
   children,
@@ -120,5 +123,11 @@ export function AppInitializer({
     setIsBrowser(true);
   }, []);
 
-  return isBrowser ? (initialized ? children : null) : children;
+  const renderResult = initialized ? children : null;
+
+  if (isServer) {
+    return isBrowser ? renderResult : children;
+  }
+
+  return renderResult;
 }
