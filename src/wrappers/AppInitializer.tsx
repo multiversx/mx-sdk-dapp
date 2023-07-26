@@ -107,7 +107,7 @@ export function AppInitializer({
   environment,
   dappConfig
 }: AppInitializerPropsType) {
-  const [isBrowser, setIsBrowser] = useState(false);
+  const [isBrowser, setIsBrowser] = useState(!dappConfig?.isSSR);
 
   const { initialized } = useAppInitializer({
     customNetworkConfig,
