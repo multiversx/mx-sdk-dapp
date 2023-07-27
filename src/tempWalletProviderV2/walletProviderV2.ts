@@ -2,7 +2,10 @@ import { IPlainTransactionObject } from '@multiversx/sdk-core';
 import { SignableMessage } from '@multiversx/sdk-core';
 import { Transaction } from '@multiversx/sdk-core';
 import qs from 'qs';
-import { WALLET_PROVIDER_CONNECT_URL } from './const';
+import {
+  WALLET_PROVIDER_CONNECT_URL,
+  WALLET_PROVIDER_SIGN_TRANSACTION_URL
+} from './const';
 import {
   ErrAccountNotConnected,
   ErrCannotSignSingleTransaction
@@ -23,6 +26,7 @@ export class WalletV2Provider {
   public account: IWalletV2Account = { address: '' };
   private initialized = false;
   private static _instance: WalletV2Provider = new WalletV2Provider();
+  walletWindow: Window | null = null;
 
   private constructor() {
     if (WalletV2Provider._instance) {
@@ -68,7 +72,7 @@ export class WalletV2Provider {
         isChildTab: true
       }
     });
-    window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
+    this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
     const account: { address: string; signature: string } = await new Promise(
       (resolve) => {
         const parent = this;
@@ -85,6 +89,51 @@ export class WalletV2Provider {
     this.account.signature = account.signature;
 
     return this.account.address;
+  }
+
+  static prepareWalletTransaction(transaction: Transaction): any {
+    let plainTransaction = transaction.toPlainObject();
+
+    // We adjust the data field, in order to make it compatible with what the web wallet expects.
+    if (plainTransaction.data) {
+      plainTransaction.data = Buffer.from(
+        plainTransaction.data,
+        'base64'
+      ).toString();
+    } else {
+      // The web wallet expects the data field to be a string, even if it's empty (early 2023).
+      plainTransaction.data = '';
+    }
+
+    return plainTransaction;
+  }
+
+  private buildTransactionsUrl(
+    endpoint: string,
+    transactions: Transaction[],
+    options?: { callbackUrl?: string }
+  ): string {
+    const jsonToSend: any = {};
+    transactions.map((tx) => {
+      let plainTx = WalletV2Provider.prepareWalletTransaction(tx);
+      for (let txProp in plainTx) {
+        if (
+          plainTx.hasOwnProperty(txProp) &&
+          !jsonToSend.hasOwnProperty(txProp)
+        ) {
+          jsonToSend[txProp] = [];
+        }
+
+        jsonToSend[txProp].push(plainTx[txProp]);
+      }
+    });
+    jsonToSend.isChildTab = true;
+
+    return this.buildWalletUrl({
+      endpoint,
+      callbackUrl: options?.callbackUrl,
+      params: jsonToSend
+    });
   }
 
   private buildWalletUrl(options: {
@@ -130,6 +179,10 @@ export class WalletV2Provider {
   }
 
   private disconnect() {
+    console.log('close wallet window!');
+    if (this.walletWindow) {
+      this.walletWindow.close();
+    }
     this.account = { address: '' };
   }
 
@@ -171,27 +224,14 @@ export class WalletV2Provider {
 
   async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     this.ensureConnected();
-
-    const walletV2Response = await this.startBgrMsgChannel(
-      Operation.SignTransactions,
-      {
-        from: this.account.address,
-        transactions: transactions.map((transaction) =>
-          transaction.toPlainObject()
-        )
-      }
-    );
-
-    try {
-      const transactionsResponse = walletV2Response.map(
-        (transaction: IPlainTransactionObject) =>
-          Transaction.fromPlainObject(transaction)
+    if (this.walletWindow) {
+      const redirectUrl = this.buildTransactionsUrl(
+        WALLET_PROVIDER_SIGN_TRANSACTION_URL,
+        transactions
       );
-
-      return transactionsResponse;
-    } catch (error: any) {
-      throw new Error(`Transaction canceled: ${error.message}.`);
+      this.walletWindow.location.href = redirectUrl;
     }
+    throw new Error(`Transaction canceled. ${transactions}`);
   }
 
   async signMessage(message: SignableMessage): Promise<SignableMessage> {
