@@ -9,20 +9,6 @@
 
   .valueWrapper {
     font-size: 14px;
-
-    .value {
-      word-break: break-all;
-      line-height: 1.5;
-      height: 16px;
-      gap: 8px;
-      display: flex;
-      align-items: center;
-
-      &.shrunk {
-        line-height: 1;
-        height: auto;
-      }
-    }
   }
 
   .label {
@@ -38,23 +24,6 @@
     position: relative;
     width: auto;
     top: 1px;
-  }
-
-  .valueCopy {
-    font-size: 12px;
-  }
-
-  .explorer {
-    margin-left: 0;
-    font-size: 12px;
-
-    svg {
-      color: var(--dapp-form-placeholder-color) !important;
-    }
-
-    &:hover svg {
-      color: var(--dapp-form-btn-bg) !important;
-    }
   }
 
   .loadingDots {

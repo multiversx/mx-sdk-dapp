@@ -3,18 +3,13 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { ACCOUNTS_ENDPOINT } from 'apiCalls';
-import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
 import { useGetAccountFromApi } from 'hooks';
-import { CopyButton } from 'UI/CopyButton';
-import { ExplorerLink } from 'UI/ExplorerLink';
 import { LoadingDots } from 'UI/LoadingDots';
-import { Trim } from 'UI/Trim';
 import { isContract } from 'utils/smartContracts';
 
 import { ReceiverSubValue } from './components/ReceiverSubValue';
+import { ReceiverValue } from './components/ReceiverValue';
 import styles from './confirmReceiverStyles.scss';
-import { trimReceiverDomain } from './helpers';
 
 export interface ConfirmReceiverPropsType {
   receiver: string;
@@ -42,27 +37,16 @@ export const ConfirmReceiver = ({
     <div className={styles.receiver}>
       <span className={styles.label}>Receiver</span>
 
-      {receiver && !usernameAccountLoading ? (
-        <span data-testid='confirmReceiver' className={styles.valueWrapper}>
-          {hasUsername ? (
-            <span className={classNames(styles.value, styles.shrunk)}>
-              <MultiversXIconSimple className={styles.icon} />
-              {trimReceiverDomain(receiverValue)}
-
-              <ExplorerLink
-                page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
-                className={styles.explorer}
-              />
-            </span>
-          ) : (
-            <span className={styles.value}>
-              <Trim text={receiver} />
-              <CopyButton text={receiver} className={styles.valueCopy} />
-            </span>
-          )}
-        </span>
-      ) : (
+      {usernameAccountLoading ? (
         <LoadingDots className={styles.loadingDots} />
+      ) : (
+        <span data-testid='confirmReceiver' className={styles.valueWrapper}>
+          <ReceiverValue
+            hasUsername={hasUsername}
+            receiverAddress={receiver}
+            receiverValue={receiverValue}
+          />
+        </span>
       )}
 
       {usernameAccountLoading ? (
@@ -70,11 +54,7 @@ export const ConfirmReceiver = ({
           className={classNames(styles.loadingDots, styles.absolute)}
         />
       ) : (
-        <ReceiverSubValue
-          usernameAccountLoading={usernameAccountLoading}
-          hasUsername={hasUsername}
-          receiver={receiver}
-        />
+        <ReceiverSubValue hasUsername={hasUsername} receiver={receiver} />
       )}
 
       {scamReport && (

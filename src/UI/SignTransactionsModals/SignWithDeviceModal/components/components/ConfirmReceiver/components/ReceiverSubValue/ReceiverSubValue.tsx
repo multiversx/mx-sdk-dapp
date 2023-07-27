@@ -9,19 +9,17 @@ import { isContract } from 'utils';
 import styles from './receiverSubValueStyles.scss';
 
 export interface ReceiverSubValuePropsType {
-  usernameAccountLoading: boolean;
   hasUsername: boolean;
   receiver: string;
 }
 
 export const ReceiverSubValue = ({
   hasUsername,
-  receiver,
-  usernameAccountLoading
+  receiver
 }: ReceiverSubValuePropsType) => {
   const isSmartContract = isContract(receiver);
 
-  if (hasUsername && !isSmartContract) {
+  if (hasUsername) {
     return (
       <span className={styles.subValue}>
         <Trim text={receiver} className={styles.subValueTrim} />
@@ -30,7 +28,7 @@ export const ReceiverSubValue = ({
     );
   }
 
-  if (isSmartContract && !usernameAccountLoading) {
+  if (isSmartContract) {
     return (
       <span className={styles.subValue}>
         <Trim text='Smart Contract Call' className={styles.subValueTrim} />
@@ -43,18 +41,14 @@ export const ReceiverSubValue = ({
     );
   }
 
-  if (!hasUsername && !isSmartContract) {
-    return (
-      <span className={styles.subValue}>
-        <Trim text='View in Explorer' className={styles.subValueTrim} />
+  return (
+    <span className={styles.subValue}>
+      <Trim text='View in Explorer' className={styles.subValueTrim} />
 
-        <ExplorerLink
-          page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
-          className={styles.subValueExplorer}
-        />
-      </span>
-    );
-  }
-
-  return null;
+      <ExplorerLink
+        page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
+        className={styles.subValueExplorer}
+      />
+    </span>
+  );
 };

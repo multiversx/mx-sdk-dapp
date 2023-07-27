@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added usernames' support for the signing transaction screens](https://github.com/multiversx/mx-sdk-dapp/pull/878)
+- [Added usernames' support](https://github.com/multiversx/mx-sdk-dapp/pull/878)
 
 ## [[v2.19.0]](https://github.com/multiversx/mx-sdk-dapp/pull/877)] - 2023-07-26
 
