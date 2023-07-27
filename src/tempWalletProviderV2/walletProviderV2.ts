@@ -15,6 +15,9 @@ interface IWalletV2Account {
   signature?: string;
 }
 
+export const PARENT_DAPP_WINDOW_NAME = 'parentDapp';
+export const CHILD_WEB_WALLET_WINDOW_NAME = 'childWallet';
+
 export class WalletV2Provider {
   private walletUrl = '';
   public account: IWalletV2Account = { address: '' };
@@ -27,6 +30,7 @@ export class WalletV2Provider {
         'Error: Instantiation failed: Use WalletV2Provider.getInstance() instead of new.'
       );
     }
+    window.name = PARENT_DAPP_WINDOW_NAME;
     WalletV2Provider._instance = this;
   }
 
@@ -64,7 +68,7 @@ export class WalletV2Provider {
         isChildTab: true
       }
     });
-    window.open(redirectUrl, '_blank');
+    window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
     const account: { address: string; signature: string } = await new Promise(
       (resolve) => {
         const parent = this;
