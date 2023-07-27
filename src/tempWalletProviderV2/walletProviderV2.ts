@@ -1,13 +1,13 @@
 import { IPlainTransactionObject } from '@multiversx/sdk-core';
 import { SignableMessage } from '@multiversx/sdk-core';
 import { Transaction } from '@multiversx/sdk-core';
+import qs from 'qs';
+import { WALLET_PROVIDER_CONNECT_URL } from './const';
 import {
   ErrAccountNotConnected,
   ErrCannotSignSingleTransaction
 } from './errors';
 import { Operation } from './operation';
-import { WALLET_PROVIDER_CONNECT_URL } from './const';
-import qs from 'qs';
 
 declare global {
   interface Window {
@@ -24,7 +24,7 @@ interface IWalletV2Account {
 export class WalletV2Provider {
   private walletUrl = '';
   public account: IWalletV2Account = { address: '' };
-  private initialized: boolean = false;
+  private initialized = false;
   private static _instance: WalletV2Provider = new WalletV2Provider();
 
   private constructor() {
@@ -80,6 +80,13 @@ export class WalletV2Provider {
     });
     console.log('heee');
     const myWindow = window.open(redirectUrl, '_blank');
+
+    window.addEventListener('message', (event) => {
+      console.log('should focus?', event);
+      window.focus();
+      console.log('not focus');
+    });
+
     console.log(myWindow, data);
 
     throw new Error('not able to login');
