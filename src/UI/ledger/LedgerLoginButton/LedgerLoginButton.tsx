@@ -1,15 +1,16 @@
 import React, { ReactNode, useState } from 'react';
 
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { DataTestIdsEnum } from 'constants/index';
 import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { useDappModal } from 'UI/DappModal';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 
-import type { OnProviderLoginType } from '../../../types';
-import type { WithClassnameType } from '../../types';
+import { OnProviderLoginType } from '../../../types';
+import { WithClassnameType } from '../../types';
 import { LedgerLoginContainer } from '../LedgerLoginContainer';
-import type { InnerLedgerComponentsClassesType } from '../LedgerLoginContainer/types';
+import { InnerLedgerComponentsClassesType } from '../LedgerLoginContainer/types';
 
 export interface LedgerLoginButtonPropsType
   extends WithClassnameType,
@@ -38,7 +39,7 @@ export const LedgerLoginButton: (
   children,
   onModalOpens,
   onModalCloses,
-  'data-testid': dataTestId,
+  'data-testid': dataTestId = DataTestIdsEnum.ledgerLoginButton,
   loginButtonText = 'Ledger',
   buttonClassName = 'dapp-ledger-login-button',
   className = 'dapp-ledger-login',
@@ -61,6 +62,7 @@ export const LedgerLoginButton: (
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
     setCanShowLoginModal(true);
     handleShowModal();
     onModalOpens?.();

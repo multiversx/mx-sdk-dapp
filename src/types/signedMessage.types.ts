@@ -1,5 +1,6 @@
 export enum SignedMessageQueryParamsEnum {
   signature = 'signature',
   sessionId = 'sessionId',
-  status = 'status'
+  status = 'status',
+  address = 'address'
 }

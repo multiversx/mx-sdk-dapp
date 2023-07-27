@@ -106,4 +106,49 @@
       }
     }
   }
+
+  .sign-buttons {
+    display: flex;
+    flex-direction: column;
+    padding-top: 16px;
+    margin-top: auto;
+
+    .sign-button-submit {
+      transition: all 200ms ease-out;
+      margin: 32px auto 0;
+      align-self: center;
+      line-height: 1;
+      font-family: 'Inter';
+      font-size: 16px;
+      font-weight: 600;
+      padding: 16px 24px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      width: auto;
+      order: -1;
+
+      @media (min-width: 768px) {
+        margin-top: 40px;
+      }
+    }
+
+    .sign-button-cancel {
+      background: transparent;
+      transition: all 200ms ease-out;
+      border: none;
+      color: #23f7dd;
+      font-size: 16px;
+      font-weight: 500;
+      margin-top: 24px;
+      text-align: center;
+      padding: 0;
+
+      @media (min-width: 768px) {
+        margin-top: 32px;
+      }
+    }
+  }
 }

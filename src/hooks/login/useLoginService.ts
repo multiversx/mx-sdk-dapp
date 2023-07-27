@@ -49,10 +49,9 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     );
   };
 
-  const getNativeAuthLoginToken = async () => {
+  const getNativeAuthLoginToken = () => {
     try {
-      const loginToken = await client.initialize();
-      return loginToken;
+      return client.initialize();
     } catch (error) {
       console.error('Unable to get block. Login failed.', error);
       return;
@@ -90,7 +89,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
 
     dispatch(
       setTokenLogin({
-        loginToken: loginToken,
+        loginToken,
         signature,
         nativeAuthToken,
         ...(apiAddress ? { nativeAuthConfig: configuration } : {})

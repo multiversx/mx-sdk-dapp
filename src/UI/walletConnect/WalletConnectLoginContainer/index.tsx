@@ -127,7 +127,7 @@ export const WalletConnectLoginContainer = ({
   }, []);
 
   const authorizationInfo = showScamPhishingAlert
-    ? getAuthorizationInfo(token)
+    ? getAuthorizationInfo(token, containerScamPhishingAlertClassName)
     : undefined;
 
   const content = (

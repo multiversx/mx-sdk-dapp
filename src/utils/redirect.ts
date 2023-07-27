@@ -10,7 +10,7 @@ export const safeRedirect = (url: string, timeout = 0) => {
       if (!window) {
         return;
       }
-      window.location.href = url;
+
       window.location.assign(url);
     }, timeout);
   }

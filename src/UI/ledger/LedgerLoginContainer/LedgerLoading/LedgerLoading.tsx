@@ -3,6 +3,7 @@ import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import globals from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { PageState } from 'UI/PageState';
 
 import styles from './ledgerLoadingStyles.scss';
@@ -33,6 +34,7 @@ export const LedgerLoading = ({
   return (
     <div
       className={classNames(styles.ledgerLoadingWrapper, ledgerLoadingWrapper)}
+      data-testid={DataTestIdsEnum.ledgerLoading}
     >
       <div
         className={classNames(

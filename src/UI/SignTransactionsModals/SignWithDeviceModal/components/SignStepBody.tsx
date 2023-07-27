@@ -4,10 +4,7 @@ import classNames from 'classnames';
 
 import { useGetEgldPrice, useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
-import type {
-  ActiveLedgerTransactionType,
-  MultiSignTransactionType
-} from 'types';
+import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { NftEnumType } from 'types/tokens.types';
 import { TransactionData } from 'UI/TransactionData';
 import { getIdentifierType } from 'utils';
