@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.19.1]](https://github.com/multiversx/mx-sdk-dapp/pull/879)] - 2023-07-27
+
 - [Added usernames' support](https://github.com/multiversx/mx-sdk-dapp/pull/878)
 
 ## [[v2.19.0]](https://github.com/multiversx/mx-sdk-dapp/pull/877)] - 2023-07-26
