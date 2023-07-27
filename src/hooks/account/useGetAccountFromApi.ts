@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { getAccountFromApi } from 'apiCalls';
 import { AccountType } from 'types';
-import { isContract } from 'utils';
 
-export const useGetAccountFromApi = (address?: string | null) => {
+export const useGetAccountFromApi = (address: string | null) => {
   const [account, setAccount] = useState<AccountType | null>();
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export const useGetAccountFromApi = (address?: string | null) => {
       }
     };
 
-    if (address && isContract(address)) {
+    if (!address) {
       setAccount(null);
       return;
     }

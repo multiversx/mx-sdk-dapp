@@ -2,7 +2,7 @@ import { isStringBase64 } from '../decoders';
 
 export const getUsernameForTransaction = (username?: string) => {
   if (!username) {
-    return undefined;
+    return;
   }
 
   const defaultData = username ?? '';

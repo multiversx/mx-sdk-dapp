@@ -12,11 +12,12 @@ import { LoadingDots } from 'UI/LoadingDots';
 import { Trim } from 'UI/Trim';
 import { isContract } from 'utils/smartContracts';
 
+import { ReceiverSubValue } from './components/ReceiverSubValue';
 import styles from './confirmReceiverStyles.scss';
 import { trimReceiverDomain } from './helpers';
 
 export interface ConfirmReceiverPropsType {
-  receiver?: string;
+  receiver: string;
   scamReport: string | null;
 }
 
@@ -24,17 +25,18 @@ export const ConfirmReceiver = ({
   receiver,
   scamReport
 }: ConfirmReceiverPropsType) => {
-  const isSmartContract = isContract(receiver ?? '');
+  const isSmartContract = isContract(receiver);
 
   const {
     account: usernameAccount,
     loading: usernameAccountLoading,
     error: usernameAccountError
-  } = useGetAccountFromApi(receiver);
+  } = useGetAccountFromApi(isSmartContract ? null : receiver);
 
   const receiverValue = usernameAccount?.username ?? receiver;
-  const hasUsername =
-    receiver && Boolean(usernameAccount?.username) && !usernameAccountError;
+  const hasUsername = Boolean(
+    receiver && Boolean(usernameAccount?.username) && !usernameAccountError
+  );
 
   return (
     <div className={styles.receiver}>
@@ -63,27 +65,15 @@ export const ConfirmReceiver = ({
         <LoadingDots className={styles.loadingDots} />
       )}
 
-      {hasUsername && !isSmartContract && (
-        <span className={styles.subValue}>
-          <Trim text={receiver} className={styles.subValueTrim} />
-          <CopyButton text={receiver} className={styles.valueCopy} />
-        </span>
-      )}
-
-      {isSmartContract && !usernameAccountLoading && (
-        <span className={styles.subValue}>
-          <Trim text='Smart Contract Call' className={styles.subValueTrim} />
-
-          <ExplorerLink
-            page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
-            className={styles.explorer}
-          />
-        </span>
-      )}
-
-      {usernameAccountLoading && (
+      {usernameAccountLoading ? (
         <LoadingDots
           className={classNames(styles.loadingDots, styles.absolute)}
+        />
+      ) : (
+        <ReceiverSubValue
+          usernameAccountLoading={usernameAccountLoading}
+          hasUsername={hasUsername}
+          receiver={receiver}
         />
       )}
 
