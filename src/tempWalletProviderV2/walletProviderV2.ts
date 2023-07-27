@@ -75,9 +75,9 @@ export class WalletV2Provider {
     this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
     const account: { address: string; signature: string } = await new Promise(
       (resolve) => {
-        const parent = this;
+        const walletUrl = this.walletUrl;
         window.addEventListener('message', function eventHandler(event) {
-          if (event.origin === new URL(parent.walletUrl).origin) {
+          if (event.origin === new URL(walletUrl).origin) {
             window.removeEventListener('message', eventHandler);
             resolve(JSON.parse(event.data));
           }
@@ -92,7 +92,7 @@ export class WalletV2Provider {
   }
 
   static prepareWalletTransaction(transaction: Transaction): any {
-    let plainTransaction = transaction.toPlainObject();
+    const plainTransaction = transaction.toPlainObject();
 
     // We adjust the data field, in order to make it compatible with what the web wallet expects.
     if (plainTransaction.data) {
@@ -115,8 +115,8 @@ export class WalletV2Provider {
   ): string {
     const jsonToSend: any = {};
     transactions.map((tx) => {
-      let plainTx = WalletV2Provider.prepareWalletTransaction(tx);
-      for (let txProp in plainTx) {
+      const plainTx = WalletV2Provider.prepareWalletTransaction(tx);
+      for (const txProp in plainTx) {
         if (
           plainTx.hasOwnProperty(txProp) &&
           !jsonToSend.hasOwnProperty(txProp)
