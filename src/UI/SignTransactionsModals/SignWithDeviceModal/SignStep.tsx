@@ -190,6 +190,7 @@ export const SignStep = (props: SignStepType) => {
       ) : (
         <>
           <SignStepBody {...signStepBodyProps} />
+
           <div
             className={classNames(
               classes.buttonsWrapper,

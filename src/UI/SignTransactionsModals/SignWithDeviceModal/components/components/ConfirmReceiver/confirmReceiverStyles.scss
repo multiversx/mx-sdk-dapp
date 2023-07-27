@@ -1,20 +1,98 @@
 .receiver {
   text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  padding-bottom: 24px;
+  width: 100%;
 
-  .value {
-    font-size: 16px;
-    word-break: break-all;
-    line-height: 1.5;
-    display: block;
-    color: #e5e5e5;
+  .valueWrapper {
+    font-size: 14px;
+
+    .value {
+      word-break: break-all;
+      line-height: 1.5;
+      height: 16px;
+      gap: 8px;
+      display: flex;
+      align-items: center;
+
+      &.shrunk {
+        line-height: 1;
+        height: auto;
+      }
+    }
   }
 
   .label {
-    margin-bottom: 8px;
     color: #a3a3a3;
     font-size: 12px;
     line-height: 1;
     font-weight: 400;
     display: block;
+  }
+
+  .icon {
+    height: 16px;
+    position: relative;
+    width: auto;
+    top: 1px;
+  }
+
+  .subValue {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    height: 16px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    .subValueTrim {
+      line-height: 1;
+      color: var(--dapp-form-placeholder-color);
+      font-size: 12px;
+      display: flex;
+      align-items: flex-end;
+      max-width: none;
+
+      [class*='left'] *,
+      [class*='right'] * {
+        color: var(--dapp-form-placeholder-color);
+        font-size: 12px !important;
+      }
+    }
+  }
+
+  .valueCopy {
+    font-size: 12px;
+  }
+
+  .explorer {
+    margin-left: 0;
+    font-size: 12px;
+
+    svg {
+      color: var(--dapp-form-placeholder-color) !important;
+    }
+
+    &:hover svg {
+      color: var(--dapp-form-btn-bg) !important;
+    }
+  }
+
+  .loadingDots {
+    font-size: 16px;
+    line-height: 1;
+    height: 16px;
+
+    &.absolute {
+      left: 0;
+      right: 0;
+      bottom: 0;
+      position: absolute;
+    }
   }
 }
