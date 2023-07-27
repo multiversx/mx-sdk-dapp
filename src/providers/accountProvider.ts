@@ -5,11 +5,13 @@ import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
+import { WalletV2Provider } from 'tempWalletProviderV2';
 
 type ProvidersType =
   | IDappProvider
   | ExtensionProvider
   | WalletProvider
+  | WalletV2Provider
   | HWProvider
   | OperaProvider
   | WalletConnectV2Provider;

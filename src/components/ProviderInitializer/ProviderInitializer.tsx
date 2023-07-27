@@ -40,7 +40,11 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
-import { getExtensionProvider } from './helpers';
+import {
+  getExtensionProvider,
+  getOperaProvider,
+  getWalletV2Provider
+} from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
@@ -208,7 +212,15 @@ export function ProviderInitializer() {
 
   async function setOperaProvider() {
     const address = await getAddress();
-    const provider = await getExtensionProvider(address);
+    const provider = await getOperaProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
+  async function setWalletV2Provider() {
+    const address = await getAddress();
+    const provider = await getWalletV2Provider(address);
     if (provider) {
       setAccountProvider(provider);
     }
@@ -238,6 +250,11 @@ export function ProviderInitializer() {
 
       case LoginMethodsEnum.opera: {
         setOperaProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.walletV2: {
+        setWalletV2Provider();
         break;
       }
 

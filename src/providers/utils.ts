@@ -5,6 +5,7 @@ import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
+import { WalletV2Provider } from 'tempWalletProviderV2';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -28,6 +29,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.extension;
     case OperaProvider:
       return LoginMethodsEnum.opera;
+    case WalletV2Provider:
+      return LoginMethodsEnum.walletV2;
     case EmptyProvider:
       return LoginMethodsEnum.none;
     default:

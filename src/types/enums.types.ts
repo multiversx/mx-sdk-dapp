@@ -30,6 +30,7 @@ export enum LoginMethodsEnum {
   walletconnect = 'walletconnect',
   walletconnectv2 = 'walletconnectv2',
   wallet = 'wallet',
+  walletV2 = 'walletV2',
   extension = 'extension',
   opera = 'opera',
   extra = 'extra',
