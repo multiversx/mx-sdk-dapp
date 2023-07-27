@@ -37,7 +37,6 @@ export class WalletV2Provider {
   }
 
   public static getInstance(walletUrl: string): WalletV2Provider {
-    console.log('geting instance', walletUrl);
     WalletV2Provider._instance.walletUrl = walletUrl;
     return WalletV2Provider._instance;
   }
@@ -65,11 +64,6 @@ export class WalletV2Provider {
         'WalletV2 provider is not initialised, call init() first'
       );
     }
-    console.log('-----');
-    const { token } = options;
-    const data = token ? token : '';
-    // await this.startBgrMsgChannel(Operation.Connect, data);
-    console.log('try login with walletV2');
     const redirectUrl = this.buildWalletUrl({
       endpoint: WALLET_PROVIDER_CONNECT_URL,
       callbackUrl: options?.callbackUrl,
@@ -78,18 +72,25 @@ export class WalletV2Provider {
         isChildTab: true
       }
     });
-    console.log('heee');
-    const myWindow = window.open(redirectUrl, '_blank');
+    window.open(redirectUrl, '_blank');
+    const account: { address: string; signature: string } = await new Promise(
+      (resolve) => {
+        const walletListener = window.addEventListener('message', (event) => {
+          if (event.origin === new URL(this.walletUrl).origin) {
+            removeListener();
+            resolve(JSON.parse(event.data));
+          }
+        });
 
-    window.addEventListener('message', (event) => {
-      console.log('should focus?', event);
-      window.focus();
-      console.log('not focus');
-    });
+        const removeListener = () => {
+          window.removeEventListener('message', walletListener as any);
+        };
+      }
+    );
 
-    console.log(myWindow, data);
+    this.account.address = account.address;
+    this.account.signature = account.signature;
 
-    throw new Error('not able to login');
     return this.account.address;
   }
 
