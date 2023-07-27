@@ -1,4 +1,3 @@
-import { IPlainTransactionObject } from '@multiversx/sdk-core';
 import { SignableMessage } from '@multiversx/sdk-core';
 import { Transaction } from '@multiversx/sdk-core';
 import qs from 'qs';
