@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
-import { useDispatch } from 'reduxStore/DappProviderContext';
+import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -15,6 +15,7 @@ import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
 import { WalletV2Provider } from 'tempWalletProviderV2';
+import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 
 export type UseWalletV2LoginReturnType = [
   InitiateLoginFunctionType,
@@ -32,6 +33,7 @@ export const useWalletV2Login = ({
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
+  const network = useSelector(networkSelector);
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
@@ -42,7 +44,9 @@ export const useWalletV2Login = ({
     }
 
     setIsLoading(true);
-    const provider: WalletV2Provider = WalletV2Provider.getInstance();
+    const provider: WalletV2Provider = WalletV2Provider.getInstance(
+      network.walletAddress
+    );
 
     try {
       const isSuccessfullyInitialized: boolean = await provider.init();

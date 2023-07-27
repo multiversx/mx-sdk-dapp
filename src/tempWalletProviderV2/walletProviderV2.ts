@@ -22,7 +22,7 @@ interface IWalletV2Account {
 }
 
 export class WalletV2Provider {
-  private walletUrl = 'https://localhost:3002/';
+  private walletUrl = '';
   public account: IWalletV2Account = { address: '' };
   private initialized: boolean = false;
   private static _instance: WalletV2Provider = new WalletV2Provider();
@@ -36,7 +36,9 @@ export class WalletV2Provider {
     WalletV2Provider._instance = this;
   }
 
-  public static getInstance(): WalletV2Provider {
+  public static getInstance(walletUrl: string): WalletV2Provider {
+    console.log('geting instance', walletUrl);
+    WalletV2Provider._instance.walletUrl = walletUrl;
     return WalletV2Provider._instance;
   }
 
@@ -63,6 +65,7 @@ export class WalletV2Provider {
         'WalletV2 provider is not initialised, call init() first'
       );
     }
+    console.log('-----');
     const { token } = options;
     const data = token ? token : '';
     // await this.startBgrMsgChannel(Operation.Connect, data);
@@ -75,6 +78,7 @@ export class WalletV2Provider {
         isChildTab: true
       }
     });
+    console.log('heee');
     const myWindow = window.open(redirectUrl, '_blank');
     console.log(myWindow, data);
 
