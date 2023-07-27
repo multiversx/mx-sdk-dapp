@@ -14,11 +14,13 @@ import styles from './confirmReceiverStyles.scss';
 export interface ConfirmReceiverPropsType {
   receiver: string;
   scamReport: string | null;
+  receiverUsername?: string;
 }
 
 export const ConfirmReceiver = ({
   receiver,
-  scamReport
+  scamReport,
+  receiverUsername
 }: ConfirmReceiverPropsType) => {
   const isSmartContract = isContract(receiver);
 
@@ -26,11 +28,16 @@ export const ConfirmReceiver = ({
     account: usernameAccount,
     loading: usernameAccountLoading,
     error: usernameAccountError
-  } = useGetAccountFromApi(receiver, { shouldSkipFetching: isSmartContract });
+  } = useGetAccountFromApi(receiver, {
+    shouldSkipFetching: Boolean(isSmartContract || receiverUsername)
+  });
 
-  const receiverValue = usernameAccount?.username ?? receiver;
+  const possibleReceiverUsername =
+    receiverUsername ?? usernameAccount?.username;
+
+  const receiverValue = possibleReceiverUsername ?? receiver;
   const hasUsername = Boolean(
-    receiver && Boolean(usernameAccount?.username) && !usernameAccountError
+    receiver && Boolean(possibleReceiverUsername) && !usernameAccountError
   );
 
   return (
