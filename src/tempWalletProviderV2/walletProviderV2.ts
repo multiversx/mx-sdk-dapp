@@ -77,7 +77,8 @@ export class WalletV2Provider {
       (resolve) => {
         const walletListener = window.addEventListener('message', (event) => {
           if (event.origin === new URL(this.walletUrl).origin) {
-            removeListener();
+            console.log('-----event!!!!');
+            // removeListener();
             resolve(JSON.parse(event.data));
           }
         });
