@@ -13,7 +13,8 @@ export const getTransactionsParams = ({
   after,
   before,
   search,
-  status
+  status,
+  withUsername
 }: GetTransactionsType) => {
   const params = {
     sender,
@@ -25,6 +26,7 @@ export const getTransactionsParams = ({
     from: (page - 1) * transactionSize,
     ...(transactionSize > 0 ? { size: transactionSize } : {}),
     withScResults,
+    withUsername,
     status
   };
 

@@ -77,6 +77,10 @@ export const SignStepBody = ({
       tokenId: nonce && nonce?.length > 0 ? nftId : tokenId
     });
 
+  const transactionReceiver = multiTxData
+    ? new Address(receiver).bech32()
+    : currentTransaction.transaction.getReceiver().toString();
+
   const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
     formatAmount({
       input: isTokenTransaction
@@ -129,11 +133,7 @@ export const SignStepBody = ({
 
         <ConfirmReceiver
           scamReport={scamReport}
-          receiver={
-            multiTxData
-              ? new Address(receiver).bech32()
-              : currentTransaction.transaction.getReceiver().toString()
-          }
+          receiver={transactionReceiver}
         />
 
         <div className={styles.columns}>

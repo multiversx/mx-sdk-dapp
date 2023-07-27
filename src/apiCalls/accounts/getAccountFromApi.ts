@@ -7,6 +7,7 @@ export async function getAccountFromApi(address?: string) {
   if (!address) {
     return null;
   }
+
   const apiAddress = getCleanApiAddress();
   const configUrl = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
 
