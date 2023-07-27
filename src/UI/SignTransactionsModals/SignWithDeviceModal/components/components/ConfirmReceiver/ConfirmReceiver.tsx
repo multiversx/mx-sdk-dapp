@@ -26,7 +26,7 @@ export const ConfirmReceiver = ({
     account: usernameAccount,
     loading: usernameAccountLoading,
     error: usernameAccountError
-  } = useGetAccountFromApi(isSmartContract ? null : receiver);
+  } = useGetAccountFromApi(receiver, { shouldSkipFetching: isSmartContract });
 
   const receiverValue = usernameAccount?.username ?? receiver;
   const hasUsername = Boolean(

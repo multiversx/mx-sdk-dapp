@@ -1,36 +1,34 @@
-import { useEffect, useState } from 'react';
+import axios from 'axios';
+import useSwr from 'swr';
 
-import { getAccountFromApi } from 'apiCalls';
-import { AccountType } from 'types';
+import { ACCOUNTS_ENDPOINT } from 'apiCalls';
+import { apiAddressSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 
-export const useGetAccountFromApi = (address: string | null) => {
-  const [account, setAccount] = useState<AccountType | null>();
+export interface UseGetAccountFromApiOptionsType {
+  shouldSkipFetching?: boolean;
+}
 
-  useEffect(() => {
-    const fetchAccountApi = async (address: string) => {
-      try {
-        const accountFromApi = await getAccountFromApi(address);
+export const useGetAccountFromApi = (
+  address: string,
+  options: UseGetAccountFromApiOptionsType
+) => {
+  const apiAddress = apiAddressSelector(store.getState());
+  const accountEndpoint = options.shouldSkipFetching
+    ? null
+    : `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}`;
 
-        setAccount(accountFromApi);
-      } catch (error) {
-        console.error(error);
-        setAccount(null);
-      }
-    };
+  const { data, error, isLoading, isValidating } = useSwr(
+    accountEndpoint,
+    (url) => axios.get(url).then((response) => response.data)
+  );
 
-    if (!address) {
-      setAccount(null);
-      return;
-    }
-
-    if (address && !account) {
-      fetchAccountApi(address);
-    }
-  }, [address, account]);
+  const dataLoadingFromLibrary = isLoading || isValidating;
+  const isUsernameLoading = dataLoadingFromLibrary || (!error && !data);
 
   return {
-    loading: account === undefined,
-    error: account === null,
-    account
+    loading: isUsernameLoading && !options.shouldSkipFetching,
+    error,
+    account: data
   };
 };
