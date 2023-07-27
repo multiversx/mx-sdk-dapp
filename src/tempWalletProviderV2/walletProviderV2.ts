@@ -9,12 +9,6 @@ import {
 } from './errors';
 import { Operation } from './operation';
 
-declare global {
-  interface Window {
-    elrondWallet: { extensionId: string };
-  }
-}
-
 interface IWalletV2Account {
   address: string;
   name?: string;
@@ -47,9 +41,7 @@ export class WalletV2Provider {
   }
 
   async init(): Promise<boolean> {
-    if (window && window.elrondWallet) {
-      this.initialized = true;
-    }
+    this.initialized = true;
     return this.initialized;
   }
 
@@ -75,17 +67,13 @@ export class WalletV2Provider {
     window.open(redirectUrl, '_blank');
     const account: { address: string; signature: string } = await new Promise(
       (resolve) => {
-        const walletListener = window.addEventListener('message', (event) => {
-          if (event.origin === new URL(this.walletUrl).origin) {
-            console.log('-----event!!!!');
-            // removeListener();
+        const parent = this;
+        window.addEventListener('message', function eventHandler(event) {
+          if (event.origin === new URL(parent.walletUrl).origin) {
+            window.removeEventListener('message', eventHandler);
             resolve(JSON.parse(event.data));
           }
         });
-
-        const removeListener = () => {
-          window.removeEventListener('message', walletListener as any);
-        };
       }
     );
 
