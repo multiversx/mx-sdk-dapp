@@ -183,7 +183,6 @@ export class WalletV2Provider {
   }
 
   private disconnect() {
-    console.log('close wallet window!');
     if (this.walletWindow) {
       this.walletWindow.close();
     }
