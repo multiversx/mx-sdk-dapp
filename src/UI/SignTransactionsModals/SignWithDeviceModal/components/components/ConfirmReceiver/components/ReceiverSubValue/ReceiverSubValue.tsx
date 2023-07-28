@@ -31,7 +31,7 @@ export const ReceiverSubValue = ({
   if (isSmartContract) {
     return (
       <span className={styles.subValue}>
-        <Trim text='Smart Contract Call' className={styles.subValueTrim} />
+        <Trim text='Smart Contract' className={styles.subValueTrim} />
 
         <ExplorerLink
           page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
