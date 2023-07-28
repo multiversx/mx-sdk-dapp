@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
+import { useWalletV2Login } from 'hooks';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
-import { useWalletV2Login } from 'hooks';
 
 export interface WalletV2LoginButtonPropsType
   extends WithClassnameType,

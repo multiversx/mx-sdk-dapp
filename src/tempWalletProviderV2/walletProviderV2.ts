@@ -3,6 +3,7 @@ import { Transaction } from '@multiversx/sdk-core';
 import qs from 'qs';
 import {
   WALLET_PROVIDER_CONNECT_URL,
+  WALLET_PROVIDER_DISCONNECT_URL,
   WALLET_PROVIDER_SIGN_TRANSACTION_URL
 } from './const';
 import {
@@ -173,8 +174,13 @@ export class WalletV2Provider {
       );
     }
     try {
-      await this.startBgrMsgChannel(Operation.Logout, this.account.address);
       this.disconnect();
+      if (this.walletWindow) {
+        window.open(
+          this.buildWalletUrl({ endpoint: WALLET_PROVIDER_DISCONNECT_URL }),
+          CHILD_WEB_WALLET_WINDOW_NAME
+        );
+      }
     } catch (error) {
       console.warn('WalletV2 origin url is already cleared!', error);
     }
@@ -183,9 +189,6 @@ export class WalletV2Provider {
   }
 
   private disconnect() {
-    if (this.walletWindow) {
-      this.walletWindow.close();
-    }
     this.account = { address: '' };
   }
 
@@ -239,8 +242,7 @@ export class WalletV2Provider {
       window.addEventListener('message', function eventHandler(event) {
         if (event.origin === new URL(walletUrl).origin) {
           window.removeEventListener('message', eventHandler);
-          // resolve(JSON.parse(event.data));
-          console.log(event.data);
+          resolve(JSON.parse(event.data));
         }
       });
     });
@@ -249,8 +251,26 @@ export class WalletV2Provider {
       transactionsResponse?.status === 'cancelled' &&
       transactionsResponse.address === this.account.address
     ) {
-      throw new Error(`Transaction canceled.`);
+      throw new Error('Transaction canceled.');
     }
+
+    if (
+      transactionsResponse?.status === 'cancelled' &&
+      transactionsResponse.address === this.account.address
+    ) {
+      throw new Error('Transaction canceled.');
+    } else if (
+      Array.isArray(transactionsResponse) &&
+      transactionsResponse.length > 0
+    ) {
+      console.log('transactionsResponse', transactionsResponse);
+      const signedTransactions = transactionsResponse.map((tx: any) => {
+        const transaction = Transaction.fromPlainObject(tx);
+        return transaction;
+      });
+      return signedTransactions;
+    }
+    throw new Error('Error signing transactions.');
   }
 
   async signMessage(message: SignableMessage): Promise<SignableMessage> {

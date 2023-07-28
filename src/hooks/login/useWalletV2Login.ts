@@ -4,6 +4,8 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
+import { WalletV2Provider } from 'tempWalletProviderV2';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -14,8 +16,6 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
-import { WalletV2Provider } from 'tempWalletProviderV2';
-import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 
 export type UseWalletV2LoginReturnType = [
   InitiateLoginFunctionType,
