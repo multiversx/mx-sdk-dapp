@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.19.2]](https://github.com/multiversx/mx-sdk-dapp/pull/881)] - 2023-07-28
+
 - [Added support for the transaction receiver to get username from outside](https://github.com/multiversx/mx-sdk-dapp/pull/880)
 
 ## [[v2.19.1]](https://github.com/multiversx/mx-sdk-dapp/pull/879)] - 2023-07-27
