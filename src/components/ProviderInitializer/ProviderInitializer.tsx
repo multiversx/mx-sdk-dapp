@@ -219,9 +219,7 @@ export function ProviderInitializer() {
   }
 
   async function setWalletV2Provider() {
-    console.log('get the instance herer', network.walletAddress);
     const address = await getAddress();
-    console.log('get the instance herer', network.walletAddress);
     const provider = await getWalletV2Provider(address, network.walletAddress);
     if (provider) {
       setAccountProvider(provider);

@@ -33,6 +33,11 @@ export class WalletV2Provider {
         'Error: Instantiation failed: Use WalletV2Provider.getInstance() instead of new.'
       );
     }
+    window.addEventListener('beforeunload', () => {
+      if (this.walletWindow) {
+        this.walletWindow.close();
+      }
+    });
     window.name = PARENT_DAPP_WINDOW_NAME;
     WalletV2Provider._instance = this;
   }
