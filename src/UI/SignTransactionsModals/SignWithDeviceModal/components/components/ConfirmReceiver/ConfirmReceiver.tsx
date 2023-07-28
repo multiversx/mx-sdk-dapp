@@ -32,12 +32,10 @@ export const ConfirmReceiver = ({
     shouldSkipFetching: Boolean(isSmartContract || receiverUsername)
   });
 
-  const possibleReceiverUsername =
-    receiverUsername ?? usernameAccount?.username;
-
-  const receiverValue = possibleReceiverUsername ?? receiver;
+  const foundReceiverUsername = receiverUsername ?? usernameAccount?.username;
+  const receiverValue = foundReceiverUsername ?? receiver;
   const hasUsername = Boolean(
-    receiver && Boolean(possibleReceiverUsername) && !usernameAccountError
+    receiver && Boolean(foundReceiverUsername) && !usernameAccountError
   );
 
   return (
