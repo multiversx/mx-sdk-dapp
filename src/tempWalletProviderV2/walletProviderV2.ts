@@ -227,13 +227,12 @@ export class WalletV2Provider {
 
   async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     this.ensureConnected();
-    if (this.walletWindow) {
-      const redirectUrl = this.buildTransactionsUrl(
-        WALLET_PROVIDER_SIGN_TRANSACTION_URL,
-        transactions
-      );
-      window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
-    }
+
+    const redirectUrl = this.buildTransactionsUrl(
+      WALLET_PROVIDER_SIGN_TRANSACTION_URL,
+      transactions
+    );
+    window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
     throw new Error(`Transaction canceled. ${transactions}`);
   }
 
