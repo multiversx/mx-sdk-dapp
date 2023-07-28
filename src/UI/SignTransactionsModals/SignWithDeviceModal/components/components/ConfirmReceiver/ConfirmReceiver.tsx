@@ -24,13 +24,13 @@ export const ConfirmReceiver = ({
 }: ConfirmReceiverPropsType) => {
   const isSmartContract = isContract(receiver);
 
+  const skipFetchingAccount = Boolean(isSmartContract || receiverUsername);
+
   const {
     account: usernameAccount,
     loading: usernameAccountLoading,
     error: usernameAccountError
-  } = useGetAccountFromApi(receiver, {
-    shouldSkipFetching: Boolean(isSmartContract || receiverUsername)
-  });
+  } = useGetAccountFromApi(skipFetchingAccount ? null : receiver);
 
   const foundReceiverUsername = receiverUsername ?? usernameAccount?.username;
   const receiverValue = foundReceiverUsername ?? receiver;
