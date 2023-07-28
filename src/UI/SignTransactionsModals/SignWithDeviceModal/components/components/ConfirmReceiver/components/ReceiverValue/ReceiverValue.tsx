@@ -3,11 +3,11 @@ import classNames from 'classnames';
 
 import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
+import { trimUsernameDomain } from 'hooks/account/helpers';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { Trim } from 'UI/Trim';
 
-import { trimReceiverDomain } from '../../helpers';
 import styles from './receiverValueStyles.scss';
 
 export interface ReceiverValuePropsType {
@@ -25,7 +25,7 @@ export const ReceiverValue = ({
     return (
       <span className={classNames(styles.receiverValue, styles.shrunk)}>
         <MultiversXIconSimple className={styles.receiverValueIcon} />
-        {trimReceiverDomain(receiverValue)}
+        {trimUsernameDomain(receiverValue)}
 
         <ExplorerLink
           page={`/${ACCOUNTS_ENDPOINT}/${receiverAddress}`}

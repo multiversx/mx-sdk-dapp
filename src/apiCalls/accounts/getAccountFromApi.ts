@@ -3,19 +3,22 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getCleanApiAddress } from 'apiCalls/utils';
 import { AccountType } from 'types';
 
+export const accountFetcher = (address: string | null) => {
+  const apiAddress = getCleanApiAddress();
+  const url = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
+  return axios.get<AccountType>(url);
+};
+
 export async function getAccountFromApi(address?: string) {
   if (!address) {
     return null;
   }
 
-  const apiAddress = getCleanApiAddress();
-  const configUrl = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
-
   try {
-    const { data } = await axios.get<AccountType>(configUrl);
+    const { data } = await accountFetcher(address);
     return data;
   } catch (err) {
-    console.error('error fetching configuration for ', configUrl);
+    console.error('error fetching configuration for ', address);
   }
   return null;
 }
