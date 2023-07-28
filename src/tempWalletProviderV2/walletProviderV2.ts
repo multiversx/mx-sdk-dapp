@@ -233,7 +233,24 @@ export class WalletV2Provider {
       transactions
     );
     this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
-    throw new Error(`Transaction canceled. ${transactions}`);
+
+    const transactionsResponse: any = await new Promise((resolve) => {
+      const walletUrl = this.walletUrl;
+      window.addEventListener('message', function eventHandler(event) {
+        if (event.origin === new URL(walletUrl).origin) {
+          window.removeEventListener('message', eventHandler);
+          // resolve(JSON.parse(event.data));
+          console.log(event.data);
+        }
+      });
+    });
+
+    if (
+      transactionsResponse?.status === 'cancelled' &&
+      transactionsResponse.address === this.account.address
+    ) {
+      throw new Error(`Transaction canceled.`);
+    }
   }
 
   async signMessage(message: SignableMessage): Promise<SignableMessage> {
