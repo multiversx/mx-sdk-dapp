@@ -232,7 +232,7 @@ export class WalletV2Provider {
         WALLET_PROVIDER_SIGN_TRANSACTION_URL,
         transactions
       );
-      this.walletWindow.location.href = redirectUrl;
+      window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
     }
     throw new Error(`Transaction canceled. ${transactions}`);
   }
