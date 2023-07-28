@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Ledger login improvements and added support for bluetooth connect](https://github.com/multiversx/mx-sdk-dapp/pull/882)
+
 ## [[v2.19.2]](https://github.com/multiversx/mx-sdk-dapp/pull/881)] - 2023-07-28
 
 - [Changed username fetching logic (skip fetching if already provided)](https://github.com/multiversx/mx-sdk-dapp/pull/880)

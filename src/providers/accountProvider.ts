@@ -6,7 +6,7 @@ import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
 
-type ProvidersType =
+export type ProvidersType =
   | IDappProvider
   | ExtensionProvider
   | WalletProvider

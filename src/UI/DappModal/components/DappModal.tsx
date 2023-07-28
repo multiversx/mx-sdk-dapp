@@ -32,7 +32,8 @@ export const DappModal = ({
   parentElement,
   config = defaultConfig,
   children,
-  className = 'dapp-modal-dialog-wrapper'
+  className = 'dapp-modal-dialog-wrapper',
+  'data-testid': dataTestId = 'dappModal'
 }: DappModalPropsType) => {
   if (!visible) {
     return null;
@@ -60,6 +61,7 @@ export const DappModal = ({
       role='dialog'
       aria-modal='true'
       className={classNames(modalDialogClassName, styles.dappModal, className)}
+      data-testid={dataTestId}
     >
       <div
         className={classNames(styles.dappModalContent, modalContentClassName)}

@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
-import { setAccountProvider } from 'providers/accountProvider';
+import {
+  setAccountProvider,
+  getAccountProvider
+} from 'providers/accountProvider';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
   isLoggedInSelector,
@@ -10,24 +13,6 @@ import {
 import { getLedgerConfiguration } from 'utils/account';
 import { logout } from 'utils/logout';
 
-async function getHwWalletProvider(ledgerLoginIndex?: number) {
-  const hwWalletP = new HWProvider();
-  let isInitialized = hwWalletP.isInitialized();
-  if (!isInitialized) {
-    isInitialized = await hwWalletP.init();
-  }
-
-  if (!isInitialized) {
-    return null;
-  }
-
-  if (ledgerLoginIndex != null) {
-    await hwWalletP.setAddressIndex(ledgerLoginIndex);
-  }
-
-  return hwWalletP;
-}
-
 type SetLedgerProviderType = {
   isRelogin?: boolean;
 };
@@ -36,6 +21,7 @@ export const useSetLedgerProvider = () => {
   const logoutRoute = useSelector(logoutRouteSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
+  const provider = getAccountProvider();
 
   const [ledgerData, setLedgerData] =
     useState<{
@@ -43,13 +29,35 @@ export const useSetLedgerProvider = () => {
       dataEnabled: boolean;
     }>();
 
+  const initHWProvider = async () => {
+    let isInitialized =
+      provider instanceof HWProvider && provider.isInitialized();
+
+    let hwWalletP = provider as HWProvider;
+
+    if (!isInitialized) {
+      hwWalletP = new HWProvider();
+      isInitialized = await hwWalletP.init();
+    }
+
+    if (!isInitialized || !hwWalletP) {
+      return;
+    }
+
+    if (ledgerLogin?.index != null) {
+      await hwWalletP.setAddressIndex(ledgerLogin.index);
+    }
+
+    return hwWalletP;
+  };
+
   async function setLedgerProvider(props?: SetLedgerProviderType) {
-    let hwWalletP: HWProvider | null = null;
+    let hwWalletP: HWProvider | undefined;
 
     const shouldLogout = isLoggedIn && !props?.isRelogin;
 
     try {
-      hwWalletP = await getHwWalletProvider(ledgerLogin?.index);
+      hwWalletP = await initHWProvider();
 
       if (!hwWalletP) {
         console.warn('Could not initialise ledger app');
@@ -57,6 +65,7 @@ export const useSetLedgerProvider = () => {
         if (shouldLogout) {
           logout(logoutRoute);
         }
+
         return;
       }
 
@@ -67,6 +76,7 @@ export const useSetLedgerProvider = () => {
       return hwWalletP;
     } catch (err) {
       console.error('Could not initialise ledger app', err);
+
       if (shouldLogout) {
         logout(logoutRoute);
       }

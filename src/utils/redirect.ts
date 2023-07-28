@@ -11,7 +11,11 @@ export const safeRedirect = (url: string, timeout = 0) => {
         return;
       }
 
-      window.location.assign(url);
+      if (url.startsWith('/')) {
+        return window.history.pushState('', '', url);
+      }
+
+      return window.location.assign(url);
     }, timeout);
   }
 };
