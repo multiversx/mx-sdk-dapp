@@ -17,8 +17,8 @@ export const signMessage = async ({
 
   const { origin } = getWindowLocation();
   const callbackUrl = window?.location
-    ? `${origin}${callbackRoute}`
-    : `${callbackRoute}`;
+    ? `${origin}${callbackRoute ?? ''}`
+    : `${callbackRoute ?? ''}`;
   const signableMessage = new SignableMessage({
     address: new Address(address),
     message: Buffer.from(message, 'ascii')

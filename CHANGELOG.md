@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix the malformed url due to the missing callbackRoute](https://github.com/multiversx/mx-sdk-dapp/pull/884)
 - [Updated the @multiversx packages to their latest versions](https://github.com/multiversx/mx-sdk-dapp/pull/883)
 
 ## [[v2.19.2]](https://github.com/multiversx/mx-sdk-dapp/pull/881)] - 2023-07-28
