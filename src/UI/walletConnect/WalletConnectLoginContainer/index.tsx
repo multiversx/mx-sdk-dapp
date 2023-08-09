@@ -41,10 +41,10 @@ export const WalletConnectLoginContainer = ({
   callbackRoute,
   loginButtonText = 'xPortal App',
   title = 'Login with the xPortal App',
-  logoutRoute = '/unlock',
   className = 'dapp-wallet-connect-login-modal',
   lead = 'Scan the QR code using the xPortal App',
   wrapContentInsideModal = true,
+  logoutRoute,
   token,
   nativeAuth,
   onClose,
@@ -65,11 +65,11 @@ export const WalletConnectLoginContainer = ({
       wcPairings
     }
   ] = useWalletConnectV2Login({
-    logoutRoute,
     callbackRoute,
     token,
     nativeAuth,
-    onLoginRedirect
+    onLoginRedirect,
+    logoutRoute
   });
 
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');

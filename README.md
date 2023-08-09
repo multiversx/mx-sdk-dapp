@@ -282,7 +282,6 @@ you can easily import and use them.
   callbackRoute={callbackRoute}
   loginButtonText='Login with xPortal'
   title='xPortal Login'
-  logoutRoute='/unlock'
   className='wallect-connect-login-modal'
   lead='Scan the QR code using xPortal'
   wrapContentInsideModal={wrapContentInsideModal}
@@ -415,7 +414,8 @@ return type is as follows:
 const [initiateLogin, genericLoginReturnType, customLoginReturnType] =
   useLoginHook({
     callbackRoute,
-    logoutRoute,
+    token,
+    nativeAuth,
     onLoginRedirect
   });
 ```
