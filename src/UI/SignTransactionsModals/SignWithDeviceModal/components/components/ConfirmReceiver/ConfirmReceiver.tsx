@@ -1,25 +1,65 @@
 import React from 'react';
-
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+
+import { useGetAccountFromApi } from 'hooks';
+import { LoadingDots } from 'UI/LoadingDots';
+import { isContract } from 'utils/smartContracts';
+
+import { ReceiverSubValue } from './components/ReceiverSubValue';
+import { ReceiverValue } from './components/ReceiverValue';
 import styles from './confirmReceiverStyles.scss';
 
 export interface ConfirmReceiverPropsType {
-  receiver?: string;
+  receiver: string;
   scamReport: string | null;
+  receiverUsername?: string;
 }
 
-export const ConfirmReceiver = (props: ConfirmReceiverPropsType) => {
-  const { receiver, scamReport } = props;
+export const ConfirmReceiver = ({
+  receiver,
+  scamReport,
+  receiverUsername
+}: ConfirmReceiverPropsType) => {
+  const isSmartContract = isContract(receiver);
+
+  const skipFetchingAccount = Boolean(isSmartContract || receiverUsername);
+
+  const {
+    account: usernameAccount,
+    loading: usernameAccountLoading,
+    error: usernameAccountError
+  } = useGetAccountFromApi(skipFetchingAccount ? null : receiver);
+
+  const foundReceiverUsername = receiverUsername ?? usernameAccount?.username;
+  const receiverValue = foundReceiverUsername ?? receiver;
+  const hasUsername = Boolean(
+    receiver && Boolean(foundReceiverUsername) && !usernameAccountError
+  );
 
   return (
     <div className={styles.receiver}>
       <span className={styles.label}>Receiver</span>
 
-      {receiver && (
-        <span className={styles.value} data-testid='confirmReceiver'>
-          {receiver}
+      {usernameAccountLoading ? (
+        <LoadingDots className={styles.loadingDots} />
+      ) : (
+        <span data-testid='confirmReceiver' className={styles.valueWrapper}>
+          <ReceiverValue
+            hasUsername={hasUsername}
+            receiverAddress={receiver}
+            receiverValue={receiverValue}
+          />
         </span>
+      )}
+
+      {usernameAccountLoading ? (
+        <LoadingDots
+          className={classNames(styles.loadingDots, styles.absolute)}
+        />
+      ) : (
+        <ReceiverSubValue hasUsername={hasUsername} receiver={receiver} />
       )}
 
       {scamReport && (
@@ -29,6 +69,7 @@ export const ConfirmReceiver = (props: ConfirmReceiverPropsType) => {
               icon={faExclamationTriangle}
               className={styles.icon}
             />
+
             <small data-testid='confirmScamReport'>{scamReport}</small>
           </span>
         </div>

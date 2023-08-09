@@ -17,6 +17,8 @@ export function parseTransactionAfterSigning(
   const parsedTransaction: SignedTransactionType = {
     ...transaction.toPlainObject(),
     hash: transaction.getHash().hex(),
+    senderUsername: transaction.getSenderUsername().valueOf(),
+    receiverUsername: transaction.getReceiverUsername().valueOf(),
     status: TransactionServerStatusesEnum.pending
   };
   return parsedTransaction;

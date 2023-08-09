@@ -6,10 +6,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+- [Fix WalletConnect Provider default logoutRoute](https://github.com/multiversx/mx-sdk-dapp/pull/886)
+- [Bump @multiversx/sdk-native-auth-client to fix RN issues](https://github.com/multiversx/mx-sdk-dapp/pull/885)
+- [Fix the malformed url due to the missing callbackRoute](https://github.com/multiversx/mx-sdk-dapp/pull/884)
+- [Updated the @multiversx packages to their latest versions](https://github.com/multiversx/mx-sdk-dapp/pull/883)
+
+## [[v2.19.2]](https://github.com/multiversx/mx-sdk-dapp/pull/881)] - 2023-07-28
+
+- [Changed username fetching logic (skip fetching if already provided)](https://github.com/multiversx/mx-sdk-dapp/pull/880)
+
+## [[v2.19.1]](https://github.com/multiversx/mx-sdk-dapp/pull/879)] - 2023-07-27
+
+- [Added usernames' support](https://github.com/multiversx/mx-sdk-dapp/pull/878)
+
 ## [[v2.19.0]](https://github.com/multiversx/mx-sdk-dapp/pull/877)] - 2023-07-26
+
 - [Fixed NextJS provider double mounting](https://github.com/multiversx/mx-sdk-dapp/pull/876)
 
 ## [[v2.18.5]](https://github.com/multiversx/mx-sdk-dapp/pull/875)] - 2023-07-24
+
 - [Fixed `optionalRedirect` `setTimout` usage and window redirect](https://github.com/multiversx/mx-sdk-dapp/pull/873)
 - [Fixed ledger signing reconnect](https://github.com/multiversx/mx-sdk-dapp/pull/874)
 - [Added ledger transport mock](https://github.com/multiversx/mx-sdk-dapp/pull/871)

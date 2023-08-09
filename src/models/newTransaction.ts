@@ -14,7 +14,13 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     data: getDataPayloadForTransaction(rawTransaction.data),
     nonce: rawTransaction.nonce.valueOf(),
     receiver: new Address(rawTransaction.receiver),
+    ...(rawTransaction.receiverUsername
+      ? { receiverUsername: rawTransaction.receiverUsername }
+      : {}),
     sender: new Address(rawTransaction.sender),
+    ...(rawTransaction.senderUsername
+      ? { senderUsername: rawTransaction.senderUsername }
+      : {}),
     gasLimit: rawTransaction.gasLimit.valueOf() ?? GAS_LIMIT,
     gasPrice: rawTransaction.gasPrice.valueOf() ?? GAS_PRICE,
     chainID: rawTransaction.chainID.valueOf(),

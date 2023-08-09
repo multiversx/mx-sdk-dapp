@@ -69,7 +69,13 @@ export async function signTransactions({
     sessionId,
     callbackRoute,
     customTransactionInformation,
-    transactions: transactionsPayload.map((tx) => tx.toPlainObject())
+    transactions: transactionsPayload.map((tx) => {
+      return {
+        ...tx.toPlainObject(),
+        senderUsername: tx.getSenderUsername().valueOf(),
+        receiverUsername: tx.getReceiverUsername().valueOf()
+      };
+    })
   };
   store.dispatch(setSignTransactionsCancelMessage(null));
   store.dispatch(setTransactionsToSign(signTransactionsPayload));
