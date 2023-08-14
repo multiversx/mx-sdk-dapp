@@ -168,9 +168,6 @@ export function useLedgerLogin({
     const isInitialized = await isHWProviderInitialized();
 
     if (!selectedAddress || !isInitialized) {
-      alert('Not init or not address loginUser');
-      alert(selectedAddress);
-      alert(isInitialized);
       return onLoginFailed(failInitializeErrorText);
     }
 
@@ -295,14 +292,12 @@ export function useLedgerLogin({
       const isInitialized = await isHWProviderInitialized();
 
       if (!isInitialized) {
-        // await initHWProvider();
-        alert('Not init onStartLogin');
+        console.log('Not init onStartLogin');
         return onLoginFailed(failInitializeErrorText);
       }
 
       if (ledgerAccount != null) {
         if (!selectedAddress) {
-          alert('Not selected address onStartLogin');
           return onLoginFailed(failInitializeErrorText);
         }
 

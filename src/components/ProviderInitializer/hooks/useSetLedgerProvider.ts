@@ -66,7 +66,12 @@ export const useSetLedgerProvider = () => {
         console.warn('Could not initialise ledger app');
 
         if (shouldLogout) {
-          logout(logoutRoute);
+          // Enforce absolute URL path to refresh the page on logout
+          const callbackUrl = logoutRoute?.startsWith('/')
+            ? logoutRoute
+            : `${window?.location?.origin ?? ''}${logoutRoute ?? ''}`;
+
+          logout(callbackUrl);
         }
 
         return;

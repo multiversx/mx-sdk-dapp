@@ -62,6 +62,11 @@ export async function logout(
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
     const url = needsCallbackUrl ? getWindowLocation().origin : callbackUrl;
 
+    if (providerType === LoginMethodsEnum.none) {
+      // logout does not exist in empty provider
+      return redirectToCallbackUrl(url, onRedirect);
+    }
+
     if (isWalletProvider) {
       // allow Redux clearing it's state before navigation
       setTimeout(() => {
