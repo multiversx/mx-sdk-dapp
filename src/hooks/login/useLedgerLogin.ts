@@ -122,16 +122,16 @@ export function useLedgerLogin({
     setError(`${message}.${customMessage}`);
     setIsLoading(false);
     dispatch(setLedgerAccount(null));
-
-    return;
   };
 
   const isHWProviderInitialized = async () => {
     try {
+      const isConnected = await hwProvider.isConnected();
+
       return (
         hwProvider instanceof HWProvider &&
         hwProvider.isInitialized() &&
-        (await hwProvider.isConnected())
+        isConnected
       );
     } catch (e) {
       onLoginFailed(e);
@@ -141,7 +141,9 @@ export function useLedgerLogin({
   };
 
   const initHWProvider = async () => {
-    if (await isHWProviderInitialized()) {
+    const isInitialized = await isHWProviderInitialized();
+
+    if (isInitialized) {
       setError('');
       setIsLoading(false);
       return;
@@ -160,12 +162,15 @@ export function useLedgerLogin({
     } catch (e) {
       onLoginFailed(e);
     }
-
-    return;
   };
 
   async function loginUser() {
-    if (!selectedAddress || !(await isHWProviderInitialized())) {
+    const isInitialized = await isHWProviderInitialized();
+
+    if (!selectedAddress || !isInitialized) {
+      alert('Not init or not address loginUser');
+      alert(selectedAddress);
+      alert(isInitialized);
       return onLoginFailed(failInitializeErrorText);
     }
 
@@ -249,11 +254,13 @@ export function useLedgerLogin({
   }
 
   async function fetchAccounts() {
-    if (!(await isHWProviderInitialized())) {
+    const isInitialized = await isHWProviderInitialized();
+
+    if (!isInitialized) {
       return onLoginFailed(error);
     }
 
-    if (accounts?.length) {
+    if (accounts?.length > 0) {
       return;
     }
 
@@ -273,8 +280,6 @@ export function useLedgerLogin({
     } catch (err) {
       onLoginFailed(err);
     }
-
-    return;
   }
 
   async function onStartLogin() {
@@ -287,13 +292,17 @@ export function useLedgerLogin({
     try {
       setIsLoading(true);
       await initHWProvider();
+      const isInitialized = await isHWProviderInitialized();
 
-      if (!(await isHWProviderInitialized())) {
+      if (!isInitialized) {
+        // await initHWProvider();
+        alert('Not init onStartLogin');
         return onLoginFailed(failInitializeErrorText);
       }
 
       if (ledgerAccount != null) {
         if (!selectedAddress) {
+          alert('Not selected address onStartLogin');
           return onLoginFailed(failInitializeErrorText);
         }
 
@@ -336,7 +345,9 @@ export function useLedgerLogin({
   }, [startIndex, showAddressList, hwProvider]);
 
   useEffect(() => {
-    if (accounts?.length && !showAddressList) {
+    const shouldShowAddressList = accounts?.length > 0 && !showAddressList;
+
+    if (shouldShowAddressList) {
       setShowAddressList(true);
     }
   }, [accounts]);

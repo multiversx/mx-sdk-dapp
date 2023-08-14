@@ -11,7 +11,11 @@ export const safeRedirect = (url: string, timeout = 0) => {
         return;
       }
 
-      if (url.startsWith('/')) {
+      // Navigate to callbackUrl without page refresh
+      // if we are in the same origin
+      const isSameOriginRedirect = url?.startsWith('/');
+
+      if (isSameOriginRedirect) {
         return window.history.pushState('', '', url);
       }
 

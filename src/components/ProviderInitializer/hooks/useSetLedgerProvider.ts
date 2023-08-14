@@ -30,21 +30,24 @@ export const useSetLedgerProvider = () => {
     }>();
 
   const initHWProvider = async () => {
-    let isInitialized =
-      provider instanceof HWProvider && provider.isInitialized();
+    const hasAddressIndex = ledgerLogin?.index != null;
 
-    let hwWalletP = provider as HWProvider;
+    if (provider instanceof HWProvider && provider.isInitialized()) {
+      if (hasAddressIndex) {
+        await provider.setAddressIndex(ledgerLogin.index);
+      }
 
-    if (!isInitialized) {
-      hwWalletP = new HWProvider();
-      isInitialized = await hwWalletP.init();
+      return provider;
     }
 
-    if (!isInitialized || !hwWalletP) {
+    const hwWalletP = new HWProvider();
+    const isInitialized = await hwWalletP.init();
+
+    if (!isInitialized) {
       return;
     }
 
-    if (ledgerLogin?.index != null) {
+    if (hasAddressIndex) {
       await hwWalletP.setAddressIndex(ledgerLogin.index);
     }
 
