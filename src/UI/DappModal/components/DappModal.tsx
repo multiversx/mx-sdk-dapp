@@ -2,13 +2,13 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { WithClassnameType } from '../../types';
 import { DappModalConfig } from '../dappModal.types';
 import styles from '../dappModalStyles.scss';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
-import { DataTestIdsEnum } from '../../../constants';
 
 export interface DappModalPropsType extends WithClassnameType {
   id?: string;
