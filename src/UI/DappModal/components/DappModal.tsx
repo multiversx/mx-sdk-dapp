@@ -8,6 +8,7 @@ import styles from '../dappModalStyles.scss';
 import { DappModalBody } from './DappModalBody';
 import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
+import { DataTestIdsEnum } from '../../../constants';
 
 export interface DappModalPropsType extends WithClassnameType {
   id?: string;
@@ -33,7 +34,7 @@ export const DappModal = ({
   config = defaultConfig,
   children,
   className = 'dapp-modal-dialog-wrapper',
-  'data-testid': dataTestId = 'dappModal'
+  'data-testid': dataTestId = DataTestIdsEnum.dappModal
 }: DappModalPropsType) => {
   if (!visible) {
     return null;

@@ -32,30 +32,36 @@ export const useSetLedgerProvider = () => {
   const initHWProvider = async () => {
     const hasAddressIndex = ledgerLogin?.index != null;
 
-    if (provider instanceof HWProvider && provider.isInitialized()) {
-      if (hasAddressIndex) {
-        await provider.setAddressIndex(ledgerLogin.index);
+    try {
+      if (provider instanceof HWProvider && provider.isInitialized()) {
+        if (hasAddressIndex) {
+          await provider.setAddressIndex(ledgerLogin.index);
+        }
+
+        return provider;
       }
 
-      return provider;
+      const hwWalletP = new HWProvider();
+      const isInitialized = await hwWalletP.init();
+
+      if (!isInitialized) {
+        return null;
+      }
+
+      if (hasAddressIndex) {
+        await hwWalletP.setAddressIndex(ledgerLogin.index);
+      }
+
+      return hwWalletP;
+    } catch (e) {
+      console.error('Failed to initialise Ledger Provider');
+
+      return null;
     }
-
-    const hwWalletP = new HWProvider();
-    const isInitialized = await hwWalletP.init();
-
-    if (!isInitialized) {
-      return;
-    }
-
-    if (hasAddressIndex) {
-      await hwWalletP.setAddressIndex(ledgerLogin.index);
-    }
-
-    return hwWalletP;
   };
 
   async function setLedgerProvider(props?: SetLedgerProviderType) {
-    let hwWalletP: HWProvider | undefined;
+    let hwWalletP: HWProvider | null;
 
     const shouldLogout = isLoggedIn && !props?.isRelogin;
 

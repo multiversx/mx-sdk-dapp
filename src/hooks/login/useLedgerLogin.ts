@@ -126,13 +126,9 @@ export function useLedgerLogin({
 
   const isHWProviderInitialized = async () => {
     try {
-      const isConnected = await hwProvider.isConnected();
-
-      return (
-        hwProvider instanceof HWProvider &&
-        hwProvider.isInitialized() &&
-        isConnected
-      );
+      if (hwProvider instanceof HWProvider && hwProvider.isInitialized()) {
+        return await hwProvider.isConnected();
+      }
     } catch (e) {
       onLoginFailed(e);
     }
@@ -292,7 +288,6 @@ export function useLedgerLogin({
       const isInitialized = await isHWProviderInitialized();
 
       if (!isInitialized) {
-        console.log('Not init onStartLogin');
         return onLoginFailed(failInitializeErrorText);
       }
 
@@ -364,7 +359,6 @@ export function useLedgerLogin({
       selectedAddress,
       version,
       contractDataEnabled,
-
       onGoToPrevPage,
       onGoToNextPage,
       onSelectAddress,
