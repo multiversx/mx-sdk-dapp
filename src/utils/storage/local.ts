@@ -67,5 +67,14 @@ export const removeItem = (key: LocalKeyType) => {
   if (!hasLocalStorage) {
     return;
   }
+
   localStorage.removeItem(String(key));
+};
+
+export const clear = () => {
+  if (!hasLocalStorage) {
+    return;
+  }
+
+  localStorage.clear();
 };
