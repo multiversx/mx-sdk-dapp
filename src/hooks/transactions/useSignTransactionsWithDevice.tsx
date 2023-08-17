@@ -85,6 +85,7 @@ export function useSignTransactionsWithDevice(
         })
       );
     }
+
     dispatch(setSignTransactionsError(errorMessage));
   }
 

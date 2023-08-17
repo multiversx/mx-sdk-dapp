@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Prevent signing transactions with sender different from current account](https://github.com/multiversx/mx-sdk-dapp/pull/887)
 - [Ledger login improvements and added support for bluetooth connect](https://github.com/multiversx/mx-sdk-dapp/pull/882)
 - [Fix WalletConnect Provider default logoutRoute](https://github.com/multiversx/mx-sdk-dapp/pull/886)
 - [Bump @multiversx/sdk-native-auth-client to fix RN issues](https://github.com/multiversx/mx-sdk-dapp/pull/885)

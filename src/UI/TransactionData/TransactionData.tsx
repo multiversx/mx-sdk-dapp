@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
 
-import { N_A } from 'constants/index';
+import { DataTestIdsEnum, N_A } from 'constants/index';
 import { decodePart } from 'utils/decoders/decodePart';
 import { WithClassnameType } from '../types';
 
@@ -91,7 +91,7 @@ export const TransactionData = ({
           </span>
 
           <div
-            data-testid='confirmScCall'
+            data-testid={DataTestIdsEnum.confirmScCall}
             className={classNames(
               styles.value,
               transactionDataInputValueClassName
@@ -113,7 +113,7 @@ export const TransactionData = ({
         </span>
 
         <div
-          data-testid='confirmData'
+          data-testid={DataTestIdsEnum.confirmData}
           className={classNames(
             styles.value,
             transactionDataInputValueClassName
