@@ -114,7 +114,7 @@ export function useSignMultipleTransactions({
     if (isLoggedInWithDifferentAccount) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
-      return handleAbort();
+      return onCancel?.();
     }
 
     const notSender = address !== receiver;
