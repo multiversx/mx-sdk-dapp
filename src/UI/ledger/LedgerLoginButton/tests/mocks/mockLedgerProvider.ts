@@ -56,4 +56,9 @@ export const mockLedgerProvider = async () => {
     .mockImplementation(() => new HwAppMock());
 
   jest.spyOn(HWProvider.prototype, 'init').mockResolvedValue(true);
+  jest.spyOn(HWProvider.prototype, 'isInitialized').mockReturnValue(true);
+  jest.spyOn(HWProvider.prototype, 'isConnected').mockResolvedValue(true);
+  jest
+    .spyOn(HWProvider.prototype, 'getAccounts')
+    .mockResolvedValue([testAddress]);
 };

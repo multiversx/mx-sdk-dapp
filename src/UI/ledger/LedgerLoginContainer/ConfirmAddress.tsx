@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
@@ -47,6 +48,7 @@ export const ConfirmAddress = ({
         ledgerModalConfirmContentClassName,
         className
       )}
+      data-testid={DataTestIdsEnum.ledgerConfirmAddress}
     >
       <h4
         className={classNames(

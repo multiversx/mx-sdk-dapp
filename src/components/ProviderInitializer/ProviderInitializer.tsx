@@ -218,6 +218,7 @@ export function ProviderInitializer() {
     if (loginMethod == null || initalizingLedger) {
       return;
     }
+
     switch (loginMethod) {
       case LoginMethodsEnum.ledger: {
         initalizingLedger = true;

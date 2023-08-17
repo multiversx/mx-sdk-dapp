@@ -3,6 +3,7 @@ import { expect } from '@storybook/jest';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import {
+  mockWindowHistory,
   mockWindowLocation,
   renderWithProvider,
   server,
@@ -12,6 +13,7 @@ import {
 import { logoutAction } from 'reduxStore/commonActions';
 import * as actions from 'reduxStore/slices/loginInfoSlice';
 import { store } from 'reduxStore/store';
+import { sleep } from 'utils/asyncActions';
 import { ExtensionLoginButton } from '../';
 import { checkIsLoggedInStore } from './helpers';
 
@@ -52,6 +54,7 @@ describe('ExtensionLoginButton tests', () => {
   beforeEach(() => {
     store.dispatch(logoutAction());
     mockWindowLocation();
+    mockWindowHistory();
   });
 
   it('should perform simple login and redirect', async () => {
@@ -66,7 +69,29 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
+      expect(window.history.pushState).toHaveBeenCalledWith(
+        '',
+        '',
+        CALLBACK_ROUTE
+      );
+    });
+  });
+
+  it('should perform login and redirect to URL', async () => {
+    const methods = renderWithProvider({
+      children: <ExtensionLoginButton callbackRoute='https://multivers.com' />
+    });
+
+    const loginButton = await methods.findByTestId('extensionLoginButton');
+
+    fireEvent.click(loginButton);
+
+    await checkIsLoggedInStore();
+
+    await waitFor(() => {
+      expect(window.location.assign).toHaveBeenCalledWith(
+        'https://multivers.com'
+      );
     });
   });
 
@@ -89,7 +114,7 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledTimes(0);
+      expect(window.history.pushState).toHaveBeenCalledTimes(0);
       expect(onLoginRedirect).toHaveBeenCalledTimes(1);
       expect(onLoginRedirect).toHaveBeenCalledWith(CALLBACK_ROUTE, {
         address: testAddress,
@@ -108,8 +133,8 @@ describe('ExtensionLoginButton tests', () => {
     const loginButton = await methods.findByTestId('extensionLoginButton');
     const setTokenLoginSpy = jest.spyOn(actions, 'setTokenLogin');
     jest.spyOn(Date, 'now').mockReturnValue(1690184313013); // 2023-07-24T11:00
-
     fireEvent.click(loginButton);
+    await sleep(1000);
 
     await waitFor(() => {
       expect(setTokenLoginSpy).toHaveBeenCalledTimes(2);
@@ -117,12 +142,17 @@ describe('ExtensionLoginButton tests', () => {
         1,
         tokenLoginWithoutSignature
       );
+
       expect(setTokenLoginSpy).toHaveBeenNthCalledWith(
         2,
         tokenLoginWithSignature
       );
 
-      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
+      expect(window.history.pushState).toHaveBeenCalledWith(
+        '',
+        '',
+        CALLBACK_ROUTE
+      );
     });
   });
 
@@ -145,7 +175,7 @@ describe('ExtensionLoginButton tests', () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledTimes(0);
+      expect(window.history.pushState).toHaveBeenCalledTimes(0);
     });
   });
 });

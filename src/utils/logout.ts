@@ -40,7 +40,7 @@ export async function logout(
   }
 
   if (!isLoggedIn || !provider) {
-    redirectToCallbackUrl(callbackUrl, onRedirect, false);
+    redirectToCallbackUrl(callbackUrl, onRedirect);
     return;
   }
 
@@ -48,7 +48,7 @@ export async function logout(
     const address = await getAddress();
     broadcastLogoutAcrossTabs(address);
   } catch (err) {
-    redirectToCallbackUrl(callbackUrl, onRedirect, false);
+    redirectToCallbackUrl(callbackUrl, onRedirect);
     console.error('error fetching logout address', err);
   }
 
@@ -62,6 +62,11 @@ export async function logout(
     const needsCallbackUrl = isWalletProvider && !callbackUrl;
     const url = needsCallbackUrl ? getWindowLocation().origin : callbackUrl;
 
+    if (providerType === LoginMethodsEnum.none) {
+      // logout does not exist in empty provider
+      return redirectToCallbackUrl(url, onRedirect);
+    }
+
     if (isWalletProvider) {
       // allow Redux clearing it's state before navigation
       setTimeout(() => {
@@ -69,7 +74,7 @@ export async function logout(
       });
     } else {
       await provider.logout({ callbackUrl: url });
-      redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
+      redirectToCallbackUrl(url, onRedirect);
     }
   } catch (err) {
     console.error('error logging out', err);
