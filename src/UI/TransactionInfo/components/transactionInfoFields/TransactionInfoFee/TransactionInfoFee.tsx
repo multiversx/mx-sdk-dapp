@@ -1,17 +1,14 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { N_A } from 'constants/index';
+import { DataTestIdsEnum, N_A } from 'constants/index';
+import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/getTransactionFee';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 
-import {
-  WithClassnameType,
-  WithTransactionType
-} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
@@ -56,7 +53,7 @@ export const TransactionInfoFee = ({
       title='Transaction Fee'
       className={classNames(styles.fee, className)}
     >
-      <span data-testid='transactionInfoFee'>{fee}</span>
+      <span data-testid={DataTestIdsEnum.transactionInfoFee}>{fee}</span>
     </DetailItem>
   );
 };

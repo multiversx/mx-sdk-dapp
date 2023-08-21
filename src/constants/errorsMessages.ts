@@ -9,3 +9,5 @@ export const DEFAULT_TRANSACTION_STATUS_MESSAGE =
   'Undefined transaction status';
 export const SECOND_LOGIN_ATTEMPT_ERROR =
   'Action not allowed. User is logged in. Call logout() first';
+export const SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS =
+  'You cannot sign transactions from a different account';

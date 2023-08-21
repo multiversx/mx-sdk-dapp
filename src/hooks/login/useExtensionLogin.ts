@@ -13,7 +13,7 @@ import {
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { addOriginToLocationPath, getWindowLocation } from 'utils/window';
 import { useLoginService } from './useLoginService';
 
 export type UseExtensionLoginReturnType = [
@@ -54,9 +54,9 @@ export const useExtensionLogin = ({
         return;
       }
 
-      const { origin, pathname } = getWindowLocation();
+      const { pathname } = getWindowLocation();
       const callbackUrl: string = encodeURIComponent(
-        `${origin}${callbackRoute ?? pathname}`
+        addOriginToLocationPath(callbackRoute ?? pathname)
       );
 
       if (hasNativeAuth && !token) {

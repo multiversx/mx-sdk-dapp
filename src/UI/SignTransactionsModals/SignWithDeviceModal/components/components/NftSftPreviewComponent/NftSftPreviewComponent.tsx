@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { useGetNetworkConfig } from 'hooks';
 import { NftEnumType } from 'types/tokens.types';
 import {
@@ -44,11 +45,14 @@ export const NftSftPreviewComponent = ({
 
       <div className={styles.content}>
         <div className={styles.left}>
-          <div className={styles.name} data-testid='nftLabel'>
+          <div className={styles.name} data-testid={DataTestIdsEnum.nftLabel}>
             {tokenLabel}
           </div>
 
-          <div className={styles.identifier} data-testid='nftIdentifier'>
+          <div
+            className={styles.identifier}
+            data-testid={DataTestIdsEnum.nftIdentifier}
+          >
             {tokenId}
           </div>
         </div>

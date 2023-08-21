@@ -7,6 +7,7 @@ import {
 } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
+import { logoutRouteSelector } from 'reduxStore/selectors';
 import {
   chainIDSelector,
   walletConnectDeepLinkSelector,
@@ -42,8 +43,7 @@ export enum WalletConnectV2Error {
 }
 
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
-  logoutRoute: string;
-  events?: string[];
+  logoutRoute?: string;
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -63,10 +63,10 @@ export type WalletConnectV2LoginHookReturnType = [
 
 export const useWalletConnectV2Login = ({
   callbackRoute,
-  logoutRoute,
   token: tokenToSign,
   nativeAuth,
-  onLoginRedirect
+  onLoginRedirect,
+  logoutRoute: providerLogoutRoute
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
@@ -88,10 +88,12 @@ export const useWalletConnectV2Login = ({
   const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
   const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
+  const dappLogoutRoute = useSelector(logoutRouteSelector);
   const providerRef = useRef<any>(provider);
   const canLoginRef = useRef<boolean>(true);
   const isInitialisingRef = useRef<boolean>(false);
 
+  const logoutRoute = providerLogoutRoute ?? dappLogoutRoute ?? '/';
   const dappMethods: string[] = [
     WalletConnectOptionalMethodsEnum.CANCEL_ACTION
   ];

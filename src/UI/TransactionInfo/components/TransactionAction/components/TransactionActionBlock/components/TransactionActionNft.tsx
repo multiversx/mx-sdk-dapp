@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { TransactionActionNftReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
@@ -41,14 +42,14 @@ export const TransactionActionNft = ({
             showLabel={false}
             showLastNonZeroDecimal={showLastNonZeroDecimal}
             decimals={token.decimals}
-            data-testid='nftFormattedAmount'
+            data-testid={DataTestIdsEnum.nftFormattedAmount}
           />
         </div>
       )}
 
       <ExplorerLink
         page={tokenExplorerLink}
-        data-testid='nftExplorerLink'
+        data-testid={DataTestIdsEnum.nftExplorerLink}
         className={classNames(styles.explorer, {
           [globalStyles.sideLink]: token.svgUrl,
           [globalStyles.dFlex]: token.svgUrl,

@@ -11,7 +11,15 @@ export const safeRedirect = (url: string, timeout = 0) => {
         return;
       }
 
-      window.location.assign(url);
+      // Navigate to callbackUrl without page refresh
+      // if we are in the same origin
+      const isSameOriginRedirect = url?.startsWith('/');
+
+      if (isSameOriginRedirect) {
+        return window.history.pushState('', '', url);
+      }
+
+      return window.location.assign(url);
     }, timeout);
   }
 };

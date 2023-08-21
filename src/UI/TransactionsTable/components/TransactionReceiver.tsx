@@ -2,10 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 
-import { WithTransactionType } from '../../../UI/types';
+import { WithTransactionType } from 'UI/types';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
@@ -30,7 +31,7 @@ export const TransactionReceiver = ({
         globalStyles.alignItemsCenter,
         styles.transactionCell
       )}
-      data-testid='transactionReceiver'
+      data-testid={DataTestIdsEnum.transactionReceiver}
     >
       {showLockedAccounts && (
         <LockedTokenAddressIcon
@@ -57,7 +58,7 @@ export const TransactionReceiver = ({
       ) : (
         <ExplorerLink
           page={transaction.links.receiverLink ?? ''}
-          data-testid='receiverLink'
+          data-testid={DataTestIdsEnum.receiverLink}
           className={classNames(
             globalStyles.w100,
             styles.transactionCellMargin,

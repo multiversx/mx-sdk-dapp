@@ -3,18 +3,16 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import classNames from 'classnames';
+import { DataTestIdsEnum } from 'constants/index';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 
 import { AccountName, ShardSpan } from 'UI/TransactionsTable/components';
+import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { isContract } from 'utils/smartContracts';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 
-import {
-  WithClassnameType,
-  WithTransactionType
-} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
@@ -29,12 +27,15 @@ export const TransactionInfoTo = ({
 
   return (
     <DetailItem title='To' className={classNames(styles.to, className)}>
-      <div className={styles.wrapper} data-testid='transactionTo'>
+      <div
+        className={styles.wrapper}
+        data-testid={DataTestIdsEnum.transactionTo}
+      >
         <div className={styles.content}>
           {isContract(transaction.receiver) && (
             <span
               className={styles.contract}
-              data-testid='transactionToContract'
+              data-testid={DataTestIdsEnum.transactionToContract}
             >
               Contract
             </span>
@@ -42,13 +43,13 @@ export const TransactionInfoTo = ({
 
           <ExplorerLink
             page={String(transaction.links.receiverLink)}
-            data-testid='transactionToExplorerLink'
+            data-testid={DataTestIdsEnum.transactionToExplorerLink}
             className={styles.explorer}
           >
             <AccountName
               address={transaction.receiver}
               assets={transaction.receiverAssets}
-              data-testid='transactionToAccount'
+              data-testid={DataTestIdsEnum.transactionToAccount}
             />
           </ExplorerLink>
 
@@ -62,7 +63,7 @@ export const TransactionInfoTo = ({
               (
               <ShardSpan
                 shard={transaction.receiverShard}
-                data-testid='transactionToShard'
+                data-testid={DataTestIdsEnum.transactionToShard}
               />
               )
             </ExplorerLink>

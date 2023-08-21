@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls';
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { TransactionServerStatusesEnum } from 'types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -60,7 +61,7 @@ export const TransactionDetailsBody = ({
     <div
       className={classNames(styles.container, className)}
       key={hash}
-      data-testid='transactionDetailsToastBody'
+      data-testid={DataTestIdsEnum.transactionDetailsToastBody}
     >
       {!isTimedOut && icon != null && (
         <FontAwesomeIcon

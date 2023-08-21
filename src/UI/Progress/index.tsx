@@ -43,7 +43,7 @@ export const Progress = ({
   }, []);
 
   const progressRef = useRef<HTMLDivElement | null>(null);
-  const intervalRef = useRef<NodeJS.Timer>();
+  const intervalRef = useRef<NodeJS.Timeout>();
   const percentRemainingRef = useRef(currentRemaining);
 
   useEffect(() => {

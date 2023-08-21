@@ -4,15 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
-import { N_A } from 'constants/index';
+import { DataTestIdsEnum, N_A } from 'constants/index';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
+import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
 
-import {
-  WithClassnameType,
-  WithTransactionType
-} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 export const TransactionInfoAge = ({
@@ -30,7 +27,7 @@ export const TransactionInfoAge = ({
             globalStyles.flexWrap,
             globalStyles.alignItemsCenter
           )}
-          data-testid='transactionAge'
+          data-testid={DataTestIdsEnum.transactionAge}
         >
           {pending ? (
             <FontAwesomeIcon

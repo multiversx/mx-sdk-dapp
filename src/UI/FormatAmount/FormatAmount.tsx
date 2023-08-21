@@ -1,7 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { DECIMALS, DIGITS, MAINNET_EGLD_LABEL, ZERO } from 'constants/index';
+import {
+  DataTestIdsEnum,
+  DECIMALS,
+  DIGITS,
+  MAINNET_EGLD_LABEL,
+  ZERO
+} from 'constants/index';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { FormatAmountPropsType } from './formatAmount.types';
@@ -11,11 +17,14 @@ const formatAmountInvalid = (props: FormatAmountPropsType) => {
   return (
     <span
       data-testid={
-        props['data-testid'] ? props['data-testid'] : 'formatAmountComponent'
+        props['data-testid'] || DataTestIdsEnum.formatAmountComponent
       }
       className={props.className}
     >
-      <span className={styles['int-amount']} data-testid='formatAmountInt'>
+      <span
+        className={styles['int-amount']}
+        data-testid={DataTestIdsEnum.formatAmountInt}
+      >
         ...
       </span>
     </span>
@@ -55,15 +64,21 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
   return (
     <span
       data-testid={
-        props['data-testid'] ? props['data-testid'] : 'formatAmountComponent'
+        props['data-testid'] || DataTestIdsEnum.formatAmountComponent
       }
       className={props.className}
     >
-      <span className={styles['int-amount']} data-testid='formatAmountInt'>
+      <span
+        className={styles['int-amount']}
+        data-testid={DataTestIdsEnum.formatAmountInt}
+      >
         {valueParts[0]}
       </span>
       {valueParts.length > 1 && (
-        <span className={styles.decimals} data-testid='formatAmountDecimals'>
+        <span
+          className={styles.decimals}
+          data-testid={DataTestIdsEnum.formatAmountDecimals}
+        >
           .{valueParts[1]}
         </span>
       )}
@@ -73,7 +88,7 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
             styles.symbol,
             props.token && globalStyles.textMuted
           )}
-          data-testid='formatAmountSymbol'
+          data-testid={DataTestIdsEnum.formatAmountSymbol}
         >
           {` ${props.token ?? erdLabel}`}
         </span>

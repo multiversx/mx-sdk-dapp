@@ -2,10 +2,11 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim/Trim';
 
-import { WithClassnameType, WithTransactionType } from '../../../UI/types';
+import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { TransactionIcon } from './TransactionIcon';
 
 import styles from './transactionsTable.styles.scss';
@@ -33,7 +34,7 @@ export const TransactionHash = ({
 
       <ExplorerLink
         page={transactionHashLink}
-        data-testid='transactionLink'
+        data-testid={DataTestIdsEnum.transactionLink}
         className={classNames(
           globalStyles.w100,
           styles.transactionCellMargin,
@@ -41,7 +42,10 @@ export const TransactionHash = ({
           styles.transactionCellLink
         )}
       >
-        <Trim text={transaction.txHash} data-testid='transactionHash' />
+        <Trim
+          text={transaction.txHash}
+          data-testid={DataTestIdsEnum.transactionHash}
+        />
       </ExplorerLink>
     </div>
   );
