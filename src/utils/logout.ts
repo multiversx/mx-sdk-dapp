@@ -7,7 +7,7 @@ import { getAddress } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
-import { getWindowLocation } from './window/getWindowLocation';
+import { addOriginToLocationPath } from './window';
 
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
@@ -59,8 +59,7 @@ export async function logout(
   store.dispatch(logoutAction());
 
   try {
-    const needsCallbackUrl = isWalletProvider && !callbackUrl;
-    const url = needsCallbackUrl ? getWindowLocation().origin : callbackUrl;
+    const url = addOriginToLocationPath(callbackUrl);
 
     if (providerType === LoginMethodsEnum.none) {
       // logout does not exist in empty provider
