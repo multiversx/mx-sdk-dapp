@@ -3,7 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { DataTestIdsEnum } from 'constants/index';
-import { WithClassnameType } from 'types';
+import { WithClassnameType } from 'UI/types';
 
 export interface DefaultToastDeleteButtonPropsType extends WithClassnameType {
   onClick?: () => void;
