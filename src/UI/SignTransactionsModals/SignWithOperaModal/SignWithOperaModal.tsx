@@ -3,6 +3,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
@@ -66,7 +67,7 @@ export const SignWithOperaModal = ({
         action={
           <button
             id='closeButton'
-            data-testid='closeButton'
+            data-testid={DataTestIdsEnum.closeButton}
             onClick={close}
             className={classes.closeBtn}
           >

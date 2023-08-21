@@ -2,9 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
-import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
-import { WithClassnameType, WithTransactionType } from '../../../UI/types';
+import { DataTestIdsEnum } from 'constants/index';
+import { WithClassnameType, WithTransactionType } from 'UI/types';
+import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
 import styles from './transactionsTable.styles.scss';
 
@@ -22,7 +23,7 @@ export const TransactionMethod = ({
         globalStyles.fontWeightLight,
         globalStyles.p0
       )}
-      data-testid='transactionMethod'
+      data-testid={DataTestIdsEnum.transactionMethod}
     >
       <div
         className={classNames(

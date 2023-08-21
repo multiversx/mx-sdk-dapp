@@ -3,16 +3,17 @@ import classNames from 'classnames';
 
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
 
 import { AccountName } from 'UI/TransactionsTable/components/AccountName';
 import { ScAddressIcon } from 'UI/TransactionsTable/components/ScAddressIcon';
+import { WithTransactionType } from 'UI/types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
 
-import { WithTransactionType } from '../../../../../../UI/types';
 import { ActionToken } from '../ActionToken';
 
 import styles from './styles.scss';
@@ -46,7 +47,7 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
 
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(entry.address)}
-            data-testid='receiverLink'
+            data-testid={DataTestIdsEnum.receiverLink}
             className={styles.explorer}
           >
             <AccountName address={entry.address} assets={entryAssets} />

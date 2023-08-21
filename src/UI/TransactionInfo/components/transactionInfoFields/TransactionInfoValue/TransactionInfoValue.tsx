@@ -1,15 +1,12 @@
 import React from 'react';
 
 import classNames from 'classnames';
-import { N_A } from 'constants/index';
+import { DataTestIdsEnum, N_A } from 'constants/index';
+import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 
-import {
-  WithClassnameType,
-  WithTransactionType
-} from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
 import styles from './styles.scss';
@@ -32,7 +29,7 @@ export const TransactionInfoValue = ({
 
   return (
     <DetailItem title='Value' className={classNames(styles.value, className)}>
-      <span data-testid='transactionInfoValue'>
+      <span data-testid={DataTestIdsEnum.transactionInfoValue}>
         {formattedTxValue} {egldLabel}{' '}
         <span className={styles.price}>
           {transaction.price != null

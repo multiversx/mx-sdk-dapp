@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
 
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
+import { WithTransactionType } from 'UI/types';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
 
-import { WithTransactionType } from '../../../../UI/types';
 import styles from '../transactionsTable.styles.scss';
 
 interface TokenWrapperPropsType {
@@ -25,14 +26,14 @@ export interface TransactionValuePropsType extends WithTransactionType {
 const TokenWrapper = ({ children, titleText }: TokenWrapperPropsType) => (
   <div
     className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
-    data-testid='transactionValue'
+    data-testid={DataTestIdsEnum.transactionValue}
   >
     {children}
 
     {titleText && (
       <FontAwesomeIcon
         icon={faLayerGroup}
-        data-testid='transactionValueIcon'
+        data-testid={DataTestIdsEnum.transactionValueIcon}
         className={classNames(globalStyles.ml2, globalStyles.textSecondary)}
         title={titleText}
       />
@@ -79,7 +80,7 @@ export const TransactionValue = ({
         <FormatAmount
           value={egldValueData.value}
           digits={2}
-          data-testid='transactionValue'
+          data-testid={DataTestIdsEnum.transactionValue}
         />
       </div>
     );
