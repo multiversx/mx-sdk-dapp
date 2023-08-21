@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
-import { DECIMALS } from 'constants/index';
+import { DataTestIdsEnum, DECIMALS } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
 import { TransactionActionTokenReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionTokenText';
@@ -28,14 +28,14 @@ export const TransactionActionToken = ({
             showLabel={false}
             decimals={token.decimals ?? DECIMALS}
             showLastNonZeroDecimal={showLastNonZeroDecimal}
-            data-testid='tokenFormattedAmount'
+            data-testid={DataTestIdsEnum.tokenFormattedAmount}
           />
         </div>
       )}
 
       <ExplorerLink
         page={tokenExplorerLink}
-        data-testid='tokenExplorerLink'
+        data-testid={DataTestIdsEnum.tokenExplorerLink}
         className={classNames(globalStyles.dFlex, {
           [globalStyles.sideLink]: token.svgUrl
         })}

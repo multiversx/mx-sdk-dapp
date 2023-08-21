@@ -5,6 +5,7 @@ import QRCode from 'qrcode';
 
 import Lighting from 'assets/icons/lightning.svg';
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { getAuthorizationInfo } from 'services/nativeAuth/helpers';
 import { ModalContainer } from 'UI/ModalContainer';
@@ -206,7 +207,7 @@ export const WalletConnectLoginContainer = ({
         {isMobileDevice && (
           <a
             id='accessWalletBtn'
-            data-testid='accessWalletBtn'
+            data-testid={DataTestIdsEnum.accessWalletBtn}
             href={walletConnectDeepLinkV2}
             rel='noopener noreferrer nofollow'
             target='_blank'

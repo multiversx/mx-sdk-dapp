@@ -2,9 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { ExplorerLink } from 'UI/ExplorerLink';
 
-import { WithTransactionType } from '../../../UI/types';
+import { WithTransactionType } from 'UI/types';
 import { ShardSpan } from './ShardSpan';
 
 import styles from './transactionsTable.styles.scss';
@@ -25,9 +26,12 @@ export const TransactionShardsTransition = ({
         styles.transactionCellMargin,
         styles.transactionCellLink
       )}
-      data-testid='shardFromLink'
+      data-testid={DataTestIdsEnum.shardFromLink}
     >
-      <ShardSpan shard={transaction.senderShard} data-testid='senderShard' />
+      <ShardSpan
+        shard={transaction.senderShard}
+        data-testid={DataTestIdsEnum.senderShard}
+      />
     </ExplorerLink>
 
     <span className={classNames(globalStyles.textSecondary, globalStyles.mx2)}>
@@ -40,11 +44,11 @@ export const TransactionShardsTransition = ({
         styles.transactionCellLink
       )}
       page={transaction.links.receiverShardLink ?? ''}
-      data-testid='shardToLink'
+      data-testid={DataTestIdsEnum.shardToLink}
     >
       <ShardSpan
         shard={transaction.receiverShard}
-        data-testid='receiverShard'
+        data-testid={DataTestIdsEnum.receiverShard}
       />
     </ExplorerLink>
   </div>

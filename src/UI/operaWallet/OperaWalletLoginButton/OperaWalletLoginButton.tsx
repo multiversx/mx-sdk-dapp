@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { DataTestIdsEnum } from 'constants/index';
 import { useOperaLogin } from 'hooks';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
@@ -29,7 +30,7 @@ export const OperaWalletLoginButton: (
   loginButtonText = 'Opera Crypto Wallet',
   onLoginRedirect,
   disabled,
-  'data-testid': dataTestId = 'operaLoginButton'
+  'data-testid': dataTestId = DataTestIdsEnum.operaLoginButton
 }) => {
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
   const [onInitiateLogin] = useOperaLogin({

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
 
-import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
+import {
+  DataTestIdsEnum,
+  GAS_PER_DATA_BYTE,
+  GAS_PRICE_MODIFIER
+} from 'constants/index';
 import { useGetEgldPrice } from 'hooks';
 import { FormatAmount } from 'UI/FormatAmount';
 import { LoadingDots } from 'UI/LoadingDots';
@@ -44,7 +48,7 @@ export const ConfirmFee = ({
             egldLabel={egldLabel}
             value={feeLimit}
             showLastNonZeroDecimal={true}
-            data-testid='confirmFee'
+            data-testid={DataTestIdsEnum.confirmFee}
           />
         </div>
       </div>

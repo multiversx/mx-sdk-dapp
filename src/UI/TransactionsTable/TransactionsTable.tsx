@@ -2,6 +2,7 @@ import React, { ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { useGetAccount, useGetNetworkConfig } from 'hooks';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction/getInterpretedTransaction';
@@ -61,7 +62,7 @@ export const TransactionsTable = ({
           styles.transactionsTableHeader
         )}
       >
-        <h6 className={globalStyles.h6} data-testid='title'>
+        <h6 className={globalStyles.h6} data-testid={DataTestIdsEnum.title}>
           {title || 'Transactions'}
         </h6>
       </div>
@@ -70,7 +71,7 @@ export const TransactionsTable = ({
         <div className={styles.tableWrapper}>
           <table
             className={classNames(styles.table, globalStyles.trimSizeSm)}
-            data-testid='transactionsTable'
+            data-testid={DataTestIdsEnum.transactionsTable}
           >
             <thead>
               <tr>

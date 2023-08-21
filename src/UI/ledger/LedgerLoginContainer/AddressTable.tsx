@@ -190,7 +190,7 @@ export const AddressTable = ({
           <button
             type='button'
             onClick={onGoToPrevPage}
-            data-testid='prevBtn'
+            data-testid={DataTestIdsEnum.prevBtn}
             className={classNames(
               styles.ledgerAddressTableNavigationButton,
               {
@@ -212,7 +212,7 @@ export const AddressTable = ({
           <button
             type='button'
             onClick={onGoToNextPage}
-            data-testid='nextBtn'
+            data-testid={DataTestIdsEnum.nextBtn}
             className={classNames(
               styles.ledgerAddressTableNavigationButton,
               {

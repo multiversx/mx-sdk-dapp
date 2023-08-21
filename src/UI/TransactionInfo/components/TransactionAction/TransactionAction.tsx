@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 
+import { DataTestIdsEnum } from 'constants/index';
+import { WithTransactionType } from 'UI/types';
 import { transactionActionUnwrapper } from 'utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
-
-import { WithTransactionType } from '../../../../UI/types';
 import { ActionText } from './components/ActionText';
 
 import styles from './styles.scss';
@@ -18,7 +18,10 @@ export const TransactionAction = ({ transaction }: WithTransactionType) => {
     }, [transaction.action]);
 
   return (
-    <div data-testid='transactionAction' className={styles.action}>
+    <div
+      data-testid={DataTestIdsEnum.transactionAction}
+      className={styles.action}
+    >
       {unwrappedResult.map((entry, i) => (
         <div
           key={JSON.stringify(unwrappedResult) + i}

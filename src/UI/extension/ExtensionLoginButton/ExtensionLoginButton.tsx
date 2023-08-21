@@ -1,7 +1,11 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
-import { CHROME_EXTENSION_LINK, FIREFOX_ADDON_LINK } from 'constants/index';
+import {
+  CHROME_EXTENSION_LINK,
+  DataTestIdsEnum,
+  FIREFOX_ADDON_LINK
+} from 'constants/index';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
@@ -33,7 +37,7 @@ export const ExtensionLoginButton: (
   loginButtonText = 'MultiversX DeFi Wallet',
   onLoginRedirect,
   disabled,
-  'data-testid': dataTestId = 'extensionLoginButton'
+  'data-testid': dataTestId = DataTestIdsEnum.extensionLoginButton
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,

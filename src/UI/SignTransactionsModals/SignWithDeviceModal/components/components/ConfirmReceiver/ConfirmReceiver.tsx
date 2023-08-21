@@ -3,6 +3,7 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { useGetAccountFromApi } from 'hooks';
 import { LoadingDots } from 'UI/LoadingDots';
 import { isContract } from 'utils/smartContracts';
@@ -45,7 +46,10 @@ export const ConfirmReceiver = ({
       {usernameAccountLoading ? (
         <LoadingDots className={styles.loadingDots} />
       ) : (
-        <span data-testid='confirmReceiver' className={styles.valueWrapper}>
+        <span
+          data-testid={DataTestIdsEnum.confirmReceiver}
+          className={styles.valueWrapper}
+        >
           <ReceiverValue
             hasUsername={hasUsername}
             receiverAddress={receiver}
@@ -70,7 +74,9 @@ export const ConfirmReceiver = ({
               className={styles.icon}
             />
 
-            <small data-testid='confirmScamReport'>{scamReport}</small>
+            <small data-testid={DataTestIdsEnum.confirmScamReport}>
+              {scamReport}
+            </small>
           </span>
         </div>
       )}
