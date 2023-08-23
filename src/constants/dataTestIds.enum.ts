@@ -36,6 +36,7 @@ export enum DataTestIdsEnum {
   senderShard = 'senderShard',
   shardFromLink = 'shardFromLink',
   shardToLink = 'shardToLink',
+  signBtn = 'signBtn',
   signStepTitle = 'signStepTitle',
   title = 'title',
   tokenExplorerLink = 'tokenExplorerLink',
