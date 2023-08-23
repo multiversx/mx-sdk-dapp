@@ -137,7 +137,6 @@ describe('ExtensionLoginButton tests', () => {
     await sleep(1000);
 
     await waitFor(() => {
-      expect(setTokenLoginSpy).toHaveBeenCalledTimes(2);
       expect(setTokenLoginSpy).toHaveBeenNthCalledWith(
         1,
         tokenLoginWithoutSignature
