@@ -211,7 +211,7 @@ export const SignStep = (props: SignStepType) => {
                 buttonClassName
               )}
               id='signBtn'
-              data-testid={DataTestIdsEnum.signStepTitle}
+              data-testid={DataTestIdsEnum.signBtn}
               onClick={onSubmit}
               disabled={waitingForDevice || !isSigningReady}
             >
