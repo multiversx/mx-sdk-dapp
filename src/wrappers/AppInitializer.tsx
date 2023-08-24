@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import { getServerConfiguration } from 'apiCalls';
 import { fallbackNetworkConfigurations } from 'constants/network';
@@ -35,7 +35,11 @@ export const useAppInitializer = ({
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
   const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
-  const logoutRoute = dappConfig?.logoutRoute;
+
+  // On every rerender of DappProvider, a new reference of dappConfig is being generated
+  // Memoizing it, it would not trigger a new initializeApp()
+  const memoizedDappConfig = useMemo(() => dappConfig, []);
+  const logoutRoute = memoizedDappConfig?.logoutRoute;
 
   const { address, publicKey } = account;
   const dispatch = useDispatch();
@@ -72,7 +76,7 @@ export const useAppInitializer = ({
   }
 
   async function initializeApp() {
-    dispatch(setDappConfig(dappConfig));
+    dispatch(setDappConfig(memoizedDappConfig));
     dispatch(setLogoutRoute(logoutRoute));
     await initializeNetwork();
 
@@ -90,7 +94,7 @@ export const useAppInitializer = ({
 
   useEffect(() => {
     initializeApp();
-  }, [customNetworkConfig, environment, dappConfig]);
+  }, [customNetworkConfig, environment, memoizedDappConfig]);
 
   useEffect(() => {
     if (account.address && isLoginSessionInvalid) {
