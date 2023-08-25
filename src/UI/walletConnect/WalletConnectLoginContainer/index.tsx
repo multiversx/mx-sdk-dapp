@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactNode } from 'react';
+import React, { useEffect, useState, ReactNode, Fragment } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
@@ -25,34 +25,34 @@ import styles from './walletConnectLoginContainerStyles.scss';
 export interface WalletConnectLoginModalPropsType
   extends OnProviderLoginType,
     WithClassnameType {
-  lead?: string;
-  title?: string;
-  legacyMessage?: string;
-  logoutRoute?: string;
-  loginButtonText: string;
-  wrapContentInsideModal?: boolean;
-  isWalletConnectV2?: boolean;
-  onClose?: () => void;
-  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
   customSpinnerComponent?: ReactNode;
+  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
+  isWalletConnectV2?: boolean;
+  lead?: string;
+  legacyMessage?: string;
+  loginButtonText: string;
+  logoutRoute?: string;
+  onClose?: () => void;
+  showLoginContent: boolean;
   showScamPhishingAlert?: boolean;
+  title?: string;
 }
 
 export const WalletConnectLoginContainer = ({
   callbackRoute,
-  loginButtonText = 'xPortal App',
-  title = 'Login with the xPortal App',
   className = 'dapp-wallet-connect-login-modal',
+  customSpinnerComponent,
+  innerWalletConnectComponentsClasses,
   lead = 'Scan the QR code using the xPortal App',
-  wrapContentInsideModal = true,
+  loginButtonText = 'xPortal App',
   logoutRoute,
-  token,
   nativeAuth,
   onClose,
   onLoginRedirect,
-  innerWalletConnectComponentsClasses,
-  customSpinnerComponent,
-  showScamPhishingAlert = true
+  showLoginContent,
+  showScamPhishingAlert = true,
+  title = 'Login with the xPortal App',
+  token
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnectV2,
@@ -236,24 +236,25 @@ export const WalletConnectLoginContainer = ({
     </>
   );
 
-  return wrapContentInsideModal ? (
-    <ModalContainer
-      onClose={onCloseModal}
-      modalConfig={{
-        headerText: 'Login using the xPortal App',
-        showHeader: true,
-        modalContentClassName: styles.xPortalModalDialogContent,
-        modalHeaderClassName: styles.xPortalModalHeader,
-        modalHeaderTextClassName: styles.xPortalModalHeaderText,
-        modalCloseButtonClassName: styles.xPortalModalCloseButton,
-        modalBodyClassName: styles.xPortalModalBody,
-        modalDialogClassName: styles.xPortalLoginContainer
-      }}
-      className={className}
-    >
-      {content}
-    </ModalContainer>
-  ) : (
-    content
+  return (
+    <Fragment>
+      <ModalContainer
+        onClose={onCloseModal}
+        modalConfig={{
+          headerText: 'Login using the xPortal App',
+          showHeader: true,
+          modalContentClassName: styles.xPortalModalDialogContent,
+          modalHeaderClassName: styles.xPortalModalHeader,
+          modalHeaderTextClassName: styles.xPortalModalHeaderText,
+          modalCloseButtonClassName: styles.xPortalModalCloseButton,
+          modalBodyClassName: styles.xPortalModalBody,
+          modalDialogClassName: styles.xPortalLoginContainer
+        }}
+        className={className}
+      >
+        {content}
+      </ModalContainer>
+      {showLoginContent && content}
+    </Fragment>
   );
 };

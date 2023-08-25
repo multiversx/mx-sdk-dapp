@@ -1,10 +1,7 @@
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode } from 'react';
 
-import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { DataTestIdsEnum } from 'constants/index';
-import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
-import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { useDappModal } from 'UI/DappModal';
+import { useGetModalLoginMethods } from 'hooks';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 
 import { OnProviderLoginType } from '../../../types';
@@ -15,97 +12,86 @@ import { InnerLedgerComponentsClassesType } from '../LedgerLoginContainer/types'
 export interface LedgerLoginButtonPropsType
   extends WithClassnameType,
     OnProviderLoginType {
-  onModalOpens?: (props?: any) => void;
-  onModalCloses?: (props?: any) => void;
-  children?: ReactNode;
-  modalClassName?: string;
   buttonClassName?: string;
-  loginButtonText?: string;
-  wrapContentInsideModal?: boolean;
-  hideButtonWhenModalOpens?: boolean;
-  disabled?: boolean;
+  children?: ReactNode;
   customSpinnerComponent?: ReactNode;
+  disabled?: boolean;
+  hideButtonWhenModalOpens?: boolean;
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
+  loginButtonText?: string;
+  modalClassName?: string;
+  onModalCloses?: (props?: any) => void;
+  onModalOpens?: (props?: any) => void;
   showProgressBar?: boolean;
   showScamPhishingAlert?: boolean;
+  wrapContentInsideModal?: boolean;
 }
 
 export const LedgerLoginButton: (
   props: LedgerLoginButtonPropsType
 ) => JSX.Element = ({
-  token,
-  callbackRoute,
-  nativeAuth,
-  children,
-  onModalOpens,
-  onModalCloses,
-  'data-testid': dataTestId = DataTestIdsEnum.ledgerLoginButton,
-  loginButtonText = 'Ledger',
   buttonClassName = 'dapp-ledger-login-button',
+  callbackRoute,
+  children,
   className = 'dapp-ledger-login',
-  modalClassName,
-  wrapContentInsideModal = true,
-  hideButtonWhenModalOpens = false,
-  onLoginRedirect,
-  disabled,
   customSpinnerComponent,
+  'data-testid': dataTestId = DataTestIdsEnum.ledgerLoginButton,
+  disabled,
+  hideButtonWhenModalOpens = false,
   innerLedgerComponentsClasses,
+  loginButtonText = 'Ledger',
+  modalClassName,
+  nativeAuth,
+  onLoginRedirect,
+  onModalCloses,
+  onModalOpens,
   showProgressBar = true,
-  showScamPhishingAlert = true
+  showScamPhishingAlert = true,
+  token,
+  wrapContentInsideModal = true
 }) => {
-  const isLoggedIn = useGetIsLoggedIn();
-  const [canShowLoginModal, setCanShowLoginModal] = useState(false);
-  const { handleShowModal, handleHideModal } = useDappModal();
-  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
-
-  function handleOpenModal() {
-    if (isLoggedIn) {
-      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
-    }
-
-    setCanShowLoginModal(true);
-    handleShowModal();
-    onModalOpens?.();
-  }
-
-  function handleCloseModal() {
-    setCanShowLoginModal(false);
-    handleHideModal();
-    onModalCloses?.();
-  }
-
-  const shouldRenderButton = !hideButtonWhenModalOpens || !canShowLoginModal;
+  const {
+    disabledConnectButton,
+    handleCloseModal,
+    handleOpenModal,
+    shouldRenderButton,
+    showContent
+  } = useGetModalLoginMethods({
+    hideButtonWhenModalOpens,
+    onModalCloses,
+    onModalOpens,
+    token,
+    wrapContentInsideModal
+  });
 
   return (
     <>
       {shouldRenderButton && (
         <LoginButton
-          onLogin={handleOpenModal}
-          className={className}
           btnClassName={buttonClassName}
-          text={loginButtonText}
+          className={className}
           data-testid={dataTestId}
           disabled={disabled || disabledConnectButton}
+          onLogin={handleOpenModal}
+          text={loginButtonText}
         >
           {children}
         </LoginButton>
       )}
 
-      {canShowLoginModal && (
-        <LedgerLoginContainer
-          className={modalClassName}
-          callbackRoute={callbackRoute}
-          token={token}
-          nativeAuth={nativeAuth}
-          wrapContentInsideModal={wrapContentInsideModal}
-          onClose={handleCloseModal}
-          onLoginRedirect={onLoginRedirect}
-          customSpinnerComponent={customSpinnerComponent}
-          innerLedgerComponentsClasses={innerLedgerComponentsClasses}
-          showProgressBar={showProgressBar}
-          showScamPhishingAlert={showScamPhishingAlert}
-        />
-      )}
+      <LedgerLoginContainer
+        callbackRoute={callbackRoute}
+        className={modalClassName}
+        customSpinnerComponent={customSpinnerComponent}
+        innerLedgerComponentsClasses={innerLedgerComponentsClasses}
+        nativeAuth={nativeAuth}
+        onClose={handleCloseModal}
+        onLoginRedirect={onLoginRedirect}
+        showLoginContent={showContent}
+        showProgressBar={showProgressBar}
+        showScamPhishingAlert={showScamPhishingAlert}
+        token={token}
+      />
     </>
   );
 };

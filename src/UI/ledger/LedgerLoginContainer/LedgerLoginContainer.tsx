@@ -1,4 +1,4 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { Fragment, ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useLedgerLogin } from 'hooks/login/useLedgerLogin';
@@ -24,11 +24,11 @@ import { InnerLedgerComponentsClassesType } from './types';
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
     WithClassnameType {
-  wrapContentInsideModal?: boolean;
   onClose?: () => void;
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
+  showLoginContent: boolean;
   showProgressBar?: boolean;
   showScamPhishingAlert?: boolean;
 }
@@ -36,7 +36,6 @@ export interface LedgerLoginContainerPropsType
 export const LedgerLoginContainer = ({
   callbackRoute,
   className = 'dapp-ledger-login-container',
-  wrapContentInsideModal = true,
   onClose,
   onLoginRedirect,
   token,
@@ -44,6 +43,7 @@ export const LedgerLoginContainer = ({
   customSpinnerComponent,
   customContentComponent,
   innerLedgerComponentsClasses,
+  showLoginContent,
   showProgressBar = true,
   showScamPhishingAlert = true
 }: LedgerLoginContainerPropsType) => {
@@ -185,25 +185,28 @@ export const LedgerLoginContainer = ({
     </>
   );
 
-  if (!wrapContentInsideModal) {
-    return <LedgerLoginContent />;
-  }
-
   return (
-    <ModalContainer
-      onClose={onClose}
-      modalConfig={{
-        headerText: 'Login with ledger',
-        showHeader: true,
-        modalContentClassName: styles.ledgerModalDialogContent,
-        modalHeaderClassName: styles.ledgerModalHeader,
-        modalHeaderTextClassName: styles.ledgerModalHeaderText,
-        modalCloseButtonClassName: styles.ledgerModalCloseButton,
-        modalBodyClassName: styles.ledgerModalBody,
-        modalDialogClassName: classNames(styles.ledgerLoginContainer, className)
-      }}
-    >
-      <LedgerLoginContent />
-    </ModalContainer>
+    <Fragment>
+      <ModalContainer
+        onClose={onClose}
+        modalConfig={{
+          headerText: 'Login with ledger',
+          showHeader: true,
+          modalContentClassName: styles.ledgerModalDialogContent,
+          modalHeaderClassName: styles.ledgerModalHeader,
+          modalHeaderTextClassName: styles.ledgerModalHeaderText,
+          modalCloseButtonClassName: styles.ledgerModalCloseButton,
+          modalBodyClassName: styles.ledgerModalBody,
+          modalDialogClassName: classNames(
+            styles.ledgerLoginContainer,
+            className
+          )
+        }}
+      >
+        <LedgerLoginContent />
+      </ModalContainer>
+
+      {showLoginContent && <LedgerLoginContent />}
+    </Fragment>
   );
 };
