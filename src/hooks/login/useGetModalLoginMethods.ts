@@ -6,6 +6,8 @@ import { useGetIsLoggedIn } from '../account';
 
 export interface UseGetModalLoginMethodsPropsType {
   hideButtonWhenModalOpens?: boolean;
+  onContentHide?: (props?: any) => void;
+  onContentShow?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   onModalOpens?: (props?: any) => void;
   token: string | undefined;
@@ -14,6 +16,8 @@ export interface UseGetModalLoginMethodsPropsType {
 
 export const useGetModalLoginMethods = ({
   hideButtonWhenModalOpens,
+  onContentHide,
+  onContentShow,
   onModalCloses,
   onModalOpens,
   token,
@@ -35,6 +39,7 @@ export const useGetModalLoginMethods = ({
       onModalOpens?.();
     } else {
       setShowContent(true);
+      onContentShow?.();
     }
   };
 
@@ -44,6 +49,7 @@ export const useGetModalLoginMethods = ({
       onModalCloses?.();
     } else {
       setShowContent(false);
+      onContentHide?.();
     }
   };
 

@@ -20,6 +20,8 @@ export interface LedgerLoginButtonPropsType
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
   loginButtonText?: string;
   modalClassName?: string;
+  onContentHide?: (props?: any) => void;
+  onContentShow?: (props?: any) => void;
   onModalCloses?: (props?: any) => void;
   onModalOpens?: (props?: any) => void;
   showProgressBar?: boolean;
@@ -43,6 +45,8 @@ export const LedgerLoginButton: (
   modalClassName,
   nativeAuth,
   onLoginRedirect,
+  onContentHide,
+  onContentShow,
   onModalCloses,
   onModalOpens,
   showProgressBar = true,
@@ -58,6 +62,8 @@ export const LedgerLoginButton: (
     showContent
   } = useGetModalLoginMethods({
     hideButtonWhenModalOpens,
+    onContentHide,
+    onContentShow,
     onModalCloses,
     onModalOpens,
     token,
