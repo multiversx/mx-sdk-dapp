@@ -82,10 +82,17 @@ export class WalletV2Provider {
       (resolve) => {
         const walletUrl = this.walletUrl;
         window.addEventListener('message', function eventHandler(event) {
-          if (event.origin === new URL(walletUrl).origin) {
-            window.removeEventListener('message', eventHandler);
-            resolve(JSON.parse(event.data));
-          }
+          try {
+            const { type, payload } = JSON.parse(event.data);
+            const isWalletLoginEvent =
+              event.origin === new URL(walletUrl).origin &&
+              type === 'loginResponse';
+
+            if (isWalletLoginEvent) {
+              window.removeEventListener('message', eventHandler);
+              resolve(payload);
+            }
+          } catch {}
         });
       }
     );
