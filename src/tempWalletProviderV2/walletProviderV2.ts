@@ -78,6 +78,15 @@ export class WalletV2Provider {
       }
     });
     this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
+
+    const dataToSend = {
+      key1: 'value1',
+      key2: 'value2'
+      // ... other data
+    };
+
+    this.walletWindow?.postMessage(dataToSend, redirectUrl);
+
     const account: { address: string; signature: string } = await new Promise(
       (resolve) => {
         const walletUrl = this.walletUrl;
