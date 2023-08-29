@@ -11,7 +11,7 @@ import { DataTestIdsEnum } from 'constants/index';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
 import { WithClassnameType } from '../../../types';
 
-import { AddressRow } from '../AddressRow/AddressRow';
+import { AddressRow } from '../AddressRow';
 
 import { LedgerColumnsEnum } from '../enums';
 import { LedgerLoading } from '../LedgerLoading';

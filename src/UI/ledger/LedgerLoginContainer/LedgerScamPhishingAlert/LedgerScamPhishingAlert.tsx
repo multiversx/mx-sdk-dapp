@@ -1,7 +1,7 @@
 import React from 'react';
 import { getAuthorizationInfo } from 'services/nativeAuth/helpers';
+import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 import { getWindowLocation } from 'utils/window';
-import { ScamPhishingAlert } from '../../../ScamPhishingAlert';
 
 interface LedgerScamPhishingAlertPropsType {
   ledgerScamPhishingAlertClassName?: string;
