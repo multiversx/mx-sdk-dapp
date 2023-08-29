@@ -17,8 +17,8 @@ export const LedgerLoginContent = ({
   innerLedgerComponentsClasses,
   nativeAuth,
   onLoginRedirect,
-  showProgressBar,
-  showScamPhishingAlert,
+  showProgressBar = true,
+  showScamPhishingAlert = true,
   token
 }: Partial<LedgerLoginContainerPropsType>) => {
   const { ledgerAccount } = useGetAccountInfo();

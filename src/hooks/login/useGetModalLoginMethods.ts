@@ -29,6 +29,16 @@ export const useGetModalLoginMethods = ({
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
   const shouldRenderButton = !hideButtonWhenModalOpens || !showContent;
 
+  const handleCloseModal = () => {
+    setShowContent(false);
+    onContentHide?.();
+
+    if (wrapContentInsideModal) {
+      handleHideModal();
+      onModalCloses?.();
+    }
+  };
+
   const handleOpenModal = () => {
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
@@ -36,7 +46,7 @@ export const useGetModalLoginMethods = ({
 
     // Hide the content if already open
     if (showContent) {
-      return handleHideModal();
+      return handleCloseModal();
     }
 
     setShowContent(true);
@@ -45,16 +55,6 @@ export const useGetModalLoginMethods = ({
     if (wrapContentInsideModal) {
       handleShowModal();
       onModalOpens?.();
-    }
-  };
-
-  const handleCloseModal = () => {
-    setShowContent(false);
-    onContentHide?.();
-
-    if (wrapContentInsideModal) {
-      handleHideModal();
-      onModalCloses?.();
     }
   };
 

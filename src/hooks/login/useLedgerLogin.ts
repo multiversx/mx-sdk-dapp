@@ -52,13 +52,13 @@ export type LedgerLoginHookReturnType = [
   LedgerLoginHookCustomStateType
 ];
 
-export function useLedgerLogin({
+export const useLedgerLogin = ({
   callbackRoute,
   token: tokenToSign,
   addressesPerPage: configuredAddressesPerPage,
   nativeAuth,
   onLoginRedirect
-}: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
+}: UseLedgerLoginPropsType): LedgerLoginHookReturnType => {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const hwProvider = getAccountProvider() as HWProvider;
   const dispatch = useDispatch();
@@ -90,7 +90,7 @@ export function useLedgerLogin({
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
 
-  function dispatchLoginActions({
+  const dispatchLoginActions = ({
     address,
     index,
     signature
@@ -98,7 +98,7 @@ export function useLedgerLogin({
     address: string;
     index: number;
     signature?: string;
-  }) {
+  }) => {
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
     if (signature) {
@@ -112,7 +112,7 @@ export function useLedgerLogin({
       onLoginRedirect,
       options: { address, signature }
     });
-  }
+  };
 
   const onLoginFailed = (err: any, customMessage = '') => {
     const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
@@ -160,7 +160,7 @@ export function useLedgerLogin({
     }
   };
 
-  async function loginUser() {
+  const loginUser = async () => {
     const isInitialized = await isHWProviderInitialized();
 
     if (!selectedAddress || !isInitialized) {
@@ -211,9 +211,9 @@ export function useLedgerLogin({
     }
 
     return true;
-  }
+  };
 
-  async function onConfirmSelectedAddress() {
+  const onConfirmSelectedAddress = async () => {
     try {
       setIsLoading(true);
 
@@ -244,17 +244,13 @@ export function useLedgerLogin({
     setShowAddressList(false);
 
     return true;
-  }
+  };
 
-  async function fetchAccounts() {
+  const fetchAccounts = async () => {
     const isInitialized = await isHWProviderInitialized();
 
     if (!isInitialized) {
       return onLoginFailed(error);
-    }
-
-    if (accounts?.length > 0) {
-      return;
     }
 
     try {
@@ -273,9 +269,9 @@ export function useLedgerLogin({
     } catch (err) {
       onLoginFailed(err);
     }
-  }
+  };
 
-  async function onStartLogin() {
+  const onStartLogin = async () => {
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -324,7 +320,7 @@ export function useLedgerLogin({
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     initHWProvider();
@@ -365,4 +361,4 @@ export function useLedgerLogin({
       onConfirmSelectedAddress
     }
   ];
-}
+};

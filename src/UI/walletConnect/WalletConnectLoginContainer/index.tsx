@@ -238,7 +238,7 @@ export const WalletConnectLoginContainer = ({
     </>
   );
 
-  if (!showLoginContent) {
+  if (showLoginContent === false) {
     return null;
   }
 

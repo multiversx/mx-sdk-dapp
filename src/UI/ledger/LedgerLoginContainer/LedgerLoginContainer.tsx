@@ -26,7 +26,7 @@ export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
   const { onClose, className, showLoginContent, wrapContentInsideModal } =
     props;
 
-  if (!showLoginContent) {
+  if (showLoginContent === false) {
     return null;
   }
 
