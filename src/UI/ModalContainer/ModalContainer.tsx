@@ -9,9 +9,9 @@ import { WithClassnameType } from '../types';
 
 export interface ModalContainerPropsType extends WithClassnameType {
   children: ReactNode;
-  onClose?: () => void;
   modalConfig?: DappModalConfig;
   modalInteractionConfig?: DappModalInteractionConfig;
+  onClose?: () => void;
   visible?: boolean;
 }
 

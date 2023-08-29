@@ -5,7 +5,7 @@ import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
-import { addNewCustomToast } from 'utils';
+import { addNewCustomToast } from 'utils/toasts';
 
 import { getHumanReadableTokenExpirationTime } from './helpers';
 

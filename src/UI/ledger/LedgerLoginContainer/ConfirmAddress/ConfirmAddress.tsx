@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
 import { DataTestIdsEnum } from 'constants/index';
+
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
 
-import { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../../types';
 
 import styles from './confirmAddressStyles.scss';
 

@@ -9,7 +9,7 @@ import {
 import { useGetEgldPrice } from 'hooks';
 import { FormatAmount } from 'UI/FormatAmount';
 import { LoadingDots } from 'UI/LoadingDots';
-import { calculateFeeInFiat, calculateFeeLimit } from 'utils';
+import { calculateFeeInFiat, calculateFeeLimit } from 'utils/operations';
 
 import { TokenAvatar } from '../TokenAvatar';
 import styles from './confirmFeeStyles.scss';
