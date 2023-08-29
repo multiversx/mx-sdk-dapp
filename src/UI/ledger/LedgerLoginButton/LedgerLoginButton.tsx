@@ -97,6 +97,7 @@ export const LedgerLoginButton: (
         showProgressBar={showProgressBar}
         showScamPhishingAlert={showScamPhishingAlert}
         token={token}
+        wrapContentInsideModal={wrapContentInsideModal}
       />
     </>
   );

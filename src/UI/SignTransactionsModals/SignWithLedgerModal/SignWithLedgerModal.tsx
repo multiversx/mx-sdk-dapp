@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGetAccountInfo, useGetLoginInfo } from 'hooks';
 import { LoginMethodsEnum, SignModalPropsType } from 'types';
-import { getLedgerVersionOptions } from 'utils';
+import { getLedgerVersionOptions } from 'utils/operations/ledger';
 import { SignWithDeviceModal } from '../SignWithDeviceModal';
 import { LedgerGuardianSigningModalError } from './LedgerGuardianSigningModalError';
 

@@ -34,22 +34,27 @@ export const useGetModalLoginMethods = ({
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
+    // Hide the content if already open
+    if (showContent) {
+      return handleHideModal();
+    }
+
+    setShowContent(true);
+    onContentShow?.();
+
     if (wrapContentInsideModal) {
       handleShowModal();
       onModalOpens?.();
-    } else {
-      setShowContent(true);
-      onContentShow?.();
     }
   };
 
   const handleCloseModal = () => {
+    setShowContent(false);
+    onContentHide?.();
+
     if (wrapContentInsideModal) {
       handleHideModal();
       onModalCloses?.();
-    } else {
-      setShowContent(false);
-      onContentHide?.();
     }
   };
 

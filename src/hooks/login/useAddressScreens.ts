@@ -55,18 +55,18 @@ export const useAddressScreens = () => {
 
   return {
     accounts,
-    setAccounts,
+    defaultAddressesPerPage,
+    error,
     isLoading,
+    onGoToNextPage,
+    onGoToPrevPage,
+    onSelectAddress,
+    selectedAddress,
+    setAccounts,
+    setError,
     setIsLoading,
     setShowAddressList,
     showAddressList,
-    startIndex,
-    selectedAddress,
-    onGoToPrevPage,
-    onGoToNextPage,
-    onSelectAddress,
-    error,
-    setError,
-    defaultAddressesPerPage
+    startIndex
   };
 };

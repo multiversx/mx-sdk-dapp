@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactNode, Fragment } from 'react';
+import React, { useEffect, useState, ReactNode } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
@@ -36,6 +36,7 @@ export interface WalletConnectLoginModalPropsType
   showLoginContent: boolean;
   showScamPhishingAlert?: boolean;
   title?: string;
+  wrapContentInsideModal?: boolean;
 }
 
 export const WalletConnectLoginContainer = ({
@@ -52,7 +53,8 @@ export const WalletConnectLoginContainer = ({
   showLoginContent,
   showScamPhishingAlert = true,
   title = 'Login with the xPortal App',
-  token
+  token,
+  wrapContentInsideModal
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnectV2,
@@ -236,25 +238,28 @@ export const WalletConnectLoginContainer = ({
     </>
   );
 
-  return (
-    <Fragment>
-      <ModalContainer
-        onClose={onCloseModal}
-        modalConfig={{
-          headerText: 'Login using the xPortal App',
-          showHeader: true,
-          modalContentClassName: styles.xPortalModalDialogContent,
-          modalHeaderClassName: styles.xPortalModalHeader,
-          modalHeaderTextClassName: styles.xPortalModalHeaderText,
-          modalCloseButtonClassName: styles.xPortalModalCloseButton,
-          modalBodyClassName: styles.xPortalModalBody,
-          modalDialogClassName: styles.xPortalLoginContainer
-        }}
-        className={className}
-      >
-        {content}
-      </ModalContainer>
-      {showLoginContent && content}
-    </Fragment>
+  if (!showLoginContent) {
+    return null;
+  }
+
+  return wrapContentInsideModal ? (
+    <ModalContainer
+      className={className}
+      modalConfig={{
+        headerText: 'Login using the xPortal App',
+        showHeader: true,
+        modalContentClassName: styles.xPortalModalDialogContent,
+        modalHeaderClassName: styles.xPortalModalHeader,
+        modalHeaderTextClassName: styles.xPortalModalHeaderText,
+        modalCloseButtonClassName: styles.xPortalModalCloseButton,
+        modalBodyClassName: styles.xPortalModalBody,
+        modalDialogClassName: styles.xPortalLoginContainer
+      }}
+      onClose={onCloseModal}
+    >
+      {content}
+    </ModalContainer>
+  ) : (
+    <>{content}</>
   );
 };

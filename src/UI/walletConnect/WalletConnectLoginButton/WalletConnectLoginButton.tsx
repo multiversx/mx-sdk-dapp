@@ -106,6 +106,7 @@ export const WalletConnectLoginButton = ({
         showScamPhishingAlert={showScamPhishingAlert}
         title={title}
         token={token}
+        wrapContentInsideModal={wrapContentInsideModal}
       />
     </>
   );
