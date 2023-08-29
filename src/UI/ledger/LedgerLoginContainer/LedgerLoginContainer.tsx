@@ -30,7 +30,11 @@ export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
     return null;
   }
 
-  return wrapContentInsideModal ? (
+  if (!wrapContentInsideModal) {
+    return <LedgerLoginContent {...props} />;
+  }
+
+  return (
     <ModalContainer
       modalConfig={{
         headerText: 'Login with ledger',
@@ -46,7 +50,5 @@ export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
     >
       <LedgerLoginContent {...props} />
     </ModalContainer>
-  ) : (
-    <LedgerLoginContent {...props} />
   );
 };

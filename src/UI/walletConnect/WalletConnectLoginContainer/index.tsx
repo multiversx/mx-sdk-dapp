@@ -242,7 +242,11 @@ export const WalletConnectLoginContainer = ({
     return null;
   }
 
-  return wrapContentInsideModal ? (
+  if (!wrapContentInsideModal) {
+    return <>{content}</>;
+  }
+
+  return (
     <ModalContainer
       className={className}
       modalConfig={{
@@ -259,7 +263,5 @@ export const WalletConnectLoginContainer = ({
     >
       {content}
     </ModalContainer>
-  ) : (
-    <>{content}</>
   );
 };
