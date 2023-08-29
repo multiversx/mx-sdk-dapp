@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import { useGetAccountInfo, useLedgerLogin } from 'hooks';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { AddressTable } from '../AddressTable';
-import { ConfirmAddress } from '../ConfirmAddress';
-import { LedgerConnect } from '../LedgerConnect';
-import { LedgerLoading } from '../LedgerLoading';
 import { LedgerLoginContainerPropsType } from '../LedgerLoginContainer';
+import {
+  LedgerLoginContentBody,
+  LedgerLoginContentBodyProps
+} from '../LedgerLoginContentBody';
 import { LedgerProgressBar } from '../LedgerProgressBar';
 import { LedgerScamPhishingAlert } from '../LedgerScamPhishingAlert';
 
@@ -48,57 +48,31 @@ export const LedgerLoginContent = ({
     ledgerScamPhishingAlertClassName
   } = innerLedgerComponentsClasses || {};
 
-  const LedgerLoginContentBody = () => {
-    if (isLoading) {
-      return (
-        <LedgerLoading
-          customSpinnerComponent={customSpinnerComponent}
-          customContentComponent={customContentComponent}
-          ledgerLoadingClassNames={ledgerLoadingClassNames}
-        />
-      );
-    }
-
-    if (ledgerAccount != null && !error) {
-      return (
-        <ConfirmAddress
-          confirmAddressClassNames={confirmAddressClassNames}
-          customContentComponent={customContentComponent}
-          token={token}
-        />
-      );
-    }
-
-    if (showAddressList && !error) {
-      return (
-        <AddressTable
-          accounts={accounts}
-          addressTableClassNames={addressTableClassNames}
-          customContentComponent={customContentComponent}
-          loading={isLoading}
-          onConfirmSelectedAddress={onConfirmSelectedAddress}
-          onGoToNextPage={onGoToNextPage}
-          onGoToPrevPage={onGoToPrevPage}
-          onSelectAddress={onSelectAddress}
-          selectedAddress={selectedAddress?.address}
-          startIndex={startIndex}
-        />
-      );
-    }
-
-    return (
-      <LedgerConnect
-        customContentComponent={customContentComponent}
-        disabled={disabledConnectButton}
-        error={error}
-        ledgerConnectClassNames={ledgerConnectClassNames}
-        onClick={onStartLogin}
-      />
-    );
+  const ledgerLoginContentBodyProps: LedgerLoginContentBodyProps = {
+    accounts,
+    addressTableClassNames,
+    confirmAddressClassNames,
+    customContentComponent,
+    customSpinnerComponent,
+    disabledConnectButton,
+    error,
+    isLoading,
+    ledgerAccount,
+    ledgerConnectClassNames,
+    ledgerLoadingClassNames,
+    onConfirmSelectedAddress,
+    onGoToNextPage,
+    onGoToPrevPage,
+    onSelectAddress,
+    onStartLogin,
+    selectedAddress,
+    showAddressList,
+    startIndex,
+    token
   };
 
   return (
-    <Fragment>
+    <>
       <LedgerScamPhishingAlert
         ledgerScamPhishingAlertClassName={ledgerScamPhishingAlertClassName}
         showScamPhishingAlert={showScamPhishingAlert}
@@ -111,7 +85,7 @@ export const LedgerLoginContent = ({
         showAddressList={showAddressList}
         showProgressBar={showProgressBar}
       />
-      <LedgerLoginContentBody />
-    </Fragment>
+      <LedgerLoginContentBody {...ledgerLoginContentBodyProps} />
+    </>
   );
 };
