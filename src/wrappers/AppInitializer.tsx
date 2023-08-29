@@ -36,8 +36,7 @@ export const useAppInitializer = ({
   const account = useGetAccountInfo();
   const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
 
-  // On every rerender of DappProvider, a new reference of dappConfig is being generated
-  // Memoizing it, it would not trigger a new initializeApp()
+  // memoize dappConfig to avoid rerendering of AppInitializer
   const memoizedDappConfig = useMemo(() => dappConfig, []);
   const logoutRoute = memoizedDappConfig?.logoutRoute;
 
