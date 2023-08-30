@@ -5,7 +5,7 @@ import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { Trim } from 'UI/Trim';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 
-import { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../../types';
 
 import styles from './addressRowStyles.scss';
 

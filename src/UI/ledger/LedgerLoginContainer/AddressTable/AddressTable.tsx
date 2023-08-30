@@ -9,14 +9,13 @@ import classNames from 'classnames';
 import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
-import { WithClassnameType } from '../../types';
+import { WithClassnameType } from '../../../types';
 
-import { AddressRow } from './AddressRow';
+import { AddressRow } from '../AddressRow';
 
+import { LedgerColumnsEnum } from '../enums';
+import { LedgerLoading } from '../LedgerLoading';
 import styles from './addressTableStyles.scss';
-import { LedgerColumnsEnum } from './enums';
-
-import { LedgerLoading } from './LedgerLoading';
 
 const ADDRESSES_PER_PAGE = 10;
 

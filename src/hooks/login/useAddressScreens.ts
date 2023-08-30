@@ -31,7 +31,6 @@ export type LedgerLoginHookReturnType = [
 export const useAddressScreens = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-
   const [startIndex, setStartIndex] = useState(0);
   const [accounts, setAccounts] = useState<string[]>([]);
   const [selectedAddress, setSelectedAddress] =
@@ -55,18 +54,18 @@ export const useAddressScreens = () => {
 
   return {
     accounts,
-    setAccounts,
+    defaultAddressesPerPage,
+    error,
     isLoading,
+    onGoToNextPage,
+    onGoToPrevPage,
+    onSelectAddress,
+    selectedAddress,
+    setAccounts,
+    setError,
     setIsLoading,
     setShowAddressList,
     showAddressList,
-    startIndex,
-    selectedAddress,
-    onGoToPrevPage,
-    onGoToNextPage,
-    onSelectAddress,
-    error,
-    setError,
-    defaultAddressesPerPage
+    startIndex
   };
 };
