@@ -16,7 +16,7 @@ export interface LedgerLoginContainerPropsType
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
-  showLoginContent: boolean;
+  showLoginContent?: boolean;
   showProgressBar?: boolean;
   showScamPhishingAlert?: boolean;
   wrapContentInsideModal?: boolean;

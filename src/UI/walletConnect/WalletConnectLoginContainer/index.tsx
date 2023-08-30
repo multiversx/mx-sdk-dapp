@@ -33,7 +33,7 @@ export interface WalletConnectLoginModalPropsType
   loginButtonText: string;
   logoutRoute?: string;
   onClose?: () => void;
-  showLoginContent: boolean;
+  showLoginContent?: boolean;
   showScamPhishingAlert?: boolean;
   title?: string;
   wrapContentInsideModal?: boolean;
