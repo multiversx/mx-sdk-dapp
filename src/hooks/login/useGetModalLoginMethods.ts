@@ -36,6 +36,12 @@ export const useGetModalLoginMethods = ({
     if (wrapContentInsideModal) {
       handleHideModal();
       onModalCloses?.();
+    } else if (onModalCloses) {
+      console.warn(
+        'Deprecated: "onModalCloses" must be used only when "wrapContentInsideModal" is set to "true". Use "onContentHide" instead.'
+      );
+
+      onModalCloses();
     }
   };
 
@@ -55,6 +61,12 @@ export const useGetModalLoginMethods = ({
     if (wrapContentInsideModal) {
       handleShowModal();
       onModalOpens?.();
+    } else if (onModalOpens) {
+      console.warn(
+        'Deprecated: "onModalOpens" must be used only when "wrapContentInsideModal" is set to "true". Use "onContentShow" instead.'
+      );
+
+      onModalOpens();
     }
   };
 

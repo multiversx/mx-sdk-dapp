@@ -5,7 +5,9 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
-
+## [[v2.19.6]](https://github.com/multiversx/mx-sdk-dapp/pull/899)] - 2023-08-31
+- [Updated `sdk-web-wallet-provider` to support usernames](https://github.com/multiversx/mx-sdk-dapp/pull/898)
+- [Added deprecated warnings for login button callbacks](https://github.com/multiversx/mx-sdk-dapp/commit/2e71fbeeebabe479f897db38f10972c55aca44af)
 ## [[v2.19.5]](https://github.com/multiversx/mx-sdk-dapp/pull/897)] - 2023-08-29
 - [Fixed Ledger and Walletconnect login with modals](https://github.com/multiversx/mx-sdk-dapp/pull/895)
 -
@@ -16,10 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Added `DataTestIdsEnum` to `data-testid` HTML tags](https://github.com/multiversx/mx-sdk-dapp/pull/889)
 - [Added `addOriginToLocationPath` helper to parse redirect URLs](https://github.com/multiversx/mx-sdk-dapp/pull/888)
 - [Prevent signing transactions with sender different from current account](https://github.com/multiversx/mx-sdk-dapp/pull/887)
-- [Ledger login improvements and added support for bluetooth connect](https://github.com/multiversx/mx-sdk-dapp/pull/882)
-- [Fix WalletConnect Provider default logoutRoute](https://github.com/multiversx/mx-sdk-dapp/pull/886)
-- [Bump @multiversx/sdk-native-auth-client to fix RN issues](https://github.com/multiversx/mx-sdk-dapp/pull/885)
-- [Fix the malformed url due to the missing callbackRoute](https://github.com/multiversx/mx-sdk-dapp/pull/884)
+- [Added ledger login improvements and added support for bluetooth connect](https://github.com/multiversx/mx-sdk-dapp/pull/882)
+- [Fixed WalletConnect Provider default logoutRoute](https://github.com/multiversx/mx-sdk-dapp/pull/886)
+- [Bumped @multiversx/sdk-native-auth-client to fix RN issues](https://github.com/multiversx/mx-sdk-dapp/pull/885)
+- [Fixed the malformed url due to the missing callbackRoute](https://github.com/multiversx/mx-sdk-dapp/pull/884)
 - [Updated the @multiversx packages to their latest versions](https://github.com/multiversx/mx-sdk-dapp/pull/883)
 
 ## [[v2.19.2]](https://github.com/multiversx/mx-sdk-dapp/pull/881)] - 2023-07-28
