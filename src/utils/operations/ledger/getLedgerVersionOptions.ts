@@ -3,7 +3,8 @@ import {
   LEDGER_MULTI_ACCOUNT_MINIMUM_VERSION,
   LEDGER_SIGN_AUTH_TOKEN_MINIMUM_VERSION,
   LEDGER_WITH_WHITELISTED_TOKENS_MINIMUM_VERSION,
-  LEDGER_WITH_GUARDIANS_MINIMUM_VERSION
+  LEDGER_WITH_GUARDIANS_MINIMUM_VERSION,
+  LEDGER_WITH_USERNAMES_MINIMUM_VERSION
 } from 'constants/index';
 
 function compareVersions(a: string, b: string) {
@@ -47,6 +48,9 @@ export function getLedgerVersionOptions(version: string) {
   const indexOfGuardians = sortedVersions.indexOf(
     LEDGER_WITH_GUARDIANS_MINIMUM_VERSION
   );
+  const indexOfUsernames = sortedVersions.indexOf(
+    LEDGER_WITH_USERNAMES_MINIMUM_VERSION
+  );
   const indexOfVersion = sortedVersions.indexOf(version);
 
   return {
@@ -54,7 +58,8 @@ export function getLedgerVersionOptions(version: string) {
     ledgerWithHashSign: indexOfVersion >= indexOfHashSign,
     ledgerWithSignAuthToken: indexOfVersion >= indexOfSignAuthToken,
     ledgerWithWhitelistedTokens: indexOfVersion >= indexOfWhitelistedTokens,
-    ledgerWithGuardians: indexOfVersion >= indexOfGuardians
+    ledgerWithGuardians: indexOfVersion >= indexOfGuardians,
+    ledgerWithUsernames: indexOfVersion >= indexOfUsernames
   };
 }
 
