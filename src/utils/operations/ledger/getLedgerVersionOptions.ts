@@ -30,6 +30,7 @@ export function getLedgerVersionOptions(version: string) {
     LEDGER_SIGN_AUTH_TOKEN_MINIMUM_VERSION,
     LEDGER_WITH_WHITELISTED_TOKENS_MINIMUM_VERSION,
     LEDGER_WITH_GUARDIANS_MINIMUM_VERSION,
+    LEDGER_WITH_USERNAMES_MINIMUM_VERSION,
     version
   ].sort((a, b) => compareVersions(a, b));
 
