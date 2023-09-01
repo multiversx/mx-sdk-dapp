@@ -7,7 +7,8 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: false,
       ledgerWithSignAuthToken: false,
       ledgerWithWhitelistedTokens: false,
-      ledgerWithGuardians: false
+      ledgerWithGuardians: false,
+      ledgerWithUsernames: false
     });
   });
   test('ledger with multiAccount', () => {
@@ -16,7 +17,8 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: true,
       ledgerWithSignAuthToken: false,
       ledgerWithWhitelistedTokens: false,
-      ledgerWithGuardians: false
+      ledgerWithGuardians: false,
+      ledgerWithUsernames: false
     });
   });
   test('ledger with hashSign', () => {
@@ -25,7 +27,8 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: true,
       ledgerWithSignAuthToken: false,
       ledgerWithWhitelistedTokens: false,
-      ledgerWithGuardians: false
+      ledgerWithGuardians: false,
+      ledgerWithUsernames: false
     });
   });
   test('ledger with tokenSign', () => {
@@ -34,7 +37,8 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: true,
       ledgerWithSignAuthToken: true,
       ledgerWithWhitelistedTokens: false,
-      ledgerWithGuardians: false
+      ledgerWithGuardians: false,
+      ledgerWithUsernames: false
     });
   });
   test('ledger with tokens', () => {
@@ -43,7 +47,8 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: true,
       ledgerWithSignAuthToken: true,
       ledgerWithWhitelistedTokens: true,
-      ledgerWithGuardians: false
+      ledgerWithGuardians: false,
+      ledgerWithUsernames: false
     });
   });
   test('ledger with tokens', () => {
@@ -52,7 +57,18 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: true,
       ledgerWithSignAuthToken: true,
       ledgerWithWhitelistedTokens: true,
-      ledgerWithGuardians: true
+      ledgerWithGuardians: true,
+      ledgerWithUsernames: false
+    });
+  });
+  test('ledger with usernames', () => {
+    expect(ledgerVersionOptions('1.0.23')).toStrictEqual({
+      ledgerWithHashSign: true,
+      ledgerWithMultiAccount: true,
+      ledgerWithSignAuthToken: true,
+      ledgerWithWhitelistedTokens: true,
+      ledgerWithGuardians: true,
+      ledgerWithUsernames: true
     });
   });
   test('latest ledger version', () => {
@@ -61,7 +77,8 @@ describe('ledgerOptions tests', () => {
       ledgerWithMultiAccount: true,
       ledgerWithSignAuthToken: true,
       ledgerWithWhitelistedTokens: true,
-      ledgerWithGuardians: true
+      ledgerWithGuardians: true,
+      ledgerWithUsernames: true
     });
   });
 });
