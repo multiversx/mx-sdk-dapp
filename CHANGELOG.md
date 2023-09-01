@@ -5,6 +5,9 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
+## [[v2.19.7]](https://github.com/multiversx/mx-sdk-dapp/pull/901)] - 2023-09-01
+- [Added ledger usernames validation](https://github.com/multiversx/mx-sdk-dapp/pull/900)
+
 ## [[v2.19.6]](https://github.com/multiversx/mx-sdk-dapp/pull/899)] - 2023-08-31
 - [Updated `sdk-web-wallet-provider` to support usernames](https://github.com/multiversx/mx-sdk-dapp/pull/898)
 - [Added deprecated warnings for login button callbacks](https://github.com/multiversx/mx-sdk-dapp/commit/2e71fbeeebabe479f897db38f10972c55aca44af)
