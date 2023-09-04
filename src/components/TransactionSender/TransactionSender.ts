@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { AxiosError } from 'axios';
 import {
   sendSignedTransactions as defaultSendSignedTxs,
   sendSignedBatchTransactions as defaultSendSignedBatchTxs
@@ -23,8 +22,6 @@ import { setNonce } from 'utils/account/setNonce';
 import { safeRedirect } from 'utils/redirect';
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 import { TransactionSenderType } from './types/transactionSender.types';
-import { handleSendBatchTransactionsErrors } from './utils/handleSendBatchTransactionsErrors';
-import { handleSendTransactionsErrors } from './utils/handleSendTransactionsErrors';
 import { invokeSendTransactions } from './utils/invokeSendTransactions';
 
 /**
@@ -76,79 +73,58 @@ export const TransactionSender = ({
         continue;
       }
 
-      const grouping = session.customTransactionInformation?.grouping;
+      const isSessionIdSigned =
+        session.status === TransactionBatchStatusesEnum.signed;
+      const shouldSendCurrentSession = isSessionIdSigned && !sendingRef.current;
 
-      try {
-        const isSessionIdSigned =
-          session.status === TransactionBatchStatusesEnum.signed;
-        const shouldSendCurrentSession =
-          isSessionIdSigned && !sendingRef.current;
-
-        if (!shouldSendCurrentSession) {
-          continue;
-        }
-
-        sendingRef.current = true;
-        sentSessionIds.current.push(sessionId);
-
-        const responseHashes = await invokeSendTransactions({
-          session,
-          sessionId,
-          address,
-          clearSignInfo,
-          sendSignedTransactionsAsync,
-          sendSignedBatchTransactionsAsync
-        });
-
-        const newStatus = TransactionServerStatusesEnum.pending;
-        const newTransactions = transactions.map((transaction) => {
-          if (responseHashes?.includes(transaction.hash)) {
-            return { ...transaction, status: newStatus };
-          }
-
-          return transaction;
-        });
-
-        const submittedModalPayload = {
-          sessionId,
-          submittedMessage: 'submitted'
-        };
-
-        dispatch(setTxSubmittedModal(submittedModalPayload));
-        dispatch(
-          updateSignedTransactions({
-            sessionId,
-            status: TransactionBatchStatusesEnum.sent,
-            transactions: newTransactions
-          })
-        );
-        clearSignInfo();
-        setNonce(nonce + transactions.length);
-
-        optionalRedirect(session);
-        const [transaction] = transactions;
-        removeTransactionParamsFromUrl({
-          transaction
-        });
-      } catch (error) {
-        if (grouping) {
-          handleSendBatchTransactionsErrors({
-            errorMessage: (error as any).message,
-            sessionId,
-            transactions
-          });
-        } else {
-          handleSendTransactionsErrors({
-            errorMessage:
-              (error as AxiosError).response?.data?.message ??
-              (error as any).message,
-            sessionId,
-            clearSignInfo
-          });
-        }
-      } finally {
-        sendingRef.current = false;
+      if (!shouldSendCurrentSession) {
+        continue;
       }
+
+      sendingRef.current = true;
+      sentSessionIds.current.push(sessionId);
+
+      const responseHashes = await invokeSendTransactions({
+        session,
+        sessionId,
+        address,
+        clearSignInfo,
+        sendSignedTransactionsAsync,
+        sendSignedBatchTransactionsAsync
+      });
+
+      const newStatus = TransactionServerStatusesEnum.pending;
+      const newTransactions = transactions.map((transaction) => {
+        if (responseHashes?.includes(transaction.hash)) {
+          return { ...transaction, status: newStatus };
+        }
+
+        return transaction;
+      });
+
+      const submittedModalPayload = {
+        sessionId,
+        submittedMessage: 'submitted'
+      };
+
+      dispatch(setTxSubmittedModal(submittedModalPayload));
+      dispatch(
+        updateSignedTransactions({
+          sessionId,
+          status: TransactionBatchStatusesEnum.sent,
+          transactions: newTransactions
+        })
+      );
+      clearSignInfo();
+      setNonce(nonce + transactions.length);
+
+      optionalRedirect(session);
+      const [transaction] = transactions;
+      removeTransactionParamsFromUrl({
+        transaction
+      });
+
+      sendingRef.current = false;
     }
   }, [signedTransactions, address, nonce]);
 

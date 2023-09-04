@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import {
   SendBatchTransactionsPropsType,
   SendSignedBatchTransactionsReturnType,
@@ -11,6 +12,7 @@ import { SignedTransactionsBodyType, SimpleTransactionType } from 'types';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { TransactionSenderType } from '../types/transactionSender.types';
 import { handleSendBatchTransactionsErrors } from './handleSendBatchTransactionsErrors';
+import { handleSendTransactionsErrors } from './handleSendTransactionsErrors';
 
 const handleBatchSending = async ({
   session,
@@ -104,15 +106,34 @@ export const invokeSendTransactions = async ({
   const grouping = session.customTransactionInformation?.grouping;
 
   if (grouping) {
-    return await handleBatchSending({
-      session,
-      sessionId,
-      address,
-      clearSignInfo,
-      sendSignedBatchTransactionsAsync
-    });
+    try {
+      return await handleBatchSending({
+        session,
+        sessionId,
+        address,
+        clearSignInfo,
+        sendSignedBatchTransactionsAsync
+      });
+    } catch (error) {
+      handleSendBatchTransactionsErrors({
+        errorMessage: (error as any).message,
+        sessionId,
+        transactions
+      });
+      return null;
+    }
   }
 
-  const transactionsToSend = transactions.map((tx) => newTransaction(tx));
-  return await sendSignedTransactionsAsync(transactionsToSend);
+  try {
+    const transactionsToSend = transactions.map((tx) => newTransaction(tx));
+    return await sendSignedTransactionsAsync(transactionsToSend);
+  } catch (error) {
+    handleSendTransactionsErrors({
+      errorMessage:
+        (error as AxiosError).response?.data?.message ?? (error as any).message,
+      sessionId,
+      clearSignInfo
+    });
+    return null;
+  }
 };
