@@ -1,12 +1,9 @@
-import { useEffect, useRef } from 'react';
-import { Transaction } from '@multiversx/sdk-core/out';
-
+import { useCallback, useEffect, useRef } from 'react';
 import { AxiosError } from 'axios';
 import {
   sendSignedTransactions as defaultSendSignedTxs,
-  SendSignedTransactionsReturnType
+  sendSignedBatchTransactions as defaultSendSignedBatchTxs
 } from 'apiCalls/transactions';
-import { newTransaction } from 'models/newTransaction';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   accountSelector,
@@ -22,77 +19,90 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { SignedTransactionsBodyType } from 'types/transactions.types';
-
 import { setNonce } from 'utils/account/setNonce';
 import { safeRedirect } from 'utils/redirect';
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
-
-export interface TransactionSenderType {
-  sendSignedTransactionsAsync?: (
-    signedTransactions: Transaction[]
-  ) => Promise<SendSignedTransactionsReturnType>;
-}
+import { TransactionSenderType } from './types/transactionSender.types';
+import { handleSendBatchTransactionsErrors } from './utils/handleSendBatchTransactionsErrors';
+import { handleSendTransactionsErrors } from './utils/handleSendTransactionsErrors';
+import { invokeSendTransactions } from './utils/invokeSendTransactions';
 
 /**
  * Function used to redirect after sending because of Safari cancelling async requests on page change
  */
 const optionalRedirect = (sessionInformation: SignedTransactionsBodyType) => {
   const redirectRoute = sessionInformation.redirectRoute;
-
   if (redirectRoute) {
     safeRedirect(redirectRoute);
   }
 };
 
 export const TransactionSender = ({
-  sendSignedTransactionsAsync = defaultSendSignedTxs
+  sendSignedTransactionsAsync = defaultSendSignedTxs,
+  sendSignedBatchTransactionsAsync = defaultSendSignedBatchTxs
 }: TransactionSenderType) => {
-  const account = useSelector(accountSelector);
+  const dispatch = useDispatch();
+
+  const { address, nonce } = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
 
   const sendingRef = useRef(false);
-
-  const dispatch = useDispatch();
+  const sentSessionIds = useRef<string[]>([]);
 
   const clearSignInfo = () => {
     dispatch(clearAllTransactionsToSign());
     sendingRef.current = false;
   };
-  async function handleSendTransactions() {
-    const sessionIds = Object.keys(signedTransactions);
-    for (const sessionId of sessionIds) {
-      const sessionInformation = signedTransactions?.[sessionId];
-      const skipSending =
-        sessionInformation?.customTransactionInformation?.signWithoutSending;
 
-      if (!sessionId || skipSending) {
-        optionalRedirect(sessionInformation);
+  const handleSendTransactions = useCallback(async () => {
+    const sessionIds = Object.keys(signedTransactions);
+
+    for (const sessionId of sessionIds) {
+      const session = signedTransactions[sessionId];
+      const skipSending =
+        session?.customTransactionInformation?.signWithoutSending;
+
+      if (!session || !sessionId || skipSending) {
+        optionalRedirect(session);
         continue;
       }
 
+      if (sentSessionIds.current.includes(sessionId)) {
+        continue;
+      }
+
+      const { transactions } = session;
+      if (!transactions) {
+        continue;
+      }
+
+      const grouping = session.customTransactionInformation?.grouping;
+
       try {
         const isSessionIdSigned =
-          signedTransactions[sessionId].status ===
-          TransactionBatchStatusesEnum.signed;
+          session.status === TransactionBatchStatusesEnum.signed;
         const shouldSendCurrentSession =
           isSessionIdSigned && !sendingRef.current;
+
         if (!shouldSendCurrentSession) {
           continue;
         }
-        const { transactions } = signedTransactions[sessionId];
 
-        if (!transactions) {
-          continue;
-        }
         sendingRef.current = true;
-        const transactionsToSend = transactions.map((tx) => newTransaction(tx));
-        const responseHashes = await sendSignedTransactionsAsync(
-          transactionsToSend
-        );
+        sentSessionIds.current.push(sessionId);
+
+        const responseHashes = await invokeSendTransactions({
+          session,
+          sessionId,
+          address,
+          clearSignInfo,
+          sendSignedTransactionsAsync,
+          sendSignedBatchTransactionsAsync
+        });
 
         const newStatus = TransactionServerStatusesEnum.pending;
         const newTransactions = transactions.map((transaction) => {
-          if (responseHashes.includes(transaction.hash)) {
+          if (responseHashes?.includes(transaction.hash)) {
             return { ...transaction, status: newStatus };
           }
 
@@ -113,35 +123,38 @@ export const TransactionSender = ({
           })
         );
         clearSignInfo();
-        setNonce(account.nonce + transactions.length);
+        setNonce(nonce + transactions.length);
 
-        optionalRedirect(sessionInformation);
-        const [transaction] = transactionsToSend;
+        optionalRedirect(session);
+        const [transaction] = transactions;
         removeTransactionParamsFromUrl({
           transaction
         });
       } catch (error) {
-        const errorMessage =
-          (error as AxiosError).response?.data?.message ??
-          (error as any).message;
-
-        dispatch(
-          updateSignedTransactions({
+        if (grouping) {
+          handleSendBatchTransactionsErrors({
+            errorMessage: (error as any).message,
             sessionId,
-            status: TransactionBatchStatusesEnum.fail,
-            errorMessage
-          })
-        );
-        clearSignInfo();
+            transactions
+          });
+        } else {
+          handleSendTransactionsErrors({
+            errorMessage:
+              (error as AxiosError).response?.data?.message ??
+              (error as any).message,
+            sessionId,
+            clearSignInfo
+          });
+        }
       } finally {
         sendingRef.current = false;
       }
     }
-  }
+  }, [signedTransactions, address, nonce]);
 
   useEffect(() => {
     handleSendTransactions();
-  }, [signedTransactions, account]);
+  }, [signedTransactions, address, handleSendTransactions]);
 
   return null;
 };

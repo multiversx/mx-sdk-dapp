@@ -12,6 +12,12 @@ export interface SendBatchTransactionsPropsType {
   sessionId: string;
 }
 
+export type SendSignedBatchTransactionsReturnType = {
+  error?: string | null;
+  batchId?: string | null;
+  data?: BatchTransactionsResponseType;
+};
+
 export async function sendSignedBatchTransactions({
   transactions,
   sessionId,

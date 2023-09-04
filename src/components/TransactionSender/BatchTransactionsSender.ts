@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef } from 'react';
+import { AxiosError } from 'axios';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   accountSelector,
@@ -7,22 +8,19 @@ import {
 import {
   clearAllTransactionsToSign,
   setTxSubmittedModal,
-  setBatchTransactions,
   updateSignedTransactions
 } from 'reduxStore/slices';
-import { sendSignedBatchTransactions } from 'apiCalls/transactions/sendSignedBatchTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
-import {
-  SignedTransactionsBodyType,
-  SignedTransactionType
-} from 'types/transactions.types';
+import { SignedTransactionsBodyType } from 'types/transactions.types';
 import { setNonce } from 'utils/account/setNonce';
 import { safeRedirect } from 'utils/redirect';
-import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
+import { handleSendBatchTransactionsErrors } from './utils/handleSendBatchTransactionsErrors';
+import { handleSendTransactionsErrors } from './utils/handleSendTransactionsErrors';
+import { invokeSendTransactions } from './utils/invokeSendTransactions';
 
 /**
  * Function used to redirect after sending because of Safari cancelling async requests on page change
@@ -48,30 +46,6 @@ export const BatchTransactionsSender = () => {
     sendingRef.current = false;
   };
 
-  const handleBatchErrors = ({
-    errorMessage,
-    sessionId,
-    transactions
-  }: {
-    errorMessage: string;
-    sessionId: string;
-    transactions: SignedTransactionType[];
-  }) => {
-    console.error('Unable to send transactions', errorMessage);
-    dispatch(
-      updateSignedTransactions({
-        sessionId,
-        status: TransactionBatchStatusesEnum.fail,
-        errorMessage,
-        transactions: transactions.map((transaction) => ({
-          ...transaction,
-          status: TransactionServerStatusesEnum.notExecuted
-        }))
-      })
-    );
-    clearSignInfo();
-  };
-
   const handleSendTransactions = useCallback(async () => {
     const sessionIds = Object.keys(signedTransactions);
 
@@ -94,6 +68,8 @@ export const BatchTransactionsSender = () => {
         continue;
       }
 
+      const grouping = session.customTransactionInformation?.grouping;
+
       try {
         const isSessionIdSigned =
           session.status === TransactionBatchStatusesEnum.signed;
@@ -105,47 +81,18 @@ export const BatchTransactionsSender = () => {
         }
 
         sendingRef.current = true;
-        const indexes = [...Array(transactions.length).keys()];
-        const defaultGrouping = [indexes];
-
-        const grouping =
-          session.customTransactionInformation?.sessionInformation?.grouping ??
-          defaultGrouping;
-        const groupedTransactions = grouping?.map((item: number[]) =>
-          item
-            .map((index) => transactions[index])
-            .filter((transaction) => Boolean(transaction))
-        );
-
-        if (!groupedTransactions) {
-          continue;
-        }
-
         sentSessionIds.current.push(sessionId);
-        const response = await sendSignedBatchTransactions({
-          transactions: groupedTransactions,
+
+        const responseHashes = await invokeSendTransactions({
+          session,
           sessionId,
-          address
+          address,
+          clearSignInfo
         });
-
-        if (response?.error || !response?.data) {
-          handleBatchErrors({
-            errorMessage: response?.error ?? 'Send batch error',
-            sessionId,
-            transactions
-          });
-          continue;
-        }
-
-        dispatch(setBatchTransactions(response.data));
-
-        const responseHashes = sequentialToFlatArray({
-          transactions: response.data.transactions
-        }).map((tx) => tx.hash);
 
         const newStatus = TransactionServerStatusesEnum.pending;
         const newTransactions = transactions.map((transaction) => {
-          if (responseHashes.includes(transaction.hash)) {
+          if (responseHashes?.includes(transaction.hash)) {
             return { ...transaction, status: newStatus };
           }
 
@@ -174,11 +121,21 @@ export const BatchTransactionsSender = () => {
           transaction
         });
       } catch (error) {
-        handleBatchErrors({
-          errorMessage: (error as any).message,
-          sessionId,
-          transactions
-        });
+        if (grouping) {
+          handleSendBatchTransactionsErrors({
+            errorMessage: (error as any).message,
+            sessionId,
+            transactions
+          });
+        } else {
+          handleSendTransactionsErrors({
+            errorMessage:
+              (error as AxiosError).response?.data?.message ??
+              (error as any).message,
+            sessionId,
+            clearSignInfo
+          });
+        }
       } finally {
         sendingRef.current = false;
       }
