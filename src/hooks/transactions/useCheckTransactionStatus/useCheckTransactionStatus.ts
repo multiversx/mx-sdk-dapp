@@ -11,13 +11,15 @@ export function useCheckTransactionStatus() {
     getTransactionsByHash?: GetTransactionsByHashesType;
     shouldRefreshBalance?: boolean;
   }) {
-    const pendingBatches = pendingTransactionsArray.filter(
-      ([sessionId, transactionBatch]) => {
+    const pendingBatches = pendingTransactionsArray
+      .filter(
+        ([_, session]) => !session?.customTransactionInformation?.grouping
+      )
+      .filter(([sessionId, transactionBatch]) => {
         const isPending =
           sessionId != null && getIsTransactionPending(transactionBatch.status);
         return isPending;
-      }
-    );
+      });
     if (pendingBatches.length > 0) {
       for (const [sessionId, transactionBatch] of pendingBatches) {
         await checkBatch({
