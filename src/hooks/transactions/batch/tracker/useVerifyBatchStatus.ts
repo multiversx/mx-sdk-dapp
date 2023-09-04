@@ -25,10 +25,14 @@ export const useVerifyBatchStatus = (props?: {
     async ({ batchId }: { batchId: string }) => {
       const sessionId = extractSessionId(batchId)?.toString() ?? '';
       const session = signedTransactions[sessionId];
+
+      if (!session) {
+        return;
+      }
+
       // If the grouping is missing then means the transactions were sent with the normal flow
       const grouping = session.customTransactionInformation?.grouping;
-
-      if (!session || !grouping) {
+      if (!grouping) {
         return;
       }
 
