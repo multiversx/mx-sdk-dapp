@@ -1,7 +1,6 @@
 import { PayloadAction } from '@reduxjs/toolkit';
 import throttle from 'lodash.throttle';
 import { LOGOUT_ACTION_NAME } from 'constants/index';
-import { deriveIsLoggedIn } from 'reduxStore/selectors/helpers';
 import { invalidateLoginSession } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
 import { getNewLoginExpiresTimestamp, setLoginExpiresAt } from 'storage/local';
@@ -22,17 +21,18 @@ export const loginSessionMiddleware: any =
     if (whitelistedActions.includes(action.type)) {
       return next(action);
     }
+
     const appState: RootState = store.getState();
     const loginTimestamp = storage.local.getItem(
       localStorageKeys.loginExpiresAt
     );
-    const isLoggedIn = deriveIsLoggedIn(
-      appState?.loginInfo?.loginMethod,
-      appState?.account.address
-    );
+
+    const isLoggedIn = Boolean(appState?.account.address);
+
     if (!isLoggedIn) {
       return next(action);
     }
+
     if (loginTimestamp == null) {
       return setLoginExpiresAt(getNewLoginExpiresTimestamp());
     }
@@ -53,5 +53,6 @@ export const loginSessionMiddleware: any =
 
       throttledSetNewExpires();
     }
+
     return next(action);
   };

@@ -7,7 +7,6 @@ import React, {
   createContext
 } from 'react';
 import { loginInfoSelector } from 'reduxStore/selectors';
-import { deriveIsLoggedIn } from 'reduxStore/selectors/helpers';
 import { RootState, store } from 'reduxStore/store';
 import { LoginInfoStateType } from '../../../reduxStore/slices/loginInfoSlice';
 
@@ -54,7 +53,7 @@ export function AxiosInterceptorContextProvider({
   const value: AxiosInterceptorContextPropsType = {
     address,
     setAddress,
-    isLoggedIn: deriveIsLoggedIn(loginInfo.loginMethod, address),
+    isLoggedIn: Boolean(address),
     loginInfo,
     setLoginInfo: (data: LoginInfoStateType) => setLoginInfo(data)
   };
