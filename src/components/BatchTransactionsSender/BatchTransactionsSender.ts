@@ -10,7 +10,7 @@ import {
   setBatchTransactions,
   updateSignedTransactions
 } from 'reduxStore/slices';
-import { sendBatchTransactions } from 'services/transactions/sendBatchTransactions';
+import { sendSignedBatchTransactions } from 'apiCalls/transactions/sendSignedBatchTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -122,7 +122,7 @@ export const BatchTransactionsSender = () => {
         }
 
         sentSessionIds.current.push(sessionId);
-        const response = await sendBatchTransactions({
+        const response = await sendSignedBatchTransactions({
           transactions: groupedTransactions,
           sessionId,
           address

@@ -32,11 +32,9 @@ export interface CustomComponentsType {
 }
 
 export function CustomComponents({
-  customComponents,
-  enableBatchTransactions
+  customComponents
 }: {
   customComponents?: CustomComponentsType;
-  enableBatchTransactions?: boolean;
 }) {
   const transactionSender = customComponents?.transactionSender;
   const transactionTracker = customComponents?.transactionTracker;
@@ -52,19 +50,11 @@ export function CustomComponents({
 
   return (
     <>
-      {!Boolean(enableBatchTransactions) && (
-        <>
-          <TxSender {...transactionSender?.props} />
-          <TxTracker {...transactionTracker?.props} />
-        </>
-      )}
+      <TxSender {...transactionSender?.props} />
+      <TxTracker {...transactionTracker?.props} />
 
-      {Boolean(enableBatchTransactions) && (
-        <>
-          <BatchTxsSender {...batchTransactionsSender?.props} />
-          <BatchTxsTracker {...batchTransactionsTracker?.props} />
-        </>
-      )}
+      <BatchTxsSender {...batchTransactionsSender?.props} />
+      <BatchTxsTracker {...batchTransactionsTracker?.props} />
 
       <LogoutListener />
     </>

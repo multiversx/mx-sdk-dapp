@@ -7,9 +7,9 @@ import {
 } from 'reduxStore/slices';
 import { removeBatchTransactions } from 'services/transactions';
 import {
-  sendBatchTransactions,
+  sendSignedBatchTransactions,
   SendBatchTransactionsPropsType
-} from 'services/transactions/sendBatchTransactions';
+} from 'apiCalls/transactions/sendSignedBatchTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -23,7 +23,7 @@ export const useSendBatchTransactions = () => {
 
   const send = useCallback(
     async (params: SendBatchTransactionsPropsType) => {
-      const response = await sendBatchTransactions(params);
+      const response = await sendSignedBatchTransactions(params);
       const error = response?.error;
       const data = response?.data;
 
