@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { ModalContainer } from 'UI/ModalContainer';
@@ -22,12 +22,15 @@ export const WalletConnectLoginContainer = (
     logoutRoute
   } = props;
 
+  const canLoginRef = useRef<boolean>(true);
+
   const [, , { cancelLogin }] = useWalletConnectV2Login({
     callbackRoute,
     token,
     nativeAuth,
     onLoginRedirect,
-    logoutRoute
+    logoutRoute,
+    canLoginRef
   });
 
   const onCloseModal = async () => {
@@ -40,7 +43,7 @@ export const WalletConnectLoginContainer = (
   }
 
   if (!wrapContentInsideModal) {
-    return <WalletConnectLoginContent {...props} />;
+    return <WalletConnectLoginContent {...props} canLoginRef={canLoginRef} />;
   }
 
   return (
@@ -58,7 +61,7 @@ export const WalletConnectLoginContainer = (
       }}
       onClose={onCloseModal}
     >
-      <WalletConnectLoginContent {...props} />
+      <WalletConnectLoginContent {...props} canLoginRef={canLoginRef} />
     </ModalContainer>
   );
 };

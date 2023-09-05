@@ -29,7 +29,8 @@ export const WalletConnectLoginContent = ({
   onLoginRedirect,
   showScamPhishingAlert = true,
   title = 'Login with the xPortal App',
-  token
+  token,
+  canLoginRef
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnectV2,
@@ -46,7 +47,8 @@ export const WalletConnectLoginContent = ({
     token,
     nativeAuth,
     onLoginRedirect,
-    logoutRoute
+    logoutRoute,
+    canLoginRef
   });
 
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');

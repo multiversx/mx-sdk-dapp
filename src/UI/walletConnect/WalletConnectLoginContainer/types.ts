@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, MutableRefObject } from 'react';
 
 import { WithClassnameType } from '../../types';
 import { InnerWalletConnectComponentsClassesType } from '../types';
@@ -19,4 +19,5 @@ export interface WalletConnectLoginModalPropsType
   showScamPhishingAlert?: boolean;
   title?: string;
   wrapContentInsideModal?: boolean;
+  canLoginRef?: MutableRefObject<boolean>;
 }
