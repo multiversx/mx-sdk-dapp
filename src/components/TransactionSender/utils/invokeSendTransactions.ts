@@ -8,7 +8,7 @@ import { sendSignedBatchTransactions } from 'apiCalls/transactions/sendSignedBat
 import { newTransaction } from 'models/newTransaction';
 import { setBatchTransactions } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
-import { SignedTransactionsBodyType, SimpleTransactionType } from 'types';
+import { SignedTransactionsBodyType, SignedTransactionType } from 'types';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 import { TransactionSenderType } from '../types/transactionSender.types';
 import { handleSendBatchTransactionsErrors } from './handleSendBatchTransactionsErrors';
@@ -39,26 +39,18 @@ const handleBatchSending = async ({
     return;
   }
 
-  const regroupedTransactions = transactions.reduce((acc, tx, index) => {
+  const groupedTransactions = transactions.reduce((acc, tx, index) => {
     const groupIndex = grouping.findIndex((group) => group.includes(index));
     if (!acc[groupIndex]) {
       acc[groupIndex] = [];
     }
-    acc[groupIndex].push(tx as SimpleTransactionType);
+    acc[groupIndex].push(tx);
     return acc;
-  }, [] as SimpleTransactionType[][]);
-
-  console.log('regroupedTransactions', regroupedTransactions);
-
-  const groupedTransactions = grouping?.map((item: number[]) =>
-    item
-      .map((index) => transactions[index])
-      .filter((transaction) => Boolean(transaction))
-  );
+  }, [] as SignedTransactionType[][]);
 
   console.log('groupedTransactions', groupedTransactions);
 
-  if (!groupedTransactions) {
+  if (groupedTransactions.length === 0) {
     return;
   }
 
@@ -68,7 +60,9 @@ const handleBatchSending = async ({
     address
   });
 
-  if (response?.error || !response?.data) {
+  const data = response?.data;
+
+  if (response?.error || !data) {
     handleSendBatchTransactionsErrors({
       errorMessage: response?.error ?? 'Send batch error',
       sessionId,
@@ -78,10 +72,12 @@ const handleBatchSending = async ({
     return;
   }
 
-  store.dispatch(setBatchTransactions(response.data));
+  if (data) {
+    store.dispatch(setBatchTransactions(data));
+  }
 
   return sequentialToFlatArray({
-    transactions: response?.data.transactions
+    transactions: data?.transactions
   }).map((tx) => tx.hash);
 };
 
