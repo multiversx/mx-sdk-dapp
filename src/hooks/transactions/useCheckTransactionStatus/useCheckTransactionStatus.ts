@@ -15,9 +15,9 @@ export function useCheckTransactionStatus() {
       .filter(
         ([_, session]) => !session?.customTransactionInformation?.grouping
       )
-      .filter(([sessionId, transactionBatch]) => {
+      .filter(([sessionId, session]) => {
         const isPending =
-          sessionId != null && getIsTransactionPending(transactionBatch.status);
+          sessionId != null && getIsTransactionPending(session.status);
         return isPending;
       });
     if (pendingBatches.length > 0) {
