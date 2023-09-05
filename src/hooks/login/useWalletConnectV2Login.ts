@@ -48,7 +48,7 @@ export interface InitWalletConnectV2Type extends OnProviderLoginType {
 
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string;
-  cancelLogin: () => void;
+  cancelLogin: () => Promise<void>;
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   removeExistingPairing: (topic: string) => Promise<void>;
   walletConnectUri?: string;
@@ -132,8 +132,19 @@ export const useWalletConnectV2Login = ({
     console.log('WalletConnect Session Event: ', event);
   };
 
-  const cancelLogin = () => {
+  const cancelLogin = async () => {
     canLoginRef.current = false;
+    try {
+      const connectedSessions =
+        providerRef.current?.walletConnector?.session?.getAll() ?? [];
+      if (connectedSessions.length > 0) {
+        await providerRef.current?.logout();
+      }
+    } catch {
+      console.warn('Unable to logout');
+    }
+
+    return;
   };
 
   async function handleOnLogin() {

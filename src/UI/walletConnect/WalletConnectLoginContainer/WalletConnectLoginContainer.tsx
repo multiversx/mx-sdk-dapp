@@ -30,8 +30,8 @@ export const WalletConnectLoginContainer = (
     logoutRoute
   });
 
-  const onCloseModal = () => {
-    cancelLogin();
+  const onCloseModal = async () => {
+    await cancelLogin();
     onClose?.();
   };
 
