@@ -1,4 +1,8 @@
 import { useCallback, useState } from 'react';
+import {
+  sendSignedBatchTransactions,
+  SendBatchTransactionsPropsType
+} from 'apiCalls/transactions/sendSignedBatchTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   setBatchTransactions,
@@ -6,10 +10,6 @@ import {
   updateSignedTransactions
 } from 'reduxStore/slices';
 import { removeBatchTransactions } from 'services/transactions';
-import {
-  sendSignedBatchTransactions,
-  SendBatchTransactionsPropsType
-} from 'apiCalls/transactions/sendSignedBatchTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum

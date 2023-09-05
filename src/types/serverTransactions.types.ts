@@ -320,10 +320,15 @@ export enum BatchTransactionStatus {
   fail = 'fail'
 }
 
+export interface BatchTransactionsRequestType {
+  id: string;
+  transactions: SignedTransactionType[][];
+}
+
 export interface BatchTransactionsResponseType {
   id: string;
   status: BatchTransactionStatus;
-  transactions: SignedTransactionType[] | SignedTransactionType[][];
+  transactions: SignedTransactionType[][];
   error?: string;
   message?: string;
   statusCode?: string;

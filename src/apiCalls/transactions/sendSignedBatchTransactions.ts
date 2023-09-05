@@ -1,14 +1,17 @@
 import axios from 'axios';
 import { TIMEOUT } from 'constants/network';
 import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
-import { networkSelector } from 'reduxStore/selectors';
+import { addressSelector, networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
-import { BatchTransactionsResponseType, SignedTransactionType } from 'types';
+import {
+  BatchTransactionsRequestType,
+  BatchTransactionsResponseType,
+  SignedTransactionType
+} from 'types';
 import { TRANSACTIONS_BATCH } from '../endpoints';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[][];
-  address: string;
   sessionId: string;
 }
 
@@ -20,9 +23,9 @@ export type SendSignedBatchTransactionsReturnType = {
 
 export async function sendSignedBatchTransactions({
   transactions,
-  sessionId,
-  address
+  sessionId
 }: SendBatchTransactionsPropsType) {
+  const address = addressSelector(store.getState());
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
 
   try {
@@ -31,8 +34,8 @@ export async function sendSignedBatchTransactions({
       address
     });
 
-    const payload = {
-      transactions: transactions,
+    const payload: BatchTransactionsRequestType = {
+      transactions,
       id: batchId
     };
 

@@ -17,13 +17,11 @@ import { handleSendTransactionsErrors } from './handleSendTransactionsErrors';
 const handleBatchSending = async ({
   session,
   sessionId,
-  address,
   clearSignInfo,
   sendSignedBatchTransactionsAsync
 }: {
   session: SignedTransactionsBodyType;
   sessionId: string;
-  address: string;
   clearSignInfo?: () => void;
   sendSignedBatchTransactionsAsync: (
     props: SendBatchTransactionsPropsType
@@ -56,8 +54,7 @@ const handleBatchSending = async ({
 
   const response = await sendSignedBatchTransactionsAsync({
     transactions: groupedTransactions,
-    sessionId,
-    address
+    sessionId
   });
 
   const data = response?.data;
@@ -84,14 +81,12 @@ const handleBatchSending = async ({
 export const invokeSendTransactions = async ({
   session,
   sessionId,
-  address,
   clearSignInfo,
   sendSignedBatchTransactionsAsync = sendSignedBatchTransactions,
   sendSignedTransactionsAsync = sendSignedTransactions
 }: {
   session: SignedTransactionsBodyType;
   sessionId: string;
-  address: string;
   clearSignInfo?: () => void;
 } & TransactionSenderType) => {
   const { transactions } = session;
@@ -106,7 +101,6 @@ export const invokeSendTransactions = async ({
       return await handleBatchSending({
         session,
         sessionId,
-        address,
         clearSignInfo,
         sendSignedBatchTransactionsAsync
       });
