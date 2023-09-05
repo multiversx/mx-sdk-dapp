@@ -87,7 +87,6 @@ export const TransactionSender = ({
       const responseHashes = await invokeSendTransactions({
         session,
         sessionId,
-        address,
         clearSignInfo,
         sendSignedTransactionsAsync,
         sendSignedBatchTransactionsAsync
