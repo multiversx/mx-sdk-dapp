@@ -12,8 +12,6 @@ export function useCheckTransactionStatus() {
       shouldRefreshBalance?: boolean;
     }
   ) {
-    console.log('pendingTransactionsArray', pendingTransactionsArray);
-
     const pendingBatches = pendingTransactionsArray
       .filter(
         ([_, session]) => !session?.customTransactionInformation?.grouping
@@ -24,10 +22,7 @@ export function useCheckTransactionStatus() {
         return isPending;
       });
 
-    console.log('pendingBatches', pendingBatches);
-
     if (pendingBatches.length > 0) {
-      console.log('pendingBatches.length > 0', pendingBatches);
       for (const [sessionId, transactionBatch] of pendingBatches) {
         await checkBatch({
           sessionId,

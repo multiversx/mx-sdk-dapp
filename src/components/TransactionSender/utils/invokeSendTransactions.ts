@@ -46,8 +46,6 @@ const handleBatchSending = async ({
     return acc;
   }, [] as SignedTransactionType[][]);
 
-  console.log('groupedTransactions', groupedTransactions);
-
   if (groupedTransactions.length === 0) {
     return;
   }
