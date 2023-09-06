@@ -1,6 +1,6 @@
 import { RootState } from 'reduxStore/store';
 import { addressSelector } from './accountInfoSelectors';
-import { createDeepEqualSelector, deriveIsLoggedIn } from './helpers';
+import { createDeepEqualSelector } from './helpers';
 
 export const loginInfoSelector = (state: RootState) => state.loginInfo;
 
@@ -12,7 +12,7 @@ export const loginMethodSelector = createDeepEqualSelector(
 export const isLoggedInSelector = createDeepEqualSelector(
   loginInfoSelector,
   addressSelector,
-  (state, address) => deriveIsLoggedIn(state.loginMethod, address)
+  (_, address) => Boolean(address)
 );
 
 export const walletConnectLoginSelector = createDeepEqualSelector(
