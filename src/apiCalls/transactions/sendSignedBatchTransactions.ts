@@ -6,6 +6,7 @@ import { store } from 'reduxStore/store';
 import {
   BatchTransactionsRequestType,
   BatchTransactionsResponseType,
+  CustomTransactionInformation,
   SignedTransactionType
 } from 'types';
 import { TRANSACTIONS_BATCH } from '../endpoints';
@@ -13,6 +14,7 @@ import { TRANSACTIONS_BATCH } from '../endpoints';
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[][];
   sessionId: string;
+  customTransactionInformationOverrides?: Partial<CustomTransactionInformation>;
 }
 
 export type SendSignedBatchTransactionsReturnType = {

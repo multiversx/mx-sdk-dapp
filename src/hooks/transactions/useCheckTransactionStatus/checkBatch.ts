@@ -2,12 +2,12 @@ import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transact
 import { updateSignedTransactionStatus } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import {
-  GetTransactionsByHashesReturnType,
-  GetTransactionsByHashesType,
   CustomTransactionInformation,
+  GetTransactionsByHashesReturnType,
   SignedTransactionsBodyType
 } from 'types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { TransactionsTrackerType } from 'types/transactionsTracker.types';
 import { refreshAccount } from 'utils/account';
 import {
   getIsTransactionFailed,
@@ -18,10 +18,10 @@ import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { manageTimedOutTransactions } from './manageTimedOutTransactions';
 
-export interface TransactionStatusTrackerPropsType {
+export interface TransactionStatusTrackerPropsType
+  extends TransactionsTrackerType {
   sessionId: string;
   transactionBatch: SignedTransactionsBodyType;
-  getTransactionsByHash?: GetTransactionsByHashesType;
   shouldRefreshBalance?: boolean;
   isSequential?: boolean;
 }
@@ -142,7 +142,9 @@ export async function checkBatch({
   transactionBatch: { transactions, customTransactionInformation },
   getTransactionsByHash = defaultGetTxByHash,
   shouldRefreshBalance,
-  isSequential
+  isSequential,
+  onSuccess,
+  onFail
 }: TransactionStatusTrackerPropsType) {
   try {
     if (transactions == null) {
@@ -161,6 +163,34 @@ export async function checkBatch({
         shouldRefreshBalance,
         isSequential
       });
+    }
+
+    const hasCompleted = serverTransactions.every(
+      (tx) => tx.status !== TransactionServerStatusesEnum.pending
+    );
+
+    // Call the onSuccess or onFail callback only if the transactions are sent normally (not using batch transactions mechanism).
+    // The batch transactions mechanism will call the callbacks separately.
+    if (hasCompleted && !customTransactionInformation?.grouping) {
+      console.log(
+        'checkBatch -> customTransactionInformation',
+        customTransactionInformation
+      );
+      const isSuccessful = serverTransactions.every(
+        (tx) => tx.status === TransactionServerStatusesEnum.success
+      );
+
+      if (isSuccessful) {
+        return onSuccess?.(sessionId);
+      }
+
+      const isFailed = serverTransactions.some(
+        (tx) => tx.status === TransactionServerStatusesEnum.fail
+      );
+
+      if (isFailed) {
+        return onFail?.(sessionId);
+      }
     }
   } catch (error) {
     console.error(error);

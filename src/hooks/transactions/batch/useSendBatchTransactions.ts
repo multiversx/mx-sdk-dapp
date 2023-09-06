@@ -10,6 +10,7 @@ import {
   updateSignedTransactions
 } from 'reduxStore/slices';
 import { removeBatchTransactions } from 'services/transactions';
+import { updateSignedTransactionCustomTransactionInformationState } from 'services/transactions/updateSignedTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -43,6 +44,20 @@ export const useSendBatchTransactions = () => {
           ...transaction,
           status: TransactionServerStatusesEnum.pending
         }));
+
+        // Ensure the transaction custom information is updated with the desired values from the dApp when the transactions are send on demand
+        let indexInFlatArray = 0;
+        const grouping = params.transactions.map((group) => {
+          return group.map((_tx) => indexInFlatArray++);
+        });
+        updateSignedTransactionCustomTransactionInformationState({
+          sessionId: params.sessionId,
+          customTransactionInformationOverrides: {
+            ...(params.customTransactionInformationOverrides ?? {}),
+            // Mandatory override. Otherwise, the transactions will not be grouped and the transaction tracker will not work properly (doesn't know to differentiate between transactions sent in batch and the transactions sent using normal flow)
+            grouping
+          }
+        });
 
         dispatch(
           updateSignedTransactions({

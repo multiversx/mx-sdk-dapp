@@ -40,7 +40,7 @@ export const TransactionSender = ({
 }: TransactionSenderType) => {
   const dispatch = useDispatch();
 
-  const { address, nonce } = useSelector(accountSelector);
+  const { nonce } = useSelector(accountSelector);
   const signedTransactions = useSelector(signedTransactionsSelector);
 
   const sendingRef = useRef(false);
@@ -125,11 +125,11 @@ export const TransactionSender = ({
 
       sendingRef.current = false;
     }
-  }, [signedTransactions, address, nonce]);
+  }, [signedTransactions, nonce]);
 
   useEffect(() => {
     handleSendTransactions();
-  }, [signedTransactions, address, handleSendTransactions]);
+  }, [signedTransactions, handleSendTransactions]);
 
   return null;
 };
