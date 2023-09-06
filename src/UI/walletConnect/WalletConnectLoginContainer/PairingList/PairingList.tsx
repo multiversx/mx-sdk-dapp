@@ -4,10 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { PairingTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
-import { WithClassnameType } from '../../types';
-
+import { WithClassnameType } from '../../../types';
+import styles from '../walletConnectLoginContainerStyles.scss';
 import { ImageWithFallback } from './ImageWithFallback';
-import styles from './walletConnectLoginContainerStyles.scss';
 
 export interface WalletConnectPairingListClassesType {
   leadClassName?: string;
