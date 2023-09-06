@@ -16,8 +16,8 @@ import { useUpdateBatch } from './useUpdateBatch';
  * Resolves the toast and set the status to failed for each transaction after a certain time (10minutes)
  * */
 export const useCheckHangingBatchesFallback = (props?: {
-  onSuccess?: (batchId: string | null) => void;
-  onFail?: (batchId: string | null, errorMessage?: string) => void;
+  onSuccess?: (sessionId: string | null) => void;
+  onFail?: (sessionId: string | null, errorMessage?: string) => void;
 }) => {
   const { batchTransactionsArray } = useGetBatches();
   const updateBatch = useUpdateBatch();
@@ -53,12 +53,12 @@ export const useCheckHangingBatchesFallback = (props?: {
         removeBatchTransactions(batchId);
 
         if (isSuccessful) {
-          onSuccess?.(batchId);
+          onSuccess?.(sessionId.toString());
         }
 
         if (isFailed) {
           onFail?.(
-            batchId,
+            sessionId.toString(),
             'Error processing batch transactions. Status: failed'
           );
         }

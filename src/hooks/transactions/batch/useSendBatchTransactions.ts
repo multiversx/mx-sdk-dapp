@@ -1,4 +1,8 @@
 import { useCallback, useState } from 'react';
+import {
+  sendSignedBatchTransactions,
+  SendBatchTransactionsPropsType
+} from 'apiCalls/transactions/sendSignedBatchTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   setBatchTransactions,
@@ -6,15 +10,13 @@ import {
   updateSignedTransactions
 } from 'reduxStore/slices';
 import { removeBatchTransactions } from 'services/transactions';
-import {
-  sendBatchTransactions,
-  SendBatchTransactionsPropsType
-} from 'services/transactions/sendBatchTransactions';
+import { updateSignedTransactionCustomTransactionInformationState } from 'services/transactions/updateSignedTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { BatchTransactionStatus } from 'types/serverTransactions.types';
+import { generateBatchTransactionsGrouping } from 'utils/transactions/batch/generateBatchTransactionsGrouping';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
 
 export const useSendBatchTransactions = () => {
@@ -23,7 +25,7 @@ export const useSendBatchTransactions = () => {
 
   const send = useCallback(
     async (params: SendBatchTransactionsPropsType) => {
-      const response = await sendBatchTransactions(params);
+      const response = await sendSignedBatchTransactions(params);
       const error = response?.error;
       const data = response?.data;
 
@@ -43,6 +45,18 @@ export const useSendBatchTransactions = () => {
           ...transaction,
           status: TransactionServerStatusesEnum.pending
         }));
+
+        // Ensure the transaction custom information is updated with the desired values from the dApp when the transactions are send on demand
+        const grouping = generateBatchTransactionsGrouping(params.transactions);
+
+        updateSignedTransactionCustomTransactionInformationState({
+          sessionId: params.sessionId,
+          customTransactionInformationOverrides: {
+            ...(params.customTransactionInformationOverrides ?? {}),
+            // Mandatory override. Otherwise, the transactions will not be grouped and the transaction tracker will not work properly (doesn't know to differentiate between transactions sent in batch and the transactions sent using normal flow)
+            grouping
+          }
+        });
 
         dispatch(
           updateSignedTransactions({

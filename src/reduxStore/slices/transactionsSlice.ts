@@ -23,6 +23,7 @@ export interface UpdateSignedTransactionsPayloadType {
   status: TransactionBatchStatusesEnum;
   errorMessage?: string;
   transactions?: SignedTransactionType[];
+  customTransactionInformationOverrides?: Partial<CustomTransactionInformation>;
 }
 
 export interface MoveTransactionsToSignedStatePayloadType
@@ -221,6 +222,23 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<string | null>
     ) => {
       state.signTransactionsCancelMessage = action.payload;
+    },
+    updateCustomTransactionInformation: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<{
+        sessionId: string;
+        customTransactionInformationOverrides: Partial<CustomTransactionInformation>;
+      }>
+    ) => {
+      const { sessionId, customTransactionInformationOverrides } =
+        action.payload;
+      const session = state.signedTransactions[sessionId];
+      if (session != null) {
+        state.signedTransactions[sessionId].customTransactionInformation = {
+          ...state.customTransactionInformationForSessionId[sessionId],
+          ...customTransactionInformationOverrides
+        };
+      }
     }
   },
   extraReducers: (builder) => {
@@ -270,7 +288,8 @@ export const {
   clearTransactionToSign,
   setSignTransactionsError,
   setSignTransactionsCancelMessage,
-  moveTransactionsToSignedState
+  moveTransactionsToSignedState,
+  updateCustomTransactionInformation
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
