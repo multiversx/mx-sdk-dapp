@@ -29,8 +29,9 @@ import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransac
  */
 const optionalRedirect = (sessionInformation: SignedTransactionsBodyType) => {
   const redirectRoute = sessionInformation.redirectRoute;
+
   if (redirectRoute) {
-    safeRedirect(redirectRoute);
+    safeRedirect({ url: redirectRoute });
   }
 };
 
