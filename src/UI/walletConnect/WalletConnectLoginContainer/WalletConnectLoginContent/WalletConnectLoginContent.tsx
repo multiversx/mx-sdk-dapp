@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ReactNode } from 'react';
+import React, { useEffect, useState } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import QRCode from 'qrcode';
@@ -8,38 +8,16 @@ import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { getAuthorizationInfo } from 'services/nativeAuth/helpers';
-import { ModalContainer } from 'UI/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { ScamPhishingAlert } from 'UI/ScamPhishingAlert';
 import { isMobileEnvironment } from 'utils/environment/isMobileEnvironment';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
-import { WithClassnameType } from '../../types';
-import { InnerWalletConnectComponentsClassesType } from '../types';
-import { OnProviderLoginType } from './../../../types';
+import { Pairinglist } from '../PairingList';
+import { WalletConnectLoginModalPropsType } from '../types';
+import styles from '../walletConnectLoginContainerStyles.scss';
 
-import { Pairinglist } from './PairingList';
-
-import styles from './walletConnectLoginContainerStyles.scss';
-
-export interface WalletConnectLoginModalPropsType
-  extends OnProviderLoginType,
-    WithClassnameType {
-  customSpinnerComponent?: ReactNode;
-  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
-  isWalletConnectV2?: boolean;
-  lead?: string;
-  legacyMessage?: string;
-  loginButtonText: string;
-  logoutRoute?: string;
-  onClose?: () => void;
-  showLoginContent?: boolean;
-  showScamPhishingAlert?: boolean;
-  title?: string;
-  wrapContentInsideModal?: boolean;
-}
-
-export const WalletConnectLoginContainer = ({
+export const WalletConnectLoginContent = ({
   callbackRoute,
   className = 'dapp-wallet-connect-login-modal',
   customSpinnerComponent,
@@ -48,13 +26,11 @@ export const WalletConnectLoginContainer = ({
   loginButtonText = 'xPortal App',
   logoutRoute,
   nativeAuth,
-  onClose,
   onLoginRedirect,
-  showLoginContent,
   showScamPhishingAlert = true,
   title = 'Login with the xPortal App',
   token,
-  wrapContentInsideModal
+  canLoginRef
 }: WalletConnectLoginModalPropsType) => {
   const [
     initLoginWithWalletConnectV2,
@@ -62,7 +38,6 @@ export const WalletConnectLoginContainer = ({
     {
       connectExisting,
       removeExistingPairing,
-      cancelLogin: cancelLoginV2,
       uriDeepLink: walletConnectDeepLinkV2,
       walletConnectUri: walletConnectUriV2,
       wcPairings
@@ -72,7 +47,8 @@ export const WalletConnectLoginContainer = ({
     token,
     nativeAuth,
     onLoginRedirect,
-    logoutRoute
+    logoutRoute,
+    canLoginRef
   });
 
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
@@ -116,11 +92,6 @@ export const WalletConnectLoginContainer = ({
     }
   };
 
-  const onCloseModal = () => {
-    cancelLoginV2();
-    onClose?.();
-  };
-
   useEffect(() => {
     generateQRCode();
   }, [walletConnectUriV2]);
@@ -133,7 +104,7 @@ export const WalletConnectLoginContainer = ({
     ? getAuthorizationInfo(token, containerScamPhishingAlertClassName)
     : undefined;
 
-  const content = (
+  return (
     <>
       {showScamPhishingAlert && (
         <ScamPhishingAlert
@@ -236,32 +207,5 @@ export const WalletConnectLoginContainer = ({
         )}
       </div>
     </>
-  );
-
-  if (showLoginContent === false) {
-    return null;
-  }
-
-  if (!wrapContentInsideModal) {
-    return <>{content}</>;
-  }
-
-  return (
-    <ModalContainer
-      className={className}
-      modalConfig={{
-        headerText: 'Login using the xPortal App',
-        showHeader: true,
-        modalContentClassName: styles.xPortalModalDialogContent,
-        modalHeaderClassName: styles.xPortalModalHeader,
-        modalHeaderTextClassName: styles.xPortalModalHeaderText,
-        modalCloseButtonClassName: styles.xPortalModalCloseButton,
-        modalBodyClassName: styles.xPortalModalBody,
-        modalDialogClassName: styles.xPortalLoginContainer
-      }}
-      onClose={onCloseModal}
-    >
-      {content}
-    </ModalContainer>
   );
 };

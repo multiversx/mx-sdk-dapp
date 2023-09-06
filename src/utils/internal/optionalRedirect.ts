@@ -14,7 +14,6 @@ export function optionalRedirect({
   options
 }: OptionalRedirectType) {
   const shouldRedirect = Boolean(callbackRoute);
-
   const hasOnLoginRedirect = typeof onLoginRedirect === 'function';
 
   if (shouldRedirect && callbackRoute != null) {
@@ -26,7 +25,10 @@ export function optionalRedirect({
     const { pathname } = getWindowLocation();
 
     if (!pathname.includes(callbackRoute)) {
-      safeRedirect(callbackRoute, DEFAULT_TIMEOUT);
+      safeRedirect({
+        url: callbackRoute,
+        timeout: DEFAULT_TIMEOUT
+      });
     }
   }
 }
