@@ -17,6 +17,7 @@ import {
 } from 'types/enums.types';
 import { BatchTransactionStatus } from 'types/serverTransactions.types';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
+import { generateBatchTransactionsGrouping } from '../../../utils/transactions/batch/generateBatchTransactionsGrouping';
 
 export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();
@@ -46,10 +47,8 @@ export const useSendBatchTransactions = () => {
         }));
 
         // Ensure the transaction custom information is updated with the desired values from the dApp when the transactions are send on demand
-        let indexInFlatArray = 0;
-        const grouping = params.transactions.map((group) => {
-          return group.map((_tx) => indexInFlatArray++);
-        });
+        const grouping = generateBatchTransactionsGrouping(params.transactions);
+
         updateSignedTransactionCustomTransactionInformationState({
           sessionId: params.sessionId,
           customTransactionInformationOverrides: {

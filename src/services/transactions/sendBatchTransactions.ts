@@ -9,6 +9,7 @@ import {
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { signTransactions } from './signTransactions';
 import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
+import { generateBatchTransactionsGrouping } from '../../utils/transactions/batch/generateBatchTransactionsGrouping';
 
 export async function sendBatchTransactions({
   transactions,
@@ -30,10 +31,7 @@ export async function sendBatchTransactions({
       minGasLimit
     });
 
-    let indexInFlatArray = 0;
-    const grouping = transactions.map((group) => {
-      return group.map((_tx) => indexInFlatArray++);
-    });
+    const grouping = generateBatchTransactionsGrouping(transactions);
 
     const { sessionId, error } = await signTransactions({
       transactions: transactionsToSign as Transaction[],
