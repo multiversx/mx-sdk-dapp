@@ -9,6 +9,7 @@ import { tokenLoginSelector } from 'reduxStore/selectors';
 import { WithClassnameType } from '../../../types';
 
 import styles from './confirmAddressStyles.scss';
+import { getAuthTokenText } from './helpers';
 
 export interface ConfirmAddressPropsType extends WithClassnameType {
   token?: string;
@@ -40,6 +41,11 @@ export const ConfirmAddress = ({
 
   const tokenLogin = useSelector(tokenLoginSelector);
   const loginToken = tokenLogin?.loginToken ?? token;
+
+  const authTokenText = getAuthTokenText({
+    loginToken,
+    version: ledgerAccount?.version
+  });
 
   return (
     <div
@@ -98,7 +104,7 @@ export const ConfirmAddress = ({
               ledgerModalConfirmDataClassName
             )}
           >
-            {`${loginToken}{}`}
+            {authTokenText?.data}
           </div>
 
           <div
@@ -107,9 +113,7 @@ export const ConfirmAddress = ({
               ledgerModalConfirmDescriptionClassName
             )}
           >
-            {loginToken
-              ? 'are the one shown on your Ledger device screen now.'
-              : 'is the one shown on your Ledger device screen now.'}
+            {authTokenText?.description}
           </div>
         </div>
       )}
