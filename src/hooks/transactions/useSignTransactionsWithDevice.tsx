@@ -134,7 +134,7 @@ export function useSignTransactionsWithDevice(
         customTransactionInformation?.redirectAfterSign &&
         !locationIncludesCallbackRoute
       ) {
-        safeRedirect(callbackRoute);
+        safeRedirect({ url: callbackRoute });
       }
     }
   }
