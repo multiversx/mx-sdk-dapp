@@ -6,10 +6,10 @@ import {
   SendBatchTransactionsPropsType,
   SimpleTransactionType
 } from 'types';
+import { generateBatchTransactionsGrouping } from 'utils/transactions/batch/generateBatchTransactionsGrouping';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { signTransactions } from './signTransactions';
 import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
-import { generateBatchTransactionsGrouping } from '../../utils/transactions/batch/generateBatchTransactionsGrouping';
 
 export async function sendBatchTransactions({
   transactions,

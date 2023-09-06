@@ -16,8 +16,8 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { BatchTransactionStatus } from 'types/serverTransactions.types';
+import { generateBatchTransactionsGrouping } from 'utils/transactions/batch/generateBatchTransactionsGrouping';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
-import { generateBatchTransactionsGrouping } from '../../../utils/transactions/batch/generateBatchTransactionsGrouping';
 
 export const useSendBatchTransactions = () => {
   const dispatch = useDispatch();
