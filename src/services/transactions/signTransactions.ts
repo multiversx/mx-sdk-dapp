@@ -68,7 +68,11 @@ export async function signTransactions({
   const signTransactionsPayload = {
     sessionId,
     callbackRoute,
-    customTransactionInformation,
+    customTransactionInformation: {
+      ...(customTransactionInformation ?? {}),
+      signWithoutSending:
+        customTransactionInformation?.signWithoutSending ?? true
+    },
     transactions: transactionsPayload.map((tx) => {
       return {
         ...tx.toPlainObject(),

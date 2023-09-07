@@ -13,8 +13,8 @@ import { useVerifyBatchStatus } from './useVerifyBatchStatus';
  * Resolves the toast by checking the status of each transaction in batch after a certain time (90seconds)
  * */
 export const useCheckBatchesOnWsFailureFallback = (props?: {
-  onSuccess?: (batchId: string | null) => void;
-  onFail?: (batchId: string | null, errorMessage?: string) => void;
+  onSuccess?: (sessionId: string | null) => void;
+  onFail?: (sessionId: string | null, errorMessage?: string) => void;
 }) => {
   const { batchTransactionsArray } = useGetBatches();
   const { verifyBatchStatus } = useVerifyBatchStatus(props);

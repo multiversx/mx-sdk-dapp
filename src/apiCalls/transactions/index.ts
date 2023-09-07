@@ -1,4 +1,5 @@
 export * from './sendSignedTransactions';
+export * from './sendSignedBatchTransactions';
 export * from './getTransactionsByHashes';
 export * from './getTransactions';
 export * from './getTransactionsCount';

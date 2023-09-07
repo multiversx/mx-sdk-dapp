@@ -8,8 +8,8 @@ import { useCheckBatch } from './useCheckBatch';
 import { useUpdateBatch } from './useUpdateBatch';
 
 export const useVerifyBatchStatus = (props?: {
-  onSuccess?: (batchId: string | null) => void;
-  onFail?: (batchId: string | null, errorMessage?: string) => void;
+  onSuccess?: (sessionId: string | null) => void;
+  onFail?: (sessionId: string | null, errorMessage?: string) => void;
 }) => {
   const dispatch = useDispatch();
   const { signedTransactions } = useGetSignedTransactions();
@@ -30,6 +30,12 @@ export const useVerifyBatchStatus = (props?: {
         return;
       }
 
+      // If the grouping is missing then means the transactions were sent with the normal flow
+      const grouping = session.customTransactionInformation?.grouping;
+      if (!grouping) {
+        return;
+      }
+
       const sessionTransactions =
         signedTransactions[sessionId]?.transactions ?? [];
 
@@ -40,11 +46,11 @@ export const useVerifyBatchStatus = (props?: {
 
       if (completed) {
         if (isSuccessful) {
-          onSuccess?.(batchId);
+          onSuccess?.(sessionId);
         }
 
         if (isFailed) {
-          onFail?.(batchId, 'Error processing batch transactions.');
+          onFail?.(sessionId, 'Error processing batch transactions.');
         }
       } else {
         const data = await checkBatch({ batchId });

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.20.0]](https://github.com/multiversx/mx-sdk-dapp/pull/911)] - 2023-09-07
+
+- [Add batch transactions documentation](https://github.com/multiversx/mx-sdk-dapp/pull/909)
+- [Batch transactions improvements](https://github.com/multiversx/mx-sdk-dapp/pull/905)
+
 ## [[v2.19.9]](https://github.com/multiversx/mx-sdk-dapp/pull/908)] - 2023-09-06
 
 - [Changed `safeRedirect` method to force page reload on logout to ensure fresh states](https://github.com/multiversx/mx-sdk-dapp/pull/907)

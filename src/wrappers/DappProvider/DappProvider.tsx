@@ -21,7 +21,6 @@ export interface DappProviderPropsType {
   environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
   dappConfig?: DappConfigType;
-  enableBatchTransactions?: boolean;
 }
 
 export const DappProvider = ({
@@ -30,8 +29,7 @@ export const DappProvider = ({
   externalProvider,
   environment,
   customComponents,
-  dappConfig,
-  enableBatchTransactions
+  dappConfig
 }: DappProviderPropsType) => {
   if (!environment) {
     //throw if the user tries to initialize the app without a valid environment
@@ -54,10 +52,7 @@ export const DappProvider = ({
             dappConfig={dappConfig}
           >
             <ProviderInitializer />
-            <CustomComponents
-              customComponents={customComponents}
-              enableBatchTransactions={enableBatchTransactions}
-            />
+            <CustomComponents customComponents={customComponents} />
             {children}
           </AppInitializer>
         )}
