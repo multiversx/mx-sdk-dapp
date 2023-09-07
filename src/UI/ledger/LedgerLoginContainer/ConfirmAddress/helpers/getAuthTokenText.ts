@@ -1,6 +1,6 @@
 import { decodeLoginToken } from 'services/nativeAuth/helpers/decodeLoginToken';
 import getLedgerVersionOptions from 'utils/operations/ledger/getLedgerVersionOptions';
-import { getFormattedDate } from './getFormattedDate';
+import { secondsToTimeString } from './secondsToTimeString';
 
 export const getAuthTokenText = ({
   loginToken,
@@ -22,7 +22,7 @@ export const getAuthTokenText = ({
   const description = 'are the one shown on your Ledger device screen now.';
 
   if (ledgerWithUsernames) {
-    const time = getFormattedDate(nativeAuthInfo.ttl);
+    const time = secondsToTimeString(nativeAuthInfo.ttl);
 
     return {
       data: `Authorizing ${nativeAuthInfo.origin} for ${time}`,
