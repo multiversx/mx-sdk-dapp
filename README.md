@@ -809,18 +809,6 @@ useBatchTransactionsTracker(props);
 
 The transactions trackers will automatically update the transactions statuses in the store. This functionality is used by the `TransactionToastList` component to display the transactions statuses.
 
-```typescript
-import {useTrackTransactionStatus} from @multiversx/sdk-dapp/hooks;
-
-const transactionStatus = useTrackTransactionStatus({
-  transactionId: sessionId,
-  onSuccess,
-  onFail,
-  onCancelled,
-});
-```
-
-
 ### 2. Tracking transaction status
 
 ```typescript
