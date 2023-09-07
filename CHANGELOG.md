@@ -7,22 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Batch transactions improvements](https://github.com/multiversx/mx-sdk-dapp/pull/905)
+
+## [[v2.19.9]](https://github.com/multiversx/mx-sdk-dapp/pull/908)] - 2023-09-06
+
+- [Changed `safeRedirect` method to force page reload on logout to ensure fresh states](https://github.com/multiversx/mx-sdk-dapp/pull/907)
+- [Fix WalletConnect initialization on background regardless of the selected provider](https://github.com/multiversx/mx-sdk-dapp/pull/906)
+
 ## [[v2.19.8]](https://github.com/multiversx/mx-sdk-dapp/pull/904)] - 2023-09-04
+
 - [Removed `loginMethod` from the `isLoggedIn` check](https://github.com/multiversx/mx-sdk-dapp/pull/903)
 
 ## [[v2.19.7]](https://github.com/multiversx/mx-sdk-dapp/pull/901)] - 2023-09-01
+
 - [Added ledger usernames validation](https://github.com/multiversx/mx-sdk-dapp/pull/900)
 
 ## [[v2.19.6]](https://github.com/multiversx/mx-sdk-dapp/pull/899)] - 2023-08-31
+
 - [Updated `sdk-web-wallet-provider` to support usernames](https://github.com/multiversx/mx-sdk-dapp/pull/898)
 - [Added deprecated warnings for login button callbacks](https://github.com/multiversx/mx-sdk-dapp/commit/2e71fbeeebabe479f897db38f10972c55aca44af)
+
 ## [[v2.19.5]](https://github.com/multiversx/mx-sdk-dapp/pull/897)] - 2023-08-29
+
 - [Fixed Ledger and Walletconnect login with modals](https://github.com/multiversx/mx-sdk-dapp/pull/895)
 -
+
 ## [[v2.19.4]](https://github.com/multiversx/mx-sdk-dapp/pull/896)] - 2023-08-28
+
 - [Memoize dappConfig in order to not trigger initializeApp on every DappProvider rerender](https://github.com/multiversx/mx-sdk-dapp/pull/894)
 
 ## [[v2.19.3]](https://github.com/multiversx/mx-sdk-dapp/pull/890)] - 2023-08-21
+
 - [Added `DataTestIdsEnum` to `data-testid` HTML tags](https://github.com/multiversx/mx-sdk-dapp/pull/889)
 - [Added `addOriginToLocationPath` helper to parse redirect URLs](https://github.com/multiversx/mx-sdk-dapp/pull/888)
 - [Prevent signing transactions with sender different from current account](https://github.com/multiversx/mx-sdk-dapp/pull/887)

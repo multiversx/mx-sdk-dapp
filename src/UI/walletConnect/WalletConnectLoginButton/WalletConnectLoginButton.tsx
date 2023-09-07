@@ -1,35 +1,10 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 
 import { useGetModalLoginMethods } from 'hooks';
 
-import { OnProviderLoginType } from '../../../types';
 import { LoginButton } from '../../LoginButton/LoginButton';
-import { WithClassnameType } from '../../types';
-import { InnerWalletConnectComponentsClassesType } from '../types';
 import { WalletConnectLoginContainer } from '../WalletConnectLoginContainer';
-
-export interface WalletConnectLoginButtonPropsType
-  extends WithClassnameType,
-    OnProviderLoginType {
-  buttonClassName?: string;
-  children?: ReactNode;
-  customSpinnerComponent?: ReactNode;
-  disabled?: boolean;
-  hideButtonWhenModalOpens?: boolean;
-  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
-  isWalletConnectV2?: boolean;
-  lead?: string;
-  loginButtonText?: string;
-  logoutRoute?: string;
-  modalClassName?: string;
-  onContentHide?: (props?: any) => void;
-  onContentShow?: (props?: any) => void;
-  onModalCloses?: (props?: any) => void;
-  onModalOpens?: (props?: any) => void;
-  showScamPhishingAlert?: boolean;
-  title?: string;
-  wrapContentInsideModal?: boolean;
-}
+import { WalletConnectLoginButtonPropsType } from './types';
 
 export const WalletConnectLoginButton = ({
   buttonClassName = 'dapp-wallet-connect-login-button',
