@@ -1,8 +1,3 @@
-/*
-   Converts number of seconds to a time string. Example: 123 -> "2min 3 sec.";
-   1234 -> "20min 34 sec."; 12345 -> "3h 25min 45sec.". If more than 24h, will display "more than one day"
-*/
-
 export const secondsToTimeString = (seconds: number) => {
   if (seconds <= 0) {
     return 'N/A time';

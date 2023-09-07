@@ -19,15 +19,19 @@ export const getAuthTokenText = ({
     return null;
   }
 
+  const description = 'are the one shown on your Ledger device screen now.';
+
   if (ledgerWithUsernames) {
     const time = secondsToTimeString(nativeAuthInfo.ttl);
 
     return {
-      data: `${nativeAuthInfo.origin} for ${time}.`
+      data: `${nativeAuthInfo.origin} for ${time}.`,
+      description
     };
   }
 
   return {
-    data: `${loginToken}{}`
+    data: `${loginToken}{}`,
+    description
   };
 };

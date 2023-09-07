@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Converted nativeAuth TTL to string date format and changed UI description](https://github.com/multiversx/mx-sdk-dapp/pull/910)
+- [Changed Ledger authentication texts for v.23 of MultiversX app](https://github.com/multiversx/mx-sdk-dapp/pull/910)
 - [Batch transactions improvements](https://github.com/multiversx/mx-sdk-dapp/pull/905)
 
 ## [[v2.19.9]](https://github.com/multiversx/mx-sdk-dapp/pull/908)] - 2023-09-06
