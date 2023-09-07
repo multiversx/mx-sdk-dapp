@@ -74,7 +74,7 @@ export const ConfirmAddress = ({
             ledgerModalConfirmDescriptionClassName
           )}
         >
-          For security, please confirm that your address:
+          For security, please confirm your address:
         </div>
 
         <div
@@ -95,7 +95,7 @@ export const ConfirmAddress = ({
               ledgerModalConfirmDescriptionClassName
             )}
           >
-            and Auth Token:
+            and authorize:
           </div>
 
           <div
@@ -105,15 +105,6 @@ export const ConfirmAddress = ({
             )}
           >
             {authTokenText?.data}
-          </div>
-
-          <div
-            className={classNames(
-              styles.ledgerConfirmAddressDescription,
-              ledgerModalConfirmDescriptionClassName
-            )}
-          >
-            {authTokenText?.description}
           </div>
         </div>
       )}
