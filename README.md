@@ -617,8 +617,8 @@ Having the example above, the transactions will be sent in the following order:
 `tx1` will be sent first, waits until is completed, then `tx2` and `tx3` will be sent in parallel. This means that the groups are sent synchronously, but the transactions inside a group are sent in parallel.
 
 ** Important! This function will send the transactions automatically in batches, based on the provided transactions array, immediately after signing.
-If you do not want to be sent automatically, but on demand, then you should use send callback exposed by the `useSendBatchTransactions` hook.
-Be aware, you should take care of the `sessionId` passed to the batch. We recommend to generate a new sessionId like this: `Date.now().toString();` **
+If you do not want them to be sent automatically, but on demand, then you should use send callback exposed by the `useSendBatchTransactions` hook.
+Be sure to save the `sessionId` passed to the batch. We recommend to generate a new sessionId like this: `Date.now().toString();` **
 
 ```typescript
 import { sendBatchTransactions } from '@multiversx/sdk-dapp/services/transactions/sendBatchTransactions';
