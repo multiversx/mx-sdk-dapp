@@ -1,6 +1,6 @@
 import { useBatchTransactionsTracker } from 'hooks/transactions/batch/tracker/useBatchTransactionsTracker';
+import { useTransactionsTracker } from 'hooks/transactions/useTransactionsTracker';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
-import { useTransactionsTracker } from './useTransactionsTracker';
 
 export function TransactionsTracker(props: TransactionsTrackerType) {
   useTransactionsTracker(props);
