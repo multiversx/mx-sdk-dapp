@@ -30,6 +30,14 @@ export async function sendSignedBatchTransactions({
   const address = addressSelector(store.getState());
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
 
+  if (!address) {
+    return {
+      error:
+        'Invalid address provided. You need to be logged in to send transactions',
+      batchId: null
+    };
+  }
+
   try {
     const batchId = buildBatchId({
       sessionId,
