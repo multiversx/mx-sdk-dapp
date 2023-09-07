@@ -532,9 +532,10 @@ or the `useSignTransactions` hook defined below. If you don't use one of these, 
 
 </details>
 
-<details><summary>
+<details>
+<summary>
 Sending sync transactions in batches (batch transactions mechanism)
-  </summary>
+</summary>
 
 ### Sending Transactions
 
@@ -646,9 +647,10 @@ or the `useSignTransactions` hook defined below. If you don't use one of these, 
 
 </details>
 
-<details><summary>
+<details>
+<summary>
 Transaction Signing Flow
-  </summary>
+</summary>
 
 ### Transaction Signing Flow
 
@@ -733,7 +735,7 @@ Tracking a transaction
 
 ### Tracking a transaction
 
-The library has a built-in implementation for tracking the transactions send normally of synchronously via batch transactions.
+The library has a built-in implementation for tracking the transactions sent normally of synchronously via batch transactions.
 Also, exposes a hook called `useTrackTransactionStatus`;
 
 ### 1. Built-in tracking
@@ -744,7 +746,7 @@ This component is using the `useTransactionsTracker` and `useBatchTransactionsTr
 `useTransactionsTracker` - track transactions sent normally
 `useBatchTransactionsTracker` track batch transactions
 
-The developers are be able to create theirs own implementation for the transaction tracking component (using these hooks or creating their own logic) and pass it to the `DappProvider` component through `customComponents` field.
+The developers are be able to create their own implementation for the transaction tracking component (using these hooks or creating their own logic) and pass it to the `DappProvider` component through `customComponents` field.
 
 ```jsx
 import { TransactionsTracker } from "your/module";
