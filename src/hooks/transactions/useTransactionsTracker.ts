@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
-import { useCheckTransactionStatus, useRegisterWebsocketListener } from 'hooks';
+import {
+  useCheckTransactionStatus,
+  useRegisterWebsocketListener
+} from 'hooks/index';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
 
 export function useTransactionsTracker(props?: TransactionsTrackerType) {

@@ -1,5 +1,5 @@
 import { useIdleTimer as useReactIdleTimer } from 'react-idle-timer';
-import { useClosureRef } from 'components/TransactionsTracker/useClosureRef';
+import { useClosureRef } from 'hooks/useClosureRef';
 import { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { logoutRouteSelector } from 'reduxStore/selectors';
