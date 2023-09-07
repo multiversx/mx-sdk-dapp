@@ -23,7 +23,7 @@ export const getAuthTokenText = ({
     const time = secondsToTimeString(nativeAuthInfo.ttl);
 
     return {
-      data: `${nativeAuthInfo.origin} for ${time}`
+      data: `${nativeAuthInfo.origin} for ${time}.`
     };
   }
 
