@@ -73,8 +73,7 @@ export class WalletV2Provider {
       endpoint: WALLET_PROVIDER_CONNECT_URL,
       callbackUrl: options?.callbackUrl,
       params: {
-        token: options?.token,
-        isChildTab: true
+        token: options?.token
       }
     });
     this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
@@ -89,15 +88,18 @@ export class WalletV2Provider {
 
     const account: { address: string; signature: string } = await new Promise(
       (resolve) => {
+        console.log('\x1b[42m%s\x1b[0m', 'in account promise');
+
         const walletUrl = this.walletUrl;
         window.addEventListener('message', function eventHandler(event) {
           try {
-            const { type, payload } = JSON.parse(event.data);
+            const { type, payload } = event.data;
             const isWalletLoginEvent =
-              event.origin === new URL(walletUrl).origin &&
-              type === 'loginResponse';
+              event.origin === new URL(walletUrl).origin && type === 'connect';
 
             if (isWalletLoginEvent) {
+              console.log('\x1b[42m%s\x1b[0m', 112);
+
               window.removeEventListener('message', eventHandler);
               resolve(payload);
             }
@@ -148,7 +150,6 @@ export class WalletV2Provider {
         jsonToSend[txProp].push(plainTx[txProp]);
       }
     });
-    jsonToSend.isChildTab = true;
 
     return this.buildWalletUrl({
       endpoint,
