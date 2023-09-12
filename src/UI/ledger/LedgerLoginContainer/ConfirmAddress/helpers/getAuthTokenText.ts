@@ -13,7 +13,7 @@ export const getAuthTokenText = ({
     return null;
   }
 
-  const { ledgerWithUsernames } = getLedgerVersionOptions('1.0.22');
+  const { ledgerWithUsernames } = getLedgerVersionOptions(version);
   const nativeAuthInfo = decodeLoginToken(loginToken);
   if (nativeAuthInfo == null) {
     return null;
