@@ -95,6 +95,10 @@ export class Aggregator {
     return this.isEgld(id) ? this.defaultConfig.WEGLD : id;
   }
 
+  /**
+   * get protocol fees, protocol was set in the constructor.
+   * @returns protocol fees ex: 100 = 0.1%
+   */
   async getProtocolFeePercent(): Promise<number> {
     if (!this.protocol || this.protocol === Address.Zero().bech32()) return 0;
     const query = this.contract.methods.getProtocolFeePercent([this.protocol]);
@@ -102,6 +106,10 @@ export class Aggregator {
     return firstValue?.valueOf() || 0;
   }
 
+  /**
+   * get all supported tokens
+   * @returns list of supported tokens
+   */
   async getTokens() {
     const res = await axios.get<
       Array<{ id: string; decimal?: number; coingeckoId?: string }>
@@ -109,7 +117,18 @@ export class Aggregator {
     return res?.data || [];
   }
 
-  async getPaths(from: string, to: string, amount: BigNumber.Value) {
+  /**
+   *
+   * @param from token id | EGLD
+   * @param to token id | EGLD
+   * @param amount amount of token "from" with decimals ex: 1 EGLD = 1e18
+   * @returns paths, rate, price impact..., return undefined if cannot find any paths
+   */
+  async getPaths(
+    from: string,
+    to: string,
+    amount: BigNumber.Value
+  ): Promise<SorSwapResponse | undefined> {
     if (this.getTokenId(from) === this.getTokenId(to)) {
       if (this.getTokenId(from) === this.defaultConfig.WEGLD) {
         const amt = new BigNumber(amount);
@@ -150,12 +169,20 @@ export class Aggregator {
     return data.data;
   }
 
+  /**
+   *
+   * @param from token id | EGLD
+   * @param to token id | EGLD
+   * @param amount amount of token "from" with decimals ex: 1 EGLD = 1e18
+   * @param slippage 1% = 1_000
+   * @returns interaction that is ready to sign and send to the network
+   */
   async aggregate(
     from: string,
     to: string,
     amount: BigNumber.Value,
     slippage: number
-  ) {
+  ): Promise<Interaction> {
     const protocol =
       this.getTokenId(from) === this.getTokenId(to) &&
       this.getTokenId(from) === this.defaultConfig.WEGLD
