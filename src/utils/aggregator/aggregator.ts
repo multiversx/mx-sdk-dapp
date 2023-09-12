@@ -110,6 +110,30 @@ export class Aggregator {
   }
 
   async getPaths(from: string, to: string, amount: BigNumber.Value) {
+    if (this.getTokenId(from) === this.getTokenId(to)) {
+      if (this.getTokenId(from) === this.defaultConfig.WEGLD) {
+        const amt = new BigNumber(amount);
+        const res: SorSwapResponse = {
+          effectivePrice: 1,
+          effectivePriceReversed: 1,
+          marketSp: '0',
+          priceImpact: 0,
+          returnAmount: amt.div(1e18).toString(10),
+          returnAmountConsiderGasFees: amt.toString(10),
+          returnAmountWithDecimal: amt.toString(10),
+          returnAmountWithoutSwapFees: amt.toString(10),
+          tokenAddresses: [],
+          swaps: [],
+          swapAmount: amt.div(1e18).toString(10),
+          swapAmountWithDecimal: amt.toString(10),
+          tokenIn: from,
+          tokenOut: to,
+          routes: []
+        };
+        return res;
+      }
+      return;
+    }
     const fee = this.fee ?? (await this.getProtocolFeePercent());
     this.fee = fee;
     const amt = new BigNumber(amount)
@@ -132,7 +156,13 @@ export class Aggregator {
     amount: BigNumber.Value,
     slippage: number
   ) {
+    const protocol =
+      this.getTokenId(from) === this.getTokenId(to) &&
+      this.getTokenId(from) === this.defaultConfig.WEGLD
+        ? ''
+        : this.protocol;
     const res = await this.getPaths(from, to, amount);
+    if (!res) throw new Error(`Could not find any paths for ${from} to ${to}`);
     const swaps = res?.swaps || [];
     const hopTokenIds = res?.tokenAddresses || [];
     const steps: AggregatorStep[] = swaps.map((s) => {
@@ -163,7 +193,7 @@ export class Aggregator {
         amount,
         steps,
         [...hopLimits, ...outputLimits],
-        this.protocol
+        protocol
       );
     }
     return await this._aggregateEsdt(
@@ -171,7 +201,7 @@ export class Aggregator {
       steps,
       [...hopLimits, ...outputLimits],
       this.isEgld(to),
-      this.protocol
+      protocol
     );
   }
 
