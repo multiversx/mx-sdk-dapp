@@ -1,0 +1,371 @@
+{
+    "buildInfo": {
+        "rustc": {
+            "version": "1.72.0-nightly",
+            "commitHash": "2d0aa57684e10f7b3d3fe740ee18d431181583ad",
+            "commitDate": "2023-06-18",
+            "channel": "Nightly",
+            "short": "rustc 1.72.0-nightly (2d0aa5768 2023-06-18)"
+        },
+        "contractCrate": {
+            "name": "aggregator",
+            "version": "0.0.0"
+        },
+        "framework": {
+            "name": "multiversx-sc",
+            "version": "0.40.0"
+        }
+    },
+    "name": "AggregatorContract",
+    "constructor": {
+        "inputs": [
+            {
+                "name": "egld_wrapper_address",
+                "type": "Address"
+            },
+            {
+                "name": "egld_wrapped_token_id",
+                "type": "TokenIdentifier"
+            }
+        ],
+        "outputs": []
+    },
+    "endpoints": [
+        {
+            "name": "aggregateEgld",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "EGLD"
+            ],
+            "inputs": [
+                {
+                    "name": "steps",
+                    "type": "List<AggregatorStep>"
+                },
+                {
+                    "name": "limits",
+                    "type": "List<TokenAmount>"
+                },
+                {
+                    "name": "protocol",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "aggregateEsdt",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "steps",
+                    "type": "List<AggregatorStep>"
+                },
+                {
+                    "name": "limits",
+                    "type": "List<TokenAmount>"
+                },
+                {
+                    "name": "egld_return",
+                    "type": "bool"
+                },
+                {
+                    "name": "protocol",
+                    "type": "optional<Address>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "aggregate",
+            "mutability": "mutable",
+            "payableInTokens": [
+                "*"
+            ],
+            "inputs": [
+                {
+                    "name": "steps",
+                    "type": "List<AggregatorStep>"
+                },
+                {
+                    "name": "limits",
+                    "type": "variadic<TokenAmount>",
+                    "multi_arg": true
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<EsdtTokenPayment>"
+                }
+            ]
+        },
+        {
+            "name": "getClaimabeProtocolFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "protocol",
+                    "type": "Address"
+                },
+                {
+                    "name": "from_idx",
+                    "type": "u64"
+                },
+                {
+                    "name": "to_idx",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<TokenAmount>"
+                }
+            ]
+        },
+        {
+            "name": "registerProtocolFee",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "whitelist_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getClaimabeAshswapFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "from_idx",
+                    "type": "u64"
+                },
+                {
+                    "name": "to_idx",
+                    "type": "u64"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "List<TokenAmount>"
+                }
+            ]
+        },
+        {
+            "name": "getAshswapFeeAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "registerAshswapFee",
+            "onlyOwner": true,
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "fee_percent",
+                    "type": "u64"
+                },
+                {
+                    "name": "whitelist_address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getProtocolFeePercent",
+            "mutability": "readonly",
+            "inputs": [
+                {
+                    "name": "address",
+                    "type": "Address"
+                }
+            ],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "getAshswapFeePercent",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "u64"
+                }
+            ]
+        },
+        {
+            "name": "claimProtocolFee",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "protocol",
+                    "type": "Address"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimProtocolFeeByTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "protocol",
+                    "type": "Address"
+                },
+                {
+                    "name": "tokens",
+                    "type": "List<TokenIdentifier>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "claimAshswapFee",
+            "mutability": "mutable",
+            "inputs": [],
+            "outputs": []
+        },
+        {
+            "name": "claimAshswapFeeByTokens",
+            "mutability": "mutable",
+            "inputs": [
+                {
+                    "name": "tokens",
+                    "type": "List<TokenIdentifier>"
+                }
+            ],
+            "outputs": []
+        },
+        {
+            "name": "getEgldWrapperAddress",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "Address"
+                }
+            ]
+        },
+        {
+            "name": "getEgldWrappedTokenId",
+            "mutability": "readonly",
+            "inputs": [],
+            "outputs": [
+                {
+                    "type": "TokenIdentifier"
+                }
+            ]
+        }
+    ],
+    "events": [
+        {
+            "identifier": "aggregate_event",
+            "inputs": [
+                {
+                    "name": "caller",
+                    "type": "Address",
+                    "indexed": true
+                },
+                {
+                    "name": "aggregate",
+                    "type": "AggregatorEvent"
+                }
+            ]
+        }
+    ],
+    "hasCallback": false,
+    "types": {
+        "AggregatorEvent": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "payment_in",
+                    "type": "List<EsdtTokenPayment>"
+                },
+                {
+                    "name": "payment_out",
+                    "type": "List<EsdtTokenPayment>"
+                }
+            ]
+        },
+        "AggregatorStep": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_in",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_out",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount_in",
+                    "type": "BigUint"
+                },
+                {
+                    "name": "pool_address",
+                    "type": "Address"
+                },
+                {
+                    "name": "function_name",
+                    "type": "bytes"
+                },
+                {
+                    "name": "arguments",
+                    "type": "List<bytes>"
+                }
+            ]
+        },
+        "EsdtTokenPayment": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token_identifier",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "token_nonce",
+                    "type": "u64"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        },
+        "TokenAmount": {
+            "type": "struct",
+            "fields": [
+                {
+                    "name": "token",
+                    "type": "TokenIdentifier"
+                },
+                {
+                    "name": "amount",
+                    "type": "BigUint"
+                }
+            ]
+        }
+    }
+}
