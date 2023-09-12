@@ -5,7 +5,6 @@ import { DataTestIdsEnum } from 'constants/index';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
-import { getLedgerVersionOptions } from 'utils';
 
 import { WithClassnameType } from '../../../types';
 
@@ -48,10 +47,6 @@ export const ConfirmAddress = ({
     version: ledgerAccount?.version
   });
 
-  const { ledgerWithUsernames } = getLedgerVersionOptions(
-    ledgerAccount?.version ?? '0'
-  );
-
   return (
     <div
       className={classNames(
@@ -79,9 +74,7 @@ export const ConfirmAddress = ({
             ledgerModalConfirmDescriptionClassName
           )}
         >
-          {ledgerWithUsernames
-            ? 'For security, please confirm your address:'
-            : 'For security, please confirm that your address:'}
+          {authTokenText?.infoPartOne}
         </div>
 
         <div
@@ -90,41 +83,38 @@ export const ConfirmAddress = ({
             ledgerModalConfirmDataClassName
           )}
         >
-          <>{ledgerAccount?.address ?? ''}</>
+          {ledgerAccount?.address ?? ''}
         </div>
       </div>
 
-      {loginToken && (
-        <div className={styles.ledgerConfirmAddressSection}>
-          <div
-            className={classNames(
-              styles.ledgerConfirmAddressDescription,
-              ledgerModalConfirmDescriptionClassName
-            )}
-          >
-            {ledgerWithUsernames ? 'and authorize:' : 'and Auth Token:'}
-          </div>
-
-          <div
-            className={classNames(
-              styles.ledgerConfirmAddressData,
-              ledgerModalConfirmDataClassName
-            )}
-          >
-            {authTokenText?.data}
-          </div>
-          {!ledgerWithUsernames ? (
-            <div
-              className={classNames(
-                styles.ledgerConfirmAddressDescription,
-                ledgerModalConfirmDescriptionClassName
-              )}
-            >
-              {authTokenText?.data}
-            </div>
-          ) : null}
+      <div className={styles.ledgerConfirmAddressSection}>
+        <div
+          className={classNames(
+            styles.ledgerConfirmAddressDescription,
+            ledgerModalConfirmDescriptionClassName
+          )}
+        >
+          {authTokenText?.infoPartTwo}
         </div>
-      )}
+
+        <div
+          className={classNames(
+            styles.ledgerConfirmAddressData,
+            ledgerModalConfirmDataClassName
+          )}
+        >
+          {authTokenText?.data}
+        </div>
+
+        <div
+          className={classNames(
+            styles.ledgerConfirmAddressDescription,
+            ledgerModalConfirmDescriptionClassName
+          )}
+        >
+          {authTokenText?.infoPartThree}
+        </div>
+      </div>
 
       <div
         className={classNames(

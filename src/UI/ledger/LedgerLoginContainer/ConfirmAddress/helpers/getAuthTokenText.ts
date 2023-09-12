@@ -13,25 +13,33 @@ export const getAuthTokenText = ({
     return null;
   }
 
-  const { ledgerWithUsernames } = getLedgerVersionOptions(version);
+  const { ledgerWithUsernames } = getLedgerVersionOptions('1.0.22');
   const nativeAuthInfo = decodeLoginToken(loginToken);
   if (nativeAuthInfo == null) {
     return null;
   }
 
-  const description = 'are the one shown on your Ledger device screen now.';
+  const infoPartOne = 'For security, please confirm that your address:';
+  const infoPartTwo = 'and Auth Token:';
+  const infoPartThree = 'are the one shown on your Ledger device screen now.';
 
   if (ledgerWithUsernames) {
     const time = secondsToTimeString(nativeAuthInfo.ttl);
 
+    const infoPartOne = 'For security, please confirm your address:';
+    const infoPartTwo = 'and authorize:';
+
     return {
       data: `${nativeAuthInfo.origin} for ${time}.`,
-      description
+      infoPartOne,
+      infoPartTwo
     };
   }
 
   return {
     data: `${loginToken}{}`,
-    description
+    infoPartOne,
+    infoPartTwo,
+    infoPartThree
   };
 };

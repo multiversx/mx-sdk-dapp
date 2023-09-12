@@ -1,8 +1,29 @@
 import { secondsToTimeString } from '../secondsToTimeString';
 
 describe('secondsToTimeString tests', () => {
-  it('converts 0 seconds to "0 sec"', () => {
+  it('converts 0 seconds to "N/A time"', () => {
     expect(secondsToTimeString(0)).toBe('N/A time');
+  });
+
+  it('converts NaN to "N/A time"', () => {
+    expect(secondsToTimeString(NaN)).toBe('N/A time');
+  });
+
+  it('converts undefined to "N/A time"', () => {
+    expect(secondsToTimeString(undefined as any)).toBe('N/A time');
+  });
+
+  it('converts -1 to "N/A time"', () => {
+    expect(secondsToTimeString(-1)).toBe('N/A time');
+  });
+
+  it('converts null to "N/A time"', () => {
+    expect(secondsToTimeString(null as any)).toBe('N/A time');
+  });
+
+  it('converts string values to "N/A time"', () => {
+    expect(secondsToTimeString('abc' as any)).toBe('N/A time');
+    expect(secondsToTimeString('123' as any)).toBe('N/A time');
   });
 
   it('converts seconds less than a minute correctly', () => {
