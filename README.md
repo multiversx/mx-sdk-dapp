@@ -537,7 +537,7 @@ or the `useSignTransactions` hook defined below. If you don't use one of these, 
 Sending sync transactions in batches (batch transactions mechanism)
 </summary>
 
-### Sending Transactions
+### Sending transactions synchronously in batches
 
 The API for sending sync transactions is a function called **sendBatchTransactions**:
 
