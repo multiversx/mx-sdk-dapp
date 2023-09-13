@@ -1,7 +1,7 @@
-import { sendBatchTransactions } from './sendBatchTransactions';
 import { addressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { sendBatchTransactions } from './sendBatchTransactions';
 import { signTransactions } from './signTransactions';
 import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
 
