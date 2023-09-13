@@ -16,7 +16,7 @@ import { WithClassnameType } from '../../types';
 export interface TransactionStatusToastType extends WithClassnameType {
   signError: string | null;
   canceledTransactionsMessage: string | null;
-  onDelete: () => void;
+  onDelete?: () => void;
 }
 
 export const TransactionStatusToast = ({
@@ -52,7 +52,7 @@ export const TransactionStatusToast = ({
         dappConfig.cancelTransactionToastDuration ??
         CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
       component: () => <StatusMessageComponent type={type} message={message} />,
-      onClose: () => onDelete(),
+      onClose: () => onDelete?.(),
       icon: faWarning
     });
   }, []);

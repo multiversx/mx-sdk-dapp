@@ -52,8 +52,7 @@ export const ConfirmationScreen = ({
 
   const transactionStatusToastProps: TransactionStatusToastType = {
     signError,
-    canceledTransactionsMessage,
-    onDelete: handleClose
+    canceledTransactionsMessage
   };
 
   const shouldShowTransactionStatusToast =
