@@ -12,6 +12,7 @@ import {
   transactionsToSignSelector
 } from 'reduxStore/selectors';
 import {
+  clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
