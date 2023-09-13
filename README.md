@@ -735,7 +735,7 @@ Tracking a transaction
 
 ### Tracking a transaction
 
-The library has a built-in implementation for tracking the transactions sent normally of synchronously via batch transactions.
+The library has a built-in implementation for tracking the transactions sent normally or synchronously via batch transactions.
 Also, exposes a hook called `useTrackTransactionStatus`;
 
 ### 1. Built-in tracking
