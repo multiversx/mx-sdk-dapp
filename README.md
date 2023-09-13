@@ -633,7 +633,7 @@ sendBatchTransactions({
   transactions,
   signWithoutSending: true,
   callbackRoute: window.location.pathname,
-  customTransactionInformation: { redirectAfterSign: true }
+  redirectAfterSign: true
 });
 
 const { error, batchId, data } = await sendBatchToBlockchain({
