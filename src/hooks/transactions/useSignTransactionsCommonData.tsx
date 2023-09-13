@@ -12,6 +12,7 @@ import {
   transactionsToSignSelector
 } from 'reduxStore/selectors';
 import {
+  clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
   setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
@@ -65,6 +66,7 @@ export const useSignTransactionsCommonData = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
 
+    dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
     if (!isExtensionProvider) {
@@ -72,6 +74,7 @@ export const useSignTransactionsCommonData = () => {
     }
 
     clearTransactionStatusMessage();
+    ExtensionProvider.getInstance()?.cancelAction?.();
   }
 
   return {
