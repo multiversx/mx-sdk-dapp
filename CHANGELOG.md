@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Changed Ledger authentication texts for v.23 of MultiversX app](https://github.com/multiversx/mx-sdk-dapp/pull/910)
+- [Fix transaction cancellation when a transaction toast is discarded](https://github.com/multiversx/mx-wallet-dapp/pull/915)
 
 ## [[v2.20.1]](https://github.com/multiversx/mx-sdk-dapp/pull/913)] - 2023-09-08
 
