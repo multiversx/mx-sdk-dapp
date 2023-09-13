@@ -74,7 +74,7 @@ export const ConfirmAddress = ({
             ledgerModalConfirmDescriptionClassName
           )}
         >
-          {authTokenText?.infoPartOne}
+          {authTokenText?.confirmAddressText}
         </div>
 
         <div
@@ -94,7 +94,7 @@ export const ConfirmAddress = ({
             ledgerModalConfirmDescriptionClassName
           )}
         >
-          {authTokenText?.infoPartTwo}
+          {authTokenText?.authText}
         </div>
 
         <div
@@ -112,7 +112,7 @@ export const ConfirmAddress = ({
             ledgerModalConfirmDescriptionClassName
           )}
         >
-          {authTokenText?.infoPartThree}
+          {authTokenText?.areShownText}
         </div>
       </div>
 
