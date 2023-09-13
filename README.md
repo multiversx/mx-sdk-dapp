@@ -537,7 +537,7 @@ or the `useSignTransactions` hook defined below. If you don't use one of these, 
 Sending sync transactions in batches (batch transactions mechanism)
 </summary>
 
-### Sending Transactions
+### Sending transactions synchronously in batches
 
 The API for sending sync transactions is a function called **sendBatchTransactions**:
 
@@ -547,7 +547,7 @@ It can be used to send a group of transactions (that ca be synchronized) with mi
 
 
 ```typescript
-const { sessionId, error } = await sendBatchTransactions({
+const { batchId, error } = await sendBatchTransactions({
     transactions: [
       [
         {
@@ -603,9 +603,9 @@ const { sessionId, error } = await sendBatchTransactions({
   });
 ```
 
-It returns a Promise that will be fulfilled with `{error?: string; sessionId: string | null;}`
+It returns a Promise that will be fulfilled with `{error?: string; batchId: string | null;}`
 
-- `sessionId` is the transactions' session id used to compose the `batchId` which will be used to send the batch to the batch service and to track the transactions status and react to it.
+- `batchId` is the transactions' batch id used to send the batch to the batch service and to track the transactions status and react to it. This is composed by the `sessionId` (received after signing) and the user address. Eg. `12123423123-erd1address...`.
 - `error` is the error that can appear during the signing/sending process.
 
 ### How to synchronize transactions ?

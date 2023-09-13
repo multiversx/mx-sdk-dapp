@@ -66,7 +66,6 @@ export const useSignTransactionsCommonData = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
 
-    dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
     if (!isExtensionProvider) {
@@ -74,7 +73,6 @@ export const useSignTransactionsCommonData = () => {
     }
 
     clearTransactionStatusMessage();
-    ExtensionProvider.getInstance()?.cancelAction?.();
   }
 
   return {

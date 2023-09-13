@@ -6,8 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-[v2.20.1]](https://github.com/multiversx/mx-sdk-dapp/pull/913)] - 2023-09-08
- - [Fix double login when session is invalid and user is loggedout](https://github.com/multiversx/mx-sdk-dapp/pull/912)
+## [[v2.20.2]](https://github.com/multiversx/mx-sdk-dapp/pull/913)] - 2023-09-13
+- [Changed Ledger authentication texts for v.23 of MultiversX app](https://github.com/multiversx/mx-sdk-dapp/pull/910)
+- [Fix transaction cancellation when a transaction toast is discarded](https://github.com/multiversx/mx-wallet-dapp/pull/915)
+
+## [[v2.20.1]](https://github.com/multiversx/mx-sdk-dapp/pull/913)] - 2023-09-08
+
+- [Fix double login when session is invalid and user is loggedout](https://github.com/multiversx/mx-sdk-dapp/pull/912)
+
 ## [[v2.20.0]](https://github.com/multiversx/mx-sdk-dapp/pull/911)] - 2023-09-07
 
 - [Add batch transactions documentation](https://github.com/multiversx/mx-sdk-dapp/pull/909)
