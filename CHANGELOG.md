@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.20.4]](https://github.com/multiversx/mx-sdk-dapp/pull/923)] - 2023-09-14
+- [Fix custom transaction information overrides - missing properties on 'signed' state transition](https://github.com/multiversx/mx-sdk-dapp/pull/922)
+
 ## [[v2.20.3]](https://github.com/multiversx/mx-sdk-dapp/pull/920)] - 2023-09-13
 - [Add back cancelAction when cancelling a transaction and remove it from transaction toast discard](https://github.com/multiversx/mx-sdk-dapp/pull/919)
 
