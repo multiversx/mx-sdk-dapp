@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.20.5]](https://github.com/multiversx/mx-sdk-dapp/pull/925)] - 2023-09-14
+- [Fix refreshNativeAuthTokenLogin signature](https://github.com/multiversx/mx-sdk-dapp/pull/924)
+
 ## [[v2.20.4]](https://github.com/multiversx/mx-sdk-dapp/pull/923)] - 2023-09-14
 - [Fix custom transaction information overrides - missing properties on 'signed' state transition](https://github.com/multiversx/mx-sdk-dapp/pull/922)
 
