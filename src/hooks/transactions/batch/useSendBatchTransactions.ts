@@ -54,7 +54,7 @@ export const useSendBatchTransactions = () => {
           customTransactionInformationOverrides: {
             ...(params.customTransactionInformationOverrides ?? {}),
             // Mandatory override. Otherwise, the transactions will not be grouped and the transaction tracker will not work properly (doesn't know to differentiate between transactions sent in batch and the transactions sent using normal flow)
-            grouping: grouping
+            grouping
           }
         });
 
