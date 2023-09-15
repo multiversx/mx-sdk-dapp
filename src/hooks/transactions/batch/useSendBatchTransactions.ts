@@ -49,8 +49,6 @@ export const useSendBatchTransactions = () => {
         // Ensure the transaction custom information is updated with the desired values from the dApp when the transactions are send on demand
         const grouping = generateBatchTransactionsGrouping(params.transactions);
 
-        console.log('signedTransactions - custom transactions information');
-
         updateSignedTransactionsCustomTransactionInformationState({
           sessionId: params.sessionId,
           customTransactionInformationOverrides: {

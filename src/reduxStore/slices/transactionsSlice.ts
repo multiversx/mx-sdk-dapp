@@ -88,15 +88,6 @@ export const transactionsSlice = createSlice({
         ...(state.customTransactionInformationForSessionId[sessionId] || {})
       };
 
-      console.log(
-        'moveTransactionsToSignedState - customTransactionInformation',
-        {
-          ...state.customTransactionInformationForSessionId[sessionId],
-          ...(overrideCustomTransactionInformation ?? {})
-        },
-        sessionId
-      );
-
       state.signedTransactions[sessionId] = {
         transactions,
         status,
