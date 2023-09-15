@@ -10,7 +10,7 @@ import {
   updateSignedTransactions
 } from 'reduxStore/slices';
 import { removeBatchTransactions } from 'services/transactions';
-import { updateSignedTransactionCustomTransactionInformationState } from 'services/transactions/updateSignedTransactions';
+import { updateSignedTransactionsCustomTransactionInformationState } from 'services/transactions/updateSignedTransactions';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -49,7 +49,7 @@ export const useSendBatchTransactions = () => {
         // Ensure the transaction custom information is updated with the desired values from the dApp when the transactions are send on demand
         const grouping = generateBatchTransactionsGrouping(params.transactions);
 
-        updateSignedTransactionCustomTransactionInformationState({
+        updateSignedTransactionsCustomTransactionInformationState({
           sessionId: params.sessionId,
           customTransactionInformationOverrides: {
             ...(params.customTransactionInformationOverrides ?? {}),

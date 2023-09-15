@@ -78,12 +78,15 @@ export const transactionsSlice = createSlice({
         errorMessage,
         status,
         redirectRoute,
-        customTransactionInformation: overrideCustomTransactionInformation = {}
+        customTransactionInformation: overrideCustomTransactionInformation
       } = action.payload;
 
-      const customTransactionInformation =
-        state.customTransactionInformationForSessionId?.[sessionId] ||
-        defaultCustomInformation;
+      state.customTransactionInformationForSessionId[sessionId] = {
+        ...defaultCustomInformation,
+        ...(state.signedTransactions[sessionId]?.customTransactionInformation ||
+          {}),
+        ...(state.customTransactionInformationForSessionId[sessionId] || {})
+      };
 
       state.signedTransactions[sessionId] = {
         transactions,
@@ -91,8 +94,8 @@ export const transactionsSlice = createSlice({
         errorMessage,
         redirectRoute,
         customTransactionInformation: {
-          ...customTransactionInformation,
-          ...overrideCustomTransactionInformation
+          ...state.customTransactionInformationForSessionId[sessionId],
+          ...(overrideCustomTransactionInformation ?? {})
         }
       };
 
@@ -223,7 +226,7 @@ export const transactionsSlice = createSlice({
     ) => {
       state.signTransactionsCancelMessage = action.payload;
     },
-    updateCustomTransactionInformation: (
+    updateSignedTransactionsCustomTransactionInformation: (
       state: TransactionsSliceStateType,
       action: PayloadAction<{
         sessionId: string;
@@ -235,7 +238,8 @@ export const transactionsSlice = createSlice({
       const session = state.signedTransactions[sessionId];
       if (session != null) {
         state.signedTransactions[sessionId].customTransactionInformation = {
-          ...state.customTransactionInformationForSessionId[sessionId],
+          ...(state.signedTransactions[sessionId]
+            .customTransactionInformation as CustomTransactionInformation),
           ...customTransactionInformationOverrides
         };
       }
@@ -289,7 +293,7 @@ export const {
   setSignTransactionsError,
   setSignTransactionsCancelMessage,
   moveTransactionsToSignedState,
-  updateCustomTransactionInformation
+  updateSignedTransactionsCustomTransactionInformation
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;
