@@ -113,12 +113,12 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     }
     const messageToSign = new SignableMessage({
       address: new Address(address),
-      message: Buffer.from(loginToken)
+      message: Buffer.from(`${address}${loginToken}{}`)
     });
-    const signature = await signMessageCallback(messageToSign, {});
+    const signedMessage = await signMessageCallback(messageToSign, {});
     setTokenLoginInfo({
       address,
-      signature: (signature.toJSON() as any).signature
+      signature: signedMessage.getSignature().toString('hex')
     });
   };
 
