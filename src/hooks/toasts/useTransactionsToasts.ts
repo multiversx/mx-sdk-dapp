@@ -16,6 +16,12 @@ export const useTransactionsToasts = () => {
     return transactionsToasts.map((toast) => {
       const status = signedTransactions[toast.toastId]?.status;
 
+      console.log('toast.toastId = ', toast.toastId);
+      console.log(
+        'signedTransactions[toast.toastId] = ',
+        signedTransactions[toast.toastId]
+      );
+
       return {
         sessionId: toast.toastId,
         baseTransactionsInfo: transactionsInfo[toast.toastId] ?? {},
