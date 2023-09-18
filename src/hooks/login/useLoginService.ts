@@ -6,7 +6,7 @@ import { networkSelector, tokenLoginSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { nativeAuth } from 'services/nativeAuth';
 import { getNativeAuthConfig } from 'services/nativeAuth/methods';
-import { OnProviderLoginType } from 'types';
+import { NativeAuthConfigType, OnProviderLoginType } from 'types';
 
 const getApiAddress = (
   apiAddress: string,
@@ -99,14 +99,23 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
 
   // TODO: @StanislavSava verify and maybe refactor to separate function
   const refreshNativeAuthTokenLogin = async ({
-    signMessageCallback
+    signMessageCallback,
+    nativeAuthClientConfig
   }: {
     signMessageCallback: (
       messageToSign: SignableMessage,
       options: Record<any, any>
     ) => Promise<SignableMessage>;
+    nativeAuthClientConfig?: NativeAuthConfigType;
   }) => {
-    const loginToken = await getNativeAuthLoginToken();
+    const nativeAuthClient = nativeAuth(
+      nativeAuthClientConfig || configuration
+    );
+
+    const loginToken = await nativeAuthClient.initialize({
+      noCache: Boolean(nativeAuthClientConfig)
+    });
+
     tokenRef.current = loginToken;
     if (!loginToken) {
       return;
