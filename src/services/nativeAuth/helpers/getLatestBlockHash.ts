@@ -49,7 +49,8 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
 export async function getLatestBlockHash(
   apiUrl: string,
   blockHashShard?: number,
-  getBlockHash?: () => Promise<string>
+  getBlockHash?: () => Promise<string>,
+  noCache?: boolean
 ): Promise<LatestBlockHashType> {
   if (apiUrl == null) {
     throw new Error('missing api url');
@@ -59,7 +60,8 @@ export async function getLatestBlockHash(
   if (
     cachedResponse.current != null &&
     currentTimestampMs <
-      cachedResponse.current.timestamp * 1000 + cachingDurationMs
+      cachedResponse.current.timestamp * 1000 + cachingDurationMs &&
+    !noCache
   ) {
     return cachedResponse.current;
   }
