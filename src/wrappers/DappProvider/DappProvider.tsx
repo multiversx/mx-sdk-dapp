@@ -18,7 +18,7 @@ export interface DappProviderPropsType {
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
   //we need the strings for autocomplete suggestions
-  environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
+  environment: 'testnet' | 'mainnet' | 'devnet' | 'devnet2' | EnvironmentsEnum;
   customComponents?: CustomComponentsType;
   dappConfig?: DappConfigType;
 }

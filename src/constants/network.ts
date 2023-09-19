@@ -21,6 +21,23 @@ export const fallbackNetworkConfigurations: Record<
     explorerAddress: 'http://devnet-explorer.multiversx.com',
     apiTimeout: '4000'
   },
+  devnet2: {
+    id: 'devnet2',
+    chainId: 'D',
+    name: 'Devnet',
+    egldLabel: 'xEGLD',
+    decimals: '18',
+    digits: '4',
+    gasPerDataByte: '1500',
+    walletConnectDeepLink:
+      'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',
+    walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],
+    walletConnectV2RelayAddresses: ['wss://relay.walletconnect.com'],
+    walletAddress: 'https://devnet2-wallet.multiversx.com',
+    apiAddress: 'https://devnet2-api.multiversx.com',
+    explorerAddress: 'http://devnet2-explorer.multiversx.com',
+    apiTimeout: '4000'
+  },
   testnet: {
     id: 'testnet',
     chainId: 'T',
@@ -59,6 +76,8 @@ export const fallbackNetworkConfigurations: Record<
 
 const { chainId: DEVNET_CHAIN_ID, egldLabel: DEVNET_EGLD_LABEL } =
   fallbackNetworkConfigurations[EnvironmentsEnum.devnet];
+const { chainId: DEVNET2_CHAIN_ID, egldLabel: DEVNET2_EGLD_LABEL } =
+  fallbackNetworkConfigurations[EnvironmentsEnum.devnet2];
 const { chainId: TESTNET_CHAIN_ID, egldLabel: TESTNET_EGLD_LABEL } =
   fallbackNetworkConfigurations[EnvironmentsEnum.testnet];
 const { chainId: MAINNET_CHAIN_ID, egldLabel: MAINNET_EGLD_LABEL } =
@@ -66,21 +85,25 @@ const { chainId: MAINNET_CHAIN_ID, egldLabel: MAINNET_EGLD_LABEL } =
 
 export {
   DEVNET_CHAIN_ID,
+  DEVNET2_CHAIN_ID,
   TESTNET_CHAIN_ID,
   MAINNET_CHAIN_ID,
   DEVNET_EGLD_LABEL,
+  DEVNET2_EGLD_LABEL,
   TESTNET_EGLD_LABEL,
   MAINNET_EGLD_LABEL
 };
 
 export const chainIdByEnvironment: Record<EnvironmentsEnum, string> = {
   [EnvironmentsEnum.devnet]: DEVNET_CHAIN_ID,
+  [EnvironmentsEnum.devnet2]: DEVNET2_CHAIN_ID,
   [EnvironmentsEnum.testnet]: TESTNET_CHAIN_ID,
   [EnvironmentsEnum.mainnet]: MAINNET_CHAIN_ID
 };
 
 export const chainIdToEnvironment: Record<string, EnvironmentsEnum> = {
   [DEVNET_CHAIN_ID]: EnvironmentsEnum.devnet,
+  [DEVNET2_CHAIN_ID]: EnvironmentsEnum.devnet2,
   [TESTNET_CHAIN_ID]: EnvironmentsEnum.testnet,
   [MAINNET_CHAIN_ID]: EnvironmentsEnum.mainnet
 };

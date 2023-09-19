@@ -103,7 +103,7 @@ import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
 >
 ```
 
-`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet` (also configured in `EnvironmentsEnum`)
+`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet`, `devnet2` and `mainnet` (also configured in `EnvironmentsEnum`)
 
 DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
 This allows using different APIs and different connection providers to configure your network configuration.

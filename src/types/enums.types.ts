@@ -50,6 +50,7 @@ export enum TypesOfSmartContractCallsEnum {
 export enum EnvironmentsEnum {
   testnet = 'testnet',
   devnet = 'devnet',
+  devnet2 = 'devnet2',
   mainnet = 'mainnet'
 }
 
