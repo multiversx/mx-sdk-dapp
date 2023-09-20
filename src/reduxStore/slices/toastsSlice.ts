@@ -6,12 +6,12 @@ import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import { logoutAction } from '../commonActions';
 
 export interface ToastsSliceState {
-  customToasts: CustomToastType[];
+  customToasts: Record<string, CustomToastType>;
   transactionToasts: TransactionToastType[];
 }
 
 const initialState: ToastsSliceState = {
-  customToasts: [],
+  customToasts: {},
   transactionToasts: []
 };
 
@@ -23,22 +23,20 @@ export const toastsSlice = createSlice({
       state: ToastsSliceState,
       action: PayloadAction<CustomToastType>
     ) => {
-      state.customToasts.push({
+      const toastId = action.payload.toastId || `custom-toast-${Date.now()}`;
+
+      state.customToasts[toastId] = {
         ...action.payload,
         type: ToastsEnum.custom,
-        toastId:
-          action.payload.toastId ||
-          `custom-toast-${state.customToasts.length + 1}`
-      });
+        toastId
+      };
     },
 
     removeCustomToast: (
       state: ToastsSliceState,
       action: PayloadAction<string>
     ) => {
-      state.customToasts = state.customToasts.filter(
-        (toast) => toast.toastId !== action.payload
-      );
+      delete state.customToasts[action.payload];
     },
 
     addTransactionToast: (
