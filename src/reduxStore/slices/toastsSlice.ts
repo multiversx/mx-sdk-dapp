@@ -23,12 +23,28 @@ export const toastsSlice = createSlice({
       state: ToastsSliceState,
       action: PayloadAction<CustomToastType>
     ) => {
+      const toastId =
+        action.payload.toastId ||
+        `custom-toast-${state.customToasts.length + 1}`;
+
+      const existingToastIndex = state.customToasts.findIndex(
+        (toast) => toast.toastId === toastId
+      );
+
+      if (existingToastIndex !== -1) {
+        state.customToasts[existingToastIndex] = {
+          ...state.customToasts[existingToastIndex],
+          ...action.payload,
+          type: ToastsEnum.custom,
+          toastId
+        } as CustomToastType;
+        return;
+      }
+
       state.customToasts.push({
         ...action.payload,
         type: ToastsEnum.custom,
-        toastId:
-          action.payload.toastId ||
-          `custom-toast-${state.customToasts.length + 1}`
+        toastId
       });
     },
 
