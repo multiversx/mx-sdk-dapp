@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.21.0]](https://github.com/multiversx/mx-sdk-dapp/pull/933)] - 2023-09-21
+
 - [Prevent duplicate custom toasts with the same ID](https://github.com/multiversx/mx-sdk-dapp/pull/932)
 - [Extend UI/CopyButton icons](https://github.com/multiversx/mx-sdk-dapp/pull/931)
 
