@@ -17,6 +17,12 @@ import { useLoginService } from './useLoginService';
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
   redirectDelayMilliseconds?: number;
+  /**
+   * This property is used to override the default wallet address.
+   * This is useful when you want to use a custom wallet provider.
+   * It overrides the wallet address from the network, including the wallet address from the custom network config from the DappProvider.
+   * */
+  customWalletAddress?: string;
 }
 
 export type UseWebWalletLoginReturnType = [
@@ -28,7 +34,8 @@ export const useWebWalletLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
-  redirectDelayMilliseconds = 100
+  redirectDelayMilliseconds = 100,
+  customWalletAddress
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -45,7 +52,9 @@ export const useWebWalletLogin = ({
     }
     try {
       setIsLoading(true);
-      const provider = newWalletProvider(network.walletAddress);
+      const provider = newWalletProvider(
+        customWalletAddress ?? network.walletAddress
+      );
 
       const now = new Date();
       const expires: number = now.setMinutes(now.getMinutes() + 3) / 1000;

@@ -12,6 +12,12 @@ export interface WebWalletLoginButtonPropsType
   children?: ReactNode;
   loginButtonText?: string;
   disabled?: boolean;
+  /**
+   * This property is used to override the default wallet address.
+   * This is useful when you want to use a custom wallet provider.
+   * It overrides the wallet address from the network, including the wallet address from the custom network config from the DappProvider.
+   * */
+  customWalletAddress?: string;
 }
 
 export const WebWalletLoginButton: (
@@ -25,12 +31,14 @@ export const WebWalletLoginButton: (
   nativeAuth,
   'data-testid': dataTestId,
   loginButtonText = 'MultiversX Web Wallet',
-  disabled
+  disabled,
+  customWalletAddress
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({
     callbackRoute,
     nativeAuth,
-    token
+    token,
+    customWalletAddress
   });
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
