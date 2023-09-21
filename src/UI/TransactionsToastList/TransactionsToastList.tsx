@@ -132,26 +132,24 @@ export const TransactionsToastList = ({
     ]
   );
 
-  const customToastsList = Object.entries(customToasts).map(
-    ([toastId, props]) => {
-      const CustomComponent =
-        getRegisteredCustomIconComponents(props.toastId) ?? null;
-      const onCloseHandler = getRegisteredToastCloseHandler(props.toastId);
+  const customToastsList = customToasts.map((props) => {
+    const CustomComponent =
+      getRegisteredCustomIconComponents(props.toastId) ?? null;
+    const onCloseHandler = getRegisteredToastCloseHandler(props.toastId);
 
-      return (
-        <CustomToast
-          key={toastId}
-          {...props}
-          component={CustomComponent as never}
-          onDelete={() => {
-            handleDeleteCustomToast(props.toastId);
-            onCloseHandler?.();
-          }}
-          className={customToastClassName}
-        />
-      );
-    }
-  );
+    return (
+      <CustomToast
+        key={props.toastId}
+        {...props}
+        component={CustomComponent as never}
+        onDelete={() => {
+          handleDeleteCustomToast(props.toastId);
+          onCloseHandler?.();
+        }}
+        className={customToastClassName}
+      />
+    );
+  });
 
   const clearNotPendingTransactionsFromStorage = () => {
     const toasts = transactionToastsSelector(store.getState());
