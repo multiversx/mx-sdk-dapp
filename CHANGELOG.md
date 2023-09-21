@@ -6,18 +6,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.21.0]](https://github.com/multiversx/mx-sdk-dapp/pull/933)] - 2023-09-21
+
+- [Prevent duplicate custom toasts with the same ID](https://github.com/multiversx/mx-sdk-dapp/pull/932)
+- [Extend UI/CopyButton icons](https://github.com/multiversx/mx-sdk-dapp/pull/931)
+
 ## [[v2.20.6]](https://github.com/multiversx/mx-sdk-dapp/pull/928)] - 2023-09-14
+
 - [Add network option when refreshing a native auth token](https://github.com/multiversx/mx-sdk-dapp/pull/927)
+
 ## [[v2.20.5]](https://github.com/multiversx/mx-sdk-dapp/pull/925)] - 2023-09-14
+
 - [Fix refreshNativeAuthTokenLogin signature](https://github.com/multiversx/mx-sdk-dapp/pull/924)
 
 ## [[v2.20.4]](https://github.com/multiversx/mx-sdk-dapp/pull/923)] - 2023-09-14
+
 - [Fix custom transaction information overrides - missing properties on 'signed' state transition](https://github.com/multiversx/mx-sdk-dapp/pull/922)
 
 ## [[v2.20.3]](https://github.com/multiversx/mx-sdk-dapp/pull/920)] - 2023-09-13
+
 - [Add back cancelAction when cancelling a transaction and remove it from transaction toast discard](https://github.com/multiversx/mx-sdk-dapp/pull/919)
 
 ## [[v2.20.2]](https://github.com/multiversx/mx-sdk-dapp/pull/913)] - 2023-09-13
+
 - [Changed Ledger authentication texts for v.23 of MultiversX app](https://github.com/multiversx/mx-sdk-dapp/pull/910)
 - [Fix transaction cancellation when a transaction toast is discarded](https://github.com/multiversx/mx-wallet-dapp/pull/915)
 
