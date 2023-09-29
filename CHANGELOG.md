@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Added `getDefaultCallbackUrl` helper](https://github.com/multiversx/mx-sdk-dapp/pull/936)
+- [Return native auth token when refreshing the token](https://github.com/multiversx/mx-sdk-dapp/pull/938)
 
 ## [[v2.21.0]](https://github.com/multiversx/mx-sdk-dapp/pull/933)] - 2023-09-21
 
