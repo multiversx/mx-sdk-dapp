@@ -6,6 +6,6 @@ export const generateBatchTransactionsGrouping = (
 ) => {
   let indexInFlatArray = 0;
   return transactions.map((group) => {
-    return group.map((_tx) => indexInFlatArray++);
+    return group.map(() => indexInFlatArray++);
   });
 };
