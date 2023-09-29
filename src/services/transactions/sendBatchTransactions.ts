@@ -7,7 +7,7 @@ import {
   SimpleTransactionType
 } from 'types';
 import { generateBatchTransactionsGrouping } from 'utils/transactions/batch/generateBatchTransactionsGrouping';
-import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { getDefaultCallbackUrl } from 'utils/window';
 import { signTransactions } from './signTransactions';
 import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
 
@@ -15,7 +15,7 @@ export async function sendBatchTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
-  callbackRoute = getWindowLocation().pathname,
+  callbackRoute = getDefaultCallbackUrl(),
   signWithoutSending = false,
   completedTransactionsDelay,
   sessionInformation,

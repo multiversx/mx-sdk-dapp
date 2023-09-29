@@ -39,6 +39,7 @@ import {
 
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
+import { getDefaultCallbackUrl } from 'utils/window';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 import {
@@ -150,9 +151,9 @@ export const useSignTransactions = () => {
       customTransactionInformation
     } = transactionsToSign;
     const { redirectAfterSign } = customTransactionInformation;
-    const { pathname } = getWindowLocation();
-    const redirectRoute = callbackRoute || pathname;
-    const isCurrentRoute = pathname.includes(redirectRoute);
+    const defaultCallbackUrl = getDefaultCallbackUrl();
+    const redirectRoute = callbackRoute || defaultCallbackUrl;
+    const isCurrentRoute = defaultCallbackUrl.includes(redirectRoute);
     const shouldRedirectAfterSign = redirectAfterSign && !isCurrentRoute;
 
     try {

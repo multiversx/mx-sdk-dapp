@@ -27,9 +27,14 @@ export function builtCallbackUrl({
   let url = callbackUrl;
 
   if (Object.entries(urlParams).length > 0) {
-    const { search, origin, pathname } = new URL(callbackUrl);
-    const { nextUrlParams } = buildUrlParams(search, urlParams);
-    url = `${origin}${pathname}?${nextUrlParams}`;
+    try {
+      const { search, origin, pathname, hash } = new URL(callbackUrl);
+      const { nextUrlParams } = buildUrlParams(search, urlParams);
+      url = `${origin}${pathname}?${nextUrlParams}${hash}`;
+    } catch (err) {
+      console.error('Unable to construct URL from: ', callbackUrl, err);
+      return url;
+    }
   }
 
   return url;
