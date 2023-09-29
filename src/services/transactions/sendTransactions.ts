@@ -4,7 +4,7 @@ import {
   SendTransactionsPropsType,
   SimpleTransactionType
 } from 'types';
-import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { getDefaultCallbackUrl } from 'utils/window';
 import { signTransactions } from './signTransactions';
 import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
 
@@ -12,7 +12,7 @@ export async function sendTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
-  callbackRoute = getWindowLocation().pathname,
+  callbackRoute = getDefaultCallbackUrl(),
   signWithoutSending = false,
   completedTransactionsDelay,
   sessionInformation,
