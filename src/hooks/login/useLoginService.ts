@@ -95,6 +95,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
         ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })
     );
+    return nativeAuthToken;
   };
 
   // TODO: @StanislavSava verify and maybe refactor to separate function
@@ -125,10 +126,12 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
       message: Buffer.from(`${address}${loginToken}{}`)
     });
     const signedMessage = await signMessageCallback(messageToSign, {});
-    setTokenLoginInfo({
+    const nativeAuthToken = setTokenLoginInfo({
       address,
       signature: signedMessage.getSignature().toString('hex')
     });
+
+    return nativeAuthToken;
   };
 
   return {
