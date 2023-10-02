@@ -22,8 +22,8 @@ import { getProviderType } from 'providers/utils';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
-  networkSelector,
-  signTransactionsCancelMessageSelector
+  signTransactionsCancelMessageSelector,
+  walletAddressSelector
 } from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
@@ -53,7 +53,7 @@ export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const { provider } = useGetAccountProvider();
-  const network = useSelector(networkSelector);
+  const walletAddress = useSelector(walletAddressSelector);
 
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
@@ -206,7 +206,7 @@ export const useSignTransactions = () => {
           sessionId,
           callbackRoute,
           isGuarded: isGuarded && allowGuardian,
-          walletAddress: network.walletAddress
+          walletAddress
         });
 
       if (needs2FaSigning) {

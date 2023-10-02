@@ -1,13 +1,15 @@
 import React, { ReactNode } from 'react';
-import { useWebWalletLogin } from 'hooks/login/useWebWalletLogin';
+import {
+  UseWebWalletLoginPropsType,
+  useWebWalletLogin
+} from 'hooks/login/useWebWalletLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
-import { OnProviderLoginType } from '../../../types';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WithClassnameType } from '../../types';
 
 export interface WebWalletLoginButtonPropsType
-  extends WithClassnameType,
-    Omit<OnProviderLoginType, 'onLoginRedirect'> {
+  extends UseWebWalletLoginPropsType,
+    WithClassnameType {
   buttonClassName?: string;
   children?: ReactNode;
   loginButtonText?: string;
@@ -25,12 +27,14 @@ export const WebWalletLoginButton: (
   nativeAuth,
   'data-testid': dataTestId,
   loginButtonText = 'MultiversX Web Wallet',
-  disabled
+  disabled,
+  customWalletAddress
 }) => {
   const [onInitiateLogin] = useWebWalletLogin({
     callbackRoute,
     nativeAuth,
-    token
+    token,
+    customWalletAddress
   });
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
