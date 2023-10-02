@@ -48,6 +48,11 @@ export const explorerAddressSelector = createDeepEqualSelector(
   (state) => state.explorerAddress
 );
 
+export const walletAddressSelector = createDeepEqualSelector(
+  networkSelector,
+  (state) => state.customWalletAddress ?? state.walletAddress
+);
+
 export const egldLabelSelector = createDeepEqualSelector(
   networkSelector,
   (state) => state.egldLabel

@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import omit from 'lodash.omit';
+import { REHYDRATE } from 'redux-persist';
+import { logoutAction } from 'reduxStore/commonActions';
 import {
   AccountInfoSliceNetworkType,
   BaseNetworkType,
@@ -62,11 +64,31 @@ export const networkConfigSlice = createSlice({
       action: PayloadAction<string>
     ) => {
       state.chainID = action.payload;
+    },
+    setCustomWalletAddress: (
+      state: NetworkConfigStateType,
+      action: PayloadAction<string>
+    ) => {
+      state.network.customWalletAddress = action.payload;
     }
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logoutAction, (state: NetworkConfigStateType) => {
+      state.network.customWalletAddress = undefined;
+    }),
+      builder.addCase(REHYDRATE, (state, action: any) => {
+        if (!action.payload?.network?.customWalletAddress) {
+          return;
+        }
+        const {
+          network: { customWalletAddress }
+        } = action.payload;
+        state.network.customWalletAddress = customWalletAddress;
+      });
   }
 });
 
-export const { initializeNetworkConfig, setChainID } =
+export const { initializeNetworkConfig, setChainID, setCustomWalletAddress } =
   networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
-import { setWalletLogin } from 'reduxStore/slices';
+import { setCustomWalletAddress, setWalletLogin } from 'reduxStore/slices';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
@@ -17,6 +17,7 @@ import { useLoginService } from './useLoginService';
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
   redirectDelayMilliseconds?: number;
+  customWalletAddress?: string;
 }
 
 export type UseWebWalletLoginReturnType = [
@@ -28,7 +29,8 @@ export const useWebWalletLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
-  redirectDelayMilliseconds = 100
+  redirectDelayMilliseconds = 100,
+  customWalletAddress
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -43,9 +45,16 @@ export const useWebWalletLogin = ({
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
+    if (customWalletAddress) {
+      dispatch(setCustomWalletAddress(customWalletAddress));
+    }
+
     try {
       setIsLoading(true);
-      const provider = newWalletProvider(network.walletAddress);
+      const provider = newWalletProvider(
+        customWalletAddress ?? network.walletAddress
+      );
 
       const now = new Date();
       const expires: number = now.setMinutes(now.getMinutes() + 3) / 1000;
