@@ -67,7 +67,7 @@ export const networkConfigSlice = createSlice({
     },
     setCustomWalletAddress: (
       state: NetworkConfigStateType,
-      action: PayloadAction<string>
+      action: PayloadAction<AccountInfoSliceNetworkType['customWalletAddress']>
     ) => {
       state.network.customWalletAddress = action.payload;
     }

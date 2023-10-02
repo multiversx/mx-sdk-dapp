@@ -46,9 +46,7 @@ export const useWebWalletLogin = ({
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
-    if (customWalletAddress) {
-      dispatch(setCustomWalletAddress(customWalletAddress));
-    }
+    dispatch(setCustomWalletAddress(customWalletAddress));
 
     try {
       setIsLoading(true);
