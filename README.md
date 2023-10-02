@@ -311,6 +311,15 @@ you can easily import and use them.
 >
 ```
 
+If you have a custom Web Wallet provider you can integrate it by using the `customWalletAddress` prop:
+```jsx
+<WebWalletLoginButton
+  callbackRoute="/dashboard"
+  loginButtonText="Custom Web Wallet login"
+  customWalletAddress="https://custom-web-wallet.com"
+>
+```
+
 All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
 The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
 
