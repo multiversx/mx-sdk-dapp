@@ -18,6 +18,9 @@ export interface BaseNetworkType {
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {
   walletConnectBridgeAddress: string;
   walletConnectV2RelayAddress: string;
+  /**
+   * if set, will be used as main `walletAddress`
+   */
   customWalletAddress?: string;
 }
 
