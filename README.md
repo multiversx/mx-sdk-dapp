@@ -311,7 +311,7 @@ you can easily import and use them.
 >
 ```
 
-If you have a custom Web Wallet service you can integrate it by using the `customWalletAddress` prop:
+If you have a custom Web Wallet provider you can integrate it by using the `customWalletAddress` prop:
 ```jsx
 <WebWalletLoginButton
   callbackRoute="/dashboard"
