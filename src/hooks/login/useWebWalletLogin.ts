@@ -7,6 +7,7 @@ import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
+  AccountInfoSliceNetworkType,
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
   OnProviderLoginType
@@ -17,7 +18,7 @@ import { useLoginService } from './useLoginService';
 export interface UseWebWalletLoginPropsType
   extends Omit<OnProviderLoginType, 'onLoginRedirect'> {
   redirectDelayMilliseconds?: number;
-  customWalletAddress?: string;
+  customWalletAddress?: AccountInfoSliceNetworkType['customWalletAddress'];
 }
 
 export type UseWebWalletLoginReturnType = [
