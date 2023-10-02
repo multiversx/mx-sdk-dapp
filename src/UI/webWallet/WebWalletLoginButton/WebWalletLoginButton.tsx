@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react';
+import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import {
   UseWebWalletLoginPropsType,
   useWebWalletLogin
-} from 'hooks/login/useWebWalletLogin';
-import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
+} from '../../../hooks/login/useWebWalletLogin';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WithClassnameType } from '../../types';
 
