@@ -89,7 +89,7 @@ function redirectToCallbackUrl(
     if (typeof onRedirect === 'function') {
       onRedirect(callbackUrl);
     } else {
-      safeRedirect({ url: callbackUrl, shouldForcePageReload: true });
+      safeRedirect({ url: callbackUrl });
     }
   }
 }

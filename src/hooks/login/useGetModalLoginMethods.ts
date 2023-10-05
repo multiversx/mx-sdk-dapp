@@ -25,7 +25,7 @@ export const useGetModalLoginMethods = ({
 }: UseGetModalLoginMethodsPropsType) => {
   const isLoggedIn = useGetIsLoggedIn();
   const [showContent, setShowContent] = useState(false);
-  const { handleShowModal, handleHideModal } = useDappModal();
+  const { handleShowModal, handleHideModal, showModal } = useDappModal();
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
   const shouldRenderButton = !hideButtonWhenModalOpens || !showContent;
 
@@ -75,6 +75,7 @@ export const useGetModalLoginMethods = ({
     handleCloseModal,
     handleOpenModal,
     shouldRenderButton,
-    showContent
+    showContent,
+    showModal
   };
 };

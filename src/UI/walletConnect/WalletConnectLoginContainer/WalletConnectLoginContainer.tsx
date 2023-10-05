@@ -11,15 +11,16 @@ export const WalletConnectLoginContainer = (
   props: WalletConnectLoginModalPropsType
 ) => {
   const {
-    onClose,
-    className,
-    showLoginContent,
-    wrapContentInsideModal,
     callbackRoute,
-    token,
+    className,
+    logoutRoute,
     nativeAuth,
+    onClose,
     onLoginRedirect,
-    logoutRoute
+    showLoginContent,
+    showLoginModal,
+    token,
+    wrapContentInsideModal
   } = props;
 
   const canLoginRef = useRef<boolean>(true);
@@ -60,6 +61,7 @@ export const WalletConnectLoginContainer = (
         modalDialogClassName: styles.xPortalLoginContainer
       }}
       onClose={onCloseModal}
+      visible={showLoginModal}
     >
       <WalletConnectLoginContent {...props} canLoginRef={canLoginRef} />
     </ModalContainer>

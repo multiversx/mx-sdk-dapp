@@ -3,7 +3,6 @@ import { expect } from '@storybook/jest';
 import { fireEvent, waitFor } from '@testing-library/react';
 import { rest } from 'msw';
 import {
-  mockWindowHistory,
   mockWindowLocation,
   renderWithProvider,
   server,
@@ -54,7 +53,6 @@ describe('ExtensionLoginButton tests', () => {
   beforeEach(() => {
     store.dispatch(logoutAction());
     mockWindowLocation();
-    mockWindowHistory();
   });
 
   it('should perform simple login and redirect', async () => {
@@ -69,11 +67,7 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.history.pushState).toHaveBeenCalledWith(
-        '',
-        '',
-        CALLBACK_ROUTE
-      );
+      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
 
@@ -114,7 +108,7 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.history.pushState).toHaveBeenCalledTimes(0);
+      expect(window.location.assign).toHaveBeenCalledTimes(0);
       expect(onLoginRedirect).toHaveBeenCalledTimes(1);
       expect(onLoginRedirect).toHaveBeenCalledWith(CALLBACK_ROUTE, {
         address: testAddress,
@@ -147,11 +141,7 @@ describe('ExtensionLoginButton tests', () => {
         tokenLoginWithSignature
       );
 
-      expect(window.history.pushState).toHaveBeenCalledWith(
-        '',
-        '',
-        CALLBACK_ROUTE
-      );
+      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
 
@@ -174,7 +164,7 @@ describe('ExtensionLoginButton tests', () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(window.history.pushState).toHaveBeenCalledTimes(0);
+      expect(window.location.assign).toHaveBeenCalledTimes(0);
     });
   });
 });
