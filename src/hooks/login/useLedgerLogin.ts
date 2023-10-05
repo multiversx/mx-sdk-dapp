@@ -183,7 +183,7 @@ export const useLedgerLogin = ({
 
       try {
         const loginInfo = await hwProvider.tokenLogin({
-          token: Buffer.from(`${token}{}`),
+          token: Buffer.from(token),
           addressIndex: index
         });
 
