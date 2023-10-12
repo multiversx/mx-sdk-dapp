@@ -78,8 +78,6 @@ export function getTokenFromData(data?: string): {
   }
 
   if (isNftBurn) {
-    console.log('\x1b[42m%s\x1b[0m', 1122);
-
     try {
       const [, /*ESDTNFTBurn*/ collection, nonce, quantity] = decodeData(data);
       if ([collection, nonce, quantity].every((el) => Boolean(el))) {
@@ -90,11 +88,8 @@ export function getTokenFromData(data?: string): {
           nonce
         };
       }
-    } catch (err) {
-      console.log('\x1b[42m%s\x1b[0m', 'asdasd');
-    }
+    } catch (err) {}
   }
-  console.log('\x1b[42m%s\x1b[0m', 'Assssssd');
 
   return noData;
 }
