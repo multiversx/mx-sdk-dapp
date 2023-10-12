@@ -56,9 +56,8 @@ export const AddressTable = ({
   onSelectAddress,
   selectedAddress,
   startIndex,
-  usedIndexes = []
+  disabledIndexes = []
 }: AddressTablePropsType) => {
-  console.log('used indexes are: ', usedIndexes);
   const {
     ledgerModalTitleClassName,
     ledgerModalSubtitleClassName,
@@ -75,7 +74,7 @@ export const AddressTable = ({
 
   const getFirstUnusedIndex = () => {
     let indexToCheck = 0;
-    while (usedIndexes.includes(indexToCheck)) {
+    while (disabledIndexes.includes(indexToCheck)) {
       indexToCheck++;
     }
     return indexToCheck;
@@ -183,7 +182,7 @@ export const AddressTable = ({
               <AddressRow
                 address={address}
                 balance={balance}
-                disabled={usedIndexes.includes(index)}
+                disabled={disabledIndexes.includes(index)}
                 key={index + startIndex * ADDRESSES_PER_PAGE}
                 index={index + startIndex * ADDRESSES_PER_PAGE}
                 selectedAddress={selectedAddress}

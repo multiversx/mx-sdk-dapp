@@ -51,9 +51,9 @@ export const AddressRow = ({
       )}
     >
       <div
-        className={`${styles.ledgerAddressTableBodyItemData} ${classNames({
+        className={classNames(styles.ledgerAddressTableBodyItemData, {
           disabled
-        })}`}
+        })}
       >
         <input
           type='radio'
