@@ -4,8 +4,8 @@ All notable changes will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
 ## [Unreleased]
+- [Added `ESDTNFTBurn` to `getTokenFromData` helper](https://github.com/multiversx/mx-sdk-dapp/pull/943)
 ## [[v2.22.1]](https://github.com/multiversx/mx-sdk-dapp/pull/942)] - 2023-10-02
 - [Fixed `WebWalletLoginButtonPropsType` interface](https://github.com/multiversx/mx-sdk-dapp/pull/942)
 ## [[v2.22.0]](https://github.com/multiversx/mx-sdk-dapp/pull/941)] - 2023-10-02
