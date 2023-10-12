@@ -34,4 +34,16 @@ describe('getTokenFromData tests', () => {
       amount: ''
     });
   });
+  test('get nft from burn transaction', () => {
+    const result = getTokenFromData(
+      'ESDTNFTBurn@4554484f532d643735383863@015a@01'
+    );
+
+    expect(result).toStrictEqual({
+      collection: 'ETHOS-d7588c',
+      tokenId: 'ETHOS-d7588c-015a',
+      nonce: '015a',
+      amount: '1'
+    });
+  });
 });
