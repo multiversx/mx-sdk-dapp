@@ -52,12 +52,7 @@ export const SignStep = (props: SignStepType) => {
   }`;
 
   useEffect(() => {
-    const isCurrentNonceRegistered =
-      Object.keys(nonceDataStepMap).includes(currentNonceData);
-    const isCurrentStepRegistered =
-      Object.values(nonceDataStepMap).includes(currentStep);
-
-    if (isCurrentNonceRegistered || isCurrentStepRegistered) {
+    if (nonceDataStepMap[currentNonceData] === currentStep) {
       return;
     }
 
