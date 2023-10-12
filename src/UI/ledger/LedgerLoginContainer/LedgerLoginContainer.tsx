@@ -17,6 +17,7 @@ export interface LedgerLoginContainerPropsType
   customContentComponent?: ReactNode;
   innerLedgerComponentsClasses?: InnerLedgerComponentsClassesType;
   showLoginContent?: boolean;
+  showLoginModal?: boolean;
   showProgressBar?: boolean;
   showScamPhishingAlert?: boolean;
   wrapContentInsideModal?: boolean;
@@ -36,6 +37,7 @@ export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
 
   return (
     <ModalContainer
+      visible={props.showLoginModal}
       modalConfig={{
         headerText: 'Login with ledger',
         showHeader: true,

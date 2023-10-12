@@ -59,7 +59,8 @@ export const LedgerLoginButton: (
     handleCloseModal,
     handleOpenModal,
     shouldRenderButton,
-    showContent
+    showContent,
+    showModal
   } = useGetModalLoginMethods({
     hideButtonWhenModalOpens,
     onContentHide,
@@ -94,6 +95,7 @@ export const LedgerLoginButton: (
         onClose={handleCloseModal}
         onLoginRedirect={onLoginRedirect}
         showLoginContent={showContent}
+        showLoginModal={showModal}
         showProgressBar={showProgressBar}
         showScamPhishingAlert={showScamPhishingAlert}
         token={token}

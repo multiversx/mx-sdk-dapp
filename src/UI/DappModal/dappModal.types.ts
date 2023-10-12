@@ -15,6 +15,5 @@ export interface DappModalConfig {
 }
 
 export interface DappModalInteractionConfig {
-  openOnMount?: boolean;
   visible?: boolean;
 }

@@ -52,9 +52,7 @@ export const SignWaitingScreenModal = ({
       modalConfig={{
         modalDialogClassName: classes.wrapper
       }}
-      modalInteractionConfig={{
-        openOnMount: true
-      }}
+      visible
     >
       <PageState
         icon={error ? faTimes : null}

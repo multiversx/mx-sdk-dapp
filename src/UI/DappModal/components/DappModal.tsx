@@ -11,12 +11,12 @@ import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
 
 export interface DappModalPropsType extends WithClassnameType {
-  id?: string;
-  visible: boolean;
-  onHide?: () => void;
-  parentElement?: Element;
   children?: ReactNode;
   config?: DappModalConfig;
+  id?: string;
+  onHide?: () => void;
+  parentElement?: Element;
+  visible?: boolean;
 }
 
 const defaultConfig: DappModalConfig = {
@@ -27,14 +27,14 @@ const defaultConfig: DappModalConfig = {
 };
 
 export const DappModal = ({
-  id = 'dapp-modal',
-  visible,
-  onHide,
-  parentElement,
-  config = defaultConfig,
+  'data-testid': dataTestId = DataTestIdsEnum.dappModal,
   children,
   className = 'dapp-modal-dialog-wrapper',
-  'data-testid': dataTestId = DataTestIdsEnum.dappModal
+  config = defaultConfig,
+  id = 'dapp-modal',
+  onHide,
+  parentElement,
+  visible
 }: DappModalPropsType) => {
   if (!visible) {
     return null;
