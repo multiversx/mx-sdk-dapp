@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "2.22.2",
+  "version": "2.22.3",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -60,7 +60,6 @@
     "@typescript-eslint/parser": "5.14.0",
     "axios-mock-adapter": "1.21.2",
     "babel-loader": "8.3.0",
-    "better-sqlite3": "7.6.2",
     "css-loader": "5.2.6",
     "dotenv": "16.0.3",
     "esbuild": "0.14.47",
