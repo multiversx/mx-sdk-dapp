@@ -5,7 +5,6 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ## [Unreleased]
-<<<<<<< HEAD
 ## [[v2.22.2]](https://github.com/multiversx/mx-sdk-dapp/pull/947)] - 2023-10-12
 - [Added `ESDTNFTBurn` to `getTokenFromData` helper](https://github.com/multiversx/mx-sdk-dapp/pull/946)
 - [Added page reload on login redirect](https://github.com/multiversx/mx-sdk-dapp/pull/944)
@@ -14,8 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Fixed `WebWalletLoginButtonPropsType` interface](https://github.com/multiversx/mx-sdk-dapp/pull/942)
 
-=======
->>>>>>> main
 ## [[v2.22.1]](https://github.com/multiversx/mx-sdk-dapp/pull/942)] - 2023-10-02
 - [Fixed `WebWalletLoginButtonPropsType` interface](https://github.com/multiversx/mx-sdk-dapp/pull/942)
 ## [[v2.22.0]](https://github.com/multiversx/mx-sdk-dapp/pull/941)] - 2023-10-02
