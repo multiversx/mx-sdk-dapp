@@ -21,6 +21,7 @@ const ADDRESSES_PER_PAGE = 10;
 
 export interface AddressTablePropsType extends WithClassnameType {
   accounts: string[];
+  usedIndexes: number[];
   addressTableClassNames?: {
     ledgerModalTitleClassName?: string;
     ledgerModalSubtitleClassName?: string;
@@ -54,8 +55,10 @@ export const AddressTable = ({
   onGoToPrevPage,
   onSelectAddress,
   selectedAddress,
-  startIndex
+  startIndex,
+  usedIndexes = []
 }: AddressTablePropsType) => {
+  console.log('used indexes are: ', usedIndexes);
   const {
     ledgerModalTitleClassName,
     ledgerModalSubtitleClassName,
@@ -69,6 +72,15 @@ export const AddressTable = ({
   const [accountsWithBalance, setAccountsWithBalance] = useState<
     Array<{ address: string; balance: string }>
   >([]);
+
+  const getFirstUnusedIndex = () => {
+    let indexToCheck = 0;
+    while (usedIndexes.includes(indexToCheck)) {
+      indexToCheck++;
+    }
+    return indexToCheck;
+  };
+
   useEffect(() => {
     const isAccountsLoaded = accounts.length > 0 && !loading;
 
@@ -78,7 +90,7 @@ export const AddressTable = ({
     const shouldSelectFirstAddress =
       isAccountsLoaded && isFirstPageAndNoAddressSelected;
     if (shouldSelectFirstAddress) {
-      const index = 0;
+      const index = getFirstUnusedIndex();
       const address = accounts[index];
       onSelectAddress({ address, index });
     }
@@ -171,6 +183,7 @@ export const AddressTable = ({
               <AddressRow
                 address={address}
                 balance={balance}
+                disabled={usedIndexes.includes(index)}
                 key={index + startIndex * ADDRESSES_PER_PAGE}
                 index={index + startIndex * ADDRESSES_PER_PAGE}
                 selectedAddress={selectedAddress}

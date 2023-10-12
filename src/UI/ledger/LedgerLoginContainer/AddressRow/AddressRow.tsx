@@ -16,6 +16,7 @@ export interface AddressRowPropsType extends WithClassnameType {
   balance: string;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
   ledgerModalTableSelectedItemClassName?: string;
+  disabled: boolean;
 }
 
 export const AddressRow = ({
@@ -25,7 +26,8 @@ export const AddressRow = ({
   selectedAddress,
   onSelectAddress,
   className = 'dapp-ledger-address-row',
-  ledgerModalTableSelectedItemClassName
+  ledgerModalTableSelectedItemClassName,
+  disabled = false
 }: AddressRowPropsType) => {
   const handleChange = (event: SyntheticEvent) => {
     const { checked } = event.target as HTMLInputElement;
@@ -48,10 +50,15 @@ export const AddressRow = ({
         className
       )}
     >
-      <div className={styles.ledgerAddressTableBodyItemData}>
+      <div
+        className={`${styles.ledgerAddressTableBodyItemData} ${classNames({
+          disabled
+        })}`}
+      >
         <input
           type='radio'
           id={`check_${index}`}
+          disabled={disabled}
           data-testid={`check_${index}`}
           onChange={handleChange}
           role='button'
