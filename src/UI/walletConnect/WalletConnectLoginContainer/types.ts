@@ -1,8 +1,8 @@
 import { ReactNode, MutableRefObject } from 'react';
 
+import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { InnerWalletConnectComponentsClassesType } from '../types';
-import { OnProviderLoginType } from './../../../types';
 
 export interface WalletConnectLoginModalPropsType
   extends OnProviderLoginType,
@@ -16,6 +16,7 @@ export interface WalletConnectLoginModalPropsType
   logoutRoute?: string;
   onClose?: () => void;
   showLoginContent?: boolean;
+  showLoginModal?: boolean;
   showScamPhishingAlert?: boolean;
   title?: string;
   wrapContentInsideModal?: boolean;

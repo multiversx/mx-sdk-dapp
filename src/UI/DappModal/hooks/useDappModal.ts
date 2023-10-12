@@ -1,71 +1,29 @@
-import { useCallback, useEffect } from 'react';
-import { useIsDappModalVisible } from 'hooks';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { dappModalConfigSelector } from 'reduxStore/selectors/dappModalsSelectors';
-import {
-  setDappModalConfig,
-  setDappModalVisibility
-} from 'reduxStore/slices/dappModalsSlice';
-import {
-  DappModalConfig,
-  DappModalInteractionConfig
-} from '../dappModal.types';
+import { useEffect, useState } from 'react';
 
-export interface UseDappModalProps {
-  config?: DappModalInteractionConfig;
-  modalConfig?: DappModalConfig;
-}
+import { DappModalInteractionConfig } from '../dappModal.types';
 
-export const useDappModal = (props?: UseDappModalProps) => {
-  const dispatch = useDispatch();
-  const visible = useIsDappModalVisible();
-  const modalConfig = useSelector(dappModalConfigSelector);
+export const useDappModal = (props?: DappModalInteractionConfig) => {
+  const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = () => {
-    dispatch(setDappModalVisibility(true));
+    setShowModal(true);
   };
 
   const handleHideModal = () => {
-    dispatch(setDappModalVisibility(false));
+    setShowModal(false);
   };
 
-  const setModalConfig = useCallback((config: DappModalConfig) => {
-    dispatch(setDappModalConfig(config));
-  }, []);
-
   useEffect(() => {
-    if (props?.modalConfig) {
-      setModalConfig(props?.modalConfig);
-    }
-  }, [props?.modalConfig]);
-
-  useEffect(() => {
-    if (props?.config?.openOnMount) {
+    if (props?.visible === true) {
       handleShowModal();
-    }
-
-    return () => {
-      handleHideModal();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (typeof props?.config?.visible !== 'boolean') {
-      return;
-    }
-
-    if (props.config.visible) {
-      handleShowModal();
-    } else {
+    } else if (props?.visible === false) {
       handleHideModal();
     }
-  }, [props?.config?.visible]);
+  }, [props?.visible]);
 
   return {
     handleShowModal,
     handleHideModal,
-    setModalConfig,
-    visible,
-    config: modalConfig
+    showModal
   };
 };

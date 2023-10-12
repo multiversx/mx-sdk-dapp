@@ -37,7 +37,8 @@ export const WalletConnectLoginButton = ({
     handleCloseModal,
     handleOpenModal,
     shouldRenderButton,
-    showContent
+    showContent,
+    showModal
   } = useGetModalLoginMethods({
     hideButtonWhenModalOpens,
     onContentHide,
@@ -78,6 +79,7 @@ export const WalletConnectLoginButton = ({
         onClose={handleCloseModal}
         onLoginRedirect={onLoginRedirect}
         showLoginContent={showContent}
+        showLoginModal={showModal}
         showScamPhishingAlert={showScamPhishingAlert}
         title={title}
         token={token}

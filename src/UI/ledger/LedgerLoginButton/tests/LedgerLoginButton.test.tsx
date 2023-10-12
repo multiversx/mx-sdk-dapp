@@ -7,8 +7,7 @@ import {
   renderWithProvider,
   server,
   testNetwork,
-  testAddress,
-  mockWindowHistory
+  testAddress
 } from '__mocks__';
 
 import { logoutAction } from 'reduxStore/commonActions';
@@ -48,7 +47,6 @@ describe('LedgerLoginButton tests', () => {
   beforeEach(async () => {
     store.dispatch(logoutAction());
     mockWindowLocation();
-    mockWindowHistory();
   });
 
   it('should perform simple login and redirect', async () => {
@@ -67,11 +65,7 @@ describe('LedgerLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.history.pushState).toHaveBeenCalledWith(
-        '',
-        '',
-        CALLBACK_ROUTE
-      );
+      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
 
@@ -107,7 +101,7 @@ describe('LedgerLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.history.pushState).toHaveBeenCalledTimes(0);
+      expect(window.location.assign).toHaveBeenCalledTimes(0);
       expect(onLoginRedirect).toHaveBeenCalledTimes(1);
       expect(onLoginRedirect).toHaveBeenCalledWith(CALLBACK_ROUTE, {
         address: testAddress,
@@ -143,11 +137,7 @@ describe('LedgerLoginButton tests', () => {
         tokenLoginWithSignature
       );
 
-      expect(window.history.pushState).toHaveBeenCalledWith(
-        '',
-        '',
-        CALLBACK_ROUTE
-      );
+      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
 
@@ -172,7 +162,7 @@ describe('LedgerLoginButton tests', () => {
     await ledgerLogin(methods);
 
     await waitFor(() => {
-      expect(window.history.pushState).toHaveBeenCalledTimes(0);
+      expect(window.location.assign).toHaveBeenCalledTimes(0);
     });
   });
 });
