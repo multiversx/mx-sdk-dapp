@@ -21,7 +21,7 @@ const ADDRESSES_PER_PAGE = 10;
 
 export interface AddressTablePropsType extends WithClassnameType {
   accounts: string[];
-  usedIndexes: number[];
+  disabledIndexes: number[];
   addressTableClassNames?: {
     ledgerModalTitleClassName?: string;
     ledgerModalSubtitleClassName?: string;
