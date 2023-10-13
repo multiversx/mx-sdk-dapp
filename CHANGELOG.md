@@ -4,21 +4,32 @@ All notable changes will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
 
+## [[v2.22.5]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13
+
+- [Prevent "document/window is undefined" issue on Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/955)
+- [Update the WalletConnect provider to 4.0.4 (@walletconnect 2.10.2)](https://github.com/multiversx/mx-sdk-dapp/pull/957)
+
 ## [[v2.22.4]](https://github.com/multiversx/mx-sdk-dapp/pull/954)] - 2023-10-13
+
 - [Integration tests](https://github.com/multiversx/mx-sdk-dapp/pull/953)
 
 ## [[v2.22.3]](https://github.com/multiversx/mx-sdk-dapp/pull/949)] - 2023-10-12
+
 - [Add used indexes to addressTable component](https://github.com/multiversx/mx-sdk-dapp/pull/948)
 
 ## [[v2.22.2]](https://github.com/multiversx/mx-sdk-dapp/pull/947)] - 2023-10-12
+
 - [Added `ESDTNFTBurn` to `getTokenFromData` helper](https://github.com/multiversx/mx-sdk-dapp/pull/946)
 - [Added page reload on login redirect](https://github.com/multiversx/mx-sdk-dapp/pull/944)
 - [Fixed `ModalContainer` not working in `StrictMode`](https://github.com/multiversx/mx-sdk-dapp/pull/943)
 
 ## [[v2.22.1]](https://github.com/multiversx/mx-sdk-dapp/pull/942)] - 2023-10-02
+
 - [Fixed `WebWalletLoginButtonPropsType` interface](https://github.com/multiversx/mx-sdk-dapp/pull/942)
+
 ## [[v2.22.0]](https://github.com/multiversx/mx-sdk-dapp/pull/941)] - 2023-10-02
 
 - [Added support for custom Web Wallet address](https://github.com/multiversx/mx-sdk-dapp/pull/940)

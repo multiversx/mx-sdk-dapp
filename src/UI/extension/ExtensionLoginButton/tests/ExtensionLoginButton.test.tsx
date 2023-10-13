@@ -67,7 +67,7 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
+      expect(window?.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
 
@@ -83,7 +83,7 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledWith(
+      expect(window?.location.assign).toHaveBeenCalledWith(
         'https://multivers.com'
       );
     });
@@ -108,7 +108,7 @@ describe('ExtensionLoginButton tests', () => {
     await checkIsLoggedInStore();
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledTimes(0);
+      expect(window?.location.assign).toHaveBeenCalledTimes(0);
       expect(onLoginRedirect).toHaveBeenCalledTimes(1);
       expect(onLoginRedirect).toHaveBeenCalledWith(CALLBACK_ROUTE, {
         address: testAddress,
@@ -141,7 +141,7 @@ describe('ExtensionLoginButton tests', () => {
         tokenLoginWithSignature
       );
 
-      expect(window.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
+      expect(window?.location.assign).toHaveBeenCalledWith(CALLBACK_ROUTE);
     });
   });
 
@@ -164,7 +164,7 @@ describe('ExtensionLoginButton tests', () => {
     fireEvent.click(loginButton);
 
     await waitFor(() => {
-      expect(window.location.assign).toHaveBeenCalledTimes(0);
+      expect(window?.location.assign).toHaveBeenCalledTimes(0);
     });
   });
 });
