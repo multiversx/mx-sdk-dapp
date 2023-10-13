@@ -7,7 +7,7 @@ interface ParseNavigationParamsOptionsType {
 }
 
 const defaultOptions: ParseNavigationParamsOptionsType = {
-  search: isWindowAvailable() ? window?.location.search : '',
+  search: isWindowAvailable() ? window.location.search : '',
   removeParams: []
 };
 
