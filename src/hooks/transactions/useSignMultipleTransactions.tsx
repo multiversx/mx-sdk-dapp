@@ -99,12 +99,13 @@ export function useSignMultipleTransactions({
       return;
     }
 
-    const { transaction, multiTxData } = tx;
+    const { transaction, multiTxData, transactionIndex } = tx;
     const dataField = transaction.getData().toString();
     const transactionTokenInfo = getTxInfoByDataField(
       transaction.getData().toString(),
       multiTxData
     );
+
     const { tokenId } = transactionTokenInfo;
     const receiver = transaction.getReceiver().toString();
     const sender = transaction.getSender().toString();
@@ -137,7 +138,8 @@ export function useSignMultipleTransactions({
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
-      dataField
+      dataField,
+      transactionIndex
     });
   }
 

@@ -4,6 +4,7 @@ export * from './getAreTransactionsOnSameShard';
 export * from './getInterpretedTransaction';
 export * from './getTokenFromData';
 export * from './getTransactionLink';
+export * from './getUnHighlightedDataFieldParts';
 export * from './isTokenTransfer';
 export * from './parseMultiEsdtTransferData';
 export * from './parseTransactionAfterSigning';
