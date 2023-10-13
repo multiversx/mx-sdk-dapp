@@ -7,11 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Update the WalletConnect provider to 4.0.4 (@walletconnect 2.10.2)](https://github.com/multiversx/mx-sdk-dapp/pull/957)
-
 ## [[v2.22.5]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13
 
 - [Prevent "document/window is undefined" issue on Next.js](https://github.com/multiversx/mx-sdk-dapp/pull/955)
+- [Update the WalletConnect provider to 4.0.4 (@walletconnect 2.10.2)](https://github.com/multiversx/mx-sdk-dapp/pull/957)
 
 ## [[v2.22.4]](https://github.com/multiversx/mx-sdk-dapp/pull/954)] - 2023-10-13
 
