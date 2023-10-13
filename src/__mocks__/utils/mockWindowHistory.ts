@@ -1,4 +1,8 @@
 export const mockWindowHistory = () => {
+  if (!window) {
+    return;
+  }
+
   const history = window.history;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

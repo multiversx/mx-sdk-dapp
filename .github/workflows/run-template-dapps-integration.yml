@@ -1,0 +1,21 @@
+name: run-template-dapps-integration
+
+on:
+  pull_request:
+    branches: [main]
+  repository_dispatch:
+    types: run-template-dapps-integration
+  workflow_dispatch:
+
+jobs:
+  run_template_dapps_integration_script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+      - name: Run script file
+        run: |
+          chmod +x ./scripts/template-dapps-integration.sh
+          ./scripts/template-dapps-integration.sh
+        shell: bash

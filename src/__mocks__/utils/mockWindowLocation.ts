@@ -1,4 +1,8 @@
 export const mockWindowLocation = () => {
+  if (!window) {
+    return;
+  }
+
   const location = window.location;
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
