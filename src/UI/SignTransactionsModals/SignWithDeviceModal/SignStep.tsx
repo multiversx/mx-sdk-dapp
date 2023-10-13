@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect, useState } from 'react';
+import React, { MouseEvent, useState } from 'react';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -20,49 +20,27 @@ export { SignStepType, SignStepInnerClassesType };
 
 export const SignStep = (props: SignStepType) => {
   const {
-    onSignTransaction,
-    handleClose,
-    onPrev,
     GuardianScreen,
-    title,
-    waitingForDevice,
+    allTransactions,
+    className,
+    currentStep,
     currentTransaction,
     error,
-    allTransactions,
+    handleClose,
     isLastTransaction,
-    currentStep,
-    className,
-    signStepInnerClasses
+    isSigning,
+    onPrev,
+    onSignTransaction,
+    signStepInnerClasses,
+    title,
+    waitingForDevice
   } = props;
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
 
-  // a unique mapping between nonce + data and step to prevent signing same transaction twice
-  const [nonceDataStepMap, setNonceDataStepMap] = useState<
-    Record<number, number | undefined>
-  >({});
-
   if (!currentTransaction) {
     return null;
   }
-
-  const currentNonce = currentTransaction.transaction.getNonce().valueOf();
-  const currentNonceData = `${currentNonce.toString()}_${
-    currentTransaction.transactionTokenInfo.multiTxData
-  }`;
-
-  useEffect(() => {
-    if (nonceDataStepMap[currentNonceData] === currentStep) {
-      return;
-    }
-
-    setNonceDataStepMap((existing) => {
-      return {
-        ...existing,
-        [currentNonceData]: currentStep
-      };
-    });
-  }, [currentNonceData, currentStep]);
 
   const transactionData = currentTransaction.transaction.getData().toString();
 
@@ -86,7 +64,12 @@ export const SignStep = (props: SignStepType) => {
   const signLastTransaction = isLastTransaction && !waitingForDevice;
 
   const onSubmit = () => {
+    if (isSigning) {
+      return;
+    }
+
     onSignTransaction();
+
     if (signLastTransaction && GuardianScreen) {
       return setShowGuardianScreen(true);
     }
@@ -96,6 +79,7 @@ export const SignStep = (props: SignStepType) => {
     type && multiTxData && !transactionData.endsWith(multiTxData);
 
   let signBtnLabel = 'Sign & Continue';
+  signBtnLabel = isSigning ? 'Loading...' : signBtnLabel;
   signBtnLabel = waitingForDevice ? 'Check your Ledger' : signBtnLabel;
   signBtnLabel = signLastTransaction ? 'Sign & Submit' : signBtnLabel;
   signBtnLabel = continueWithoutSigning ? 'Continue' : signBtnLabel;
@@ -141,7 +125,7 @@ export const SignStep = (props: SignStepType) => {
     }
   ];
 
-  const isSigningReady = nonceDataStepMap[currentNonceData] === currentStep;
+  console.log('Rendered: ', isSigning);
 
   return (
     <div
@@ -208,9 +192,9 @@ export const SignStep = (props: SignStepType) => {
               id='signBtn'
               data-testid={DataTestIdsEnum.signBtn}
               onClick={onSubmit}
-              disabled={waitingForDevice || !isSigningReady}
+              disabled={isSigning}
             >
-              {isSigningReady ? signBtnLabel : 'Loading...'}
+              {signBtnLabel}
             </button>
           </div>
         </>

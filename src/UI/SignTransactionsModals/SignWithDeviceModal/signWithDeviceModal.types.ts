@@ -23,13 +23,14 @@ export interface SignStepInnerClassesType {
 export interface SignStepPropsType
   extends WithClassnameType,
     GuardianScreenType {
-  handleClose: () => void;
   GuardianScreen?: SignPropsType['GuardianScreen'];
-  waitingForDevice: boolean;
-  error: string | null;
+  allTransactions: MultiSignTransactionType[];
   callbackRoute?: string;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
-  allTransactions: MultiSignTransactionType[];
+  error: string | null;
+  handleClose: () => void;
   isLastTransaction: boolean;
+  isSigning: boolean;
+  waitingForDevice: boolean;
 }

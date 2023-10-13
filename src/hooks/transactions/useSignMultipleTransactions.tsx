@@ -68,6 +68,7 @@ export function useSignMultipleTransactions({
     useState<ActiveLedgerTransactionType | null>(null);
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
+  const [isSigning, setIsSigning] = useState(false);
 
   const { getTxInfoByDataField, allTransactions } =
     useParseMultiEsdtTransferData({
@@ -141,10 +142,28 @@ export function useSignMultipleTransactions({
     });
   }
 
+  function setPendingState() {
+    console.log('setPendingState: ', isSigning);
+    setIsSigning(true);
+
+    if (isLedger) {
+      setWaitingForDevice(true);
+    }
+  }
+
+  function resetPendingState() {
+    console.log('resetPendingState: ', isSigning);
+    setIsSigning(false);
+
+    if (isLedger) {
+      setWaitingForDevice(false);
+    }
+  }
+
   function reset() {
     setCurrentStep(0);
     setSignedTransactions(undefined);
-    setWaitingForDevice(false);
+    resetPendingState();
   }
 
   async function sign() {
@@ -152,7 +171,7 @@ export function useSignMultipleTransactions({
       return;
     }
 
-    setWaitingForDevice(isLedger);
+    console.log('sign(): ', isSigning);
 
     let signedTx: Transaction;
     try {
@@ -176,7 +195,7 @@ export function useSignMultipleTransactions({
 
     if (!isLastTransaction) {
       setCurrentStep((exising) => exising + 1);
-      setWaitingForDevice(false);
+
       return;
     }
 
@@ -199,22 +218,27 @@ export function useSignMultipleTransactions({
     reset();
   }
 
-  function signTx() {
+  async function signTx() {
     try {
       if (currentTransaction == null) {
         return;
       }
+
+      console.log('signTx: ', isSigning);
+
       const signature = currentTransaction.transaction.getSignature();
 
       if (signature.toString('hex') && !isLastTransaction) {
+        console.log('Has signature:', true);
+
         setCurrentStep((exising) => exising + 1);
         return;
       }
 
-      sign();
+      await sign();
     } catch {
       // the only way to check if tx has signature is with try catch
-      sign();
+      await sign();
     }
   }
 
@@ -237,10 +261,25 @@ export function useSignMultipleTransactions({
   );
 
   function handleSignTransaction() {
+    // Prevent double signing
+    console.log('handleSignTransaction: ', isSigning);
+
+    if (isSigning) {
+      return;
+    }
+
+    setPendingState();
+
+    console.log('handleSignTransaction after setPendingState: ', isSigning);
+
     if (shouldContinueWithoutSigning) {
       setCurrentStep((exising) => exising + 1);
+      resetPendingState();
     } else {
-      signTx();
+      signTx().then(() => {
+        console.log('Finished signTx');
+        resetPendingState();
+      });
     }
   }
 
@@ -270,6 +309,7 @@ export function useSignMultipleTransactions({
     onNext,
     onPrev,
     waitingForDevice,
+    isSigning,
     onAbort: handleAbort,
     isLastTransaction,
     isFirstTransaction: currentStep === 0,

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Dispatch, SetStateAction } from 'react';
 import { Transaction } from '@multiversx/sdk-core';
 import { getScamAddressData } from 'apiCalls/getScamAddressData';
 
@@ -36,19 +36,20 @@ export interface UseSignTransactionsWithDevicePropsType {
 
 export interface UseSignTransactionsWithDeviceReturnType {
   allTransactions: MultiSignTransactionType[];
-  onSignTransaction: () => void;
+  callbackRoute?: string;
+  currentStep: number;
+  currentTransaction: ActiveLedgerTransactionType | null;
+  isLastTransaction: boolean;
+  isSigning: boolean;
+  onAbort: () => void;
   onNext: () => void;
   onPrev: () => void;
-  onAbort: () => void;
-  waitingForDevice: boolean;
-  isLastTransaction: boolean;
-  currentStep: number;
-  signedTransactions?: DeviceSignedTransactions;
-  setSignedTransactions?: React.Dispatch<
-    React.SetStateAction<DeviceSignedTransactions | undefined>
+  onSignTransaction: () => void;
+  setSignedTransactions?: Dispatch<
+    SetStateAction<DeviceSignedTransactions | undefined>
   >;
-  currentTransaction: ActiveLedgerTransactionType | null;
-  callbackRoute?: string;
+  signedTransactions?: DeviceSignedTransactions;
+  waitingForDevice: boolean;
 }
 
 export function useSignTransactionsWithDevice(
