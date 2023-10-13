@@ -5,12 +5,18 @@ import globalStyles from 'assets/sass/main.scss';
 
 import { DataTestIdsEnum, N_A } from 'constants/index';
 import { decodePart } from 'utils/decoders/decodePart';
+import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
 import { WithClassnameType } from '../types';
 
 import styles from './TransactionDataStyles.scss';
 
-const allOccurences = (sourceStr: string, searchStr: string) =>
-  [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
+const allOccurences = (sourceStr: string, searchStr: string) => {
+  const occurrences = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(
+    (result) => result.index
+  );
+
+  return occurrences.filter((search) => Number.isFinite(search)) as number[];
+};
 
 export interface TransactionDataPropsType extends WithClassnameType {
   data: string;
@@ -20,7 +26,7 @@ export interface TransactionDataPropsType extends WithClassnameType {
     transactionDataInputLabelClassName?: string;
     transactionDataInputValueClassName?: string;
   };
-  txIndex: number;
+  transactionIndex: number;
 }
 
 export const TransactionData = ({
@@ -29,7 +35,7 @@ export const TransactionData = ({
   highlight,
   innerTransactionDataClasses,
   isScCall,
-  txIndex
+  transactionIndex
 }: TransactionDataPropsType) => {
   const {
     transactionDataInputLabelClassName,
@@ -71,10 +77,12 @@ export const TransactionData = ({
       }
 
       default: {
-        const highlightIndex = occurrences[txIndex] || data.indexOf(highlight);
-        const highlightLength = highlight.length;
-        const start = data.slice(0, highlightIndex);
-        const end = data.slice(highlightIndex + highlightLength);
+        const { start, end } = getUnHighlightedDataFieldParts({
+          occurrences,
+          transactionIndex,
+          data,
+          highlight
+        });
 
         output = (
           <>

@@ -171,7 +171,7 @@ export const SignStepBody = ({
               transactionDataInputValueClassName: inputValueClassName
             }}
             isScCall={!tokenId}
-            txIndex={currentTransaction.transactionIndex}
+            transactionIndex={currentTransaction.transactionIndex}
           />
         )}
 
