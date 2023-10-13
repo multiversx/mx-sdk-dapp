@@ -48,7 +48,7 @@ export const TransactionData = ({
   if (showHighlight) {
     switch (true) {
       case data.startsWith(highlight): {
-        const [_, rest] = data.split(highlight);
+        const [, rest] = data.split(highlight);
 
         output = (
           <>
