@@ -21,7 +21,7 @@ export const parseNavigationParams = (
   options = defaultOptions
 ) => {
   let params: Record<string, string> = {};
-  const defaultSearch = isWindowAvailable() ? window?.location.search : '';
+  const defaultSearch = isWindowAvailable() ? window.location.search : '';
   const search = options.search ?? defaultSearch;
 
   if (search) {
