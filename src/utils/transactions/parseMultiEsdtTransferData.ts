@@ -3,7 +3,6 @@ import { MultiEsdtTransactionType, TransactionTypesEnum } from 'types';
 import { decodePart } from 'utils/decoders/decodePart';
 import { getAllStringOccurrences } from '../getAllStringOccurrences';
 
-// TODO: add tests
 export function parseMultiEsdtTransferData(data?: string) {
   const transactions: MultiEsdtTransactionType[] = [];
   let contractCallDataIndex = 0;
@@ -15,8 +14,8 @@ export function parseMultiEsdtTransferData(data?: string) {
       const [, receiver, encodedTxCount, ...rest] = data?.split('@');
       if (receiver) {
         const txCount = new BigNumber(encodedTxCount, 16).toNumber();
-
         let itemIndex = 0;
+
         for (let txIndex = 0; txIndex < txCount; txIndex++) {
           const transaction: MultiEsdtTransactionType = {
             type: TransactionTypesEnum.nftTransaction,
