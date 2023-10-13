@@ -12,7 +12,7 @@ export const removeSearchParamsFromUrl = ({
   removeParams,
   search
 }: RemoveSearchParamsFromUrlParamsType) => {
-  const windowSearch = isWindowAvailable() ? window?.location.search : '';
+  const windowSearch = isWindowAvailable() ? window.location.search : '';
   const defaultSearch = search ?? windowSearch;
 
   if (!defaultSearch) {
