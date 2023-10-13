@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  run_template_dapp_integration_script:
+  run_template_dapps_integration_script:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
