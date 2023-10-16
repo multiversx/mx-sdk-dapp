@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed missing `await` for `refreshAccount` in `useCheckTransactionStatus`](https://github.com/multiversx/mx-sdk-dapp/pull/960)
 - [Fixed `MultiESDTNFTTransfer` data field highlight and signing](https://github.com/multiversx/mx-sdk-dapp/pull/958)
 
 ## [[v2.22.5]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13

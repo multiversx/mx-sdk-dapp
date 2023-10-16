@@ -13,14 +13,11 @@ export function useCheckTransactionStatus() {
     }
   ) {
     const pendingBatches = pendingTransactionsArray
+      .filter(([, session]) => !session?.customTransactionInformation?.grouping)
       .filter(
-        ([_, session]) => !session?.customTransactionInformation?.grouping
-      )
-      .filter(([sessionId, session]) => {
-        const isPending =
-          sessionId != null && getIsTransactionPending(session.status);
-        return isPending;
-      });
+        ([sessionId, session]) =>
+          sessionId != null && getIsTransactionPending(session.status)
+      );
 
     if (pendingBatches.length > 0) {
       for (const [sessionId, transactionBatch] of pendingBatches) {
@@ -31,8 +28,9 @@ export function useCheckTransactionStatus() {
         });
       }
     }
+
     if (props.shouldRefreshBalance) {
-      refreshAccount();
+      await refreshAccount();
     }
   }
 
