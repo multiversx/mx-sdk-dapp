@@ -12,12 +12,12 @@ export const XaliasLoginButton: (
 ) => JSX.Element = ({
   children,
   token,
-  className = 'dapp-web-wallet-login',
+  className = 'dapp-xalias-login',
   callbackRoute,
   buttonClassName,
   nativeAuth,
   'data-testid': dataTestId = DataTestIdsEnum.xAliasLoginButton,
-  loginButtonText = 'xAlias Web Wallet',
+  loginButtonText = 'xAlias',
   disabled,
   customWalletAddress: customXaliasAddress
 }) => {
