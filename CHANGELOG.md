@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added xAlias login methods](https://github.com/multiversx/mx-sdk-dapp/pull/966)
 - [Added `sdk-dapp-version` to web wallet communication](https://github.com/multiversx/mx-sdk-dapp/pull/964)
 - [Fixed missing `await` for `refreshAccount` in `useCheckTransactionStatus`](https://github.com/multiversx/mx-sdk-dapp/pull/960)
 - [Fixed `MultiESDTNFTTransfer` data field highlight and signing](https://github.com/multiversx/mx-sdk-dapp/pull/958)
