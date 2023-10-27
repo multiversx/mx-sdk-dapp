@@ -61,5 +61,6 @@ export enum DataTestIdsEnum {
   transactionValue = 'transactionValue',
   transactionValueIcon = 'transactionValueIcon',
   transactionsTable = 'transactionsTable',
-  'trim-text-component' = 'trim-text-component'
+  'trim-text-component' = 'trim-text-component',
+  xAliasLoginButton = 'xAliasLoginButton'
 }
