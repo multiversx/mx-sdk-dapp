@@ -162,11 +162,12 @@ export interface SignTransactionsPropsType {
 }
 
 export interface ActiveLedgerTransactionType {
-  transaction: Transaction;
-  transactionTokenInfo: TransactionDataTokenType;
-  isTokenTransaction: boolean;
   dataField: string;
+  isTokenTransaction: boolean;
   receiverScamInfo: string | null;
+  transaction: Transaction;
+  transactionIndex: number;
+  transactionTokenInfo: TransactionDataTokenType;
 }
 
 export interface SmartContractResult {

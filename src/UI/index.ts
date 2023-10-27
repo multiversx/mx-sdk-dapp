@@ -22,6 +22,7 @@ export * from './UsdValue';
 export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
 export * from './webWallet/WebWalletLoginButton';
+export * from './webWallet/XaliasLoginButton';
 export * from './TransactionsTable';
 export * from './ScamPhishingAlert';
 export * from './TimeAgo';

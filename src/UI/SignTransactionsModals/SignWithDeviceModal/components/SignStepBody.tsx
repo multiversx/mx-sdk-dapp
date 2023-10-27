@@ -119,6 +119,8 @@ export const SignStepBody = ({
   const shouldShowAmount =
     isEgld || isEsdt || (Boolean(type) && type !== NftEnumType.NonFungibleESDT);
 
+  const data = currentTransaction.transaction.getData().toString();
+
   return (
     <div className={styles.summary}>
       <div className={styles.fields}>
@@ -159,16 +161,17 @@ export const SignStepBody = ({
           </div>
         </div>
 
-        {currentTransaction.transaction.getData() && (
+        {data && (
           <TransactionData
-            isScCall={!tokenId}
-            data={currentTransaction.transaction.getData().toString()}
-            highlight={multiTxData}
             className={inputGroupClassName}
+            data={data}
+            highlight={multiTxData}
             innerTransactionDataClasses={{
               transactionDataInputLabelClassName: inputLabelClassName,
               transactionDataInputValueClassName: inputValueClassName
             }}
+            isScCall={!tokenId}
+            transactionIndex={currentTransaction.transactionIndex}
           />
         )}
 

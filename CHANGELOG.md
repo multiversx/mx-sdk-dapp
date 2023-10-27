@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.23.0]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13
+- [Added xAlias login methods](https://github.com/multiversx/mx-sdk-dapp/pull/966)
+- [Added `sdk-dapp-version` to web wallet communication](https://github.com/multiversx/mx-sdk-dapp/pull/964)
+- [Fixed missing `await` for `refreshAccount` in `useCheckTransactionStatus`](https://github.com/multiversx/mx-sdk-dapp/pull/960)
+- [Fixed `MultiESDTNFTTransfer` data field highlight and signing](https://github.com/multiversx/mx-sdk-dapp/pull/958)
 
 ## [[v2.22.5]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13
 
@@ -27,9 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Fixed `ModalContainer` not working in `StrictMode`](https://github.com/multiversx/mx-sdk-dapp/pull/943)
 
 ## [[v2.22.1]](https://github.com/multiversx/mx-sdk-dapp/pull/942)] - 2023-10-02
-
 - [Fixed `WebWalletLoginButtonPropsType` interface](https://github.com/multiversx/mx-sdk-dapp/pull/942)
-
 ## [[v2.22.0]](https://github.com/multiversx/mx-sdk-dapp/pull/941)] - 2023-10-02
 
 - [Added support for custom Web Wallet address](https://github.com/multiversx/mx-sdk-dapp/pull/940)

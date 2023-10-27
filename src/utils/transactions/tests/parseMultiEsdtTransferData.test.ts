@@ -72,12 +72,9 @@ const two = {
 };
 const three = {
   data: removeWhiteSpaces(`MultiESDTNFTTransfer@000000000000000005003a6b2c77e799c53499791de274ebee24558681aa10fb
-  @02@534649544c4547454e442d356461396464
-  @0ead
-  @01
-  @534649542d616562633930
-  @00
-  @01e0524e2357d3c000
+  @02
+  @534649544c4547454e442d356461396464@0ead@01
+  @534649542d616562633930@00@01e0524e2357d3c000
   @75706772616465@6d657461646174613a626166796265696168776b34323576763669647767736a356f74356c32716a737170656c67366c716a6779777733747563727135777a62766664712f333036302e6a736f6e@7618623408A6A242813A40E471F2CE707599F0C12DA0790DCBB6305A3993F5B65771FCCB4EE925772E348458AAD916504F806F97485490F59C27EF56236A4801`),
   sft: {
     amount: '1',
@@ -103,6 +100,33 @@ const three = {
     type: 'scCall'
   }
 };
+
+const four = {
+  data: removeWhiteSpaces(`MultiESDTNFTTransfer
+  @000000000000000005006704c51b25a956ddbc643189ba7945b413890d4f0fd6
+  @02
+  @444d452d626465326238@01@01
+  @444d452d626465326238@01@01
+  @6e6674446973747269627574696f6e
+  @ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09
+  @ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09`),
+  nft: {
+    amount: '1',
+    data: '444d452d626465326238@01@01',
+    nonce: '01',
+    receiver:
+      '000000000000000005006704c51b25a956ddbc643189ba7945b413890d4f0fd6',
+    token: 'DME-bde2b8',
+    type: 'nftTransaction'
+  },
+  ssCall: {
+    data: '6e6674446973747269627574696f6e@ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09@ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09',
+    receiver:
+      '000000000000000005006704c51b25a956ddbc643189ba7945b413890d4f0fd6',
+    type: 'scCall'
+  }
+};
+
 describe('parseMultiEsdtTransferData tests', () => {
   test('Interprets data with scCall', () => {
     const response = [one.esdt, one.sft1, one.sft2, one.scCall];
@@ -136,6 +160,13 @@ describe('parseMultiEsdtTransferData tests', () => {
   test('Interprets data with two ESDT and NFT transactions', () => {
     const result = parseMultiEsdtTransferData(three.data);
     const response = [three.sft, three.esdt, three.scCall];
+    expect(result).toEqual(response);
+  });
+  test('Interprets data with two identical NFT transactions', () => {
+    const result = parseMultiEsdtTransferData(
+      'MultiESDTNFTTransfer@000000000000000005006704c51b25a956ddbc643189ba7945b413890d4f0fd6@02@444d452d626465326238@01@01@444d452d626465326238@01@01@6e6674446973747269627574696f6e@ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09@ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09'
+    );
+    const response = [four.nft, four.nft, four.ssCall];
     expect(result).toEqual(response);
   });
 });

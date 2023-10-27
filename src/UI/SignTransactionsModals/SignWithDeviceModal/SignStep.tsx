@@ -49,7 +49,7 @@ export const SignStep = (props: SignStepType) => {
   const currentNonce = currentTransaction.transaction.getNonce().valueOf();
   const currentNonceData = `${currentNonce.toString()}_${
     currentTransaction.transactionTokenInfo.multiTxData
-  }`;
+  }_${currentTransaction.transactionIndex}`;
 
   useEffect(() => {
     const isCurrentNonceRegistered =

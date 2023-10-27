@@ -5,12 +5,18 @@ import globalStyles from 'assets/sass/main.scss';
 
 import { DataTestIdsEnum, N_A } from 'constants/index';
 import { decodePart } from 'utils/decoders/decodePart';
+import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
 import { WithClassnameType } from '../types';
 
 import styles from './TransactionDataStyles.scss';
 
-const allOccurences = (sourceStr: string, searchStr: string) =>
-  [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
+const allOccurences = (sourceStr: string, searchStr: string) => {
+  const occurrences = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(
+    (result) => result.index
+  );
+
+  return occurrences.filter((search) => Number.isFinite(search)) as number[];
+};
 
 export interface TransactionDataPropsType extends WithClassnameType {
   data: string;
@@ -20,14 +26,16 @@ export interface TransactionDataPropsType extends WithClassnameType {
     transactionDataInputLabelClassName?: string;
     transactionDataInputValueClassName?: string;
   };
+  transactionIndex: number;
 }
 
 export const TransactionData = ({
+  className = 'dapp-transaction-data',
   data,
   highlight,
+  innerTransactionDataClasses,
   isScCall,
-  className = 'dapp-transaction-data',
-  innerTransactionDataClasses
+  transactionIndex
 }: TransactionDataPropsType) => {
   const {
     transactionDataInputLabelClassName,
@@ -39,10 +47,15 @@ export const TransactionData = ({
   const [encodedScCall, ...remainingDataFields] =
     highlight && isScCall ? highlight.split('@') : [];
 
-  if (data && highlight && allOccurences(data, highlight).length === 1) {
+  const isHighlightedData = data && highlight;
+  const occurrences = isHighlightedData ? allOccurences(data, highlight) : [];
+  const showHighlight = isHighlightedData && occurrences.length > 0;
+
+  if (showHighlight) {
     switch (true) {
       case data.startsWith(highlight): {
         const [, rest] = data.split(highlight);
+
         output = (
           <>
             {highlight}
@@ -53,6 +66,7 @@ export const TransactionData = ({
       }
       case data.endsWith(highlight): {
         const [rest] = data.split(highlight);
+
         output = (
           <>
             <span className={globalStyles.textMuted}>{rest}</span>
@@ -63,7 +77,12 @@ export const TransactionData = ({
       }
 
       default: {
-        const [start, end] = data.split(highlight);
+        const { start, end } = getUnHighlightedDataFieldParts({
+          occurrences,
+          transactionIndex,
+          data,
+          highlight
+        });
 
         output = (
           <>
