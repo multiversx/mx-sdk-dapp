@@ -19,7 +19,7 @@ export interface Props {
   LedgerLoginButtonText?: string;
   ExtensionLoginButtonText?: string;
   OperaWalletLoginButtonText?: string;
-  WalletV2LoginButtonText?: string;
+  CrossWindowLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;
@@ -35,7 +35,7 @@ export const UnlockPage = ({
   WalletConnectLoginButtonText = 'xPortal App',
   ExtensionLoginButtonText = 'Extension',
   OperaWalletLoginButtonText = 'Opera Crypto Wallet',
-  WalletV2LoginButtonText = 'Wallet V2',
+  CrossWindowLoginButtonText = 'Wallet V2',
   WebWalletLoginButtonText = 'Web wallet'
 }: Props) => {
   const generatedClasses = {
@@ -93,7 +93,7 @@ export const UnlockPage = ({
 
             <WebWalletLoginButton
               callbackRoute={loginRoute}
-              loginButtonText={WalletV2LoginButtonText}
+              loginButtonText={CrossWindowLoginButtonText}
             />
 
             <WebWalletLoginButton

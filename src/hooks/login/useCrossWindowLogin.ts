@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { CrossWindowProvider } from 'crossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { WalletV2Provider } from 'tempWalletProviderV2';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -17,17 +17,17 @@ import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
 
-export type UseWalletV2LoginReturnType = [
+export type UseCrossWindowLoginReturnType = [
   InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
 
-export const useWalletV2Login = ({
+export const useCrossWindowLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
   onLoginRedirect
-}: OnProviderLoginType): UseWalletV2LoginReturnType => {
+}: OnProviderLoginType): UseCrossWindowLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
@@ -44,7 +44,7 @@ export const useWalletV2Login = ({
     }
 
     setIsLoading(true);
-    const provider: WalletV2Provider = WalletV2Provider.getInstance(
+    const provider: CrossWindowProvider = CrossWindowProvider.getInstance(
       network.walletAddress
     );
 
@@ -102,7 +102,7 @@ export const useWalletV2Login = ({
       }
 
       dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.walletV2 })
+        loginAction({ address, loginMethod: LoginMethodsEnum.crossWindow })
       );
 
       optionalRedirect({

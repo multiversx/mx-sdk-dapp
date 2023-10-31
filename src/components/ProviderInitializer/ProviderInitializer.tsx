@@ -46,7 +46,7 @@ import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
 import {
   getExtensionProvider,
   getOperaProvider,
-  getWalletV2Provider
+  getCrossWindowProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -222,9 +222,12 @@ export function ProviderInitializer() {
     }
   }
 
-  async function setWalletV2Provider() {
+  async function setCrossWindowProvider() {
     const address = await getAddress();
-    const provider = await getWalletV2Provider(address, network.walletAddress);
+    const provider = await getCrossWindowProvider({
+      address,
+      walletUrl: network.walletAddress
+    });
     if (provider) {
       setAccountProvider(provider);
     }
@@ -258,8 +261,8 @@ export function ProviderInitializer() {
         break;
       }
 
-      case LoginMethodsEnum.walletV2: {
-        setWalletV2Provider();
+      case LoginMethodsEnum.crossWindow: {
+        setCrossWindowProvider();
         break;
       }
 

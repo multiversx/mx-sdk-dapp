@@ -8,21 +8,21 @@ import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 
-import styles from './signWithWalletV2ModalStyles.scss';
+import styles from './signWithCrossWindowWalletModal.styles.scss';
 
-export const SignWithWalletV2Modal = ({
+export const SignWithCrossWindowWalletModal = ({
   handleClose,
   error,
   transactions,
   sessionId,
-  className = 'dapp-walletV2-modal',
+  className = 'dapp-cross-window-modal',
   modalContentClassName
 }: SignModalPropsType) => {
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
 
   const classes = {
-    wrapper: classNames(styles.modalContainer, styles.walletV2, className),
+    wrapper: classNames(styles.modalContainer, styles.crossWindow, className),
     icon: globalStyles.textWhite,
     closeBtn: classNames(
       globalStyles.btn,
@@ -36,8 +36,8 @@ export const SignWithWalletV2Modal = ({
   const description = error
     ? error
     : transactions && transactions.length > 1
-    ? 'Check your WalletV2 Crypto Wallet to sign the transactions'
-    : 'Check your WalletV2 Crypto Wallet to sign the transaction';
+    ? 'Check your Window Crypto Wallet to sign the transactions'
+    : 'Check your Window Crypto Wallet to sign the transaction';
 
   const close = (event: MouseEvent) => {
     event.preventDefault();
@@ -51,9 +51,6 @@ export const SignWithWalletV2Modal = ({
       modalConfig={{
         modalDialogClassName: classes.wrapper
       }}
-      modalInteractionConfig={{
-        openOnMount: true
-      }}
     >
       <PageState
         icon={error ? faTimes : null}
@@ -61,7 +58,7 @@ export const SignWithWalletV2Modal = ({
         className={modalContentClassName}
         iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
         iconSize='3x'
-        title='Confirm on WalletV2 Crypto Wallet'
+        title='Confirm on Window Crypto Wallet'
         description={description}
         action={
           <button

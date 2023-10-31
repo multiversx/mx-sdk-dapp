@@ -1,3 +1,3 @@
 export * from './getOperaProvider';
 export * from './getExtensionProvider';
-export * from './getWalletV2Provider';
+export * from './getCrossWindowProvider';

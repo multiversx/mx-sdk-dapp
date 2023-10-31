@@ -2,16 +2,16 @@ import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
+import { CrossWindowProvider } from 'crossWindowProvider';
 import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
-import { WalletV2Provider } from 'tempWalletProviderV2';
 
 export type ProvidersType =
   | IDappProvider
   | ExtensionProvider
   | WalletProvider
-  | WalletV2Provider
+  | CrossWindowProvider
   | HWProvider
   | OperaProvider
   | WalletConnectV2Provider;

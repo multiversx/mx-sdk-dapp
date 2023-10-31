@@ -4,6 +4,7 @@ import { useGetLoginInfo } from 'hooks';
 import { LoginMethodsEnum } from 'types';
 
 import { ConfirmationScreen, DeviceConfirmationScreen } from './components';
+import { SignWithCrossWindowWalletModal } from './SignWithCrossWindowWalletModal';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithExtraModal } from './SignWithExtraModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
@@ -14,7 +15,6 @@ import {
   ScreenType,
   SignPropsType
 } from './types/signTransactionsModals.types';
-import { SignWithWalletV2Modal } from './SignWithWalletV2Modal';
 
 export interface SignTransactionsModalsPropsType {
   className?: string;
@@ -37,7 +37,8 @@ export const SignTransactionsModals = ({
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
     Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
     Opera: CustomConfirmScreens?.Opera ?? SignWithOperaModal,
-    WalletV2: CustomConfirmScreens?.WalletV2 ?? SignWithWalletV2Modal,
+    CrossWindow:
+      CustomConfirmScreens?.CrossWindow ?? SignWithCrossWindowWalletModal,
     // The purpose of having this is to have a consistent flow of transaction signing.
     // The logic for redirecting to the web wallet is placed in the ConfirmationScreen component,
     // so we have to render that component when we are logged in with the web wallet provider
@@ -72,8 +73,8 @@ export const SignTransactionsModals = ({
       return renderScreen({ Screen: ConfirmScreens.Extension });
     case LoginMethodsEnum.opera:
       return renderScreen({ Screen: ConfirmScreens.Opera });
-    case LoginMethodsEnum.walletV2:
-      return renderScreen({ Screen: ConfirmScreens.WalletV2 });
+    case LoginMethodsEnum.crossWindow:
+      return renderScreen({ Screen: ConfirmScreens.CrossWindow });
     case LoginMethodsEnum.wallet:
       return renderScreen({ Screen: ConfirmScreens.Wallet });
     case LoginMethodsEnum.extra:

@@ -32,7 +32,7 @@ export interface LoginInfoStateType {
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
   operaLogin: LoginInfoType | null;
-  walletV2Login: LoginInfoType | null;
+  crossWindowLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
 }
@@ -45,7 +45,7 @@ const initialState: LoginInfoStateType = {
   walletLogin: null,
   extensionLogin: null,
   operaLogin: null,
-  walletV2Login: null,
+  crossWindowLogin: null,
   isLoginSessionInvalid: false
 };
 

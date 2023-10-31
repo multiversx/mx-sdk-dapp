@@ -12,7 +12,7 @@ import {
 } from './errors';
 import { Operation } from './operation';
 
-interface IWalletV2Account {
+interface ICrossWindowWalletAccount {
   address: string;
   name?: string;
   signature?: string;
@@ -21,17 +21,17 @@ interface IWalletV2Account {
 export const PARENT_DAPP_WINDOW_NAME = 'parentDapp';
 export const CHILD_WEB_WALLET_WINDOW_NAME = 'childWallet';
 
-export class WalletV2Provider {
+export class CrossWindowProvider {
   private walletUrl = '';
-  public account: IWalletV2Account = { address: '' };
+  public account: ICrossWindowWalletAccount = { address: '' };
   private initialized = false;
-  private static _instance: WalletV2Provider = new WalletV2Provider();
+  private static _instance: CrossWindowProvider = new CrossWindowProvider();
   walletWindow: Window | null = null;
 
   private constructor() {
-    if (WalletV2Provider._instance) {
+    if (CrossWindowProvider._instance) {
       throw new Error(
-        'Error: Instantiation failed: Use WalletV2Provider.getInstance() instead of new.'
+        'Error: Instantiation failed: Use CrossWindowProvider.getInstance() instead of new.'
       );
     }
     window.addEventListener('beforeunload', () => {
@@ -40,17 +40,17 @@ export class WalletV2Provider {
       }
     });
     window.name = PARENT_DAPP_WINDOW_NAME;
-    WalletV2Provider._instance = this;
+    CrossWindowProvider._instance = this;
   }
 
-  public static getInstance(walletUrl: string): WalletV2Provider {
-    WalletV2Provider._instance.walletUrl = walletUrl;
-    return WalletV2Provider._instance;
+  public static getInstance(walletUrl: string): CrossWindowProvider {
+    CrossWindowProvider._instance.walletUrl = walletUrl;
+    return CrossWindowProvider._instance;
   }
 
-  public setAddress(address: string): WalletV2Provider {
+  public setAddress(address: string): CrossWindowProvider {
     this.account.address = address;
-    return WalletV2Provider._instance;
+    return CrossWindowProvider._instance;
   }
 
   async init(): Promise<boolean> {
@@ -66,7 +66,7 @@ export class WalletV2Provider {
   ): Promise<string> {
     if (!this.initialized) {
       throw new Error(
-        'WalletV2 provider is not initialised, call init() first'
+        'Wallet cross window provider is not initialised, call init() first'
       );
     }
     const redirectUrl = this.buildWalletUrl({
@@ -138,7 +138,7 @@ export class WalletV2Provider {
   ): string {
     const jsonToSend: any = {};
     transactions.map((tx) => {
-      const plainTx = WalletV2Provider.prepareWalletTransaction(tx);
+      const plainTx = CrossWindowProvider.prepareWalletTransaction(tx);
       for (const txProp in plainTx) {
         if (
           plainTx.hasOwnProperty(txProp) &&
@@ -187,7 +187,7 @@ export class WalletV2Provider {
   async logout(): Promise<boolean> {
     if (!this.initialized) {
       throw new Error(
-        'WalletV2 provider is not initialised, call init() first'
+        'CrossWindow provider is not initialised, call init() first'
       );
     }
     try {
@@ -199,7 +199,7 @@ export class WalletV2Provider {
         );
       }
     } catch (error) {
-      console.warn('WalletV2 origin url is already cleared!', error);
+      console.warn('CrossWindow origin url is already cleared!', error);
     }
 
     return true;
@@ -212,7 +212,7 @@ export class WalletV2Provider {
   async getAddress(): Promise<string> {
     if (!this.initialized) {
       throw new Error(
-        'WalletV2 provider is not initialised, call init() first'
+        'CrossWindow provider is not initialised, call init() first'
       );
     }
     return this.account ? this.account.address : '';
@@ -297,11 +297,11 @@ export class WalletV2Provider {
       account: this.account.address,
       message: message.message.toString()
     };
-    const walletV2Response = await this.startBgrMsgChannel(
+    const crossWindowResponse = await this.startBgrMsgChannel(
       Operation.SignMessage,
       data
     );
-    const signatureHex = walletV2Response.signature;
+    const signatureHex = crossWindowResponse.signature;
     const signature = Buffer.from(signatureHex, 'hex');
 
     message.applySignature(signature);

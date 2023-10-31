@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
-import { useWalletV2Login } from 'hooks';
+import { useCrossWindowLogin } from 'hooks';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 
-export interface WalletV2LoginButtonPropsType
+export interface CrossWindowLoginButtonPropsType
   extends WithClassnameType,
     OnProviderLoginType {
   children?: ReactNode;
@@ -14,22 +14,22 @@ export interface WalletV2LoginButtonPropsType
   disabled?: boolean;
 }
 
-export const WalletV2LoginButton: (
-  props: WalletV2LoginButtonPropsType
+export const CrossWindowLoginButton: (
+  props: CrossWindowLoginButtonPropsType
 ) => JSX.Element = ({
   token,
-  className = 'dapp-walletV2-login',
+  className = 'dapp-window-wallet-login',
   children,
   callbackRoute,
   buttonClassName,
   nativeAuth,
-  loginButtonText = 'Web WalletV2',
+  loginButtonText = 'Window Wallet',
   onLoginRedirect,
   disabled,
   'data-testid': dataTestId = 'walletV2LoginButton'
 }) => {
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
-  const [onInitiateLogin] = useWalletV2Login({
+  const [onInitiateLogin] = useCrossWindowLogin({
     callbackRoute,
     token,
     onLoginRedirect,
