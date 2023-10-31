@@ -9,7 +9,6 @@ import {
   TransactionServerStatusesEnum,
   TransactionTypesEnum
 } from './enums.types';
-import { BatchTransactionsResponseType } from './serverTransactions.types';
 
 export interface TransactionsToSignType {
   transactions: IPlainTransactionObject[];
@@ -142,6 +141,18 @@ export interface SendTransactionsPropsType {
   sessionInformation?: any;
 }
 
+export interface SendBatchTransactionsPropsType {
+  transactions: (Transaction | SimpleTransactionType)[][];
+  redirectAfterSign?: boolean;
+  signWithoutSending?: boolean;
+  skipGuardian?: boolean;
+  completedTransactionsDelay?: number;
+  callbackRoute?: string;
+  transactionsDisplayInfo: TransactionsDisplayInfoType;
+  minGasLimit?: number;
+  sessionInformation?: any;
+}
+
 export interface SignTransactionsPropsType {
   transactions: Transaction[] | Transaction;
   minGasLimit?: number;
@@ -151,11 +162,12 @@ export interface SignTransactionsPropsType {
 }
 
 export interface ActiveLedgerTransactionType {
-  transaction: Transaction;
-  transactionTokenInfo: TransactionDataTokenType;
-  isTokenTransaction: boolean;
   dataField: string;
+  isTokenTransaction: boolean;
   receiverScamInfo: string | null;
+  transaction: Transaction;
+  transactionIndex: number;
+  transactionTokenInfo: TransactionDataTokenType;
 }
 
 export interface SmartContractResult {
@@ -212,6 +224,10 @@ export interface CustomTransactionInformation {
    * If true, the change guardian action will not trigger transaction version update
    */
   skipGuardian?: boolean;
+  /**
+   * Keeps indexes of transactions that should be grouped together. If not provided, all transactions will be grouped together. Used only for batch transactions.
+   */
+  grouping?: number[][];
 }
 
 export interface SendTransactionReturnType {
@@ -222,7 +238,6 @@ export interface SendTransactionReturnType {
 export interface SendBatchTransactionReturnType {
   error?: string;
   batchId: string | null;
-  data?: BatchTransactionsResponseType | null;
 }
 
 export type GetTransactionsByHashesType = (

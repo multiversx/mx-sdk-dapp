@@ -13,11 +13,13 @@ export interface BaseNetworkType {
   apiTimeout: string;
   walletConnectV2ProjectId?: string;
   walletConnectV2Options?: Record<string, any>;
+  xAliasAddress?: string;
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {
   walletConnectBridgeAddress: string;
   walletConnectV2RelayAddress: string;
+  customWalletAddress?: string;
 }
 
 export interface NetworkType extends BaseNetworkType {

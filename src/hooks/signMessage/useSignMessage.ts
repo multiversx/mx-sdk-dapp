@@ -115,7 +115,7 @@ export const useSignMessage = () => {
 
     return `${isWalletLogin ? origin : ''}${callbackUrl.pathname}${
       callbackUrl.search
-    }`;
+    }${callbackUrl.hash}`;
   };
 
   const checkProviderIsInitialized = async () => {

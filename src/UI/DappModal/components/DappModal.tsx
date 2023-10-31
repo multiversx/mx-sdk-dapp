@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { WithClassnameType } from '../../types';
 import { DappModalConfig } from '../dappModal.types';
 import styles from '../dappModalStyles.scss';
@@ -10,12 +11,12 @@ import { DappModalFooter } from './DappModalFooter';
 import { DappModalHeader } from './DappModalHeader';
 
 export interface DappModalPropsType extends WithClassnameType {
-  id?: string;
-  visible: boolean;
-  onHide?: () => void;
-  parentElement?: Element;
   children?: ReactNode;
   config?: DappModalConfig;
+  id?: string;
+  onHide?: () => void;
+  parentElement?: Element;
+  visible?: boolean;
 }
 
 const defaultConfig: DappModalConfig = {
@@ -26,13 +27,14 @@ const defaultConfig: DappModalConfig = {
 };
 
 export const DappModal = ({
+  'data-testid': dataTestId = DataTestIdsEnum.dappModal,
+  children,
+  className = 'dapp-modal-dialog-wrapper',
+  config = defaultConfig,
   id = 'dapp-modal',
-  visible,
   onHide,
   parentElement,
-  config = defaultConfig,
-  children,
-  className = 'dapp-modal-dialog-wrapper'
+  visible
 }: DappModalPropsType) => {
   if (!visible) {
     return null;
@@ -60,6 +62,7 @@ export const DappModal = ({
       role='dialog'
       aria-modal='true'
       className={classNames(modalDialogClassName, styles.dappModal, className)}
+      data-testid={dataTestId}
     >
       <div
         className={classNames(styles.dappModalContent, modalContentClassName)}

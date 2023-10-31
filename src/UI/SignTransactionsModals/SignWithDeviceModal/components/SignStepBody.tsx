@@ -7,10 +7,10 @@ import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { NftEnumType } from 'types/tokens.types';
 import { TransactionData } from 'UI/TransactionData';
-import { getIdentifierType } from 'utils';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
+import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
 import { useSignStepsClasses } from '../hooks';
 import { ConfirmAmount } from './components/ConfirmAmount';
@@ -119,6 +119,8 @@ export const SignStepBody = ({
   const shouldShowAmount =
     isEgld || isEsdt || (Boolean(type) && type !== NftEnumType.NonFungibleESDT);
 
+  const data = currentTransaction.transaction.getData().toString();
+
   return (
     <div className={styles.summary}>
       <div className={styles.fields}>
@@ -159,16 +161,17 @@ export const SignStepBody = ({
           </div>
         </div>
 
-        {currentTransaction.transaction.getData() && (
+        {data && (
           <TransactionData
-            isScCall={!tokenId}
-            data={currentTransaction.transaction.getData().toString()}
-            highlight={multiTxData}
             className={inputGroupClassName}
+            data={data}
+            highlight={multiTxData}
             innerTransactionDataClasses={{
               transactionDataInputLabelClassName: inputLabelClassName,
               transactionDataInputValueClassName: inputValueClassName
             }}
+            isScCall={!tokenId}
+            transactionIndex={currentTransaction.transactionIndex}
           />
         )}
 

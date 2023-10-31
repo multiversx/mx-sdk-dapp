@@ -311,6 +311,15 @@ you can easily import and use them.
 >
 ```
 
+If you have a custom Web Wallet provider you can integrate it by using the `customWalletAddress` prop:
+```jsx
+<WebWalletLoginButton
+  callbackRoute="/dashboard"
+  loginButtonText="Custom Web Wallet login"
+  customWalletAddress="https://custom-web-wallet.com"
+>
+```
+
 All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
 The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
 
@@ -532,9 +541,125 @@ or the `useSignTransactions` hook defined below. If you don't use one of these, 
 
 </details>
 
-<details><summary>
+<details>
+<summary>
+Sending sync transactions in batches (batch transactions mechanism)
+</summary>
+
+### Sending transactions synchronously in batches
+
+The API for sending sync transactions is a function called **sendBatchTransactions**:
+
+`import { sendBatchTransactions } from "@multiversx/sdk-dapp/services/transactions/sendBatchTransactions";`
+
+It can be used to send a group of transactions (that ca be synchronized) with minimum information:
+
+
+```typescript
+const { batchId, error } = await sendBatchTransactions({
+    transactions: [
+      [
+        {
+          value: '1000000000000000000',
+          data: 'tx1',
+          receiver: receiverAddress
+        },
+      ],
+      [
+        {
+          value: '1000000000000000000',
+          data: 'tx2',
+          receiver: receiverAddress
+        },
+        {
+          value: '1000000000000000000',
+          data: 'tx3',
+          receiver: receiverAddress
+        },
+      ]
+    ],
+  /**
+   * the route to be redirected to after signing. Will not redirect if the user is already on the specified route
+   * @default window.location.pathname
+   */
+  callbackRoute?: string;
+  /**
+   * custom message for toasts texts
+   * @default null
+   */
+  transactionsDisplayInfo: TransactionsDisplayInfoType;
+  /**
+   * Minimum amount of gas in order to process the transaction.
+   * @default 50_000
+   */
+  minGasLimit?: number (optional, defaults to 50_000);
+  /**
+   * Contains extra sessionInformation that will be passed back via getSignedTransactions hook
+   */
+  sessionInformation?: any (optional, defaults to null)
+  /**
+   * The transactions will be signed without being sent to the blockchain
+   */
+  signWithoutSending?: boolean;
+  /**
+   * Delay the transaction status from going into "successful" state
+   */
+  completedTransactionsDelay?: number;
+  /**
+   * If true, redirects to the provided callbackRoute
+   */
+  redirectAfterSigning?: boolean;
+  });
+```
+
+It returns a Promise that will be fulfilled with `{error?: string; batchId: string | null;}`
+
+- `batchId` is the transactions' batch id used to send the batch to the batch service and to track the transactions status and react to it. This is composed by the `sessionId` (received after signing) and the user address. Eg. `12123423123-erd1address...`.
+- `error` is the error that can appear during the signing/sending process.
+
+### How to synchronize transactions ?
+`sendBatchTransactions` accepts an argument `transactions` which is an array of transactions arrays.
+Each transaction array will be sent to the blockchain in the order they are provided.
+Having the example above, the transactions will be sent in the following order:
+- `tx1`
+- `tx2, tx3`
+
+`tx1` will be sent first, waits until is completed, then `tx2` and `tx3` will be sent in parallel. This means that the groups are sent synchronously, but the transactions inside a group are sent in parallel.
+
+** Important! This function will send the transactions automatically in batches, based on the provided transactions array, immediately after signing.
+If you do not want them to be sent automatically, but on demand, then you should use send callback exposed by the `useSendBatchTransactions` hook.
+Be sure to save the `sessionId` passed to the batch. We recommend to generate a new sessionId like this: `Date.now().toString();` **
+
+```typescript
+import { sendBatchTransactions } from '@multiversx/sdk-dapp/services/transactions/sendBatchTransactions';
+import { useSendBatchTransactions } from '@multiversx/sdk-dapp/hooks/transactions/batch/useSendBatchTransactions';
+
+
+const { send: sendBatchToBlockchain } = useSendBatchTransactions();
+
+// Use signWithoutSending: true to sign the transactions without sending them to the blockchain
+sendBatchTransactions({
+  transactions,
+  signWithoutSending: true,
+  callbackRoute: window.location.pathname,
+  redirectAfterSign: true
+});
+
+const { error, batchId, data } = await sendBatchToBlockchain({
+  transactions,
+  sessionId
+});
+```
+
+**Important! For the transaction to be signed, you will have to use either `SignTransactionsModals` defined above, in the `Prerequisites` section,
+or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
+
+</details>
+
+<details>
+<summary>
 Transaction Signing Flow
-  </summary>
+</summary>
 
 ### Transaction Signing Flow
 
@@ -619,7 +744,83 @@ Tracking a transaction
 
 ### Tracking a transaction
 
-The library exposes a hook called useTrackTransactionStatus;
+The library has a built-in implementation for tracking the transactions sent normally or synchronously via batch transactions.
+Also, exposes a hook called `useTrackTransactionStatus`;
+
+### 1. Built-in tracking
+
+There is a `TransactionTracker` component that is used to track transactions. It is used by default in the `DappProvider` component.
+This component is using the `useTransactionsTracker` and `useBatchTransactionsTracker` hooks to track the transactions.
+
+`useTransactionsTracker` - track transactions sent normally
+`useBatchTransactionsTracker` track batch transactions
+
+The developers are be able to create their own implementation for the transaction tracking component (using these hooks or creating their own logic) and pass it to the `DappProvider` component through `customComponents` field.
+
+```jsx
+import { TransactionsTracker } from "your/module";
+<DappProvider
+  environment={environment}
+  customNetworkConfig={{
+    name: 'customConfig',
+    apiTimeout,
+    walletConnectV2ProjectId
+  }}
+  customComponents={{
+    transactionTracker: {
+      component: TransactionsTracker,
+      props: {
+        onSuccess: (sessionId) => {
+          console.log(`Session ${sessionId} successfully completed`);
+        },
+        onFail: (sessionId, errorMessage) => {
+          if (errorMessage) {
+            console.log(`Session ${sessionId} failed, ${errorMessage}`);
+            return;
+          }
+
+          console.log(`Session ${sessionId} failed`);
+        }
+      }
+    }
+  }}
+>
+````
+The props passed to the `TransactionsTracker` component are:
+```typescript
+export interface TransactionsTrackerType {
+  getTransactionsByHash?: GetTransactionsByHashesType;
+  onSuccess?: (sessionId: string | null) => void;
+  onFail?: (sessionId: string | null, errorMessage?: string) => void;
+}
+```
+Also, the same props can be passed to the `useTransactionsTracker` and `useBatchTransactionsTracker` hooks.
+
+```typescript
+import { useBatchTransactionsTracker } from 'hooks/transactions/batch/tracker/useBatchTransactionsTracker';
+import { useTransactionsTracker } from 'hooks/transactions/useTransactionsTracker';
+
+const props = {
+  onSuccess: (sessionId) => {
+    console.log(`Session ${sessionId} successfully completed`);
+  },
+  onFail: (sessionId, errorMessage) => {
+    if (errorMessage) {
+      console.log(`Session ${sessionId} failed, ${errorMessage}`);
+      return;
+    }
+
+    console.log(`Session ${sessionId} failed`);
+  }
+};
+
+useTransactionsTracker(props);
+useBatchTransactionsTracker(props);
+```
+
+The transactions trackers will automatically update the transactions statuses in the store. This functionality is used by the `TransactionToastList` component to display the transactions statuses.
+
+### 2. Tracking transaction status
 
 ```typescript
 import {useTrackTransactionStatus} from @multiversx/sdk-dapp/hooks;

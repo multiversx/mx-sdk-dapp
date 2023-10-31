@@ -111,6 +111,7 @@ export const loginInfoSlice = createSlice({
         state: LoginInfoStateType,
         action: PayloadAction<LoginActionPayloadType>
       ) => {
+        state.isLoginSessionInvalid = false;
         state.loginMethod = action.payload.loginMethod;
         setLoginExpiresAt(getNewLoginExpiresTimestamp());
       }

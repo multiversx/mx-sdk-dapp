@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { LoadingDots } from 'UI/LoadingDots';
 import { TokenDetails } from 'UI/TokenDetails';
 import { UsdValue } from 'UI/UsdValue';
@@ -33,7 +34,10 @@ export const ConfirmAmount = ({
       <div className={styles.token}>
         <TokenAvatar type={tokenType} avatar={tokenAvatar} />
 
-        <div className={styles.value} data-testid='confirmAmount'>
+        <div
+          className={styles.value}
+          data-testid={DataTestIdsEnum.confirmAmount}
+        >
           {formattedAmount} <TokenDetails.Label token={token} />
         </div>
       </div>
@@ -43,7 +47,7 @@ export const ConfirmAmount = ({
         <UsdValue
           amount={rawAmount}
           usd={tokenPrice}
-          data-testid='confirmUsdValue'
+          data-testid={DataTestIdsEnum.confirmUsdValue}
           className={styles.price}
         />
       )}

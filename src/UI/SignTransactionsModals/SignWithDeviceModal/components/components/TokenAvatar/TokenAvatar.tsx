@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import MultiversXIcon from 'assets/icons/EGLD.svg';
 import { NftEnumType } from 'types/tokens.types';
 
-import { getEgldLabel } from 'utils';
+import { getEgldLabel } from 'utils/network';
 import styles from './tokenAvatarStyles.scss';
 
 export interface TokenAvatarPropsType {
@@ -23,7 +23,7 @@ export const TokenAvatar = (props: TokenAvatarPropsType) => {
   const isEgld = type === egldLabel;
 
   const tokenIcon = avatar ? (
-    <img src={avatar} />
+    <img src={avatar} alt={type} />
   ) : (
     <FontAwesomeIcon icon={faDiamond} />
   );

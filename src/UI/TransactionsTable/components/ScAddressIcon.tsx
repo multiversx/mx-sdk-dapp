@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { isContract } from 'utils/smartContracts';
 
 export interface ScAddressIconPropsType {
@@ -23,7 +24,7 @@ const ScAddressIcon = ({
         title='Smart Contract'
         icon={faFileAlt}
         className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
-        data-testid='scIcon'
+        data-testid={DataTestIdsEnum.scIcon}
       />
     );
   }

@@ -27,9 +27,7 @@ export const AuthenticatedRoutesWrapper = ({
 }) => {
   const searchParamAddress = getSearchParamAddress();
   const isLoggedIn = useSelector(isLoggedInSelector);
-
   const isAccountLoading = useSelector(isAccountLoadingSelector);
-
   const walletLogin = useSelector(walletLoginSelector);
 
   const getLocationPathname = () => {
@@ -56,7 +54,7 @@ export const AuthenticatedRoutesWrapper = ({
       return onRedirect(unlockRoute);
     }
 
-    safeRedirect(unlockRoute);
+    safeRedirect({ url: unlockRoute });
   }, [shouldRedirect, unlockRoute]);
 
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;

@@ -4,7 +4,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
-import { CANCEL_ACTION_NAME } from 'constants/index';
+import { CANCEL_ACTION_NAME, DataTestIdsEnum } from 'constants/index';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
@@ -76,9 +76,7 @@ export const SignWithWalletConnectModal = ({
       modalConfig={{
         modalDialogClassName: classes.wrapper
       }}
-      modalInteractionConfig={{
-        openOnMount: true
-      }}
+      visible
     >
       <PageState
         icon={error ? faTimes : null}
@@ -91,7 +89,7 @@ export const SignWithWalletConnectModal = ({
         action={
           <button
             id='closeButton'
-            data-testid='closeButton'
+            data-testid={DataTestIdsEnum.closeButton}
             onClick={close}
             className={classes.closeBtn}
           >

@@ -2,6 +2,7 @@ import React, { MouseEvent, useEffect, useState } from 'react';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { DataTestIdsEnum } from 'constants/index';
 
 import globalStyles from '../../../assets/sass/main.scss';
 
@@ -48,7 +49,7 @@ export const SignStep = (props: SignStepType) => {
   const currentNonce = currentTransaction.transaction.getNonce().valueOf();
   const currentNonceData = `${currentNonce.toString()}_${
     currentTransaction.transactionTokenInfo.multiTxData
-  }`;
+  }_${currentTransaction.transactionIndex}`;
 
   useEffect(() => {
     const isCurrentNonceRegistered =
@@ -176,7 +177,7 @@ export const SignStep = (props: SignStepType) => {
         <ProgressHeader steps={steps} type='detailed' size='small' />
       )}
 
-      <div className={styles.title} data-testid='signStepTitle'>
+      <div className={styles.title} data-testid={DataTestIdsEnum.signStepTitle}>
         {signFlowTitle || 'Confirm on Ledger'}
       </div>
 
@@ -195,7 +196,7 @@ export const SignStep = (props: SignStepType) => {
           >
             <button
               id='closeButton'
-              data-testid='closeButton'
+              data-testid={DataTestIdsEnum.closeButton}
               onClick={onCloseClick}
               className={classNames(styles.signButtonCancel, buttonClassName)}
             >
@@ -210,7 +211,7 @@ export const SignStep = (props: SignStepType) => {
                 buttonClassName
               )}
               id='signBtn'
-              data-testid='signBtn'
+              data-testid={DataTestIdsEnum.signBtn}
               onClick={onSubmit}
               disabled={waitingForDevice || !isSigningReady}
             >

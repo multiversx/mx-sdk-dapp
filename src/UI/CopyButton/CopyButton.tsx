@@ -1,4 +1,5 @@
 import React, { useState, MouseEvent } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -9,11 +10,15 @@ import { copyTextToClipboard } from './helpers/copyToClipboard';
 
 export interface CopyButtonPropsType extends WithClassnameType {
   text: string;
+  copyIcon?: IconProp;
+  successIcon?: IconProp;
 }
 
 export const CopyButton = ({
   text,
-  className = 'dapp-copy-button'
+  className = 'dapp-copy-button',
+  copyIcon = faCopy,
+  successIcon = faCheck
 }: CopyButtonPropsType) => {
   const [copyResult, setCopyResut] = useState({
     default: true,
@@ -46,9 +51,9 @@ export const CopyButton = ({
       className={classNames(styles.copy, className)}
     >
       {copyResult.default || !copyResult.success ? (
-        <FontAwesomeIcon icon={faCopy} />
+        <FontAwesomeIcon icon={copyIcon} />
       ) : (
-        <FontAwesomeIcon icon={faCheck} />
+        <FontAwesomeIcon icon={successIcon} />
       )}
     </a>
   );

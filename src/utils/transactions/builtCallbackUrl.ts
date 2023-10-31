@@ -1,3 +1,5 @@
+import { SDK_DAPP_VERSION } from 'constants/index';
+
 function buildUrlParams(
   search: string,
   urlParams: {
@@ -15,6 +17,8 @@ function buildUrlParams(
   return { nextUrlParams, params };
 }
 
+const version = '__sdkDappVersion'; // will be replaced at build time
+
 export interface ReplyUrlType {
   callbackUrl: string;
   urlParams?: { [key: string]: string };
@@ -27,9 +31,18 @@ export function builtCallbackUrl({
   let url = callbackUrl;
 
   if (Object.entries(urlParams).length > 0) {
-    const { search, origin, pathname } = new URL(callbackUrl);
-    const { nextUrlParams } = buildUrlParams(search, urlParams);
-    url = `${origin}${pathname}?${nextUrlParams}`;
+    try {
+      const { search, origin, pathname, hash } = new URL(callbackUrl);
+      const urlParamsWithVersion = {
+        ...urlParams,
+        [SDK_DAPP_VERSION]: version
+      };
+      const { nextUrlParams } = buildUrlParams(search, urlParamsWithVersion);
+      url = `${origin}${pathname}?${nextUrlParams}${hash}`;
+    } catch (err) {
+      console.error('Unable to construct URL from: ', callbackUrl, err);
+      return url;
+    }
   }
 
   return url;

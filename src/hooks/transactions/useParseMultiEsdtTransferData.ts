@@ -113,6 +113,7 @@ export function useParseMultiEsdtTransferData({
           });
         }
       });
+
       setAllTransactions(allTxs);
     }
   }

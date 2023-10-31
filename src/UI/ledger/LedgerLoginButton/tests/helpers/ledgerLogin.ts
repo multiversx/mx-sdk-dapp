@@ -1,5 +1,5 @@
 import { fireEvent } from '@testing-library/react';
-import { RenderType } from '__mocks__';
+import { RenderType, testAddress } from '__mocks__';
 import { DataTestIdsEnum } from 'constants/index';
 
 export const ledgerLogin = async (methods: RenderType) => {
@@ -15,7 +15,7 @@ export const ledgerLogin = async (methods: RenderType) => {
 
   fireEvent.click(ledgerConnectBtn);
 
-  const addressTableContainerTitle = methods.getByTestId(
+  const addressTableContainerTitle = await methods.findByTestId(
     DataTestIdsEnum.addressTableContainer
   );
 
@@ -23,9 +23,9 @@ export const ledgerLogin = async (methods: RenderType) => {
   const confirmBtn = methods.getByTestId(DataTestIdsEnum.confirmBtn);
   fireEvent.click(confirmBtn);
 
-  const ledgerLoading = await methods.findByTestId(
-    DataTestIdsEnum.ledgerLoading
+  const ledgerConfirmAddress = await methods.findByTestId(
+    DataTestIdsEnum.ledgerConfirmAddress
   );
 
-  expect(ledgerLoading).toHaveTextContent('Waiting for device');
+  expect(ledgerConfirmAddress).toHaveTextContent(testAddress);
 };

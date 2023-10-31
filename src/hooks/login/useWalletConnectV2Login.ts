@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, MutableRefObject } from 'react';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -44,11 +44,12 @@ export enum WalletConnectV2Error {
 
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute?: string;
+  canLoginRef?: MutableRefObject<boolean>;
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
   uriDeepLink: string;
-  cancelLogin: () => void;
+  cancelLogin: () => Promise<void>;
   connectExisting: (pairing: PairingTypes.Struct) => Promise<void>;
   removeExistingPairing: (topic: string) => Promise<void>;
   walletConnectUri?: string;
@@ -66,7 +67,8 @@ export const useWalletConnectV2Login = ({
   token: tokenToSign,
   nativeAuth,
   onLoginRedirect,
-  logoutRoute: providerLogoutRoute
+  logoutRoute: providerLogoutRoute,
+  canLoginRef: parentCanLoginRef
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
@@ -90,7 +92,7 @@ export const useWalletConnectV2Login = ({
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const dappLogoutRoute = useSelector(logoutRouteSelector);
   const providerRef = useRef<any>(provider);
-  const canLoginRef = useRef<boolean>(true);
+  const canLoginRef = parentCanLoginRef ?? useRef<boolean>(false);
   const isInitialisingRef = useRef<boolean>(false);
 
   const logoutRoute = providerLogoutRoute ?? dappLogoutRoute ?? '/';
@@ -108,21 +110,8 @@ export const useWalletConnectV2Login = ({
     ? `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(wcUri)}`
     : '';
 
-  useUpdateEffect(() => {
-    if (!tokenToSign) {
-      return;
-    }
-
-    generateWcUri();
-  }, [tokenToSign]);
-
-  useUpdateEffect(() => {
-    providerRef.current = provider;
-  }, [provider]);
-
-  useEffect(() => {
-    setIsLoading(!Boolean(wcUri));
-  }, [wcUri]);
+  const loginFailed = Boolean(error);
+  const isLoggedIn = getIsLoggedIn();
 
   const handleOnLogout = () => {
     logout(logoutRoute);
@@ -132,11 +121,7 @@ export const useWalletConnectV2Login = ({
     console.log('WalletConnect Session Event: ', event);
   };
 
-  const cancelLogin = () => {
-    canLoginRef.current = false;
-  };
-
-  async function handleOnLogin() {
+  const handleOnLogin = async () => {
     try {
       const provider = providerRef.current;
       const isLoggedIn = getIsLoggedIn();
@@ -197,7 +182,83 @@ export const useWalletConnectV2Login = ({
       setError(WalletConnectV2Error.userRejected);
       console.error(err);
     }
-  }
+  };
+
+  const cancelLogin = async () => {
+    canLoginRef.current = false;
+    try {
+      const connectedSessions =
+        providerRef.current?.walletConnector?.session?.getAll() ?? [];
+      if (connectedSessions.length > 0) {
+        await providerRef.current?.logout();
+      }
+    } catch {
+      console.warn('Unable to logout');
+    }
+
+    return;
+  };
+
+  const connectExisting = async (pairing: PairingTypes.Struct) => {
+    if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
+      setError(WalletConnectV2Error.invalidConfig);
+      return;
+    }
+    if (!pairing || !pairing.topic) {
+      setError(WalletConnectV2Error.invalidTopic);
+      return;
+    }
+
+    try {
+      const { approval } = await providerRef.current?.connect({
+        topic: pairing.topic,
+        methods: dappMethods
+      });
+
+      if (hasNativeAuth && !token) {
+        token = await loginService.getNativeAuthLoginToken();
+        // Fetching block failed
+        if (!token) {
+          console.warn('Fetching block failed. Login cancelled.');
+          return;
+        }
+      }
+
+      if (token) {
+        loginService.setLoginToken(token);
+      }
+
+      try {
+        await providerRef.current?.login({ approval, token });
+      } catch (err) {
+        setError(WalletConnectV2Error.userRejectedExisting);
+        setIsLoading(true);
+
+        await initiateLogin();
+      }
+    } catch (err) {
+      console.error(WalletConnectV2Error.sessionExpired, err);
+      setError(WalletConnectV2Error.sessionExpired);
+    } finally {
+      setWcPairings(providerRef.current?.pairings);
+    }
+  };
+
+  const removeExistingPairing = async (topic: string) => {
+    try {
+      if (topic) {
+        await providerRef.current?.logout({
+          topic
+        });
+      }
+    } catch (err) {
+      console.error(WalletConnectV2Error.errorLogout, err);
+      setError(WalletConnectV2Error.errorLogout);
+    } finally {
+      const newPairings = await providerRef.current?.getPairings();
+      setWcPairings(newPairings);
+    }
+  };
 
   async function initiateLogin(loginProvider = true) {
     if (!walletConnectV2ProjectId || !walletConnectV2RelayAddress) {
@@ -252,67 +313,6 @@ export const useWalletConnectV2Login = ({
     return;
   }
 
-  async function connectExisting(pairing: PairingTypes.Struct) {
-    if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
-      setError(WalletConnectV2Error.invalidConfig);
-      return;
-    }
-    if (!pairing || !pairing.topic) {
-      setError(WalletConnectV2Error.invalidTopic);
-      return;
-    }
-
-    try {
-      const { approval } = await providerRef.current?.connect({
-        topic: pairing.topic,
-        methods: dappMethods
-      });
-
-      if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
-        if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
-          return;
-        }
-      }
-
-      if (token) {
-        loginService.setLoginToken(token);
-      }
-
-      try {
-        await providerRef.current?.login({ approval, token });
-      } catch (err) {
-        setError(WalletConnectV2Error.userRejectedExisting);
-        setIsLoading(true);
-
-        await initiateLogin();
-      }
-    } catch (err) {
-      console.error(WalletConnectV2Error.sessionExpired, err);
-      setError(WalletConnectV2Error.sessionExpired);
-    } finally {
-      setWcPairings(providerRef.current?.pairings);
-    }
-  }
-
-  async function removeExistingPairing(topic: string) {
-    try {
-      if (topic) {
-        await providerRef.current?.logout({
-          topic
-        });
-      }
-    } catch (err) {
-      console.error(WalletConnectV2Error.errorLogout, err);
-      setError(WalletConnectV2Error.errorLogout);
-    } finally {
-      const newPairings = await providerRef.current?.getPairings();
-      setWcPairings(newPairings);
-    }
-  }
-
   async function generateWcUri() {
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
       setError(WalletConnectV2Error.invalidConfig);
@@ -362,8 +362,21 @@ export const useWalletConnectV2Login = ({
     }
   }
 
-  const loginFailed = Boolean(error);
-  const isLoggedIn = getIsLoggedIn();
+  useUpdateEffect(() => {
+    if (!tokenToSign) {
+      return;
+    }
+
+    generateWcUri();
+  }, [tokenToSign]);
+
+  useUpdateEffect(() => {
+    providerRef.current = provider;
+  }, [provider]);
+
+  useEffect(() => {
+    setIsLoading(!Boolean(wcUri));
+  }, [wcUri]);
 
   return [
     initiateLogin,

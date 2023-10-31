@@ -23,6 +23,7 @@ export interface UpdateSignedTransactionsPayloadType {
   status: TransactionBatchStatusesEnum;
   errorMessage?: string;
   transactions?: SignedTransactionType[];
+  customTransactionInformationOverrides?: Partial<CustomTransactionInformation>;
 }
 
 export interface MoveTransactionsToSignedStatePayloadType
@@ -77,12 +78,15 @@ export const transactionsSlice = createSlice({
         errorMessage,
         status,
         redirectRoute,
-        customTransactionInformation: overrideCustomTransactionInformation = {}
+        customTransactionInformation: overrideCustomTransactionInformation
       } = action.payload;
 
-      const customTransactionInformation =
-        state.customTransactionInformationForSessionId?.[sessionId] ||
-        defaultCustomInformation;
+      state.customTransactionInformationForSessionId[sessionId] = {
+        ...defaultCustomInformation,
+        ...(state.signedTransactions[sessionId]?.customTransactionInformation ||
+          {}),
+        ...(state.customTransactionInformationForSessionId[sessionId] || {})
+      };
 
       state.signedTransactions[sessionId] = {
         transactions,
@@ -90,8 +94,8 @@ export const transactionsSlice = createSlice({
         errorMessage,
         redirectRoute,
         customTransactionInformation: {
-          ...customTransactionInformation,
-          ...overrideCustomTransactionInformation
+          ...state.customTransactionInformationForSessionId[sessionId],
+          ...(overrideCustomTransactionInformation ?? {})
         }
       };
 
@@ -221,6 +225,24 @@ export const transactionsSlice = createSlice({
       action: PayloadAction<string | null>
     ) => {
       state.signTransactionsCancelMessage = action.payload;
+    },
+    updateSignedTransactionsCustomTransactionInformation: (
+      state: TransactionsSliceStateType,
+      action: PayloadAction<{
+        sessionId: string;
+        customTransactionInformationOverrides: Partial<CustomTransactionInformation>;
+      }>
+    ) => {
+      const { sessionId, customTransactionInformationOverrides } =
+        action.payload;
+      const session = state.signedTransactions[sessionId];
+      if (session != null) {
+        state.signedTransactions[sessionId].customTransactionInformation = {
+          ...(state.signedTransactions[sessionId]
+            .customTransactionInformation as CustomTransactionInformation),
+          ...customTransactionInformationOverrides
+        };
+      }
     }
   },
   extraReducers: (builder) => {
@@ -270,7 +292,8 @@ export const {
   clearTransactionToSign,
   setSignTransactionsError,
   setSignTransactionsCancelMessage,
-  moveTransactionsToSignedState
+  moveTransactionsToSignedState,
+  updateSignedTransactionsCustomTransactionInformation
 } = transactionsSlice.actions;
 
 export default transactionsSlice.reducer;

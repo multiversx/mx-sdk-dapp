@@ -1,5 +1,5 @@
 import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';
-import { GetTransactionsByHashesType } from 'types/transactions.types';
+import { TransactionsTrackerType } from 'types/transactionsTracker.types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 import { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';
 import { checkBatch } from './checkBatch';
@@ -7,17 +7,18 @@ import { checkBatch } from './checkBatch';
 export function useCheckTransactionStatus() {
   const { pendingTransactionsArray } = useGetPendingTransactions();
 
-  async function checkTransactionStatus(props: {
-    getTransactionsByHash?: GetTransactionsByHashesType;
-    shouldRefreshBalance?: boolean;
-  }) {
-    const pendingBatches = pendingTransactionsArray.filter(
-      ([sessionId, transactionBatch]) => {
-        const isPending =
-          sessionId != null && getIsTransactionPending(transactionBatch.status);
-        return isPending;
-      }
-    );
+  async function checkTransactionStatus(
+    props: TransactionsTrackerType & {
+      shouldRefreshBalance?: boolean;
+    }
+  ) {
+    const pendingBatches = pendingTransactionsArray
+      .filter(([, session]) => !session?.customTransactionInformation?.grouping)
+      .filter(
+        ([sessionId, session]) =>
+          sessionId != null && getIsTransactionPending(session.status)
+      );
+
     if (pendingBatches.length > 0) {
       for (const [sessionId, transactionBatch] of pendingBatches) {
         await checkBatch({
@@ -27,8 +28,9 @@ export function useCheckTransactionStatus() {
         });
       }
     }
+
     if (props.shouldRefreshBalance) {
-      refreshAccount();
+      await refreshAccount();
     }
   }
 

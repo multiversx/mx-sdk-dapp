@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 
-import { ELLIPSIS } from 'constants/index';
+import { DataTestIdsEnum, ELLIPSIS } from 'constants/index';
 import { useDebounce } from 'hooks';
 import { WithClassnameType } from '../types';
 import styles from './trim.styles.scss';
@@ -15,7 +15,7 @@ export interface TrimType extends WithClassnameType {
 export const Trim = ({
   text,
   className = 'dapp-trim',
-  'data-testid': dataTestId = 'trim-text-component',
+  'data-testid': dataTestId = DataTestIdsEnum['trim-text-component'],
   color
 }: TrimType) => {
   const [debounce, setDebounce] = useState(0);

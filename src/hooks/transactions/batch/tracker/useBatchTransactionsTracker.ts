@@ -13,8 +13,8 @@ import { useCheckHangingBatchesFallback } from './useCheckHangingBatchesFallback
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 export type BatchTransactionsTrackerProps = {
-  onSuccess?: (batchId: string | null) => void;
-  onFail?: (batchId: string | null, errorMessage?: string) => void;
+  onSuccess?: (sessionId: string | null) => void;
+  onFail?: (sessionId: string | null, errorMessage?: string) => void;
 };
 
 export const useBatchTransactionsTracker = ({

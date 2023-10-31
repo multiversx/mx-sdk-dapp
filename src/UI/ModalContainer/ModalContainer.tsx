@@ -9,35 +9,24 @@ import { WithClassnameType } from '../types';
 
 export interface ModalContainerPropsType extends WithClassnameType {
   children: ReactNode;
-  onClose?: () => void;
   modalConfig?: DappModalConfig;
   modalInteractionConfig?: DappModalInteractionConfig;
+  onClose?: () => void;
   visible?: boolean;
 }
 
 export const ModalContainer = (props: ModalContainerPropsType) => {
-  const {
-    handleHideModal: onHide,
-    visible,
-    config
-  } = useDappModal({
-    modalConfig: props.modalConfig,
-    config: {
-      ...props.modalInteractionConfig,
-      visible: props.visible
-    }
-  });
+  const { showModal } = useDappModal({ visible: props.visible });
 
   const hideModalHandler = () => {
-    onHide();
     props.onClose?.();
   };
 
   return (
     <DappModal
       onHide={hideModalHandler}
-      visible={visible}
-      config={config}
+      visible={showModal}
+      config={props.modalConfig}
       className={props.className}
     >
       {props.children}

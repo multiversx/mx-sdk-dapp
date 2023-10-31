@@ -1,53 +1,59 @@
-import axios from 'axios';
-import { TRANSACTIONS_BATCH } from 'apiCalls';
-import { TIMEOUT } from 'constants/network';
-import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
-import { networkSelector } from 'reduxStore/selectors';
+import { Transaction } from '@multiversx/sdk-core/out';
+import { addressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import {
-  BatchTransactionsResponseType,
   SendBatchTransactionReturnType,
-  SignedTransactionType
+  SendBatchTransactionsPropsType,
+  SimpleTransactionType
 } from 'types';
-
-export interface SendBatchTransactionsPropsType {
-  transactions: SignedTransactionType[][];
-  address: string;
-  sessionId: string;
-}
+import { generateBatchTransactionsGrouping } from 'utils/transactions/batch/generateBatchTransactionsGrouping';
+import { getDefaultCallbackUrl } from 'utils/window';
+import { signTransactions } from './signTransactions';
+import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
 
 export async function sendBatchTransactions({
   transactions,
-  sessionId,
-  address
+  transactionsDisplayInfo,
+  redirectAfterSign = true,
+  callbackRoute = getDefaultCallbackUrl(),
+  signWithoutSending = false,
+  completedTransactionsDelay,
+  sessionInformation,
+  skipGuardian,
+  minGasLimit
 }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType> {
-  const { apiAddress, apiTimeout } = networkSelector(store.getState());
-
   try {
-    const batchId = buildBatchId({
-      sessionId,
-      address
+    const address = addressSelector(store.getState());
+    const transactionsPayload = transactions.flat();
+
+    const transactionsToSign = await transformTransactionsToSign({
+      transactions: transactionsPayload as SimpleTransactionType[],
+      minGasLimit
     });
 
-    const payload = {
-      transactions: transactions,
-      id: batchId
-    };
+    const grouping = generateBatchTransactionsGrouping(transactions);
 
-    const response = await axios.post<BatchTransactionsResponseType>(
-      `${apiAddress}/${TRANSACTIONS_BATCH}`,
-      payload,
-      {
-        timeout: Number(apiTimeout ?? TIMEOUT)
+    const { sessionId, error } = await signTransactions({
+      transactions: transactionsToSign as Transaction[],
+      minGasLimit,
+      callbackRoute,
+      transactionsDisplayInfo,
+      customTransactionInformation: {
+        grouping,
+        redirectAfterSign,
+        completedTransactionsDelay,
+        sessionInformation,
+        skipGuardian,
+        signWithoutSending
       }
-    );
+    });
 
-    return { batchId, data: response.data };
-  } catch (err) {
-    console.error('error sending batch transactions', err);
     return {
-      error: (err as any)?.message ?? 'error sending batch transactions',
-      batchId: null
+      error,
+      batchId: `${sessionId}-${address}`
     };
+  } catch (err) {
+    console.error('error signing transaction', err as any);
+    return { error: err as any, batchId: null };
   }
 }

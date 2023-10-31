@@ -6,9 +6,11 @@ import {
   UpdateSignedTransactionStatusPayloadType,
   MoveTransactionsToSignedStatePayloadType,
   setTransactionsDisplayInfo,
-  SetTransactionsInfoPayloadType
+  SetTransactionsInfoPayloadType,
+  updateSignedTransactionsCustomTransactionInformation
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
+import { CustomTransactionInformation } from 'types';
 
 export function setTransactionsToSignedState(
   payload: MoveTransactionsToSignedStatePayloadType
@@ -32,4 +34,11 @@ export function setTransactionsDisplayInfoState(
   payload: SetTransactionsInfoPayloadType
 ) {
   store.dispatch(setTransactionsDisplayInfo(payload));
+}
+
+export function updateSignedTransactionsCustomTransactionInformationState(payload: {
+  sessionId: string;
+  customTransactionInformationOverrides: Partial<CustomTransactionInformation>;
+}) {
+  store.dispatch(updateSignedTransactionsCustomTransactionInformation(payload));
 }

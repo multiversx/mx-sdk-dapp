@@ -7,7 +7,7 @@ import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { egldLabelSelector, networkSelector } from 'reduxStore/selectors';
+import { egldLabelSelector, walletAddressSelector } from 'reduxStore/selectors';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsError
@@ -57,7 +57,7 @@ export function useSignTransactionsWithDevice(
   const { onCancel, verifyReceiverScam = true, hasGuardianScreen } = props;
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
-  const network = useSelector(networkSelector);
+  const walletAddress = useSelector(walletAddressSelector);
   const getLedgerProvider = useGetLedgerProvider();
 
   const egldLabel = useSelector(egldLabelSelector);
@@ -85,6 +85,7 @@ export function useSignTransactionsWithDevice(
         })
       );
     }
+
     dispatch(setSignTransactionsError(errorMessage));
   }
 
@@ -109,7 +110,7 @@ export function useSignTransactionsWithDevice(
         callbackRoute,
         hasGuardianScreen,
         isGuarded: isGuarded && allowGuardian,
-        walletAddress: network.walletAddress
+        walletAddress
       });
 
     if (needs2FaSigning) {
@@ -133,7 +134,7 @@ export function useSignTransactionsWithDevice(
         customTransactionInformation?.redirectAfterSign &&
         !locationIncludesCallbackRoute
       ) {
-        safeRedirect(callbackRoute);
+        safeRedirect({ url: callbackRoute });
       }
     }
   }

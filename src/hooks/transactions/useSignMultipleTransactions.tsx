@@ -6,6 +6,7 @@ import {
   TransactionVersion
 } from '@multiversx/sdk-core';
 
+import { SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS } from 'constants/index';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import {
   ActiveLedgerTransactionType,
@@ -93,17 +94,30 @@ export function useSignMultipleTransactions({
 
   async function extractTransactionsInfo() {
     const tx = allTransactions[currentStep];
+
     if (tx == null) {
       return;
     }
-    const { transaction, multiTxData } = tx;
+
+    const { transaction, multiTxData, transactionIndex } = tx;
     const dataField = transaction.getData().toString();
     const transactionTokenInfo = getTxInfoByDataField(
       transaction.getData().toString(),
       multiTxData
     );
+
     const { tokenId } = transactionTokenInfo;
     const receiver = transaction.getReceiver().toString();
+    const sender = transaction.getSender().toString();
+    const isLoggedInWithDifferentAccount = sender && address !== sender;
+
+    // Prevent signing transactions with different account
+    if (isLoggedInWithDifferentAccount) {
+      console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+
+      return onCancel?.();
+    }
+
     const notSender = address !== receiver;
     const verified = receiver in verifiedAddresses;
 
@@ -124,7 +138,8 @@ export function useSignMultipleTransactions({
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
-      dataField
+      dataField,
+      transactionIndex
     });
   }
 

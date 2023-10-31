@@ -1,20 +1,19 @@
 export interface DappModalConfig {
-  showHeader?: boolean;
-  showFooter?: boolean;
-  headerText?: string;
+  customModalFooter?: JSX.Element;
+  customModalHeader?: JSX.Element;
   footerText?: string;
-  modalDialogClassName?: string;
+  headerText?: string;
+  modalBodyClassName?: string;
+  modalCloseButtonClassName?: string;
   modalContentClassName?: string;
+  modalDialogClassName?: string;
+  modalFooterClassName?: string;
   modalHeaderClassName?: string;
   modalHeaderTextClassName?: string;
-  modalCloseButtonClassName?: string;
-  modalBodyClassName?: string;
-  modalFooterClassName?: string;
-  customModalHeader?: JSX.Element;
-  customModalFooter?: JSX.Element;
+  showFooter?: boolean;
+  showHeader?: boolean;
 }
 
 export interface DappModalInteractionConfig {
-  openOnMount?: boolean;
   visible?: boolean;
 }

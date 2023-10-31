@@ -20,7 +20,10 @@ import {
   isLoggedInSelector,
   tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
-import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
+import {
+  networkSelector,
+  walletAddressSelector
+} from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setAccount,
   setIsAccountLoading,
@@ -51,6 +54,7 @@ let initalizingLedger = false;
 
 export function ProviderInitializer() {
   const network = useSelector(networkSelector);
+  const walletAddress = useSelector(walletAddressSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
@@ -151,7 +155,7 @@ export function ProviderInitializer() {
   }
 
   async function tryAuthenticateWalletUser() {
-    const provider = newWalletProvider(network.walletAddress);
+    const provider = newWalletProvider(walletAddress);
     setAccountProvider(provider);
 
     if (walletLogin == null) {
@@ -230,6 +234,7 @@ export function ProviderInitializer() {
     if (loginMethod == null || initalizingLedger) {
       return;
     }
+
     switch (loginMethod) {
       case LoginMethodsEnum.ledger: {
         initalizingLedger = true;

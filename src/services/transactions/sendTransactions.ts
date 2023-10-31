@@ -4,16 +4,16 @@ import {
   SendTransactionsPropsType,
   SimpleTransactionType
 } from 'types';
-import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { getDefaultCallbackUrl } from 'utils/window';
 import { signTransactions } from './signTransactions';
-import { transformAndSignTransactions } from './transformAndSignTransactions';
+import { transformTransactionsToSign } from './utils/transformTransactionsToSign';
 
 export async function sendTransactions({
   transactions,
   transactionsDisplayInfo,
   redirectAfterSign = true,
-  callbackRoute = getWindowLocation().pathname,
-  signWithoutSending,
+  callbackRoute = getDefaultCallbackUrl(),
+  signWithoutSending = false,
   completedTransactionsDelay,
   sessionInformation,
   skipGuardian,
@@ -24,19 +24,13 @@ export async function sendTransactions({
       ? transactions
       : [transactions];
 
-    const areComplexTransactions = transactionsPayload.every(
-      (tx) => Object.getPrototypeOf(tx).toPlainObject != null
-    );
-    let txToSign = transactionsPayload;
-    if (!areComplexTransactions) {
-      txToSign = await transformAndSignTransactions({
-        transactions: transactionsPayload as SimpleTransactionType[],
-        minGasLimit
-      });
-    }
+    const transactionsToSign = await transformTransactionsToSign({
+      transactions: transactionsPayload as SimpleTransactionType[],
+      minGasLimit
+    });
 
     return signTransactions({
-      transactions: txToSign as Transaction[],
+      transactions: transactionsToSign as Transaction[],
       minGasLimit,
       callbackRoute,
       transactionsDisplayInfo,

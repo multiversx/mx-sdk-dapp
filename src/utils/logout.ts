@@ -7,7 +7,7 @@ import { getAddress } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
-import { getWindowLocation } from './window/getWindowLocation';
+import { addOriginToLocationPath } from './window';
 
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
@@ -40,7 +40,7 @@ export async function logout(
   }
 
   if (!isLoggedIn || !provider) {
-    redirectToCallbackUrl(callbackUrl, onRedirect, false);
+    redirectToCallbackUrl(callbackUrl, onRedirect);
     return;
   }
 
@@ -48,7 +48,7 @@ export async function logout(
     const address = await getAddress();
     broadcastLogoutAcrossTabs(address);
   } catch (err) {
-    redirectToCallbackUrl(callbackUrl, onRedirect, false);
+    redirectToCallbackUrl(callbackUrl, onRedirect);
     console.error('error fetching logout address', err);
   }
 
@@ -59,8 +59,12 @@ export async function logout(
   store.dispatch(logoutAction());
 
   try {
-    const needsCallbackUrl = isWalletProvider && !callbackUrl;
-    const url = needsCallbackUrl ? getWindowLocation().origin : callbackUrl;
+    const url = addOriginToLocationPath(callbackUrl);
+
+    if (providerType === LoginMethodsEnum.none) {
+      // logout does not exist in empty provider
+      return redirectToCallbackUrl(url, onRedirect);
+    }
 
     if (isWalletProvider) {
       // allow Redux clearing it's state before navigation
@@ -69,7 +73,7 @@ export async function logout(
       });
     } else {
       await provider.logout({ callbackUrl: url });
-      redirectToCallbackUrl(callbackUrl, onRedirect, isWalletProvider);
+      redirectToCallbackUrl(url, onRedirect);
     }
   } catch (err) {
     console.error('error logging out', err);
@@ -85,7 +89,7 @@ function redirectToCallbackUrl(
     if (typeof onRedirect === 'function') {
       onRedirect(callbackUrl);
     } else {
-      safeRedirect(callbackUrl);
+      safeRedirect({ url: callbackUrl });
     }
   }
 }

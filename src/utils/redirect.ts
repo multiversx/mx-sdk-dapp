@@ -4,14 +4,20 @@ export const preventRedirects = (shouldPreventRedirect = true) => {
   preventRedirect = shouldPreventRedirect;
 };
 
-export const safeRedirect = (url: string, timeout = 0) => {
+export const safeRedirect = ({
+  timeout = 0,
+  url
+}: {
+  timeout?: number;
+  url: string;
+}) => {
   if (!preventRedirect) {
     setTimeout(() => {
       if (!window) {
         return;
       }
 
-      window.location.assign(url);
+      return window.location.assign(url);
     }, timeout);
   }
 };

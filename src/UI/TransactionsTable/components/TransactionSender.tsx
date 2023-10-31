@@ -2,11 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import globalStyles from 'assets/sass/main.scss';
+import { DataTestIdsEnum } from 'constants/index';
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
+import { WithTransactionType } from 'UI/types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 
-import { WithTransactionType } from '../../../UI/types';
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
@@ -32,7 +33,7 @@ export const TransactionSender = ({
         globalStyles.alignItemsCenter,
         styles.transactionCell
       )}
-      data-testid='transactionSender'
+      data-testid={DataTestIdsEnum.transactionSender}
     >
       {showLockedAccounts && (
         <LockedTokenAddressIcon
@@ -59,7 +60,7 @@ export const TransactionSender = ({
       ) : addressIsValid(transaction.sender) ? (
         <ExplorerLink
           page={transaction.links.senderLink ?? ''}
-          data-testid='senderLink'
+          data-testid={DataTestIdsEnum.senderLink}
           className={classNames(
             globalStyles.w100,
             styles.transactionCellOverflow,

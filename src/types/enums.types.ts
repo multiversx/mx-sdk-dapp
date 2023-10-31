@@ -62,6 +62,7 @@ export enum ToastsEnum {
 export enum TransactionTypesEnum {
   MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
   ESDTTransfer = 'ESDTTransfer',
+  ESDTNFTBurn = 'ESDTNFTBurn',
   ESDTNFTTransfer = 'ESDTNFTTransfer',
   esdtTransaction = 'esdtTransaction',
   nftTransaction = 'nftTransaction',

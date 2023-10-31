@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { getLedgerConfiguration } from 'providers';
+import { getAccountProvider, getLedgerConfiguration } from 'providers';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -21,7 +21,6 @@ import {
 import { getIsLoggedIn } from '../../utils';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
-
 const failInitializeErrorText = 'Check if the MultiversX App is open on Ledger';
 
 export interface UseLedgerLoginPropsType extends OnProviderLoginType {
@@ -53,14 +52,15 @@ export type LedgerLoginHookReturnType = [
   LedgerLoginHookCustomStateType
 ];
 
-export function useLedgerLogin({
+export const useLedgerLogin = ({
   callbackRoute,
   token: tokenToSign,
   addressesPerPage: configuredAddressesPerPage,
   nativeAuth,
   onLoginRedirect
-}: UseLedgerLoginPropsType): LedgerLoginHookReturnType {
+}: UseLedgerLoginPropsType): LedgerLoginHookReturnType => {
   const ledgerAccount = useSelector(ledgerAccountSelector);
+  const hwProvider = getAccountProvider() as HWProvider;
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = nativeAuth != null;
@@ -87,23 +87,18 @@ export function useLedgerLogin({
   const addressesPerPage =
     configuredAddressesPerPage ?? defaultAddressesPerPage;
 
-  const hwWalletP = new HWProvider();
   const [version, setVersion] = useState('');
   const [contractDataEnabled, setContractDataEnabled] = useState(false);
 
-  function dispatchLoginActions({
-    provider,
+  const dispatchLoginActions = ({
     address,
     index,
     signature
   }: {
-    provider: HWProvider;
     address: string;
     index: number;
     signature?: string;
-  }) {
-    setAccountProvider(provider);
-
+  }) => {
     dispatch(setLedgerLogin({ index, loginType: LoginMethodsEnum.ledger }));
 
     if (signature) {
@@ -117,23 +112,61 @@ export function useLedgerLogin({
       onLoginRedirect,
       options: { address, signature }
     });
-  }
+  };
 
   const onLoginFailed = (err: any, customMessage = '') => {
-    const { errorMessage } = getLedgerErrorCodes(err);
+    const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
+    const message =
+      errorMessage ?? defaultErrorMessage ?? failInitializeErrorText;
 
-    if (errorMessage) {
-      setError(`${errorMessage}.${customMessage}`);
-    }
+    setError(`${message}.${customMessage}`);
     setIsLoading(false);
-    console.warn(err);
     dispatch(setLedgerAccount(null));
   };
 
-  async function loginUser(hwWalletProvider: HWProvider) {
-    if (selectedAddress == null) {
-      return false;
+  const isHWProviderInitialized = async () => {
+    try {
+      if (hwProvider instanceof HWProvider && hwProvider.isInitialized()) {
+        return await hwProvider.isConnected();
+      }
+    } catch (e) {
+      onLoginFailed(e);
     }
+
+    return false;
+  };
+
+  const initHWProvider = async () => {
+    const isInitialized = await isHWProviderInitialized();
+
+    if (isInitialized) {
+      setError('');
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      const hwWalletP = new HWProvider();
+      const initialized = await hwWalletP.init();
+
+      if (initialized) {
+        setAccountProvider(hwWalletP);
+      }
+
+      setError('');
+      setIsLoading(false);
+    } catch (e) {
+      onLoginFailed(e);
+    }
+  };
+
+  const loginUser = async () => {
+    const isInitialized = await isHWProviderInitialized();
+
+    if (!selectedAddress || !isInitialized) {
+      return onLoginFailed(failInitializeErrorText);
+    }
+
     const { index } = selectedAddress;
 
     if (hasNativeAuth && !token) {
@@ -147,15 +180,16 @@ export function useLedgerLogin({
 
     if (token) {
       loginService.setLoginToken(token);
+
       try {
-        const loginInfo = await hwWalletProvider.tokenLogin({
+        const loginInfo = await hwProvider.tokenLogin({
           token: Buffer.from(`${token}{}`),
           addressIndex: index
         });
+
         dispatchLoginActions({
           address: loginInfo.address,
-          provider: hwWalletProvider,
-          index: index,
+          index,
           signature: loginInfo.signature.toString('hex')
         });
       } catch (err) {
@@ -163,26 +197,30 @@ export function useLedgerLogin({
       }
     } else {
       try {
-        const address = await hwWalletProvider.login({ addressIndex: index });
+        const address = await hwProvider.login({ addressIndex: index });
+
         dispatchLoginActions({
           address,
-          provider: hwWalletProvider,
           index
         });
       } catch (err) {
         onLoginFailed(err);
+
         return false;
       }
     }
-    return true;
-  }
 
-  async function onConfirmSelectedAddress() {
+    return true;
+  };
+
+  const onConfirmSelectedAddress = async () => {
     try {
       setIsLoading(true);
+
       if (selectedAddress == null) {
         return false;
       }
+
       if (ledgerAccount) {
         dispatch(updateLedgerAccount(selectedAddress));
       } else {
@@ -195,108 +233,110 @@ export function useLedgerLogin({
         );
       }
 
-      const hwWalletProvider = new HWProvider();
-      const initialized = await hwWalletProvider.init();
-      if (!initialized) {
-        setError(failInitializeErrorText);
-        console.warn(failInitializeErrorText);
-        return false;
-      }
       setIsLoading(false);
-      await loginUser(hwWalletProvider);
+      await loginUser();
     } catch (err) {
-      const { errorMessage } = getLedgerErrorCodes(err);
-      if (errorMessage) {
-        setError(errorMessage);
-      }
-      console.warn(failInitializeErrorText, err);
+      onLoginFailed(err);
     } finally {
       setIsLoading(false);
     }
-    setShowAddressList(false);
-    return true;
-  }
 
-  async function fetchAccounts() {
+    setShowAddressList(false);
+
+    return true;
+  };
+
+  const fetchAccounts = async () => {
+    const isInitialized = await isHWProviderInitialized();
+
+    if (!isInitialized) {
+      return onLoginFailed(error);
+    }
+
     try {
       setIsLoading(true);
-      const initialized = await hwWalletP.init();
-      if (!initialized) {
-        setError(failInitializeErrorText);
-        console.warn(failInitializeErrorText);
-        setIsLoading(false);
-        return;
-      }
-      const accounts = await hwWalletP.getAccounts(
+
+      const accounts = await hwProvider.getAccounts(
         startIndex,
         addressesPerPage
       );
-      const ledgerData = await getLedgerConfiguration(hwWalletP);
+
+      const ledgerData = await getLedgerConfiguration(hwProvider);
       setVersion(ledgerData.version);
       setContractDataEnabled(ledgerData.dataEnabled);
       setAccounts(accounts);
       setIsLoading(false);
     } catch (err) {
-      const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
-      setError(errorMessage ?? defaultErrorMessage);
-      console.error('error', err);
-      setIsLoading(false);
+      onLoginFailed(err);
     }
-  }
+  };
 
-  async function onStartLogin() {
+  const onStartLogin = async () => {
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
     setError('');
+
     try {
       setIsLoading(true);
+      await initHWProvider();
+      const isInitialized = await isHWProviderInitialized();
+
+      if (!isInitialized) {
+        return onLoginFailed(failInitializeErrorText);
+      }
+
       if (ledgerAccount != null) {
-        const hwWalletP = new HWProvider();
-        const initialized = await hwWalletP.init();
-        if (!initialized || !selectedAddress) {
-          console.warn(failInitializeErrorText);
-          return;
+        if (!selectedAddress) {
+          return onLoginFailed(failInitializeErrorText);
         }
 
-        const address = await hwWalletP.login({
+        const address = await hwProvider.login({
           addressIndex: selectedAddress.index.valueOf()
         });
-        setAccountProvider(hwWalletP);
 
         if (!address) {
-          setIsLoading(false);
-          console.warn('Login cancelled.');
-          return;
+          return onLoginFailed('Login cancelled.');
         }
 
         dispatch(
           loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
         );
+
         optionalRedirect({
           callbackRoute,
           onLoginRedirect
         });
       } else {
-        if (accounts?.length > 0) {
-          setShowAddressList(true);
-        } else {
+        if (!accounts?.length) {
           await fetchAccounts();
-          setShowAddressList(true);
         }
+
+        setShowAddressList(true);
       }
     } catch (error) {
-      console.error('error ', error);
-      const { defaultErrorMessage } = getLedgerErrorCodes();
-      setError(defaultErrorMessage);
+      onLoginFailed(error);
     } finally {
       setIsLoading(false);
     }
-  }
+  };
+
+  useEffect(() => {
+    initHWProvider();
+  }, [hwProvider]);
 
   useEffect(() => {
     fetchAccounts();
-  }, [startIndex]);
+  }, [startIndex, showAddressList, hwProvider]);
+
+  useEffect(() => {
+    const shouldShowAddressList = accounts?.length > 0 && !showAddressList;
+
+    if (shouldShowAddressList) {
+      setShowAddressList(true);
+    }
+  }, [accounts]);
 
   const loginFailed = Boolean(error);
 
@@ -315,11 +355,10 @@ export function useLedgerLogin({
       selectedAddress,
       version,
       contractDataEnabled,
-
       onGoToPrevPage,
       onGoToNextPage,
       onSelectAddress,
       onConfirmSelectedAddress
     }
   ];
-}
+};
