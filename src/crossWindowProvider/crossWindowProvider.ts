@@ -18,7 +18,7 @@ interface ICrossWindowWalletAccount {
   signature?: string;
 }
 
-export const PARENT_DAPP_WINDOW_NAME = 'parentDapp';
+export const PARENT_DAPP_WINDOW_NAME = window.location.origin;
 export const CHILD_WEB_WALLET_WINDOW_NAME = 'childWallet';
 
 export class CrossWindowProvider {

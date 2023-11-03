@@ -27,6 +27,13 @@ export interface AppInitializerPropsType extends UseAppInitializerPropsType {
   children?: any;
 }
 
+if (window.document.referrer) {
+  (window as any).parentDapp = window.open(
+    '',
+    new URL(window.document.referrer).origin
+  );
+}
+
 export const useAppInitializer = ({
   customNetworkConfig = {},
   environment,
