@@ -10,7 +10,6 @@ import {
   ErrAccountNotConnected,
   ErrCannotSignSingleTransaction
 } from './errors';
-import { Operation } from './operation';
 
 interface ICrossWindowWalletAccount {
   address: string;
@@ -20,6 +19,14 @@ interface ICrossWindowWalletAccount {
 
 export const PARENT_DAPP_WINDOW_NAME = window.location.origin;
 export const CHILD_WEB_WALLET_WINDOW_NAME = 'childWallet';
+let old_name = window.name;
+const check_name = function () {
+  if (window.name != old_name) {
+    console.log('window name changed to ' + window.name + ' from ' + old_name);
+    old_name = window.name;
+  }
+};
+setInterval(check_name, 1000);
 
 export class CrossWindowProvider {
   private walletUrl = '';
@@ -27,6 +34,9 @@ export class CrossWindowProvider {
   private initialized = false;
   private static _instance: CrossWindowProvider = new CrossWindowProvider();
   walletWindow: Window | null = null;
+  private handshakeEstablished = false;
+  private callbackUrl: string | undefined = undefined;
+  private accessToken: string | undefined = undefined;
 
   private constructor() {
     if (CrossWindowProvider._instance) {
@@ -35,11 +45,15 @@ export class CrossWindowProvider {
       );
     }
     window.addEventListener('beforeunload', () => {
-      if (this.walletWindow) {
-        this.walletWindow.close();
+      if (this.walletWindow && window.opener) {
+        return this.walletWindow?.postMessage(
+          { type: 'mxDappHandshake', payload: false },
+          this.walletUrl
+        );
       }
+      this.walletWindow?.close();
     });
-    window.name = PARENT_DAPP_WINDOW_NAME;
+
     CrossWindowProvider._instance = this;
   }
 
@@ -54,8 +68,113 @@ export class CrossWindowProvider {
   }
 
   async init(): Promise<boolean> {
+    window.name = PARENT_DAPP_WINDOW_NAME;
     this.initialized = true;
     return this.initialized;
+  }
+
+  async handshake(): Promise<boolean> {
+    console.log('handshake!');
+    if (!this.walletWindow) {
+      console.log('open wallet');
+      this.walletWindow = window.open(
+        this.walletUrl,
+        CHILD_WEB_WALLET_WINDOW_NAME
+      );
+    } else {
+      console.log('open existing wallet');
+      window.open('', CHILD_WEB_WALLET_WINDOW_NAME);
+    }
+
+    //check if can be returned true if wallet window exists
+    if (this.handshakeEstablished) {
+      console.log('handshake already established');
+      return true;
+    }
+
+    const { type, payload } = await this.listenOnce();
+    if (type !== 'handshake' || !payload) {
+      throw new Error('Handshake could not be established');
+    }
+    console.log('handshake event received');
+
+    this.walletWindow?.postMessage(
+      { type: 'mxDappHandshake', payload: true },
+      this.walletUrl
+    );
+    this.onHandshakeChangeListener();
+
+    const redirectQueryString = this.buildWalletQueryString({
+      endpoint: WALLET_PROVIDER_CONNECT_URL,
+      callbackUrl: this.callbackUrl,
+      params: {
+        token: this.accessToken
+      }
+    });
+    console.log('send connect event');
+    this.walletWindow?.postMessage(
+      { type: 'mxDappConnect', payload: redirectQueryString },
+      this.walletUrl
+    );
+
+    const {
+      type: connectType,
+      payload: { address, signature }
+    } = await this.listenOnce();
+    console.log('connect response received');
+    if (connectType !== 'connect') {
+      throw new Error(
+        `Could not connect. received ${connectType} event instead of connect`
+      );
+    }
+    console.log('connect is correct');
+    this.account.address = address;
+    this.account.signature = signature;
+    this.handshakeEstablished = true;
+    return true;
+  }
+
+  private async onHandshakeChangeListener() {
+    console.log('add handshake change listener');
+    const walletUrl = this.walletUrl;
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
+    window.addEventListener('message', function eventHandler(event) {
+      try {
+        const { type, payload } = event.data;
+        const isWalletEvent = event.origin === new URL(walletUrl).origin;
+
+        if (isWalletEvent && type === 'handshake') {
+          console.log('handshake changed! ', payload);
+          if (payload === false) {
+            self.handshakeEstablished = false;
+            self.walletWindow = null;
+            console.log('remove handshake!!@#s');
+            window.removeEventListener('message', eventHandler);
+          }
+        }
+      } catch {}
+    });
+  }
+
+  async listenOnce(): Promise<any> {
+    if (!this.walletWindow) {
+      throw new Error('Wallet window is not instantiated');
+    }
+    return await new Promise((resolve) => {
+      const walletUrl = this.walletUrl;
+      window.addEventListener('message', function eventHandler(event) {
+        try {
+          const { type, payload } = event.data;
+          const isWalletEvent = event.origin === new URL(walletUrl).origin;
+
+          if (isWalletEvent) {
+            window.removeEventListener('message', eventHandler);
+            resolve({ type, payload });
+          }
+        } catch {}
+      });
+    });
   }
 
   async login(
@@ -69,50 +188,14 @@ export class CrossWindowProvider {
         'Wallet cross window provider is not initialised, call init() first'
       );
     }
-    const redirectUrl = this.buildWalletUrl({
-      endpoint: WALLET_PROVIDER_CONNECT_URL,
-      callbackUrl: options?.callbackUrl,
-      params: {
-        token: options?.token
-      }
-    });
-    this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
+    this.callbackUrl = options.callbackUrl;
+    this.accessToken = options.token;
 
-    const dataToSend = {
-      key1: 'value1',
-      key2: 'value2'
-      // ... other data
-    };
-
-    this.walletWindow?.postMessage(dataToSend, redirectUrl);
-
-    const account: { address: string; signature: string } = await new Promise(
-      (resolve) => {
-        console.log('\x1b[42m%s\x1b[0m', 'in account promise');
-
-        const walletUrl = this.walletUrl;
-        window.addEventListener('message', function eventHandler(event) {
-          try {
-            const { type, payload } = event.data;
-            const isWalletLoginEvent =
-              event.origin === new URL(walletUrl).origin && type === 'connect';
-
-            if (isWalletLoginEvent) {
-              console.log('\x1b[42m%s\x1b[0m', 112);
-
-              window.removeEventListener('message', eventHandler);
-              resolve(payload);
-            }
-          } catch {}
-        });
-      }
-    );
-
-    this.account.address = account.address;
-    this.account.signature = account.signature;
+    await this.handshake();
 
     return this.account.address;
   }
+  //----------------------------------------------------------------------------------------------------------------------------------
 
   static prepareWalletTransaction(transaction: Transaction): any {
     const plainTransaction = transaction.toPlainObject();
@@ -151,14 +234,14 @@ export class CrossWindowProvider {
       }
     });
 
-    return this.buildWalletUrl({
+    return this.buildWalletQueryString({
       endpoint,
       callbackUrl: options?.callbackUrl,
       params: jsonToSend
     });
   }
 
-  private buildWalletUrl(options: {
+  private buildWalletQueryString(options: {
     endpoint: string;
     callbackUrl?: string;
     params?: any;
@@ -168,20 +251,8 @@ export class CrossWindowProvider {
     const fullQueryString = partialQueryString
       ? `${partialQueryString}&callbackUrl=${callbackUrl}`
       : `callbackUrl=${callbackUrl}`;
-    const url = `${this.baseWalletUrl()}/${
-      options.endpoint
-    }?${fullQueryString}`;
 
-    console.info(`Redirecting to Wallet URL: ${decodeURI(url)}`);
-
-    return url;
-  }
-
-  private baseWalletUrl(): string {
-    const pathArray = this.walletUrl.split('/');
-    const protocol = pathArray[0];
-    const host = pathArray[2];
-    return protocol + '//' + host;
+    return fullQueryString;
   }
 
   async logout(): Promise<boolean> {
@@ -193,10 +264,7 @@ export class CrossWindowProvider {
     try {
       this.disconnect();
       if (this.walletWindow) {
-        window.open(
-          this.buildWalletUrl({ endpoint: WALLET_PROVIDER_DISCONNECT_URL }),
-          CHILD_WEB_WALLET_WINDOW_NAME
-        );
+        this.walletWindow.close();
       }
     } catch (error) {
       console.warn('CrossWindow origin url is already cleared!', error);
@@ -222,7 +290,6 @@ export class CrossWindowProvider {
     return this.initialized;
   }
 
-  // TODO: In V3, this will not be an async function anymore.
   async isConnected(): Promise<boolean> {
     return Boolean(this.account.address);
   }
@@ -248,11 +315,7 @@ export class CrossWindowProvider {
   async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     this.ensureConnected();
 
-    const redirectUrl = this.buildTransactionsUrl(
-      WALLET_PROVIDER_SIGN_TRANSACTION_URL,
-      transactions
-    );
-    this.walletWindow = window.open(redirectUrl, CHILD_WEB_WALLET_WINDOW_NAME);
+    await this.handshake();
 
     const transactionsResponse: any = await new Promise((resolve) => {
       const walletUrl = this.walletUrl;
@@ -280,7 +343,6 @@ export class CrossWindowProvider {
       Array.isArray(transactionsResponse) &&
       transactionsResponse.length > 0
     ) {
-      console.log('transactionsResponse', transactionsResponse);
       const signedTransactions = transactionsResponse.map((tx: any) => {
         const transaction = Transaction.fromPlainObject(tx);
         return transaction;
@@ -292,55 +354,31 @@ export class CrossWindowProvider {
 
   async signMessage(message: SignableMessage): Promise<SignableMessage> {
     this.ensureConnected();
+    await this.handshake();
 
+    console.log('continue sign message');
+    this.walletWindow = window.open(
+      this.walletUrl,
+      CHILD_WEB_WALLET_WINDOW_NAME
+    );
     const data = {
       account: this.account.address,
       message: message.message.toString()
     };
-    const crossWindowResponse = await this.startBgrMsgChannel(
-      Operation.SignMessage,
-      data
-    );
-    const signatureHex = crossWindowResponse.signature;
-    const signature = Buffer.from(signatureHex, 'hex');
 
-    message.applySignature(signature);
+    this.walletWindow?.postMessage(
+      { type: 'mxDappSignMessage', payload: 'sign message' },
+      this.walletUrl
+    );
+
+    // const signatureHex = crossWindowResponse.signature;
+    // const signature = Buffer.from(signatureHex, 'hex');
+
+    // message.applySignature(signature);
     return message;
   }
 
   cancelAction() {
-    return this.startBgrMsgChannel(Operation.CancelAction, {});
-  }
-
-  private startBgrMsgChannel(
-    operation: string,
-    connectData: any
-  ): Promise<any> {
-    return new Promise((resolve) => {
-      window.postMessage(
-        {
-          target: 'erdw-inpage',
-          type: operation,
-          data: connectData
-        },
-        window.origin
-      );
-
-      const eventHandler = (event: any) => {
-        if (event.isTrusted && event.data.target === 'erdw-contentScript') {
-          if (event.data.type === 'connectResponse') {
-            if (event.data.data && Boolean(event.data.data.address)) {
-              this.account = event.data.data;
-            }
-            window.removeEventListener('message', eventHandler);
-            resolve(event.data.data);
-          } else {
-            window.removeEventListener('message', eventHandler);
-            resolve(event.data.data);
-          }
-        }
-      };
-      window.addEventListener('message', eventHandler, false);
-    });
+    // return this.startBgrMsgChannel(Operation.CancelAction, {});
   }
 }
