@@ -2,11 +2,6 @@ import { SignableMessage } from '@multiversx/sdk-core';
 import { Transaction } from '@multiversx/sdk-core';
 import qs from 'qs';
 import {
-  WALLET_PROVIDER_CONNECT_URL,
-  WALLET_PROVIDER_DISCONNECT_URL,
-  WALLET_PROVIDER_SIGN_TRANSACTION_URL
-} from './const';
-import {
   ErrAccountNotConnected,
   ErrCannotSignSingleTransaction
 } from './errors';
@@ -17,16 +12,7 @@ interface ICrossWindowWalletAccount {
   signature?: string;
 }
 
-export const PARENT_DAPP_WINDOW_NAME = window.location.origin;
-export const CHILD_WEB_WALLET_WINDOW_NAME = 'childWallet';
-let old_name = window.name;
-const check_name = function () {
-  if (window.name != old_name) {
-    console.log('window name changed to ' + window.name + ' from ' + old_name);
-    old_name = window.name;
-  }
-};
-setInterval(check_name, 1000);
+export const DAPP_WINDOW_NAME = window.location.origin;
 
 export class CrossWindowProvider {
   private walletUrl = '';
@@ -53,7 +39,7 @@ export class CrossWindowProvider {
       }
       this.walletWindow?.close();
     });
-
+    window.name = window.name = DAPP_WINDOW_NAME;
     CrossWindowProvider._instance = this;
   }
 
@@ -68,7 +54,7 @@ export class CrossWindowProvider {
   }
 
   async init(): Promise<boolean> {
-    window.name = PARENT_DAPP_WINDOW_NAME;
+    window.name = DAPP_WINDOW_NAME;
     this.initialized = true;
     return this.initialized;
   }
@@ -77,16 +63,12 @@ export class CrossWindowProvider {
     console.log('handshake!');
     if (!this.walletWindow) {
       console.log('open wallet');
-      this.walletWindow = window.open(
-        this.walletUrl,
-        CHILD_WEB_WALLET_WINDOW_NAME
-      );
+      this.walletWindow = window.open(this.walletUrl, this.walletUrl);
     } else {
       console.log('open existing wallet');
-      window.open('', CHILD_WEB_WALLET_WINDOW_NAME);
+      window.open('', this.walletUrl);
     }
 
-    //check if can be returned true if wallet window exists
     if (this.handshakeEstablished) {
       console.log('handshake already established');
       return true;
@@ -104,32 +86,36 @@ export class CrossWindowProvider {
     );
     this.onHandshakeChangeListener();
 
-    const redirectQueryString = this.buildWalletQueryString({
-      endpoint: WALLET_PROVIDER_CONNECT_URL,
-      callbackUrl: this.callbackUrl,
+    const payloadQueryString = this.buildWalletQueryString({
       params: {
         token: this.accessToken
       }
     });
+    const isRelogin = await this.isConnected();
     console.log('send connect event');
     this.walletWindow?.postMessage(
-      { type: 'mxDappConnect', payload: redirectQueryString },
+      {
+        type: 'mxDappConnect',
+        payload: { queryString: payloadQueryString, isRelogin }
+      },
       this.walletUrl
     );
-
-    const {
-      type: connectType,
-      payload: { address, signature }
-    } = await this.listenOnce();
-    console.log('connect response received');
-    if (connectType !== 'connect') {
-      throw new Error(
-        `Could not connect. received ${connectType} event instead of connect`
-      );
+    if (!isRelogin) {
+      const {
+        type: connectType,
+        payload: { address, signature }
+      } = await this.listenOnce();
+      console.log('connect response received');
+      if (connectType !== 'connect') {
+        throw new Error(
+          `Could not connect. received ${connectType} event instead of connect`
+        );
+      }
+      console.log('connect is correct');
+      this.account.address = address;
+      this.account.signature = signature;
     }
-    console.log('connect is correct');
-    this.account.address = address;
-    this.account.signature = signature;
+
     this.handshakeEstablished = true;
     return true;
   }
@@ -161,12 +147,18 @@ export class CrossWindowProvider {
     if (!this.walletWindow) {
       throw new Error('Wallet window is not instantiated');
     }
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this;
+
     return await new Promise((resolve) => {
       const walletUrl = this.walletUrl;
-      window.addEventListener('message', function eventHandler(event) {
+      window.addEventListener('message', async function eventHandler(event) {
         try {
           const { type, payload } = event.data;
           const isWalletEvent = event.origin === new URL(walletUrl).origin;
+
+          const isRelogin = await self.isConnected();
+          if (isRelogin && type === 'connect') return;
 
           if (isWalletEvent) {
             window.removeEventListener('message', eventHandler);
@@ -214,11 +206,7 @@ export class CrossWindowProvider {
     return plainTransaction;
   }
 
-  private buildTransactionsUrl(
-    endpoint: string,
-    transactions: Transaction[],
-    options?: { callbackUrl?: string }
-  ): string {
+  private buildTransactionsQueryString(transactions: Transaction[]): string {
     const jsonToSend: any = {};
     transactions.map((tx) => {
       const plainTx = CrossWindowProvider.prepareWalletTransaction(tx);
@@ -235,18 +223,12 @@ export class CrossWindowProvider {
     });
 
     return this.buildWalletQueryString({
-      endpoint,
-      callbackUrl: options?.callbackUrl,
       params: jsonToSend
     });
   }
 
-  private buildWalletQueryString(options: {
-    endpoint: string;
-    callbackUrl?: string;
-    params?: any;
-  }): string {
-    const callbackUrl = options?.callbackUrl || window.location.href;
+  private buildWalletQueryString(options: { params?: any }): string {
+    const callbackUrl = this.callbackUrl || window.location.href;
     const partialQueryString = qs.stringify(options.params || {});
     const fullQueryString = partialQueryString
       ? `${partialQueryString}&callbackUrl=${callbackUrl}`
@@ -314,67 +296,70 @@ export class CrossWindowProvider {
 
   async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
     this.ensureConnected();
-
     await this.handshake();
 
-    const transactionsResponse: any = await new Promise((resolve) => {
-      const walletUrl = this.walletUrl;
-      window.addEventListener('message', function eventHandler(event) {
-        if (event.origin === new URL(walletUrl).origin) {
-          window.removeEventListener('message', eventHandler);
-          resolve(JSON.parse(event.data));
-        }
-      });
+    const payloadQueryString = this.buildTransactionsQueryString(transactions);
+    this.walletWindow?.postMessage(
+      { type: 'mxDappSignTransactions', payload: payloadQueryString },
+      this.walletUrl
+    );
+
+    const { type, payload: signedPlainTransactions }: any =
+      await this.listenOnce();
+    console.log('transaction resp received: ', signedPlainTransactions);
+
+    if (type === 'cancel') {
+      throw new Error('Transaction canceled.');
+    }
+
+    if (!signedPlainTransactions || !signedPlainTransactions.length) {
+      throw new Error('Could not sign transactions');
+    }
+    console.log('prepare transactions!');
+    const signedTransactions = signedPlainTransactions.map((tx: any) => {
+      console.log('tx to transform: ', tx);
+      const transaction = Transaction.fromPlainObject(tx);
+      return transaction;
     });
 
-    if (
-      transactionsResponse?.status === 'cancelled' &&
-      transactionsResponse.address === this.account.address
-    ) {
-      throw new Error('Transaction canceled.');
-    }
+    console.log('signed transactions: ', signedTransactions);
 
-    if (
-      transactionsResponse?.status === 'cancelled' &&
-      transactionsResponse.address === this.account.address
-    ) {
-      throw new Error('Transaction canceled.');
-    } else if (
-      Array.isArray(transactionsResponse) &&
-      transactionsResponse.length > 0
-    ) {
-      const signedTransactions = transactionsResponse.map((tx: any) => {
-        const transaction = Transaction.fromPlainObject(tx);
-        return transaction;
-      });
-      return signedTransactions;
-    }
-    throw new Error('Error signing transactions.');
+    return signedTransactions;
   }
 
   async signMessage(message: SignableMessage): Promise<SignableMessage> {
     this.ensureConnected();
     await this.handshake();
-
-    console.log('continue sign message');
-    this.walletWindow = window.open(
-      this.walletUrl,
-      CHILD_WEB_WALLET_WINDOW_NAME
-    );
-    const data = {
-      account: this.account.address,
-      message: message.message.toString()
-    };
-
+    console.log('continue with sign message');
+    const payloadQueryString = this.buildWalletQueryString({
+      params: {
+        message: message.message.toString()
+      }
+    });
     this.walletWindow?.postMessage(
-      { type: 'mxDappSignMessage', payload: 'sign message' },
+      { type: 'mxDappSignMessage', payload: payloadQueryString },
       this.walletUrl
     );
+    console.log('listen for sign response');
+    const {
+      type,
+      payload: { status, signature }
+    } = await this.listenOnce();
+    console.log('sign response received', type, status, signature);
+    if (type !== 'signMessage') {
+      console.log('error!');
+      throw new Error(
+        `Could not connect. received ${type} event instead of signMessage`
+      );
+    }
+    console.log('sign response correct');
 
-    // const signatureHex = crossWindowResponse.signature;
-    // const signature = Buffer.from(signatureHex, 'hex');
+    if (status !== 'signed') {
+      throw new Error('Could not sign message');
+    }
 
-    // message.applySignature(signature);
+    message.applySignature(Buffer.from(signature, 'hex'));
+
     return message;
   }
 
