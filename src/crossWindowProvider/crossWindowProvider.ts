@@ -198,6 +198,9 @@ export class CrossWindowProvider {
         plainTransaction.data,
         'base64'
       ).toString();
+      // TODO: do the same for:
+      // receiverUsername
+      // senderUsername
     } else {
       // The web wallet expects the data field to be a string, even if it's empty (early 2023).
       plainTransaction.data = '';
