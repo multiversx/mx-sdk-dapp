@@ -133,6 +133,7 @@ export class CrossWindowProvider {
         if (isWalletEvent && type === 'handshake') {
           console.log('handshake changed! ', payload);
           if (payload === false) {
+            self.walletWindow?.close();
             self.handshakeEstablished = false;
             self.walletWindow = null;
             console.log('remove handshake!!@#s');
