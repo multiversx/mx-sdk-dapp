@@ -43,13 +43,17 @@ export class CrossWindowProvider {
     CrossWindowProvider._instance = this;
   }
 
-  public static getInstance(walletUrl: string): CrossWindowProvider {
-    CrossWindowProvider._instance.walletUrl = walletUrl;
+  public static getInstance(): CrossWindowProvider {
     return CrossWindowProvider._instance;
   }
 
   public setAddress(address: string): CrossWindowProvider {
     this.account.address = address;
+    return CrossWindowProvider._instance;
+  }
+
+  public setWalletUrl(url: string): CrossWindowProvider {
+    this.walletUrl = url;
     return CrossWindowProvider._instance;
   }
 
@@ -368,6 +372,9 @@ export class CrossWindowProvider {
   }
 
   cancelAction() {
-    // return this.startBgrMsgChannel(Operation.CancelAction, {});
+    this.walletWindow?.postMessage(
+      { type: 'mxDappCancelAction' },
+      this.walletUrl
+    );
   }
 }

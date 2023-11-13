@@ -8,8 +8,9 @@ export async function getCrossWindowProvider({
   walletUrl: string;
 }) {
   try {
-    const provider =
-      CrossWindowProvider.getInstance(walletUrl).setAddress(address);
+    const provider = CrossWindowProvider.getInstance()
+      .setAddress(address)
+      .setWalletUrl(walletUrl);
 
     const success = await provider.init();
 

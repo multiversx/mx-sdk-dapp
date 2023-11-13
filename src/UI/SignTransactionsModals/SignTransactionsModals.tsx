@@ -63,7 +63,6 @@ export const SignTransactionsModals = ({
     },
     [verifyReceiverScam, className]
   );
-  console.log('login method is: ', loginMethod);
   switch (loginMethod) {
     case LoginMethodsEnum.ledger:
       return renderScreen({ Screen: ConfirmScreens.Ledger, isDevice: true });

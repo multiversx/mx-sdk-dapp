@@ -15,6 +15,7 @@ import {
   TRANSACTION_CANCELLED,
   WALLET_SIGN_SESSION
 } from 'constants/index';
+import { CrossWindowProvider } from 'crossWindowProvider';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
@@ -77,18 +78,20 @@ export const useSignTransactions = () => {
 
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
+    const isCrossWindowProvider = provider instanceof CrossWindowProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
     isSigningRef.current = false;
 
-    if (!isExtensionProvider) {
+    if (!isExtensionProvider && !isCrossWindowProvider) {
       return;
     }
 
     clearTransactionStatusMessage();
     ExtensionProvider.getInstance()?.cancelAction?.();
+    CrossWindowProvider.getInstance()?.cancelAction?.();
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {

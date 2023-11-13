@@ -44,9 +44,8 @@ export const useCrossWindowLogin = ({
     }
 
     setIsLoading(true);
-    const provider: CrossWindowProvider = CrossWindowProvider.getInstance(
-      network.walletAddress
-    );
+    const provider: CrossWindowProvider =
+      CrossWindowProvider.getInstance().setWalletUrl(network.walletAddress);
 
     try {
       const isSuccessfullyInitialized: boolean = await provider.init();
