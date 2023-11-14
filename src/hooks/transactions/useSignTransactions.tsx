@@ -6,6 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -15,7 +16,6 @@ import {
   TRANSACTION_CANCELLED,
   WALLET_SIGN_SESSION
 } from 'constants/index';
-import { CrossWindowProvider } from 'crossWindowProvider';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';

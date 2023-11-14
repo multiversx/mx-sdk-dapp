@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { CrossWindowProvider } from 'crossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
