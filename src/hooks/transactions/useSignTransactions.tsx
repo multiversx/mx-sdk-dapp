@@ -6,6 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { uniq } from 'lodash';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -37,6 +38,7 @@ import {
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
 
+import { getAccount } from 'utils/account/getAccount';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getDefaultCallbackUrl } from 'utils/window';
@@ -259,12 +261,26 @@ export const useSignTransactions = () => {
       return;
     }
 
-    const isLoggedInWithDifferentAccount = transactions.some((tx) => {
-      const sender = tx.getSender().toString();
-      return sender && address !== sender;
-    });
+    const senderAddresses = uniq(
+      transactions
+        .map((tx) => tx.getSender().toString())
+        .filter((sender) => sender)
+    );
 
-    // Prevent signing transactions with different account
+    const senderAccounts = senderAddresses.length
+      ? await Promise.all(senderAddresses.map((sender) => getAccount(sender)))
+      : [];
+
+    const isLoggedInWithDifferentAccount = senderAccounts.some(
+      (senderAccount) =>
+        senderAccount &&
+        senderAccount.address !== address &&
+        senderAccount.activeGuardianAddress !== address
+    );
+
+    // Don't allow signing if the sender from the transaction
+    // is different from the current logged in account
+    // and the guardian address is not equal to the logged in account address
     if (isLoggedInWithDifferentAccount) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 

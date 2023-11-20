@@ -13,6 +13,7 @@ import {
   DeviceSignedTransactions,
   ScamInfoType
 } from 'types';
+import { getAccount } from 'utils/account/getAccount';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 import { getAreAllTransactionsSignedByGuardian } from './helpers';
@@ -109,9 +110,15 @@ export function useSignMultipleTransactions({
     const { tokenId } = transactionTokenInfo;
     const receiver = transaction.getReceiver().toString();
     const sender = transaction.getSender().toString();
-    const isLoggedInWithDifferentAccount = sender && address !== sender;
+    const senderAccount = await getAccount(sender);
+    const isLoggedInWithDifferentAccount =
+      senderAccount &&
+      senderAccount.address !== address &&
+      senderAccount.activeGuardianAddress !== address;
 
-    // Prevent signing transactions with different account
+    // Don't allow signing if the sender from the transaction
+    // is different from the current logged in account
+    // and the guardian address is not equal to the logged in account address
     if (isLoggedInWithDifferentAccount) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
