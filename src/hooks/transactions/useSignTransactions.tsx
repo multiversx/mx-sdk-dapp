@@ -48,7 +48,7 @@ import {
   useSetTransactionNonces,
   getShouldMoveTransactionsToSignedState,
   checkNeedsGuardianSigning,
-  checkIsInvalidSender
+  checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
@@ -276,15 +276,9 @@ export const useSignTransactions = () => {
       ? await getAccount(senderAddresses[0])
       : null;
 
-    const isLoggedInWithDifferentAccount = checkIsInvalidSender(
-      senderAccount,
-      address
-    );
+    const isValidSender = checkIsValidSender(senderAccount, address);
 
-    // Don't allow signing if the sender from the transaction
-    // is different from the current logged in account
-    // and the guardian address is not equal to the logged in account address
-    if (isLoggedInWithDifferentAccount) {
+    if (!isValidSender) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
       return onCancel(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);

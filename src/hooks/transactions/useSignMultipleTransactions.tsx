@@ -17,7 +17,7 @@ import { getAccount } from 'utils/account/getAccount';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 import {
-  checkIsInvalidSender,
+  checkIsValidSender,
   getAreAllTransactionsSignedByGuardian
 } from './helpers';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
@@ -114,15 +114,9 @@ export function useSignMultipleTransactions({
     const receiver = transaction.getReceiver().toString();
     const sender = transaction.getSender().toString();
     const senderAccount = await getAccount(sender);
-    const isLoggedInWithDifferentAccount = checkIsInvalidSender(
-      senderAccount,
-      address
-    );
+    const isValidSender = checkIsValidSender(senderAccount, address);
 
-    // Don't allow signing if the sender from the transaction
-    // is different from the current logged in account
-    // and the guardian address is not equal to the logged in account address
-    if (isLoggedInWithDifferentAccount) {
+    if (!isValidSender) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
       return onCancel?.();
