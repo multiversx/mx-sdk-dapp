@@ -6,7 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
-import { uniq } from 'lodash';
+import uniq from 'lodash/uniq';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
