@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.23.1]](https://github.com/multiversx/mx-sdk-dapp/pull/970)] - 2023-11-20
+- [Changed transaction sender validation](https://github.com/multiversx/mx-sdk-dapp/pull/969)
+
 ## [[v2.23.0]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13
 - [Added xAlias login methods](https://github.com/multiversx/mx-sdk-dapp/pull/966)
 - [Added `sdk-dapp-version` to web wallet communication](https://github.com/multiversx/mx-sdk-dapp/pull/964)
