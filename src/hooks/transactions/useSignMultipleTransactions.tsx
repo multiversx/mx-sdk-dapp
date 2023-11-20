@@ -13,9 +13,13 @@ import {
   DeviceSignedTransactions,
   ScamInfoType
 } from 'types';
+import { getAccount } from 'utils/account/getAccount';
 import { getLedgerErrorCodes } from 'utils/internal/getLedgerErrorCodes';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
-import { getAreAllTransactionsSignedByGuardian } from './helpers';
+import {
+  checkIsValidSender,
+  getAreAllTransactionsSignedByGuardian
+} from './helpers';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
 
 export interface UseSignMultipleTransactionsPropsType {
@@ -109,10 +113,10 @@ export function useSignMultipleTransactions({
     const { tokenId } = transactionTokenInfo;
     const receiver = transaction.getReceiver().toString();
     const sender = transaction.getSender().toString();
-    const isLoggedInWithDifferentAccount = sender && address !== sender;
+    const senderAccount = await getAccount(sender);
+    const isValidSender = checkIsValidSender(senderAccount, address);
 
-    // Prevent signing transactions with different account
-    if (isLoggedInWithDifferentAccount) {
+    if (!isValidSender) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
       return onCancel?.();
