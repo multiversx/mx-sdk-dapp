@@ -47,7 +47,8 @@ import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
   useSetTransactionNonces,
   getShouldMoveTransactionsToSignedState,
-  checkNeedsGuardianSigning
+  checkNeedsGuardianSigning,
+  checkIsInvalidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
@@ -265,17 +266,19 @@ export const useSignTransactions = () => {
       transactions
         .map((tx) => tx.getSender().toString())
         .filter((sender) => sender)
-    );
+    ) as string[];
 
-    const senderAccounts = senderAddresses.length
-      ? await Promise.all(senderAddresses.map((sender) => getAccount(sender)))
-      : [];
+    if (senderAddresses.length > 1) {
+      throw new Error('Multiple senders are not allowed');
+    }
 
-    const isLoggedInWithDifferentAccount = senderAccounts.some(
-      (senderAccount) =>
-        senderAccount &&
-        senderAccount.address !== address &&
-        senderAccount.activeGuardianAddress !== address
+    const senderAccount = senderAddresses.length
+      ? await getAccount(senderAddresses[0])
+      : null;
+
+    const isLoggedInWithDifferentAccount = checkIsInvalidSender(
+      senderAccount,
+      address
     );
 
     // Don't allow signing if the sender from the transaction
