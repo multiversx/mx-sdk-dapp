@@ -28,5 +28,5 @@ const DappModalFooterComponent = ({
 };
 
 export const DappModalFooter = withStyles(DappModalFooterComponent, {
-  local: import('UI/DappModal/dappModalStyles.scss')
+  local: () => import('UI/DappModal/dappModalStyles.scss')
 });

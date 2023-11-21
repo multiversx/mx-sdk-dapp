@@ -20,21 +20,23 @@ export type WithStylesImportType = {
 export function withStyles<TProps>(
   Component: FunctionComponent<TProps & WithStylesImportType>,
   imports: {
-    global?: Promise<StylesType>;
-    local?: Promise<StylesType>;
+    global?: () => Promise<StylesType>;
+    local?: () => Promise<StylesType>;
   }
 ) {
   return (props: TProps) => {
     const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>();
     const [styles, setStyles] = React.useState<Record<any, any>>();
 
+    const defaultGlobalImport = () => import('assets/sass/main.scss');
+
     const importStyles = async () => {
-      (imports.global ?? import('assets/sass/main.scss')).then(
+      (imports.global ? imports.global() : defaultGlobalImport()).then(
         (styles: StylesType) => setGlobalStyles(styles.default)
       );
 
       if (imports.local) {
-        imports.local.then((styles: StylesType) => setStyles(styles.default));
+        imports.local().then((styles: StylesType) => setStyles(styles.default));
       }
     };
 

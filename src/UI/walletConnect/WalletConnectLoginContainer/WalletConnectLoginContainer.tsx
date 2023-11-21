@@ -70,8 +70,9 @@ const WalletConnectLoginContainerComponent = (
 export const WalletConnectLoginContainer = withStyles(
   WalletConnectLoginContainerComponent,
   {
-    local: import(
-      'UI/walletConnect/WalletConnectLoginContainer/walletConnectLoginContainerStyles.scss'
-    )
+    local: () =>
+      import(
+        'UI/walletConnect/WalletConnectLoginContainer/walletConnectLoginContainerStyles.scss'
+      )
   }
 );

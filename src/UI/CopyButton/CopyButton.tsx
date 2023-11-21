@@ -60,5 +60,5 @@ const CopyButtonComponent = ({
 };
 
 export const CopyButton = withStyles(CopyButtonComponent, {
-  local: import('UI/CopyButton/copyButton.styles.scss')
+  local: () => import('UI/CopyButton/copyButton.styles.scss')
 });

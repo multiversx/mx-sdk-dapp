@@ -64,7 +64,6 @@ const LedgerLoginContainerComponent = (
 };
 
 export const LedgerLoginContainer = withStyles(LedgerLoginContainerComponent, {
-  local: import(
-    'UI/ledger/LedgerLoginContainer/ledgerLoginContainerStyles.scss'
-  )
+  local: () =>
+    import('UI/ledger/LedgerLoginContainer/ledgerLoginContainerStyles.scss')
 });
