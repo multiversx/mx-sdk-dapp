@@ -1,13 +1,10 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { IconProp, SizeProp } from '@fortawesome/fontawesome-svg-core';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../types';
-
-import styles from './pageState.styles.scss';
 
 // TODO: Rename to "PageStatePropsType" when sdk-dapp@3.0.0
 export interface PageStateProps extends WithClassnameType {
@@ -20,7 +17,7 @@ export interface PageStateProps extends WithClassnameType {
   description?: string | ReactNode;
 }
 
-export const PageState = ({
+const PageStateComponent = ({
   icon,
   title,
   action,
@@ -29,23 +26,28 @@ export const PageState = ({
   description,
   iconBgClass,
   iconSize = '5x',
-  className = 'dapp-page-state'
-}: PageStateProps) => {
-  const classes = {
-    wrapper: classNames(
-      styles.state,
-      globalStyles.mAuto,
-      globalStyles.p4,
-      globalStyles.textCenter,
-      className
-    ),
-    iconContainer: classNames(globalStyles.iconState, globalStyles.mxAuto, {
-      [iconBgClass ?? '']: Boolean(iconBgClass)
+  className = 'dapp-page-state',
+  globalStyles,
+  styles
+}: PageStateProps & WithStylesImportType) => {
+  const classes = useMemo(
+    () => ({
+      wrapper: classNames(
+        styles?.state,
+        globalStyles?.mAuto,
+        globalStyles?.p4,
+        globalStyles?.textCenter,
+        className
+      ),
+      iconContainer: classNames(globalStyles?.iconState, globalStyles?.mxAuto, {
+        [iconBgClass ?? '']: Boolean(iconBgClass)
+      }),
+      iconClass: classNames(iconClass != null && iconClass),
+      title: classNames(globalStyles?.h4, globalStyles?.my4),
+      description: globalStyles?.mb3
     }),
-    iconClass: classNames(iconClass != null && iconClass),
-    title: classNames(globalStyles.h4, globalStyles.my4),
-    description: globalStyles.mb3
-  };
+    []
+  );
 
   return (
     <div className={classes.wrapper} data-testid={dataTestId}>
@@ -67,3 +69,7 @@ export const PageState = ({
     </div>
   );
 };
+
+export const PageState = withStyles(PageStateComponent, {
+  local: 'UI/PageState/pageState.styles.scss'
+});

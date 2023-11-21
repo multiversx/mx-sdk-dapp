@@ -1,10 +1,7 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../types';
-
-import styles from './loginButtonStyles.scss';
 
 export interface LoginButtonPropsType extends WithClassnameType {
   onLogin: () => void;
@@ -14,30 +11,35 @@ export interface LoginButtonPropsType extends WithClassnameType {
   disabled?: boolean;
 }
 
-export const LoginButton = ({
+const LoginButtonComponent = ({
   onLogin,
   text = 'Default Login Button',
   className = 'dapp-login-button',
   btnClassName = 'dapp-default-login-button',
   disabled,
   'data-testid': dataTestId,
-  children
-}: LoginButtonPropsType) => {
-  const classes = {
-    wrapper: classNames(
-      globalStyles.btn,
-      globalStyles.btnPrimary,
-      globalStyles.px4,
-      globalStyles.m1,
-      globalStyles.mx3,
-      {
-        [btnClassName]: btnClassName != null
-      },
-      className
-    ),
-    loginText: styles.loginText,
-    wrapperClassName: className
-  };
+  children,
+  globalStyles,
+  styles
+}: LoginButtonPropsType & WithStylesImportType) => {
+  const classes = useMemo(
+    () => ({
+      wrapper: classNames(
+        globalStyles?.btn,
+        globalStyles?.btnPrimary,
+        globalStyles?.px4,
+        globalStyles?.m1,
+        globalStyles?.mx3,
+        {
+          [btnClassName]: btnClassName != null
+        },
+        className
+      ),
+      loginText: styles?.loginText,
+      wrapperClassName: className
+    }),
+    [globalStyles, styles]
+  );
 
   return (
     <button
@@ -50,3 +52,7 @@ export const LoginButton = ({
     </button>
   );
 };
+
+export const LoginButton = withStyles(LoginButtonComponent, {
+  local: 'UI/LoginButton/loginButtonStyles.scss'
+});
