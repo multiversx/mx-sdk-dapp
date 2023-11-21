@@ -14,21 +14,21 @@ type StylesType = typeof import('*.scss');
 
 export type WithStylesImportType = {
   globalStyles?: Record<any, any>;
-  styles?: Record<any, any>;
+  styles: Record<any, any>;
 };
 
 export function withStyles<TProps>(
   Component: FunctionComponent<TProps & WithStylesImportType>,
   imports: {
     global?: string;
-    local?: string;
+    local: string;
   }
 ) {
   return (props: TProps) => {
     const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>();
     const [styles, setStyles] = React.useState<Record<any, any>>();
 
-    const computeClasses = async () => {
+    const importStyles = async () => {
       setGlobalStyles(
         await StylesImportRegistry[
           imports.global ?? 'assets/sass/main.scss'
@@ -45,9 +45,11 @@ export function withStyles<TProps>(
     };
 
     useEffect(() => {
-      computeClasses();
+      importStyles();
     }, []);
 
-    return <Component {...props} globalStyles={globalStyles} styles={styles} />;
+    return (
+      <Component {...props} globalStyles={globalStyles} styles={styles!} />
+    );
   };
 }
