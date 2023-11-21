@@ -2,11 +2,8 @@ import React from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../types';
-
-import styles from '../dappModalStyles.scss';
 
 export interface DappModalHeaderPropsType extends WithClassnameType {
   visible?: boolean;
@@ -17,27 +14,29 @@ export interface DappModalHeaderPropsType extends WithClassnameType {
   onHide?: () => void;
 }
 
-export const DappModalHeader = ({
+const DappModalHeaderComponent = ({
   visible,
   headerText,
   customHeader,
   className,
   closeButtonClassName,
   headerTextClassName,
-  onHide
-}: DappModalHeaderPropsType) => {
+  onHide,
+  globalStyles,
+  styles
+}: DappModalHeaderPropsType & WithStylesImportType) => {
   if (!visible) {
     return null;
   }
 
   return customHeader ? (
-    <div className={classNames(styles.dappModalHeader, className)}>
+    <div className={classNames(styles?.dappModalHeader, className)}>
       {customHeader}
     </div>
   ) : (
-    <div className={classNames(styles.dappModalHeader, className)}>
+    <div className={classNames(styles?.dappModalHeader, className)}>
       <div
-        className={classNames(styles.dappModalHeaderText, headerTextClassName)}
+        className={classNames(styles?.dappModalHeaderText, headerTextClassName)}
       >
         {headerText}
       </div>
@@ -45,9 +44,9 @@ export const DappModalHeader = ({
       <button
         onClick={onHide}
         className={classNames(
-          styles.dappModalCloseButton,
-          globalStyles.btn,
-          globalStyles.btnLight,
+          styles?.dappModalCloseButton,
+          globalStyles?.btn,
+          globalStyles?.btnLight,
           closeButtonClassName
         )}
       >
@@ -56,3 +55,7 @@ export const DappModalHeader = ({
     </div>
   );
 };
+
+export const DappModalHeader = withStyles(DappModalHeaderComponent, {
+  local: import('UI/DappModal/dappModalStyles.scss')
+});

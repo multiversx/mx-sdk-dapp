@@ -54,5 +54,5 @@ const LoginButtonComponent = ({
 };
 
 export const LoginButton = withStyles(LoginButtonComponent, {
-  local: 'UI/LoginButton/loginButtonStyles.scss'
+  local: import('UI/LoginButton/loginButtonStyles.scss')
 });

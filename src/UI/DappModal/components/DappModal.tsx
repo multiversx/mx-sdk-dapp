@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import ReactDOM from 'react-dom';
-
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../types';
@@ -62,11 +61,11 @@ const DappModalComponent = ({
       id={id}
       role='dialog'
       aria-modal='true'
-      className={classNames(modalDialogClassName, styles.dappModal, className)}
+      className={classNames(modalDialogClassName, styles?.dappModal, className)}
       data-testid={dataTestId}
     >
       <div
-        className={classNames(styles.dappModalContent, modalContentClassName)}
+        className={classNames(styles?.dappModalContent, modalContentClassName)}
       >
         <DappModalHeader
           visible={showHeader}
@@ -93,5 +92,5 @@ const DappModalComponent = ({
 };
 
 export const DappModal = withStyles(DappModalComponent, {
-  local: 'UI/DappModal/dappModalStyles.scss'
+  local: import('UI/DappModal/dappModalStyles.scss')
 });

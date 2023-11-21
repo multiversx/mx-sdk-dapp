@@ -1,9 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../types';
-
-import styles from '../dappModalStyles.scss';
 
 export interface DappModalFooterPropsType extends WithClassnameType {
   visible?: boolean;
@@ -11,19 +9,24 @@ export interface DappModalFooterPropsType extends WithClassnameType {
   customFooter?: JSX.Element;
 }
 
-export const DappModalFooter = ({
+const DappModalFooterComponent = ({
   visible,
   customFooter,
   className,
-  footerText
-}: DappModalFooterPropsType) => {
+  footerText,
+  styles
+}: DappModalFooterPropsType & WithStylesImportType) => {
   if (!visible) {
     return null;
   }
 
   return (
-    <div className={classNames(styles.dappModalFooter, className)}>
+    <div className={classNames(styles?.dappModalFooter, className)}>
       {customFooter ?? <div>{footerText}</div>}
     </div>
   );
 };
+
+export const DappModalFooter = withStyles(DappModalFooterComponent, {
+  local: import('UI/DappModal/dappModalStyles.scss')
+});

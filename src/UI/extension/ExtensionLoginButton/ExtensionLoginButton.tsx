@@ -1,18 +1,17 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 import {
   CHROME_EXTENSION_LINK,
   DataTestIdsEnum,
   FIREFOX_ADDON_LINK
 } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { getIsExtensionAvailable } from '../helpers';
-import styles from './extensionLoginButton.styles.scss';
 
 export interface ExtensionLoginButtonPropsType
   extends WithClassnameType,
@@ -25,8 +24,8 @@ export interface ExtensionLoginButtonPropsType
 
 const isExtensionAvailable = getIsExtensionAvailable();
 
-export const ExtensionLoginButton: (
-  props: ExtensionLoginButtonPropsType
+const ExtensionLoginButtonComponent: (
+  props: ExtensionLoginButtonPropsType & WithStylesImportType
 ) => JSX.Element = ({
   token,
   className = 'dapp-extension-login',
@@ -37,7 +36,9 @@ export const ExtensionLoginButton: (
   loginButtonText = 'MultiversX DeFi Wallet',
   onLoginRedirect,
   disabled,
-  'data-testid': dataTestId = DataTestIdsEnum.extensionLoginButton
+  'data-testid': dataTestId = DataTestIdsEnum.extensionLoginButton,
+  globalStyles,
+  styles
 }) => {
   const [onInitiateLogin] = useExtensionLogin({
     callbackRoute,
@@ -49,18 +50,18 @@ export const ExtensionLoginButton: (
   const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
   const classes = {
     wrapper: classNames(
-      globalStyles.btn,
-      globalStyles.btnPrimary,
-      globalStyles.px4,
-      globalStyles.m1,
-      globalStyles.mx3,
-      styles.noExtensionButtonWrapper,
+      globalStyles?.btn,
+      globalStyles?.btnPrimary,
+      globalStyles?.px4,
+      globalStyles?.m1,
+      globalStyles?.mx3,
+      styles?.noExtensionButtonWrapper,
       {
         [buttonClassName]: buttonClassName != null
       },
       className
     ),
-    loginText: classNames(styles.loginText, styles.noExtensionButtonContent),
+    loginText: classNames(styles?.loginText, styles?.noExtensionButtonContent),
     wrapperClassName: className
   };
 
@@ -90,3 +91,9 @@ export const ExtensionLoginButton: (
     </LoginButton>
   );
 };
+
+export const ExtensionLoginButton = withStyles(ExtensionLoginButtonComponent, {
+  local: import(
+    'UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss'
+  )
+});

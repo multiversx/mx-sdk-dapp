@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
 import {
   DataTestIdsEnum,
   DECIMALS,
@@ -8,12 +7,16 @@ import {
   MAINNET_EGLD_LABEL,
   ZERO
 } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { FormatAmountPropsType } from './formatAmount.types';
-import styles from './formatAmountStyles.scss';
 
-const formatAmountInvalid = (props: FormatAmountPropsType) => {
+const formatAmountInvalid = (
+  props: FormatAmountPropsType & WithStylesImportType
+) => {
+  const styles = props.styles ?? {};
+
   return (
     <span
       data-testid={
@@ -31,10 +34,15 @@ const formatAmountInvalid = (props: FormatAmountPropsType) => {
   );
 };
 
-const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
+const formatAmountValid = (
+  props: FormatAmountPropsType & WithStylesImportType,
+  erdLabel: string
+) => {
   const { value, showLastNonZeroDecimal = false, showLabel = true } = props;
   const digits = props.digits != null ? props.digits : DIGITS;
   const decimals = props.decimals != null ? props.decimals : DECIMALS;
+  const styles = props.styles ?? {};
+  const globalStyles = props.globalStyles ?? {};
 
   const formattedValue = formatAmount({
     input: value,
@@ -97,7 +105,9 @@ const formatAmountValid = (props: FormatAmountPropsType, erdLabel: string) => {
   );
 };
 
-const FormatAmountComponent = (props: FormatAmountPropsType) => {
+const FormatAmountComponent = (
+  props: FormatAmountPropsType & WithStylesImportType
+) => {
   const { value } = props;
 
   return !stringIsInteger(value)
@@ -108,10 +118,16 @@ const FormatAmountComponent = (props: FormatAmountPropsType) => {
 /**
  * @param props.egldLabel  if not provided, will fallback on **EGLD**
  */
-export const FormatAmount = (props: FormatAmountPropsType) => {
+const FormatAmountWrapper = (
+  props: FormatAmountPropsType & WithStylesImportType
+) => {
   const egldLabel = props.egldLabel || MAINNET_EGLD_LABEL;
 
   const formatAmountProps = { ...props, egldLabel };
 
   return <FormatAmountComponent {...formatAmountProps} />;
 };
+
+export const FormatAmount = withStyles(FormatAmountWrapper, {
+  local: import('UI/FormatAmount/formatAmountStyles.scss')
+});

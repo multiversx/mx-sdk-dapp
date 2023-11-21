@@ -1,27 +1,27 @@
 import React, { FunctionComponent, useEffect } from 'react';
 
-const StylesImportRegistry = {
-  'assets/sass/main.scss': import('assets/sass/main.scss'),
-  'UI/PageState/pageState.styles.scss': import(
-    'UI/PageState/pageState.styles.scss'
-  ).then((styles) => styles.default),
-  'UI/LoginButton/loginButtonStyles.scss': import(
-    'UI/LoginButton/loginButtonStyles.scss'
-  )
-};
+// const StylesImportRegistry = {
+//   'assets/sass/main.scss': import('assets/sass/main.scss'),
+//   'UI/PageState/pageState.styles.scss': import(
+//     'UI/PageState/pageState.styles.scss'
+//   ).then((styles) => styles.default),
+//   'UI/LoginButton/loginButtonStyles.scss': import(
+//     'UI/LoginButton/loginButtonStyles.scss'
+//   )
+// };
 
 type StylesType = typeof import('*.scss');
 
 export type WithStylesImportType = {
   globalStyles?: Record<any, any>;
-  styles: Record<any, any>;
+  styles?: Record<any, any>;
 };
 
 export function withStyles<TProps>(
   Component: FunctionComponent<TProps & WithStylesImportType>,
   imports: {
-    global?: string;
-    local: string;
+    global?: Promise<StylesType>;
+    local?: Promise<StylesType>;
   }
 ) {
   return (props: TProps) => {
@@ -29,18 +29,12 @@ export function withStyles<TProps>(
     const [styles, setStyles] = React.useState<Record<any, any>>();
 
     const importStyles = async () => {
-      setGlobalStyles(
-        await StylesImportRegistry[
-          imports.global ?? 'assets/sass/main.scss'
-        ].then((styles: StylesType) => styles.default)
+      (imports.global ?? import('assets/sass/main.scss')).then(
+        (styles: StylesType) => setGlobalStyles(styles.default)
       );
 
       if (imports.local) {
-        setStyles(
-          await StylesImportRegistry[imports.local].then(
-            (styles: StylesType) => styles.default
-          )
-        );
+        imports.local.then((styles: StylesType) => setStyles(styles.default));
       }
     };
 
@@ -49,7 +43,11 @@ export function withStyles<TProps>(
     }, []);
 
     return (
-      <Component {...props} globalStyles={globalStyles} styles={styles!} />
+      <Component
+        {...props}
+        globalStyles={globalStyles ?? {}}
+        styles={styles ?? {}}
+      />
     );
   };
 }

@@ -1,11 +1,9 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ModalContainer } from 'UI/ModalContainer';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
-import styles from './ledgerLoginContainerStyles.scss';
-
 import { LedgerLoginContent } from './LedgerLoginContent';
 import { InnerLedgerComponentsClassesType } from './types';
 
@@ -23,9 +21,16 @@ export interface LedgerLoginContainerPropsType
   wrapContentInsideModal?: boolean;
 }
 
-export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
-  const { onClose, className, showLoginContent, wrapContentInsideModal } =
-    props;
+const LedgerLoginContainerComponent = (
+  props: LedgerLoginContainerPropsType & WithStylesImportType
+) => {
+  const {
+    onClose,
+    className,
+    showLoginContent,
+    wrapContentInsideModal,
+    styles
+  } = props;
 
   if (showLoginContent === false) {
     return null;
@@ -41,12 +46,15 @@ export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
       modalConfig={{
         headerText: 'Login with ledger',
         showHeader: true,
-        modalContentClassName: styles.ledgerModalDialogContent,
-        modalHeaderClassName: styles.ledgerModalHeader,
-        modalHeaderTextClassName: styles.ledgerModalHeaderText,
-        modalCloseButtonClassName: styles.ledgerModalCloseButton,
-        modalBodyClassName: styles.ledgerModalBody,
-        modalDialogClassName: classNames(styles.ledgerLoginContainer, className)
+        modalContentClassName: styles?.ledgerModalDialogContent,
+        modalHeaderClassName: styles?.ledgerModalHeader,
+        modalHeaderTextClassName: styles?.ledgerModalHeaderText,
+        modalCloseButtonClassName: styles?.ledgerModalCloseButton,
+        modalBodyClassName: styles?.ledgerModalBody,
+        modalDialogClassName: classNames(
+          styles?.ledgerLoginContainer,
+          className
+        )
       }}
       onClose={onClose}
     >
@@ -54,3 +62,9 @@ export const LedgerLoginContainer = (props: LedgerLoginContainerPropsType) => {
     </ModalContainer>
   );
 };
+
+export const LedgerLoginContainer = withStyles(LedgerLoginContainerComponent, {
+  local: import(
+    'UI/ledger/LedgerLoginContainer/ledgerLoginContainerStyles.scss'
+  )
+});

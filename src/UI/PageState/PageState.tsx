@@ -71,5 +71,5 @@ const PageStateComponent = ({
 };
 
 export const PageState = withStyles(PageStateComponent, {
-  local: 'UI/PageState/pageState.styles.scss'
+  local: import('UI/PageState/pageState.styles.scss')
 });
