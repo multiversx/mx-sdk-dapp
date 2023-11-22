@@ -1,25 +1,26 @@
 import React from 'react';
 import classNames from 'classnames';
-import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ComponentIconToastPropsType } from '../customToast.types';
 import { useMemoizedCloseButton } from '../helpers';
 
-export const CustomComponentToast = ({
+const CustomComponentToastComponent = ({
   onDelete,
   message,
   component,
   CustomCloseButton,
   className = 'dapp-custom-toast',
-  toastId
-}: ComponentIconToastPropsType) => {
+  toastId,
+  styles: wrapperStyles
+}: ComponentIconToastPropsType & WithStylesImportType) => {
   const closeButton = useMemoizedCloseButton({ onDelete, CustomCloseButton });
 
   return (
     <div
       id={toastId}
       className={classNames(
-        wrapperStyles.toasts,
-        wrapperStyles.toastWrapper,
+        wrapperStyles?.toasts,
+        wrapperStyles?.toastWrapper,
         className
       )}
     >
@@ -30,3 +31,8 @@ export const CustomComponentToast = ({
     </div>
   );
 };
+
+export const CustomComponentToast = withStyles(CustomComponentToastComponent, {
+  local: () =>
+    import('UI/TransactionsToastList/transactionsToastList.styles.scss')
+});
