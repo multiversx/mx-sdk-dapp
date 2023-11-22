@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { TimeAgo } from 'UI/TimeAgo/TimeAgo';
 import {
   TransactionDirectionBadge,
@@ -12,10 +11,7 @@ import {
   TransactionShardsTransition,
   TransactionValue
 } from '.';
-
 import { WithClassnameType, WithTransactionType } from '../../../UI/types';
-
-import styles from './transactionsTable.styles.scss';
 
 export interface TransactionRowPropsType
   extends WithTransactionType,
@@ -24,12 +20,14 @@ export interface TransactionRowPropsType
   showLockedAccounts?: boolean;
 }
 
-export const TransactionRow = ({
+export const TransactionRowComponent = ({
   className,
   transaction,
   showDirectionCol,
-  showLockedAccounts
-}: TransactionRowPropsType) => (
+  showLockedAccounts,
+  globalStyles,
+  styles
+}: TransactionRowPropsType & WithStylesImportType) => (
   <tr className={classNames(className, { new: transaction.isNew })}>
     <td>
       <TransactionHash transaction={transaction} />
@@ -63,12 +61,17 @@ export const TransactionRow = ({
       />
     </td>
 
-    <td className={styles.transactionFunction}>
+    <td className={styles?.transactionFunction}>
       <TransactionMethod transaction={transaction} />
     </td>
 
-    <td className={globalStyles.textLeft}>
+    <td className={globalStyles?.textLeft}>
       <TransactionValue transaction={transaction} />
     </td>
   </tr>
 );
+
+export const TransactionRow = withStyles(TransactionRowComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});

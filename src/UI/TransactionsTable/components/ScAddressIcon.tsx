@@ -2,9 +2,8 @@ import React from 'react';
 import { faFileAlt } from '@fortawesome/free-solid-svg-icons/faFileAlt';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { isContract } from 'utils/smartContracts';
 
 export interface ScAddressIconPropsType {
@@ -12,10 +11,11 @@ export interface ScAddressIconPropsType {
   secondInitiator?: string;
 }
 
-const ScAddressIcon = ({
+const ScAddressIconComponent = ({
   initiator,
-  secondInitiator
-}: ScAddressIconPropsType) => {
+  secondInitiator,
+  globalStyles
+}: ScAddressIconPropsType & WithStylesImportType) => {
   const showIcon = isContract(initiator) || isContract(secondInitiator ?? '');
 
   if (showIcon) {
@@ -23,7 +23,7 @@ const ScAddressIcon = ({
       <FontAwesomeIcon
         title='Smart Contract'
         icon={faFileAlt}
-        className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
+        className={classNames(globalStyles?.mr1, globalStyles?.textSecondary)}
         data-testid={DataTestIdsEnum.scIcon}
       />
     );
@@ -32,4 +32,4 @@ const ScAddressIcon = ({
   return null;
 };
 
-export { ScAddressIcon };
+export const ScAddressIcon = withStyles(ScAddressIconComponent, {});

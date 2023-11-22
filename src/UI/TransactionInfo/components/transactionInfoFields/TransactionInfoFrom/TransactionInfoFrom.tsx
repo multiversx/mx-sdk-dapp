@@ -1,6 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import {
@@ -9,28 +9,26 @@ import {
   ShardSpan
 } from 'UI/TransactionsTable/components';
 import { addressIsValid } from 'utils/account/addressIsValid';
-
 import {
   WithClassnameType,
   WithTransactionType
 } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
-import styles from './styles.scss';
-
-export const TransactionInfoFrom = ({
+const TransactionInfoFromComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => (
-  <DetailItem title='From' className={classNames(styles.from, className)}>
-    <div className={styles.wrapper}>
+  transaction,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => (
+  <DetailItem title='From' className={classNames(styles?.from, className)}>
+    <div className={styles?.wrapper}>
       <ScAddressIcon initiator={transaction.sender} />
 
       {addressIsValid(transaction.sender) ? (
         <>
           <ExplorerLink
             page={String(transaction.links.senderLink)}
-            className={styles.explorer}
+            className={styles?.explorer}
           >
             <AccountName
               address={transaction.sender}
@@ -38,20 +36,27 @@ export const TransactionInfoFrom = ({
             />
           </ExplorerLink>
 
-          <CopyButton className={styles.copy} text={transaction.sender} />
+          <CopyButton className={styles?.copy} text={transaction.sender} />
 
           <ExplorerLink
             page={String(transaction.links.senderShardLink)}
-            className={styles.shard}
+            className={styles?.shard}
           >
             (<ShardSpan shard={transaction.senderShard} />)
           </ExplorerLink>
         </>
       ) : (
-        <span className={styles.shard}>
+        <span className={styles?.shard}>
           (<ShardSpan shard={transaction.sender} />)
         </span>
       )}
     </div>
   </DetailItem>
 );
+
+export const TransactionInfoFrom = withStyles(TransactionInfoFromComponent, {
+  local: () =>
+    import(
+      'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoFrom/styles.scss'
+    )
+});

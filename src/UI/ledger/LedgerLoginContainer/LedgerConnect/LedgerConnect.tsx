@@ -1,13 +1,9 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
 import LedgerLogo from 'assets/icons/ledger-nano.svg';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../../types';
-
-import styles from './ledgerConnectStyles.scss';
 
 export interface LedgerConnectPropsType extends WithClassnameType {
   onClick: () => void;
@@ -27,15 +23,17 @@ export interface LedgerConnectPropsType extends WithClassnameType {
   };
 }
 
-export const LedgerConnect = ({
+const LedgerConnectComponent = ({
   onClick,
   error,
   disabled,
   connectPageContent,
   customContentComponent,
   className = 'dapp-ledger-connect-button',
-  ledgerConnectClassNames
-}: LedgerConnectPropsType) => {
+  ledgerConnectClassNames,
+  globalStyles,
+  styles
+}: LedgerConnectPropsType & WithStylesImportType) => {
   const {
     ledgerModalTitleClassName,
     ledgerModalSubtitleClassName,
@@ -48,10 +46,10 @@ export const LedgerConnect = ({
   } = ledgerConnectClassNames || {};
 
   return (
-    <div className={classNames(styles.loginConnectContainer, className)}>
+    <div className={classNames(styles?.loginConnectContainer, className)}>
       <div
         className={classNames(
-          styles.loginConnectContainerContent,
+          styles?.loginConnectContainerContent,
           ledgerModalContentClassName
         )}
       >
@@ -61,7 +59,7 @@ export const LedgerConnect = ({
           <>
             <div
               className={classNames(
-                styles.loginConnectContainerHeading,
+                styles?.loginConnectContainerHeading,
                 ledgerModalTitleClassName
               )}
             >
@@ -70,7 +68,7 @@ export const LedgerConnect = ({
 
             <p
               className={classNames(
-                styles.loginConnectContainerDescription,
+                styles?.loginConnectContainerDescription,
                 ledgerModalSubtitleClassName
               )}
             >
@@ -80,7 +78,7 @@ export const LedgerConnect = ({
             {error && (
               <p
                 className={classNames(
-                  styles.loginConnectContainerError,
+                  styles?.loginConnectContainerError,
                   ledgerModalErrorClassName
                 )}
               >
@@ -92,7 +90,7 @@ export const LedgerConnect = ({
 
             <div
               className={classNames(
-                styles.loginConnectContainerIcon,
+                styles?.loginConnectContainerIcon,
                 ledgerModalIconClassName
               )}
             >
@@ -103,7 +101,7 @@ export const LedgerConnect = ({
 
         <div
           className={classNames(
-            styles.loginConnectContainerFooter,
+            styles?.loginConnectContainerFooter,
             ledgerModalFooterClassName
           )}
         >
@@ -112,9 +110,9 @@ export const LedgerConnect = ({
             disabled={disabled}
             data-testid={DataTestIdsEnum.ledgerConnectBtn}
             className={classNames(
-              globalStyles.btn,
-              globalStyles.btnPrimary,
-              styles.loginConnectContainerButton,
+              globalStyles?.btn,
+              globalStyles?.btnPrimary,
+              styles?.loginConnectContainerButton,
               ledgerModalButtonClassName
             )}
           >
@@ -126,7 +124,7 @@ export const LedgerConnect = ({
             target='_blank'
             rel='noopener noreferrer'
             className={classNames(
-              styles.loginConnectContainerLink,
+              styles?.loginConnectContainerLink,
               ledgerModalFooterLinkClassName
             )}
           >
@@ -137,3 +135,10 @@ export const LedgerConnect = ({
     </div>
   );
 };
+
+export const LedgerConnect = withStyles(LedgerConnectComponent, {
+  local: () =>
+    import(
+      'UI/ledger/LedgerLoginContainer/LedgerConnect/ledgerConnectStyles.scss'
+    )
+});

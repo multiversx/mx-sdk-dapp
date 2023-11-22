@@ -1,12 +1,9 @@
 import React, { ReactNode } from 'react';
 import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-
-import globals from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { PageState } from 'UI/PageState';
-
-import styles from './ledgerLoadingStyles.scss';
 
 export interface LedgerLoadingPropsType {
   customSpinnerComponent?: ReactNode;
@@ -19,11 +16,13 @@ export interface LedgerLoadingPropsType {
   };
 }
 
-export const LedgerLoading = ({
+const LedgerLoadingComponent = ({
   customSpinnerComponent,
   ledgerLoadingClassNames,
-  customContentComponent
-}: LedgerLoadingPropsType) => {
+  customContentComponent,
+  globalStyles,
+  styles
+}: LedgerLoadingPropsType & WithStylesImportType) => {
   const {
     ledgerModalSubtitleClassName,
     ledgerModalTitleClassName,
@@ -33,12 +32,12 @@ export const LedgerLoading = ({
 
   return (
     <div
-      className={classNames(styles.ledgerLoadingWrapper, ledgerLoadingWrapper)}
+      className={classNames(styles?.ledgerLoadingWrapper, ledgerLoadingWrapper)}
       data-testid={DataTestIdsEnum.ledgerLoading}
     >
       <div
         className={classNames(
-          styles.ledgerLoadingHeading,
+          styles?.ledgerLoadingHeading,
           ledgerModalTitleClassName
         )}
       >
@@ -47,7 +46,7 @@ export const LedgerLoading = ({
 
       <p
         className={classNames(
-          styles.ledgerLoadingDescription,
+          styles?.ledgerLoadingDescription,
           ledgerModalSubtitleClassName
         )}
       >
@@ -58,7 +57,7 @@ export const LedgerLoading = ({
 
       <div
         className={classNames(
-          styles.ledgerLoadingSpinner,
+          styles?.ledgerLoadingSpinner,
           ledgerLoadingSpinner
         )}
       >
@@ -68,10 +67,17 @@ export const LedgerLoading = ({
           <PageState
             iconSize='10x'
             icon={faCircleNotch}
-            iconClass={classNames('fa-spin', globals.textPrimary)}
+            iconClass={classNames('fa-spin', globalStyles?.textPrimary)}
           />
         )}
       </div>
     </div>
   );
 };
+
+export const LedgerLoading = withStyles(LedgerLoadingComponent, {
+  local: () =>
+    import(
+      'UI/ledger/LedgerLoginContainer/LedgerLoading/ledgerLoadingStyles.scss'
+    )
+});

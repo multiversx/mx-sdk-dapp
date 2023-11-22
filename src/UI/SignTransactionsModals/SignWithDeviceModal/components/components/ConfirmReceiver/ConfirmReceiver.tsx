@@ -2,15 +2,13 @@ import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccountFromApi } from 'hooks';
 import { LoadingDots } from 'UI/LoadingDots';
 import { isContract } from 'utils/smartContracts';
-
 import { ReceiverSubValue } from './components/ReceiverSubValue';
 import { ReceiverValue } from './components/ReceiverValue';
-import styles from './confirmReceiverStyles.scss';
 
 export interface ConfirmReceiverPropsType {
   receiver: string;
@@ -18,11 +16,12 @@ export interface ConfirmReceiverPropsType {
   receiverUsername?: string;
 }
 
-export const ConfirmReceiver = ({
+const ConfirmReceiverComponent = ({
   receiver,
   scamReport,
-  receiverUsername
-}: ConfirmReceiverPropsType) => {
+  receiverUsername,
+  styles
+}: ConfirmReceiverPropsType & WithStylesImportType) => {
   const isSmartContract = isContract(receiver);
 
   const skipFetchingAccount = Boolean(isSmartContract || receiverUsername);
@@ -40,15 +39,15 @@ export const ConfirmReceiver = ({
   );
 
   return (
-    <div className={styles.receiver}>
-      <span className={styles.label}>Receiver</span>
+    <div className={styles?.receiver}>
+      <span className={styles?.label}>Receiver</span>
 
       {usernameAccountLoading ? (
-        <LoadingDots className={styles.loadingDots} />
+        <LoadingDots className={styles?.loadingDots} />
       ) : (
         <span
           data-testid={DataTestIdsEnum.confirmReceiver}
-          className={styles.valueWrapper}
+          className={styles?.valueWrapper}
         >
           <ReceiverValue
             hasUsername={hasUsername}
@@ -60,18 +59,18 @@ export const ConfirmReceiver = ({
 
       {usernameAccountLoading ? (
         <LoadingDots
-          className={classNames(styles.loadingDots, styles.absolute)}
+          className={classNames(styles?.loadingDots, styles?.absolute)}
         />
       ) : (
         <ReceiverSubValue hasUsername={hasUsername} receiver={receiver} />
       )}
 
       {scamReport && (
-        <div className={styles.scam}>
+        <div className={styles?.scam}>
           <span>
             <FontAwesomeIcon
               icon={faExclamationTriangle}
-              className={styles.icon}
+              className={styles?.icon}
             />
 
             <small data-testid={DataTestIdsEnum.confirmScamReport}>
@@ -83,3 +82,10 @@ export const ConfirmReceiver = ({
     </div>
   );
 };
+
+export const ConfirmReceiver = withStyles(ConfirmReceiverComponent, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmReceiver/confirmReceiverStyles.scss'
+    )
+});

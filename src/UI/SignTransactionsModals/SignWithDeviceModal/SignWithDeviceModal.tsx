@@ -1,21 +1,22 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccount, useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { SignStep } from './SignStep';
-import styles from './signWithDeviceModalStyles.scss';
 
-export const SignWithDeviceModal = ({
+const SignWithDeviceModalComponent = ({
   handleClose,
   error,
   className = 'dapp-device-modal',
   verifyReceiverScam = true,
   GuardianScreen,
   title = 'Confirm transaction',
-  signStepInnerClasses
-}: SignModalPropsType) => {
+  signStepInnerClasses,
+  globalStyles,
+  styles
+}: SignModalPropsType & WithStylesImportType) => {
   const { address } = useGetAccount();
 
   const {
@@ -36,9 +37,13 @@ export const SignWithDeviceModal = ({
     hasGuardianScreen: Boolean(GuardianScreen)
   });
   const classes = {
-    wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
-    container: classNames(globalStyles.card, globalStyles.container),
-    cardBody: globalStyles.cardBody
+    wrapper: classNames(
+      styles?.modalContainer,
+      styles?.walletConnect,
+      className
+    ),
+    container: classNames(globalStyles?.card, globalStyles?.container),
+    cardBody: globalStyles?.cardBody
   };
 
   return (
@@ -72,3 +77,10 @@ export const SignWithDeviceModal = ({
     </ModalContainer>
   );
 };
+
+export const SignWithDeviceModal = withStyles(SignWithDeviceModalComponent, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/signWithDeviceModalStyles.scss'
+    )
+});

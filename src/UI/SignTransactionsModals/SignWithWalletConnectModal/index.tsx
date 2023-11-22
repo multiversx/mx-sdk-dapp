@@ -1,10 +1,8 @@
 import React from 'react';
-
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { CANCEL_ACTION_NAME, DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { useCancelWalletConnectAction } from 'hooks/transactions/useCancelWalletConnectAction';
@@ -15,28 +13,32 @@ import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
 import { WalletConnectConnectionStatus } from 'UI/walletConnect/WalletConnectConnectionStatus';
 
-import styles from './signWithWalletConnectModalStyles.scss';
-
-export const SignWithWalletConnectModal = ({
+const SignWithWalletConnectModalComponent = ({
   error,
   handleClose,
   transactions,
   sessionId,
   className = 'dapp-wallet-connect-modal',
-  modalContentClassName
-}: SignModalPropsType) => {
+  modalContentClassName,
+  globalStyles,
+  styles
+}: SignModalPropsType & WithStylesImportType) => {
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
 
   const classes = {
-    wrapper: classNames(styles.modalContainer, styles.walletConnect, className),
-    icon: globalStyles.textWhite,
+    wrapper: classNames(
+      styles?.modalContainer,
+      styles?.walletConnect,
+      className
+    ),
+    icon: globalStyles?.textWhite,
     closeBtn: classNames(
-      globalStyles.btn,
-      globalStyles.btnCloseLink,
-      globalStyles.btnDark,
-      globalStyles.textWhite,
-      globalStyles.mt2
+      globalStyles?.btn,
+      globalStyles?.btnCloseLink,
+      globalStyles?.btnDark,
+      globalStyles?.textWhite,
+      globalStyles?.mt2
     )
   };
 
@@ -82,7 +84,7 @@ export const SignWithWalletConnectModal = ({
         icon={error ? faTimes : null}
         iconClass={classes.icon}
         className={modalContentClassName}
-        iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
+        iconBgClass={error ? globalStyles?.bgDanger : globalStyles?.bgWarning}
         iconSize='3x'
         title='Confirm on the xPortal App'
         description={error ? error : <Description />}
@@ -100,3 +102,13 @@ export const SignWithWalletConnectModal = ({
     </ModalContainer>
   );
 };
+
+export const SignWithWalletConnectModal = withStyles(
+  SignWithWalletConnectModalComponent,
+  {
+    local: () =>
+      import(
+        'UI/SignTransactionsModals/SignWithWalletConnectModal/signWithWalletConnectModalStyles.scss'
+      )
+  }
+);

@@ -5,8 +5,7 @@ import {
   faCheckCircle
 } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { getProviderType } from 'providers/utils';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -28,10 +27,13 @@ export interface WalletConnectConnectionStatusType {
   description?: string;
 }
 
-export const WalletConnectConnectionStatus = ({
+const WalletConnectConnectionStatusComponent = ({
   description,
-  className
-}: WalletConnectConnectionStatusType & WithClassnameType) => {
+  className,
+  globalStyles
+}: WalletConnectConnectionStatusType &
+  WithClassnameType &
+  WithStylesImportType) => {
   const { provider } = useGetAccountProvider();
   const providerType = getProviderType(provider);
 
@@ -92,13 +94,13 @@ export const WalletConnectConnectionStatus = ({
           className={className}
           icon={faCircleNotch}
           iconClassName={classNames(
-            globalStyles.textPrimary,
+            globalStyles?.textPrimary,
             'fa-spin',
             'slow-spin'
           )}
           description='Checking the connection...'
           details={
-            <div className={classNames(globalStyles.mt3)}>{description}</div>
+            <div className={classNames(globalStyles?.mt3)}>{description}</div>
           }
         />
       );
@@ -109,7 +111,7 @@ export const WalletConnectConnectionStatus = ({
           className={className}
           icon={faCircleNotch}
           iconClassName={classNames(
-            globalStyles.textPrimary,
+            globalStyles?.textPrimary,
             'fa-spin',
             'slow-spin'
           )}
@@ -123,10 +125,10 @@ export const WalletConnectConnectionStatus = ({
         <WalletConnectConnectionDescription
           className={className}
           icon={faCheckCircle}
-          iconClassName={classNames(globalStyles.textSuccess)}
+          iconClassName={classNames(globalStyles?.textSuccess)}
           description='Connected'
           details={
-            <div className={classNames(globalStyles.mt3)}>{description}</div>
+            <div className={classNames(globalStyles?.mt3)}>{description}</div>
           }
         />
       );
@@ -137,10 +139,15 @@ export const WalletConnectConnectionStatus = ({
         <WalletConnectConnectionDescription
           className={className}
           icon={faTimes}
-          iconClassName={classNames(globalStyles.textDanger)}
+          iconClassName={classNames(globalStyles?.textDanger)}
           description='Unable to establish a connection with the device.'
           details={<WalletConnectConnectionHint />}
         />
       );
   }
 };
+
+export const WalletConnectConnectionStatus = withStyles(
+  WalletConnectConnectionStatusComponent,
+  {}
+);

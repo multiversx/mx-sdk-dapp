@@ -1,23 +1,29 @@
 import React from 'react';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { CopyButton } from 'UI/CopyButton';
-
 import {
   WithClassnameType,
   WithTransactionType
 } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
-import styles from './styles.scss';
-
-export const TransactionInfoHash = ({
+const TransactionInfoHashComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => (
+  transaction,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => (
   <DetailItem className={className} title='Hash'>
-    <div className={styles.hash}>
+    <div className={styles?.hash}>
       {transaction.txHash}
 
-      <CopyButton text={transaction.txHash} className={styles.copy} />
+      <CopyButton text={transaction.txHash} className={styles?.copy} />
     </div>
   </DetailItem>
 );
+
+export const TransactionInfoHash = withStyles(TransactionInfoHashComponent, {
+  local: () =>
+    import(
+      'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoHash/styles.scss'
+    )
+});

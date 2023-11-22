@@ -1,13 +1,10 @@
 import React, { SyntheticEvent } from 'react';
 import classNames from 'classnames';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { Trim } from 'UI/Trim';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
-
 import { WithClassnameType } from '../../../types';
-
-import styles from './addressRowStyles.scss';
 
 export interface AddressRowPropsType extends WithClassnameType {
   selectedAddress?: string;
@@ -19,7 +16,7 @@ export interface AddressRowPropsType extends WithClassnameType {
   disabled: boolean;
 }
 
-export const AddressRow = ({
+const AddressRowComponent = ({
   address,
   index,
   balance,
@@ -27,8 +24,9 @@ export const AddressRow = ({
   onSelectAddress,
   className = 'dapp-ledger-address-row',
   ledgerModalTableSelectedItemClassName,
-  disabled = false
-}: AddressRowPropsType) => {
+  disabled = false,
+  styles
+}: AddressRowPropsType & WithStylesImportType) => {
   const handleChange = (event: SyntheticEvent) => {
     const { checked } = event.target as HTMLInputElement;
 
@@ -40,18 +38,18 @@ export const AddressRow = ({
   return (
     <div
       className={classNames(
-        styles.ledgerAddressTableBodyItem,
+        styles?.ledgerAddressTableBodyItem,
         {
           [ledgerModalTableSelectedItemClassName ?? '']:
             selectedAddress === address,
-          [styles.ledgerAddressTableBodyItemSelected]:
+          [styles?.ledgerAddressTableBodyItemSelected ?? '']:
             selectedAddress === address
         },
         className
       )}
     >
       <div
-        className={classNames(styles.ledgerAddressTableBodyItemData, {
+        className={classNames(styles?.ledgerAddressTableBodyItemData, {
           disabled
         })}
       >
@@ -63,26 +61,31 @@ export const AddressRow = ({
           onChange={handleChange}
           role='button'
           checked={selectedAddress === address}
-          className={styles.ledgerAddressTableBodyItemDataInput}
+          className={styles?.ledgerAddressTableBodyItemDataInput}
         />
 
         <label
           htmlFor={`check_${index}`}
           role='button'
           data-testid={`label_${index}`}
-          className={styles.ledgerAddressTableBodyItemDataLabel}
+          className={styles?.ledgerAddressTableBodyItemDataLabel}
         >
-          <div className={styles.ledgerAddressTableBodyItemDataValue}>
+          <div className={styles?.ledgerAddressTableBodyItemDataValue}>
             <Trim text={address} />
           </div>
         </label>
       </div>
 
-      <div className={styles.ledgerAddressTableBodyItemData}>
+      <div className={styles?.ledgerAddressTableBodyItemData}>
         <FormatAmount value={balance} egldLabel={getEgldLabel()} />
       </div>
 
-      <div className={styles.ledgerAddressTableBodyItemData}>{index}</div>
+      <div className={styles?.ledgerAddressTableBodyItemData}>{index}</div>
     </div>
   );
 };
+
+export const AddressRow = withStyles(AddressRowComponent, {
+  local: () =>
+    import('UI/ledger/LedgerLoginContainer/AddressRow/addressRowStyles.scss')
+});

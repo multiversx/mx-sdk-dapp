@@ -1,10 +1,8 @@
 import React from 'react';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { VisibleTransactionOperationType } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
-
 import {
   WithOperationType,
   WithTransactionType
@@ -12,10 +10,11 @@ import {
 import { DetailedItem } from './DetailedItem';
 import { OperationToken } from './OperationToken';
 
-export const OperationRow = ({
+const OperationRowComponent = ({
   operation,
-  transaction
-}: WithTransactionType & WithOperationType) => {
+  transaction,
+  globalStyles
+}: WithTransactionType & WithOperationType & WithStylesImportType) => {
   switch (operation.type) {
     case VisibleTransactionOperationType.nft:
     case VisibleTransactionOperationType.esdt:
@@ -23,11 +22,11 @@ export const OperationRow = ({
         <DetailedItem operation={operation} transaction={transaction}>
           <>
             {operation.esdtType === NftEnumType.NonFungibleESDT && (
-              <div className={globalStyles.mr1}>NFT</div>
+              <div className={globalStyles?.mr1}>NFT</div>
             )}
 
             {operation.esdtType === NftEnumType.SemiFungibleESDT && (
-              <div className={globalStyles.mr1}>SFT quantity</div>
+              <div className={globalStyles?.mr1}>SFT quantity</div>
             )}
 
             <OperationToken operation={operation} />
@@ -39,7 +38,7 @@ export const OperationRow = ({
       return (
         <DetailedItem operation={operation} transaction={transaction}>
           <>
-            <div className={globalStyles.mr2}>Value</div>
+            <div className={globalStyles?.mr2}>Value</div>
 
             <FormatAmount value={operation.value} showLastNonZeroDecimal />
           </>
@@ -50,3 +49,5 @@ export const OperationRow = ({
       return null;
   }
 };
+
+export const OperationRow = withStyles(OperationRowComponent, {});
