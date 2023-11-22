@@ -1,15 +1,5 @@
 import React, { FunctionComponent, useEffect } from 'react';
 
-// const StylesImportRegistry = {
-//   'assets/sass/main.scss': import('assets/sass/main.scss'),
-//   'UI/PageState/pageState.styles.scss': import(
-//     'UI/PageState/pageState.styles.scss'
-//   ).then((styles) => styles.default),
-//   'UI/LoginButton/loginButtonStyles.scss': import(
-//     'UI/LoginButton/loginButtonStyles.scss'
-//   )
-// };
-
 type StylesType = typeof import('*.scss');
 
 export type WithStylesImportType = {
@@ -28,7 +18,8 @@ export function withStyles<TProps>(
     const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>();
     const [styles, setStyles] = React.useState<Record<any, any>>();
 
-    const defaultGlobalImport = () => import('assets/sass/main.scss');
+    const defaultGlobalImport = async () =>
+      await import('assets/sass/main.scss');
 
     const importStyles = async () => {
       (imports.global ? imports.global() : defaultGlobalImport()).then(
