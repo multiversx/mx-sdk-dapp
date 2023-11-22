@@ -1,4 +1,5 @@
-import React, { FunctionComponent, useEffect } from 'react';
+import React, { FunctionComponent } from 'react';
+import { useStyles } from './useStyles';
 
 type StylesType = typeof import('*.scss');
 
@@ -15,25 +16,10 @@ export function withStyles<TProps>(
   }
 ) {
   return (props: TProps) => {
-    const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>();
-    const [styles, setStyles] = React.useState<Record<any, any>>();
-
-    const defaultGlobalImport = async () =>
-      await import('assets/sass/main.scss');
-
-    const importStyles = async () => {
-      (imports.global ? imports.global() : defaultGlobalImport()).then(
-        (styles: StylesType) => setGlobalStyles(styles.default)
-      );
-
-      if (imports.local) {
-        imports.local().then((styles: StylesType) => setStyles(styles.default));
-      }
-    };
-
-    useEffect(() => {
-      importStyles();
-    }, []);
+    const { globalStyles, styles } = useStyles({
+      globalImportCallback: imports.global,
+      localImportCallback: imports.local
+    });
 
     return (
       <Component
