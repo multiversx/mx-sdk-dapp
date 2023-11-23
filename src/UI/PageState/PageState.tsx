@@ -46,7 +46,7 @@ const PageStateComponent = ({
       title: classNames(globalStyles?.h4, globalStyles?.my4),
       description: globalStyles?.mb3
     }),
-    []
+    [globalStyles, styles, className, iconBgClass, iconClass]
   );
 
   return (
