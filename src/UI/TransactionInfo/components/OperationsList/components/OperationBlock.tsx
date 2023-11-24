@@ -2,19 +2,14 @@ import React from 'react';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
-
 import { AccountName } from 'UI/TransactionsTable/components';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
-
 import { WithTransactionType } from '../../../../../UI/types';
-
-import styles from '../styles.scss';
 
 export interface OperationBlockPropsType extends WithTransactionType {
   address: string;
@@ -23,13 +18,15 @@ export interface OperationBlockPropsType extends WithTransactionType {
   direction?: string;
 }
 
-export const OperationBlock = ({
+const OperationBlockComponent = ({
   address,
   transaction,
   action,
   isFullSize,
-  direction
-}: OperationBlockPropsType) => {
+  direction,
+  globalStyles,
+  styles
+}: OperationBlockPropsType & WithStylesImportType) => {
   let operationAssets;
 
   if (address === transaction.sender) {
@@ -49,19 +46,19 @@ export const OperationBlock = ({
 
   return (
     <div
-      className={classNames(styles.operationBlock, {
-        [globalStyles.col12]: isFullSize,
-        [globalStyles.prXl0]: !isFullSize,
-        [globalStyles.pl3]: !isFullSize && operationAssets,
-        [globalStyles.colLg6]: !isFullSize && !operationAssets,
-        [globalStyles.colXl4]: !isFullSize && !operationAssets
+      className={classNames(styles?.operationBlock, {
+        [globalStyles?.col12 ?? '']: isFullSize,
+        [globalStyles?.prXl0 ?? '']: !isFullSize,
+        [globalStyles?.pl3 ?? '']: !isFullSize && operationAssets,
+        [globalStyles?.colLg6 ?? '']: !isFullSize && !operationAssets,
+        [globalStyles?.colXl4 ?? '']: !isFullSize && !operationAssets
       })}
     >
       {direction && (
         <div
           className={classNames(
-            styles.direction,
-            styles[directions[direction]]
+            styles?.direction,
+            styles?.[directions[direction]]
           )}
         >
           {directions[direction]}
@@ -72,11 +69,11 @@ export const OperationBlock = ({
         <FontAwesomeIcon
           icon={faCaretRight}
           size='xs'
-          className={classNames(globalStyles.textSecondary, globalStyles.mr2)}
+          className={classNames(globalStyles?.textSecondary, globalStyles?.mr2)}
         />
       )}
 
-      <div className={classNames(globalStyles.textNowrap, globalStyles.mr2)}>
+      <div className={classNames(globalStyles?.textNowrap, globalStyles?.mr2)}>
         {action || ''}
       </div>
 
@@ -84,12 +81,12 @@ export const OperationBlock = ({
         <>
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(address)}
-            className={styles.explorer}
+            className={styles?.explorer}
           >
             <AccountName address={address} assets={operationAssets} />
           </ExplorerLink>
 
-          <CopyButton text={address} className={styles.copy} />
+          <CopyButton text={address} className={styles?.copy} />
         </>
       ) : (
         ''
@@ -97,3 +94,8 @@ export const OperationBlock = ({
     </div>
   );
 };
+
+export const OperationBlock = withStyles(OperationBlockComponent, {
+  local: () =>
+    import('UI/TransactionInfo/components/OperationsList/styles.scss')
+});

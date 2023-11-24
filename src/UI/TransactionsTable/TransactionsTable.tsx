@@ -1,15 +1,12 @@
 import React, { ReactNode, useMemo } from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
 import { useGetAccount, useGetNetworkConfig } from 'hooks';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction/getInterpretedTransaction';
+import { withStyles, WithStylesImportType } from '../../hocs/withStyles';
 import { WithClassnameType } from '../types';
 import { TransactionRow } from './components/TransactionRow';
-
-import styles from './components/transactionsTable.styles.scss';
 
 export interface TransactionsTableType extends WithClassnameType {
   transactions: ServerTransactionType[];
@@ -18,13 +15,15 @@ export interface TransactionsTableType extends WithClassnameType {
   showLockedAccounts?: boolean;
 }
 
-export const TransactionsTable = ({
+const TransactionsTableComponent = ({
   transactions,
   directionCol = false,
   showLockedAccounts = false,
   className = 'dapp-transactions-table',
-  title
-}: TransactionsTableType) => {
+  title,
+  globalStyles,
+  styles
+}: TransactionsTableType & WithStylesImportType) => {
   const { address } = useGetAccount();
   const {
     network: { explorerAddress }
@@ -45,32 +44,32 @@ export const TransactionsTable = ({
   return (
     <div
       className={classNames(
-        globalStyles.card,
-        globalStyles.mt5,
-        globalStyles.mb5,
-        styles.transactionsTable,
+        globalStyles?.card,
+        globalStyles?.mt5,
+        globalStyles?.mb5,
+        styles?.transactionsTable,
         className
       )}
     >
       <div
         className={classNames(
-          globalStyles.cardHeader,
-          globalStyles.cardHeaderItem,
-          globalStyles.dFlex,
-          globalStyles.justifyContentBetween,
-          globalStyles.alignItemsCenter,
-          styles.transactionsTableHeader
+          globalStyles?.cardHeader,
+          globalStyles?.cardHeaderItem,
+          globalStyles?.dFlex,
+          globalStyles?.justifyContentBetween,
+          globalStyles?.alignItemsCenter,
+          styles?.transactionsTableHeader
         )}
       >
-        <h6 className={globalStyles.h6} data-testid={DataTestIdsEnum.title}>
+        <h6 className={globalStyles?.h6} data-testid={DataTestIdsEnum.title}>
           {title || 'Transactions'}
         </h6>
       </div>
 
-      <div className={classNames(globalStyles.cardBody, globalStyles.p0)}>
-        <div className={styles.tableWrapper}>
+      <div className={classNames(globalStyles?.cardBody, globalStyles?.p0)}>
+        <div className={styles?.tableWrapper}>
           <table
-            className={classNames(styles.table, globalStyles.trimSizeSm)}
+            className={classNames(styles?.table, globalStyles?.trimSizeSm)}
             data-testid={DataTestIdsEnum.transactionsTable}
           >
             <thead>
@@ -102,3 +101,8 @@ export const TransactionsTable = ({
     </div>
   );
 };
+
+export const TransactionsTable = withStyles(TransactionsTableComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});

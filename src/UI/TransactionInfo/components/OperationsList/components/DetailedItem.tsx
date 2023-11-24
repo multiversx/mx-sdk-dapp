@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
   WithOperationType,
   WithTransactionType
@@ -14,17 +13,18 @@ export interface DetailedItemPropsType
   children?: ReactNode;
 }
 
-export const DetailedItem = ({
+const DetailedItemComponent = ({
   children,
   operation,
-  transaction
-}: DetailedItemPropsType) => (
+  transaction,
+  globalStyles
+}: DetailedItemPropsType & WithStylesImportType) => (
   <div
     className={classNames(
-      globalStyles.dFlex,
-      globalStyles.row,
-      globalStyles.mb3,
-      globalStyles.mbXl2
+      globalStyles?.dFlex,
+      globalStyles?.row,
+      globalStyles?.mb3,
+      globalStyles?.mbXl2
     )}
   >
     <OperationText operation={operation} transaction={transaction} />
@@ -32,14 +32,17 @@ export const DetailedItem = ({
     {children && (
       <div
         className={classNames(
-          globalStyles.colLg6,
-          globalStyles.colXl4,
-          globalStyles.dFlex,
-          globalStyles.alignItemsCenter
+          globalStyles?.colLg6,
+          globalStyles?.colXl4,
+          globalStyles?.dFlex,
+          globalStyles?.alignItemsCenter
         )}
       >
         <div
-          className={classNames(globalStyles.dFlex, globalStyles.textTruncate)}
+          className={classNames(
+            globalStyles?.dFlex,
+            globalStyles?.textTruncate
+          )}
         >
           {children}
         </div>
@@ -47,3 +50,5 @@ export const DetailedItem = ({
     )}
   </div>
 );
+
+export const DetailedItem = withStyles(DetailedItemComponent, {});

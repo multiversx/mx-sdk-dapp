@@ -1,28 +1,32 @@
 import React from 'react';
-
 import { N_A } from 'constants/index';
-import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
   WithTransactionType,
   WithClassnameType
 } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
-import styles from './styles.scss';
-
-export const TransactionInfoGasUsed = ({
+const TransactionInfoGasPriceComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => (
-  <DetailItem className={className} title='Gas Price'>
-    {transaction.gasPrice != null ? (
-      <FormatAmount
-        value={transaction.gasPrice.toString()}
-        showLastNonZeroDecimal
-      />
+  transaction,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => (
+  <DetailItem className={className} title='Gas Used'>
+    {transaction.gasUsed != null ? (
+      transaction.gasUsed.toLocaleString('en')
     ) : (
-      <span className={styles.gas}>{N_A}</span>
+      <span className={styles?.gas}>{N_A}</span>
     )}
   </DetailItem>
+);
+
+export const TransactionInfoGasPrice = withStyles(
+  TransactionInfoGasPriceComponent,
+  {
+    local: () =>
+      import(
+        'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoGasPrice/styles.scss'
+      )
+  }
 );

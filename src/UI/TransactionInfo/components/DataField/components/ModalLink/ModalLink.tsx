@@ -2,12 +2,14 @@ import React, { useState, MouseEvent } from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { DappModal } from 'UI/DappModal/components/DappModal';
 import { LinkComponentProps } from '../Linkified/linkified.types';
 
-export const ModalLink = (props: LinkComponentProps) => {
+const ModalLinkComponent = (
+  props: LinkComponentProps & WithStylesImportType
+) => {
+  const { globalStyles } = props;
   const [show, setShow] = useState(false);
 
   const onClick = (event: MouseEvent) => {
@@ -26,29 +28,29 @@ export const ModalLink = (props: LinkComponentProps) => {
       <a {...props} onClick={onClick} />
 
       <DappModal visible={show} onHide={handleClose}>
-        <div className={globalStyles.card}>
+        <div className={globalStyles?.card}>
           <div
             className={classNames(
-              globalStyles.cardBody,
-              globalStyles.textCenter
+              globalStyles?.cardBody,
+              globalStyles?.textCenter
             )}
           >
-            <p className={classNames(globalStyles.h3, globalStyles.pt1)}>
+            <p className={classNames(globalStyles?.h3, globalStyles?.pt1)}>
               <FontAwesomeIcon
                 icon={faExclamationTriangle}
                 className={classNames(
-                  globalStyles.textWarning,
-                  globalStyles.mr2
+                  globalStyles?.textWarning,
+                  globalStyles?.mr2
                 )}
               />
               Caution!
             </p>
 
-            <p className={globalStyles.lead}>
+            <p className={globalStyles?.lead}>
               You are about to navigate to an external website.
             </p>
 
-            <div className={globalStyles.mxAuto}>
+            <div className={globalStyles?.mxAuto}>
               <p>
                 This link is not part of MultiversX. Do not enter your private
                 words, your keystore file or any of your MultiversX account
@@ -58,16 +60,16 @@ export const ModalLink = (props: LinkComponentProps) => {
 
             <div
               className={classNames(
-                globalStyles.dFlex,
-                globalStyles.alignItemsCenter,
-                globalStyles.flexColumn
+                globalStyles?.dFlex,
+                globalStyles?.alignItemsCenter,
+                globalStyles?.flexColumn
               )}
             >
               <button
                 type='button'
                 className={classNames(
-                  globalStyles.btn,
-                  globalStyles.btnPrimary
+                  globalStyles?.btn,
+                  globalStyles?.btnPrimary
                 )}
                 onClick={handleClose}
               >
@@ -77,7 +79,7 @@ export const ModalLink = (props: LinkComponentProps) => {
               <a
                 href={props.href}
                 target='_blank'
-                className={globalStyles.mt3}
+                className={globalStyles?.mt3}
                 rel='noreferrer noopener'
               >
                 Continue to {link}
@@ -89,3 +91,5 @@ export const ModalLink = (props: LinkComponentProps) => {
     </>
   );
 };
+
+export const ModalLink = withStyles(ModalLinkComponent, {});

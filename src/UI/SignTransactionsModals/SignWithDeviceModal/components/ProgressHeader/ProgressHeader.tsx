@@ -2,13 +2,19 @@ import React from 'react';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ProgressHeaderPropsType } from './ProgressHeader.types';
 
-import styles from './progressHeaderStyles.scss';
-
-export const ProgressHeader = (props: ProgressHeaderPropsType) => {
-  const { steps, size = 'large', type = 'simple', collapsible = false } = props;
+const ProgressHeaderComponent = (
+  props: ProgressHeaderPropsType & WithStylesImportType
+) => {
+  const {
+    steps,
+    size = 'large',
+    type = 'simple',
+    collapsible = false,
+    styles
+  } = props;
 
   const available = steps.filter((step) => !step.hidden);
   const active = available.findIndex((step) => step.active);
@@ -16,27 +22,27 @@ export const ProgressHeader = (props: ProgressHeaderPropsType) => {
   const third = (33 / 100) * total;
 
   return (
-    <div className={styles.progressSteps}>
+    <div className={styles?.progressSteps}>
       {available.map((step, index) => (
         <div
           key={`progress-step-${index}`}
           style={{ width: collapsible ? 'auto' : `${100 / available.length}%` }}
-          className={classNames(styles.progressStep, {
-            [styles.left]: type === 'detailed'
+          className={classNames(styles?.progressStep, {
+            [styles?.left]: type === 'detailed'
           })}
         >
           <div
             style={{ width: collapsible ? (step.active ? third : 20) : 'auto' }}
-            className={classNames(styles.progressStepWrapper, {
-              [styles.active]: step.active,
-              [styles.detailed]: type === 'detailed',
-              [styles.completed]: index < active || step.completed,
-              [styles.collapsible]: collapsible
+            className={classNames(styles?.progressStepWrapper, {
+              [styles?.active]: step.active,
+              [styles?.detailed]: type === 'detailed',
+              [styles?.completed]: index < active || step.completed,
+              [styles?.collapsible]: collapsible
             })}
           >
             <div
-              className={classNames(styles.progressStepIndex, {
-                [styles.active]: step.active
+              className={classNames(styles?.progressStepIndex, {
+                [styles?.active]: step.active
               })}
             >
               {index + 1}
@@ -44,19 +50,21 @@ export const ProgressHeader = (props: ProgressHeaderPropsType) => {
               {type === 'detailed' && index < active && (
                 <FontAwesomeIcon
                   icon={faCheck}
-                  className={styles.progressStepCheck}
+                  className={styles?.progressStepCheck}
                 />
               )}
             </div>
 
             {step.title && type === 'detailed' && (
               <div
-                className={classNames(styles.progressStepTitle, {
-                  [styles.active]: step.active,
-                  [styles.collapsible]: collapsible
+                className={classNames(styles?.progressStepTitle, {
+                  [styles?.active]: step.active,
+                  [styles?.collapsible]: collapsible
                 })}
               >
-                <div className={styles.progressStepTitleText}>{step.title}</div>
+                <div className={styles?.progressStepTitleText}>
+                  {step.title}
+                </div>
               </div>
             )}
           </div>
@@ -65,3 +73,10 @@ export const ProgressHeader = (props: ProgressHeaderPropsType) => {
     </div>
   );
 };
+
+export const ProgressHeader = withStyles(ProgressHeaderComponent, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/components/ProgressHeader/progressHeaderStyles.scss'
+    )
+});

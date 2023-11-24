@@ -2,8 +2,7 @@ import React, { ReactNode, useEffect, useRef } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { EventType } from 'types/serverTransactions.types';
 import { CopyButton } from 'UI/CopyButton';
 import { Trim } from 'UI/Trim';
@@ -13,8 +12,6 @@ import {
 } from 'utils/transactions/transactionInfoHelpers';
 import { getEventListInitialDecodeMethod } from 'utils/transactions/transactionInfoHelpers/getEventListInitialDecodeMethod';
 import { DataDecode } from '../DataDecode';
-
-import styles from './styles.scss';
 
 export interface EventsListPropsType {
   events: EventType[];
@@ -37,17 +34,29 @@ const EventTopics = ({ topics, identifier }: EventTopicsPropsType) => {
   return <DataDecode value={mergedTopics} identifier={identifier} />;
 };
 
-const EventData = ({ label, children }: EventDataPropsType) => (
-  <div className={classNames(globalStyles.row, styles.row)}>
-    <div className={classNames(globalStyles.colSm2, styles.label)}>{label}</div>
+const EventData = ({
+  label,
+  children,
+  globalStyles,
+  styles
+}: EventDataPropsType & WithStylesImportType) => (
+  <div className={classNames(globalStyles?.row, styles?.row)}>
+    <div className={classNames(globalStyles?.colSm2, styles?.label)}>
+      {label}
+    </div>
 
-    <div className={classNames(globalStyles.colSm10, styles.data)}>
+    <div className={classNames(globalStyles?.colSm10, styles?.data)}>
       {children}
     </div>
   </div>
 );
 
-export const EventsList = ({ events, id }: EventsListPropsType) => {
+const EventsListComponent = ({
+  events,
+  id,
+  globalStyles,
+  styles
+}: EventsListPropsType & WithStylesImportType) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const initialDecodeMethod = getEventListInitialDecodeMethod();
@@ -62,7 +71,7 @@ export const EventsList = ({ events, id }: EventsListPropsType) => {
   }, []);
 
   return (
-    <div className={styles.events}>
+    <div className={styles?.events}>
       {events.map((event: EventType, index) => {
         const dataHexValue = getEventListDataHexValue(event);
         const highlightTx = getEventListHighlight(event, id);
@@ -70,28 +79,42 @@ export const EventsList = ({ events, id }: EventsListPropsType) => {
         return (
           <div
             key={index}
-            className={styles.event}
+            className={styles?.event}
             {...(highlightTx ? { ref } : {})}
           >
-            <div className={styles.icon}>
+            <div className={styles?.icon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className={styles.content}>
+            <div className={styles?.content}>
               {event.address != null && (
-                <EventData label='Hash'>
-                  <Trim text={event.address} className={styles.hash} />
+                <EventData
+                  label='Hash'
+                  globalStyles={globalStyles}
+                  styles={styles}
+                >
+                  <Trim text={event.address} className={styles?.hash} />
 
-                  <CopyButton text={event.address} className={styles.copy} />
+                  <CopyButton text={event.address} className={styles?.copy} />
                 </EventData>
               )}
 
               {event.identifier != null && (
-                <EventData label='Identifier'>{event.identifier}</EventData>
+                <EventData
+                  label='Identifier'
+                  globalStyles={globalStyles}
+                  styles={styles}
+                >
+                  {event.identifier}
+                </EventData>
               )}
 
               {event.topics != null && event.topics.length > 0 && (
-                <EventData label='Topics'>
+                <EventData
+                  label='Topics'
+                  globalStyles={globalStyles}
+                  styles={styles}
+                >
                   <EventTopics
                     topics={event.topics}
                     identifier={event.identifier}
@@ -100,7 +123,11 @@ export const EventsList = ({ events, id }: EventsListPropsType) => {
               )}
 
               {event.data != null && (
-                <EventData label='Data'>
+                <EventData
+                  label='Data'
+                  globalStyles={globalStyles}
+                  styles={styles}
+                >
                   <DataDecode
                     value={dataHexValue}
                     {...(highlightTx ? { initialDecodeMethod } : {})}
@@ -114,3 +141,7 @@ export const EventsList = ({ events, id }: EventsListPropsType) => {
     </div>
   );
 };
+
+export const EventsList = withStyles(EventsListComponent, {
+  local: () => import('UI/TransactionInfo/components/EventsList/styles.scss')
+});

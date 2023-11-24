@@ -1,5 +1,4 @@
 import React from 'react';
-
 import {
   faHourglass,
   faTimes,
@@ -8,18 +7,17 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { InterpretedTransactionType } from 'types/serverTransactions.types';
 import {
   getTransactionStatus,
   getTransactionStatusText
 } from 'utils/transactions/transactionInfoHelpers';
-
 import { WithClassnameType, WithTransactionType } from '../../../../UI/types';
 
 export const getStatusIconAndColor = (
-  transaction: InterpretedTransactionType
+  transaction: InterpretedTransactionType,
+  globalStyles?: WithStylesImportType['globalStyles']
 ) => {
   let Icon = () => <></>;
   let color = '';
@@ -28,51 +26,51 @@ export const getStatusIconAndColor = (
     getTransactionStatus(transaction);
 
   if (transaction.pendingResults) {
-    color = globalStyles.textWarning;
+    color = globalStyles?.textWarning;
     Icon = () => (
       <FontAwesomeIcon
         icon={faHourglass}
-        className={classNames(globalStyles.mr2, color)}
+        className={classNames(globalStyles?.mr2, color)}
       />
     );
   }
 
   if (failed) {
-    color = globalStyles.textDanger;
+    color = globalStyles?.textDanger;
     Icon = () => (
       <FontAwesomeIcon
         icon={faTimes}
-        className={classNames(globalStyles.mr2, color)}
+        className={classNames(globalStyles?.mr2, color)}
       />
     );
   }
 
   if (invalid) {
-    color = globalStyles.textDanger;
+    color = globalStyles?.textDanger;
     Icon = () => (
       <FontAwesomeIcon
         icon={faBan}
-        className={classNames(globalStyles.mr2, color)}
+        className={classNames(globalStyles?.mr2, color)}
       />
     );
   }
 
   if (success) {
-    color = globalStyles.textSuccess;
+    color = globalStyles?.textSuccess;
     Icon = () => (
       <FontAwesomeIcon
         icon={faCheckCircle}
-        className={classNames(globalStyles.mr2, color)}
+        className={classNames(globalStyles?.mr2, color)}
       />
     );
   }
 
   if (pending) {
-    color = globalStyles.textWarning;
+    color = globalStyles?.textWarning;
     Icon = () => (
       <FontAwesomeIcon
         icon={faHourglass}
-        className={classNames(globalStyles.mr2, color)}
+        className={classNames(globalStyles?.mr2, color)}
       />
     );
   }
@@ -83,19 +81,20 @@ export const getStatusIconAndColor = (
   };
 };
 
-export const TransactionStatus = ({
+const TransactionStatusComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => {
-  const { Icon } = getStatusIconAndColor(transaction);
+  transaction,
+  globalStyles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => {
+  const { Icon } = getStatusIconAndColor(transaction, globalStyles);
 
   return (
     <span
       className={classNames(
-        globalStyles.dFlex,
-        globalStyles.alignItemsCenter,
-        globalStyles.textCapitalize,
-        globalStyles.mr2,
+        globalStyles?.dFlex,
+        globalStyles?.alignItemsCenter,
+        globalStyles?.textCapitalize,
+        globalStyles?.mr2,
         className
       )}
     >
@@ -105,3 +104,5 @@ export const TransactionStatus = ({
     </span>
   );
 };
+
+export const TransactionStatus = withStyles(TransactionStatusComponent, {});

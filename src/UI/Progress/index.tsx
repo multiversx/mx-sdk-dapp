@@ -1,14 +1,13 @@
 import React, { useEffect, useMemo, useRef, ReactNode } from 'react';
 import classNames from 'classnames';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { getUnixTimestampWithAddedSeconds } from 'utils/dateTime';
 import {
   getRemainingValue,
   PROGRESS_INTERVAL_DURATION_MS
 } from 'utils/progress/getRemainingValue';
 import { storage } from 'utils/storage';
-
 import { WithClassnameType } from '../types';
-import styles from './progressStyles.scss';
 
 const TOAST_PROGRESS_KEY = 'toastProgress';
 
@@ -25,15 +24,16 @@ export interface ProgressProps extends WithClassnameType {
   };
 }
 
-export const Progress = ({
+const ProgressComponent = ({
   id,
   children,
   progress,
   done,
   expiresIn = 10 * 60,
   className = 'dapp-progress',
-  isCrossShard = false
-}: ProgressProps) => {
+  isCrossShard = false,
+  styles
+}: ProgressProps & WithStylesImportType) => {
   const { currentRemaining, totalSeconds } = useMemo(() => {
     const toastsProgress = storage.session.getItem(TOAST_PROGRESS_KEY) || {};
     const currentToastProgress = toastsProgress[id];
@@ -170,13 +170,13 @@ export const Progress = ({
   }
 
   return progress ? (
-    <div className={classNames(styles.progress, className)}>
+    <div className={classNames(styles?.progress, className)}>
       <div
         ref={progressRef}
         role='progressbar'
         aria-valuemin={0}
         aria-valuemax={100}
-        className={styles.bar}
+        className={styles?.bar}
       />
       {children}
     </div>
@@ -184,3 +184,7 @@ export const Progress = ({
     <>{children}</>
   );
 };
+
+export const Progress = withStyles(ProgressComponent, {
+  local: () => import('UI/Progress/progressStyles.scss')
+});
