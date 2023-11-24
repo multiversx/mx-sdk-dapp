@@ -1,9 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { getVisibleOperations } from 'utils/transactions/transactionInfoHelpers/getVisibleOperations';
-
 import {
   WithClassnameType,
   WithTransactionType
@@ -11,10 +9,11 @@ import {
 import { DetailItem } from '../../DetailItem';
 import { OperationsList } from '../../OperationsList/OperationList';
 
-export const TransactionInfoTokenOperations = ({
+const TransactionInfoTokenOperationsComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => {
+  transaction,
+  globalStyles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => {
   const visibleOperations = getVisibleOperations(transaction);
   const showOperations = visibleOperations.length > 0;
 
@@ -27,14 +26,14 @@ export const TransactionInfoTokenOperations = ({
       className={className}
       title={
         <>
-          <span className={globalStyles.mr2}>Token Operations</span>
+          <span className={globalStyles?.mr2}>Token Operations</span>
 
           <span
             className={classNames(
-              globalStyles.badge,
-              globalStyles.badgeSecondary,
-              globalStyles.badgePill,
-              globalStyles.fontWeightLight
+              globalStyles?.badge,
+              globalStyles?.badgeSecondary,
+              globalStyles?.badgePill,
+              globalStyles?.fontWeightLight
             )}
           >
             {visibleOperations.length}
@@ -49,3 +48,8 @@ export const TransactionInfoTokenOperations = ({
     </DetailItem>
   );
 };
+
+export const TransactionInfoTokenOperations = withStyles(
+  TransactionInfoTokenOperationsComponent,
+  {}
+);

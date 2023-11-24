@@ -2,17 +2,18 @@ import React from 'react';
 import { faLock } from '@fortawesome/free-solid-svg-icons/faLock';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
 import { addressIsValid } from 'utils/account/addressIsValid';
 
-export const LockedTokenAddressIcon = ({
+const LockedTokenAddressIconComponent = ({
   address,
-  tokenId
+  tokenId,
+  globalStyles
 }: {
   address: string;
   tokenId: string;
-}) => {
+} & WithStylesImportType) => {
   const tokenDetails = useGetTokenDetails({ tokenId });
   const lockedAccounts = tokenDetails.assets?.lockedAccounts;
   if (lockedAccounts) {
@@ -35,10 +36,15 @@ export const LockedTokenAddressIcon = ({
         title={lockedAccountName}
         icon={faLock}
         size='xs'
-        className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
+        className={classNames(globalStyles?.mr1, globalStyles?.textSecondary)}
       />
     ) : null;
   }
 
   return null;
 };
+
+export const LockedTokenAddressIcon = withStyles(
+  LockedTokenAddressIconComponent,
+  {}
+);

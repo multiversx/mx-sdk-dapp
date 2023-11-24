@@ -1,16 +1,18 @@
 import React from 'react';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons/faExchangeAlt';
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { PageState } from 'UI/PageState';
 
-export function FailedTransactions() {
+function FailedTransactionsComponent({ globalStyles }: WithStylesImportType) {
   return (
     <PageState
       icon={faExchangeAlt}
       title='Unable to load transactions'
-      className={globalStyles.myAuto}
+      className={globalStyles?.myAuto}
       data-testid={DataTestIdsEnum.errorScreen}
     />
   );
 }
+
+export const FailedTransactions = withStyles(FailedTransactionsComponent, {});

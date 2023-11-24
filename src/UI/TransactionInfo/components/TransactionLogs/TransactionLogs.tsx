@@ -1,9 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ResultType } from 'types/serverTransactions.types';
-
 import { WithTransactionType } from '../../../../UI/types';
 import { AddressDetailItem } from '../AddressDetailItem/AddressDetailitem';
 import { DetailItem } from '../DetailItem';
@@ -13,14 +11,17 @@ import { ScrDetailItem } from '../ScrDetailItem/ScrDetailItem';
 const showResultsEvents = (result: ResultType) =>
   result?.logs?.events && result.logs.events?.length > 0;
 
-const Results = ({ transaction }: WithTransactionType) => {
+const ResultsComponent = ({
+  transaction,
+  globalStyles
+}: WithTransactionType & WithStylesImportType) => {
   const showResults = transaction.results && transaction.results.length > 0;
 
   if (!showResults) {
     return null;
   }
   return (
-    <div className={globalStyles.row}>
+    <div className={globalStyles?.row}>
       {transaction.results?.map((result, resultIndex) => {
         if (!result.logs) {
           return null;
@@ -30,8 +31,8 @@ const Results = ({ transaction }: WithTransactionType) => {
           <div
             key={`tx-result-log-${resultIndex}`}
             className={classNames(
-              globalStyles.col12,
-              globalStyles.borderBottom
+              globalStyles?.col12,
+              globalStyles?.borderBottom
             )}
           >
             <ScrDetailItem result={result} />
@@ -51,6 +52,8 @@ const Results = ({ transaction }: WithTransactionType) => {
     </div>
   );
 };
+
+const Results = withStyles(ResultsComponent, {});
 
 export const TransactionLogs = ({ transaction }: WithTransactionType) => {
   const showEvents =

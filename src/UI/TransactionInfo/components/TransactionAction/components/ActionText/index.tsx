@@ -1,31 +1,31 @@
 import React from 'react';
 import classNames from 'classnames';
-
 import DefaultAvatar from 'assets/icons/default-avatar.svg';
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { TokenArgumentType } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount';
-
 import { AccountName } from 'UI/TransactionsTable/components/AccountName';
 import { ScAddressIcon } from 'UI/TransactionsTable/components/ScAddressIcon';
 import { WithTransactionType } from 'UI/types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers';
-
 import { ActionToken } from '../ActionToken';
-
-import styles from './styles.scss';
 
 export interface ActionTextPropsType extends WithTransactionType {
   entry: any;
 }
 
-export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
+const ActionTextComponent = ({
+  entry,
+  transaction,
+  globalStyles,
+  styles
+}: ActionTextPropsType & WithStylesImportType) => {
   if (typeof entry === 'string') {
     return (
-      <span className={globalStyles.mr1}>{entry.replace('eGLD', 'EGLD')}</span>
+      <span className={globalStyles?.mr1}>{entry.replace('eGLD', 'EGLD')}</span>
     );
   }
 
@@ -42,13 +42,13 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
 
     if (addressIsValid(entry.address)) {
       return (
-        <div className={styles.address}>
+        <div className={styles?.address}>
           <ScAddressIcon initiator={entry.address} />
 
           <ExplorerLink
             page={explorerUrlBuilder.accountDetails(entry.address)}
             data-testid={DataTestIdsEnum.receiverLink}
-            className={styles.explorer}
+            className={styles?.explorer}
           >
             <AccountName address={entry.address} assets={entryAssets} />
           </ExplorerLink>
@@ -64,14 +64,14 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
       return (
         <div
           key={`tx-${token.identifier}-${index}`}
-          className={classNames(styles.token, {
-            [styles.spaced]: entry.token.length > 1
+          className={classNames(styles?.token, {
+            [styles?.spaced ?? '']: entry.token.length > 1
           })}
         >
           <ActionToken token={token} showLastNonZeroDecimal={true} />
 
           {index < entry.token.length - 1 && (
-            <span className={styles.comma}>,</span>
+            <span className={styles?.comma}>,</span>
           )}
         </div>
       );
@@ -87,10 +87,10 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
           {index < entry.tokenNoValue.length - 1 && (
             <span
               className={classNames(
-                globalStyles.mlN1,
-                globalStyles.mr1,
-                globalStyles.dNone,
-                globalStyles.dSmFlex
+                globalStyles?.mlN1,
+                globalStyles?.mr1,
+                globalStyles?.dNone,
+                globalStyles?.dSmFlex
               )}
             >
               ,
@@ -105,15 +105,15 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
     return entry.tokenNoLink.map(
       (tokenNoLink: TokenArgumentType, index: number) => (
         <div key={`tx-${tokenNoLink.token}-${index}`}>
-          <span className={globalStyles.mr1}>{tokenNoLink.ticker}</span>
+          <span className={globalStyles?.mr1}>{tokenNoLink.ticker}</span>
 
           {index < entry.tokenNoLink.length - 1 && (
             <span
               className={classNames(
-                globalStyles.mlN1,
-                globalStyles.mr1,
-                globalStyles.dNone,
-                globalStyles.dSmFlex
+                globalStyles?.mlN1,
+                globalStyles?.mr1,
+                globalStyles?.dNone,
+                globalStyles?.dSmFlex
               )}
             >
               ,
@@ -146,19 +146,19 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
 
   if (Boolean(entry.providerName)) {
     const className = classNames(
-      globalStyles.sideIcon,
-      globalStyles.mr1,
-      globalStyles.mrLg1,
-      globalStyles.roundedCircle
+      globalStyles?.sideIcon,
+      globalStyles?.mr1,
+      globalStyles?.mrLg1,
+      globalStyles?.roundedCircle
     );
 
     return (
-      <span className={classNames(globalStyles.dFlex, globalStyles.mr1)}>
+      <span className={classNames(globalStyles?.dFlex, globalStyles?.mr1)}>
         <ExplorerLink
           page={explorerUrlBuilder.providerDetails(transaction.receiver)}
           className={classNames(
-            globalStyles.dFlex,
-            globalStyles.alignSelfCenter
+            globalStyles?.dFlex,
+            globalStyles?.alignSelfCenter
           )}
         >
           {entry.providerAvatar ? (
@@ -175,3 +175,10 @@ export const ActionText = ({ entry, transaction }: ActionTextPropsType) => {
 
   return null;
 };
+
+export const ActionText = withStyles(ActionTextComponent, {
+  local: () =>
+    import(
+      'UI/TransactionInfo/components/TransactionAction/components/ActionText/styles.scss'
+    )
+});

@@ -1,14 +1,10 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
-
 import { DataTestIdsEnum, N_A } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { decodePart } from 'utils/decoders/decodePart';
 import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
 import { WithClassnameType } from '../types';
-
-import styles from './TransactionDataStyles.scss';
 
 const allOccurences = (sourceStr: string, searchStr: string) => {
   const occurrences = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(
@@ -29,14 +25,16 @@ export interface TransactionDataPropsType extends WithClassnameType {
   transactionIndex: number;
 }
 
-export const TransactionData = ({
+const TransactionDataComponent = ({
   className = 'dapp-transaction-data',
   data,
   highlight,
   innerTransactionDataClasses,
   isScCall,
-  transactionIndex
-}: TransactionDataPropsType) => {
+  transactionIndex,
+  globalStyles,
+  styles
+}: TransactionDataPropsType & WithStylesImportType) => {
   const {
     transactionDataInputLabelClassName,
     transactionDataInputValueClassName
@@ -59,7 +57,7 @@ export const TransactionData = ({
         output = (
           <>
             {highlight}
-            <span className={globalStyles.textMuted}>{rest}</span>
+            <span className={globalStyles?.textMuted}>{rest}</span>
           </>
         );
         break;
@@ -69,7 +67,7 @@ export const TransactionData = ({
 
         output = (
           <>
-            <span className={globalStyles.textMuted}>{rest}</span>
+            <span className={globalStyles?.textMuted}>{rest}</span>
             {highlight}
           </>
         );
@@ -86,9 +84,9 @@ export const TransactionData = ({
 
         output = (
           <>
-            <span className={globalStyles.textMuted}>{start}</span>
-            <span className={globalStyles.highlighted}>{highlight}</span>
-            <span className={globalStyles.textMuted}>{end}</span>
+            <span className={globalStyles?.textMuted}>{start}</span>
+            <span className={globalStyles?.highlighted}>{highlight}</span>
+            <span className={globalStyles?.textMuted}>{end}</span>
           </>
         );
         break;
@@ -99,10 +97,10 @@ export const TransactionData = ({
   return (
     <>
       {encodedScCall && (
-        <div className={classNames(styles.data, className)}>
+        <div className={classNames(styles?.data, className)}>
           <span
             className={classNames(
-              styles.label,
+              styles?.label,
               transactionDataInputLabelClassName
             )}
           >
@@ -112,7 +110,7 @@ export const TransactionData = ({
           <div
             data-testid={DataTestIdsEnum.confirmScCall}
             className={classNames(
-              styles.value,
+              styles?.value,
               transactionDataInputValueClassName
             )}
           >
@@ -121,10 +119,10 @@ export const TransactionData = ({
         </div>
       )}
 
-      <div className={styles.data}>
+      <div className={styles?.data}>
         <span
           className={classNames(
-            styles.label,
+            styles?.label,
             transactionDataInputLabelClassName
           )}
         >
@@ -134,7 +132,7 @@ export const TransactionData = ({
         <div
           data-testid={DataTestIdsEnum.confirmData}
           className={classNames(
-            styles.value,
+            styles?.value,
             transactionDataInputValueClassName
           )}
         >
@@ -144,3 +142,7 @@ export const TransactionData = ({
     </>
   );
 };
+
+export const TransactionData = withStyles(TransactionDataComponent, {
+  local: () => import('UI/TransactionData/TransactionDataStyles.scss')
+});

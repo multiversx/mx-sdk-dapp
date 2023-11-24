@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.24.0]](https://github.com/multiversx/mx-sdk-dapp/pull/972)] - 2023-11-24
+- [Full SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/971)
+
 ## [[v2.23.1]](https://github.com/multiversx/mx-sdk-dapp/pull/970)] - 2023-11-20
 - [Changed transaction sender validation](https://github.com/multiversx/mx-sdk-dapp/pull/969)
 

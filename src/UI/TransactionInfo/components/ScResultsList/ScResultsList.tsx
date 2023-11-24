@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { faExchange } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import { N_A } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ResultType } from 'types/serverTransactions.types';
 import { FormatAmount } from 'UI/FormatAmount';
 import { explorerUrlBuilder } from 'utils/transactions/getInterpretedTransaction/helpers/index';
@@ -11,20 +11,20 @@ import {
   getScResultsDecodedData,
   getScResultsHighlight
 } from 'utils/transactions/transactionInfoHelpers/index';
-
 import ResultData from './components/ResultData/ResultData';
 import ResultHash from './components/ResultHash/ResultHash';
 import ResultReceiver from './components/ResultReceiver/ResultReceiver';
 import ResultSender from './components/ResultSender/ResultSender';
 import ResultWrapper from './components/ResultWrapper/ResultWrapper';
 
-import styles from './styles.scss';
-
 export interface ScResultsListPropsType {
   results: ResultType[];
 }
 
-export const ScResultsList = ({ results }: ScResultsListPropsType) => {
+const ScResultsListComponent = ({
+  results,
+  styles
+}: ScResultsListPropsType & WithStylesImportType) => {
   const ref = useRef<HTMLDivElement>(null);
   const initialDecodeMethod = getInitialScResultsDecodeMethod();
 
@@ -40,7 +40,7 @@ export const ScResultsList = ({ results }: ScResultsListPropsType) => {
   }, []);
 
   return (
-    <div className={styles.results}>
+    <div className={styles?.results}>
       {results.map((result: ResultType) => {
         const highlightTx = getScResultsHighlight(result.hash);
 
@@ -48,14 +48,14 @@ export const ScResultsList = ({ results }: ScResultsListPropsType) => {
           <div
             key={result.hash}
             id={result.hash}
-            className={styles.result}
+            className={styles?.result}
             {...(highlightTx ? { ref } : {})}
           >
-            <div className={styles.icon}>
+            <div className={styles?.icon}>
               <FontAwesomeIcon icon={faExchange} />
             </div>
 
-            <div className={styles.content}>
+            <div className={styles?.content}>
               {result.hash && (
                 <ResultHash
                   hash={result.hash}
@@ -111,3 +111,7 @@ export const ScResultsList = ({ results }: ScResultsListPropsType) => {
     </div>
   );
 };
+
+export const ScResultsList = withStyles(ScResultsListComponent, {
+  local: () => import('UI/TransactionInfo/components/ScResultsList/styles.scss')
+});

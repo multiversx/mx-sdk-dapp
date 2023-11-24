@@ -1,21 +1,24 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../types';
-
-import styles from '../dappModalStyles.scss';
 
 export interface DappModalBodyPropsType extends WithClassnameType {
   children?: ReactNode;
 }
 
-export const DappModalBody = ({
+const DappModalBodyComponent = ({
   className,
-  children
-}: DappModalBodyPropsType) => {
+  children,
+  styles
+}: DappModalBodyPropsType & WithStylesImportType) => {
   return (
-    <div className={classNames(styles.dappModalBody, className)}>
+    <div className={classNames(styles?.dappModalBody, className)}>
       {children}
     </div>
   );
 };
+
+export const DappModalBody = withStyles(DappModalBodyComponent, {
+  local: () => import('UI/DappModal/dappModalStyles.scss')
+});

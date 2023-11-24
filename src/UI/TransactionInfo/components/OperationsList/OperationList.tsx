@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { OperationType } from 'types/serverTransactions.types';
 import {
   useGetOperationList,
@@ -9,7 +8,11 @@ import {
 } from 'utils/transactions/transactionInfoHelpers/useGetOperationList';
 import { OperationRow } from './components/OperationRow';
 
-export const OperationsList = (props: OperationListType) => {
+const OperationsListComponent = (
+  props: OperationListType & WithStylesImportType
+) => {
+  const { globalStyles } = props;
+
   const {
     isExpanded,
     displayedOperations,
@@ -19,8 +22,10 @@ export const OperationsList = (props: OperationListType) => {
   } = useGetOperationList(props);
 
   return (
-    <div className={globalStyles.mbN2}>
-      <div className={classNames(globalStyles.dFlex, globalStyles.flexColumn)}>
+    <div className={globalStyles?.mbN2}>
+      <div
+        className={classNames(globalStyles?.dFlex, globalStyles?.flexColumn)}
+      >
         {displayedOperations.map((operation: OperationType, index) => (
           <div key={`display-${index}`}>
             <OperationRow
@@ -33,7 +38,7 @@ export const OperationsList = (props: OperationListType) => {
 
       {showToggleButton && (
         <button
-          className={classNames(globalStyles.btn, globalStyles.btnLink)}
+          className={classNames(globalStyles?.btn, globalStyles?.btnLink)}
           type='button'
           onClick={onToggleButtonClick}
           aria-controls='operations-list'
@@ -45,3 +50,5 @@ export const OperationsList = (props: OperationListType) => {
     </div>
   );
 };
+
+export const OperationsList = withStyles(OperationsListComponent, {});

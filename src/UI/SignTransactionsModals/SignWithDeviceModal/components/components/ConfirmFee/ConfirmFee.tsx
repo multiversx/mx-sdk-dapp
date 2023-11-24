@@ -1,18 +1,16 @@
 import React from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
-
 import {
   DataTestIdsEnum,
   GAS_PER_DATA_BYTE,
   GAS_PRICE_MODIFIER
 } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetEgldPrice } from 'hooks';
 import { FormatAmount } from 'UI/FormatAmount';
 import { LoadingDots } from 'UI/LoadingDots';
 import { calculateFeeInFiat, calculateFeeLimit } from 'utils/operations';
-
 import { TokenAvatar } from '../TokenAvatar';
-import styles from './confirmFeeStyles.scss';
 
 export interface FeePropsType {
   transaction: Transaction;
@@ -20,11 +18,12 @@ export interface FeePropsType {
   tokenAvatar?: string;
 }
 
-export const ConfirmFee = ({
+const ConfirmFeeComponent = ({
   transaction,
   tokenAvatar,
-  egldLabel
-}: FeePropsType) => {
+  egldLabel,
+  styles
+}: FeePropsType & WithStylesImportType) => {
   const { price } = useGetEgldPrice();
 
   const feeLimit = calculateFeeLimit({
@@ -37,13 +36,13 @@ export const ConfirmFee = ({
   });
 
   return (
-    <div className={styles.fee}>
-      <span className={styles.label}>Fee</span>
+    <div className={styles?.fee}>
+      <span className={styles?.label}>Fee</span>
 
-      <div className={styles.token}>
+      <div className={styles?.token}>
         <TokenAvatar type={egldLabel} avatar={tokenAvatar} />
 
-        <div className={styles.value}>
+        <div className={styles?.value}>
           <FormatAmount
             egldLabel={egldLabel}
             value={feeLimit}
@@ -53,7 +52,7 @@ export const ConfirmFee = ({
         </div>
       </div>
 
-      <span className={styles.price}>
+      <span className={styles?.price}>
         {price ? (
           calculateFeeInFiat({
             feeLimit,
@@ -66,3 +65,10 @@ export const ConfirmFee = ({
     </div>
   );
 };
+
+export const ConfirmFee = withStyles(ConfirmFeeComponent, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmFee/confirmFeeStyles.scss'
+    )
+});

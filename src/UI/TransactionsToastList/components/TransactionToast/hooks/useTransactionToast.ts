@@ -1,5 +1,6 @@
 import { useEffect, useMemo } from 'react';
 import { AVERAGE_TX_DURATION_MS, CROSS_SHARD_ROUNDS } from 'constants/index';
+import { useStyles } from 'hocs/useStyles';
 import { useGetTransactionDisplayInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
@@ -11,8 +12,6 @@ import {
   getIsTransactionPending,
   getIsTransactionTimedOut
 } from 'utils/transactions/transactionStateByStatus';
-
-import styles from '../transactionToast.styles.scss';
 import { TransactionToastDefaultProps } from '../transactionToast.type';
 import { getToastDataStateByStatus } from '../utils';
 
@@ -25,6 +24,13 @@ export const useTransactionToast = ({
   endTimeProgress,
   onDelete
 }: TransactionToastDefaultProps) => {
+  const { styles } = useStyles({
+    localImportCallback: () =>
+      import(
+        'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss'
+      )
+  });
+
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
 
@@ -61,7 +67,7 @@ export const useTransactionToast = ({
     status,
     toastId,
     transactionDisplayInfo,
-    classes: styles
+    classes: styles ?? {}
   });
 
   const handleDeleteToast = () => {

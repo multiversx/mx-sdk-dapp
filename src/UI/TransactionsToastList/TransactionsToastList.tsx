@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -30,7 +31,6 @@ import {
   TransactionToastGuard,
   TransactionToastGuardPropsType
 } from './components';
-import styles from './transactionsToastList.styles.scss';
 
 export interface TransactionsToastListPropsType extends WithClassnameType {
   toastProps?: any;
@@ -43,15 +43,16 @@ export interface TransactionsToastListPropsType extends WithClassnameType {
   children?: React.ReactNode;
 }
 
-export const TransactionsToastList = ({
+export const TransactionsToastListComponent = ({
   className = 'transactions-toast-list',
   transactionToastClassName,
   customToastClassName,
   signedTransactions,
   successfulToastLifetime,
   parentElement,
-  children
-}: TransactionsToastListPropsType) => {
+  children,
+  styles
+}: TransactionsToastListPropsType & WithStylesImportType) => {
   const customToasts = useSelector(customToastsSelector);
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
@@ -187,7 +188,7 @@ export const TransactionsToastList = ({
   }, []);
 
   return createPortal(
-    <div className={classNames(styles.toasts, className)}>
+    <div className={classNames(styles?.toasts, className)}>
       {customToastsList}
       {MemoizedTransactionsToastsList}
       {children}
@@ -195,3 +196,11 @@ export const TransactionsToastList = ({
     parentElement || document?.body
   );
 };
+
+export const TransactionsToastList = withStyles(
+  TransactionsToastListComponent,
+  {
+    local: () =>
+      import('UI/TransactionsToastList/transactionsToastList.styles.scss')
+  }
+);

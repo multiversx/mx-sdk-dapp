@@ -2,9 +2,8 @@ import React, { ReactNode } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../types';
 
 export interface WalletConnectConnectionStatusType {
@@ -14,25 +13,28 @@ export interface WalletConnectConnectionStatusType {
   details?: string | ReactNode;
 }
 
-export const WalletConnectConnectionDescription = ({
+const WalletConnectConnectionDescriptionComponent = ({
   icon,
   iconClassName,
   description,
   details,
-  className
-}: WalletConnectConnectionStatusType & WithClassnameType) => {
+  className,
+  globalStyles
+}: WalletConnectConnectionStatusType &
+  WithClassnameType &
+  WithStylesImportType) => {
   const holderClassName = classNames(
-    globalStyles.dFlex,
-    globalStyles.flexColumn,
-    globalStyles.alignItemsCenter,
-    globalStyles.justifyContentCenter,
-    globalStyles.my3,
+    globalStyles?.dFlex,
+    globalStyles?.flexColumn,
+    globalStyles?.alignItemsCenter,
+    globalStyles?.justifyContentCenter,
+    globalStyles?.my3,
     className
   );
   const textClassName = classNames(
-    globalStyles.dFlex,
-    globalStyles.alignItemsCenter,
-    globalStyles.mr2
+    globalStyles?.dFlex,
+    globalStyles?.alignItemsCenter,
+    globalStyles?.mr2
   );
 
   return (
@@ -41,7 +43,7 @@ export const WalletConnectConnectionDescription = ({
         {icon && (
           <FontAwesomeIcon
             icon={icon}
-            className={classNames(globalStyles.mr2, iconClassName)}
+            className={classNames(globalStyles?.mr2, iconClassName)}
           />
         )}
         {description}
@@ -50,3 +52,8 @@ export const WalletConnectConnectionDescription = ({
     </div>
   );
 };
+
+export const WalletConnectConnectionDescription = withStyles(
+  WalletConnectConnectionDescriptionComponent,
+  {}
+);

@@ -1,14 +1,12 @@
 import React, { useRef } from 'react';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { ModalContainer } from 'UI/ModalContainer';
-
 import { WalletConnectLoginModalPropsType } from './types';
-import styles from './walletConnectLoginContainerStyles.scss';
 import { WalletConnectLoginContent } from './WalletConnectLoginContent';
 
-export const WalletConnectLoginContainer = (
-  props: WalletConnectLoginModalPropsType
+const WalletConnectLoginContainerComponent = (
+  props: WalletConnectLoginModalPropsType & WithStylesImportType
 ) => {
   const {
     callbackRoute,
@@ -20,7 +18,8 @@ export const WalletConnectLoginContainer = (
     showLoginContent,
     showLoginModal,
     token,
-    wrapContentInsideModal
+    wrapContentInsideModal,
+    styles
   } = props;
 
   const canLoginRef = useRef<boolean>(true);
@@ -53,12 +52,12 @@ export const WalletConnectLoginContainer = (
       modalConfig={{
         headerText: 'Login using the xPortal App',
         showHeader: true,
-        modalContentClassName: styles.xPortalModalDialogContent,
-        modalHeaderClassName: styles.xPortalModalHeader,
-        modalHeaderTextClassName: styles.xPortalModalHeaderText,
-        modalCloseButtonClassName: styles.xPortalModalCloseButton,
-        modalBodyClassName: styles.xPortalModalBody,
-        modalDialogClassName: styles.xPortalLoginContainer
+        modalContentClassName: styles?.xPortalModalDialogContent,
+        modalHeaderClassName: styles?.xPortalModalHeader,
+        modalHeaderTextClassName: styles?.xPortalModalHeaderText,
+        modalCloseButtonClassName: styles?.xPortalModalCloseButton,
+        modalBodyClassName: styles?.xPortalModalBody,
+        modalDialogClassName: styles?.xPortalLoginContainer
       }}
       onClose={onCloseModal}
       visible={showLoginModal}
@@ -67,3 +66,13 @@ export const WalletConnectLoginContainer = (
     </ModalContainer>
   );
 };
+
+export const WalletConnectLoginContainer = withStyles(
+  WalletConnectLoginContainerComponent,
+  {
+    local: () =>
+      import(
+        'UI/walletConnect/WalletConnectLoginContainer/walletConnectLoginContainerStyles.scss'
+      )
+  }
+);

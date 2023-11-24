@@ -2,27 +2,28 @@ import React from 'react';
 import { faInfo, faTimes, faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { StatusIconType } from './transactionStatusToast.types';
-
-import styles from './transactionStatusToastStyles.scss';
 
 export interface StatusIconPropsType {
   type: StatusIconType;
 }
 
-export const StatusIcon = ({ type }: StatusIconPropsType) => {
+const StatusIconComponent = ({
+  type,
+  globalStyles,
+  styles
+}: StatusIconPropsType & WithStylesImportType) => {
   switch (type) {
     case StatusIconType.INFO:
       return (
         <div
           className={classNames(
-            styles.transactionsStatusToastIcon,
-            globalStyles.success
+            styles?.transactionsStatusToastIcon,
+            globalStyles?.success
           )}
         >
-          <FontAwesomeIcon icon={faInfo} className={styles.svg} size='5x' />
+          <FontAwesomeIcon icon={faInfo} className={styles?.svg} size='5x' />
         </div>
       );
 
@@ -30,12 +31,12 @@ export const StatusIcon = ({ type }: StatusIconPropsType) => {
       return (
         <div
           className={classNames(
-            styles.transactionsStatusToastIcon,
-            globalStyles.warning,
-            styles.warningIcon
+            styles?.transactionsStatusToastIcon,
+            globalStyles?.warning,
+            styles?.warningIcon
           )}
         >
-          <FontAwesomeIcon icon={faWarning} className={styles.svg} size='5x' />
+          <FontAwesomeIcon icon={faWarning} className={styles?.svg} size='5x' />
         </div>
       );
 
@@ -43,15 +44,22 @@ export const StatusIcon = ({ type }: StatusIconPropsType) => {
       return (
         <div
           className={classNames(
-            styles.transactionsStatusToastIcon,
-            globalStyles.danger,
-            styles.errorIcon
+            styles?.transactionsStatusToastIcon,
+            globalStyles?.danger,
+            styles?.errorIcon
           )}
         >
-          <FontAwesomeIcon icon={faTimes} className={styles.svg} size='5x' />
+          <FontAwesomeIcon icon={faTimes} className={styles?.svg} size='5x' />
         </div>
       );
     default:
       return null;
   }
 };
+
+export const StatusIcon = withStyles(StatusIconComponent, {
+  local: () =>
+    import(
+      'components/TransactionStatusToast/transactionStatusToastStyles.scss'
+    )
+});

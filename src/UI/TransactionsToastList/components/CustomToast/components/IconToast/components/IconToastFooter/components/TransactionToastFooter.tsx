@@ -1,16 +1,16 @@
 import React from 'react';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { TransactionServerStatusesEnum } from 'types';
 import { TransactionDetailsBody } from 'UI/TransactionDetails/components';
-import transactionDetailsStyles from 'UI/TransactionDetails/transactionDetails.styles.scss';
 import { TransactionValue } from 'UI/TransactionsTable/components/TransactionValue';
 import { TransactionIconToastPropsType } from 'UI/TransactionsToastList/components/CustomToast/customToast.types';
 import { getInterpretedTransaction } from 'utils/transactions';
 import { SharedToastFooter } from './SharedToastFooter';
 
-export const TransactionToastFooter = (
-  props: TransactionIconToastPropsType
+const TransactionToastFooterComponent = (
+  props: TransactionIconToastPropsType & WithStylesImportType
 ) => {
   const { className, transaction } = props;
   const { address } = useGetAccount();
@@ -26,7 +26,7 @@ export const TransactionToastFooter = (
 
   return (
     <SharedToastFooter>
-      <div className={transactionDetailsStyles.status}>
+      <div className={props.styles?.status}>
         <TransactionValue transaction={interpretedTransaction} />
       </div>
       <TransactionDetailsBody
@@ -37,3 +37,10 @@ export const TransactionToastFooter = (
     </SharedToastFooter>
   );
 };
+
+export const TransactionToastFooter = withStyles(
+  TransactionToastFooterComponent,
+  {
+    local: () => import('UI/TransactionDetails/transactionDetails.styles.scss')
+  }
+);

@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import {
   WithClassnameType,
   WithTransactionType
@@ -9,19 +8,25 @@ import {
 import { DetailItem } from '../../DetailItem';
 import { TransactionStatus } from '../../TransactionStatus';
 
-export const TransactionInfoStatus = ({
+const TransactionInfoStatusComponents = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => (
+  transaction,
+  globalStyles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => (
   <DetailItem className={className} title='Status'>
     <div
       className={classNames(
-        globalStyles.dFlex,
-        globalStyles.alignItemsCenter,
-        globalStyles.flexWrap
+        globalStyles?.dFlex,
+        globalStyles?.alignItemsCenter,
+        globalStyles?.flexWrap
       )}
     >
       <TransactionStatus transaction={transaction} />
     </div>
   </DetailItem>
+);
+
+export const TransactionInfoStatus = withStyles(
+  TransactionInfoStatusComponents,
+  {}
 );
