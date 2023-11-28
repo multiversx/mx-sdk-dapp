@@ -1,8 +1,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
-import styles from './detailItem.module.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
 export interface DetailItemPropsType {
   children: ReactNode;
@@ -12,27 +10,29 @@ export interface DetailItemPropsType {
   noBorder?: boolean;
 }
 
-export const DetailItem = ({
+const DetailItemComponent = ({
   children,
   title,
   className = '',
   colWidth = '2',
-  noBorder = false
-}: DetailItemPropsType) => (
+  noBorder = false,
+  globalStyles,
+  styles
+}: DetailItemPropsType & WithStylesImportType) => (
   <div
-    className={classNames(globalStyles.row, styles.detailItem, className, {
-      [globalStyles.pt3]: noBorder,
-      [globalStyles.pb1]: noBorder,
-      [globalStyles.borderBottom]: !noBorder,
-      [globalStyles.py3]: !noBorder
+    className={classNames(globalStyles?.row, styles?.detailItem, className, {
+      [globalStyles?.pt3 ?? '']: noBorder,
+      [globalStyles?.pb1 ?? '']: noBorder,
+      [globalStyles?.borderBottom ?? '']: !noBorder,
+      [globalStyles?.py3 ?? '']: !noBorder
     })}
   >
     <div
       className={classNames(
-        globalStyles.textSecondary,
-        globalStyles.textLgRight,
-        globalStyles.fontWeightMedium,
-        globalStyles[`colLg${colWidth}`]
+        globalStyles?.textSecondary,
+        globalStyles?.textLgRight,
+        globalStyles?.fontWeightMedium,
+        globalStyles?.[`colLg${colWidth}`]
       )}
     >
       {title}
@@ -40,11 +40,16 @@ export const DetailItem = ({
 
     <div
       className={classNames(
-        globalStyles.fontWeightMedium,
-        globalStyles[`colLg${12 - Number(colWidth)}`]
+        globalStyles?.fontWeightMedium,
+        globalStyles?.[`colLg${12 - Number(colWidth)}`]
       )}
     >
       {children}
     </div>
   </div>
 );
+
+export const DetailItem = withStyles(DetailItemComponent, {
+  local: () =>
+    import('UI/TransactionInfo/components/DetailItem/detailItem.module.scss')
+});

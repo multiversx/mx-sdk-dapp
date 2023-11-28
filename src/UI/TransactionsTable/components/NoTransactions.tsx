@@ -1,14 +1,16 @@
 import React from 'react';
 import { faExchangeAlt } from '@fortawesome/free-solid-svg-icons/faExchangeAlt';
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { PageState } from 'UI/PageState';
 
-export function NoTransactions() {
+function NoTransactionsComponent({ globalStyles }: WithStylesImportType) {
   return (
     <PageState
       icon={faExchangeAlt}
       title='No transactions'
-      className={globalStyles.myAuto}
+      className={globalStyles?.myAuto}
     />
   );
 }
+
+export const NoTransactions = withStyles(NoTransactionsComponent, {});

@@ -2,10 +2,9 @@ import React, { useState, MouseEvent } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import classNames from 'classnames';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../types';
-import styles from './copyButton.styles.scss';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
 
 export interface CopyButtonPropsType extends WithClassnameType {
@@ -14,12 +13,13 @@ export interface CopyButtonPropsType extends WithClassnameType {
   successIcon?: IconProp;
 }
 
-export const CopyButton = ({
+const CopyButtonComponent = ({
   text,
   className = 'dapp-copy-button',
   copyIcon = faCopy,
-  successIcon = faCheck
-}: CopyButtonPropsType) => {
+  successIcon = faCheck,
+  styles
+}: CopyButtonPropsType & WithStylesImportType) => {
   const [copyResult, setCopyResut] = useState({
     default: true,
     success: false
@@ -48,7 +48,7 @@ export const CopyButton = ({
     <a
       href='/#'
       onClick={handleCopyToClipboard}
-      className={classNames(styles.copy, className)}
+      className={classNames(styles?.copy, className)}
     >
       {copyResult.default || !copyResult.success ? (
         <FontAwesomeIcon icon={copyIcon} />
@@ -58,3 +58,7 @@ export const CopyButton = ({
     </a>
   );
 };
+
+export const CopyButton = withStyles(CopyButtonComponent, {
+  local: () => import('UI/CopyButton/copyButton.styles.scss')
+});

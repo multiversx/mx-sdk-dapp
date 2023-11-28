@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
-import styles from 'UI/TokenDetails/TokenSymbol/tokenSymbol.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../../types';
 
 export interface SimplePropsType extends WithClassnameType {
@@ -14,24 +13,26 @@ export interface CombinedPropsType extends WithClassnameType {
 }
 
 // TODO: Rename to "Simple" into something more relevant when sdk-dapp@3.0.0
-export const Simple = ({
+const SimpleComponent = ({
   children,
-  className = 'dapp-simple-token-symbol'
-}: SimplePropsType) => (
-  <div className={classNames(styles.tokenSymbol, className)}>{children}</div>
+  className = 'dapp-simple-token-symbol',
+  styles
+}: SimplePropsType & WithStylesImportType) => (
+  <div className={classNames(styles?.tokenSymbol, className)}>{children}</div>
 );
 
 // TODO: Rename to "Combined" into something more relevant when sdk-dapp@3.0.0
-export const Combined = ({
+const CombinedComponent = ({
   small,
   children,
-  className = 'dapp-combined-token-symbol'
-}: CombinedPropsType) => (
+  className = 'dapp-combined-token-symbol',
+  styles
+}: CombinedPropsType & WithStylesImportType) => (
   <div
     className={classNames(
-      styles.tokenSymbolCombined,
+      styles?.tokenSymbolCombined,
       {
-        [styles.small]: small
+        [styles?.small ?? '']: small
       },
       className
     )}
@@ -39,3 +40,11 @@ export const Combined = ({
     {children}
   </div>
 );
+
+export const Simple = withStyles(SimpleComponent, {
+  local: () => import('UI/TokenDetails/TokenSymbol/tokenSymbol.scss')
+});
+
+export const Combined = withStyles(CombinedComponent, {
+  local: () => import('UI/TokenDetails/TokenSymbol/tokenSymbol.scss')
+});

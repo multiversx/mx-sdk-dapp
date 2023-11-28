@@ -1,16 +1,13 @@
 import React, { MouseEvent, useState } from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { N_A } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ScamInfoType } from 'types/account.types';
-import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/index';
+import { DataDecode } from 'UI/TransactionInfo/components/DataDecode/DataDecode';
 import { truncate } from 'utils/operations/truncate';
 import { getScamFlag } from 'utils/transactions/transactionInfoHelpers/getScamFlag';
 import { useDataDecodeMethod } from 'utils/transactions/transactionInfoHelpers/useDataDecodeMethod';
 import { Linkified, ModalLink } from './components';
-
-import styles from './dataField.module.scss';
 
 const DISPLAYED_DATA_LENGTH = 1000000;
 
@@ -19,7 +16,12 @@ export interface DataFieldPropsType {
   scamInfo?: ScamInfoType;
 }
 
-export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
+const DataFieldComponent = ({
+  data,
+  scamInfo,
+  globalStyles,
+  styles
+}: DataFieldPropsType & WithStylesImportType) => {
   const { initialDecodeMethod, setDecodeMethod } = useDataDecodeMethod();
   const [showData, setShowData] = useState(false);
 
@@ -39,9 +41,9 @@ export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
       {showData ? (
         <div
           className={classNames(
-            globalStyles.formControl,
-            globalStyles.col,
-            globalStyles.mt1
+            globalStyles?.formControl,
+            globalStyles?.col,
+            globalStyles?.mt1
           )}
         >
           <Linkified
@@ -64,7 +66,7 @@ export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
         <a
           href='/#'
           onClick={show}
-          className={classNames(globalStyles.textMuted, styles.smallFont)}
+          className={classNames(globalStyles?.textMuted, styles?.smallFont)}
         >
           {!showData ? 'Show' : 'Hide'} original message
         </a>
@@ -72,3 +74,8 @@ export const DataField = ({ data, scamInfo }: DataFieldPropsType) => {
     </>
   );
 };
+
+export const DataField = withStyles(DataFieldComponent, {
+  local: () =>
+    import('UI/TransactionInfo/components/DataField/dataField.module.scss')
+});

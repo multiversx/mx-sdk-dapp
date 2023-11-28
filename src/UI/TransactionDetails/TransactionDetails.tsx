@@ -1,13 +1,11 @@
 import React, { useMemo, ReactNode } from 'react';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { SignedTransactionType } from 'types/index';
 import { isServerTransactionPending } from 'utils/transactions/transactionStateByStatus';
-
 import {
   TransactionDetailsBody,
   TransactionDetailsBodyPropsType
 } from './components';
-import styles from './transactionDetails.styles.scss';
 
 export interface TransactionDetailsType {
   title?: ReactNode;
@@ -16,12 +14,13 @@ export interface TransactionDetailsType {
   className?: string;
 }
 
-export const TransactionDetails = ({
+const TransactionDetailsComponent = ({
   title,
   transactions,
   isTimedOut = false,
-  className = 'dapp-transaction-details'
-}: TransactionDetailsType) => {
+  className = 'dapp-transaction-details',
+  styles
+}: TransactionDetailsType & WithStylesImportType) => {
   if (transactions == null) {
     return null;
   }
@@ -43,9 +42,9 @@ export const TransactionDetails = ({
 
   return (
     <>
-      {title && <div className={styles.title}>{title}</div>}
+      {title && <div className={styles?.title}>{title}</div>}
 
-      <div className={styles.status}>{processedTransactionsStatus}</div>
+      <div className={styles?.status}>{processedTransactionsStatus}</div>
 
       {transactions.map(({ hash, status }) => {
         const transactionDetailsBodyProps: TransactionDetailsBodyPropsType = {
@@ -62,3 +61,7 @@ export const TransactionDetails = ({
     </>
   );
 };
+
+export const TransactionDetails = withStyles(TransactionDetailsComponent, {
+  local: () => import('UI/TransactionDetails/transactionDetails.styles.scss')
+});

@@ -1,7 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
 export interface NftBadgePropsType {
   text: string;
@@ -9,21 +8,24 @@ export interface NftBadgePropsType {
   ['data-testid']?: string;
 }
 
-export const NftBadge = ({
+const NftBadgeComponent = ({
   text,
   className,
-  'data-testid': dataTestId = 'nftBadge'
-}: NftBadgePropsType) => (
+  'data-testid': dataTestId = 'nftBadge',
+  globalStyles
+}: NftBadgePropsType & WithStylesImportType) => (
   <div
     data-testid={dataTestId}
     className={classNames(
-      globalStyles.badge,
-      globalStyles.badgeSecondary,
-      globalStyles.badgePill,
-      globalStyles.fontWeightLight,
+      globalStyles?.badge,
+      globalStyles?.badgeSecondary,
+      globalStyles?.badgePill,
+      globalStyles?.fontWeightLight,
       className
     )}
   >
     {text}
   </div>
 );
+
+export const NftBadge = withStyles(NftBadgeComponent, {});

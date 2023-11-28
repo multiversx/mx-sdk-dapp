@@ -1,21 +1,27 @@
 import React from 'react';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { StatusIcon } from './StatusIcon';
 import { StatusIconType } from './transactionStatusToast.types';
-
-import styles from './transactionStatusToastStyles.scss';
 
 export interface StatusMessageComponentPropsType {
   type: StatusIconType;
   message?: string;
 }
 
-export const StatusMessageComponent = ({
+const StatusMessage = ({
   type,
-  message
-}: StatusMessageComponentPropsType) => (
-  <div className={styles.transactionsStatusToastContent}>
+  message,
+  styles
+}: StatusMessageComponentPropsType & WithStylesImportType) => (
+  <div className={styles?.transactionsStatusToastContent}>
     <StatusIcon type={type} />
     {message}
   </div>
 );
+
+export const StatusMessageComponent = withStyles(StatusMessage, {
+  local: () =>
+    import(
+      'components/TransactionStatusToast/transactionStatusToastStyles.scss'
+    )
+});

@@ -1,25 +1,33 @@
 import React from 'react';
-
 import { N_A } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { getUsdValue } from 'utils/operations/getUsdValue';
-
 import {
   WithClassnameType,
   WithTransactionType
 } from '../../../../../UI/types';
 import { DetailItem } from '../../DetailItem';
 
-import styles from './styles.scss';
-
-export const TransactionInfoEgldPrice = ({
+const TransactionInfoEgldPriceComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => (
+  transaction,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => (
   <DetailItem className={className} title='EGLD Price'>
     {transaction.price != null ? (
       getUsdValue({ amount: '1', usd: transaction.price })
     ) : (
-      <span className={styles.price}>{N_A}</span>
+      <span className={styles?.price}>{N_A}</span>
     )}
   </DetailItem>
+);
+
+export const TransactionInfoEgldPrice = withStyles(
+  TransactionInfoEgldPriceComponent,
+  {
+    local: () =>
+      import(
+        'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoEgldPrice/styles.scss'
+      )
+  }
 );
