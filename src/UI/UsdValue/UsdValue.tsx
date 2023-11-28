@@ -21,7 +21,6 @@ const UsdValueComponent = ({
   addEqualSign,
   className,
   globalStyles,
-  styles,
   ...dataTestId
 }: UsdValueType & WithStylesImportType) => {
   const value = getUsdValue({
