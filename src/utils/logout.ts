@@ -2,7 +2,7 @@ import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
-import { getAddress } from './account';
+import { getAddress, getWebviewToken } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
@@ -27,7 +27,7 @@ const broadcastLogoutAcrossTabs = (address: string) => {
 export async function logout(
   callbackUrl?: string,
   onRedirect?: (callbackUrl?: string) => void,
-  shouldAttemptRelogin = false
+  shouldAttemptRelogin = Boolean(getWebviewToken())
 ) {
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
