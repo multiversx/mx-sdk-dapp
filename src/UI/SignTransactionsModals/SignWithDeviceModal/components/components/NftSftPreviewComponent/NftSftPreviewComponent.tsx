@@ -1,15 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
-
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetNetworkConfig } from 'hooks';
 import { NftEnumType } from 'types/tokens.types';
 import {
   explorerUrlBuilder,
   getExplorerLink
 } from 'utils/transactions/getInterpretedTransaction/helpers';
-
-import styles from './NftSftPreviewComponent.styles.scss';
 
 export interface NftSftPreviewPropsType {
   txType: NftEnumType;
@@ -18,12 +16,13 @@ export interface NftSftPreviewPropsType {
   tokenAvatar: string;
 }
 
-export const NftSftPreviewComponent = ({
+export const NftSftPreview = ({
   txType,
   tokenLabel,
   tokenId,
-  tokenAvatar
-}: NftSftPreviewPropsType) => {
+  tokenAvatar,
+  styles
+}: NftSftPreviewPropsType & WithStylesImportType) => {
   const {
     network: { explorerAddress }
   } = useGetNetworkConfig();
@@ -38,29 +37,29 @@ export const NftSftPreviewComponent = ({
     <a
       href={explorerLink}
       target='_blank'
-      className={styles.preview}
+      className={styles?.preview}
       rel='noreferrer'
     >
-      <img src={tokenAvatar} className={styles.image} alt={tokenLabel} />
+      <img src={tokenAvatar} className={styles?.image} alt={tokenLabel} />
 
-      <div className={styles.content}>
-        <div className={styles.left}>
-          <div className={styles.name} data-testid={DataTestIdsEnum.nftLabel}>
+      <div className={styles?.content}>
+        <div className={styles?.left}>
+          <div className={styles?.name} data-testid={DataTestIdsEnum.nftLabel}>
             {tokenLabel}
           </div>
 
           <div
-            className={styles.identifier}
+            className={styles?.identifier}
             data-testid={DataTestIdsEnum.nftIdentifier}
           >
             {tokenId}
           </div>
         </div>
-        <div className={styles.right}>
+        <div className={styles?.right}>
           <div
-            className={classNames(styles.badge, {
-              [styles.nft]: txType === NftEnumType.NonFungibleESDT,
-              [styles.sft]: txType === NftEnumType.SemiFungibleESDT
+            className={classNames(styles?.badge, {
+              [styles?.nft]: txType === NftEnumType.NonFungibleESDT,
+              [styles?.sft]: txType === NftEnumType.SemiFungibleESDT
             })}
           >
             {badge}
@@ -70,3 +69,10 @@ export const NftSftPreviewComponent = ({
     </a>
   );
 };
+
+export const NftSftPreviewComponent = withStyles(NftSftPreview, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/components/components/NftSftPreviewComponent/NftSftPreviewComponent.styles.scss'
+    )
+});

@@ -3,9 +3,7 @@ import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
-
-import globalStyles from '../../../assets/sass/main.scss';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { SignStepBody, SignStepBodyPropsType } from './components';
 import { ProgressHeader } from './components/ProgressHeader';
 import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
@@ -13,12 +11,9 @@ import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
 } from './signWithDeviceModal.types';
-
-import styles from './signWithDeviceModalStyles.scss';
-
 export { SignStepType, SignStepInnerClassesType };
 
-export const SignStep = (props: SignStepType) => {
+const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
   const {
     onSignTransaction,
     handleClose,
@@ -32,7 +27,9 @@ export const SignStep = (props: SignStepType) => {
     isLastTransaction,
     currentStep,
     className,
-    signStepInnerClasses
+    signStepInnerClasses,
+    globalStyles,
+    styles
   } = props;
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
@@ -151,16 +148,16 @@ export const SignStep = (props: SignStepType) => {
   return (
     <div
       className={classNames(
-        styles.modalLayoutContent,
-        styles.spaced,
+        styles?.modalLayoutContent,
+        styles?.spaced,
         className,
-        { [styles.guarded]: signStepBodyProps.isGuarded }
+        { [styles?.guarded ?? '']: signStepBodyProps.isGuarded }
       )}
     >
       {isGuardianScreenVisible && (
         <div
           onClick={onGuardianScreenPrev}
-          className={classNames(styles.modalLayoutHeadingIcon, styles.back)}
+          className={classNames(styles?.modalLayoutHeadingIcon, styles?.back)}
         >
           <FontAwesomeIcon icon={faArrowLeft} />
         </div>
@@ -168,7 +165,7 @@ export const SignStep = (props: SignStepType) => {
 
       <div
         onClick={onCloseClick}
-        className={classNames(styles.modalLayoutHeadingIcon, styles.close)}
+        className={classNames(styles?.modalLayoutHeadingIcon, styles?.close)}
       >
         <FontAwesomeIcon icon={faTimes} />
       </div>
@@ -177,7 +174,10 @@ export const SignStep = (props: SignStepType) => {
         <ProgressHeader steps={steps} type='detailed' size='small' />
       )}
 
-      <div className={styles.title} data-testid={DataTestIdsEnum.signStepTitle}>
+      <div
+        className={styles?.title}
+        data-testid={DataTestIdsEnum.signStepTitle}
+      >
         {signFlowTitle || 'Confirm on Ledger'}
       </div>
 
@@ -192,13 +192,13 @@ export const SignStep = (props: SignStepType) => {
           <SignStepBody {...signStepBodyProps} />
 
           <div
-            className={classNames(styles.signButtons, buttonsWrapperClassName)}
+            className={classNames(styles?.signButtons, buttonsWrapperClassName)}
           >
             <button
               id='closeButton'
               data-testid={DataTestIdsEnum.closeButton}
               onClick={onCloseClick}
-              className={classNames(styles.signButtonCancel, buttonClassName)}
+              className={classNames(styles?.signButtonCancel, buttonClassName)}
             >
               {currentStep === 0 ? 'Cancel' : 'Back'}
             </button>
@@ -206,8 +206,8 @@ export const SignStep = (props: SignStepType) => {
             <button
               type='button'
               className={classNames(
-                globalStyles.btnPrimary,
-                styles.signButtonSubmit,
+                globalStyles?.btnPrimary,
+                styles?.signButtonSubmit,
                 buttonClassName
               )}
               id='signBtn'
@@ -223,3 +223,10 @@ export const SignStep = (props: SignStepType) => {
     </div>
   );
 };
+
+export const SignStep = withStyles(SignStepComponent, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/signWithDeviceModalStyles.scss'
+    )
+});

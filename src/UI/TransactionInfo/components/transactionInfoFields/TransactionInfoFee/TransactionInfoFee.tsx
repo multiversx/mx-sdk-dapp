@@ -1,22 +1,20 @@
 import React from 'react';
-
 import classNames from 'classnames';
 import { DataTestIdsEnum, N_A } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { getUsdValue } from 'utils/operations/getUsdValue';
 import { getTransactionFee } from 'utils/transactions/transactionInfoHelpers/getTransactionFee';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
-
 import { DetailItem } from '../../DetailItem';
 
-import styles from './styles.scss';
-
-export const TransactionInfoFee = ({
+const TransactionInfoFeeComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => {
+  transaction,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => {
   const egldLabel = getEgldLabel();
   const txFee = getTransactionFee(transaction);
 
@@ -42,18 +40,25 @@ export const TransactionInfoFee = ({
     transaction.gasUsed != null ? (
       <>
         {transactionFee} {egldLabel}{' '}
-        <span className={styles.price}>({price})</span>
+        <span className={styles?.price}>({price})</span>
       </>
     ) : (
-      <span className={styles.price}>{N_A}</span>
+      <span className={styles?.price}>{N_A}</span>
     );
 
   return (
     <DetailItem
       title='Transaction Fee'
-      className={classNames(styles.fee, className)}
+      className={classNames(styles?.fee, className)}
     >
       <span data-testid={DataTestIdsEnum.transactionInfoFee}>{fee}</span>
     </DetailItem>
   );
 };
+
+export const TransactionInfoFee = withStyles(TransactionInfoFeeComponent, {
+  local: () =>
+    import(
+      'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoFee/styles.scss'
+    )
+});

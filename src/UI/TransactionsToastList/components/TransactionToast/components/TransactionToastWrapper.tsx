@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
-
-import wrapperStyles from 'UI/TransactionsToastList/transactionsToastList.styles.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
 export interface TransactionToastWrapperPropsType {
   className?: string;
@@ -9,19 +8,28 @@ export interface TransactionToastWrapperPropsType {
   id?: string;
 }
 
-export const TransactionToastWrapper = ({
+const TransactionToastWrapperComponent = ({
   className = 'dapp-transaction-toast-wrapper',
   children,
-  id
-}: TransactionToastWrapperPropsType) => (
+  id,
+  styles: wrapperStyles
+}: TransactionToastWrapperPropsType & WithStylesImportType) => (
   <div
     id={id}
     className={classNames(
-      wrapperStyles.toasts,
-      wrapperStyles.toastWrapper,
+      wrapperStyles?.toasts,
+      wrapperStyles?.toastWrapper,
       className
     )}
   >
     {children}
   </div>
+);
+
+export const TransactionToastWrapper = withStyles(
+  TransactionToastWrapperComponent,
+  {
+    local: () =>
+      import('UI/TransactionsToastList/transactionsToastList.styles.scss')
+  }
 );

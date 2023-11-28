@@ -1,6 +1,16 @@
 import React, { PropsWithChildren } from 'react';
-import styles from 'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
-export const SharedToastFooter = ({ children }: PropsWithChildren) => {
-  return <div className={styles.footer}>{children}</div>;
+const SharedToastFooterComponent = ({
+  children,
+  styles
+}: PropsWithChildren & WithStylesImportType) => {
+  return <div className={styles?.footer}>{children}</div>;
 };
+
+export const SharedToastFooter = withStyles(SharedToastFooterComponent, {
+  local: () =>
+    import(
+      'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss'
+    )
+});

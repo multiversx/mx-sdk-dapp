@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-
 import { DataTestIdsEnum, ELLIPSIS } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useDebounce } from 'hooks';
 import { WithClassnameType } from '../types';
-import styles from './trim.styles.scss';
 
 // TODO: Rename to "TrimPropsType" when sdk-dapp@3.0.0
 export interface TrimType extends WithClassnameType {
@@ -12,12 +11,13 @@ export interface TrimType extends WithClassnameType {
   color?: 'muted' | 'secondary' | string;
 }
 
-export const Trim = ({
+const TrimComponent = ({
   text,
   className = 'dapp-trim',
   'data-testid': dataTestId = DataTestIdsEnum['trim-text-component'],
-  color
-}: TrimType) => {
+  color,
+  styles
+}: TrimType & WithStylesImportType) => {
   const [debounce, setDebounce] = useState(0);
   const [overflow, setOverflow] = useState(false);
   const trimRef = useRef(document?.createElement('span'));
@@ -53,26 +53,26 @@ export const Trim = ({
   return (
     <span
       ref={trimRef}
-      className={classNames(styles.trim, color, className, {
+      className={classNames(styles?.trim, color, className, {
         overflow: overflow
       })}
       data-testid={dataTestId}
     >
-      <span ref={hiddenTextRef} className={styles.hiddenTextRef}>
+      <span ref={hiddenTextRef} className={styles?.hiddenTextRef}>
         {text}
       </span>
 
       {overflow ? (
         <>
-          <span className={styles.left}>
+          <span className={styles?.left}>
             <span>
               {String(text).substring(0, Math.floor(text.length / 2))}
             </span>
           </span>
 
-          <span className={styles.ellipsis}>{ELLIPSIS}</span>
+          <span className={styles?.ellipsis}>{ELLIPSIS}</span>
 
-          <span className={styles.right}>
+          <span className={styles?.right}>
             <span>{String(text).substring(Math.ceil(text.length / 2))}</span>
           </span>
         </>
@@ -82,3 +82,7 @@ export const Trim = ({
     </span>
   );
 };
+
+export const Trim = withStyles(TrimComponent, {
+  local: () => import('UI/Trim/trim.styles.scss')
+});

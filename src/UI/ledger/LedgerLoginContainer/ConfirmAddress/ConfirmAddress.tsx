@@ -1,14 +1,11 @@
 import React, { ReactNode } from 'react';
 import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { tokenLoginSelector } from 'reduxStore/selectors';
-
 import { WithClassnameType } from '../../../types';
-
-import styles from './confirmAddressStyles.scss';
 import { getAuthTokenText } from './helpers';
 
 export interface ConfirmAddressPropsType extends WithClassnameType {
@@ -24,12 +21,13 @@ export interface ConfirmAddressPropsType extends WithClassnameType {
   };
 }
 
-export const ConfirmAddress = ({
+const ConfirmAddressComponent = ({
   token,
   className = 'dapp-ledger-confirm-address',
   customContentComponent,
-  confirmAddressClassNames
-}: ConfirmAddressPropsType) => {
+  confirmAddressClassNames,
+  styles
+}: ConfirmAddressPropsType & WithStylesImportType) => {
   const { ledgerAccount } = useGetAccountInfo();
   const {
     ledgerModalTitleClassName,
@@ -50,7 +48,7 @@ export const ConfirmAddress = ({
   return (
     <div
       className={classNames(
-        styles.ledgerConfirmAddress,
+        styles?.ledgerConfirmAddress,
         ledgerModalConfirmContentClassName,
         className
       )}
@@ -58,7 +56,7 @@ export const ConfirmAddress = ({
     >
       <h4
         className={classNames(
-          styles.ledgerConfirmAddressHeading,
+          styles?.ledgerConfirmAddressHeading,
           ledgerModalTitleClassName
         )}
       >
@@ -67,10 +65,10 @@ export const ConfirmAddress = ({
 
       {customContentComponent}
 
-      <div className={styles.ledgerConfirmAddressSection}>
+      <div className={styles?.ledgerConfirmAddressSection}>
         <div
           className={classNames(
-            styles.ledgerConfirmAddressDescription,
+            styles?.ledgerConfirmAddressDescription,
             ledgerModalConfirmDescriptionClassName
           )}
         >
@@ -79,7 +77,7 @@ export const ConfirmAddress = ({
 
         <div
           className={classNames(
-            styles.ledgerConfirmAddressData,
+            styles?.ledgerConfirmAddressData,
             ledgerModalConfirmDataClassName
           )}
         >
@@ -87,10 +85,10 @@ export const ConfirmAddress = ({
         </div>
       </div>
 
-      <div className={styles.ledgerConfirmAddressSection}>
+      <div className={styles?.ledgerConfirmAddressSection}>
         <div
           className={classNames(
-            styles.ledgerConfirmAddressDescription,
+            styles?.ledgerConfirmAddressDescription,
             ledgerModalConfirmDescriptionClassName
           )}
         >
@@ -99,7 +97,7 @@ export const ConfirmAddress = ({
 
         <div
           className={classNames(
-            styles.ledgerConfirmAddressData,
+            styles?.ledgerConfirmAddressData,
             ledgerModalConfirmDataClassName
           )}
         >
@@ -108,7 +106,7 @@ export const ConfirmAddress = ({
 
         <div
           className={classNames(
-            styles.ledgerConfirmAddressDescription,
+            styles?.ledgerConfirmAddressDescription,
             ledgerModalConfirmDescriptionClassName
           )}
         >
@@ -118,7 +116,7 @@ export const ConfirmAddress = ({
 
       <div
         className={classNames(
-          styles.ledgerConfirmAddressFooter,
+          styles?.ledgerConfirmAddressFooter,
           ledgerModalConfirmFooterClassName
         )}
       >
@@ -139,3 +137,10 @@ export const ConfirmAddress = ({
     </div>
   );
 };
+
+export const ConfirmAddress = withStyles(ConfirmAddressComponent, {
+  local: () =>
+    import(
+      'UI/ledger/LedgerLoginContainer/ConfirmAddress/confirmAddressStyles.scss'
+    )
+});

@@ -1,37 +1,35 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { TransactionDirectionEnum } from 'types/serverTransactions.types';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { WithTransactionType } from 'UI/types';
 import { addressIsValid } from 'utils/account/addressIsValid';
-
 import { AccountName } from './AccountName';
 import { LockedTokenAddressIcon } from './LockedTokenAddressIcon';
 import { ScAddressIcon } from './ScAddressIcon';
 import { ShardSpan } from './ShardSpan';
 
-import styles from './transactionsTable.styles.scss';
-
 export interface TransactionSenderPropsType extends WithTransactionType {
   showLockedAccounts?: boolean;
 }
 
-export const TransactionSender = ({
+export const TransactionSenderComponent = ({
   transaction,
-  showLockedAccounts
-}: TransactionSenderPropsType) => {
+  showLockedAccounts,
+  globalStyles,
+  styles
+}: TransactionSenderPropsType & WithStylesImportType) => {
   const directionOut =
     transaction.transactionDetails.direction === TransactionDirectionEnum.OUT;
 
   return (
     <div
       className={classNames(
-        globalStyles.dFlex,
-        globalStyles.alignItemsCenter,
-        styles.transactionCell
+        globalStyles?.dFlex,
+        globalStyles?.alignItemsCenter,
+        styles?.transactionCell
       )}
       data-testid={DataTestIdsEnum.transactionSender}
     >
@@ -47,9 +45,9 @@ export const TransactionSender = ({
       {directionOut ? (
         <div
           className={classNames(
-            globalStyles.w100,
-            styles.transactionCellOverflow,
-            styles.transactionCellMargin
+            globalStyles?.w100,
+            styles?.transactionCellOverflow,
+            styles?.transactionCellMargin
           )}
         >
           <AccountName
@@ -62,10 +60,10 @@ export const TransactionSender = ({
           page={transaction.links.senderLink ?? ''}
           data-testid={DataTestIdsEnum.senderLink}
           className={classNames(
-            globalStyles.w100,
-            styles.transactionCellOverflow,
-            styles.transactionCellMargin,
-            styles.transactionCellLink
+            globalStyles?.w100,
+            styles?.transactionCellOverflow,
+            styles?.transactionCellMargin,
+            styles?.transactionCellLink
           )}
         >
           <AccountName
@@ -79,3 +77,8 @@ export const TransactionSender = ({
     </div>
   );
 };
+
+export const TransactionSender = withStyles(TransactionSenderComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});

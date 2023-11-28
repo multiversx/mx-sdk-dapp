@@ -2,17 +2,13 @@ import React, { ReactNode } from 'react';
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { NftEnumType } from 'types/tokens.types';
 import { FormatAmount } from 'UI/FormatAmount';
-
 import { TransactionActionBlock } from 'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock';
 import { WithTransactionType } from 'UI/types';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionValue';
-
-import styles from '../transactionsTable.styles.scss';
 
 interface TokenWrapperPropsType {
   children: ReactNode;
@@ -23,9 +19,13 @@ export interface TransactionValuePropsType extends WithTransactionType {
   hideMultipleBadge?: boolean;
 }
 
-const TokenWrapper = ({ children, titleText }: TokenWrapperPropsType) => (
+const TokenWrapperComponent = ({
+  children,
+  titleText,
+  globalStyles
+}: TokenWrapperPropsType & WithStylesImportType) => (
   <div
-    className={classNames(globalStyles.dFlex, globalStyles.alignItemsCenter)}
+    className={classNames(globalStyles?.dFlex, globalStyles?.alignItemsCenter)}
     data-testid={DataTestIdsEnum.transactionValue}
   >
     {children}
@@ -34,17 +34,23 @@ const TokenWrapper = ({ children, titleText }: TokenWrapperPropsType) => (
       <FontAwesomeIcon
         icon={faLayerGroup}
         data-testid={DataTestIdsEnum.transactionValueIcon}
-        className={classNames(globalStyles.ml2, globalStyles.textSecondary)}
+        className={classNames(globalStyles?.ml2, globalStyles?.textSecondary)}
         title={titleText}
       />
     )}
   </div>
 );
 
-export const TransactionValue = ({
+const TokenWrapper = withStyles(TokenWrapperComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});
+
+const TransactionValueComponent = ({
   transaction,
-  hideMultipleBadge
-}: TransactionValuePropsType) => {
+  hideMultipleBadge,
+  styles
+}: TransactionValuePropsType & WithStylesImportType) => {
   const { egldValueData, tokenValueData, nftValueData } = getTransactionValue({
     transaction,
     hideMultipleBadge
@@ -52,7 +58,7 @@ export const TransactionValue = ({
 
   if (tokenValueData) {
     return (
-      <div className={styles.transactionCell}>
+      <div className={styles?.transactionCell}>
         <TokenWrapper titleText={tokenValueData.titleText}>
           <TransactionActionBlock.Token {...tokenValueData} />
         </TokenWrapper>
@@ -66,7 +72,7 @@ export const TransactionValue = ({
     const badgeText = hideBadgeForMetaESDT ? null : nftValueData.badgeText;
 
     return (
-      <div className={styles.transactionCell}>
+      <div className={styles?.transactionCell}>
         <TokenWrapper titleText={nftValueData.titleText}>
           <TransactionActionBlock.Nft {...nftValueData} badgeText={badgeText} />
         </TokenWrapper>
@@ -76,7 +82,7 @@ export const TransactionValue = ({
 
   if (egldValueData) {
     return (
-      <div className={styles.transactionCell}>
+      <div className={styles?.transactionCell}>
         <FormatAmount
           value={egldValueData.value}
           digits={2}
@@ -88,3 +94,8 @@ export const TransactionValue = ({
 
   return null;
 };
+
+export const TransactionValue = withStyles(TransactionValueComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import EgldIcon from 'assets/icons/EGLD.svg';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
-
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
 import { WithClassnameType } from '../types';
-import styles from './tokenDetailsStyles.scss';
 import { Combined, Simple } from './TokenSymbol';
 
 const getIdentifierWithoutNonce = (identifier: string) => {
@@ -31,12 +29,23 @@ export interface TokenIconType extends TokenIconPropsType {
   icon: () => JSX.Element;
 }
 
-function getIcon(isEgldTransfer: boolean, tokenAvatar?: string) {
+function getIconComponent({
+  isEgldTransfer,
+  tokenAvatar,
+  styles
+}: {
+  isEgldTransfer: boolean;
+  tokenAvatar?: string;
+} & WithStylesImportType) {
   if (tokenAvatar && tokenAvatar !== 'undefined') {
-    return <img className={styles.tokenSymbolCustomToken} src={tokenAvatar} />;
+    return <img className={styles?.tokenSymbolCustomToken} src={tokenAvatar} />;
   }
   return isEgldTransfer ? <EgldIcon /> : <FontAwesomeIcon icon={faDiamond} />;
 }
+
+const getIcon = withStyles(getIconComponent, {
+  local: () => import('UI/TokenDetails/tokenDetailsStyles.scss')
+});
 
 const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
   const egldLabel = getEgldLabel();
@@ -46,8 +55,7 @@ const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {
     token,
     symbol: token ? token.split('-')[0] : '',
     label: token,
-    // eslint-disable-next-line react/display-name
-    icon: () => getIcon(isEgldTransfer, tokenAvatar)
+    icon: () => getIcon({ isEgldTransfer, tokenAvatar })
   };
 };
 

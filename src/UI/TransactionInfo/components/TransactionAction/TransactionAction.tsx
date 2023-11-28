@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
-
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithTransactionType } from 'UI/types';
 import { transactionActionUnwrapper } from 'utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper';
 import { ActionText } from './components/ActionText';
 
-import styles from './styles.scss';
-
-export const TransactionAction = ({ transaction }: WithTransactionType) => {
+export const TransactionActionComponent = ({
+  transaction,
+  styles
+}: WithTransactionType & WithStylesImportType) => {
   const unwrappedResult: ReturnType<typeof transactionActionUnwrapper> =
     useMemo(() => {
       if (transaction.action) {
@@ -20,12 +21,12 @@ export const TransactionAction = ({ transaction }: WithTransactionType) => {
   return (
     <div
       data-testid={DataTestIdsEnum.transactionAction}
-      className={styles.action}
+      className={styles?.action}
     >
       {unwrappedResult.map((entry, i) => (
         <div
           key={JSON.stringify(unwrappedResult) + i}
-          className={styles.result}
+          className={styles?.result}
         >
           <ActionText transaction={transaction} entry={entry} />
         </div>
@@ -33,3 +34,8 @@ export const TransactionAction = ({ transaction }: WithTransactionType) => {
     </div>
   );
 };
+
+export const TransactionAction = withStyles(TransactionActionComponent, {
+  local: () =>
+    import('UI/TransactionInfo/components/TransactionAction/styles.scss')
+});

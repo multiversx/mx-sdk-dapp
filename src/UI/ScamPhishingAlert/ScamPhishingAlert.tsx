@@ -2,8 +2,7 @@ import React, { ReactNode } from 'react';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
-import styles from './scamPhishingStyles.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
 export interface AuthorizationInfo {
   url: string;
@@ -18,8 +17,10 @@ export interface ScamPhishingAlertPropsType {
   authorizationInfo?: AuthorizationInfo;
 }
 
-export const ScamPhishingAlert = (props: ScamPhishingAlertPropsType) => {
-  const { className, url, icon, authorizationInfo } = props;
+const ScamPhishingAlertComponent = (
+  props: ScamPhishingAlertPropsType & WithStylesImportType
+) => {
+  const { className, url, icon, authorizationInfo, styles } = props;
   const sanitizedUrl = url.replace('https://', '').replace(/\/$/, '');
   const sanitizedAuthUrl = authorizationInfo?.url
     ? authorizationInfo.url.replace('https://', '').replace(/\/$/, '')
@@ -27,17 +28,17 @@ export const ScamPhishingAlert = (props: ScamPhishingAlertPropsType) => {
 
   return (
     <>
-      <p className={classNames(styles.scamPhishingAlert, className)}>
+      <p className={classNames(styles?.scamPhishingAlert, className)}>
         {icon || (
           <FontAwesomeIcon
-            className={styles.scamPhishingAlertIcon}
+            className={styles?.scamPhishingAlertIcon}
             icon={faLock}
           />
         )}
 
-        <span className={styles.scamPhishingAlertText}>
+        <span className={styles?.scamPhishingAlertText}>
           <span>Scam/Phishing verification:</span>{' '}
-          <span className={styles.scamPhishingAlertPrefix}>
+          <span className={styles?.scamPhishingAlertPrefix}>
             <strong>https://</strong>
             {sanitizedUrl}
           </span>
@@ -47,24 +48,24 @@ export const ScamPhishingAlert = (props: ScamPhishingAlertPropsType) => {
       {authorizationInfo && authorizationInfo.url && (
         <p
           className={classNames(
-            styles.scamPhishingAlert,
-            styles.scamPhishingAlertAuthorization,
+            styles?.scamPhishingAlert,
+            styles?.scamPhishingAlertAuthorization,
             authorizationInfo.className
           )}
         >
-          <span className={styles.scamPhishingAlertText}>
+          <span className={styles?.scamPhishingAlertText}>
             Please confirm that you are indeed connecting to
           </span>
 
-          <span className={styles.scamPhishingAlertText}>
+          <span className={styles?.scamPhishingAlertText}>
             <strong>https://</strong>
             <span>{sanitizedAuthUrl} for</span>
-            <strong className={styles.scamPhishingAlertAuthorizationDuration}>
+            <strong className={styles?.scamPhishingAlertAuthorizationDuration}>
               {authorizationInfo.duration}
             </strong>
           </span>
 
-          <span className={styles.scamPhishingAlertText}>
+          <span className={styles?.scamPhishingAlertText}>
             and that you trust this site. You might be sharing sensitive data.
           </span>
 
@@ -74,3 +75,7 @@ export const ScamPhishingAlert = (props: ScamPhishingAlertPropsType) => {
     </>
   );
 };
+
+export const ScamPhishingAlert = withStyles(ScamPhishingAlertComponent, {
+  local: () => import('UI/ScamPhishingAlert/scamPhishingStyles.scss')
+});

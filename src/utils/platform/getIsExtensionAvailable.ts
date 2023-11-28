@@ -1,3 +1,4 @@
 export const getIsExtensionAvailable = () => {
-  return Boolean(window?.elrondWallet);
+  const safeWindow = typeof window !== 'undefined' ? (window as any) : {};
+  return Boolean(safeWindow.elrondWallet);
 };

@@ -1,22 +1,29 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithTransactionType } from '../../../UI/types';
 
-import styles from './transactionsTable.styles.scss';
-
-export const TransactionDirectionBadge = ({
-  transaction
-}: WithTransactionType) => (
-  <div className={globalStyles.dFlex}>
+const TransactionDirectionBadgeComponent = ({
+  transaction,
+  globalStyles,
+  styles
+}: WithTransactionType & WithStylesImportType) => (
+  <div className={globalStyles?.dFlex}>
     <span
       className={classNames(
-        styles.directionBadge,
+        styles?.directionBadge,
         transaction.transactionDetails.direction?.toLowerCase()
       )}
     >
       {transaction.transactionDetails.direction?.toUpperCase()}
     </span>
   </div>
+);
+
+export const TransactionDirectionBadge = withStyles(
+  TransactionDirectionBadgeComponent,
+  {
+    local: () =>
+      import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+  }
 );

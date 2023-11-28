@@ -1,45 +1,43 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
-
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { getTransactionMethod } from 'utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod';
 
-import styles from './transactionsTable.styles.scss';
-
-export const TransactionMethod = ({
+const TransactionMethodComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => (
-  <div className={classNames(styles.transactionCell, className)}>
+  transaction,
+  globalStyles,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => (
+  <div className={classNames(styles?.transactionCell, className)}>
     <span
       title={transaction.action?.description}
       className={classNames(
-        globalStyles.badge,
-        globalStyles.badgeSecondary,
-        globalStyles.badgePill,
-        globalStyles.fontWeightLight,
-        globalStyles.p0
+        globalStyles?.badge,
+        globalStyles?.badgeSecondary,
+        globalStyles?.badgePill,
+        globalStyles?.fontWeightLight,
+        globalStyles?.p0
       )}
       data-testid={DataTestIdsEnum.transactionMethod}
     >
       <div
         className={classNames(
-          globalStyles.badge,
-          globalStyles.badgeSecondary,
-          globalStyles.badgePill
+          globalStyles?.badge,
+          globalStyles?.badgeSecondary,
+          globalStyles?.badgePill
         )}
       >
         <div
           className={classNames(
-            styles.transactionFunctionBadge,
-            globalStyles.textTruncate,
-            globalStyles.textCapitalize,
-            globalStyles.textWhite,
-            globalStyles.p1,
-            styles.transactionCellFontSmall
+            styles?.transactionFunctionBadge,
+            globalStyles?.textTruncate,
+            globalStyles?.textCapitalize,
+            globalStyles?.textWhite,
+            globalStyles?.p1,
+            styles?.transactionCellFontSmall
           )}
         >
           {getTransactionMethod(transaction)}
@@ -48,3 +46,8 @@ export const TransactionMethod = ({
     </span>
   </div>
 );
+
+export const TransactionMethod = withStyles(TransactionMethodComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});
