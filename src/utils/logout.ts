@@ -2,6 +2,7 @@ import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
+import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getAddress, getWebviewToken } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
@@ -29,6 +30,7 @@ export async function logout(
   onRedirect?: (callbackUrl?: string) => void,
   shouldAttemptRelogin = Boolean(getWebviewToken())
 ) {
+  const isLoggedIn = getIsLoggedIn();
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
@@ -37,12 +39,15 @@ export async function logout(
     return await provider.relogin();
   }
 
-  const url = addOriginToLocationPath(callbackUrl);
-
   if (isWalletProvider) {
+    if (!isLoggedIn) {
+      return;
+    }
+
     preventRedirects();
   }
 
+  const url = addOriginToLocationPath(callbackUrl);
   store.dispatch(logoutAction());
 
   try {
@@ -59,10 +64,7 @@ export async function logout(
 
   try {
     if (isWalletProvider) {
-      // allow Redux clearing its state before navigation
-      setTimeout(() => {
-        provider.logout({ callbackUrl: url });
-      });
+      await provider.logout({ callbackUrl: url });
     } else {
       await provider.logout({ callbackUrl: url });
       redirectToCallbackUrl(url, onRedirect);
