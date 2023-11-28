@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed logout redirect loop](https://github.com/multiversx/mx-sdk-dapp/pull/973)
+
 ## [[v2.24.0]](https://github.com/multiversx/mx-sdk-dapp/pull/972)] - 2023-11-24
 - [Full SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/971)
 
