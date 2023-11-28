@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.24.2]](https://github.com/multiversx/mx-sdk-dapp/pull/975)] - 2023-11-28
-- [Fixed logout for wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/974)
+## [[v2.24.2]](https://github.com/multiversx/mx-sdk-dapp/pull/976)] - 2023-11-28
+- [Fixed logout for wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/975)
 
-## [[v2.24.1]](https://github.com/multiversx/mx-sdk-dapp/pull/973)] - 2023-11-28
+## [[v2.24.1]](https://github.com/multiversx/mx-sdk-dapp/pull/974)] - 2023-11-28
 - [Fixed logout redirect loop](https://github.com/multiversx/mx-sdk-dapp/pull/973)
 
 ## [[v2.24.0]](https://github.com/multiversx/mx-sdk-dapp/pull/972)] - 2023-11-24
