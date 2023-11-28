@@ -35,8 +35,6 @@ export async function logout(
   const providerType = getProviderType(provider);
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
 
-  console.log({ providerType, isLoggedIn });
-
   if (shouldAttemptRelogin && provider?.relogin != null) {
     return await provider.relogin();
   }
