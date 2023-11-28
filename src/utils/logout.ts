@@ -58,7 +58,7 @@ export async function logout(
     return redirectToCallbackUrl(url, onRedirect);
   }
 
-  if (!provider || providerType === LoginMethodsEnum.none) {
+  if (!isLoggedIn || !provider || providerType === LoginMethodsEnum.none) {
     return redirectToCallbackUrl(url, onRedirect);
   }
 
