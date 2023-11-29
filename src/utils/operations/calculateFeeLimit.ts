@@ -11,9 +11,9 @@ import {
   EXTRA_GAS_LIMIT_GUARDED_TX,
   GAS_LIMIT,
   GAS_PRICE,
-  GuardianActionsEnum,
   ZERO
 } from 'constants/index';
+import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { stringIsFloat, stringIsInteger } from 'utils/validation';
 
 export interface CalculateFeeLimitType {
@@ -42,12 +42,9 @@ export function calculateFeeLimit({
 }: CalculateFeeLimitType) {
   const data = inputData || '';
   const validGasLimit = stringIsInteger(gasLimit) ? gasLimit : minGasLimit;
-  const isGuardianTx = Object.values(GuardianActionsEnum).some((action) =>
-    data.startsWith(action)
-  );
 
   // We need to add extra gas fee for guardian transactions
-  const extraGasLimit = isGuardianTx ? EXTRA_GAS_LIMIT_GUARDED_TX : 0;
+  const extraGasLimit = isGuardianTx({ data }) ? EXTRA_GAS_LIMIT_GUARDED_TX : 0;
   const usedGasLimit = new BigNumber(validGasLimit)
     .plus(extraGasLimit)
     .toNumber();

@@ -3,6 +3,7 @@ import { PlainSignedTransaction } from '@multiversx/sdk-web-wallet-provider/out/
 import { newTransaction } from 'models';
 import { SignedTransactionType } from 'types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { isGuardianTx } from './isGuardianTx';
 
 export function parseTransactionAfterSigning(
   signedTransaction: Transaction | PlainSignedTransaction
@@ -21,5 +22,12 @@ export function parseTransactionAfterSigning(
     receiverUsername: transaction.getReceiverUsername().valueOf(),
     status: TransactionServerStatusesEnum.pending
   };
+
+  // TODO: Remove when the protocol supports usernames for guardian transactions
+  if (isGuardianTx({ data: parsedTransaction.data, onlySetGuardian: true })) {
+    delete parsedTransaction.senderUsername;
+    delete parsedTransaction.receiverUsername;
+  }
+
   return parsedTransaction;
 }

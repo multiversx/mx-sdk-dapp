@@ -7,40 +7,45 @@ import {
 import { GAS_LIMIT, GAS_PRICE, VERSION } from 'constants/index';
 import { RawTransactionType } from 'types';
 import { getDataPayloadForTransaction } from 'utils/transactions/getDataPayloadForTransaction';
+import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 
 export function newTransaction(rawTransaction: RawTransactionType) {
+  const rawTx = Object.assign({}, rawTransaction);
+
+  // TODO: Remove when the protocol supports usernames for guardian transactions
+  if (isGuardianTx({ data: rawTx.data, onlySetGuardian: true })) {
+    delete rawTx.senderUsername;
+    delete rawTx.receiverUsername;
+  }
+
   const transaction = new Transaction({
-    value: rawTransaction.value.valueOf(),
-    data: getDataPayloadForTransaction(rawTransaction.data),
-    nonce: rawTransaction.nonce.valueOf(),
-    receiver: new Address(rawTransaction.receiver),
-    ...(rawTransaction.receiverUsername
-      ? { receiverUsername: rawTransaction.receiverUsername }
+    value: rawTx.value.valueOf(),
+    data: getDataPayloadForTransaction(rawTx.data),
+    nonce: rawTx.nonce.valueOf(),
+    receiver: new Address(rawTx.receiver),
+    ...(rawTx.receiverUsername
+      ? { receiverUsername: rawTx.receiverUsername }
       : {}),
-    sender: new Address(rawTransaction.sender),
-    ...(rawTransaction.senderUsername
-      ? { senderUsername: rawTransaction.senderUsername }
+    sender: new Address(rawTx.sender),
+    ...(rawTx.senderUsername ? { senderUsername: rawTx.senderUsername } : {}),
+    gasLimit: rawTx.gasLimit.valueOf() ?? GAS_LIMIT,
+    gasPrice: rawTx.gasPrice.valueOf() ?? GAS_PRICE,
+    chainID: rawTx.chainID.valueOf(),
+    version: new TransactionVersion(rawTx.version ?? VERSION),
+    ...(rawTx.options
+      ? { options: new TransactionOptions(rawTx.options) }
       : {}),
-    gasLimit: rawTransaction.gasLimit.valueOf() ?? GAS_LIMIT,
-    gasPrice: rawTransaction.gasPrice.valueOf() ?? GAS_PRICE,
-    chainID: rawTransaction.chainID.valueOf(),
-    version: new TransactionVersion(rawTransaction.version ?? VERSION),
-    ...(rawTransaction.options
-      ? { options: new TransactionOptions(rawTransaction.options) }
-      : {}),
-    ...(rawTransaction.guardian
-      ? { guardian: new Address(rawTransaction.guardian) }
-      : {})
+    ...(rawTx.guardian ? { guardian: new Address(rawTx.guardian) } : {})
   });
 
-  if (rawTransaction.guardianSignature) {
+  if (rawTx.guardianSignature) {
     transaction.applyGuardianSignature(
-      Buffer.from(rawTransaction.guardianSignature, 'hex')
+      Buffer.from(rawTx.guardianSignature, 'hex')
     );
   }
 
-  if (rawTransaction.signature) {
-    transaction.applySignature(Buffer.from(rawTransaction.signature, 'hex'));
+  if (rawTx.signature) {
+    transaction.applySignature(Buffer.from(rawTx.signature, 'hex'));
   }
 
   return transaction;
