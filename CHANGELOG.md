@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.24.3]](https://github.com/multiversx/mx-sdk-dapp/pull/979)] - 2023-11-29
+
+- [Removed `senderUsername` and `receiverUsername` for `SetGuardian` tx](https://github.com/multiversx/mx-sdk-dapp/pull/978)
+- [Added extra gas fee for guardian transactions](https://github.com/multiversx/mx-sdk-dapp/pull/977)
+
 ## [[v2.24.2]](https://github.com/multiversx/mx-sdk-dapp/pull/976)] - 2023-11-28
 - [Fixed logout for wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/975)
 
