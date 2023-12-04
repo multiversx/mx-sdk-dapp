@@ -32,12 +32,17 @@ export const AxiosInterceptor = ({
     );
   };
 
+  const isUrlInAuthenticatedDomains = (url?: string) => {
+    if (!url) return false;
+    return authenticatedDomanis.some(domain => url.startsWith(domain));
+  };
+
   const setInterceptors = () => {
     axios.interceptors.request.eject(requestIdRef.current);
 
     requestIdRef.current = axios.interceptors.request.use(
       async (config) => {
-        if (authenticatedDomanis.includes(String(config?.baseURL))) {
+        if (authenticatedDomanis.includes(String(config?.baseURL)) || isUrlInAuthenticatedDomains(config.url)) {
           config.headers = {
             Authorization: `Bearer ${bearerToken}`
           };
