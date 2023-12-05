@@ -81,7 +81,7 @@ export const useCrossWindowLogin = ({
         ...(token && { token })
       };
 
-      await provider.login(providerLoginData);
+      await provider.login(providerLoginData); // TODO: de ce nu raspundem aici cu signature si address ?
 
       setAccountProvider(provider);
 
