@@ -1,0 +1,56 @@
+import React, { PropsWithChildren } from 'react';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
+import { WithStylesImportType } from 'hocs/withStyles';
+import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
+import { getExplorerLink } from 'utils/transactions/getInterpretedTransaction/helpers/getExplorerLink';
+import { WithClassnameType } from '../types';
+
+export interface ExplorerLinkPropsType
+  extends PropsWithChildren,
+    WithClassnameType {
+  page: string;
+  text?: any;
+  title?: string;
+  onClick?: () => void;
+  'data-testid'?: string;
+}
+
+export const ExplorerLinkComponent = ({
+  page,
+  text,
+  className = 'dapp-explorer-link',
+  children,
+  globalStyles,
+  styles,
+  ...rest
+}: ExplorerLinkPropsType & WithStylesImportType) => {
+  const {
+    network: { explorerAddress }
+  } = useGetNetworkConfig();
+
+  const defaultContent = text ?? (
+    <FontAwesomeIcon
+      icon={faArrowUpRightFromSquare}
+      className={styles?.search}
+    />
+  );
+
+  const link = getExplorerLink({
+    explorerAddress: String(explorerAddress),
+    to: page
+  });
+
+  return (
+    <a
+      href={link}
+      target='_blank'
+      className={classNames(styles?.link, globalStyles?.ml2, className)}
+      rel='noreferrer'
+      {...rest}
+    >
+      {children ?? defaultContent}
+    </a>
+  );
+};
