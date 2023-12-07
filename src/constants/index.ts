@@ -1,6 +1,7 @@
 export * from './dataTestIds.enum';
 export * from './errorsMessages';
 export * from './extension.constants';
+export * from './guardianActions.enum';
 export * from './ledger.constants';
 export * from './ledgerErrorCodes';
 export * from './mnemonicWords';

@@ -15,6 +15,7 @@ import {
   SendTransactionReturnType,
   SignTransactionsPropsType
 } from 'types';
+import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { stringIsFloat } from 'utils/validation/stringIsFloat';
 import { calcTotalFee } from './utils';
 
@@ -74,8 +75,15 @@ export async function signTransactions({
         customTransactionInformation?.signWithoutSending ?? true
     },
     transactions: transactionsPayload.map((tx) => {
+      const transaction = tx.toPlainObject();
+
+      // TODO: Remove when the protocol supports usernames for guardian transactions
+      if (isGuardianTx({ data: transaction.data, onlySetGuardian: true })) {
+        return transaction;
+      }
+
       return {
-        ...tx.toPlainObject(),
+        ...transaction,
         senderUsername: tx.getSenderUsername().valueOf(),
         receiverUsername: tx.getReceiverUsername().valueOf()
       };
