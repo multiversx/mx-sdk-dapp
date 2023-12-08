@@ -75,7 +75,9 @@ export const useAppInitializer = ({
   }
 
   async function initializeApp() {
-    dispatch(setDappConfig(memoizedDappConfig));
+    if (memoizedDappConfig) {
+      dispatch(setDappConfig(memoizedDappConfig));
+    }
     dispatch(setLogoutRoute(logoutRoute));
     await initializeNetwork();
 
