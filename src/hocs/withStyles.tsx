@@ -23,11 +23,6 @@ export function withStyles<TProps>(
       localImportSyncCallback: imports.localSync
     });
 
-    console.log({
-      globalStyles,
-      styles
-    });
-
     return (
       <Component
         {...props}

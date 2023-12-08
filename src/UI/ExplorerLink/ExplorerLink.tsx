@@ -1,24 +1,61 @@
-import React from 'react';
+import React, { PropsWithChildren } from 'react';
+import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { isSSR } from 'utils/isSSR';
-import {
-  ExplorerLinkComponent,
-  ExplorerLinkPropsType
-} from './ExplorerLinkComponent';
+import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
+import { getExplorerLink } from 'utils/transactions/getInterpretedTransaction/helpers/getExplorerLink';
+import { WithClassnameType } from '../types';
 
-export const ExplorerLink = isSSR()
-  ? withStyles(ExplorerLinkComponent, {
-      local: () => import('UI/ExplorerLink/explorerLinkStyles.scss')
-    })
-  : (props: ExplorerLinkPropsType & WithStylesImportType) => {
-      const globalStyles = require('assets/sass/main.scss');
-      const styles = require('UI/ExplorerLink/explorerLinkStyles.scss');
+export interface ExplorerLinkPropsType
+  extends PropsWithChildren,
+    WithClassnameType {
+  page: string;
+  text?: any;
+  title?: string;
+  onClick?: () => void;
+  'data-testid'?: string;
+}
 
-      return (
-        <ExplorerLinkComponent
-          {...props}
-          globalStyles={globalStyles}
-          styles={styles}
-        />
-      );
-    };
+const ExplorerLinkComponent = ({
+  page,
+  text,
+  className = 'dapp-explorer-link',
+  children,
+  globalStyles,
+  styles,
+  ...rest
+}: ExplorerLinkPropsType & WithStylesImportType) => {
+  const {
+    network: { explorerAddress }
+  } = useGetNetworkConfig();
+
+  const defaultContent = text ?? (
+    <FontAwesomeIcon
+      icon={faArrowUpRightFromSquare}
+      className={styles?.search}
+    />
+  );
+
+  const link = getExplorerLink({
+    explorerAddress: String(explorerAddress),
+    to: page
+  });
+
+  return (
+    <a
+      href={link}
+      target='_blank'
+      className={classNames(styles?.link, globalStyles?.ml2, className)}
+      rel='noreferrer'
+      {...rest}
+    >
+      {children ?? defaultContent}
+    </a>
+  );
+};
+
+export const ExplorerLink = withStyles(ExplorerLinkComponent, {
+  local: () => import('UI/ExplorerLink/explorerLinkStyles.scss'),
+  localSync: () => require('UI/ExplorerLink/explorerLinkStyles.scss').default
+});
