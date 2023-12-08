@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from '../types';
 import { copyTextToClipboard } from './helpers/copyToClipboard';
+import { isSSR } from 'utils/isSSR';
 
 export interface CopyButtonPropsType extends WithClassnameType {
   text: string;
@@ -18,8 +19,9 @@ const CopyButtonComponent = ({
   className = 'dapp-copy-button',
   copyIcon = faCopy,
   successIcon = faCheck,
-  styles
-}: CopyButtonPropsType & WithStylesImportType) => {
+  styles //  = isSSR() ? {} : require('./copyButton.styles.scss')
+}: // globalStyles = isSSR() ? {} : require('assets/sass/main.scss')
+CopyButtonPropsType & WithStylesImportType) => {
   const [copyResult, setCopyResut] = useState({
     default: true,
     success: false
@@ -59,6 +61,39 @@ const CopyButtonComponent = ({
   );
 };
 
-export const CopyButton = withStyles(CopyButtonComponent, {
-  local: () => import('UI/CopyButton/copyButton.styles.scss')
-});
+// export const CopyButton = withStyles(CopyButtonComponent, {
+//   local: () => import('UI/CopyButton/copyButton.styles.scss')
+// });
+
+export const CopyButton = isSSR()
+  ? withStyles(CopyButtonComponent, {
+      local: () => import('UI/CopyButton/copyButton.styles.scss')
+    })
+  : (props: CopyButtonPropsType) => {
+      const globalStylesCallback = () =>
+        require('assets/sass/main.scss').default;
+      const stylesCallback = () =>
+        require('UI/CopyButton/copyButton.styles.scss').default;
+
+      const globalStyles = globalStylesCallback();
+      const styles = stylesCallback();
+
+      console.log({
+        globalStyles,
+        styles
+      });
+
+      return (
+        <CopyButtonComponent
+          {...props}
+          globalStyles={globalStyles}
+          styles={styles}
+        />
+      );
+    };
+
+// export const CopyButton = isSSR()
+//   ? withStyles(CopyButtonComponent, {
+//       local: () => import('UI/CopyButton/copyButton.styles.scss')
+//     })
+//   : CopyButtonComponent;
