@@ -42,9 +42,12 @@ const TransactionInfoMiniblockComponent = ({
 export const TransactionInfoMiniblock = withStyles(
   TransactionInfoMiniblockComponent,
   {
-    local: () =>
+    ssrStyles: () =>
       import(
         'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoMiniblock/styles.scss'
-      )
+      ),
+    clientStyles: () =>
+      require('UI/TransactionInfo/components/transactionInfoFields/TransactionInfoMiniblock/styles.scss')
+        .default
   }
 );

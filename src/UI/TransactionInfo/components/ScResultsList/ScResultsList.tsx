@@ -113,5 +113,8 @@ const ScResultsListComponent = ({
 };
 
 export const ScResultsList = withStyles(ScResultsListComponent, {
-  local: () => import('UI/TransactionInfo/components/ScResultsList/styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/ScResultsList/styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/ScResultsList/styles.scss').default
 });

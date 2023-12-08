@@ -89,6 +89,9 @@ const TransactionDetailsBodyComponent = ({
 export const TransactionDetailsBody = withStyles(
   TransactionDetailsBodyComponent,
   {
-    local: () => import('UI/TransactionDetails/transactionDetails.styles.scss')
+    ssrStyles: () =>
+      import('UI/TransactionDetails/transactionDetails.styles.scss'),
+    clientStyles: () =>
+      require('UI/TransactionDetails/transactionDetails.styles.scss').default
   }
 );

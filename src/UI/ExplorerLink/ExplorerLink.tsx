@@ -56,6 +56,6 @@ const ExplorerLinkComponent = ({
 };
 
 export const ExplorerLink = withStyles(ExplorerLinkComponent, {
-  local: () => import('UI/ExplorerLink/explorerLinkStyles.scss'),
-  localSync: () => require('UI/ExplorerLink/explorerLinkStyles.scss').default
+  ssrStyles: () => import('UI/ExplorerLink/explorerLinkStyles.scss'),
+  clientStyles: () => require('UI/ExplorerLink/explorerLinkStyles.scss').default
 });

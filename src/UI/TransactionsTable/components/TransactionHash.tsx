@@ -50,6 +50,9 @@ export const TransactionHashComponent = ({
 };
 
 export const TransactionHash = withStyles(TransactionHashComponent, {
-  local: () =>
-    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionsTable/components/transactionsTable.styles.scss')
+      .default
 });

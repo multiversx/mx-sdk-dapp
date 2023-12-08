@@ -141,8 +141,11 @@ const PairinglistComponent = ({
 };
 
 export const Pairinglist = withStyles(PairinglistComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/walletConnect/WalletConnectLoginContainer/walletConnectLoginContainerStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/walletConnect/WalletConnectLoginContainer/walletConnectLoginContainerStyles.scss')
+      .default
 });

@@ -57,8 +57,11 @@ const TransactionInfoFeeComponent = ({
 };
 
 export const TransactionInfoFee = withStyles(TransactionInfoFeeComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoFee/styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/transactionInfoFields/TransactionInfoFee/styles.scss')
+      .default
 });

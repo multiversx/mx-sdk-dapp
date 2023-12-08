@@ -225,8 +225,11 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
 };
 
 export const SignStep = withStyles(SignStepComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/signWithDeviceModalStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/signWithDeviceModalStyles.scss')
+      .default
 });

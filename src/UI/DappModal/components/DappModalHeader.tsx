@@ -57,6 +57,6 @@ const DappModalHeaderComponent = ({
 };
 
 export const DappModalHeader = withStyles(DappModalHeaderComponent, {
-  local: () => import('UI/DappModal/dappModalStyles.scss'),
-  localSync: () => require('UI/DappModal/dappModalStyles.scss').default
+  ssrStyles: () => import('UI/DappModal/dappModalStyles.scss'),
+  clientStyles: () => require('UI/DappModal/dappModalStyles.scss').default
 });

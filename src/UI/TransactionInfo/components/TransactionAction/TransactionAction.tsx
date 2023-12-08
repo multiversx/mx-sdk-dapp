@@ -36,6 +36,9 @@ export const TransactionActionComponent = ({
 };
 
 export const TransactionAction = withStyles(TransactionActionComponent, {
-  local: () =>
-    import('UI/TransactionInfo/components/TransactionAction/styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/TransactionAction/styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/TransactionAction/styles.scss')
+      .default
 });
