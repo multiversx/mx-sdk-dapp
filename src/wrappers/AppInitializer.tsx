@@ -94,12 +94,6 @@ export const useAppInitializer = ({
   }, [address, publicKey, logoutRoute]);
 
   useEffect(() => {
-    console.log(
-      'aAAAAAAAAAAA',
-      customNetworkConfig,
-      environment,
-      memoizedDappConfig
-    );
     initializeApp();
   }, [customNetworkConfig, environment, memoizedDappConfig]);
 
