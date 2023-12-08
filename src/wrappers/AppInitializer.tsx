@@ -39,7 +39,6 @@ export const useAppInitializer = ({
   // memoize dappConfig to avoid rerendering of AppInitializer
   const memoizedDappConfig = useMemo(() => dappConfig, []);
 
-  console.log({ dappConfig, memoizedDappConfig });
   const logoutRoute = memoizedDappConfig?.logoutRoute;
 
   const { address, publicKey } = account;
