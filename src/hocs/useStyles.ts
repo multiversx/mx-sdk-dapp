@@ -12,13 +12,13 @@ export type WithStylesImportType = {
 const defaultGlobalImport = async () => await import('assets/sass/main.scss');
 
 export function useStyles({
-  globalImportCallback,
-  localImportCallback,
-  localImportSyncCallback
+  ssrGlobalImportCallback,
+  ssrImportCallback,
+  clientImportCallback
 }: {
-  globalImportCallback?: () => Promise<StylesType>;
-  localImportCallback?: () => Promise<StylesType>;
-  localImportSyncCallback?: () => Record<any, any>;
+  ssrGlobalImportCallback?: () => Promise<StylesType>;
+  ssrImportCallback?: () => Promise<StylesType>;
+  clientImportCallback?: () => StylesType;
 }) {
   const dappConfig = useSelector(dappConfigSelector);
 
@@ -26,16 +26,16 @@ export function useStyles({
     dappConfig?.isSSR ? undefined : require('assets/sass/main.scss').default
   );
   const [styles, setStyles] = React.useState<Record<any, any> | undefined>(
-    dappConfig?.isSSR ? undefined : localImportSyncCallback?.()
+    dappConfig?.isSSR ? undefined : clientImportCallback?.()
   );
 
   const importStyles = async () => {
-    (globalImportCallback
-      ? globalImportCallback()
+    (ssrGlobalImportCallback
+      ? ssrGlobalImportCallback()
       : defaultGlobalImport()
     ).then((styles: StylesType) => setGlobalStyles(styles.default));
 
-    localImportCallback?.().then((styles: StylesType) =>
+    ssrImportCallback?.().then((styles: StylesType) =>
       setStyles(styles.default)
     );
   };
