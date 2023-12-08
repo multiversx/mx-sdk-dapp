@@ -1,16 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
-
 import { DataTestIdsEnum, N_A } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { decodePart } from 'utils/decoders/decodePart';
+import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
 import { WithClassnameType } from '../types';
 
-import styles from './TransactionDataStyles.scss';
+const allOccurences = (sourceStr: string, searchStr: string) => {
+  const occurrences = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(
+    (result) => result.index
+  );
 
-const allOccurences = (sourceStr: string, searchStr: string) =>
-  [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map((a) => a.index);
+  return occurrences.filter((search) => Number.isFinite(search)) as number[];
+};
 
 export interface TransactionDataPropsType extends WithClassnameType {
   data: string;
@@ -20,15 +22,19 @@ export interface TransactionDataPropsType extends WithClassnameType {
     transactionDataInputLabelClassName?: string;
     transactionDataInputValueClassName?: string;
   };
+  transactionIndex: number;
 }
 
-export const TransactionData = ({
+const TransactionDataComponent = ({
+  className = 'dapp-transaction-data',
   data,
   highlight,
+  innerTransactionDataClasses,
   isScCall,
-  className = 'dapp-transaction-data',
-  innerTransactionDataClasses
-}: TransactionDataPropsType) => {
+  transactionIndex,
+  globalStyles,
+  styles
+}: TransactionDataPropsType & WithStylesImportType) => {
   const {
     transactionDataInputLabelClassName,
     transactionDataInputValueClassName
@@ -39,23 +45,29 @@ export const TransactionData = ({
   const [encodedScCall, ...remainingDataFields] =
     highlight && isScCall ? highlight.split('@') : [];
 
-  if (data && highlight && allOccurences(data, highlight).length === 1) {
+  const isHighlightedData = data && highlight;
+  const occurrences = isHighlightedData ? allOccurences(data, highlight) : [];
+  const showHighlight = isHighlightedData && occurrences.length > 0;
+
+  if (showHighlight) {
     switch (true) {
       case data.startsWith(highlight): {
         const [, rest] = data.split(highlight);
+
         output = (
           <>
             {highlight}
-            <span className={globalStyles.textMuted}>{rest}</span>
+            <span className={globalStyles?.textMuted}>{rest}</span>
           </>
         );
         break;
       }
       case data.endsWith(highlight): {
         const [rest] = data.split(highlight);
+
         output = (
           <>
-            <span className={globalStyles.textMuted}>{rest}</span>
+            <span className={globalStyles?.textMuted}>{rest}</span>
             {highlight}
           </>
         );
@@ -63,13 +75,18 @@ export const TransactionData = ({
       }
 
       default: {
-        const [start, end] = data.split(highlight);
+        const { start, end } = getUnHighlightedDataFieldParts({
+          occurrences,
+          transactionIndex,
+          data,
+          highlight
+        });
 
         output = (
           <>
-            <span className={globalStyles.textMuted}>{start}</span>
-            <span className={globalStyles.highlighted}>{highlight}</span>
-            <span className={globalStyles.textMuted}>{end}</span>
+            <span className={globalStyles?.textMuted}>{start}</span>
+            <span className={globalStyles?.highlighted}>{highlight}</span>
+            <span className={globalStyles?.textMuted}>{end}</span>
           </>
         );
         break;
@@ -80,10 +97,10 @@ export const TransactionData = ({
   return (
     <>
       {encodedScCall && (
-        <div className={classNames(styles.data, className)}>
+        <div className={classNames(styles?.data, className)}>
           <span
             className={classNames(
-              styles.label,
+              styles?.label,
               transactionDataInputLabelClassName
             )}
           >
@@ -93,7 +110,7 @@ export const TransactionData = ({
           <div
             data-testid={DataTestIdsEnum.confirmScCall}
             className={classNames(
-              styles.value,
+              styles?.value,
               transactionDataInputValueClassName
             )}
           >
@@ -102,10 +119,10 @@ export const TransactionData = ({
         </div>
       )}
 
-      <div className={styles.data}>
+      <div className={styles?.data}>
         <span
           className={classNames(
-            styles.label,
+            styles?.label,
             transactionDataInputLabelClassName
           )}
         >
@@ -115,7 +132,7 @@ export const TransactionData = ({
         <div
           data-testid={DataTestIdsEnum.confirmData}
           className={classNames(
-            styles.value,
+            styles?.value,
             transactionDataInputValueClassName
           )}
         >
@@ -125,3 +142,7 @@ export const TransactionData = ({
     </>
   );
 };
+
+export const TransactionData = withStyles(TransactionDataComponent, {
+  local: () => import('UI/TransactionData/TransactionDataStyles.scss')
+});

@@ -6,6 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import uniq from 'lodash/uniq';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -37,6 +38,7 @@ import {
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
 
+import { getAccount } from 'utils/account/getAccount';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getDefaultCallbackUrl } from 'utils/window';
@@ -45,7 +47,8 @@ import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
   useSetTransactionNonces,
   getShouldMoveTransactionsToSignedState,
-  checkNeedsGuardianSigning
+  checkNeedsGuardianSigning,
+  checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
 
@@ -259,13 +262,23 @@ export const useSignTransactions = () => {
       return;
     }
 
-    const isLoggedInWithDifferentAccount = transactions.some((tx) => {
-      const sender = tx.getSender().toString();
-      return sender && address !== sender;
-    });
+    const senderAddresses = uniq(
+      transactions
+        .map((tx) => tx.getSender().toString())
+        .filter((sender) => sender)
+    ) as string[];
 
-    // Prevent signing transactions with different account
-    if (isLoggedInWithDifferentAccount) {
+    if (senderAddresses.length > 1) {
+      throw new Error('Multiple senders are not allowed');
+    }
+
+    const senderAccount = senderAddresses.length
+      ? await getAccount(senderAddresses[0])
+      : null;
+
+    const isValidSender = checkIsValidSender(senderAccount, address);
+
+    if (!isValidSender) {
       console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
       return onCancel(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);

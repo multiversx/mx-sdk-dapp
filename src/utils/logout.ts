@@ -3,7 +3,7 @@ import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
-import { getAddress } from './account';
+import { getAddress, getWebviewToken } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
@@ -28,49 +28,43 @@ const broadcastLogoutAcrossTabs = (address: string) => {
 export async function logout(
   callbackUrl?: string,
   onRedirect?: (callbackUrl?: string) => void,
-  shouldAttemptRelogin = true
+  shouldAttemptRelogin = Boolean(getWebviewToken())
 ) {
+  const isLoggedIn = getIsLoggedIn();
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
-  const isLoggedIn = getIsLoggedIn();
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
 
   if (shouldAttemptRelogin && provider?.relogin != null) {
     return await provider.relogin();
   }
 
-  if (!isLoggedIn || !provider) {
-    redirectToCallbackUrl(callbackUrl, onRedirect);
-    return;
+  if (isWalletProvider) {
+    if (!isLoggedIn) {
+      return;
+    }
+
+    preventRedirects();
   }
+
+  const url = addOriginToLocationPath(callbackUrl);
+  store.dispatch(logoutAction());
 
   try {
     const address = await getAddress();
     broadcastLogoutAcrossTabs(address);
   } catch (err) {
-    redirectToCallbackUrl(callbackUrl, onRedirect);
     console.error('error fetching logout address', err);
+    return redirectToCallbackUrl(url, onRedirect);
   }
 
-  if (isWalletProvider) {
-    preventRedirects();
+  if (!provider || providerType === LoginMethodsEnum.none) {
+    return redirectToCallbackUrl(url, onRedirect);
   }
-
-  store.dispatch(logoutAction());
 
   try {
-    const url = addOriginToLocationPath(callbackUrl);
-
-    if (providerType === LoginMethodsEnum.none) {
-      // logout does not exist in empty provider
-      return redirectToCallbackUrl(url, onRedirect);
-    }
-
     if (isWalletProvider) {
-      // allow Redux clearing it's state before navigation
-      setTimeout(() => {
-        provider.logout({ callbackUrl: url });
-      });
+      await provider.logout({ callbackUrl: url });
     } else {
       await provider.logout({ callbackUrl: url });
       redirectToCallbackUrl(url, onRedirect);

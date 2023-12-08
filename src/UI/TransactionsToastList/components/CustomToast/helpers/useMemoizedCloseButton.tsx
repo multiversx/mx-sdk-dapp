@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
+import { useStyles } from 'hocs/useStyles';
 import { DefaultToastDeleteButton } from '../../TransactionToast/components';
-import styles from '../customToast.styles.scss';
 import { CustomToastPropsType } from '../customToast.types';
 
 interface MemoizedCloseButtonPropsType {
@@ -12,13 +12,20 @@ export const useMemoizedCloseButton = ({
   CustomCloseButton,
   onDelete
 }: MemoizedCloseButtonPropsType) => {
+  const { styles } = useStyles({
+    localImportCallback: () =>
+      import(
+        'UI/TransactionsToastList/components/CustomToast/customToast.styles.scss'
+      )
+  });
+
   const closeButton = useMemo(() => {
     return CustomCloseButton ? (
       <CustomCloseButton onClick={onDelete} />
     ) : (
-      <DefaultToastDeleteButton onClick={onDelete} className={styles.close} />
+      <DefaultToastDeleteButton onClick={onDelete} className={styles?.close} />
     );
-  }, [CustomCloseButton, onDelete]);
+  }, [CustomCloseButton, onDelete, styles]);
 
   return closeButton;
 };

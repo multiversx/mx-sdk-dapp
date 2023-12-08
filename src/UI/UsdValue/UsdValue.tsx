@@ -1,10 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { ZERO } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { getUsdValue } from 'utils/operations/getUsdValue';
-
 import { WithClassnameType } from '../types';
 
 // TODO: Rename to "UsdValuePropsType" when sdk-dapp@3.0.0
@@ -16,14 +14,15 @@ export interface UsdValueType extends WithClassnameType {
   'data-testid'?: string;
 }
 
-export const UsdValue = ({
+const UsdValueComponent = ({
   amount,
   usd,
   decimals,
   addEqualSign,
   className,
+  globalStyles,
   ...dataTestId
-}: UsdValueType) => {
+}: UsdValueType & WithStylesImportType) => {
   const value = getUsdValue({
     amount,
     usd,
@@ -37,9 +36,9 @@ export const UsdValue = ({
   return (
     <small
       className={classNames(
-        globalStyles.formText,
-        globalStyles.textSecondary,
-        globalStyles.mt0,
+        globalStyles?.formText,
+        globalStyles?.textSecondary,
+        globalStyles?.mt0,
         className ?? 'dapp-usd-value'
       )}
       {...dataTestId}
@@ -48,3 +47,5 @@ export const UsdValue = ({
     </small>
   );
 };
+
+export const UsdValue = withStyles(UsdValueComponent, {});

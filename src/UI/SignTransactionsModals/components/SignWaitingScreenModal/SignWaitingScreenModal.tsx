@@ -1,42 +1,41 @@
 import React, { MouseEvent } from 'react';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
-
-import styles from './signWaitingScreenModal.styles.scss';
 
 export interface SignWaitingScreenModalPropsType extends SignModalPropsType {
   title: string;
   description: string;
 }
 
-export const SignWaitingScreenModal = ({
+const SignWaitingScreenModalComponent = ({
   handleClose,
   error,
   title,
   description,
   sessionId,
   className = 'dapp-extension-modal',
-  modalContentClassName
-}: SignWaitingScreenModalPropsType) => {
+  modalContentClassName,
+  globalStyles,
+  styles
+}: SignWaitingScreenModalPropsType & WithStylesImportType) => {
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
 
   const classes = {
-    wrapper: classNames(styles.modalContainer, styles.extension, className),
-    icon: globalStyles.textWhite,
+    wrapper: classNames(styles?.modalContainer, styles?.extension, className),
+    icon: globalStyles?.textWhite,
     closeBtn: classNames(
-      globalStyles.btn,
-      globalStyles.btnCloseLink,
-      globalStyles.btnDark,
-      globalStyles.textWhite,
-      globalStyles.mt2
+      globalStyles?.btn,
+      globalStyles?.btnCloseLink,
+      globalStyles?.btnDark,
+      globalStyles?.textWhite,
+      globalStyles?.mt2
     )
   };
 
@@ -58,7 +57,7 @@ export const SignWaitingScreenModal = ({
         icon={error ? faTimes : null}
         iconClass={classes.icon}
         className={modalContentClassName}
-        iconBgClass={error ? globalStyles.bgDanger : globalStyles.bgWarning}
+        iconBgClass={error ? globalStyles?.bgDanger : globalStyles?.bgWarning}
         iconSize='3x'
         title={title}
         description={description}
@@ -76,3 +75,13 @@ export const SignWaitingScreenModal = ({
     </ModalContainer>
   );
 };
+
+export const SignWaitingScreenModal = withStyles(
+  SignWaitingScreenModalComponent,
+  {
+    local: () =>
+      import(
+        'UI/SignTransactionsModals/components/SignWaitingScreenModal/signWaitingScreenModal.styles.scss'
+      )
+  }
+);

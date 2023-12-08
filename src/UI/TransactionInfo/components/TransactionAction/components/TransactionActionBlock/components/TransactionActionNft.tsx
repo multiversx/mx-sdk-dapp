@@ -1,39 +1,39 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ExplorerLink } from 'UI/ExplorerLink';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { TransactionActionNftReturnType } from 'utils/transactions/transactionInfoHelpers/getTransactionActionNftText';
-import styles from '../styles.scss';
 import { NftBadge } from './NftBadge';
 
-export const TransactionActionNft = ({
+const TransactionActionNftComponent = ({
   badgeText,
   tokenFormattedAmount,
   tokenExplorerLink,
   tokenLinkText,
   token,
-  showLastNonZeroDecimal
-}: TransactionActionNftReturnType) => {
+  showLastNonZeroDecimal,
+  globalStyles,
+  styles
+}: TransactionActionNftReturnType & WithStylesImportType) => {
   if (!token.identifier) {
     return null;
   }
 
   return (
-    <div className={styles.transactionActionNft}>
+    <div className={styles?.transactionActionNft}>
       {badgeText != null && (
         <NftBadge
           text={badgeText}
-          className={classNames(globalStyles.mr1, globalStyles.myAuto)}
+          className={classNames(globalStyles?.mr1, globalStyles?.myAuto)}
         />
       )}
 
       {tokenFormattedAmount != null && (
         <div
-          className={classNames(globalStyles.mr1, {
-            [globalStyles.textTruncate]: token.svgUrl
+          className={classNames(globalStyles?.mr1, {
+            [globalStyles?.textTruncate ?? '']: token.svgUrl
           })}
         >
           <FormatAmount
@@ -50,24 +50,24 @@ export const TransactionActionNft = ({
       <ExplorerLink
         page={tokenExplorerLink}
         data-testid={DataTestIdsEnum.nftExplorerLink}
-        className={classNames(styles.explorer, {
-          [globalStyles.sideLink]: token.svgUrl,
-          [globalStyles.dFlex]: token.svgUrl,
-          [globalStyles.textTruncate]: !token.svgUrl
+        className={classNames(styles?.explorer, {
+          [globalStyles?.sideLink ?? '']: token.svgUrl,
+          [globalStyles?.dFlex ?? '']: token.svgUrl,
+          [globalStyles?.textTruncate ?? '']: !token.svgUrl
         })}
       >
-        <div className={styles.data}>
+        <div className={styles?.data}>
           {token.svgUrl && (
             <img
               src={token.svgUrl}
               alt={token.name}
-              className={classNames(globalStyles.sideIcon, globalStyles.mr1)}
+              className={classNames(globalStyles?.sideIcon, globalStyles?.mr1)}
             />
           )}
 
           <span
             className={classNames({
-              [styles.truncate]: token.ticker === token.collection
+              [styles?.truncate ?? '']: token.ticker === token.collection
             })}
           >
             {tokenLinkText}
@@ -77,3 +77,10 @@ export const TransactionActionNft = ({
     </div>
   );
 };
+
+export const TransactionActionNft = withStyles(TransactionActionNftComponent, {
+  local: () =>
+    import(
+      'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock/styles.scss'
+    )
+});

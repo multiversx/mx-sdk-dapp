@@ -1,9 +1,7 @@
 import React from 'react';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { timeAgo } from 'utils/operations/timeRemaining';
 import { getHumanReadableTimeFormat } from 'utils/transactions/getInterpretedTransaction/helpers/getHumanReadableTimeFormat';
-
-import styles from '../TransactionsTable/components/transactionsTable.styles.scss';
 
 export interface TimeAgoPropsType {
   value: number;
@@ -11,11 +9,12 @@ export interface TimeAgoPropsType {
   tooltip?: boolean;
 }
 
-export const TimeAgo = ({
+const TimeAgoComponent = ({
   value,
   short = false,
-  tooltip = false
-}: TimeAgoPropsType) => {
+  tooltip = false,
+  styles
+}: TimeAgoPropsType & WithStylesImportType) => {
   const result = timeAgo(value * 1000, short);
 
   const component = tooltip ? (
@@ -33,5 +32,10 @@ export const TimeAgo = ({
     <span data-testid={`timeAgo-${value}`}>{result}</span>
   );
 
-  return <span className={styles.transactionCell}>{component}</span>;
+  return <span className={styles?.transactionCell}>{component}</span>;
 };
+
+export const TimeAgo = withStyles(TimeAgoComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});

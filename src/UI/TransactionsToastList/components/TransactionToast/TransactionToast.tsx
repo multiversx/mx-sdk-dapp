@@ -1,11 +1,9 @@
 import React, { ReactNode } from 'react';
-
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { Progress } from 'UI/Progress';
-
 import { WithClassnameType } from '../../../types';
 import { TransactionToastContent, TransactionToastWrapper } from './components';
 import { useTransactionToast } from './hooks/useTransactionToast';
-import styles from './transactionToast.styles.scss';
 import {
   TransactionToastCustomizationProps,
   TransactionToastDefaultProps
@@ -19,7 +17,7 @@ export interface TransactionToastPropsType
   customization?: TransactionToastCustomizationProps;
 }
 
-export const TransactionToast = ({
+const TransactionToastComponent = ({
   toastId,
   title = '',
   className = 'dapp-transaction-toast',
@@ -29,8 +27,9 @@ export const TransactionToast = ({
   lifetimeAfterSuccess,
   status,
   transactions,
-  customization
-}: TransactionToastPropsType) => {
+  customization,
+  styles
+}: TransactionToastPropsType & WithStylesImportType) => {
   const {
     isCrossShard,
     progress,
@@ -63,7 +62,7 @@ export const TransactionToast = ({
         isCrossShard={isCrossShard}
       >
         <TransactionToastContentComponent
-          style={styles}
+          style={styles ?? {}}
           toastDataState={toastDataState}
           transactions={transactions ?? []}
           toastTitle={title}
@@ -76,3 +75,10 @@ export const TransactionToast = ({
     </TransactionToastWrapper>
   );
 };
+
+export const TransactionToast = withStyles(TransactionToastComponent, {
+  local: () =>
+    import(
+      'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss'
+    )
+});

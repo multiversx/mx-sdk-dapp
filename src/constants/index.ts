@@ -1,6 +1,7 @@
 export * from './dataTestIds.enum';
 export * from './errorsMessages';
 export * from './extension.constants';
+export * from './guardianActions.enum';
 export * from './ledger.constants';
 export * from './ledgerErrorCodes';
 export * from './mnemonicWords';
@@ -27,6 +28,7 @@ export const ALL_SHARDS_SHARD_ID = 4294967280;
 
 export const DAPP_INIT_ROUTE = '/dapp/init';
 export const WALLET_SIGN_SESSION = 'signSession';
+export const SDK_DAPP_VERSION = 'sdk-dapp-version';
 
 export const LOGOUT_ACTION_NAME = 'logout';
 export const LOGIN_ACTION_NAME = 'login';

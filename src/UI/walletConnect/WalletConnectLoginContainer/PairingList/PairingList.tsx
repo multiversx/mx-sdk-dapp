@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { faCircleNotch, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { PairingTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';
-
 import { WithClassnameType } from '../../../types';
-import styles from '../walletConnectLoginContainerStyles.scss';
 import { ImageWithFallback } from './ImageWithFallback';
 
 export interface WalletConnectPairingListClassesType {
@@ -26,13 +25,14 @@ export interface PairingListPropsType extends WithClassnameType {
   pairingListClasses?: WalletConnectPairingListClassesType;
 }
 
-export const Pairinglist = ({
+const PairinglistComponent = ({
   connectExisting,
   removeExistingPairing,
   activePairings,
   className = 'dapp-wallet-connect-pairing-list',
-  pairingListClasses
-}: PairingListPropsType) => {
+  pairingListClasses,
+  styles
+}: PairingListPropsType & WithStylesImportType) => {
   const [topicLoading, setTopicLoading] = useState<string>('');
 
   const {
@@ -50,16 +50,21 @@ export const Pairinglist = ({
   }, [activePairings]);
 
   return (
-    <div className={classNames(styles.xPortalPairings, className)}>
-      <p className={classNames(styles.xPortalPairingsLead, leadClassName)}>
+    <div className={classNames(styles?.xPortalPairings, className)}>
+      <p className={classNames(styles?.xPortalPairingsLead, leadClassName)}>
         or choose an existing pairing:
       </p>
 
-      <div className={classNames(styles.xPortalPairingsList, wrapperClassName)}>
+      <div
+        className={classNames(styles?.xPortalPairingsList, wrapperClassName)}
+      >
         {activePairings.map((pairing) => (
           <button
             type='button'
-            className={classNames(styles.xPortalPairingButton, buttonClassName)}
+            className={classNames(
+              styles?.xPortalPairingButton,
+              buttonClassName
+            )}
             key={pairing.topic}
             onClick={() => {
               connectExisting(pairing);
@@ -74,7 +79,7 @@ export const Pairinglist = ({
                     className={classNames(
                       'fa-spin',
                       'slow-spin',
-                      styles.xPortalPairingLoader,
+                      styles?.xPortalPairingLoader,
                       loaderClassName
                     )}
                   />
@@ -85,7 +90,7 @@ export const Pairinglist = ({
                         src={pairing.peerMetadata.icons[0]}
                         alt={pairing.peerMetadata.name}
                         className={classNames(
-                          styles.xPortalPairingImage,
+                          styles?.xPortalPairingImage,
                           iconClassName
                         )}
                       />
@@ -95,28 +100,28 @@ export const Pairinglist = ({
 
                 <div
                   className={classNames(
-                    styles.xPortalPairingDetails,
+                    styles?.xPortalPairingDetails,
                     detailsClassName
                   )}
                 >
-                  <strong className={styles.xPortalPairingDetail}>
+                  <strong className={styles?.xPortalPairingDetail}>
                     {topicLoading === pairing.topic
                       ? `Confirm on ${pairing.peerMetadata.name}`
                       : pairing.peerMetadata.name}
                   </strong>
 
-                  <span className={styles.xPortalPairingDetail}>
+                  <span className={styles?.xPortalPairingDetail}>
                     {pairing.peerMetadata.description}
                   </span>
 
-                  <span className={styles.xPortalPairingDetail}>
+                  <span className={styles?.xPortalPairingDetail}>
                     {pairing.peerMetadata.url}
                   </span>
                 </div>
 
                 <div
                   className={classNames(
-                    styles.xPortalPairingRemove,
+                    styles?.xPortalPairingRemove,
                     removeClassName
                   )}
                   onClick={(event) => {
@@ -134,3 +139,10 @@ export const Pairinglist = ({
     </div>
   );
 };
+
+export const Pairinglist = withStyles(PairinglistComponent, {
+  local: () =>
+    import(
+      'UI/walletConnect/WalletConnectLoginContainer/walletConnectLoginContainerStyles.scss'
+    )
+});

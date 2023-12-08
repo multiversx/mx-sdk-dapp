@@ -13,7 +13,9 @@ describe('builtCallbackUrl tests', () => {
         callbackUrl: url,
         urlParams: { status: 'success' }
       })
-    ).toBe('https://wallet.multiversx.com/?status=success');
+    ).toBe(
+      'https://wallet.multiversx.com/?status=success&sdk-dapp-version=__sdkDappVersion'
+    );
   });
 
   test('adds urlParams and keeps existing hash', () => {
@@ -22,7 +24,9 @@ describe('builtCallbackUrl tests', () => {
         callbackUrl: url + '#test',
         urlParams: { status: 'success' }
       })
-    ).toBe('https://wallet.multiversx.com/?status=success#test');
+    ).toBe(
+      'https://wallet.multiversx.com/?status=success&sdk-dapp-version=__sdkDappVersion#test'
+    );
   });
 
   test('keeps existing urlParams', () => {
@@ -31,7 +35,9 @@ describe('builtCallbackUrl tests', () => {
         callbackUrl: url + '?page=1',
         urlParams: { status: 'success' }
       })
-    ).toBe('https://wallet.multiversx.com/?page=1&status=success');
+    ).toBe(
+      'https://wallet.multiversx.com/?page=1&status=success&sdk-dapp-version=__sdkDappVersion'
+    );
   });
 
   test('keeps existing hash', () => {
@@ -40,7 +46,9 @@ describe('builtCallbackUrl tests', () => {
         callbackUrl: url + '?page=1#logs',
         urlParams: { status: 'success' }
       })
-    ).toBe('https://wallet.multiversx.com/?page=1&status=success#logs');
+    ).toBe(
+      'https://wallet.multiversx.com/?page=1&status=success&sdk-dapp-version=__sdkDappVersion#logs'
+    );
   });
 
   test('throws error if callbackUrl is invalid and urlParams are defined', () => {

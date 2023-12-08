@@ -2,20 +2,20 @@ import React from 'react';
 import { faDiamond } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
-
 import MultiversXIcon from 'assets/icons/EGLD.svg';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { NftEnumType } from 'types/tokens.types';
-
 import { getEgldLabel } from 'utils/network';
-import styles from './tokenAvatarStyles.scss';
 
 export interface TokenAvatarPropsType {
   type?: NftEnumType | string;
   avatar?: string;
 }
 
-export const TokenAvatar = (props: TokenAvatarPropsType) => {
-  const { avatar, type } = props;
+const TokenAvatarComponent = (
+  props: TokenAvatarPropsType & WithStylesImportType
+) => {
+  const { avatar, type, styles } = props;
 
   const egldLabel = getEgldLabel();
   const isNft = type === NftEnumType.NonFungibleESDT;
@@ -31,9 +31,9 @@ export const TokenAvatar = (props: TokenAvatarPropsType) => {
   if (isNft || isSft) {
     return (
       <div
-        className={classNames(styles.tokenAvatar, {
-          [styles.tokenAvatarNft]: isNft,
-          [styles.tokenAvatarSft]: isSft
+        className={classNames(styles?.tokenAvatar, {
+          [styles?.tokenAvatarNft]: isNft,
+          [styles?.tokenAvatarSft]: isSft
         })}
       >
         {isNft ? 'NFT' : 'SFT'}
@@ -42,8 +42,15 @@ export const TokenAvatar = (props: TokenAvatarPropsType) => {
   }
 
   return (
-    <div className={styles.tokenAvatar}>
+    <div className={styles?.tokenAvatar}>
       {isEgld ? <MultiversXIcon /> : tokenIcon}
     </div>
   );
 };
+
+export const TokenAvatar = withStyles(TokenAvatarComponent, {
+  local: () =>
+    import(
+      'UI/SignTransactionsModals/SignWithDeviceModal/components/components/TokenAvatar/tokenAvatarStyles.scss'
+    )
+});

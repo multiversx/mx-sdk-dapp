@@ -5,14 +5,15 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons/faTimes';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import lodash from 'lodash';
-
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { getTransactionMessages } from 'utils/transactions/transactionInfoHelpers/getTransactionMessages';
 import { getTransactionStatus } from 'utils/transactions/transactionInfoHelpers/getTransactionStatus';
-
 import { WithTransactionType } from '../../../UI/types';
 
-export const TransactionIcon = ({ transaction }: WithTransactionType) => {
+export const TransactionIconComponent = ({
+  transaction,
+  globalStyles
+}: WithTransactionType & WithStylesImportType) => {
   const transactionMessages = getTransactionMessages(transaction);
 
   const { failed, invalid, pending } = getTransactionStatus(transaction);
@@ -42,7 +43,9 @@ export const TransactionIcon = ({ transaction }: WithTransactionType) => {
       title={tooltip}
       icon={icon}
       size={icon === faTimes ? '1x' : 'sm'}
-      className={classNames(globalStyles.mr1, globalStyles.textSecondary)}
+      className={classNames(globalStyles?.mr1, globalStyles?.textSecondary)}
     />
   );
 };
+
+export const TransactionIcon = withStyles(TransactionIconComponent, {});

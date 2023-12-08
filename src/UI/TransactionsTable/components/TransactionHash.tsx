@@ -1,20 +1,18 @@
 import React from 'react';
 import classNames from 'classnames';
-
-import globalStyles from 'assets/sass/main.scss';
 import { DataTestIdsEnum } from 'constants/index';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ExplorerLink } from 'UI/ExplorerLink/ExplorerLink';
 import { Trim } from 'UI/Trim/Trim';
-
 import { WithClassnameType, WithTransactionType } from 'UI/types';
 import { TransactionIcon } from './TransactionIcon';
 
-import styles from './transactionsTable.styles.scss';
-
-export const TransactionHash = ({
+export const TransactionHashComponent = ({
   className,
-  transaction
-}: WithTransactionType & WithClassnameType) => {
+  transaction,
+  globalStyles,
+  styles
+}: WithTransactionType & WithClassnameType & WithStylesImportType) => {
   const transactionHashLink = `/transactions/${
     transaction.originalTxHash
       ? `${transaction.originalTxHash}#${transaction.txHash}`
@@ -24,9 +22,9 @@ export const TransactionHash = ({
   return (
     <div
       className={classNames(
-        globalStyles.dFlex,
-        globalStyles.alignItemsCenter,
-        styles.transactionCell,
+        globalStyles?.dFlex,
+        globalStyles?.alignItemsCenter,
+        styles?.transactionCell,
         className
       )}
     >
@@ -36,10 +34,10 @@ export const TransactionHash = ({
         page={transactionHashLink}
         data-testid={DataTestIdsEnum.transactionLink}
         className={classNames(
-          globalStyles.w100,
-          styles.transactionCellMargin,
-          styles.transactionCellOverflow,
-          styles.transactionCellLink
+          globalStyles?.w100,
+          styles?.transactionCellMargin,
+          styles?.transactionCellOverflow,
+          styles?.transactionCellLink
         )}
       >
         <Trim
@@ -50,3 +48,8 @@ export const TransactionHash = ({
     </div>
   );
 };
+
+export const TransactionHash = withStyles(TransactionHashComponent, {
+  local: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+});

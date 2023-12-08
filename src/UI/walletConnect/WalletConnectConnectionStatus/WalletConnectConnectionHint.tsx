@@ -1,25 +1,32 @@
 import React from 'react';
 import classNames from 'classnames';
-import globalStyles from 'assets/sass/main.scss';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 
-export const WalletConnectConnectionHint = () => (
+const WalletConnectConnectionHintComponent = ({
+  globalStyles
+}: WithStylesImportType) => (
   <div
     className={classNames(
-      globalStyles.dFlex,
-      globalStyles.flexColumn,
-      globalStyles.alignItemsCenter,
+      globalStyles?.dFlex,
+      globalStyles?.flexColumn,
+      globalStyles?.alignItemsCenter,
 
-      globalStyles.mt2
+      globalStyles?.mt2
     )}
   >
-    <small className={globalStyles.textSecondary}>
+    <small className={globalStyles?.textSecondary}>
       Make sure that the phone is unlocked and the app is opened.
     </small>
     <small>
       Hint:{' '}
-      <span className={globalStyles.textSecondary}>
+      <span className={globalStyles?.textSecondary}>
         Battery saving mode might have an effect on the connection quality.
       </span>
     </small>
   </div>
+);
+
+export const WalletConnectConnectionHint = withStyles(
+  WalletConnectConnectionHintComponent,
+  {}
 );
