@@ -92,5 +92,6 @@ const DappModalComponent = ({
 };
 
 export const DappModal = withStyles(DappModalComponent, {
-  local: () => import('UI/DappModal/dappModalStyles.scss')
+  local: () => import('UI/DappModal/dappModalStyles.scss'),
+  localSync: () => require('UI/DappModal/dappModalStyles.scss').default
 });

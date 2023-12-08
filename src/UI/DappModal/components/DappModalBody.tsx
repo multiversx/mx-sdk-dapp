@@ -20,5 +20,6 @@ const DappModalBodyComponent = ({
 };
 
 export const DappModalBody = withStyles(DappModalBodyComponent, {
-  local: () => import('UI/DappModal/dappModalStyles.scss')
+  local: () => import('UI/DappModal/dappModalStyles.scss'),
+  localSync: () => require('UI/DappModal/dappModalStyles.scss').default
 });
