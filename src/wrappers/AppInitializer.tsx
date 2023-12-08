@@ -38,6 +38,8 @@ export const useAppInitializer = ({
 
   // memoize dappConfig to avoid rerendering of AppInitializer
   const memoizedDappConfig = useMemo(() => dappConfig, []);
+
+  console.log({ dappConfig, memoizedDappConfig });
   const logoutRoute = memoizedDappConfig?.logoutRoute;
 
   const { address, publicKey } = account;
@@ -75,7 +77,9 @@ export const useAppInitializer = ({
   }
 
   async function initializeApp() {
-    dispatch(setDappConfig(memoizedDappConfig));
+    if (memoizedDappConfig) {
+      dispatch(setDappConfig(memoizedDappConfig));
+    }
     dispatch(setLogoutRoute(logoutRoute));
     await initializeNetwork();
 
@@ -92,6 +96,12 @@ export const useAppInitializer = ({
   }, [address, publicKey, logoutRoute]);
 
   useEffect(() => {
+    console.log(
+      'aAAAAAAAAAAA',
+      customNetworkConfig,
+      environment,
+      memoizedDappConfig
+    );
     initializeApp();
   }, [customNetworkConfig, environment, memoizedDappConfig]);
 
