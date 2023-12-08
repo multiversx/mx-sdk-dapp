@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { useSelector } from '../reduxStore/DappProviderContext';
+import { dappConfigSelector } from '../reduxStore/selectors';
 
 type StylesType = typeof import('*.scss');
 
@@ -7,17 +9,25 @@ export type WithStylesImportType = {
   styles?: Record<any, any>;
 };
 
+const defaultGlobalImport = async () => await import('assets/sass/main.scss');
+
 export function useStyles({
   globalImportCallback,
-  localImportCallback
+  localImportCallback,
+  localImportSyncCallback
 }: {
   globalImportCallback?: () => Promise<StylesType>;
   localImportCallback?: () => Promise<StylesType>;
+  localImportSyncCallback?: () => Record<any, any>;
 }) {
-  const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>();
-  const [styles, setStyles] = React.useState<Record<any, any>>();
+  const dappConfig = useSelector(dappConfigSelector);
 
-  const defaultGlobalImport = async () => await import('assets/sass/main.scss');
+  const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>(
+    dappConfig?.isSSR ? undefined : require('assets/sass/main.scss').default
+  );
+  const [styles, setStyles] = React.useState<Record<any, any> | undefined>(
+    dappConfig?.isSSR ? undefined : localImportSyncCallback?.()
+  );
 
   const importStyles = async () => {
     (globalImportCallback
@@ -31,7 +41,9 @@ export function useStyles({
   };
 
   useEffect(() => {
-    importStyles();
+    if (dappConfig?.isSSR) {
+      importStyles();
+    }
   }, []);
 
   return {

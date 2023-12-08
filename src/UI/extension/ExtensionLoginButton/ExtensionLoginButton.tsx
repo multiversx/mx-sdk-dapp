@@ -21,11 +21,6 @@ export const ExtensionLoginButton = isSSR()
       const globalStyles = globalStylesCallback();
       const styles = stylesCallback();
 
-      console.log({
-        globalStyles,
-        styles
-      });
-
       return (
         <ExtensionLoginButtonComponent
           {...props}

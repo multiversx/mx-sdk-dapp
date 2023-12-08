@@ -13,12 +13,19 @@ export function withStyles<TProps>(
   imports: {
     global?: () => Promise<StylesType>;
     local?: () => Promise<StylesType>;
+    localSync?: () => StylesType;
   }
 ) {
   return (props: TProps) => {
     const { globalStyles, styles } = useStyles({
       globalImportCallback: imports.global,
-      localImportCallback: imports.local
+      localImportCallback: imports.local,
+      localImportSyncCallback: imports.localSync
+    });
+
+    console.log({
+      globalStyles,
+      styles
     });
 
     return (
