@@ -18,9 +18,8 @@ const CopyButtonComponent = ({
   className = 'dapp-copy-button',
   copyIcon = faCopy,
   successIcon = faCheck,
-  styles //  = isSSR() ? {} : require('./copyButton.styles.scss')
-}: // globalStyles = isSSR() ? {} : require('assets/sass/main.scss')
-CopyButtonPropsType & WithStylesImportType) => {
+  styles
+}: CopyButtonPropsType & WithStylesImportType) => {
   const [copyResult, setCopyResut] = useState({
     default: true,
     success: false
