@@ -1,33 +1,42 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { PlatformsEnum, WebViewProviderResponseEnums } from 'types/index';
-import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { requestMethods } from './requestMethods';
+import { getTargetOrigin } from './targetOrigin';
 
 const notInitializedError = (caller: string) => () => {
   throw new Error(`Unable to perform ${caller}, Provider not initialized`);
 };
 
 const currentPlatform = detectCurrentPlatform();
-export const targetOrigin = isWindowAvailable()
-  ? window?.parent?.origin ?? '*'
-  : '*';
 
 const messageType = 'message';
 
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
+    console.log('handleMessageReceived', event);
     let eventData = event.data;
     if (
-      event.target.origin != targetOrigin &&
+      event.origin != getTargetOrigin() &&
       currentPlatform != PlatformsEnum.reactNative
     ) {
+      console.log('event.origin != getTargetOrigin()');
       return;
     }
     try {
-      eventData = JSON.parse(eventData);
+      if (typeof eventData === 'string') {
+        console.log('typeof eventData === string');
+        eventData = JSON.parse(eventData);
+      } else {
+        console.log('typeof eventData !== string');
+        eventData = {
+          type: WebViewProviderResponseEnums.signMessageResponse,
+          message: eventData.payload
+        };
+      }
+
       cb(eventData);
     } catch (err) {
       console.error('error parsing response');
@@ -37,6 +46,7 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
     document.addEventListener(messageType, handleMessageReceived);
   }
   if (window) {
+    console.log('window.addEventListener - messageType = ', messageType);
     window.addEventListener(messageType, handleMessageReceived);
   }
 };

@@ -1,12 +1,12 @@
 import { PlatformsEnum, WebViewProviderRequestEnums } from 'types/index';
-import { targetOrigin } from './webviewProvider';
+import { getTargetOrigin } from './targetOrigin';
 
 export const requestMethods = {
   signTransactions: {
     [PlatformsEnum.ios]: (transactions: any) =>
       (window as any).webkit.messageHandlers.signTransactions.postMessage(
         transactions,
-        targetOrigin
+        getTargetOrigin()
       ),
     [PlatformsEnum.reactNative]: (message: any) =>
       (window as any)?.ReactNativeWebView.postMessage(
@@ -17,12 +17,12 @@ export const requestMethods = {
       ),
 
     [PlatformsEnum.web]: (message: any) =>
-      (window as any)?.postMessage(
+      (window as any)?.parent.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signTransactionsRequest,
-          message
+          payload: message
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
   signMessage: {
@@ -36,12 +36,12 @@ export const requestMethods = {
         })
       ),
     [PlatformsEnum.web]: (message: any) =>
-      (window as any)?.postMessage(
+      (window as any)?.parent?.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.signMessageRequest,
           message
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
   logout: {
@@ -54,11 +54,11 @@ export const requestMethods = {
         })
       ),
     [PlatformsEnum.web]: () =>
-      (window as any)?.postMessage(
+      (window as any)?.parent.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.logoutRequest
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
   login: {
@@ -71,11 +71,11 @@ export const requestMethods = {
         })
       ),
     [PlatformsEnum.web]: () =>
-      (window as any)?.postMessage(
+      (window as any)?.parent.postMessage(
         JSON.stringify({
           type: WebViewProviderRequestEnums.loginRequest
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   }
 };

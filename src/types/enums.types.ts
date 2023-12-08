@@ -87,7 +87,8 @@ export enum TransactionsDefaultTitles {
 export enum PlatformsEnum {
   ios = 'ios',
   reactNative = 'reactNative',
-  web = 'web'
+  web = 'web',
+  webWallet = 'webWallet'
 }
 
 export enum WebViewProviderRequestBaseEnums {
