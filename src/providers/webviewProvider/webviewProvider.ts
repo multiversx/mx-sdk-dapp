@@ -51,7 +51,7 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
   }
 };
 
-export const webviewProvider: any = {
+export const webviewProvider = {
   init: async () => {
     return true;
   },
@@ -109,19 +109,6 @@ export const webviewProvider: any = {
       requestMethods.signMessage[currentPlatform](message);
       const waitForSignedMessageResponse: Promise<string> = new Promise(
         (resolve, reject) => {
-          (window as any).signMessageResponse = (
-            signedMessage: string,
-            error: string
-          ) => {
-            if (error) {
-              reject(error);
-              (window as any).signMessageResponse = null;
-              return;
-            }
-            resolve(signedMessage);
-            (window as any).signMessageResponse = null;
-          };
-
           function handleSignMessageResponse(eventData: any) {
             const { message, type } = eventData;
             if (
@@ -156,17 +143,6 @@ export const webviewProvider: any = {
       requestMethods.signTransactions[currentPlatform](plainTransactions);
       const waitForSignedTransactionsResponse: Promise<Transaction[]> =
         new Promise((resolve, reject) => {
-          (window as any).transactionsSigned = (txs: any, error: string) => {
-            txs = JSON.parse(txs);
-            if (error) {
-              reject(error);
-              (window as any).transactionsSigned = null;
-              return;
-            }
-            resolve(txs.map((tx: any) => Transaction.fromPlainObject(tx)));
-            (window as any).transactionsSigned = null;
-          };
-
           function handleSignTransactionResponse(eventData: any) {
             const { message, type } = eventData;
             if (
