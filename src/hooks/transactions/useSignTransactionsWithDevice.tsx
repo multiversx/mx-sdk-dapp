@@ -144,11 +144,15 @@ export function useSignTransactionsWithDevice(
     clearTransactionsToSignWithWarning(sessionId);
   }
 
-  async function handleSignTransaction(transaction: Transaction) {
+  async function handleSignTransaction(transaction: Transaction | null) {
     const connectedProvider =
       providerType !== LoginMethodsEnum.ledger
         ? provider
         : await getLedgerProvider();
+
+    if (!transaction) {
+      return null;
+    }
 
     return await connectedProvider.signTransaction(transaction);
   }

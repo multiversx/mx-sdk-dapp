@@ -1,9 +1,12 @@
+import { Transaction, SignableMessage } from '@multiversx/sdk-core';
 import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
+import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
+import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './targetOrigin';
 
 export type ResponseTypeMap = {
@@ -32,7 +35,20 @@ type SendPostMessageType<T extends CrossWindowProviderRequestEnums> = {
   payload?: any;
 };
 
+const notInitializedError = (caller: string) => () => {
+  throw new Error(`Unable to perform ${caller}, Provider not initialized`);
+};
+
 export class NewWebviewProvider {
+  private static instance: NewWebviewProvider;
+
+  static getInstance() {
+    if (!NewWebviewProvider.instance) {
+      NewWebviewProvider.instance = new NewWebviewProvider();
+    }
+    return NewWebviewProvider.instance;
+  }
+
   init = async () => {
     return true;
   };
@@ -42,29 +58,74 @@ export class NewWebviewProvider {
   };
 
   logout = async () => {
-    return await this.sendPostMessage({
+    this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.logoutRequest
     });
+    return true;
   };
 
   relogin = async () => {
-    return await this.sendPostMessage({
+    const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.loginRequest
     });
+
+    try {
+      const { accessToken, error } = response.payload;
+      if (!error) {
+        loginWithNativeAuthToken(accessToken);
+        setExternalProviderAsAccountProvider();
+        return accessToken;
+      } else {
+        console.error('Unable to login', error);
+        return null;
+      }
+    } catch (err) {
+      throw new Error('Unable to login');
+    }
   };
 
-  signTransactions = async (transactions: IPlainTransactionObject[]) => {
-    return await this.sendPostMessage({
+  signTransactions = async (
+    transactionsToSign: (IPlainTransactionObject | Transaction)[]
+  ): Promise<Transaction[] | null> => {
+    const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.signTransactionsRequest,
-      payload: transactions
+      payload: transactionsToSign
     });
+
+    const { transactions, error } = response.payload;
+
+    try {
+      if (!error) {
+        return transactions.map((tx: any) => Transaction.fromPlainObject(tx));
+      } else {
+        console.error('Unable to sign', error);
+        return null;
+      }
+    } catch (err) {
+      throw new Error('Unable to sign');
+    }
   };
 
-  signMessage = async (message: string) => {
-    return await this.sendPostMessage({
+  signTransaction = async (
+    transaction: IPlainTransactionObject | Transaction
+  ) => {
+    const response = await this.signTransactions([transaction]);
+    return response?.[0];
+  };
+
+  signMessage = async (message: SignableMessage) => {
+    const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.signMessageRequest,
       payload: message
     });
+
+    const { signedMessage, error } = response.payload;
+
+    if (!error) {
+      return signedMessage;
+    } else {
+      throw new Error(error);
+    }
   };
 
   async waitingForResponse<T extends CrossWindowProviderResponseEnums>(
@@ -128,10 +189,15 @@ export class NewWebviewProvider {
         getTargetOrigin()
       );
     } else if (safeWindow.parent) {
+      console.log('sendPostMessage - parent', safeWindow.parent);
+      console.log('sendPostMessage - message', message);
       safeWindow.parent.postMessage(JSON.stringify(message), getTargetOrigin());
     }
 
     const data = await this.waitingForResponse(responseTypeMap[message.type]);
+
+    console.log('sendPostMessage - data', data);
+
     return data;
   };
 
@@ -145,4 +211,8 @@ export class NewWebviewProvider {
     console.log('handleMessageReceived', event);
     return Promise.resolve(true);
   }
+
+  isInitialized = () => true;
+  isConnected = async () => true;
+  getAddress = notInitializedError('getAddress');
 }

@@ -7,7 +7,7 @@ export interface DappOptions {
 
 export interface IDappProvider {
   init?(): Promise<boolean>;
-  login?(options?: DappOptions): Promise<string>;
+  login?(options?: DappOptions): Promise<string | boolean>;
   logout(options?: DappOptions): Promise<boolean>;
   getAddress(): Promise<string>;
   isInitialized(): boolean;
@@ -19,11 +19,11 @@ export interface IDappProvider {
   signTransaction(
     transaction: Transaction,
     options?: DappOptions
-  ): Promise<Transaction>;
+  ): Promise<Transaction | null | undefined>;
   signTransactions(
     transactions: Transaction[],
     options?: DappOptions
-  ): Promise<Transaction[]>;
+  ): Promise<Transaction[] | null | undefined>;
   signMessage<T extends SignableMessage>(
     message: T,
     options: DappOptions

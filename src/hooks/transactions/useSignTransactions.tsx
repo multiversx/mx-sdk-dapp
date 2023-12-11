@@ -156,6 +156,9 @@ export const useSignTransactions = () => {
       callbackRoute,
       customTransactionInformation
     } = transactionsToSign;
+
+    console.log('transactionsToSign', transactionsToSign);
+
     const { redirectAfterSign } = customTransactionInformation;
     const defaultCallbackUrl = getDefaultCallbackUrl();
     const redirectRoute = callbackRoute || defaultCallbackUrl;
@@ -182,17 +185,18 @@ export const useSignTransactions = () => {
 
     try {
       isSigningRef.current = true;
-      const signedTransactions: Transaction[] = await provider.signTransactions(
-        isGuarded && allowGuardian
-          ? transactions.map((transaction) => {
-              transaction.setVersion(TransactionVersion.withTxOptions());
-              transaction.setOptions(
-                TransactionOptions.withOptions({ guarded: true })
-              );
-              return transaction;
-            })
-          : transactions
-      );
+      const signedTransactions: Transaction[] =
+        (await provider.signTransactions(
+          isGuarded && allowGuardian
+            ? transactions.map((transaction) => {
+                transaction.setVersion(TransactionVersion.withTxOptions());
+                transaction.setOptions(
+                  TransactionOptions.withOptions({ guarded: true })
+                );
+                return transaction;
+              })
+            : transactions
+        )) ?? [];
       isSigningRef.current = false;
 
       const shouldMoveTransactionsToSignedState =
