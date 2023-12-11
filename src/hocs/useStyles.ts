@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
-import { useSelector } from '../reduxStore/DappProviderContext';
-import { dappConfigSelector } from '../reduxStore/selectors';
+import { isSSR } from 'utils/isSSR';
 
 type StylesType = typeof import('*.scss');
 
@@ -9,8 +8,12 @@ export type WithStylesImportType = {
   styles?: Record<any, any>;
 };
 
-const defaultGlobalImport = async () => await import('assets/sass/main.scss');
+const defaultServerGlobalImport = async () =>
+  await import('assets/sass/main.scss');
+const defaultClientGlobalImport = () =>
+  require('assets/sass/main.scss').default;
 
+const ssr = isSSR();
 export function useStyles({
   ssrGlobalImportCallback,
   ssrImportCallback,
@@ -20,19 +23,17 @@ export function useStyles({
   ssrImportCallback?: () => Promise<StylesType>;
   clientImportCallback?: () => StylesType;
 }) {
-  const dappConfig = useSelector(dappConfigSelector);
-
   const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>(
-    dappConfig?.isSSR ? undefined : require('assets/sass/main.scss').default
+    ssr ? undefined : defaultClientGlobalImport()
   );
   const [styles, setStyles] = React.useState<Record<any, any> | undefined>(
-    dappConfig?.isSSR ? undefined : clientImportCallback?.()
+    ssr ? undefined : clientImportCallback?.()
   );
 
   const importStyles = async () => {
     (ssrGlobalImportCallback
       ? ssrGlobalImportCallback()
-      : defaultGlobalImport()
+      : defaultServerGlobalImport()
     ).then((styles: StylesType) => setGlobalStyles(styles.default));
 
     ssrImportCallback?.().then((styles: StylesType) =>
@@ -41,7 +42,7 @@ export function useStyles({
   };
 
   useEffect(() => {
-    if (dappConfig?.isSSR) {
+    if (ssr) {
       importStyles();
     }
   }, []);
