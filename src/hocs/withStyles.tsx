@@ -11,14 +11,16 @@ export type WithStylesImportType = {
 export function withStyles<TProps>(
   Component: FunctionComponent<TProps & WithStylesImportType>,
   imports: {
-    global?: () => Promise<StylesType>;
-    local?: () => Promise<StylesType>;
+    ssrGlobalStyles?: () => Promise<StylesType>;
+    ssrStyles?: () => Promise<StylesType>;
+    clientStyles?: () => StylesType;
   }
 ) {
   return (props: TProps) => {
     const { globalStyles, styles } = useStyles({
-      globalImportCallback: imports.global,
-      localImportCallback: imports.local
+      ssrGlobalImportCallback: imports.ssrGlobalStyles,
+      ssrImportCallback: imports.ssrStyles,
+      clientImportCallback: imports.clientStyles
     });
 
     return (

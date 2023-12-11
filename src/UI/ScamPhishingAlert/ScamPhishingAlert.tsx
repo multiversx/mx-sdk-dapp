@@ -77,5 +77,7 @@ const ScamPhishingAlertComponent = (
 };
 
 export const ScamPhishingAlert = withStyles(ScamPhishingAlertComponent, {
-  local: () => import('UI/ScamPhishingAlert/scamPhishingStyles.scss')
+  ssrStyles: () => import('UI/ScamPhishingAlert/scamPhishingStyles.scss'),
+  clientStyles: () =>
+    require('UI/ScamPhishingAlert/scamPhishingStyles.scss').default
 });

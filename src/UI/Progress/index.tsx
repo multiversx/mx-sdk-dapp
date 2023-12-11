@@ -186,5 +186,6 @@ const ProgressComponent = ({
 };
 
 export const Progress = withStyles(ProgressComponent, {
-  local: () => import('UI/Progress/progressStyles.scss')
+  ssrStyles: () => import('UI/Progress/progressStyles.scss'),
+  clientStyles: () => require('UI/Progress/progressStyles.scss').default
 });

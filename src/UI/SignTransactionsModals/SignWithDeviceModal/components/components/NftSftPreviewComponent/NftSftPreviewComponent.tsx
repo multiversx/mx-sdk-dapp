@@ -71,8 +71,11 @@ export const NftSftPreview = ({
 };
 
 export const NftSftPreviewComponent = withStyles(NftSftPreview, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/components/components/NftSftPreviewComponent/NftSftPreviewComponent.styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/NftSftPreviewComponent/NftSftPreviewComponent.styles.scss')
+      .default
 });

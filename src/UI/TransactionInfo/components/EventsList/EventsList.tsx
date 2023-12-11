@@ -143,5 +143,8 @@ const EventsListComponent = ({
 };
 
 export const EventsList = withStyles(EventsListComponent, {
-  local: () => import('UI/TransactionInfo/components/EventsList/styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/EventsList/styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/EventsList/styles.scss').default
 });

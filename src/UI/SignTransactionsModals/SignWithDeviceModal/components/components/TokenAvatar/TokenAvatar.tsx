@@ -49,8 +49,11 @@ const TokenAvatarComponent = (
 };
 
 export const TokenAvatar = withStyles(TokenAvatarComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/components/components/TokenAvatar/tokenAvatarStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/TokenAvatar/tokenAvatarStyles.scss')
+      .default
 });

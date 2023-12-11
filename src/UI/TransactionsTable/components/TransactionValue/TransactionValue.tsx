@@ -42,8 +42,11 @@ const TokenWrapperComponent = ({
 );
 
 const TokenWrapper = withStyles(TokenWrapperComponent, {
-  local: () =>
-    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionsTable/components/transactionsTable.styles.scss')
+      .default
 });
 
 const TransactionValueComponent = ({
@@ -96,6 +99,9 @@ const TransactionValueComponent = ({
 };
 
 export const TransactionValue = withStyles(TransactionValueComponent, {
-  local: () =>
-    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionsTable/components/transactionsTable.styles.scss')
+      .default
 });

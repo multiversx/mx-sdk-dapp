@@ -24,9 +24,12 @@ const TransactionInfoGasLimitComponent = ({
 export const TransactionInfoGasLimit = withStyles(
   TransactionInfoGasLimitComponent,
   {
-    local: () =>
+    ssrStyles: () =>
       import(
         'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoGasLimit/styles.scss'
-      )
+      ),
+    clientStyles: () =>
+      require('UI/TransactionInfo/components/transactionInfoFields/TransactionInfoGasLimit/styles.scss')
+        .default
   }
 );

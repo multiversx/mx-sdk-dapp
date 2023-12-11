@@ -79,9 +79,12 @@ const SignWaitingScreenModalComponent = ({
 export const SignWaitingScreenModal = withStyles(
   SignWaitingScreenModalComponent,
   {
-    local: () =>
+    ssrStyles: () =>
       import(
         'UI/SignTransactionsModals/components/SignWaitingScreenModal/signWaitingScreenModal.styles.scss'
-      )
+      ),
+    clientStyles: () =>
+      require('UI/SignTransactionsModals/components/SignWaitingScreenModal/signWaitingScreenModal.styles.scss')
+        .default
   }
 );

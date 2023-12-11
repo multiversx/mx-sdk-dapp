@@ -76,6 +76,9 @@ const DataFieldComponent = ({
 };
 
 export const DataField = withStyles(DataFieldComponent, {
-  local: () =>
-    import('UI/TransactionInfo/components/DataField/dataField.module.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/DataField/dataField.module.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/DataField/dataField.module.scss')
+      .default
 });

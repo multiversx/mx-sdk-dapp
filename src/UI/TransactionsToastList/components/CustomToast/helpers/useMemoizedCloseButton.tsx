@@ -13,10 +13,13 @@ export const useMemoizedCloseButton = ({
   onDelete
 }: MemoizedCloseButtonPropsType) => {
   const { styles } = useStyles({
-    localImportCallback: () =>
+    ssrImportCallback: () =>
       import(
         'UI/TransactionsToastList/components/CustomToast/customToast.styles.scss'
-      )
+      ),
+    clientImportCallback: () =>
+      require('UI/TransactionsToastList/components/CustomToast/customToast.styles.scss')
+        .default
   });
 
   const closeButton = useMemo(() => {

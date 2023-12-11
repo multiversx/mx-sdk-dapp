@@ -53,8 +53,11 @@ const ReceiverSubValueComponent = ({
 };
 
 export const ReceiverSubValue = withStyles(ReceiverSubValueComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmReceiver/components/ReceiverSubValue/receiverSubValueStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmReceiver/components/ReceiverSubValue/receiverSubValueStyles.scss')
+      .default
 });
