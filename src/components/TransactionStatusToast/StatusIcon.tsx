@@ -58,8 +58,11 @@ const StatusIconComponent = ({
 };
 
 export const StatusIcon = withStyles(StatusIconComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'components/TransactionStatusToast/transactionStatusToastStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('components/TransactionStatusToast/transactionStatusToastStyles.scss')
+      .default
 });

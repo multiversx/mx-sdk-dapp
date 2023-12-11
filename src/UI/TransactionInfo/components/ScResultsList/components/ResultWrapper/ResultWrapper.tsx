@@ -25,10 +25,13 @@ const ResultWrapperComponent = ({
 );
 
 const ResultWrapper = withStyles(ResultWrapperComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionInfo/components/ScResultsList/components/ResultWrapper/styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/ScResultsList/components/ResultWrapper/styles.scss')
+      .default
 });
 
 export default ResultWrapper;

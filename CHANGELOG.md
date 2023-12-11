@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+## [[v2.24.4]](https://github.com/multiversx/mx-sdk-dapp/pull/983)] - 2023-12-11
+- [Add entire dappConfig into redux store](https://github.com/multiversx/mx-sdk-dapp/pull/982)
+- [Fix CSS injection on SSR/Client side](https://github.com/multiversx/mx-sdk-dapp/pull/981)
 ## [[v2.24.3]](https://github.com/multiversx/mx-sdk-dapp/pull/979)] - 2023-11-29
 
 - [Removed `senderUsername` and `receiverUsername` for `SetGuardian` tx](https://github.com/multiversx/mx-sdk-dapp/pull/978)

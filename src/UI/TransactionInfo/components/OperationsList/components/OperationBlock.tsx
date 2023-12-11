@@ -96,6 +96,8 @@ const OperationBlockComponent = ({
 };
 
 export const OperationBlock = withStyles(OperationBlockComponent, {
-  local: () =>
-    import('UI/TransactionInfo/components/OperationsList/styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/OperationsList/styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/OperationsList/styles.scss').default
 });

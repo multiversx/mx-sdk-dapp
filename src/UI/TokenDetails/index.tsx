@@ -44,7 +44,8 @@ function getIconComponent({
 }
 
 const getIcon = withStyles(getIconComponent, {
-  local: () => import('UI/TokenDetails/tokenDetailsStyles.scss')
+  ssrStyles: () => import('UI/TokenDetails/tokenDetailsStyles.scss'),
+  clientStyles: () => require('UI/TokenDetails/tokenDetailsStyles.scss').default
 });
 
 const getDetails = (token: string, tokenAvatar?: string): TokenIconType => {

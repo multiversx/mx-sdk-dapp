@@ -79,8 +79,11 @@ const TransactionActionNftComponent = ({
 };
 
 export const TransactionActionNft = withStyles(TransactionActionNftComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock/styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock/styles.scss')
+      .default
 });
