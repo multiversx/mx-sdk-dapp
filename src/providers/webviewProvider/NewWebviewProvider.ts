@@ -1,5 +1,4 @@
 import { Transaction, SignableMessage } from '@multiversx/sdk-core';
-import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums
@@ -85,30 +84,24 @@ export class NewWebviewProvider {
   };
 
   signTransactions = async (
-    transactionsToSign: (IPlainTransactionObject | Transaction)[]
+    transactionsToSign: Transaction[]
   ): Promise<Transaction[] | null> => {
     const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.signTransactionsRequest,
-      payload: transactionsToSign
+      payload: transactionsToSign.map((tx) => tx.toPlainObject())
     });
 
-    const { transactions, error } = response.payload;
+    const transactions = response.payload;
 
-    try {
-      if (!error) {
-        return transactions.map((tx: any) => Transaction.fromPlainObject(tx));
-      } else {
-        console.error('Unable to sign', error);
-        return null;
-      }
-    } catch (err) {
-      throw new Error('Unable to sign');
-    }
+    console.log({
+      response,
+      transactions
+    });
+
+    return transactions.map((tx: any) => Transaction.fromPlainObject(tx));
   };
 
-  signTransaction = async (
-    transaction: IPlainTransactionObject | Transaction
-  ) => {
+  signTransaction = async (transaction: Transaction) => {
     const response = await this.signTransactions([transaction]);
     return response?.[0];
   };
@@ -191,7 +184,7 @@ export class NewWebviewProvider {
     } else if (safeWindow.parent) {
       console.log('sendPostMessage - parent', safeWindow.parent);
       console.log('sendPostMessage - message', message);
-      safeWindow.parent.postMessage(JSON.stringify(message), getTargetOrigin());
+      safeWindow.parent.postMessage(message, getTargetOrigin());
     }
 
     const data = await this.waitingForResponse(responseTypeMap[message.type]);

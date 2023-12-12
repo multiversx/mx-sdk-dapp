@@ -4,13 +4,13 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
 // import { webviewProvider } from 'providers/webviewProvider';
+import { NewWebviewProvider } from 'providers/webviewProvider/NewWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
 import { DappConfigType } from 'types/dappConfig.types';
 import { AppInitializer } from 'wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
-import { NewWebviewProvider } from '../../providers/webviewProvider/NewWebviewProvider';
 
 export { DappConfigType };
 

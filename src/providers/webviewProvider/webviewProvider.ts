@@ -51,7 +51,7 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
   }
 };
 
-export const webviewProvider = {
+export const webviewProvider: any = {
   init: async () => {
     return true;
   },
