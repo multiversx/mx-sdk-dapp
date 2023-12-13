@@ -3,12 +3,12 @@ import axios from 'axios';
 import { useAxiosInterceptorContext } from './AxiosInterceptorContextProvider';
 
 export interface AxiosInterceptorType extends PropsWithChildren {
-  authenticatedDomanis: string[];
+  authenticatedDomains: string[];
 }
 
 export const AxiosInterceptor = ({
   children,
-  authenticatedDomanis
+  authenticatedDomains
 }: AxiosInterceptorType) => {
   const { loginInfo } = useAxiosInterceptorContext();
   const bearerToken = loginInfo?.tokenLogin?.nativeAuthToken;
@@ -37,7 +37,7 @@ export const AxiosInterceptor = ({
 
     requestIdRef.current = axios.interceptors.request.use(
       async (config) => {
-        if (authenticatedDomanis.includes(String(config?.baseURL))) {
+        if (authenticatedDomains.includes(String(config?.baseURL))) {
           config.headers = {
             Authorization: `Bearer ${bearerToken}`
           };
