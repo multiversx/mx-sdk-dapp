@@ -75,8 +75,11 @@ const ProgressHeaderComponent = (
 };
 
 export const ProgressHeader = withStyles(ProgressHeaderComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/components/ProgressHeader/progressHeaderStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/ProgressHeader/progressHeaderStyles.scss')
+      .default
 });

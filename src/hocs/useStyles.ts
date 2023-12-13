@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { isSSR } from 'utils/isSSR';
 
 type StylesType = typeof import('*.scss');
 
@@ -7,31 +8,43 @@ export type WithStylesImportType = {
   styles?: Record<any, any>;
 };
 
-export function useStyles({
-  globalImportCallback,
-  localImportCallback
-}: {
-  globalImportCallback?: () => Promise<StylesType>;
-  localImportCallback?: () => Promise<StylesType>;
-}) {
-  const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>();
-  const [styles, setStyles] = React.useState<Record<any, any>>();
+const defaultServerGlobalImport = async () =>
+  await import('assets/sass/main.scss');
+const defaultClientGlobalImport = () =>
+  require('assets/sass/main.scss').default;
 
-  const defaultGlobalImport = async () => await import('assets/sass/main.scss');
+const ssr = isSSR();
+export function useStyles({
+  ssrGlobalImportCallback,
+  ssrImportCallback,
+  clientImportCallback
+}: {
+  ssrGlobalImportCallback?: () => Promise<StylesType>;
+  ssrImportCallback?: () => Promise<StylesType>;
+  clientImportCallback?: () => StylesType;
+}) {
+  const [globalStyles, setGlobalStyles] = React.useState<Record<any, any>>(
+    ssr ? undefined : defaultClientGlobalImport()
+  );
+  const [styles, setStyles] = React.useState<Record<any, any> | undefined>(
+    ssr ? undefined : clientImportCallback?.()
+  );
 
   const importStyles = async () => {
-    (globalImportCallback
-      ? globalImportCallback()
-      : defaultGlobalImport()
+    (ssrGlobalImportCallback
+      ? ssrGlobalImportCallback()
+      : defaultServerGlobalImport()
     ).then((styles: StylesType) => setGlobalStyles(styles.default));
 
-    localImportCallback?.().then((styles: StylesType) =>
+    ssrImportCallback?.().then((styles: StylesType) =>
       setStyles(styles.default)
     );
   };
 
   useEffect(() => {
-    importStyles();
+    if (ssr) {
+      importStyles();
+    }
   }, []);
 
   return {

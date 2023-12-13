@@ -77,8 +77,11 @@ const TransactionToastComponent = ({
 };
 
 export const TransactionToast = withStyles(TransactionToastComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss')
+      .default
 });

@@ -11,22 +11,9 @@ export const dappConfigSlice = createSlice({
   initialState,
   reducers: {
     setDappConfig: (
-      state: DappConfigSliceStateType,
+      _state: DappConfigSliceStateType,
       action: PayloadAction<DappConfigSliceStateType>
-    ) => {
-      if (state && action.payload) {
-        const {
-          logoutRoute,
-          shouldUseWebViewProvider,
-          cancelTransactionToastDuration
-        } = action.payload;
-        state.logoutRoute = logoutRoute;
-        state.shouldUseWebViewProvider = shouldUseWebViewProvider;
-        state.cancelTransactionToastDuration = cancelTransactionToastDuration;
-      } else {
-        state = action.payload;
-      }
-    }
+    ) => action.payload
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {

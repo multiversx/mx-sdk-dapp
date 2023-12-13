@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import classNames from 'classnames';
 import { createPortal } from 'react-dom';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
@@ -53,6 +59,7 @@ export const TransactionsToastListComponent = ({
   children,
   styles
 }: TransactionsToastListPropsType & WithStylesImportType) => {
+  const [isBrowser, setIsBrowser] = useState(false);
   const customToasts = useSelector(customToastsSelector);
   const transactionsToasts = useSelector(transactionToastsSelector);
   const dispatch = useDispatch();
@@ -174,6 +181,8 @@ export const TransactionsToastListComponent = ({
   };
 
   useEffect(() => {
+    setIsBrowser(true);
+
     window?.addEventListener(
       'beforeunload',
       clearNotPendingTransactionsFromStorage
@@ -187,20 +196,28 @@ export const TransactionsToastListComponent = ({
     };
   }, []);
 
-  return createPortal(
-    <div className={classNames(styles?.toasts, className)}>
-      {customToastsList}
-      {MemoizedTransactionsToastsList}
-      {children}
-    </div>,
-    parentElement || document?.body
+  return (
+    <>
+      {isBrowser &&
+        createPortal(
+          <div className={classNames(styles?.toasts, className)}>
+            {customToastsList}
+            {MemoizedTransactionsToastsList}
+            {children}
+          </div>,
+          parentElement || document?.body
+        )}
+    </>
   );
 };
 
 export const TransactionsToastList = withStyles(
   TransactionsToastListComponent,
   {
-    local: () =>
-      import('UI/TransactionsToastList/transactionsToastList.styles.scss')
+    ssrStyles: () =>
+      import('UI/TransactionsToastList/transactionsToastList.styles.scss'),
+    clientStyles: () =>
+      require('UI/TransactionsToastList/transactionsToastList.styles.scss')
+        .default
   }
 );

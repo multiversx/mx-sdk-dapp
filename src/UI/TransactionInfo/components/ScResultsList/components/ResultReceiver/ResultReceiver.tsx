@@ -29,10 +29,13 @@ const ResultReceiverComponent = ({
 );
 
 export const ResultReceiver = withStyles(ResultReceiverComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionInfo/components/ScResultsList/components/ResultReceiver/styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/ScResultsList/components/ResultReceiver/styles.scss')
+      .default
 });
 
 export default ResultReceiver;

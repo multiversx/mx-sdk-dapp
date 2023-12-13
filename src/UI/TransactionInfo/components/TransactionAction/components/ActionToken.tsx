@@ -89,8 +89,11 @@ const ActionTokenComponent = ({
 };
 
 export const ActionToken = withStyles(ActionTokenComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionInfo/components/TransactionAction/components/styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/TransactionAction/components/styles.scss')
+      .default
 });
