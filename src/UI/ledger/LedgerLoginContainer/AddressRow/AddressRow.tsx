@@ -86,6 +86,9 @@ const AddressRowComponent = ({
 };
 
 export const AddressRow = withStyles(AddressRowComponent, {
-  local: () =>
-    import('UI/ledger/LedgerLoginContainer/AddressRow/addressRowStyles.scss')
+  ssrStyles: () =>
+    import('UI/ledger/LedgerLoginContainer/AddressRow/addressRowStyles.scss'),
+  clientStyles: () =>
+    require('UI/ledger/LedgerLoginContainer/AddressRow/addressRowStyles.scss')
+      .default
 });

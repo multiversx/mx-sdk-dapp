@@ -54,5 +54,6 @@ const LoginButtonComponent = ({
 };
 
 export const LoginButton = withStyles(LoginButtonComponent, {
-  local: () => import('UI/LoginButton/loginButtonStyles.scss')
+  ssrStyles: () => import('UI/LoginButton/loginButtonStyles.scss'),
+  clientStyles: () => require('UI/LoginButton/loginButtonStyles.scss').default
 });

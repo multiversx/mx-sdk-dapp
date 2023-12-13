@@ -50,6 +50,9 @@ const DetailItemComponent = ({
 );
 
 export const DetailItem = withStyles(DetailItemComponent, {
-  local: () =>
-    import('UI/TransactionInfo/components/DetailItem/detailItem.module.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/DetailItem/detailItem.module.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/DetailItem/detailItem.module.scss')
+      .default
 });

@@ -270,7 +270,7 @@ export const useSignMessage = () => {
         // Message was signed successfully
         dispatch(
           setSignSession({
-            sessionId: currentSessionId,
+            sessionId,
             signedSession: {
               signature,
               status

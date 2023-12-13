@@ -84,5 +84,6 @@ const TrimComponent = ({
 };
 
 export const Trim = withStyles(TrimComponent, {
-  local: () => import('UI/Trim/trim.styles.scss')
+  ssrStyles: () => import('UI/Trim/trim.styles.scss'),
+  clientStyles: () => require('UI/Trim/trim.styles.scss').default
 });

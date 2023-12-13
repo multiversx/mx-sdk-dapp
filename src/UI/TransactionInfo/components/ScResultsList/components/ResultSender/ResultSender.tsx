@@ -29,10 +29,13 @@ const ResultSenderComponent = ({
 );
 
 const ResultSender = withStyles(ResultSenderComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionInfo/components/ScResultsList/components/ResultSender/styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/ScResultsList/components/ResultSender/styles.scss')
+      .default
 });
 
 export default ResultSender;

@@ -56,8 +56,11 @@ const ConfirmAmountComponent = ({
 };
 
 export const ConfirmAmount = withStyles(ConfirmAmountComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/confirmAmountStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/confirmAmountStyles.scss')
+      .default
 });
