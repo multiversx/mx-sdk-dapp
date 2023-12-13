@@ -93,11 +93,6 @@ export class NewWebviewProvider {
 
     const transactions = response.payload;
 
-    console.log({
-      response,
-      transactions
-    });
-
     return transactions.map((tx: any) => Transaction.fromPlainObject(tx));
   };
 
@@ -112,13 +107,14 @@ export class NewWebviewProvider {
       payload: message
     });
 
-    const { signedMessage, error } = response.payload;
+    const signedMessage = response.payload;
 
-    if (!error) {
-      return signedMessage;
-    } else {
-      throw new Error(error);
-    }
+    console.log({
+      response,
+      signedMessage
+    });
+
+    return signedMessage;
   };
 
   async waitingForResponse<T extends CrossWindowProviderResponseEnums>(

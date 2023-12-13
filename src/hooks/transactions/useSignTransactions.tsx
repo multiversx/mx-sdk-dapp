@@ -157,8 +157,6 @@ export const useSignTransactions = () => {
       customTransactionInformation
     } = transactionsToSign;
 
-    console.log('transactionsToSign', transactionsToSign);
-
     const { redirectAfterSign } = customTransactionInformation;
     const defaultCallbackUrl = getDefaultCallbackUrl();
     const redirectRoute = callbackRoute || defaultCallbackUrl;
