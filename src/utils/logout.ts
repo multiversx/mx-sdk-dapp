@@ -2,12 +2,12 @@ import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
+import { matchPath } from '../wrappers/AuthenticatedRoutesWrapper/helpers/matchPath';
 import { getAddress, getWebviewToken } from './account';
 import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
 import { addOriginToLocationPath, getWindowLocation } from './window';
-import { matchPath } from '../wrappers/AuthenticatedRoutesWrapper/helpers/matchPath';
 
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
