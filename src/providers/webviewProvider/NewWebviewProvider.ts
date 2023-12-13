@@ -4,7 +4,6 @@ import {
   CrossWindowProviderResponseEnums
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
-import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './targetOrigin';
 
@@ -107,14 +106,7 @@ export class NewWebviewProvider {
       payload: message
     });
 
-    const signedMessage = response.payload;
-
-    console.log({
-      response,
-      signedMessage
-    });
-
-    return signedMessage;
+    return response.payload;
   };
 
   async waitingForResponse<T extends CrossWindowProviderResponseEnums>(
@@ -123,8 +115,6 @@ export class NewWebviewProvider {
     type: T;
     payload: any;
   }> {
-    const currentPlatform = detectCurrentPlatform();
-
     return await new Promise((resolve) => {
       window.addEventListener(
         'message',
@@ -137,10 +127,8 @@ export class NewWebviewProvider {
           const { type, payload } = event.data;
 
           if (event.origin != getTargetOrigin()) {
-            console.log('event.origin not accepted', {
-              eventOrigin: event.origin,
-              targetOrigin: getTargetOrigin(),
-              currentPlatform
+            console.error('origin not accepted', {
+              eventOrigin: event.origin
             });
             return;
           }
@@ -178,26 +166,14 @@ export class NewWebviewProvider {
         getTargetOrigin()
       );
     } else if (safeWindow.parent) {
-      console.log('sendPostMessage - parent', safeWindow.parent);
-      console.log('sendPostMessage - message', message);
       safeWindow.parent.postMessage(message, getTargetOrigin());
     }
 
     const data = await this.waitingForResponse(responseTypeMap[message.type]);
-
-    console.log('sendPostMessage - data', data);
-
     return data;
   };
 
   getTargetOrigin() {
-    return Promise.resolve(true);
-  }
-
-  handleMessageReceived(event: {
-    data: { type: CrossWindowProviderResponseEnums; payload: any };
-  }) {
-    console.log('handleMessageReceived', event);
     return Promise.resolve(true);
   }
 

@@ -1,42 +1,33 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { PlatformsEnum, WebViewProviderResponseEnums } from 'types/index';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { requestMethods } from './requestMethods';
-import { getTargetOrigin } from './targetOrigin';
 
 const notInitializedError = (caller: string) => () => {
   throw new Error(`Unable to perform ${caller}, Provider not initialized`);
 };
 
 const currentPlatform = detectCurrentPlatform();
+export const targetOrigin = isWindowAvailable()
+  ? window?.parent?.origin ?? '*'
+  : '*';
 
 const messageType = 'message';
 
 const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
-    console.log('handleMessageReceived', event);
     let eventData = event.data;
     if (
-      event.origin != getTargetOrigin() &&
+      event.target.origin != targetOrigin &&
       currentPlatform != PlatformsEnum.reactNative
     ) {
-      console.log('event.origin != getTargetOrigin()');
       return;
     }
     try {
-      if (typeof eventData === 'string') {
-        console.log('typeof eventData === string');
-        eventData = JSON.parse(eventData);
-      } else {
-        console.log('typeof eventData !== string');
-        eventData = {
-          type: WebViewProviderResponseEnums.signMessageResponse,
-          message: eventData.payload
-        };
-      }
-
+      eventData = JSON.parse(eventData);
       cb(eventData);
     } catch (err) {
       console.error('error parsing response');
@@ -46,7 +37,6 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
     document.addEventListener(messageType, handleMessageReceived);
   }
   if (window) {
-    console.log('window.addEventListener - messageType = ', messageType);
     window.addEventListener(messageType, handleMessageReceived);
   }
 };
@@ -109,6 +99,19 @@ export const webviewProvider: any = {
       requestMethods.signMessage[currentPlatform](message);
       const waitForSignedMessageResponse: Promise<string> = new Promise(
         (resolve, reject) => {
+          (window as any).signMessageResponse = (
+            signedMessage: string,
+            error: string
+          ) => {
+            if (error) {
+              reject(error);
+              (window as any).signMessageResponse = null;
+              return;
+            }
+            resolve(signedMessage);
+            (window as any).signMessageResponse = null;
+          };
+
           function handleSignMessageResponse(eventData: any) {
             const { message, type } = eventData;
             if (
@@ -143,6 +146,17 @@ export const webviewProvider: any = {
       requestMethods.signTransactions[currentPlatform](plainTransactions);
       const waitForSignedTransactionsResponse: Promise<Transaction[]> =
         new Promise((resolve, reject) => {
+          (window as any).transactionsSigned = (txs: any, error: string) => {
+            txs = JSON.parse(txs);
+            if (error) {
+              reject(error);
+              (window as any).transactionsSigned = null;
+              return;
+            }
+            resolve(txs.map((tx: any) => Transaction.fromPlainObject(tx)));
+            (window as any).transactionsSigned = null;
+          };
+
           function handleSignTransactionResponse(eventData: any) {
             const { message, type } = eventData;
             if (

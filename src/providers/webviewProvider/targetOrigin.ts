@@ -10,9 +10,3 @@ export const getTargetOrigin = () => {
 
   return '*';
 };
-
-console.log({
-  window,
-  parent: window?.parent,
-  origin: getTargetOrigin()
-});
