@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.24.5]](https://github.com/multiversx/mx-sdk-dapp/pull/988)] - 2023-12-14
+
 - [Prevent redirect on logout if `callbackURL` is the current URL](https://github.com/multiversx/mx-sdk-dapp/pull/987)
 - [Fix sign message with web wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/985)
 - [Fix typo in AxiosInterceptor](https://github.com/multiversx/mx-sdk-dapp/pull/984)
