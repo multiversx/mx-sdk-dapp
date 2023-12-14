@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Prevent provider logout when not logged in or initialized](https://github.com/multiversx/mx-sdk-dapp/pull/990)
+
 ## [[v2.25.0]](https://github.com/multiversx/mx-sdk-dapp/pull/988)] - 2023-12-14
 
 - [Added latest `axios` version](https://github.com/multiversx/mx-sdk-dapp/pull/989)
