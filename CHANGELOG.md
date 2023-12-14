@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.24.5]](https://github.com/multiversx/mx-sdk-dapp/pull/988)] - 2023-12-14
+## [[v2.25.0]](https://github.com/multiversx/mx-sdk-dapp/pull/988)] - 2023-12-14
 
 - [Added latest `axios` version](https://github.com/multiversx/mx-sdk-dapp/pull/989)
 - [Prevent redirect on logout if `callbackURL` is the current URL](https://github.com/multiversx/mx-sdk-dapp/pull/987)
