@@ -53,4 +53,15 @@ describe('Add window origin to pathname', () => {
     const path = addOriginToLocationPath('/unlock');
     expect(path).toStrictEqual('https://multiversx.com/unlock');
   });
+
+  it('should return current origin if no parameter is specified', () => {
+    windowSpy.mockImplementation(() => ({
+      location: {
+        origin: 'https://multiversx.com'
+      }
+    }));
+
+    const path = addOriginToLocationPath();
+    expect(path).toStrictEqual('https://multiversx.com/');
+  });
 });

@@ -9,6 +9,22 @@ import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
 import { addOriginToLocationPath, getWindowLocation } from './window';
 
+interface RedirectToCallbackUrlParamsType {
+  callbackUrl?: string;
+  onRedirect?: (callbackUrl?: string) => void;
+}
+
+const redirectToCallbackUrl = ({
+  callbackUrl,
+  onRedirect
+}: RedirectToCallbackUrlParamsType) => {
+  if (typeof onRedirect === 'function') {
+    onRedirect(callbackUrl);
+  } else if (callbackUrl) {
+    safeRedirect({ url: callbackUrl });
+  }
+};
+
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
   const { data } = storedData ? JSON.parse(storedData) : { data: address };
@@ -31,58 +47,49 @@ export async function logout(
   onRedirect?: (callbackUrl?: string) => void,
   shouldAttemptReLogin = Boolean(getWebviewToken())
 ) {
+  let address = '';
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
 
   if (shouldAttemptReLogin && provider?.relogin != null) {
-    return await provider.relogin();
+    return provider.relogin();
   }
 
-  const url = addOriginToLocationPath(callbackUrl);
-  store.dispatch(logoutAction());
-
   try {
-    const address = await getAddress();
+    address = await getAddress();
     broadcastLogoutAcrossTabs(address);
   } catch (err) {
     console.error('error fetching logout address', err);
   }
 
+  store.dispatch(logoutAction());
+  const url = addOriginToLocationPath(callbackUrl);
   const location = getWindowLocation();
   const callbackPathname = new URL(url).pathname;
 
-  // Prevent page redirect if
-  // the logout callbackURL is equal to the current URL
-  if (matchPath(location.pathname, callbackPathname)) {
+  // Prevent page redirect if the logout callbackURL is equal to the current URL
+  // or if is wallet provider
+  if (matchPath(location.pathname, callbackPathname) || isWalletProvider) {
     preventRedirects();
   }
 
-  if (!provider?.isInitialized?.()) {
-    return redirectToCallbackUrl(url, onRedirect);
+  // We are already logged out, so we can redirect to the dapp
+  if (!address && provider?.isInitialized?.() == null) {
+    return redirectToCallbackUrl({
+      callbackUrl: url,
+      onRedirect
+    });
   }
 
   try {
-    if (isWalletProvider) {
-      await provider.logout({ callbackUrl: url });
-    } else {
-      await provider.logout({ callbackUrl: url });
-      redirectToCallbackUrl(url, onRedirect);
-    }
+    await provider.logout({ callbackUrl: url });
   } catch (err) {
     console.error('error logging out', err);
-  }
-}
-
-function redirectToCallbackUrl(
-  callbackUrl?: string,
-  onRedirect?: (callbackUrl?: string) => void
-) {
-  if (callbackUrl) {
-    if (typeof onRedirect === 'function') {
-      onRedirect(callbackUrl);
-    } else {
-      safeRedirect({ url: callbackUrl });
-    }
+  } finally {
+    redirectToCallbackUrl({
+      callbackUrl: url,
+      onRedirect
+    });
   }
 }
