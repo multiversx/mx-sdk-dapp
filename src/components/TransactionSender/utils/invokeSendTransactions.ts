@@ -116,9 +116,12 @@ export const invokeSendTransactions = async ({
     const transactionsToSend = transactions.map((tx) => newTransaction(tx));
     return await sendSignedTransactionsAsync(transactionsToSend);
   } catch (error) {
+    const responseData = <{ message: string }>(
+      (error as AxiosError).response?.data
+    );
+
     handleSendTransactionsErrors({
-      errorMessage:
-        (error as AxiosError).response?.data?.message ?? (error as any).message,
+      errorMessage: responseData?.message ?? (error as any).message,
       sessionId,
       clearSignInfo
     });

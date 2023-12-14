@@ -52,12 +52,13 @@ export async function logout(
   const location = getWindowLocation();
   const callbackPathname = new URL(url).pathname;
 
-  // Prevent page redirect if the logout callbackURL is equal to the current URL
+  // Prevent page redirect if
+  // the logout callbackURL is equal to the current URL
   if (matchPath(location.pathname, callbackPathname)) {
     preventRedirects();
   }
 
-  if (!provider || providerType === LoginMethodsEnum.none) {
+  if (!provider?.isInitialized?.()) {
     return redirectToCallbackUrl(url, onRedirect);
   }
 
