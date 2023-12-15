@@ -24,10 +24,10 @@ export interface IDappProvider {
     transactions: Transaction[],
     options?: DappOptions
   ): Promise<Transaction[] | null | undefined>;
-  signMessage<T extends SignableMessage>(
-    message: T,
+  signMessage(
+    message: SignableMessage,
     options: DappOptions
-  ): Promise<T>;
+  ): Promise<SignableMessage | null>;
   sendCustomMessage?({
     method,
     params
@@ -39,5 +39,5 @@ export interface IDappProvider {
     request: EngineTypes.RequestParams['request'];
   }): Promise<any>;
   ping?(): Promise<boolean>;
-  relogin?: () => Promise<void>;
+  relogin?: () => Promise<string | null | void>;
 }
