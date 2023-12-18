@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 - [Fix cancel sign message toast](https://github.com/multiversx/mx-sdk-dapp/pull/995)
-- [Changed message signing URL to use `addOriginToLocationPath`](https://github.com/multiversx/mx-sdk-dapp/pull/994)
+- [⚠️ Breaking change: message signing URL to use `addOriginToLocationPath`](https://github.com/multiversx/mx-sdk-dapp/pull/994)
 
 ## [[v2.25.2]](https://github.com/multiversx/mx-sdk-dapp/pull/993)] - 2023-12-18
 
