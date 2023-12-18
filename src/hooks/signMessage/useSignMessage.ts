@@ -14,7 +14,8 @@ import {
 import {
   clearSignedMessageInfo,
   setSignSession,
-  setSignSessionState
+  setSignSessionState,
+  setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import {
   LoginMethodsEnum,
@@ -94,6 +95,7 @@ export const useSignMessage = () => {
         }
       })
     );
+    dispatch(setSignTransactionsCancelMessage(errorMessage));
   };
 
   const checkCallbackSessionId = (
