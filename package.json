@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "2.24.2-alpha.7",
+  "version": "2.26.0-alpha.0",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -17,7 +17,7 @@
     "build:cjs-types": "tsc --build tsconfig.cjs.json",
     "build": "rimraf dist && node esbuild.js && yarn build:esm-types && yarn build:cjs-types && cp package.json dist && cp README.md dist",
     "publish-package": "yarn test && yarn build && cd dist && npm publish",
-    "publish-package-next": "yarn test && yarn build && cd dist && npm publish --tag next",
+    "publish-package-next": "yarn build && cd dist && npm publish --tag next",
     "publish-yalc": "yarn build && cd dist && yalc publish --push",
     "watch": "yarn node esbuild-watch.js && yarn build:esm-types && yarn build:cjs-types -- --watch",
     "test": "jest",
@@ -169,5 +169,8 @@
     "reselect": "4.0.0",
     "shx": "0.3.4",
     "socket.io-client": "4.6.1"
+  },
+  "publishConfig": {
+    "registry": "http://localhost:4873"
   }
 }
