@@ -2014,10 +2014,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.6.tgz#0c8bfc9f90ab612d2cad31d937f296cf59b3f537"
-  integrity sha512-AiYV6vo/SPuHsgCA8/w6kyCKawz3Ti28PxtRHVN/MafSgm+EuORbEpFx9Aa4xdUBGdUK09r2PmK3bpSjLjLEXQ==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.0.7":
+  version "0.0.7"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.7.tgz#eb1983ae7fc49496605675620d2084ac38a526b5"
+  integrity sha512-k8uxZ31CETQWFZ+4crmwlLfYMY//jHpIOMf2NC3MK0HHqmTgyKw7rpr+rAPQoilMORS8Mjp7ZeRtpfP8Jlk1jw==
   dependencies:
     "@types/qs" "^6.9.10"
     qs "^6.11.2"
@@ -8416,9 +8416,9 @@ fast-redact@^3.0.0:
   integrity sha512-6T5V1QK1u4oF+ATxs1lWUmlEk6P2T9HqJG3e2DnHOdVgZy2rFJBoEnrIedcTXlkAHU/zKC+7KETJ+KGGKwxgMQ==
 
 fastq@^1.6.0:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.15.0.tgz#d04d07c6a2a68fe4599fea8d2e103a937fae6b3a"
-  integrity sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.16.0.tgz#83b9a9375692db77a822df081edb6a9cf6839320"
+  integrity sha512-ifCoaXsDrsdkWTtiNJX5uzHDsrck5TzfKKDcuFFTIrrc/BS076qgEIfoIy1VeZqViznfKiysPYTh/QeHtnIsYA==
   dependencies:
     reusify "^1.0.4"
 
