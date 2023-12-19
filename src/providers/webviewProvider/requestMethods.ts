@@ -1,12 +1,12 @@
 import { PlatformsEnum, WebViewProviderRequestEnums } from 'types/index';
-import { targetOrigin } from './webviewProvider';
+import { getTargetOrigin } from './webviewProvider';
 
 export const requestMethods = {
   signTransactions: {
     [PlatformsEnum.ios]: (transactions: any) =>
       (window as any).webkit.messageHandlers.signTransactions.postMessage(
         transactions,
-        targetOrigin
+        getTargetOrigin()
       ),
     [PlatformsEnum.reactNative]: (message: any) =>
       (window as any)?.ReactNativeWebView.postMessage(
@@ -22,7 +22,7 @@ export const requestMethods = {
           type: WebViewProviderRequestEnums.signTransactionsRequest,
           message
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
   signMessage: {
@@ -41,7 +41,7 @@ export const requestMethods = {
           type: WebViewProviderRequestEnums.signMessageRequest,
           message
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
   logout: {
@@ -58,7 +58,7 @@ export const requestMethods = {
         JSON.stringify({
           type: WebViewProviderRequestEnums.logoutRequest
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
   login: {
@@ -75,7 +75,7 @@ export const requestMethods = {
         JSON.stringify({
           type: WebViewProviderRequestEnums.loginRequest
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   }
 };

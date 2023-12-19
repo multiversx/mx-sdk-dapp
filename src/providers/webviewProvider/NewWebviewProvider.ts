@@ -112,19 +112,11 @@ export class NewWebviewProvider implements IDappProvider {
     const { data, error } = response.payload;
 
     if (error || !data) {
-      console.log({
-        error,
-        data
-      });
       console.error('Unable to sign message');
       return null;
     }
 
     if (data.status !== SignMessageStatusEnum.signed) {
-      console.log({
-        error,
-        data
-      });
       console.error('Could not sign message');
       return null;
     }
