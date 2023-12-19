@@ -159,7 +159,7 @@ export class NewWebviewProvider implements IDappProvider {
 
           const isCurrentAction =
             action === type ||
-            type === CrossWindowProviderResponseEnums.cancelResponse; // TODO: check if this is needed
+            type === CrossWindowProviderResponseEnums.cancelResponse;
 
           if (!isCurrentAction) {
             return;
