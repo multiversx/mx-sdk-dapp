@@ -49,10 +49,9 @@ export class NewWebviewProvider implements IDappProvider {
   };
 
   logout = async () => {
-    this.sendPostMessage({
+    return await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.logoutRequest
     });
-    return true;
   };
 
   relogin = async () => {

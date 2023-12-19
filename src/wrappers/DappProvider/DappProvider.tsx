@@ -20,6 +20,14 @@ import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export { DappConfigType };
 
+const setWebviewProvider = () => {
+  if (getWebviewPlatform() === PlatformsEnum.webWallet) {
+    setExternalProvider(NewWebviewProvider.getInstance());
+  } else {
+    setExternalProvider(webviewProvider);
+  }
+};
+
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
   customNetworkConfig?: CustomNetworkType;
@@ -46,11 +54,7 @@ export const DappProvider = ({
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
   } else if (dappConfig?.shouldUseWebViewProvider) {
-    if (getWebviewPlatform() === PlatformsEnum.webWallet) {
-      setExternalProvider(NewWebviewProvider.getInstance());
-    } else {
-      setExternalProvider(webviewProvider);
-    }
+    setWebviewProvider();
   }
 
   return (
