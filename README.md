@@ -1201,7 +1201,7 @@ Due to this, you cannot yet use the DappProvider wrapping logic in a React Nativ
 
 We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
 Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to the xPortal App.
-There are also guide for doing this from the [community](https://github.com/S4F-IT/maiar-integration/blob/master/README.md)
+There are also guide for doing this from the [community](https://github.com/sash20m/react-native-xportal)
 
 ## Next.js support
 

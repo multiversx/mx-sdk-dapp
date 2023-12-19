@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.25.2]](https://github.com/multiversx/mx-sdk-dapp/pull/993)] - 2023-12-18
+
+- [Upgrade sdks versions](https://github.com/multiversx/mx-sdk-dapp/pull/992)
+
+## [[v2.25.1]](https://github.com/multiversx/mx-sdk-dapp/pull/991)] - 2023-12-14
+
+- [Prevent provider logout when not logged in or initialized](https://github.com/multiversx/mx-sdk-dapp/pull/990)
+
+## [[v2.25.0]](https://github.com/multiversx/mx-sdk-dapp/pull/988)] - 2023-12-14
+
+- [Added latest `axios` version](https://github.com/multiversx/mx-sdk-dapp/pull/989)
+- [Prevent redirect on logout if `callbackURL` is the current URL](https://github.com/multiversx/mx-sdk-dapp/pull/987)
+- [Fix sign message with web wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/985)
+- [Fix typo in AxiosInterceptor](https://github.com/multiversx/mx-sdk-dapp/pull/984)
+
+## [[v2.24.4]](https://github.com/multiversx/mx-sdk-dapp/pull/983)] - 2023-12-11
+
+- [Add entire dappConfig into redux store](https://github.com/multiversx/mx-sdk-dapp/pull/982)
+- [Fix CSS injection on SSR/Client side](https://github.com/multiversx/mx-sdk-dapp/pull/981)
+
 ## [[v2.24.3]](https://github.com/multiversx/mx-sdk-dapp/pull/979)] - 2023-11-29
 
 - [Removed `senderUsername` and `receiverUsername` for `SetGuardian` tx](https://github.com/multiversx/mx-sdk-dapp/pull/978)

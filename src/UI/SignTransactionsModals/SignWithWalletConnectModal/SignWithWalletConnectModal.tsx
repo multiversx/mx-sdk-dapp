@@ -106,9 +106,12 @@ const SignWithWalletConnectModalComponent = ({
 export const SignWithWalletConnectModal = withStyles(
   SignWithWalletConnectModalComponent,
   {
-    local: () =>
+    ssrStyles: () =>
       import(
         'UI/SignTransactionsModals/SignWithWalletConnectModal/signWithWalletConnectModalStyles.scss'
-      )
+      ),
+    clientStyles: () =>
+      require('UI/SignTransactionsModals/SignWithWalletConnectModal/signWithWalletConnectModalStyles.scss')
+        .default
   }
 );

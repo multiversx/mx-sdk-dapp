@@ -103,6 +103,9 @@ const TransactionsTableComponent = ({
 };
 
 export const TransactionsTable = withStyles(TransactionsTableComponent, {
-  local: () =>
-    import('UI/TransactionsTable/components/transactionsTable.styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionsTable/components/transactionsTable.styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionsTable/components/transactionsTable.styles.scss')
+      .default
 });

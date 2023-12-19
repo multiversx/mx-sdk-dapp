@@ -84,8 +84,11 @@ const ConfirmReceiverComponent = ({
 };
 
 export const ConfirmReceiver = withStyles(ConfirmReceiverComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmReceiver/confirmReceiverStyles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmReceiver/confirmReceiverStyles.scss')
+      .default
 });

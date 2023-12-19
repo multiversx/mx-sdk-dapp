@@ -57,7 +57,10 @@ export const signedMessageInfoSlice = createSlice({
       state.isSigning =
         signedSession.status === SignedMessageStatusesEnum.pending;
 
-      state.signedSessions[sessionId] = signedSession;
+      state.signedSessions[sessionId] = {
+        ...state.signedSessions[sessionId],
+        ...signedSession
+      };
     },
     setSignSessionState: (
       state: SignedMessageInfoStateType,

@@ -9,8 +9,11 @@ const SharedToastFooterComponent = ({
 };
 
 export const SharedToastFooter = withStyles(SharedToastFooterComponent, {
-  local: () =>
+  ssrStyles: () =>
     import(
       'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss'
-    )
+    ),
+  clientStyles: () =>
+    require('UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss')
+      .default
 });

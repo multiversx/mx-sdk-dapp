@@ -33,6 +33,9 @@ const AddressDetailItemComponent = ({
 );
 
 export const AddressDetailItem = withStyles(AddressDetailItemComponent, {
-  local: () =>
-    import('UI/TransactionInfo/components/AddressDetailItem/styles.scss')
+  ssrStyles: () =>
+    import('UI/TransactionInfo/components/AddressDetailItem/styles.scss'),
+  clientStyles: () =>
+    require('UI/TransactionInfo/components/AddressDetailItem/styles.scss')
+      .default
 });
