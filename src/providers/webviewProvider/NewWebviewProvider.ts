@@ -1,4 +1,5 @@
 import { Transaction, SignableMessage } from '@multiversx/sdk-core';
+import type { IPlainTransactionObject } from '@multiversx/sdk-core';
 import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import {
   CrossWindowProviderRequestEnums,
@@ -12,9 +13,17 @@ import { IDappProvider } from 'types/dappProvider.types';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './targetOrigin';
 
+// TODO to be moved in cross-window-provider
+export type RequestMessageType = {
+  [CrossWindowProviderRequestEnums.loginRequest]: boolean;
+  [CrossWindowProviderRequestEnums.logoutRequest]: boolean;
+  [CrossWindowProviderRequestEnums.signTransactionsRequest]: IPlainTransactionObject[];
+  [CrossWindowProviderRequestEnums.signMessageRequest]: SignableMessage;
+};
+
 type SendPostMessageType<T extends CrossWindowProviderRequestEnums> = {
   type: T;
-  payload?: any;
+  payload?: RequestMessageType[keyof RequestMessageType];
 };
 
 const notInitializedError = (caller: string) => () => {
@@ -85,7 +94,7 @@ export class NewWebviewProvider implements IDappProvider {
     }
 
     const transactions = data;
-    return transactions.map((tx: any) => Transaction.fromPlainObject(tx));
+    return transactions.map((tx) => Transaction.fromPlainObject(tx));
   };
 
   signTransaction = async (transaction: Transaction) => {
@@ -136,7 +145,7 @@ export class NewWebviewProvider implements IDappProvider {
         async function eventHandler(
           event: MessageEvent<{
             type: T;
-            payload: any;
+            payload: ReplyWithPostMessageType<T>['payload'];
           }>
         ) {
           const { type, payload } = event.data;

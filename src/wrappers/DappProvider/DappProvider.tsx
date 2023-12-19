@@ -3,12 +3,18 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
-// import { webviewProvider } from 'providers/webviewProvider';
+import { webviewProvider } from 'providers/webviewProvider';
 import { NewWebviewProvider } from 'providers/webviewProvider/NewWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
-import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
+import {
+  CustomNetworkType,
+  EnvironmentsEnum,
+  IDappProvider,
+  PlatformsEnum
+} from 'types';
 import { DappConfigType } from 'types/dappConfig.types';
+import { getWebviewPlatform } from 'utils/account/getWebviewPlatform';
 import { AppInitializer } from 'wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
@@ -40,8 +46,11 @@ export const DappProvider = ({
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
   } else if (dappConfig?.shouldUseWebViewProvider) {
-    // setExternalProvider(webviewProvider);
-    setExternalProvider(NewWebviewProvider.getInstance());
+    if (getWebviewPlatform() === PlatformsEnum.webWallet) {
+      setExternalProvider(NewWebviewProvider.getInstance());
+    } else {
+      setExternalProvider(webviewProvider);
+    }
   }
 
   return (
