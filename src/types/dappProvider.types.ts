@@ -7,7 +7,7 @@ export interface DappOptions {
 
 export interface IDappProvider {
   init?(): Promise<boolean>;
-  login?(options?: DappOptions): Promise<string>;
+  login?(options?: DappOptions): Promise<string | boolean>;
   logout(options?: DappOptions): Promise<boolean>;
   getAddress(): Promise<string>;
   isInitialized(): boolean;
@@ -19,15 +19,15 @@ export interface IDappProvider {
   signTransaction(
     transaction: Transaction,
     options?: DappOptions
-  ): Promise<Transaction>;
+  ): Promise<Transaction | null | undefined>;
   signTransactions(
     transactions: Transaction[],
     options?: DappOptions
-  ): Promise<Transaction[]>;
-  signMessage<T extends SignableMessage>(
-    message: T,
+  ): Promise<Transaction[] | null | undefined>;
+  signMessage(
+    message: SignableMessage,
     options: DappOptions
-  ): Promise<T>;
+  ): Promise<SignableMessage | null>;
   sendCustomMessage?({
     method,
     params
@@ -39,5 +39,5 @@ export interface IDappProvider {
     request: EngineTypes.RequestParams['request'];
   }): Promise<any>;
   ping?(): Promise<boolean>;
-  relogin?: () => Promise<void>;
+  relogin?: () => Promise<string | null | void>;
 }
