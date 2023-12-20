@@ -14,7 +14,8 @@ import {
 import {
   clearSignedMessageInfo,
   setSignSession,
-  setSignSessionState
+  setSignSessionState,
+  setSignTransactionsCancelMessage
 } from 'reduxStore/slices';
 import {
   LoginMethodsEnum,
@@ -28,6 +29,7 @@ import {
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
+  addOriginToLocationPath,
   getAccountProvider,
   getAddress,
   removeSearchParamsFromUrl
@@ -93,6 +95,7 @@ export const useSignMessage = () => {
         }
       })
     );
+    dispatch(setSignTransactionsCancelMessage(errorMessage));
   };
 
   const checkCallbackSessionId = (
@@ -103,9 +106,9 @@ export const useSignMessage = () => {
       return '';
     }
 
-    // Make sure callbackURL has sessionId
-    const callbackUrl = new URL(callbackRoute);
+    const callbackUrl = new URL(addOriginToLocationPath(callbackRoute));
 
+    // Make sure callbackURL has sessionId
     if (!callbackUrl.searchParams.get(SignedMessageQueryParamsEnum.sessionId)) {
       callbackUrl.searchParams.append(
         SignedMessageQueryParamsEnum.sessionId,

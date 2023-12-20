@@ -63,7 +63,6 @@ export async function logout(
     console.error('error fetching logout address', err);
   }
 
-  store.dispatch(logoutAction());
   const url = addOriginToLocationPath(callbackUrl);
   const location = getWindowLocation();
   const callbackPathname = new URL(url).pathname;
@@ -83,6 +82,7 @@ export async function logout(
   }
 
   try {
+    store.dispatch(logoutAction());
     await provider.logout({ callbackUrl: url });
   } catch (err) {
     console.error('error logging out', err);
