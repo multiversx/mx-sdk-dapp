@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+- [Prevent logout action when not logged in or provider not initialized](https://github.com/multiversx/mx-sdk-dapp/pull/997)
 - [Fix cancel sign message toast](https://github.com/multiversx/mx-sdk-dapp/pull/995)
 - [⚠️ Breaking change: message signing URL to use `addOriginToLocationPath`](https://github.com/multiversx/mx-sdk-dapp/pull/994)
 
@@ -22,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Added latest `axios` version](https://github.com/multiversx/mx-sdk-dapp/pull/989)
 - [Prevent redirect on logout if `callbackURL` is the current URL](https://github.com/multiversx/mx-sdk-dapp/pull/987)
 - [Fix sign message with web wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/985)
-- [Fix typo in AxiosInterceptor](https://github.com/multiversx/mx-sdk-dapp/pull/984)
+- [⚠️ Breaking change: Fix typo in AxiosInterceptor](https://github.com/multiversx/mx-sdk-dapp/pull/984)
 
 ## [[v2.24.4]](https://github.com/multiversx/mx-sdk-dapp/pull/983)] - 2023-12-11
 
