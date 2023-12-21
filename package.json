@@ -147,7 +147,6 @@
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
     "@multiversx/sdk-native-auth-client": "1.0.6",
-    "@multiversx/sdk-network-providers": "2.2.0",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.2.0",
     "@multiversx/sdk-wallet-connect-provider": "4.0.4",
