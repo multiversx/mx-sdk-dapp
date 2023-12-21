@@ -94,6 +94,11 @@ export const webviewProvider: any = {
   isInitialized: () => true,
   isConnected: async () => true,
   sendTransaction: notInitializedError('sendTransaction'),
+  sendCustomRequest: async (payload: {
+    request: { method: string; params: any };
+  }) => {
+    requestMethods.sendCustomRequest[currentPlatform](payload);
+  },
   signMessage: async (message: string) => {
     try {
       requestMethods.signMessage[currentPlatform](message);
