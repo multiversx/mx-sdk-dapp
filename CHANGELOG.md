@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Remove sdk-network-providers from the dependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1000)
+
 ## [[v2.26.0]](https://github.com/multiversx/mx-sdk-dapp/pull/998)] - 2023-12-20
 
 - [Prevent logout action when not logged in or provider not initialized](https://github.com/multiversx/mx-sdk-dapp/pull/997)
