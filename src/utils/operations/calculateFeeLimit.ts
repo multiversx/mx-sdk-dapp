@@ -5,7 +5,6 @@ import {
   Address,
   TokenPayment
 } from '@multiversx/sdk-core';
-import { NetworkConfig } from '@multiversx/sdk-network-providers';
 import BigNumber from 'bignumber.js';
 import {
   EXTRA_GAS_LIMIT_GUARDED_TX,
@@ -62,13 +61,13 @@ export function calculateFeeLimit({
     version: new TransactionVersion(1)
   });
 
-  const networkConfig = new NetworkConfig();
-  networkConfig.MinGasLimit = parseInt(minGasLimit);
-  networkConfig.GasPerDataByte = parseInt(gasPerDataByte);
-  networkConfig.GasPriceModifier = parseFloat(gasPriceModifier);
-
   try {
-    const bNfee = transaction.computeFee(networkConfig);
+    const bNfee = transaction.computeFee({
+      GasPerDataByte: parseInt(gasPerDataByte),
+      MinGasLimit: parseInt(minGasLimit),
+      GasPriceModifier: parseFloat(gasPriceModifier),
+      ChainID: chainId
+    });
     return bNfee.toString(10);
   } catch (err) {
     console.error(err);

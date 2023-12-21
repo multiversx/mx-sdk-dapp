@@ -1,5 +1,5 @@
-import { TransactionStatus } from '@multiversx/sdk-network-providers';
 import { getTransactionByHashPromise } from 'apiCalls';
+import { TransactionStatus } from 'models/TransactionStatus';
 import { ServerTransactionType } from 'types';
 import { delayWithPromise } from 'utils/delayWithPromise';
 
