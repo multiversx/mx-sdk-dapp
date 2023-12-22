@@ -30,14 +30,14 @@ const notInitializedError = (caller: string) => () => {
   throw new Error(`Unable to perform ${caller}, Provider not initialized`);
 };
 
-export class NewWebviewProvider implements IDappProvider {
-  private static instance: NewWebviewProvider;
+export class ExperimentalWebviewProvider implements IDappProvider {
+  private static instance: ExperimentalWebviewProvider;
 
   static getInstance() {
-    if (!NewWebviewProvider.instance) {
-      NewWebviewProvider.instance = new NewWebviewProvider();
+    if (!ExperimentalWebviewProvider.instance) {
+      ExperimentalWebviewProvider.instance = new ExperimentalWebviewProvider();
     }
-    return NewWebviewProvider.instance;
+    return ExperimentalWebviewProvider.instance;
   }
 
   init = async () => {

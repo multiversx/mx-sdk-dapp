@@ -4,7 +4,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
 import { webviewProvider } from 'providers/webviewProvider';
-import { NewWebviewProvider } from 'providers/webviewProvider/NewWebviewProvider';
+import { ExperimentalWebviewProvider } from 'providers/webviewProvider/ExperimentalWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import {
@@ -22,7 +22,7 @@ export { DappConfigType };
 
 const setWebviewProvider = () => {
   if (getWebviewPlatform() === PlatformsEnum.webWallet) {
-    setExternalProvider(NewWebviewProvider.getInstance());
+    setExternalProvider(ExperimentalWebviewProvider.getInstance());
   } else {
     setExternalProvider(webviewProvider);
   }
