@@ -48,7 +48,7 @@ export const requestMethods = {
           type: payload.request.method,
           payload: payload.request.params
         }),
-        targetOrigin
+        getTargetOrigin()
       )
   },
 
