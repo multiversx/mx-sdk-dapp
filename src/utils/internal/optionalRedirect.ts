@@ -1,10 +1,11 @@
-import { DEFAULT_TIMEOUT } from 'constants/index';
 import { OnLoginRedirectOptionsType, OnProviderLoginType } from '../../types';
 import { safeRedirect } from '../redirect';
 
 interface OptionalRedirectType extends Omit<OnProviderLoginType, 'token'> {
   options?: OnLoginRedirectOptionsType;
 }
+
+const DEFAULT_TIMEOUT = 200;
 
 export function optionalRedirect({
   callbackRoute,

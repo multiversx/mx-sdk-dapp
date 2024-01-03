@@ -1,4 +1,3 @@
-import { DEFAULT_TIMEOUT } from 'constants/index';
 import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
@@ -84,11 +83,15 @@ export async function logout(
 
   try {
     store.dispatch(logoutAction());
-    // Add delay in order to have enough time for storage cleanup (web provider)
-    await provider.logout({
-      callbackUrl: url,
-      redirectDelayMilliseconds: DEFAULT_TIMEOUT
-    });
+
+    if (providerType === LoginMethodsEnum.wallet) {
+      // Allow redux store cleanup before redirect to web wallet
+      return setTimeout(() => {
+        provider.logout({ callbackUrl: url });
+      });
+    }
+
+    await provider.logout({ callbackUrl: url });
   } catch (err) {
     console.error('error logging out', err);
   } finally {

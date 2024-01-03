@@ -8,7 +8,6 @@ export * from './mnemonicWords';
 export * from './network';
 export * from './transactionStatus';
 export * from './web-wallet.constants';
-export * from './defaultTimeouts';
 
 export const GAS_PRICE_MODIFIER = 0.01;
 export const GAS_PER_DATA_BYTE = 1_500;
