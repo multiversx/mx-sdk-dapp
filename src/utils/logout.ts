@@ -83,6 +83,14 @@ export async function logout(
 
   try {
     store.dispatch(logoutAction());
+
+    if (providerType === LoginMethodsEnum.wallet) {
+      // Allow redux store cleanup before redirect to web wallet
+      return setTimeout(() => {
+        provider.logout({ callbackUrl: url });
+      });
+    }
+
     await provider.logout({ callbackUrl: url });
   } catch (err) {
     console.error('error logging out', err);
