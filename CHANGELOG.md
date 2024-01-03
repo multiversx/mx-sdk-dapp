@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.26.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1005)] - 2024-01-03
+- [Fix logout issue with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1004)
+
 ## [[v2.26.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1003)] - 2023-12-21
 
 - [Adds custom message request capability to webview provider](https://github.com/multiversx/mx-sdk-dapp/pull/1002)
