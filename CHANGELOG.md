@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Fix logout issue with web provider](https://github.com/multiversx/mx-sdk-dapp/pull/1004)
+- [Fix logout issue with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1004)
 
 ## [[v2.26.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1003)] - 2023-12-21
 
