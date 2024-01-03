@@ -2,6 +2,7 @@ import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums,
   ReplyWithPostMessageType,
+  RequestMessageType,
   ResponseTypeMap,
   SignMessageStatusEnum,
   ReplyWithPostMessageObjectType
@@ -12,6 +13,7 @@ export {
   CrossWindowProviderResponseEnums,
   ReplyWithPostMessageType,
   ResponseTypeMap,
+  RequestMessageType,
   SignMessageStatusEnum,
   ReplyWithPostMessageObjectType
 };
