@@ -3,7 +3,6 @@ import { EngineTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';
 
 export interface DappOptions {
   callbackUrl?: string;
-  redirectDelayMilliseconds?: number;
 }
 
 export interface IDappProvider {
