@@ -1924,20 +1924,6 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@12.16.0":
-  version "12.16.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.16.0.tgz#100077580302d50868479fb0db3516f9f3802513"
-  integrity sha512-b2htlSeXVkZwrnEVAxoUgNe0oiiOheEjibEbxwNXqtWnsSI31fAtVXxXMersVgcliMJGjmtHkpFAItAucG3OSg==
-  dependencies:
-    "@multiversx/sdk-transaction-decoder" "1.0.2"
-    bech32 "1.1.4"
-    bignumber.js "9.0.1"
-    blake2b "2.1.3"
-    buffer "6.0.3"
-    json-duplicate-key-handle "1.0.0"
-    keccak "3.0.2"
-    protobufjs "7.2.4"
-
 "@multiversx/sdk-core@12.17.0":
   version "12.17.0"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.17.0.tgz#7c9a837efe87cc2cabac37c1af372f90d517f386"

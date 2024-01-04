@@ -142,7 +142,7 @@
     "**/*.d.ts"
   ],
   "dependencies": {
-    "@multiversx/sdk-core": "12.16.0",
+    "@multiversx/sdk-core": "12.17.0",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
     "@multiversx/sdk-native-auth-client": "1.0.6",

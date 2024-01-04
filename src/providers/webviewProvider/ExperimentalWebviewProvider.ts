@@ -97,7 +97,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
   async signMessage(message: SignableMessage): Promise<SignableMessage | null> {
     const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.signMessageRequest
+      type: CrossWindowProviderRequestEnums.signMessageRequest,
+      payload: message
     });
 
     const { data, error } = response.payload;
@@ -177,6 +178,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
         getTargetOrigin()
       );
     } else if (safeWindow.parent) {
+      console.log('--------------');
+      console.log('sending message to parent', message);
       safeWindow.parent.postMessage(message, getTargetOrigin());
     }
 
