@@ -1,10 +1,10 @@
 import { Transaction, SignableMessage } from '@multiversx/sdk-core';
-import type { IPlainTransactionObject } from '@multiversx/sdk-core';
 import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums,
   ReplyWithPostMessageType,
+  RequestPayloadType,
   ResponseTypeMap,
   SignMessageStatusEnum
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
@@ -13,17 +13,9 @@ import { IDappProvider } from 'types/dappProvider.types';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './targetOrigin';
 
-// TODO to be moved in cross-window-provider
-export type RequestMessageType = {
-  [CrossWindowProviderRequestEnums.loginRequest]: boolean;
-  [CrossWindowProviderRequestEnums.logoutRequest]: boolean;
-  [CrossWindowProviderRequestEnums.signTransactionsRequest]: IPlainTransactionObject[];
-  [CrossWindowProviderRequestEnums.signMessageRequest]: SignableMessage;
-};
-
 type SendPostMessageType<T extends CrossWindowProviderRequestEnums> = {
   type: T;
-  payload?: RequestMessageType[keyof RequestMessageType];
+  payload?: RequestPayloadType[keyof RequestPayloadType];
 };
 
 const notInitializedError = (caller: string) => () => {
@@ -105,8 +97,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
   async signMessage(message: SignableMessage): Promise<SignableMessage | null> {
     const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.signMessageRequest,
-      payload: message
+      type: CrossWindowProviderRequestEnums.signMessageRequest
     });
 
     const { data, error } = response.payload;
@@ -189,8 +180,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
       safeWindow.parent.postMessage(message, getTargetOrigin());
     }
 
-    const data = await this.waitingForResponse(responseTypeMap[message.type]);
-    return data;
+    return await this.waitingForResponse(responseTypeMap[message.type]);
   };
 
   getTargetOrigin() {
