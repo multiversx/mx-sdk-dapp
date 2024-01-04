@@ -51,6 +51,7 @@ export async function logout(
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
+  const isProviderInitialised = provider?.isInitialized?.() === true;
 
   if (shouldAttemptReLogin && provider?.relogin != null) {
     return provider.relogin();
@@ -69,12 +70,15 @@ export async function logout(
 
   // Prevent page redirect if the logout callbackURL is equal to the current URL
   // or if is wallet provider
-  if (matchPath(location.pathname, callbackPathname) || isWalletProvider) {
+  if (
+    matchPath(location.pathname, callbackPathname) ||
+    (isWalletProvider && isProviderInitialised)
+  ) {
     preventRedirects();
   }
 
   // We are already logged out, so we can redirect to the dapp
-  if (!address && provider?.isInitialized?.() == null) {
+  if (!address && !isProviderInitialised) {
     return redirectToCallbackUrl({
       callbackUrl: url,
       onRedirect
@@ -84,7 +88,7 @@ export async function logout(
   try {
     store.dispatch(logoutAction());
 
-    if (providerType === LoginMethodsEnum.wallet) {
+    if (isWalletProvider) {
       // Allow redux store cleanup before redirect to web wallet
       return setTimeout(() => {
         provider.logout({ callbackUrl: url });
