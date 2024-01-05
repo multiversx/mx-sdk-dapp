@@ -4,8 +4,10 @@ All notable changes will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+@andreigiura
 
 ## [Unreleased]
+- [Add custom request option for WC button](https://github.com/multiversx/mx-sdk-dapp/pull/1010)
 
 ## [[v2.26.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1009)] - 2024-01-04
 - [Fixed provider initialised check](https://github.com/multiversx/mx-sdk-dapp/pull/1008)
