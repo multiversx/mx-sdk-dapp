@@ -186,10 +186,6 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return await this.waitingForResponse(responseTypeMap[message.type]);
   };
 
-  getTargetOrigin() {
-    return Promise.resolve(true);
-  }
-
   isInitialized = () => true;
   isConnected = async () => true;
   getAddress = notInitializedError('getAddress');

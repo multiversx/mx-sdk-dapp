@@ -1,6 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { PlatformsEnum, WebViewProviderResponseEnums } from 'types/index';
+import { getWebviewPlatform } from 'utils/account/getWebviewPlatform';
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { detectCurrentPlatform } from 'utils/platform/detectCurrentPlatform';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
@@ -13,7 +14,10 @@ const notInitializedError = (caller: string) => () => {
 const currentPlatform = detectCurrentPlatform();
 export const getTargetOrigin = () => {
   try {
-    return isWindowAvailable() ? window?.parent?.origin ?? '*' : '*';
+    return isWindowAvailable() &&
+      getWebviewPlatform() !== PlatformsEnum.webWallet
+      ? window?.parent?.origin ?? '*'
+      : '*';
   } catch (err) {
     // Catch error: Failed to read a named property 'origin' from 'Window' in iframe
     console.warn('error getting target origin', err);
