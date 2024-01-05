@@ -25,4 +25,5 @@ export interface WalletConnectLoginButtonPropsType
   showScamPhishingAlert?: boolean;
   title?: string;
   wrapContentInsideModal?: boolean;
+  customRequestMethods?: Array<string>;
 }

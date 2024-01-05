@@ -19,7 +19,8 @@ const WalletConnectLoginContainerComponent = (
     showLoginModal,
     token,
     wrapContentInsideModal,
-    styles
+    styles,
+    customRequestMethods
   } = props;
 
   const canLoginRef = useRef<boolean>(true);
@@ -30,7 +31,8 @@ const WalletConnectLoginContainerComponent = (
     nativeAuth,
     onLoginRedirect,
     logoutRoute,
-    canLoginRef
+    canLoginRef,
+    customRequestMethods
   });
 
   const onCloseModal = async () => {
