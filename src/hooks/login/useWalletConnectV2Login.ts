@@ -45,6 +45,7 @@ export enum WalletConnectV2Error {
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute?: string;
   canLoginRef?: MutableRefObject<boolean>;
+  customRequestMethods?: Array<string>;
 }
 
 export interface WalletConnectV2LoginHookCustomStateType {
@@ -68,7 +69,8 @@ export const useWalletConnectV2Login = ({
   nativeAuth,
   onLoginRedirect,
   logoutRoute: providerLogoutRoute,
-  canLoginRef: parentCanLoginRef
+  canLoginRef: parentCanLoginRef,
+  customRequestMethods = []
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = nativeAuth != null;
@@ -97,7 +99,8 @@ export const useWalletConnectV2Login = ({
 
   const logoutRoute = providerLogoutRoute ?? dappLogoutRoute ?? '/';
   const dappMethods: string[] = [
-    WalletConnectOptionalMethodsEnum.CANCEL_ACTION
+    WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
+    ...customRequestMethods
   ];
   if (tokenToSign) {
     dappMethods.push(WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN);

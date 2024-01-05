@@ -30,7 +30,8 @@ export const WalletConnectLoginButton = ({
   showScamPhishingAlert,
   title = 'Login with the xPortal App',
   token,
-  wrapContentInsideModal = true
+  wrapContentInsideModal = true,
+  customRequestMethods = []
 }: WalletConnectLoginButtonPropsType) => {
   const {
     disabledConnectButton,
@@ -84,6 +85,7 @@ export const WalletConnectLoginButton = ({
         title={title}
         token={token}
         wrapContentInsideModal={wrapContentInsideModal}
+        customRequestMethods={customRequestMethods}
       />
     </>
   );
