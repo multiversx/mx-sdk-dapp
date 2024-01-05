@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 
 ## [[v2.26.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1011)] - 2024-01-05
-- - [Add custom request option for WC button](https://github.com/multiversx/mx-sdk-dapp/pull/1010)
+- [Add custom request option for WC button](https://github.com/multiversx/mx-sdk-dapp/pull/1010)
 
 ## [[v2.26.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1009)] - 2024-01-04
 - [Fixed provider initialised check](https://github.com/multiversx/mx-sdk-dapp/pull/1008)
