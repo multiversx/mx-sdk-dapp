@@ -21,4 +21,5 @@ export interface WalletConnectLoginModalPropsType
   title?: string;
   wrapContentInsideModal?: boolean;
   canLoginRef?: MutableRefObject<boolean>;
+  customRequestMethods?: Array<string>;
 }
