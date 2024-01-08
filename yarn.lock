@@ -1921,10 +1921,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@12.16.0":
-  version "12.16.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.16.0.tgz#100077580302d50868479fb0db3516f9f3802513"
-  integrity sha512-b2htlSeXVkZwrnEVAxoUgNe0oiiOheEjibEbxwNXqtWnsSI31fAtVXxXMersVgcliMJGjmtHkpFAItAucG3OSg==
+"@multiversx/sdk-core@12.17.0":
+  version "12.17.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-12.17.0.tgz#7c9a837efe87cc2cabac37c1af372f90d517f386"
+  integrity sha512-SdIdUMT4hVgcmNF2uNOZusrxwEJXFtllJ9YOQMJ4V0f1Ajq4fYGWv88OfNGGNaH/I0BAvMZKFsfVL4zgtVekmQ==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     bech32 "1.1.4"
@@ -1999,6 +1999,16 @@
     scryptsy "2.1.0"
     tweetnacl "1.0.3"
     uuid "8.3.2"
+
+"@multiversx/sdk-web-wallet-cross-window-provider@0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.13.tgz#6b4711a815ab856788f9704ef482f45de0a05759"
+  integrity sha512-pvmDe2sw2SrQgwTz3KlrI9CjPKZpx3V1uUDlHYrVHJYX/WFEQv3YrKllbSkYqKgfdBWWEHJfT0CQwS8Mu+yCqw==
+  dependencies:
+    "@multiversx/sdk-core" "12.17.0"
+    "@types/jest" "^29.5.11"
+    "@types/qs" "6.9.10"
+    qs "6.11.2"
 
 "@multiversx/sdk-web-wallet-provider@3.1.0":
   version "3.1.0"
@@ -3955,7 +3965,7 @@
   dependencies:
     "@types/istanbul-lib-report" "*"
 
-"@types/jest@*":
+"@types/jest@*", "@types/jest@^29.5.11":
   version "29.5.11"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-29.5.11.tgz#0c13aa0da7d0929f078ab080ae5d4ced80fa2f2c"
   integrity sha512-S2mHmYIVe13vrm6q4kN6fLYYAka15ALQki/vgDC3mIukEOx8WJlv0kQPM+d4w8Gp6u0uSdKND04IlTXBv0rwnQ==
@@ -4135,6 +4145,11 @@
   integrity sha512-7uNT9L4WQTNJejHTSTdaJhfBSCN73xtXaHFyBJ8TSwiLhe4PRuTue7Iph0s2nG9R/ifUaSnGhLUOZavlBEqDWQ==
   dependencies:
     "@types/node" "*"
+
+"@types/qs@6.9.10":
+  version "6.9.10"
+  resolved "https://registry.yarnpkg.com/@types/qs/-/qs-6.9.10.tgz#0af26845b5067e1c9a622658a51f60a3934d51e8"
+  integrity sha512-3Gnx08Ns1sEoCrWssEgTSJs/rsT2vhGP+Ja9cnnk9k4ALxinORlQneLXFeFKOTJMOeZUFD1s7w+w2AphTpvzZw==
 
 "@types/qs@6.9.7":
   version "6.9.7"
@@ -13045,7 +13060,7 @@ qs@6.11.0:
   dependencies:
     side-channel "^1.0.4"
 
-qs@^6.10.0, qs@^6.11.2:
+qs@6.11.2, qs@^6.10.0, qs@^6.11.2:
   version "6.11.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.11.2.tgz#64bea51f12c1f5da1bc01496f48ffcff7c69d7d9"
   integrity sha512-tDNIz22aBzCDxLtVH++VnTfzxlfeK5CbqohpSqpJgj1Wg/cQbStNAz3NuqCs5vV+pjBsK4x4pN9HlVh7rcYRiA==
