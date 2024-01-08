@@ -29,7 +29,8 @@ const WalletConnectLoginContentComponent = ({
   token,
   canLoginRef,
   globalStyles,
-  styles
+  styles,
+  customRequestMethods = []
 }: WalletConnectLoginModalPropsType & WithStylesImportType) => {
   const [
     initLoginWithWalletConnectV2,
@@ -47,7 +48,8 @@ const WalletConnectLoginContentComponent = ({
     nativeAuth,
     onLoginRedirect,
     logoutRoute,
-    canLoginRef
+    canLoginRef,
+    customRequestMethods
   });
 
   const [qrCodeSvg, setQrCodeSvg] = useState<string>('');
