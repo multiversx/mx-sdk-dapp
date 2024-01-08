@@ -173,13 +173,11 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     if (safeWindow.ReactNativeWebView) {
       safeWindow.ReactNativeWebView.postMessage(
         JSON.stringify(message),
-        // TODO: check if this is needed
         getTargetOrigin()
       );
     } else if (safeWindow.webkit) {
       safeWindow.webkit.messageHandlers.postMessage(
         JSON.stringify(message),
-        // TODO: check if this is needed
         getTargetOrigin()
       );
     } else if (safeWindow.parent) {
