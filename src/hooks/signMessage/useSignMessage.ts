@@ -203,7 +203,7 @@ export const useSignMessage = () => {
         callbackRoute
       });
 
-      if (signedMessage.signature) {
+      if (signedMessage?.signature) {
         dispatch(
           setSignSession({
             sessionId,

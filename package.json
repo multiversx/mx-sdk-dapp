@@ -26,8 +26,7 @@
     "storybook": "start-storybook -p 6006",
     "test-storybook": "test-storybook",
     "build-storybook": "build-storybook",
-    "lint": "eslint --fix --ext js,ts,tsx src",
-    "pre-release": "node prerelease-script.js"
+    "lint": "eslint --fix --ext js,ts,tsx src"
   },
   "devDependencies": {
     "@babel/core": "7.20.5",
@@ -143,13 +142,14 @@
     "**/*.d.ts"
   ],
   "dependencies": {
-    "@multiversx/sdk-core": "12.16.0",
+    "@multiversx/sdk-core": "12.17.0",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
     "@multiversx/sdk-native-auth-client": "1.0.6",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.2.0",
     "@multiversx/sdk-wallet-connect-provider": "4.0.4",
+    "@multiversx/sdk-web-wallet-cross-window-provider": "0.0.13",
     "@multiversx/sdk-web-wallet-provider": "3.1.0",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "1.6.2",

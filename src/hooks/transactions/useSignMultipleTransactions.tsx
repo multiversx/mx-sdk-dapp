@@ -31,7 +31,9 @@ export interface UseSignMultipleTransactionsPropsType {
   isLedger?: boolean;
   transactionsToSign?: Transaction[];
   onCancel?: () => void;
-  onSignTransaction: (transaction: Transaction) => Promise<Transaction>;
+  onSignTransaction: (
+    transaction: Transaction | null
+  ) => Promise<Transaction | null | undefined>;
   onTransactionsSignSuccess: (transactions: Transaction[]) => void;
   onTransactionsSignError: (errorMessage: string) => void;
   onGetScamAddressData?:
@@ -160,7 +162,7 @@ export function useSignMultipleTransactions({
 
     setWaitingForDevice(isLedger);
 
-    let signedTx: Transaction;
+    let signedTx: Transaction | null | undefined;
     try {
       signedTx = await onSignTransaction(currentTransaction.transaction);
     } catch (err) {
@@ -172,6 +174,10 @@ export function useSignMultipleTransactions({
 
       reset();
       return onTransactionsSignError(errorMessage ?? message);
+    }
+
+    if (!signedTx) {
+      return;
     }
 
     const newSignedTx = { [currentStep]: signedTx };

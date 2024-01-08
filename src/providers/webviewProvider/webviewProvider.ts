@@ -11,9 +11,15 @@ const notInitializedError = (caller: string) => () => {
 };
 
 const currentPlatform = detectCurrentPlatform();
-export const targetOrigin = isWindowAvailable()
-  ? window?.parent?.origin ?? '*'
-  : '*';
+export const getTargetOrigin = () => {
+  try {
+    return isWindowAvailable() ? window?.parent?.origin ?? '*' : '*';
+  } catch (err) {
+    // Catch error: Failed to read a named property 'origin' from 'Window' in iframe
+    console.warn('error getting target origin', err);
+    return '*';
+  }
+};
 
 const messageType = 'message';
 
@@ -21,7 +27,7 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
     let eventData = event.data;
     if (
-      event.target.origin != targetOrigin &&
+      event.target.origin != getTargetOrigin() &&
       currentPlatform != PlatformsEnum.reactNative
     ) {
       return;
