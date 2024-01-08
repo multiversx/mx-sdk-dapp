@@ -4,18 +4,20 @@ import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
 import { decodeNativeAuthToken } from './decodeNativeAuthToken';
 
-export function loginWithNativeAuthToken(token: string, dispatch?: any) {
+export function loginWithNativeAuthToken(
+  token: string,
+  dispatch = store.dispatch
+) {
   const nativeAuthInfo = decodeNativeAuthToken(token);
 
   if (nativeAuthInfo == null) {
     return;
   }
 
-  const dispatchFn = dispatch ?? store.dispatch;
   const { signature, address } = nativeAuthInfo;
 
   if (signature && token && address) {
-    dispatchFn(
+    dispatch(
       setTokenLogin({
         loginToken: token,
         signature,
@@ -23,6 +25,6 @@ export function loginWithNativeAuthToken(token: string, dispatch?: any) {
       })
     );
 
-    dispatchFn(loginAction({ address, loginMethod: LoginMethodsEnum.extra }));
+    dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.extra }));
   }
 }
