@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Experimental Webview Provider](https://github.com/multiversx/mx-sdk-dapp/pull/1012)
+- [Added Experimental Webview Provider](https://github.com/multiversx/mx-sdk-dapp/pull/1012)
+
+## [[v2.26.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1013)] - 2024-01-08
+- [Prevent logout before webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1012)
 
 ## [[v2.26.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1011)] - 2024-01-05
 - [Add custom request option for WC button](https://github.com/multiversx/mx-sdk-dapp/pull/1010)
