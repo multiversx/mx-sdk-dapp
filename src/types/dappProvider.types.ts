@@ -20,15 +20,15 @@ export interface IDappProvider {
   signTransaction(
     transaction: Transaction,
     options?: DappOptions
-  ): Promise<Nullable<Transaction>>;
+  ): Promise<Nullable<Transaction | undefined>>;
   signTransactions(
     transactions: Transaction[],
     options?: DappOptions
-  ): Promise<Transaction[] | null>;
+  ): Promise<Nullable<Transaction[]>>;
   signMessage(
     message: SignableMessage,
     options: DappOptions
-  ): Promise<SignableMessage | null>;
+  ): Promise<Nullable<SignableMessage>>;
   sendCustomMessage?({
     method,
     params

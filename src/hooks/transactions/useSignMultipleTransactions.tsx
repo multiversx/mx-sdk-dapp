@@ -34,7 +34,7 @@ export interface UseSignMultipleTransactionsPropsType {
   onCancel?: () => void;
   onSignTransaction: (
     transaction: Nullable<Transaction>
-  ) => Promise<Nullable<Transaction>>;
+  ) => Promise<Nullable<Transaction | undefined>>;
   onTransactionsSignSuccess: (transactions: Transaction[]) => void;
   onTransactionsSignError: (errorMessage: string) => void;
   onGetScamAddressData?:
@@ -163,7 +163,7 @@ export function useSignMultipleTransactions({
 
     setWaitingForDevice(isLedger);
 
-    let signedTx: Nullable<Transaction>;
+    let signedTx: Nullable<Transaction | undefined>;
     try {
       signedTx = await onSignTransaction(currentTransaction.transaction);
     } catch (err) {

@@ -268,4 +268,4 @@ export interface TransactionLinkType {
   address: string;
 }
 
-export type Nullable<T> = T | null | undefined;
+export type Nullable<T> = T | null;
