@@ -12,13 +12,7 @@ const notInitializedError = (caller: string) => () => {
 
 const currentPlatform = detectCurrentPlatform();
 export const getTargetOrigin = () => {
-  try {
-    return isWindowAvailable() ? window?.parent?.origin ?? '*' : '*';
-  } catch (err) {
-    // Catch error: Failed to read a named property 'origin' from 'Window' in iframe
-    console.warn('error getting target origin', err);
-    return '*';
-  }
+  return isWindowAvailable() ? window?.parent?.origin ?? '*' : '*';
 };
 
 const messageType = 'message';
