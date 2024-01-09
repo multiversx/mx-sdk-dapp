@@ -22,11 +22,11 @@ const CALLBACK_ROUTE = '/dashboard';
 
 const tokenLoginWithoutSignature = {
   loginToken:
-    'aHR0cDovL2xvY2FsaG9zdA.fff67d31476ad920d53093a3a4c2178e198179b35656eeefa419107fa718b780.86400.eyJ0aW1lc3RhbXAiOjE2OTAxODQzMTN9',
+    'aHR0cDovL2xvY2FsaG9zdA.fff67d31476ad920d53093a3a4c2178e198179b35656eeefa419107fa718b780.7200.eyJ0aW1lc3RhbXAiOjE2OTAxODQzMTN9',
   nativeAuthConfig: {
     apiAddress: 'https://devnet-api.multiversx.com',
     blockHashShard: undefined,
-    expirySeconds: 86400,
+    expirySeconds: 7200,
     extraInfo: {},
     extraRequestHeaders: {},
     gatewayUrl: undefined,
@@ -40,7 +40,7 @@ const tokenLoginWithSignature = {
   signature:
     'e4c98dd01020118b13db9dd5db9e5b56ff0c4a0141306918a9d3eea964a21ada5d566f58cdf6c921ed3405bf5685d1e87545dbcc86ea3c27a43aa3abee8c2b0e',
   nativeAuthToken:
-    'ZXJkMWRtOXV4cGY1YXdrbjd1aGp1N3pqbjlsZGUwZGhhaHkwcWF4cXFsdTI2eGN1dXcyN3FxcnNxZm1lajM.YUhSMGNEb3ZMMnh2WTJGc2FHOXpkQS5mZmY2N2QzMTQ3NmFkOTIwZDUzMDkzYTNhNGMyMTc4ZTE5ODE3OWIzNTY1NmVlZWZhNDE5MTA3ZmE3MThiNzgwLjg2NDAwLmV5SjBhVzFsYzNSaGJYQWlPakUyT1RBeE9EUXpNVE45.e4c98dd01020118b13db9dd5db9e5b56ff0c4a0141306918a9d3eea964a21ada5d566f58cdf6c921ed3405bf5685d1e87545dbcc86ea3c27a43aa3abee8c2b0e'
+    'ZXJkMWRtOXV4cGY1YXdrbjd1aGp1N3pqbjlsZGUwZGhhaHkwcWF4cXFsdTI2eGN1dXcyN3FxcnNxZm1lajM.YUhSMGNEb3ZMMnh2WTJGc2FHOXpkQS5mZmY2N2QzMTQ3NmFkOTIwZDUzMDkzYTNhNGMyMTc4ZTE5ODE3OWIzNTY1NmVlZWZhNDE5MTA3ZmE3MThiNzgwLjcyMDAuZXlKMGFXMWxjM1JoYlhBaU9qRTJPVEF4T0RRek1UTjk.e4c98dd01020118b13db9dd5db9e5b56ff0c4a0141306918a9d3eea964a21ada5d566f58cdf6c921ed3405bf5685d1e87545dbcc86ea3c27a43aa3abee8c2b0e'
 };
 
 describe('LedgerLoginButton tests', () => {
