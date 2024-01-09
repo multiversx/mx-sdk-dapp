@@ -11,9 +11,9 @@ const notInitializedError = (caller: string) => () => {
 };
 
 const currentPlatform = detectCurrentPlatform();
-export const targetOrigin = isWindowAvailable()
-  ? window?.parent?.origin ?? '*'
-  : '*';
+export const getTargetOrigin = () => {
+  return isWindowAvailable() ? window?.parent?.origin ?? '*' : '*';
+};
 
 const messageType = 'message';
 
@@ -21,7 +21,7 @@ const handleWaitForMessage = (cb: (eventData: any) => void) => {
   const handleMessageReceived = (event: any) => {
     let eventData = event.data;
     if (
-      event.target.origin != targetOrigin &&
+      event.target.origin != getTargetOrigin() &&
       currentPlatform != PlatformsEnum.reactNative
     ) {
       return;
