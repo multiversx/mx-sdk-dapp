@@ -1,5 +1,6 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
 import { EngineTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';
+import { Nullable } from './transactions.types';
 
 export interface DappOptions {
   callbackUrl?: string;
@@ -19,7 +20,7 @@ export interface IDappProvider {
   signTransaction(
     transaction: Transaction,
     options?: DappOptions
-  ): Promise<Transaction | null | undefined>;
+  ): Promise<Nullable<Transaction>>;
   signTransactions(
     transactions: Transaction[],
     options?: DappOptions

@@ -17,6 +17,7 @@ import {
   DeviceSignedTransactions,
   LoginMethodsEnum,
   MultiSignTransactionType,
+  Nullable,
   TransactionBatchStatusesEnum
 } from 'types';
 import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
@@ -144,7 +145,7 @@ export function useSignTransactionsWithDevice(
     clearTransactionsToSignWithWarning(sessionId);
   }
 
-  async function handleSignTransaction(transaction: Transaction | null) {
+  async function handleSignTransaction(transaction: Nullable<Transaction>) {
     const connectedProvider =
       providerType !== LoginMethodsEnum.ledger
         ? provider

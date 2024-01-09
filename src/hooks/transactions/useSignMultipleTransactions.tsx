@@ -11,6 +11,7 @@ import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiE
 import {
   ActiveLedgerTransactionType,
   DeviceSignedTransactions,
+  Nullable,
   ScamInfoType
 } from 'types';
 import { getAccount } from 'utils/account/getAccount';
@@ -32,8 +33,8 @@ export interface UseSignMultipleTransactionsPropsType {
   transactionsToSign?: Transaction[];
   onCancel?: () => void;
   onSignTransaction: (
-    transaction: Transaction | null
-  ) => Promise<Transaction | null | undefined>;
+    transaction: Nullable<Transaction>
+  ) => Promise<Nullable<Transaction>>;
   onTransactionsSignSuccess: (transactions: Transaction[]) => void;
   onTransactionsSignError: (errorMessage: string) => void;
   onGetScamAddressData?:
@@ -162,7 +163,7 @@ export function useSignMultipleTransactions({
 
     setWaitingForDevice(isLedger);
 
-    let signedTx: Transaction | null | undefined;
+    let signedTx: Nullable<Transaction>;
     try {
       signedTx = await onSignTransaction(currentTransaction.transaction);
     } catch (err) {
