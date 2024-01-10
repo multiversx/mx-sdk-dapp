@@ -1,5 +1,30 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+const getFormattedAxiosResponse = async <T>(
+  response: Response,
+  config?: AxiosRequestConfig<T> | undefined
+) => {
+  if (!response.ok) {
+    throw new Error(`HTTP error! Status: ${response.status}`);
+  }
+
+  // Clone the response to be able to read it twice (for status and data)
+  const clonedResponse = response.clone();
+
+  // Parse the JSON body asynchronously
+  const jsonPromise = clonedResponse.json();
+
+  // Return the standardized response object
+  const [responseData] = await Promise.all([jsonPromise]);
+  return {
+    data: responseData,
+    status: response.status,
+    statusText: response.statusText,
+    headers: response.headers,
+    config
+  };
+};
+
 async function customPost<T = any, R = AxiosResponse<T, any>, D = any>(
   url: string,
   data?: D,
@@ -16,24 +41,7 @@ async function customPost<T = any, R = AxiosResponse<T, any>, D = any>(
       ...config
     } as RequestInit);
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-    // Clone the response to be able to read it twice (for status and data)
-    const clonedResponse = response.clone();
-
-    // Parse the JSON body asynchronously
-    const jsonPromise = clonedResponse.json();
-
-    // Return the standardized response object
-    return Promise.all([jsonPromise]).then(([responseData]) => ({
-      data: responseData,
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      config
-    })) as Promise<R>;
+    return getFormattedAxiosResponse(response, config) as Promise<R>;
   } catch (error) {
     console.error('Fetch Error:', error);
     throw error;
@@ -50,20 +58,31 @@ async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    // Clone the response to be able to read it twice (for status and data)
-    const clonedResponse = response.clone();
+    return getFormattedAxiosResponse(response, config) as Promise<R>;
+  } catch (error) {
+    console.error('Fetch Error:', error);
+    throw error;
+  }
+}
 
-    // Parse the JSON body asynchronously
-    const jsonPromise = clonedResponse.json();
+async function customPatch<T = any, R = AxiosResponse<T, any>, D = any>(
+  url: string,
+  data?: D,
+  config?: AxiosRequestConfig<D> | undefined
+): Promise<R> {
+  try {
+    const response = await fetch(url, {
+      method: 'PATCH',
+      body: data ? JSON.stringify(data) : undefined,
+      headers: config?.headers || {},
+      ...config
+    } as RequestInit);
 
-    // Return the standardized response object
-    return Promise.all([jsonPromise]).then(([data]) => ({
-      data,
-      status: response.status,
-      statusText: response.statusText,
-      headers: response.headers,
-      config
-    })) as Promise<R>;
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    return getFormattedAxiosResponse(response, config) as Promise<R>;
   } catch (error) {
     console.error('Fetch Error:', error);
     throw error;
@@ -73,5 +92,6 @@ async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
 const axiosInstance = axios.create();
 axiosInstance.get = customGet;
 axiosInstance.post = customPost;
+axiosInstance.patch = customPatch;
 
 export { axiosInstance };
