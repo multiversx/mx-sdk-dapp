@@ -9,7 +9,7 @@
   "browser": "./",
   "react-native": "./",
   "engines": {
-    "node": ">=16"
+    "node": ">=18"
   },
   "scripts": {
     "start": "yarn watch",
