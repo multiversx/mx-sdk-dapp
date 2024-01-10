@@ -1,4 +1,6 @@
+import { buildAxiosFetch } from '@lifeomic/axios-fetch';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+const fetch = buildAxiosFetch(axios);
 
 const getFormattedAxiosResponse = async <T>(
   response: Response,
@@ -53,6 +55,8 @@ async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
   config?: AxiosRequestConfig<D> | undefined
 ): Promise<R> {
   try {
+    console.log('config', config);
+
     const response = await fetch(url, config as RequestInit);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

@@ -142,6 +142,7 @@
     "**/*.d.ts"
   ],
   "dependencies": {
+    "@lifeomic/axios-fetch": "3.0.1",
     "@multiversx/sdk-core": "12.17.0",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
