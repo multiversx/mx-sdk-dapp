@@ -3,8 +3,8 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
+import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider/ExperimentalWebviewProvider';
 import { webviewProvider } from 'providers/webviewProvider';
-import { ExperimentalWebviewProvider } from 'providers/webviewProvider/ExperimentalWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import {
