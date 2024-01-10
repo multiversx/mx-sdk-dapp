@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.27.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1020)] - 2024-01-09
 - [Remove native auth token legacy support](https://github.com/multiversx/mx-sdk-dapp/pull/1018)
 
 ## [[v2.27.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1017)] - 2024-01-09
