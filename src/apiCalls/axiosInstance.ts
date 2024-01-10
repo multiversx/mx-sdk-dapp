@@ -2,10 +2,7 @@ import { buildAxiosFetch } from '@lifeomic/axios-fetch';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 const fetch = buildAxiosFetch(axios);
 
-const getFormattedAxiosResponse = async <T>(
-  response: Response,
-  config?: AxiosRequestConfig<T> | undefined
-) => {
+const getFormattedAxiosResponse = async <T>(response: Response, config?: T) => {
   if (!response.ok) {
     throw new Error(`HTTP error! Status: ${response.status}`);
   }
@@ -43,7 +40,7 @@ async function customPost<T = any, R = AxiosResponse<T, any>, D = any>(
       ...config
     } as RequestInit);
 
-    return getFormattedAxiosResponse(response, config) as Promise<R>;
+    return getFormattedAxiosResponse(response, config) as unknown as Promise<R>;
   } catch (error) {
     console.error('Fetch Error:', error);
     throw error;
@@ -55,14 +52,12 @@ async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
   config?: AxiosRequestConfig<D> | undefined
 ): Promise<R> {
   try {
-    console.log('config', config);
-
     const response = await fetch(url, config as RequestInit);
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    return getFormattedAxiosResponse(response, config) as Promise<R>;
+    return getFormattedAxiosResponse(response, config) as unknown as Promise<R>;
   } catch (error) {
     console.error('Fetch Error:', error);
     throw error;
@@ -86,7 +81,7 @@ async function customPatch<T = any, R = AxiosResponse<T, any>, D = any>(
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-    return getFormattedAxiosResponse(response, config) as Promise<R>;
+    return getFormattedAxiosResponse(response, config) as unknown as Promise<R>;
   } catch (error) {
     console.error('Fetch Error:', error);
     throw error;

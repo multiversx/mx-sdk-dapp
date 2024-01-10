@@ -1,7 +1,7 @@
 /**************
  * MSW config code
  ***************/
-
+import 'isomorphic-fetch';
 import { server } from './__mocks__/server';
 
 // Establish API mocking before all tests.
