@@ -1,8 +1,8 @@
 #!/bin/bash
 
-echo 'Make sure you are using Node v16^ and have node_modules installed'
+echo 'Make sure you are using Node v18^ and have node_modules installed'
 # Uncomment if using nvm
-# nvm use 16
+# nvm use 18
 
 # Uncomment if you want to install node_modules as well
 # echo 'Installing node_modules in mx-wallet-dapp'
