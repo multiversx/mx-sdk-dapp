@@ -7,25 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.28.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1022)] - 2024-01-11
+
+- [Updated the min required Node version to 18, updated packages](https://github.com/multiversx/mx-sdk-dapp/pull/1021)
+
 ## [[v2.27.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1020)] - 2024-01-10
+
 - [Remove native auth token legacy support](https://github.com/multiversx/mx-sdk-dapp/pull/1018)
 
 ## [[v2.27.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1017)] - 2024-01-09
+
 - [Added Experimental Webview Provider](https://github.com/multiversx/mx-sdk-dapp/pull/1012)
 
 ## [[v2.26.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1013)] - 2024-01-08
+
 - [Prevent logout before webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1012)
 
 ## [[v2.26.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1011)] - 2024-01-05
+
 - [Add custom request option for WC button](https://github.com/multiversx/mx-sdk-dapp/pull/1010)
 
 ## [[v2.26.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1009)] - 2024-01-04
+
 - [Fixed provider initialised check](https://github.com/multiversx/mx-sdk-dapp/pull/1008)
 
 ## [[v2.26.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1007)] - 2024-01-04
+
 - [Prevent redirects on logout if the provider is both of wallet type and initialised](https://github.com/multiversx/mx-sdk-dapp/pull/1006)
 
 ## [[v2.26.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1005)] - 2024-01-03
+
 - [Fix logout issue with web-wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1004)
 
 ## [[v2.26.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1003)] - 2023-12-21
@@ -68,18 +79,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Added extra gas fee for guardian transactions](https://github.com/multiversx/mx-sdk-dapp/pull/977)
 
 ## [[v2.24.2]](https://github.com/multiversx/mx-sdk-dapp/pull/976)] - 2023-11-28
+
 - [Fixed logout for wallet provider](https://github.com/multiversx/mx-sdk-dapp/pull/975)
 
 ## [[v2.24.1]](https://github.com/multiversx/mx-sdk-dapp/pull/974)] - 2023-11-28
+
 - [Fixed logout redirect loop](https://github.com/multiversx/mx-sdk-dapp/pull/973)
 
 ## [[v2.24.0]](https://github.com/multiversx/mx-sdk-dapp/pull/972)] - 2023-11-24
+
 - [Full SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/971)
 
 ## [[v2.23.1]](https://github.com/multiversx/mx-sdk-dapp/pull/970)] - 2023-11-20
+
 - [Changed transaction sender validation](https://github.com/multiversx/mx-sdk-dapp/pull/969)
 
 ## [[v2.23.0]](https://github.com/multiversx/mx-sdk-dapp/pull/956)] - 2023-10-13
+
 - [Added xAlias login methods](https://github.com/multiversx/mx-sdk-dapp/pull/966)
 - [Added `sdk-dapp-version` to web wallet communication](https://github.com/multiversx/mx-sdk-dapp/pull/964)
 - [Fixed missing `await` for `refreshAccount` in `useCheckTransactionStatus`](https://github.com/multiversx/mx-sdk-dapp/pull/960)
@@ -105,7 +121,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Fixed `ModalContainer` not working in `StrictMode`](https://github.com/multiversx/mx-sdk-dapp/pull/943)
 
 ## [[v2.22.1]](https://github.com/multiversx/mx-sdk-dapp/pull/942)] - 2023-10-02
+
 - [Fixed `WebWalletLoginButtonPropsType` interface](https://github.com/multiversx/mx-sdk-dapp/pull/942)
+
 ## [[v2.22.0]](https://github.com/multiversx/mx-sdk-dapp/pull/941)] - 2023-10-02
 
 - [Added support for custom Web Wallet address](https://github.com/multiversx/mx-sdk-dapp/pull/940)
