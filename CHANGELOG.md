@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Move axios in peerDependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1023)
+
 ## [[v2.28.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1022)] - 2024-01-11
 
 - [Updated the min required Node version to 18, updated packages](https://github.com/multiversx/mx-sdk-dapp/pull/1021)
