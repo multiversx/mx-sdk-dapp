@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Changed postMessage payload from string to plain object](https://github.com/multiversx/mx-sdk-dapp/pull/1023)
+- [Changed postMessage payload from string to plain object](https://github.com/multiversx/mx-sdk-dapp/pull/1025)
 
 ## [[v2.28.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1022)] - 2024-01-11
 
