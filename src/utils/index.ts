@@ -1,7 +1,6 @@
 export * from './account';
 export * from './buildUrlParams';
 export * from './clearNavigationHistory';
-export * from './crossWindow';
 export * from './dateTime';
 export * from './decoders';
 export * from './environment';
