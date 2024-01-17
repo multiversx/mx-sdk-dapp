@@ -1,6 +1,7 @@
 export * from './account';
 export * from './buildUrlParams';
 export * from './clearNavigationHistory';
+export * from './crossWindow';
 export * from './dateTime';
 export * from './decoders';
 export * from './environment';
@@ -11,8 +12,8 @@ export * from './math';
 export * from './network';
 export * from './operations';
 export * from './parseNavigationParams';
-export * from './progress';
 export * from './platform';
+export * from './progress';
 export * from './redirect';
 export * from './removeSearchParamsFromUrl';
 export * from './retryMultipleTimes';
