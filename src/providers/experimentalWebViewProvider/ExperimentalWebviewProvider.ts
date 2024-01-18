@@ -4,8 +4,8 @@ import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums,
   PostMessageParamsType,
-  ReplyWithPostMessageType,
-  ResponseTypeMap,
+  PostMessageReturnType,
+  ReplyWithPostMessagePayloadType,
   SignMessageStatusEnum
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
@@ -123,7 +123,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     action: T
   ): Promise<{
     type: T;
-    payload: ReplyWithPostMessageType<T>['payload'];
+    payload: ReplyWithPostMessagePayloadType<T>;
   }> {
     return await new Promise((resolve) => {
       window.addEventListener(
@@ -131,7 +131,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
         async function eventHandler(
           event: MessageEvent<{
             type: T;
-            payload: ReplyWithPostMessageType<T>['payload'];
+            payload: ReplyWithPostMessagePayloadType<T>;
           }>
         ) {
           const { type, payload } = event.data;
@@ -160,10 +160,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
   sendPostMessage = async <T extends CrossWindowProviderRequestEnums>(
     message: PostMessageParamsType<T>
-  ): Promise<{
-    type: ResponseTypeMap[T] | CrossWindowProviderResponseEnums.cancelResponse;
-    payload: ReplyWithPostMessageType<ResponseTypeMap[T]>['payload'];
-  }> => {
+  ): Promise<PostMessageReturnType<T>> => {
     const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
 
     if (safeWindow.ReactNativeWebView) {
