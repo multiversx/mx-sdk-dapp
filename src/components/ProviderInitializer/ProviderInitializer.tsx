@@ -43,7 +43,7 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
-import { getExtensionProvider } from './helpers';
+import { getExtensionProvider, getMultiSigLoginToken } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
@@ -162,8 +162,13 @@ export function ProviderInitializer() {
       const address = await getAddress();
       const {
         clearNavigationHistory,
-        remainingParams: { signature }
-      } = parseNavigationParams(['signature', 'loginToken', 'address']);
+        remainingParams: { signature, multisig }
+      } = parseNavigationParams([
+        'signature',
+        'loginToken',
+        'address',
+        'multisig'
+      ]);
 
       if (!address) {
         setAccountProvider(emptyProvider);
@@ -172,17 +177,31 @@ export function ProviderInitializer() {
         return clearNavigationHistory();
       }
 
+      const loginToken = await getMultiSigLoginToken({
+        loginToken: tokenLogin?.loginToken,
+        multisig
+      });
+
+      const accountAddress = loginToken != null ? multisig : address;
+
+      if (loginToken != null) {
+        loginService.setLoginToken(loginToken);
+      }
+
       if (signature) {
         loginService.setTokenLoginInfo({ signature, address });
       }
 
-      const account = await getAccount(address);
+      const account = await getAccount(accountAddress);
       if (account) {
         initializedAccountRef.current = true;
         dispatch(setIsAccountLoading(true));
 
         dispatch(
-          loginAction({ address, loginMethod: LoginMethodsEnum.wallet })
+          loginAction({
+            address: accountAddress,
+            loginMethod: LoginMethodsEnum.wallet
+          })
         );
 
         dispatch(
