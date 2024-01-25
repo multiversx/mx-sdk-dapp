@@ -170,8 +170,6 @@ export function ProviderInitializer() {
         'multisig'
       ]);
 
-      console.log('\x1b[42m%s\x1b[0m', 123, { signature, multisig, address });
-
       if (!address) {
         setAccountProvider(emptyProvider);
         dispatch(setTokenLogin(null));
