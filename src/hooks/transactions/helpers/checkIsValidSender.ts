@@ -4,10 +4,18 @@ import { AccountType } from 'types/account.types';
 // is neither the sender or the sender account's active guardian
 export const checkIsValidSender = (
   senderAccount: Partial<AccountType> | null,
-  address: string
+  address: string | string[]
 ) => {
   if (!senderAccount) {
     return true;
+  }
+
+  if (Array.isArray(address)) {
+    return address.some(
+      (addr) =>
+        senderAccount.address === addr ||
+        senderAccount.activeGuardianAddress === addr
+    );
   }
 
   return (
