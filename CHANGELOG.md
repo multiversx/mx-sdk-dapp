@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ## [[v2.28.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1030)] - 2024-01-26
+- [Added transaction toast wrapper id](https://github.com/multiversx/mx-sdk-dapp/pull/1031)
+
+## [[v2.28.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1030)] - 2024-01-26
 - [Added support for `checkIsValidSender` with array option](https://github.com/multiversx/mx-sdk-dapp/pull/1029)
 
 ## [[v2.28.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1028)] - 2024-01-25

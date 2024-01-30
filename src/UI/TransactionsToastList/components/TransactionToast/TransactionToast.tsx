@@ -52,7 +52,7 @@ const TransactionToastComponent = ({
     customization?.TransactionToastContent ?? TransactionToastContent;
 
   return (
-    <TransactionToastWrapper className={className}>
+    <TransactionToastWrapper className={className} id={`toast-${toastId}`}>
       <ProgressComponent
         key={toastId}
         id={toastId}
