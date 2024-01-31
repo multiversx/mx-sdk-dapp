@@ -281,7 +281,6 @@ export const useWalletConnectV2Login = ({
       providerRef.current.init();
 
       setAccountProvider(providerRef.current);
-      console.log('\x1b[42m%s\x1b[0m', 'DID set provider 1');
 
       isInitialisingRef.current = false;
       canLoginRef.current = true;
