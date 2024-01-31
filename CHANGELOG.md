@@ -6,6 +6,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.28.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1032)] - 2024-01-31
+- [Fixed setting walletconnectV2 `accountProvider` on init](https://github.com/multiversx/mx-sdk-dapp/pull/1033)
+
+## [[v2.28.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1032)] - 2024-01-30
+- [Added transaction toast wrapper id](https://github.com/multiversx/mx-sdk-dapp/pull/1031)
+
+## [[v2.28.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1030)] - 2024-01-26
+- [Added support for `checkIsValidSender` with array option](https://github.com/multiversx/mx-sdk-dapp/pull/1029)
+
+## [[v2.28.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1028)] - 2024-01-25
+- [Added support for Web Wallet multisig token login](https://github.com/multiversx/mx-sdk-dapp/pull/1027)
+
 
 - [Changed postMessage payload from string to plain object](https://github.com/multiversx/mx-sdk-dapp/pull/1025)
 

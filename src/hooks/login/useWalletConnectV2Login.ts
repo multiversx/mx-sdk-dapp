@@ -141,6 +141,8 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
+      setAccountProvider(provider);
+
       if (!canLoginRef.current) {
         try {
           await providerRef.current?.logout();
@@ -279,6 +281,7 @@ export const useWalletConnectV2Login = ({
       providerRef.current.init();
 
       setAccountProvider(providerRef.current);
+
       isInitialisingRef.current = false;
       canLoginRef.current = true;
 
@@ -303,7 +306,6 @@ export const useWalletConnectV2Login = ({
     );
     await newProvider.init();
 
-    setAccountProvider(newProvider);
     providerRef.current = newProvider;
     isInitialisingRef.current = false;
     canLoginRef.current = true;
