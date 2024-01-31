@@ -76,8 +76,14 @@ export const useSignTransactionsCommonData = () => {
     }
 
     clearTransactionStatusMessage();
-    ExtensionProvider.getInstance()?.cancelAction?.();
-    CrossWindowProvider.getInstance()?.cancelAction?.();
+
+    if (isExtensionProvider) {
+      ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+
+    if (isCrossWindowProvider) {
+      CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
   }
 
   return {

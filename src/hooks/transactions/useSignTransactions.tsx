@@ -93,8 +93,13 @@ export const useSignTransactions = () => {
     }
 
     clearTransactionStatusMessage();
-    ExtensionProvider.getInstance()?.cancelAction?.();
-    CrossWindowProvider.getInstance()?.cancelAction?.();
+
+    if (isExtensionProvider) {
+      ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+    if (isCrossWindowProvider) {
+      CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
