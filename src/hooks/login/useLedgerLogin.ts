@@ -150,6 +150,7 @@ export const useLedgerLogin = ({
       const initialized = await hwWalletP.init();
 
       if (initialized) {
+        console.log('Set provider');
         setAccountProvider(hwWalletP);
       }
 

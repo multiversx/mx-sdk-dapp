@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect, MutableRefObject } from 'react';
+import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import {
@@ -11,9 +11,9 @@ import { logoutRouteSelector } from 'reduxStore/selectors';
 import {
   chainIDSelector,
   walletConnectDeepLinkSelector,
+  walletConnectV2OptionsSelector,
   walletConnectV2ProjectIdSelector,
-  walletConnectV2RelaySelector,
-  walletConnectV2OptionsSelector
+  walletConnectV2RelaySelector
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -22,14 +22,15 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
 import {
-  WalletConnectOptionalMethodsEnum,
-  WalletConnectV2Provider,
+  PairingTypes,
   SessionEventTypes,
-  PairingTypes
+  WalletConnectOptionalMethodsEnum,
+  WalletConnectV2Provider
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
+import { emptyProvider } from '../../providers';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -141,8 +142,6 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
-      setAccountProvider(provider);
-
       if (!canLoginRef.current) {
         try {
           await providerRef.current?.logout();
@@ -154,6 +153,7 @@ export const useWalletConnectV2Login = ({
       }
 
       const address = await providerRef.current?.getAddress();
+
       if (!address) {
         console.warn('Login cancelled.');
         return;
@@ -191,12 +191,27 @@ export const useWalletConnectV2Login = ({
 
   const cancelLogin = async () => {
     canLoginRef.current = false;
+
+    if (
+      provider == null ||
+      !getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)
+    ) {
+      providerRef.current = emptyProvider;
+      return;
+    }
+
+    console.log(provider);
+
     try {
       const connectedSessions =
         providerRef.current?.walletConnector?.session?.getAll() ?? [];
+
       if (connectedSessions.length > 0) {
         await providerRef.current?.logout();
       }
+
+      providerRef.current = emptyProvider;
+      setAccountProvider(emptyProvider);
     } catch {
       console.warn('Unable to logout');
     }
@@ -271,7 +286,7 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
-    if (isInitialisingRef.current) {
+    if (isInitialisingRef.current || canLoginRef.current === false) {
       return;
     }
 
@@ -305,7 +320,7 @@ export const useWalletConnectV2Login = ({
       walletConnectV2Options
     );
     await newProvider.init();
-
+    setAccountProvider(newProvider);
     providerRef.current = newProvider;
     isInitialisingRef.current = false;
     canLoginRef.current = true;
@@ -368,15 +383,17 @@ export const useWalletConnectV2Login = ({
   }
 
   useUpdateEffect(() => {
-    if (!tokenToSign) {
+    if (!tokenToSign || !providerRef.current?.connect) {
       return;
     }
 
     generateWcUri();
-  }, [tokenToSign]);
+  }, [tokenToSign, providerRef.current?.connect]);
 
   useUpdateEffect(() => {
-    providerRef.current = provider;
+    if (getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)) {
+      providerRef.current = provider;
+    }
   }, [provider]);
 
   useEffect(() => {

@@ -1,6 +1,5 @@
 import React, { useRef } from 'react';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { ModalContainer } from 'UI/ModalContainer';
 import { WalletConnectLoginModalPropsType } from './types';
 import { WalletConnectLoginContent } from './WalletConnectLoginContent';
@@ -9,34 +8,18 @@ const WalletConnectLoginContainerComponent = (
   props: WalletConnectLoginModalPropsType & WithStylesImportType
 ) => {
   const {
-    callbackRoute,
     className,
-    logoutRoute,
-    nativeAuth,
     onClose,
-    onLoginRedirect,
     showLoginContent,
     showLoginModal,
-    token,
     wrapContentInsideModal,
     styles,
-    customRequestMethods
+    canLoginRef: parentCanLoginRef
   } = props;
 
-  const canLoginRef = useRef<boolean>(true);
-
-  const [, , { cancelLogin }] = useWalletConnectV2Login({
-    callbackRoute,
-    token,
-    nativeAuth,
-    onLoginRedirect,
-    logoutRoute,
-    canLoginRef,
-    customRequestMethods
-  });
+  const canLoginRef = parentCanLoginRef ?? useRef<boolean>(true);
 
   const onCloseModal = async () => {
-    await cancelLogin();
     onClose?.();
   };
 
