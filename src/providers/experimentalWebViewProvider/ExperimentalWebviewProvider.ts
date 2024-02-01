@@ -3,20 +3,15 @@ import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provide
 import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums,
-  ReplyWithPostMessageType,
-  RequestPayloadType,
-  ResponseTypeMap,
+  PostMessageParamsType,
+  PostMessageReturnType,
+  ReplyWithPostMessagePayloadType,
   SignMessageStatusEnum
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { IDappProvider } from 'types/dappProvider.types';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './helpers/getTargetOrigin';
-
-type SendPostMessageType<T extends CrossWindowProviderRequestEnums> = {
-  type: T;
-  payload?: RequestPayloadType[keyof RequestPayloadType];
-};
 
 const notInitializedError = (caller: string) => () => {
   throw new Error(`Unable to perform ${caller}, Provider not initialized`);
@@ -47,7 +42,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
   logout = async () => {
     const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.logoutRequest
+      type: CrossWindowProviderRequestEnums.logoutRequest,
+      payload: undefined
     });
 
     return Boolean(response.payload.data);
@@ -55,7 +51,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
   relogin = async () => {
     const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.loginRequest
+      type: CrossWindowProviderRequestEnums.loginRequest,
+      payload: undefined
     });
 
     const { data, error } = response.payload;
@@ -84,15 +81,14 @@ export class ExperimentalWebviewProvider implements IDappProvider {
       payload: transactionsToSign.map((tx) => tx.toPlainObject())
     });
 
-    const { data, error } = response.payload;
+    const { data: signedTransactions, error } = response.payload;
 
-    if (error || !data) {
+    if (error || !signedTransactions) {
       console.error('Unable to sign transactions');
       return null;
     }
 
-    const transactions = data;
-    return transactions.map((tx) => Transaction.fromPlainObject(tx));
+    return signedTransactions.map((tx) => Transaction.fromPlainObject(tx));
   };
 
   signTransaction = async (transaction: Transaction) => {
@@ -103,7 +99,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   async signMessage(message: SignableMessage): Promise<SignableMessage | null> {
     const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.signMessageRequest,
-      payload: message
+      payload: { message: message.message.toString() }
     });
 
     const { data, error } = response.payload;
@@ -127,7 +123,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     action: T
   ): Promise<{
     type: T;
-    payload: ReplyWithPostMessageType<T>['payload'];
+    payload: ReplyWithPostMessagePayloadType<T>;
   }> {
     return await new Promise((resolve) => {
       window.addEventListener(
@@ -135,7 +131,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
         async function eventHandler(
           event: MessageEvent<{
             type: T;
-            payload: ReplyWithPostMessageType<T>['payload'];
+            payload: ReplyWithPostMessagePayloadType<T>;
           }>
         ) {
           const { type, payload } = event.data;
@@ -163,11 +159,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   }
 
   sendPostMessage = async <T extends CrossWindowProviderRequestEnums>(
-    message: SendPostMessageType<T>
-  ): Promise<{
-    type: ResponseTypeMap[T] | CrossWindowProviderResponseEnums.cancelResponse;
-    payload: ReplyWithPostMessageType<ResponseTypeMap[T]>['payload'];
-  }> => {
+    message: PostMessageParamsType<T>
+  ): Promise<PostMessageReturnType<T>> => {
     const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
 
     if (safeWindow.ReactNativeWebView) {

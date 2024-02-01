@@ -36,6 +36,7 @@ export enum LoginMethodsEnum {
   walletconnect = 'walletconnect',
   walletconnectv2 = 'walletconnectv2',
   wallet = 'wallet',
+  crossWindow = 'crossWindow',
   extension = 'extension',
   opera = 'opera',
   extra = 'extra',
@@ -94,6 +95,7 @@ export enum WebViewProviderRequestBaseEnums {
   signTransactionsWithGuardianResponse = 'SIGN_TRANSACTIONS_WITH_GUARDIAN_RESPONSE',
   reloginRequest = 'RELOGIN_REQUEST'
 }
+
 export const WebViewProviderRequestEnums = {
   ...CrossWindowProviderRequestEnums,
   ...WebViewProviderRequestBaseEnums

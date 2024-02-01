@@ -956,7 +956,12 @@ The sdk-dapp library exposes bundles for both CommonJS and ESModules, however, i
 moduleNameMapper: {
     '@multiversx/sdk-dapp/(.*)':
       '<rootDir>/node_modules/@multiversx/sdk-dapp/__commonjs/$1.js'
-}
+},
+```
+
+You may need in your setupJest.js file do:
+```javascript
+import 'isomorphic-fetch';
 ```
 
 # sdk-dapp exports

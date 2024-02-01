@@ -43,7 +43,12 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
-import { getExtensionProvider, getMultiSigLoginToken } from './helpers';
+import {
+  getOperaProvider,
+  getCrossWindowProvider,
+  getExtensionProvider,
+  getMultiSigLoginToken
+} from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
@@ -231,7 +236,18 @@ export function ProviderInitializer() {
 
   async function setOperaProvider() {
     const address = await getAddress();
-    const provider = await getExtensionProvider(address);
+    const provider = await getOperaProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
+  async function setCrossWindowProvider() {
+    const address = await getAddress();
+    const provider = await getCrossWindowProvider({
+      address,
+      walletUrl: network.walletAddress
+    });
     if (provider) {
       setAccountProvider(provider);
     }
@@ -262,6 +278,11 @@ export function ProviderInitializer() {
 
       case LoginMethodsEnum.opera: {
         setOperaProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.crossWindow: {
+        setCrossWindowProvider();
         break;
       }
 
