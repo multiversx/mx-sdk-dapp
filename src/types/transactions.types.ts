@@ -267,3 +267,5 @@ export interface TransactionLinkType {
   label: string;
   address: string;
 }
+
+export type Nullable<T> = T | null;

@@ -21,6 +21,7 @@ export interface CustomConfirmScreensType {
   Ledger?: ScreenType;
   Extension?: ScreenType;
   Opera?: ScreenType;
+  CrossWindow?: ScreenType;
   WalletConnect?: ScreenType;
   Wallet?: ScreenType;
   Extra?: ScreenType;

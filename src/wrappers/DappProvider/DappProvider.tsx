@@ -3,15 +3,30 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
+import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider/ExperimentalWebviewProvider';
 import { webviewProvider } from 'providers/webviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
-import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
+import {
+  CustomNetworkType,
+  EnvironmentsEnum,
+  IDappProvider,
+  PlatformsEnum
+} from 'types';
 import { DappConfigType } from 'types/dappConfig.types';
+import { getWebviewPlatform } from 'utils/account/getWebviewPlatform';
 import { AppInitializer } from 'wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export { DappConfigType };
+
+const setWebviewProvider = () => {
+  if (getWebviewPlatform() === PlatformsEnum.webWallet) {
+    setExternalProvider(ExperimentalWebviewProvider.getInstance());
+  } else {
+    setExternalProvider(webviewProvider);
+  }
+};
 
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
@@ -39,7 +54,7 @@ export const DappProvider = ({
   if (externalProvider != null) {
     setExternalProvider(externalProvider);
   } else if (dappConfig?.shouldUseWebViewProvider) {
-    setExternalProvider(webviewProvider);
+    setWebviewProvider();
   }
 
   return (

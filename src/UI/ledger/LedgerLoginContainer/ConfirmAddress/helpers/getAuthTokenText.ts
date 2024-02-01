@@ -37,7 +37,7 @@ export const getAuthTokenText = ({
   }
 
   return {
-    data: `${loginToken}{}`,
+    data: loginToken,
     confirmAddressText,
     authText,
     areShownText

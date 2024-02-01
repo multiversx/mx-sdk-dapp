@@ -43,6 +43,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     tokenRef.current = loginToken;
     dispatch(
       setTokenLogin({
+        ...tokenLogin,
         loginToken,
         ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })
@@ -123,7 +124,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     }
     const messageToSign = new SignableMessage({
       address: new Address(address),
-      message: Buffer.from(`${address}${loginToken}{}`)
+      message: Buffer.from(`${address}${loginToken}`)
     });
     const signedMessage = await signMessageCallback(messageToSign, {});
     const nativeAuthToken = setTokenLoginInfo({

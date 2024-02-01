@@ -35,6 +35,8 @@ yarn add @multiversx/sdk-dapp --no-optional
 
 ### **If you're transitioning from dapp-core 1.x to @multiversx/sdk-dapp (dapp-core 2.0), please read the [Migration guide](https://github.com/multiversx/mx-sdk-dapp/wiki/Migration-guide-2.0)**
 
+### **As of @multiversx/sdk-dapp@2.28.0 Node >=18 is required since Node 16 [reached its EOL](https://nodejs.org/en/blog/announcements/nodejs16-eol).**
+
 # Usage
 
 sdk-dapp aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with a new application or integrate sdk-dapp into an existing application.
@@ -312,6 +314,7 @@ you can easily import and use them.
 ```
 
 If you have a custom Web Wallet provider you can integrate it by using the `customWalletAddress` prop:
+
 ```jsx
 <WebWalletLoginButton
   callbackRoute="/dashboard"
@@ -554,7 +557,6 @@ The API for sending sync transactions is a function called **sendBatchTransactio
 
 It can be used to send a group of transactions (that ca be synchronized) with minimum information:
 
-
 ```typescript
 const { batchId, error } = await sendBatchTransactions({
     transactions: [
@@ -618,9 +620,11 @@ It returns a Promise that will be fulfilled with `{error?: string; batchId: stri
 - `error` is the error that can appear during the signing/sending process.
 
 ### How to synchronize transactions ?
+
 `sendBatchTransactions` accepts an argument `transactions` which is an array of transactions arrays.
 Each transaction array will be sent to the blockchain in the order they are provided.
 Having the example above, the transactions will be sent in the following order:
+
 - `tx1`
 - `tx2, tx3`
 
@@ -633,7 +637,6 @@ Be sure to save the `sessionId` passed to the batch. We recommend to generate a 
 ```typescript
 import { sendBatchTransactions } from '@multiversx/sdk-dapp/services/transactions/sendBatchTransactions';
 import { useSendBatchTransactions } from '@multiversx/sdk-dapp/hooks/transactions/batch/useSendBatchTransactions';
-
 
 const { send: sendBatchToBlockchain } = useSendBatchTransactions();
 
@@ -785,8 +788,10 @@ import { TransactionsTracker } from "your/module";
     }
   }}
 >
-````
+```
+
 The props passed to the `TransactionsTracker` component are:
+
 ```typescript
 export interface TransactionsTrackerType {
   getTransactionsByHash?: GetTransactionsByHashesType;
@@ -794,6 +799,7 @@ export interface TransactionsTrackerType {
   onFail?: (sessionId: string | null, errorMessage?: string) => void;
 }
 ```
+
 Also, the same props can be passed to the `useTransactionsTracker` and `useBatchTransactionsTracker` hooks.
 
 ```typescript
@@ -950,7 +956,12 @@ The sdk-dapp library exposes bundles for both CommonJS and ESModules, however, i
 moduleNameMapper: {
     '@multiversx/sdk-dapp/(.*)':
       '<rootDir>/node_modules/@multiversx/sdk-dapp/__commonjs/$1.js'
-}
+},
+```
+
+You may need in your setupJest.js file do:
+```javascript
+import 'isomorphic-fetch';
 ```
 
 # sdk-dapp exports
