@@ -97,7 +97,6 @@ export async function logout(
       }, CLEAR_SESSION_TIMEOUT_MS);
     }
 
-    console.log('\x1b[42m%s\x1b[0m', 'default logout');
     await provider.logout({ callbackUrl: url });
   } catch (err) {
     console.error('error logging out', err);
