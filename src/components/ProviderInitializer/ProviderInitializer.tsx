@@ -47,7 +47,7 @@ import {
   getOperaProvider,
   getCrossWindowProvider,
   getExtensionProvider,
-  getMultiSigLoginToken
+  processMultisigAccount
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -182,29 +182,21 @@ export function ProviderInitializer() {
         return clearNavigationHistory();
       }
 
-      const loginToken = await getMultiSigLoginToken({
+      const account = await processMultisigAccount({
         loginToken: tokenLogin?.loginToken,
-        multisig
+        multisig,
+        address,
+        signature,
+        loginService
       });
 
-      const accountAddress = loginToken != null ? multisig : address;
-
-      if (loginToken != null) {
-        loginService.setLoginToken(loginToken);
-      }
-
-      if (signature) {
-        loginService.setTokenLoginInfo({ signature, address });
-      }
-
-      const account = await getAccount(accountAddress);
       if (account) {
         initializedAccountRef.current = true;
         dispatch(setIsAccountLoading(true));
 
         dispatch(
           loginAction({
-            address: accountAddress,
+            address: account.address,
             loginMethod: LoginMethodsEnum.wallet
           })
         );

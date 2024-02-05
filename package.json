@@ -151,7 +151,7 @@
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.2.0",
     "@multiversx/sdk-wallet-connect-provider": "4.1.0",
-    "@multiversx/sdk-web-wallet-cross-window-provider": "0.0.20",
+    "@multiversx/sdk-web-wallet-cross-window-provider": "0.0.21",
     "@multiversx/sdk-web-wallet-provider": "3.1.0",
     "@reduxjs/toolkit": "1.8.2",
     "axios": "1.6.5",

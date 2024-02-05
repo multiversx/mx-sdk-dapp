@@ -16,6 +16,10 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
+import { processMultisigAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
+import { tokenLoginSelector } from 'reduxStore/selectors';
+import { setAccount } from 'reduxStore/slices';
+import { getLatestNonce } from 'utils/account/getLatestNonce';
 
 export type UseCrossWindowLoginReturnType = [
   InitiateLoginFunctionType,
@@ -31,6 +35,7 @@ export const useCrossWindowLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
+  const tokenLogin = useSelector(tokenLoginSelector);
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
   const network = useSelector(networkSelector);
@@ -81,7 +86,9 @@ export const useCrossWindowLogin = ({
         ...(token && { token })
       };
 
-      const { signature, address } = await provider.login(providerLoginData);
+      const { signature, address, multisig } = await provider.login(
+        providerLoginData
+      );
 
       setAccountProvider(provider);
 
@@ -91,15 +98,30 @@ export const useCrossWindowLogin = ({
         return;
       }
 
-      if (signature && token) {
-        loginService.setTokenLoginInfo({
-          signature,
-          address
-        });
+      const account = await processMultisigAccount({
+        loginToken: tokenLogin?.loginToken,
+        multisig,
+        address,
+        signature,
+        loginService
+      });
+
+      if (!account) {
+        return;
       }
 
       dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.crossWindow })
+        loginAction({
+          address: account.address,
+          loginMethod: LoginMethodsEnum.crossWindow
+        })
+      );
+
+      dispatch(
+        setAccount({
+          ...account,
+          nonce: getLatestNonce(account)
+        })
       );
 
       optionalRedirect({
