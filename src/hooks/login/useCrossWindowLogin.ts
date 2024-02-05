@@ -17,7 +17,6 @@ import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
 import { processMultisigAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
-import { tokenLoginSelector } from 'reduxStore/selectors';
 import { setAccount } from 'reduxStore/slices';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
 
@@ -35,7 +34,6 @@ export const useCrossWindowLogin = ({
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
-  const tokenLogin = useSelector(tokenLoginSelector);
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
   const network = useSelector(networkSelector);
@@ -99,7 +97,7 @@ export const useCrossWindowLogin = ({
       }
 
       const account = await processMultisigAccount({
-        loginToken: tokenLogin?.loginToken,
+        loginToken: token,
         multisig,
         address,
         signature,
@@ -127,7 +125,7 @@ export const useCrossWindowLogin = ({
       optionalRedirect({
         callbackRoute,
         onLoginRedirect,
-        options: { signature, address }
+        options: { signature, address: account.address }
       });
     } catch (error) {
       console.error('error loging in', error);
