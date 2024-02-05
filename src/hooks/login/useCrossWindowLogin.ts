@@ -16,6 +16,9 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
+import { processMultisigAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
+import { setAccount } from 'reduxStore/slices';
+import { getLatestNonce } from 'utils/account/getLatestNonce';
 
 export type UseCrossWindowLoginReturnType = [
   InitiateLoginFunctionType,
@@ -81,7 +84,9 @@ export const useCrossWindowLogin = ({
         ...(token && { token })
       };
 
-      const { signature, address } = await provider.login(providerLoginData);
+      const { signature, address, multisig } = await provider.login(
+        providerLoginData
+      );
 
       setAccountProvider(provider);
 
@@ -91,21 +96,36 @@ export const useCrossWindowLogin = ({
         return;
       }
 
-      if (signature && token) {
-        loginService.setTokenLoginInfo({
-          signature,
-          address
-        });
+      const account = await processMultisigAccount({
+        loginToken: token,
+        multisig,
+        address,
+        signature,
+        loginService
+      });
+
+      if (!account) {
+        return;
       }
 
       dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.crossWindow })
+        loginAction({
+          address: account.address,
+          loginMethod: LoginMethodsEnum.crossWindow
+        })
+      );
+
+      dispatch(
+        setAccount({
+          ...account,
+          nonce: getLatestNonce(account)
+        })
       );
 
       optionalRedirect({
         callbackRoute,
         onLoginRedirect,
-        options: { signature, address }
+        options: { signature, address: account.address }
       });
     } catch (error) {
       console.error('error loging in', error);
