@@ -20,10 +20,11 @@ import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactio
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
+const { search } = getWindowLocation();
+
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
 ) {
-  const { search } = getWindowLocation();
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
 
@@ -36,7 +37,7 @@ export function useParseSignedTransactions(
 
         const signedTransactions = new WalletProvider(
           `${network.walletAddress}${DAPP_INIT_ROUTE}`
-        ).getTransactionsFromWalletUrl();
+        ).getTransactionsFromWalletUrl(search);
 
         if (searchData.status === TransactionBatchStatusesEnum.cancelled) {
           dispatch(
