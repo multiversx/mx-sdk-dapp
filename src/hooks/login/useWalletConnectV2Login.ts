@@ -30,7 +30,8 @@ import {
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
-import { emptyProvider } from '../../providers';
+import { emptyProvider, getProviderType } from '../../providers';
+import { useGetLoginInfo } from '../account';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -74,6 +75,7 @@ export const useWalletConnectV2Login = ({
   customRequestMethods = []
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
+  const { loginMethod } = useGetLoginInfo();
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
@@ -127,12 +129,11 @@ export const useWalletConnectV2Login = ({
 
   const handleOnLogin = async () => {
     try {
-      const provider = providerRef.current;
       const isLoggedIn = getIsLoggedIn();
 
       if (
         isLoggedIn ||
-        provider == null ||
+        providerRef.current == null ||
         !getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)
       ) {
         return;
@@ -190,17 +191,15 @@ export const useWalletConnectV2Login = ({
   };
 
   const cancelLogin = async () => {
-    canLoginRef.current = false;
-
-    if (
-      provider == null ||
-      !getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)
-    ) {
-      providerRef.current = emptyProvider;
-      return;
+    if (canLoginRef.current) {
+      canLoginRef.current = false;
     }
 
-    console.log(provider);
+    const providerType = getProviderType(providerRef.current);
+
+    if (providerType !== LoginMethodsEnum.walletconnectv2) {
+      return;
+    }
 
     try {
       const connectedSessions =
@@ -212,6 +211,16 @@ export const useWalletConnectV2Login = ({
 
       providerRef.current = emptyProvider;
       setAccountProvider(emptyProvider);
+
+      // TODO: Why is provider still set?
+      // Works everything well if refreshing after login
+
+      console.log({
+        providerRef: providerRef.current,
+        provider,
+        isLoggedIn,
+        loginMethod
+      });
     } catch {
       console.warn('Unable to logout');
     }
@@ -391,9 +400,13 @@ export const useWalletConnectV2Login = ({
   }, [tokenToSign, providerRef.current?.connect]);
 
   useUpdateEffect(() => {
-    if (getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)) {
-      providerRef.current = provider;
+    if (canLoginRef?.current === false) {
+      cancelLogin();
     }
+  }, [canLoginRef.current]);
+
+  useUpdateEffect(() => {
+    providerRef.current = provider;
   }, [provider]);
 
   useEffect(() => {

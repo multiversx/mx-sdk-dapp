@@ -36,7 +36,6 @@ const WalletConnectLoginContentComponent = ({
     initLoginWithWalletConnectV2,
     { error: walletConnectErrorV2 },
     {
-      cancelLogin,
       connectExisting,
       removeExistingPairing,
       uriDeepLink: walletConnectDeepLinkV2,
@@ -100,8 +99,6 @@ const WalletConnectLoginContentComponent = ({
 
   useEffect(() => {
     if (canLoginRef?.current === false) {
-      cancelLogin();
-
       return;
     }
 
