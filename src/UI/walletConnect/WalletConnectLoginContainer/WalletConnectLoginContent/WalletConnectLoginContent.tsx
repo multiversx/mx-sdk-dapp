@@ -98,8 +98,12 @@ const WalletConnectLoginContentComponent = ({
   }, [walletConnectUriV2]);
 
   useEffect(() => {
+    if (canLoginRef?.current === false) {
+      return;
+    }
+
     initLoginWithWalletConnectV2();
-  }, []);
+  }, [canLoginRef?.current]);
 
   const authorizationInfo = showScamPhishingAlert
     ? getAuthorizationInfo(token, containerScamPhishingAlertClassName)

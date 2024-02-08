@@ -22,7 +22,7 @@ export const getRegisteredToastCloseHandler = (id: string) =>
 export const addNewCustomToast = (props: CustomToastType) => {
   if (props.component != null) {
     const { component, onClose, ...rest } = props;
-    const { payload } = store.dispatch(
+    const data = store.dispatch(
       addCustomToast({
         ...rest,
         // do not send component to Redux
@@ -31,12 +31,12 @@ export const addNewCustomToast = (props: CustomToastType) => {
       })
     );
 
-    componentsDictionary[payload.toastId] = component;
+    componentsDictionary[data?.payload.toastId] = component;
     if (onClose) {
-      componentsCloseHandlersDictionary[payload.toastId] = onClose;
+      componentsCloseHandlersDictionary[data?.payload.toastId] = onClose;
     }
 
-    return payload;
+    return data?.payload;
   }
   return store.dispatch(addCustomToast(props)).payload;
 };
