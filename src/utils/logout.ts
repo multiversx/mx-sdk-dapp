@@ -42,6 +42,8 @@ const broadcastLogoutAcrossTabs = (address: string) => {
   storage.local.removeItem(localStorageKeys.logoutEvent);
 };
 
+const CLEAR_SESSION_TIMEOUT_MS = 500;
+
 export async function logout(
   callbackUrl?: string,
   onRedirect?: (callbackUrl?: string) => void,
@@ -92,7 +94,7 @@ export async function logout(
       // Allow redux store cleanup before redirect to web wallet
       return setTimeout(() => {
         provider.logout({ callbackUrl: url });
-      });
+      }, CLEAR_SESSION_TIMEOUT_MS);
     }
 
     await provider.logout({ callbackUrl: url });
