@@ -8,7 +8,7 @@ import {
   WALLET_SIGN_SESSION
 } from 'constants/index';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors';
+import { dappConfigSelector, networkSelector } from 'reduxStore/selectors';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsCancelMessage
@@ -20,13 +20,18 @@ import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactio
 import { removeTransactionParamsFromUrl } from 'utils/transactions/removeTransactionParamsFromUrl';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
-const { search } = getWindowLocation();
+const location = getWindowLocation();
 
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
 ) {
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
+  const { shouldFetchWalletUrlOnLoad } = useSelector(dappConfigSelector);
+
+  const { search } = shouldFetchWalletUrlOnLoad
+    ? location
+    : getWindowLocation();
 
   useEffect(() => {
     if (search != null) {
