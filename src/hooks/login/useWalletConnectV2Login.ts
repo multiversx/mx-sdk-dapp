@@ -1,10 +1,9 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 
+import { useGetAccountProvider } from 'hooks/account';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
-import {
-  getAccountProvider,
-  setAccountProvider
-} from 'providers/accountProvider';
+import { setAccountProvider } from 'providers/accountProvider';
+import { emptyProvider, getProviderType } from 'providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { logoutRouteSelector } from 'reduxStore/selectors';
@@ -17,7 +16,10 @@ import {
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
+import {
+  LoginHookGenericStateType,
+  OnProviderLoginType
+} from 'types/login.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
@@ -28,10 +30,7 @@ import {
   WalletConnectV2Provider
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { LoginHookGenericStateType, OnProviderLoginType } from '../../types';
 import { useLoginService } from './useLoginService';
-import { emptyProvider, getProviderType } from '../../providers';
-import { useGetLoginInfo } from '../account';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -75,7 +74,6 @@ export const useWalletConnectV2Login = ({
   customRequestMethods = []
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
-  const { loginMethod } = useGetLoginInfo();
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
@@ -87,7 +85,7 @@ export const useWalletConnectV2Login = ({
     PairingTypes.Struct[] | undefined
   >([]);
 
-  const provider = getAccountProvider();
+  const { provider, providerType } = useGetAccountProvider();
   const walletConnectV2RelayAddress = useSelector(walletConnectV2RelaySelector);
   const walletConnectV2ProjectId = useSelector(
     walletConnectV2ProjectIdSelector
@@ -105,9 +103,11 @@ export const useWalletConnectV2Login = ({
     WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
     ...customRequestMethods
   ];
+
   if (tokenToSign) {
     dappMethods.push(WalletConnectOptionalMethodsEnum.SIGN_LOGIN_TOKEN);
   }
+
   if (hasNativeAuth) {
     dappMethods.push(WalletConnectOptionalMethodsEnum.SIGN_NATIVE_AUTH_TOKEN);
   }
@@ -130,16 +130,16 @@ export const useWalletConnectV2Login = ({
   const handleOnLogin = async () => {
     try {
       const isLoggedIn = getIsLoggedIn();
+      const isLoggedInWithDifferentProvider =
+        isLoggedIn &&
+        providerType &&
+        providerType !== LoginMethodsEnum.walletconnectv2;
 
       if (
-        isLoggedIn ||
+        isInitialisingRef.current ||
         providerRef.current == null ||
-        !getIsProviderEqualTo(LoginMethodsEnum.walletconnectv2)
+        isLoggedInWithDifferentProvider
       ) {
-        return;
-      }
-
-      if (isInitialisingRef.current) {
         return;
       }
 
@@ -211,16 +211,6 @@ export const useWalletConnectV2Login = ({
 
       providerRef.current = emptyProvider;
       setAccountProvider(emptyProvider);
-
-      // TODO: Why is provider still set?
-      // Works everything well if refreshing after login
-
-      console.log({
-        providerRef: providerRef.current,
-        provider,
-        isLoggedIn,
-        loginMethod
-      });
     } catch {
       console.warn('Unable to logout');
     }
@@ -233,6 +223,7 @@ export const useWalletConnectV2Login = ({
       setError(WalletConnectV2Error.invalidConfig);
       return;
     }
+
     if (!pairing || !pairing.topic) {
       setError(WalletConnectV2Error.invalidTopic);
       return;
@@ -295,7 +286,21 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
-    if (isInitialisingRef.current || canLoginRef.current === false) {
+    const isLoggedIn = getIsLoggedIn();
+    const isLoggedInWithDifferentProvider =
+      isLoggedIn &&
+      providerType &&
+      providerType !== LoginMethodsEnum.walletconnectv2;
+
+    const cannotLogin = canLoginRef.current === false && !isLoggedIn;
+    const isInitialized = providerRef.current?.isInitialized?.();
+
+    if (
+      isInitialisingRef.current ||
+      cannotLogin ||
+      isLoggedInWithDifferentProvider ||
+      isInitialized
+    ) {
       return;
     }
 
@@ -321,6 +326,7 @@ export const useWalletConnectV2Login = ({
       onClientLogout: handleOnLogout,
       onClientEvent: handleOnEvent
     };
+
     const newProvider = new WalletConnectV2Provider(
       providerHandlers,
       chainId,
@@ -328,6 +334,7 @@ export const useWalletConnectV2Login = ({
       walletConnectV2ProjectId,
       walletConnectV2Options
     );
+
     await newProvider.init();
     setAccountProvider(newProvider);
     providerRef.current = newProvider;
