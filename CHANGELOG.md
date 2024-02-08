@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added option to access URL search param from application load time in `useParseSignedTransactions`](https://github.com/multiversx/mx-sdk-dapp/pull/1042)
 - [Fixed wallet connect breaks login with other providers](https://github.com/multiversx/mx-sdk-dapp/pull/1043)
 - [Fixed possibly undefined payload on custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
 
