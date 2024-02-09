@@ -19,7 +19,7 @@ import { LoginMethodsEnum } from 'types/enums.types';
 import {
   LoginHookGenericStateType,
   OnProviderLoginType
-} from 'types/login.types';
+} from '../../types/login.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
