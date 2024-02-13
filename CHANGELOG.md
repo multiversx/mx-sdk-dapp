@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.28.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1046)] - 2024-02-13
+- [Updated AddressRow data-testids](https://github.com/multiversx/mx-sdk-dapp/pull/1045)
+
 ## [[v2.28.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1044)] - 2024-02-08
 - [Added option to access URL search param from application load time in `useParseSignedTransactions`](https://github.com/multiversx/mx-sdk-dapp/pull/1042)
 - [Fixed wallet connect breaks login with other providers](https://github.com/multiversx/mx-sdk-dapp/pull/1043)
