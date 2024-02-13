@@ -16,10 +16,6 @@ import {
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
-import {
-  LoginHookGenericStateType,
-  OnProviderLoginType
-} from '../../types/login.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
@@ -30,6 +26,10 @@ import {
   WalletConnectV2Provider
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
+import {
+  LoginHookGenericStateType,
+  OnProviderLoginType
+} from '../../types/login.types';
 import { useLoginService } from './useLoginService';
 
 export enum WalletConnectV2Error {

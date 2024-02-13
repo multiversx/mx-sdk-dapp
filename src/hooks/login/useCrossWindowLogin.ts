@@ -1,24 +1,24 @@
 import { useState } from 'react';
 
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
+import { processMultisigAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
+import { setAccount } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
   OnProviderLoginType
 } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
-import { processMultisigAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
-import { setAccount } from 'reduxStore/slices';
-import { getLatestNonce } from 'utils/account/getLatestNonce';
 
 export type UseCrossWindowLoginReturnType = [
   InitiateLoginFunctionType,
