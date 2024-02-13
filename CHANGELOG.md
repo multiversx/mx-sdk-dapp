@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fixed wallet connect breaks login with other providers](https://github.com/multiversx/mx-sdk-dapp/pull/1041)
-- [Fixed possibly undefined payload on custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/1040)
+## [[v2.28.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1048)] - 2024-02-13
+- [Updated AddressRow data-testids](https://github.com/multiversx/mx-sdk-dapp/pull/1047)
 
-## [[v2.28.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1038)] - 2024-02-01
-- [Fixed logout with web wallet infinite loop](https://github.com/multiversx/mx-sdk-dapp/pull/1037)
+## [[v2.28.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1044)] - 2024-02-08
+- [Added option to access URL search param from application load time in `useParseSignedTransactions`](https://github.com/multiversx/mx-sdk-dapp/pull/1042)
+- [Fixed wallet connect breaks login with other providers](https://github.com/multiversx/mx-sdk-dapp/pull/1043)
+- [Fixed possibly undefined payload on custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
+
+## [[v2.28.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1036)] - 2024-02-01
+- [Fixed logout with web wallet infinite loop](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
 
 ## [[v2.28.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1035)] - 2024-02-01
 - [Reverted setting walletconnectV2 `accountProvider` on init](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
@@ -26,8 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.28.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1028)] - 2024-01-25
 - [Added support for Web Wallet multisig token login](https://github.com/multiversx/mx-sdk-dapp/pull/1027)
-
-
 - [Changed postMessage payload from string to plain object](https://github.com/multiversx/mx-sdk-dapp/pull/1025)
 
 ## [[v2.28.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1022)] - 2024-01-11
