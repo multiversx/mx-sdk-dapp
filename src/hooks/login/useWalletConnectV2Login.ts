@@ -3,7 +3,7 @@ import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { useGetAccountProvider } from 'hooks/account';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { setAccountProvider } from 'providers/accountProvider';
-import { emptyProvider, getProviderType } from 'providers/utils';
+import { emptyProvider } from 'providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { logoutRouteSelector } from 'reduxStore/selectors';
@@ -195,9 +195,13 @@ export const useWalletConnectV2Login = ({
       canLoginRef.current = false;
     }
 
-    const providerType = getProviderType(providerRef.current);
+    const isLoggedIn = getIsLoggedIn();
+    const isLoggedInWithDifferentProvider =
+      isLoggedIn &&
+      providerType &&
+      providerType !== LoginMethodsEnum.walletconnectv2;
 
-    if (providerType !== LoginMethodsEnum.walletconnectv2) {
+    if (providerRef.current == null || isLoggedInWithDifferentProvider) {
       return;
     }
 

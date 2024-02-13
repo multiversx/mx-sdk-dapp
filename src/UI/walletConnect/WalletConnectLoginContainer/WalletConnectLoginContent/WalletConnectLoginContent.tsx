@@ -34,8 +34,9 @@ const WalletConnectLoginContentComponent = ({
 }: WalletConnectLoginModalPropsType & WithStylesImportType) => {
   const [
     initLoginWithWalletConnectV2,
-    { error: walletConnectErrorV2 },
+    { error: walletConnectErrorV2, isLoggedIn },
     {
+      cancelLogin,
       connectExisting,
       removeExistingPairing,
       uriDeepLink: walletConnectDeepLinkV2,
@@ -99,10 +100,17 @@ const WalletConnectLoginContentComponent = ({
 
   useEffect(() => {
     if (canLoginRef?.current === false) {
+      cancelLogin();
       return;
     }
 
     initLoginWithWalletConnectV2();
+
+    return () => {
+      if (!isLoggedIn) {
+        cancelLogin();
+      }
+    };
   }, [canLoginRef?.current]);
 
   const authorizationInfo = showScamPhishingAlert
