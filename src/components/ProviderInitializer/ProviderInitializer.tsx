@@ -43,7 +43,7 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
-import { getExtensionProvider, getMultiSigLoginToken } from './helpers';
+import { getExtensionProvider, getModifiedLoginToken } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
@@ -162,12 +162,13 @@ export function ProviderInitializer() {
       const address = await getAddress();
       const {
         clearNavigationHistory,
-        remainingParams: { signature, multisig }
+        remainingParams: { signature, multisig, impersonate }
       } = parseNavigationParams([
         'signature',
         'loginToken',
         'address',
-        'multisig'
+        'multisig',
+        'impersonate'
       ]);
 
       if (!address) {
@@ -177,12 +178,17 @@ export function ProviderInitializer() {
         return clearNavigationHistory();
       }
 
-      const loginToken = await getMultiSigLoginToken({
+      const loginToken = await getModifiedLoginToken({
         loginToken: tokenLogin?.loginToken,
-        multisig
+        extraInfoData: {
+          multisig,
+          impersonate
+        }
       });
 
-      const accountAddress = loginToken != null ? multisig : address;
+      const tokenAddress = multisig || impersonate || address;
+
+      const accountAddress = loginToken != null ? tokenAddress : address;
 
       if (loginToken != null) {
         loginService.setLoginToken(loginToken);
