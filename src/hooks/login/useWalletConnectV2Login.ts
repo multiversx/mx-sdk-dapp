@@ -6,7 +6,7 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { emptyProvider, getProviderType } from 'providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { logoutRouteSelector } from 'reduxStore/selectors';
+import { loginMethodSelector, logoutRouteSelector } from 'reduxStore/selectors';
 import {
   chainIDSelector,
   walletConnectDeepLinkSelector,
@@ -59,7 +59,7 @@ export interface WalletConnectV2LoginHookCustomStateType {
 }
 
 export type WalletConnectV2LoginHookReturnType = [
-  (loginProvider?: boolean) => void,
+  (loginProvider?: boolean) => Promise<void>,
   LoginHookGenericStateType,
   WalletConnectV2LoginHookCustomStateType
 ];
@@ -84,6 +84,8 @@ export const useWalletConnectV2Login = ({
   const [wcPairings, setWcPairings] = useState<
     PairingTypes.Struct[] | undefined
   >([]);
+  const [sessionProvider, setSessionProvider] =
+    useState<WalletConnectV2Provider | null>(null);
 
   const { provider, providerType } = useGetAccountProvider();
   const walletConnectV2RelayAddress = useSelector(walletConnectV2RelaySelector);
@@ -94,6 +96,7 @@ export const useWalletConnectV2Login = ({
   const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const dappLogoutRoute = useSelector(logoutRouteSelector);
+  const loginMethod = useSelector(loginMethodSelector);
   const providerRef = useRef<any>(provider);
   const canLoginRef = parentCanLoginRef ?? useRef<boolean>(false);
   const isInitialisingRef = useRef<boolean>(false);
@@ -210,7 +213,7 @@ export const useWalletConnectV2Login = ({
       }
 
       providerRef.current = emptyProvider;
-      setAccountProvider(emptyProvider);
+      setSessionProvider(null);
     } catch {
       console.warn('Unable to logout');
     }
@@ -309,7 +312,7 @@ export const useWalletConnectV2Login = ({
     if (providerRef.current?.walletConnector) {
       providerRef.current.init();
 
-      setAccountProvider(providerRef.current);
+      setSessionProvider(providerRef.current);
 
       isInitialisingRef.current = false;
       canLoginRef.current = true;
@@ -336,7 +339,7 @@ export const useWalletConnectV2Login = ({
     );
 
     await newProvider.init();
-    setAccountProvider(newProvider);
+    setSessionProvider(newProvider);
     providerRef.current = newProvider;
     isInitialisingRef.current = false;
     canLoginRef.current = true;
@@ -419,6 +422,22 @@ export const useWalletConnectV2Login = ({
   useEffect(() => {
     setIsLoading(!Boolean(wcUri));
   }, [wcUri]);
+
+  useEffect(() => {
+    if (!sessionProvider) {
+      return;
+    }
+
+    // Check if a new session has been created is already connected
+    const isConnected =
+      sessionProvider.session ||
+      loginMethod === LoginMethodsEnum.walletconnectv2;
+
+    // Set new provider only if account is logged in and if walletConnect session is available
+    if (isConnected && isLoggedIn) {
+      setAccountProvider(sessionProvider);
+    }
+  }, [sessionProvider, isLoggedIn]);
 
   return [
     initiateLogin,
