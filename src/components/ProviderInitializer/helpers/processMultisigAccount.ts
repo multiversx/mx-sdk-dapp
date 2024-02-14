@@ -1,9 +1,10 @@
 import { getAccount } from 'utils/account/getAccount';
-import { getMultiSigLoginToken } from './getMultiSigLoginToken';
+import {
+  getModifiedLoginToken,
+  GetMultiSigLoginTokenType
+} from './getModifiedLoginToken';
 
-interface SetMultisigLoginToken<T> {
-  loginToken?: string;
-  multisig?: string;
+interface SetMultisigLoginToken<T> extends GetMultiSigLoginTokenType {
   signature?: string;
   address: string;
   loginService: T;
@@ -22,17 +23,20 @@ export const processMultisigAccount = async <
   }
 >({
   loginToken: token,
-  multisig,
+  extraInfoData,
   address,
   signature,
   loginService
 }: SetMultisigLoginToken<T>) => {
-  const loginToken = await getMultiSigLoginToken({
+  const loginToken = await getModifiedLoginToken({
     loginToken: token,
-    multisig
+    extraInfoData
   });
 
-  const accountAddress = loginToken != null ? multisig : address;
+  let tokenAddress =
+    extraInfoData.multisig || extraInfoData.impersonate || address;
+
+  const accountAddress = loginToken != null ? tokenAddress : address;
 
   if (loginToken != null) {
     loginService.setLoginToken(loginToken);
