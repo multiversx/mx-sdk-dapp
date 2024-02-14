@@ -47,7 +47,7 @@ import {
   getOperaProvider,
   getCrossWindowProvider,
   getExtensionProvider,
-  processMultisigAccount
+  processModifiedAccount
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -167,12 +167,13 @@ export function ProviderInitializer() {
       const address = await getAddress();
       const {
         clearNavigationHistory,
-        remainingParams: { signature, multisig }
+        remainingParams: { signature, multisig, impersonate }
       } = parseNavigationParams([
         'signature',
         'loginToken',
         'address',
-        'multisig'
+        'multisig',
+        'impersonate'
       ]);
 
       if (!address) {
@@ -182,9 +183,12 @@ export function ProviderInitializer() {
         return clearNavigationHistory();
       }
 
-      const account = await processMultisigAccount({
+      const account = await processModifiedAccount({
         loginToken: tokenLogin?.loginToken,
-        multisig,
+        extraInfoData: {
+          multisig,
+          impersonate
+        },
         address,
         signature,
         loginService
