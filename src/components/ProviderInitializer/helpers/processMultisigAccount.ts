@@ -10,7 +10,7 @@ interface SetMultisigLoginToken<T> extends GetMultiSigLoginTokenType {
   loginService: T;
 }
 
-export const processMultisigAccount = async <
+export const processModifiedAccount = async <
   T extends {
     setLoginToken: (loginToken: string) => void;
     setTokenLoginInfo: ({

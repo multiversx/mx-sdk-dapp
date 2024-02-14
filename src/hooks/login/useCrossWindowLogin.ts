@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
-import { processMultisigAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
+import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processMultisigAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -96,7 +96,7 @@ export const useCrossWindowLogin = ({
         return;
       }
 
-      const account = await processMultisigAccount({
+      const account = await processModifiedAccount({
         loginToken: token,
         multisig,
         address,
