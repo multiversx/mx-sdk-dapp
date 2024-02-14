@@ -72,7 +72,7 @@ export const websocketBatchEventSelector = createDeepEqualSelector(
   (state) => state.websocketBatchEvent
 );
 
-export const isWalletConnectInitializedSelector = createDeepEqualSelector(
+export const isWalletConnectV2InitializedSelector = createDeepEqualSelector(
   privateAccountInfoSelector,
-  (state) => state.isWalletConnectInitialized
+  (state) => state.isWalletConnectV2Initialized
 );

@@ -42,7 +42,7 @@ export interface AccountInfoSliceType {
     data: BatchTransactionsWSResponseType;
   } | null;
   accountLoadingError: string | null;
-  isWalletConnectInitialized: boolean;
+  isWalletConnectV2Initialized: boolean;
 }
 
 export const emptyAccount: AccountType = {
@@ -65,7 +65,7 @@ const initialState: AccountInfoSliceType = {
   walletConnectAccount: null,
   isAccountLoading: true,
   accountLoadingError: null,
-  isWalletConnectInitialized: false
+  isWalletConnectV2Initialized: false
 };
 
 export const accountInfoSlice = createSlice({
@@ -159,11 +159,11 @@ export const accountInfoSlice = createSlice({
         data: action.payload
       };
     },
-    setIsWalletConnectInitialized: (
+    setIsWalletConnectV2Initialized: (
       state: AccountInfoSliceType,
       action: PayloadAction<boolean>
     ) => {
-      state.isWalletConnectInitialized = action.payload;
+      state.isWalletConnectV2Initialized = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -211,7 +211,7 @@ export const {
   setAccountLoadingError,
   setWebsocketEvent,
   setWebsocketBatchEvent,
-  setIsWalletConnectInitialized
+  setIsWalletConnectV2Initialized
 } = accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;
