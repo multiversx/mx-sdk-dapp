@@ -84,9 +84,8 @@ export const useCrossWindowLogin = ({
         ...(token && { token })
       };
 
-      const { signature, address, multisig } = await provider.login(
-        providerLoginData
-      );
+      const { signature, address, multisig, impersonate } =
+        await provider.login(providerLoginData);
 
       setAccountProvider(provider);
 
@@ -98,7 +97,7 @@ export const useCrossWindowLogin = ({
 
       const account = await processModifiedAccount({
         loginToken: token,
-        multisig,
+        extraInfoData: { multisig, impersonate },
         address,
         signature,
         loginService
