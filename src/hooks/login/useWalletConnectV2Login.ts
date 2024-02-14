@@ -410,12 +410,6 @@ export const useWalletConnectV2Login = ({
   }, [tokenToSign, providerRef.current?.connect]);
 
   useUpdateEffect(() => {
-    if (canLoginRef?.current === false) {
-      cancelLogin();
-    }
-  }, [canLoginRef.current]);
-
-  useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
 
