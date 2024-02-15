@@ -31,7 +31,8 @@ import {
   setLedgerAccount,
   setWalletLogin,
   setChainID,
-  setTokenLogin
+  setTokenLogin,
+  setIsWalletConnectV2Initialized
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -249,6 +250,18 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setWalletConnectV2Provider() {
+    try {
+      // Trigger loader until wallet connect has been initialized
+      dispatch(setIsWalletConnectV2Initialized(true));
+      await initWalletConnectV2LoginProvider(false);
+    } catch {
+      console.error('Could not initialize WalletConnect');
+    } finally {
+      dispatch(setIsWalletConnectV2Initialized(false));
+    }
+  }
+
   async function initializeProvider() {
     if (loginMethod == null || initalizingLedger) {
       return;
@@ -263,7 +276,7 @@ export function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.walletconnectv2: {
-        initWalletConnectV2LoginProvider(false);
+        setWalletConnectV2Provider();
         break;
       }
 
