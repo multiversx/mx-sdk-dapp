@@ -76,7 +76,7 @@ export const useWalletConnectV2Login = ({
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
-  const loginService = useLoginService(nativeAuth);
+  const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
   let token = tokenToSign;
 
   const [error, setError] = useState<string>('');
