@@ -16,6 +16,7 @@ import {
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { checkNativeAuth } from 'utils/checkNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
@@ -74,7 +75,7 @@ export const useWalletConnectV2Login = ({
   customRequestMethods = []
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
-  const hasNativeAuth = nativeAuth != null;
+  const hasNativeAuth = checkNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
 
