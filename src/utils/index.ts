@@ -24,4 +24,4 @@ export * from './transactions';
 export * from './validation';
 export * from './websocket';
 export * from './window';
-export * from './checkNativeAuth';
+export * from './getHasNativeAuth';

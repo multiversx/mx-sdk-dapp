@@ -4,7 +4,7 @@ import { OnProviderLoginType } from '../../types/login.types';
 const safeWindow = typeof window !== 'undefined' ? window : ({} as Window);
 const isDevelopment = safeWindow?.location?.origin?.includes('localhost');
 
-export const checkNativeAuth = (
+export const getHasNativeAuth = (
   nativeAuth: OnProviderLoginType['nativeAuth']
 ) => {
   const hasNativeAuth = isObject(nativeAuth);
