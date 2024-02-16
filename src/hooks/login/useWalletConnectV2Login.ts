@@ -101,6 +101,7 @@ export const useWalletConnectV2Login = ({
   const providerRef = useRef<any>(provider);
   const canLoginRef = parentCanLoginRef ?? useRef<boolean>(false);
   const isInitialisingRef = useRef<boolean>(false);
+  const mounted = useRef(false);
 
   const logoutRoute = providerLogoutRoute ?? dappLogoutRoute ?? '/';
   const dappMethods: string[] = [
@@ -364,6 +365,11 @@ export const useWalletConnectV2Login = ({
         methods: dappMethods
       });
 
+      // Do not do any other actions if component is not mounted
+      if (!mounted.current) {
+        return;
+      }
+
       const hasUri = Boolean(uri);
 
       if (!hasUri) {
@@ -413,6 +419,14 @@ export const useWalletConnectV2Login = ({
   useUpdateEffect(() => {
     providerRef.current = provider;
   }, [provider]);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     setIsLoading(!Boolean(wcUri));
