@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getNetworkConfigFromApi } from 'apiCalls';
+import { getEnvironmentForChainId, getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -21,6 +21,7 @@ import {
   tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import {
+  chainIDSelector,
   networkSelector,
   walletAddressSelector
 } from 'reduxStore/selectors/networkConfigSelectors';
@@ -64,6 +65,7 @@ export function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const chainID = useSelector(chainIDSelector);
 
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
@@ -91,7 +93,7 @@ export function ProviderInitializer() {
 
   useEffect(() => {
     initializeProvider();
-  }, [loginMethod]);
+  }, [loginMethod, chainID]);
 
   useEffect(() => {
     fetchAccount();
@@ -263,7 +265,9 @@ export function ProviderInitializer() {
   }
 
   async function initializeProvider() {
-    if (loginMethod == null || initalizingLedger) {
+    const isValidEnvironment = getEnvironmentForChainId(chainID);
+
+    if (loginMethod == null || initalizingLedger || !isValidEnvironment) {
       return;
     }
 
