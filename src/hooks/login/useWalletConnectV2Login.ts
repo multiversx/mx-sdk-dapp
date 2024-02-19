@@ -88,7 +88,7 @@ export const useWalletConnectV2Login = ({
   const [sessionProvider, setSessionProvider] =
     useState<WalletConnectV2Provider | null>(null);
 
-  const { provider, providerType } = useGetAccountProvider();
+  const { provider } = useGetAccountProvider();
   const walletConnectV2RelayAddress = useSelector(walletConnectV2RelaySelector);
   const walletConnectV2ProjectId = useSelector(
     walletConnectV2ProjectIdSelector
@@ -134,17 +134,7 @@ export const useWalletConnectV2Login = ({
 
   const handleOnLogin = async () => {
     try {
-      const isLoggedIn = getIsLoggedIn();
-      const isLoggedInWithDifferentProvider =
-        isLoggedIn &&
-        providerType &&
-        providerType !== LoginMethodsEnum.walletconnectv2;
-
-      if (
-        isInitialisingRef.current ||
-        providerRef.current == null ||
-        isLoggedInWithDifferentProvider
-      ) {
+      if (isInitialisingRef.current || providerRef.current == null) {
         return;
       }
 
@@ -296,17 +286,9 @@ export const useWalletConnectV2Login = ({
     const cannotLogin = canLoginRef.current === false && !isLoggedIn;
     const isInitialized = providerRef.current?.isInitialized?.();
 
-    console.log('befoooore', {
-      isInitialisingRef,
-      cannotLogin,
-      isInitialized,
-      providerType
-    });
     if (isInitialisingRef.current || cannotLogin || isInitialized) {
       return;
     }
-
-    console.log('afterrr');
 
     isInitialisingRef.current = true;
 
@@ -438,7 +420,7 @@ export const useWalletConnectV2Login = ({
 
     // Check if a new session has been created is already connected
     const isConnected =
-      sessionProvider.session ||
+      Boolean(sessionProvider.session) ||
       loginMethod === LoginMethodsEnum.walletconnectv2;
 
     // Set new provider only if account is logged in and if walletConnect session is available
