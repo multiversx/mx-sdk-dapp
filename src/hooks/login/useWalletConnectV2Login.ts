@@ -292,10 +292,6 @@ export const useWalletConnectV2Login = ({
     }
 
     const isLoggedIn = getIsLoggedIn();
-    const isLoggedInWithDifferentProvider =
-      isLoggedIn &&
-      providerType &&
-      providerType !== LoginMethodsEnum.walletconnectv2;
 
     const cannotLogin = canLoginRef.current === false && !isLoggedIn;
     const isInitialized = providerRef.current?.isInitialized?.();
@@ -303,16 +299,10 @@ export const useWalletConnectV2Login = ({
     console.log('befoooore', {
       isInitialisingRef,
       cannotLogin,
-      isLoggedInWithDifferentProvider,
       isInitialized,
       providerType
     });
-    if (
-      isInitialisingRef.current ||
-      cannotLogin ||
-      isLoggedInWithDifferentProvider ||
-      isInitialized
-    ) {
+    if (isInitialisingRef.current || cannotLogin || isInitialized) {
       return;
     }
 
