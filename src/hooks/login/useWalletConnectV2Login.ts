@@ -300,6 +300,12 @@ export const useWalletConnectV2Login = ({
     const cannotLogin = canLoginRef.current === false && !isLoggedIn;
     const isInitialized = providerRef.current?.isInitialized?.();
 
+    console.log('befoooore', {
+      isInitialisingRef,
+      cannotLogin,
+      isLoggedInWithDifferentProvider,
+      isInitialized
+    });
     if (
       isInitialisingRef.current ||
       cannotLogin ||
@@ -308,6 +314,8 @@ export const useWalletConnectV2Login = ({
     ) {
       return;
     }
+
+    console.log('afterrr');
 
     isInitialisingRef.current = true;
 
