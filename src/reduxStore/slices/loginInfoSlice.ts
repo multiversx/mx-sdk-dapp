@@ -35,7 +35,7 @@ export interface LoginInfoStateType {
   crossWindowLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
-  isWalletConnectV2Initialized: boolean;
+  isWalletConnectV2Initialized?: boolean;
 }
 
 const initialState: LoginInfoStateType = {
@@ -47,8 +47,7 @@ const initialState: LoginInfoStateType = {
   extensionLogin: null,
   operaLogin: null,
   crossWindowLogin: null,
-  isLoginSessionInvalid: false,
-  isWalletConnectV2Initialized: false
+  isLoginSessionInvalid: false
 };
 
 export const loginInfoSlice = createSlice({
