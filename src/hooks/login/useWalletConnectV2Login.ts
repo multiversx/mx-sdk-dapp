@@ -304,7 +304,8 @@ export const useWalletConnectV2Login = ({
       isInitialisingRef,
       cannotLogin,
       isLoggedInWithDifferentProvider,
-      isInitialized
+      isInitialized,
+      providerType
     });
     if (
       isInitialisingRef.current ||
