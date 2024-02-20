@@ -25,3 +25,4 @@ export * from './validation';
 export * from './websocket';
 export * from './window';
 export * from './getHasNativeAuth';
+export * from './waitForChainID';

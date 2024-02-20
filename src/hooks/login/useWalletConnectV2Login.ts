@@ -8,7 +8,6 @@ import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { loginMethodSelector, logoutRouteSelector } from 'reduxStore/selectors';
 import {
-  chainIDSelector,
   walletConnectDeepLinkSelector,
   walletConnectV2OptionsSelector,
   walletConnectV2ProjectIdSelector,
@@ -20,6 +19,7 @@ import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { logout } from 'utils/logout';
+import { waitForChainID } from 'utils/waitForChainID';
 import {
   PairingTypes,
   SessionEventTypes,
@@ -41,7 +41,8 @@ export enum WalletConnectV2Error {
   connectError = 'Unable to connect',
   userRejected = 'User rejected connection proposal',
   userRejectedExisting = 'User rejected existing connection proposal',
-  errorLogout = 'Unable to remove existing pairing'
+  errorLogout = 'Unable to remove existing pairing',
+  invalidChainID = 'Invalid chainID'
 }
 
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
@@ -94,7 +95,6 @@ export const useWalletConnectV2Login = ({
     walletConnectV2ProjectIdSelector
   );
   const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
-  const chainId = useSelector(chainIDSelector);
   const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
   const dappLogoutRoute = useSelector(logoutRouteSelector);
   const loginMethod = useSelector(loginMethodSelector);
@@ -276,6 +276,13 @@ export const useWalletConnectV2Login = ({
   };
 
   async function initiateLogin(loginProvider = true) {
+    const chainId = await waitForChainID({ maxRetries: 15 });
+
+    if (!chainId) {
+      setError(WalletConnectV2Error.invalidChainID);
+      return;
+    }
+
     if (!walletConnectV2ProjectId || !walletConnectV2RelayAddress) {
       setError(WalletConnectV2Error.invalidConfig);
       return;
