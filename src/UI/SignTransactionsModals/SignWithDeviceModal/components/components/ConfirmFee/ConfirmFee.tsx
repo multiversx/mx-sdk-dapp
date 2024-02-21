@@ -1,5 +1,6 @@
 import React from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
+
 import {
   DataTestIdsEnum,
   GAS_PER_DATA_BYTE,
@@ -7,20 +8,21 @@ import {
 } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetEgldPrice } from 'hooks';
-import { FormatAmount } from 'UI/FormatAmount';
+import { Balance } from 'UI/Balance';
 import { LoadingDots } from 'UI/LoadingDots';
-import { calculateFeeInFiat, calculateFeeLimit } from 'utils/operations';
-import { TokenAvatar } from '../TokenAvatar';
+import {
+  calculateFeeInFiat,
+  calculateFeeLimit,
+  formatAmount
+} from 'utils/operations';
 
 export interface FeePropsType {
   transaction: Transaction;
   egldLabel: string;
-  tokenAvatar?: string;
 }
 
 const ConfirmFeeComponent = ({
   transaction,
-  tokenAvatar,
   egldLabel,
   styles
 }: FeePropsType & WithStylesImportType) => {
@@ -35,33 +37,51 @@ const ConfirmFeeComponent = ({
     chainId: transaction.getChainID().valueOf()
   });
 
+  const feeLimitFormatted = formatAmount({
+    input: feeLimit,
+    showLastNonZeroDecimal: true
+  });
+
+  const feeInFiatLimit = price
+    ? calculateFeeInFiat({
+        feeLimit,
+        egldPriceInUsd: price,
+        hideEqualSign: true
+      })
+    : null;
+
   return (
-    <div className={styles?.fee}>
-      <span className={styles?.label}>Fee</span>
+    <div className={styles?.confirmFee}>
+      <div className={styles?.confirmFeeLabel}>Transaction Fee</div>
 
-      <div className={styles?.token}>
-        <TokenAvatar type={egldLabel} avatar={tokenAvatar} />
+      <div className={styles?.confirmFeeData}>
+        <Balance
+          className={styles?.confirmFeeDataBalance}
+          data-testid={DataTestIdsEnum.confirmFee}
+          egldIcon={true}
+          showEgldLabel={true}
+          showEgldLabelSup={true}
+          egldLabel={egldLabel}
+          amount={feeLimitFormatted}
+        />
 
-        <div className={styles?.value}>
-          <FormatAmount
-            egldLabel={egldLabel}
-            value={feeLimit}
-            showLastNonZeroDecimal={true}
-            data-testid={DataTestIdsEnum.confirmFee}
-          />
-        </div>
-      </div>
-
-      <span className={styles?.price}>
-        {price ? (
-          calculateFeeInFiat({
-            feeLimit,
-            egldPriceInUsd: price
-          })
+        {feeInFiatLimit ? (
+          <span className={styles?.confirmFeeDataPriceWrapper}>
+            (
+            <Balance
+              amount={feeInFiatLimit}
+              displayAsUsd={true}
+              addEqualSign={true}
+              className={styles?.confirmFeeDataPrice}
+            />
+            )
+          </span>
         ) : (
-          <LoadingDots />
+          <span className={styles?.confirmFeeDataPriceWrapper}>
+            <LoadingDots />
+          </span>
         )}
-      </span>
+      </div>
     </div>
   );
 };

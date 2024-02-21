@@ -1,4 +1,5 @@
 export * as DappCorePages from './pages';
+export * from './Balance';
 export * from './Denominate';
 export * from './FormatAmount';
 export * from './ExplorerLink';

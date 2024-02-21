@@ -1,6 +1,7 @@
 import React from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
+
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetEgldPrice, useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
@@ -11,6 +12,7 @@ import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
+
 import { useSignStepsClasses } from '../hooks';
 import { ConfirmAmount } from './components/ConfirmAmount';
 import { ConfirmFee } from './components/ConfirmFee';
@@ -138,6 +140,11 @@ const SignStepBodyComponent = ({
           receiver={transactionReceiver}
         />
 
+        <ConfirmFee
+          egldLabel={egldLabel}
+          transaction={currentTransaction.transaction}
+        />
+
         <div className={styles?.columns}>
           {shouldShowAmount && (
             <div className={styles?.column}>
@@ -151,14 +158,6 @@ const SignStepBodyComponent = ({
               />
             </div>
           )}
-
-          <div className={styles?.column}>
-            <ConfirmFee
-              tokenAvatar={tokenAvatar}
-              egldLabel={egldLabel}
-              transaction={currentTransaction.transaction}
-            />
-          </div>
         </div>
 
         {data && (
