@@ -12,3 +12,4 @@ export * from './parseTransactionAfterSigning';
 export * from './removeTransactionParamsFromUrl';
 export * from './transactionInfoHelpers';
 export * from './transactionStateByStatus';
+export * from './getOperationsDetails';
