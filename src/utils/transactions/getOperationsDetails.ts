@@ -18,7 +18,7 @@ export const getOperationsDetails = ({
     return [];
   }
 
-  let operations: OperationType[] = getVisibleOperations(transaction);
+  let operations = getVisibleOperations(transaction);
 
   if (operations.length === 0) {
     return [];
