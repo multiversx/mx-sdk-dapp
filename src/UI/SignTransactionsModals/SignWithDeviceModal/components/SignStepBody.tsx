@@ -145,32 +145,28 @@ const SignStepBodyComponent = ({
           transaction={currentTransaction.transaction}
         />
 
-        <div className={styles?.columns}>
-          {shouldShowAmount && (
-            <div className={styles?.column}>
-              <ConfirmAmount
-                tokenAvatar={tokenAvatar}
-                formattedAmount={shownAmount}
-                rawAmount={rawAmount}
-                token={token}
-                tokenType={isEgld ? egldLabel : type}
-                tokenPrice={tokenPrice}
-              />
-            </div>
-          )}
-        </div>
+        {shouldShowAmount && (
+          <ConfirmAmount
+            tokenAvatar={tokenAvatar}
+            formattedAmount={shownAmount}
+            rawAmount={rawAmount}
+            token={token}
+            tokenType={isEgld ? egldLabel : type}
+            tokenPrice={tokenPrice}
+          />
+        )}
 
         {data && (
           <TransactionData
             className={inputGroupClassName}
             data={data}
             highlight={multiTxData}
+            isScCall={!tokenId}
+            transactionIndex={currentTransaction.transactionIndex}
             innerTransactionDataClasses={{
               transactionDataInputLabelClassName: inputLabelClassName,
               transactionDataInputValueClassName: inputValueClassName
             }}
-            isScCall={!tokenId}
-            transactionIndex={currentTransaction.transactionIndex}
           />
         )}
 
