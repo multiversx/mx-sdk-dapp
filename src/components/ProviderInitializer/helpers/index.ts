@@ -1,3 +1,5 @@
 export * from './getOperaProvider';
 export * from './getExtensionProvider';
-export * from './getMultiSigLoginToken';
+export * from './getCrossWindowProvider';
+export * from './processMultisigAccount';
+export * from './getModifiedLoginToken';

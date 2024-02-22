@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Added getHasNativeAuth in order to see if nativeAuth has been configured on development mode](https://github.com/multiversx/mx-sdk-dapp/pull/1051)
+- [Added support for nativeAuth impersonat](https://github.com/multiversx/mx-sdk-dapp/pull/1049)
+- [Updated WalletConnectV2 account provider to be updated on new or existing session](https://github.com/multiversx/mx-sdk-dapp/pull/1050)
 
 ## [[v2.28.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1048)] - 2024-02-13
 - [Updated AddressRow data-testids](https://github.com/multiversx/mx-sdk-dapp/pull/1047)
@@ -31,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.28.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1028)] - 2024-01-25
 - [Added support for Web Wallet multisig token login](https://github.com/multiversx/mx-sdk-dapp/pull/1027)
-
+- [Changed postMessage payload from string to plain object](https://github.com/multiversx/mx-sdk-dapp/pull/1025)
 
 ## [[v2.28.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1022)] - 2024-01-11
 

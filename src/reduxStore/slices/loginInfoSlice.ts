@@ -32,8 +32,10 @@ export interface LoginInfoStateType {
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
   operaLogin: LoginInfoType | null;
+  crossWindowLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
+  isWalletConnectV2Initialized?: boolean;
 }
 
 const initialState: LoginInfoStateType = {
@@ -44,6 +46,7 @@ const initialState: LoginInfoStateType = {
   walletLogin: null,
   extensionLogin: null,
   operaLogin: null,
+  crossWindowLogin: null,
   isLoginSessionInvalid: false
 };
 
@@ -97,6 +100,12 @@ export const loginInfoSlice = createSlice({
       action: PayloadAction<string | undefined>
     ) => {
       state.logoutRoute = action.payload;
+    },
+    setIsWalletConnectV2Initialized: (
+      state: LoginInfoStateType,
+      action: PayloadAction<boolean>
+    ) => {
+      state.isWalletConnectV2Initialized = action.payload;
     }
   },
   extraReducers: (builder) => {
@@ -125,7 +134,8 @@ export const {
   setTokenLoginSignature,
   setWalletLogin,
   invalidateLoginSession,
-  setLogoutRoute
+  setLogoutRoute,
+  setIsWalletConnectV2Initialized
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;

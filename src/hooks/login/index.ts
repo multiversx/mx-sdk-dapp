@@ -1,7 +1,8 @@
 export { useExtensionLogin } from './useExtensionLogin';
+export { useOperaLogin } from './useOperaLogin';
+export { useCrossWindowLogin } from './useCrossWindowLogin';
+export { useWebWalletLogin } from './useWebWalletLogin';
 export { useGetModalLoginMethods } from './useGetModalLoginMethods';
 export { useLedgerLogin } from './useLedgerLogin';
-export { useOperaLogin } from './useOperaLogin';
 export { useXaliasLogin } from './useXaliasLogin';
 export { useWalletConnectV2Login } from './useWalletConnectV2Login';
-export { useWebWalletLogin } from './useWebWalletLogin';
