@@ -128,7 +128,7 @@ const TransactionDataComponent = ({
               transactionDataInputLabelClassName
             )}
           >
-            SC Call
+            Smart Contract Call
           </span>
 
           <div className={styles?.transactionDataValueWrapper}>
