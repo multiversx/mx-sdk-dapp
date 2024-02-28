@@ -1,6 +1,7 @@
 import React from 'react';
 import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
+
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetEgldPrice, useGetNetworkConfig } from 'hooks';
 import { useGetTokenDetails } from 'hooks/transactions/useGetTokenDetails';
@@ -11,6 +12,7 @@ import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { isTokenTransfer } from 'utils/transactions/isTokenTransfer';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
+
 import { useSignStepsClasses } from '../hooks';
 import { ConfirmAmount } from './components/ConfirmAmount';
 import { ConfirmFee } from './components/ConfirmFee';
@@ -138,40 +140,33 @@ const SignStepBodyComponent = ({
           receiver={transactionReceiver}
         />
 
-        <div className={styles?.columns}>
-          {shouldShowAmount && (
-            <div className={styles?.column}>
-              <ConfirmAmount
-                tokenAvatar={tokenAvatar}
-                formattedAmount={shownAmount}
-                rawAmount={rawAmount}
-                token={token}
-                tokenType={isEgld ? egldLabel : type}
-                tokenPrice={tokenPrice}
-              />
-            </div>
-          )}
+        <ConfirmFee
+          egldLabel={egldLabel}
+          transaction={currentTransaction.transaction}
+        />
 
-          <div className={styles?.column}>
-            <ConfirmFee
-              tokenAvatar={tokenAvatar}
-              egldLabel={egldLabel}
-              transaction={currentTransaction.transaction}
-            />
-          </div>
-        </div>
+        {shouldShowAmount && (
+          <ConfirmAmount
+            tokenAvatar={tokenAvatar}
+            formattedAmount={shownAmount}
+            rawAmount={rawAmount}
+            token={token}
+            tokenType={isEgld ? egldLabel : type}
+            tokenPrice={tokenPrice}
+          />
+        )}
 
         {data && (
           <TransactionData
             className={inputGroupClassName}
             data={data}
             highlight={multiTxData}
+            isScCall={!tokenId}
+            transactionIndex={currentTransaction.transactionIndex}
             innerTransactionDataClasses={{
               transactionDataInputLabelClassName: inputLabelClassName,
               transactionDataInputValueClassName: inputValueClassName
             }}
-            isScCall={!tokenId}
-            transactionIndex={currentTransaction.transactionIndex}
           />
         )}
 

@@ -3,13 +3,17 @@ import { DIGITS, DECIMALS } from 'constants/index';
 import { formatAmount } from './formatAmount';
 import { getUsdValue } from './getUsdValue';
 
-export const calculateFeeInFiat = ({
-  feeLimit,
-  egldPriceInUsd
-}: {
+export interface CalculateFeeInFiatType {
   feeLimit: string;
   egldPriceInUsd: number;
-}) => {
+  hideEqualSign?: boolean;
+}
+
+export const calculateFeeInFiat = ({
+  feeLimit,
+  egldPriceInUsd,
+  hideEqualSign
+}: CalculateFeeInFiatType) => {
   const amount = formatAmount({
     input: feeLimit,
     decimals: DECIMALS,
@@ -17,11 +21,15 @@ export const calculateFeeInFiat = ({
     showLastNonZeroDecimal: true
   });
 
-  const feeInFiat = `≈ ${getUsdValue({
+  const feeAsUsdValue = getUsdValue({
     amount,
     usd: egldPriceInUsd,
     decimals: DIGITS
-  })}`;
+  });
 
-  return feeInFiat;
+  if (hideEqualSign) {
+    return feeAsUsdValue;
+  }
+
+  return `≈ ${feeAsUsdValue}`;
 };

@@ -1,33 +1,30 @@
-.fee {
+.confirmFee {
   display: flex;
   flex-direction: column;
-  text-align: left;
+  line-height: 1;
+  gap: 8px;
 
-  .label {
-    margin-bottom: 8px;
+  .confirmFeeLabel {
     color: #a3a3a3;
-    font-size: 12px;
-    line-height: 1;
-    font-weight: 400;
-    display: block;
   }
 
-  .token {
+  .confirmFeeData {
     display: flex;
     align-items: center;
+    gap: 12px;
 
-    .value {
-      font-size: 14px;
-      font-weight: 500;
-      line-height: 1.5;
-      color: #e5e5e5;
+    .confirmFeeDataPriceWrapper {
+      display: flex;
+      align-items: center;
+      color: #737373;
+
+      .confirmFeeDataPrice {
+        color: #737373;
+
+        * {
+          opacity: 1 !important;
+        }
+      }
     }
-  }
-
-  .price {
-    font-size: 12px;
-    color: #737373;
-    line-height: 1;
-    margin-top: 8px;
   }
 }
