@@ -25,7 +25,8 @@ export const BalanceComponent = ({
   showTokenLabel = true,
   styles,
   tokenLabel,
-  showTokenLabelSup
+  showTokenLabelSup,
+  'data-testid': dataTestId
 }: BalancePropsType) => {
   const [mainBalance, decimalBalance] = amount.split('.');
   const processedMainBalance =
@@ -34,7 +35,10 @@ export const BalanceComponent = ({
       : mainBalance;
 
   return (
-    <div className={classNames(styles?.balance, className)}>
+    <div
+      className={classNames(styles?.balance, className)}
+      data-testid={dataTestId}
+    >
       {egldIcon && !displayAsUsd && (
         <MultiversXSymbol className={styles?.balanceSymbol} />
       )}
