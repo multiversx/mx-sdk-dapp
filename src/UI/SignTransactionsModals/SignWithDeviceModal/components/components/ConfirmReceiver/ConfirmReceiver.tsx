@@ -69,14 +69,14 @@ const ConfirmReceiverComponent = ({
           <LoadingDots className={styles?.receiverLoading} />
         </div>
       ) : (
-        <div className={styles?.receiverWrapper}>
+        <div
+          className={styles?.receiverWrapper}
+          data-testid={DataTestIdsEnum.confirmReceiver}
+        >
           <Trim text={receiver} className={styles?.receiverTrim} />
 
           {hasUsername && !isSmartContract && (
-            <span
-              className={styles?.receiverData}
-              data-testid={DataTestIdsEnum.confirmReceiver}
-            >
+            <span className={styles?.receiverData}>
               (<MultiversXIconSimple className={styles?.receiverDataIcon} />
               <span className={styles?.receiverDataUsername}>
                 {trimUsernameDomain(receiverValue)}
