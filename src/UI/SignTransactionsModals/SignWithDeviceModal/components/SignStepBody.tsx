@@ -15,6 +15,7 @@ import { getIdentifierType } from 'utils/validation/getIdentifierType';
 
 import { useSignStepsClasses } from '../hooks';
 import { ConfirmAmount } from './components/ConfirmAmount';
+import { ConfirmAmount as ConfirmAmount2 } from './components/ConfirmAmount2';
 import { ConfirmFee } from './components/ConfirmFee';
 import { ConfirmReceiver } from './components/ConfirmReceiver';
 import { NftSftPreviewComponent } from './components/NftSftPreviewComponent';
@@ -61,7 +62,7 @@ const SignStepBodyComponent = ({
     errorClassName
   } = signStepInnerClasses || {};
 
-  const { tokenId, nonce, amount, multiTxData, receiver } =
+  const { tokenId, multiTxData, receiver, nonce, amount } =
     currentTransaction.transactionTokenInfo;
 
   const isTokenTransaction = Boolean(
@@ -74,10 +75,11 @@ const SignStepBodyComponent = ({
   const appendedNonce = nonce ? `-${nonce}` : '';
   const nftId = `${tokenId}${appendedNonce}`;
 
-  const { tokenDecimals, tokenAvatar, tokenLabel, type, esdtPrice } =
-    useGetTokenDetails({
-      tokenId: nonce && nonce?.length > 0 ? nftId : tokenId
-    });
+  const a = useGetTokenDetails({
+    tokenId: nonce && nonce?.length > 0 ? nftId : tokenId
+  });
+
+  const { tokenDecimals, tokenAvatar, tokenLabel, type, esdtPrice } = a;
 
   const transactionReceiver = multiTxData
     ? new Address(receiver).bech32()
@@ -99,6 +101,7 @@ const SignStepBodyComponent = ({
 
   const scamReport = currentTransaction.receiverScamInfo;
   const classes = useSignStepsClasses(scamReport, globalStyles);
+  const data = currentTransaction.transaction.getData().toString();
 
   const token = isNft ? nftId : tokenId || egldLabel;
   const shownAmount = isNft ? amount : formattedAmount;
@@ -121,8 +124,6 @@ const SignStepBodyComponent = ({
   const shouldShowAmount =
     isEgld || isEsdt || (Boolean(type) && type !== NftEnumType.NonFungibleESDT);
 
-  const data = currentTransaction.transaction.getData().toString();
-
   return (
     <div className={styles?.summary}>
       <div className={styles?.fields}>
@@ -135,15 +136,14 @@ const SignStepBodyComponent = ({
           />
         )}
 
+        <ConfirmAmount2 currentTransaction={currentTransaction} />
+
         <ConfirmReceiver
           scamReport={scamReport}
           receiver={transactionReceiver}
         />
 
-        <ConfirmFee
-          egldLabel={egldLabel}
-          transaction={currentTransaction.transaction}
-        />
+        <ConfirmFee transaction={currentTransaction.transaction} />
 
         {shouldShowAmount && (
           <ConfirmAmount

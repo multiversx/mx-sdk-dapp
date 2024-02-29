@@ -1,0 +1,98 @@
+.confirmAmount {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 8px;
+
+  .confirmAmountPreview {
+    display: flex;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+
+    &:hover .confirmAmountPreviewIcon {
+      color: #0ac2ae;
+    }
+
+    .confirmAmountPreviewWrapper {
+      gap: 8px;
+      display: flex;
+      align-items: center;
+
+      .confirmAmountPreviewIconWrapper {
+        position: relative;
+
+        .confirmAmountPreviewIcon {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 48px;
+          overflow: hidden;
+          border-radius: 8px;
+          height: 48px;
+          border: 1px solid #2e2e2e;
+
+          &.confirmAmountPreviewIconRelative {
+            position: relative;
+          }
+        }
+      }
+
+      .confirmAmountPreviewContent {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+
+        .confirmAmountPreviewName {
+          font-size: 16px;
+          color: #e5e5e5;
+          line-height: 1;
+        }
+
+        .confirmAmountPreviewTicker {
+          color: #525252;
+          font-size: 10px;
+        }
+      }
+    }
+
+    .confirmAmountPreviewIcon {
+      color: #525252;
+      transition: all 200ms ease-out;
+    }
+  }
+
+  .confirmAmountData {
+    display: flex;
+    flex-direction: column;
+    height: 48px;
+    justify-content: space-between;
+
+    .confirmAmountDataWrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+
+      .confirmAmountDataIcon {
+        width: 32px;
+        height: 32px;
+      }
+
+      .confirmAmountDataBalanceWrapper {
+        flex: 1;
+        min-width: 0;
+
+        .confirmAmountDataBalance {
+          display: inline-block;
+          color: #0ac2ae;
+          font-weight: 500;
+          font-size: 32px;
+        }
+      }
+    }
+
+    .confirmAmountDataPrice {
+      color: #737373;
+    }
+  }
+}

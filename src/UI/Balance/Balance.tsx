@@ -11,9 +11,9 @@ interface BalancePropsType extends WithClassnameType, WithStylesImportType {
   addEqualSign?: boolean;
   displayAsUsd?: boolean;
   egldIcon?: boolean;
-  showEgldLabel?: boolean;
-  egldLabel?: string;
-  showEgldLabelSup?: boolean;
+  showTokenLabel?: boolean;
+  tokenLabel?: string;
+  showTokenLabelSup?: boolean;
 }
 
 export const BalanceComponent = ({
@@ -22,10 +22,10 @@ export const BalanceComponent = ({
   addEqualSign,
   egldIcon,
   className,
-  showEgldLabel = true,
+  showTokenLabel = true,
   styles,
-  egldLabel,
-  showEgldLabelSup
+  tokenLabel,
+  showTokenLabelSup
 }: BalancePropsType) => {
   const [mainBalance, decimalBalance] = amount.split('.');
   const processedMainBalance =
@@ -49,13 +49,13 @@ export const BalanceComponent = ({
         <span className={styles?.balanceDecimals}>.{decimalBalance}</span>
       )}
 
-      {!displayAsUsd && showEgldLabel && (
+      {!displayAsUsd && showTokenLabel && (
         <span
           className={classNames(styles?.balanceSuffix, {
-            [styles?.balanceSuffixSup]: showEgldLabelSup
+            [styles?.balanceSuffixSup]: showTokenLabelSup
           })}
         >
-          {egldLabel}
+          {tokenLabel}
         </span>
       )}
     </div>

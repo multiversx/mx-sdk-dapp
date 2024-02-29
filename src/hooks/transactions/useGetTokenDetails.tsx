@@ -33,6 +33,9 @@ interface TokenOptionType {
   type?: NftEnumType;
   error?: string;
   esdtPrice?: number;
+  ticker?: string;
+  identifier?: string;
+  name?: string;
 }
 
 interface TokenInfoResponse {
@@ -91,8 +94,11 @@ export function useGetTokenDetails({
     tokenLabel,
     type: selectedToken?.type,
     tokenAvatar,
+    identifier: selectedToken?.identifier,
     assets: selectedToken?.assets,
     esdtPrice: selectedToken?.price,
+    ticker: selectedToken?.ticker,
+    name: selectedToken?.name,
     error
   };
 }

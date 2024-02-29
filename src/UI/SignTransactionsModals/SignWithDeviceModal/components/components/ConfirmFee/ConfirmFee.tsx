@@ -10,6 +10,7 @@ import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetEgldPrice } from 'hooks';
 import { Balance } from 'UI/Balance';
 import { LoadingDots } from 'UI/LoadingDots';
+import { getEgldLabel } from 'utils';
 import {
   calculateFeeInFiat,
   calculateFeeLimit,
@@ -18,16 +19,15 @@ import {
 
 export interface FeePropsType {
   transaction: Transaction;
-  egldLabel: string;
 }
 
 const ConfirmFeeComponent = ({
   transaction,
-  egldLabel,
   styles
 }: FeePropsType & WithStylesImportType) => {
   const { price } = useGetEgldPrice();
 
+  const egldLabel = getEgldLabel();
   const feeLimit = calculateFeeLimit({
     gasPerDataByte: String(GAS_PER_DATA_BYTE),
     gasPriceModifier: String(GAS_PRICE_MODIFIER),
@@ -59,9 +59,9 @@ const ConfirmFeeComponent = ({
           className={styles?.confirmFeeDataBalance}
           data-testid={DataTestIdsEnum.confirmFee}
           egldIcon={true}
-          showEgldLabel={true}
-          showEgldLabelSup={true}
-          egldLabel={egldLabel}
+          showTokenLabel={true}
+          showTokenLabelSup={true}
+          tokenLabel={egldLabel}
           amount={feeLimitFormatted}
         />
 
