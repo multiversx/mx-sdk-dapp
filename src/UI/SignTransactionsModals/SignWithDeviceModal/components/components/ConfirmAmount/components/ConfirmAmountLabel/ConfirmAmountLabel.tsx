@@ -47,9 +47,9 @@ const ConfirmAmountLabelComponent = ({
 export const ConfirmAmountLabel = withStyles(ConfirmAmountLabelComponent, {
   ssrStyles: () =>
     import(
-      'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount2/components/ConfirmAmountLabel/confirmAmountLabelStyles.scss'
+      'UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/components/ConfirmAmountLabel/confirmAmountLabelStyles.scss'
     ),
   clientStyles: () =>
-    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount2/components/ConfirmAmountLabel/confirmAmountLabelStyles.scss')
+    require('UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/components/ConfirmAmountLabel/confirmAmountLabelStyles.scss')
       .default
 });

@@ -1,0 +1,35 @@
+.confirmAmountData {
+  display: flex;
+  flex-direction: column;
+  height: 48px;
+  justify-content: space-between;
+
+  .confirmAmountDataWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    .confirmAmountDataIcon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .confirmAmountDataBalanceWrapper {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+
+      .confirmAmountDataBalance {
+        display: inline-flex;
+        color: #0ac2ae;
+        font-weight: 500;
+        font-size: 32px;
+      }
+    }
+  }
+
+  .confirmAmountDataPrice {
+    color: #737373;
+    font-size: 1rem;
+  }
+}

@@ -36,6 +36,7 @@ interface TokenOptionType {
   ticker?: string;
   identifier?: string;
   name?: string;
+  isLoading?: boolean;
 }
 
 interface TokenInfoResponse {
@@ -47,6 +48,12 @@ interface TokenInfoResponse {
   assets: TokenAssets;
   media?: TokenMediaType[];
   price: number;
+}
+
+interface TokenInfoResponseDataType {
+  data?: TokenInfoResponse;
+  error?: string;
+  isLoading?: boolean;
 }
 
 const fetcher = (url: string) =>
@@ -65,8 +72,9 @@ export function useGetTokenDetails({
 
   const {
     data: selectedToken,
-    error
-  }: { data?: TokenInfoResponse; error?: string } = useSwr(
+    error,
+    isLoading
+  }: TokenInfoResponseDataType = useSwr(
     Boolean(tokenIdentifier)
       ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
@@ -90,6 +98,7 @@ export function useGetTokenDetails({
     : '';
 
   return {
+    isLoading,
     tokenDecimals: tokenDecimals,
     tokenLabel,
     type: selectedToken?.type,

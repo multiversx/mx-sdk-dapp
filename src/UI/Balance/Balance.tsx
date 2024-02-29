@@ -54,13 +54,13 @@ export const BalanceComponent = ({
       )}
 
       {!displayAsUsd && showTokenLabel && (
-        <span
+        <sup
           className={classNames(styles?.balanceSuffix, {
             [styles?.balanceSuffixSup]: showTokenLabelSup
           })}
         >
           {tokenLabel}
-        </span>
+        </sup>
       )}
     </div>
   );
