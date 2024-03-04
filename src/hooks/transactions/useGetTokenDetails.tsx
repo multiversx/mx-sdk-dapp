@@ -25,7 +25,7 @@ export interface TokenMediaType {
   fileSize?: number;
 }
 
-interface TokenOptionType {
+export interface TokenOptionType {
   tokenLabel: string;
   tokenDecimals: number;
   tokenAvatar: string;

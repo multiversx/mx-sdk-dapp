@@ -58,9 +58,9 @@ const ConfirmFeeComponent = ({
         <Balance
           className={styles?.confirmFeeDataBalance}
           data-testid={DataTestIdsEnum.confirmFee}
-          egldIcon={true}
-          showTokenLabel={true}
-          showTokenLabelSup={true}
+          egldIcon
+          showTokenLabel
+          showTokenLabelSup
           tokenLabel={egldLabel}
           amount={feeLimitFormatted}
         />
@@ -70,8 +70,8 @@ const ConfirmFeeComponent = ({
             (
             <Balance
               amount={feeInFiatLimit}
-              displayAsUsd={true}
-              addEqualSign={true}
+              displayAsUsd
+              addEqualSign
               className={styles?.confirmFeeDataPrice}
             />
             )

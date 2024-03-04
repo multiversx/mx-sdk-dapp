@@ -1,5 +1,9 @@
 import { useState } from 'react';
 
+/*
+ * Hook that handles the font size of the amount, scaling it down based on the available size, and updating the state when it finished.
+ */
+
 export const useHandleAmountReference = () => {
   const [isFontSizeLoading, setIsFontSizeLoading] = useState(true);
 

@@ -68,7 +68,7 @@ const ActionTextComponent = ({
             [styles?.spaced ?? '']: entry.token.length > 1
           })}
         >
-          <ActionToken token={token} showLastNonZeroDecimal={true} />
+          <ActionToken token={token} showLastNonZeroDecimal />
 
           {index < entry.token.length - 1 && (
             <span className={styles?.comma}>,</span>

@@ -3,15 +3,10 @@ import classNames from 'classnames';
 
 import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
-import {
-  useGetEgldPrice,
-  useGetNetworkConfig,
-  useGetTokenDetails
-} from 'hooks';
+import { useGetEgldPrice, useGetTokenDetails } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
 import { NftEnumType } from 'types/tokens.types';
 import { LoadingDots } from 'UI/LoadingDots';
-import { getEgldLabel } from 'utils';
 
 import {
   ConfirmAmountData,
@@ -36,29 +31,18 @@ const ConfirmAmountComponent = ({
   const tokenIdForTokenDetails =
     nonce && nonce.length > 0 ? `${tokenId}-${nonce}` : tokenId;
 
-  const { price: egldPrice } = useGetEgldPrice();
-  const { network } = useGetNetworkConfig();
-
-  const {
-    type,
-    name,
-    tokenAvatar,
-    tokenDecimals,
-    esdtPrice,
-    ticker,
-    identifier,
-    isLoading: isTokenDetailsLoading
-  } = useGetTokenDetails({
+  const tokenDetails = useGetTokenDetails({
     tokenId: tokenIdForTokenDetails
   });
 
+  const { type, esdtPrice, isLoading: isTokenDetailsLoading } = tokenDetails;
+  const { price: egldPrice } = useGetEgldPrice();
+
   const isEgld = !tokenId;
+  const tokenPrice = isEgld ? egldPrice : esdtPrice;
   const isNftOrSft = type
     ? [NftEnumType.SemiFungibleESDT, NftEnumType.NonFungibleESDT].includes(type)
     : false;
-
-  const tokenPrice = isEgld ? egldPrice : esdtPrice;
-  const egldLabel = getEgldLabel();
 
   return (
     <div className={styles?.confirmAmount}>
@@ -86,13 +70,9 @@ const ConfirmAmountComponent = ({
         >
           {isNftOrSft ? (
             <ConfirmAmountNftSft
-              network={network}
-              name={name}
-              tokenAvatar={tokenAvatar}
-              identifier={identifier}
               amount={amount}
-              ticker={ticker}
               type={type}
+              tokenDetails={tokenDetails}
             />
           ) : (
             <ConfirmAmountData
@@ -100,13 +80,9 @@ const ConfirmAmountComponent = ({
               isEgld={isEgld}
               amount={amount}
               handleReference={handleAmountReference}
-              tokenAvatar={tokenAvatar}
               currentTransaction={currentTransaction}
-              egldLabel={egldLabel}
-              tokenDecimals={tokenDecimals}
+              tokenDetails={tokenDetails}
               tokenPrice={tokenPrice}
-              network={network}
-              ticker={ticker}
             />
           )}
         </div>

@@ -82,9 +82,7 @@ const ActionTokenComponent = ({
       showLastNonZeroDecimal
     });
 
-    return (
-      <TransactionActionBlock.Token {...props} showLastNonZeroDecimal={true} />
-    );
+    return <TransactionActionBlock.Token {...props} showLastNonZeroDecimal />;
   }
 };
 

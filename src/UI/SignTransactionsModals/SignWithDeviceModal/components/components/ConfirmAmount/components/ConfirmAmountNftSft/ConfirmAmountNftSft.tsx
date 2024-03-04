@@ -1,11 +1,13 @@
 import React, { MouseEvent } from 'react';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import classNames from 'classnames';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
-import { AccountInfoSliceNetworkType } from 'types';
+import { TokenOptionType, useGetNetworkConfig } from 'hooks';
 import { NftEnumType } from 'types/tokens.types';
 import {
   explorerUrlBuilder,
@@ -13,27 +15,25 @@ import {
 } from 'utils/transactions/getInterpretedTransaction/helpers';
 
 export interface ConfirmAmountNftSftPropsType extends WithStylesImportType {
-  tokenAvatar: string;
-  ticker?: string;
-  network: AccountInfoSliceNetworkType;
-  identifier?: string;
-  name?: string;
   type?: NftEnumType;
   amount: string;
+  tokenDetails: TokenOptionType;
 }
 
 const ConfirmAmountNftSftComponent = ({
-  identifier,
-  tokenAvatar,
-  network,
-  ticker,
-  name,
   styles,
   amount,
-  type
+  type,
+  tokenDetails
 }: ConfirmAmountNftSftPropsType) => {
+  const { network } = useGetNetworkConfig();
+  const { identifier, tokenAvatar, ticker, name } = tokenDetails;
+
   const isSft = NftEnumType.SemiFungibleESDT === type;
-  const duplicatedSftAvatars = Array(Math.min(4, Number(amount))).fill(null);
+  const mirroredSftAvatarsCount = 4;
+  const duplicatedSftAvatars = Array(
+    Math.min(mirroredSftAvatarsCount, Number(amount))
+  ).fill(null);
 
   const handleNftSftClick = (event: MouseEvent<HTMLElement>) => {
     if (!identifier) {
@@ -47,7 +47,10 @@ const ConfirmAmountNftSftComponent = ({
 
     event.preventDefault();
     event.stopPropagation();
-    window.open(explorerLink);
+
+    if (safeWindow.open) {
+      safeWindow.open(explorerLink);
+    }
   };
 
   return (
@@ -80,8 +83,19 @@ const ConfirmAmountNftSftComponent = ({
         )}
 
         <div className={styles?.confirmAmountNftSftContent}>
-          <div className={styles?.confirmAmountNftSftName}>{name}</div>
-          <div className={styles?.confirmAmountNftSftTicker}>{ticker}</div>
+          <div
+            className={styles?.confirmAmountNftSftName}
+            data-testid={DataTestIdsEnum.nftLabel}
+          >
+            {name}
+          </div>
+
+          <div
+            className={styles?.confirmAmountNftSftTicker}
+            data-testid={DataTestIdsEnum.nftIdentifier}
+          >
+            {ticker}
+          </div>
         </div>
       </div>
 

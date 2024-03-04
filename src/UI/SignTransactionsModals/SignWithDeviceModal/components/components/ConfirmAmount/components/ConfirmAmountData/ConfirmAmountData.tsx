@@ -1,47 +1,40 @@
 import React from 'react';
 import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import classNames from 'classnames';
+
 import { DataTestIdsEnum } from 'constants/index';
 import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
-import {
-  AccountInfoSliceNetworkType,
-  ActiveLedgerTransactionType
-} from 'types';
+import { TokenOptionType, useGetNetworkConfig } from 'hooks';
+import { ActiveLedgerTransactionType } from 'types';
 import { Balance } from 'UI/Balance';
 import { UsdValue } from 'UI/UsdValue';
 import { formatAmount } from 'utils';
 
 export interface ConfirmAmountDataPropsType extends WithStylesImportType {
   isEgld: boolean;
-  tokenAvatar: string;
-  egldLabel: string;
-  ticker?: string;
   tokenPrice?: number;
   isNftOrSft: boolean;
   amount: string;
-  tokenDecimals: number;
-  network: AccountInfoSliceNetworkType;
   handleReference: (element: HTMLElement | null) => void;
   currentTransaction: ActiveLedgerTransactionType;
+  tokenDetails: TokenOptionType;
 }
 
 const ConfirmAmountDataComponent = ({
   isEgld,
   styles,
-  tokenAvatar,
-  egldLabel,
-  ticker,
   tokenPrice,
   isNftOrSft,
   handleReference,
-  network,
-  tokenDecimals,
   currentTransaction,
-  amount
+  amount,
+  tokenDetails
 }: ConfirmAmountDataPropsType) => {
+  const { network } = useGetNetworkConfig();
+  const { tokenAvatar, tokenDecimals, ticker } = tokenDetails;
+
   const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
     formatAmount({
       input: isEgld
@@ -84,9 +77,9 @@ const ConfirmAmountDataComponent = ({
           <Balance
             amount={formattedAmount}
             egldIcon={isEgld}
-            showTokenLabel={true}
-            showTokenLabelSup={true}
-            tokenLabel={isEgld ? egldLabel : ticker}
+            showTokenLabel
+            showTokenLabelSup
+            tokenLabel={isEgld ? network.egldLabel : ticker}
             className={styles?.confirmAmountDataBalance}
           />
         </div>
