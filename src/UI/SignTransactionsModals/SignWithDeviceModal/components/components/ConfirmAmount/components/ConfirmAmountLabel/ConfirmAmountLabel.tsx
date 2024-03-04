@@ -1,9 +1,10 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { NftEnumType } from 'types/tokens.types';
+
+import { WithStylesImportType } from '../../../../../../../../hocs/useStyles';
 
 interface ConfirmAmountLabelPropsType extends WithStylesImportType {
   type?: NftEnumType;

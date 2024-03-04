@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
 import { DataTestIdsEnum } from 'constants/index';
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { TokenOptionType, useGetNetworkConfig } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
 import { Balance } from 'UI/Balance';
 import { UsdValue } from 'UI/UsdValue';
 import { formatAmount } from 'utils';
+
+import { WithStylesImportType } from '../../../../../../../../hocs/useStyles';
 
 export interface ConfirmAmountDataPropsType extends WithStylesImportType {
   isEgld: boolean;

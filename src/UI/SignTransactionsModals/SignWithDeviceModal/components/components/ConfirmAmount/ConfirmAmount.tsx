@@ -1,12 +1,13 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { useGetEgldPrice, useGetTokenDetails } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
 import { NftEnumType } from 'types/tokens.types';
 import { LoadingDots } from 'UI/LoadingDots';
+
+import { WithStylesImportType } from '../../../../../../hocs/useStyles';
 
 import {
   ConfirmAmountData,

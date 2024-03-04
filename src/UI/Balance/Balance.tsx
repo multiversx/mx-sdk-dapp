@@ -2,9 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 import MultiversXSymbol from 'assets/icons/mvx-icon-simple.svg';
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { WithClassnameType } from 'UI/types';
+
+import { WithStylesImportType } from '../../hocs/useStyles';
 
 interface BalancePropsType extends WithClassnameType, WithStylesImportType {
   amount: string;

@@ -5,7 +5,6 @@ import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out
 import classNames from 'classnames';
 
 import { DataTestIdsEnum } from 'constants/index';
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { TokenOptionType, useGetNetworkConfig } from 'hooks';
 import { NftEnumType } from 'types/tokens.types';
@@ -13,6 +12,8 @@ import {
   explorerUrlBuilder,
   getExplorerLink
 } from 'utils/transactions/getInterpretedTransaction/helpers';
+
+import { WithStylesImportType } from '../../../../../../../../hocs/useStyles';
 
 export interface ConfirmAmountNftSftPropsType extends WithStylesImportType {
   type?: NftEnumType;
@@ -29,6 +30,7 @@ const ConfirmAmountNftSftComponent = ({
   const { network } = useGetNetworkConfig();
   const { identifier, tokenAvatar, ticker, name } = tokenDetails;
 
+  const isSft = NftEnumType.SemiFungibleESDT === type;
   const mirroredSftAvatarsCount = 4;
   const duplicatedSftAvatars = Array(
     Math.min(mirroredSftAvatarsCount, Number(amount))
@@ -76,7 +78,7 @@ const ConfirmAmountNftSftComponent = ({
         ) : (
           <div className={styles?.confirmAmountNftSftIconWrapper}>
             <div className={styles?.confirmAmountNftSftIconText}>
-              {NftEnumType.SemiFungibleESDT === type ? 'SFT' : 'NFT'}
+              {isSft ? 'SFT' : 'NFT'}
             </div>
           </div>
         )}
