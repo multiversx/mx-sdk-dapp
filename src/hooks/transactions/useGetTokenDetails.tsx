@@ -25,7 +25,7 @@ export interface TokenMediaType {
   fileSize?: number;
 }
 
-interface TokenOptionType {
+export interface TokenOptionType {
   tokenLabel: string;
   tokenDecimals: number;
   tokenAvatar: string;
@@ -33,6 +33,10 @@ interface TokenOptionType {
   type?: NftEnumType;
   error?: string;
   esdtPrice?: number;
+  ticker?: string;
+  identifier?: string;
+  name?: string;
+  isLoading?: boolean;
 }
 
 interface TokenInfoResponse {
@@ -44,6 +48,12 @@ interface TokenInfoResponse {
   assets: TokenAssets;
   media?: TokenMediaType[];
   price: number;
+}
+
+interface TokenInfoResponseDataType {
+  data?: TokenInfoResponse;
+  error?: string;
+  isLoading?: boolean;
 }
 
 const fetcher = (url: string) =>
@@ -62,8 +72,9 @@ export function useGetTokenDetails({
 
   const {
     data: selectedToken,
-    error
-  }: { data?: TokenInfoResponse; error?: string } = useSwr(
+    error,
+    isLoading
+  }: TokenInfoResponseDataType = useSwr(
     Boolean(tokenIdentifier)
       ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
@@ -87,12 +98,16 @@ export function useGetTokenDetails({
     : '';
 
   return {
+    isLoading,
     tokenDecimals: tokenDecimals,
     tokenLabel,
     type: selectedToken?.type,
     tokenAvatar,
+    identifier: selectedToken?.identifier,
     assets: selectedToken?.assets,
     esdtPrice: selectedToken?.price,
+    ticker: selectedToken?.ticker,
+    name: selectedToken?.name,
     error
   };
 }

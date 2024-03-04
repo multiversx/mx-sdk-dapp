@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
 import { DataTestIdsEnum } from 'constants/index';
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { useGetAccountFromApi } from 'hooks';
 import { trimUsernameDomain } from 'hooks/account/helpers';
@@ -14,6 +13,8 @@ import { ExplorerLink } from 'UI/ExplorerLink';
 import { LoadingDots } from 'UI/LoadingDots';
 import { Trim } from 'UI/Trim';
 import { isContract } from 'utils';
+
+import { WithStylesImportType } from '../../../../../../hocs/useStyles';
 
 export interface ConfirmReceiverPropsType extends WithStylesImportType {
   receiver: string;

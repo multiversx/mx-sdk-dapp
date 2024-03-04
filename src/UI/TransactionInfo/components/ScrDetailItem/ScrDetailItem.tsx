@@ -13,7 +13,7 @@ const ScrDetailItemComponent = ({
   result,
   styles
 }: { result: ResultType } & WithStylesImportType) => (
-  <DetailItem title='SC Result Hash' noBorder={true}>
+  <DetailItem title='SC Result Hash' noBorder>
     <div className={styles?.contractDetailItem}>
       <Trim text={result.hash} />
 

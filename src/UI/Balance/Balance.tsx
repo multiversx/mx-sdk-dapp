@@ -2,18 +2,19 @@ import React from 'react';
 import classNames from 'classnames';
 
 import MultiversXSymbol from 'assets/icons/mvx-icon-simple.svg';
-import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { WithClassnameType } from 'UI/types';
+
+import { WithStylesImportType } from '../../hocs/useStyles';
 
 interface BalancePropsType extends WithClassnameType, WithStylesImportType {
   amount: string;
   addEqualSign?: boolean;
   displayAsUsd?: boolean;
   egldIcon?: boolean;
-  showEgldLabel?: boolean;
-  egldLabel?: string;
-  showEgldLabelSup?: boolean;
+  showTokenLabel?: boolean;
+  tokenLabel?: string;
+  showTokenLabelSup?: boolean;
 }
 
 export const BalanceComponent = ({
@@ -22,10 +23,10 @@ export const BalanceComponent = ({
   addEqualSign,
   egldIcon,
   className,
-  showEgldLabel = true,
+  showTokenLabel = true,
   styles,
-  egldLabel,
-  showEgldLabelSup,
+  tokenLabel,
+  showTokenLabelSup,
   'data-testid': dataTestId
 }: BalancePropsType) => {
   const [mainBalance, decimalBalance] = amount.split('.');
@@ -53,14 +54,14 @@ export const BalanceComponent = ({
         <span className={styles?.balanceDecimals}>.{decimalBalance}</span>
       )}
 
-      {!displayAsUsd && showEgldLabel && (
-        <span
+      {!displayAsUsd && showTokenLabel && (
+        <sup
           className={classNames(styles?.balanceSuffix, {
-            [styles?.balanceSuffixSup]: showEgldLabelSup
+            [styles?.balanceSuffixSup]: showTokenLabelSup
           })}
         >
-          {egldLabel}
-        </span>
+          {tokenLabel}
+        </sup>
       )}
     </div>
   );
