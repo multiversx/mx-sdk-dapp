@@ -1,5 +1,8 @@
 import React from 'react';
+import { faCoins } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
 import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
@@ -11,8 +14,7 @@ import { Balance } from 'UI/Balance';
 import { UsdValue } from 'UI/UsdValue';
 import { formatAmount } from 'utils';
 
-export interface ConfirmAmountDataComponentPropsType
-  extends WithStylesImportType {
+export interface ConfirmAmountDataPropsType extends WithStylesImportType {
   isEgld: boolean;
   tokenAvatar: string;
   egldLabel: string;
@@ -39,7 +41,7 @@ const ConfirmAmountDataComponent = ({
   tokenDecimals,
   currentTransaction,
   amount
-}: ConfirmAmountDataComponentPropsType) => {
+}: ConfirmAmountDataPropsType) => {
   const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
     formatAmount({
       input: isEgld
@@ -57,8 +59,22 @@ const ConfirmAmountDataComponent = ({
   return (
     <div className={styles?.confirmAmountData}>
       <div className={styles?.confirmAmountDataWrapper}>
-        {!isEgld && (
+        {!isEgld && tokenAvatar && (
           <img src={tokenAvatar} className={styles?.confirmAmountDataIcon} />
+        )}
+
+        {!isEgld && !tokenAvatar && (
+          <div
+            className={classNames(
+              styles?.confirmAmountDataIcon,
+              styles?.confirmAmountDataIconDefault
+            )}
+          >
+            <FontAwesomeIcon
+              icon={faCoins}
+              className={styles?.confirmAmountDataIconDefaultIcon}
+            />
+          </div>
         )}
 
         <div
