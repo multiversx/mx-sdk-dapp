@@ -29,7 +29,6 @@ const ConfirmAmountNftSftComponent = ({
   const { network } = useGetNetworkConfig();
   const { identifier, tokenAvatar, ticker, name } = tokenDetails;
 
-  const isSft = NftEnumType.SemiFungibleESDT === type;
   const mirroredSftAvatarsCount = 4;
   const duplicatedSftAvatars = Array(
     Math.min(mirroredSftAvatarsCount, Number(amount))
@@ -77,7 +76,7 @@ const ConfirmAmountNftSftComponent = ({
         ) : (
           <div className={styles?.confirmAmountNftSftIconWrapper}>
             <div className={styles?.confirmAmountNftSftIconText}>
-              {isSft ? 'SFT' : 'NFT'}
+              {NftEnumType.SemiFungibleESDT === type ? 'SFT' : 'NFT'}
             </div>
           </div>
         )}
