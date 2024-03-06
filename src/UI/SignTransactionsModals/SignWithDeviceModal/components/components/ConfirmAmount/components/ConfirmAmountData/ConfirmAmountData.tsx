@@ -78,6 +78,7 @@ const ConfirmAmountDataComponent = ({
           <Balance
             amount={formattedAmount}
             egldIcon={isEgld}
+            data-testid={DataTestIdsEnum.confirmAmount}
             showTokenLabel
             showTokenLabelSup
             tokenLabel={isEgld ? network.egldLabel : ticker}
