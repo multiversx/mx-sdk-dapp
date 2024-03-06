@@ -87,8 +87,8 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
 
   const signLastTransaction = isLastTransaction && !waitingForDevice;
 
-  const onSubmit = () => {
-    onSignTransaction();
+  const onSubmit = async () => {
+    await onSignTransaction();
     if (signLastTransaction && GuardianScreen) {
       return setShowGuardianScreen(true);
     }

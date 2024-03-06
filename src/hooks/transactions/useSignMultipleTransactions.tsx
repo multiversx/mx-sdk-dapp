@@ -157,6 +157,19 @@ export function useSignMultipleTransactions({
   }
 
   async function sign() {
+    const existingSignedTransactions = Object.values(signedTransactions ?? {});
+
+    const alreadySignedByGuardian = getAreAllTransactionsSignedByGuardian({
+      isGuarded,
+      transactions: existingSignedTransactions
+    });
+
+    if (alreadySignedByGuardian) {
+      onTransactionsSignSuccess(existingSignedTransactions);
+      reset();
+      return;
+    }
+
     if (currentTransaction == null) {
       return;
     }
@@ -174,7 +187,8 @@ export function useSignMultipleTransactions({
         : null;
 
       reset();
-      return onTransactionsSignError(errorMessage ?? message);
+      onTransactionsSignError(errorMessage ?? message);
+      return;
     }
 
     if (!signedTx) {
@@ -212,7 +226,7 @@ export function useSignMultipleTransactions({
     reset();
   }
 
-  function signTx() {
+  async function signTx() {
     try {
       if (currentTransaction == null) {
         return;
@@ -224,10 +238,10 @@ export function useSignMultipleTransactions({
         return;
       }
 
-      sign();
+      await sign();
     } catch {
       // the only way to check if tx has signature is with try catch
-      sign();
+      await sign();
     }
   }
 
@@ -249,12 +263,12 @@ export function useSignMultipleTransactions({
       )
   );
 
-  function handleSignTransaction() {
+  async function handleSignTransaction() {
     if (shouldContinueWithoutSigning) {
       setCurrentStep((exising) => exising + 1);
-    } else {
-      signTx();
+      return;
     }
+    await signTx();
   }
 
   function onNext() {
