@@ -191,7 +191,7 @@ export type DeviceSignedTransactions = Record<number, Transaction>;
 
 export interface GuardianScreenType extends WithClassnameType {
   address: string;
-  onSignTransaction: () => void;
+  onSignTransaction: () => Promise<void>;
   onPrev: () => void;
   title?: ReactNode;
   signStepInnerClasses?: SignStepInnerClassesType;
