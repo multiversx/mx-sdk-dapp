@@ -48,7 +48,7 @@ const SignStepBodyComponent = ({
     errorClassName
   } = signStepInnerClasses || {};
 
-  const { tokenId, multiTxData, receiver } =
+  const { tokenId, multiTxData, receiver, amount } =
     currentTransaction.transactionTokenInfo;
 
   const transactionReceiver = multiTxData
@@ -67,6 +67,7 @@ const SignStepBodyComponent = ({
         <ConfirmReceiver
           scamReport={scamReport}
           receiver={transactionReceiver}
+          amount={amount}
         />
 
         <ConfirmFee transaction={currentTransaction.transaction} />
