@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Added support for nativeAuth impersonat](https://github.com/multiversx/mx-sdk-dapp/pull/1049)
 - [Updated WalletConnectV2 account provider to be updated on new or existing session](https://github.com/multiversx/mx-sdk-dapp/pull/1050)
 
+## [[v2.28.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1062)] - 2024-03-07
+- [Fixed base64 utils conversion](https://github.com/multiversx/mx-sdk-dapp/pull/1061)
+
 ## [[v2.28.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1048)] - 2024-02-13
 - [Updated AddressRow data-testids](https://github.com/multiversx/mx-sdk-dapp/pull/1047)
 
