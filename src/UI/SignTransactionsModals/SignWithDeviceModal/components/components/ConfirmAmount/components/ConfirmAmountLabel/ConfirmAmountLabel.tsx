@@ -1,6 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
 import { NftEnumType } from 'types/tokens.types';
 
@@ -35,7 +36,10 @@ const ConfirmAmountLabelComponent = ({
     return (
       <div className={styles?.confirmAmountLabel}>
         <span className={styles?.confirmAmountLabelText}>You are sending</span>
-        <span className={styles?.confirmAmountLabelValue}>
+        <span
+          className={styles?.confirmAmountLabelValue}
+          data-testid={DataTestIdsEnum.confirmAmount}
+        >
           {amountToLocaleString} {sftLabel}
         </span>
       </div>

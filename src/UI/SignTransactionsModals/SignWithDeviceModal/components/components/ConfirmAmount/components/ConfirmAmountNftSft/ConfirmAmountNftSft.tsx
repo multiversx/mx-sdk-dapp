@@ -28,7 +28,7 @@ const ConfirmAmountNftSftComponent = ({
   tokenDetails
 }: ConfirmAmountNftSftPropsType) => {
   const { network } = useGetNetworkConfig();
-  const { identifier, tokenAvatar, ticker, name } = tokenDetails;
+  const { identifier, tokenAvatar, name } = tokenDetails;
 
   const isSft = NftEnumType.SemiFungibleESDT === type;
   const mirroredSftAvatarsCount = 4;
@@ -95,7 +95,7 @@ const ConfirmAmountNftSftComponent = ({
             className={styles?.confirmAmountNftSftTicker}
             data-testid={DataTestIdsEnum.nftIdentifier}
           >
-            {ticker}
+            {identifier}
           </div>
         </div>
       </div>
