@@ -1,6 +1,6 @@
 import { ReactNode, MutableRefObject } from 'react';
 
-import { OnProviderLoginType } from '../../../types';
+import { OnProviderLoginType } from '../../../types/login.types';
 import { WithClassnameType } from '../../types';
 import { InnerWalletConnectComponentsClassesType } from '../types';
 
@@ -10,7 +10,6 @@ export interface WalletConnectLoginModalPropsType
   loginButtonText: string;
   customSpinnerComponent?: ReactNode;
   innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
-  isWalletConnectV2?: boolean;
   lead?: string;
   legacyMessage?: string;
   logoutRoute?: string;
@@ -20,6 +19,8 @@ export interface WalletConnectLoginModalPropsType
   showScamPhishingAlert?: boolean;
   title?: string;
   wrapContentInsideModal?: boolean;
-  canLoginRef?: MutableRefObject<boolean>;
   customRequestMethods?: Array<string>;
+  // deprecated/not used - kept for compatibility
+  isWalletConnectV2?: boolean;
+  canLoginRef?: MutableRefObject<boolean>;
 }
