@@ -1,6 +1,7 @@
 import React from 'react';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 
 import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
@@ -20,16 +21,19 @@ export interface ConfirmReceiverPropsType extends WithStylesImportType {
   receiver: string;
   scamReport: string | null;
   receiverUsername?: string;
+  amount: string;
 }
 
 const ConfirmReceiverComponent = ({
   receiver,
   scamReport,
   receiverUsername,
+  amount,
   styles
 }: ConfirmReceiverPropsType) => {
   const isSmartContract = isContract(receiver);
   const skipFetchingAccount = Boolean(isSmartContract || receiverUsername);
+  const isAmountZero = new BigNumber(amount).isZero();
 
   const {
     account: usernameAccount,
@@ -46,7 +50,9 @@ const ConfirmReceiverComponent = ({
   return (
     <div className={styles?.receiver}>
       <div className={styles?.receiverLabelWrapper}>
-        <div className={styles?.receiverLabel}>To</div>
+        <div className={styles?.receiverLabel}>
+          {isAmountZero ? 'To interact with' : 'To'}
+        </div>
 
         {scamReport && (
           <div className={styles?.receiverLabelScam}>

@@ -60,6 +60,7 @@ export const BalanceComponent = ({
             [styles?.balanceSuffixSup]: showTokenLabelSup
           })}
         >
+          {' '}
           {tokenLabel}
         </sup>
       )}
