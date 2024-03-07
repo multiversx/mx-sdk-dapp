@@ -26,8 +26,10 @@ export function isStringBase64(str: string) {
     const bufferFromEncoded = Buffer.from(bufferFromDecoded).toString('base64');
 
     // If the result is equal to the initial string
-    const isEqualToInitialString =
-      str === btoaEncoded && str === bufferFromEncoded;
+    const isBtoaEqual = str === btoaEncoded || btoaEncoded.startsWith(str);
+    const isBufferFromBase64Equal =
+      str === bufferFromEncoded || bufferFromEncoded.startsWith(str);
+    const isEqualToInitialString = isBtoaEqual && isBufferFromBase64Equal;
 
     if (isEqualToInitialString) {
       // it is a regular base64 string
