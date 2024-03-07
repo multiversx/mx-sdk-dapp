@@ -7,7 +7,7 @@ import { InnerWalletConnectComponentsClassesType } from '../types';
 export interface WalletConnectLoginModalPropsType
   extends OnProviderLoginType,
     WithClassnameType {
-  loginButtonText: string;
+  loginButtonText: ReactNode;
   customSpinnerComponent?: ReactNode;
   innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;
   lead?: string;
