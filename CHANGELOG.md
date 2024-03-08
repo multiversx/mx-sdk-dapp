@@ -6,35 +6,48 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+- [Update WalletConnect package and functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1064)
 - [Fixed sign step signing and labels](https://github.com/multiversx/mx-sdk-dapp/pull/1060)
 - [Fixed signing multiple transactions with guarded ledger](https://github.com/multiversx/mx-sdk-dapp/pull/1059)
 - [Added getHasNativeAuth in order to see if nativeAuth has been configured on development mode](https://github.com/multiversx/mx-sdk-dapp/pull/1051)
 - [Added support for nativeAuth impersonat](https://github.com/multiversx/mx-sdk-dapp/pull/1049)
 - [Updated WalletConnectV2 account provider to be updated on new or existing session](https://github.com/multiversx/mx-sdk-dapp/pull/1050)
 
+## [[v2.28.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1062)] - 2024-03-07
+
+- [Fixed base64 utils conversion](https://github.com/multiversx/mx-sdk-dapp/pull/1061)
+
 ## [[v2.28.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1048)] - 2024-02-13
+
 - [Updated AddressRow data-testids](https://github.com/multiversx/mx-sdk-dapp/pull/1047)
 
 ## [[v2.28.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1044)] - 2024-02-08
+
 - [Added option to access URL search param from application load time in `useParseSignedTransactions`](https://github.com/multiversx/mx-sdk-dapp/pull/1042)
 - [Fixed wallet connect breaks login with other providers](https://github.com/multiversx/mx-sdk-dapp/pull/1043)
 - [Fixed possibly undefined payload on custom toasts](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
 
 ## [[v2.28.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1036)] - 2024-02-01
+
 - [Fixed logout with web wallet infinite loop](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
 
 ## [[v2.28.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1035)] - 2024-02-01
+
 - [Reverted setting walletconnectV2 `accountProvider` on init](https://github.com/multiversx/mx-sdk-dapp/pull/1036)
 - [Fixed setting `loginToken` in `nativeAuthService` losing previous state](https://github.com/multiversx/mx-sdk-dapp/pull/1034)
 - [Fixed setting walletconnectV2 `accountProvider` on init](https://github.com/multiversx/mx-sdk-dapp/pull/1033)
 
 ## [[v2.28.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1032)] - 2024-01-30
+
 - [Added transaction toast wrapper id](https://github.com/multiversx/mx-sdk-dapp/pull/1031)
 
 ## [[v2.28.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1030)] - 2024-01-26
+
 - [Added support for `checkIsValidSender` with array option](https://github.com/multiversx/mx-sdk-dapp/pull/1029)
 
 ## [[v2.28.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1028)] - 2024-01-25
+
 - [Added support for Web Wallet multisig token login](https://github.com/multiversx/mx-sdk-dapp/pull/1027)
 - [Changed postMessage payload from string to plain object](https://github.com/multiversx/mx-sdk-dapp/pull/1025)
 
