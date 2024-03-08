@@ -36,31 +36,34 @@ export const BalanceComponent = ({
       : mainBalance;
 
   const getBalancePayload = () => {
-    const balancePayload: Record<string, string> = {};
+    const balancePayload: Record<string, string> = { processedMainBalance };
 
     if (addEqualSign && displayAsUsd) {
-      Object.assign(balancePayload, { approximation: '≈' });
-    }
-
-    if (processedMainBalance) {
-      Object.assign(balancePayload, { processedMainBalance });
+      balancePayload.approximation = '≈';
     }
 
     if (decimalBalance) {
-      Object.assign(balancePayload, { decimalBalance: `.${decimalBalance}` });
+      balancePayload.decimalBalance = `.${decimalBalance}`;
     }
 
     if (!displayAsUsd && showTokenLabel) {
-      Object.assign(balancePayload, { tokenLabel: ` ${tokenLabel}` });
+      balancePayload.tokenLabel = ` ${tokenLabel}`;
     }
 
     return balancePayload;
   };
 
   const balancePayload = getBalancePayload();
-  const dataBalanceValue = Object.values(balancePayload).reduce(
-    (totalBalanceValue, currentBalanceValue) =>
-      totalBalanceValue.concat(currentBalanceValue),
+  const dataValues = [
+    balancePayload.approximation,
+    balancePayload.processedMainBalance,
+    balancePayload.decimalBalance,
+    balancePayload.tokenLabel
+  ];
+
+  const dataBalanceValue = dataValues.reduce(
+    (totalDataValue, dataValueItem) =>
+      dataValueItem ? totalDataValue.concat(dataValueItem) : totalDataValue,
     ''
   );
 
