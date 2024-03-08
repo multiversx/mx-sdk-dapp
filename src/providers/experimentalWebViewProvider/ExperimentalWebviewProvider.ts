@@ -12,6 +12,7 @@ import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { IDappProvider } from 'types/dappProvider.types';
+import { logout } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './helpers/getTargetOrigin';
 import { notInitializedError } from './helpers/notInitializedError';
@@ -49,10 +50,12 @@ export class ExperimentalWebviewProvider implements IDappProvider {
           ) {
             store.dispatch(logoutAction());
 
-            this.sendPostMessage({
-              type: CrossWindowProviderRequestEnums.finalizeResetStateRequest,
-              payload: undefined
-            });
+            setTimeout(() => {
+              this.sendPostMessage({
+                type: CrossWindowProviderRequestEnums.finalizeResetStateRequest,
+                payload: undefined
+              });
+            }, 500);
           }
         }
       )
@@ -72,6 +75,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
       type: CrossWindowProviderRequestEnums.logoutRequest,
       payload: undefined
     });
+
+    await logout();
 
     return Boolean(response.payload.data);
   };
