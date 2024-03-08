@@ -10,12 +10,14 @@ import { WithStylesImportType } from '../../../../../../../../hocs/useStyles';
 interface ConfirmAmountLabelPropsType extends WithStylesImportType {
   type?: NftEnumType;
   amount: string;
+  identifier?: string;
 }
 
 const ConfirmAmountLabelComponent = ({
   amount,
   styles,
-  type
+  type,
+  identifier
 }: ConfirmAmountLabelPropsType) => {
   const amountBigNumber = new BigNumber(amount);
   const isAmountZero = amountBigNumber.isZero();
@@ -39,6 +41,7 @@ const ConfirmAmountLabelComponent = ({
         <span
           className={styles?.confirmAmountLabelValue}
           data-testid={DataTestIdsEnum.confirmAmount}
+          data-value={`${amountToLocaleString} ${identifier}`}
         >
           {amountToLocaleString} {sftLabel}
         </span>
