@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Add support for the new cross window functionality in web wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1067/files)
 - [Update WalletConnect package and functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1064)
 - [Fixed sign step signing and labels](https://github.com/multiversx/mx-sdk-dapp/pull/1060)
 - [Fixed signing multiple transactions with guarded ledger](https://github.com/multiversx/mx-sdk-dapp/pull/1059)
