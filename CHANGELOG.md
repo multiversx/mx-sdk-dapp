@@ -6,7 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+- [Fixed types and file names](https://github.com/multiversx/mx-sdk-dapp/pull/1068)
 - [Add support for the new cross window functionality in web wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1067)
 - [Update WalletConnect package and functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1064)
 - [Fixed sign step signing and labels](https://github.com/multiversx/mx-sdk-dapp/pull/1060)
