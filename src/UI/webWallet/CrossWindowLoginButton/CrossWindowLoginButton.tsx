@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
@@ -26,7 +27,7 @@ export const CrossWindowLoginButton: (
   loginButtonText = 'Window Wallet',
   onLoginRedirect,
   disabled,
-  'data-testid': dataTestId = 'walletV2LoginButton'
+  'data-testid': dataTestId = DataTestIdsEnum.accessCrossWindowWalletBtn
 }) => {
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
   const [onInitiateLogin] = useCrossWindowLogin({
