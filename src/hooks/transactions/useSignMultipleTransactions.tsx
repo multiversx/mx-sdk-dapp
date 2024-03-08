@@ -164,7 +164,7 @@ export function useSignMultipleTransactions({
       transactions: existingSignedTransactions
     });
 
-    if (alreadySignedByGuardian) {
+    if (isGuarded && alreadySignedByGuardian) {
       onTransactionsSignSuccess(existingSignedTransactions);
       reset();
       return;

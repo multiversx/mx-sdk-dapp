@@ -27,7 +27,6 @@ const WalletConnectLoginContentComponent = ({
   showScamPhishingAlert = true,
   title = 'Login with the xPortal App',
   token,
-  canLoginRef,
   globalStyles,
   styles,
   customRequestMethods = []
@@ -48,7 +47,6 @@ const WalletConnectLoginContentComponent = ({
     nativeAuth,
     onLoginRedirect,
     logoutRoute,
-    canLoginRef,
     customRequestMethods
   });
 

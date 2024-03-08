@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { ModalContainer } from 'UI/ModalContainer';
 import { WalletConnectLoginModalPropsType } from './types';
@@ -13,13 +13,10 @@ const WalletConnectLoginContainerComponent = (
     showLoginContent,
     showLoginModal,
     wrapContentInsideModal,
-    styles,
-    canLoginRef: parentCanLoginRef
+    styles
   } = props;
 
-  const canLoginRef = parentCanLoginRef ?? useRef<boolean>(true);
-
-  const onCloseModal = async () => {
+  const onCloseModal = () => {
     onClose?.();
   };
 
@@ -28,7 +25,7 @@ const WalletConnectLoginContainerComponent = (
   }
 
   if (!wrapContentInsideModal) {
-    return <WalletConnectLoginContent {...props} canLoginRef={canLoginRef} />;
+    return <WalletConnectLoginContent {...props} />;
   }
 
   return (
@@ -47,7 +44,7 @@ const WalletConnectLoginContainerComponent = (
       onClose={onCloseModal}
       visible={showLoginModal}
     >
-      <WalletConnectLoginContent {...props} canLoginRef={canLoginRef} />
+      <WalletConnectLoginContent {...props} />
     </ModalContainer>
   );
 };

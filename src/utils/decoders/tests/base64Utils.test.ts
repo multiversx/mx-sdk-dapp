@@ -64,4 +64,9 @@ describe('isStringBase64', () => {
     );
     expect(result).toStrictEqual(false);
   });
+
+  it('should return false for atob equal to base64 conversion', async () => {
+    const result = isStringBase64('fd');
+    expect(result).toStrictEqual(false);
+  });
 });

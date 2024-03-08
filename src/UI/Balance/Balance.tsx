@@ -35,32 +35,71 @@ export const BalanceComponent = ({
       ? `$${mainBalance}`
       : mainBalance;
 
+  const getBalancePayload = () => {
+    const balancePayload: Record<string, string> = { processedMainBalance };
+
+    if (addEqualSign && displayAsUsd) {
+      balancePayload.approximation = '≈';
+    }
+
+    if (decimalBalance) {
+      balancePayload.decimalBalance = `.${decimalBalance}`;
+    }
+
+    if (!displayAsUsd && showTokenLabel) {
+      balancePayload.tokenLabel = ` ${tokenLabel}`;
+    }
+
+    return balancePayload;
+  };
+
+  const balancePayload = getBalancePayload();
+  const dataValues = [
+    balancePayload.approximation,
+    balancePayload.processedMainBalance,
+    balancePayload.decimalBalance,
+    balancePayload.tokenLabel
+  ];
+
+  const dataBalanceValue = dataValues.reduce(
+    (totalDataValue, dataValueItem) =>
+      dataValueItem ? totalDataValue.concat(dataValueItem) : totalDataValue,
+    ''
+  );
+
   return (
     <div
       className={classNames(styles?.balance, className)}
       data-testid={dataTestId}
+      data-value={dataBalanceValue}
     >
       {egldIcon && !displayAsUsd && (
         <MultiversXSymbol className={styles?.balanceSymbol} />
       )}
 
-      {addEqualSign && displayAsUsd && (
-        <span className={styles?.balanceApproximation}>≈</span>
+      {balancePayload.approximation && (
+        <span className={styles?.balanceApproximation}>
+          {balancePayload.approximation}
+        </span>
       )}
 
-      <span className={styles?.balanceMain}>{processedMainBalance}</span>
-
-      {decimalBalance && (
-        <span className={styles?.balanceDecimals}>.{decimalBalance}</span>
+      {balancePayload.processedMainBalance && (
+        <span className={styles?.balanceMain}>{processedMainBalance}</span>
       )}
 
-      {!displayAsUsd && showTokenLabel && (
+      {balancePayload.decimalBalance && (
+        <span className={styles?.balanceDecimals}>
+          {balancePayload.decimalBalance}
+        </span>
+      )}
+
+      {balancePayload.tokenLabel && (
         <sup
           className={classNames(styles?.balanceSuffix, {
             [styles?.balanceSuffixSup]: showTokenLabelSup
           })}
         >
-          {tokenLabel}
+          {balancePayload.tokenLabel}
         </sup>
       )}
     </div>

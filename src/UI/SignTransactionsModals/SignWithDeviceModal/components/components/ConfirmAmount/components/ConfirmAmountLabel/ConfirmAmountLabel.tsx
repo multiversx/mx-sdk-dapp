@@ -1,6 +1,7 @@
 import React from 'react';
 import BigNumber from 'bignumber.js';
 
+import { DataTestIdsEnum } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
 import { NftEnumType } from 'types/tokens.types';
 
@@ -9,17 +10,20 @@ import { WithStylesImportType } from '../../../../../../../../hocs/useStyles';
 interface ConfirmAmountLabelPropsType extends WithStylesImportType {
   type?: NftEnumType;
   amount: string;
+  identifier?: string;
 }
 
 const ConfirmAmountLabelComponent = ({
   amount,
   styles,
-  type
+  type,
+  identifier
 }: ConfirmAmountLabelPropsType) => {
   const amountBigNumber = new BigNumber(amount);
   const isAmountZero = amountBigNumber.isZero();
   const sftLabel = amountBigNumber.isEqualTo(1) ? 'SFT' : 'SFTs';
   const amountToLocaleString = amountBigNumber.toNumber().toLocaleString('en');
+  const dataValue = `${amountToLocaleString} ${identifier}`;
 
   if (isAmountZero) {
     return <div className={styles?.confirmAmountLabel}>You are using</div>;
@@ -35,7 +39,11 @@ const ConfirmAmountLabelComponent = ({
     return (
       <div className={styles?.confirmAmountLabel}>
         <span className={styles?.confirmAmountLabelText}>You are sending</span>
-        <span className={styles?.confirmAmountLabelValue}>
+        <span
+          className={styles?.confirmAmountLabelValue}
+          data-testid={DataTestIdsEnum.confirmAmount}
+          data-value={dataValue}
+        >
           {amountToLocaleString} {sftLabel}
         </span>
       </div>

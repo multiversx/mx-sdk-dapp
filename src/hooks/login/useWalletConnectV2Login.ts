@@ -1,4 +1,4 @@
-import { MutableRefObject, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { useGetAccountProvider } from 'hooks/account';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
@@ -47,7 +47,6 @@ export enum WalletConnectV2Error {
 
 export interface InitWalletConnectV2Type extends OnProviderLoginType {
   logoutRoute?: string;
-  canLoginRef?: MutableRefObject<boolean>;
   customRequestMethods?: Array<string>;
 }
 
@@ -72,7 +71,6 @@ export const useWalletConnectV2Login = ({
   nativeAuth,
   onLoginRedirect,
   logoutRoute: providerLogoutRoute,
-  canLoginRef: parentCanLoginRef,
   customRequestMethods = []
 }: InitWalletConnectV2Type): WalletConnectV2LoginHookReturnType => {
   const dispatch = useDispatch();
@@ -99,7 +97,6 @@ export const useWalletConnectV2Login = ({
   const dappLogoutRoute = useSelector(logoutRouteSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const providerRef = useRef<any>(provider);
-  const canLoginRef = parentCanLoginRef ?? useRef<boolean>(false);
   const isInitialisingRef = useRef<boolean>(false);
   const mounted = useRef(false);
 
@@ -138,7 +135,7 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
-      if (!canLoginRef.current) {
+      if (!mounted.current) {
         try {
           await providerRef.current?.logout();
         } catch {
@@ -186,10 +183,6 @@ export const useWalletConnectV2Login = ({
   };
 
   const cancelLogin = async () => {
-    if (canLoginRef.current) {
-      canLoginRef.current = false;
-    }
-
     const providerType = getProviderType(providerRef.current);
 
     if (providerType !== LoginMethodsEnum.walletconnectv2) {
@@ -290,7 +283,7 @@ export const useWalletConnectV2Login = ({
 
     const isLoggedIn = getIsLoggedIn();
 
-    const cannotLogin = canLoginRef.current === false && !isLoggedIn;
+    const cannotLogin = mounted.current === false && !isLoggedIn;
     const isInitialized = providerRef.current?.isInitialized?.();
 
     if (isInitialisingRef.current || cannotLogin || isInitialized) {
@@ -300,15 +293,14 @@ export const useWalletConnectV2Login = ({
     isInitialisingRef.current = true;
 
     if (providerRef.current?.walletConnector) {
-      providerRef.current.init();
+      await providerRef.current.init();
 
       setSessionProvider(providerRef.current);
 
       isInitialisingRef.current = false;
-      canLoginRef.current = true;
 
       if (loginProvider) {
-        generateWcUri();
+        await generateWcUri();
       }
 
       return;
@@ -332,11 +324,10 @@ export const useWalletConnectV2Login = ({
     setSessionProvider(newProvider);
     providerRef.current = newProvider;
     isInitialisingRef.current = false;
-    canLoginRef.current = true;
 
     if (loginProvider) {
       setWcPairings(newProvider.pairings);
-      generateWcUri();
+      await generateWcUri();
     }
 
     return;
@@ -349,14 +340,14 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      const { uri, approval } = await providerRef.current?.connect({
-        methods: dappMethods
-      });
-
       // Do not do any other actions if component is not mounted
       if (!mounted.current) {
         return;
       }
+
+      const { uri, approval } = await providerRef.current?.connect({
+        methods: dappMethods
+      });
 
       const hasUri = Boolean(uri);
 
@@ -395,14 +386,6 @@ export const useWalletConnectV2Login = ({
       console.error(WalletConnectV2Error.connectError, err);
     }
   }
-
-  useUpdateEffect(() => {
-    if (!tokenToSign || !providerRef.current?.connect) {
-      return;
-    }
-
-    generateWcUri();
-  }, [tokenToSign, providerRef.current?.connect]);
 
   useUpdateEffect(() => {
     providerRef.current = provider;

@@ -34,7 +34,7 @@ const ConfirmAmountDataComponent = ({
   tokenDetails
 }: ConfirmAmountDataPropsType) => {
   const { network } = useGetNetworkConfig();
-  const { tokenAvatar, tokenDecimals, ticker } = tokenDetails;
+  const { tokenAvatar, tokenDecimals, identifier } = tokenDetails;
 
   const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
     formatAmount({
@@ -81,7 +81,7 @@ const ConfirmAmountDataComponent = ({
             data-testid={DataTestIdsEnum.confirmAmount}
             showTokenLabel
             showTokenLabelSup
-            tokenLabel={isEgld ? network.egldLabel : ticker}
+            tokenLabel={isEgld ? network.egldLabel : identifier}
             className={styles?.confirmAmountDataBalance}
           />
         </div>
