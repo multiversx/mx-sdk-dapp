@@ -36,8 +36,13 @@ const ConfirmAmountComponent = ({
     tokenId: tokenIdForTokenDetails
   });
 
-  const { type, esdtPrice, isLoading: isTokenDetailsLoading } = tokenDetails;
   const { price: egldPrice } = useGetEgldPrice();
+  const {
+    type,
+    esdtPrice,
+    isLoading: isTokenDetailsLoading,
+    identifier
+  } = tokenDetails;
 
   const isEgld = !tokenId;
   const tokenPrice = isEgld ? egldPrice : esdtPrice;
@@ -51,7 +56,11 @@ const ConfirmAmountComponent = ({
         {isTokenDetailsLoading ? (
           <LoadingDots />
         ) : (
-          <ConfirmAmountLabel amount={amount} type={type} />
+          <ConfirmAmountLabel
+            amount={amount}
+            type={type}
+            identifier={identifier}
+          />
         )}
       </div>
 

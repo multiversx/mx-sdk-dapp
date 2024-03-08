@@ -35,33 +35,68 @@ export const BalanceComponent = ({
       ? `$${mainBalance}`
       : mainBalance;
 
+  const getBalancePayload = () => {
+    const balancePayload: Record<string, string> = {};
+
+    if (addEqualSign && displayAsUsd) {
+      Object.assign(balancePayload, { approximation: '≈' });
+    }
+
+    if (processedMainBalance) {
+      Object.assign(balancePayload, { processedMainBalance });
+    }
+
+    if (decimalBalance) {
+      Object.assign(balancePayload, { decimalBalance: `.${decimalBalance}` });
+    }
+
+    if (!displayAsUsd && showTokenLabel) {
+      Object.assign(balancePayload, { tokenLabel: ` ${tokenLabel}` });
+    }
+
+    return balancePayload;
+  };
+
+  const balancePayload = getBalancePayload();
+  const dataBalanceValue = Object.values(balancePayload).reduce(
+    (totalBalanceValue, currentBalanceValue) =>
+      totalBalanceValue.concat(currentBalanceValue),
+    ''
+  );
+
   return (
     <div
       className={classNames(styles?.balance, className)}
       data-testid={dataTestId}
+      data-value={dataBalanceValue}
     >
       {egldIcon && !displayAsUsd && (
         <MultiversXSymbol className={styles?.balanceSymbol} />
       )}
 
-      {addEqualSign && displayAsUsd && (
-        <span className={styles?.balanceApproximation}>≈</span>
+      {balancePayload.approximation && (
+        <span className={styles?.balanceApproximation}>
+          {balancePayload.approximation}
+        </span>
       )}
 
-      <span className={styles?.balanceMain}>{processedMainBalance}</span>
-
-      {decimalBalance && (
-        <span className={styles?.balanceDecimals}>.{decimalBalance}</span>
+      {balancePayload.processedMainBalance && (
+        <span className={styles?.balanceMain}>{processedMainBalance}</span>
       )}
 
-      {!displayAsUsd && showTokenLabel && (
+      {balancePayload.decimalBalance && (
+        <span className={styles?.balanceDecimals}>
+          {balancePayload.decimalBalance}
+        </span>
+      )}
+
+      {balancePayload.tokenLabel && (
         <sup
           className={classNames(styles?.balanceSuffix, {
             [styles?.balanceSuffixSup]: showTokenLabelSup
           })}
         >
-          {' '}
-          {tokenLabel}
+          {balancePayload.tokenLabel}
         </sup>
       )}
     </div>
