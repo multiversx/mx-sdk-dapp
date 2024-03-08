@@ -33,7 +33,7 @@ export const processModifiedAccount = async <
     extraInfoData
   });
 
-  let tokenAddress =
+  const tokenAddress =
     extraInfoData.multisig || extraInfoData.impersonate || address;
 
   const accountAddress = loginToken != null ? tokenAddress : address;
