@@ -23,6 +23,7 @@ const ConfirmAmountLabelComponent = ({
   const isAmountZero = amountBigNumber.isZero();
   const sftLabel = amountBigNumber.isEqualTo(1) ? 'SFT' : 'SFTs';
   const amountToLocaleString = amountBigNumber.toNumber().toLocaleString('en');
+  const dataValue = `${amountToLocaleString} ${identifier}`;
 
   if (isAmountZero) {
     return <div className={styles?.confirmAmountLabel}>You are using</div>;
@@ -41,7 +42,7 @@ const ConfirmAmountLabelComponent = ({
         <span
           className={styles?.confirmAmountLabelValue}
           data-testid={DataTestIdsEnum.confirmAmount}
-          data-value={`${amountToLocaleString} ${identifier}`}
+          data-value={dataValue}
         >
           {amountToLocaleString} {sftLabel}
         </span>
