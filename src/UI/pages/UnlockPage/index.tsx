@@ -32,7 +32,6 @@ const UnlockPageComponent = ({
   WalletConnectLoginButtonText = 'xPortal App',
   ExtensionLoginButtonText = 'Extension',
   OperaWalletLoginButtonText = 'Opera Crypto Wallet',
-  CrossWindowLoginButtonText = 'Wallet V2',
   WebWalletLoginButtonText = 'Web wallet',
   globalStyles,
   styles
@@ -88,11 +87,6 @@ const UnlockPageComponent = ({
             <OperaWalletLoginButton
               callbackRoute={loginRoute}
               loginButtonText={OperaWalletLoginButtonText}
-            />
-
-            <WebWalletLoginButton
-              callbackRoute={loginRoute}
-              loginButtonText={CrossWindowLoginButtonText}
             />
 
             <WebWalletLoginButton
