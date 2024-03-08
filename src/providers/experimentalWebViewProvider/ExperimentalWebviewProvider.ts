@@ -8,14 +8,14 @@ import {
   ReplyWithPostMessagePayloadType,
   SignMessageStatusEnum
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
+import { logoutAction } from 'reduxStore/commonActions';
+import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { IDappProvider } from 'types/dappProvider.types';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getTargetOrigin } from './helpers/getTargetOrigin';
-
-const notInitializedError = (caller: string) => () => {
-  throw new Error(`Unable to perform ${caller}, Provider not initialized`);
-};
+import { notInitializedError } from './helpers/notInitializedError';
+import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
 
 /**
  * This is an experimental provider that uses `postMessage` to communicate with the parent.
@@ -31,6 +31,33 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     }
     return ExperimentalWebviewProvider.instance;
   }
+
+  constructor() {
+    this.resetState();
+  }
+
+  private resetState = () => {
+    const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
+
+    safeWindow.addEventListener(
+      'message',
+      webviewProviderEventHandler(
+        CrossWindowProviderResponseEnums.resetStateResponse,
+        (data) => {
+          if (
+            data.type === CrossWindowProviderResponseEnums.resetStateResponse
+          ) {
+            store.dispatch(logoutAction());
+
+            this.sendPostMessage({
+              type: CrossWindowProviderRequestEnums.finalizeResetStateRequest,
+              payload: undefined
+            });
+          }
+        }
+      )
+    );
+  };
 
   init = async () => {
     return true;
@@ -128,32 +155,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return await new Promise((resolve) => {
       window.addEventListener(
         'message',
-        async function eventHandler(
-          event: MessageEvent<{
-            type: T;
-            payload: ReplyWithPostMessagePayloadType<T>;
-          }>
-        ) {
-          const { type, payload } = event.data;
-
-          if (event.origin != getTargetOrigin()) {
-            console.error('origin not accepted', {
-              eventOrigin: event.origin
-            });
-            return;
-          }
-
-          const isCurrentAction =
-            action === type ||
-            type === CrossWindowProviderResponseEnums.cancelResponse;
-
-          if (!isCurrentAction) {
-            return;
-          }
-
-          window.removeEventListener('message', eventHandler);
-          resolve({ type, payload });
-        }
+        webviewProviderEventHandler(action, resolve)
       );
     });
   }
