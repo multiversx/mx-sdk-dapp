@@ -27,7 +27,6 @@ const WalletConnectLoginContentComponent = ({
   showScamPhishingAlert = true,
   title = 'Login with the xPortal App',
   token,
-  canLoginRef,
   globalStyles,
   styles,
   customRequestMethods = []
@@ -48,7 +47,6 @@ const WalletConnectLoginContentComponent = ({
     nativeAuth,
     onLoginRedirect,
     logoutRoute,
-    canLoginRef,
     customRequestMethods
   });
 
@@ -98,12 +96,8 @@ const WalletConnectLoginContentComponent = ({
   }, [walletConnectUriV2]);
 
   useEffect(() => {
-    if (canLoginRef?.current === false) {
-      return;
-    }
-
     initLoginWithWalletConnectV2();
-  }, [canLoginRef?.current]);
+  }, []);
 
   const authorizationInfo = showScamPhishingAlert
     ? getAuthorizationInfo(token, containerScamPhishingAlertClassName)

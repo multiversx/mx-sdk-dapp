@@ -44,3 +44,8 @@ export const logoutRouteSelector = createDeepEqualSelector(
   loginInfoSelector,
   (state) => state.logoutRoute
 );
+
+export const isWalletConnectV2InitializedSelector = createDeepEqualSelector(
+  loginInfoSelector,
+  (state) => state.isWalletConnectV2Initialized
+);
