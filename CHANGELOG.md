@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Move axios in peerDependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1023)
 
+## [[v2.29.0-beta.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1073)] - 2024-03-12
+- [Move axios in peerDependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1023)
 - [Upgrade sdk packages](https://github.com/multiversx/mx-sdk-dapp/pull/1072)
 
 ## [[v2.29.0-beta.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1071)] - 2024-03-12
