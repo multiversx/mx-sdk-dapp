@@ -22,7 +22,9 @@ export { DappConfigType };
 
 const setWebviewProvider = () => {
   if (getWebviewPlatform() === PlatformsEnum.webWallet) {
-    setExternalProvider(ExperimentalWebviewProvider.getInstance());
+    const providerInstance = ExperimentalWebviewProvider.getInstance();
+    providerInstance.init?.();
+    setExternalProvider(providerInstance);
   } else {
     setExternalProvider(webviewProvider);
   }

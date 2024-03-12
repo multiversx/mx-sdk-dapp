@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 -[Added getOperationsDetails for retrieving visible operations](https://github.com/multiversx/mx-sdk-dapp/pull/1054)
 
+- [Fix experimental webview provider initialization](https://github.com/multiversx/mx-sdk-dapp/pull/1070)
+
 ## [[v2.29.0-beta.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1069)] - 2024-03-11
 - [Fixed types and file names](https://github.com/multiversx/mx-sdk-dapp/pull/1068)
 - [Add support for the new cross window functionality in web wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1067)
