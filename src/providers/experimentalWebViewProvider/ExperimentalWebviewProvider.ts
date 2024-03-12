@@ -63,11 +63,6 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   };
 
   init = async () => {
-    this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.finalizeHandshakeRequest,
-      payload: undefined
-    });
-
     return true;
   };
 
