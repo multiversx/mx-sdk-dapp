@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
--[Added getOperationsDetails for retrieving visible operations](https://github.com/multiversx/mx-sdk-dapp/pull/1054)
 
+## [[v2.29.0-beta.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1071)] - 2024-03-12
+- [Added getOperationsDetails for retrieving visible operations](https://github.com/multiversx/mx-sdk-dapp/pull/1054)
 - [Fix experimental webview provider initialization](https://github.com/multiversx/mx-sdk-dapp/pull/1070)
 
 ## [[v2.29.0-beta.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1069)] - 2024-03-11
