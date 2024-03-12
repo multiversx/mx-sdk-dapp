@@ -16,6 +16,7 @@ export interface Props {
   LedgerLoginButtonText?: string;
   ExtensionLoginButtonText?: string;
   OperaWalletLoginButtonText?: string;
+  CrossWindowLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;

@@ -48,7 +48,7 @@ const TransactionInfoAgeComponent = ({
             />
           )}
 
-          <TimeAgo value={transaction.timestamp} short={true} />
+          <TimeAgo value={transaction.timestamp} short />
 
           <span
             className={classNames(

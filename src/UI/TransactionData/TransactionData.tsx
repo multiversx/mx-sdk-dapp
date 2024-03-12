@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { DataTestIdsEnum, N_A } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { CopyButton } from 'UI/CopyButton';
 import { decodePart } from 'utils/decoders/decodePart';
 import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
 import { WithClassnameType } from '../types';
@@ -49,6 +50,14 @@ const TransactionDataComponent = ({
   const occurrences = isHighlightedData ? allOccurences(data, highlight) : [];
   const showHighlight = isHighlightedData && occurrences.length > 0;
 
+  const handleElementReference = (element: HTMLElement | null) => {
+    if (!element) {
+      return;
+    }
+
+    element.scrollIntoView();
+  };
+
   if (showHighlight) {
     switch (true) {
       case data.startsWith(highlight): {
@@ -56,7 +65,7 @@ const TransactionDataComponent = ({
 
         output = (
           <>
-            {highlight}
+            <span className={globalStyles?.highlighted}>{highlight}</span>
             <span className={globalStyles?.textMuted}>{rest}</span>
           </>
         );
@@ -68,7 +77,12 @@ const TransactionDataComponent = ({
         output = (
           <>
             <span className={globalStyles?.textMuted}>{rest}</span>
-            {highlight}
+            <span
+              className={globalStyles?.highlighted}
+              ref={handleElementReference}
+            >
+              {highlight}
+            </span>
           </>
         );
         break;
@@ -85,7 +99,12 @@ const TransactionDataComponent = ({
         output = (
           <>
             <span className={globalStyles?.textMuted}>{start}</span>
-            <span className={globalStyles?.highlighted}>{highlight}</span>
+            <span
+              className={globalStyles?.highlighted}
+              ref={handleElementReference}
+            >
+              {highlight}
+            </span>
             <span className={globalStyles?.textMuted}>{end}</span>
           </>
         );
@@ -94,49 +113,76 @@ const TransactionDataComponent = ({
     }
   }
 
+  const decodedScCall = [
+    decodePart(encodedScCall),
+    ...remainingDataFields
+  ].join('@');
+
   return (
     <>
       {encodedScCall && (
-        <div className={classNames(styles?.data, className)}>
+        <div className={classNames(styles?.transactionData, className)}>
           <span
             className={classNames(
-              styles?.label,
+              styles?.transactionDataLabel,
               transactionDataInputLabelClassName
             )}
           >
-            SC Call
+            Smart Contract Call
           </span>
 
-          <div
-            data-testid={DataTestIdsEnum.confirmScCall}
-            className={classNames(
-              styles?.value,
-              transactionDataInputValueClassName
-            )}
-          >
-            {[decodePart(encodedScCall), ...remainingDataFields].join('@')}
+          <div className={styles?.transactionDataValueWrapper}>
+            <div
+              data-testid={DataTestIdsEnum.confirmScCall}
+              className={classNames(
+                styles?.transactionDataValue,
+                transactionDataInputValueClassName
+              )}
+            >
+              <span className={styles?.transactionDataValueText}>
+                {decodedScCall}
+              </span>
+
+              {data && (
+                <CopyButton
+                  text={decodedScCall}
+                  className={styles?.transactionDataValueCopy}
+                />
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      <div className={styles?.data}>
+      <div className={classNames(styles?.transactionData, className)}>
         <span
           className={classNames(
-            styles?.label,
+            styles?.transactionDataLabel,
             transactionDataInputLabelClassName
           )}
         >
           Data
         </span>
 
-        <div
-          data-testid={DataTestIdsEnum.confirmData}
-          className={classNames(
-            styles?.value,
-            transactionDataInputValueClassName
-          )}
-        >
-          {data ? output : N_A}
+        <div className={styles?.transactionDataValueWrapper}>
+          <div
+            data-testid={DataTestIdsEnum.confirmData}
+            className={classNames(
+              styles?.transactionDataValue,
+              transactionDataInputValueClassName
+            )}
+          >
+            <span className={styles?.transactionDataValueText}>
+              {data ? output : N_A}
+            </span>
+
+            {data && (
+              <CopyButton
+                text={data}
+                className={styles?.transactionDataValueCopy}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

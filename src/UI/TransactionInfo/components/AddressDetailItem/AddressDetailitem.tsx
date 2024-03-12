@@ -12,7 +12,7 @@ const AddressDetailItemComponent = ({
   address,
   styles
 }: { address: string } & WithStylesImportType) => (
-  <DetailItem title='Address' noBorder={true}>
+  <DetailItem title='Address' noBorder>
     <div className={styles?.addressDetailItem}>
       <ScAddressIcon initiator={address} />
 

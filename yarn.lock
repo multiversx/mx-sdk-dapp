@@ -1850,6 +1850,13 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/logs/-/logs-6.12.0.tgz#ad903528bf3687a44da435d7b2479d724d374f5d"
   integrity sha512-ExDoj1QV5eC6TEbMdLUMMk9cfvNKhhv5gXol4SmULRVCx/3iyCPhJ74nsb3S0Vb+/f+XujBEj3vQn5+cwS0fNA==
 
+"@lifeomic/axios-fetch@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@lifeomic/axios-fetch/-/axios-fetch-3.0.1.tgz#a0f135470d7bb54d0ce82b0a2f3b19daa7bf77e2"
+  integrity sha512-bwEgYXtGrn/F+yYqoUIAWBRzyqQ7yB1VL84gCq0uAk36GRoyoWyOzbE35VWeXlmkkoby91FnAwh4UhgayMM/og==
+  dependencies:
+    "@types/node-fetch" "^2.5.10"
+
 "@mdx-js/mdx@^1.6.22":
   version "1.6.22"
   resolved "https://registry.yarnpkg.com/@mdx-js/mdx/-/mdx-1.6.22.tgz#8a723157bf90e78f17dc0f27995398e6c731f1ba"
@@ -1934,6 +1941,20 @@
     keccak "3.0.2"
     protobufjs "7.2.4"
 
+"@multiversx/sdk-core@13.0.0-alpha.2":
+  version "13.0.0-alpha.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.0.0-alpha.2.tgz#ca4b484ce3b8e33858788e48486421f67473af8b"
+  integrity sha512-5Wau36OAIre95akZvuyw8XrO3/zdRDmCqj9azQ4UWm7Jq6ax0XbQpBMI4BVQQ3EL39hgxTmRXeEpCBDxGd/ylg==
+  dependencies:
+    "@multiversx/sdk-transaction-decoder" "1.0.2"
+    bech32 "1.1.4"
+    bignumber.js "9.0.1"
+    blake2b "2.1.3"
+    buffer "6.0.3"
+    json-duplicate-key-handle "1.0.0"
+    keccak "3.0.2"
+    protobufjs "7.2.4"
+
 "@multiversx/sdk-extension-provider@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-3.0.0.tgz#e0e178ee5555f9440457547759621f5c3152c5fa"
@@ -1972,13 +1993,13 @@
   dependencies:
     bech32 "^2.0.0"
 
-"@multiversx/sdk-wallet-connect-provider@4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-4.1.0.tgz#802f7ffbd69a774014ce6a26dcd52b1ab0492633"
-  integrity sha512-gvgZ2q+boliQHRiYDkJ+OOYCbsbrhoavqx01wwECs41EPn7TCIFKVcA5ljtK9OSiX8Htis7ckpTaZFWSr5wkCg==
+"@multiversx/sdk-wallet-connect-provider@4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-4.1.1.tgz#4c5fc34eeac818fd545d0bf94f1eff79cb7b07db"
+  integrity sha512-Fh+MD0RUXbn+Cnxep7TV4tH5XI5T5pSerrU5usbNRBe/DFGlWYcaGLbxVaat4VnMDHu9WnEjT5r2qO530YQi4g==
   dependencies:
-    "@walletconnect/sign-client" "2.11.0"
-    "@walletconnect/utils" "2.11.0"
+    "@walletconnect/sign-client" "2.11.2"
+    "@walletconnect/utils" "2.11.2"
     bech32 "1.1.4"
 
 "@multiversx/sdk-wallet@4.2.0":
@@ -1999,20 +2020,20 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.14":
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.14.tgz#95c62d57f4a695b9e22496de56a679ddf53799b5"
-  integrity sha512-bIma2d5Bd2THO9r4icbVkJd+o6FfmUsmRkERQ7vVM9bEjBZyxFdoWn4p0gh6Nu8EdGVSj7BE0BagYpag+zJdow==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.0.24":
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.24.tgz#2f6e0d26a8e05bb9397cacd6466b215806eba034"
+  integrity sha512-Ijz/uJkqCKQ8gsHzJlA0VW9ilQFG/qnVBZnw/t/gmFJ1KV0N5YKV0KTmdIpbrjVz9yQ7ZMWRS4rAebvNuUD97Q==
   dependencies:
     "@multiversx/sdk-core" "12.18.0"
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
     qs "6.11.2"
 
-"@multiversx/sdk-web-wallet-provider@3.1.0":
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-provider/-/sdk-web-wallet-provider-3.1.0.tgz#af6f7e56ff05cd429c677654638dddbcaed1473b"
-  integrity sha512-gIE7AudJl5Ax64AMAD0o6m0cVi+dI5LW2TSM5M9K7zKMWWCflhv27a2A61JkCIQ6CK5OTIkMXaFb61OzUqhplQ==
+"@multiversx/sdk-web-wallet-provider@3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-provider/-/sdk-web-wallet-provider-3.2.1.tgz#94ba12140f4f9f35f30b8e13186baa78db4ddaae"
+  integrity sha512-f0CHVsBephFhoQtCAx9y2WhiIZEaNgn0oVa+sZNkgILcXU53Gm8Rj8wMfM0SDimHBYcXCcBDedyLCU3MioOjoQ==
   dependencies:
     qs "6.10.3"
 
@@ -4066,6 +4087,14 @@
   resolved "https://registry.yarnpkg.com/@types/ms/-/ms-0.7.34.tgz#10964ba0dee6ac4cd462e2795b6bebd407303433"
   integrity sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==
 
+"@types/node-fetch@^2.5.10":
+  version "2.6.11"
+  resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.11.tgz#9b39b78665dae0e82a08f02f4967d62c66f95d24"
+  integrity sha512-24xFj9R5+rfQJLRyM56qh+wnVSYhyXC2tkoBndtY0U+vubqNsYXGjufB2nn8Q6gt0LrARwL6UBtMCSVCwl4B1g==
+  dependencies:
+    "@types/node" "*"
+    form-data "^4.0.0"
+
 "@types/node-fetch@^2.5.7":
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/@types/node-fetch/-/node-fetch-2.6.10.tgz#ff5c1ceacab782f2b7ce69957d38c1c27b0dc469"
@@ -4395,10 +4424,10 @@
     "@typescript-eslint/types" "5.14.0"
     eslint-visitor-keys "^3.0.0"
 
-"@walletconnect/core@2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@walletconnect/core/-/core-2.11.0.tgz#3a4e301077b2f858fd916b7a20b5b984d1afce63"
-  integrity sha512-2Tjp5BCevI7dbmqo/OrCjX4tqgMqwJNQLlQAlphqPfvwlF9+tIu6pGcVbSN3U9zyXzWIZCeleqEaWUeSeET4Ew==
+"@walletconnect/core@2.11.2":
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@walletconnect/core/-/core-2.11.2.tgz#35286be92c645fa461fecc0dfe25de9f076fca8f"
+  integrity sha512-bB4SiXX8hX3/hyBfVPC5gwZCXCl+OPj+/EDVM71iAO3TDsh78KPbrVAbDnnsbHzZVHlsMohtXX3j5XVsheN3+g==
   dependencies:
     "@walletconnect/heartbeat" "1.2.1"
     "@walletconnect/jsonrpc-provider" "1.0.13"
@@ -4411,8 +4440,8 @@
     "@walletconnect/relay-auth" "^1.0.4"
     "@walletconnect/safe-json" "^1.0.2"
     "@walletconnect/time" "^1.0.2"
-    "@walletconnect/types" "2.11.0"
-    "@walletconnect/utils" "2.11.0"
+    "@walletconnect/types" "2.11.2"
+    "@walletconnect/utils" "2.11.2"
     events "^3.3.0"
     isomorphic-unfetch "3.1.0"
     lodash.isequal "4.5.0"
@@ -4522,19 +4551,19 @@
   dependencies:
     tslib "1.14.1"
 
-"@walletconnect/sign-client@2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@walletconnect/sign-client/-/sign-client-2.11.0.tgz#de10f976cc1b8ab04b7f7c27f6a298e4e083ab25"
-  integrity sha512-H2ukscibBS+6WrzQWh+WyVBqO5z4F5et12JcwobdwgHnJSlqIoZxqnUYYWNCI5rUR5UKsKWaUyto4AE9N5dw4Q==
+"@walletconnect/sign-client@2.11.2":
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@walletconnect/sign-client/-/sign-client-2.11.2.tgz#855609653855f0d23b0502cdbdcf43402e34c459"
+  integrity sha512-MfBcuSz2GmMH+P7MrCP46mVE5qhP0ZyWA0FyIH6/WuxQ6G+MgKsGfaITqakpRPsykWOJq8tXMs3XvUPDU413OQ==
   dependencies:
-    "@walletconnect/core" "2.11.0"
+    "@walletconnect/core" "2.11.2"
     "@walletconnect/events" "^1.0.1"
     "@walletconnect/heartbeat" "1.2.1"
     "@walletconnect/jsonrpc-utils" "1.0.8"
     "@walletconnect/logger" "^2.0.1"
     "@walletconnect/time" "^1.0.2"
-    "@walletconnect/types" "2.11.0"
-    "@walletconnect/utils" "2.11.0"
+    "@walletconnect/types" "2.11.2"
+    "@walletconnect/utils" "2.11.2"
     events "^3.3.0"
 
 "@walletconnect/time@^1.0.2":
@@ -4544,10 +4573,10 @@
   dependencies:
     tslib "1.14.1"
 
-"@walletconnect/types@2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.11.0.tgz#474a009c56faa9ef4063b76ed84415c801dc9f1e"
-  integrity sha512-AB5b1lrEbCGHxqS2vqfCkIoODieH+ZAUp9rA1O2ftrhnqDJiJK983Df87JhYhECsQUBHHfALphA8ydER0q+9sw==
+"@walletconnect/types@2.11.2":
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@walletconnect/types/-/types-2.11.2.tgz#d0359dd4106fcaa1634241a00428d3ea08d0d3c7"
+  integrity sha512-p632MFB+lJbip2cvtXPBQslpUdiw1sDtQ5y855bOlAGquay+6fZ4h1DcDePeKQDQM3P77ax2a9aNPZxV6y/h1Q==
   dependencies:
     "@walletconnect/events" "^1.0.1"
     "@walletconnect/heartbeat" "1.2.1"
@@ -4556,10 +4585,10 @@
     "@walletconnect/logger" "^2.0.1"
     events "^3.3.0"
 
-"@walletconnect/utils@2.11.0":
-  version "2.11.0"
-  resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-2.11.0.tgz#31c95151c823022077883dda61800cdea71879b7"
-  integrity sha512-hxkHPlTlDQILHfIKXlmzgNJau/YcSBC3XHUSuZuKZbNEw3duFT6h6pm3HT/1+j1a22IG05WDsNBuTCRkwss+BQ==
+"@walletconnect/utils@2.11.2":
+  version "2.11.2"
+  resolved "https://registry.yarnpkg.com/@walletconnect/utils/-/utils-2.11.2.tgz#dee0f19adf5e38543612cbe9fa4de7ed28eb7e85"
+  integrity sha512-LyfdmrnZY6dWqlF4eDrx5jpUwsB2bEPjoqR5Z6rXPiHJKUOdJt7az+mNOn5KTSOlRpd1DmozrBrWr+G9fFLYVw==
   dependencies:
     "@stablelib/chacha20poly1305" "1.0.1"
     "@stablelib/hkdf" "1.0.1"
@@ -4569,7 +4598,7 @@
     "@walletconnect/relay-api" "^1.0.9"
     "@walletconnect/safe-json" "^1.0.2"
     "@walletconnect/time" "^1.0.2"
-    "@walletconnect/types" "2.11.0"
+    "@walletconnect/types" "2.11.2"
     "@walletconnect/window-getters" "^1.0.1"
     "@walletconnect/window-metadata" "^1.0.1"
     detect-browser "5.3.0"
@@ -10135,6 +10164,14 @@ isobject@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/isobject/-/isobject-4.0.0.tgz#3f1c9155e73b192022a80819bacd0343711697b0"
   integrity sha512-S/2fF5wH8SJA/kmwr6HYhK/RI/OkhD84k8ntalo0iJjZikgq1XFvR5M8NPT1x5F7fBwCG3qHfnzeP/Vh/ZxCUA==
+
+isomorphic-fetch@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/isomorphic-fetch/-/isomorphic-fetch-3.0.0.tgz#0267b005049046d2421207215d45d6a262b8b8b4"
+  integrity sha512-qvUtwJ3j6qwsF3jLxkZ72qCgjMysPzDfeV240JHiGZsANBYd+EEuu35v7dfrJ9Up0Ak07D7GGSkGhCHTqg/5wA==
+  dependencies:
+    node-fetch "^2.6.1"
+    whatwg-fetch "^3.4.1"
 
 isomorphic-timers-promises@^1.0.1:
   version "1.0.1"
@@ -15900,6 +15937,11 @@ whatwg-encoding@^2.0.0:
   integrity sha512-p41ogyeMUrw3jWclHWTQg1k05DSVXPLcVxRTYsXUk+ZooOCZLcoYgPZ/HL/D/N+uQPOtcp1me1WhBEaX02mhWg==
   dependencies:
     iconv-lite "0.6.3"
+
+whatwg-fetch@^3.4.1:
+  version "3.6.20"
+  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.6.20.tgz#580ce6d791facec91d37c72890995a0b48d31c70"
+  integrity sha512-EqhiFU6daOA8kpjOWTL0olhVOF3i7OrFzSYiGsEMB8GcXS+RrzauAERX65xMeNWVqxA6HXH2m69Z9LaKKdisfg==
 
 whatwg-mimetype@^3.0.0:
   version "3.0.0"

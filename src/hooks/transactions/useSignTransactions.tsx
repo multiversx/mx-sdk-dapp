@@ -6,6 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import uniq from 'lodash/uniq';
 import {
   ERROR_SIGNING,
@@ -80,18 +81,25 @@ export const useSignTransactions = () => {
 
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
+    const isCrossWindowProvider = provider instanceof CrossWindowProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
     isSigningRef.current = false;
 
-    if (!isExtensionProvider) {
+    if (!isExtensionProvider && !isCrossWindowProvider) {
       return;
     }
 
     clearTransactionStatusMessage();
-    ExtensionProvider.getInstance()?.cancelAction?.();
+
+    if (isExtensionProvider) {
+      ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+    if (isCrossWindowProvider) {
+      CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
   }
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
@@ -153,6 +161,7 @@ export const useSignTransactions = () => {
       callbackRoute,
       customTransactionInformation
     } = transactionsToSign;
+
     const { redirectAfterSign } = customTransactionInformation;
     const defaultCallbackUrl = getDefaultCallbackUrl();
     const redirectRoute = callbackRoute || defaultCallbackUrl;

@@ -43,6 +43,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     tokenRef.current = loginToken;
     dispatch(
       setTokenLogin({
+        ...tokenLogin,
         loginToken,
         ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })

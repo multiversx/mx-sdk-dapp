@@ -55,9 +55,9 @@ const AddressRowComponent = ({
       >
         <input
           type='radio'
-          id={`check_${index}`}
+          id={`check_${address}`}
           disabled={disabled}
-          data-testid={`check_${index}`}
+          data-testid={`check_${address}`}
           onChange={handleChange}
           role='button'
           checked={selectedAddress === address}
