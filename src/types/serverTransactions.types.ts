@@ -147,6 +147,7 @@ export enum HiddenTransactionOperationType {
 }
 
 export interface OperationType {
+  id?: string;
   action: TransactionOperationActionTypeEnum;
   type: VisibleTransactionOperationType | HiddenTransactionOperationType;
   esdtType?: NftEnumType | EsdtEnumType;
@@ -154,6 +155,7 @@ export interface OperationType {
   name?: string;
   identifier?: string;
   sender: string;
+  ticker?: string;
   receiver: string;
   value: string;
   decimals?: number;
@@ -187,6 +189,7 @@ export interface EventType {
   topics: string[];
   order: number;
   data?: string;
+  additionalData?: string[];
 }
 
 export interface ResultLogType {
@@ -212,6 +215,8 @@ export interface ResultType {
   senderAssets?: AssetType;
   receiverAssets?: AssetType;
   miniBlockHash?: string;
+  function?: string;
+  timestamp?: number;
 }
 
 export interface ReceiptType {
@@ -258,6 +263,7 @@ export interface ServerTransactionType {
   isNew?: boolean; // UI flag
   tokenValue?: string;
   tokenIdentifier?: string;
+  function?: string;
 }
 
 export enum TransferTypeEnum {
