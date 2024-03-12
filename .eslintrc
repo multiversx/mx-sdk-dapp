@@ -85,6 +85,7 @@
     "linebreak-style": ["error", "unix"],
     "quotes": ["error", "single"],
     "semi": ["error", "always"],
+    "prefer-object-spread": 2,
     "object-curly-newline": "off",
     "arrow-body-style": "off",
     "react/jsx-props-no-spreading": "off",

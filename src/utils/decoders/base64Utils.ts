@@ -12,8 +12,7 @@
  *
  * Solution:
  * - if any conversion fails (atob(), btoa() or Buffer.from()), it is definitely not an encoded string
- * - if atob() conversion is equal to Buffer.from() conversion
- * or the string is equal to btoa() conversion of atob(), it is a regular base64 string
+ * - if the string is equal
  *
  * @see The tests for this function are in src/utils/decoders/tests/base64Utils.test.ts
  * @param str
@@ -27,13 +26,12 @@ export function isStringBase64(str: string) {
     const bufferFromEncoded = Buffer.from(bufferFromDecoded).toString('base64');
 
     // If the result is equal to the initial string
-    const isEqualToInitialString =
-      str === btoaEncoded && str === bufferFromEncoded;
+    const isBtoaEqual = str === btoaEncoded || btoaEncoded.startsWith(str);
+    const isBufferFromBase64Equal =
+      str === bufferFromEncoded || bufferFromEncoded.startsWith(str);
+    const isEqualToInitialString = isBtoaEqual && isBufferFromBase64Equal;
 
-    // or the atob() conversion is equal to the Buffer.from('base64')
-    const isAtobEqualToBufferFrom = atobDecoded === bufferFromDecoded;
-
-    if (isEqualToInitialString || isAtobEqualToBufferFrom) {
+    if (isEqualToInitialString) {
       // it is a regular base64 string
       return true;
     }

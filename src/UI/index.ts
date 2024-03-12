@@ -1,4 +1,5 @@
 export * as DappCorePages from './pages';
+export * from './Balance';
 export * from './Denominate';
 export * from './FormatAmount';
 export * from './ExplorerLink';
@@ -23,6 +24,7 @@ export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
 export * from './webWallet/WebWalletLoginButton';
 export * from './webWallet/XaliasLoginButton';
+export * from './webWallet/CrossWindowLoginButton';
 export * from './TransactionsTable';
 export * from './ScamPhishingAlert';
 export * from './TimeAgo';

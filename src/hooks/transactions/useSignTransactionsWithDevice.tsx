@@ -37,7 +37,7 @@ export interface UseSignTransactionsWithDevicePropsType {
 
 export interface UseSignTransactionsWithDeviceReturnType {
   allTransactions: MultiSignTransactionType[];
-  onSignTransaction: () => void;
+  onSignTransaction: () => Promise<void>;
   onNext: () => void;
   onPrev: () => void;
   onAbort: () => void;
@@ -145,7 +145,9 @@ export function useSignTransactionsWithDevice(
     clearTransactionsToSignWithWarning(sessionId);
   }
 
-  async function handleSignTransaction(transaction: Nullable<Transaction>) {
+  async function handleSignTransaction(
+    transaction: Nullable<Transaction>
+  ): Promise<Nullable<Transaction | undefined>> {
     const connectedProvider =
       providerType !== LoginMethodsEnum.ledger
         ? provider

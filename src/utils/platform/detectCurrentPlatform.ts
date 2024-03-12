@@ -9,5 +9,6 @@ export const detectCurrentPlatform = () => {
   if (safeWindow.webkit) {
     return PlatformsEnum.ios;
   }
+
   return PlatformsEnum.web;
 };

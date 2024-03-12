@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { axiosInstance } from 'apiCalls/axiosInstance';
 import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getCleanApiAddress } from 'apiCalls/utils';
 import { AccountType } from 'types';
@@ -6,7 +6,7 @@ import { AccountType } from 'types';
 export const accountFetcher = (address: string | null) => {
   const apiAddress = getCleanApiAddress();
   const url = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
-  return axios.get<AccountType>(url);
+  return axiosInstance.get<AccountType>(url);
 };
 
 export async function getAccountFromApi(address?: string) {
