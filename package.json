@@ -57,6 +57,7 @@
     "@types/qs": "6.9.7",
     "@typescript-eslint/eslint-plugin": "5.0.0",
     "@typescript-eslint/parser": "5.14.0",
+    "axios": "1.6.5",
     "axios-mock-adapter": "1.21.2",
     "babel-loader": "8.3.0",
     "css-loader": "5.2.6",
@@ -114,6 +115,7 @@
   "peerDependencies": {
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
+    "axios": ">=1.6.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -154,7 +156,6 @@
     "@multiversx/sdk-web-wallet-cross-window-provider": "0.0.25",
     "@multiversx/sdk-web-wallet-provider": "3.2.1",
     "@reduxjs/toolkit": "1.8.2",
-    "axios": "1.6.5",
     "bignumber.js": "9.x",
     "linkify-react": "4.0.2",
     "linkifyjs": "4.0.2",
