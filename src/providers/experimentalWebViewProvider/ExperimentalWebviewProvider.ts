@@ -63,6 +63,11 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   };
 
   init = async () => {
+    this.sendPostMessage({
+      type: CrossWindowProviderRequestEnums.finalizeHandshakeRequest,
+      payload: undefined
+    });
+
     return true;
   };
 
@@ -151,7 +156,13 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return message;
   }
 
-  async waitingForResponse<T extends CrossWindowProviderResponseEnums>(
+  isInitialized = () => true;
+
+  isConnected = async () => true;
+
+  getAddress = notInitializedError('getAddress');
+
+  private async waitingForResponse<T extends CrossWindowProviderResponseEnums>(
     action: T
   ): Promise<{
     type: T;
@@ -165,7 +176,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     });
   }
 
-  sendPostMessage = async <T extends CrossWindowProviderRequestEnums>(
+  private sendPostMessage = async <T extends CrossWindowProviderRequestEnums>(
     message: PostMessageParamsType<T>
   ): Promise<PostMessageReturnType<T>> => {
     const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
@@ -186,8 +197,4 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     return await this.waitingForResponse(responseTypeMap[message.type]);
   };
-
-  isInitialized = () => true;
-  isConnected = async () => true;
-  getAddress = notInitializedError('getAddress');
 }

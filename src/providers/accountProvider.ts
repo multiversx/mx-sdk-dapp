@@ -28,6 +28,7 @@ export function setAccountProvider<TProvider extends ProvidersType>(
 
 export function setExternalProvider(provider: IDappProvider) {
   externalProvider = provider;
+  externalProvider.init?.();
 }
 
 export function setExternalProviderAsAccountProvider() {
