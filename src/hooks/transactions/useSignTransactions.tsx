@@ -209,22 +209,23 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(signedTransactions).map(
-        (tx) => parseTransactionAfterSigning(tx)
-      );
+      const { needs2FaSigning, guardTransactions } = checkNeedsGuardianSigning({
+        transactions: signedTransactions,
+        sessionId,
+        callbackRoute,
+        isGuarded: isGuarded && allowGuardian,
+        walletAddress
+      });
 
-      const { needs2FaSigning, sendTransactionsToGuardian } =
-        checkNeedsGuardianSigning({
-          transactions: signedTransactions,
-          sessionId,
-          callbackRoute,
-          isGuarded: isGuarded && allowGuardian,
-          walletAddress
-        });
+      let finalizedTransactions = signedTransactions;
 
       if (needs2FaSigning) {
-        return sendTransactionsToGuardian();
+        finalizedTransactions = await guardTransactions();
       }
+
+      const signedTransactionsArray = Object.values(finalizedTransactions).map(
+        (tx) => parseTransactionAfterSigning(tx)
+      );
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,
