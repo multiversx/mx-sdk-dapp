@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1077)] - 2024-03-14
 - [Fixed different address than account address in account info](https://github.com/multiversx/mx-sdk-dapp/pull/1076)
 - [Changed 2FA signing to use wallet cross-window provider](https://github.com/multiversx/mx-sdk-dapp/pull/1075)
 
