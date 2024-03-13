@@ -23,7 +23,8 @@ export const accountInfoSelector = createDeepEqualSelector(
   (state, account) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { accounts, ...info } = state;
-    return { ...info, account };
+
+    return { ...info, address: account.address, account };
   }
 );
 
