@@ -33,7 +33,8 @@ import {
   setWalletLogin,
   setChainID,
   setTokenLogin,
-  setIsWalletConnectV2Initialized
+  setIsWalletConnectV2Initialized,
+  setAddress
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -149,12 +150,16 @@ export function ProviderInitializer() {
               nonce: account.nonce.valueOf()
             })
           );
+        } else if (!isLoggedIn) {
+          // Clear the address and publicKey if account is not found
+          dispatch(setAddress(''));
         }
       } catch (e) {
         dispatch(setAccountLoadingError('Failed getting account'));
         console.error('Failed getting account ', e);
       }
     }
+
     dispatch(setIsAccountLoading(false));
   }
 
