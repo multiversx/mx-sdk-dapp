@@ -220,7 +220,11 @@ export const useSignTransactions = () => {
       let finalizedTransactions = signedTransactions;
 
       if (needs2FaSigning) {
-        finalizedTransactions = await guardTransactions();
+        try {
+          finalizedTransactions = await guardTransactions();
+        } catch {
+          return onCancel('Guarding transactions failed', sessionId);
+        }
       }
 
       const signedTransactionsArray = Object.values(finalizedTransactions).map(

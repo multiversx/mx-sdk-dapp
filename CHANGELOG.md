@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Added 2FA signing cancel action](https://github.com/multiversx/mx-sdk-dapp/pull/1077)
 
 ## [[v2.29.0-beta.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1073)] - 2024-03-14
 - [Fixed different address than account address in account info](https://github.com/multiversx/mx-sdk-dapp/pull/1076)
