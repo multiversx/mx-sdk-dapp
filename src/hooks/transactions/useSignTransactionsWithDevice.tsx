@@ -37,7 +37,7 @@ export interface UseSignTransactionsWithDevicePropsType {
 
 export interface UseSignTransactionsWithDeviceReturnType {
   allTransactions: MultiSignTransactionType[];
-  onSignTransaction: () => void;
+  onSignTransaction: () => Promise<void>;
   onNext: () => void;
   onPrev: () => void;
   onAbort: () => void;
@@ -96,7 +96,9 @@ export function useSignTransactionsWithDevice(
 
   const allowGuardian = !customTransactionInformation?.skipGuardian;
 
-  function handleTransactionsSignSuccess(newSignedTransactions: Transaction[]) {
+  async function handleTransactionsSignSuccess(
+    newSignedTransactions: Transaction[]
+  ) {
     const shouldMoveTransactionsToSignedState =
       getShouldMoveTransactionsToSignedState(newSignedTransactions);
 
@@ -104,19 +106,19 @@ export function useSignTransactionsWithDevice(
       return;
     }
 
-    const { needs2FaSigning, sendTransactionsToGuardian } =
-      checkNeedsGuardianSigning({
-        transactions: newSignedTransactions,
-        sessionId,
-        callbackRoute,
-        hasGuardianScreen,
-        isGuarded: isGuarded && allowGuardian,
-        walletAddress
-      });
+    const { needs2FaSigning, guardTransactions } = checkNeedsGuardianSigning({
+      transactions: newSignedTransactions,
+      sessionId,
+      callbackRoute,
+      hasGuardianScreen,
+      isGuarded: isGuarded && allowGuardian,
+      walletAddress
+    });
 
+    let finalizedTransactions = newSignedTransactions;
     if (needs2FaSigning) {
       setIsSignDisabled(true); // prevent user from pressing sign button again while page is redirecting
-      return sendTransactionsToGuardian();
+      finalizedTransactions = await guardTransactions();
     }
 
     if (sessionId) {
@@ -124,7 +126,7 @@ export function useSignTransactionsWithDevice(
         moveTransactionsToSignedState({
           sessionId: sessionId,
           status: TransactionBatchStatusesEnum.signed,
-          transactions: newSignedTransactions.map((tx) =>
+          transactions: finalizedTransactions.map((tx) =>
             parseTransactionAfterSigning(tx)
           )
         })
@@ -145,7 +147,9 @@ export function useSignTransactionsWithDevice(
     clearTransactionsToSignWithWarning(sessionId);
   }
 
-  async function handleSignTransaction(transaction: Nullable<Transaction>) {
+  async function handleSignTransaction(
+    transaction: Nullable<Transaction>
+  ): Promise<Nullable<Transaction | undefined>> {
     const connectedProvider =
       providerType !== LoginMethodsEnum.ledger
         ? provider

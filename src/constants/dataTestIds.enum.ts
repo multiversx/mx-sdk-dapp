@@ -1,5 +1,6 @@
 export enum DataTestIdsEnum {
   accessWalletBtn = 'accessWalletBtn',
+  accessCrossWindowWalletBtn = 'accessCrossWindowWalletBtn',
   addressTableContainer = 'addressTableContainer',
   closeButton = 'closeButton',
   confirmAmount = 'confirmAmount',

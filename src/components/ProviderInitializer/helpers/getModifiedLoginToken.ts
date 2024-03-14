@@ -4,14 +4,17 @@ import { nativeAuth } from 'services/nativeAuth/nativeAuth';
 
 export interface GetMultiSigLoginTokenType {
   loginToken?: string;
-  multisig?: string;
+  extraInfoData: {
+    multisig?: string;
+    impersonate?: string;
+  };
 }
 
-export const getMultiSigLoginToken = async ({
+export const getModifiedLoginToken = async ({
   loginToken,
-  multisig
+  extraInfoData
 }: GetMultiSigLoginTokenType) => {
-  if (loginToken == null || multisig == null) {
+  if (loginToken == null || Object.keys(extraInfoData).length === 0) {
     return null;
   }
 
@@ -29,7 +32,7 @@ export const getMultiSigLoginToken = async ({
   };
 
   const tokenLogin = await nativeAuth({
-    extraInfo: { ...rest, multisig },
+    extraInfo: { ...rest, ...extraInfoData },
     expirySeconds: data?.ttl,
     origin: data?.origin
   }).initialize({

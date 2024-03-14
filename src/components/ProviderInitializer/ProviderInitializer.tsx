@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getNetworkConfigFromApi } from 'apiCalls';
+import { getEnvironmentForChainId, getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -21,6 +21,7 @@ import {
   tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import {
+  chainIDSelector,
   networkSelector,
   walletAddressSelector
 } from 'reduxStore/selectors/networkConfigSelectors';
@@ -31,7 +32,9 @@ import {
   setLedgerAccount,
   setWalletLogin,
   setChainID,
-  setTokenLogin
+  setTokenLogin,
+  setIsWalletConnectV2Initialized,
+  setAddress
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -43,7 +46,12 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
-import { getExtensionProvider, getMultiSigLoginToken } from './helpers';
+import {
+  getOperaProvider,
+  getCrossWindowProvider,
+  getExtensionProvider,
+  processModifiedAccount
+} from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
@@ -58,6 +66,7 @@ export function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
+  const chainID = useSelector(chainIDSelector);
 
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
@@ -85,7 +94,7 @@ export function ProviderInitializer() {
 
   useEffect(() => {
     initializeProvider();
-  }, [loginMethod]);
+  }, [loginMethod, chainID]);
 
   useEffect(() => {
     fetchAccount();
@@ -141,12 +150,16 @@ export function ProviderInitializer() {
               nonce: account.nonce.valueOf()
             })
           );
+        } else if (!isLoggedIn) {
+          // Clear the address and publicKey if account is not found
+          dispatch(setAddress(''));
         }
       } catch (e) {
         dispatch(setAccountLoadingError('Failed getting account'));
         console.error('Failed getting account ', e);
       }
     }
+
     dispatch(setIsAccountLoading(false));
   }
 
@@ -162,12 +175,13 @@ export function ProviderInitializer() {
       const address = await getAddress();
       const {
         clearNavigationHistory,
-        remainingParams: { signature, multisig }
+        remainingParams: { signature, multisig, impersonate }
       } = parseNavigationParams([
         'signature',
         'loginToken',
         'address',
-        'multisig'
+        'multisig',
+        'impersonate'
       ]);
 
       if (!address) {
@@ -177,29 +191,24 @@ export function ProviderInitializer() {
         return clearNavigationHistory();
       }
 
-      const loginToken = await getMultiSigLoginToken({
+      const account = await processModifiedAccount({
         loginToken: tokenLogin?.loginToken,
-        multisig
+        extraInfoData: {
+          multisig,
+          impersonate
+        },
+        address,
+        signature,
+        loginService
       });
 
-      const accountAddress = loginToken != null ? multisig : address;
-
-      if (loginToken != null) {
-        loginService.setLoginToken(loginToken);
-      }
-
-      if (signature) {
-        loginService.setTokenLoginInfo({ signature, address });
-      }
-
-      const account = await getAccount(accountAddress);
       if (account) {
         initializedAccountRef.current = true;
         dispatch(setIsAccountLoading(true));
 
         dispatch(
           loginAction({
-            address: accountAddress,
+            address: account.address,
             loginMethod: LoginMethodsEnum.wallet
           })
         );
@@ -231,14 +240,39 @@ export function ProviderInitializer() {
 
   async function setOperaProvider() {
     const address = await getAddress();
-    const provider = await getExtensionProvider(address);
+    const provider = await getOperaProvider(address);
     if (provider) {
       setAccountProvider(provider);
     }
   }
 
+  async function setCrossWindowProvider() {
+    const address = await getAddress();
+    const provider = await getCrossWindowProvider({
+      address,
+      walletUrl: network.walletAddress
+    });
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
+  async function setWalletConnectV2Provider() {
+    try {
+      // Trigger loader until wallet connect has been initialized
+      dispatch(setIsWalletConnectV2Initialized(true));
+      await initWalletConnectV2LoginProvider(false);
+    } catch {
+      console.error('Could not initialize WalletConnect');
+    } finally {
+      dispatch(setIsWalletConnectV2Initialized(false));
+    }
+  }
+
   async function initializeProvider() {
-    if (loginMethod == null || initalizingLedger) {
+    const isValidEnvironment = getEnvironmentForChainId(chainID);
+
+    if (loginMethod == null || initalizingLedger || !isValidEnvironment) {
       return;
     }
 
@@ -251,7 +285,7 @@ export function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.walletconnectv2: {
-        initWalletConnectV2LoginProvider(false);
+        setWalletConnectV2Provider();
         break;
       }
 
@@ -262,6 +296,11 @@ export function ProviderInitializer() {
 
       case LoginMethodsEnum.opera: {
         setOperaProvider();
+        break;
+      }
+
+      case LoginMethodsEnum.crossWindow: {
+        setCrossWindowProvider();
         break;
       }
 

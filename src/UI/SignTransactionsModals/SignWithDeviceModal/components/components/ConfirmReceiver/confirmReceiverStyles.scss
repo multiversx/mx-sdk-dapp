@@ -1,41 +1,83 @@
+@import 'assets/sass/variables/variables';
+
 .receiver {
-  text-align: left;
   display: flex;
   flex-direction: column;
+  line-height: 1;
   gap: 8px;
-  position: relative;
-  padding-bottom: 24px;
-  width: 100%;
 
-  .valueWrapper {
-    font-size: 14px;
+  .receiverLabelWrapper {
+    display: flex;
+    gap: 8px;
+
+    .receiverLabel {
+      color: #a3a3a3;
+    }
+
+    .receiverLabelScam {
+      color: $danger;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      position: relative;
+      padding-left: 16px;
+
+      &:before {
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        width: 10px;
+        content: '';
+        position: absolute;
+        height: 1px;
+        background-color: #a3a3a3;
+      }
+
+      .receiverLabelScamIcon {
+        color: $danger;
+      }
+    }
   }
 
-  .label {
-    color: #a3a3a3;
-    font-size: 12px;
+  .receiverWrapper {
+    display: flex;
+    align-items: center;
     line-height: 1;
-    font-weight: 400;
-    display: block;
-  }
+    white-space: nowrap;
+    gap: 8px;
 
-  .icon {
-    height: 16px;
-    position: relative;
-    width: auto;
-    top: 1px;
-  }
+    .receiverData {
+      color: #737373;
+      display: flex;
+      gap: calc(8px / 4);
+      align-items: center;
 
-  .loadingDots {
-    font-size: 16px;
-    line-height: 1;
-    height: 16px;
+      .receiverDataIcon {
+        width: 10px;
+        height: auto;
+        margin-bottom: calc((8px / 4) * -1);
+      }
+    }
 
-    &.absolute {
-      left: 0;
-      right: 0;
-      bottom: 0;
-      position: absolute;
+    .receiverCopy {
+      color: #737373;
+      min-width: 1rem;
+      max-height: 1rem;
+    }
+
+    .receiverExternal {
+      margin: 0;
+      max-height: 1rem;
+
+      &:hover * {
+        color: #0ac2ae !important;
+      }
+
+      * {
+        transition: all 200ms ease;
+        color: #737373 !important;
+      }
     }
   }
 }

@@ -81,10 +81,7 @@ const ScResultsListComponent = ({
 
               {result.value != null && (
                 <ResultWrapper label='Value'>
-                  <FormatAmount
-                    value={result.value}
-                    showLastNonZeroDecimal={true}
-                  />
+                  <FormatAmount value={result.value} showLastNonZeroDecimal />
                 </ResultWrapper>
               )}
 
