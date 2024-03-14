@@ -68,7 +68,7 @@ export async function logout(
 
   const url = addOriginToLocationPath(callbackUrl);
   const location = getWindowLocation();
-  const callbackPathname = new URL(url).pathname;
+  const callbackPathname = new URL(decodeURIComponent(url)).pathname;
 
   // Prevent page redirect if the logout callbackURL is equal to the current URL
   // or if is wallet provider
