@@ -118,27 +118,33 @@ export function useSignTransactionsWithDevice(
     let finalizedTransactions = newSignedTransactions;
     if (needs2FaSigning) {
       setIsSignDisabled(true); // prevent user from pressing sign button again while page is redirecting
-      finalizedTransactions = await guardTransactions();
+      try {
+        finalizedTransactions = await guardTransactions();
+      } catch {
+        return handleTransactionSignError('Guarding transactions failed');
+      }
     }
 
-    if (sessionId) {
-      dispatch(
-        moveTransactionsToSignedState({
-          sessionId: sessionId,
-          status: TransactionBatchStatusesEnum.signed,
-          transactions: finalizedTransactions.map((tx) =>
-            parseTransactionAfterSigning(tx)
-          )
-        })
-      );
+    if (!sessionId) {
+      return;
+    }
 
-      if (
-        callbackRoute != null &&
-        customTransactionInformation?.redirectAfterSign &&
-        !locationIncludesCallbackRoute
-      ) {
-        safeRedirect({ url: callbackRoute });
-      }
+    dispatch(
+      moveTransactionsToSignedState({
+        sessionId: sessionId,
+        status: TransactionBatchStatusesEnum.signed,
+        transactions: finalizedTransactions.map((tx) =>
+          parseTransactionAfterSigning(tx)
+        )
+      })
+    );
+
+    if (
+      callbackRoute != null &&
+      customTransactionInformation?.redirectAfterSign &&
+      !locationIncludesCallbackRoute
+    ) {
+      safeRedirect({ url: callbackRoute });
     }
   }
 
