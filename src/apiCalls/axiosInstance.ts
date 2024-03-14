@@ -1,5 +1,8 @@
 import { buildAxiosFetch } from '@lifeomic/axios-fetch';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+
+// Needs to be used beacause an async call made after cross-window user interaction makes the dapp unresponsive
+
 const fetch = buildAxiosFetch(axios);
 
 const getFormattedAxiosResponse = async <T>(response: Response, config?: T) => {
