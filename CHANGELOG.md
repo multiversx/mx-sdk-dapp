@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1080)] - 2024-03-14
 - [Fix web wallet URL construction on logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1079)
 
 ## [[v2.29.0-beta.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1078)] - 2024-03-14
