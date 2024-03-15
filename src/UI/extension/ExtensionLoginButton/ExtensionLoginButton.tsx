@@ -48,9 +48,8 @@ const ExtensionLoginButtonComponent: (
     nativeAuth
   });
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
-  const isFirefox = isWindowAvailable()
-    ? navigator.userAgent.indexOf('Firefox') != -1
-    : false;
+  const isFirefox =
+    isWindowAvailable() && navigator.userAgent.indexOf('Firefox') != -1;
   const classes = {
     wrapper: classNames(
       globalStyles?.btn,
