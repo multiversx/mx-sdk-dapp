@@ -9,10 +9,10 @@ import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useExtensionLogin } from 'hooks/login/useExtensionLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { getIsExtensionAvailable } from '../helpers';
-import { isWindowAvailable } from '../../../utils';
 
 export interface ExtensionLoginButtonPropsType
   extends WithClassnameType,

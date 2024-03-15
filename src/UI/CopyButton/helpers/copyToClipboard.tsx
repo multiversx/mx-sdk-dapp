@@ -1,4 +1,4 @@
-import { isWindowAvailable } from '../../../utils';
+import { isWindowAvailable } from 'utils/isWindowAvailable';
 
 function fallbackCopyTextToClipboard(text: string) {
   let success = false;
