@@ -1,3 +1,5 @@
+import { isWindowAvailable } from '../../../utils';
+
 function fallbackCopyTextToClipboard(text: string) {
   let success = false;
 
@@ -21,6 +23,8 @@ function fallbackCopyTextToClipboard(text: string) {
 }
 
 export async function copyTextToClipboard(text: string) {
+  if (!isWindowAvailable()) return false;
+
   let success = false;
 
   if (!navigator.clipboard) {

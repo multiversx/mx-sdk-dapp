@@ -12,6 +12,7 @@ import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 import { getIsExtensionAvailable } from '../helpers';
+import { isWindowAvailable } from '../../../utils';
 
 export interface ExtensionLoginButtonPropsType
   extends WithClassnameType,
@@ -47,7 +48,9 @@ const ExtensionLoginButtonComponent: (
     nativeAuth
   });
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
-  const isFirefox = navigator.userAgent.indexOf('Firefox') != -1;
+  const isFirefox = isWindowAvailable()
+    ? navigator.userAgent.indexOf('Firefox') != -1
+    : false;
   const classes = {
     wrapper: classNames(
       globalStyles?.btn,
