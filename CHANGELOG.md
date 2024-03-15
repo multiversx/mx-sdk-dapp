@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+- [Prevent nextjs build issue](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
+
 ## [[v2.29.0-beta.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1080)] - 2024-03-14
 - [Fix web wallet URL construction on logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1079)
 
