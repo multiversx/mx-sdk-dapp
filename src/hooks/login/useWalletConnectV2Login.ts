@@ -15,6 +15,7 @@ import {
 } from 'reduxStore/selectors/networkConfigSelectors';
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
@@ -99,6 +100,10 @@ export const useWalletConnectV2Login = ({
   const providerRef = useRef<any>(provider);
   const isInitialisingRef = useRef<boolean>(false);
   const mounted = useRef(false);
+
+  const isValidProvider = getIsProviderEqualTo(
+    LoginMethodsEnum.walletconnectv2
+  );
 
   const logoutRoute = providerLogoutRoute ?? dappLogoutRoute ?? '/';
   const dappMethods: string[] = [
@@ -207,6 +212,10 @@ export const useWalletConnectV2Login = ({
   };
 
   const connectExisting = async (pairing: PairingTypes.Struct) => {
+    if (!isValidProvider) {
+      return;
+    }
+
     if (!walletConnectV2RelayAddress || !walletConnectV2ProjectId) {
       setError(WalletConnectV2Error.invalidConfig);
       return;
