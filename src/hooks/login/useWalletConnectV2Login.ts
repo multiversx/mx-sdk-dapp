@@ -101,7 +101,7 @@ export const useWalletConnectV2Login = ({
   const isInitialisingRef = useRef<boolean>(false);
   const mounted = useRef(false);
 
-  const isInvalidProvider = !getIsProviderEqualTo(
+  const isValidProvider = !getIsProviderEqualTo(
     LoginMethodsEnum.walletconnectv2
   );
 
@@ -212,7 +212,7 @@ export const useWalletConnectV2Login = ({
   };
 
   const connectExisting = async (pairing: PairingTypes.Struct) => {
-    if (isInvalidProvider) {
+    if (!isValidProvider) {
       return;
     }
 
@@ -343,7 +343,7 @@ export const useWalletConnectV2Login = ({
   }
 
   async function generateWcUri() {
-    if (!providerRef.current || isInvalidProvider) {
+    if (!providerRef.current || !isValidProvider) {
       return;
     }
 

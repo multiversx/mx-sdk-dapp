@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fixed wrong redirect to wallet on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
+- [Fixed wrong redirect to wallet on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1083)
 
 ## [[v2.29.0-beta.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1082)] - 2024-03-15
 - [Fixed nextjs build issue](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
