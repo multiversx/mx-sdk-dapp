@@ -101,7 +101,7 @@ export const useWalletConnectV2Login = ({
   const isInitialisingRef = useRef<boolean>(false);
   const mounted = useRef(false);
 
-  const isValidProvider = !getIsProviderEqualTo(
+  const isValidProvider = getIsProviderEqualTo(
     LoginMethodsEnum.walletconnectv2
   );
 
