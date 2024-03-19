@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed wrong redirect to wallet on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
+
 ## [[v2.29.0-beta.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1082)] - 2024-03-15
-- [Prevent nextjs build issue](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
+- [Fixed nextjs build issue](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
 
 ## [[v2.29.0-beta.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1080)] - 2024-03-14
-- [Fix web wallet URL construction on logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1079)
+- [Fixed web wallet URL construction on logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1079)
 
 ## [[v2.29.0-beta.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1078)] - 2024-03-14
 - [Added 2FA signing cancel action](https://github.com/multiversx/mx-sdk-dapp/pull/1077)
@@ -29,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.29.0-beta.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1071)] - 2024-03-12
 - [Added getOperationsDetails for retrieving visible operations](https://github.com/multiversx/mx-sdk-dapp/pull/1054)
-- [Fix experimental webview provider initialization](https://github.com/multiversx/mx-sdk-dapp/pull/1070)
+- [Fixed experimental webview provider initialization](https://github.com/multiversx/mx-sdk-dapp/pull/1070)
 
 ## [[v2.29.0-beta.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1069)] - 2024-03-11
 - [Fixed types and file names](https://github.com/multiversx/mx-sdk-dapp/pull/1068)
