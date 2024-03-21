@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.11]](https://github.com/multiversx/mx-sdk-dapp/pull/1089)] - 2024-03-21
+- [Add protobufjs as dependency](https://github.com/multiversx/mx-sdk-dapp/pull/1088)
+
 ## [[v2.29.0-beta.10]](https://github.com/multiversx/mx-sdk-dapp/pull/1087)] - 2024-03-21
 - [ExperimentalWebviewProvider: "Cancel response" handling for the signTransactions and signMessage actions](https://github.com/multiversx/mx-sdk-dapp/pull/1086)
 
