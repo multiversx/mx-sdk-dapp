@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [ExperimentalWebviewProvider: Cancel response handling for the signTransactions and signMessage actions](https://github.com/multiversx/mx-sdk-dapp/pull/1086)
+- [ExperimentalWebviewProvider: "Cancel response" handling for the signTransactions and signMessage actions](https://github.com/multiversx/mx-sdk-dapp/pull/1086)
 
 ## [[v2.29.0-beta.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1085)] - 2024-03-19
 - [Reverted change](https://github.com/multiversx/mx-sdk-dapp/pull/1085)
