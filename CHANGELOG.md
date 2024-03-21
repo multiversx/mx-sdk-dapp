@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.12]](https://github.com/multiversx/mx-sdk-dapp/pull/1091)] - 2024-03-21
+- [Upgrade sdk-core](https://github.com/multiversx/mx-sdk-dapp/pull/1090)
+
 ## [[v2.29.0-beta.11]](https://github.com/multiversx/mx-sdk-dapp/pull/1089)] - 2024-03-21
 - [Add protobufjs as dependency](https://github.com/multiversx/mx-sdk-dapp/pull/1088)
 
