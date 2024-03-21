@@ -146,7 +146,7 @@
   ],
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
-    "@multiversx/sdk-core": "13.0.0-beta.4",
+    "@multiversx/sdk-core": "13.0.0-beta.7",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
     "@multiversx/sdk-native-auth-client": "1.0.7",
