@@ -126,7 +126,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     }
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
-      console.error('Cancelled the transactions signing action');
+      console.warn('Cancelled the transactions signing action');
       return null;
     }
 
@@ -152,7 +152,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     }
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
-      console.error('Cancelled the message signing action');
+      console.warn('Cancelled the message signing action');
       return null;
     }
 
