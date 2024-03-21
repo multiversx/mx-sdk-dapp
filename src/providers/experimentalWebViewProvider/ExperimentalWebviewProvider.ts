@@ -1,4 +1,4 @@
-import { Transaction, SignableMessage } from '@multiversx/sdk-core';
+import { SignableMessage, Transaction } from '@multiversx/sdk-core';
 import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import {
   CrossWindowProviderRequestEnums,
@@ -125,6 +125,11 @@ export class ExperimentalWebviewProvider implements IDappProvider {
       return null;
     }
 
+    if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
+      console.error('Cancelled the transactions signing action');
+      return null;
+    }
+
     return signedTransactions.map((tx) => Transaction.fromPlainObject(tx));
   };
 
@@ -143,6 +148,11 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (error || !data) {
       console.error('Unable to sign message');
+      return null;
+    }
+
+    if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
+      console.error('Cancelled the message signing action');
       return null;
     }
 
