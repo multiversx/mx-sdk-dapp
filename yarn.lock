@@ -1941,10 +1941,10 @@
     keccak "3.0.2"
     protobufjs "7.2.4"
 
-"@multiversx/sdk-core@13.0.0-beta.7":
-  version "13.0.0-beta.7"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.0.0-beta.7.tgz#55836aea6a597ed3987a92f23b3f1b7ff8971710"
-  integrity sha512-mmgoB61FmGg1zKhOJ62ww777bLfvgVqGdyZ6vLMfmng26OS/ImZlMfDYcPaGWo4Nt8a9tMsRUEt35o6T8/ggnA==
+"@multiversx/sdk-core@13.0.0-beta.8":
+  version "13.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.0.0-beta.8.tgz#27fa46779b1e106d8749488004023fae888ddde2"
+  integrity sha512-QdPC7YhfyD2JDO2RgiLZDu77mCWP7YYovkxpwm1VnhMAMZx3JhYRV0qrPFXyAsXGG5ZIZ9sQ29EJyDho8Dg78Q==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     bech32 "1.1.4"
