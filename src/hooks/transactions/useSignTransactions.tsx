@@ -20,6 +20,7 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -52,7 +53,6 @@ import {
   checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
-import { ExperimentalWebviewProvider } from '../../providers/experimentalWebViewProvider';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
@@ -207,19 +207,10 @@ export const useSignTransactions = () => {
             : transactions
         )) ?? [];
 
-      console.log(
-        'useSignTransactions ------ signedTransactions',
-        signedTransactions
-      );
       isSigningRef.current = false;
 
       const shouldMoveTransactionsToSignedState =
         getShouldMoveTransactionsToSignedState(signedTransactions);
-
-      console.log(
-        'useSignTransactions ------ shouldMoveTransactionsToSignedState',
-        shouldMoveTransactionsToSignedState
-      );
 
       if (!shouldMoveTransactionsToSignedState) {
         return;
@@ -235,24 +226,10 @@ export const useSignTransactions = () => {
 
       let finalizedTransactions = signedTransactions;
 
-      console.log(
-        'useSignTransactions ------ finalizedTransactions',
-        finalizedTransactions
-      );
-
       if (needs2FaSigning) {
         try {
           finalizedTransactions = await guardTransactions();
-
-          console.log(
-            'useSignTransactions ------ guardTransactions try',
-            guardTransactions
-          );
         } catch {
-          console.log(
-            'useSignTransactions ------ guardTransactions catch',
-            guardTransactions
-          );
           return onCancel('Guarding transactions failed', sessionId);
         }
       }
@@ -261,18 +238,11 @@ export const useSignTransactions = () => {
         (tx) => parseTransactionAfterSigning(tx)
       );
 
-      console.log(
-        'useSignTransactions ------ signedTransactionsArray',
-        signedTransactionsArray
-      );
-
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,
         transactions: signedTransactionsArray,
         status: TransactionBatchStatusesEnum.signed
       };
-
-      console.log('useSignTransactions ------ payload', payload);
 
       // redirect is delegated to optionalRedirect in TransactionSender
       if (shouldRedirectAfterSign) {
@@ -281,8 +251,6 @@ export const useSignTransactions = () => {
 
       dispatch(moveTransactionsToSignedState(payload));
     } catch (error) {
-      console.log('useSignTransactions ------ catch');
-
       isSigningRef.current = false;
 
       const errorMessage =

@@ -114,13 +114,10 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   signTransactions = async (
     transactionsToSign: Transaction[]
   ): Promise<Transaction[] | null> => {
-    console.log('signTransactions - transactionsToSign', transactionsToSign);
     const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.signTransactionsRequest,
       payload: transactionsToSign.map((tx) => tx.toPlainObject())
     });
-
-    console.log('signTransactions----------------------');
 
     const { data: signedTransactions, error } = response.payload;
 
@@ -131,8 +128,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
       console.warn('Cancelled the transactions signing action');
-      removeAllTransactionsToSign();
-      // await this.cancelAction();
+      await this.cancelAction();
       return null;
     }
 
@@ -172,10 +168,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return message;
   }
 
-  cancelAction() {
+  async cancelAction() {
     removeAllTransactionsToSign();
-    // removeAllSignedTransactions();
-
     return this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.cancelAction,
       payload: undefined

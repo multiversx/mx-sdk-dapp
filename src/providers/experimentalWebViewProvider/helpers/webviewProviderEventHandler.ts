@@ -27,17 +27,11 @@ export const webviewProviderEventHandler =
       return;
     }
 
-    console.log('webviewProviderEventHandler - type: ', type);
-
     const isCurrentAction =
       action === type ||
       type === CrossWindowProviderResponseEnums.cancelResponse;
 
     if (!isCurrentAction) {
-      console.log(
-        'webviewProviderEventHandler - !isCurrentAction: ',
-        isCurrentAction
-      );
       return;
     }
 
