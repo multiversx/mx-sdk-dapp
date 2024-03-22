@@ -11,6 +11,7 @@ import {
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
+import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
 import { logout } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
@@ -113,10 +114,13 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   signTransactions = async (
     transactionsToSign: Transaction[]
   ): Promise<Transaction[] | null> => {
+    console.log('signTransactions - transactionsToSign', transactionsToSign);
     const response = await this.sendPostMessage({
       type: CrossWindowProviderRequestEnums.signTransactionsRequest,
       payload: transactionsToSign.map((tx) => tx.toPlainObject())
     });
+
+    console.log('signTransactions----------------------');
 
     const { data: signedTransactions, error } = response.payload;
 
@@ -127,6 +131,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
       console.warn('Cancelled the transactions signing action');
+      removeAllTransactionsToSign();
+      // await this.cancelAction();
       return null;
     }
 
@@ -164,6 +170,16 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     message.applySignature(Buffer.from(String(data.signature), 'hex'));
 
     return message;
+  }
+
+  cancelAction() {
+    removeAllTransactionsToSign();
+    // removeAllSignedTransactions();
+
+    return this.sendPostMessage({
+      type: CrossWindowProviderRequestEnums.cancelAction,
+      payload: undefined
+    });
   }
 
   isInitialized = () => true;

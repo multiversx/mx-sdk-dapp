@@ -52,6 +52,7 @@ import {
   checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
+import { ExperimentalWebviewProvider } from '../../providers/experimentalWebViewProvider';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
@@ -82,6 +83,8 @@ export const useSignTransactions = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isExperiementalWebviewProvider =
+      provider instanceof ExperimentalWebviewProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
@@ -99,6 +102,9 @@ export const useSignTransactions = () => {
     }
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
+    if (isExperiementalWebviewProvider) {
+      ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
   }
 
@@ -191,7 +197,7 @@ export const useSignTransactions = () => {
       const signedTransactions: Transaction[] =
         (await provider.signTransactions(
           isGuarded && allowGuardian
-            ? transactions.map((transaction) => {
+            ? transactions?.map((transaction) => {
                 transaction.setVersion(TransactionVersion.withTxOptions());
                 transaction.setOptions(
                   TransactionOptions.withOptions({ guarded: true })
@@ -200,10 +206,20 @@ export const useSignTransactions = () => {
               })
             : transactions
         )) ?? [];
+
+      console.log(
+        'useSignTransactions ------ signedTransactions',
+        signedTransactions
+      );
       isSigningRef.current = false;
 
       const shouldMoveTransactionsToSignedState =
         getShouldMoveTransactionsToSignedState(signedTransactions);
+
+      console.log(
+        'useSignTransactions ------ shouldMoveTransactionsToSignedState',
+        shouldMoveTransactionsToSignedState
+      );
 
       if (!shouldMoveTransactionsToSignedState) {
         return;
@@ -219,10 +235,24 @@ export const useSignTransactions = () => {
 
       let finalizedTransactions = signedTransactions;
 
+      console.log(
+        'useSignTransactions ------ finalizedTransactions',
+        finalizedTransactions
+      );
+
       if (needs2FaSigning) {
         try {
           finalizedTransactions = await guardTransactions();
+
+          console.log(
+            'useSignTransactions ------ guardTransactions try',
+            guardTransactions
+          );
         } catch {
+          console.log(
+            'useSignTransactions ------ guardTransactions catch',
+            guardTransactions
+          );
           return onCancel('Guarding transactions failed', sessionId);
         }
       }
@@ -231,11 +261,18 @@ export const useSignTransactions = () => {
         (tx) => parseTransactionAfterSigning(tx)
       );
 
+      console.log(
+        'useSignTransactions ------ signedTransactionsArray',
+        signedTransactionsArray
+      );
+
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,
         transactions: signedTransactionsArray,
         status: TransactionBatchStatusesEnum.signed
       };
+
+      console.log('useSignTransactions ------ payload', payload);
 
       // redirect is delegated to optionalRedirect in TransactionSender
       if (shouldRedirectAfterSign) {
@@ -244,6 +281,8 @@ export const useSignTransactions = () => {
 
       dispatch(moveTransactionsToSignedState(payload));
     } catch (error) {
+      console.log('useSignTransactions ------ catch');
+
       isSigningRef.current = false;
 
       const errorMessage =
