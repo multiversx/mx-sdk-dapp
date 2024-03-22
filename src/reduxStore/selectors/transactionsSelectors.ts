@@ -40,17 +40,13 @@ export const signTransactionsCancelMessageSelector = createDeepEqualSelector(
 
 const selectTxByStatus =
   (txStatusVerifier: typeof getIsTransactionPending) =>
-  (signedTransactions: SignedTransactionsType) => {
-    return Object.entries(signedTransactions).reduce(
-      (acc, [sessionId, txBody]) => {
-        if (txStatusVerifier(txBody.status)) {
-          acc[sessionId] = txBody;
-        }
-        return acc;
-      },
-      {} as SignedTransactionsType
-    );
-  };
+  (signedTransactions: SignedTransactionsType) =>
+    Object.entries(signedTransactions).reduce((acc, [sessionId, txBody]) => {
+      if (txStatusVerifier(txBody.status)) {
+        acc[sessionId] = txBody;
+      }
+      return acc;
+    }, {} as SignedTransactionsType);
 
 export const pendingSignedTransactionsSelector = createDeepEqualSelector(
   signedTransactionsSelector,
