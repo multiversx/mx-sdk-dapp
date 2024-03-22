@@ -12,6 +12,7 @@ export const successBatchTransactionsStates = [
 
 export const failBatchTransactionsStates = [
   TransactionBatchStatusesEnum.fail,
+  TransactionBatchStatusesEnum.cancelled,
   TransactionBatchStatusesEnum.timedOut
 ];
 
