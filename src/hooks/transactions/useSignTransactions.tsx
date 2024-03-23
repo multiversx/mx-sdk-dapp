@@ -20,6 +20,7 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -82,6 +83,8 @@ export const useSignTransactions = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isExperiementalWebviewProvider =
+      provider instanceof ExperimentalWebviewProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
@@ -99,6 +102,9 @@ export const useSignTransactions = () => {
     }
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
+    if (isExperiementalWebviewProvider) {
+      ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
   }
 
@@ -191,7 +197,7 @@ export const useSignTransactions = () => {
       const signedTransactions: Transaction[] =
         (await provider.signTransactions(
           isGuarded && allowGuardian
-            ? transactions.map((transaction) => {
+            ? transactions?.map((transaction) => {
                 transaction.setVersion(TransactionVersion.withTxOptions());
                 transaction.setOptions(
                   TransactionOptions.withOptions({ guarded: true })
@@ -200,6 +206,7 @@ export const useSignTransactions = () => {
               })
             : transactions
         )) ?? [];
+
       isSigningRef.current = false;
 
       const shouldMoveTransactionsToSignedState =

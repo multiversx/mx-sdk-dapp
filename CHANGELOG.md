@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [ExperimentalWebviewProvider: Fix cancel sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/1092)
+
 ## [[v2.29.0-beta.12]](https://github.com/multiversx/mx-sdk-dapp/pull/1091)] - 2024-03-21
 - [Upgrade sdk-core](https://github.com/multiversx/mx-sdk-dapp/pull/1090)
 
