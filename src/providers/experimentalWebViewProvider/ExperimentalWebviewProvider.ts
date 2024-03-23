@@ -11,6 +11,7 @@ import {
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
+import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
 import { logout } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
@@ -127,6 +128,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
       console.warn('Cancelled the transactions signing action');
+      removeAllTransactionsToSign();
       return null;
     }
 
@@ -164,6 +166,13 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     message.applySignature(Buffer.from(String(data.signature), 'hex'));
 
     return message;
+  }
+
+  async cancelAction() {
+    return this.sendPostMessage({
+      type: CrossWindowProviderRequestEnums.cancelAction,
+      payload: undefined
+    });
   }
 
   isInitialized = () => true;
