@@ -146,6 +146,7 @@
   ],
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
+    "@metamask/providers": "^16.0.0",
     "@multiversx/sdk-core": "13.0.0-beta.8",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",

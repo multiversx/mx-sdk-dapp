@@ -1,19 +1,33 @@
-import { IPlainTransactionObject } from '@multiversx/sdk-core/out';
-import { SignableMessage } from '@multiversx/sdk-core/out/signableMessage';
-import { Transaction } from '@multiversx/sdk-core/out/transaction';
+import { MetaMaskInpageProvider } from '@metamask/providers';
+import { SignableMessage, Transaction } from '@multiversx/sdk-core/out';
+import { Signature } from '@multiversx/sdk-core/out/signature';
+
+import { defaultSnapOrigin } from './config';
 import {
   ErrAccountNotConnected,
   ErrCannotSignSingleTransaction
 } from './errors';
-import { Operation } from './operation';
+import { connectSnap, getSnap } from './snap';
 
-interface IMetamaskAccount {
+export interface IMetamaskWalletAccount {
   address: string;
+  name?: string;
   signature?: string;
 }
 
+declare global {
+  interface Window {
+    ethereum: MetaMaskInpageProvider & {
+      setProvider?: (provider: MetaMaskInpageProvider) => void;
+      detected?: MetaMaskInpageProvider[];
+      providers?: MetaMaskInpageProvider[];
+    };
+    isMetamask: boolean;
+  }
+}
+
 export class MetamaskProvider {
-  public account: IMetamaskAccount = { address: '' };
+  public account: IMetamaskWalletAccount = { address: '' };
   private initialized = false;
   private static _instance: MetamaskProvider = new MetamaskProvider();
 
@@ -36,26 +50,73 @@ export class MetamaskProvider {
   }
 
   async init(): Promise<boolean> {
-    if (window && window.elrondWallet) {
-      this.initialized = true;
+    console.log(
+      window,
+      window.ethereum,
+      window.ethereum.isMetaMask,
+      this.initialized
+    );
+    if (
+      window &&
+      window.ethereum &&
+      window.ethereum.isMetaMask &&
+      !this.initialized
+    ) {
+      console.log('all good!');
+      try {
+        await connectSnap();
+        const installedSnap = await getSnap();
+        this.initialized = installedSnap !== undefined;
+      } catch (error) {
+        console.log(error);
+        this.initialized = false;
+      }
     }
     return this.initialized;
   }
 
-  async login(
-    options: {
-      callbackUrl?: string;
-      token?: string;
-    } = {}
-  ): Promise<string> {
+  async login({
+    token
+  }: {
+    callbackUrl?: string;
+    token?: string;
+  } = {}): Promise<string> {
     if (!this.initialized) {
       throw new Error(
-        'Extension provider is not initialised, call init() first'
+        'Metamask provider is not initialised, call init() first' + token
       );
     }
-    const { token } = options;
-    const data = token ? token : '';
-    await this.startBgrMsgChannel(Operation.Connect, data);
+    try {
+      const address = (await window.ethereum.request({
+        method: 'wallet_invokeSnap',
+        params: {
+          snapId: defaultSnapOrigin,
+          request: {
+            method: 'mvx_getAddress',
+            params: undefined
+          }
+        }
+      })) as string;
+
+      this.account.address = address;
+
+      if (token) {
+        const tokenSigned = (await window.ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: {
+            snapId: defaultSnapOrigin,
+            request: {
+              method: 'mvx_signAuthToken',
+              params: { token: token }
+            }
+          }
+        })) as string;
+
+        this.account.signature = tokenSigned;
+      }
+    } catch (error: any) {
+      throw error;
+    }
     return this.account.address;
   }
 
@@ -65,18 +126,10 @@ export class MetamaskProvider {
         'Metamask provider is not initialised, call init() first'
       );
     }
-    try {
-      await this.startBgrMsgChannel(Operation.Logout, this.account.address);
-      this.disconnect();
-    } catch (error) {
-      console.warn('Metamask origin url is already cleared!', error);
-    }
+
+    this.account = { address: '' };
 
     return true;
-  }
-
-  private disconnect() {
-    this.account = { address: '' };
   }
 
   async getAddress(): Promise<string> {
@@ -92,14 +145,11 @@ export class MetamaskProvider {
     return this.initialized;
   }
 
-  // TODO: In V3, this will not be an async function anymore.
-  async isConnected(): Promise<boolean> {
+  isConnected(): boolean {
     return Boolean(this.account.address);
   }
 
   async signTransaction(transaction: Transaction): Promise<Transaction> {
-    this.ensureConnected();
-
     const signedTransactions = await this.signTransactions([transaction]);
 
     if (signedTransactions.length != 1) {
@@ -109,88 +159,66 @@ export class MetamaskProvider {
     return signedTransactions[0];
   }
 
-  private ensureConnected() {
-    if (!this.account.address) {
-      throw new ErrAccountNotConnected();
-    }
-  }
-
   async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
-    this.ensureConnected();
-
-    const metamaskResponse = await this.startBgrMsgChannel(
-      Operation.SignTransactions,
-      {
-        from: this.account.address,
-        transactions: transactions.map((transaction) =>
-          transaction.toPlainObject()
-        )
-      }
-    );
-
+    console.log('sign transactions on metamask');
     try {
-      const transactionsResponse = metamaskResponse.map(
-        (transaction: IPlainTransactionObject) =>
-          Transaction.fromPlainObject(transaction)
+      const transactionsPlain = transactions.map((transaction) =>
+        transaction.toPlainObject()
+      );
+      console.log('plain tx: ', transactions);
+
+      const metamaskReponse = (await window.ethereum.request({
+        method: 'wallet_invokeSnap',
+        params: {
+          snapId: defaultSnapOrigin,
+          request: {
+            method: 'mvx_signTransactions',
+            params: { transactions: transactionsPlain }
+          }
+        }
+      })) as string[];
+      console.log('response: ', metamaskReponse);
+
+      const transactionsResponse = metamaskReponse.map((transaction: string) =>
+        Transaction.fromPlainObject(JSON.parse(transaction))
       );
 
       return transactionsResponse;
-    } catch (error: any) {
-      throw new Error(`Transaction canceled: ${error.message}.`);
+    } catch (error) {
+      throw error;
     }
   }
 
   async signMessage(message: SignableMessage): Promise<SignableMessage> {
-    this.ensureConnected();
+    try {
+      this.ensureConnected();
 
-    const data = {
-      account: this.account.address,
-      message: message.message.toString()
-    };
-    const metamaskResponse = await this.startBgrMsgChannel(
-      Operation.SignMessage,
-      data
-    );
-    const signatureHex = metamaskResponse.signature;
-    const signature = Buffer.from(signatureHex, 'hex');
+      const metamaskReponse = (await window.ethereum.request({
+        method: 'wallet_invokeSnap',
+        params: {
+          snapId: defaultSnapOrigin,
+          request: {
+            method: 'mvx_signMessage',
+            params: { message: message.message.toString('ascii') }
+          }
+        }
+      })) as string;
 
-    message.applySignature(signature);
-    return message;
+      message.applySignature(new Signature(metamaskReponse));
+
+      return message;
+    } catch (error) {
+      throw error;
+    }
   }
 
   cancelAction() {
-    return this.startBgrMsgChannel(Operation.CancelAction, {});
+    return false;
   }
 
-  private startBgrMsgChannel(
-    operation: string,
-    connectData: any
-  ): Promise<any> {
-    return new Promise((resolve) => {
-      window.postMessage(
-        {
-          target: 'erdw-inpage',
-          type: operation,
-          data: connectData
-        },
-        window.origin
-      );
-
-      const eventHandler = (event: any) => {
-        if (event.isTrusted && event.data.target === 'erdw-contentScript') {
-          if (event.data.type === 'connectResponse') {
-            if (event.data.data && Boolean(event.data.data.address)) {
-              this.account = event.data.data;
-            }
-            window.removeEventListener('message', eventHandler);
-            resolve(event.data.data);
-          } else {
-            window.removeEventListener('message', eventHandler);
-            resolve(event.data.data);
-          }
-        }
-      };
-      window.addEventListener('message', eventHandler, false);
-    });
+  private ensureConnected() {
+    if (!this.account.address) {
+      throw new ErrAccountNotConnected();
+    }
   }
 }
