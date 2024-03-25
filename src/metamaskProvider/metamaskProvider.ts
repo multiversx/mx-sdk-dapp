@@ -5,7 +5,8 @@ import { Signature } from '@multiversx/sdk-core/out/signature';
 import { defaultSnapOrigin } from './config';
 import {
   ErrAccountNotConnected,
-  ErrCannotSignSingleTransaction
+  ErrCannotSignSingleTransaction,
+  ErrTransactionCancelled
 } from './errors';
 import { connectSnap, getSnap } from './snap';
 
@@ -174,7 +175,7 @@ export class MetamaskProvider {
 
       return transactionsResponse;
     } catch (error) {
-      throw error;
+      throw new ErrTransactionCancelled();
     }
   }
 
