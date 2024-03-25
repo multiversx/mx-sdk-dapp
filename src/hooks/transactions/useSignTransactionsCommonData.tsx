@@ -7,6 +7,7 @@ import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 
+import { MetamaskProvider } from 'metamaskProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   signTransactionsCancelMessageSelector,
@@ -67,11 +68,12 @@ export const useSignTransactionsCommonData = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isMetamaskProvider = provider instanceof MetamaskProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
-    if (!isExtensionProvider && !isCrossWindowProvider) {
+    if (!isExtensionProvider && !isCrossWindowProvider && !isMetamaskProvider) {
       return;
     }
 
@@ -79,6 +81,10 @@ export const useSignTransactionsCommonData = () => {
 
     if (isExtensionProvider) {
       ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+
+    if (isMetamaskProvider) {
+      MetamaskProvider.getInstance()?.cancelAction?.();
     }
 
     if (isCrossWindowProvider) {

@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "module": "CommonJS",
+        "target": "es2015",
+        "outDir": "out",
+        "lib": [
+            "ES2015",
+            "DOM"
+        ],
+        "sourceMap": true,
+        "allowJs": true,
+        "strict": true,
+        "strictPropertyInitialization": true,
+        "strictNullChecks": true,
+        "skipLibCheck": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "noUnusedParameters": true,
+        "esModuleInterop": true,
+        "declaration": true
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "out",
+        "**/*.spec.ts"
+    ]
+}

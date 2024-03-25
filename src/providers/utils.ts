@@ -6,6 +6,7 @@ import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
+import { MetamaskProvider } from 'metamaskProvider';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -27,6 +28,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.ledger;
     case ExtensionProvider:
       return LoginMethodsEnum.extension;
+    case MetamaskProvider:
+      return LoginMethodsEnum.metamask;
     case OperaProvider:
       return LoginMethodsEnum.opera;
     case CrossWindowProvider:

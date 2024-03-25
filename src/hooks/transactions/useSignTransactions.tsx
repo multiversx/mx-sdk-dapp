@@ -20,6 +20,7 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { MetamaskProvider } from 'metamaskProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
@@ -83,6 +84,7 @@ export const useSignTransactions = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperiementalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
 
@@ -91,7 +93,7 @@ export const useSignTransactions = () => {
 
     isSigningRef.current = false;
 
-    if (!isExtensionProvider && !isCrossWindowProvider) {
+    if (!isExtensionProvider && !isCrossWindowProvider && !isMetamaskProvider) {
       return;
     }
 
@@ -99,6 +101,9 @@ export const useSignTransactions = () => {
 
     if (isExtensionProvider) {
       ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+    if (isMetamaskProvider) {
+      MetamaskProvider.getInstance()?.cancelAction?.();
     }
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
