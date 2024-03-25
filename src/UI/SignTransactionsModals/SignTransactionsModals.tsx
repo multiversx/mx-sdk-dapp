@@ -36,8 +36,8 @@ export const SignTransactionsModals = ({
     Ledger: CustomConfirmScreens?.Ledger ?? SignWithLedgerModal,
     WalletConnect:
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
-    Extension: CustomConfirmScreens?.Metamask ?? SignWithMetamaskModal,
-    Metamask: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
+    Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
+    Metamask: CustomConfirmScreens?.Metamask ?? SignWithMetamaskModal,
     Opera: CustomConfirmScreens?.Opera ?? SignWithOperaModal,
     CrossWindow:
       CustomConfirmScreens?.CrossWindow ?? SignWithCrossWindowWalletModal,

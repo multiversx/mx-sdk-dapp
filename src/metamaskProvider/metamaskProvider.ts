@@ -50,25 +50,17 @@ export class MetamaskProvider {
   }
 
   async init(): Promise<boolean> {
-    console.log(
-      window,
-      window.ethereum,
-      window.ethereum.isMetaMask,
-      this.initialized
-    );
     if (
       window &&
       window.ethereum &&
       window.ethereum.isMetaMask &&
       !this.initialized
     ) {
-      console.log('all good!');
       try {
         await connectSnap();
         const installedSnap = await getSnap();
         this.initialized = installedSnap !== undefined;
       } catch (error) {
-        console.log(error);
         this.initialized = false;
       }
     }
@@ -160,12 +152,10 @@ export class MetamaskProvider {
   }
 
   async signTransactions(transactions: Transaction[]): Promise<Transaction[]> {
-    console.log('sign transactions on metamask');
     try {
       const transactionsPlain = transactions.map((transaction) =>
         transaction.toPlainObject()
       );
-      console.log('plain tx: ', transactions);
 
       const metamaskReponse = (await window.ethereum.request({
         method: 'wallet_invokeSnap',
@@ -177,7 +167,6 @@ export class MetamaskProvider {
           }
         }
       })) as string[];
-      console.log('response: ', metamaskReponse);
 
       const transactionsResponse = metamaskReponse.map((transaction: string) =>
         Transaction.fromPlainObject(JSON.parse(transaction))
