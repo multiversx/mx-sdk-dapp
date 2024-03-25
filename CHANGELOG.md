@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.16]](https://github.com/multiversx/mx-sdk-dapp/pull/1099)] - 2024-03-25
+- [ExperimentalWebviewProvider: fix cancel actions](https://github.com/multiversx/mx-sdk-dapp/pull/1098)
+
 ## [[v2.29.0-beta.15]](https://github.com/multiversx/mx-sdk-dapp/pull/1097)] - 2024-03-25
 - [Fixed ledger cross-window login](https://github.com/multiversx/mx-sdk-dapp/pull/1096)
 
