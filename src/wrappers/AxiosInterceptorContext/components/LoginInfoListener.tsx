@@ -13,7 +13,7 @@ export const LoginInfoListener = ({ children = null }: PropsWithChildren) => {
   useEffect(() => {
     setAddress(address);
     setLoginInfo(loginInfo);
-  }, [loginInfo.tokenLogin?.loginToken, address]);
+  }, [loginInfo, address]);
 
   return <>{children}</>;
 };
