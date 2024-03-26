@@ -6,8 +6,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.29.0-beta.18]](https://github.com/multiversx/mx-sdk-dapp/pull/1103)] - 2024-03-26
+- [Changed `logout()` with an extendable `options` parameter](https://github.com/multiversx/mx-sdk-dapp/pull/1102)
+
 ## [[v2.29.0-beta.17]](https://github.com/multiversx/mx-sdk-dapp/pull/1101)] - 2024-03-26
-- [ExperimentalWebviewProvider: fix cancel actions](https://github.com/multiversx/mx-sdk-dapp/pull/1100)
+- [Added LogoutListener to CustomComponents configuration](https://github.com/multiversx/mx-sdk-dapp/pull/1100)
 
 ## [[v2.29.0-beta.16]](https://github.com/multiversx/mx-sdk-dapp/pull/1099)] - 2024-03-25
 - [ExperimentalWebviewProvider: fix cancel actions](https://github.com/multiversx/mx-sdk-dapp/pull/1098)

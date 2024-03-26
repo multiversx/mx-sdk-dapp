@@ -47,7 +47,10 @@ const CLEAR_SESSION_TIMEOUT_MS = 500;
 export async function logout(
   callbackUrl?: string,
   onRedirect?: (callbackUrl?: string) => void,
-  shouldAttemptReLogin = Boolean(getWebviewToken())
+  shouldAttemptReLogin = Boolean(getWebviewToken()),
+  options = {
+    shouldBroadcastLogoutAcrossTabs: true
+  }
 ) {
   let address = '';
   const provider = getAccountProvider();
@@ -59,11 +62,13 @@ export async function logout(
     return provider.relogin();
   }
 
-  try {
-    address = await getAddress();
-    broadcastLogoutAcrossTabs(address);
-  } catch (err) {
-    console.error('error fetching logout address', err);
+  if (options.shouldBroadcastLogoutAcrossTabs) {
+    try {
+      address = await getAddress();
+      broadcastLogoutAcrossTabs(address);
+    } catch (err) {
+      console.error('error fetching logout address', err);
+    }
   }
 
   const url = addOriginToLocationPath(callbackUrl);
