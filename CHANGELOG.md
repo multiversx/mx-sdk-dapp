@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.19]](https://github.com/multiversx/mx-sdk-dapp/pull/1105)] - 2024-03-26
+- [Fixed cross-window ledger re-login when device is locked](https://github.com/multiversx/mx-sdk-dapp/pull/1104)
+
+
 ## [[v2.29.0-beta.18]](https://github.com/multiversx/mx-sdk-dapp/pull/1103)] - 2024-03-26
 - [Changed `logout()` with an extendable `options` parameter](https://github.com/multiversx/mx-sdk-dapp/pull/1102)
 

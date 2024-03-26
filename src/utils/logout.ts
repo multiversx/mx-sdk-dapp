@@ -81,8 +81,17 @@ export async function logout(
     matchPath(location.pathname, callbackPathname) ||
     (isWalletProvider && isProviderInitialised)
   ) {
+    console.log('Prevent redirects');
     preventRedirects();
   }
+
+  console.log('Logout', {
+    address,
+    providerType,
+    callbackPathname,
+    isProviderInitialised
+  });
+  debugger;
 
   // We are already logged out, so we can redirect to the dapp
   if (!address && !isProviderInitialised) {
@@ -94,7 +103,12 @@ export async function logout(
 
   try {
     store.dispatch(logoutAction());
+
     if (isWalletProvider) {
+      if (!isProviderInitialised) {
+        return;
+      }
+
       // Allow redux store cleanup before redirect to web wallet
       return setTimeout(() => {
         provider.logout({ callbackUrl: url });
