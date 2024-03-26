@@ -117,7 +117,7 @@ describe('ExtensionLoginButton tests', () => {
     });
   });
 
-  it('should perform login with nativeAuth', async () => {
+  it('extension should perform login with nativeAuth', async () => {
     const methods = renderWithProvider({
       children: (
         <ExtensionLoginButton callbackRoute={CALLBACK_ROUTE} nativeAuth />
