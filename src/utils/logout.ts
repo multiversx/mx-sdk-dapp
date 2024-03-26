@@ -81,17 +81,8 @@ export async function logout(
     matchPath(location.pathname, callbackPathname) ||
     (isWalletProvider && isProviderInitialised)
   ) {
-    console.log('Prevent redirects');
     preventRedirects();
   }
-
-  console.log('Logout', {
-    address,
-    providerType,
-    callbackPathname,
-    isProviderInitialised
-  });
-  debugger;
 
   // We are already logged out, so we can redirect to the dapp
   if (!address && !isProviderInitialised) {
