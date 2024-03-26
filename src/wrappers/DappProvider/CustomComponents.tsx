@@ -14,6 +14,9 @@ export interface CustomComponentsType {
     component?: typeof TransactionsTracker;
     props?: TransactionsTrackerType;
   };
+  logoutListener?: {
+    component?: typeof LogoutListener;
+  };
 }
 
 export function CustomComponents({
@@ -23,16 +26,18 @@ export function CustomComponents({
 }) {
   const transactionSender = customComponents?.transactionSender;
   const transactionTracker = customComponents?.transactionTracker;
+  const logoutListener = customComponents?.logoutListener;
 
   const TxSender = transactionSender?.component ?? TransactionSender;
   const TxTracker = transactionTracker?.component ?? TransactionsTracker;
+  const LogOutListener = logoutListener?.component ?? LogoutListener;
 
   return (
     <>
       <TxSender {...transactionSender?.props} />
       <TxTracker {...transactionTracker?.props} />
 
-      <LogoutListener />
+      <LogOutListener />
     </>
   );
 }
