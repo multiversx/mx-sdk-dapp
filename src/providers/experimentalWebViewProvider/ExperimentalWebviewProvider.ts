@@ -129,6 +129,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
       console.warn('Cancelled the transactions signing action');
       removeAllTransactionsToSign();
+      this.cancelAction();
       return null;
     }
 
@@ -155,6 +156,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
       console.warn('Cancelled the message signing action');
+      this.cancelAction();
       return null;
     }
 
