@@ -191,7 +191,7 @@ export const useSignTransactions = () => {
     }
 
     const allowGuardian = !customTransactionInformation.skipGuardian;
-    const hasConsentPopup = !customTransactionInformation.hasConsentPopup;
+    const hasConsentPopup = customTransactionInformation.hasConsentPopup;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
 
     try {
