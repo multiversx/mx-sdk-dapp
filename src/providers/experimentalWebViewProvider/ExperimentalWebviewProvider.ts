@@ -1,5 +1,5 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
-import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
+import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums,

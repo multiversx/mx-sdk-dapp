@@ -1,7 +1,7 @@
 import React, { MouseEvent } from 'react';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
+import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import classNames from 'classnames';
 
 import { DataTestIdsEnum } from 'constants/index';

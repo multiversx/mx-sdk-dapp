@@ -6,6 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import uniq from 'lodash/uniq';
 import {
@@ -20,7 +21,6 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import { MetamaskProvider } from 'metamaskProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
@@ -199,6 +199,7 @@ export const useSignTransactions = () => {
 
     try {
       isSigningRef.current = true;
+      provider?.setShouldShowConsentPopup?.(true);
       const signedTransactions: Transaction[] =
         (await provider.signTransactions(
           isGuarded && allowGuardian

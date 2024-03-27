@@ -47,12 +47,12 @@ export const useCrossWindowLogin = ({
     }
 
     setIsLoading(true);
+    const isSuccessfullyInitialized: boolean =
+      await CrossWindowProvider.getInstance().init();
     const provider: CrossWindowProvider =
       CrossWindowProvider.getInstance().setWalletUrl(network.walletAddress);
 
     try {
-      const isSuccessfullyInitialized: boolean = await provider.init();
-
       if (!isSuccessfullyInitialized) {
         console.warn(
           'Something went wrong trying to redirect to wallet login..'
