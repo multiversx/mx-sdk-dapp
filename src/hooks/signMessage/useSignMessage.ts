@@ -52,7 +52,7 @@ export interface SignedMessageParamsType {
  * 2. Signing from dapp logged in with web wallet (redirect to web wallet)
  * 3. Signing from web wallet as hook after redirect and replying back with signature
  */
-export const useSignMessage = () => {
+export const useSignMessage = (options?: { hasConsentPopup?: boolean }) => {
   const dispatch = useDispatch();
   const [currentSessionId, setCurrentSessionId] = useState<string>('');
   const signedMessageInfo = useSelector(signedMessageInfoSliceSelector);
@@ -200,7 +200,8 @@ export const useSignMessage = () => {
     try {
       const signedMessage = await signMessageWithProvider({
         ...props,
-        callbackRoute
+        callbackRoute,
+        options
       });
 
       if (signedMessage?.signature) {

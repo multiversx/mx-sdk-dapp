@@ -1,6 +1,6 @@
 import { useState } from 'react';
-
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
+import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -25,12 +25,19 @@ export type UseCrossWindowLoginReturnType = [
   LoginHookGenericStateType
 ];
 
+const isSafari = /^((?!chrome|android).)*safari/i.test(
+  safeWindow?.navigator?.userAgent ?? ''
+);
+
 export const useCrossWindowLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
-  onLoginRedirect
-}: OnProviderLoginType): UseCrossWindowLoginReturnType => {
+  onLoginRedirect,
+  hasConsentPopup
+}: OnProviderLoginType & {
+  hasConsentPopup?: boolean;
+}): UseCrossWindowLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
@@ -83,6 +90,12 @@ export const useCrossWindowLogin = ({
         callbackUrl,
         ...(token && { token })
       };
+
+      const needsConsent = isSafari && hasNativeAuth;
+
+      if (needsConsent || hasConsentPopup) {
+        provider.setShouldShowConsentPopup(true);
+      }
 
       const { signature, address, multisig, impersonate } =
         await provider.login(providerLoginData);

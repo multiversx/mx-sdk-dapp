@@ -13,6 +13,7 @@ export interface CrossWindowLoginButtonPropsType
   buttonClassName?: string;
   loginButtonText?: string;
   disabled?: boolean;
+  hasConsentPopup?: boolean;
 }
 
 export const CrossWindowLoginButton: (
@@ -27,6 +28,7 @@ export const CrossWindowLoginButton: (
   loginButtonText = 'Window Wallet',
   onLoginRedirect,
   disabled,
+  hasConsentPopup,
   'data-testid': dataTestId = DataTestIdsEnum.accessCrossWindowWalletBtn
 }) => {
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
@@ -34,7 +36,8 @@ export const CrossWindowLoginButton: (
     callbackRoute,
     token,
     onLoginRedirect,
-    nativeAuth
+    nativeAuth,
+    hasConsentPopup
   });
 
   const handleLogin = () => {
