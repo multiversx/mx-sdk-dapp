@@ -1946,7 +1946,7 @@
     once "^1.4.0"
     readable-stream "^3.6.2"
 
-"@metamask/providers@16.0.0", "@metamask/providers@^16.0.0":
+"@metamask/providers@16.0.0":
   version "16.0.0"
   resolved "https://registry.yarnpkg.com/@metamask/providers/-/providers-16.0.0.tgz#5ba3bcbdc59b334958f1dcf6ed9b7f68de55eff1"
   integrity sha512-zqZpn7Tg+QuvhL9x1WYCdXjFclZrMR2LOU2a3kHVFms5pOfizzFApB492VFgHuv/5xKohSxDkhXpAZ/TNGmM4g==
