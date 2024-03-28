@@ -139,6 +139,7 @@ export interface SendTransactionsPropsType {
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
   sessionInformation?: any;
+  hasConsentPopup?: boolean;
 }
 
 export interface SendBatchTransactionsPropsType {
@@ -146,6 +147,10 @@ export interface SendBatchTransactionsPropsType {
   redirectAfterSign?: boolean;
   signWithoutSending?: boolean;
   skipGuardian?: boolean;
+  /**
+   * For Cross-Window provider in Safari browser, performing async calls before signing transactions needs a consent popup in order to open a new tab.
+   */
+  hasConsentPopup?: boolean;
   completedTransactionsDelay?: number;
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
@@ -228,6 +233,10 @@ export interface CustomTransactionInformation {
    * Keeps indexes of transactions that should be grouped together. If not provided, all transactions will be grouped together. Used only for batch transactions.
    */
   grouping?: number[][];
+  /**
+   * For Cross-Window provider in Safari browser, performing async calls before signing transactions needs a consent popup in order to open a new tab.
+   */
+  hasConsentPopup?: boolean;
 }
 
 export interface SendTransactionReturnType {
