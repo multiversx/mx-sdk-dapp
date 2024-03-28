@@ -17,7 +17,8 @@ export async function sendTransactions({
   completedTransactionsDelay,
   sessionInformation,
   skipGuardian,
-  minGasLimit
+  minGasLimit,
+  hasConsentPopup
 }: SendTransactionsPropsType): Promise<SendTransactionReturnType> {
   try {
     const transactionsPayload = Array.isArray(transactions)
@@ -39,7 +40,8 @@ export async function sendTransactions({
         completedTransactionsDelay,
         sessionInformation,
         skipGuardian,
-        signWithoutSending
+        signWithoutSending,
+        hasConsentPopup
       }
     });
   } catch (err) {

@@ -139,6 +139,7 @@ export interface SendTransactionsPropsType {
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   minGasLimit?: number;
   sessionInformation?: any;
+  hasConsentPopup?: boolean;
 }
 
 export interface SendBatchTransactionsPropsType {
