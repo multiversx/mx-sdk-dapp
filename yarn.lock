@@ -2072,10 +2072,10 @@
     buffer "6.0.3"
     platform "1.3.6"
 
-"@multiversx/sdk-metamask-provider@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-0.0.3.tgz#ca6c7ac28f3603c63e5d2ffb23887533503b9e2e"
-  integrity sha512-tBYfU+jQEIzgrOJSrMyPGhakM4/f9CCBKRgLnulsvOO35nu0fh/hbsWX4cPHOJrmcAMAfpVeDmt+xo2GCD90eg==
+"@multiversx/sdk-metamask-provider@0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-0.0.4.tgz#8abd0d52b3c98af40a00e6c8307295c398918b6a"
+  integrity sha512-4w4d4AZNFPuEfeshUlBZ9JfgV+k+Ct+9AC9C7pvH8ZXe0GGXCUhr4YympApWxRM1qm8P4P3ViyE1LOYmMCO/Yw==
   dependencies:
     "@metamask/providers" "16.0.0"
     "@multiversx/sdk-core" "12.18.0"
