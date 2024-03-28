@@ -2126,10 +2126,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.28-alpha.14":
-  version "0.0.28-alpha.14"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.28-alpha.14.tgz#d5d408390f520313e6aa45e9572001860666a725"
-  integrity sha512-qc+JWdqeDhs/AoRIcQRhAVRjjLNB8OnSJ9mVkxqAFt0mQimlMK7yk268FW495AAutUwVtXEvFKeiTLbY8zCyAg==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.0.29":
+  version "0.0.29"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.29.tgz#9d82545cb738d5d82972b06f77282e9f212e7334"
+  integrity sha512-xUEEnRGY6VqhW9SAfPnynAQXd6lsa1clUe6doQ0RjzF7r1w3n+PgSx7HNPb7DzRgUWd6sXToVLD2ZW2xQ+EoIQ==
   dependencies:
     "@multiversx/sdk-core" "12.18.0"
     "@types/jest" "^29.5.11"
@@ -7520,9 +7520,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.668:
-  version "1.4.717"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.717.tgz#99db370cae8cd090d5b01f8748e9ad369924d0f8"
-  integrity sha512-6Fmg8QkkumNOwuZ/5mIbMU9WI3H2fmn5ajcVya64I5Yr5CcNmO7vcLt0Y7c96DCiMO5/9G+4sI2r6eEvdg1F7A==
+  version "1.4.719"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.719.tgz#22a94ce7a5150511ba88e900836039e159efe22c"
+  integrity sha512-FbWy2Q2YgdFzkFUW/W5jBjE9dj+804+98E4Pup78JBPnbdb3pv6IneY2JCPKdeKLh3AOKHQeYf+KwLr7mxGh6Q==
 
 element-resize-detector@^1.2.2:
   version "1.2.4"

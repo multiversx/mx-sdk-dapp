@@ -6,8 +6,12 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+<<<<<<< HEAD
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
+=======
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider';
+>>>>>>> development
 import uniq from 'lodash/uniq';
 import {
   ERROR_SIGNING,
@@ -196,10 +200,20 @@ export const useSignTransactions = () => {
     }
 
     const allowGuardian = !customTransactionInformation.skipGuardian;
+    const hasConsentPopup = customTransactionInformation.hasConsentPopup;
+    const isCrossWindowProvider = provider instanceof CrossWindowProvider;
 
     try {
       isSigningRef.current = true;
+<<<<<<< HEAD
       provider?.setShouldShowConsentPopup?.(true);
+=======
+
+      if (isCrossWindowProvider && hasConsentPopup) {
+        (provider as CrossWindowProvider).setShouldShowConsentPopup(true);
+      }
+
+>>>>>>> development
       const signedTransactions: Transaction[] =
         (await provider.signTransactions(
           isGuarded && allowGuardian

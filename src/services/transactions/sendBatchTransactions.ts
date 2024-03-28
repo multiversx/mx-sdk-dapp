@@ -20,6 +20,7 @@ export async function sendBatchTransactions({
   completedTransactionsDelay,
   sessionInformation,
   skipGuardian,
+  hasConsentPopup,
   minGasLimit
 }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType> {
   try {
@@ -44,7 +45,8 @@ export async function sendBatchTransactions({
         completedTransactionsDelay,
         sessionInformation,
         skipGuardian,
-        signWithoutSending
+        signWithoutSending,
+        hasConsentPopup
       }
     });
 
