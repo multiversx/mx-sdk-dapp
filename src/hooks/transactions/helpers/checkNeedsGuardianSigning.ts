@@ -1,4 +1,5 @@
 import { Transaction } from '@multiversx/sdk-core';
+import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import { getEnvironmentForChainId } from 'apiCalls/configuration';
 import { getCrossWindowProvider } from 'components/ProviderInitializer/helpers';
 import {
@@ -64,6 +65,15 @@ export const checkNeedsGuardianSigning = ({
       address: transactions[0].getSender().toString(),
       walletUrl: walletProviderAddress
     });
+
+    const isSafari = /^((?!chrome|android).)*safari/i.test(
+      safeWindow?.navigator?.userAgent ?? ''
+    );
+
+    if (provider && isSafari) {
+      provider.setShouldShowConsentPopup(true);
+    }
+
     const transactionsSignedByGuardian = await provider?.guardTransactions(
       transactions
     );
