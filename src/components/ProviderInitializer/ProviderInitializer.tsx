@@ -50,7 +50,8 @@ import {
   getOperaProvider,
   getCrossWindowProvider,
   getExtensionProvider,
-  processModifiedAccount
+  processModifiedAccount,
+  getMetamaskProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -238,6 +239,14 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setMetamaskProvider() {
+    const address = await getAddress();
+    const provider = await getMetamaskProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
   async function setOperaProvider() {
     const address = await getAddress();
     const provider = await getOperaProvider(address);
@@ -291,6 +300,10 @@ export function ProviderInitializer() {
 
       case LoginMethodsEnum.extension: {
         setExtensionProvider();
+        break;
+      }
+      case LoginMethodsEnum.metamask: {
+        setMetamaskProvider();
         break;
       }
 

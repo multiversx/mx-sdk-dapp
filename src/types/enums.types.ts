@@ -38,6 +38,7 @@ export enum LoginMethodsEnum {
   wallet = 'wallet',
   crossWindow = 'crossWindow',
   extension = 'extension',
+  metamask = 'metamask',
   opera = 'opera',
   extra = 'extra',
   none = ''

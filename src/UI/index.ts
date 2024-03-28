@@ -28,3 +28,4 @@ export * from './webWallet/CrossWindowLoginButton';
 export * from './TransactionsTable';
 export * from './ScamPhishingAlert';
 export * from './TimeAgo';
+export * from './metamask/MetamaskLoginButton';

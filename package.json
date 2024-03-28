@@ -146,9 +146,11 @@
   ],
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
+    "@metamask/providers": "16.0.0",
     "@multiversx/sdk-core": "13.0.0-beta.9",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
+    "@multiversx/sdk-metamask-provider": "0.0.4",
     "@multiversx/sdk-native-auth-client": "1.0.7",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.2.0",
