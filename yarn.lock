@@ -2053,14 +2053,6 @@
     json-bigint "1.0.0"
     keccak "3.0.2"
 
-"@multiversx/sdk-dapp-ui@0.0.3":
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.0.3.tgz#b91459b7360882669f7d054748223ff8ba891ee7"
-  integrity sha512-zDPQpjlUuhIKDcD7HT+gIuiofSc78zRlLKEizCpmLt0aSVdcr9K1e3lU/4pSIV4zffDQUZ776NV6vDtAUGKyFA==
-  dependencies:
-    "@stencil/core" "^4.7.0"
-    bignumber.js "^9.1.2"
-
 "@multiversx/sdk-extension-provider@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-3.0.0.tgz#e0e178ee5555f9440457547759621f5c3152c5fa"
@@ -2080,10 +2072,10 @@
     buffer "6.0.3"
     platform "1.3.6"
 
-"@multiversx/sdk-metamask-provider@^0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-0.0.2.tgz#d480f304b74cb072ee2e086ed09a61fca73a56ed"
-  integrity sha512-Ex8MnLjTGt4hgOKOftll49B+MLqsWV4zEVOW1Me2PBBXEE32Vfao74hGUBV0EswoCZqb59Ebsrn4fFT/0XmcaA==
+"@multiversx/sdk-metamask-provider@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-0.0.3.tgz#ca6c7ac28f3603c63e5d2ffb23887533503b9e2e"
+  integrity sha512-tBYfU+jQEIzgrOJSrMyPGhakM4/f9CCBKRgLnulsvOO35nu0fh/hbsWX4cPHOJrmcAMAfpVeDmt+xo2GCD90eg==
   dependencies:
     "@metamask/providers" "16.0.0"
     "@multiversx/sdk-core" "12.18.0"
@@ -2134,13 +2126,12 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.28-alpha.3":
-  version "0.0.28-alpha.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.28-alpha.3.tgz#edeb430ff886f04af18b16954aa56f0b4605b786"
-  integrity sha512-Gh3bn0+43qWMoQB6/tibn+YQaJlXbDp8utPtGofpSldRWsMekSvF3xQme3oJ5RtzGNrw36Z91LwOX/WIIq7WPg==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.0.28-alpha.10":
+  version "0.0.28-alpha.10"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.28-alpha.10.tgz#f85a9682da99617622027e093a60071299dd18f9"
+  integrity sha512-53jeXKTO09cjAv3cZhoObKoUsMHI9iEhWz3i+fheTfkY61rOcDNxjAfn7UtBiMYHVmiqJVMuhwceJhuj67gc3w==
   dependencies:
     "@multiversx/sdk-core" "12.18.0"
-    "@multiversx/sdk-dapp-ui" "0.0.3"
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
     qs "6.11.2"
@@ -2713,11 +2704,6 @@
     "@stablelib/keyagreement" "^1.0.1"
     "@stablelib/random" "^1.0.2"
     "@stablelib/wipe" "^1.0.1"
-
-"@stencil/core@^4.7.0":
-  version "4.13.0"
-  resolved "https://registry.yarnpkg.com/@stencil/core/-/core-4.13.0.tgz#31654b9c601ce8b74194903fe28ed4bcb66b576e"
-  integrity sha512-gg+gtBWekQ08mDja8GVAUHNu+rrFhQaKZDvfhnS3l/5JbYiJddTimuDPPhuc0sR0JZL1iRdJTJSa+JbvmnQ1cQ==
 
 "@storybook/addon-actions@6.5.14":
   version "6.5.14"
@@ -5813,7 +5799,7 @@ bignumber.js@9.0.1:
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
   integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
 
-bignumber.js@9.x, bignumber.js@^9.0.0, bignumber.js@^9.1.2:
+bignumber.js@9.x, bignumber.js@^9.0.0:
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.1.2.tgz#b7c4242259c008903b13707983b5f4bbd31eda0c"
   integrity sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==
@@ -15271,9 +15257,9 @@ terser@^4.1.2, terser@^4.6.3:
     source-map-support "~0.5.12"
 
 terser@^5.26.0, terser@^5.3.4:
-  version "5.29.2"
-  resolved "https://registry.yarnpkg.com/terser/-/terser-5.29.2.tgz#c17d573ce1da1b30f21a877bffd5655dd86fdb35"
-  integrity sha512-ZiGkhUBIM+7LwkNjXYJq8svgkd+QK3UUr0wJqY4MieaezBSAIPgbSPZyIx0idM6XWK5CMzSWa8MJIzmRcB8Caw==
+  version "5.30.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.30.0.tgz#64cb2af71e16ea3d32153f84d990f9be0cdc22bf"
+  integrity sha512-Y/SblUl5kEyEFzhMAQdsxVHh+utAxd4IuRNJzKywY/4uzSogh3G219jqbDDxYu4MXO9CzY3tSEqmZvW6AoEDJw==
   dependencies:
     "@jridgewell/source-map" "^0.3.3"
     acorn "^8.8.2"
