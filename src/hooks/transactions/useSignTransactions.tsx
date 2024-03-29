@@ -6,7 +6,7 @@ import {
 } from '@multiversx/sdk-core';
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
-import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider';
 
 import uniq from 'lodash/uniq';

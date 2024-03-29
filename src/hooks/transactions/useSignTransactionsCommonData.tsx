@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Transaction } from '@multiversx/sdk-core/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
-import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';

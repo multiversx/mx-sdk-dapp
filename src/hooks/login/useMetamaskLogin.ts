@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
