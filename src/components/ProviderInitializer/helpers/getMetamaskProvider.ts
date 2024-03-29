@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
+=======
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
+>>>>>>> main
 
 export async function getMetamaskProvider(address: string) {
   try {
