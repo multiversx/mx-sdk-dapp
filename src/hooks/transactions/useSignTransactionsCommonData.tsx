@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Transaction } from '@multiversx/sdk-core/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
@@ -67,11 +68,12 @@ export const useSignTransactionsCommonData = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isMetamaskProvider = provider instanceof MetamaskProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
-    if (!isExtensionProvider && !isCrossWindowProvider) {
+    if (!isExtensionProvider && !isCrossWindowProvider && !isMetamaskProvider) {
       return;
     }
 
@@ -79,6 +81,10 @@ export const useSignTransactionsCommonData = () => {
 
     if (isExtensionProvider) {
       ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+
+    if (isMetamaskProvider) {
+      MetamaskProvider.getInstance()?.cancelAction?.();
     }
 
     if (isCrossWindowProvider) {

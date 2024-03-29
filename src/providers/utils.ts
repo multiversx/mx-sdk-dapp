@@ -2,6 +2,7 @@ import { SignableMessage, Transaction } from '@multiversx/sdk-core';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
@@ -27,6 +28,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.ledger;
     case ExtensionProvider:
       return LoginMethodsEnum.extension;
+    case MetamaskProvider:
+      return LoginMethodsEnum.metamask;
     case OperaProvider:
       return LoginMethodsEnum.opera;
     case CrossWindowProvider:

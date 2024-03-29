@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.20]](https://github.com/multiversx/mx-sdk-dapp/pull/1109)] - 2024-03-29
+- [Add metamask provider](https://github.com/multiversx/mx-sdk-dapp/pull/1108)
+
 ## [[v2.29.0-beta.20]](https://github.com/multiversx/mx-sdk-dapp/pull/1107)] - 2024-03-27
 - [Fixed Safari popup signing for CrossWindowProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1106)
 
