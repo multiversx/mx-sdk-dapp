@@ -1,5 +1,5 @@
 import { SignableMessage, Address } from '@multiversx/sdk-core';
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider';
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 import { getAccountProvider, getProviderType } from 'providers';
 import { LoginMethodsEnum } from 'types';
 import { getAddress } from 'utils/account/getAddress';
