@@ -1,4 +1,4 @@
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out';
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';

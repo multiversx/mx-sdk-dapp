@@ -6,9 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.29.0-beta.22]](https://github.com/multiversx/mx-sdk-dapp/pull/1112)] - 2024-04-01
+- [Added esbuild compilation options](https://github.com/multiversx/mx-sdk-dapp/pull/1111)
 
 ## [[v2.29.0-beta.20]](https://github.com/multiversx/mx-sdk-dapp/pull/1109)] - 2024-03-29
-- [Add metamask provider](https://github.com/multiversx/mx-sdk-dapp/pull/1108)
+- [Added metamask provider](https://github.com/multiversx/mx-sdk-dapp/pull/1108)
 
 ## [[v2.29.0-beta.20]](https://github.com/multiversx/mx-sdk-dapp/pull/1107)] - 2024-03-27
 - [Fixed Safari popup signing for CrossWindowProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1106)
