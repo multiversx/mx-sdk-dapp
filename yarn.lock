@@ -2041,18 +2041,6 @@
     keccak "3.0.2"
     protobufjs "7.2.4"
 
-"@multiversx/sdk-core@13.0.0-beta.9":
-  version "13.0.0-beta.9"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.0.0-beta.9.tgz#b8b00b48285e660924503396c8939dde63b398d8"
-  integrity sha512-NIUPZeVAxhgXvXiwkndR1cITaK0MIs5bmDyUNjxnAamVpuzXCTXZ1l5mHXpYwl5uuwCw5FmawhwX9K4aRat24w==
-  dependencies:
-    "@multiversx/sdk-transaction-decoder" "1.0.2"
-    bech32 "1.1.4"
-    blake2b "2.1.3"
-    buffer "6.0.3"
-    json-bigint "1.0.0"
-    keccak "3.0.2"
-
 "@multiversx/sdk-extension-provider@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-3.0.0.tgz#e0e178ee5555f9440457547759621f5c3152c5fa"
@@ -2126,12 +2114,11 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.31":
-  version "0.0.31"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.31.tgz#653a90f8f6f3b25fa05c2ab96ed3d34880b1f1f7"
-  integrity sha512-Bxyp9yxd6BWnl6uaJ/kd60T0tWT22X9PfWydhSX6fbkFN8RRGVcnG0QU6RPENp6oi1jqIjd8hOSS5UAvE5oXlA==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.0.32":
+  version "0.0.32"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.32.tgz#d9171911f60a3f2f4d8504db9d48c9247194fa3e"
+  integrity sha512-cZBm5bBZsNDCMOjz67v9CItvLG512E/7X+p/Xg8qEMVuD0tf6Z9MmrspktxfXHv9bTFBDpQbi22G7LmANLKNfA==
   dependencies:
-    "@multiversx/sdk-core" "13.0.0-beta.9"
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
     qs "6.11.2"
@@ -5799,7 +5786,7 @@ bignumber.js@9.0.1:
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.0.1.tgz#8d7ba124c882bfd8e43260c67475518d0689e4e5"
   integrity sha512-IdZR9mh6ahOBv/hYGiXyVuyCetmGJhtYkqLBpTStdhEGjegpPlUawydyaF3pbIOFynJTpllEs+NP+CS9jKFLjA==
 
-bignumber.js@9.x, bignumber.js@^9.0.0:
+bignumber.js@9.x:
   version "9.1.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-9.1.2.tgz#b7c4242259c008903b13707983b5f4bbd31eda0c"
   integrity sha512-2/mKyZH9K85bzOEfhXDBFZTGd1CTs+5IHpeFQo9luiBG7hghdC851Pj2WAhb6E3R6b9tZj/XKhbg4fum+Kepug==
@@ -11204,13 +11191,6 @@ jsesc@~0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==
-
-json-bigint@1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/json-bigint/-/json-bigint-1.0.0.tgz#ae547823ac0cad8398667f8cd9ef4730f5b01ff1"
-  integrity sha512-SiPv/8VpZuWbvLSMtTDU8hEfrZWg/mH/nV/b4o0CYbSxu1UIQPLdwKOCIyLQX+VIPO5vrLX3i8qtqFyhdPSUSQ==
-  dependencies:
-    bignumber.js "^9.0.0"
 
 json-buffer@3.0.1:
   version "3.0.1"
