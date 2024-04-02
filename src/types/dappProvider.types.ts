@@ -41,4 +41,5 @@ export interface IDappProvider {
   }): Promise<any>;
   ping?(): Promise<boolean>;
   relogin?: () => Promise<Nullable<string | void>>;
+  setShouldShowConsentPopup?: (shouldShow: boolean) => void;
 }

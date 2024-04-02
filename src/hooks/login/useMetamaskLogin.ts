@@ -1,49 +1,38 @@
 import { useState } from 'react';
-import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
-import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
+
+import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { setAccount } from 'reduxStore/slices';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
   OnProviderLoginType
 } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
-import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { addOriginToLocationPath } from 'utils/window';
+import { getDefaultCallbackUrl } from 'utils/window';
 import { useLoginService } from './useLoginService';
 
-export type UseCrossWindowLoginReturnType = [
+export type UseMetamaskLoginReturnType = [
   InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
 
-const isSafari = /^((?!chrome|android).)*safari/i.test(
-  safeWindow?.navigator?.userAgent ?? ''
-);
-
-export const useCrossWindowLogin = ({
+export const useMetamaskLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
-  onLoginRedirect,
-  hasConsentPopup
-}: OnProviderLoginType & {
-  hasConsentPopup?: boolean;
-}): UseCrossWindowLoginReturnType => {
+  onLoginRedirect
+}: OnProviderLoginType): UseMetamaskLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
-  const network = useSelector(networkSelector);
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
@@ -54,12 +43,11 @@ export const useCrossWindowLogin = ({
     }
 
     setIsLoading(true);
-    const isSuccessfullyInitialized: boolean =
-      await CrossWindowProvider.getInstance().init();
-    const provider: CrossWindowProvider =
-      CrossWindowProvider.getInstance().setWalletUrl(network.walletAddress);
+    const provider: MetamaskProvider = MetamaskProvider.getInstance();
 
     try {
+      const isSuccessfullyInitialized: boolean = await provider.init();
+
       if (!isSuccessfullyInitialized) {
         console.warn(
           'Something went wrong trying to redirect to wallet login..'
@@ -67,9 +55,9 @@ export const useCrossWindowLogin = ({
         return;
       }
 
-      const { origin, pathname } = getWindowLocation();
+      const defaultCallbackUrl = getDefaultCallbackUrl();
       const callbackUrl: string = encodeURIComponent(
-        `${origin}${callbackRoute ?? pathname}`
+        addOriginToLocationPath(callbackRoute ?? defaultCallbackUrl)
       );
 
       if (hasNativeAuth && !token) {
@@ -91,56 +79,37 @@ export const useCrossWindowLogin = ({
         ...(token && { token })
       };
 
-      const needsConsent = isSafari && hasNativeAuth;
-
-      if (needsConsent || hasConsentPopup) {
-        provider.setShouldShowConsentPopup(true);
-      }
-
-      const { signature, address, multisig, impersonate } =
-        await provider.login(providerLoginData);
+      await provider.login(providerLoginData);
 
       setAccountProvider(provider);
+
+      const { signature, address } = provider.account;
 
       if (!address) {
         setIsLoading(false);
         console.warn('Login cancelled.');
+        setError('Login cancelled');
         return;
       }
 
-      const account = await processModifiedAccount({
-        loginToken: token,
-        extraInfoData: { multisig, impersonate },
-        address,
-        signature,
-        loginService
-      });
-
-      if (!account) {
-        return;
+      if (signature && token) {
+        loginService.setTokenLoginInfo({
+          signature,
+          address
+        });
       }
 
       dispatch(
-        loginAction({
-          address: account.address,
-          loginMethod: LoginMethodsEnum.crossWindow
-        })
-      );
-
-      dispatch(
-        setAccount({
-          ...account,
-          nonce: getLatestNonce(account)
-        })
+        loginAction({ address, loginMethod: LoginMethodsEnum.metamask })
       );
 
       optionalRedirect({
         callbackRoute,
         onLoginRedirect,
-        options: { signature, address: account.address }
+        options: { signature, address }
       });
     } catch (error) {
-      console.error('error loging in', error);
+      console.error('error logging in', error);
       // TODO: can be any or typed error
       setError('error logging in' + (error as any).message);
     } finally {

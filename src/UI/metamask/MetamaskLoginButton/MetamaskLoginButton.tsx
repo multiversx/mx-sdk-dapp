@@ -1,44 +1,40 @@
 import React, { ReactNode } from 'react';
-import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
-import { useCrossWindowLogin } from 'hooks';
+import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { useMetamaskLogin } from 'hooks';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 
-export interface CrossWindowLoginButtonPropsType
+export interface MetamaskLoginButtonPropsType
   extends WithClassnameType,
     OnProviderLoginType {
   children?: ReactNode;
   buttonClassName?: string;
   loginButtonText?: string;
   disabled?: boolean;
-  hasConsentPopup?: boolean;
 }
 
-export const CrossWindowLoginButton: (
-  props: CrossWindowLoginButtonPropsType
+const MetamaskLoginButtonComponent: (
+  props: MetamaskLoginButtonPropsType & WithStylesImportType
 ) => JSX.Element = ({
   token,
-  className = 'dapp-window-wallet-login',
+  className = 'dapp-metamask-login',
   children,
   callbackRoute,
-  buttonClassName,
+  buttonClassName = 'dapp-default-login-button',
   nativeAuth,
-  loginButtonText = 'Window Wallet',
+  loginButtonText = 'Metamask',
   onLoginRedirect,
-  disabled,
-  hasConsentPopup,
-  'data-testid': dataTestId = DataTestIdsEnum.accessCrossWindowWalletBtn
+  disabled
 }) => {
-  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
-  const [onInitiateLogin] = useCrossWindowLogin({
+  const [onInitiateLogin] = useMetamaskLogin({
     callbackRoute,
     token,
     onLoginRedirect,
-    nativeAuth,
-    hasConsentPopup
+    nativeAuth
   });
+  const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
   const handleLogin = () => {
     onInitiateLogin();
@@ -51,9 +47,18 @@ export const CrossWindowLoginButton: (
       btnClassName={buttonClassName}
       text={loginButtonText}
       disabled={disabled || disabledConnectButton}
-      data-testid={dataTestId}
     >
       {children}
     </LoginButton>
   );
 };
+
+export const MetamaskLoginButton = withStyles(MetamaskLoginButtonComponent, {
+  ssrStyles: () =>
+    import(
+      'UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss'
+    ),
+  clientStyles: () =>
+    require('UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss')
+      .default
+});

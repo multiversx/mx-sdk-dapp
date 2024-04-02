@@ -31,7 +31,12 @@ const buildTypes = {
   }
 };
 
-module.exports = function esbuildWrapper(buildType = 'esm') {
+module.exports = function esbuildWrapper(
+  buildType = 'esm',
+  options = {
+    outDir: 'dist'
+  }
+) {
   const { format, splitting, tsconfig, destination, replacements } =
     buildTypes[buildType];
 
@@ -54,7 +59,7 @@ module.exports = function esbuildWrapper(buildType = 'esm') {
             entryPoints: files,
             splitting,
             format,
-            outdir: `dist${destination}`,
+            outdir: `${options.outDir}${destination}`,
             treeShaking: true,
             minify: true,
             bundle: true,

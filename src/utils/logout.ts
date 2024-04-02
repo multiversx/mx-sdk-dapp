@@ -1,3 +1,4 @@
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
@@ -49,7 +50,8 @@ export async function logout(
   onRedirect?: (callbackUrl?: string) => void,
   shouldAttemptReLogin = Boolean(getWebviewToken()),
   options = {
-    shouldBroadcastLogoutAcrossTabs: true
+    shouldBroadcastLogoutAcrossTabs: true,
+    hasConsentPopup: false
   }
 ) {
   let address = '';
@@ -94,11 +96,25 @@ export async function logout(
 
   try {
     store.dispatch(logoutAction());
+
     if (isWalletProvider) {
+      if (!isProviderInitialised) {
+        return;
+      }
+
       // Allow redux store cleanup before redirect to web wallet
       return setTimeout(() => {
         provider.logout({ callbackUrl: url });
       }, CLEAR_SESSION_TIMEOUT_MS);
+    }
+
+    if (
+      options.hasConsentPopup &&
+      providerType === LoginMethodsEnum.crossWindow
+    ) {
+      (provider as unknown as CrossWindowProvider).setShouldShowConsentPopup(
+        true
+      );
     }
 
     await provider.logout({ callbackUrl: url });

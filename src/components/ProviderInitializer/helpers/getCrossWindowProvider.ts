@@ -1,4 +1,4 @@
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider';
+import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 
 export async function getCrossWindowProvider({
   address,
@@ -8,11 +8,10 @@ export async function getCrossWindowProvider({
   walletUrl: string;
 }) {
   try {
+    const success = await CrossWindowProvider.getInstance().init();
     const provider = CrossWindowProvider.getInstance()
       .setAddress(address)
       .setWalletUrl(walletUrl);
-
-    const success = await provider.init();
 
     if (success) {
       return provider;
