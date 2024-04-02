@@ -159,7 +159,7 @@
     "@multiversx/sdk-web-wallet-cross-window-provider": "0.0.32",
     "@multiversx/sdk-web-wallet-provider": "3.2.1",
     "@multiversx/sdk-dapp-utils": "0.0.1",
-    "@multiversx/sdk-webview-provider": "0.0.3",
+    "@multiversx/sdk-webview-provider": "0.0.5",
     "@reduxjs/toolkit": "1.8.2",
     "bignumber.js": "9.x",
     "linkify-react": "4.0.2",

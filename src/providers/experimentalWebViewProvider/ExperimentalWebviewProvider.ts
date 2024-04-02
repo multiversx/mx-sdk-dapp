@@ -1,9 +1,6 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
 import { providerNotInitializedError } from '@multiversx/sdk-dapp-utils/out/helpers/providerNotInitializedError';
-import {
-  CrossWindowProviderRequestEnums,
-  CrossWindowProviderResponseEnums
-} from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
+import { CrossWindowProviderResponseEnums } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { webviewProviderEventHandler } from '@multiversx/sdk-webview-provider/out/webviewProviderEventHandler';
 import { logoutAction } from 'reduxStore/commonActions';
@@ -21,7 +18,7 @@ import { setExternalProviderAsAccountProvider } from '../accountProvider';
  * */
 export class ExperimentalWebviewProvider implements IDappProvider {
   private static instance: ExperimentalWebviewProvider;
-  private _provider = WebviewProvider.getInstance();
+  private readonly _provider: WebviewProvider;
 
   static getInstance() {
     if (!ExperimentalWebviewProvider.instance) {
@@ -31,6 +28,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   }
 
   constructor() {
+    this._provider = WebviewProvider.getInstance();
     this.resetState();
   }
 
@@ -48,15 +46,16 @@ export class ExperimentalWebviewProvider implements IDappProvider {
             store.dispatch(logoutAction());
 
             setTimeout(() => {
-              this._provider.sendPostMessage({
-                type: CrossWindowProviderRequestEnums.finalizeResetStateRequest,
-                payload: undefined
-              });
+              this._provider.finalizeResetState();
             }, 500);
           }
         }
       )
     );
+  };
+
+  init = async () => {
+    return await this._provider.init();
   };
 
   logout = async () => {
@@ -102,9 +101,17 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return await this._provider.signMessage(message);
   };
 
-  isConnected = this._provider.isConnected;
+  cancelAction = async () => {
+    return await this._provider.cancelAction();
+  };
 
-  isInitialized = this._provider.isInitialized;
+  isInitialized = () => {
+    return this._provider.isInitialized();
+  };
+
+  isConnected = async () => {
+    return await this._provider.isConnected();
+  };
 
   getAddress = providerNotInitializedError('getAddress');
 }

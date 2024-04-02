@@ -2148,10 +2148,10 @@
   dependencies:
     qs "6.10.3"
 
-"@multiversx/sdk-webview-provider@0.0.3":
-  version "0.0.3"
-  resolved "http://localhost:4873/@multiversx/sdk-webview-provider/-/sdk-webview-provider-0.0.3.tgz#294b7069ca75860f2e09e0a231f8611a291afc3f"
-  integrity sha512-uZuwwVLs/BMVnkCrP91r1a7THpVvXOGgEyqHkDJP8LD69ulOmYK2XlPbFGz6VfK3+dwgDXDjGvnD3uPjjssfvQ==
+"@multiversx/sdk-webview-provider@0.0.5":
+  version "0.0.5"
+  resolved "http://localhost:4873/@multiversx/sdk-webview-provider/-/sdk-webview-provider-0.0.5.tgz#28a43c11aabcc4066c34beb8d927ee8de0cbe27c"
+  integrity sha512-nQQFYEiJhID+Tx2Ic3EZjSpuzCFik/O8CryHhKVZpLAYI3iZI02PMf+jvZMhdjp7bSz4huS2eUPPXAz1Xzmaww==
 
 "@noble/curves@1.3.0", "@noble/curves@~1.3.0":
   version "1.3.0"
