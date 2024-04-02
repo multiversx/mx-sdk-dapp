@@ -3,11 +3,10 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
-import { ACCOUNTS_ENDPOINT } from 'apiCalls';
+import { useGetAccountFromApi, ACCOUNTS_ENDPOINT } from 'apiCalls';
 import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
-import { useGetAccountFromApi } from 'hooks';
 import { trimUsernameDomain } from 'hooks/account/helpers';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -36,8 +35,8 @@ const ConfirmReceiverComponent = ({
   const isAmountZero = new BigNumber(amount).isZero();
 
   const {
-    account: usernameAccount,
-    loading: usernameAccountLoading,
+    data: usernameAccount,
+    isLoading: usernameAccountLoading,
     error: usernameAccountError
   } = useGetAccountFromApi(skipFetchingAccount ? null : receiver);
 

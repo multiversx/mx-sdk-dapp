@@ -41,8 +41,6 @@ import {
   LoginMethodsEnum,
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
-
-import { getAccount } from 'utils/account/getAccount';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getDefaultCallbackUrl } from 'utils/window';
@@ -55,17 +53,17 @@ import {
   checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
+import { useGetAccountFromApi } from '../../apiCalls';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const { provider } = useGetAccountProvider();
+  const { isGuarded, address } = useGetAccount();
   const walletAddress = useSelector(walletAddressSelector);
-
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
   const setTransactionNonces = useSetTransactionNonces();
-  const { isGuarded, address } = useGetAccount();
 
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
@@ -79,6 +77,14 @@ export const useSignTransactions = () => {
     onAbort,
     clearTransactionStatusMessage
   } = useSignTransactionsCommonData();
+
+  const senderAddresses = uniq(
+    transactionsToSign?.transactions
+      .map((tx) => tx.getSender().toString())
+      .filter((sender) => sender)
+  ) as string[];
+
+  const { data: senderAccount } = useGetAccountFromApi(senderAddresses[0]);
 
   useParseSignedTransactions(onAbort);
 
@@ -297,19 +303,9 @@ export const useSignTransactions = () => {
       return;
     }
 
-    const senderAddresses = uniq(
-      transactions
-        .map((tx) => tx.getSender().toString())
-        .filter((sender) => sender)
-    ) as string[];
-
     if (senderAddresses.length > 1) {
       throw new Error('Multiple senders are not allowed');
     }
-
-    const senderAccount = senderAddresses.length
-      ? await getAccount(senderAddresses[0])
-      : null;
 
     const isValidSender = checkIsValidSender(senderAccount, address);
 
@@ -329,9 +325,8 @@ export const useSignTransactions = () => {
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const transactionsWithIncrementalNonces = await setTransactionNonces(
-        transactions
-      );
+      const transactionsWithIncrementalNonces =
+        setTransactionNonces(transactions);
 
       if (isSigningWithWebWallet) {
         return signWithWallet(

@@ -54,10 +54,12 @@ import {
   getMetamaskProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
+import { useGetAccount } from '../../hooks';
 
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
+  const account = useGetAccount();
   const network = useSelector(networkSelector);
   const walletAddress = useSelector(walletAddressSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
@@ -68,7 +70,6 @@ export function ProviderInitializer() {
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
   const chainID = useSelector(chainIDSelector);
-
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
   const loginService = useLoginService(
@@ -132,6 +133,7 @@ export function ProviderInitializer() {
 
   async function fetchAccount() {
     dispatch(setIsAccountLoading(true));
+
     if (initializedAccountRef.current) {
       // account was recently initialized, skip refetching
       initializedAccountRef.current = false;
@@ -139,7 +141,7 @@ export function ProviderInitializer() {
       return;
     }
 
-    if (address) {
+    if (address && address !== account.address) {
       try {
         const account = await getAccount(address);
 

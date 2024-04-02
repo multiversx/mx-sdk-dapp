@@ -15,21 +15,22 @@ export { SignStepType, SignStepInnerClassesType };
 
 const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
   const {
-    onSignTransaction,
-    handleClose,
-    onPrev,
-    GuardianScreen,
-    title,
-    waitingForDevice,
-    currentTransaction,
-    error,
     allTransactions,
-    isLastTransaction,
-    currentStep,
     className,
-    signStepInnerClasses,
+    currentStep,
+    currentTransaction,
+    GuardianScreen,
+    error,
     globalStyles,
-    styles
+    handleClose,
+    handleSubmit,
+    isLastTransaction,
+    onPrev,
+    onSignTransaction,
+    signStepInnerClasses,
+    styles,
+    title,
+    waitingForDevice
   } = props;
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
@@ -89,8 +90,13 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
 
   const onSubmit = async () => {
     await onSignTransaction();
+
     if (signLastTransaction && GuardianScreen) {
       return setShowGuardianScreen(true);
+    }
+
+    if (signLastTransaction && handleSubmit) {
+      handleSubmit();
     }
   };
 

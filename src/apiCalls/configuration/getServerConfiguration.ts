@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { CONFIG_ENDPOINT } from 'apiCalls/endpoints';
 import { NetworkType } from 'types';
+import { axiosInstance } from '../utils';
 
 export async function getServerConfiguration(apiAddress: string) {
   const configUrl = `${apiAddress}/${CONFIG_ENDPOINT}`;
