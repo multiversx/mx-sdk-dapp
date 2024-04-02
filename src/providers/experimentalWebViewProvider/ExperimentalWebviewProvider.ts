@@ -1,6 +1,6 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
+import { CrossWindowProviderResponseEnums } from '@multiversx/sdk-dapp-utils/out/enums/crossWindowProviderEnums';
 import { providerNotInitializedError } from '@multiversx/sdk-dapp-utils/out/helpers/providerNotInitializedError';
-import { CrossWindowProviderResponseEnums } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { webviewProviderEventHandler } from '@multiversx/sdk-webview-provider/out/webviewProviderEventHandler';
 import { logoutAction } from 'reduxStore/commonActions';
