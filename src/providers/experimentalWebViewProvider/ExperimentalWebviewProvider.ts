@@ -1,23 +1,18 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
-import { responseTypeMap } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
+import { providerNotInitializedError } from '@multiversx/sdk-dapp-utils/out/helpers/providerNotInitializedError';
 import {
   CrossWindowProviderRequestEnums,
-  CrossWindowProviderResponseEnums,
-  PostMessageParamsType,
-  PostMessageReturnType,
-  ReplyWithPostMessagePayloadType,
-  SignMessageStatusEnum
+  CrossWindowProviderResponseEnums
 } from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
+import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
+import { webviewProviderEventHandler } from '@multiversx/sdk-webview-provider/out/webviewProviderEventHandler';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
-import { logout } from 'utils/logout';
+import { logout as logoutFromDapp } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
-import { getTargetOrigin } from './helpers/getTargetOrigin';
-import { notInitializedError } from './helpers/notInitializedError';
-import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
 
 /**
  * This is an experimental provider that uses `postMessage` to communicate with the parent.
@@ -26,6 +21,7 @@ import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandl
  * */
 export class ExperimentalWebviewProvider implements IDappProvider {
   private static instance: ExperimentalWebviewProvider;
+  private _provider = WebviewProvider.getInstance();
 
   static getInstance() {
     if (!ExperimentalWebviewProvider.instance) {
@@ -52,7 +48,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
             store.dispatch(logoutAction());
 
             setTimeout(() => {
-              this.sendPostMessage({
+              this._provider.sendPostMessage({
                 type: CrossWindowProviderRequestEnums.finalizeResetStateRequest,
                 payload: undefined
               });
@@ -63,43 +59,14 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     );
   };
 
-  init = async () => {
-    this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.finalizeHandshakeRequest,
-      payload: undefined
-    });
-
-    return true;
-  };
-
-  login = async () => {
-    return true;
-  };
-
   logout = async () => {
-    const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.logoutRequest,
-      payload: undefined
-    });
-
-    await logout();
-
-    return Boolean(response.payload.data);
+    const response = await this._provider.logout();
+    await logoutFromDapp();
+    return response;
   };
 
   relogin = async () => {
-    const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.loginRequest,
-      payload: undefined
-    });
-
-    const { data, error } = response.payload;
-
-    if (error || !data) {
-      throw new Error('Unable to re-login');
-    }
-
-    const { accessToken } = data;
+    const accessToken = await this._provider.relogin();
 
     if (!accessToken) {
       console.error('Unable to re-login. Missing accessToken.');
@@ -114,108 +81,30 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   signTransactions = async (
     transactionsToSign: Transaction[]
   ): Promise<Transaction[] | null> => {
-    const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.signTransactionsRequest,
-      payload: transactionsToSign.map((tx) => tx.toPlainObject())
-    });
+    const response = await this._provider.signTransactions(transactionsToSign);
 
-    const { data: signedTransactions, error } = response.payload;
-
-    if (error || !signedTransactions) {
-      console.error('Unable to sign transactions');
-      return null;
-    }
-
-    if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
-      console.warn('Cancelled the transactions signing action');
+    if (!response) {
       removeAllTransactionsToSign();
-      this.cancelAction();
+      this._provider.cancelAction();
       return null;
     }
 
-    return signedTransactions.map((tx) => Transaction.fromPlainObject(tx));
+    return response;
   };
 
   signTransaction = async (transaction: Transaction) => {
-    const response = await this.signTransactions([transaction]);
-    return response?.[0];
+    return await this._provider.signTransaction(transaction);
   };
 
-  async signMessage(message: SignableMessage): Promise<SignableMessage | null> {
-    const response = await this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.signMessageRequest,
-      payload: { message: message.message.toString() }
-    });
-
-    const { data, error } = response.payload;
-
-    if (error || !data) {
-      console.error('Unable to sign message');
-      return null;
-    }
-
-    if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
-      console.warn('Cancelled the message signing action');
-      this.cancelAction();
-      return null;
-    }
-
-    if (data.status !== SignMessageStatusEnum.signed) {
-      console.error('Could not sign message');
-      return null;
-    }
-
-    message.applySignature(Buffer.from(String(data.signature), 'hex'));
-
-    return message;
-  }
-
-  async cancelAction() {
-    return this.sendPostMessage({
-      type: CrossWindowProviderRequestEnums.cancelAction,
-      payload: undefined
-    });
-  }
-
-  isInitialized = () => true;
-
-  isConnected = async () => true;
-
-  getAddress = notInitializedError('getAddress');
-
-  private async waitingForResponse<T extends CrossWindowProviderResponseEnums>(
-    action: T
-  ): Promise<{
-    type: T;
-    payload: ReplyWithPostMessagePayloadType<T>;
-  }> {
-    return await new Promise((resolve) => {
-      window.addEventListener(
-        'message',
-        webviewProviderEventHandler(action, resolve)
-      );
-    });
-  }
-
-  private sendPostMessage = async <T extends CrossWindowProviderRequestEnums>(
-    message: PostMessageParamsType<T>
-  ): Promise<PostMessageReturnType<T>> => {
-    const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
-
-    if (safeWindow.ReactNativeWebView) {
-      safeWindow.ReactNativeWebView.postMessage(
-        JSON.stringify(message),
-        getTargetOrigin()
-      );
-    } else if (safeWindow.webkit) {
-      safeWindow.webkit.messageHandlers.postMessage(
-        JSON.stringify(message),
-        getTargetOrigin()
-      );
-    } else if (safeWindow.parent) {
-      safeWindow.parent.postMessage(message, getTargetOrigin());
-    }
-
-    return await this.waitingForResponse(responseTypeMap[message.type]);
+  signMessage = async (
+    message: SignableMessage
+  ): Promise<SignableMessage | null> => {
+    return await this._provider.signMessage(message);
   };
+
+  isConnected = this._provider.isConnected;
+
+  isInitialized = this._provider.isInitialized;
+
+  getAddress = providerNotInitializedError('getAddress');
 }
