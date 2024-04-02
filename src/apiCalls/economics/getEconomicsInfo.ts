@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { ECONOMICS_ENDPOINT } from 'apiCalls/endpoints';
 import { getCleanApiAddress } from 'apiCalls/utils/getCleanApiAddress';
+import { axiosInstance } from '../utils/axiosInstance';
 
 export interface EconomicsInfoType {
   totalSupply: number;
@@ -14,7 +14,7 @@ export interface EconomicsInfoType {
 
 export function getEconomics(url = ECONOMICS_ENDPOINT) {
   const apiAddress = getCleanApiAddress();
-  return axios.get<EconomicsInfoType>(url, {
+  return axiosInstance.get<EconomicsInfoType>(url, {
     baseURL: apiAddress
   });
 }

@@ -1,4 +1,4 @@
-import { axiosInstance } from 'apiCalls/axiosInstance';
+import { axiosInstance } from 'apiCalls/utils/axiosInstance';
 import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';
 import { getCleanApiAddress } from 'apiCalls/utils';
 import { AccountType } from 'types';
@@ -20,5 +20,6 @@ export async function getAccountFromApi(address?: string) {
   } catch (err) {
     console.error('error fetching configuration for ', address);
   }
+
   return null;
 }

@@ -1,10 +1,10 @@
-import axios from 'axios';
 import useSwr from 'swr';
 
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
+import { axiosFetcher } from 'apiCalls/utils/axiosFetcher';
 
 export interface TokenAssets {
   description: string;
@@ -56,9 +56,6 @@ interface TokenInfoResponseDataType {
   isLoading?: boolean;
 }
 
-const fetcher = (url: string) =>
-  axios.get(url).then((response) => response.data);
-
 export function useGetTokenDetails({
   tokenId
 }: {
@@ -78,7 +75,7 @@ export function useGetTokenDetails({
     Boolean(tokenIdentifier)
       ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
-    fetcher
+    axiosFetcher
   );
 
   if (!tokenIdentifier) {

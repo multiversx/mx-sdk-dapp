@@ -91,7 +91,7 @@ async function customPatch<T = any, R = AxiosResponse<T, any>, D = any>(
   }
 }
 
-const axiosInstance = axios.create();
+const axiosInstance = axiosInstance.create();
 axiosInstance.get = customGet;
 axiosInstance.post = customPost;
 axiosInstance.patch = customPatch;

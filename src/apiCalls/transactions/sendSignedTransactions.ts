@@ -1,7 +1,7 @@
 import { Transaction } from '@multiversx/sdk-core';
-import axios from 'axios';
 import { networkSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
+import { axiosInstance } from '../utils';
 
 export type SendSignedTransactionsReturnType = string[];
 
@@ -10,7 +10,7 @@ export async function sendSignedTransactions(
 ): Promise<SendSignedTransactionsReturnType> {
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
   const promises = signedTransactions.map((transaction) => {
-    return axios.post(
+    return axiosInstance.post(
       `${apiAddress}/transactions`,
       transaction.toPlainObject(),
       { timeout: parseInt(apiTimeout) }

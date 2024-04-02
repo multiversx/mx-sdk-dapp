@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core';
-import { getScamAddressData } from 'apiCalls/getScamAddressData';
+import { getScamAddressData } from 'apiCalls/utils/getScamAddressData';
 
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
