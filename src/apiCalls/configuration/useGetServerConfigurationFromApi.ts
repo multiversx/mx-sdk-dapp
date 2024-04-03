@@ -17,23 +17,23 @@ export const useGetServerConfigurationFromApi = () => {
 
   const egldDenomination = 'egldDenomination';
 
-  if (egldDenomination in data) {
-    const {
-      [egldDenomination]: decimals,
-      decimals: digits,
-      ...rest
-    } = data as NetworkType & {
-      [egldDenomination]: string;
-    };
-
-    const networkConfig: NetworkType = {
-      ...rest,
-      decimals,
-      digits
-    };
-
-    return networkConfig;
+  if (!(egldDenomination in data)) {
+    return data;
   }
 
-  return data;
+  const {
+    [egldDenomination]: decimals,
+    decimals: digits,
+    ...rest
+  } = data as NetworkType & {
+    [egldDenomination]: string;
+  };
+
+  const networkConfig: NetworkType = {
+    ...rest,
+    decimals,
+    digits
+  };
+
+  return networkConfig;
 };
