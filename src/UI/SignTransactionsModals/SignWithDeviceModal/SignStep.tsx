@@ -11,6 +11,7 @@ import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
 } from './signWithDeviceModal.types';
+import { Loader } from '../../Loader';
 export { SignStepType, SignStepInnerClassesType };
 
 const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
@@ -25,6 +26,7 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     handleClose,
     handleSubmit,
     isLastTransaction,
+    isLoading,
     onPrev,
     onSignTransaction,
     signStepInnerClasses,
@@ -40,8 +42,8 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     Record<number, number | undefined>
   >({});
 
-  if (!currentTransaction) {
-    return null;
+  if (!currentTransaction || isLoading) {
+    return <Loader />;
   }
 
   const currentNonce = currentTransaction.transaction.getNonce().valueOf();
