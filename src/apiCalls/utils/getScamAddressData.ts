@@ -8,6 +8,7 @@ export async function getScamAddressData(addressToVerify: string) {
   const {
     network: { apiAddress, apiTimeout }
   } = networkConfigSelector(store.getState());
+
   const { data } = await axios.get<{
     scamInfo?: ScamInfoType;
     code?: string;

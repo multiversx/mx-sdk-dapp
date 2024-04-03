@@ -54,7 +54,7 @@ export interface UseSignMultipleTransactionsReturnType
   hasMultipleTransactions: boolean;
 }
 
-export function useSignMultipleTransactions({
+export const useSignMultipleTransactions = ({
   isLedger = false,
   transactionsToSign,
   egldLabel,
@@ -66,7 +66,7 @@ export function useSignMultipleTransactions({
   onTransactionsSignError,
   onTransactionsSignSuccess,
   onGetScamAddressData
-}: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType {
+}: UseSignMultipleTransactionsPropsType): UseSignMultipleTransactionsReturnType => {
   const isGuarded = Boolean(activeGuardianAddress);
   const [currentStep, setCurrentStep] = useState(0);
   const [signedTransactions, setSignedTransactions] =
@@ -95,11 +95,7 @@ export function useSignMultipleTransactions({
 
   const isLastTransaction = currentStep === allTransactions.length - 1;
 
-  useEffect(() => {
-    extractTransactionsInfo();
-  }, [currentStep, allTransactions]);
-
-  async function extractTransactionsInfo() {
+  const extractTransactionsInfo = async () => {
     const tx = allTransactions[currentStep];
 
     if (tx == null) {
@@ -116,6 +112,13 @@ export function useSignMultipleTransactions({
     const { tokenId } = transactionTokenInfo;
     const receiver = transaction.getReceiver().toString();
     const sender = transaction.getSender().toString();
+
+    if (!sender) {
+      console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+
+      return onCancel?.();
+    }
+
     const senderAccount = await getAccount(sender);
     const isValidSender = checkIsValidSender(senderAccount, address);
 
@@ -128,7 +131,7 @@ export function useSignMultipleTransactions({
     const notSender = address !== receiver;
     const verified = receiver in verifiedAddresses;
 
-    if (notSender && !verified && onGetScamAddressData != null) {
+    if (receiver && notSender && !verified && onGetScamAddressData != null) {
       const data = await onGetScamAddressData(receiver);
       verifiedAddresses = {
         ...verifiedAddresses,
@@ -148,7 +151,11 @@ export function useSignMultipleTransactions({
       dataField,
       transactionIndex
     });
-  }
+  };
+
+  useEffect(() => {
+    extractTransactionsInfo();
+  }, [currentStep, allTransactions]);
 
   function reset() {
     setCurrentStep(0);
@@ -156,7 +163,7 @@ export function useSignMultipleTransactions({
     setWaitingForDevice(false);
   }
 
-  async function sign() {
+  const sign = async () => {
     const existingSignedTransactions = Object.values(signedTransactions ?? {});
 
     const alreadySignedByGuardian = getAreAllTransactionsSignedByGuardian({
@@ -224,9 +231,9 @@ export function useSignMultipleTransactions({
 
     onTransactionsSignSuccess(allSignedTransactions);
     reset();
-  }
+  };
 
-  async function signTx() {
+  const signTx = async () => {
     try {
       if (currentTransaction == null) {
         return;
@@ -243,7 +250,7 @@ export function useSignMultipleTransactions({
       // the only way to check if tx has signature is with try catch
       await sign();
     }
-  }
+  };
 
   const isFirst = currentStep === 0;
 
@@ -263,13 +270,13 @@ export function useSignMultipleTransactions({
       )
   );
 
-  async function handleSignTransaction() {
+  const handleSignTransaction = async () => {
     if (shouldContinueWithoutSigning) {
       setCurrentStep((exising) => exising + 1);
       return;
     }
     await signTx();
-  }
+  };
 
   function onNext() {
     setCurrentStep((current) => {
@@ -307,4 +314,4 @@ export function useSignMultipleTransactions({
     setSignedTransactions,
     currentTransaction
   };
-}
+};
