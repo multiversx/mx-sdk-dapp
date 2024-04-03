@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added SWR API calls](https://github.com/multiversx/mx-sdk-dapp/pull/1116)
+## [[v2.29.0-beta.26]](https://github.com/multiversx/mx-sdk-dapp/pull/1121)] - 2024-04-03
+- [Added SWR API calls](https://github.com/multiversx/mx-sdk-dapp/pull/1120)
+
+## [[v2.29.0-beta.25]](https://github.com/multiversx/mx-sdk-dapp/pull/1119)] - 2024-04-03
+- [Fix transactions toast status in case of some failed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1118)
 
 ## [[v2.29.0-beta.24]](https://github.com/multiversx/mx-sdk-dapp/pull/1115)] - 2024-04-01
 - [Added sdk-core to peer dependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1114)

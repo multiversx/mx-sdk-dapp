@@ -171,7 +171,7 @@ export const transactionsSlice = createSlice({
 
         const areTransactionsFailed = state.signedTransactions[
           sessionId
-        ]?.transactions?.every((transaction) =>
+        ]?.transactions?.some((transaction) =>
           getIsTransactionFailed(transaction.status)
         );
 
