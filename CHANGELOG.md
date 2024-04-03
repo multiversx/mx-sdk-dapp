@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.29.0-beta.25]](https://github.com/multiversx/mx-sdk-dapp/pull/1119)] - 2024-04-03
+- [Fix transactions toast status in case of some failed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1118)
+
 ## [[v2.29.0-beta.24]](https://github.com/multiversx/mx-sdk-dapp/pull/1115)] - 2024-04-01
 - [Added sdk-core to peer dependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1114)
 
