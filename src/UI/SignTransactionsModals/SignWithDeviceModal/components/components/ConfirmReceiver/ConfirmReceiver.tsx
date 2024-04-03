@@ -3,11 +3,10 @@ import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
 
-import { ACCOUNTS_ENDPOINT } from 'apiCalls';
+import { useGetAccountFromApi, ACCOUNTS_ENDPOINT } from 'apiCalls';
 import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
-import { useGetAccountFromApi } from 'hooks';
 import { trimUsernameDomain } from 'hooks/account/helpers';
 import { CopyButton } from 'UI/CopyButton';
 import { ExplorerLink } from 'UI/ExplorerLink';
@@ -18,17 +17,19 @@ import { isContract } from 'utils';
 import { WithStylesImportType } from '../../../../../../hocs/useStyles';
 
 export interface ConfirmReceiverPropsType extends WithStylesImportType {
-  receiver: string;
-  scamReport: string | null;
-  receiverUsername?: string;
   amount: string;
+  label?: React.ReactNode;
+  receiver: string;
+  receiverUsername?: string;
+  scamReport: string | null;
 }
 
 const ConfirmReceiverComponent = ({
-  receiver,
-  scamReport,
-  receiverUsername,
   amount,
+  label,
+  receiver,
+  receiverUsername,
+  scamReport,
   styles
 }: ConfirmReceiverPropsType) => {
   const isSmartContract = isContract(receiver);
@@ -36,8 +37,8 @@ const ConfirmReceiverComponent = ({
   const isAmountZero = new BigNumber(amount).isZero();
 
   const {
-    account: usernameAccount,
-    loading: usernameAccountLoading,
+    data: usernameAccount,
+    isLoading: usernameAccountLoading,
     error: usernameAccountError
   } = useGetAccountFromApi(skipFetchingAccount ? null : receiver);
 
@@ -47,11 +48,13 @@ const ConfirmReceiverComponent = ({
     receiver && Boolean(foundReceiverUsername) && !usernameAccountError
   );
 
+  const defaultReceiverLabel = isAmountZero ? 'To interact with' : 'To';
+
   return (
     <div className={styles?.receiver}>
       <div className={styles?.receiverLabelWrapper}>
         <div className={styles?.receiverLabel}>
-          {isAmountZero ? 'To interact with' : 'To'}
+          {label ?? defaultReceiverLabel}
         </div>
 
         {scamReport && (

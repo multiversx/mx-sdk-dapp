@@ -1,15 +1,14 @@
 import axios from 'axios';
 import { apiAddressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
-import { ServerTransactionType } from 'types/serverTransactions.types';
 import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
 } from 'types/transactions.types';
 
-export async function getTransactionsByHashes(
+export const getTransactionsByHashes = async (
   pendingTransactions: PendingTransactionsType
-): Promise<GetTransactionsByHashesReturnType> {
+): Promise<GetTransactionsByHashesReturnType> => {
   const apiAddress = apiAddressSelector(store.getState());
   const hashes = pendingTransactions.map((tx) => tx.hash);
   const { data: responseData } = await axios.get(`${apiAddress}/transactions`, {
@@ -36,14 +35,12 @@ export async function getTransactionsByHashes(
       hasStatusChanged: txOnNetwork && txOnNetwork.status !== previousStatus
     };
   });
-}
+};
 
-export async function getTransactionByHashPromise(hash: string) {
+export const getTransactionByHashPromise = (hash: string) => {
   const apiAddress = apiAddressSelector(store.getState());
-  return await axios.get<ServerTransactionType>(
-    `${apiAddress}/transactions/${hash}`,
-    {
-      timeout: 10000 // 10sec
-    }
-  );
-}
+
+  return axios.get(`${apiAddress}/transactions/${hash}`, {
+    timeout: 10000 // 10sec
+  });
+};

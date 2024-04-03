@@ -27,7 +27,6 @@ export const useSignTransactionsCommonData = () => {
   const [error, setError] = useState<string | null>(null);
   const [hasTransactions, setHasTransactions] = useState<boolean>();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-
   const setTransactionNonces = useSetTransactionNonces();
   const transactionsToSign = useSelector(transactionsToSignSelector);
   const signTransactionsCancelMessage = useSelector(

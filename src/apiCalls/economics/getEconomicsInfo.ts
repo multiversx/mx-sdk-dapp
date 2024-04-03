@@ -14,9 +14,9 @@ export interface EconomicsInfoType {
 
 export function getEconomics(url = ECONOMICS_ENDPOINT) {
   const apiAddress = getCleanApiAddress();
-  return axios.get<EconomicsInfoType>(url, {
-    baseURL: apiAddress
-  });
+  const configUrl = `${apiAddress}/${url}`;
+
+  return axios.get<EconomicsInfoType>(configUrl);
 }
 
 export async function getEconomicsInfo() {

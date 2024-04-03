@@ -61,7 +61,6 @@ export const useSignTransactions = () => {
   const savedCallback = useRef('/');
   const { provider } = useGetAccountProvider();
   const walletAddress = useSelector(walletAddressSelector);
-
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
   const setTransactionNonces = useSetTransactionNonces();
@@ -307,16 +306,17 @@ export const useSignTransactions = () => {
       throw new Error('Multiple senders are not allowed');
     }
 
-    const senderAccount = senderAddresses.length
-      ? await getAccount(senderAddresses[0])
-      : null;
+    const sender = senderAddresses?.[0];
 
-    const isValidSender = checkIsValidSender(senderAccount, address);
+    if (sender && sender !== address) {
+      const senderAccount = sender ? await getAccount(sender) : null;
+      const isValidSender = checkIsValidSender(senderAccount, address);
 
-    if (!isValidSender) {
-      console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+      if (!isValidSender) {
+        console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
 
-      return onCancel(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+        return onCancel(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+      }
     }
 
     /*
