@@ -8,7 +8,7 @@ export const accountFetcher = (address: string | null) => {
   return axiosInstance.get(url);
 };
 
-export async function getAccountFromApi(address?: string) {
+export const getAccountFromApi = async (address?: string) => {
   if (!address) {
     return null;
   }
@@ -21,4 +21,4 @@ export async function getAccountFromApi(address?: string) {
   }
 
   return null;
-}
+};

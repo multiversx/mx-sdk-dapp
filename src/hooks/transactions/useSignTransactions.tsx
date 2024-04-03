@@ -41,12 +41,13 @@ import {
   LoginMethodsEnum,
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
+
+import { getAccount } from 'utils/account/getAccount';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getDefaultCallbackUrl } from 'utils/window';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
-import { useGetAccountFromApi } from '../../apiCalls';
 import {
   useSetTransactionNonces,
   getShouldMoveTransactionsToSignedState,
@@ -59,11 +60,11 @@ export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const { provider } = useGetAccountProvider();
-  const { isGuarded, address } = useGetAccount();
   const walletAddress = useSelector(walletAddressSelector);
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
   const setTransactionNonces = useSetTransactionNonces();
+  const { isGuarded, address } = useGetAccount();
 
   const signTransactionsCancelMessage = useSelector(
     signTransactionsCancelMessageSelector
@@ -78,13 +79,6 @@ export const useSignTransactions = () => {
     clearTransactionStatusMessage
   } = useSignTransactionsCommonData();
 
-  const senderAddresses = uniq(
-    transactionsToSign?.transactions
-      .map((tx) => tx.getSender().toString())
-      .filter((sender) => sender)
-  ) as string[];
-
-  const { data: senderAccount } = useGetAccountFromApi(senderAddresses[0]);
   useParseSignedTransactions(onAbort);
 
   function clearSignInfo(sessionId?: string) {
@@ -302,18 +296,27 @@ export const useSignTransactions = () => {
       return;
     }
 
-    console.log({ senderAddresses, senderAccount });
+    const senderAddresses = uniq(
+      transactions
+        .map((tx) => tx.getSender().toString())
+        .filter((sender) => sender)
+    ) as string[];
 
     if (senderAddresses.length > 1) {
       throw new Error('Multiple senders are not allowed');
     }
 
-    const isValidSender = checkIsValidSender(senderAccount, address);
+    const sender = senderAddresses?.[0];
 
-    if (!isValidSender) {
-      console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+    if (sender && sender !== address) {
+      const senderAccount = sender ? await getAccount(sender) : null;
+      const isValidSender = checkIsValidSender(senderAccount, address);
 
-      return onCancel(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+      if (!isValidSender) {
+        console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+
+        return onCancel(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
+      }
     }
 
     /*
