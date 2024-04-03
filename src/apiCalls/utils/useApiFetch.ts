@@ -5,5 +5,6 @@ import { axiosFetcher } from './axiosFetcher';
 export const useApiFetch = ({ apiEndpoint }: { apiEndpoint: string }) => {
   const apiAddress = getCleanApiAddress();
   const url = `${apiAddress}/${apiEndpoint}`;
+
   return useSWR(url, axiosFetcher);
 };

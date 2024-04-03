@@ -9,7 +9,7 @@ import {
   SignedTransactionType
 } from 'types';
 import { TRANSACTIONS_BATCH } from '../endpoints';
-import { axiosInstance } from '../utils';
+import axios from 'axios';
 
 export interface SendBatchTransactionsPropsType {
   transactions: SignedTransactionType[][];
@@ -49,7 +49,7 @@ export async function sendSignedBatchTransactions({
       id: batchId
     };
 
-    const response = await axiosInstance.post<BatchTransactionsResponseType>(
+    const response = await axios.post<BatchTransactionsResponseType>(
       `${apiAddress}/${TRANSACTIONS_BATCH}`,
       payload,
       {

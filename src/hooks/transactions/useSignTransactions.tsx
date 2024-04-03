@@ -85,7 +85,6 @@ export const useSignTransactions = () => {
   ) as string[];
 
   const { data: senderAccount } = useGetAccountFromApi(senderAddresses[0]);
-
   useParseSignedTransactions(onAbort);
 
   function clearSignInfo(sessionId?: string) {
@@ -302,6 +301,8 @@ export const useSignTransactions = () => {
       console.error(MISSING_PROVIDER_MESSAGE);
       return;
     }
+
+    console.log({ senderAddresses, senderAccount });
 
     if (senderAddresses.length > 1) {
       throw new Error('Multiple senders are not allowed');
