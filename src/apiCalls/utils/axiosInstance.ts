@@ -54,10 +54,6 @@ async function customGet<T = any, R = AxiosResponse<T, any>, D = any>(
   url: string,
   config?: AxiosRequestConfig<D> | undefined
 ): Promise<R> {
-  if (url.includes('localhost')) {
-    debugger;
-  }
-
   try {
     const response = await fetch(url, config as RequestInit);
     if (!response.ok) {

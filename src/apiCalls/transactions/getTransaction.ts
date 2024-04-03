@@ -1,6 +1,6 @@
+import axios from 'axios';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TRANSACTIONS_ENDPOINT } from '../endpoints';
-import { axiosInstance } from '../utils';
 import { getTimeout } from './helpers';
 
 export interface GetTransactionType {
@@ -14,7 +14,7 @@ export const getTransaction = ({
   apiAddress,
   apiTimeout
 }: GetTransactionType) => {
-  return axiosInstance.get<ServerTransactionType[]>(
+  return axios.get<ServerTransactionType[]>(
     `${apiAddress}/${TRANSACTIONS_ENDPOINT}/${hash}`,
     {
       ...getTimeout(apiTimeout)
