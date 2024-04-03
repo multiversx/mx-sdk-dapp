@@ -329,8 +329,9 @@ export const useSignTransactions = () => {
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const transactionsWithIncrementalNonces =
-        setTransactionNonces(transactions);
+      const transactionsWithIncrementalNonces = await setTransactionNonces(
+        transactions
+      );
 
       if (isSigningWithWebWallet) {
         return signWithWallet(

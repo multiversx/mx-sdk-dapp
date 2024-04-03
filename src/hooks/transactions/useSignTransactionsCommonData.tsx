@@ -38,7 +38,7 @@ export const useSignTransactionsCommonData = () => {
     const transactionsWithFixedNonce = transactionsToSign?.transactions ?? [];
 
     if (hasTransactionsToSign) {
-      const transactionsWithIncrementalNonces = setTransactionNonces(
+      const transactionsWithIncrementalNonces = await setTransactionNonces(
         transactionsWithFixedNonce
       );
 
