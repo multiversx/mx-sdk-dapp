@@ -17,17 +17,19 @@ import { isContract } from 'utils';
 import { WithStylesImportType } from '../../../../../../hocs/useStyles';
 
 export interface ConfirmReceiverPropsType extends WithStylesImportType {
-  receiver: string;
-  scamReport: string | null;
-  receiverUsername?: string;
   amount: string;
+  label?: React.ReactNode;
+  receiver: string;
+  receiverUsername?: string;
+  scamReport: string | null;
 }
 
 const ConfirmReceiverComponent = ({
-  receiver,
-  scamReport,
-  receiverUsername,
   amount,
+  label,
+  receiver,
+  receiverUsername,
+  scamReport,
   styles
 }: ConfirmReceiverPropsType) => {
   const isSmartContract = isContract(receiver);
@@ -46,11 +48,13 @@ const ConfirmReceiverComponent = ({
     receiver && Boolean(foundReceiverUsername) && !usernameAccountError
   );
 
+  const defaultReceiverLabel = isAmountZero ? 'To interact with' : 'To';
+
   return (
     <div className={styles?.receiver}>
       <div className={styles?.receiverLabelWrapper}>
         <div className={styles?.receiverLabel}>
-          {isAmountZero ? 'To interact with' : 'To'}
+          {label ?? defaultReceiverLabel}
         </div>
 
         {scamReport && (

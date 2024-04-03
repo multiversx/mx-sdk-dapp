@@ -18,22 +18,24 @@ const allOccurences = (sourceStr: string, searchStr: string) => {
 export interface TransactionDataPropsType extends WithClassnameType {
   data: string;
   highlight?: string;
-  isScCall?: boolean;
   innerTransactionDataClasses?: {
     transactionDataInputLabelClassName?: string;
     transactionDataInputValueClassName?: string;
   };
+  isScCall?: boolean;
+  label?: React.ReactNode;
   transactionIndex: number;
 }
 
 const TransactionDataComponent = ({
   className = 'dapp-transaction-data',
   data,
+  globalStyles,
   highlight,
   innerTransactionDataClasses,
   isScCall,
+  label,
   transactionIndex,
-  globalStyles,
   styles
 }: TransactionDataPropsType & WithStylesImportType) => {
   const {
@@ -161,7 +163,7 @@ const TransactionDataComponent = ({
             transactionDataInputLabelClassName
           )}
         >
-          Data
+          {label ?? 'Data'}
         </span>
 
         <div className={styles?.transactionDataValueWrapper}>
