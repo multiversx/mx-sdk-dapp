@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { Loader } from '../../Loader';
 import { SignStepBody, SignStepBodyPropsType } from './components';
 import { ProgressHeader } from './components/ProgressHeader';
 import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
@@ -11,7 +12,6 @@ import {
   SignStepPropsType as SignStepType,
   SignStepInnerClassesType
 } from './signWithDeviceModal.types';
-import { Loader } from '../../Loader';
 export { SignStepType, SignStepInnerClassesType };
 
 const SignStepComponent = (props: SignStepType & WithStylesImportType) => {

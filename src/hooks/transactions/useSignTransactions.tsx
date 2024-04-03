@@ -46,6 +46,7 @@ import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactio
 import { getDefaultCallbackUrl } from 'utils/window';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
+import { useGetAccountFromApi } from '../../apiCalls';
 import {
   useSetTransactionNonces,
   getShouldMoveTransactionsToSignedState,
@@ -53,7 +54,6 @@ import {
   checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
-import { useGetAccountFromApi } from '../../apiCalls';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();

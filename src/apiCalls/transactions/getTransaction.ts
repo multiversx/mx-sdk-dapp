@@ -1,7 +1,7 @@
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TRANSACTIONS_ENDPOINT } from '../endpoints';
-import { getTimeout } from './helpers';
 import { axiosInstance } from '../utils';
+import { getTimeout } from './helpers';
 
 export interface GetTransactionType {
   apiAddress: string;

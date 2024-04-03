@@ -1,10 +1,10 @@
 import useSwr from 'swr';
 
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
+import { axiosFetcher } from 'apiCalls/utils/axiosFetcher';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
-import { axiosFetcher } from 'apiCalls/utils/axiosFetcher';
 
 export interface TokenAssets {
   description: string;

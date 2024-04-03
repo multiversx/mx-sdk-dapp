@@ -45,6 +45,7 @@ import {
   emptyProvider
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
+import { useGetAccount } from '../../hooks';
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
 import {
   getOperaProvider,
@@ -54,7 +55,6 @@ import {
   getMetamaskProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
-import { useGetAccount } from '../../hooks';
 
 let initalizingLedger = false;
 

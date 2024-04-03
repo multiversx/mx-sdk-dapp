@@ -10,7 +10,7 @@ import { getDataPayloadForTransaction } from 'utils/transactions/getDataPayloadF
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 
 export function newTransaction(rawTransaction: RawTransactionType) {
-  const rawTx = Object.assign({}, rawTransaction);
+  const rawTx = { ...rawTransaction };
 
   // TODO: Remove when the protocol supports usernames for guardian transactions
   if (isGuardianTx({ data: rawTx.data, onlySetGuardian: true })) {

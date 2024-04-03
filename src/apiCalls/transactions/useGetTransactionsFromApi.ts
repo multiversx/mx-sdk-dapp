@@ -1,5 +1,5 @@
-import { useApiFetch } from '../utils';
 import { TRANSACTIONS_ENDPOINT } from '../endpoints';
+import { useApiFetch } from '../utils';
 
 export const useGetTransactionsFromApi = (hash: string) =>
   useApiFetch({
