@@ -4,8 +4,8 @@ import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccount, useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
-import { SignStep } from './SignStep';
 import { Loader } from '../../Loader';
+import { SignStep } from './SignStep';
 
 const SignWithDeviceModalComponent = ({
   handleClose,
