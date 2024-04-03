@@ -5,6 +5,7 @@ import { useGetAccount, useSignTransactionsWithDevice } from 'hooks';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { SignStep } from './SignStep';
+import { Loader } from '../../Loader';
 
 const SignWithDeviceModalComponent = ({
   handleClose,
@@ -59,26 +60,29 @@ const SignWithDeviceModalComponent = ({
       visible
     >
       <div className={classes.cardBody}>
-        <SignStep
-          address={address}
-          allTransactions={allTransactions}
-          callbackRoute={callbackRoute}
-          currentStep={currentStep}
-          currentTransaction={currentTransaction}
-          error={error}
-          GuardianScreen={GuardianScreen}
-          handleClose={onAbort}
-          handleSubmit={handleSubmit}
-          isLoading={isLoading}
-          isLastTransaction={isLastTransaction}
-          onPrev={onPrev}
-          onSignTransaction={onSignTransaction}
-          setSignedTransactions={setSignedTransactions}
-          signStepInnerClasses={signStepInnerClasses}
-          signedTransactions={signedTransactions}
-          title={title}
-          waitingForDevice={waitingForDevice}
-        />
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <SignStep
+            address={address}
+            allTransactions={allTransactions}
+            callbackRoute={callbackRoute}
+            currentStep={currentStep}
+            currentTransaction={currentTransaction}
+            error={error}
+            GuardianScreen={GuardianScreen}
+            handleClose={onAbort}
+            handleSubmit={handleSubmit}
+            isLastTransaction={isLastTransaction}
+            onPrev={onPrev}
+            onSignTransaction={onSignTransaction}
+            setSignedTransactions={setSignedTransactions}
+            signStepInnerClasses={signStepInnerClasses}
+            signedTransactions={signedTransactions}
+            title={title}
+            waitingForDevice={waitingForDevice}
+          />
+        )}
       </div>
     </ModalContainer>
   );

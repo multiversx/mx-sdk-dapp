@@ -32,6 +32,5 @@ export interface SignStepPropsType
   handleClose: () => void;
   handleSubmit?: () => void;
   isLastTransaction: boolean;
-  isLoading?: boolean;
   waitingForDevice: boolean;
 }

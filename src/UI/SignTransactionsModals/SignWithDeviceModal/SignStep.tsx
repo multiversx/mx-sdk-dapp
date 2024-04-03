@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { Loader } from '../../Loader';
 import { SignStepBody, SignStepBodyPropsType } from './components';
 import { ProgressHeader } from './components/ProgressHeader';
 import { ProgressHeaderPropsType } from './components/ProgressHeader/ProgressHeader.types';
@@ -26,7 +25,6 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     handleClose,
     handleSubmit,
     isLastTransaction,
-    isLoading,
     onPrev,
     onSignTransaction,
     signStepInnerClasses,
@@ -42,8 +40,8 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     Record<number, number | undefined>
   >({});
 
-  if (!currentTransaction || isLoading) {
-    return <Loader />;
+  if (!currentTransaction) {
+    return null;
   }
 
   const currentNonce = currentTransaction.transaction.getNonce().valueOf();
