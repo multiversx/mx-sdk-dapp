@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0-beta.28]](https://github.com/multiversx/mx-sdk-dapp/pull/1126)] - 2024-04-04
+- [ExperimentalWebviewProvider: fix cancel action on sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/1125)
+
 ## [[v2.29.0-beta.27]](https://github.com/multiversx/mx-sdk-dapp/pull/1124)] - 2024-04-04
 - [Changed signTransactions to prevent re-fetching of account during validation](https://github.com/multiversx/mx-sdk-dapp/pull/1123)
 
