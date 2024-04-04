@@ -10,6 +10,7 @@ import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamask
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 
 import uniq from 'lodash/uniq';
+import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -53,7 +54,6 @@ import {
   checkIsValidSender
 } from './helpers';
 import { useSignTransactionsCommonData } from './useSignTransactionsCommonData';
-import { useGetAccountFromApi } from '../../apiCalls';
 
 export const useSignTransactions = () => {
   const dispatch = useDispatch();

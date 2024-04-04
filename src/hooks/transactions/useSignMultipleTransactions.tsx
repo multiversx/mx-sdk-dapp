@@ -6,6 +6,7 @@ import {
   TransactionVersion
 } from '@multiversx/sdk-core';
 
+import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import { SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS } from 'constants/index';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import {
@@ -21,7 +22,6 @@ import {
   getAreAllTransactionsSignedByGuardian
 } from './helpers';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
-import { useGetAccountFromApi } from '../../apiCalls';
 
 export interface UseSignMultipleTransactionsPropsType {
   egldLabel: string;
