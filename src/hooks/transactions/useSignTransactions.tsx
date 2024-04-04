@@ -10,6 +10,7 @@ import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamask
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 
 import uniq from 'lodash/uniq';
+import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import {
   ERROR_SIGNING,
   ERROR_SIGNING_TX,
@@ -41,8 +42,6 @@ import {
   LoginMethodsEnum,
   TransactionBatchStatusesEnum
 } from 'types/enums.types';
-
-import { getAccount } from 'utils/account/getAccount';
 import { builtCallbackUrl } from 'utils/transactions/builtCallbackUrl';
 import { parseTransactionAfterSigning } from 'utils/transactions/parseTransactionAfterSigning';
 import { getDefaultCallbackUrl } from 'utils/window';
@@ -81,7 +80,20 @@ export const useSignTransactions = () => {
 
   useParseSignedTransactions(onAbort);
 
-  function clearSignInfo(sessionId?: string) {
+  const senderAddresses = uniq(
+    transactionsToSign?.transactions
+      .map((tx) => tx.getSender().toString())
+      .filter((sender) => sender)
+  ) as string[];
+
+  const sender = senderAddresses?.[0];
+
+  // Skip account fetching if the sender is missing or same as current account
+  const { data: senderAccount } = useGetAccountFromApi(
+    !sender || sender === address ? null : sender
+  );
+
+  const clearSignInfo = (sessionId?: string) => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
@@ -111,7 +123,7 @@ export const useSignTransactions = () => {
     if (isExperiementalWebviewProvider) {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
-  }
+  };
 
   const onCancel = (errorMessage: string, sessionId?: string) => {
     const isSigningWithWalletConnectV2 =
@@ -296,20 +308,11 @@ export const useSignTransactions = () => {
       return;
     }
 
-    const senderAddresses = uniq(
-      transactions
-        .map((tx) => tx.getSender().toString())
-        .filter((sender) => sender)
-    ) as string[];
-
     if (senderAddresses.length > 1) {
       throw new Error('Multiple senders are not allowed');
     }
 
-    const sender = senderAddresses?.[0];
-
     if (sender && sender !== address) {
-      const senderAccount = sender ? await getAccount(sender) : null;
       const isValidSender = checkIsValidSender(senderAccount, address);
 
       if (!isValidSender) {
@@ -366,7 +369,7 @@ export const useSignTransactions = () => {
     } else {
       isSigningRef.current = false;
     }
-  }, [transactionsToSign, hasTransactions]);
+  }, [transactionsToSign, hasTransactions, senderAccount]);
 
   return {
     error,
