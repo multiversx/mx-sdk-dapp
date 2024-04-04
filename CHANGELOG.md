@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.29.0-beta.27]](https://github.com/multiversx/mx-sdk-dapp/pull/1122)] - 2024-04-04
-- [Changed signTransactions to prevent re-fetching of account during validation](https://github.com/multiversx/mx-sdk-dapp/pull/1121)
+## [[v2.29.0-beta.27]](https://github.com/multiversx/mx-sdk-dapp/pull/1124)] - 2024-04-04
+- [Changed signTransactions to prevent re-fetching of account during validation](https://github.com/multiversx/mx-sdk-dapp/pull/1123)
 
 ## [[v2.29.0-beta.26]](https://github.com/multiversx/mx-sdk-dapp/pull/1120)] - 2024-04-03
 - [Added SWR API calls](https://github.com/multiversx/mx-sdk-dapp/pull/1117)
