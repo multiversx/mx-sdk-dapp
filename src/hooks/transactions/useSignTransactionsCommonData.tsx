@@ -8,6 +8,7 @@ import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 
+import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
   signTransactionsCancelMessageSelector,
@@ -68,6 +69,7 @@ export const useSignTransactionsCommonData = () => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
+    const isWebviewProvider = provider instanceof ExperimentalWebviewProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
@@ -88,6 +90,10 @@ export const useSignTransactionsCommonData = () => {
 
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
+
+    if (isWebviewProvider) {
+      ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
   }
 
