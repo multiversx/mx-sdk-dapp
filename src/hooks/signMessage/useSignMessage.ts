@@ -126,20 +126,13 @@ export const useSignMessage = (options?: { hasConsentPopup?: boolean }) => {
       return;
     }
 
-    try {
-      const isProviderInitialized = await provider?.init?.();
+    const isProviderInitialized = await provider?.init?.();
 
-      if (!isProviderInitialized) {
-        return;
-      }
-    } catch (error) {
-      const errorMessage =
-        (error as Error)?.message ||
-        (error as string) ||
-        PROVIDER_NOT_INITIALIZED;
-
-      console.error(errorMessage);
+    if (!isProviderInitialized) {
+      return;
     }
+
+    return isProviderInitialized;
   };
 
   const signMessageWithWallet = async ({
@@ -189,8 +182,15 @@ export const useSignMessage = (options?: { hasConsentPopup?: boolean }) => {
     try {
       await checkProviderIsInitialized();
     } catch (error) {
+      const errorMessage =
+        (error as Error)?.message ||
+        (error as string) ||
+        PROVIDER_NOT_INITIALIZED;
+
+      console.error(errorMessage);
+
       onCancel({
-        errorMessage: String(error),
+        errorMessage: PROVIDER_NOT_INITIALIZED,
         callbackRoute
       });
 
@@ -227,9 +227,10 @@ export const useSignMessage = (options?: { hasConsentPopup?: boolean }) => {
     } catch (error) {
       const errorMessage =
         (error as Error)?.message || (error as string) || ERROR_SIGNING;
+      console.error(errorMessage);
 
       onCancel({
-        errorMessage,
+        errorMessage: ERROR_SIGNING,
         callbackRoute
       });
     }
