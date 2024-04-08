@@ -203,7 +203,7 @@ export const useSignTransactions = () => {
         PROVIDER_NOT_INITIALIZED;
       console.error(errorMessage);
 
-      onCancel(errorMessage);
+      onCancel(PROVIDER_NOT_INITIALIZED, sessionId);
       return;
     }
 

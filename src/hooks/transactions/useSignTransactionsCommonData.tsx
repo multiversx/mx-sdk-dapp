@@ -69,7 +69,8 @@ export const useSignTransactionsCommonData = () => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
-    const isWebviewProvider = provider instanceof ExperimentalWebviewProvider;
+    const isExperimentalWebviewProvider =
+      provider instanceof ExperimentalWebviewProvider;
 
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
@@ -92,7 +93,7 @@ export const useSignTransactionsCommonData = () => {
       CrossWindowProvider.getInstance()?.cancelAction?.();
     }
 
-    if (isWebviewProvider) {
+    if (isExperimentalWebviewProvider) {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
   }
