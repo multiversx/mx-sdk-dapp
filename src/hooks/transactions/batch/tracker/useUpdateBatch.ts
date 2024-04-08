@@ -48,7 +48,8 @@ export function useUpdateBatch() {
           updateSignedTransactionStatus({
             sessionId,
             status: apiTx.status as TransactionServerStatusesEnum,
-            transactionHash: transaction.hash
+            transactionHash: transaction.hash,
+            serverTransaction: apiTx
           })
         );
       }
