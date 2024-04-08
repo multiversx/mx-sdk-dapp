@@ -23,7 +23,6 @@ export const signMessage = async ({
   const providerType = getProviderType(provider);
 
   const callbackUrl = addOriginToLocationPath(callbackRoute);
-
   const signableMessage = new SignableMessage({
     address: new Address(address),
     message: Buffer.from(message, 'ascii')
