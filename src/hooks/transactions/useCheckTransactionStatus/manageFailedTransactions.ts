@@ -3,7 +3,7 @@ import {
   updateSignedTransactionStatus
 } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
-import { SmartContractResult } from 'types';
+import { ServerTransactionType, SmartContractResult } from 'types';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -28,7 +28,8 @@ export function manageFailedTransactions({
       sessionId,
       status: TransactionServerStatusesEnum.fail,
       errorMessage: resultWithError?.returnMessage,
-      inTransit: false
+      inTransit: false,
+      serverTransaction: resultWithError as unknown as ServerTransactionType
     })
   );
   store.dispatch(

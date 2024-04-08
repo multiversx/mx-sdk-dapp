@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 import {
   CustomTransactionInformation,
+  ServerTransactionType,
   SignedTransactionsBodyType,
   SignedTransactionsType,
   SignedTransactionType,
@@ -36,6 +37,7 @@ export interface UpdateSignedTransactionStatusPayloadType {
   sessionId: string;
   transactionHash: string;
   status: TransactionServerStatusesEnum;
+  serverTransaction?: ServerTransactionType;
   errorMessage?: string;
   inTransit?: boolean;
 }
@@ -146,14 +148,21 @@ export const transactionsSlice = createSlice({
       state: TransactionsSliceStateType,
       action: PayloadAction<UpdateSignedTransactionStatusPayloadType>
     ) => {
-      const { sessionId, status, errorMessage, transactionHash, inTransit } =
-        action.payload;
+      const {
+        sessionId,
+        status,
+        errorMessage,
+        transactionHash,
+        serverTransaction,
+        inTransit
+      } = action.payload;
       const transactions = state.signedTransactions?.[sessionId]?.transactions;
       if (transactions != null) {
         state.signedTransactions[sessionId].transactions = transactions.map(
           (transaction) => {
             if (transaction.hash === transactionHash) {
               return {
+                ...(serverTransaction ?? {}),
                 ...transaction,
                 status,
                 errorMessage,
