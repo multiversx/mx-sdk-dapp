@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1130)] - 2024-04-08
+- [Updated sdk-core version to 13.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1129)
+
 ## [[v2.29.0-beta.29]](https://github.com/multiversx/mx-sdk-dapp/pull/1128)] - 2024-04-08
 - [Fix error handling on sign message flow](https://github.com/multiversx/mx-sdk-dapp/pull/1127)
 
