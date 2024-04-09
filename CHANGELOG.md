@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1134)] - 2024-04-09
+- [Added version version 2.29.0](https://github.com/multiversx/mx-sdk-dapp/pull/1133)
+
 ## [[v2.29.0-beta.30]](https://github.com/multiversx/mx-sdk-dapp/pull/1132)] - 2024-04-08
 - [Sync signed transactions fields with the corresponding fields from the API](https://github.com/multiversx/mx-sdk-dapp/pull/1131)
 - [Updated sdk-core version to 13.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1129)
