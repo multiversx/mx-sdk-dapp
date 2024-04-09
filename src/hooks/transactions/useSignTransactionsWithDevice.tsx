@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core';
 import { getScamAddressData } from 'apiCalls/utils/getScamAddressData';
 
@@ -68,7 +67,6 @@ export function useSignTransactionsWithDevice(
   const dispatch = useDispatch();
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
-  const [isSignDisabled, setIsSignDisabled] = useState<boolean>();
 
   const {
     transactions,
@@ -106,23 +104,17 @@ export function useSignTransactionsWithDevice(
       return;
     }
 
-    const { needs2FaSigning, guardTransactions } = checkNeedsGuardianSigning({
-      transactions: newSignedTransactions,
-      sessionId,
-      callbackRoute,
-      hasGuardianScreen,
-      isGuarded: isGuarded && allowGuardian,
-      walletAddress
-    });
+    const { needs2FaSigning, sendTransactionsToGuardian } =
+      checkNeedsGuardianSigning({
+        transactions: newSignedTransactions,
+        sessionId,
+        callbackRoute,
+        isGuarded: isGuarded && allowGuardian,
+        walletAddress
+      });
 
-    let finalizedTransactions = newSignedTransactions;
     if (needs2FaSigning) {
-      setIsSignDisabled(true); // prevent user from pressing sign button again while page is redirecting
-      try {
-        finalizedTransactions = await guardTransactions();
-      } catch {
-        return handleTransactionSignError('Guarding transactions failed');
-      }
+      return sendTransactionsToGuardian();
     }
 
     if (!sessionId) {
@@ -133,7 +125,7 @@ export function useSignTransactionsWithDevice(
       moveTransactionsToSignedState({
         sessionId: sessionId,
         status: TransactionBatchStatusesEnum.signed,
-        transactions: finalizedTransactions.map((tx) =>
+        transactions: newSignedTransactions.map((tx) =>
           parseTransactionAfterSigning(tx)
         )
       })
@@ -186,7 +178,6 @@ export function useSignTransactionsWithDevice(
   return {
     ...signMultipleTxReturnValues,
     callbackRoute,
-    waitingForDevice:
-      isSignDisabled ?? signMultipleTxReturnValues.waitingForDevice
+    waitingForDevice: signMultipleTxReturnValues.waitingForDevice
   };
 }
