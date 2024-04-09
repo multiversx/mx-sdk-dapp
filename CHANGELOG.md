@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.29.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1136)] - 2024-04-09
+- [Reverted ledger 2FA code to redirect URL instead of Cross-Window](https://github.com/multiversx/mx-sdk-dapp/pull/1135)
+
 ## [[v2.29.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1134)] - 2024-04-09
 - [Added version version 2.29.0](https://github.com/multiversx/mx-sdk-dapp/pull/1133)
 
