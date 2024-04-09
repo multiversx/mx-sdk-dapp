@@ -240,27 +240,22 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const { needs2FaSigning, guardTransactions } = checkNeedsGuardianSigning({
-        transactions: signedTransactions,
-        sessionId,
-        callbackRoute,
-        isGuarded: isGuarded && allowGuardian,
-        walletAddress
-      });
-
-      let finalizedTransactions = signedTransactions;
-
-      if (needs2FaSigning) {
-        try {
-          finalizedTransactions = await guardTransactions();
-        } catch {
-          return onCancel('Guarding transactions failed', sessionId);
-        }
-      }
-
-      const signedTransactionsArray = Object.values(finalizedTransactions).map(
+      const signedTransactionsArray = Object.values(signedTransactions).map(
         (tx) => parseTransactionAfterSigning(tx)
       );
+
+      const { needs2FaSigning, sendTransactionsToGuardian } =
+        checkNeedsGuardianSigning({
+          transactions: signedTransactions,
+          sessionId,
+          callbackRoute,
+          isGuarded: isGuarded && allowGuardian,
+          walletAddress
+        });
+
+      if (needs2FaSigning) {
+        return sendTransactionsToGuardian();
+      }
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
         sessionId,
