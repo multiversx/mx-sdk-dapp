@@ -19,6 +19,27 @@ import { getTargetOrigin } from './helpers/getTargetOrigin';
 import { notInitializedError } from './helpers/notInitializedError';
 import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
 
+const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
+const isMobileWebview = () =>
+  safeWindow.ReactNativeWebView || safeWindow.webkit;
+
+const processPlatformResponse = <T extends CrossWindowProviderRequestEnums>(
+  response: PostMessageReturnType<T>
+) => {
+  try {
+    if (isMobileWebview() && typeof response === 'string' && response !== '') {
+      return JSON.parse(response) as PostMessageReturnType<T>;
+    }
+  } catch (error) {
+    console.error('Error parsing response', {
+      response,
+      error
+    });
+  }
+
+  return response;
+};
+
 /**
  * This is an experimental provider that uses `postMessage` to communicate with the parent.
  * Please do not use this provider or use it with caution.
@@ -216,6 +237,9 @@ export class ExperimentalWebviewProvider implements IDappProvider {
       safeWindow.parent.postMessage(message, getTargetOrigin());
     }
 
-    return await this.waitingForResponse(responseTypeMap[message.type]);
+    const response = await this.waitingForResponse(
+      responseTypeMap[message.type]
+    );
+    return processPlatformResponse(response);
   };
 }
