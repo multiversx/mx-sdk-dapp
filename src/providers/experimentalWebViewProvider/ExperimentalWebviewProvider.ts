@@ -17,14 +17,14 @@ import { setExternalProviderAsAccountProvider } from '../accountProvider';
  * It will be renamed to WebviewProvider once it is stable.
  * */
 export class ExperimentalWebviewProvider implements IDappProvider {
-  private static instance: ExperimentalWebviewProvider;
+  private static _instance: ExperimentalWebviewProvider;
   private readonly _provider: WebviewProvider;
 
   static getInstance() {
-    if (!ExperimentalWebviewProvider.instance) {
-      ExperimentalWebviewProvider.instance = new ExperimentalWebviewProvider();
+    if (!ExperimentalWebviewProvider._instance) {
+      ExperimentalWebviewProvider._instance = new ExperimentalWebviewProvider();
     }
-    return ExperimentalWebviewProvider.instance;
+    return ExperimentalWebviewProvider._instance;
   }
 
   constructor() {
