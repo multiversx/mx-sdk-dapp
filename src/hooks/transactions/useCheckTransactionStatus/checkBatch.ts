@@ -4,6 +4,7 @@ import { store } from 'reduxStore/store';
 import {
   CustomTransactionInformation,
   GetTransactionsByHashesReturnType,
+  ServerTransactionType,
   SignedTransactionsBodyType
 } from 'types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
@@ -84,7 +85,9 @@ function manageTransaction({
           sessionId,
           status,
           transactionHash: hash,
-          inTransit
+          inTransit,
+          serverTransaction:
+            serverTransaction as unknown as ServerTransactionType
         })
       );
       return;
@@ -105,7 +108,9 @@ function manageTransaction({
                 sessionId,
                 status: TransactionServerStatusesEnum.success,
                 transactionHash: hash,
-                inTransit
+                inTransit,
+                serverTransaction:
+                  serverTransaction as unknown as ServerTransactionType
               })
             ),
           customTransactionInformation?.completedTransactionsDelay
@@ -117,7 +122,9 @@ function manageTransaction({
             sessionId,
             status,
             transactionHash: hash,
-            inTransit
+            inTransit,
+            serverTransaction:
+              serverTransaction as unknown as ServerTransactionType
           })
         );
       }

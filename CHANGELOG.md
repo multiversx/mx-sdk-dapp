@@ -8,6 +8,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - [Integrate sdk-webview-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1116)
 
+## [[v2.29.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1137)] - 2024-04-09
+
+## [[v2.29.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1136)] - 2024-04-09
+- [Reverted ledger 2FA code to redirect URL instead of Cross-Window](https://github.com/multiversx/mx-sdk-dapp/pull/1135)
+
+## [[v2.29.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1134)] - 2024-04-09
+- [Added version version 2.29.0](https://github.com/multiversx/mx-sdk-dapp/pull/1133)
+
+## [[v2.29.0-beta.30]](https://github.com/multiversx/mx-sdk-dapp/pull/1132)] - 2024-04-08
+- [Sync signed transactions fields with the corresponding fields from the API](https://github.com/multiversx/mx-sdk-dapp/pull/1131)
+- [Updated sdk-core version to 13.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1129)
+
+## [[v2.29.0-beta.29]](https://github.com/multiversx/mx-sdk-dapp/pull/1128)] - 2024-04-08
+- [Fix error handling on sign message flow](https://github.com/multiversx/mx-sdk-dapp/pull/1127)
+
+## [[v2.29.0-beta.28]](https://github.com/multiversx/mx-sdk-dapp/pull/1126)] - 2024-04-04
+- [ExperimentalWebviewProvider: fix cancel action on sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/1125)
+
+## [[v2.29.0-beta.27]](https://github.com/multiversx/mx-sdk-dapp/pull/1124)] - 2024-04-04
+- [Changed signTransactions to prevent re-fetching of account during validation](https://github.com/multiversx/mx-sdk-dapp/pull/1123)
+
+## [[v2.29.0-beta.26]](https://github.com/multiversx/mx-sdk-dapp/pull/1120)] - 2024-04-03
+- [Added SWR API calls](https://github.com/multiversx/mx-sdk-dapp/pull/1117)
+
 ## [[v2.29.0-beta.25]](https://github.com/multiversx/mx-sdk-dapp/pull/1119)] - 2024-04-03
 - [Fix transactions toast status in case of some failed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1118)
 
@@ -27,7 +51,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v2.29.0-beta.19]](https://github.com/multiversx/mx-sdk-dapp/pull/1105)] - 2024-03-26
 - [Fixed cross-window ledger re-login when device is locked](https://github.com/multiversx/mx-sdk-dapp/pull/1104)
-
 
 ## [[v2.29.0-beta.18]](https://github.com/multiversx/mx-sdk-dapp/pull/1103)] - 2024-03-26
 - [Changed `logout()` with an extendable `options` parameter](https://github.com/multiversx/mx-sdk-dapp/pull/1102)

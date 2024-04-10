@@ -208,16 +208,17 @@ export interface GuardianScreenType extends WithClassnameType {
 }
 
 export interface SignModalPropsType extends WithClassnameType {
-  handleClose: () => void;
-  error: string | null;
   callbackRoute?: string;
-  sessionId?: string;
-  transactions: Transaction[];
-  modalContentClassName?: string;
-  verifyReceiverScam?: boolean;
-  title?: ReactNode;
+  error: string | null;
   GuardianScreen?: (signProps: GuardianScreenType) => JSX.Element;
+  handleClose: () => void;
+  handleSubmit?: () => void;
+  modalContentClassName?: string;
+  sessionId?: string;
   signStepInnerClasses?: SignStepInnerClassesType;
+  title?: ReactNode;
+  transactions: Transaction[];
+  verifyReceiverScam?: boolean;
 }
 
 export interface CustomTransactionInformation {
