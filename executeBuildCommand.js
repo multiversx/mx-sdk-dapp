@@ -61,7 +61,7 @@ module.exports = function esbuildWrapper(
             format,
             outdir: `${options.outDir}${destination}`,
             treeShaking: true,
-            minify: true,
+            minify: false,
             bundle: true,
             sourcemap: true,
             chunkNames: '__chunks__/[name]-[hash]',
