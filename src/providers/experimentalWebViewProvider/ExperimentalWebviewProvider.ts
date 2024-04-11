@@ -15,13 +15,12 @@ import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
 import { logout } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
+import { getSafeDocument } from './helpers/getSafeDocument';
+import { getSafeWindow } from './helpers/getSafeWindow';
 import { getTargetOrigin } from './helpers/getTargetOrigin';
+import { isMobileWebview } from './helpers/isMobileWebview';
 import { notInitializedError } from './helpers/notInitializedError';
 import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
-
-const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
-const isMobileWebview = () =>
-  safeWindow.ReactNativeWebView || safeWindow.webkit;
 
 const processPlatformResponse = <T extends CrossWindowProviderRequestEnums>(
   response: PostMessageReturnType<T>
@@ -60,7 +59,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   }
 
   private resetState = () => {
-    const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
+    const safeWindow = getSafeWindow();
 
     safeWindow.addEventListener(
       'message',
@@ -211,7 +210,11 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     payload: ReplyWithPostMessagePayloadType<T>;
   }> {
     return await new Promise((resolve) => {
-      window.addEventListener(
+      getSafeWindow().addEventListener?.(
+        'message',
+        webviewProviderEventHandler(action, resolve)
+      );
+      getSafeDocument().addEventListener?.(
         'message',
         webviewProviderEventHandler(action, resolve)
       );
@@ -221,7 +224,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   private sendPostMessage = async <T extends CrossWindowProviderRequestEnums>(
     message: PostMessageParamsType<T>
   ): Promise<PostMessageReturnType<T>> => {
-    const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
+    const safeWindow = getSafeWindow();
 
     if (safeWindow.ReactNativeWebView) {
       safeWindow.ReactNativeWebView.postMessage(
