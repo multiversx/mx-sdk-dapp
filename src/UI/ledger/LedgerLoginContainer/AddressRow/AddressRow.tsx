@@ -1,12 +1,16 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import classNames from 'classnames';
+
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 import { Trim } from 'UI/Trim';
 import { getEgldLabel } from 'utils/network/getEgldLabel';
+
 import { WithClassnameType } from '../../../types';
 
-export interface AddressRowPropsType extends WithClassnameType {
+export interface AddressRowPropsType
+  extends WithClassnameType,
+    WithStylesImportType {
   selectedAddress?: string;
   index: number;
   address: string;
@@ -26,64 +30,55 @@ const AddressRowComponent = ({
   ledgerModalTableSelectedItemClassName,
   disabled = false,
   styles
-}: AddressRowPropsType & WithStylesImportType) => {
-  const handleChange = (event: SyntheticEvent) => {
-    const { checked } = event.target as HTMLInputElement;
-
-    if (checked) {
-      onSelectAddress({ address, index });
-    }
-  };
-
-  return (
+}: AddressRowPropsType) => (
+  <div
+    onClick={() => onSelectAddress({ address, index })}
+    className={classNames(
+      styles?.ledgerAddressTableBodyItem,
+      {
+        [ledgerModalTableSelectedItemClassName ?? '']:
+          selectedAddress === address,
+        [styles?.ledgerAddressTableBodyItemSelected ?? '']:
+          selectedAddress === address
+      },
+      className
+    )}
+  >
     <div
-      className={classNames(
-        styles?.ledgerAddressTableBodyItem,
-        {
-          [ledgerModalTableSelectedItemClassName ?? '']:
-            selectedAddress === address,
-          [styles?.ledgerAddressTableBodyItemSelected ?? '']:
-            selectedAddress === address
-        },
-        className
-      )}
+      className={classNames(styles?.ledgerAddressTableBodyItemData, {
+        disabled
+      })}
     >
-      <div
-        className={classNames(styles?.ledgerAddressTableBodyItemData, {
-          disabled
-        })}
+      <input
+        type='radio'
+        id={`check_${address}`}
+        disabled={disabled}
+        onChange={() => onSelectAddress({ address, index })}
+        data-testid={`check_${address}`}
+        role='button'
+        checked={selectedAddress === address}
+        className={styles?.ledgerAddressTableBodyItemDataInput}
+      />
+
+      <label
+        htmlFor={`check_${index}`}
+        role='button'
+        data-testid={`label_${index}`}
+        className={styles?.ledgerAddressTableBodyItemDataLabel}
       >
-        <input
-          type='radio'
-          id={`check_${address}`}
-          disabled={disabled}
-          data-testid={`check_${address}`}
-          onChange={handleChange}
-          role='button'
-          checked={selectedAddress === address}
-          className={styles?.ledgerAddressTableBodyItemDataInput}
-        />
-
-        <label
-          htmlFor={`check_${index}`}
-          role='button'
-          data-testid={`label_${index}`}
-          className={styles?.ledgerAddressTableBodyItemDataLabel}
-        >
-          <div className={styles?.ledgerAddressTableBodyItemDataValue}>
-            <Trim text={address} />
-          </div>
-        </label>
-      </div>
-
-      <div className={styles?.ledgerAddressTableBodyItemData}>
-        <FormatAmount value={balance} egldLabel={getEgldLabel()} />
-      </div>
-
-      <div className={styles?.ledgerAddressTableBodyItemData}>{index}</div>
+        <div className={styles?.ledgerAddressTableBodyItemDataValue}>
+          <Trim text={address} />
+        </div>
+      </label>
     </div>
-  );
-};
+
+    <div className={styles?.ledgerAddressTableBodyItemData}>
+      <FormatAmount value={balance} egldLabel={getEgldLabel()} />
+    </div>
+
+    <div className={styles?.ledgerAddressTableBodyItemData}>{index}</div>
+  </div>
+);
 
 export const AddressRow = withStyles(AddressRowComponent, {
   ssrStyles: () =>
