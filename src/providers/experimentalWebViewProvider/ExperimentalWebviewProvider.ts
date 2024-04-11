@@ -18,26 +18,8 @@ import { setExternalProviderAsAccountProvider } from '../accountProvider';
 import { getSafeDocument } from './helpers/getSafeDocument';
 import { getSafeWindow } from './helpers/getSafeWindow';
 import { getTargetOrigin } from './helpers/getTargetOrigin';
-import { isMobileWebview } from './helpers/isMobileWebview';
 import { notInitializedError } from './helpers/notInitializedError';
 import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
-
-const processPlatformResponse = <T extends CrossWindowProviderRequestEnums>(
-  response: PostMessageReturnType<T>
-) => {
-  try {
-    if (isMobileWebview() && typeof response === 'string' && response !== '') {
-      return JSON.parse(response) as PostMessageReturnType<T>;
-    }
-  } catch (error) {
-    console.error('Error parsing response', {
-      response,
-      error
-    });
-  }
-
-  return response;
-};
 
 /**
  * This is an experimental provider that uses `postMessage` to communicate with the parent.
@@ -148,8 +130,10 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (response.type == CrossWindowProviderResponseEnums.cancelResponse) {
       console.warn('Cancelled the transactions signing action');
+
       removeAllTransactionsToSign();
       this.cancelAction();
+
       return null;
     }
 
@@ -240,9 +224,6 @@ export class ExperimentalWebviewProvider implements IDappProvider {
       safeWindow.parent.postMessage(message, getTargetOrigin());
     }
 
-    const response = await this.waitingForResponse(
-      responseTypeMap[message.type]
-    );
-    return processPlatformResponse(response);
+    return await this.waitingForResponse(responseTypeMap[message.type]);
   };
 }

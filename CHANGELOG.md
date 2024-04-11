@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [ExperimentalWebviewProvider: fix mobile webview communication](https://github.com/multiversx/mx-sdk-dapp/pull/1144)
 - [Fixed address table select area](https://github.com/multiversx/mx-sdk-dapp/pull/1142)
 
 ## [[v2.30.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1141)] - 2024-04-11
