@@ -36,10 +36,13 @@ export const webviewProviderEventHandler =
       payload: ReplyWithPostMessagePayloadType<T>;
     };
 
-    if (event.origin != getTargetOrigin()) {
-      console.error('origin not accepted', {
-        eventOrigin: event.origin
-      });
+    if (isMobileWebview()) {
+      // We need to check the origin inside this if statement to prevent runtime errors.
+      // Accessing event.target.origin from an iframe is restricted due to CORS, but is accessible from the mobile webview.
+      if ((event.target as Window).origin != getSafeWindow().parent?.origin) {
+        return;
+      }
+    } else if (event.origin != getTargetOrigin()) {
       return;
     }
 
