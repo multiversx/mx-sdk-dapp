@@ -1246,6 +1246,32 @@ The WalletConnect Project ID grants you access to the [WalletConnect Cloud Relay
 
 If the Project ID is valid, the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
 
+### Experimental features
+## ExperimentalWebviewProvider
+This provider is used to interact with a parent window within an iframe or webview context. Main use-case is to allow the dApp to be embedded in a parent window and to communicate with it.
+Mainly used for the WebWallet Hub and the xPortal Hub.
+It implements all the methods of a signing provider and can be used to send transactions or messages to the parent window to be signed.
+The parent window should implement the methods to handle the requests (eg. `signTransaction` and `signMessage`);
+It is still in development and should be used with caution.
+
+For those apps who are using `@multiversx/sdk-dapp` and wants to interact with the parent window, the only thing that needs to be done is to upgrade the `@multiversx/sdk-dapp` to the latest version and to set the iframe or webview URL, passing the access token as a query parameter.
+eg.
+
+```jsx
+<iframe src="https://your-dapp.com?accessToken=yourAccessToken" />
+<Webview source={{ uri: "https://your-dapp.com?accessToken=yourAccessToken" }} />
+```
+
+For the moment, the `ExperimentalWebviewProvider` is available only for the WebWallet Hub and xPortal Hub, but it can be used for other use-cases as well. The only thing that needs to be done is to pass the `platform` besides the `accessToken` in the query parameter,
+otherwise the provider will fallback to the old webview provider which will be deprecated in the near future.
+The `platform` constraint is a temporary solution and will be removed when the support for the old webview provider will be removed.
+
+```jsx
+<iframe src="https://your-dapp.com?accessToken=yourAccessToken&platform=webWallet" />
+<Webview source={{ uri: "https://your-dapp.com?accessToken=yourAccessToken&platform=webWallet" }} />
+```
+
+
 ## Roadmap
 
 See the [open issues](https://github.com/multiversx/mx-sdk-dapp/issues) for a list of proposed features (and known issues).
