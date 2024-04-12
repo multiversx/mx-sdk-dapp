@@ -10,6 +10,11 @@ import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
 import { logout as logoutFromDapp } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
+import { getSafeDocument } from './helpers/getSafeDocument';
+import { getSafeWindow } from './helpers/getSafeWindow';
+import { getTargetOrigin } from './helpers/getTargetOrigin';
+import { notInitializedError } from './helpers/notInitializedError';
+import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
 
 /**
  * This is an experimental provider that uses `postMessage` to communicate with the parent.
@@ -33,7 +38,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   }
 
   private resetState = () => {
-    const safeWindow = typeof window !== 'undefined' ? window : ({} as any);
+    const safeWindow = getSafeWindow();
 
     safeWindow.addEventListener(
       'message',

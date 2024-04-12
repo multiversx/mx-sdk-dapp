@@ -5,6 +5,7 @@
   align-items: center;
   padding: 16px;
   border-radius: 8px;
+  cursor: pointer;
 
   &:not(.ledger-address-table-body-item-selected) {
     color: $gray-600;

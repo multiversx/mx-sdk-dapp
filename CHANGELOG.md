@@ -8,108 +8,153 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - [Integrate sdk-webview-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1116)
 
+## [[v2.30.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1143)] - 2024-04-11
+
+- [ExperimentalWebviewProvider: fix mobile webview communication](https://github.com/multiversx/mx-sdk-dapp/pull/1144)
+- [Fixed address table select area](https://github.com/multiversx/mx-sdk-dapp/pull/1142)
+
+## [[v2.30.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1141)] - 2024-04-11
+
+- [ExperimentalWebviewProvider: fix mobile response](https://github.com/multiversx/mx-sdk-dapp/pull/1140)
+
+## [[v2.30.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1139)] - 2024-04-10
+
+- [ExperimentalWebviewProvider: Enhance mobile webview compatibility to provide comprehensive support.](https://github.com/multiversx/mx-sdk-dapp/pull/1138)
+
 ## [[v2.29.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1137)] - 2024-04-09
 
 ## [[v2.29.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1136)] - 2024-04-09
+
 - [Reverted ledger 2FA code to redirect URL instead of Cross-Window](https://github.com/multiversx/mx-sdk-dapp/pull/1135)
 
 ## [[v2.29.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1134)] - 2024-04-09
+
 - [Added version version 2.29.0](https://github.com/multiversx/mx-sdk-dapp/pull/1133)
 
 ## [[v2.29.0-beta.30]](https://github.com/multiversx/mx-sdk-dapp/pull/1132)] - 2024-04-08
+
 - [Sync signed transactions fields with the corresponding fields from the API](https://github.com/multiversx/mx-sdk-dapp/pull/1131)
 - [Updated sdk-core version to 13.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1129)
 
 ## [[v2.29.0-beta.29]](https://github.com/multiversx/mx-sdk-dapp/pull/1128)] - 2024-04-08
+
 - [Fix error handling on sign message flow](https://github.com/multiversx/mx-sdk-dapp/pull/1127)
 
 ## [[v2.29.0-beta.28]](https://github.com/multiversx/mx-sdk-dapp/pull/1126)] - 2024-04-04
+
 - [ExperimentalWebviewProvider: fix cancel action on sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/1125)
 
 ## [[v2.29.0-beta.27]](https://github.com/multiversx/mx-sdk-dapp/pull/1124)] - 2024-04-04
+
 - [Changed signTransactions to prevent re-fetching of account during validation](https://github.com/multiversx/mx-sdk-dapp/pull/1123)
 
 ## [[v2.29.0-beta.26]](https://github.com/multiversx/mx-sdk-dapp/pull/1120)] - 2024-04-03
+
 - [Added SWR API calls](https://github.com/multiversx/mx-sdk-dapp/pull/1117)
 
 ## [[v2.29.0-beta.25]](https://github.com/multiversx/mx-sdk-dapp/pull/1119)] - 2024-04-03
+
 - [Fix transactions toast status in case of some failed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1118)
 
 ## [[v2.29.0-beta.24]](https://github.com/multiversx/mx-sdk-dapp/pull/1115)] - 2024-04-01
+
 - [Added sdk-core to peer dependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1114)
 
 ## [[v2.29.0-beta.23]](https://github.com/multiversx/mx-sdk-dapp/pull/1113)] - 2024-04-01
 
 ## [[v2.29.0-beta.22]](https://github.com/multiversx/mx-sdk-dapp/pull/1112)] - 2024-04-01
+
 - [Added esbuild compilation options](https://github.com/multiversx/mx-sdk-dapp/pull/1111)
 
 ## [[v2.29.0-beta.20]](https://github.com/multiversx/mx-sdk-dapp/pull/1109)] - 2024-03-29
+
 - [Added metamask provider](https://github.com/multiversx/mx-sdk-dapp/pull/1108)
 
 ## [[v2.29.0-beta.20]](https://github.com/multiversx/mx-sdk-dapp/pull/1107)] - 2024-03-27
+
 - [Fixed Safari popup signing for CrossWindowProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1106)
 
 ## [[v2.29.0-beta.19]](https://github.com/multiversx/mx-sdk-dapp/pull/1105)] - 2024-03-26
+
 - [Fixed cross-window ledger re-login when device is locked](https://github.com/multiversx/mx-sdk-dapp/pull/1104)
 
 ## [[v2.29.0-beta.18]](https://github.com/multiversx/mx-sdk-dapp/pull/1103)] - 2024-03-26
+
 - [Changed `logout()` with an extendable `options` parameter](https://github.com/multiversx/mx-sdk-dapp/pull/1102)
 
 ## [[v2.29.0-beta.17]](https://github.com/multiversx/mx-sdk-dapp/pull/1101)] - 2024-03-26
+
 - [Added LogoutListener to CustomComponents configuration](https://github.com/multiversx/mx-sdk-dapp/pull/1100)
 
 ## [[v2.29.0-beta.16]](https://github.com/multiversx/mx-sdk-dapp/pull/1099)] - 2024-03-25
+
 - [ExperimentalWebviewProvider: fix cancel actions](https://github.com/multiversx/mx-sdk-dapp/pull/1098)
 
 ## [[v2.29.0-beta.15]](https://github.com/multiversx/mx-sdk-dapp/pull/1097)] - 2024-03-25
+
 - [Fixed ledger cross-window login](https://github.com/multiversx/mx-sdk-dapp/pull/1096)
 
 ## [[v2.29.0-beta.14]](https://github.com/multiversx/mx-sdk-dapp/pull/1095)] - 2024-03-25
+
 - [Fixed sdk-core ledger signing issue](https://github.com/multiversx/mx-sdk-dapp/pull/1094)
 
 ## [[v2.29.0-beta.13]](https://github.com/multiversx/mx-sdk-dapp/pull/1093)] - 2024-03-23
+
 - [ExperimentalWebviewProvider: Fix cancel sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/1092)
 
 ## [[v2.29.0-beta.12]](https://github.com/multiversx/mx-sdk-dapp/pull/1091)] - 2024-03-21
+
 - [Upgrade sdk-core](https://github.com/multiversx/mx-sdk-dapp/pull/1090)
 
 ## [[v2.29.0-beta.11]](https://github.com/multiversx/mx-sdk-dapp/pull/1089)] - 2024-03-21
+
 - [Add protobufjs as dependency](https://github.com/multiversx/mx-sdk-dapp/pull/1088)
 
 ## [[v2.29.0-beta.10]](https://github.com/multiversx/mx-sdk-dapp/pull/1087)] - 2024-03-21
+
 - [ExperimentalWebviewProvider: "Cancel response" handling for the signTransactions and signMessage actions](https://github.com/multiversx/mx-sdk-dapp/pull/1086)
 
 ## [[v2.29.0-beta.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1085)] - 2024-03-19
+
 - [Reverted change](https://github.com/multiversx/mx-sdk-dapp/pull/1085)
 
 ## [[v2.29.0-beta.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1084)] - 2024-03-19
+
 - [Fixed wrong redirect to wallet on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1083)
 
 ## [[v2.29.0-beta.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1082)] - 2024-03-15
+
 - [Fixed nextjs build issue](https://github.com/multiversx/mx-sdk-dapp/pull/1081)
 
 ## [[v2.29.0-beta.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1080)] - 2024-03-14
+
 - [Fixed web wallet URL construction on logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1079)
 
 ## [[v2.29.0-beta.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1078)] - 2024-03-14
+
 - [Added 2FA signing cancel action](https://github.com/multiversx/mx-sdk-dapp/pull/1077)
 
 ## [[v2.29.0-beta.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1073)] - 2024-03-14
+
 - [Fixed different address than account address in account info](https://github.com/multiversx/mx-sdk-dapp/pull/1076)
 - [Changed 2FA signing to use wallet cross-window provider](https://github.com/multiversx/mx-sdk-dapp/pull/1075)
 
 ## [[v2.29.0-beta.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1073)] - 2024-03-12
+
 - [Fixed WebWallet logout not working](https://github.com/multiversx/mx-sdk-dapp/pull/1074)
 
 ## [[v2.29.0-beta.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1073)] - 2024-03-12
+
 - [Move axios in peerDependencies](https://github.com/multiversx/mx-sdk-dapp/pull/1023)
 - [Upgrade sdk packages](https://github.com/multiversx/mx-sdk-dapp/pull/1072)
 
 ## [[v2.29.0-beta.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1071)] - 2024-03-12
+
 - [Added getOperationsDetails for retrieving visible operations](https://github.com/multiversx/mx-sdk-dapp/pull/1054)
 - [Fixed experimental webview provider initialization](https://github.com/multiversx/mx-sdk-dapp/pull/1070)
 
 ## [[v2.29.0-beta.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1069)] - 2024-03-11
+
 - [Fixed types and file names](https://github.com/multiversx/mx-sdk-dapp/pull/1068)
 - [Add support for the new cross window functionality in web wallet](https://github.com/multiversx/mx-sdk-dapp/pull/1067)
 - [Update WalletConnect package and functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1064)
