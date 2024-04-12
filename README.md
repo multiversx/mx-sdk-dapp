@@ -1246,31 +1246,87 @@ The WalletConnect Project ID grants you access to the [WalletConnect Cloud Relay
 
 If the Project ID is valid, the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
 
-### Experimental features
+# Experimental features
 ## ExperimentalWebviewProvider
-This provider is used to interact with a parent window within an iframe or webview context. Main use-case is to allow the dApp to be embedded in a parent window and to communicate with it.
-Mainly used for the WebWallet Hub and the xPortal Hub.
-It implements all the methods of a signing provider and can be used to send transactions or messages to the parent window to be signed.
-The parent window should implement the methods to handle the requests (eg. `signTransaction` and `signMessage`);
-It is still in development and should be used with caution.
+Serves as an interface for communication between a dApp and a parent window within an iframe or webview context.
+Its primary purpose is to enable embedding the dApp in a parent window and facilitating communication with it.
 
-For those apps who are using `@multiversx/sdk-dapp` and wants to interact with the parent window, the only thing that needs to be done is to upgrade the `@multiversx/sdk-dapp` to the latest version and to set the iframe or webview URL, passing the access token as a query parameter.
-eg.
+### Usage
+The ExperimentalWebviewProvider is primarily utilized by the WebWallet Hub and the xPortal Hub.
+It implements all the methods of a signing provider, sending the transactions or messages to the parent window for signing.
 
+### Implementation
+The parent window must implement specific methods to handle requests, such as `signTransaction` and `signMessage`.
+These methods are called by the ExperimentalWebviewProvider to initiate the signing process.
+
+```jsx
+const handleMessages = (event: MessageEvent<RequestMessageType>) => {
+  const { type, payload } = event.data;
+
+  switch (type) {
+    case CrossWindowProviderRequestEnums.loginRequest:
+      // handle login request resulting in accessToken
+      iframe.target.contentWindow.postMessage({
+        type: CrossWindowProviderResponseEnums.loginResponse,
+        payload: {
+          data: {
+            address,
+            accessToken
+          }
+        },
+      })
+      break;
+    case CrossWindowProviderRequestEnums.signTransactionsRequest:
+      const transactions = payload.map((plainTransactionObject) =>
+        Transaction.fromPlainObject(plainTransactionObject)
+      );
+
+      // handle transaction signing resulting in signedTransactions
+
+      iframe.target.contentWindow.postMessage({
+        type: CrossWindowProviderResponseEnums.signTransactionsResponse,
+        payload: {
+          data: signedTransactions
+        },
+      })
+      break;
+    case CrossWindowProviderRequestEnums.signMessageRequest:
+      const messageToSign = payload?.message;
+
+      // handle message signing resulting in signature
+
+      windowTarget.postMessage({
+        type: CrossWindowProviderResponseEnums.signMessageResponse,
+        payload: {
+          data: {
+            signature,
+            status: SignMessageStatusEnum.signed
+          }
+        },
+      })
+      break;
+    default:
+      // handle other message types
+      break;
+  }
+};
+
+window.addEventListener('message', handleMessages);
+```
+
+### Development Status
+It's important to note that the `ExperimentalWebviewProvider` is still under development and should be used with caution.
+As such, it may undergo changes or updates that could affect its functionality.
+
+### Integration Guide
+For applications utilizing `@multiversx/sdk-dapp` and aiming to interact with the parent window, integration involves upgrading to the latest version of `@multiversx/sdk-dapp`
+and setting the iframe or webview URL. This URL should include the access token as a query parameter.
+
+### Example Integration
 ```jsx
 <iframe src="https://your-dapp.com?accessToken=yourAccessToken" />
 <Webview source={{ uri: "https://your-dapp.com?accessToken=yourAccessToken" }} />
 ```
-
-For the moment, the `ExperimentalWebviewProvider` is available only for the WebWallet Hub and xPortal Hub, but it can be used for other use-cases as well. The only thing that needs to be done is to pass the `platform` besides the `accessToken` in the query parameter,
-otherwise the provider will fallback to the old webview provider which will be deprecated in the near future.
-The `platform` constraint is a temporary solution and will be removed when the support for the old webview provider will be removed.
-
-```jsx
-<iframe src="https://your-dapp.com?accessToken=yourAccessToken&platform=webWallet" />
-<Webview source={{ uri: "https://your-dapp.com?accessToken=yourAccessToken&platform=webWallet" }} />
-```
-
 
 ## Roadmap
 
