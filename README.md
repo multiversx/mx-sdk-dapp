@@ -1246,6 +1246,88 @@ The WalletConnect Project ID grants you access to the [WalletConnect Cloud Relay
 
 If the Project ID is valid, the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
 
+# Experimental features
+## ExperimentalWebviewProvider
+Serves as an interface for communication between a dApp and a parent window within an iframe or webview context.
+Its primary purpose is to enable embedding the dApp in a parent window and facilitating communication with it.
+
+### Usage
+The ExperimentalWebviewProvider is primarily utilized by the WebWallet Hub and the xPortal Hub.
+It implements all the methods of a signing provider, sending the transactions or messages to the parent window for signing.
+
+### Implementation
+The parent window must implement specific methods to handle requests, such as `signTransaction` and `signMessage`.
+These methods are called by the ExperimentalWebviewProvider to initiate the signing process.
+
+```jsx
+const handleMessages = (event: MessageEvent<RequestMessageType>) => {
+  const { type, payload } = event.data;
+
+  switch (type) {
+    case CrossWindowProviderRequestEnums.loginRequest:
+      // handle login request resulting in accessToken
+      iframe.target.contentWindow.postMessage({
+        type: CrossWindowProviderResponseEnums.loginResponse,
+        payload: {
+          data: {
+            address,
+            accessToken
+          }
+        },
+      })
+      break;
+    case CrossWindowProviderRequestEnums.signTransactionsRequest:
+      const transactions = payload.map((plainTransactionObject) =>
+        Transaction.fromPlainObject(plainTransactionObject)
+      );
+
+      // handle transaction signing resulting in signedTransactions
+
+      iframe.target.contentWindow.postMessage({
+        type: CrossWindowProviderResponseEnums.signTransactionsResponse,
+        payload: {
+          data: signedTransactions
+        },
+      })
+      break;
+    case CrossWindowProviderRequestEnums.signMessageRequest:
+      const messageToSign = payload?.message;
+
+      // handle message signing resulting in signature
+
+      windowTarget.postMessage({
+        type: CrossWindowProviderResponseEnums.signMessageResponse,
+        payload: {
+          data: {
+            signature,
+            status: SignMessageStatusEnum.signed
+          }
+        },
+      })
+      break;
+    default:
+      // handle other message types
+      break;
+  }
+};
+
+window.addEventListener('message', handleMessages);
+```
+
+### Development Status
+It's important to note that the `ExperimentalWebviewProvider` is still under development and should be used with caution.
+As such, it may undergo changes or updates that could affect its functionality.
+
+### Integration Guide
+For applications utilizing `@multiversx/sdk-dapp` and aiming to interact with the parent window, integration involves upgrading to the latest version of `@multiversx/sdk-dapp`
+and setting the iframe or webview URL. This URL should include the access token as a query parameter.
+
+### Example Integration
+```jsx
+<iframe src="https://your-dapp.com?accessToken=yourAccessToken" />
+<Webview source={{ uri: "https://your-dapp.com?accessToken=yourAccessToken" }} />
+```
+
 ## Roadmap
 
 See the [open issues](https://github.com/multiversx/mx-sdk-dapp/issues) for a list of proposed features (and known issues).
