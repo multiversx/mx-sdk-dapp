@@ -1,23 +1,16 @@
 import { SignableMessage, Transaction } from '@multiversx/sdk-core';
-import { CrossWindowProviderResponseEnums } from '@multiversx/sdk-dapp-utils/out/enums/crossWindowProviderEnums';
 import { providerNotInitializedError } from '@multiversx/sdk-dapp-utils/out/helpers/providerNotInitializedError';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
-import { webviewProviderEventHandler } from '@multiversx/sdk-webview-provider/out/webviewProviderEventHandler';
 import { logoutAction } from 'reduxStore/commonActions';
 import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
-import { logout as logoutFromDapp } from 'utils/logout';
+import { logout as logoutFromDApp } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
-import { getSafeDocument } from './helpers/getSafeDocument';
-import { getSafeWindow } from './helpers/getSafeWindow';
-import { getTargetOrigin } from './helpers/getTargetOrigin';
-import { notInitializedError } from './helpers/notInitializedError';
-import { webviewProviderEventHandler } from './helpers/webviewProviderEventHandler';
 
 /**
- * This is an experimental provider that uses `postMessage` to communicate with the parent.
+ * This is an experimental provider that uses @multiversx/webview-provider to handle the communication between .
  * Please do not use this provider or use it with caution.
  * It will be renamed to WebviewProvider once it is stable.
  * */
@@ -33,39 +26,22 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   }
 
   constructor() {
-    this._provider = WebviewProvider.getInstance();
-    this.resetState();
+    this._provider = WebviewProvider.getInstance({
+      resetStateCallback: () => store.dispatch(logoutAction())
+    });
   }
-
-  private resetState = () => {
-    const safeWindow = getSafeWindow();
-
-    safeWindow.addEventListener(
-      'message',
-      webviewProviderEventHandler(
-        CrossWindowProviderResponseEnums.resetStateResponse,
-        (data) => {
-          if (
-            data.type === CrossWindowProviderResponseEnums.resetStateResponse
-          ) {
-            store.dispatch(logoutAction());
-
-            setTimeout(() => {
-              this._provider.finalizeResetState();
-            }, 500);
-          }
-        }
-      )
-    );
-  };
 
   init = async () => {
     return await this._provider.init();
   };
 
+  login = async () => {
+    return await this._provider.login();
+  };
+
   logout = async () => {
     const response = await this._provider.logout();
-    await logoutFromDapp();
+    await logoutFromDApp();
     return response;
   };
 
