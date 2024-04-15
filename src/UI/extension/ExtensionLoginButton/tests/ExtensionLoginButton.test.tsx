@@ -16,6 +16,13 @@ import { sleep } from 'utils/asyncActions';
 import { ExtensionLoginButton } from '../';
 import { checkIsLoggedInStore } from './helpers';
 
+jest.mock('reduxStore/slices/loginInfoSlice', () => {
+  return {
+    __esModule: true, //    <----- this __esModule: true is important
+    ...jest.requireActual('reduxStore/slices/loginInfoSlice')
+  };
+});
+
 jest.mock('@multiversx/sdk-extension-provider', () => {
   const { ExtensionProvider } = require('./mocks/mockExtensionProvider');
   return {
@@ -53,6 +60,10 @@ describe('ExtensionLoginButton tests', () => {
   beforeEach(() => {
     store.dispatch(logoutAction());
     mockWindowLocation();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should perform simple login and redirect', async () => {
