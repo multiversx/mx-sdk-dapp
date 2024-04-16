@@ -1,6 +1,13 @@
 import * as timestampModule from '../../../../utils/dateTime/getUnixTimestamp';
 import { getTokenExpiration } from '../getTokenExpiration';
 
+jest.mock('../../../../utils/dateTime/getUnixTimestamp', () => {
+  return {
+    __esModule: true,
+    ...jest.requireActual('../../../../utils/dateTime/getUnixTimestamp')
+  };
+});
+
 // 1669712100 Tue Nov 29 2022 08:55:00 GMT+0000
 // 2 minutes expiration time
 const nativeAuthToken =
