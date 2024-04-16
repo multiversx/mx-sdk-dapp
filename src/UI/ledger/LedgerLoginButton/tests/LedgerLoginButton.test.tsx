@@ -18,6 +18,13 @@ import { LedgerLoginButton } from '../LedgerLoginButton';
 import { checkIsLoggedInStore, ledgerLogin } from './helpers';
 import { mockLedgerProvider } from './mocks';
 
+jest.mock('reduxStore/slices/loginInfoSlice', () => {
+  return {
+    __esModule: true, //    <----- this __esModule: true is important
+    ...jest.requireActual('reduxStore/slices/loginInfoSlice')
+  };
+});
+
 const CALLBACK_ROUTE = '/dashboard';
 
 const tokenLoginWithoutSignature = {
