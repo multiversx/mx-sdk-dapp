@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { apiAddressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
+import { ServerTransactionType } from 'types';
 import {
   GetTransactionsByHashesReturnType,
   PendingTransactionsType
@@ -40,7 +41,10 @@ export const getTransactionsByHashes = async (
 export const getTransactionByHashPromise = (hash: string) => {
   const apiAddress = apiAddressSelector(store.getState());
 
-  return axios.get(`${apiAddress}/transactions/${hash}`, {
-    timeout: 10000 // 10sec
-  });
+  return axios.get<ServerTransactionType>(
+    `${apiAddress}/transactions/${hash}`,
+    {
+      timeout: 10000 // 10sec
+    }
+  );
 };
