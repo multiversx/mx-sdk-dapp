@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.31.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1151)] - 2024-04-16
+- [Fix webview-provider SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/1150)
+
 ## [[v2.31.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1149)] - 2024-04-16
 - [Upgrade sdk-web-wallet-cross-window-provider with webcomponents](https://github.com/multiversx/mx-sdk-dapp/pull/1148)
 
