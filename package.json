@@ -164,7 +164,7 @@
     "@multiversx/sdk-native-auth-client": "1.0.7",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.2.0",
-    "@multiversx/mx-sdk-dapp-core": "git+https://github.com/multiversx/mx-sdk-dapp-core.git",
+    "@multiversx/sdk-dapp-core": "0.0.0",
     "@multiversx/sdk-wallet-connect-provider": "4.1.1",
     "@multiversx/sdk-web-wallet-cross-window-provider": "0.0.37",
     "@multiversx/sdk-web-wallet-provider": "3.2.1",
