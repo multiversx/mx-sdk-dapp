@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
+import { useSessionNetworkStore } from 'hooks/login/helpers/useGetNetwork';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
@@ -39,21 +40,44 @@ export const CrossWindowLoginButton: (
     nativeAuth,
     hasConsentPopup
   });
+  const { environment, setEnvironment, count, setCount } =
+    useSessionNetworkStore();
 
   const handleLogin = () => {
     onInitiateLogin();
   };
 
   return (
-    <LoginButton
-      onLogin={handleLogin}
-      className={className}
-      btnClassName={buttonClassName}
-      text={loginButtonText}
-      disabled={disabled || disabledConnectButton}
-      data-testid={dataTestId}
-    >
-      {children}
-    </LoginButton>
+    <>
+      <button
+        onClick={() => {
+          setEnvironment();
+        }}
+        className={buttonClassName}
+      >
+        Change network
+      </button>
+      <br />
+      <h2>{environment}</h2>
+      <button
+        onClick={() => {
+          setCount();
+        }}
+        className={buttonClassName}
+      >
+        Increase +
+      </button>
+      <h2>Count: {count}</h2>
+      <LoginButton
+        onLogin={handleLogin}
+        className={className}
+        btnClassName={buttonClassName}
+        text={loginButtonText}
+        disabled={disabled || disabledConnectButton}
+        data-testid={dataTestId}
+      >
+        {children}
+      </LoginButton>
+    </>
   );
 };

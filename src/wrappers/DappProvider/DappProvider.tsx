@@ -1,4 +1,5 @@
 import React, { ReactElement } from 'react';
+import { Logger } from '@multiversx/sdk-dapp-core';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
@@ -28,6 +29,7 @@ export interface DappProviderPropsType {
   customComponents?: CustomComponentsType;
   dappConfig?: DappConfigType;
 }
+Logger.log('DappProvider.tsx');
 
 export const DappProvider = ({
   children,

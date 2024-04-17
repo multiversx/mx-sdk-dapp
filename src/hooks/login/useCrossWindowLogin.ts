@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
@@ -18,6 +18,10 @@ import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
+import {
+  initializeNetworkStore,
+  sessionNetworkStore
+} from './helpers/useGetNetwork';
 import { useLoginService } from './useLoginService';
 
 export type UseCrossWindowLoginReturnType = [
