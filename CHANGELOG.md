@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.31.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1154)] - 2024-04-18
+
 - [Removed unnecessary address check](https://github.com/multiversx/mx-sdk-dapp/pull/1153)
 - [Updated the WalletConnect provider to 4.1.2 (@walletconnect 2.12.2)](https://github.com/multiversx/mx-sdk-dapp/pull/1152)
 
