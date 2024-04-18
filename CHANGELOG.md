@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.31.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1156)] - 2024-04-18
+- [Removed sdk-web-wallet-cross-window-provider with `lit` webcomponents](https://github.com/multiversx/mx-sdk-dapp/pull/1155)
+
 ## [[v2.31.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1154)] - 2024-04-18
 
 - [Removed unnecessary address check](https://github.com/multiversx/mx-sdk-dapp/pull/1153)
