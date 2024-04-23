@@ -2368,7 +2368,7 @@
     json-bigint "1.0.0"
     keccak "3.0.2"
 
-"@multiversx/sdk-dapp-utils@0.0.1":
+"@multiversx/sdk-dapp-utils@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-utils/-/sdk-dapp-utils-0.0.1.tgz#ba8bd9319649d45dea9a76beca1e03d957dea2cb"
   integrity sha512-fl3TdES93Jc4T559BI+QxNRGRUTabb7TiAXHKL9g6mbLD+silK+5euAoDpPBkbZpVFnfsXQssUVuyKBV4Ine6w==
@@ -2446,10 +2446,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.39":
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.39.tgz#b7aef8852bf277371ba361575edde2aa2113e954"
-  integrity sha512-6tlHhYMa7O6Gaxt8UPttgDMhpnar3uKGcOwVHdm5ierE835aIAQsRZqx29pv41fzcsC40JEXQju6wG/j/DG8Og==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.1.1.tgz#9a992f3bfbc2efbecb39e9718aff9dccaa2e461b"
+  integrity sha512-9bWl9R92a6DGA5tF68IjXpI1nN9QyZjWEK0/YFNwV6nfswhtIrA2F+VsQIIXeb/HzMXbcVEtkyk9jMGkHSR5vw==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
