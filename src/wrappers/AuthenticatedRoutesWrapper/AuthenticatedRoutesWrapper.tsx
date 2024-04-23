@@ -11,6 +11,7 @@ import { getSearchParamAddress } from 'utils/account/getSearchParamAddress';
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { safeRedirect } from 'utils/redirect';
 import { matchRoute } from './helpers/matchRoute';
+import { getWebviewToken } from 'utils/account/getWebviewToken';
 
 export const AuthenticatedRoutesWrapper = ({
   children,
@@ -29,6 +30,7 @@ export const AuthenticatedRoutesWrapper = ({
   const isLoggedIn = useSelector(isLoggedInSelector);
   const isAccountLoading = useSelector(isAccountLoadingSelector);
   const walletLogin = useSelector(walletLoginSelector);
+  const isWebviewLogin = Boolean(getWebviewToken());
 
   const getLocationPathname = () => {
     if (isWindowAvailable()) {
@@ -43,7 +45,10 @@ export const AuthenticatedRoutesWrapper = ({
   );
 
   const shouldRedirect =
-    isOnAuthenticatedRoute && !isLoggedIn && walletLogin == null;
+    isOnAuthenticatedRoute &&
+    !isLoggedIn &&
+    walletLogin == null &&
+    !isWebviewLogin;
 
   useEffect(() => {
     if (!shouldRedirect) {
