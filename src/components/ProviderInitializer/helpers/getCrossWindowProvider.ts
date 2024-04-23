@@ -1,4 +1,4 @@
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 
 export async function getCrossWindowProvider({
   address,
