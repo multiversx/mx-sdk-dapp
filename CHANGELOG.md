@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+
+## [[v2.32.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1161)] - 2024-04-23
+- [ExperimentalWebviewProvider: fix android communication](https://github.com/multiversx/mx-sdk-dapp/pull/1163)
+- [Added `sdk-dapp-utils` and removed Cross-Window export files](https://github.com/multiversx/mx-sdk-dapp/pull/1162)
+- [Extract MultiEsdtTrasfer parser for multiple transactions in a separate function](https://github.com/multiversx/mx-sdk-dapp/pull/1157)
+- [Fixed `AuthenticatedRoutesWrapper` redirects to unlock route during webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1160)
+
 ## [[v2.31.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1159)] - 2024-04-23
 - [Changed sdk-web-wallet-cross-window-provider imports & upgraded package](https://github.com/multiversx/mx-sdk-dapp/pull/1158)
 

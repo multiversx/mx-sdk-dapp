@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
 import { TokenOptionType, useGetNetworkConfig } from 'hooks';
-import { safeWindow } from 'lib/sdkWebWalletCrossWindowProvider';
+import { safeWindow } from 'lib/sdkDappUtils';
 import { NftEnumType } from 'types/tokens.types';
 import {
   explorerUrlBuilder,
@@ -49,7 +49,7 @@ const ConfirmAmountNftSftComponent = ({
     event.preventDefault();
     event.stopPropagation();
 
-    if (safeWindow.open) {
+    if (safeWindow?.open) {
       safeWindow.open(explorerLink);
     }
   };

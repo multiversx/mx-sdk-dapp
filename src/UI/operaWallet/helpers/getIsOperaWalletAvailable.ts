@@ -1,4 +1,5 @@
+import { safeWindow } from 'lib/sdkDappUtils';
+
 export const getIsOperaWalletAvailable = () => {
-  const safeWindow = typeof window !== 'undefined' ? (window as any) : {};
-  return Boolean(safeWindow.isOpera && safeWindow.elrond);
+  return Boolean(safeWindow?.isOpera && safeWindow?.elrond);
 };

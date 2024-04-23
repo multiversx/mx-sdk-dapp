@@ -1,12 +1,11 @@
+import { safeWindow } from 'lib/sdkDappUtils';
 import { PlatformsEnum } from 'types/enums.types';
 
-const safeWindow = typeof window !== 'undefined' ? (window as any) : {};
-
 export const detectCurrentPlatform = () => {
-  if (safeWindow.ReactNativeWebView) {
+  if ((safeWindow as any)?.ReactNativeWebView) {
     return PlatformsEnum.reactNative;
   }
-  if (safeWindow.webkit) {
+  if ((safeWindow as any)?.webkit) {
     return PlatformsEnum.ios;
   }
 
