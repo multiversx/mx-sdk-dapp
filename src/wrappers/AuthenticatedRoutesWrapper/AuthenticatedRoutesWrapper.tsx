@@ -8,10 +8,10 @@ import {
 
 import { RouteType } from 'types';
 import { getSearchParamAddress } from 'utils/account/getSearchParamAddress';
+import { getWebviewToken } from 'utils/account/getWebviewToken';
 import { isWindowAvailable } from 'utils/isWindowAvailable';
 import { safeRedirect } from 'utils/redirect';
 import { matchRoute } from './helpers/matchRoute';
-import { getWebviewToken } from 'utils/account/getWebviewToken';
 
 export const AuthenticatedRoutesWrapper = ({
   children,
