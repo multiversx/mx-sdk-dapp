@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fixed `AuthenticatedRoutesWrapper` redirects to unlock route during webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1157su)
+- [Fixed `AuthenticatedRoutesWrapper` redirects to unlock route during webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1160)
 
 ## [[v2.31.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1156)] - 2024-04-18
 - [Removed sdk-web-wallet-cross-window-provider with `lit` webcomponents](https://github.com/multiversx/mx-sdk-dapp/pull/1155)
