@@ -2462,10 +2462,10 @@
   dependencies:
     qs "6.10.3"
 
-"@multiversx/sdk-webview-provider@0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-0.0.8.tgz#3524ee6a3d049172246a7b4e8e777aab2a669fea"
-  integrity sha512-usfJouOEkWz93Fx0NoUCdXit4TYyzUUL0sg+0HSqnNLlvcZ/Jw7i40Hidn5TEchuYLbVsQnidxKMfE6cPHnpNw==
+"@multiversx/sdk-webview-provider@0.0.9":
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-0.0.9.tgz#074f707ee9b84f9108087a62cc83da2c4e46f585"
+  integrity sha512-IVdrMVncvnH61NQ6QsPWkfLfEoT274St2qrWyG1hv9gBg2t78hat4pL+QB/c+gA6TbxVMj9DBbcb3CDsI6dDUg==
 
 "@napi-rs/wasm-runtime@^0.1.1":
   version "0.1.2"
