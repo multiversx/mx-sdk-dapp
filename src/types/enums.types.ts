@@ -1,7 +1,7 @@
 import {
   CrossWindowProviderRequestEnums,
   CrossWindowProviderResponseEnums
-} from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
+} from 'lib/sdkWebWalletCrossWindowProvider';
 export { CrossWindowProviderRequestEnums, CrossWindowProviderResponseEnums };
 
 export enum TransactionServerStatusesEnum {
