@@ -6,7 +6,7 @@ import {
   ResponseTypeMap,
   SignMessageStatusEnum,
   ReplyWithPostMessageObjectType
-} from '@multiversx/sdk-web-wallet-cross-window-provider/out/types';
+} from 'lib/sdkWebWalletCrossWindowProvider';
 
 export {
   CrossWindowProviderRequestEnums,

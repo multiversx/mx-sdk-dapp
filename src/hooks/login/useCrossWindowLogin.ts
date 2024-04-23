@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { safeWindow } from 'lib/sdkWebWalletCrossWindowProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -94,6 +94,8 @@ export const useCrossWindowLogin = ({
       const needsConsent = isSafari && hasNativeAuth;
 
       if (needsConsent || hasConsentPopup) {
+        console.log('\x1b[42m%s\x1b[0m', 'show here');
+
         provider.setShouldShowConsentPopup(true);
       }
 
