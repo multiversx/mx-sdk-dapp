@@ -6,7 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
+- [ExperimentalWebviewProvider: fix android communication](https://github.com/multiversx/mx-sdk-dapp/pull/1163)
+-
 ## [[v2.31.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1161)] - 2024-04-23
 - [Fixed `AuthenticatedRoutesWrapper` redirects to unlock route during webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1160)
 
