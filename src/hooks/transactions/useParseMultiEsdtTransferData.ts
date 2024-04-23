@@ -5,8 +5,7 @@ import {
   TransactionDataTokenType,
   TransactionsDataTokensType
 } from 'types';
-import { getTokenFromData } from 'utils/transactions/getTokenFromData';
-import { parseMultiEsdtTransferData } from 'utils/transactions/parseMultiEsdtTransferData';
+import { parseMultiEsdtTransferDataForMultipleTransactions } from 'utils/transactions/parseMultiEsdtTransferDataForMultipleTransactions';
 
 const defaultTransactionInfo: TransactionDataTokenType = {
   tokenId: '',
@@ -38,16 +37,6 @@ export function useParseMultiEsdtTransferData({
     MultiSignTransactionType[]
   >([]);
 
-  function addTransactionDataToParsedInfo(
-    data: string,
-    txInfo: TransactionDataTokenType
-  ) {
-    setParsedTransactions((existing) => ({
-      ...existing,
-      [data]: txInfo
-    }));
-  }
-
   function getTxInfoByDataField(
     data: string,
     multiTransactionData?: string
@@ -71,51 +60,13 @@ export function useParseMultiEsdtTransferData({
   }
 
   function extractTransactionESDTData() {
-    if (transactions && transactions.length > 0) {
-      const allTxs: MultiSignTransactionType[] = [];
-      transactions.forEach((transaction, transactionIndex) => {
-        const txData = transaction.getData().toString();
-        const multiTxs = parseMultiEsdtTransferData(txData);
-
-        if (multiTxs.length > 0) {
-          multiTxs.forEach((trx, idx) => {
-            const newTx: MultiSignTransactionType = {
-              transaction,
-              multiTxData: trx.data,
-              transactionIndex: idx
-            };
-            addTransactionDataToParsedInfo(trx.data, {
-              tokenId: trx.token ? trx.token : '',
-              amount: trx.amount ? trx.amount : '',
-              type: trx.type,
-              nonce: trx.nonce ? trx.nonce : '',
-              multiTxData: trx.data,
-              receiver: trx.receiver
-            });
-            allTxs.push(newTx);
-          });
-        } else {
-          const transactionData = transaction.getData().toString();
-
-          const { tokenId, amount } = getTokenFromData(transactionData);
-
-          if (tokenId) {
-            addTransactionDataToParsedInfo(transactionData, {
-              tokenId,
-              amount,
-              receiver: transaction.getReceiver().bech32()
-            });
-          }
-          allTxs.push({
-            transaction,
-            transactionIndex,
-            multiTxData: transactionData
-          });
-        }
+    const { allTransactions, parsedTransactionsByDataField } =
+      parseMultiEsdtTransferDataForMultipleTransactions({
+        transactions
       });
 
-      setAllTransactions(allTxs);
-    }
+    setAllTransactions(allTransactions);
+    setParsedTransactions(parsedTransactionsByDataField);
   }
 
   useEffect(() => {
