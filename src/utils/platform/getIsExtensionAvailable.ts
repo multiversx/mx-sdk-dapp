@@ -1,4 +1,5 @@
+import { safeWindow } from 'lib/sdkDappUtils';
+
 export const getIsExtensionAvailable = () => {
-  const safeWindow = typeof window !== 'undefined' ? (window as any) : {};
-  return Boolean(safeWindow.elrondWallet);
+  return Boolean(safeWindow?.elrondWallet);
 };

@@ -1,10 +1,8 @@
 import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import {
-  CrossWindowProvider,
-  safeWindow
-} from 'lib/sdkWebWalletCrossWindowProvider';
+import { safeWindow } from 'lib/sdkDappUtils';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
