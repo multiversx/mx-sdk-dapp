@@ -4,9 +4,9 @@ import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {

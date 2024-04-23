@@ -7,7 +7,6 @@ import {
 
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
-import { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';
 
 import uniq from 'lodash/uniq';
 import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
@@ -23,6 +22,7 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
