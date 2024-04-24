@@ -45,7 +45,7 @@ import {
   emptyProvider
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
-import { useGetAccount } from '../../hooks';
+
 import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
 import {
   getOperaProvider,
@@ -59,7 +59,6 @@ import { useSetLedgerProvider } from './hooks';
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
-  const account = useGetAccount();
   const network = useSelector(networkSelector);
   const walletAddress = useSelector(walletAddressSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
@@ -141,7 +140,7 @@ export function ProviderInitializer() {
       return;
     }
 
-    if (address && address !== account.address) {
+    if (address) {
       try {
         const account = await getAccount(address);
 

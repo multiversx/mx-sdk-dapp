@@ -1,12 +1,12 @@
 import React, { MouseEvent } from 'react';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { safeWindow } from '@multiversx/sdk-web-wallet-cross-window-provider/out/constants';
 import classNames from 'classnames';
 
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
 import { TokenOptionType, useGetNetworkConfig } from 'hooks';
+import { safeWindow } from 'lib/sdkDappUtils';
 import { NftEnumType } from 'types/tokens.types';
 import {
   explorerUrlBuilder,
@@ -49,7 +49,7 @@ const ConfirmAmountNftSftComponent = ({
     event.preventDefault();
     event.stopPropagation();
 
-    if (safeWindow.open) {
+    if (safeWindow?.open) {
       safeWindow.open(explorerLink);
     }
   };
