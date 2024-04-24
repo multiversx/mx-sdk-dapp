@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+- [Added FF Windows to browser constants](https://github.com/multiversx/mx-sdk-dapp/pull/1164)
+
 ## [[v2.32.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1161)] - 2024-04-23
 - [ExperimentalWebviewProvider: fix android communication](https://github.com/multiversx/mx-sdk-dapp/pull/1163)
 - [Added `sdk-dapp-utils` and removed Cross-Window export files](https://github.com/multiversx/mx-sdk-dapp/pull/1162)
