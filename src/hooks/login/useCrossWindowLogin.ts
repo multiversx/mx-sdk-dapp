@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
+import { isBrowserWithPopupConfirmation } from 'constants/browser';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { safeWindow } from 'lib/sdkDappUtils';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -24,10 +24,6 @@ export type UseCrossWindowLoginReturnType = [
   InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
-
-const isSafari = /^((?!chrome|android).)*safari/i.test(
-  safeWindow?.navigator?.userAgent ?? ''
-);
 
 export const useCrossWindowLogin = ({
   callbackRoute,
@@ -91,7 +87,7 @@ export const useCrossWindowLogin = ({
         ...(token && { token })
       };
 
-      const needsConsent = isSafari && hasNativeAuth;
+      const needsConsent = isBrowserWithPopupConfirmation && hasNativeAuth;
 
       if (needsConsent || hasConsentPopup) {
         provider.setShouldShowConsentPopup(true);
