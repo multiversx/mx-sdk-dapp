@@ -2368,7 +2368,7 @@
     json-bigint "1.0.0"
     keccak "3.0.2"
 
-"@multiversx/sdk-dapp-utils@0.0.1":
+"@multiversx/sdk-dapp-utils@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-utils/-/sdk-dapp-utils-0.0.1.tgz#ba8bd9319649d45dea9a76beca1e03d957dea2cb"
   integrity sha512-fl3TdES93Jc4T559BI+QxNRGRUTabb7TiAXHKL9g6mbLD+silK+5euAoDpPBkbZpVFnfsXQssUVuyKBV4Ine6w==
@@ -2446,10 +2446,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.0.39":
-  version "0.0.39"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.0.39.tgz#b7aef8852bf277371ba361575edde2aa2113e954"
-  integrity sha512-6tlHhYMa7O6Gaxt8UPttgDMhpnar3uKGcOwVHdm5ierE835aIAQsRZqx29pv41fzcsC40JEXQju6wG/j/DG8Og==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.1.2.tgz#59be26554bd07b0bb316fd6e99b96018533df23e"
+  integrity sha512-Vb1n8fDK/itRVmOsxaXfUlFJDATx0rma2ZpJygqabebEx8/YSb20nWMkTifISvLtqmxnJO9ilfHor4oYb8B7pA==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
@@ -2462,10 +2462,10 @@
   dependencies:
     qs "6.10.3"
 
-"@multiversx/sdk-webview-provider@0.0.8":
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-0.0.8.tgz#3524ee6a3d049172246a7b4e8e777aab2a669fea"
-  integrity sha512-usfJouOEkWz93Fx0NoUCdXit4TYyzUUL0sg+0HSqnNLlvcZ/Jw7i40Hidn5TEchuYLbVsQnidxKMfE6cPHnpNw==
+"@multiversx/sdk-webview-provider@0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-0.0.10.tgz#6699dfd564ec020c67736d35077fb8a79e015dda"
+  integrity sha512-wyNPl6mq8pYXWdpviPqQfxGoCaEkQlkELAf0rzQ3USbIkV/LlYuXEjIX3JCl3NxbE6wlk4jwp2xIGykX20HeZw==
 
 "@napi-rs/wasm-runtime@^0.1.1":
   version "0.1.2"
