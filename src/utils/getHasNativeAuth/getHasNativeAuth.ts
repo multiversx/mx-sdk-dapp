@@ -1,7 +1,7 @@
 import isObject from 'lodash/isObject';
+import { safeWindow } from 'lib/sdkDappUtils';
 import { OnProviderLoginType } from '../../types/login.types';
 
-const safeWindow = typeof window !== 'undefined' ? window : ({} as Window);
 const isDevelopment = safeWindow?.location?.origin?.includes('localhost');
 
 export const getHasNativeAuth = (
