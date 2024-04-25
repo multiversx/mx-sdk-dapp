@@ -5,22 +5,27 @@ import {
 } from '@multiversx/sdk-dapp-core/dist/store/models/network';
 import { create } from 'zustand';
 
-export const useSessionNetworkStore = create<NetworkRootState>((set) => {
-  type NetworkKeys = keyof typeof NetworkKeysEnum;
+// eslint-disable-next-line @typescript-eslint/ban-types
+function callSetFunction<T extends Function, F extends Function>(
+  originalFunction: T,
+  set: F
+) {
+  return function (this: any, ...args: any[]) {
+    set.apply(this, args);
+    return originalFunction.apply(this, args);
+  };
+}
 
-  const returnObj = {};
+export const useSessionNetworkStore = create<NetworkRootState>((set) => {
+  const returnObj: any = {};
 
   for (const key in NetworkKeysEnum) {
-    const networkKey = NetworkKeysEnum[key as NetworkKeys];
+    const networkKey = NetworkKeysEnum[key as keyof typeof NetworkKeysEnum];
     const currentValue = sessionNetworkStore.getState()[networkKey];
+
     returnObj[networkKey] =
       typeof currentValue === 'function'
-        ? (data: any) => {
-            // Update the vanilla store when setting count in the React store
-            currentValue(data);
-            // Update the React store
-            set({ [networkKey]: data });
-          }
+        ? callSetFunction(currentValue, set)
         : currentValue;
   }
 
