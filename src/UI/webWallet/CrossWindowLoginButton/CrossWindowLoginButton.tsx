@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/dist/types/enums.types';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
-import { useSessionNetworkStore } from 'hooks/login/helpers/useGetNetwork';
+import { useSessionNetworkStore } from 'hooks/login/helpers/useSessionNetworkStore';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
