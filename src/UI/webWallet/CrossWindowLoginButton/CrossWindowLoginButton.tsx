@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/dist/types/enums.types';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
 import { useStore } from 'hooks/login/helpers/useStore';
@@ -40,9 +41,7 @@ export const CrossWindowLoginButton: (
     nativeAuth,
     hasConsentPopup
   });
-  const {
-    network: { chainID, setChainID }
-  } = useStore();
+  const { chainID, setChainID } = useStore();
 
   const handleLogin = () => {
     onInitiateLogin();
@@ -52,7 +51,9 @@ export const CrossWindowLoginButton: (
     <>
       <button
         onClick={() => {
-          chainID === '1' ? setChainID('D') : setChainID('1');
+          chainID === EnvironmentsEnum.devnet
+            ? setChainID(EnvironmentsEnum.mainnet)
+            : setChainID(EnvironmentsEnum.devnet);
         }}
         className={buttonClassName}
       >
