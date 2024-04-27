@@ -16,6 +16,7 @@ function callSetFunction<T extends Function, F extends Function>(
   };
 }
 
+// Immer working
 export const useStore = create<NetworkRootState>((set) => {
   const returnObj: any = {};
 
