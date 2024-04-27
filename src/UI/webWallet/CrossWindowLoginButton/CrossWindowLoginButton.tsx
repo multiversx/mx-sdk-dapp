@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/dist/types/enums.types';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
-import { useSessionNetworkStore } from 'hooks/login/helpers/useSessionNetworkStore';
+import { useStore } from 'hooks/login/helpers/useStore';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
@@ -41,7 +40,9 @@ export const CrossWindowLoginButton: (
     nativeAuth,
     hasConsentPopup
   });
-  const { environment, setEnvironment } = useSessionNetworkStore();
+  const {
+    network: { chainID, setChainID }
+  } = useStore();
 
   const handleLogin = () => {
     onInitiateLogin();
@@ -51,16 +52,14 @@ export const CrossWindowLoginButton: (
     <>
       <button
         onClick={() => {
-          environment === EnvironmentsEnum.testnet
-            ? setEnvironment(EnvironmentsEnum.mainnet)
-            : setEnvironment(EnvironmentsEnum.testnet);
+          chainID === '1' ? setChainID('D') : setChainID('1');
         }}
         className={buttonClassName}
       >
         Change network
       </button>
       <br />
-      <h2>{environment}</h2>
+      <h2>{chainID}</h2>
       <LoginButton
         onLogin={handleLogin}
         className={className}
