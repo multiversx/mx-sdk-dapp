@@ -1,7 +1,7 @@
 import {
   sessionNetworkStore,
-  NetworkRootState,
-  NetworkKeysEnum
+  RootState,
+  KeysEnum
 } from '@multiversx/sdk-dapp-core/dist/store/models/network';
 import { create } from 'zustand';
 
@@ -17,11 +17,11 @@ function callSetFunction<T extends Function, F extends Function>(
 }
 
 // Immer working
-export const useStore = create<NetworkRootState>((set) => {
+export const useStore = create<RootState>((set) => {
   const returnObj: any = {};
 
-  for (const key in NetworkKeysEnum) {
-    const networkKey = NetworkKeysEnum[key as keyof typeof NetworkKeysEnum];
+  for (const key in KeysEnum) {
+    const networkKey = KeysEnum[key as keyof typeof KeysEnum];
     const currentValue = sessionNetworkStore.getState()[networkKey];
 
     returnObj[networkKey] =
@@ -30,7 +30,7 @@ export const useStore = create<NetworkRootState>((set) => {
         : currentValue;
   }
 
-  return returnObj as NetworkRootState;
+  return returnObj as RootState;
 });
 
 sessionNetworkStore.subscribe((newState) => {
