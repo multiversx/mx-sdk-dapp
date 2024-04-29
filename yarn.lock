@@ -2468,6 +2468,7 @@
     "@multiversx/sdk-core" "^12.19.1"
     "@multiversx/sdk-dapp-ui" "*"
     "@multiversx/sdk-web-wallet-cross-window-provider" "0.0.37"
+    immer "^10.0.4"
     zustand "^4.4.7"
 
 "@multiversx/sdk-dapp-utils@>= 0.0.1", "@multiversx/sdk-dapp-utils@0.0.1":
