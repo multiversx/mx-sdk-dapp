@@ -1,4 +1,6 @@
 import React, { ReactNode } from 'react';
+import { sharedActions } from '@multiversx/sdk-dapp-core/dist/store/actions/sharedActions';
+import { useStore as useAccountStore } from '@multiversx/sdk-dapp-core/dist/store/models/account';
 import { useStore } from '@multiversx/sdk-dapp-core/dist/store/models/network/network';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/dist/types/enums.types';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
@@ -43,6 +45,7 @@ export const CrossWindowLoginButton: (
     hasConsentPopup
   });
   const { chainID, setChainID } = useStore();
+  const { address, setAddress } = useAccountStore();
 
   const handleLogin = () => {
     onInitiateLogin();
@@ -50,18 +53,34 @@ export const CrossWindowLoginButton: (
 
   return (
     <>
+      <table>
+        <tr>
+          <td>Address:</td>
+          <td>{address}</td>
+        </tr>
+        <tr>
+          <td>ChainID:</td>
+          <td>{chainID}</td>
+        </tr>
+      </table>
       <button
         onClick={() => {
           chainID === EnvironmentsEnum.devnet
             ? setChainID(EnvironmentsEnum.mainnet)
             : setChainID(EnvironmentsEnum.devnet);
+          setAddress('111');
         }}
-        className={buttonClassName}
       >
-        Change network
+        [ Change network ]
+      </button>
+      <button
+        onClick={() => {
+          sharedActions.logout();
+        }}
+      >
+        [ LOGOUT ]
       </button>
       <br />
-      <h2>{chainID}</h2>
       <LoginButton
         onLogin={handleLogin}
         className={className}
