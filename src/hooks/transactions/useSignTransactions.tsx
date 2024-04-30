@@ -22,15 +22,13 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
+import { useNetworkStore } from 'lib/sdkDappCore';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import {
-  signTransactionsCancelMessageSelector,
-  walletAddressSelector
-} from 'reduxStore/selectors';
+import { signTransactionsCancelMessageSelector } from 'reduxStore/selectors';
 import {
   clearAllTransactionsToSign,
   clearTransactionsInfoForSessionId,
@@ -59,7 +57,9 @@ export const useSignTransactions = () => {
   const dispatch = useDispatch();
   const savedCallback = useRef('/');
   const { provider } = useGetAccountProvider();
-  const walletAddress = useSelector(walletAddressSelector);
+  const {
+    network: { walletAddress }
+  } = useNetworkStore();
   const providerType = getProviderType(provider);
   const isSigningRef = useRef(false);
   const setTransactionNonces = useSetTransactionNonces();

@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { getEnvironmentForChainId, getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import { useNetwork } from 'hooks/store/useNetworkStore';
+import { refreshChainID } from 'lib/sdkDappCore';
 import {
   setAccountProvider,
   setExternalProviderAsAccountProvider
@@ -20,18 +22,13 @@ import {
   isLoggedInSelector,
   tokenLoginSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
-import {
-  chainIDSelector,
-  networkSelector,
-  walletAddressSelector
-} from 'reduxStore/selectors/networkConfigSelectors';
+
 import {
   setAccount,
   setIsAccountLoading,
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID,
   setTokenLogin,
   setIsWalletConnectV2Initialized,
   setAddress
@@ -59,8 +56,8 @@ import { useSetLedgerProvider } from './hooks';
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
-  const network = useSelector(networkSelector);
-  const walletAddress = useSelector(walletAddressSelector);
+  const { network, chainID, setChainID } = useNetwork();
+  const walletAddress = network.walletAddress;
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const walletLogin = useSelector(walletLoginSelector);
@@ -68,7 +65,6 @@ export function ProviderInitializer() {
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const ledgerLogin = useSelector(ledgerLoginSelector);
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const chainID = useSelector(chainIDSelector);
   const tokenLogin = useSelector(tokenLoginSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
   const loginService = useLoginService(
@@ -105,17 +101,6 @@ export function ProviderInitializer() {
     // prevent balance double fetching by handling ledgerAccount data separately
     setLedgerAccountInfo();
   }, [ledgerAccount, isLoggedIn, ledgerData]);
-
-  async function refreshChainID() {
-    try {
-      const networkConfig = await getNetworkConfigFromApi();
-      if (networkConfig) {
-        dispatch(setChainID(networkConfig.erd_chain_id));
-      }
-    } catch (err) {
-      console.error('failed refreshing chainId ', err);
-    }
-  }
 
   function setLedgerAccountInfo() {
     if (ledgerAccount == null && ledgerLogin != null && ledgerData) {

@@ -1,5 +1,4 @@
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { xAliasAddressSelector } from 'reduxStore/selectors';
+import { useNetworkStore } from 'lib/sdkDappCore';
 import {
   UseWebWalletLoginPropsType,
   useWebWalletLogin,
@@ -9,7 +8,7 @@ import {
 export const useXaliasLogin = (
   props: UseWebWalletLoginPropsType
 ): UseWebWalletLoginReturnType => {
-  const xAliasAddress = useSelector(xAliasAddressSelector);
+  const xAliasAddress = useNetworkStore().network.xAliasAddress;
   return useWebWalletLogin({
     ...props,
     customWalletAddress: props.customWalletAddress ?? xAliasAddress

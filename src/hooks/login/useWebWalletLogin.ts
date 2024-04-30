@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors';
-import { setCustomWalletAddress, setWalletLogin } from 'reduxStore/slices';
+import { useNetworkStore } from 'lib/sdkDappCore';
+import { useDispatch } from 'reduxStore/DappProviderContext';
+import { setWalletLogin } from 'reduxStore/slices';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
@@ -47,7 +47,7 @@ export const useWebWalletLogin = ({
 }: UseWebWalletLoginPropsType): UseWebWalletLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const network = useSelector(networkSelector);
+  const { network, setCustomWalletAddress } = useNetworkStore();
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = Boolean(nativeAuth);
@@ -59,7 +59,7 @@ export const useWebWalletLogin = ({
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
-    dispatch(setCustomWalletAddress(customWalletAddress));
+    setCustomWalletAddress(String(customWalletAddress));
 
     try {
       setIsLoading(true);

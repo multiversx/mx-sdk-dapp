@@ -1,13 +1,12 @@
 import axios from 'axios';
-import { networkConfigSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { networkStore } from 'lib/sdkDappCore';
 import { ScamInfoType } from 'types/account.types';
 import { ACCOUNTS_ENDPOINT } from '../endpoints';
 
 export async function getScamAddressData(addressToVerify: string) {
   const {
     network: { apiAddress, apiTimeout }
-  } = networkConfigSelector(store.getState());
+  } = networkStore.getState();
 
   const { data } = await axios.get<{
     scamInfo?: ScamInfoType;

@@ -1,13 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Address } from '@multiversx/sdk-core/out';
-import { getServerConfiguration } from 'apiCalls';
-import { fallbackNetworkConfigurations } from 'constants/network';
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
+import { initializeNetwork } from 'lib/sdkDappCore';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import { setDappConfig } from 'reduxStore/slices';
 import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
-import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
 import {
   CustomNetworkType,
   DappConfigType,
@@ -43,43 +41,15 @@ export const useAppInitializer = ({
   const { address, publicKey } = account;
   const dispatch = useDispatch();
 
-  async function initializeNetwork() {
-    const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
-    const customNetworkApiAddress = customNetworkConfig?.apiAddress;
-    const fallbackConfig = fallbackNetworkConfigurations[environment] || {};
-
-    const localConfig = {
-      ...fallbackConfig,
-      ...customNetworkConfig
-    };
-
-    if (fetchConfigFromServer) {
-      const fallbackApiAddress = fallbackConfig?.apiAddress;
-
-      const serverConfig = await getServerConfiguration(
-        customNetworkApiAddress || fallbackApiAddress
-      );
-
-      if (serverConfig != null) {
-        const apiConfig = {
-          ...fallbackConfig,
-          ...serverConfig,
-          ...customNetworkConfig
-        };
-        dispatch(initializeNetworkConfig(apiConfig));
-        return;
-      }
-    }
-
-    dispatch(initializeNetworkConfig(localConfig));
-  }
-
   async function initializeApp() {
     if (memoizedDappConfig) {
       dispatch(setDappConfig(memoizedDappConfig));
     }
     dispatch(setLogoutRoute(logoutRoute));
-    await initializeNetwork();
+    await initializeNetwork({
+      customNetworkConfig,
+      environment
+    });
 
     setInitialized(true);
   }

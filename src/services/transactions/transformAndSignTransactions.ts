@@ -7,8 +7,9 @@ import {
   GAS_PER_DATA_BYTE,
   GAS_PRICE
 } from 'constants/index';
+import { networkStore } from 'lib/sdkDappCore';
 import { newTransaction } from 'models/newTransaction';
-import { addressSelector, chainIDSelector } from 'reduxStore/selectors';
+import { addressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import { SendSimpleTransactionPropsType } from 'types';
 
@@ -78,7 +79,7 @@ export async function transformAndSignTransactions({
       transactionNonce
     });
 
-    const storeChainId = chainIDSelector(store.getState()).valueOf().toString();
+    const storeChainId = networkStore.getState().chainID;
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
       value,

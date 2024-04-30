@@ -2,17 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 
 import { useGetAccountProvider } from 'hooks/account';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
+import { useNetworkStore } from 'lib/sdkDappCore';
 import { setAccountProvider } from 'providers/accountProvider';
 import { emptyProvider, getProviderType } from 'providers/utils';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { loginMethodSelector, logoutRouteSelector } from 'reduxStore/selectors';
-import {
-  walletConnectDeepLinkSelector,
-  walletConnectV2OptionsSelector,
-  walletConnectV2ProjectIdSelector,
-  walletConnectV2RelaySelector
-} from 'reduxStore/selectors/networkConfigSelectors';
+
 import { setWalletConnectLogin } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getHasNativeAuth } from 'utils/getHasNativeAuth';
@@ -88,12 +84,15 @@ export const useWalletConnectV2Login = ({
     useState<WalletConnectV2Provider | null>(null);
 
   const { provider } = useGetAccountProvider();
-  const walletConnectV2RelayAddress = useSelector(walletConnectV2RelaySelector);
-  const walletConnectV2ProjectId = useSelector(
-    walletConnectV2ProjectIdSelector
-  );
-  const walletConnectV2Options = useSelector(walletConnectV2OptionsSelector);
-  const walletConnectDeepLink = useSelector(walletConnectDeepLinkSelector);
+  const {
+    network: {
+      walletConnectV2RelayAddress,
+      walletConnectV2ProjectId,
+      walletConnectV2Options,
+      walletConnectDeepLink
+    }
+  } = useNetworkStore();
+
   const dappLogoutRoute = useSelector(logoutRouteSelector);
   const loginMethod = useSelector(loginMethodSelector);
   const providerRef = useRef<any>(provider);

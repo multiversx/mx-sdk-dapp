@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { GAS_LIMIT } from 'constants/index';
 
+import { networkStore } from 'lib/sdkDappCore';
 import { accountBalanceSelector } from 'reduxStore/selectors/accountInfoSelectors';
-import { chainIDSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import {
   setNotificationModal,
   setSignTransactionsCancelMessage,
@@ -29,7 +29,7 @@ export async function signTransactions({
   const appState = store.getState();
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(appState);
-  const storeChainId = chainIDSelector(appState);
+  const storeChainId = networkStore.getState().chainID;
 
   const transactionsPayload = Array.isArray(transactions)
     ? transactions

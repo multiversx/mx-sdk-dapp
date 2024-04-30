@@ -1,7 +1,5 @@
 import React from 'react';
-
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors';
+import { useNetworkStore } from 'lib/sdkDappCore';
 import { SignModalPropsType } from 'types';
 import {
   SignWaitingScreenModal,
@@ -9,7 +7,9 @@ import {
 } from '../components';
 
 export const SignWithCrossWindowWalletModal = (props: SignModalPropsType) => {
-  const { walletAddress } = useSelector(networkSelector);
+  const {
+    network: { walletAddress }
+  } = useNetworkStore();
 
   const description = props.error
     ? props.error
