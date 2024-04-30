@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react';
 import { sharedActions } from '@multiversx/sdk-dapp-core/dist/store/actions/sharedActions';
 import { useStore as useAccountStore } from '@multiversx/sdk-dapp-core/dist/store/models/account';
-import { useStore } from '@multiversx/sdk-dapp-core/dist/store/models/network/network';
+
+import { useStore as useNetworkStore } from '@multiversx/sdk-dapp-core/dist/store/models/network/network';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/dist/types/enums.types';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
@@ -44,7 +45,7 @@ export const CrossWindowLoginButton: (
     nativeAuth,
     hasConsentPopup
   });
-  const { chainID, setChainID } = useStore();
+  const { chainID, setChainID } = useNetworkStore();
   const { address, setAddress } = useAccountStore();
 
   const handleLogin = () => {
