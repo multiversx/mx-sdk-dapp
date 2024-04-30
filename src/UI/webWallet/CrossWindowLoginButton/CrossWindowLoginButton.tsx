@@ -55,11 +55,11 @@ export const CrossWindowLoginButton: (
     <>
       <table>
         <tr>
-          <td>Address:</td>
+          <td>Address: </td>
           <td>{address}</td>
         </tr>
         <tr>
-          <td>ChainID:</td>
+          <td>ChainID: </td>
           <td>{chainID}</td>
         </tr>
       </table>
