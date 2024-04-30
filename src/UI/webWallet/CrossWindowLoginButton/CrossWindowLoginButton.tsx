@@ -1,8 +1,8 @@
 import React, { ReactNode } from 'react';
 import { sharedActions } from '@multiversx/sdk-dapp-core/dist/store/actions/sharedActions';
-import { useStore as useAccountStore } from '@multiversx/sdk-dapp-core/dist/store/models/account';
+import { useStore as useAccountStore } from '@multiversx/sdk-dapp-core/dist/store/slices/account';
 
-import { useStore as useNetworkStore } from '@multiversx/sdk-dapp-core/dist/store/models/network/network';
+import { useStore as useNetworkStore } from '@multiversx/sdk-dapp-core/dist/store/slices/network/network';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/dist/types/enums.types';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useCrossWindowLogin } from 'hooks';
