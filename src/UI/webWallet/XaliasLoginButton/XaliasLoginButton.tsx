@@ -1,8 +1,7 @@
 import React from 'react';
 import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { useXaliasLogin } from 'hooks/login/useXaliasLogin';
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { xAliasAddressSelector } from 'reduxStore/selectors';
+import { useNetworkStore } from 'lib/sdkDappCore';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from '../../LoginButton/LoginButton';
 import { WebWalletLoginButtonPropsType } from '../WebWalletLoginButton';
@@ -21,7 +20,7 @@ export const XaliasLoginButton: (
   disabled,
   customWalletAddress: customXaliasAddress
 }) => {
-  const xAliasAddress = useSelector(xAliasAddressSelector);
+  const xAliasAddress = useNetworkStore().network.xAliasAddress;
 
   // if network has no configured xAlias address, disable the button
   const xAliasUrl = customXaliasAddress ?? xAliasAddress;

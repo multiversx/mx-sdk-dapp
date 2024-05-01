@@ -3,12 +3,10 @@ import reduxPersistLocalStorage from 'redux-persist/lib/storage';
 import reduxPersistSessionStorage from 'redux-persist/lib/storage/session';
 import { PersistConfig } from 'redux-persist/lib/types';
 import getRootReducer from 'reduxStore/reducers';
-import { defaultNetwork } from 'reduxStore/slices';
 import account from 'reduxStore/slices/accountInfoSlice';
 import batchTransactions from 'reduxStore/slices/batchTransactionsSlice';
 import loginInfo from 'reduxStore/slices/loginInfoSlice';
 import modals from 'reduxStore/slices/modalsSlice';
-import networkConfig from 'reduxStore/slices/networkConfigSlice';
 import { signedMessageInfoReducer } from 'reduxStore/slices/signedMessageInfoSlice';
 import toasts from 'reduxStore/slices/toastsSlice';
 import transactionsInfo from 'reduxStore/slices/transactionsInfoSlice';
@@ -24,8 +22,7 @@ const config: {
 const persistMapping = {
   [ReducersEnum.account]: 'sdk-dapp-account',
   [ReducersEnum.loginInfo]: 'sdk-dapp-login-info',
-  [ReducersEnum.modals]: 'sdk-dapp-modals',
-  [ReducersEnum.networkConfig]: 'sdk-dapp-network-config'
+  [ReducersEnum.modals]: 'sdk-dapp-modals'
 };
 
 const accountReducerPersistConfig = getSessionStoragePersistConfig(
@@ -37,15 +34,11 @@ const loginInfReducerPersistConfig = getSessionStoragePersistConfig(
 const modalsReducerPersistConfig = getSessionStoragePersistConfig(
   persistMapping[ReducersEnum.modals]
 );
-const networkConfigReducerPersistConfig = getSessionStoragePersistConfig(
-  persistMapping[ReducersEnum.networkConfig]
-);
 
 const migrations: any = {
   2: (state: any) => {
     return {
-      ...state,
-      networkConfig: defaultNetwork
+      ...state
     };
   }
 };
@@ -116,11 +109,7 @@ const fullSessionReducers = {
     loginInfReducerPersistConfig,
     loginInfo
   ),
-  [ReducersEnum.modals]: persistReducer(modalsReducerPersistConfig, modals),
-  [ReducersEnum.networkConfig]: persistReducer(
-    networkConfigReducerPersistConfig,
-    networkConfig
-  )
+  [ReducersEnum.modals]: persistReducer(modalsReducerPersistConfig, modals)
 };
 
 const isPersistToLocalStorage =

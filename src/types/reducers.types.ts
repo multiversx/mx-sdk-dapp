@@ -4,7 +4,6 @@ export enum ReducersEnum {
   dappConfig = 'dappConfig',
   loginInfo = 'loginInfo',
   modals = 'modals',
-  networkConfig = 'networkConfig',
   signedMessageInfo = 'signedMessageInfo',
   toasts = 'toasts',
   transactions = 'transactions',

@@ -1,6 +1,5 @@
-import { networkSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { networkStore } from 'lib/sdkDappCore';
 
 export function getNetworkConfig() {
-  return networkSelector(store.getState());
+  return networkStore.getState();
 }

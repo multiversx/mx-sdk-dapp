@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
-import { getEnvironmentForChainId, getNetworkConfigFromApi } from 'apiCalls';
+import { getEnvironmentForChainId } from 'apiCalls';
+import { useGetNetworkConfig } from 'hooks';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
-import { useNetwork } from 'hooks/store/useNetworkStore';
 import { refreshChainID } from 'lib/sdkDappCore';
 import {
   setAccountProvider,
@@ -56,7 +56,7 @@ import { useSetLedgerProvider } from './hooks';
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
-  const { network, chainID, setChainID } = useNetwork();
+  const { network, chainID } = useGetNetworkConfig();
   const walletAddress = network.walletAddress;
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);

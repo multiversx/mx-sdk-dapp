@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { TIMEOUT } from 'constants/network';
 import { buildBatchId } from 'hooks/transactions/helpers/buildBatchId';
-import { addressSelector, networkSelector } from 'reduxStore/selectors';
+import { networkStore } from 'lib/sdkDappCore';
+import { addressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import {
   BatchTransactionsRequestType,
@@ -28,7 +29,9 @@ export async function sendSignedBatchTransactions({
   sessionId
 }: SendBatchTransactionsPropsType) {
   const address = addressSelector(store.getState());
-  const { apiAddress, apiTimeout } = networkSelector(store.getState());
+  const {
+    network: { apiAddress, apiTimeout }
+  } = networkStore.getState();
 
   if (!address) {
     return {

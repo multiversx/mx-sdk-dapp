@@ -3,10 +3,10 @@ import { getScamAddressData } from 'apiCalls/utils/getScamAddressData';
 
 import { useGetAccountInfo } from 'hooks/account/useGetAccountInfo';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
+import { useNetwork } from 'hooks/store/useNetworkStore';
 import { useSignMultipleTransactions } from 'hooks/transactions/useSignMultipleTransactions';
 
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { egldLabelSelector, walletAddressSelector } from 'reduxStore/selectors';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsError
@@ -57,10 +57,9 @@ export function useSignTransactionsWithDevice(
   const { onCancel, verifyReceiverScam = true, hasGuardianScreen } = props;
   const { transactionsToSign, hasTransactions } =
     useSignTransactionsCommonData();
-  const walletAddress = useSelector(walletAddressSelector);
   const getLedgerProvider = useGetLedgerProvider();
 
-  const egldLabel = useSelector(egldLabelSelector);
+  const { egldLabel, walletAddress } = useNetwork();
   const { account } = useGetAccountInfo();
   const { address, isGuarded, activeGuardianAddress } = account;
   const { provider, providerType } = useGetAccountProvider();

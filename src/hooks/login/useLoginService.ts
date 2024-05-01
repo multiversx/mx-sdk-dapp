@@ -1,8 +1,9 @@
 import { useRef } from 'react';
 import { Address, SignableMessage } from '@multiversx/sdk-core';
 import { useGetAccount } from 'hooks/account';
+import { useNetwork } from 'hooks/store/useNetworkStore';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector, tokenLoginSelector } from 'reduxStore/selectors';
+import { tokenLoginSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { nativeAuth } from 'services/nativeAuth';
 import { getNativeAuthConfig } from 'services/nativeAuth/methods';
@@ -22,7 +23,7 @@ const getApiAddress = (
 };
 
 export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
-  const network = useSelector(networkSelector);
+  const network = useNetwork();
   const tokenLogin = useSelector(tokenLoginSelector);
   const tokenRef = useRef(tokenLogin?.loginToken);
 

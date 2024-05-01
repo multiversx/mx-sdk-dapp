@@ -7,8 +7,9 @@ import {
   TRANSACTION_CANCELLED,
   WALLET_SIGN_SESSION
 } from 'constants/index';
+import { useNetwork } from 'hooks/store/useNetworkStore';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { dappConfigSelector, networkSelector } from 'reduxStore/selectors';
+import { dappConfigSelector } from 'reduxStore/selectors';
 import {
   moveTransactionsToSignedState,
   setSignTransactionsCancelMessage
@@ -25,7 +26,7 @@ const location = getWindowLocation();
 export function useParseSignedTransactions(
   onAbort: (sessionId?: string) => void
 ) {
-  const network = useSelector(networkSelector);
+  const network = useNetwork();
   const dispatch = useDispatch();
   const { shouldFetchWalletUrlOnLoad } = useSelector(dappConfigSelector);
 

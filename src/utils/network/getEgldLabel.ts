@@ -1,6 +1,5 @@
-import { egldLabelSelector } from 'reduxStore/selectors';
-import { store } from 'reduxStore/store';
+import { networkStore } from 'lib/sdkDappCore';
 
 export function getEgldLabel() {
-  return egldLabelSelector(store.getState());
+  return networkStore.getState().network.egldLabel;
 }

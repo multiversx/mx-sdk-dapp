@@ -2,11 +2,11 @@ import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { isBrowserWithPopupConfirmation } from 'constants/browser';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useNetwork } from 'hooks/store/useNetworkStore';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import { setAccount } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
@@ -39,7 +39,7 @@ export const useCrossWindowLogin = ({
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
-  const network = useSelector(networkSelector);
+  const network = useNetwork();
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();

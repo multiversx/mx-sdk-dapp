@@ -1,6 +1,5 @@
-import { useSelector } from 'reduxStore/DappProviderContext';
-import { networkConfigSelector } from 'reduxStore/selectors';
+import { useNetworkStore } from 'lib/sdkDappCore';
 
 export const useGetNetworkConfig = () => {
-  return useSelector(networkConfigSelector);
+  return useNetworkStore();
 };
