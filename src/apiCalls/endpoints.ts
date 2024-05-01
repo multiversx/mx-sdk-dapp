@@ -24,4 +24,4 @@ export {
   TRANSACTIONS_BATCH,
   TRANSACTIONS_ENDPOINT,
   TRANSFERS_ENDPOINT
-} from '@multiversx/sdk-dapp-core/dist/apiCalls/endpoints';
+} from '@multiversx/sdk-dapp-core/out/apiCalls/endpoints';
