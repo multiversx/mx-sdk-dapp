@@ -4,8 +4,7 @@ import * as endpoints from '@multiversx/sdk-dapp-core/out/apiCalls/endpoints';
 export { endpoints };
 export {
   getCleanApiAddress,
-  initializeNetwork,
-  refreshChainID
+  initializeNetwork
 } from '@multiversx/sdk-dapp-core/out/store/slices/network/actions/index';
 export {
   store as networkStore,

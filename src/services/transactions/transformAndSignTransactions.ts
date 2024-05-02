@@ -79,7 +79,7 @@ export async function transformAndSignTransactions({
       transactionNonce
     });
 
-    const storeChainId = networkStore.getState().chainID;
+    const storeChainId = networkStore.getState().network.chainId;
     const transactionsChainId = chainID || storeChainId;
     return newTransaction({
       value,

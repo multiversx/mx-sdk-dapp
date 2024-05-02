@@ -29,7 +29,7 @@ export async function signTransactions({
   const appState = store.getState();
   const sessionId = Date.now().toString();
   const accountBalance = accountBalanceSelector(appState);
-  const storeChainId = networkStore.getState().chainID;
+  const storeChainId = networkStore.getState().network.chainId;
 
   const transactionsPayload = Array.isArray(transactions)
     ? transactions

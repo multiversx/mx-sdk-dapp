@@ -3,7 +3,6 @@ import { getEnvironmentForChainId } from 'apiCalls';
 import { useGetNetworkConfig } from 'hooks';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
-import { refreshChainID } from 'lib/sdkDappCore';
 import {
   setAccountProvider,
   setExternalProviderAsAccountProvider
@@ -56,7 +55,7 @@ import { useSetLedgerProvider } from './hooks';
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
-  const { network, chainID } = useGetNetworkConfig();
+  const { network } = useGetNetworkConfig();
   const walletAddress = network.walletAddress;
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
   const loginMethod = useSelector(loginMethodSelector);
@@ -86,12 +85,8 @@ export function ProviderInitializer() {
   });
 
   useEffect(() => {
-    refreshChainID();
-  }, [network]);
-
-  useEffect(() => {
     initializeProvider();
-  }, [loginMethod, chainID]);
+  }, [loginMethod]);
 
   useEffect(() => {
     fetchAccount();
@@ -265,7 +260,7 @@ export function ProviderInitializer() {
   }
 
   async function initializeProvider() {
-    const isValidEnvironment = getEnvironmentForChainId(chainID);
+    const isValidEnvironment = getEnvironmentForChainId(network.chainId);
 
     if (loginMethod == null || initalizingLedger || !isValidEnvironment) {
       return;

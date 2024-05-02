@@ -45,7 +45,10 @@ export const CrossWindowLoginButton: (
     nativeAuth,
     hasConsentPopup
   });
-  const { chainID, setChainID } = useNetworkStore();
+  const {
+    setCustomWalletAddress,
+    network: { customWalletAddress }
+  } = useNetworkStore();
   const { address, setAddress } = useAccountStore();
 
   const handleLogin = () => {
@@ -60,15 +63,15 @@ export const CrossWindowLoginButton: (
           <td>{address}</td>
         </tr>
         <tr>
-          <td>ChainID: </td>
-          <td>{chainID}</td>
+          <td>Wallet Addr: </td>
+          <td>{customWalletAddress}</td>
         </tr>
       </table>
       <button
         onClick={() => {
-          chainID === EnvironmentsEnum.devnet
-            ? setChainID(EnvironmentsEnum.mainnet)
-            : setChainID(EnvironmentsEnum.devnet);
+          customWalletAddress === ''
+            ? setCustomWalletAddress(EnvironmentsEnum.mainnet)
+            : setCustomWalletAddress(EnvironmentsEnum.devnet);
           setAddress('111');
         }}
       >

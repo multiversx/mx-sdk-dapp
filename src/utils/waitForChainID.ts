@@ -11,11 +11,11 @@ export const waitForChainID = ({
 
     // Function to periodically check the value of chainID
     const checkChainID = () => {
-      const { chainID } = networkStore.getState();
-      const isValidEnvironment = getEnvironmentForChainId(chainID);
+      const { chainId } = networkStore.getState().network;
+      const isValidEnvironment = getEnvironmentForChainId(chainId);
 
       if (Boolean(isValidEnvironment)) {
-        resolve(chainID);
+        resolve(chainId);
         return;
       }
 
