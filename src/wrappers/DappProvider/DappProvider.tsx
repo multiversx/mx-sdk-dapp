@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import { Logger } from '@multiversx/sdk-dapp-core';
+import { Logger } from '@multiversx/sdk-dapp-core/out/core/Logger';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';

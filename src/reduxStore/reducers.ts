@@ -6,7 +6,6 @@ import batchTransactions from './slices/batchTransactionsSlice';
 import dappConfig from './slices/dappConfigSlice';
 import loginInfo from './slices/loginInfoSlice';
 import modals from './slices/modalsSlice';
-// import networkConfig from './slices/networkConfigSlice';
 import { signedMessageInfoReducer } from './slices/signedMessageInfoSlice';
 import toasts from './slices/toastsSlice';
 import transactionsInfo from './slices/transactionsInfoSlice';
@@ -17,7 +16,6 @@ const reducers = {
   [ReducersEnum.dappConfig]: dappConfig,
   [ReducersEnum.loginInfo]: loginInfo,
   [ReducersEnum.modals]: modals,
-  // [ReducersEnum.networkConfig]: networkConfig,
   [ReducersEnum.signedMessageInfo]: signedMessageInfoReducer,
   [ReducersEnum.toasts]: toasts,
   [ReducersEnum.transactionsInfo]: transactionsInfo,

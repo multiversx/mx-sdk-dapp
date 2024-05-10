@@ -7,6 +7,6 @@ export {
   initializeNetwork
 } from '@multiversx/sdk-dapp-core/out/store/slices/network/actions/index';
 export {
-  store as networkStore,
-  useStore as useNetworkStore
+  networkStore,
+  useNetworkStore
 } from '@multiversx/sdk-dapp-core/out/store/slices/network/network';
