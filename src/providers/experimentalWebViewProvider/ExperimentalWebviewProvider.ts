@@ -94,5 +94,14 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return await this._provider.isConnected();
   };
 
+  sendCustomRequest = async (payload: {
+    request: { method: string; params: any };
+  }) => {
+    this._provider.sendPostMessage({
+      type: payload.request.method as any,
+      payload: payload.request.params
+    });
+  };
+
   getAddress = providerNotInitializedError('getAddress');
 }
