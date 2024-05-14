@@ -4,7 +4,7 @@ import { axiosInstance } from 'apiCalls/utils/axiosInstance';
 
 export const accountFetcher = (address: string | null) => {
   const apiAddress = getCleanApiAddress();
-  const url = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
+  const url = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true&hasAssets=true`;
   return axiosInstance.get(url);
 };
 

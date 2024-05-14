@@ -4,6 +4,6 @@ import { useApiFetch } from '../utils';
 export const useGetAccountFromApi = (address: string | null) =>
   useApiFetch({
     apiEndpoint: address
-      ? `${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`
+      ? `${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true&hasAssets=true`
       : null
   });
