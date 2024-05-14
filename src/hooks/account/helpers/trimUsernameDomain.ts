@@ -3,8 +3,8 @@ export const trimUsernameDomain = (username?: string) => {
     return;
   }
 
-  const dotExists = username.lastIndexOf('.') > 0;
-  const trimmedPartBeforeLastDot = dotExists
+  const elrondSuffixExists = username.lastIndexOf('.elrond') > 0;
+  const trimmedPartBeforeLastDot = elrondSuffixExists
     ? username.substring(0, username.lastIndexOf('.'))
     : username;
 
