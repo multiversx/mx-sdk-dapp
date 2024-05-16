@@ -32,7 +32,6 @@ export interface AccountInfoSliceType {
   publicKey: string;
   ledgerAccount: LedgerAccountType | null;
   walletConnectAccount: string | null;
-  isAccountLoading: boolean;
   websocketEvent: {
     timestamp: number;
     message: string;
@@ -41,7 +40,6 @@ export interface AccountInfoSliceType {
     timestamp: number;
     data: BatchTransactionsWSResponseType;
   } | null;
-  accountLoadingError: string | null;
 }
 
 export const emptyAccount: AccountType = {
@@ -61,35 +59,26 @@ const initialState: AccountInfoSliceType = {
   accounts: { '': emptyAccount },
   ledgerAccount: null,
   publicKey: '',
-  walletConnectAccount: null,
-  isAccountLoading: true,
-  accountLoadingError: null
+  walletConnectAccount: null
 };
 
 export const accountInfoSlice = createSlice({
   name: 'accountInfoSlice',
   initialState: initialState,
   reducers: {
-    setAddress: (
-      state: AccountInfoSliceType,
-      action: PayloadAction<string>
-    ) => {
-      const address = action.payload;
-      state.address = address;
-      state.publicKey = address ? new Address(address).hex() : '';
-    },
     setAccount: (
       state: AccountInfoSliceType,
       action: PayloadAction<AccountType>
     ) => {
+      state.address = action.payload.address;
+      state.publicKey = new Address(action.payload.address).hex();
+
       // account fetching always comes after address is populated
-      const isSameAddress = state.address === action.payload.address;
+
       state.accounts = {
-        [state.address]: isSameAddress ? action.payload : emptyAccount
+        [state.address]: action.payload
       };
       state.shard = action.payload.shard;
-      state.isAccountLoading = false;
-      state.accountLoadingError = null;
     },
     setAccountNonce: (
       state: AccountInfoSliceType,
@@ -125,20 +114,7 @@ export const accountInfoSlice = createSlice({
     ) => {
       state.walletConnectAccount = action.payload;
     },
-    setIsAccountLoading: (
-      state: AccountInfoSliceType,
-      action: PayloadAction<boolean>
-    ) => {
-      state.isAccountLoading = action.payload;
-      state.accountLoadingError = null;
-    },
-    setAccountLoadingError: (
-      state: AccountInfoSliceType,
-      action: PayloadAction<string | null>
-    ) => {
-      state.accountLoadingError = action.payload;
-      state.isAccountLoading = false;
-    },
+
     setWebsocketEvent: (
       state: AccountInfoSliceType,
       action: PayloadAction<string>
@@ -169,7 +145,9 @@ export const accountInfoSlice = createSlice({
         state: AccountInfoSliceType,
         action: PayloadAction<LoginActionPayloadType>
       ) => {
-        const { address } = action.payload;
+        const {
+          account: { address }
+        } = action.payload;
         state.address = address;
         state.publicKey = new Address(address).hex();
       }
@@ -193,14 +171,11 @@ export const accountInfoSlice = createSlice({
 
 export const {
   setAccount,
-  setAddress,
   setAccountNonce,
   setAccountShard,
   setLedgerAccount,
   updateLedgerAccount,
   setWalletConnectAccount,
-  setIsAccountLoading,
-  setAccountLoadingError,
   setWebsocketEvent,
   setWebsocketBatchEvent
 } = accountInfoSlice.actions;

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
+import { getAccountFromApi } from 'apiCalls';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -99,8 +100,13 @@ export const useMetamaskLogin = ({
         });
       }
 
+      const account = await getAccountFromApi(address);
+
       dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.metamask })
+        loginAction({
+          account,
+          loginMethod: LoginMethodsEnum.metamask
+        })
       );
 
       optionalRedirect({

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { getAccountFromApi } from 'apiCalls';
 import { useGetAccountProvider } from 'hooks/account';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { useNetworkStore } from 'lib/sdkDappCore';
@@ -152,8 +153,11 @@ export const useWalletConnectV2Login = ({
       }
 
       const signature = await providerRef.current?.getSignature();
+
+      const account = await getAccountFromApi(address);
+
       const loginActionData = {
-        address: address,
+        account,
         loginMethod: LoginMethodsEnum.walletconnectv2
       };
 

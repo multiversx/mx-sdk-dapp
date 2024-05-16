@@ -24,13 +24,11 @@ import {
 
 import {
   setAccount,
-  setIsAccountLoading,
-  setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
   setTokenLogin,
   setIsWalletConnectV2Initialized,
-  setAddress
+  emptyAccount
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -111,12 +109,10 @@ export function ProviderInitializer() {
   }
 
   async function fetchAccount() {
-    dispatch(setIsAccountLoading(true));
-
     if (initializedAccountRef.current) {
       // account was recently initialized, skip refetching
       initializedAccountRef.current = false;
-      dispatch(setIsAccountLoading(false));
+
       return;
     }
 
@@ -134,15 +130,12 @@ export function ProviderInitializer() {
           );
         } else if (!isLoggedIn) {
           // Clear the address and publicKey if account is not found
-          dispatch(setAddress(''));
+          dispatch(setAccount(emptyAccount));
         }
       } catch (e) {
-        dispatch(setAccountLoadingError('Failed getting account'));
         console.error('Failed getting account ', e);
       }
     }
-
-    dispatch(setIsAccountLoading(false));
   }
 
   async function tryAuthenticateWalletUser() {
@@ -186,14 +179,6 @@ export function ProviderInitializer() {
 
       if (account) {
         initializedAccountRef.current = true;
-        dispatch(setIsAccountLoading(true));
-
-        dispatch(
-          loginAction({
-            address: account.address,
-            loginMethod: LoginMethodsEnum.wallet
-          })
-        );
 
         dispatch(
           setAccount({
@@ -201,7 +186,13 @@ export function ProviderInitializer() {
             nonce: getLatestNonce(account)
           })
         );
-        dispatch(setIsAccountLoading(false));
+
+        dispatch(
+          loginAction({
+            account,
+            loginMethod: LoginMethodsEnum.wallet
+          })
+        );
       }
 
       clearNavigationHistory();

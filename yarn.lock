@@ -4737,9 +4737,9 @@
     form-data "^4.0.0"
 
 "@types/node@*", "@types/node@>=13.7.0":
-  version "20.12.10"
-  resolved "https://registry.npmjs.org/@types/node/-/node-20.12.10.tgz"
-  integrity sha512-Eem5pH9pmWBHoGAT8Dr5fdc5rYA+4NAovdM4EktRPVAAiJhmWWfQrA0cFhAbOsQdSfIHjAud6YdkbL69+zSKjw==
+  version "20.12.11"
+  resolved "https://registry.npmjs.org/@types/node/-/node-20.12.11.tgz"
+  integrity sha512-vDg9PZ/zi+Nqp6boSOT7plNuthRugEKixDv5sFTIpkE89MmNtEArAShI4mxuX2+UrLEe9pxC1vm2cjm9YlWbJw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -5636,10 +5636,10 @@ acorn@^7.4.1:
   resolved "https://registry.npmjs.org/acorn/-/acorn-7.4.1.tgz"
   integrity sha512-nQyp0o1/mNdbTO1PO6kHkwSrmgZ0MT/jCCpNiwbUjGoRN4dlBhqJtoQuCnEOKzgTVwg0ZWiCoQy6SxMebQVh8A==
 
-address@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/address/-/address-2.0.2.tgz"
-  integrity sha512-u6nFssvaX9RHQmjMSqgT7b7QJbf/5/U8+ntbTL8vgABfIiEmm02ZSM5MwljKjCrIrm7iIbgYEya2YW6AaRccVA==
+address@^1.0.1:
+  version "1.2.2"
+  resolved "https://registry.npmjs.org/address/-/address-1.2.2.tgz"
+  integrity sha512-4B/qKCfeE/ODUaAUpSwfzazo5x29WD4r3vXiWsB7I2mSDAihwEqKO+g8GELZUQSSAo5e1XTYh3ZVfLyxBc12nA==
 
 agent-base@6:
   version "6.0.2"
@@ -6862,9 +6862,9 @@ can-bind-to-host@^1.1.1:
   integrity sha512-CqsgmaqiyFRNtP17Ihqa/uHbZxRirntNVNl/kJz31DLKuNRfzvzionkLoUSkElQ6Cz+cpXKA3mhHq4tjbieujA==
 
 caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001587:
-  version "1.0.30001616"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001616.tgz"
-  integrity sha512-RHVYKov7IcdNjVHJFNY/78RdG4oGVjbayxv8u5IO74Wv7Hlq4PnJE6mo/OjFijjVFNy5ijnCt6H3IIo4t+wfEw==
+  version "1.0.30001617"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001617.tgz"
+  integrity sha512-mLyjzNI9I+Pix8zwcrpxEbGlfqOkF9kM3ptzmKNw5tizSyYwMe+nGLTqMK9cO+0E+Bh6TsBxNAaHWEM8xwSsmA==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -7968,11 +7968,12 @@ detect-package-manager@^2.0.1:
     execa "^5.1.1"
 
 detect-port@^1.3.0:
-  version "1.6.0"
-  resolved "https://registry.npmjs.org/detect-port/-/detect-port-1.6.0.tgz"
-  integrity sha512-iKO0phS1ebSLst7ULM1hw4qjndYHqyKe76Pk0q+QDvoANFth/f9Pp6oSZzOIM367SeRi+ufseIGvIiThTPERSg==
+  version "1.6.1"
+  resolved "https://registry.npmjs.org/detect-port/-/detect-port-1.6.1.tgz"
+  integrity sha512-CmnVc+Hek2egPx1PeTFVta2W78xy2K/9Rkf6cC4T59S50tVnzKj+tnx5mmx5lwvCkujZ4uRrpRSuV+IVs3f90Q==
   dependencies:
-    address "^2.0.2"
+    address "^1.0.1"
+    debug "4"
 
 diff-sequences@^28.1.1:
   version "28.1.1"
@@ -8190,9 +8191,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.668:
-  version "1.4.758"
-  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.758.tgz"
-  integrity sha512-/o9x6TCdrYZBMdGeTifAP3wlF/gVT+TtWJe3BSmtNh92Mw81U9hrYwW9OAGUh+sEOX/yz5e34sksqRruZbjYrw==
+  version "1.4.762"
+  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.762.tgz"
+  integrity sha512-rrFvGweLxPwwSwJOjIopy3Vr+J3cIPtZzuc74bmlvmBIgQO3VYJDvVrlj94iKZ3ukXUH64Ex31hSfRTLqvjYJQ==
 
 element-resize-detector@^1.2.2:
   version "1.2.4"
@@ -10507,9 +10508,9 @@ ipaddr.js@1.9.1:
   integrity sha512-0KI/607xoxSToH7GjN1FfSbLoU0+btTicjsQSWQlh/hZykN8KpmMf7uYwPW3R+akZ6R/w18ZlXSHBYXiYUPO3g==
 
 iron-webcrypto@^1.0.0:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/iron-webcrypto/-/iron-webcrypto-1.1.1.tgz"
-  integrity sha512-5xGwQUWHQSy039rFr+5q/zOmj7GP0Ypzvo34Ep+61bPIhaLduEDp/PvLGlU3awD2mzWUR0weN2vJ1mILydFPEg==
+  version "1.2.1"
+  resolved "https://registry.npmjs.org/iron-webcrypto/-/iron-webcrypto-1.2.1.tgz"
+  integrity sha512-feOM6FaSr6rEABp/eDfVseKyTMDt+KGpeB35SkVn9Tyn0CqvVsY3EwI0v5i8nMHyJnzCIQf7nsy3p41TPkJZhg==
 
 is-absolute-url@^3.0.0:
   version "3.0.3"
@@ -12917,7 +12918,7 @@ mkdirp@^1.0.4:
   resolved "https://registry.npmjs.org/mkdirp/-/mkdirp-1.0.4.tgz"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
-mlly@^1.6.1:
+mlly@^1.6.1, mlly@^1.7.0:
   version "1.7.0"
   resolved "https://registry.npmjs.org/mlly/-/mlly-1.7.0.tgz"
   integrity sha512-U9SDaXGEREBYQgfejV97coK0UL1r+qnF2SyO9A3qcI8MzKnsIFKHNVEkrDyNncQTKQQumsasmeq84eNMdBfsNQ==
@@ -13944,12 +13945,12 @@ pkg-dir@^5.0.0:
     find-up "^5.0.0"
 
 pkg-types@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/pkg-types/-/pkg-types-1.1.0.tgz"
-  integrity sha512-/RpmvKdxKf8uILTtoOhAgf30wYbP2Qw+L9p3Rvshx1JZVX+XQNZQFjlbmGHEGIm4CkVPlSn+NXmIM8+9oWQaSA==
+  version "1.1.1"
+  resolved "https://registry.npmjs.org/pkg-types/-/pkg-types-1.1.1.tgz"
+  integrity sha512-ko14TjmDuQJ14zsotODv7dBlwxKhUKQEhuhmbqo1uCi9BB0Z2alo/wAXg6q1dTR5TyuqYyWhjtfe/Tsh+X28jQ==
   dependencies:
     confbox "^0.1.7"
-    mlly "^1.6.1"
+    mlly "^1.7.0"
     pathe "^1.1.2"
 
 platform@1.3.6:
@@ -15404,14 +15405,14 @@ semver@^6.1.2, semver@^6.3.0, semver@^6.3.1:
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
 
 semver@^7.0.0, semver@^7.3.2, semver@^7.3.5, semver@^7.3.7, semver@^7.3.8, semver@^7.5.3, semver@^7.5.4:
-  version "7.6.1"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.6.1.tgz"
-  integrity sha512-f/vbBsu+fOiYt+lmwZV0rVwJScl46HppnOA1ZvIuBWKOTlllpyJ3bfVax76/OrhCH38dyxoDIA8K7uB963IYgA==
+  version "7.6.2"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.6.2.tgz"
+  integrity sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==
 
 semver@^7.3.4:
-  version "7.6.1"
-  resolved "https://registry.npmjs.org/semver/-/semver-7.6.1.tgz"
-  integrity sha512-f/vbBsu+fOiYt+lmwZV0rVwJScl46HppnOA1ZvIuBWKOTlllpyJ3bfVax76/OrhCH38dyxoDIA8K7uB963IYgA==
+  version "7.6.2"
+  resolved "https://registry.npmjs.org/semver/-/semver-7.6.2.tgz"
+  integrity sha512-FNAIBWCx9qcRhoHcgcJ0gvU7SN1lYU2ZXuSfl04bSC5OpvDHFyJCjdNHomPXxjQlCBU67YW64PzY7/VIEH7F2w==
 
 "semver@2 || 3 || 4 || 5":
   version "5.7.2"

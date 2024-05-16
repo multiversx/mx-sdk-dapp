@@ -1,10 +1,6 @@
 import React, { ReactNode, useEffect } from 'react';
 import { useSelector } from 'reduxStore/DappProviderContext';
-import {
-  isAccountLoadingSelector,
-  isLoggedInSelector,
-  walletLoginSelector
-} from 'reduxStore/selectors';
+import { isLoggedInSelector, walletLoginSelector } from 'reduxStore/selectors';
 
 import { RouteType } from 'types';
 import { getSearchParamAddress } from 'utils/account/getSearchParamAddress';
@@ -28,7 +24,6 @@ export const AuthenticatedRoutesWrapper = ({
 }) => {
   const searchParamAddress = getSearchParamAddress();
   const isLoggedIn = useSelector(isLoggedInSelector);
-  const isAccountLoading = useSelector(isAccountLoadingSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const isWebviewLogin = Boolean(getWebviewToken());
 
@@ -64,7 +59,7 @@ export const AuthenticatedRoutesWrapper = ({
 
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
 
-  if (isAccountLoading || isValidWalletLoginAttempt) {
+  if (isValidWalletLoginAttempt) {
     return null;
   }
 
