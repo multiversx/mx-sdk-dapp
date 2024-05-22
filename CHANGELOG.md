@@ -6,8 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.32.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1175)] - 2024-05-22
+- [Fixed signing in custom environment](https://github.com/multiversx/mx-sdk-dapp/pull/1174)
 
-## [[v2.32.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1173)] - 2024-03-14
+## [[v2.32.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1173)] - 2024-05-14
 - [Fixed username trim removes information after dot](https://github.com/multiversx/mx-sdk-dapp/pull/1172)
 
 ## [[v2.32.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1171)] - 2024-05-13
