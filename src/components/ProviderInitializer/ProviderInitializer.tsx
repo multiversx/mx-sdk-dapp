@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getEnvironmentForChainId, getNetworkConfigFromApi } from 'apiCalls';
+import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import {
@@ -280,9 +280,7 @@ export function ProviderInitializer() {
   }
 
   async function initializeProvider() {
-    const isValidEnvironment = getEnvironmentForChainId(chainID);
-
-    if (loginMethod == null || initalizingLedger || !isValidEnvironment) {
+    if (loginMethod == null || initalizingLedger) {
       return;
     }
 
