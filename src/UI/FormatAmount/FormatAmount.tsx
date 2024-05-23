@@ -1,13 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
-import {
-  DataTestIdsEnum,
-  DECIMALS,
-  DIGITS,
-  MAINNET_EGLD_LABEL,
-  ZERO
-} from 'constants/index';
+import { DataTestIdsEnum, DECIMALS, DIGITS, ZERO } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { getEgldLabel } from 'utils/network/getEgldLabel';
 import { formatAmount } from 'utils/operations/formatAmount';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 import { FormatAmountPropsType } from './formatAmount.types';
@@ -121,7 +116,7 @@ const FormatAmountComponent = (
 const FormatAmountWrapper = (
   props: FormatAmountPropsType & WithStylesImportType
 ) => {
-  const egldLabel = props.egldLabel || MAINNET_EGLD_LABEL;
+  const egldLabel = props.egldLabel || getEgldLabel();
 
   const formatAmountProps = { ...props, egldLabel };
 
