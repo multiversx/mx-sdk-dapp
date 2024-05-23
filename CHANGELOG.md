@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v2.32.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1177)] - 2024-05-22
 - [Use egld label from active network for FromatAmount component](https://github.com/multiversx/mx-sdk-dapp/pull/1176)
 
 ## [[v2.32.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1175)] - 2024-05-22
