@@ -98,10 +98,6 @@ export async function logout(
     store.dispatch(logoutAction());
 
     if (isWalletProvider) {
-      if (!isProviderInitialised) {
-        return;
-      }
-
       // Allow redux store cleanup before redirect to web wallet
       return setTimeout(() => {
         provider.logout({ callbackUrl: url });
@@ -119,6 +115,7 @@ export async function logout(
 
     await provider.logout({ callbackUrl: url });
   } catch (err) {
+    console.error('Logging out error:', err);
   } finally {
     if (!isWalletProvider) {
       redirectToCallbackUrl({

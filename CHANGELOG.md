@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.32.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1179)] - 2024-05-29
+- [Fixed web wallet url logout no redirect](https://github.com/multiversx/mx-sdk-dapp/pull/1178)
+- [Upgrade sdk-web-wallet-cross-window-provider and remove lit dependency](https://github.com/multiversx/mx-sdk-dapp/pull/1179)
+
 ## [[v2.32.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1177)] - 2024-05-23
 - [Use egld label from active network for FromatAmount component](https://github.com/multiversx/mx-sdk-dapp/pull/1176)
 
