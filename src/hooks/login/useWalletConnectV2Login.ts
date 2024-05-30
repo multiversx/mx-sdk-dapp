@@ -32,7 +32,6 @@ import {
   OnProviderLoginType
 } from '../../types/login.types';
 import { useLoginService } from './useLoginService';
-import { getIsProviderEqualTo } from 'utils/account/getIsProviderEqualTo';
 
 export enum WalletConnectV2Error {
   invalidAddress = 'Invalid address',
@@ -100,7 +99,6 @@ export const useWalletConnectV2Login = ({
   const providerRef = useRef<any>(provider);
   const isInitialisingRef = useRef<boolean>(false);
   const mounted = useRef(false);
-  const isWalletProvider = getIsProviderEqualTo(LoginMethodsEnum.wallet);
   const logoutRoute = providerLogoutRoute ?? dappLogoutRoute ?? '/';
   const dappMethods: string[] = [
     WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
@@ -146,7 +144,7 @@ export const useWalletConnectV2Login = ({
         return;
       }
 
-      const address = await providerRef.current?.getAddress();
+      const address = await providerRef.current?.getAddress?.();
 
       if (!address) {
         console.warn('Login cancelled.');
@@ -237,7 +235,11 @@ export const useWalletConnectV2Login = ({
         loginService.setLoginToken(token);
       }
 
-      if (isWalletProvider) {
+      const providerType = providerRef.current
+        ? getProviderType(providerRef.current)
+        : false;
+
+      if (providerType !== LoginMethodsEnum.walletconnectv2) {
         // Prevent redirecting to wallet login hook
         setIsLoading(true);
         await initiateLogin();
@@ -388,8 +390,14 @@ export const useWalletConnectV2Login = ({
         loginService.setLoginToken(token);
       }
 
-      if (isWalletProvider) {
+      const providerType = providerRef.current
+        ? getProviderType(providerRef.current)
+        : false;
+
+      if (providerType !== LoginMethodsEnum.walletconnectv2) {
         // Prevent redirecting to wallet login hook
+        setIsLoading(true);
+        await initiateLogin();
         return;
       }
 
