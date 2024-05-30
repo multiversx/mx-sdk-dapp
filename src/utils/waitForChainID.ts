@@ -1,4 +1,3 @@
-import { getEnvironmentForChainId } from 'apiCalls';
 import { chainIDSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 
@@ -13,9 +12,8 @@ export const waitForChainID = ({
     // Function to periodically check the value of chainID
     const checkChainID = () => {
       const chainID = chainIDSelector(store.getState());
-      const isValidEnvironment = getEnvironmentForChainId(chainID);
 
-      if (Boolean(isValidEnvironment)) {
+      if (chainID) {
         resolve(chainID);
         return;
       }
