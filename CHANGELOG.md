@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed walletconnect infinite loading when using custom network config](https://github.com/multiversx/mx-sdk-dapp/pull/1180)
+
 ## [[v2.32.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1179)] - 2024-05-29
 - [Fixed web wallet url logout no redirect](https://github.com/multiversx/mx-sdk-dapp/pull/1178)
 - [Upgrade sdk-web-wallet-cross-window-provider and remove lit dependency](https://github.com/multiversx/mx-sdk-dapp/pull/1179)
