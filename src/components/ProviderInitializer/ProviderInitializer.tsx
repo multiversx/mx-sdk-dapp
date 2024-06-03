@@ -35,7 +35,8 @@ import {
   setChainID,
   setTokenLogin,
   setIsWalletConnectV2Initialized,
-  setAddress
+  setAddress,
+  resetAccount
 } from 'reduxStore/slices';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -143,6 +144,7 @@ export function ProviderInitializer() {
     const decoded = decodeNativeAuthToken(tokenLogin?.nativeAuthToken);
 
     if (decoded?.address && decoded.address !== address) {
+      dispatch(resetAccount());
       dispatch(setAddress(decoded.address));
     }
   }

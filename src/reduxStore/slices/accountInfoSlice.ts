@@ -156,7 +156,8 @@ export const accountInfoSlice = createSlice({
         timestamp: Date.now(),
         data: action.payload
       };
-    }
+    },
+    resetAccount: () => initialState
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
@@ -202,7 +203,8 @@ export const {
   setIsAccountLoading,
   setAccountLoadingError,
   setWebsocketEvent,
-  setWebsocketBatchEvent
+  setWebsocketBatchEvent,
+  resetAccount
 } = accountInfoSlice.actions;
 
 export default accountInfoSlice.reducer;
