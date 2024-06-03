@@ -46,7 +46,7 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
-import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
+import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
 import {
   getOperaProvider,
   getCrossWindowProvider,
@@ -55,6 +55,7 @@ import {
   getMetamaskProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
+import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 
 let initalizingLedger = false;
 
@@ -95,7 +96,11 @@ export function ProviderInitializer() {
 
   useEffect(() => {
     initializeProvider();
-  }, [loginMethod, chainID]);
+  }, [address, loginMethod, chainID]);
+
+  useEffect(() => {
+    checkAddress();
+  }, [tokenLogin?.nativeAuthToken, address]);
 
   useEffect(() => {
     fetchAccount();
@@ -127,6 +132,18 @@ export function ProviderInitializer() {
           version: ledgerData.version
         })
       );
+    }
+  }
+
+  async function checkAddress() {
+    if (!tokenLogin?.nativeAuthToken) {
+      return;
+    }
+
+    const decoded = decodeNativeAuthToken(tokenLogin?.nativeAuthToken);
+
+    if (decoded?.address && decoded.address !== address) {
+      dispatch(setAddress(decoded.address));
     }
   }
 
