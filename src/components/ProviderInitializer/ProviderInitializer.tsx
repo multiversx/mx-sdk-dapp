@@ -135,7 +135,7 @@ export function ProviderInitializer() {
     }
   }
 
-  async function checkAddress() {
+  function checkAddress() {
     if (!tokenLogin?.nativeAuthToken) {
       return;
     }
