@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
 import {
   setAccountProvider,
   setExternalProviderAsAccountProvider
@@ -36,6 +37,7 @@ import {
   setIsWalletConnectV2Initialized,
   setAddress
 } from 'reduxStore/slices';
+import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   getAddress,
@@ -46,7 +48,6 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
-import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
 import {
   getOperaProvider,
   getCrossWindowProvider,
@@ -55,7 +56,6 @@ import {
   getMetamaskProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
-import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 
 let initalizingLedger = false;
 
