@@ -35,8 +35,7 @@ import {
   setChainID,
   setTokenLogin,
   setIsWalletConnectV2Initialized,
-  setAddress,
-  resetAccount
+  setAddress
 } from 'reduxStore/slices';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -45,7 +44,8 @@ import {
   getAccount,
   getLatestNonce,
   newWalletProvider,
-  emptyProvider
+  emptyProvider,
+  refreshAccount
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
@@ -136,7 +136,7 @@ export function ProviderInitializer() {
     }
   }
 
-  function checkAddress() {
+  async function checkAddress() {
     if (!tokenLogin?.nativeAuthToken) {
       return;
     }
@@ -144,8 +144,8 @@ export function ProviderInitializer() {
     const decoded = decodeNativeAuthToken(tokenLogin?.nativeAuthToken);
 
     if (decoded?.address && decoded.address !== address) {
-      dispatch(resetAccount());
       dispatch(setAddress(decoded.address));
+      await refreshAccount();
     }
   }
 
