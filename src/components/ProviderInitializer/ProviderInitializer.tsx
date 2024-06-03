@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { getNetworkConfigFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
+import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
 import {
   setAccountProvider,
   setExternalProviderAsAccountProvider
@@ -36,17 +37,18 @@ import {
   setIsWalletConnectV2Initialized,
   setAddress
 } from 'reduxStore/slices';
+import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   getAddress,
   getAccount,
   getLatestNonce,
   newWalletProvider,
-  emptyProvider
+  emptyProvider,
+  refreshAccount
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
-import { useWebViewLogin } from '../../hooks/login/useWebViewLogin';
 import {
   getOperaProvider,
   getCrossWindowProvider,
@@ -95,7 +97,11 @@ export function ProviderInitializer() {
 
   useEffect(() => {
     initializeProvider();
-  }, [loginMethod, chainID]);
+  }, [address, loginMethod, chainID]);
+
+  useEffect(() => {
+    checkAddress();
+  }, [tokenLogin?.nativeAuthToken, address]);
 
   useEffect(() => {
     fetchAccount();
@@ -127,6 +133,19 @@ export function ProviderInitializer() {
           version: ledgerData.version
         })
       );
+    }
+  }
+
+  async function checkAddress() {
+    if (!tokenLogin?.nativeAuthToken) {
+      return;
+    }
+
+    const decoded = decodeNativeAuthToken(tokenLogin?.nativeAuthToken);
+
+    if (decoded?.address && decoded.address !== address) {
+      dispatch(setAddress(decoded.address));
+      await refreshAccount();
     }
   }
 
