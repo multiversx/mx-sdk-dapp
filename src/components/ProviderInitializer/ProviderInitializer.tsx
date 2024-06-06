@@ -137,7 +137,11 @@ export function ProviderInitializer() {
   }
 
   async function checkAddress() {
-    if (!tokenLogin?.nativeAuthToken) {
+    const {
+      remainingParams: { impersonate }
+    } = parseNavigationParams(['impersonate']);
+
+    if (!tokenLogin?.nativeAuthToken || impersonate) {
       return;
     }
 
