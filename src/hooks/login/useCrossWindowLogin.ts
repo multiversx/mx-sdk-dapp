@@ -30,9 +30,11 @@ export const useCrossWindowLogin = ({
   token: tokenToSign,
   nativeAuth,
   onLoginRedirect,
-  hasConsentPopup
+  hasConsentPopup,
+  walletAddress
 }: OnProviderLoginType & {
   hasConsentPopup?: boolean;
+  walletAddress?: string;
 }): UseCrossWindowLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -53,7 +55,9 @@ export const useCrossWindowLogin = ({
     const isSuccessfullyInitialized: boolean =
       await CrossWindowProvider.getInstance().init();
     const provider: CrossWindowProvider =
-      CrossWindowProvider.getInstance().setWalletUrl(network.walletAddress);
+      CrossWindowProvider.getInstance().setWalletUrl(
+        walletAddress ?? network.walletAddress
+      );
 
     try {
       if (!isSuccessfullyInitialized) {
