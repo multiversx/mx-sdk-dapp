@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.33.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1187)] - 2024-06-06
+- [Removed address check for impersonate action in `ProviderInitializer`](https://github.com/multiversx/mx-sdk-dapp/pull/1186)
+
 ## [[v2.33.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1185)] - 2024-06-06
 - [Added `XaliasCrossWindowLoginButton`](https://github.com/multiversx/mx-sdk-dapp/pull/1184)
 
