@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added `XaliasCrossWindowLoginButton`](https://github.com/multiversx/mx-sdk-dapp/pull/1183)
+## [[v2.33.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1185)] - 2024-06-06
+- [Added `XaliasCrossWindowLoginButton`](https://github.com/multiversx/mx-sdk-dapp/pull/1184)
 
 ## [[v2.32.10]](https://github.com/multiversx/mx-sdk-dapp/pull/1182)] - 2024-06-03
 - [Fixed logged in address is different than address from nativeAuth token](https://github.com/multiversx/mx-sdk-dapp/pull/1181)
