@@ -7,54 +7,71 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added extensible icons to certain components](https://github.com/multiversx/mx-sdk-dapp/pull/1188)
+
 ## [[v2.33.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1187)] - 2024-06-06
+
 - [Removed address check for impersonate action in `ProviderInitializer`](https://github.com/multiversx/mx-sdk-dapp/pull/1186)
 
 ## [[v2.33.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1185)] - 2024-06-06
+
 - [Added `XaliasCrossWindowLoginButton`](https://github.com/multiversx/mx-sdk-dapp/pull/1184)
 
 ## [[v2.32.10]](https://github.com/multiversx/mx-sdk-dapp/pull/1182)] - 2024-06-03
+
 - [Fixed logged in address is different than address from nativeAuth token](https://github.com/multiversx/mx-sdk-dapp/pull/1181)
 
 ## [[v2.32.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1180)] - 2024-05-30
+
 - [Fixed walletconnect infinite loading when using custom network config](https://github.com/multiversx/mx-sdk-dapp/pull/1180)
 
 ## [[v2.32.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1179)] - 2024-05-29
+
 - [Fixed web wallet url logout no redirect](https://github.com/multiversx/mx-sdk-dapp/pull/1178)
 - [Upgrade sdk-web-wallet-cross-window-provider and remove lit dependency](https://github.com/multiversx/mx-sdk-dapp/pull/1179)
 
 ## [[v2.32.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1177)] - 2024-05-23
+
 - [Use egld label from active network for FromatAmount component](https://github.com/multiversx/mx-sdk-dapp/pull/1176)
 
 ## [[v2.32.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1175)] - 2024-05-22
+
 - [Fixed signing in custom environment](https://github.com/multiversx/mx-sdk-dapp/pull/1174)
 
 ## [[v2.32.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1173)] - 2024-05-14
+
 - [Fixed username trim removes information after dot](https://github.com/multiversx/mx-sdk-dapp/pull/1172)
 
 ## [[v2.32.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1171)] - 2024-05-13
-  - [Fixed webview custom message method](https://github.com/multiversx/mx-sdk-dapp/pull/1170)
+
+- [Fixed webview custom message method](https://github.com/multiversx/mx-sdk-dapp/pull/1170)
 
 ## [[v2.32.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1169)] - 2024-04-25
+
 - [Fixed sdk-web-wallet-cross-window-provider `console.log`](https://github.com/multiversx/mx-sdk-dapp/pull/1169)
 
 ## [[v2.32.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1168)] - 2024-04-25
+
 - [Changed sdk-web-wallet-cross-window-provider imports & upgraded package](https://github.com/multiversx/mx-sdk-dapp/pull/1167)
 
 ## [[v2.32.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1166)] - 2024-04-25
+
 - [ExperimentalWebviewProvider: Fix incoming messages from android webview](https://github.com/multiversx/mx-sdk-dapp/pull/1165)
 - [Added FF Windows to browser constants](https://github.com/multiversx/mx-sdk-dapp/pull/1164)
 
 ## [[v2.32.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1161)] - 2024-04-23
+
 - [ExperimentalWebviewProvider: fix android communication](https://github.com/multiversx/mx-sdk-dapp/pull/1163)
 - [Added `sdk-dapp-utils` and removed Cross-Window export files](https://github.com/multiversx/mx-sdk-dapp/pull/1162)
 - [Extract MultiEsdtTrasfer parser for multiple transactions in a separate function](https://github.com/multiversx/mx-sdk-dapp/pull/1157)
 - [Fixed `AuthenticatedRoutesWrapper` redirects to unlock route during webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1160)
 
 ## [[v2.31.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1159)] - 2024-04-23
+
 - [Changed sdk-web-wallet-cross-window-provider imports & upgraded package](https://github.com/multiversx/mx-sdk-dapp/pull/1158)
 
 ## [[v2.31.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1156)] - 2024-04-18
+
 - [Removed sdk-web-wallet-cross-window-provider with `lit` webcomponents](https://github.com/multiversx/mx-sdk-dapp/pull/1155)
 
 ## [[v2.31.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1154)] - 2024-04-18
