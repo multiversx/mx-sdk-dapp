@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
@@ -18,7 +19,9 @@ import { WithStylesImportType } from '../../../../../../hocs/useStyles';
 
 export interface ConfirmReceiverPropsType extends WithStylesImportType {
   amount: string;
-  label?: React.ReactNode;
+  label?: ReactNode;
+  customCopyIcon?: IconProp;
+  customExplorerIcon?: IconProp;
   receiver: string;
   receiverUsername?: string;
   scamReport: string | null;
@@ -28,7 +31,9 @@ const ConfirmReceiverComponent = ({
   amount,
   label,
   receiver,
+  customExplorerIcon,
   receiverUsername,
+  customCopyIcon,
   scamReport,
   styles
 }: ConfirmReceiverPropsType) => {
@@ -105,10 +110,16 @@ const ConfirmReceiverComponent = ({
             </span>
           )}
 
-          <CopyButton text={receiver} className={styles?.receiverCopy} />
+          <CopyButton
+            text={receiver}
+            className={styles?.receiverCopy}
+            copyIcon={customCopyIcon}
+          />
+
           <ExplorerLink
             page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
             className={styles?.receiverExternal}
+            customExplorerIcon={customExplorerIcon}
           />
         </div>
       )}

@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faArrowUpRightFromSquare } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
@@ -12,6 +13,7 @@ export interface ExplorerLinkPropsType
     WithClassnameType {
   page: string;
   text?: any;
+  customExplorerIcon?: IconProp;
   title?: string;
   onClick?: () => void;
   'data-testid'?: string;
@@ -23,6 +25,7 @@ const ExplorerLinkComponent = ({
   className = 'dapp-explorer-link',
   children,
   globalStyles,
+  customExplorerIcon,
   styles,
   ...rest
 }: ExplorerLinkPropsType & WithStylesImportType) => {
@@ -32,7 +35,7 @@ const ExplorerLinkComponent = ({
 
   const defaultContent = text ?? (
     <FontAwesomeIcon
-      icon={faArrowUpRightFromSquare}
+      icon={customExplorerIcon ?? faArrowUpRightFromSquare}
       className={styles?.search}
     />
   );

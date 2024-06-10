@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import classNames from 'classnames';
+
 import { DataTestIdsEnum, N_A } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { CopyButton } from 'UI/CopyButton';
 import { decodePart } from 'utils/decoders/decodePart';
 import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
+
 import { WithClassnameType } from '../types';
 
 const allOccurences = (sourceStr: string, searchStr: string) => {
@@ -23,12 +26,15 @@ export interface TransactionDataPropsType extends WithClassnameType {
     transactionDataInputValueClassName?: string;
   };
   isScCall?: boolean;
-  label?: React.ReactNode;
+  label?: ReactNode;
   transactionIndex: number;
+  showCopyButton?: boolean;
+  customCopyIcon?: IconProp;
 }
 
 const TransactionDataComponent = ({
   className = 'dapp-transaction-data',
+  showCopyButton = true,
   data,
   globalStyles,
   highlight,
@@ -36,6 +42,7 @@ const TransactionDataComponent = ({
   isScCall,
   label,
   transactionIndex,
+  customCopyIcon,
   styles
 }: TransactionDataPropsType & WithStylesImportType) => {
   const {
@@ -178,8 +185,9 @@ const TransactionDataComponent = ({
               {data ? output : N_A}
             </span>
 
-            {data && (
+            {data && showCopyButton && (
               <CopyButton
+                copyIcon={customCopyIcon}
                 text={data}
                 className={styles?.transactionDataValueCopy}
               />
