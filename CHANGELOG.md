@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [ExperimentalWebviewProvider: full webkit support](https://github.com/multiversx/mx-sdk-dapp/pull/1193)
+
 ## [[v2.33.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1194)] - 2024-06-25
 
 - [Updated default chainID to empty string instead of -1](https://github.com/multiversx/mx-sdk-dapp/pull/1192)
