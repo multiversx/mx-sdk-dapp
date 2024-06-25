@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [ExperimentalWebviewProvider: full webkit support](https://github.com/multiversx/mx-sdk-dapp/pull/1193)
 - [Fixed infinite loop in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/1191)
 - [Added extensible icons to certain components](https://github.com/multiversx/mx-sdk-dapp/pull/1188)
 
