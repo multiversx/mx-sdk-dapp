@@ -29,8 +29,6 @@ export function parseMultiEsdtTransferData(data?: string) {
             receiver
           };
 
-          console.log({ encodedTxCount });
-
           for (let index = 0; index < 3; index++) {
             switch (index) {
               case 0:
