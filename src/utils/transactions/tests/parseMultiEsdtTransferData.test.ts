@@ -127,6 +127,21 @@ const four = {
   }
 };
 
+const five = {
+  data: removeWhiteSpaces(`MultiESDTNFTTransfer
+  @000000000000000005006945e6647033941911d0e8e3b85c876b6ec449db1679
+  @55544b2d353463323862
+  @
+  @091d
+  @55544b4641524d2d653539363331
+  @02
+  @04b4a8335ecc4a780000
+  @55544b4641524d2d653539363331
+  @03
+  @a968163f0a57b4000000
+  @7374616b654661726d`)
+};
+
 describe('parseMultiEsdtTransferData tests', () => {
   test('Interprets data with scCall', () => {
     const response = [one.esdt, one.sft1, one.sft2, one.scCall];
@@ -163,10 +178,12 @@ describe('parseMultiEsdtTransferData tests', () => {
     expect(result).toEqual(response);
   });
   test('Interprets data with two identical NFT transactions', () => {
-    const result = parseMultiEsdtTransferData(
-      'MultiESDTNFTTransfer@000000000000000005006704c51b25a956ddbc643189ba7945b413890d4f0fd6@02@444d452d626465326238@01@01@444d452d626465326238@01@01@6e6674446973747269627574696f6e@ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09@ee62513ef30aede25b3366b6e3219ee18084026f36d6105299ee9963b1338f09'
-    );
+    const result = parseMultiEsdtTransferData(four.data);
     const response = [four.nft, four.nft, four.ssCall];
     expect(result).toEqual(response);
+  });
+  test('Returns empty array for invalid data', () => {
+    const result = parseMultiEsdtTransferData(five.data);
+    expect(result).toEqual([]);
   });
 });
