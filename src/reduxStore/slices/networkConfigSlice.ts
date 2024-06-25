@@ -35,7 +35,7 @@ export interface NetworkConfigStateType {
 
 const initialState: NetworkConfigStateType = {
   network: defaultNetwork,
-  chainID: '-1'
+  chainID: ''
 };
 
 export const networkConfigSlice = createSlice({
