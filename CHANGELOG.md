@@ -7,12 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [ExperimentalWebviewProvider: full webkit support](https://github.com/multiversx/mx-sdk-dapp/pull/1193)
-
 ## [[v2.33.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1194)] - 2024-06-25
 
+- [ExperimentalWebviewProvider: full webkit support](https://github.com/multiversx/mx-sdk-dapp/pull/1193)
 - [Updated default chainID to empty string instead of -1](https://github.com/multiversx/mx-sdk-dapp/pull/1192)
 - [Fixed infinite loop in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/1191)
+
+## [[v2.33.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1190)] - 2024-06-10
+
 - [Added extensible icons to certain components](https://github.com/multiversx/mx-sdk-dapp/pull/1188)
 
 ## [[v2.33.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1187)] - 2024-06-06
