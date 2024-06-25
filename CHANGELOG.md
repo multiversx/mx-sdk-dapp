@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed infinite loop in `parseMultiEsdtTransferData`](https://github.com/multiversx/mx-sdk-dapp/pull/1189)
 - [Added extensible icons to certain components](https://github.com/multiversx/mx-sdk-dapp/pull/1188)
 
 ## [[v2.33.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1187)] - 2024-06-06
