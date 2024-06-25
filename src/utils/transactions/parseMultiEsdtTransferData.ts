@@ -12,8 +12,14 @@ export function parseMultiEsdtTransferData(data?: string) {
       data?.includes('@')
     ) {
       const [, receiver, encodedTxCount, ...rest] = data?.split('@');
+
       if (receiver) {
         const txCount = new BigNumber(encodedTxCount, 16).toNumber();
+
+        if (txCount >= Number.MAX_SAFE_INTEGER) {
+          return [];
+        }
+
         let itemIndex = 0;
 
         for (let txIndex = 0; txIndex < txCount; txIndex++) {
@@ -63,10 +69,12 @@ export function parseMultiEsdtTransferData(data?: string) {
           const adSignOccurences = getAllStringOccurrences(tx.data, '@').length;
           return adSignOccurences !== 2;
         });
+
         const hasAdStart = transactions.some((tx) => tx.data.startsWith('@'));
         if (isDifferentFromTxCount || hasInvalidNoOfAdSigns || hasAdStart) {
           return [];
         }
+
         if (rest[contractCallDataIndex]) {
           let scCallData = rest[contractCallDataIndex];
           for (let i = contractCallDataIndex + 1; i < rest.length; i++) {
