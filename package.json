@@ -167,7 +167,7 @@
     "@multiversx/sdk-wallet-connect-provider": "4.1.2",
     "@multiversx/sdk-web-wallet-cross-window-provider": "0.2.0",
     "@multiversx/sdk-web-wallet-provider": "3.2.1",
-    "@multiversx/sdk-webview-provider": "0.0.10",
+    "@multiversx/sdk-webview-provider": "0.0.11",
     "@reduxjs/toolkit": "1.8.2",
     "bignumber.js": "9.x",
     "linkify-react": "4.0.2",
