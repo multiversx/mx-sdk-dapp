@@ -70,7 +70,7 @@ export const useAppInitializer = ({
       walletConnectV2RelayAddresses:
         'walletConnectV2RelayAddresses' in baseConfig
           ? baseConfig.walletConnectV2RelayAddresses
-          : []
+          : ['wss://relay.walletconnect.com']
     };
 
     if (fetchConfigFromServer) {
@@ -83,7 +83,7 @@ export const useAppInitializer = ({
 
       if (serverConfig != null) {
         const apiConfig = {
-          ...fallbackConfig,
+          ...localConfig,
           ...serverConfig,
           ...customNetworkConfig
         };
