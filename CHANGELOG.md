@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.33.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1196)] - 2024-06-27
+- [Added support for custom environment in DappProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1195)
+
 ## [[v2.33.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1194)] - 2024-06-25
 
 - [ExperimentalWebviewProvider: full webkit support](https://github.com/multiversx/mx-sdk-dapp/pull/1193)
