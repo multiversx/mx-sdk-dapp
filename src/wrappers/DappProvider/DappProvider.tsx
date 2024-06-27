@@ -6,9 +6,11 @@ import { setExternalProvider } from 'providers/accountProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider/ExperimentalWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
-import { CustomNetworkType, EnvironmentsEnum, IDappProvider } from 'types';
-import { DappConfigType } from 'types/dappConfig.types';
-import { AppInitializer } from 'wrappers/AppInitializer';
+import { CustomNetworkType, IDappProvider, DappConfigType } from '../../types';
+import {
+  AppInitializer,
+  UseAppInitializerPropsType
+} from './../../wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export { DappConfigType };
@@ -24,7 +26,7 @@ export interface DappProviderPropsType {
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
   //we need the strings for autocomplete suggestions
-  environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum;
+  environment: UseAppInitializerPropsType['environment'];
   customComponents?: CustomComponentsType;
   dappConfig?: DappConfigType;
 }
@@ -53,7 +55,7 @@ export const DappProvider = ({
       <PersistGate persistor={persistor} loading={null}>
         {() => (
           <AppInitializer
-            environment={environment as EnvironmentsEnum}
+            environment={environment}
             customNetworkConfig={customNetworkConfig}
             dappConfig={dappConfig}
           >
