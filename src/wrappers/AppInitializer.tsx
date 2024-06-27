@@ -65,6 +65,7 @@ export const useAppInitializer = ({
 
     const localConfig: NetworkType = {
       ...baseConfig,
+      apiTimeout: String(baseConfig.apiTimeout),
       walletConnectBridgeAddresses:
         baseConfig.walletConnectBridgeAddresses || [],
       walletConnectV2RelayAddresses:
@@ -87,7 +88,12 @@ export const useAppInitializer = ({
           ...serverConfig,
           ...customNetworkConfig
         };
-        dispatch(initializeNetworkConfig(apiConfig));
+        dispatch(
+          initializeNetworkConfig({
+            ...apiConfig,
+            apiTimeout: String(apiConfig.apiTimeout)
+          })
+        );
         return;
       }
     }
