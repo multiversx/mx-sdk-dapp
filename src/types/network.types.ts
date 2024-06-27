@@ -41,7 +41,7 @@ export interface CustomNetworkType {
   apiAddress?: string;
   explorerAddress?: string;
   skipFetchFromServer?: boolean;
-  apiTimeout?: string;
+  apiTimeout?: string | number;
   walletConnectV2ProjectId?: string;
   walletConnectV2Options?: any;
 }
