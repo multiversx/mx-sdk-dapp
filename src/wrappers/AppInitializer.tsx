@@ -7,19 +7,23 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { isLoginSessionInvalidSelector } from 'reduxStore/selectors/loginInfoSelectors';
 import { setDappConfig } from 'reduxStore/slices';
 import { setLogoutRoute } from 'reduxStore/slices/loginInfoSlice';
-import { initializeNetworkConfig } from 'reduxStore/slices/networkConfigSlice';
+import {
+  defaultNetwork,
+  initializeNetworkConfig
+} from 'reduxStore/slices/networkConfigSlice';
+import { logout } from 'utils/logout';
 import {
   CustomNetworkType,
   DappConfigType,
+  IDappProvider,
   EnvironmentsEnum,
-  IDappProvider
-} from 'types';
-import { logout } from 'utils/logout';
+  NetworkType
+} from '../types';
 
 export interface UseAppInitializerPropsType {
   customNetworkConfig?: CustomNetworkType;
   externalProvider?: IDappProvider;
-  environment: EnvironmentsEnum;
+  environment: 'testnet' | 'mainnet' | 'devnet' | EnvironmentsEnum | string;
   dappConfig?: DappConfigType;
 }
 
@@ -46,15 +50,32 @@ export const useAppInitializer = ({
   async function initializeNetwork() {
     const fetchConfigFromServer = !customNetworkConfig?.skipFetchFromServer;
     const customNetworkApiAddress = customNetworkConfig?.apiAddress;
-    const fallbackConfig = fallbackNetworkConfigurations[environment] || {};
 
-    const localConfig = {
+    const isFoundEnv = environment in fallbackNetworkConfigurations;
+
+    const fallbackConfig: NetworkType | Record<string, string> = isFoundEnv
+      ? fallbackNetworkConfigurations[environment as EnvironmentsEnum]
+      : {};
+
+    const baseConfig = {
+      ...defaultNetwork,
       ...fallbackConfig,
       ...customNetworkConfig
     };
 
+    const localConfig: NetworkType = {
+      ...baseConfig,
+      walletConnectBridgeAddresses:
+        baseConfig.walletConnectBridgeAddresses || [],
+      walletConnectV2RelayAddresses:
+        'walletConnectV2RelayAddresses' in baseConfig
+          ? baseConfig.walletConnectV2RelayAddresses
+          : []
+    };
+
     if (fetchConfigFromServer) {
-      const fallbackApiAddress = fallbackConfig?.apiAddress;
+      const fallbackApiAddress =
+        'apiAddress' in fallbackConfig ? fallbackConfig.apiAddress : '';
 
       const serverConfig = await getServerConfiguration(
         customNetworkApiAddress || fallbackApiAddress
