@@ -33,7 +33,7 @@ const WalletConnectLoginContentComponent = ({
 }: WalletConnectLoginModalPropsType & WithStylesImportType) => {
   const [
     initLoginWithWalletConnectV2,
-    { error: walletConnectErrorV2 },
+    { error: walletConnectErrorV2, isLoading },
     {
       connectExisting,
       removeExistingPairing,
@@ -150,17 +150,7 @@ const WalletConnectLoginContentComponent = ({
           )}
         </div>
 
-        {qrCodeSvg ? (
-          <div
-            className={classNames(
-              styles?.xPortalQrCode,
-              containerQrCodeClassName
-            )}
-            dangerouslySetInnerHTML={{
-              __html: qrCodeSvg
-            }}
-          />
-        ) : (
+        {isLoading || !qrCodeSvg ? (
           <div
             className={classNames(
               styles?.xPortalLoader,
@@ -177,6 +167,16 @@ const WalletConnectLoginContentComponent = ({
               />
             )}
           </div>
+        ) : (
+          <div
+            className={classNames(
+              styles?.xPortalQrCode,
+              containerQrCodeClassName
+            )}
+            dangerouslySetInnerHTML={{
+              __html: qrCodeSvg
+            }}
+          />
         )}
 
         {isMobileDevice && (

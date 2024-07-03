@@ -217,10 +217,19 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      const { approval } = await providerRef.current?.connect({
-        topic: pairing.topic,
-        methods: dappMethods
-      });
+      const providerType = providerRef.current
+        ? getProviderType(providerRef.current)
+        : false;
+
+      if (providerType !== LoginMethodsEnum.walletconnectv2) {
+        // Prevent redirecting to wallet login hook
+        await initiateLogin();
+
+        return;
+      }
+
+      setIsLoading(true);
+      await cancelLogin();
 
       if (hasNativeAuth && !token) {
         token = await loginService.getNativeAuthLoginToken();
@@ -235,17 +244,12 @@ export const useWalletConnectV2Login = ({
         loginService.setLoginToken(token);
       }
 
-      const providerType = providerRef.current
-        ? getProviderType(providerRef.current)
-        : false;
+      await initiateLogin(false);
 
-      if (providerType !== LoginMethodsEnum.walletconnectv2) {
-        // Prevent redirecting to wallet login hook
-        setIsLoading(true);
-        await initiateLogin();
-
-        return;
-      }
+      const { approval } = await providerRef.current?.connect({
+        topic: pairing.topic,
+        methods: dappMethods
+      });
 
       try {
         await providerRef.current?.login({ approval, token });
