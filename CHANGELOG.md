@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.33.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1200)] - 2024-07-03
+
 - [Update WalletConnect, disconnect default session (QR-code) on existing pairing](https://github.com/multiversx/mx-sdk-dapp/pull/1199)
 
 ## [[v2.33.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1198)] - 2024-06-27
