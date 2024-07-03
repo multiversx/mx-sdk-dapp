@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.33.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1197)] - 2024-06-27
+- [Update WalletConnect, disconnect default session (QR-code) on existing pairing](https://github.com/multiversx/mx-sdk-dapp/pull/1199)
+
+## [[v2.33.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1198)] - 2024-06-27
+
 - [Fixed walletconnect settings for custom network](https://github.com/multiversx/mx-sdk-dapp/pull/1197)
 
 ## [[v2.33.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1196)] - 2024-06-27
+
 - [Added support for custom environment in DappProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1195)
 
 ## [[v2.33.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1194)] - 2024-06-25
