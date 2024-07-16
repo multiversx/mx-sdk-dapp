@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import omit from 'lodash.omit';
 import { REHYDRATE } from 'redux-persist';
+import { AVERAGE_TX_DURATION_MS } from 'constants/transactionStatus';
 import { logoutAction } from 'reduxStore/commonActions';
 import {
   AccountInfoSliceNetworkType,
@@ -25,7 +26,8 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   walletAddress: '',
   apiAddress: '',
   explorerAddress: '',
-  apiTimeout: '4000'
+  apiTimeout: '4000',
+  roundDuration: AVERAGE_TX_DURATION_MS
 };
 
 export interface NetworkConfigStateType {
@@ -65,6 +67,12 @@ export const networkConfigSlice = createSlice({
     ) => {
       state.chainID = action.payload;
     },
+    setRoundDuration: (
+      state: NetworkConfigStateType,
+      action: PayloadAction<number>
+    ) => {
+      state.network.roundDuration = action.payload;
+    },
     setCustomWalletAddress: (
       state: NetworkConfigStateType,
       action: PayloadAction<AccountInfoSliceNetworkType['customWalletAddress']>
@@ -80,6 +88,7 @@ export const networkConfigSlice = createSlice({
         if (!action.payload?.network?.customWalletAddress) {
           return;
         }
+
         const {
           network: { customWalletAddress }
         } = action.payload;
@@ -88,7 +97,11 @@ export const networkConfigSlice = createSlice({
   }
 });
 
-export const { initializeNetworkConfig, setChainID, setCustomWalletAddress } =
-  networkConfigSlice.actions;
+export const {
+  initializeNetworkConfig,
+  setChainID,
+  setRoundDuration,
+  setCustomWalletAddress
+} = networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

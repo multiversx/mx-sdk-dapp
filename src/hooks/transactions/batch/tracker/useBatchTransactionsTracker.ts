@@ -60,11 +60,13 @@ export const useBatchTransactionsTracker = ({
 
   // register ws listener
   useRegisterWebsocketListener(onMessage, onBatchUpdate);
+
   // Fallbacks
   useCheckBatchesOnWsFailureFallback({
     onSuccess,
     onFail
   });
+
   useCheckHangingBatchesFallback({
     onSuccess,
     onFail

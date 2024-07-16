@@ -8,6 +8,11 @@ export const chainIDSelector = createDeepEqualSelector(
   (state) => state.chainID
 );
 
+export const roundDurationSelectorSelector = createDeepEqualSelector(
+  networkConfigSelector,
+  (state) => state.network.roundDuration
+);
+
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
   networkConfigSelector,
   (state) => state.network.walletConnectBridgeAddress
