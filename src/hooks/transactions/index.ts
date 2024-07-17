@@ -3,6 +3,7 @@ export * from './useGetActiveTransactionsStatus';
 export * from './useGetFailedTransactions';
 export * from './useGetLastPendingTransactionHash';
 export * from './useGetPendingTransactions';
+export * from './useGetPollingInterval';
 export * from './useGetSignTransactionsError';
 export * from './useGetSignedTransactions';
 export * from './useGetSuccessfulTransactions';

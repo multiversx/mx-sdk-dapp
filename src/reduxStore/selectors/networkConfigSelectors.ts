@@ -5,7 +5,12 @@ export const networkConfigSelector = (state: RootState) => state.networkConfig;
 
 export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.chainID
+  (state) => state.network.chainId
+);
+
+export const roundDurationSelectorSelector = createDeepEqualSelector(
+  networkConfigSelector,
+  (state) => state.network.roundDuration
 );
 
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(

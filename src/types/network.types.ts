@@ -14,6 +14,7 @@ export interface BaseNetworkType {
   walletConnectV2ProjectId?: string;
   walletConnectV2Options?: Record<string, any>;
   xAliasAddress?: string;
+  roundDuration: number;
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import omit from 'lodash.omit';
 import { REHYDRATE } from 'redux-persist';
+import { AVERAGE_TX_DURATION_MS } from 'constants/transactionStatus';
 import { logoutAction } from 'reduxStore/commonActions';
 import {
   AccountInfoSliceNetworkType,
@@ -8,6 +9,10 @@ import {
   NetworkType
 } from 'types';
 import { getRandomAddressFromNetwork } from 'utils/internal';
+
+export interface NetworkConfigStateType {
+  network: AccountInfoSliceNetworkType;
+}
 
 export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
@@ -25,22 +30,17 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   walletAddress: '',
   apiAddress: '',
   explorerAddress: '',
-  apiTimeout: '4000'
+  apiTimeout: '4000',
+  roundDuration: AVERAGE_TX_DURATION_MS
 };
 
-export interface NetworkConfigStateType {
-  network: AccountInfoSliceNetworkType;
-  chainID: string;
-}
-
 const initialState: NetworkConfigStateType = {
-  network: defaultNetwork,
-  chainID: ''
+  network: defaultNetwork
 };
 
 export const networkConfigSlice = createSlice({
   name: 'appConfig',
-  initialState: initialState,
+  initialState,
   reducers: {
     initializeNetworkConfig: (
       state: NetworkConfigStateType,
@@ -49,21 +49,26 @@ export const networkConfigSlice = createSlice({
       const walletConnectV2RelayAddress = getRandomAddressFromNetwork(
         action.payload.walletConnectV2RelayAddresses
       );
+
       const network: BaseNetworkType = omit(
         action.payload,
         'walletConnectV2RelayAddresses'
       );
+
       state.network = {
         ...state.network,
         ...network,
         walletConnectV2RelayAddress
       };
     },
-    setChainID: (
+    updateNetworkConfig: (
       state: NetworkConfigStateType,
-      action: PayloadAction<string>
+      action: PayloadAction<Partial<NetworkConfigStateType>>
     ) => {
-      state.chainID = action.payload;
+      state.network = {
+        ...state.network,
+        ...action.payload
+      };
     },
     setCustomWalletAddress: (
       state: NetworkConfigStateType,
@@ -80,6 +85,7 @@ export const networkConfigSlice = createSlice({
         if (!action.payload?.network?.customWalletAddress) {
           return;
         }
+
         const {
           network: { customWalletAddress }
         } = action.payload;
@@ -88,7 +94,10 @@ export const networkConfigSlice = createSlice({
   }
 });
 
-export const { initializeNetworkConfig, setChainID, setCustomWalletAddress } =
-  networkConfigSlice.actions;
+export const {
+  initializeNetworkConfig,
+  updateNetworkConfig,
+  setCustomWalletAddress
+} = networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;
