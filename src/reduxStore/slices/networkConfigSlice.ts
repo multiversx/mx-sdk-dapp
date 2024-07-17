@@ -63,7 +63,7 @@ export const networkConfigSlice = createSlice({
     },
     updateNetworkConfig: (
       state: NetworkConfigStateType,
-      action: PayloadAction<Partial<NetworkConfigStateType>>
+      action: PayloadAction<Partial<AccountInfoSliceNetworkType>>
     ) => {
       state.network = {
         ...state.network,
