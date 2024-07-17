@@ -5,42 +5,42 @@ export const networkConfigSelector = (state: RootState) => state.networkConfig;
 
 export const chainIDSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.chainID
+  (state) => state.chainId
 );
 
 export const roundDurationSelectorSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.roundDuration
+  (state) => state.roundDuration
 );
 
 export const walletConnectBridgeAddressSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.walletConnectBridgeAddress
+  (state) => state.walletConnectBridgeAddress
 );
 
 export const walletConnectV2RelaySelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.walletConnectV2RelayAddress
+  (state) => state.walletConnectV2RelayAddress
 );
 
 export const walletConnectV2ProjectIdSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.walletConnectV2ProjectId
+  (state) => state.walletConnectV2ProjectId
 );
 
 export const walletConnectV2OptionsSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.walletConnectV2Options
+  (state) => state.walletConnectV2Options
 );
 
 export const walletConnectDeepLinkSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network.walletConnectDeepLink
+  (state) => state.walletConnectDeepLink
 );
 
 export const networkSelector = createDeepEqualSelector(
   networkConfigSelector,
-  (state) => state.network
+  (state) => state
 );
 
 export const apiAddressSelector = createDeepEqualSelector(

@@ -30,78 +30,56 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   roundDuration: AVERAGE_TX_DURATION_MS
 };
 
-export interface NetworkConfigStateType {
-  network: AccountInfoSliceNetworkType;
-  chainID: string;
-}
-
-const initialState: NetworkConfigStateType = {
-  network: defaultNetwork,
-  chainID: ''
-};
-
 export const networkConfigSlice = createSlice({
   name: 'appConfig',
-  initialState: initialState,
+  initialState: defaultNetwork,
   reducers: {
     initializeNetworkConfig: (
-      state: NetworkConfigStateType,
+      state: AccountInfoSliceNetworkType,
       action: PayloadAction<NetworkType>
     ) => {
       const walletConnectV2RelayAddress = getRandomAddressFromNetwork(
         action.payload.walletConnectV2RelayAddresses
       );
+
       const network: BaseNetworkType = omit(
         action.payload,
         'walletConnectV2RelayAddresses'
       );
-      state.network = {
-        ...state.network,
+
+      return {
+        ...state,
         ...network,
         walletConnectV2RelayAddress
       };
     },
-    setChainID: (
-      state: NetworkConfigStateType,
-      action: PayloadAction<string>
+    updateNetworkConfig: (
+      state: AccountInfoSliceNetworkType,
+      action: PayloadAction<Partial<AccountInfoSliceNetworkType>>
     ) => {
-      state.chainID = action.payload;
-    },
-    setRoundDuration: (
-      state: NetworkConfigStateType,
-      action: PayloadAction<number>
-    ) => {
-      state.network.roundDuration = action.payload;
-    },
-    setCustomWalletAddress: (
-      state: NetworkConfigStateType,
-      action: PayloadAction<AccountInfoSliceNetworkType['customWalletAddress']>
-    ) => {
-      state.network.customWalletAddress = action.payload;
+      // Assign each prop one by one instead of resetting entire state object
+      // and lose object reference
+      for (const key in action.payload) {
+        state[key] = action.payload[key];
+      }
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(logoutAction, (state: NetworkConfigStateType) => {
-      state.network.customWalletAddress = undefined;
+    builder.addCase(logoutAction, (state: AccountInfoSliceNetworkType) => {
+      state.customWalletAddress = undefined;
     }),
       builder.addCase(REHYDRATE, (state, action: any) => {
-        if (!action.payload?.network?.customWalletAddress) {
+        if (!action.payload?.customWalletAddress) {
           return;
         }
 
-        const {
-          network: { customWalletAddress }
-        } = action.payload;
-        state.network.customWalletAddress = customWalletAddress;
+        const { customWalletAddress } = action.payload;
+        state.customWalletAddress = customWalletAddress;
       });
   }
 });
 
-export const {
-  initializeNetworkConfig,
-  setChainID,
-  setRoundDuration,
-  setCustomWalletAddress
-} = networkConfigSlice.actions;
+export const { initializeNetworkConfig, updateNetworkConfig } =
+  networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

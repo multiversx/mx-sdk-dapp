@@ -32,11 +32,10 @@ import {
   setAccountLoadingError,
   setLedgerAccount,
   setWalletLogin,
-  setChainID,
   setTokenLogin,
   setIsWalletConnectV2Initialized,
   setAddress,
-  setRoundDuration
+  updateNetworkConfig
 } from 'reduxStore/slices';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -93,7 +92,7 @@ export function ProviderInitializer() {
   });
 
   useEffect(() => {
-    refreshChainIdAndRoundDuration();
+    refreshNetworkConfig();
   }, [network]);
 
   useEffect(() => {
@@ -113,13 +112,17 @@ export function ProviderInitializer() {
     setLedgerAccountInfo();
   }, [ledgerAccount, isLoggedIn, ledgerData]);
 
-  async function refreshChainIdAndRoundDuration() {
+  async function refreshNetworkConfig() {
     try {
       const networkConfig = await getNetworkConfigFromApi();
 
       if (networkConfig) {
-        dispatch(setChainID(networkConfig.erd_chain_id));
-        dispatch(setRoundDuration(networkConfig.erd_round_duration));
+        dispatch(
+          updateNetworkConfig({
+            chainId: networkConfig.erd_chain_id,
+            roundDuration: networkConfig.erd_round_duration
+          })
+        );
       }
     } catch (err) {
       console.error('failed refreshing chainId ', err);

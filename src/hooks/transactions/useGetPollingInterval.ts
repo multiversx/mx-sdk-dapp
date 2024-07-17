@@ -12,5 +12,5 @@ export const useGetPollingInterval = () => {
     return TRANSACTIONS_STATUS_POLLING_INTERVAL_MS;
   }
 
-  return roundDuration * CROSS_SHARD_ROUNDS;
+  return (roundDuration / 2) * CROSS_SHARD_ROUNDS;
 };
