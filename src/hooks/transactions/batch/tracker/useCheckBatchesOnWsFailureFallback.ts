@@ -1,11 +1,9 @@
 import { useCallback, useEffect } from 'react';
-import {
-  AVERAGE_TX_DURATION_MS,
-  TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
-} from 'constants/transactionStatus';
-import { useGetBatches } from 'hooks/transactions/batch/useGetBatches';
-import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
-import { timestampIsOlderThan } from 'hooks/transactions/helpers/timestampIsOlderThan';
+import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionStatus';
+import { extractSessionId } from '../../helpers/extractSessionId';
+import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
+import { useGetPollingInterval } from '../../useGetPollingInterval';
+import { useGetBatches } from '../useGetBatches';
 import { useVerifyBatchStatus } from './useVerifyBatchStatus';
 
 /**
@@ -18,6 +16,7 @@ export const useCheckBatchesOnWsFailureFallback = (props?: {
 }) => {
   const { batchTransactionsArray } = useGetBatches();
   const { verifyBatchStatus } = useVerifyBatchStatus(props);
+  const pollingInterval = useGetPollingInterval();
 
   const checkAllBatches = useCallback(async () => {
     for (const { batchId } of batchTransactionsArray) {
@@ -42,7 +41,7 @@ export const useCheckBatchesOnWsFailureFallback = (props?: {
   useEffect(() => {
     const interval = setInterval(async () => {
       checkAllBatches();
-    }, AVERAGE_TX_DURATION_MS);
+    }, pollingInterval);
 
     return () => clearInterval(interval);
   }, [checkAllBatches]);
