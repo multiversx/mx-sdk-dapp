@@ -10,6 +10,8 @@ import {
 } from 'types';
 import { getRandomAddressFromNetwork } from 'utils/internal';
 
+export type NetworkConfigStateType = AccountInfoSliceNetworkType;
+
 export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
   chainId: '',
@@ -35,7 +37,7 @@ export const networkConfigSlice = createSlice({
   initialState: defaultNetwork,
   reducers: {
     initializeNetworkConfig: (
-      state: AccountInfoSliceNetworkType,
+      state: NetworkConfigStateType,
       action: PayloadAction<NetworkType>
     ) => {
       const walletConnectV2RelayAddress = getRandomAddressFromNetwork(
@@ -54,18 +56,24 @@ export const networkConfigSlice = createSlice({
       };
     },
     updateNetworkConfig: (
-      state: AccountInfoSliceNetworkType,
-      action: PayloadAction<Partial<AccountInfoSliceNetworkType>>
+      state: NetworkConfigStateType,
+      action: PayloadAction<Partial<NetworkConfigStateType>>
     ) => {
       // Assign each prop one by one instead of resetting entire state object
       // and lose object reference
       for (const key in action.payload) {
         state[key] = action.payload[key];
       }
+    },
+    setCustomWalletAddress: (
+      state: NetworkConfigStateType,
+      action: PayloadAction<NetworkConfigStateType['customWalletAddress']>
+    ) => {
+      state.customWalletAddress = action.payload;
     }
   },
   extraReducers: (builder) => {
-    builder.addCase(logoutAction, (state: AccountInfoSliceNetworkType) => {
+    builder.addCase(logoutAction, (state: NetworkConfigStateType) => {
       state.customWalletAddress = undefined;
     }),
       builder.addCase(REHYDRATE, (state, action: any) => {
@@ -79,7 +87,10 @@ export const networkConfigSlice = createSlice({
   }
 });
 
-export const { initializeNetworkConfig, updateNetworkConfig } =
-  networkConfigSlice.actions;
+export const {
+  initializeNetworkConfig,
+  updateNetworkConfig,
+  setCustomWalletAddress
+} = networkConfigSlice.actions;
 
 export default networkConfigSlice.reducer;

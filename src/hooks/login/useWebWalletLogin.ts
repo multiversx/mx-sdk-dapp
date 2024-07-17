@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
-import { updateNetworkConfig, setWalletLogin } from 'reduxStore/slices';
+import { setWalletLogin, setCustomWalletAddress } from 'reduxStore/slices';
 import { newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
@@ -59,7 +59,7 @@ export const useWebWalletLogin = ({
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
-    dispatch(updateNetworkConfig({ customWalletAddress }));
+    dispatch(setCustomWalletAddress(customWalletAddress));
 
     try {
       setIsLoading(true);
