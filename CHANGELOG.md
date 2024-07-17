@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.33.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1202)] - 2024-07-17
+## [[v2.34.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1204)] - 2024-07-17
 
 - [Added dynamic transaction polling based on network round duration](https://github.com/multiversx/mx-sdk-dapp/pull/1201)
 
