@@ -10,7 +10,9 @@ import {
 } from 'types';
 import { getRandomAddressFromNetwork } from 'utils/internal';
 
-export type NetworkConfigStateType = AccountInfoSliceNetworkType;
+export interface NetworkConfigStateType {
+  network: AccountInfoSliceNetworkType;
+}
 
 export const defaultNetwork: AccountInfoSliceNetworkType = {
   id: 'not-configured',
@@ -32,9 +34,13 @@ export const defaultNetwork: AccountInfoSliceNetworkType = {
   roundDuration: AVERAGE_TX_DURATION_MS
 };
 
+const initialState: NetworkConfigStateType = {
+  network: defaultNetwork
+};
+
 export const networkConfigSlice = createSlice({
   name: 'appConfig',
-  initialState: defaultNetwork,
+  initialState,
   reducers: {
     initializeNetworkConfig: (
       state: NetworkConfigStateType,
@@ -49,8 +55,8 @@ export const networkConfigSlice = createSlice({
         'walletConnectV2RelayAddresses'
       );
 
-      return {
-        ...state,
+      state.network = {
+        ...state.network,
         ...network,
         walletConnectV2RelayAddress
       };
@@ -59,30 +65,31 @@ export const networkConfigSlice = createSlice({
       state: NetworkConfigStateType,
       action: PayloadAction<Partial<NetworkConfigStateType>>
     ) => {
-      // Assign each prop one by one instead of resetting entire state object
-      // and lose object reference
-      for (const key in action.payload) {
-        state[key] = action.payload[key];
-      }
+      state.network = {
+        ...state.network,
+        ...action.payload
+      };
     },
     setCustomWalletAddress: (
       state: NetworkConfigStateType,
-      action: PayloadAction<NetworkConfigStateType['customWalletAddress']>
+      action: PayloadAction<AccountInfoSliceNetworkType['customWalletAddress']>
     ) => {
-      state.customWalletAddress = action.payload;
+      state.network.customWalletAddress = action.payload;
     }
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, (state: NetworkConfigStateType) => {
-      state.customWalletAddress = undefined;
+      state.network.customWalletAddress = undefined;
     }),
       builder.addCase(REHYDRATE, (state, action: any) => {
-        if (!action.payload?.customWalletAddress) {
+        if (!action.payload?.network?.customWalletAddress) {
           return;
         }
 
-        const { customWalletAddress } = action.payload;
-        state.customWalletAddress = customWalletAddress;
+        const {
+          network: { customWalletAddress }
+        } = action.payload;
+        state.network.customWalletAddress = customWalletAddress;
       });
   }
 });
