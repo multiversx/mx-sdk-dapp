@@ -8,16 +8,16 @@ jest.mock('../getVerifier', () => ({
 
 describe('Verify Message test', () => {
   const signature =
-    '{"address":"erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex","message":"0x54455354","signature":"0xfd7578037cdaed106e04c437821828a78ac0eb93d42118b6c8a11510520400cfa4a06dfa446cd6437c0f91264675bd554cbcb2e0b08622e9f210772890f12d01","version":1,"signer":"ErdJS"}';
+    '{"address":"erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv","message":"0x68656c6c6f20776f726c64","signature":"0x795b8437bdbcc9c2a3f610a96d95bd393d23d584d40121ea388999ebd9a34157117a665c86a0285cb207e7da23f4fced848f81c218ebab735da22a5cdb00f803","version":1,"signer":"ErdJS"}';
 
   it('should verify message successfully', () => {
     const { address, isVerified, message } = verifyMessage(signature);
 
     expect(address).toStrictEqual(
-      'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+      'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
     );
 
     expect(isVerified).toStrictEqual(true);
-    expect(message).toStrictEqual('TEST');
+    expect(message).toStrictEqual('hello world');
   });
 });

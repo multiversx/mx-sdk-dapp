@@ -9,7 +9,7 @@ describe('Tx Description unwrapper tests', () => {
         category: 'esdtNft',
         name: TransactionActionsEnum.transfer,
         description:
-          'Transfer 2950.00 USDC-c76f1f to erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
+          'Transfer 2950.00 USDC-c76f1f to erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
         arguments: {
           transfers: [
             {
@@ -21,7 +21,7 @@ describe('Tx Description unwrapper tests', () => {
             }
           ],
           receiver:
-            'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+            'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         }
       }
     };
@@ -38,7 +38,7 @@ describe('Tx Description unwrapper tests', () => {
         category: 'esdtNft',
         name: TransactionActionsEnum.transfer,
         description:
-          'Transfer NFT ARTCRAFT-322c6e-11 to erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
+          'Transfer NFT ARTCRAFT-322c6e-11 to erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
         arguments: {
           transfers: [
             {
@@ -51,7 +51,7 @@ describe('Tx Description unwrapper tests', () => {
             }
           ],
           receiver:
-            'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+            'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         }
       }
     };
@@ -68,7 +68,7 @@ describe('Tx Description unwrapper tests', () => {
         category: 'esdtNft',
         name: TransactionActionsEnum.transfer,
         description:
-          'Transfer 1.537276176898979513 LKFARM (LKFARM-9d1ea8-126c17) to erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex',
+          'Transfer 1.537276176898979513 LKFARM (LKFARM-9d1ea8-126c17) to erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
         arguments: {
           transfers: [
             {
@@ -82,7 +82,7 @@ describe('Tx Description unwrapper tests', () => {
             }
           ],
           receiver:
-            'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex'
+            'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         }
       }
     };
