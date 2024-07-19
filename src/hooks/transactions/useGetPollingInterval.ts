@@ -9,5 +9,6 @@ export const useGetPollingInterval = () => {
     return TRANSACTIONS_STATUS_POLLING_INTERVAL_MS;
   }
 
-  return roundDuration;
+  // Polling interval should not be less than 1s
+  return Math.max(1000, roundDuration / 2);
 };
