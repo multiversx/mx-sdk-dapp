@@ -34,7 +34,7 @@ describe('sendBatchTransactions', () => {
 
   it('should call all the dependencies and return the expected result', async () => {
     const address =
-      'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex';
+      'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv';
     const sessionId = '12345';
     const transactions = [
       [
@@ -130,7 +130,7 @@ describe('sendBatchTransactions', () => {
 
   it('should prepare the grouping field with the indexes from the flat transactions array', async () => {
     const address =
-      'erd1wh9c0sjr2xn8hzf02lwwcr4jk2s84tat9ud2kaq6zr7xzpvl9l5q8awmex';
+      'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv';
     const sessionId = '12345';
     const transactions = [
       [
