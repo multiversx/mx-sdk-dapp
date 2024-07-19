@@ -1,3 +1,5 @@
+import { loginInfoSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 
 export const getWebviewToken = () => {
@@ -5,5 +7,7 @@ export const getWebviewToken = () => {
   const urlSearchParams = new URLSearchParams(search) as any;
   const searchParams = Object.fromEntries(urlSearchParams);
 
-  return searchParams?.accessToken;
+  const { tokenLogin } = loginInfoSelector(store.getState());
+
+  return searchParams?.accessToken ?? tokenLogin?.nativeAuthToken;
 };

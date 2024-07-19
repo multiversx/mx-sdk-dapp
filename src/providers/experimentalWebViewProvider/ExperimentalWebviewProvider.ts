@@ -6,7 +6,6 @@ import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
-import { logout as logoutFromDApp } from 'utils/logout';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
 
 /**
@@ -40,9 +39,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   };
 
   logout = async () => {
-    const response = await this._provider.logout();
-    await logoutFromDApp();
-    return response;
+    store.dispatch(logoutAction());
+    return await this._provider.logout();
   };
 
   relogin = async () => {

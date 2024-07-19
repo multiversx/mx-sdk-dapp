@@ -5,6 +5,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { logoutRouteSelector, loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
 import { logout } from 'utils/logout';
+import { getWebviewToken } from 'utils/account/getWebviewToken';
 
 export const useNativeAuthLogout = () => {
   const { address } = useGetAccountInfo();
@@ -29,6 +30,13 @@ export const useNativeAuthLogout = () => {
 
   // plan logout for existing token
   useEffect(() => {
+    const isWebviewLogin = Boolean(getWebviewToken());
+
+    // prevent unexpected logout if webview login
+    if (!address || isWebviewLogin) {
+      return;
+    }
+
     // Handle the actual logout functionality.
     const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
     const plannedLogoutKey = `${address}_${expiresAt}`;
