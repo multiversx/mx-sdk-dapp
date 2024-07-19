@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.35.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1211)] - 2024-07-19
 - [Update Tests](https://github.com/multiversx/mx-sdk-dapp/pull/1210)
 - [Fix unexpected logout in webview (xPortal Hub and Web Wallet Hub)](https://github.com/multiversx/mx-sdk-dapp/pull/1209)
 
