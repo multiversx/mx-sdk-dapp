@@ -15,9 +15,9 @@ export async function getIFrameProvider({
 
     if (success) {
       return provider;
-    } else {
-      console.error('Could not initialise IFrameProvider');
     }
+
+    console.error('Could not initialise IFrameProvider');
   } catch (err) {
     console.error('Unable to login to IFrameProvider', err);
   }

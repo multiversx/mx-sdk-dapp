@@ -87,8 +87,6 @@ export const useIFrameLogin = ({
       const { signature, address, multisig, impersonate } =
         await provider.login(providerLoginData);
 
-      console.log('after login', { signature, address, multisig, impersonate });
-
       setAccountProvider(provider);
 
       if (!address) {
