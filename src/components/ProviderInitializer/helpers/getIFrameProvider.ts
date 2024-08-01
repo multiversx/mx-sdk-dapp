@@ -8,9 +8,13 @@ export async function getIFrameProvider({
   walletUrl: string;
 }) {
   try {
-    const provider = IframeProvider.getInstance()
-      .setAddress(address)
-      .setWalletUrl(walletUrl);
+    const provider = IframeProvider.getInstance();
+
+    if (provider.isInitialized()) {
+      return provider;
+    }
+
+    provider.setAddress(address).setWalletUrl(walletUrl);
     const success = await provider.init();
 
     if (success) {
