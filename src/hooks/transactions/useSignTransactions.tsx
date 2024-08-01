@@ -22,7 +22,10 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import {
+  CrossWindowProvider,
+  IframeProvider
+} from 'lib/sdkWebWalletCrossWindowProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
@@ -96,6 +99,7 @@ export const useSignTransactions = () => {
   const clearSignInfo = (sessionId?: string) => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isIFrameProvider = provider instanceof IframeProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperiementalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -105,7 +109,12 @@ export const useSignTransactions = () => {
 
     isSigningRef.current = false;
 
-    if (!isExtensionProvider && !isCrossWindowProvider && !isMetamaskProvider) {
+    if (
+      !isExtensionProvider &&
+      !isCrossWindowProvider &&
+      !isIFrameProvider &&
+      !isMetamaskProvider
+    ) {
       return;
     }
 
@@ -119,6 +128,9 @@ export const useSignTransactions = () => {
     }
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
+    if (isIFrameProvider) {
+      IframeProvider.getInstance()?.cancelAction?.();
     }
     if (isExperiementalWebviewProvider) {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
