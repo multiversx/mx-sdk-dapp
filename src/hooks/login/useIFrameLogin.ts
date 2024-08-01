@@ -18,7 +18,7 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
 
-export type UseCrossWindowLoginReturnType = [
+export type UseIFrameLoginReturnType = [
   InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
@@ -30,7 +30,7 @@ export const useIFrameLogin = ({
   walletAddress
 }: OnProviderLoginType & {
   walletAddress?: string;
-}): UseCrossWindowLoginReturnType => {
+}): UseIFrameLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;

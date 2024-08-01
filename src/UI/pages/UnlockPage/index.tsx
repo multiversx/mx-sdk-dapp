@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
+import { IFrameLoginButton } from 'UI/iframe/IFrameLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
 import { OperaWalletLoginButton } from 'UI/operaWallet/OperaWalletLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
@@ -17,6 +18,7 @@ export interface Props {
   ExtensionLoginButtonText?: string;
   OperaWalletLoginButtonText?: string;
   CrossWindowLoginButtonText?: string;
+  IFrameLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;
@@ -32,6 +34,7 @@ const UnlockPageComponent = ({
   WalletConnectLoginButtonText = 'xPortal App',
   ExtensionLoginButtonText = 'Extension',
   OperaWalletLoginButtonText = 'Opera Crypto Wallet',
+  IFrameLoginButtonText = 'IFrame Wallet',
   WebWalletLoginButtonText = 'Web wallet',
   globalStyles,
   styles
@@ -82,6 +85,11 @@ const UnlockPageComponent = ({
             <ExtensionLoginButton
               callbackRoute={loginRoute}
               loginButtonText={ExtensionLoginButtonText}
+            />
+
+            <IFrameLoginButton
+              callbackRoute={loginRoute}
+              loginButtonText={IFrameLoginButtonText}
             />
 
             <OperaWalletLoginButton
