@@ -13,7 +13,7 @@ export function useWebViewLogin() {
   const token = getWebviewToken();
 
   useEffect(() => {
-    if (!shouldUseWebViewProvider) {
+    if (!shouldUseWebViewProvider || !token) {
       return;
     }
 
