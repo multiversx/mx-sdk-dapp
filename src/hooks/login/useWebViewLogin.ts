@@ -9,6 +9,7 @@ export function useWebViewLogin() {
   const shouldUseWebViewProvider = useSelector(
     shouldUseWebViewProviderSelector
   );
+
   const token = getWebviewToken();
 
   useEffect(() => {
