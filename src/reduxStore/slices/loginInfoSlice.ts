@@ -21,7 +21,7 @@ export interface LedgerLoginType {
 
 export interface LoginInfoType {
   data: any;
-  expires: number;
+  expires?: number;
 }
 
 export interface LoginInfoStateType {
@@ -34,6 +34,7 @@ export interface LoginInfoStateType {
   operaLogin: LoginInfoType | null;
   crossWindowLogin: LoginInfoType | null;
   iframeWindowLogin: LoginInfoType | null;
+  webviewLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
   isWalletConnectV2Initialized?: boolean;
@@ -49,7 +50,8 @@ const initialState: LoginInfoStateType = {
   operaLogin: null,
   crossWindowLogin: null,
   iframeWindowLogin: null,
-  isLoginSessionInvalid: false
+  isLoginSessionInvalid: false,
+  webviewLogin: null
 };
 
 export const loginInfoSlice = createSlice({
@@ -94,6 +96,12 @@ export const loginInfoSlice = createSlice({
     ) => {
       state.ledgerLogin = action.payload;
     },
+    setWebviewLogin: (
+      state: LoginInfoStateType,
+      action: PayloadAction<LoginInfoType | null>
+    ) => {
+      state.webviewLogin = action.payload;
+    },
     invalidateLoginSession: (state: LoginInfoStateType) => {
       state.isLoginSessionInvalid = true;
     },
@@ -137,7 +145,8 @@ export const {
   setWalletLogin,
   invalidateLoginSession,
   setLogoutRoute,
-  setIsWalletConnectV2Initialized
+  setIsWalletConnectV2Initialized,
+  setWebviewLogin
 } = loginInfoSlice.actions;
 
 export default loginInfoSlice.reducer;

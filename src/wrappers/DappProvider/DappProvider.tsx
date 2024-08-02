@@ -5,7 +5,9 @@ import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInit
 import { setExternalProvider } from 'providers/accountProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider/ExperimentalWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
+import { setWebviewLogin } from 'reduxStore/slices';
 import { persistor, store } from 'reduxStore/store';
+import { getAccessTokenFromSearchParams } from 'utils/account/getAccessTokenFromSearchParams';
 import { CustomNetworkType, IDappProvider, DappConfigType } from '../../types';
 import {
   AppInitializer,
@@ -17,6 +19,12 @@ export { DappConfigType };
 
 const setWebviewProvider = () => {
   const providerInstance = ExperimentalWebviewProvider.getInstance();
+
+  const accessToken = getAccessTokenFromSearchParams();
+  setWebviewLogin({
+    data: accessToken
+  });
+
   providerInstance.init?.();
   setExternalProvider(providerInstance);
 };
