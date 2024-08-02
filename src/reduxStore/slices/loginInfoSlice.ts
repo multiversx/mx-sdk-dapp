@@ -34,7 +34,7 @@ export interface LoginInfoStateType {
   operaLogin: LoginInfoType | null;
   crossWindowLogin: LoginInfoType | null;
   iframeWindowLogin: LoginInfoType | null;
-  webviewLogin: { data: string | null } | null;
+  webviewLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
   isWalletConnectV2Initialized?: boolean;
