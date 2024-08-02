@@ -6,7 +6,10 @@ import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamask
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import {
+  CrossWindowProvider,
+  IframeProvider
+} from 'lib/sdkWebWalletCrossWindowProvider';
 
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -68,6 +71,7 @@ export const useSignTransactionsCommonData = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
+    const isIFrameProvider = provider instanceof IframeProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperimentalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -75,7 +79,12 @@ export const useSignTransactionsCommonData = () => {
     dispatch(clearAllTransactionsToSign());
     dispatch(clearTransactionsInfoForSessionId(sessionId));
 
-    if (!isExtensionProvider && !isCrossWindowProvider && !isMetamaskProvider) {
+    if (
+      !isExtensionProvider &&
+      !isCrossWindowProvider &&
+      !isIFrameProvider &&
+      !isMetamaskProvider
+    ) {
       return;
     }
 
@@ -91,6 +100,10 @@ export const useSignTransactionsCommonData = () => {
 
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
+    }
+
+    if (isIFrameProvider) {
+      IframeProvider.getInstance()?.cancelAction?.();
     }
 
     if (isExperimentalWebviewProvider) {

@@ -3,7 +3,10 @@ import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import {
+  CrossWindowProvider,
+  IframeProvider
+} from 'lib/sdkWebWalletCrossWindowProvider';
 import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
@@ -14,6 +17,7 @@ export type ProvidersType =
   | MetamaskProvider
   | WalletProvider
   | CrossWindowProvider
+  | IframeProvider
   | HWProvider
   | OperaProvider
   | WalletConnectV2Provider;
