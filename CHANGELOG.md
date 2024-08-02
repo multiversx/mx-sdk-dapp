@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.36.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1213)] - 2024-08-02
 - [Add IFrameProvider support](https://github.com/multiversx/mx-sdk-dapp/pull/1212)
 
 ## [[v2.35.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1212)] - 2024-07-19
