@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix Webview login and logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1214)
+
 ## [[v2.36.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1213)] - 2024-08-02
 - [Add IFrameProvider support](https://github.com/multiversx/mx-sdk-dapp/pull/1212)
 
