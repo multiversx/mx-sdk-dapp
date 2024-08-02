@@ -1,5 +1,4 @@
 import { loginAction } from 'reduxStore/commonActions';
-import { loginInfoSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import { LoginMethodsEnum } from 'types';
@@ -10,7 +9,6 @@ export function loginWithNativeAuthToken(
   dispatch = store.dispatch
 ) {
   const nativeAuthInfo = decodeNativeAuthToken(token);
-  const loginInfo = loginInfoSelector(store.getState());
 
   if (nativeAuthInfo == null) {
     return;
@@ -30,7 +28,7 @@ export function loginWithNativeAuthToken(
     dispatch(
       loginAction({
         address,
-        loginMethod: loginInfo.loginMethod || LoginMethodsEnum.extra
+        loginMethod: LoginMethodsEnum.extra
       })
     );
   }
