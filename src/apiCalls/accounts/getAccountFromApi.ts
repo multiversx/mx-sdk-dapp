@@ -17,7 +17,7 @@ export const getAccountFromApi = async (address?: string) => {
     const { data } = await accountFetcher(address);
     return data;
   } catch (err) {
-    console.error('error fetching configuration for ', address);
+    console.error('error fetching configuration for ', address, err);
   }
 
   return null;
