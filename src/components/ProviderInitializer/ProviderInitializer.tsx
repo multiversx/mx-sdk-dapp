@@ -54,7 +54,8 @@ import {
   getCrossWindowProvider,
   getExtensionProvider,
   processModifiedAccount,
-  getMetamaskProvider
+  getMetamaskProvider,
+  getIFrameProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -296,6 +297,17 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setIFrameProvider() {
+    const address = await getAddress();
+    const provider = await getIFrameProvider({
+      address,
+      walletUrl: network.walletAddress
+    });
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
   async function setWalletConnectV2Provider() {
     try {
       // Trigger loader until wallet connect has been initialized
@@ -344,6 +356,10 @@ export function ProviderInitializer() {
         setCrossWindowProvider();
         break;
       }
+
+      case LoginMethodsEnum.iframe:
+        setIFrameProvider();
+        break;
 
       case LoginMethodsEnum.extra: {
         setExternalProviderAsAccountProvider();
