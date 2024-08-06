@@ -29,7 +29,8 @@ export function useCheckTransactionStatus() {
       }
     }
 
-    if (props.shouldRefreshBalance) {
+    if (pendingTransactionsArray.length > 0 && props.shouldRefreshBalance) {
+      // Refresh account only if we have pending transactions
       await refreshAccount();
     }
   }

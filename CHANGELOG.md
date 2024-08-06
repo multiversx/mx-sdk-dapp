@@ -6,8 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- [Added `matchPath` tests](https://github.com/multiversx/mx-sdk-dapp/pull/1216)
 
+- [Prevent setting polling interval when websocket is present](https://github.com/multiversx/mx-sdk-dapp/pull/1217)
+- [Added `matchPath` tests](https://github.com/multiversx/mx-sdk-dapp/pull/1216)
 
 ## [[v2.36.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1215)] - 2024-08-02
 - [Fix Webview login and logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1214)
