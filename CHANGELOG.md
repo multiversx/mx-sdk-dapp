@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Allow signing transactions wihen user balance is zero](https://github.com/multiversx/mx-sdk-dapp/pull/1218)
 - [Prevent setting polling interval when websocket is present](https://github.com/multiversx/mx-sdk-dapp/pull/1217)
 - [Added `matchPath` tests](https://github.com/multiversx/mx-sdk-dapp/pull/1216)
 
