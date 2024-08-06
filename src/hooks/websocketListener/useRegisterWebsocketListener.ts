@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
-import { useSelector } from 'reduxStore/DappProviderContext';
-import {
-  websocketBatchEventSelector,
-  websocketEventSelector
-} from 'reduxStore/selectors';
 import { BatchTransactionsWSResponseType } from 'types';
+import { useGetBatchWebsocketEvent, useGetWebsocketEvent } from '../account';
 import { useInitializeWebsocketConnection } from './useInitializeWebsocketConnection';
 
 export function useRegisterWebsocketListener(
@@ -12,12 +8,12 @@ export function useRegisterWebsocketListener(
   onBatchMessage?: (data: BatchTransactionsWSResponseType) => void
 ) {
   useInitializeWebsocketConnection();
-
-  const websocketEvent = useSelector(websocketEventSelector);
-  const websocketBatchEvent = useSelector(websocketBatchEventSelector);
+  const websocketEvent = useGetWebsocketEvent();
+  const websocketBatchEvent = useGetBatchWebsocketEvent();
 
   useEffect(() => {
     const message = websocketEvent?.message;
+
     if (message) {
       onMessage(message);
     }
@@ -25,6 +21,7 @@ export function useRegisterWebsocketListener(
 
   useEffect(() => {
     const data = websocketBatchEvent?.data;
+
     if (data) {
       onBatchMessage?.(data);
     }
