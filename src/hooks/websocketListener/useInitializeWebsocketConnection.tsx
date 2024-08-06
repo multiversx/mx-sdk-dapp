@@ -118,4 +118,6 @@ export function useInitializeWebsocketConnection() {
       }
     };
   }, []);
+
+  return websocketConnection;
 }
