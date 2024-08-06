@@ -38,11 +38,23 @@ export function formatAmount({
   return (
     pipe(modInput as string)
       // format
-      .then(() =>
-        TokenTransfer.fungibleFromBigInteger('', modInput as string, decimals)
-          .amountAsBigInteger.shiftedBy(-decimals)
-          .toFixed(decimals)
-      )
+      .then(() => {
+        try {
+          const fungible = TokenTransfer.fungibleFromBigInteger(
+            '',
+            modInput as string,
+            decimals
+          )
+            .amountAsBigInteger.shiftedBy(-decimals)
+            .toFixed(decimals);
+
+          return fungible;
+        } catch (e) {
+          console.error(`Error converting ${modInput} in formatAmount`, e);
+
+          return '';
+        }
+      })
 
       // format
       .then((current) => {
@@ -51,6 +63,7 @@ export function formatAmount({
         if (bnBalance.isZero()) {
           return ZERO;
         }
+
         const balance = bnBalance.toString(10);
         const [integerPart, decimalPart] = balance.split('.');
         const bNdecimalPart = new BigNumber(decimalPart || 0);
