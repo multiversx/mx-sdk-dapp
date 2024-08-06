@@ -77,10 +77,10 @@ export function ProviderInitializer() {
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
+
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
   const { setLedgerProvider, ledgerData } = useSetLedgerProvider();
-
   useWebViewLogin();
 
   const { callbackRoute, logoutRoute: wcLogoutRoute } = walletConnectLogin
@@ -116,8 +116,12 @@ export function ProviderInitializer() {
   async function refreshNetworkConfig() {
     try {
       const networkConfig = await getNetworkConfigFromApi();
+      const hasDifferentNetworkConfig =
+        networkConfig &&
+        (network.chainId !== networkConfig.erd_chain_id ||
+          network.roundDuration !== networkConfig.erd_round_duration);
 
-      if (networkConfig) {
+      if (hasDifferentNetworkConfig) {
         dispatch(
           updateNetworkConfig({
             chainId: networkConfig.erd_chain_id,
