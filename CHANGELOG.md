@@ -6,6 +6,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Prevent network update if there are no changes](https://github.com/multiversx/mx-sdk-dapp/pull/1220)
 
 ## [[v2.36.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1219)] - 2024-08-06
 - [Allow signing transactions wihen user balance is zero](https://github.com/multiversx/mx-sdk-dapp/pull/1218)
