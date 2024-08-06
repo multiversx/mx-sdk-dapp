@@ -7,7 +7,7 @@ export function useRegisterWebsocketListener(
   onMessage: (message: string) => void,
   onBatchMessage?: (data: BatchTransactionsWSResponseType) => void
 ) {
-  const websocketConnection = useInitializeWebsocketConnection();
+  useInitializeWebsocketConnection();
   const websocketEvent = useGetWebsocketEvent();
   const websocketBatchEvent = useGetBatchWebsocketEvent();
 
@@ -26,6 +26,4 @@ export function useRegisterWebsocketListener(
       onBatchMessage?.(data);
     }
   }, [onBatchMessage, websocketBatchEvent]);
-
-  return websocketConnection;
 }

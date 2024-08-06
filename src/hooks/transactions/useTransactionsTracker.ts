@@ -1,49 +1,54 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
 import { useRegisterWebsocketListener } from '../websocketListener';
+import {
+  websocketConnection,
+  WebsocketConnectionStatusEnum
+} from '../websocketListener/websocketConnection';
 import { useCheckTransactionStatus } from './useCheckTransactionStatus';
 import { useGetPollingInterval } from './useGetPollingInterval';
-import { WebsocketConnectionStatusEnum } from '../websocketListener/websocketConnection';
 
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
   const checkTransactionStatus = useCheckTransactionStatus();
   const pollingInterval = useGetPollingInterval();
-  const [pollingIntervalTimer, setPollingIntervalTimer] =
-    useState<NodeJS.Timeout>();
+  const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
+  const isWebsocketCompleted =
+    websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
 
   const getTransactionsByHash =
     props?.getTransactionsByHash ?? defaultGetTxByHash;
 
   const onMessage = () => {
     checkTransactionStatus({
-      shouldRefreshBalance: true,
+      shouldRefreshBalance: isWebsocketCompleted,
       getTransactionsByHash,
       ...props
     });
   };
 
-  const websocketConnection = useRegisterWebsocketListener(onMessage);
+  useRegisterWebsocketListener(onMessage);
 
-  const setPollingInterval = async () => {
-    if (
-      websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED ||
-      pollingIntervalTimer
-    ) {
+  useEffect(() => {
+    if (isWebsocketCompleted) {
       // Do not setInterval if we already subscribe to websocket event
-      clearInterval(pollingIntervalTimer);
-      setPollingIntervalTimer(undefined);
+      if (pollingIntervalTimer.current) {
+        clearInterval(pollingIntervalTimer.current);
+      }
+
       return;
     }
 
-    setPollingIntervalTimer(setInterval(onMessage, pollingInterval));
+    if (pollingIntervalTimer.current) {
+      return;
+    }
+
+    pollingIntervalTimer.current = setInterval(onMessage, pollingInterval);
 
     return () => {
-      clearInterval(pollingIntervalTimer);
+      if (pollingIntervalTimer.current) {
+        clearInterval(pollingIntervalTimer.current);
+      }
     };
-  };
-
-  useEffect(() => {
-    setPollingInterval();
   }, [onMessage, websocketConnection]);
 }

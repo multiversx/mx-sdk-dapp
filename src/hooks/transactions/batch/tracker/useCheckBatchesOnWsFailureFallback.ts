@@ -1,5 +1,9 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionStatus';
+import {
+  websocketConnection,
+  WebsocketConnectionStatusEnum
+} from '../../../websocketListener/websocketConnection';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
 import { useGetPollingInterval } from '../../useGetPollingInterval';
@@ -17,6 +21,9 @@ export const useCheckBatchesOnWsFailureFallback = (props?: {
   const { batchTransactionsArray } = useGetBatches();
   const { verifyBatchStatus } = useVerifyBatchStatus(props);
   const pollingInterval = useGetPollingInterval();
+  const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
+  const isWebsocketCompleted =
+    websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
 
   const checkAllBatches = useCallback(async () => {
     for (const { batchId } of batchTransactionsArray) {
@@ -39,10 +46,27 @@ export const useCheckBatchesOnWsFailureFallback = (props?: {
   }, [batchTransactionsArray, verifyBatchStatus]);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
+    if (isWebsocketCompleted) {
+      // Do not setInterval if we already subscribe to websocket event
+      if (pollingIntervalTimer.current) {
+        clearInterval(pollingIntervalTimer.current);
+      }
+
+      return;
+    }
+
+    if (pollingIntervalTimer.current) {
+      return;
+    }
+
+    pollingIntervalTimer.current = setInterval(() => {
       checkAllBatches();
     }, pollingInterval);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (pollingIntervalTimer.current) {
+        clearInterval(pollingIntervalTimer.current);
+      }
+    };
   }, [checkAllBatches]);
 };
