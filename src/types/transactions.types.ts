@@ -160,7 +160,7 @@ export interface SendBatchTransactionsPropsType {
 
 export interface SignTransactionsPropsType {
   transactions: Transaction[] | Transaction;
-  minGasLimit?: number;
+  minGasLimit?: number; // unused, will be removed in v3.0.0
   callbackRoute?: string;
   transactionsDisplayInfo: TransactionsDisplayInfoType;
   customTransactionInformation: CustomTransactionInformation;

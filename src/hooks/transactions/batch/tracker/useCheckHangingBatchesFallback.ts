@@ -1,8 +1,12 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { TRANSACTIONS_STATUS_DROP_INTERVAL_MS } from 'constants/transactionStatus';
 import { removeBatchTransactions } from 'services/transactions';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
+import {
+  websocketConnection,
+  WebsocketConnectionStatusEnum
+} from '../../../websocketListener/websocketConnection';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
 import { useGetPollingInterval } from '../../useGetPollingInterval';
@@ -20,6 +24,9 @@ export const useCheckHangingBatchesFallback = (props?: {
   const { batchTransactionsArray } = useGetBatches();
   const pollingInterval = useGetPollingInterval();
   const updateBatch = useUpdateBatch();
+  const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
+  const isWebsocketCompleted =
+    websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
   const onSuccess = props?.onSuccess;
   const onFail = props?.onFail;
 
@@ -66,10 +73,27 @@ export const useCheckHangingBatchesFallback = (props?: {
   }, [batchTransactionsArray, updateBatch, onSuccess, onFail]);
 
   useEffect(() => {
-    const interval = setInterval(async () => {
+    if (isWebsocketCompleted) {
+      // Do not setInterval if we already subscribe to websocket event
+      if (pollingIntervalTimer.current) {
+        clearInterval(pollingIntervalTimer.current);
+      }
+
+      return;
+    }
+
+    if (pollingIntervalTimer.current) {
+      return;
+    }
+
+    pollingIntervalTimer.current = setInterval(() => {
       checkHangingBatches();
     }, pollingInterval);
 
-    return () => clearInterval(interval);
+    return () => {
+      if (pollingIntervalTimer.current) {
+        clearInterval(pollingIntervalTimer.current);
+      }
+    };
   }, [checkHangingBatches]);
 };

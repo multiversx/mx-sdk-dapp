@@ -4,8 +4,8 @@ import { useGetAccountInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { logoutRouteSelector, loginInfoSelector } from 'reduxStore/selectors';
 import { getTokenExpiration } from 'services/nativeAuth/methods';
-import { logout } from 'utils/logout';
 import { getWebviewToken } from 'utils/account/getWebviewToken';
+import { logout } from 'utils/logout';
 
 export const useNativeAuthLogout = () => {
   const { address } = useGetAccountInfo();
