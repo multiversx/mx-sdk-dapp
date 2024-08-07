@@ -1,6 +1,6 @@
-import { IFrameProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { MetamaskProxyProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 
-export async function getIFrameProvider({
+export async function getMetamaskProxyProvider({
   address,
   walletUrl
 }: {
@@ -8,7 +8,7 @@ export async function getIFrameProvider({
   walletUrl: string;
 }) {
   try {
-    const provider = IFrameProvider.getInstance();
+    const provider = MetamaskProxyProvider.getInstance();
 
     if (provider.isInitialized()) {
       return provider;
@@ -21,9 +21,9 @@ export async function getIFrameProvider({
       return provider;
     }
 
-    console.error('Could not initialise IFrameProvider');
+    console.error('Could not initialise MetamaskProxyProvider');
   } catch (err) {
-    console.error('Unable to login to IFrameProvider', err);
+    console.error('Unable to login to MetamaskProxyProvider', err);
   }
   return null;
 }

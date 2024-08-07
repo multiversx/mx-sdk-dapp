@@ -3,8 +3,8 @@ import classNames from 'classnames';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetLoginInfo } from 'hooks';
 import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
-import { IFrameLoginButton } from 'UI/iframe/IFrameLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
+import { MetamaskProxyButton } from 'UI/metamaskProxy/MetamaskProxyLoginButton';
 import { OperaWalletLoginButton } from 'UI/operaWallet/OperaWalletLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
@@ -18,7 +18,7 @@ export interface Props {
   ExtensionLoginButtonText?: string;
   OperaWalletLoginButtonText?: string;
   CrossWindowLoginButtonText?: string;
-  IFrameLoginButtonText?: string;
+  MetamaskProxyLoginButtonText?: string;
   WebWalletLoginButtonText?: string;
   WalletConnectLoginButtonText?: string;
   WalletConnectV2LoginButtonText?: string;
@@ -34,7 +34,7 @@ const UnlockPageComponent = ({
   WalletConnectLoginButtonText = 'xPortal App',
   ExtensionLoginButtonText = 'Extension',
   OperaWalletLoginButtonText = 'Opera Crypto Wallet',
-  IFrameLoginButtonText = 'IFrame Wallet',
+  MetamaskProxyLoginButtonText = 'Metamask Proxy',
   WebWalletLoginButtonText = 'Web wallet',
   globalStyles,
   styles
@@ -87,9 +87,9 @@ const UnlockPageComponent = ({
               loginButtonText={ExtensionLoginButtonText}
             />
 
-            <IFrameLoginButton
+            <MetamaskProxyButton
               callbackRoute={loginRoute}
-              loginButtonText={IFrameLoginButtonText}
+              loginButtonText={MetamaskProxyLoginButtonText}
             />
 
             <OperaWalletLoginButton

@@ -5,7 +5,7 @@ import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import {
   CrossWindowProvider,
-  IFrameProvider
+  MetamaskProxyProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
 import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
@@ -17,7 +17,7 @@ export type ProvidersType =
   | MetamaskProvider
   | WalletProvider
   | CrossWindowProvider
-  | IFrameProvider
+  | MetamaskProxyProvider
   | HWProvider
   | OperaProvider
   | WalletConnectV2Provider;
