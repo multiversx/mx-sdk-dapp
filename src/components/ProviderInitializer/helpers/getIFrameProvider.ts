@@ -1,4 +1,4 @@
-import { IframeProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IFrameProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 
 export async function getIFrameProvider({
   address,
@@ -8,7 +8,7 @@ export async function getIFrameProvider({
   walletUrl: string;
 }) {
   try {
-    const provider = IframeProvider.getInstance();
+    const provider = IFrameProvider.getInstance();
 
     if (provider.isInitialized()) {
       return provider;

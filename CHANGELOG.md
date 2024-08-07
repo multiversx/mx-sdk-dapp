@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.37.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1227)] - 2024-08-07
+- [Use IFrameProvider from its own package](https://github.com/multiversx/mx-sdk-dapp/pull/1226)
+
 ## [[v2.36.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1224)] - 2024-08-07
 - [Added ability to skip updating transaction nonces](https://github.com/multiversx/mx-sdk-dapp/pull/1223)
 
