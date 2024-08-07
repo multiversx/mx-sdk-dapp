@@ -8,7 +8,7 @@ import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
 import {
   CrossWindowProvider,
-  IframeProvider
+  IFrameProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -37,7 +37,7 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.opera;
     case CrossWindowProvider:
       return LoginMethodsEnum.crossWindow;
-    case IframeProvider:
+    case IFrameProvider:
       return LoginMethodsEnum.iframe;
     case EmptyProvider:
       return LoginMethodsEnum.none;

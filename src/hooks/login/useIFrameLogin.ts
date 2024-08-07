@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { IframeProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IFrameProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -47,7 +47,7 @@ export const useIFrameLogin = ({
     }
 
     setIsLoading(true);
-    const provider = IframeProvider.getInstance();
+    const provider = IFrameProvider.getInstance();
     provider.setWalletUrl(walletAddress ?? network.walletAddress);
 
     const isSuccessfullyInitialized: boolean = await provider.init();
