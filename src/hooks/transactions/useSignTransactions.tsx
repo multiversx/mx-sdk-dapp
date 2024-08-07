@@ -308,7 +308,12 @@ export const useSignTransactions = () => {
 
     clearTransactionStatusMessage();
 
-    const { sessionId, transactions, callbackRoute } = transactionsToSign;
+    const {
+      sessionId,
+      transactions,
+      callbackRoute,
+      customTransactionInformation
+    } = transactionsToSign;
 
     if (!provider) {
       console.error(MISSING_PROVIDER_MESSAGE);
@@ -339,9 +344,10 @@ export const useSignTransactions = () => {
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const transactionsWithIncrementalNonces = await setTransactionNonces(
-        transactions
-      );
+      const transactionsWithIncrementalNonces =
+        customTransactionInformation.skipUpdateNonces
+          ? transactions
+          : await setTransactionNonces(transactions);
 
       if (isSigningWithWebWallet) {
         return signWithWallet(
