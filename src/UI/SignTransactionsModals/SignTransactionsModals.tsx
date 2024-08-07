@@ -7,7 +7,7 @@ import { ConfirmationScreen, DeviceConfirmationScreen } from './components';
 import { SignWithCrossWindowWalletModal } from './SignWithCrossWindowWalletModal';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithExtraModal } from './SignWithExtraModal';
-import { SignWithIFrameModal } from './SignWithIFrameModal';
+import { SignWithMetamaskProxyModal } from './SignWithMetamaskProxyModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithMetamaskModal } from './SignWithMetamaskModal';
 import { SignWithOperaModal } from './SignWithOperaModal';
@@ -39,7 +39,8 @@ export const SignTransactionsModals = ({
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
     Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
     Metamask: CustomConfirmScreens?.Metamask ?? SignWithMetamaskModal,
-    Iframe: CustomConfirmScreens?.Iframe ?? SignWithIFrameModal,
+    MetamaskProxy:
+      CustomConfirmScreens?.MetamaskProxy ?? SignWithMetamaskProxyModal,
     Opera: CustomConfirmScreens?.Opera ?? SignWithOperaModal,
     CrossWindow:
       CustomConfirmScreens?.CrossWindow ?? SignWithCrossWindowWalletModal,
@@ -80,8 +81,8 @@ export const SignTransactionsModals = ({
       return renderScreen({ Screen: ConfirmScreens.Opera });
     case LoginMethodsEnum.crossWindow:
       return renderScreen({ Screen: ConfirmScreens.CrossWindow });
-    case LoginMethodsEnum.iframe:
-      return renderScreen({ Screen: ConfirmScreens.Iframe });
+    case LoginMethodsEnum.metamaskProxy:
+      return renderScreen({ Screen: ConfirmScreens.MetamaskProxy });
     case LoginMethodsEnum.wallet:
       return renderScreen({ Screen: ConfirmScreens.Wallet });
     case LoginMethodsEnum.extra:

@@ -33,7 +33,7 @@ export interface LoginInfoStateType {
   extensionLogin: LoginInfoType | null;
   operaLogin: LoginInfoType | null;
   crossWindowLogin: LoginInfoType | null;
-  iframeWindowLogin: LoginInfoType | null;
+  metamaskProxyWindowLogin: LoginInfoType | null;
   webviewLogin: LoginInfoType | null;
   isLoginSessionInvalid: boolean;
   logoutRoute?: string;
@@ -49,7 +49,7 @@ const initialState: LoginInfoStateType = {
   extensionLogin: null,
   operaLogin: null,
   crossWindowLogin: null,
-  iframeWindowLogin: null,
+  metamaskProxyWindowLogin: null,
   isLoginSessionInvalid: false,
   webviewLogin: null
 };

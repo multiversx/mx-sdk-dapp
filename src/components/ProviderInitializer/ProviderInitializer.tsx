@@ -55,7 +55,7 @@ import {
   getExtensionProvider,
   processModifiedAccount,
   getMetamaskProvider,
-  getIFrameProvider
+  getMetamaskProxyProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -301,9 +301,9 @@ export function ProviderInitializer() {
     }
   }
 
-  async function setIFrameProvider() {
+  async function setMetamaskProxyProvider() {
     const address = await getAddress();
-    const provider = await getIFrameProvider({
+    const provider = await getMetamaskProxyProvider({
       address,
       walletUrl: network.walletAddress
     });
@@ -361,8 +361,8 @@ export function ProviderInitializer() {
         break;
       }
 
-      case LoginMethodsEnum.iframe:
-        setIFrameProvider();
+      case LoginMethodsEnum.metamaskProxy:
+        setMetamaskProxyProvider();
         break;
 
       case LoginMethodsEnum.extra: {

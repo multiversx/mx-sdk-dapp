@@ -8,7 +8,7 @@ import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
 import {
   CrossWindowProvider,
-  IFrameProvider
+  MetamaskProxyProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
 
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
@@ -72,7 +72,7 @@ export const useSignTransactionsCommonData = () => {
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
-    const isIFrameProvider = provider instanceof IFrameProvider;
+    const isMetamaskProxyProvider = provider instanceof MetamaskProxyProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperimentalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -83,7 +83,7 @@ export const useSignTransactionsCommonData = () => {
     if (
       !isExtensionProvider &&
       !isCrossWindowProvider &&
-      !isIFrameProvider &&
+      !isMetamaskProxyProvider &&
       !isMetamaskProvider
     ) {
       return;
@@ -103,8 +103,8 @@ export const useSignTransactionsCommonData = () => {
       CrossWindowProvider.getInstance()?.cancelAction?.();
     }
 
-    if (isIFrameProvider) {
-      IFrameProvider.getInstance()?.cancelAction?.();
+    if (isMetamaskProxyProvider) {
+      MetamaskProxyProvider.getInstance()?.cancelAction?.();
     }
 
     if (isExperimentalWebviewProvider) {

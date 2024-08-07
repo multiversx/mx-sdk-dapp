@@ -36,7 +36,7 @@ export enum LoginMethodsEnum {
   walletconnectv2 = 'walletconnectv2',
   wallet = 'wallet',
   crossWindow = 'crossWindow',
-  iframe = 'iframe',
+  metamaskProxy = 'metamaskProxy',
   extension = 'extension',
   metamask = 'metamask',
   opera = 'opera',
