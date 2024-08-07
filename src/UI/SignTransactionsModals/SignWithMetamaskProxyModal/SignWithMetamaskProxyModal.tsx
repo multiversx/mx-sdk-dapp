@@ -6,7 +6,7 @@ import {
   SignWaitingScreenModalPropsType
 } from '../components';
 
-export const SignWithIFrameModal = (props: SignModalPropsType) => {
+export const SignWithMetamaskProxyModal = (props: SignModalPropsType) => {
   const description = props.error
     ? props.error
     : props.transactions?.length > 1

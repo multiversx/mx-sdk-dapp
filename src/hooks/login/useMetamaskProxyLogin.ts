@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { IFrameProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { MetamaskProxyProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -18,19 +18,19 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { useLoginService } from './useLoginService';
 
-export type UseIFrameLoginReturnType = [
+export type UseMetamaskProxyLoginReturnType = [
   InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
 
-export const useIFrameLogin = ({
+export const useMetamaskProxyLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
   walletAddress
 }: OnProviderLoginType & {
   walletAddress?: string;
-}): UseIFrameLoginReturnType => {
+}): UseMetamaskProxyLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
@@ -47,7 +47,7 @@ export const useIFrameLogin = ({
     }
 
     setIsLoading(true);
-    const provider = IFrameProvider.getInstance();
+    const provider = MetamaskProxyProvider.getInstance();
     provider.setWalletUrl(walletAddress ?? network.walletAddress);
 
     const isSuccessfullyInitialized: boolean = await provider.init();
@@ -110,7 +110,7 @@ export const useIFrameLogin = ({
       dispatch(
         loginAction({
           address: account.address,
-          loginMethod: LoginMethodsEnum.iframe
+          loginMethod: LoginMethodsEnum.metamaskProxy
         })
       );
 
