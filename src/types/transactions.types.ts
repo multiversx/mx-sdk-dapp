@@ -227,6 +227,10 @@ export interface CustomTransactionInformation {
   completedTransactionsDelay?: number;
   signWithoutSending: boolean;
   /**
+   * If true, transactions with lower nonces than the account nonce will not be updated with the correct nonce
+   */
+  skipUpdateNonces?: boolean;
+  /**
    * If true, the change guardian action will not trigger transaction version update
    */
   skipGuardian?: boolean;
