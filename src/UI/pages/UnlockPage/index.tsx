@@ -85,7 +85,6 @@ const UnlockPageComponent = ({
             <ExtensionLoginButton
               callbackRoute={loginRoute}
               loginButtonText={ExtensionLoginButtonText}
-              nativeAuth={true}
             />
 
             <IFrameLoginButton
