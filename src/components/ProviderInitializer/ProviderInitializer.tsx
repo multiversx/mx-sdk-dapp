@@ -303,9 +303,13 @@ export function ProviderInitializer() {
 
   async function setMetamaskProxyProvider() {
     const address = await getAddress();
+
+    if (!network.metamaskSnapWalletAddress) {
+      throw new Error('Metamask snap wallet URL is not set.');
+    }
     const provider = await getMetamaskProxyProvider({
       address,
-      walletUrl: network.walletAddress
+      walletUrl: network.metamaskSnapWalletAddress
     });
     if (provider) {
       setAccountProvider(provider);
