@@ -161,7 +161,7 @@
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
     "@multiversx/sdk-metamask-provider": "0.0.5",
-    "@multiversx/sdk-metamask-proxy-provider": "0.3.0-alpha.0",
+    "@multiversx/sdk-metamask-proxy-provider": "0.3.0-alpha.1",
     "@multiversx/sdk-native-auth-client": "1.0.7",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-wallet": "4.2.0",
