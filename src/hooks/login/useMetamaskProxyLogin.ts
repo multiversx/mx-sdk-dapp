@@ -48,7 +48,15 @@ export const useMetamaskProxyLogin = ({
 
     setIsLoading(true);
     const provider = MetamaskProxyProvider.getInstance();
-    provider.setWalletUrl(walletAddress ?? network.walletAddress);
+    console.log('setting provider: ', network);
+
+    const walletUrl = walletAddress ?? network.metamaskSnapWalletAddress;
+
+    if (!walletUrl) {
+      setError('Metamask snap wallet URL is not set');
+      return;
+    }
+    provider.setWalletUrl(walletUrl);
 
     const isSuccessfullyInitialized: boolean = await provider.init();
 
