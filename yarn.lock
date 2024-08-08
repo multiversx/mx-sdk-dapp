@@ -2400,10 +2400,10 @@
     "@metamask/providers" "16.0.0"
     "@multiversx/sdk-core" "12.18.0"
 
-"@multiversx/sdk-metamask-proxy-provider@0.2.0":
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-proxy-provider/-/sdk-metamask-proxy-provider-0.2.0.tgz#8dda49fa4da54f3758d5f48c0c62c1c015af1028"
-  integrity sha512-fgYfMslqEX0gnm+eLwdRI2GYsbbUqEjBS1/YN7dta6ROXhPG9hz0srKcmlaqKtn6zqgiI7KKlWkZ0MJgy7GGuA==
+"@multiversx/sdk-metamask-proxy-provider@0.3.0-alpha.0":
+  version "0.3.0-alpha.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-proxy-provider/-/sdk-metamask-proxy-provider-0.3.0-alpha.0.tgz#52d767dcc3f63a02f2aba94b97f8b97a235f8b6a"
+  integrity sha512-LBZujymTcQvT8fT5Eb0s2jBDjPLeKrE8V4C5QSLOaW3tNJv7lRdH4pZVV+o6NumCCPA1lx4Te8LCONoSlsOSFA==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
