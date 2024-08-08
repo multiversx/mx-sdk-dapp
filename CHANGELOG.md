@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Breaking: Replace IFrameProvider with MetamaskProxyProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1228)
+- [Fix metamask-proxy-provider: logout and cancel handles](https://github.com/multiversx/mx-sdk-dapp/pull/1230)
 
 ## [[v2.38.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1229)] - 2024-08-07
 - [Breaking: Replace IFrameProvider with MetamaskProxyProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1228)
