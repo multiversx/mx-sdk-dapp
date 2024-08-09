@@ -91,7 +91,7 @@ export function useGetTokenDetails({
     : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken
-    ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0].thumbnailUrl
+    ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0]?.thumbnailUrl
     : '';
 
   return {
