@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.38.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1233)] - 2024-08-09
 - [Fixed "Cannot read properties of undefined (reading 'thumbnailUrl')" error](https://github.com/multiversx/mx-sdk-dapp/pull/1232)
 
 ## [[v2.38.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1231)] - 2024-08-08
