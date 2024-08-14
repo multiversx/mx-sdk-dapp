@@ -84,7 +84,13 @@ export const useTransactionToast = ({
     timeoutRef.current = setTimeout(() => {
       handleDeleteToast();
     }, lifetimeAfterSuccess);
-  }, [lifetimeAfterSuccess, status]);
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [lifetimeAfterSuccess, isPending]);
 
   return {
     isCrossShard: !areSameShardTransactions,
