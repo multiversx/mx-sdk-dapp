@@ -8,7 +8,9 @@ import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
 import { getUnixTimestampWithAddedMilliseconds } from 'utils/dateTime/getUnixTimestampWithAddedMilliseconds';
 import { getAreTransactionsOnSameShard } from 'utils/transactions/getAreTransactionsOnSameShard';
 import {
+  getIsTransactionFailed,
   getIsTransactionPending,
+  getIsTransactionSuccessful,
   getIsTransactionTimedOut
 } from 'utils/transactions/transactionStateByStatus';
 import { TransactionToastDefaultProps } from '../transactionToast.type';
@@ -63,7 +65,10 @@ export const useTransactionToast = ({
   };
 
   const isPending = getIsTransactionPending(status);
+  const isFailed = getIsTransactionFailed(status);
+  const isSuccess = getIsTransactionSuccessful(status);
   const isTimedOut = getIsTransactionTimedOut(status);
+  const isCompleted = isFailed || isSuccess || isTimedOut;
 
   const toastDataState = getToastDataStateByStatus({
     status,
@@ -77,7 +82,7 @@ export const useTransactionToast = ({
   };
 
   useEffect(() => {
-    if (isPending || !lifetimeAfterSuccess || timeoutRef.current) {
+    if (!isCompleted || !lifetimeAfterSuccess || timeoutRef.current) {
       return;
     }
 
@@ -90,7 +95,7 @@ export const useTransactionToast = ({
         clearTimeout(timeoutRef.current);
       }
     };
-  }, [lifetimeAfterSuccess, isPending]);
+  }, [lifetimeAfterSuccess, isCompleted]);
 
   return {
     isCrossShard: !areSameShardTransactions,

@@ -4,8 +4,7 @@ import {
 } from 'types/enums.types';
 
 export const pendingBatchTransactionsStates = [
-  TransactionBatchStatusesEnum.sent,
-  TransactionBatchStatusesEnum.signed
+  TransactionBatchStatusesEnum.sent
 ];
 
 export const successBatchTransactionsStates = [
