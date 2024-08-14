@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed transaction toasts are not cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1234)
+
 ## [[v2.38.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1236)] - 2024-08-13
 - [Fix SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/1235)
 

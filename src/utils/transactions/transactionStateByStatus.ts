@@ -6,6 +6,7 @@ import {
 export const pendingBatchTransactionsStates = [
   TransactionBatchStatusesEnum.sent
 ];
+
 export const successBatchTransactionsStates = [
   TransactionBatchStatusesEnum.success
 ];
