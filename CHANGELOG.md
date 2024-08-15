@@ -6,8 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- [Fixed transaction toast timer is reset after another toast was removed](https://github.com/multiversx/mx-sdk-dapp/pull/1238)
 
-- [Fixed transaction toast timer is reset after another toast was removed](https://github.com/multiversx/mx-sdk-dapp/pull/1237)
+## [[v2.38.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1238)] - 2024-08-14
+- [Fix MetamaskProxy Provider singleton instance](https://github.com/multiversx/mx-sdk-dapp/pull/1237)
 - [Fixed transaction toasts are not cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1234)
 
 ## [[v2.38.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1236)] - 2024-08-13
