@@ -92,6 +92,10 @@ export const useTransactionToast = ({
 
     return () => {
       if (timeoutRef.current) {
+        // Clear timer on unmount and also delete the toast
+        // The toast may have been removed before the timer finished by the re-rendering
+        // of the toasts list during another toast removal from the store
+        handleDeleteToast();
         clearTimeout(timeoutRef.current);
       }
     };
