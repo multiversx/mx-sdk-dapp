@@ -78,10 +78,13 @@ export const useTransactionToast = ({
   });
 
   const handleDeleteToast = () => {
+    console.log(toastId, 'Delete toast');
     onDelete?.(toastId);
   };
 
   useEffect(() => {
+    console.log(toastId, { isCompleted, status });
+
     if (!isCompleted || !lifetimeAfterSuccess || timeoutRef.current) {
       return;
     }
@@ -91,7 +94,13 @@ export const useTransactionToast = ({
     }, lifetimeAfterSuccess);
 
     return () => {
+      console.log(toastId, 'Clear timeout', timeoutRef.current);
+
       if (timeoutRef.current) {
+        // Clear timer on unmount and also delete the toast
+        // The toast may have been removed before the timer finished by the re-rendering
+        // of the toasts list during another toast removal from the store
+        handleDeleteToast();
         clearTimeout(timeoutRef.current);
       }
     };
