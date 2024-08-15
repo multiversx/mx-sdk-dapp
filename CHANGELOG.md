@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v2.38.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1240)] - 2024-08-14
 - [Fixed transaction toast timer is reset after another toast was removed](https://github.com/multiversx/mx-sdk-dapp/pull/1239)
 
 ## [[v2.38.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1238)] - 2024-08-14
