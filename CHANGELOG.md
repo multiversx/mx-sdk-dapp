@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.38.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1240)] - 2024-08-14
+- [Fixed transaction toast timer is reset after another toast was removed](https://github.com/multiversx/mx-sdk-dapp/pull/1239)
+
 ## [[v2.38.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1238)] - 2024-08-14
 - [Fix MetamaskProxy Provider singleton instance](https://github.com/multiversx/mx-sdk-dapp/pull/1237)
 - [Fixed transaction toasts are not cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1234)
