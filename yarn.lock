@@ -2400,10 +2400,10 @@
     "@metamask/providers" "16.0.0"
     "@multiversx/sdk-core" "12.18.0"
 
-"@multiversx/sdk-metamask-proxy-provider@0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-proxy-provider/-/sdk-metamask-proxy-provider-0.3.2.tgz#907813f0695b8dbda5fbd2068e222d7516aefe11"
-  integrity sha512-U7i5bpJgAaF0qe21Conu5/fO1i7h6zMsaCdptr4on/r2VGFgWln7pg0nMdhTo6U89nKOADsQVVVxvRla7sg5vw==
+"@multiversx/sdk-metamask-proxy-provider@0.3.3":
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-proxy-provider/-/sdk-metamask-proxy-provider-0.3.3.tgz#4b031cad2170e87a570e78a1905533bc74dd1d09"
+  integrity sha512-78/LboIqdAgt1713PB7d3xSLqUUy1UK2QUDErqoPgfwmMjXxOiiSiq7b1STZRRXT3Wjzhiysrf5niszXoZUJmw==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
@@ -2455,10 +2455,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@0.4.1":
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.4.1.tgz#1b68a6e65acea2a7adf5696edb10c17c43f19b18"
-  integrity sha512-GgO3CUE679I0A1p+RVSwCXxcXfskbJA/gHKF0eviezN9yTJof7XtZmaOzFoH0ekKX97YIDQ8QQy5+/FPYm9ERA==
+"@multiversx/sdk-web-wallet-cross-window-provider@0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-0.4.2.tgz#49f6d7f526bd3ed16bb7c9eb85b084d710f2168f"
+  integrity sha512-0J99FYrMyQ9wzjGJKGc6nim2s4tZGMsmEClU/5lZDkTwgbfJd2LdMX2bm4yMYmBE8uUp/qOIHQOXFMZCW7VDFQ==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
