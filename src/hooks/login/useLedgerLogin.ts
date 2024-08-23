@@ -19,6 +19,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
+import { clearInitiatedLogins } from './helpers';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
 const failInitializeErrorText = 'Check if the MultiversX App is open on Ledger';
@@ -275,6 +276,8 @@ export const useLedgerLogin = ({
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
+    clearInitiatedLogins();
 
     setError('');
 

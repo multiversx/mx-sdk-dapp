@@ -31,6 +31,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types/login.types';
+import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export enum WalletConnectV2Error {
@@ -284,6 +285,8 @@ export const useWalletConnectV2Login = ({
   };
 
   async function initiateLogin(loginProvider = true) {
+    clearInitiatedLogins();
+
     const chainId = await waitForChainID({ maxRetries: 15 });
 
     if (!chainId) {
