@@ -16,6 +16,7 @@ import {
 import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseMetamaskProxyLoginReturnType = [
@@ -45,6 +46,10 @@ export const useMetamaskProxyLogin = ({
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
+    clearInitiatedLogins({
+      skip: LoginMethodsEnum.metamaskProxy
+    });
 
     setIsLoading(true);
     const provider = MetamaskProxyProvider.getInstance();
