@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated metamask sign screens to use ledger sign screens](https://github.com/multiversx/mx-sdk-dapp/pull/1243)
+
 ## [[v2.38.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1242)] - 2024-08-23
 - [Fixed double login with cross-window or metamask](https://github.com/multiversx/mx-sdk-dapp/pull/1241)
 

@@ -7,9 +7,9 @@ import { ConfirmationScreen, DeviceConfirmationScreen } from './components';
 import { SignWithCrossWindowWalletModal } from './SignWithCrossWindowWalletModal';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithExtraModal } from './SignWithExtraModal';
-import { SignWithMetamaskProxyModal } from './SignWithMetamaskProxyModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithMetamaskModal } from './SignWithMetamaskModal';
+import { SignWithMetamaskProxyModal } from './SignWithMetamaskProxyModal';
 import { SignWithOperaModal } from './SignWithOperaModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
 import {
@@ -76,7 +76,7 @@ export const SignTransactionsModals = ({
     case LoginMethodsEnum.extension:
       return renderScreen({ Screen: ConfirmScreens.Extension });
     case LoginMethodsEnum.metamask:
-      return renderScreen({ Screen: ConfirmScreens.Metamask });
+      return renderScreen({ Screen: ConfirmScreens.Metamask, isDevice: true });
     case LoginMethodsEnum.opera:
       return renderScreen({ Screen: ConfirmScreens.Opera });
     case LoginMethodsEnum.crossWindow:
