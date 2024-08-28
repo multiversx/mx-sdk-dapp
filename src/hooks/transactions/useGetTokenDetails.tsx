@@ -1,7 +1,7 @@
 import useSwr from 'swr';
 
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
-import { axiosFetcher } from 'apiCalls/utils/axiosFetcher';
+import { getPersistedToken } from 'apiCalls/tokens/getPersistedToken';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
@@ -67,6 +67,8 @@ export function useGetTokenDetails({
   const tokenIdentifier = tokenId;
   const tokenEndpoint = isNft ? NFTS_ENDPOINT : TOKENS_ENDPOINT;
 
+  console.log('\x1b[42m%s\x1b[0m', 'in sdk-dapp', tokenIdentifier);
+
   const {
     data: selectedToken,
     error,
@@ -75,8 +77,10 @@ export function useGetTokenDetails({
     Boolean(tokenIdentifier)
       ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
-    axiosFetcher
+    getPersistedToken
   );
+
+  console.log('\x1b[42m%s\x1b[0m', 'in sdk-dapp end', selectedToken);
 
   if (!tokenIdentifier) {
     return {
