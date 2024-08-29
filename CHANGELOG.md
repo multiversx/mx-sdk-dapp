@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.38.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1246)] - 2024-08-29
 - [Added sign screens cached tokens functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1245)
 
 ## [[v2.38.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1244)] - 2024-08-28
