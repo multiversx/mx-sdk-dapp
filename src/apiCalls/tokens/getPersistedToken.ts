@@ -1,10 +1,9 @@
 import { axiosInstance } from 'apiCalls/utils/axiosInstance';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import { store } from 'reduxStore/store';
-import { TokenType } from 'types/tokens.types';
 import { tokenDataStorage } from './tokenDataStorage';
 
-export async function getPersistedToken(url: string): Promise<any> {
+export async function getPersistedToken<T>(url: string): Promise<T> {
   const { apiAddress, apiTimeout } = networkSelector(store.getState());
 
   const config = {
@@ -12,17 +11,15 @@ export async function getPersistedToken(url: string): Promise<any> {
     timeout: Number(apiTimeout)
   };
 
-  const cachedToken: TokenType = await tokenDataStorage.getItem(url);
-
-  console.log('config cachedToken', cachedToken);
+  const cachedToken: T | null = await tokenDataStorage.getItem(url);
 
   if (cachedToken) {
-    return { data: cachedToken };
+    return cachedToken;
   }
 
-  const data = await axiosInstance.get<TokenType>(url, config);
+  const response = await axiosInstance.get<T>(url, config);
 
-  await tokenDataStorage.setItem(url, data.data);
+  await tokenDataStorage.setItem(url, response.data);
 
-  return data;
+  return response.data;
 }

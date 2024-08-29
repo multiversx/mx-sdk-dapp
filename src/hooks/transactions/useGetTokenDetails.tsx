@@ -50,12 +50,6 @@ interface TokenInfoResponse {
   price: number;
 }
 
-interface TokenInfoResponseDataType {
-  data?: TokenInfoResponse;
-  error?: string;
-  isLoading?: boolean;
-}
-
 export function useGetTokenDetails({
   tokenId
 }: {
@@ -73,7 +67,7 @@ export function useGetTokenDetails({
     data: selectedToken,
     error,
     isLoading
-  }: TokenInfoResponseDataType = useSwr(
+  } = useSwr<TokenInfoResponse>(
     Boolean(tokenIdentifier)
       ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,

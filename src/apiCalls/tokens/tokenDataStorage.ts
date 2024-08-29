@@ -1,9 +1,7 @@
-import { TokenType } from 'types/tokens.types';
-
 let memoryCache: Record<string, string> = {};
 
 export let tokenDataStorage = {
-  setItem: async (key: string, tokenData: TokenType) => {
+  setItem: async <T>(key: string, tokenData: T) => {
     try {
       memoryCache[key] = JSON.stringify(tokenData);
     } catch (e) {
