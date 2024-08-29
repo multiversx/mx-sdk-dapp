@@ -72,8 +72,6 @@ export function useGetTokenDetails({
     getPersistedToken
   );
 
-  console.log('\x1b[42m%s\x1b[0m', 'in sdk-dapp end', selectedToken);
-
   if (!tokenIdentifier) {
     return {
       tokenDecimals: Number(network.decimals),
