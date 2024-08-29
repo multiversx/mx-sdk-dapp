@@ -61,8 +61,6 @@ export function useGetTokenDetails({
   const tokenIdentifier = tokenId;
   const tokenEndpoint = isNft ? NFTS_ENDPOINT : TOKENS_ENDPOINT;
 
-  console.log('\x1b[42m%s\x1b[0m', 'in sdk-dapp', tokenIdentifier);
-
   const {
     data: selectedToken,
     error,
