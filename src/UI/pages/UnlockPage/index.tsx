@@ -6,6 +6,7 @@ import { ExtensionLoginButton } from 'UI/extension/ExtensionLoginButton';
 import { LedgerLoginButton } from 'UI/ledger/LedgerLoginButton';
 import { MetamaskProxyButton } from 'UI/metamaskProxy/MetamaskProxyLoginButton';
 import { OperaWalletLoginButton } from 'UI/operaWallet/OperaWalletLoginButton';
+import { PasskeyLoginButton } from 'UI/passkey/PasskeyLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
 
@@ -16,6 +17,7 @@ export interface Props {
   loginRoute: string;
   LedgerLoginButtonText?: string;
   ExtensionLoginButtonText?: string;
+  PasskeyLoginButtonText?: string;
   OperaWalletLoginButtonText?: string;
   CrossWindowLoginButtonText?: string;
   MetamaskProxyLoginButtonText?: string;
@@ -33,6 +35,7 @@ const UnlockPageComponent = ({
   description = 'Pick a login method',
   WalletConnectLoginButtonText = 'xPortal App',
   ExtensionLoginButtonText = 'Extension',
+  PasskeyLoginButtonText = 'Passkey',
   OperaWalletLoginButtonText = 'Opera Crypto Wallet',
   MetamaskProxyLoginButtonText = 'Metamask Proxy',
   WebWalletLoginButtonText = 'Web wallet',
@@ -85,6 +88,11 @@ const UnlockPageComponent = ({
             <ExtensionLoginButton
               callbackRoute={loginRoute}
               loginButtonText={ExtensionLoginButtonText}
+            />
+
+            <PasskeyLoginButton
+              callbackRoute={loginRoute}
+              loginButtonText={PasskeyLoginButtonText}
             />
 
             <MetamaskProxyButton

@@ -11,6 +11,7 @@ import {
   MetamaskProxyProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
 
+import { PasskeyProvider } from 'passkeyProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -71,6 +72,7 @@ export const useSignTransactionsCommonData = () => {
 
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
+    const isPasskeyProvider = provider instanceof PasskeyProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
     const isMetamaskProxyProvider = provider instanceof MetamaskProxyProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
@@ -84,6 +86,7 @@ export const useSignTransactionsCommonData = () => {
       !isExtensionProvider &&
       !isCrossWindowProvider &&
       !isMetamaskProxyProvider &&
+      !isPasskeyProvider &&
       !isMetamaskProvider
     ) {
       return;
@@ -93,6 +96,10 @@ export const useSignTransactionsCommonData = () => {
 
     if (isExtensionProvider) {
       ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+
+    if (isPasskeyProvider) {
+      PasskeyProvider.getInstance()?.cancelAction?.();
     }
 
     if (isMetamaskProvider) {

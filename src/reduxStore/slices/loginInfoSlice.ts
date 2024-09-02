@@ -31,6 +31,7 @@ export interface LoginInfoStateType {
   tokenLogin: TokenLoginType | null;
   walletLogin: LoginInfoType | null;
   extensionLogin: LoginInfoType | null;
+  passkeyLogin: LoginInfoType | null;
   operaLogin: LoginInfoType | null;
   crossWindowLogin: LoginInfoType | null;
   metamaskProxyWindowLogin: LoginInfoType | null;
@@ -47,6 +48,7 @@ const initialState: LoginInfoStateType = {
   tokenLogin: null,
   walletLogin: null,
   extensionLogin: null,
+  passkeyLogin: null,
   operaLogin: null,
   crossWindowLogin: null,
   metamaskProxyWindowLogin: null,

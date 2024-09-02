@@ -10,6 +10,7 @@ import {
   CrossWindowProvider,
   MetamaskProxyProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
+import { PasskeyProvider } from 'passkeyProvider';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -31,6 +32,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.ledger;
     case ExtensionProvider:
       return LoginMethodsEnum.extension;
+    case PasskeyProvider:
+      return LoginMethodsEnum.passkey;
     case MetamaskProvider:
       return LoginMethodsEnum.metamask;
     case OperaProvider:

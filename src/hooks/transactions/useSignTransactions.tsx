@@ -26,6 +26,7 @@ import {
   CrossWindowProvider,
   MetamaskProxyProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
+import { PasskeyProvider } from 'passkeyProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
@@ -98,6 +99,7 @@ export const useSignTransactions = () => {
 
   const clearSignInfo = (sessionId?: string) => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
+    const isPasskeyProvider = provider instanceof PasskeyProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
     const isMetamaskProxyProvider = provider instanceof MetamaskProxyProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
@@ -113,6 +115,7 @@ export const useSignTransactions = () => {
       !isExtensionProvider &&
       !isCrossWindowProvider &&
       !isMetamaskProxyProvider &&
+      !isPasskeyProvider &&
       !isMetamaskProvider
     ) {
       return;
@@ -122,6 +125,9 @@ export const useSignTransactions = () => {
 
     if (isExtensionProvider) {
       ExtensionProvider.getInstance()?.cancelAction?.();
+    }
+    if (isPasskeyProvider) {
+      PasskeyProvider.getInstance()?.cancelAction?.();
     }
     if (isMetamaskProvider) {
       MetamaskProvider.getInstance()?.cancelAction?.();
@@ -229,7 +235,6 @@ export const useSignTransactions = () => {
       if (isCrossWindowProvider && hasConsentPopup) {
         (provider as CrossWindowProvider).setShouldShowConsentPopup(true);
       }
-
       const signedTransactions: Transaction[] =
         (await provider.signTransactions(
           isGuarded && allowGuardian

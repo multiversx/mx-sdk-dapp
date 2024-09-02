@@ -11,6 +11,7 @@ import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithMetamaskModal } from './SignWithMetamaskModal';
 import { SignWithMetamaskProxyModal } from './SignWithMetamaskProxyModal';
 import { SignWithOperaModal } from './SignWithOperaModal';
+import { SignWithPasskeyModal } from './SignWithPasskeyModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
 import {
   CustomConfirmScreensType,
@@ -38,6 +39,7 @@ export const SignTransactionsModals = ({
     WalletConnect:
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
     Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
+    Passkey: CustomConfirmScreens?.Passkey ?? SignWithPasskeyModal,
     Metamask: CustomConfirmScreens?.Metamask ?? SignWithMetamaskModal,
     MetamaskProxy:
       CustomConfirmScreens?.MetamaskProxy ?? SignWithMetamaskProxyModal,
@@ -75,6 +77,8 @@ export const SignTransactionsModals = ({
       return renderScreen({ Screen: ConfirmScreens.WalletConnect });
     case LoginMethodsEnum.extension:
       return renderScreen({ Screen: ConfirmScreens.Extension });
+    case LoginMethodsEnum.passkey:
+      return renderScreen({ Screen: ConfirmScreens.Passkey });
     case LoginMethodsEnum.metamask:
       return renderScreen({ Screen: ConfirmScreens.Metamask, isDevice: true });
     case LoginMethodsEnum.opera:

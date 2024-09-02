@@ -7,6 +7,7 @@ import {
   CrossWindowProvider,
   MetamaskProxyProvider
 } from 'lib/sdkWebWalletCrossWindowProvider';
+import { PasskeyProvider } from 'passkeyProvider';
 import { IDappProvider } from 'types';
 import { WalletConnectV2Provider } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { emptyProvider } from './utils';
@@ -14,6 +15,7 @@ import { emptyProvider } from './utils';
 export type ProvidersType =
   | IDappProvider
   | ExtensionProvider
+  | PasskeyProvider
   | MetamaskProvider
   | WalletProvider
   | CrossWindowProvider

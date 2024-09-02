@@ -53,6 +53,7 @@ import {
   getOperaProvider,
   getCrossWindowProvider,
   getExtensionProvider,
+  getPasskeyProvider,
   processModifiedAccount,
   getMetamaskProvider,
   getMetamaskProxyProvider
@@ -274,6 +275,14 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setPasskeyProvider() {
+    const address = await getAddress();
+    const provider = await getPasskeyProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
   async function setMetamaskProvider() {
     const address = await getAddress();
     const provider = await getMetamaskProvider(address);
@@ -350,6 +359,12 @@ export function ProviderInitializer() {
         setExtensionProvider();
         break;
       }
+
+      case LoginMethodsEnum.passkey: {
+        setPasskeyProvider();
+        break;
+      }
+
       case LoginMethodsEnum.metamask: {
         setMetamaskProvider();
         break;

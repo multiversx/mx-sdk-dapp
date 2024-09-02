@@ -156,7 +156,6 @@ export function useSignTransactionsWithDevice(
     if (!transaction) {
       return null;
     }
-
     return await connectedProvider.signTransaction(transaction);
   }
 

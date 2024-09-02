@@ -7,3 +7,4 @@ export { useLedgerLogin } from './useLedgerLogin';
 export { useXaliasLogin } from './useXaliasLogin';
 export { useWalletConnectV2Login } from './useWalletConnectV2Login';
 export { useMetamaskLogin } from './useMetamaskLogin';
+export { usePasskeyLogin } from './usePasskeyLogin';

@@ -5,3 +5,4 @@ export * from './getMetamaskProxyProvider';
 export * from './processModifiedAccount';
 export * from './getModifiedLoginToken';
 export * from './getMetamaskProvider';
+export * from './getPasskeyProvider';

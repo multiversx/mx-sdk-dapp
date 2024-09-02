@@ -4,6 +4,7 @@ export * from './Denominate';
 export * from './FormatAmount';
 export * from './ExplorerLink';
 export * from './extension/ExtensionLoginButton';
+export * from './passkey/PasskeyLoginButton';
 export * from './operaWallet/OperaWalletLoginButton';
 export * from './ledger/LedgerLoginButton';
 export * from './ledger/LedgerLoginContainer';
