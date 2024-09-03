@@ -4,13 +4,11 @@ import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
-import {
-  CrossWindowProvider,
-  MetamaskProxyProvider
-} from 'lib/sdkWebWalletCrossWindowProvider';
-import { PasskeyProvider } from 'passkeyProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
@@ -40,8 +38,8 @@ export const getProviderType = <TProvider extends object>(
       return LoginMethodsEnum.opera;
     case CrossWindowProvider:
       return LoginMethodsEnum.crossWindow;
-    case MetamaskProxyProvider:
-      return LoginMethodsEnum.metamaskProxy;
+    case IframeProvider:
+      return LoginMethodsEnum.iframe;
     case EmptyProvider:
       return LoginMethodsEnum.none;
     default:

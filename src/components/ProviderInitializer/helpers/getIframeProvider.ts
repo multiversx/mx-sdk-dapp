@@ -1,6 +1,6 @@
-import { MetamaskProxyProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 
-export async function getMetamaskProxyProvider({
+export async function getIframeProvider({
   address,
   walletUrl
 }: {
@@ -8,7 +8,7 @@ export async function getMetamaskProxyProvider({
   walletUrl: string;
 }) {
   try {
-    const provider = MetamaskProxyProvider.getInstance();
+    const provider = IframeProvider.getInstance();
 
     if (provider.isInitialized()) {
       return provider;
@@ -21,9 +21,9 @@ export async function getMetamaskProxyProvider({
       return provider;
     }
 
-    console.error('Could not initialise MetamaskProxyProvider');
+    console.error('Could not initialise IframeProvider');
   } catch (err) {
-    console.error('Unable to login to MetamaskProxyProvider', err);
+    console.error('Unable to login to IframeProvider', err);
   }
   return null;
 }

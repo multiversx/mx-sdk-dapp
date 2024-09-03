@@ -56,7 +56,7 @@ import {
   getPasskeyProvider,
   processModifiedAccount,
   getMetamaskProvider,
-  getMetamaskProxyProvider
+  getIframeProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -310,13 +310,13 @@ export function ProviderInitializer() {
     }
   }
 
-  async function setMetamaskProxyProvider() {
+  async function setIframeProvider() {
     const address = await getAddress();
 
     if (!network.metamaskSnapWalletAddress) {
       throw new Error('Metamask snap wallet URL is not set.');
     }
-    const provider = await getMetamaskProxyProvider({
+    const provider = await getIframeProvider({
       address,
       walletUrl: network.metamaskSnapWalletAddress
     });
@@ -380,8 +380,8 @@ export function ProviderInitializer() {
         break;
       }
 
-      case LoginMethodsEnum.metamaskProxy:
-        setMetamaskProxyProvider();
+      case LoginMethodsEnum.iframe:
+        setIframeProvider();
         break;
 
       case LoginMethodsEnum.extra: {

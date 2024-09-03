@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { PasskeyProvider } from 'passkeyProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';

@@ -31,4 +31,4 @@ export * from './TransactionsTable';
 export * from './ScamPhishingAlert';
 export * from './TimeAgo';
 export * from './metamask/MetamaskLoginButton';
-export * from './metamaskProxy/MetamaskProxyLoginButton';
+export * from './iframe/IframeLoginButton';

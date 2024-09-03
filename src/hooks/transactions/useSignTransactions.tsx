@@ -8,6 +8,8 @@ import {
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import uniq from 'lodash/uniq';
 import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import {
@@ -22,11 +24,7 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import {
-  CrossWindowProvider,
-  MetamaskProxyProvider
-} from 'lib/sdkWebWalletCrossWindowProvider';
-import { PasskeyProvider } from 'passkeyProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
@@ -101,7 +99,7 @@ export const useSignTransactions = () => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isPasskeyProvider = provider instanceof PasskeyProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
-    const isMetamaskProxyProvider = provider instanceof MetamaskProxyProvider;
+    const isIframeProvider = provider instanceof IframeProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperiementalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -114,7 +112,7 @@ export const useSignTransactions = () => {
     if (
       !isExtensionProvider &&
       !isCrossWindowProvider &&
-      !isMetamaskProxyProvider &&
+      !isIframeProvider &&
       !isPasskeyProvider &&
       !isMetamaskProvider
     ) {
@@ -135,8 +133,8 @@ export const useSignTransactions = () => {
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
     }
-    if (isMetamaskProxyProvider) {
-      MetamaskProxyProvider.getInstance()?.cancelAction?.();
+    if (isIframeProvider) {
+      IframeProvider.getInstance()?.cancelAction?.();
     }
     if (isExperiementalWebviewProvider) {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();

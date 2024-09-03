@@ -3,15 +3,13 @@ import { useEffect, useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import {
-  CrossWindowProvider,
-  MetamaskProxyProvider
-} from 'lib/sdkWebWalletCrossWindowProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 
-import { PasskeyProvider } from 'passkeyProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
@@ -74,7 +72,7 @@ export const useSignTransactionsCommonData = () => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
     const isPasskeyProvider = provider instanceof PasskeyProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
-    const isMetamaskProxyProvider = provider instanceof MetamaskProxyProvider;
+    const isIframeProvider = provider instanceof IframeProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperimentalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -85,7 +83,7 @@ export const useSignTransactionsCommonData = () => {
     if (
       !isExtensionProvider &&
       !isCrossWindowProvider &&
-      !isMetamaskProxyProvider &&
+      !isIframeProvider &&
       !isPasskeyProvider &&
       !isMetamaskProvider
     ) {
@@ -110,8 +108,8 @@ export const useSignTransactionsCommonData = () => {
       CrossWindowProvider.getInstance()?.cancelAction?.();
     }
 
-    if (isMetamaskProxyProvider) {
-      MetamaskProxyProvider.getInstance()?.cancelAction?.();
+    if (isIframeProvider) {
+      IframeProvider.getInstance()?.cancelAction?.();
     }
 
     if (isExperimentalWebviewProvider) {

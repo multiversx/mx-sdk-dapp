@@ -36,6 +36,7 @@ export const useAppInitializer = ({
   environment,
   dappConfig
 }: UseAppInitializerPropsType) => {
+  console.log('------1');
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
   const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { MetamaskProxyProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -19,19 +19,19 @@ import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
-export type UseMetamaskProxyLoginReturnType = [
+export type UseIframeLoginReturnType = [
   InitiateLoginFunctionType,
   LoginHookGenericStateType
 ];
 
-export const useMetamaskProxyLogin = ({
+export const useIframeLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
   walletAddress
 }: OnProviderLoginType & {
   walletAddress?: string;
-}): UseMetamaskProxyLoginReturnType => {
+}): UseIframeLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
@@ -48,16 +48,16 @@ export const useMetamaskProxyLogin = ({
     }
 
     clearInitiatedLogins({
-      skip: LoginMethodsEnum.metamaskProxy
+      skip: LoginMethodsEnum.iframe
     });
 
     setIsLoading(true);
-    const provider = MetamaskProxyProvider.getInstance();
+    const provider = IframeProvider.getInstance();
 
     const walletUrl = walletAddress ?? network.metamaskSnapWalletAddress;
 
     if (!walletUrl) {
-      setError('Metamask snap wallet URL is not set');
+      setError('Iframe snap wallet URL is not set');
       return;
     }
     provider.setWalletUrl(walletUrl);
@@ -122,7 +122,7 @@ export const useMetamaskProxyLogin = ({
       dispatch(
         loginAction({
           address: account.address,
-          loginMethod: LoginMethodsEnum.metamaskProxy
+          loginMethod: LoginMethodsEnum.iframe
         })
       );
 

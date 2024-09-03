@@ -1,4 +1,4 @@
-import { PasskeyProvider } from 'passkeyProvider';
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
 
 export async function getPasskeyProvider(address: string) {
   try {

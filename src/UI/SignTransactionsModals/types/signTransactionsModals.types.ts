@@ -27,5 +27,5 @@ export interface CustomConfirmScreensType {
   WalletConnect?: ScreenType;
   Wallet?: ScreenType;
   Extra?: ScreenType;
-  MetamaskProxy?: ScreenType;
+  Iframe?: ScreenType;
 }

@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useMetamaskProxyLogin } from 'hooks/login/useMetamaskProxyLogin';
+import { useIframeLogin } from 'hooks/login/useIframeLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 
-export interface MetamaskProxyLoginButtonPropsType
+export interface IframeLoginButtonPropsType
   extends WithClassnameType,
     OnProviderLoginType {
   children?: ReactNode;
@@ -15,8 +15,8 @@ export interface MetamaskProxyLoginButtonPropsType
   disabled?: boolean;
 }
 
-const MetamaskProxyLoginButtonComponent: (
-  props: MetamaskProxyLoginButtonPropsType & WithStylesImportType
+const IframeLoginButtonComponent: (
+  props: IframeLoginButtonPropsType & WithStylesImportType
 ) => JSX.Element = ({
   token,
   className = 'dapp-metamask-proxy-login',
@@ -28,7 +28,7 @@ const MetamaskProxyLoginButtonComponent: (
   onLoginRedirect,
   disabled
 }) => {
-  const [onInitiateLogin] = useMetamaskProxyLogin({
+  const [onInitiateLogin] = useIframeLogin({
     callbackRoute,
     token,
     onLoginRedirect,
@@ -53,15 +53,9 @@ const MetamaskProxyLoginButtonComponent: (
   );
 };
 
-export const MetamaskProxyButton = withStyles(
-  MetamaskProxyLoginButtonComponent,
-  {
-    ssrStyles: () =>
-      import(
-        'UI/metamaskProxy/MetamaskProxyLoginButton/metamaskProxyLoginButton.styles.scss'
-      ),
-    clientStyles: () =>
-      require('UI/metamaskProxy/MetamaskProxyLoginButton/metamaskProxyLoginButton.styles.scss')
-        .default
-  }
-);
+export const IframeButton = withStyles(IframeLoginButtonComponent, {
+  ssrStyles: () =>
+    import('UI/iframe/IframeLoginButton/iframeLoginButton.styles.scss'),
+  clientStyles: () =>
+    require('UI/iframe/IframeLoginButton/iframeLoginButton.styles.scss').default
+});
