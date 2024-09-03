@@ -1,7 +1,5 @@
-import {
-  CrossWindowProvider,
-  MetamaskProxyProvider
-} from 'lib/sdkWebWalletCrossWindowProvider';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { LoginMethodsEnum } from 'types';
 
 export const clearInitiatedLogins = (props?: { skip: LoginMethodsEnum }) => {
@@ -13,9 +11,9 @@ export const clearInitiatedLogins = (props?: { skip: LoginMethodsEnum }) => {
     if (crossWindowProvider.isInitialized()) {
       crossWindowProvider.dispose();
     }
-    const metamaskProvider = MetamaskProxyProvider.getInstance();
-    if (metamaskProvider.isInitialized()) {
-      metamaskProvider.dispose();
+    const iframeProvider = IframeProvider.getInstance();
+    if (iframeProvider.isInitialized()) {
+      iframeProvider.dispose();
     }
   });
 

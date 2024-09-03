@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useMetamaskProxyLogin } from 'hooks/login/useMetamaskProxyLogin';
+
+import { usePasskeyLogin } from 'hooks/login/usePasskeyLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 
-export interface MetamaskProxyLoginButtonPropsType
+export interface PasskeyLoginButtonPropsType
   extends WithClassnameType,
     OnProviderLoginType {
   children?: ReactNode;
@@ -15,20 +16,20 @@ export interface MetamaskProxyLoginButtonPropsType
   disabled?: boolean;
 }
 
-const MetamaskProxyLoginButtonComponent: (
-  props: MetamaskProxyLoginButtonPropsType & WithStylesImportType
+const PasskeyLoginButtonComponent: (
+  props: PasskeyLoginButtonPropsType & WithStylesImportType
 ) => JSX.Element = ({
   token,
-  className = 'dapp-metamask-proxy-login',
+  className = 'dapp-passkey-login',
   children,
   callbackRoute,
   buttonClassName = 'dapp-default-login-button',
   nativeAuth,
-  loginButtonText = 'Metamask Proxy',
+  loginButtonText = 'Passkey',
   onLoginRedirect,
   disabled
 }) => {
-  const [onInitiateLogin] = useMetamaskProxyLogin({
+  const [onInitiateLogin] = usePasskeyLogin({
     callbackRoute,
     token,
     onLoginRedirect,
@@ -53,15 +54,12 @@ const MetamaskProxyLoginButtonComponent: (
   );
 };
 
-export const MetamaskProxyButton = withStyles(
-  MetamaskProxyLoginButtonComponent,
-  {
-    ssrStyles: () =>
-      import(
-        'UI/metamaskProxy/MetamaskProxyLoginButton/metamaskProxyLoginButton.styles.scss'
-      ),
-    clientStyles: () =>
-      require('UI/metamaskProxy/MetamaskProxyLoginButton/metamaskProxyLoginButton.styles.scss')
-        .default
-  }
-);
+export const PasskeyLoginButton = withStyles(PasskeyLoginButtonComponent, {
+  ssrStyles: () =>
+    import(
+      'UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss'
+    ),
+  clientStyles: () =>
+    require('UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss')
+      .default
+});
