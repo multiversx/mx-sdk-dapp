@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.38.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1251)] - 2024-09-03
 - [Fixed websocket connection is not closed on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1250)
 - [Upgrade sdk-dapp-utils, webview-provider, metamask-proxy-provider and cross-window-provider packages](https://github.com/multiversx/mx-sdk-dapp/pull/1247)
 
