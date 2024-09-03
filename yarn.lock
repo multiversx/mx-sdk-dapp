@@ -2412,7 +2412,7 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-opera-provider/-/sdk-opera-provider-1.0.0-alpha.1.tgz#2beebd5423fdc2e667b33660f17cbff325449097"
   integrity sha512-5hrqn+kNpuy/S6eV5wh5mE4lvQo0PduZ7fLsh/2Srcaz3K5kM5lE1VyQmWk4DTxToZSldrGbgWz/olezoC6fPg==
 
-"@multiversx/sdk-passkey-provider@^1.0.0":
+"@multiversx/sdk-passkey-provider@1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-1.0.0.tgz#f96d9956f3e9376eea86e8556219d4e88ff00bb9"
   integrity sha512-lUY2ZSWNPN6X3RIMtSXjQFL5Owh+zxPZoiIQkkbBG+IUepk3MzPpASvgPfcEMSEM755Ud9hJb13Jr1HtCtmazg==
@@ -2462,7 +2462,7 @@
     "@types/qs" "6.9.10"
     qs "6.11.2"
 
-"@multiversx/sdk-web-wallet-iframe-provider@^1.0.2":
+"@multiversx/sdk-web-wallet-iframe-provider@1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-iframe-provider/-/sdk-web-wallet-iframe-provider-1.0.2.tgz#968a3038b778d85e86724e2759cb1646672c3915"
   integrity sha512-2WpmhjfOaZySf1NOFV2L5yjfRiukaOLU3+zkmwg106oMNJq7+mP7ZM7rMe7y95xYPFgMW+1Ivtdc1DTKycIn+g==
