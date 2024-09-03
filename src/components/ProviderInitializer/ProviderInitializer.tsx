@@ -53,9 +53,10 @@ import {
   getOperaProvider,
   getCrossWindowProvider,
   getExtensionProvider,
+  getPasskeyProvider,
   processModifiedAccount,
   getMetamaskProvider,
-  getMetamaskProxyProvider
+  getIframeProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -274,6 +275,14 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setPasskeyProvider() {
+    const address = await getAddress();
+    const provider = await getPasskeyProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
   async function setMetamaskProvider() {
     const address = await getAddress();
     const provider = await getMetamaskProvider(address);
@@ -301,13 +310,13 @@ export function ProviderInitializer() {
     }
   }
 
-  async function setMetamaskProxyProvider() {
+  async function setIframeProvider() {
     const address = await getAddress();
 
     if (!network.metamaskSnapWalletAddress) {
       throw new Error('Metamask snap wallet URL is not set.');
     }
-    const provider = await getMetamaskProxyProvider({
+    const provider = await getIframeProvider({
       address,
       walletUrl: network.metamaskSnapWalletAddress
     });
@@ -350,6 +359,12 @@ export function ProviderInitializer() {
         setExtensionProvider();
         break;
       }
+
+      case LoginMethodsEnum.passkey: {
+        setPasskeyProvider();
+        break;
+      }
+
       case LoginMethodsEnum.metamask: {
         setMetamaskProvider();
         break;
@@ -365,8 +380,8 @@ export function ProviderInitializer() {
         break;
       }
 
-      case LoginMethodsEnum.metamaskProxy:
-        setMetamaskProxyProvider();
+      case LoginMethodsEnum.iframe:
+        setIframeProvider();
         break;
 
       case LoginMethodsEnum.extra: {
