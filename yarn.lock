@@ -2462,10 +2462,10 @@
     "@types/qs" "6.9.10"
     qs "6.11.2"
 
-"@multiversx/sdk-web-wallet-iframe-provider@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-iframe-provider/-/sdk-web-wallet-iframe-provider-1.0.0.tgz#4ec085637ead9e5f2e9c74bb990ee525084b3d37"
-  integrity sha512-03yyNkgPjzxYIT9PpfEeaJdGlnGO+B/ZC0S9d1rqbxR2Z6qw8LfeP/qAMqdMgg5Z0bxxD2UE94uMyq+8Es55kA==
+"@multiversx/sdk-web-wallet-iframe-provider@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-iframe-provider/-/sdk-web-wallet-iframe-provider-1.0.2.tgz#968a3038b778d85e86724e2759cb1646672c3915"
+  integrity sha512-2WpmhjfOaZySf1NOFV2L5yjfRiukaOLU3+zkmwg106oMNJq7+mP7ZM7rMe7y95xYPFgMW+1Ivtdc1DTKycIn+g==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"

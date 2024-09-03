@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
+import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
@@ -8,7 +9,6 @@ import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import { setAccount } from 'reduxStore/slices';
 import {
-  InitiateLoginFunctionType,
   LoginHookGenericStateType,
   LoginMethodsEnum,
   OnProviderLoginType
@@ -20,7 +20,7 @@ import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseIframeLoginReturnType = [
-  InitiateLoginFunctionType,
+  (loginType: IframeLoginTypes) => void,
   LoginHookGenericStateType
 ];
 
@@ -42,7 +42,7 @@ export const useIframeLogin = ({
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
 
-  async function initiateLogin() {
+  async function initiateLogin(loginType = IframeLoginTypes.metamask) {
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -60,6 +60,8 @@ export const useIframeLogin = ({
       setError('Iframe snap wallet URL is not set');
       return;
     }
+
+    provider.setLoginType(loginType);
     provider.setWalletUrl(walletUrl);
 
     const isSuccessfullyInitialized: boolean = await provider.init();

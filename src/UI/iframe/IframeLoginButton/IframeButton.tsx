@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useIframeLogin } from 'hooks/login/useIframeLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
@@ -13,6 +14,7 @@ export interface IframeLoginButtonPropsType
   buttonClassName?: string;
   loginButtonText?: string;
   disabled?: boolean;
+  loginType?: IframeLoginTypes;
 }
 
 const IframeLoginButtonComponent: (
@@ -26,7 +28,8 @@ const IframeLoginButtonComponent: (
   nativeAuth,
   loginButtonText = 'Metamask Proxy',
   onLoginRedirect,
-  disabled
+  disabled,
+  loginType = IframeLoginTypes.metamask
 }) => {
   const [onInitiateLogin] = useIframeLogin({
     callbackRoute,
@@ -37,7 +40,7 @@ const IframeLoginButtonComponent: (
   const disabledConnectButton = getIsNativeAuthSingingForbidden(token);
 
   const handleLogin = () => {
-    onInitiateLogin();
+    onInitiateLogin(loginType);
   };
 
   return (
