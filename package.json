@@ -167,7 +167,7 @@
     "@multiversx/sdk-wallet": "4.2.0",
     "@multiversx/sdk-wallet-connect-provider": "4.1.3",
     "@multiversx/sdk-web-wallet-cross-window-provider": "1.0.0",
-    "@multiversx/sdk-web-wallet-iframe-provider": "^1.0.0",
+    "@multiversx/sdk-web-wallet-iframe-provider": "1.0.0",
     "@multiversx/sdk-web-wallet-provider": "3.2.1",
     "@multiversx/sdk-webview-provider": "1.0.0",
     "@reduxjs/toolkit": "1.8.2",
