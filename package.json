@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "2.40.1",
+  "version": "2.40.2",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -157,7 +157,7 @@
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
     "@metamask/providers": "16.0.0",
-    "@multiversx/sdk-dapp-utils": "0.1.0",
+    "@multiversx/sdk-dapp-utils": "0.0.1",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
     "@multiversx/sdk-metamask-provider": "0.0.5",

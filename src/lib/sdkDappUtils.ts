@@ -1,5 +1,5 @@
-export { safeWindow } from '@multiversx/sdk-dapp-utils/out/constants/browserConstants';
+export { safeWindow } from '@multiversx/sdk-dapp-utils/out/constants/crossWindowProviderConstants';
 export {
-  WindowProviderRequestEnums,
-  WindowProviderResponseEnums
-} from '@multiversx/sdk-dapp-utils/out/enums/windowProviderEnums';
+  CrossWindowProviderRequestEnums,
+  CrossWindowProviderResponseEnums
+} from '@multiversx/sdk-dapp-utils/out/enums/crossWindowProviderEnums';

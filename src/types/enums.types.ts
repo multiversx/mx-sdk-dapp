@@ -1,6 +1,6 @@
 import {
-  WindowProviderRequestEnums,
-  WindowProviderResponseEnums
+  CrossWindowProviderRequestEnums,
+  CrossWindowProviderResponseEnums
 } from 'lib/sdkDappUtils';
 
 export enum TransactionServerStatusesEnum {
@@ -99,7 +99,7 @@ export enum WebViewProviderRequestBaseEnums {
 }
 
 export const WebViewProviderRequestEnums = {
-  ...WindowProviderRequestEnums,
+  ...CrossWindowProviderRequestEnums,
   ...WebViewProviderRequestBaseEnums
 };
 
@@ -108,6 +108,6 @@ export enum WebViewProviderResponseBaseEnums {
 }
 
 export const WebViewProviderResponseEnums = {
-  ...WindowProviderResponseEnums,
+  ...CrossWindowProviderResponseEnums,
   ...WebViewProviderResponseBaseEnums
 };
