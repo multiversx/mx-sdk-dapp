@@ -38,7 +38,7 @@ export const usePasskeyLogin = ({
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
 
-  async function initiateLogin() {
+  async function initiateLogin(newWalletName?: string) {
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -82,7 +82,11 @@ export const usePasskeyLogin = ({
         ...(token && { token })
       };
 
-      await provider.login(providerLoginData);
+      if (newWalletName) {
+        await provider.createAccount({ walletName: newWalletName, token });
+      } else {
+        await provider.login(providerLoginData);
+      }
 
       setAccountProvider(provider);
 

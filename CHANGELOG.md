@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [[v2.40.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1255)] - 2024-09-05
+- [Added create wallet feature for passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1254)
+
 ## [[v2.40.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1253)] - 2024-09-03
 - [Fixed websocket connection is not closed on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1250)
 - [Upgrade sdk-dapp-utils, webview-provider, metamask-proxy-provider and cross-window-provider packages](https://github.com/multiversx/mx-sdk-dapp/pull/1247)
