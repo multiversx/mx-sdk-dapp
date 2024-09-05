@@ -7,9 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v2.40.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1256)] - 2024-09-05
-- [Upgrade sdk-dapp version to v0.0.1](https://github.com/multiversx/mx-sdk-dapp/pull/1256)
-
 ## [[v2.40.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1255)] - 2024-09-05
 - [Added create wallet feature for passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1254)
 
