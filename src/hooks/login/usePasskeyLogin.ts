@@ -17,8 +17,13 @@ import { getDefaultCallbackUrl } from 'utils/window';
 import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
+type CreateAccountFunctionType = (
+  walletName: string
+) => Promise<{ address: string }>;
+
 export type UsePasskeyLoginReturnType = [
   InitiateLoginFunctionType,
+  CreateAccountFunctionType,
   LoginHookGenericStateType
 ];
 
@@ -37,7 +42,7 @@ export const usePasskeyLogin = ({
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
 
-  async function initiateLogin(newWalletName?: string) {
+  async function initiateLogin() {
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -81,11 +86,7 @@ export const usePasskeyLogin = ({
         ...(token && { token })
       };
 
-      if (newWalletName) {
-        await provider.createAccount({ walletName: newWalletName, token });
-      } else {
-        await provider.login(providerLoginData);
-      }
+      await provider.login(providerLoginData);
 
       setAccountProvider(provider);
 
@@ -121,10 +122,19 @@ export const usePasskeyLogin = ({
     }
   }
 
+  const createAccount = async (walletName: string) => {
+    const provider: PasskeyProvider = PasskeyProvider.getInstance();
+    await provider.init();
+    return await provider.createAccount({
+      walletName
+    });
+  };
+
   const loginFailed = Boolean(error);
 
   return [
     initiateLogin,
+    createAccount,
     {
       loginFailed,
       error,
