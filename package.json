@@ -163,7 +163,7 @@
     "@multiversx/sdk-metamask-provider": "0.0.5",
     "@multiversx/sdk-native-auth-client": "1.0.7",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
-    "@multiversx/sdk-passkey-provider": "1.0.3",
+    "@multiversx/sdk-passkey-provider": "1.0.5",
     "@multiversx/sdk-wallet": "4.2.0",
     "@multiversx/sdk-wallet-connect-provider": "4.1.3",
     "@multiversx/sdk-web-wallet-cross-window-provider": "1.0.0",
