@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [[v2.40.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1262)] - 2024-09-19
+- [Fix extension button opening store when extension is installed](https://github.com/multiversx/mx-sdk-dapp/pull/1262)
+
 ## [[v2.40.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1261)] - 2024-09-12
 - [Update passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1260)
 
