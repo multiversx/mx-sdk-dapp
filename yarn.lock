@@ -2357,9 +2357,9 @@
     protobufjs "7.2.4"
 
 "@multiversx/sdk-core@>= 12.18.0":
-  version "13.6.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.6.1.tgz#5e36351701675e50ee93a1dc9725658c40a441ad"
-  integrity sha512-I3o+WcSkcX88ls8X15ZiHQHtl1cdB8oq1wVmqAdYfyNaKjnmQae94lb2qHbh89HCsuiTsMMEP4rrXiITQbRTOg==
+  version "13.6.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.6.2.tgz#af17d37497b46f4a899144f1c13cba8a668c0541"
+  integrity sha512-TSouvbnyLVF/7fTu296zwZZZ73nOuUqP8FicQqIlZG+twsk/N+biGHDnZuiegEDAYX65968toEwN9H1/M3mRQQ==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     bech32 "1.1.4"
@@ -2412,10 +2412,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-opera-provider/-/sdk-opera-provider-1.0.0-alpha.1.tgz#2beebd5423fdc2e667b33660f17cbff325449097"
   integrity sha512-5hrqn+kNpuy/S6eV5wh5mE4lvQo0PduZ7fLsh/2Srcaz3K5kM5lE1VyQmWk4DTxToZSldrGbgWz/olezoC6fPg==
 
-"@multiversx/sdk-passkey-provider@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-1.0.7.tgz#00f4e02c82604b79a843982378a9460d596c8c5a"
-  integrity sha512-5yYy9nBNP0xq69SYBI2ksuhSVFTAZ7I/grmfvTkNca+gSrvDL+c3hi1QpR4H/TlmvIcWRkmR5N0fI+40PRbokg==
+"@multiversx/sdk-passkey-provider@1.0.8":
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-1.0.8.tgz#efe2e3f95a76cbb9651cbc3567c30ceca46c97bf"
+  integrity sha512-5SJGc2PkcXjxeBlzufeSd6sbW+X7pLyB519gT2PW4qeF9LMnC4Agt3tliNsVK87bV6uiJlglWsNbVMuOUUw5PA==
   dependencies:
     "@noble/ed25519" "2.1.0"
     "@types/jest" "29.5.11"
