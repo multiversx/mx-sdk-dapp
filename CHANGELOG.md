@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 
+## [[v2.40.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1266)] - 2024-09-20
+- [Update passkey provider in order to fix passkey login](https://github.com/multiversx/mx-sdk-dapp/pull/1266)
 
 ## [[v2.40.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1264)] - 2024-09-20
 - [Update passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1263)
