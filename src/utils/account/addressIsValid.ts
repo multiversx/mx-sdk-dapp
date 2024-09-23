@@ -11,7 +11,7 @@ function canTransformToPublicKey(address: string) {
 
 export function addressIsValid(destinationAddress: string) {
   const isValidBach =
-    destinationAddress.length === 62 && /^\w+$/.test(destinationAddress);
+    destinationAddress?.length === 62 && /^\w+$/.test(destinationAddress);
 
   return isValidBach && canTransformToPublicKey(destinationAddress);
 }
