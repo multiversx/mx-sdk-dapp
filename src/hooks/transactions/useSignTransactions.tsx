@@ -169,7 +169,9 @@ export const useSignTransactions = () => {
     sessionId: string,
     callbackRoute = ''
   ) => {
-    const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
+    const urlParams: Record<string, string> = {
+      [WALLET_SIGN_SESSION]: sessionId
+    };
     let callbackUrl = callbackRoute;
 
     if (window?.location) {
@@ -255,21 +257,23 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(signedTransactions).map(
+      let signedTransactionsArray = Object.values(signedTransactions).map(
         (tx) => parseTransactionAfterSigning(tx)
       );
 
-      const { needs2FaSigning, sendTransactionsToGuardian } =
-        checkNeedsGuardianSigning({
-          transactions: signedTransactions,
-          sessionId,
-          callbackRoute,
-          isGuarded: isGuarded && allowGuardian,
-          walletAddress
-        });
+      const { needs2FaSigning, guardTransactions } = checkNeedsGuardianSigning({
+        transactions: signedTransactions,
+        sessionId,
+        callbackRoute,
+        isGuarded: isGuarded && allowGuardian,
+        walletAddress
+      });
 
       if (needs2FaSigning) {
-        return sendTransactionsToGuardian();
+        const guardedTransactions = await guardTransactions();
+        signedTransactionsArray = guardedTransactions
+          ? guardedTransactions.map((tx) => parseTransactionAfterSigning(tx))
+          : [];
       }
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
