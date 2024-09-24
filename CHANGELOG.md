@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Updated git runner from `ubuntu-latest` to `runner-dapp`](https://github.com/multiversx/mx-sdk-dapp/pull/1268)
+- [Updated git runner from `ubuntu-latest` to `runner-dapp`](https://github.com/multiversx/mx-sdk-dapp/pull/1269)
 
 ## [[v2.40.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1267)] - 2024-09-23
 - [Remove hardcoded "erd" check when validating an address](https://github.com/multiversx/mx-sdk-dapp/pull/1267)
