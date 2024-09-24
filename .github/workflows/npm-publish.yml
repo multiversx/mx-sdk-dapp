@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   publish-npm:
-    runs-on: runner-dapp
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       packages: write
