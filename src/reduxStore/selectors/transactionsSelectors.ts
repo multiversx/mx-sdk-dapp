@@ -1,16 +1,16 @@
 import { Transaction } from '@multiversx/sdk-core';
 import { newTransaction } from 'models/newTransaction';
 import {
-  CustomTransactionInformation,
-  RawTransactionType,
-  SignedTransactionsType
-} from 'types';
-import {
   getIsTransactionFailed,
   getIsTransactionPending,
   getIsTransactionSuccessful,
   getIsTransactionTimedOut
 } from 'utils/transactions';
+import {
+  CustomTransactionInformation,
+  RawTransactionType,
+  SignedTransactionsType
+} from '../../types';
 import { RootState } from '../store';
 import { createDeepEqualSelector } from './helpers';
 
