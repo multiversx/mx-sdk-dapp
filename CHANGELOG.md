@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated git runner from `ubuntu-latest` to `runner-dapp`](https://github.com/multiversx/mx-sdk-dapp/pull/1268)
+
 ## [[v2.40.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1267)] - 2024-09-23
 - [Remove hardcoded "erd" check when validating an address](https://github.com/multiversx/mx-sdk-dapp/pull/1267)
-
 
 ## [[v2.40.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1266)] - 2024-09-20
 - [Update passkey provider in order to fix passkey login](https://github.com/multiversx/mx-sdk-dapp/pull/1266)

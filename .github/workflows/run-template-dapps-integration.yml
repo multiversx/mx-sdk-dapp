@@ -9,7 +9,7 @@ on:
 
 jobs:
   run_template_dapps_integration_script:
-    runs-on: ubuntu-latest
+    runs-on: runner-dapp
     steps:
       - uses: actions/checkout@v3
         with:
