@@ -1,7 +1,10 @@
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { signedTransactionsSelector } from 'reduxStore/selectors';
 
-import { SignedTransactionsType, SignedTransactionsBodyType } from 'types';
+import {
+  SignedTransactionsType,
+  SignedTransactionsBodyType
+} from '../../types';
 
 export interface useGetSignedTransactionsReturnType {
   signedTransactions: SignedTransactionsType;
