@@ -49,6 +49,7 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
+import { isContract } from 'utils/smartContracts';
 import {
   getOperaProvider,
   getCrossWindowProvider,
@@ -59,7 +60,6 @@ import {
   getIframeProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
-import { isContract } from 'utils/smartContracts';
 
 let initalizingLedger = false;
 
