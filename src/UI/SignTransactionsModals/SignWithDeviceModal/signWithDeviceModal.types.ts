@@ -3,7 +3,7 @@ import {
   DeviceSignedTransactions,
   GuardianScreenType,
   MultiSignTransactionType
-} from 'types';
+} from '../../../types';
 import { WithClassnameType } from '../../types';
 import { SignPropsType } from '../types/signTransactionsModals.types';
 
