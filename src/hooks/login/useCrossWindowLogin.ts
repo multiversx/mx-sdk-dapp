@@ -7,7 +7,7 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { setAccount } from 'reduxStore/slices';
+import { setAccount, setAddress } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -131,6 +131,8 @@ export const useCrossWindowLogin = ({
           loginMethod: LoginMethodsEnum.crossWindow
         })
       );
+
+      dispatch(setAddress(account.address));
 
       dispatch(
         setAccount({

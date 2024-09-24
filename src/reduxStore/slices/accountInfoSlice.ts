@@ -83,9 +83,7 @@ export const accountInfoSlice = createSlice({
       action: PayloadAction<AccountType>
     ) => {
       // account fetching always comes after address is populated
-      const isSameAddress =
-        state.address === action.payload.address &&
-        state.accounts[state.address]?.address === action.payload.address;
+      const isSameAddress = state.address === action.payload.address;
 
       state.accounts = {
         [state.address]: isSameAddress ? action.payload : emptyAccount
