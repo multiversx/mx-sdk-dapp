@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.40.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1273)] - 2024-09-25
 - [Fixed multisig login](https://github.com/multiversx/mx-sdk-dapp/pull/1272)
 
 ## [[v2.40.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1270)] - 2024-09-24
