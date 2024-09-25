@@ -46,5 +46,7 @@ export const processModifiedAccount = async <
     loginService.setTokenLoginInfo({ signature, address });
   }
 
-  return getAccount(accountAddress);
+  const account = await getAccount(accountAddress);
+
+  return account;
 };
