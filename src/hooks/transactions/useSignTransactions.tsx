@@ -193,6 +193,13 @@ export const useSignTransactions = () => {
 
   const signTransactionsWithProvider = async () => {
     if (isSigningRef.current || !transactionsToSign) {
+      console.log(
+        '\x1b[42m%s\x1b[0m',
+        'in sdk-dapp signTransactionsWithProvider returning',
+        isSigningRef.current,
+        transactionsToSign
+      );
+
       return;
     }
 
@@ -231,6 +238,12 @@ export const useSignTransactions = () => {
 
     try {
       isSigningRef.current = true;
+
+      console.log(
+        '\x1b[42m%s\x1b[0m',
+        'signTransactionsWithProvider isSigningRef.current',
+        isSigningRef.current
+      );
 
       if (isCrossWindowProvider && hasConsentPopup) {
         (provider as CrossWindowProvider).setShouldShowConsentPopup(true);

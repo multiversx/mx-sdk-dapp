@@ -24,6 +24,8 @@ import {
 import { useSetTransactionNonces } from './helpers';
 
 export const useSignTransactionsCommonData = () => {
+  console.log('sdk-dapp useSignTransactionsCommonData start');
+
   const dispatch = useDispatch();
   const { provider } = useGetAccountProvider();
   const { nonce } = useGetAccount();
@@ -62,6 +64,8 @@ export const useSignTransactionsCommonData = () => {
   };
 
   const onAbort = (sessionId?: string) => {
+    console.log('\x1b[42m%s\x1b[0m', 'sdk-dapp is aborting');
+
     clearTransactionStatusMessage();
     clearSignInfo(sessionId);
   };
@@ -116,6 +120,16 @@ export const useSignTransactionsCommonData = () => {
       ExperimentalWebviewProvider.getInstance()?.cancelAction?.();
     }
   }
+
+  console.log(
+    'in sdk-dapp useSignTransactionsCommonData transactionsToSign',
+    transactionsToSign
+  );
+
+  console.log(
+    'in sdk-dapp useSignTransactionsCommonData hasTransactions',
+    hasTransactions
+  );
 
   return {
     error,

@@ -69,5 +69,6 @@ export async function signTransactions({
   store.dispatch(
     setTransactionsDisplayInfo({ sessionId, transactionsDisplayInfo })
   );
+
   return { sessionId };
 }

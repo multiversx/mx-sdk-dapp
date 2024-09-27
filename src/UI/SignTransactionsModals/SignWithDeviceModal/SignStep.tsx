@@ -56,6 +56,14 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
       Object.values(nonceDataStepMap).includes(currentStep);
 
     if (isCurrentNonceRegistered || isCurrentStepRegistered) {
+      console.log('\x1b[42m%s\x1b[0m', 'returing because: ', {
+        isCurrentNonceRegistered,
+        isCurrentStepRegistered,
+        nonceDataStepMap,
+        currentStep,
+        currentNonceData
+      });
+
       return;
     }
 

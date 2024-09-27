@@ -64,7 +64,10 @@ export function useParseMultiEsdtTransferData({
       parseMultiEsdtTransferDataForMultipleTransactions({
         transactions
       });
-
+    console.log('extractTransactionESDTData log', {
+      allTransactions,
+      transactions
+    });
     setAllTransactions(allTransactions);
     setParsedTransactions(parsedTransactionsByDataField);
   }

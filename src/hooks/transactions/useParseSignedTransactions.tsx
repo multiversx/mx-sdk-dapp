@@ -51,6 +51,8 @@ export function useParseSignedTransactions(
               status: TransactionBatchStatusesEnum.cancelled
             })
           );
+          console.log('\x1b[42m%s\x1b[0m', 'ABORTING NOW', searchData);
+
           onAbort();
           removeSearchParamsFromUrl({
             removeParams: [

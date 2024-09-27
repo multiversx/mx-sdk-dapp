@@ -60,6 +60,11 @@ export function useSignTransactionsWithDevice(
   const walletAddress = useSelector(walletAddressSelector);
   const getLedgerProvider = useGetLedgerProvider();
 
+  console.log('\x1b[42m%s\x1b[0m', 'sdk-dapp useSignTransactionsWithDevice', {
+    transactionsToSign,
+    hasTransactions
+  });
+
   const egldLabel = useSelector(egldLabelSelector);
   const { account } = useGetAccountInfo();
   const { address, isGuarded, activeGuardianAddress } = account;

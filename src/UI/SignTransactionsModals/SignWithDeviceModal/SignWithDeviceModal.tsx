@@ -7,6 +7,8 @@ import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { Loader } from '../../Loader';
 import { SignStep } from './SignStep';
 
+console.log('\x1b[42m%s\x1b[0m', 'Link created');
+
 const SignWithDeviceModalComponent = ({
   handleClose,
   handleSubmit,
@@ -50,6 +52,8 @@ const SignWithDeviceModalComponent = ({
     container: classNames(globalStyles?.card, globalStyles?.container),
     cardBody: globalStyles?.cardBody
   };
+
+  console.log('IS IT LOADING? ', { isLoading });
 
   return (
     <ModalContainer

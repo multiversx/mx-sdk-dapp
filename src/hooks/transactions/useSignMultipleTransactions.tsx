@@ -93,6 +93,12 @@ export const useSignMultipleTransactions = ({
         : transactionsToSign
     });
 
+  console.log(
+    '\x1b[42m%s\x1b[0m',
+    'in sdk-dapp useSignMultipleTransactions: ',
+    { allTransactions }
+  );
+
   const isLastTransaction = currentStep === allTransactions.length - 1;
   const currentTx = allTransactions[currentStep];
   const sender = currentTransaction?.transaction?.getSender().toString();
@@ -103,6 +109,12 @@ export const useSignMultipleTransactions = ({
   );
 
   const extractTransactionsInfo = async () => {
+    console.log('extractTransactionsInfo log', {
+      currentTx,
+      allTransactions,
+      currentStep
+    });
+
     if (currentTx == null) {
       return;
     }
@@ -122,7 +134,9 @@ export const useSignMultipleTransactions = ({
 
       if (!isValidSender) {
         console.error(SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS);
-
+        console.log('invalid sender log', {
+          sender
+        });
         return onCancel?.();
       }
     }
@@ -163,6 +177,10 @@ export const useSignMultipleTransactions = ({
   };
 
   const sign = async () => {
+    console.log('\x1b[42m%s\x1b[0m', 'in sdk-dapp sign func', {
+      signedTransactions
+    });
+
     const existingSignedTransactions = Object.values(signedTransactions ?? {});
 
     const alreadySignedByGuardian = getAreAllTransactionsSignedByGuardian({

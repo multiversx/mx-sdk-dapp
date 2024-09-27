@@ -83,6 +83,7 @@ export const TransactionSender = ({
 
       sendingRef.current = true;
       sentSessionIds.current.push(sessionId);
+      console.log('\x1b[42m%s\x1b[0m', 'sdk-dapp invokeSendTransactions');
 
       const responseHashes = await invokeSendTransactions({
         session,
