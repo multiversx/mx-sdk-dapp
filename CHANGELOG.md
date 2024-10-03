@@ -7,88 +7,117 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Update axios, @multiversx sdks](https://github.com/multiversx/mx-sdk-dapp/pull/1274)
+- [Update metamask provider](https://github.com/multiversx/mx-sdk-dapp/pull/1265)
+
 ## [[v2.40.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1273)] - 2024-09-25
+
 - [Fixed multisig login](https://github.com/multiversx/mx-sdk-dapp/pull/1272)
 
 ## [[v2.40.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1270)] - 2024-09-24
+
 - [Update passkey provider to use "auto" strategy when creating a new passkey](https://github.com/multiversx/mx-sdk-dapp/pull/1270)
 - [Added cross-window 2FA wallet guardian signing](https://github.com/multiversx/mx-sdk-dapp/pull/1271)
 
 ## [[v2.40.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1267)] - 2024-09-23
+
 - [Remove hardcoded "erd" check when validating an address](https://github.com/multiversx/mx-sdk-dapp/pull/1267)
 
 ## [[v2.40.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1266)] - 2024-09-20
+
 - [Update passkey provider in order to fix passkey login](https://github.com/multiversx/mx-sdk-dapp/pull/1266)
 
 ## [[v2.40.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1264)] - 2024-09-20
+
 - [Update passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1263)
 
 ## [[v2.40.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1262)] - 2024-09-19
+
 - [Fix extension button opening store when extension is installed](https://github.com/multiversx/mx-sdk-dapp/pull/1262)
 
 ## [[v2.40.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1261)] - 2024-09-12
+
 - [Update passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1260)
 
 ## [[v2.40.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1259)] - 2024-09-06
+
 - [Added create wallet feature for passkey provider without auto login](https://github.com/multiversx/mx-sdk-dapp/pull/1258)
 
 ## [[v2.40.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1255)] - 2024-09-05
+
 - [Added create wallet feature for passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1254)
 
 ## [[v2.40.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1253)] - 2024-09-03
+
 - [Fixed websocket connection is not closed on logout](https://github.com/multiversx/mx-sdk-dapp/pull/1250)
 - [Upgrade sdk-dapp-utils, webview-provider, metamask-proxy-provider and cross-window-provider packages](https://github.com/multiversx/mx-sdk-dapp/pull/1247)
 - [Add passkey provider and replace MetamaskProxyProvider with IframeProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1249)
 
 ## [[v2.38.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1246)] - 2024-08-29
+
 - [Added sign screens cached tokens functionality](https://github.com/multiversx/mx-sdk-dapp/pull/1245)
 
 ## [[v2.38.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1244)] - 2024-08-28
+
 - [Updated metamask sign screens to use ledger sign screens](https://github.com/multiversx/mx-sdk-dapp/pull/1243)
 
 ## [[v2.38.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1242)] - 2024-08-23
+
 - [Fixed double login with cross-window or metamask](https://github.com/multiversx/mx-sdk-dapp/pull/1241)
 
 ## [[v2.38.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1240)] - 2024-08-14
+
 - [Fixed transaction toast timer is reset after another toast was removed](https://github.com/multiversx/mx-sdk-dapp/pull/1239)
 
 ## [[v2.38.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1238)] - 2024-08-14
+
 - [Fix MetamaskProxy Provider singleton instance](https://github.com/multiversx/mx-sdk-dapp/pull/1237)
 - [Fixed transaction toasts are not cleared](https://github.com/multiversx/mx-sdk-dapp/pull/1234)
 
 ## [[v2.38.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1236)] - 2024-08-13
+
 - [Fix SSR support](https://github.com/multiversx/mx-sdk-dapp/pull/1235)
 
 ## [[v2.38.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1233)] - 2024-08-09
+
 - [Fixed "Cannot read properties of undefined (reading 'thumbnailUrl')" error](https://github.com/multiversx/mx-sdk-dapp/pull/1232)
 
 ## [[v2.38.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1231)] - 2024-08-08
+
 - [Fix metamask-proxy-provider: logout and cancel handles](https://github.com/multiversx/mx-sdk-dapp/pull/1230)
 
 ## [[v2.38.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1229)] - 2024-08-07
+
 - [Breaking: Replace IFrameProvider with MetamaskProxyProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1228)
 
 ## [[v2.37.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1227)] - 2024-08-07
+
 - [Use IFrameProvider from its own package](https://github.com/multiversx/mx-sdk-dapp/pull/1226)
 
 ## [[v2.36.4]](https://github.com/multiversx/mx-sdk-dapp/pull/1224)] - 2024-08-07
+
 - [Added ability to skip updating transaction nonces](https://github.com/multiversx/mx-sdk-dapp/pull/1223)
 
 ## [[v2.36.3]](https://github.com/multiversx/mx-sdk-dapp/pull/1222)] - 2024-08-06
+
 - [Prevent network update if there are no changes](https://github.com/multiversx/mx-sdk-dapp/pull/1220)
 
 ## [[v2.36.2]](https://github.com/multiversx/mx-sdk-dapp/pull/1219)] - 2024-08-06
+
 - [Allow signing transactions wihen user balance is zero](https://github.com/multiversx/mx-sdk-dapp/pull/1218)
 - [Prevent setting polling interval when websocket is present](https://github.com/multiversx/mx-sdk-dapp/pull/1217)
 - [Added `matchPath` tests](https://github.com/multiversx/mx-sdk-dapp/pull/1216)
 
 ## [[v2.36.1]](https://github.com/multiversx/mx-sdk-dapp/pull/1215)] - 2024-08-02
+
 - [Fix Webview login and logout action](https://github.com/multiversx/mx-sdk-dapp/pull/1214)
 
 ## [[v2.36.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1213)] - 2024-08-02
+
 - [Add IFrameProvider support](https://github.com/multiversx/mx-sdk-dapp/pull/1212)
 
 ## [[v2.35.0]](https://github.com/multiversx/mx-sdk-dapp/pull/1212)] - 2024-07-19
+
 - [Update Tests](https://github.com/multiversx/mx-sdk-dapp/pull/1210)
 - [Fix unexpected logout in webview (xPortal Hub and Web Wallet Hub)](https://github.com/multiversx/mx-sdk-dapp/pull/1209)
 
