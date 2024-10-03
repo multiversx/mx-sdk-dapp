@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Update WalletConnect Provider](https://github.com/multiversx/mx-sdk-dapp/pull/1276)
 - [Added metamaskSnapWalletAddress defaults](https://github.com/multiversx/mx-sdk-dapp/pull/1275)
 - [Update axios, @multiversx sdks](https://github.com/multiversx/mx-sdk-dapp/pull/1274)
 - [Update metamask provider](https://github.com/multiversx/mx-sdk-dapp/pull/1265)
