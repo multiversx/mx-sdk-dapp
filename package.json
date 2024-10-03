@@ -160,7 +160,7 @@
     "@multiversx/sdk-dapp-utils": "0.1.0",
     "@multiversx/sdk-extension-provider": "3.0.0",
     "@multiversx/sdk-hw-provider": "6.4.0",
-    "@multiversx/sdk-metamask-provider": "0.0.5",
+    "@multiversx/sdk-metamask-provider": "0.0.7",
     "@multiversx/sdk-native-auth-client": "1.0.7",
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-passkey-provider": "1.0.9",
