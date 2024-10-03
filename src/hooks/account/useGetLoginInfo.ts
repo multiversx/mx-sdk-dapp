@@ -6,8 +6,9 @@ export const useGetLoginInfo = () => {
   // if AxiosInterceptor is mounted, prioritize information comming from AxiosContext
   try {
     const { loginInfo, isLoggedIn } = useAxiosInterceptorContext();
+
     return { ...loginInfo, isLoggedIn };
-    // if not mounted, proceed to returning informaiton from store
+    // if not mounted, proceed to returning information from store
   } catch {
     const loginInfo = useSelector(loginInfoSelector);
     const isLoggedIn = useSelector(isLoggedInSelector);

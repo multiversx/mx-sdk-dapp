@@ -7,7 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v2.40.9]](https://github.com/multiversx/mx-sdk-dapp/pull/1273)] - 2024-09-25
+- [Fixed multisig login](https://github.com/multiversx/mx-sdk-dapp/pull/1272)
 
+## [[v2.40.8]](https://github.com/multiversx/mx-sdk-dapp/pull/1270)] - 2024-09-24
+- [Update passkey provider to use "auto" strategy when creating a new passkey](https://github.com/multiversx/mx-sdk-dapp/pull/1270)
+- [Added cross-window 2FA wallet guardian signing](https://github.com/multiversx/mx-sdk-dapp/pull/1271)
+
+## [[v2.40.7]](https://github.com/multiversx/mx-sdk-dapp/pull/1267)] - 2024-09-23
+- [Remove hardcoded "erd" check when validating an address](https://github.com/multiversx/mx-sdk-dapp/pull/1267)
+
+## [[v2.40.6]](https://github.com/multiversx/mx-sdk-dapp/pull/1266)] - 2024-09-20
+- [Update passkey provider in order to fix passkey login](https://github.com/multiversx/mx-sdk-dapp/pull/1266)
 
 ## [[v2.40.5]](https://github.com/multiversx/mx-sdk-dapp/pull/1264)] - 2024-09-20
 - [Update passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1263)

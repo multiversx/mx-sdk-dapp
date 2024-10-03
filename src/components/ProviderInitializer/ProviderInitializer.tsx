@@ -49,6 +49,7 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
+import { isContract } from 'utils/smartContracts';
 import {
   getOperaProvider,
   getCrossWindowProvider,
@@ -150,10 +151,17 @@ export function ProviderInitializer() {
 
   async function checkAddress() {
     const {
-      remainingParams: { impersonate }
+      remainingParams: { impersonate, multisig }
     } = parseNavigationParams(['impersonate']);
 
-    if (!tokenLogin?.nativeAuthToken || impersonate) {
+    const addressIsContract = isContract(address);
+
+    if (
+      !tokenLogin?.nativeAuthToken ||
+      impersonate ||
+      multisig ||
+      addressIsContract
+    ) {
       return;
     }
 

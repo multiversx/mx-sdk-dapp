@@ -1,7 +1,7 @@
 import {
   InterpretedTransactionType,
   OperationType
-} from 'types/serverTransactions.types';
+} from '../../types/serverTransactions.types';
 
 export interface WithClassnameType {
   className?: string;
