@@ -1,6 +1,7 @@
 ### Issue/Feature
 
 ### Reproduce
+
 Issue exists on version `2.` of sdk-dapp.
 
 ### Root cause
@@ -10,13 +11,16 @@ Issue exists on version `2.` of sdk-dapp.
 ### Additional changes
 
 ### Contains breaking changes
-[x] No
 
-[] Yes
+- [x] No
+- [ ] Yes
 
 ### Updated CHANGELOG
-[x] Yes
+
+- [ ] No
+- [x] Yes
 
 ### Testing
-[x] User testing
-[] Unit tests
+
+- [x] User testing
+- [ ] Unit tests
