@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed axios interceptor concurrent calls](https://github.com/multiversx/mx-sdk-dapp/pull/1278)
+
 ## [[v2.40.10](https://github.com/multiversx/mx-sdk-dapp/pull/1277)] - 2024-10-04
 
 - [Update WalletConnect Provider](https://github.com/multiversx/mx-sdk-dapp/pull/1276)
