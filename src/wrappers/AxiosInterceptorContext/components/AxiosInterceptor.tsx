@@ -1,4 +1,4 @@
-import React, { useRef, PropsWithChildren, useEffect } from 'react';
+import React, { useRef, PropsWithChildren, useMemo } from 'react';
 import axios from 'axios';
 import { useAxiosInterceptorContext } from './AxiosInterceptorContextProvider';
 
@@ -15,7 +15,7 @@ export const AxiosInterceptor = ({
 
   const requestIdRef = useRef(-1);
 
-  const setResponseInterceptors = () => {
+  requestIdRef.current = useMemo(() => {
     axios.interceptors.response.use(
       (response) => {
         return response;
@@ -30,15 +30,16 @@ export const AxiosInterceptor = ({
         return Promise.reject(error);
       }
     );
-  };
 
-  const setInterceptors = () => {
     axios.interceptors.request.eject(requestIdRef.current);
 
-    requestIdRef.current = axios.interceptors.request.use(
+    return axios.interceptors.request.use(
       async (config) => {
-        if (authenticatedDomains.includes(String(config?.baseURL))) {
-          config.headers.set('Authorization', `Bearer ${bearerToken}`);
+        if (
+          authenticatedDomains.includes(String(config?.baseURL)) &&
+          bearerToken
+        ) {
+          config.headers.Authorization = `Bearer ${bearerToken}`;
         }
 
         return config;
@@ -47,15 +48,7 @@ export const AxiosInterceptor = ({
         Promise.reject(error);
       }
     );
-  };
-
-  useEffect(setResponseInterceptors, []);
-
-  useEffect(() => {
-    if (bearerToken) {
-      setInterceptors();
-    }
-  }, [bearerToken]);
+  }, [bearerToken, authenticatedDomains]);
 
   return <>{children}</>;
 };
