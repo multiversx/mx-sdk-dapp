@@ -82,11 +82,9 @@ export const useExtensionLogin = ({
         ...(token && { token })
       };
 
-      await provider.login(providerLoginData);
+      const { signature, address } = await provider.login(providerLoginData);
 
       setAccountProvider(provider);
-
-      const { signature, address } = provider.account;
 
       if (!address) {
         setIsLoading(false);
