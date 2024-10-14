@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Upgrade providers login methods & signMessage. Upgrade sdk-core to v.13](https://github.com/multiversx/mx-sdk-dapp/pull/1279)
+
 ## [[v2.40.11](https://github.com/multiversx/mx-sdk-dapp/pull/1280)] - 2024-10-09
 - [Fixed axios interceptor concurrent calls](https://github.com/multiversx/mx-sdk-dapp/pull/1279)
 
