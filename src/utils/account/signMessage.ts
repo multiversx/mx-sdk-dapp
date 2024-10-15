@@ -1,4 +1,4 @@
-import { SignableMessage, Address } from '@multiversx/sdk-core';
+import { Message, Address } from '@multiversx/sdk-core';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAccountProvider, getProviderType } from 'providers';
 import { LoginMethodsEnum } from 'types';
@@ -23,9 +23,10 @@ export const signMessage = async ({
   const providerType = getProviderType(provider);
 
   const callbackUrl = addOriginToLocationPath(callbackRoute);
-  const signableMessage = new SignableMessage({
+
+  const signableMessage = new Message({
     address: new Address(address),
-    message: Buffer.from(message, 'ascii')
+    data: Buffer.from(message)
   });
 
   if (

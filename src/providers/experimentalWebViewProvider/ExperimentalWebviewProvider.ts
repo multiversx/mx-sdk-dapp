@@ -1,4 +1,5 @@
-import { SignableMessage, Transaction } from '@multiversx/sdk-core';
+import { Message, Transaction } from '@multiversx/sdk-core';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { providerNotInitializedError } from '@multiversx/sdk-dapp-utils/out/helpers/providerNotInitializedError';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { logoutAction } from 'reduxStore/commonActions';
@@ -24,6 +25,15 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return ExperimentalWebviewProvider._instance;
   }
 
+  getAccount(): IDAppProviderAccount | null {
+    const data = this._provider.getAccount();
+    return { address: data?.address ?? '' };
+  }
+
+  setAccount(account: IDAppProviderAccount): void {
+    this._provider.setAccount(account);
+  }
+
   constructor() {
     this._provider = WebviewProvider.getInstance({
       resetStateCallback: () => store.dispatch(logoutAction())
@@ -35,7 +45,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   };
 
   login = async () => {
-    return await this._provider.login();
+    const data = await this._provider.login();
+    return { address: data?.address ?? '' };
   };
 
   logout = async () => {
@@ -74,9 +85,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return await this._provider.signTransaction(transaction);
   };
 
-  signMessage = async (
-    message: SignableMessage
-  ): Promise<SignableMessage | null> => {
+  signMessage = async (message: Message): Promise<Message | null> => {
     return await this._provider.signMessage(message);
   };
 
@@ -88,8 +97,8 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     return this._provider.isInitialized();
   };
 
-  isConnected = async () => {
-    return await this._provider.isConnected();
+  isConnected = () => {
+    return this._provider.isConnected();
   };
 
   sendCustomRequest = async (payload: {

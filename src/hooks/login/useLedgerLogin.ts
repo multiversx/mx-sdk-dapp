@@ -61,7 +61,7 @@ export const useLedgerLogin = ({
   onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType => {
   const ledgerAccount = useSelector(ledgerAccountSelector);
-  const hwProvider = getAccountProvider() as HWProvider;
+  const hwProvider = getAccountProvider() as unknown as HWProvider;
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = nativeAuth != null;
@@ -198,7 +198,7 @@ export const useLedgerLogin = ({
       }
     } else {
       try {
-        const address = await hwProvider.login({ addressIndex: index });
+        const { address } = await hwProvider.login({ addressIndex: index });
 
         dispatchLoginActions({
           address,
@@ -295,7 +295,7 @@ export const useLedgerLogin = ({
           return onLoginFailed(failInitializeErrorText);
         }
 
-        const address = await hwProvider.login({
+        const { address } = await hwProvider.login({
           addressIndex: selectedAddress.index.valueOf()
         });
 

@@ -34,6 +34,6 @@ test('HWProvider login', async () => {
   const provider = new HWProvider(ledgerApp);
 
   // Test the login method
-  const address = await provider.login({ addressIndex: 0 });
+  const { address } = await provider.login({ addressIndex: 0 });
   expect(address).toBe('mockAddress');
 });
