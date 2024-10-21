@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v3.0.0-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1281)] - 2024-10-15
+## [⚠️ Breaking ⚠️[v3.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1282)] - 2024-10-21
 - [Upgrade providers login methods & signMessage. Upgrade sdk-core to v.13](https://github.com/multiversx/mx-sdk-dapp/pull/1279)
 
 ## [[v2.40.11](https://github.com/multiversx/mx-sdk-dapp/pull/1280)] - 2024-10-09
