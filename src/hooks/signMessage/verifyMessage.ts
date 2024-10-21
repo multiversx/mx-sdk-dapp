@@ -1,4 +1,4 @@
-import { Address, SignableMessage } from '@multiversx/sdk-core/out';
+import { Address, Message, MessageComputer } from '@multiversx/sdk-core/out';
 import { getVerifier } from './getVerifier';
 
 export const verifyMessage = (signedMessage: string) => {
@@ -7,18 +7,19 @@ export const verifyMessage = (signedMessage: string) => {
 
     const decodedMessage = Buffer.from(message.replace('0x', ''), 'hex');
     const decodedSignature = Buffer.from(signature.replace('0x', ''), 'hex');
-    const bech32Address = new Address(address);
-    const signedM = new SignableMessage({
-      address: bech32Address,
-      message: decodedMessage,
-      signature: decodedSignature
-    });
 
     const verifier = getVerifier(address);
-    const isVerified = verifier.verify(
-      signedM.serializeForSigning(),
-      signedM.getSignature()
-    );
+
+    const messageComputer = new MessageComputer();
+
+    const msg = new Message({
+      address: new Address(address),
+      data: decodedMessage
+    });
+
+    const serializedMessage = messageComputer.computeBytesForVerifying(msg);
+
+    const isVerified = verifier.verify(serializedMessage, decodedSignature);
 
     return {
       isVerified,

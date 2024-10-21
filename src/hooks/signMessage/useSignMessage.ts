@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { SignableMessage, Address } from '@multiversx/sdk-core';
+import { Address, Message } from '@multiversx/sdk-core';
 import {
   CANCELLED,
   ERROR_SIGNING,
@@ -142,9 +142,10 @@ export const useSignMessage = (options?: { hasConsentPopup?: boolean }) => {
     const address = await getAddress();
     const provider = getAccountProvider();
     const callbackUrl = encodeURIComponent(String(callbackRoute));
-    const signableMessage = new SignableMessage({
+
+    const signableMessage = new Message({
       address: new Address(address),
-      message: Buffer.from(message, 'ascii')
+      data: Buffer.from(message)
     });
 
     return provider.signMessage(signableMessage, {
@@ -212,7 +213,7 @@ export const useSignMessage = (options?: { hasConsentPopup?: boolean }) => {
               status: SignedMessageStatusesEnum.signed,
               callbackUrl: callbackRoute,
               message: props.message,
-              signature: signedMessage.signature.toString('hex')
+              signature: Buffer.from(signedMessage?.signature).toString('hex')
             }
           })
         );

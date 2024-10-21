@@ -1,7 +1,7 @@
 import {
   WindowProviderRequestEnums,
   WindowProviderResponseEnums
-} from 'lib/sdkDappUtils';
+} from 'lib/sdkWebWalletCrossWindowProvider';
 
 export enum TransactionServerStatusesEnum {
   pending = 'pending',
