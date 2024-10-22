@@ -15,6 +15,7 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getDefaultCallbackUrl } from 'utils/window';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseOperaLoginReturnType = [
@@ -41,6 +42,8 @@ export const useOperaLogin = ({
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
+    clearInitiatedLogins();
 
     setIsLoading(true);
     const provider: OperaProvider = OperaProvider.getInstance();

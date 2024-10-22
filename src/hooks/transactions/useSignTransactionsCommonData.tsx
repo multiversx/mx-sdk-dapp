@@ -3,13 +3,12 @@ import { useEffect, useState } from 'react';
 import { Transaction } from '@multiversx/sdk-core/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import {
-  CrossWindowProvider,
-  IframeProvider
-} from 'lib/sdkWebWalletCrossWindowProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
@@ -42,9 +41,10 @@ export const useSignTransactionsCommonData = () => {
     const transactionsWithFixedNonce = transactionsToSign?.transactions ?? [];
 
     if (hasTransactionsToSign) {
-      const transactionsWithIncrementalNonces = await setTransactionNonces(
-        transactionsWithFixedNonce
-      );
+      const transactionsWithIncrementalNonces = transactionsToSign
+        ?.customTransactionInformation?.skipUpdateNonces
+        ? transactionsWithFixedNonce
+        : await setTransactionNonces(transactionsWithFixedNonce);
 
       setTransactions(transactionsWithIncrementalNonces);
     }
@@ -70,8 +70,9 @@ export const useSignTransactionsCommonData = () => {
 
   function clearSignInfo(sessionId?: string) {
     const isExtensionProvider = provider instanceof ExtensionProvider;
+    const isPasskeyProvider = provider instanceof PasskeyProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
-    const isIFrameProvider = provider instanceof IframeProvider;
+    const isIframeProvider = provider instanceof IframeProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperimentalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -82,7 +83,8 @@ export const useSignTransactionsCommonData = () => {
     if (
       !isExtensionProvider &&
       !isCrossWindowProvider &&
-      !isIFrameProvider &&
+      !isIframeProvider &&
+      !isPasskeyProvider &&
       !isMetamaskProvider
     ) {
       return;
@@ -94,6 +96,10 @@ export const useSignTransactionsCommonData = () => {
       ExtensionProvider.getInstance()?.cancelAction?.();
     }
 
+    if (isPasskeyProvider) {
+      PasskeyProvider.getInstance()?.cancelAction?.();
+    }
+
     if (isMetamaskProvider) {
       MetamaskProvider.getInstance()?.cancelAction?.();
     }
@@ -102,7 +108,7 @@ export const useSignTransactionsCommonData = () => {
       CrossWindowProvider.getInstance()?.cancelAction?.();
     }
 
-    if (isIFrameProvider) {
+    if (isIframeProvider) {
       IframeProvider.getInstance()?.cancelAction?.();
     }
 

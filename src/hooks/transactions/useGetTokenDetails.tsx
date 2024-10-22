@@ -1,7 +1,7 @@
 import useSwr from 'swr';
 
 import { NFTS_ENDPOINT, TOKENS_ENDPOINT } from 'apiCalls/endpoints';
-import { axiosFetcher } from 'apiCalls/utils/axiosFetcher';
+import { getPersistedToken } from 'apiCalls/tokens/getPersistedToken';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { NftEnumType } from 'types/tokens.types';
 import { getIdentifierType } from 'utils/validation/getIdentifierType';
@@ -50,12 +50,6 @@ interface TokenInfoResponse {
   price: number;
 }
 
-interface TokenInfoResponseDataType {
-  data?: TokenInfoResponse;
-  error?: string;
-  isLoading?: boolean;
-}
-
 export function useGetTokenDetails({
   tokenId
 }: {
@@ -71,11 +65,11 @@ export function useGetTokenDetails({
     data: selectedToken,
     error,
     isLoading
-  }: TokenInfoResponseDataType = useSwr(
+  } = useSwr<TokenInfoResponse>(
     Boolean(tokenIdentifier)
       ? `${network.apiAddress}/${tokenEndpoint}/${tokenIdentifier}`
       : null,
-    axiosFetcher
+    getPersistedToken
   );
 
   if (!tokenIdentifier) {
@@ -91,7 +85,7 @@ export function useGetTokenDetails({
     : Number(network.decimals);
   const tokenLabel = selectedToken ? selectedToken?.name : '';
   const tokenAvatar = selectedToken
-    ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0].thumbnailUrl
+    ? selectedToken?.assets?.svgUrl ?? selectedToken?.media?.[0]?.thumbnailUrl
     : '';
 
   return {

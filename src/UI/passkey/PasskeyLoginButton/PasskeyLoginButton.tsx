@@ -1,12 +1,13 @@
 import React, { ReactNode } from 'react';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useIFrameLogin } from 'hooks/login/useIFrameLogin';
+
+import { usePasskeyLogin } from 'hooks/login/usePasskeyLogin';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';
 import { WithClassnameType } from '../../types';
 
-export interface IFrameLoginButtonPropsType
+export interface PasskeyLoginButtonPropsType
   extends WithClassnameType,
     OnProviderLoginType {
   children?: ReactNode;
@@ -15,20 +16,20 @@ export interface IFrameLoginButtonPropsType
   disabled?: boolean;
 }
 
-const IFrameLoginButtonComponent: (
-  props: IFrameLoginButtonPropsType & WithStylesImportType
+const PasskeyLoginButtonComponent: (
+  props: PasskeyLoginButtonPropsType & WithStylesImportType
 ) => JSX.Element = ({
   token,
-  className = 'dapp-iframe-login',
+  className = 'dapp-passkey-login',
   children,
   callbackRoute,
   buttonClassName = 'dapp-default-login-button',
   nativeAuth,
-  loginButtonText = 'IFrame Wallet',
+  loginButtonText = 'Passkey',
   onLoginRedirect,
   disabled
 }) => {
-  const [onInitiateLogin] = useIFrameLogin({
+  const [onInitiateLogin] = usePasskeyLogin({
     callbackRoute,
     token,
     onLoginRedirect,
@@ -53,9 +54,12 @@ const IFrameLoginButtonComponent: (
   );
 };
 
-export const IFrameLoginButton = withStyles(IFrameLoginButtonComponent, {
+export const PasskeyLoginButton = withStyles(PasskeyLoginButtonComponent, {
   ssrStyles: () =>
-    import('UI/iframe/IFrameLoginButton/iframeLoginButton.styles.scss'),
+    import(
+      'UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss'
+    ),
   clientStyles: () =>
-    require('UI/iframe/IFrameLoginButton/iframeLoginButton.styles.scss').default
+    require('UI/extension/ExtensionLoginButton/extensionLoginButton.styles.scss')
+      .default
 });

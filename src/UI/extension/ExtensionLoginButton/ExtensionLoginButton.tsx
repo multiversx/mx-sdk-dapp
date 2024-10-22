@@ -23,8 +23,6 @@ export interface ExtensionLoginButtonPropsType
   disabled?: boolean;
 }
 
-const isExtensionAvailable = getIsExtensionAvailable();
-
 const ExtensionLoginButtonComponent: (
   props: ExtensionLoginButtonPropsType & WithStylesImportType
 ) => JSX.Element = ({
@@ -71,7 +69,7 @@ const ExtensionLoginButtonComponent: (
     onInitiateLogin();
   };
 
-  return !isExtensionAvailable ? (
+  return !getIsExtensionAvailable() ? (
     <a
       rel='noreferrer'
       href={isFirefox ? FIREFOX_ADDON_LINK : CHROME_EXTENSION_LINK}

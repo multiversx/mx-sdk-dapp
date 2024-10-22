@@ -1,42 +1,43 @@
 import { useState } from 'react';
-import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
-import { IframeProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
-import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
-import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { setAccount } from 'reduxStore/slices';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
-  LoginMethodsEnum,
   OnProviderLoginType
 } from 'types';
-import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { LoginMethodsEnum } from 'types/enums.types';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
-import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { optionalRedirect } from 'utils/internal';
+import { addOriginToLocationPath } from 'utils/window';
+import { getDefaultCallbackUrl } from 'utils/window';
+import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
-export type UseIFrameLoginReturnType = [
+type CreateAccountFunctionType = (
+  walletName: string
+) => Promise<{ address: string }>;
+
+export type UsePasskeyLoginReturnType = [
   InitiateLoginFunctionType,
+  CreateAccountFunctionType,
   LoginHookGenericStateType
 ];
 
-export const useIFrameLogin = ({
+export const usePasskeyLogin = ({
   callbackRoute,
   token: tokenToSign,
   nativeAuth,
-  walletAddress
-}: OnProviderLoginType & {
-  walletAddress?: string;
-}): UseIFrameLoginReturnType => {
+  onLoginRedirect
+}: OnProviderLoginType): UsePasskeyLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
-  const network = useSelector(networkSelector);
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
@@ -46,13 +47,14 @@ export const useIFrameLogin = ({
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
-    setIsLoading(true);
-    const provider = IframeProvider.getInstance();
-    provider.setWalletUrl(walletAddress ?? network.walletAddress);
+    clearInitiatedLogins();
 
-    const isSuccessfullyInitialized: boolean = await provider.init();
+    setIsLoading(true);
+    const provider: PasskeyProvider = PasskeyProvider.getInstance();
 
     try {
+      const isSuccessfullyInitialized: boolean = await provider.init();
+
       if (!isSuccessfullyInitialized) {
         console.warn(
           'Something went wrong trying to redirect to wallet login..'
@@ -60,9 +62,9 @@ export const useIFrameLogin = ({
         return;
       }
 
-      const { origin, pathname } = getWindowLocation();
+      const defaultCallbackUrl = getDefaultCallbackUrl();
       const callbackUrl: string = encodeURIComponent(
-        `${origin}${callbackRoute ?? pathname}`
+        addOriginToLocationPath(callbackRoute ?? defaultCallbackUrl)
       );
 
       if (hasNativeAuth && !token) {
@@ -84,55 +86,55 @@ export const useIFrameLogin = ({
         ...(token && { token })
       };
 
-      const { signature, address, multisig, impersonate } =
-        await provider.login(providerLoginData);
+      await provider.login(providerLoginData);
 
       setAccountProvider(provider);
+
+      const { signature, address } = provider.account;
 
       if (!address) {
         setIsLoading(false);
         console.warn('Login cancelled.');
+        setError('Login cancelled');
         return;
       }
 
-      const account = await processModifiedAccount({
-        loginToken: token,
-        extraInfoData: { multisig, impersonate },
-        address,
-        signature,
-        loginService
+      if (signature && token) {
+        loginService.setTokenLoginInfo({
+          signature,
+          address
+        });
+      }
+
+      dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.passkey }));
+
+      optionalRedirect({
+        callbackRoute,
+        onLoginRedirect,
+        options: { signature, address }
       });
-
-      if (!account) {
-        return;
-      }
-
-      dispatch(
-        loginAction({
-          address: account.address,
-          loginMethod: LoginMethodsEnum.iframe
-        })
-      );
-
-      dispatch(
-        setAccount({
-          ...account,
-          nonce: getLatestNonce(account)
-        })
-      );
     } catch (error) {
-      console.error('error loging in', error);
+      console.error('error logging in', error);
       // TODO: can be any or typed error
-      setError('error logging in' + (error as any).message);
+      setError('Error logging in: ' + (error as any).message);
     } finally {
       setIsLoading(false);
     }
   }
 
+  const createAccount = async (walletName: string) => {
+    const provider: PasskeyProvider = PasskeyProvider.getInstance();
+    await provider.init();
+    return await provider.createAccount({
+      walletName
+    });
+  };
+
   const loginFailed = Boolean(error);
 
   return [
     initiateLogin,
+    createAccount,
     {
       loginFailed,
       error,

@@ -6,17 +6,17 @@ import {
   SignWaitingScreenModalPropsType
 } from '../components';
 
-export const SignWithIFrameModal = (props: SignModalPropsType) => {
+export const SignWithPasskeyModal = (props: SignModalPropsType) => {
   const description = props.error
     ? props.error
     : props.transactions?.length > 1
-    ? 'Check your Wallet Window to sign the transactions'
-    : 'Check your Wallet Window to sign the transaction';
+    ? 'Please signin with your passkey in order to sign the transactions'
+    : 'Please signin with your passkey in order to sign the transaction';
 
   const waitingScreenProps: SignWaitingScreenModalPropsType = {
     ...props,
     description,
-    title: 'Confirm on Metamask Extension'
+    title: 'Confirm by signing in with passkey'
   };
 
   return <SignWaitingScreenModal {...waitingScreenProps} />;

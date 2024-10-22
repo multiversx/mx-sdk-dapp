@@ -7,10 +7,11 @@ import { ConfirmationScreen, DeviceConfirmationScreen } from './components';
 import { SignWithCrossWindowWalletModal } from './SignWithCrossWindowWalletModal';
 import { SignWithExtensionModal } from './SignWithExtensionModal';
 import { SignWithExtraModal } from './SignWithExtraModal';
-import { SignWithIFrameModal } from './SignWithIFrameModal';
+import { SignWithIframeModal } from './SignWithIframeModal';
 import { SignWithLedgerModal } from './SignWithLedgerModal';
 import { SignWithMetamaskModal } from './SignWithMetamaskModal';
 import { SignWithOperaModal } from './SignWithOperaModal';
+import { SignWithPasskeyModal } from './SignWithPasskeyModal';
 import { SignWithWalletConnectModal } from './SignWithWalletConnectModal';
 import {
   CustomConfirmScreensType,
@@ -38,8 +39,9 @@ export const SignTransactionsModals = ({
     WalletConnect:
       CustomConfirmScreens?.WalletConnect ?? SignWithWalletConnectModal,
     Extension: CustomConfirmScreens?.Extension ?? SignWithExtensionModal,
+    Passkey: CustomConfirmScreens?.Passkey ?? SignWithPasskeyModal,
     Metamask: CustomConfirmScreens?.Metamask ?? SignWithMetamaskModal,
-    Iframe: CustomConfirmScreens?.Iframe ?? SignWithIFrameModal,
+    Iframe: CustomConfirmScreens?.Iframe ?? SignWithIframeModal,
     Opera: CustomConfirmScreens?.Opera ?? SignWithOperaModal,
     CrossWindow:
       CustomConfirmScreens?.CrossWindow ?? SignWithCrossWindowWalletModal,
@@ -74,8 +76,10 @@ export const SignTransactionsModals = ({
       return renderScreen({ Screen: ConfirmScreens.WalletConnect });
     case LoginMethodsEnum.extension:
       return renderScreen({ Screen: ConfirmScreens.Extension });
+    case LoginMethodsEnum.passkey:
+      return renderScreen({ Screen: ConfirmScreens.Passkey });
     case LoginMethodsEnum.metamask:
-      return renderScreen({ Screen: ConfirmScreens.Metamask });
+      return renderScreen({ Screen: ConfirmScreens.Metamask, isDevice: true });
     case LoginMethodsEnum.opera:
       return renderScreen({ Screen: ConfirmScreens.Opera });
     case LoginMethodsEnum.crossWindow:

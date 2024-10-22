@@ -1,6 +1,6 @@
-import { IframeProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 
-export async function getIFrameProvider({
+export async function getIframeProvider({
   address,
   walletUrl
 }: {
@@ -21,9 +21,9 @@ export async function getIFrameProvider({
       return provider;
     }
 
-    console.error('Could not initialise IFrameProvider');
+    console.error('Could not initialise IframeProvider');
   } catch (err) {
-    console.error('Unable to login to IFrameProvider', err);
+    console.error('Unable to login to IframeProvider', err);
   }
   return null;
 }

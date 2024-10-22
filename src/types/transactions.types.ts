@@ -2,7 +2,7 @@ import { ReactNode, Dispatch, SetStateAction } from 'react';
 import { Address, Transaction } from '@multiversx/sdk-core';
 import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
 
-import { SignStepInnerClassesType } from 'UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
+import { SignStepInnerClassesType } from '../UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
 import { WithClassnameType } from '../UI/types';
 import {
   TransactionBatchStatusesEnum,
@@ -226,6 +226,10 @@ export interface CustomTransactionInformation {
   sessionInformation: any;
   completedTransactionsDelay?: number;
   signWithoutSending: boolean;
+  /**
+   * If true, transactions with lower nonces than the account nonce will not be updated with the correct nonce
+   */
+  skipUpdateNonces?: boolean;
   /**
    * If true, the change guardian action will not trigger transaction version update
    */

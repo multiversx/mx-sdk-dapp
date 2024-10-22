@@ -7,7 +7,7 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { setAccount } from 'reduxStore/slices';
+import { setAccount, setAddress } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -18,6 +18,7 @@ import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
+import { clearInitiatedLogins } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseCrossWindowLoginReturnType = [
@@ -50,6 +51,10 @@ export const useCrossWindowLogin = ({
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
+
+    clearInitiatedLogins({
+      skip: LoginMethodsEnum.crossWindow
+    });
 
     setIsLoading(true);
     const isSuccessfullyInitialized: boolean =
@@ -126,6 +131,8 @@ export const useCrossWindowLogin = ({
           loginMethod: LoginMethodsEnum.crossWindow
         })
       );
+
+      dispatch(setAddress(account.address));
 
       dispatch(
         setAccount({

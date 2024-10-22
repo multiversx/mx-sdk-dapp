@@ -49,13 +49,15 @@ import {
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
 
+import { isContract } from 'utils/smartContracts';
 import {
   getOperaProvider,
   getCrossWindowProvider,
   getExtensionProvider,
+  getPasskeyProvider,
   processModifiedAccount,
   getMetamaskProvider,
-  getIFrameProvider
+  getIframeProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
@@ -149,10 +151,17 @@ export function ProviderInitializer() {
 
   async function checkAddress() {
     const {
-      remainingParams: { impersonate }
+      remainingParams: { impersonate, multisig }
     } = parseNavigationParams(['impersonate']);
 
-    if (!tokenLogin?.nativeAuthToken || impersonate) {
+    const addressIsContract = isContract(address);
+
+    if (
+      !tokenLogin?.nativeAuthToken ||
+      impersonate ||
+      multisig ||
+      addressIsContract
+    ) {
       return;
     }
 
@@ -274,6 +283,14 @@ export function ProviderInitializer() {
     }
   }
 
+  async function setPasskeyProvider() {
+    const address = await getAddress();
+    const provider = await getPasskeyProvider(address);
+    if (provider) {
+      setAccountProvider(provider);
+    }
+  }
+
   async function setMetamaskProvider() {
     const address = await getAddress();
     const provider = await getMetamaskProvider(address);
@@ -301,11 +318,15 @@ export function ProviderInitializer() {
     }
   }
 
-  async function setIFrameProvider() {
+  async function setIframeProvider() {
     const address = await getAddress();
-    const provider = await getIFrameProvider({
+
+    if (!network.metamaskSnapWalletAddress) {
+      throw new Error('Metamask snap wallet URL is not set.');
+    }
+    const provider = await getIframeProvider({
       address,
-      walletUrl: network.walletAddress
+      walletUrl: network.metamaskSnapWalletAddress
     });
     if (provider) {
       setAccountProvider(provider);
@@ -346,6 +367,12 @@ export function ProviderInitializer() {
         setExtensionProvider();
         break;
       }
+
+      case LoginMethodsEnum.passkey: {
+        setPasskeyProvider();
+        break;
+      }
+
       case LoginMethodsEnum.metamask: {
         setMetamaskProvider();
         break;
@@ -362,7 +389,7 @@ export function ProviderInitializer() {
       }
 
       case LoginMethodsEnum.iframe:
-        setIFrameProvider();
+        setIframeProvider();
         break;
 
       case LoginMethodsEnum.extra: {

@@ -8,6 +8,8 @@ import {
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 
+import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
+import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import uniq from 'lodash/uniq';
 import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import {
@@ -22,10 +24,7 @@ import {
 import { useGetAccount } from 'hooks/account';
 import { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';
 import { useParseSignedTransactions } from 'hooks/transactions/useParseSignedTransactions';
-import {
-  CrossWindowProvider,
-  IframeProvider
-} from 'lib/sdkWebWalletCrossWindowProvider';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider';
 import { getProviderType } from 'providers/utils';
 
@@ -98,8 +97,9 @@ export const useSignTransactions = () => {
 
   const clearSignInfo = (sessionId?: string) => {
     const isExtensionProvider = provider instanceof ExtensionProvider;
+    const isPasskeyProvider = provider instanceof PasskeyProvider;
     const isCrossWindowProvider = provider instanceof CrossWindowProvider;
-    const isIFrameProvider = provider instanceof IframeProvider;
+    const isIframeProvider = provider instanceof IframeProvider;
     const isMetamaskProvider = provider instanceof MetamaskProvider;
     const isExperiementalWebviewProvider =
       provider instanceof ExperimentalWebviewProvider;
@@ -112,7 +112,8 @@ export const useSignTransactions = () => {
     if (
       !isExtensionProvider &&
       !isCrossWindowProvider &&
-      !isIFrameProvider &&
+      !isIframeProvider &&
+      !isPasskeyProvider &&
       !isMetamaskProvider
     ) {
       return;
@@ -123,13 +124,16 @@ export const useSignTransactions = () => {
     if (isExtensionProvider) {
       ExtensionProvider.getInstance()?.cancelAction?.();
     }
+    if (isPasskeyProvider) {
+      PasskeyProvider.getInstance()?.cancelAction?.();
+    }
     if (isMetamaskProvider) {
       MetamaskProvider.getInstance()?.cancelAction?.();
     }
     if (isCrossWindowProvider) {
       CrossWindowProvider.getInstance()?.cancelAction?.();
     }
-    if (isIFrameProvider) {
+    if (isIframeProvider) {
       IframeProvider.getInstance()?.cancelAction?.();
     }
     if (isExperiementalWebviewProvider) {
@@ -165,7 +169,9 @@ export const useSignTransactions = () => {
     sessionId: string,
     callbackRoute = ''
   ) => {
-    const urlParams = { [WALLET_SIGN_SESSION]: sessionId };
+    const urlParams: Record<string, string> = {
+      [WALLET_SIGN_SESSION]: sessionId
+    };
     let callbackUrl = callbackRoute;
 
     if (window?.location) {
@@ -229,7 +235,6 @@ export const useSignTransactions = () => {
       if (isCrossWindowProvider && hasConsentPopup) {
         (provider as CrossWindowProvider).setShouldShowConsentPopup(true);
       }
-
       const signedTransactions: Transaction[] =
         (await provider.signTransactions(
           isGuarded && allowGuardian
@@ -252,21 +257,23 @@ export const useSignTransactions = () => {
         return;
       }
 
-      const signedTransactionsArray = Object.values(signedTransactions).map(
+      let signedTransactionsArray = Object.values(signedTransactions).map(
         (tx) => parseTransactionAfterSigning(tx)
       );
 
-      const { needs2FaSigning, sendTransactionsToGuardian } =
-        checkNeedsGuardianSigning({
-          transactions: signedTransactions,
-          sessionId,
-          callbackRoute,
-          isGuarded: isGuarded && allowGuardian,
-          walletAddress
-        });
+      const { needs2FaSigning, guardTransactions } = checkNeedsGuardianSigning({
+        transactions: signedTransactions,
+        sessionId,
+        callbackRoute,
+        isGuarded: isGuarded && allowGuardian,
+        walletAddress
+      });
 
       if (needs2FaSigning) {
-        return sendTransactionsToGuardian();
+        const guardedTransactions = await guardTransactions();
+        signedTransactionsArray = guardedTransactions
+          ? guardedTransactions.map((tx) => parseTransactionAfterSigning(tx))
+          : [];
       }
 
       const payload: MoveTransactionsToSignedStatePayloadType = {
@@ -308,7 +315,12 @@ export const useSignTransactions = () => {
 
     clearTransactionStatusMessage();
 
-    const { sessionId, transactions, callbackRoute } = transactionsToSign;
+    const {
+      sessionId,
+      transactions,
+      callbackRoute,
+      customTransactionInformation
+    } = transactionsToSign;
 
     if (!provider) {
       console.error(MISSING_PROVIDER_MESSAGE);
@@ -339,9 +351,10 @@ export const useSignTransactions = () => {
     try {
       const isSigningWithWebWallet = providerType === LoginMethodsEnum.wallet;
 
-      const transactionsWithIncrementalNonces = await setTransactionNonces(
-        transactions
-      );
+      const transactionsWithIncrementalNonces =
+        customTransactionInformation.skipUpdateNonces
+          ? transactions
+          : await setTransactionNonces(transactions);
 
       if (isSigningWithWebWallet) {
         return signWithWallet(

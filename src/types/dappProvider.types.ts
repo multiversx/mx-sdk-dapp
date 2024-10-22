@@ -11,7 +11,7 @@ export interface IDappProvider extends IDAppProviderBase {
   init?(): Promise<boolean>;
   getAddress(): Promise<string>;
   isInitialized(): boolean;
-  isConnected(): Promise<boolean>;
+  isConnected(): boolean;
   sendTransaction?(
     transaction: Transaction,
     options?: DappOptions

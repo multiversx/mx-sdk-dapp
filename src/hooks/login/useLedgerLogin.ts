@@ -19,6 +19,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getIsLoggedIn } from '../../utils';
+import { clearInitiatedLogins } from './helpers';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
 const failInitializeErrorText = 'Check if the MultiversX App is open on Ledger';
@@ -60,7 +61,7 @@ export const useLedgerLogin = ({
   onLoginRedirect
 }: UseLedgerLoginPropsType): LedgerLoginHookReturnType => {
   const ledgerAccount = useSelector(ledgerAccountSelector);
-  const hwProvider = getAccountProvider() as HWProvider;
+  const hwProvider = getAccountProvider() as unknown as HWProvider;
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = nativeAuth != null;
@@ -197,7 +198,7 @@ export const useLedgerLogin = ({
       }
     } else {
       try {
-        const address = await hwProvider.login({ addressIndex: index });
+        const { address } = await hwProvider.login({ addressIndex: index });
 
         dispatchLoginActions({
           address,
@@ -276,6 +277,8 @@ export const useLedgerLogin = ({
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
+    clearInitiatedLogins();
+
     setError('');
 
     try {
@@ -292,7 +295,7 @@ export const useLedgerLogin = ({
           return onLoginFailed(failInitializeErrorText);
         }
 
-        const address = await hwProvider.login({
+        const { address } = await hwProvider.login({
           addressIndex: selectedAddress.index.valueOf()
         });
 
