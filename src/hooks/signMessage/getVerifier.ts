@@ -1,8 +1,7 @@
-import { Address } from '@multiversx/sdk-core/out';
-import { UserPublicKey, UserVerifier } from '@multiversx/sdk-wallet';
+import { Address, UserPublicKey, UserVerifier } from '@multiversx/sdk-core';
 
 export const getVerifier = (address: string) => {
-  const publicKey = new UserPublicKey(Address.fromString(address).pubkey());
+  const publicKey = new UserPublicKey(new Address(address).pubkey());
 
   return new UserVerifier(publicKey);
 };
