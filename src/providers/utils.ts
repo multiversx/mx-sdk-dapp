@@ -1,4 +1,5 @@
-import { SignableMessage, Transaction } from '@multiversx/sdk-core';
+import { Message, Transaction } from '@multiversx/sdk-core';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
@@ -71,6 +72,14 @@ export class EmptyProvider implements IDappProvider {
     return Promise.resolve(false);
   }
 
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error(notInitializedError('getAccount'));
+  }
+
+  setAccount(account: IDAppProviderAccount): void {
+    throw new Error(notInitializedError(`setAccount: ${account}`));
+  }
+
   login<TOptions = { callbackUrl?: string } | undefined, TResponse = string>(
     options?: TOptions
   ): Promise<TResponse> {
@@ -91,8 +100,8 @@ export class EmptyProvider implements IDappProvider {
     return false;
   }
 
-  isConnected(): Promise<boolean> {
-    return Promise.resolve(false);
+  isConnected(): boolean {
+    return false;
   }
 
   sendTransaction?<
@@ -128,7 +137,7 @@ export class EmptyProvider implements IDappProvider {
     );
   }
 
-  signMessage<T extends SignableMessage, TOptions = { callbackUrl?: string }>(
+  signMessage<T extends Message, TOptions = { callbackUrl?: string }>(
     message: T,
     options: TOptions
   ): Promise<T> {
