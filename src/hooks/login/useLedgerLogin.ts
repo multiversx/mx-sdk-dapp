@@ -116,7 +116,12 @@ export const useLedgerLogin = ({
   };
 
   const onLoginFailed = (err: any, customMessage = '') => {
+    if (!err) {
+      return;
+    }
+
     const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
+
     const message =
       errorMessage ?? defaultErrorMessage ?? failInitializeErrorText;
 
@@ -128,7 +133,7 @@ export const useLedgerLogin = ({
   const isHWProviderInitialized = async () => {
     try {
       if (hwProvider instanceof HWProvider && hwProvider.isInitialized()) {
-        return await hwProvider.isConnected();
+        return hwProvider.isConnected();
       }
     } catch (e) {
       onLoginFailed(e);
