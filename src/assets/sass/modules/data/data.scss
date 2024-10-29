@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../variables/variables';
 
 .data-field {
   $font-size: 0.8125rem;
@@ -30,7 +30,7 @@
 
   .form-control:disabled,
   .form-control[readonly] {
-    background-color: $light;
+    background-color: variables.$light;
   }
   .small-font {
     font-size: $font-size;

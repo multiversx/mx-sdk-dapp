@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed sass warnings](https://github.com/multiversx/mx-sdk-dapp/pull/1288)
+
 ## [[v3.0.3](https://github.com/multiversx/mx-sdk-dapp/pull/1287)] - 2024-10-28
 - [Fixed ledger shows redundant error on login](https://github.com/multiversx/mx-sdk-dapp/pull/1286)
 

@@ -1,8 +1,9 @@
-@import 'assets/sass/variables/variables';
+@use '../../../../assets/sass/variables/variables';
+
 .data-field {
   .form-control:disabled,
   .form-control[readonly] {
-    background-color: $light;
+    background-color: variables.$light;
   }
 
   .small-font {
@@ -14,13 +15,13 @@
   .modal-dialog {
     .modal-content {
       align-items: center;
-      border-radius: $card-border-radius;
+      border-radius: variables.$card-border-radius;
     }
 
     .card {
       .card-body {
-        box-shadow: inset 0 4px 0 0 $primary; // TODO:
-        border-radius: $card-border-radius;
+        box-shadow: inset 0 4px 0 0 variables.$primary; // TODO:
+        border-radius: variables.$card-border-radius;
       }
 
       // @include media-breakpoint-up(sm) {

@@ -1,25 +1,25 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 
 .table {
   width: 100%;
-  margin-bottom: $spacer;
-  color: $table-color;
-  background-color: $table-bg; // Reset for nesting within parents with `background-color`.
+  margin-bottom: variables.$spacer;
+  color: variables.$table-color;
+  background-color: variables.$table-bg; // Reset for nesting within parents with `background-color`.
 
   th,
   td {
-    padding: $table-cell-padding;
+    padding: variables.$table-cell-padding;
     vertical-align: top;
-    border-top: $table-border-width solid $table-border-color;
+    border-top: variables.$table-border-width solid variables.$table-border-color;
   }
 
   thead th {
     vertical-align: bottom;
-    border-bottom: (2 * $table-border-width) solid $table-border-color;
+    border-bottom: (2 * variables.$table-border-width) solid variables.$table-border-color;
   }
 
   tbody + tbody {
-    border-top: (2 * $table-border-width) solid $table-border-color;
+    border-top: (2 * variables.$table-border-width) solid variables.$table-border-color;
   }
 }
 
@@ -30,7 +30,7 @@
 .table-sm {
   th,
   td {
-    padding: $table-cell-padding-sm;
+    padding: variables.$table-cell-padding-sm;
   }
 }
 
@@ -39,17 +39,17 @@
 // Add or remove borders all around the table and between all the columns.
 
 .table-bordered {
-  border: $table-border-width solid $table-border-color;
+  border: variables.$table-border-width solid variables.$table-border-color;
 
   th,
   td {
-    border: $table-border-width solid $table-border-color;
+    border: variables.$table-border-width solid variables.$table-border-color;
   }
 
   thead {
     th,
     td {
-      border-bottom-width: 2 * $table-border-width;
+      border-bottom-width: 2 * variables.$table-border-width;
     }
   }
 }
@@ -68,8 +68,8 @@
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
 
 .table-striped {
-  tbody tr:nth-of-type(#{$table-striped-order}) {
-    background-color: $table-accent-bg;
+  tbody tr:nth-of-type(#{variables.$table-striped-order}) {
+    background-color: variables.$table-accent-bg;
   }
 }
 
@@ -81,29 +81,29 @@
 .table {
   .thead-dark {
     th {
-      color: $table-dark-color;
-      background-color: $table-dark-bg;
-      border-color: $table-dark-border-color;
+      color: variables.$table-dark-color;
+      background-color: variables.$table-dark-bg;
+      border-color: variables.$table-dark-border-color;
     }
   }
 
   .thead-light {
     th {
-      color: $table-head-color;
-      background-color: $table-head-bg;
-      border-color: $table-border-color;
+      color: variables.$table-head-color;
+      background-color: variables.$table-head-bg;
+      border-color: variables.$table-border-color;
     }
   }
 }
 
 .table-dark {
-  color: $table-dark-color;
-  background-color: $table-dark-bg;
+  color: variables.$table-dark-color;
+  background-color: variables.$table-dark-bg;
 
   th,
   td,
   thead th {
-    border-color: $table-dark-border-color;
+    border-color: variables.$table-dark-border-color;
   }
 
   &.table-bordered {
@@ -111,15 +111,15 @@
   }
 
   &.table-striped {
-    tbody tr:nth-of-type(#{$table-striped-order}) {
-      background-color: $table-dark-accent-bg;
+    tbody tr:nth-of-type(#{variables.$table-striped-order}) {
+      background-color: variables.$table-dark-accent-bg;
     }
   }
 
   &.table-hover {
     tbody tr {
-      color: $table-dark-hover-color;
-      background-color: $table-dark-hover-bg;
+      color: variables.$table-dark-hover-color;
+      background-color: variables.$table-dark-hover-bg;
     }
   }
 }

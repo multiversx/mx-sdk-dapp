@@ -1,22 +1,22 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 //
 // Border
 //
 
 .border {
-  border: $border-width solid $border-color;
+  border: variables.$border-width solid variables.$border-color;
 }
 .border-top {
-  border-top: $border-width solid $border-color;
+  border-top: variables.$border-width solid variables.$border-color;
 }
 .border-right {
-  border-right: $border-width solid $border-color;
+  border-right: variables.$border-width solid variables.$border-color;
 }
 .border-bottom {
-  border-bottom: $border-width solid $border-color;
+  border-bottom: variables.$border-width solid variables.$border-color;
 }
 .border-left {
-  border-left: $border-width solid $border-color;
+  border-left: variables.$border-width solid variables.$border-color;
 }
 
 .border-0 {
@@ -40,35 +40,35 @@
 //
 
 .rounded-sm {
-  border-radius: $border-radius-sm;
+  border-radius: variables.$border-radius-sm;
 }
 
 .rounded {
-  border-radius: $border-radius;
+  border-radius: variables.$border-radius;
 }
 
 .rounded-top {
-  border-top-left-radius: $border-radius;
-  border-top-right-radius: $border-radius;
+  border-top-left-radius: variables.$border-radius;
+  border-top-right-radius: variables.$border-radius;
 }
 
 .rounded-right {
-  border-top-right-radius: $border-radius;
-  border-bottom-right-radius: $border-radius;
+  border-top-right-radius: variables.$border-radius;
+  border-bottom-right-radius: variables.$border-radius;
 }
 
 .rounded-bottom {
-  border-bottom-right-radius: $border-radius;
-  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: variables.$border-radius;
+  border-bottom-left-radius: variables.$border-radius;
 }
 
 .rounded-left {
-  border-top-left-radius: $border-radius;
-  border-bottom-left-radius: $border-radius;
+  border-top-left-radius: variables.$border-radius;
+  border-bottom-left-radius: variables.$border-radius;
 }
 
 .rounded-lg {
-  border-radius: $border-radius-lg;
+  border-radius: variables.$border-radius-lg;
 }
 
 .rounded-circle {
@@ -76,7 +76,7 @@
 }
 
 .rounded-pill {
-  border-radius: $rounded-pill;
+  border-radius: variables.$rounded-pill;
 }
 
 .rounded-0 {

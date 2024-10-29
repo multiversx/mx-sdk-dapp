@@ -1,13 +1,13 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 
 .shadow-sm {
-  box-shadow: $box-shadow-sm;
+  box-shadow: variables.$box-shadow-sm;
 }
 .shadow {
-  box-shadow: $box-shadow;
+  box-shadow: variables.$box-shadow;
 }
 .shadow-lg {
-  box-shadow: $box-shadow-lg;
+  box-shadow: variables.$box-shadow-lg;
 }
 .shadow-none {
   box-shadow: none;
