@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Update passkey provider to use sign modals](https://github.com/multiversx/mx-sdk-dapp/pull/1285)
+
 ## [[v3.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/1286)] - 2024-10-22
 - [Upgrade @multiversx/sdk-passkey-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1285)
 
