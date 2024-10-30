@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../../assets/sass/variables/variables';
 
 .xPortal-login-container {
   padding: 48px 16px;
@@ -74,7 +74,7 @@
   }
 
   .xPortal-container-error {
-    color: $danger;
+    color: variables.$danger;
     margin-bottom: 0;
     margin-top: 12px;
     line-height: 1;
@@ -131,7 +131,7 @@
       .xPortal-pairing-button {
         display: flex;
         border: none;
-        background-color: $gray-300;
+        background-color: variables.$gray-300;
         border-radius: 6px;
         padding: 16px;
         align-items: center;
@@ -144,7 +144,7 @@
         min-width: 2rem;
         margin: 0;
         padding: 0;
-        color: $primary;
+        color: variables.$primary;
       }
 
       .xPortal-pairing-image {

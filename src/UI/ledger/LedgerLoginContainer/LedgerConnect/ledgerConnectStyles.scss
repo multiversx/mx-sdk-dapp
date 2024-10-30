@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../../../assets/sass/variables/variables';
 
 .login-connect-container {
   color: inherit;
@@ -22,7 +22,7 @@
     }
 
     .login-connect-container-error {
-      color: $danger;
+      color: variables.$danger;
       margin-bottom: 0;
       margin-top: 12px;
       line-height: 1;

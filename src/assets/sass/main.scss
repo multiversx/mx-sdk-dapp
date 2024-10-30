@@ -1,10 +1,10 @@
-@import './themes/theme.scss';
+@use 'themes/theme.scss';
 // Variables override
-@import 'variables/variables';
+@use 'variables/variables';
 
-@import 'modules/icons/iconState';
-@import 'modules/icons/sideIcon';
-@import 'modules/toast-messages/toastMessages';
-@import './modules/data/data';
-@import 'modules/progress-steps/progressSteps';
-@import 'modules/links/links';
+@use 'modules/icons/iconState';
+@use 'modules/icons/sideIcon';
+@use 'modules/toast-messages/toastMessages';
+@use 'modules/data/data';
+@use 'modules/progress-steps/progressSteps';
+@use 'modules/links/links';

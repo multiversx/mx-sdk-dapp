@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../variables/variables';
 
 .toast-messages {
   position: fixed;
@@ -25,12 +25,12 @@
       margin-bottom: 0.3rem;
       transform: translateX(0);
       .progress {
-        background-color: $transparent;
+        background-color: variables.$transparent;
         height: inherit;
         font-size: inherit;
         line-height: inherit;
         .progress-bar {
-          background-color: rgba($secondary, 0.2);
+          background-color: rgba(variables.$secondary, 0.2);
           .content-height {
             z-index: -1;
             visibility: hidden;
@@ -48,7 +48,7 @@
   .close {
     opacity: 1;
     svg {
-      color: $secondary;
+      color: variables.$secondary;
     }
   }
 }

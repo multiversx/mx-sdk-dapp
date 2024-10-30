@@ -1,3 +1,6 @@
+@use "sass:color";
+@use "sass:map";
+
 $white: #fff !default;
 $black: #000 !default;
 $transparent: rgba(0, 0, 0, 0) !default;
@@ -37,24 +40,16 @@ $buttonBorderColorDefault: #007bff !default;
 
 $spacer: 1rem !default;
 $spacers: () !default;
-$spacers: map-merge(
-  (
-    0: 0,
-    1: (
-      $spacer * 0.25
+$spacers: map.merge(
+    (
+      0: 0,
+      1: ($spacer * 0.25),
+      2: ($spacer * 0.5),
+      3: $spacer,
+      4: ($spacer * 1.5),
+      5: ($spacer * 3)
     ),
-    2: (
-      $spacer * 0.5
-    ),
-    3: $spacer,
-    4: (
-      $spacer * 1.5
-    ),
-    5: (
-      $spacer * 3
-    )
-  ),
-  $spacers
+    $spacers
 ) !default;
 
 $spacer-val: $spacer * 1.7 !default;
@@ -68,30 +63,29 @@ $spacers: (
 $modal-lg: 565px !default;
 
 @function toRem($value) {
-  $remValue: calc($value / 14) + rem;
-  @return $remValue;
+  @return calc(#{$value} / 14) + rem;
 }
 
 $grays: () !default;
-$grays: map-merge(
-  (
-    '100': $gray-100,
-    '200': $gray-200,
-    '300': $gray-300,
-    '400': $gray-400,
-    '500': $gray-500,
-    '600': $gray-600,
-    '700': $gray-700,
-    '800': $gray-800,
-    '900': $gray-900
-  ),
-  $grays
+$grays: map.merge(
+    (
+      '100': $gray-100,
+      '200': $gray-200,
+      '300': $gray-300,
+      '400': $gray-400,
+      '500': $gray-500,
+      '600': $gray-600,
+      '700': $gray-700,
+      '800': $gray-800,
+      '900': $gray-900
+    ),
+    $grays
 ) !default;
 
 $muted: #cacbcc !default;
 $link-color: $blue !default;
 $link-decoration: none !default;
-$link-hover-color: darken($blue, 15%) !default;
+$link-hover-color: color.adjust($blue, $lightness: -15%) !default;
 $link-hover-decoration: underline !default;
 
 $border-width: 1px !default;
@@ -191,7 +185,7 @@ $table-dark-bg: $gray-800 !default;
 $table-dark-accent-bg: rgba($white, 0.05) !default;
 $table-dark-hover-color: $table-dark-color !default;
 $table-dark-hover-bg: rgba($white, 0.075) !default;
-$table-dark-border-color: lighten($table-dark-bg, 7.5%) !default;
+$table-dark-border-color: color.adjust($table-dark-bg, $lightness: 7.5%) !default;
 
 $table-striped-order: odd !default;
 

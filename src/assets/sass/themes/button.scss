@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 
 .btn {
   display: inline-block;
@@ -10,8 +10,8 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-color: $transparent;
-  border: 1px solid $transparent;
+  background-color: variables.$transparent;
+  border: 1px solid variables.$transparent;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;
@@ -31,7 +31,7 @@
   }
 
   &:hover {
-    color: $gray-900;
+    color: variables.$gray-900;
     text-decoration: none;
   }
 
@@ -47,96 +47,96 @@
 }
 
 .btn-primary {
-  color: $white;
-  background-color: $primary;
-  border-color: $buttonBorderColorDefault;
+  color: variables.$white;
+  background-color: variables.$primary;
+  border-color: variables.$buttonBorderColorDefault;
 
   .focus {
-    color: $white;
-    background-color: $primary;
-    border-color: $buttonBorderColorHoverAndFocus;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 
   .disabled {
-    color: $white;
-    background-color: $primary;
-    border-color: $buttonBorderColorDefault;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$buttonBorderColorDefault;
   }
 
   &:hover {
-    color: $white;
-    background-color: $primary;
-    border-color: $buttonBorderColorHoverAndFocus;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$buttonBorderColorHoverAndFocus;
   }
 
   &:focus {
-    color: $white;
-    background-color: $primary;
-    border-color: $buttonBorderColorHoverAndFocus;
+    color: variables.$white;
+    background-color: variables.$primary;
+    border-color: variables.$buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 }
 
 .btn-secondary {
-  color: $white;
-  background-color: $secondary;
-  border-color: $buttonBorderColorDefault;
+  color: variables.$white;
+  background-color: variables.$secondary;
+  border-color: variables.$buttonBorderColorDefault;
 
   .focus {
-    color: $white;
-    background-color: $secondary;
-    border-color: $buttonBorderColorHoverAndFocus;
+    color: variables.$white;
+    background-color: variables.$secondary;
+    border-color: variables.$buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 
   .disabled {
-    color: $white;
-    background-color: $secondary;
-    border-color: $buttonBorderColorDefault;
+    color: variables.$white;
+    background-color: variables.$secondary;
+    border-color: variables.$buttonBorderColorDefault;
   }
 
   &:hover {
-    color: $white;
-    background-color: $secondary;
-    border-color: $buttonBorderColorHoverAndFocus;
+    color: variables.$white;
+    background-color: variables.$secondary;
+    border-color: variables.$buttonBorderColorHoverAndFocus;
   }
 
   &:focus {
-    color: $white;
-    background-color: $secondary;
-    border-color: $buttonBorderColorHoverAndFocus;
+    color: variables.$white;
+    background-color: variables.$secondary;
+    border-color: variables.$buttonBorderColorHoverAndFocus;
     box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5);
   }
 }
 
 .btn-warning {
-  color: $gray-900;
+  color: variables.$gray-900;
   background-color: #ffc107;
   border-color: #ffc107;
 
   .focus {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #e0a800;
     border-color: #d39e00;
     box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
   }
 
   .disabled {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #ffc107;
     border-color: #ffc107;
   }
 
   &:hover {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #e0a800;
     border-color: #d39e00;
     box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
   }
 
   &:focus {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #e0a800;
     border-color: #d39e00;
     box-shadow: 0 0 0 0.2rem rgba(222, 170, 12, 0.5);
@@ -144,31 +144,31 @@
 }
 
 .btn-dark {
-  color: $white;
-  background-color: $gray-800;
-  border-color: $gray-800;
+  color: variables.$white;
+  background-color: variables.$gray-800;
+  border-color: variables.$gray-800;
 
   .focus {
-    color: $white;
+    color: variables.$white;
     background-color: #23272b;
     border-color: #1d2124;
     box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
   }
 
   .disabled {
-    color: $white;
-    background-color: $gray-800;
-    border-color: $gray-800;
+    color: variables.$white;
+    background-color: variables.$gray-800;
+    border-color: variables.$gray-800;
   }
 
   &:hover {
-    color: $white;
+    color: variables.$white;
     background-color: #23272b;
     border-color: #1d2124;
   }
 
   &:focus {
-    color: $white;
+    color: variables.$white;
     background-color: #23272b;
     border-color: #1d2124;
     box-shadow: 0 0 0 0.2rem rgba(82, 88, 93, 0.5);
@@ -177,23 +177,23 @@
 
 // Make a button look and behave like a link
 .btn-link {
-  font-weight: $font-weight-normal;
-  color: $link-color;
-  text-decoration: $link-decoration;
+  font-weight: variables.$font-weight-normal;
+  color: variables.$link-color;
+  text-decoration: variables.$link-decoration;
 
   &:hover {
-    color: $link-hover-color;
-    text-decoration: $link-hover-decoration;
+    color: variables.$link-hover-color;
+    text-decoration: variables.$link-hover-decoration;
   }
 
   &:focus,
   &.focus {
-    text-decoration: $link-hover-decoration;
+    text-decoration: variables.$link-hover-decoration;
   }
 
   &:disabled,
   &.disabled {
-    color: $btn-link-disabled-color;
+    color: variables.$btn-link-disabled-color;
     pointer-events: none;
   }
 
@@ -201,31 +201,31 @@
 }
 
 .btn-light {
-  color: $gray-900;
-  background-color: $light;
-  border-color: $light;
+  color: variables.$gray-900;
+  background-color: variables.$light;
+  border-color: variables.$light;
 
   .focus {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #e2e6ea;
     border-color: #dae0e5;
     box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
   }
 
   .disabled {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #f8f9fa;
     border-color: #f8f9fa;
   }
 
   &:hover {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #e2e6ea;
     border-color: #dae0e5;
   }
 
   &:focus {
-    color: $gray-900;
+    color: variables.$gray-900;
     background-color: #e2e6ea;
     border-color: #dae0e5;
     box-shadow: 0 0 0 0.2rem rgba(216, 217, 219, 0.5);
