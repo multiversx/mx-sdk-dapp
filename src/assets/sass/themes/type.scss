@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 
 .h1,
 .h2,
@@ -36,6 +36,6 @@
 }
 
 .lead {
-  font-size: $lead-font-size;
-  font-weight: $lead-font-weight;
+  font-size: variables.$lead-font-size;
+  font-weight: variables.$lead-font-weight;
 }

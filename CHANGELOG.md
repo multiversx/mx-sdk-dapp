@@ -11,11 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v3.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/1286)] - 2024-10-22
 - [Upgrade @multiversx/sdk-passkey-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1285)
+- [Fixed sass warnings](https://github.com/multiversx/mx-sdk-dapp/pull/1288)
 
-## [[v3.0.1](https://github.com/multiversx/mx-sdk-dapp/pull/1284)] - 2024-10-22
-- [Upgrade sdk-core to v.13.12.0](https://github.com/multiversx/mx-sdk-dapp/pull/1283)
+## [[v3.0.3](https://github.com/multiversx/mx-sdk-dapp/pull/1287)] - 2024-10-28
+- [Fixed ledger shows redundant error on login](https://github.com/multiversx/mx-sdk-dapp/pull/1286)
 
-## [⚠️ Breaking ⚠️[v3.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1282)] - 2024-10-21
+## [[v3.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/1285)] - 2024-10-22
+- [Upgrade @multiversx/sdk-passkey-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1284)
+
+## [[v3.0.1](https://github.com/multiversx/mx-sdk-dapp/pull/1283)] - 2024-10-22
+- [Upgrade sdk-core to v.13.12.0](https://github.com/multiversx/mx-sdk-dapp/pull/1282)
+
+## [⚠️ Breaking ⚠️[v3.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1281)] - 2024-10-21
 - [Upgrade providers login methods & signMessage. Upgrade sdk-core to v.13](https://github.com/multiversx/mx-sdk-dapp/pull/1279)
 
 ## [[v2.40.11](https://github.com/multiversx/mx-sdk-dapp/pull/1280)] - 2024-10-09

@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../assets/sass/variables/variables';
 
 .scam-phishing-alert {
   margin: 40px auto 0;
@@ -10,7 +10,7 @@
   align-items: center;
 
   .scam-phishing-alert-icon {
-    color: $primary;
+    color: variables.$primary;
     margin-right: 8px;
   }
 
@@ -24,7 +24,7 @@
     }
 
     strong {
-      color: $primary;
+      color: variables.$primary;
     }
 
     .scam-phishing-alert-prefix {

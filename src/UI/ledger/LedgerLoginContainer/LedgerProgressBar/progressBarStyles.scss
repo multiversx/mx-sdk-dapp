@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../../../assets/sass/variables/variables';
 
 .ledger-progress-bar {
   position: relative;
@@ -8,7 +8,7 @@
     max-width: 250px;
     width: 60vw;
     height: 4px;
-    background-color: $gray-500;
+    background-color: variables.$gray-500;
     border-radius: 2px;
   }
 
@@ -16,7 +16,7 @@
     transition: all 400ms ease;
     height: 4px;
     border-radius: 2px;
-    background-color: $gray-700;
+    background-color: variables.$gray-700;
     position: absolute;
     top: 0;
     bottom: 0;

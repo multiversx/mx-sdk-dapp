@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 
 .form-check {
   display: flex;
@@ -14,12 +14,12 @@
 
 .form-check-input {
   position: absolute;
-  margin-top: $form-check-input-margin-y;
-  margin-left: -$form-check-input-gutter;
+  margin-top: variables.$form-check-input-margin-y;
+  margin-left: -(variables.$form-check-input-gutter);
 
   &[disabled] ~ .form-check-label,
   &:disabled ~ .form-check-label {
-    color: $text-muted;
+    color: variables.$text-muted;
   }
 }
 
@@ -69,11 +69,11 @@ textarea {
 }
 
 .form-group {
-  margin-bottom: $form-group-margin-bottom;
+  margin-bottom: variables.$form-group-margin-bottom;
 }
 
 .form-text {
   display: block;
-  margin-top: $form-text-margin-top;
+  margin-top: variables.$form-text-margin-top;
   color: inherit;
 }

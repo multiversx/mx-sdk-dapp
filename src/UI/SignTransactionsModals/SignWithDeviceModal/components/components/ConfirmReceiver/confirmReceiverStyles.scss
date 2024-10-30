@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../../../../../assets/sass/variables/variables';
 
 .receiver {
   display: flex;
@@ -15,7 +15,7 @@
     }
 
     .receiverLabelScam {
-      color: $danger;
+      color: variables.$danger;
       line-height: 1;
       display: flex;
       align-items: center;
@@ -35,7 +35,7 @@
       }
 
       .receiverLabelScamIcon {
-        color: $danger;
+        color: variables.$danger;
       }
     }
   }

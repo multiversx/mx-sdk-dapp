@@ -1,4 +1,5 @@
-@import '../variables/variables';
+@use "sass:meta";
+@use '../variables/variables';
 
 .link-style {
   color: #1392ff;
@@ -55,9 +56,9 @@
 .dapp-icon {
   padding: 5px;
   border-radius: 50%;
-  background-color: $light;
-  width: toRem(65);
-  height: toRem(65);
+  background-color: variables.$light;
+  width: variables.toRem(65);
+  height: variables.toRem(65);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -137,7 +138,7 @@
   .dapp-name {
     display: flex;
     align-items: center;
-    font-size: toRem(24);
+    font-size: variables.toRem(24);
     font-weight: 400;
     color: #9ba5b4;
     margin-left: 1.6428571428571428rem;
@@ -146,8 +147,8 @@
       content: '';
       display: block;
       width: 1px;
-      height: toRem(42);
-      margin-right: toRem(24);
+      height: variables.toRem(42);
+      margin-right: variables.toRem(24);
     }
   }
 }
@@ -159,14 +160,14 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: $white;
+  color: variables.$white;
   margin: 0 7px;
 
   button {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    background-color: $white;
+    background-color: variables.$white;
 
     &:hover {
       opacity: 0.9;
@@ -265,21 +266,21 @@
   }
 }
 
-@import 'button';
-@import 'badge';
-@import 'card';
-@import 'text';
-@import 'spacing';
-@import 'grid';
-@import 'flex';
-@import 'form';
-@import 'border';
-@import 'type';
-@import 'background';
-@import 'position';
-@import 'size';
-@import 'icons';
-@import 'shadows';
-@import 'display';
-@import 'table';
-@import 'font';
+@include meta.load-css('button');
+@include meta.load-css('badge');
+@include meta.load-css('card');
+@include meta.load-css('text');
+@include meta.load-css('spacing');
+@include meta.load-css('grid');
+@include meta.load-css('flex');
+@include meta.load-css('form');
+@include meta.load-css('border');
+@include meta.load-css('type');
+@include meta.load-css('background');
+@include meta.load-css('position');
+@include meta.load-css('size');
+@include meta.load-css('icons');
+@include meta.load-css('shadows');
+@include meta.load-css('display');
+@include meta.load-css('table');
+@include meta.load-css('font');

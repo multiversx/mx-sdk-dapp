@@ -1,5 +1,5 @@
-@import 'assets/sass/variables/variables';
+@use '../../assets/sass/variables/variables';
 
 .copy {
-  color: $gray-600;
+  color: variables.$gray-600;
 }
