@@ -77,7 +77,7 @@ export const SignTransactionsModals = ({
     case LoginMethodsEnum.extension:
       return renderScreen({ Screen: ConfirmScreens.Extension });
     case LoginMethodsEnum.passkey:
-      return renderScreen({ Screen: ConfirmScreens.Passkey });
+      return renderScreen({ Screen: ConfirmScreens.Passkey, isDevice: true });
     case LoginMethodsEnum.metamask:
       return renderScreen({ Screen: ConfirmScreens.Metamask, isDevice: true });
     case LoginMethodsEnum.opera:
