@@ -17,8 +17,6 @@ import { CustomComponents, CustomComponentsType } from './CustomComponents';
 
 export { DappConfigType };
 
-console.log('TEST');
-
 const setWebviewProvider = () => {
   const providerInstance = ExperimentalWebviewProvider.getInstance();
 
