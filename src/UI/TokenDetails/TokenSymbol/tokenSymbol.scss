@@ -1,25 +1,25 @@
-@import 'assets/sass/variables/variables';
+@use '../../../assets/sass/variables/variables';
 
 .token-symbol,
 .token-symbol-combined {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: $white;
+  background-color: variables.$white;
   border-radius: 50%;
   svg {
     #egld-token {
-      fill: $black;
+      fill: variables.$black;
     }
   }
 }
 
 .token-symbol-combined {
-  background-color: $transparent;
+  background-color: variables.$transparent;
 }
 
 .token-symbol {
-  border: 1px solid $black;
+  border: 1px solid variables.$black;
   //box-shadow: $thumbnail-box-shadow;
   width: 2rem;
   height: 2rem;
@@ -41,7 +41,7 @@
   svg {
     //filter: drop-shadow(0 0 0.25rem $shadow-color);
     circle {
-      fill: $card-bg;
+      fill: variables.$card-bg;
     }
   }
   width: 4.5rem;

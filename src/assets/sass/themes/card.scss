@@ -1,6 +1,6 @@
 @use 'sass:math';
-@import 'assets/sass/mixins/hover';
-@import 'assets/sass/variables/variables';
+@use '../mixins/hover';
+@use '../variables/variables';
 
 //
 // Base styles
@@ -11,11 +11,11 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  height: $card-height;
+  height: variables.$card-height;
   word-wrap: break-word;
-  background-color: $card-bg;
+  background-color: variables.$card-bg;
   background-clip: border-box;
-  border: $card-border-width solid $card-border-color;
+  border: variables.$card-border-width solid variables.$card-border-color;
   border-radius: 5px;
 
   > hr {
@@ -48,11 +48,11 @@
     padding: 0;
 
     &:first-child {
-      border-radius: calc(#{$card-border-radius} - 1px) calc(#{$card-border-radius} - 1px) 0 0;
+      border-radius: calc(#{variables.$card-border-radius} - 1px) calc(#{variables.$card-border-radius} - 1px) 0 0;
     }
 
     .card-header-item {
-      border-bottom: 1px solid $border-color;
+      border-bottom: 1px solid variables.$border-color;
       padding: 1.1rem 1rem;
 
       h6,
@@ -65,7 +65,7 @@
       &.compact {
         padding-top: 0.75rem;
         padding-bottom: 0.75rem;
-        background-color: $light;
+        background-color: variables.$light;
       }
     }
   }
@@ -77,16 +77,16 @@
   flex: 1 1 auto;
   height: 100%;
   min-height: 1px;
-  padding: $card-spacer-x;
-  color: $card-color;
+  padding: variables.$card-spacer-x;
+  color: variables.$card-color;
 }
 
 .card-title {
-  margin-bottom: $card-spacer-y;
+  margin-bottom: variables.$card-spacer-y;
 }
 
 .card-subtitle {
-  margin-top: math.div(-$card-spacer-y, 2);
+  margin-top: math.div(-(variables.$card-spacer-y), 2);
   margin-bottom: 0;
 }
 
@@ -100,7 +100,7 @@
   }
 
   + .card-link {
-    margin-left: $card-spacer-x;
+    margin-left: variables.$card-spacer-x;
   }
 }
 
@@ -109,16 +109,16 @@
 //
 
 .card-header {
-  padding: $card-spacer-y $card-spacer-x;
+  padding: variables.$card-spacer-y variables.$card-spacer-x;
   margin-bottom: 0; // Removes the default margin-bottom of <hN>
-  color: $card-cap-color;
-  background-color: $card-cap-bg;
-  border-bottom: $card-border-width solid $card-border-color;
+  color: variables.$card-cap-color;
+  background-color: variables.$card-cap-bg;
+  border-bottom: variables.$card-border-width solid variables.$card-border-color;
 }
 
 .card-footer {
-  padding: $card-spacer-y $card-spacer-x;
-  color: $card-cap-color;
-  background-color: $card-cap-bg;
-  border-top: $card-border-width solid $card-border-color;
+  padding: variables.$card-spacer-y variables.$card-spacer-x;
+  color: variables.$card-cap-color;
+  background-color: variables.$card-cap-bg;
+  border-top: variables.$card-border-width solid variables.$card-border-color;
 }

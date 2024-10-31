@@ -1,5 +1,5 @@
-@import 'assets/sass/variables/variables';
-@import 'assets/sass/mixins/textTruncate';
+@use '../../assets/sass/variables/variables';
+@use '../../assets/sass/mixins/textTruncate';
 
 .trim {
   display: flex;
@@ -92,7 +92,7 @@
 }
 
 a:hover > .trim span {
-  color: $link-hover-color;
+  color: variables.$link-hover-color;
   &.hidden-text-ref {
     color: transparent;
   }
@@ -100,7 +100,7 @@ a:hover > .trim span {
 
 a > .trim span,
 .text-primary > .trim span {
-  color: $primary;
+  color: variables.$primary;
   &.hidden-text-ref {
     color: transparent;
   }

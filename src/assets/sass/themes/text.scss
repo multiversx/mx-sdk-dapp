@@ -1,12 +1,12 @@
-@import 'assets/sass/mixins/textTruncate';
-@import 'assets/sass/variables/variables';
+@use '../mixins/textTruncate';
+@use '../variables/variables';
 
 .text {
   color: #9dabbd;
 }
 
 .text-white {
-  color: $white;
+  color: variables.$white;
 }
 
 .text-monospace {
@@ -55,7 +55,7 @@
 }
 
 .text-primary {
-  color: $primary;
+  color: variables.$primary;
 }
 
 .text-secondary {
@@ -63,11 +63,11 @@
 }
 
 .text-primary-highlight {
-  color: $primary;
+  color: variables.$primary;
 }
 
 .text-muted {
-  color: $text-muted;
+  color: variables.$text-muted;
 }
 
 .text-success {
@@ -85,22 +85,22 @@
   white-space: nowrap;
 }
 .text-truncate {
-  @include text-truncate();
+  @include textTruncate.text-truncate();
 }
 
 .text-body {
-  color: $body-color;
+  color: variables.$body-color;
 }
 .text-muted {
-  color: $text-muted;
+  color: variables.$text-muted;
 }
 
 .text-black-50 {
-  color: rgba($black, 0.5);
+  color: rgba(variables.$black, 0.5);
 }
 
 .text-white-50 {
-  color: rgba($white, 0.5);
+  color: rgba(variables.$white, 0.5);
 }
 
 .text-lg-right {
@@ -113,9 +113,9 @@
 
 .text-hide {
   font: 0/0 a;
-  color: $transparent;
+  color: variables.$transparent;
   text-shadow: none;
-  background-color: $transparent;
+  background-color: variables.$transparent;
   border: 0;
 }
 
@@ -147,11 +147,11 @@
 }
 
 .text-danger {
-  color: $danger;
+  color: variables.$danger;
 }
 
 .text-warning {
-  color: $warning;
+  color: variables.$warning;
 }
 
 .trim-fs-sm {

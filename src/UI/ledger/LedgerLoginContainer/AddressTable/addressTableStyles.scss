@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../../../assets/sass/variables/variables';
 
 .ledger-address-table-wrapper {
   text-align: center;
@@ -34,7 +34,7 @@
     .ledger-address-table-header {
       display: flex;
       align-items: center;
-      background-color: $gray-400;
+      background-color: variables.$gray-400;
       line-height: 1;
       padding: 16px;
       text-align: left;
@@ -73,10 +73,10 @@
       }
 
       &::-webkit-scrollbar-thumb {
-        background-color: $gray-400;
+        background-color: variables.$gray-400;
 
         &:hover {
-          background-color: $gray-400;
+          background-color: variables.$gray-400;
         }
       }
     }

@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../variables/variables';
 .side-icon {
     width: 1.5rem;
     height: 1.5rem;
@@ -7,9 +7,9 @@
     color: transparent;
     border-radius: 50%;
     overflow: hidden;
-    border: 1px solid $border-color-alt;
+    border: 1px solid variables.$border-color-alt;
     svg {
-      color: $muted;
+      color: variables.$muted;
     }
   }
 div.side-icon {

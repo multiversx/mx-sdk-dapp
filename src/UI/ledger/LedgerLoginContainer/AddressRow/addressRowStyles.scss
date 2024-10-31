@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../../../assets/sass/variables/variables';
 
 .ledger-address-table-body-item {
   display: flex;
@@ -8,7 +8,7 @@
   cursor: pointer;
 
   &:not(.ledger-address-table-body-item-selected) {
-    color: $gray-600;
+    color: variables.$gray-600;
   }
 
   .ledger-address-table-body-item-data {
@@ -49,7 +49,7 @@
       }
 
       &:before {
-        border: 2px solid $gray-500;
+        border: 2px solid variables.$gray-500;
         content: '';
         position: absolute;
         left: 50%;
@@ -63,7 +63,7 @@
       &:checked:before {
         width: 12px;
         height: 12px;
-        border: 4px solid $primary;
+        border: 4px solid variables.$primary;
       }
     }
 

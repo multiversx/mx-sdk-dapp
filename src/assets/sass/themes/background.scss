@@ -1,20 +1,20 @@
-@import 'assets/sass/variables/variables';
+@use '../variables/variables';
 
 .bg-primary {
-  background-color: $primary;
+  background-color: variables.$primary;
 }
 
 .bg-warning,
 .warning {
-  background-color: $warning;
+  background-color: variables.$warning;
 }
 
 .bg-danger,
 .danger {
-  background-color: $danger;
+  background-color: variables.$danger;
 }
 
 .bg-success,
 .success {
-  background-color: $success;
+  background-color: variables.$success;
 }

@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../assets/sass/variables/variables';
 
 .dappModal {
   position: fixed;
@@ -30,7 +30,7 @@
 
 .dappModalHeader {
   padding: 2px 16px;
-  background-color: $white;
+  background-color: variables.$white;
   font-size: 1.25rem;
 }
 
@@ -41,7 +41,7 @@
 .dappModalBody {padding: 16px 0;}
 
 .dappModalFooter {
-  background-color: $white;
+  background-color: variables.$white;
   padding: 1rem 0.5rem;
 }
 
@@ -61,7 +61,7 @@
 .dappModalCloseButton:focus {
   text-decoration: none;
   cursor: pointer;
-  color: $gray-900;
-  background-color: $gray-300;
-  border-color: $gray-200;
+  color: variables.$gray-900;
+  background-color: variables.$gray-300;
+  border-color: variables.$gray-200;
 }

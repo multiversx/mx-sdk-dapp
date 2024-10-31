@@ -1,4 +1,4 @@
-@import 'assets/sass/variables/variables';
+@use '../../assets/sass/variables/variables';
 
 .toasts {
   position: fixed;
@@ -14,7 +14,7 @@
     box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 10%);
     margin-bottom: 0.7rem;
     padding: 0.5rem;
-    background-color: $white;
+    background-color: variables.$white;
     position: relative;
   }
 
