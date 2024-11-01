@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useIframeLogin } from 'hooks/login/useIframeLogin';
+import { IframeLoginTypes } from 'lib/sdkWebWalletIframeProvider';
 import { getIsNativeAuthSingingForbidden } from 'services/nativeAuth/helpers';
 import { LoginButton } from 'UI/LoginButton/LoginButton';
 import { OnProviderLoginType } from '../../../types';

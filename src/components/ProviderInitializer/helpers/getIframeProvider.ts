@@ -1,15 +1,19 @@
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
-import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
+import {
+  IframeLoginTypes,
+  IframeProvider
+} from 'lib/sdkWebWalletIframeProvider';
+
+interface GetIframeProviderPropsType {
+  address: string;
+  walletUrl: string;
+  loginType?: IframeLoginTypes;
+}
 
 export async function getIframeProvider({
   address,
   walletUrl,
   loginType
-}: {
-  address: string;
-  walletUrl: string;
-  loginType?: IframeLoginTypes;
-}) {
+}: GetIframeProviderPropsType) {
   try {
     const provider = IframeProvider.getInstance();
 
