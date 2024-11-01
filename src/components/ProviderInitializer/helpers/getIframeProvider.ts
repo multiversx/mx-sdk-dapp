@@ -1,17 +1,31 @@
 import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
+import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
 export async function getIframeProvider({
   address,
-  walletUrl
+  walletUrl,
+  loginType
 }: {
   address: string;
   walletUrl: string;
+  loginType?: IframeLoginTypes;
 }) {
   try {
     const provider = IframeProvider.getInstance();
 
     if (provider.isInitialized()) {
       return provider;
+    }
+
+    switch (loginType) {
+      case IframeLoginTypes.passkey:
+        provider.setLoginType(IframeLoginTypes.passkey);
+        break;
+      case IframeLoginTypes.metamask:
+        provider.setLoginType(IframeLoginTypes.metamask);
+        break;
+      default:
+        break;
     }
 
     provider.setAddress(address).setWalletUrl(walletUrl);

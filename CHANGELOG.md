@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.0.7](https://github.com/multiversx/mx-sdk-dapp/pull/1296)] - 2024-11-01
+- [Fixed Iframe provider reload](https://github.com/multiversx/mx-sdk-dapp/pull/1295)
 
 ## [[v3.0.6](https://github.com/multiversx/mx-sdk-dapp/pull/1294)] - 2024-11-01
 - [Fixed `location.assign` in extension context](https://github.com/multiversx/mx-sdk-dapp/pull/1293)
