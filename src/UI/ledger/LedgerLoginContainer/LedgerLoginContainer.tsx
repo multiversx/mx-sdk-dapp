@@ -10,6 +10,7 @@ import { InnerLedgerComponentsClassesType } from './types';
 export interface LedgerLoginContainerPropsType
   extends OnProviderLoginType,
     WithClassnameType {
+  closeOnEscape?: boolean;
   onClose?: () => void;
   customSpinnerComponent?: ReactNode;
   customContentComponent?: ReactNode;
@@ -42,7 +43,7 @@ const LedgerLoginContainerComponent = (
 
   return (
     <ModalContainer
-      visible={props.showLoginModal}
+      closeOnEscape={props.closeOnEscape}
       modalConfig={{
         headerText: 'Login with ledger',
         showHeader: true,
@@ -57,6 +58,7 @@ const LedgerLoginContainerComponent = (
         )
       }}
       onClose={onClose}
+      visible={props.showLoginModal}
     >
       <LedgerLoginContent {...props} />
     </ModalContainer>

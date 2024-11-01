@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+
+## [[v3.0.6](https://github.com/multiversx/mx-sdk-dapp/pull/1294)] - 2024-11-01
+- [Fixed `location.assign` in extension context](https://github.com/multiversx/mx-sdk-dapp/pull/1293)
+
+## [[v3.0.5](https://github.com/multiversx/mx-sdk-dapp/pull/1292)] - 2024-11-01
+- [Added ability to close modal on Escape key press](https://github.com/multiversx/mx-sdk-dapp/pull/1291)
+
 ## [[v3.0.4](https://github.com/multiversx/mx-sdk-dapp/pull/1290)] - 2024-10-31
 - [Update passkey provider to use sign modals](https://github.com/multiversx/mx-sdk-dapp/pull/1289)
 - [Fixed sass warnings](https://github.com/multiversx/mx-sdk-dapp/pull/1288)
