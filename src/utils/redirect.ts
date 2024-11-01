@@ -1,3 +1,5 @@
+import { redirect } from './window';
+
 let preventRedirect = false;
 
 export const preventRedirects = (shouldPreventRedirect = true) => {
@@ -17,7 +19,7 @@ export const safeRedirect = ({
         return;
       }
 
-      return window.location.assign(url);
+      return redirect(url);
     }, timeout);
   }
 };
