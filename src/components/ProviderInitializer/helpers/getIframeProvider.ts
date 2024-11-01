@@ -1,8 +1,6 @@
 import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
-console.log('\x1b[42m%s\x1b[0m', 3);
-
 export async function getIframeProvider({
   address,
   walletUrl,
