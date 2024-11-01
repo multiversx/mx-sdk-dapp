@@ -8,7 +8,8 @@ import {
 import {
   TransactionBatchStatusesEnum,
   TransactionsDefaultTitles,
-  TransactionsDisplayInfoType
+  TransactionsDisplayInfoType,
+  TransactionServerStatusesEnum
 } from 'types';
 
 export interface ToastDataState {
@@ -21,7 +22,7 @@ export interface ToastDataState {
 }
 
 interface GetToastsOptionsDataPropsType {
-  status?: TransactionBatchStatusesEnum;
+  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
   toastId: string;
   classes?: Record<
     'success' | 'warning' | 'danger' | string,
