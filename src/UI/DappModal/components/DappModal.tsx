@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { KeyboardEvent, ReactNode } from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import classNames from 'classnames';
@@ -13,6 +13,7 @@ import { DappModalHeader } from './DappModalHeader';
 
 export interface DappModalPropsType extends WithClassnameType {
   children?: ReactNode;
+  closeOnEscape?: boolean;
   config?: DappModalConfig;
   id?: string;
   onHide?: () => void;
@@ -31,6 +32,7 @@ const DappModalComponent = ({
   'data-testid': dataTestId = DataTestIdsEnum.dappModal,
   children,
   className = 'dapp-modal-dialog-wrapper',
+  closeOnEscape,
   config = defaultConfig,
   id = 'dapp-modal',
   onHide,
@@ -64,6 +66,12 @@ const DappModalComponent = ({
     customModalFooter
   } = config;
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape' && closeOnEscape) {
+      onHide?.();
+    }
+  };
+
   return (
     <>
       {isBrowser &&
@@ -78,6 +86,7 @@ const DappModalComponent = ({
               className
             )}
             data-testid={dataTestId}
+            onKeyDown={handleKeyDown}
           >
             <div
               className={classNames(

@@ -9,6 +9,7 @@ import { WithClassnameType } from '../types';
 
 export interface ModalContainerPropsType extends WithClassnameType {
   children: ReactNode;
+  closeOnEscape?: boolean;
   modalConfig?: DappModalConfig;
   modalInteractionConfig?: DappModalInteractionConfig;
   onClose?: () => void;
@@ -24,10 +25,11 @@ export const ModalContainer = (props: ModalContainerPropsType) => {
 
   return (
     <DappModal
+      className={props.className}
+      closeOnEscape={props.closeOnEscape}
+      config={props.modalConfig}
       onHide={hideModalHandler}
       visible={showModal}
-      config={props.modalConfig}
-      className={props.className}
     >
       {props.children}
     </DappModal>
