@@ -1,0 +1,38 @@
+name: "Jest Unit Tests"
+on:
+  pull_request:
+    branches: [main, development]
+    paths:
+      - 'src/**'
+      - '**.js'
+      - '**.ts'
+      - '**.json'
+  repository_dispatch:
+    types: run-unit-tests
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run-unit-tests:
+    runs-on: runner-dapp
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          if: ${{ !github.event.pull_request.draft }}
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+      - name: Setup yarn
+        run: npm install -g yarn
+      - name: Clean up
+        run: |
+          rm -rf node_modules build
+      - name: Install Dependencies
+        run: yarn install
+      - name: Run unit tests
+        run: yarn test
