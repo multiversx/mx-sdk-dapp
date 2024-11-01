@@ -1,3 +1,4 @@
+import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { setLoginExpiresAt, getNewLoginExpiresTimestamp } from 'storage/local';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -26,6 +27,7 @@ export interface LoginInfoType {
 
 export interface LoginInfoStateType {
   loginMethod: LoginMethodsEnum;
+  iframeLoginType?: IframeLoginTypes;
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;
@@ -132,6 +134,7 @@ export const loginInfoSlice = createSlice({
       ) => {
         state.isLoginSessionInvalid = false;
         state.loginMethod = action.payload.loginMethod;
+        state.iframeLoginType = action.payload.iframeLoginType;
         setLoginExpiresAt(getNewLoginExpiresTimestamp());
       }
     );

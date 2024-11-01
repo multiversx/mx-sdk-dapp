@@ -1,15 +1,16 @@
 import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
-import { LoginMethodsEnum } from 'types/enums.types';
+
+console.log('\x1b[42m%s\x1b[0m', 3);
 
 export async function getIframeProvider({
   address,
   walletUrl,
-  loginMethod
+  loginType
 }: {
   address: string;
   walletUrl: string;
-  loginMethod: LoginMethodsEnum;
+  loginType?: IframeLoginTypes;
 }) {
   try {
     const provider = IframeProvider.getInstance();
@@ -18,11 +19,11 @@ export async function getIframeProvider({
       return provider;
     }
 
-    switch (loginMethod) {
-      case LoginMethodsEnum.passkey:
+    switch (loginType) {
+      case IframeLoginTypes.passkey:
         provider.setLoginType(IframeLoginTypes.passkey);
         break;
-      case LoginMethodsEnum.metamask:
+      case IframeLoginTypes.metamask:
         provider.setLoginType(IframeLoginTypes.metamask);
         break;
       default:

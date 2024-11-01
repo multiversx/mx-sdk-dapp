@@ -124,7 +124,8 @@ export const useIframeLogin = ({
       dispatch(
         loginAction({
           address: account.address,
-          loginMethod: LoginMethodsEnum.iframe
+          loginMethod: LoginMethodsEnum.iframe,
+          iframeLoginType: loginType
         })
       );
 
