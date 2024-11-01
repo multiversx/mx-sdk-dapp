@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
-import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import {
+  IframeLoginTypes,
+  IframeProvider
+} from 'lib/sdkWebWalletIframeProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
