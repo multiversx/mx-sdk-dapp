@@ -6,10 +6,10 @@ import { IHWWalletApp } from '@multiversx/sdk-hw-provider/out/interface';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { WalletProvider } from '@multiversx/sdk-web-wallet-provider';
 import { LEDGER_CONTRACT_DATA_ENABLED_VALUE } from 'constants/index';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { IDappProvider } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {

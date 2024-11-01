@@ -1,5 +1,5 @@
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { LoginMethodsEnum } from 'types';
 
 export const clearInitiatedLogins = (props?: { skip: LoginMethodsEnum }) => {
