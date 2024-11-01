@@ -1,3 +1,4 @@
+import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IframeLoginTypes } from 'lib/sdkWebWalletIframeProvider';
 import { setLoginExpiresAt, getNewLoginExpiresTimestamp } from 'storage/local';
