@@ -326,7 +326,8 @@ export function ProviderInitializer() {
     }
     const provider = await getIframeProvider({
       address,
-      walletUrl: network.metamaskSnapWalletAddress
+      walletUrl: network.metamaskSnapWalletAddress,
+      loginMethod
     });
     if (provider) {
       setAccountProvider(provider);
