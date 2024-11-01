@@ -13,5 +13,5 @@ export const redirect = (to: string) => {
     return safeWindow.location.reload();
   }
 
-  safeWindow?.location?.assign(to);
+  safeWindow.location.assign(to);
 };
