@@ -7,33 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Update skip method to clear only initiated login state](https://github.com/multiversx/mx-sdk-dapp/pull/1298)
+
 ## [[v3.0.7](https://github.com/multiversx/mx-sdk-dapp/pull/1296)] - 2024-11-01
+
 - [Updated Iframe provider imports](https://github.com/multiversx/mx-sdk-dapp/pull/1297)
 - [Fixed Iframe provider reload](https://github.com/multiversx/mx-sdk-dapp/pull/1295)
 
 ## [[v3.0.6](https://github.com/multiversx/mx-sdk-dapp/pull/1294)] - 2024-11-01
+
 - [Fixed `location.assign` in extension context](https://github.com/multiversx/mx-sdk-dapp/pull/1293)
 
 ## [[v3.0.5](https://github.com/multiversx/mx-sdk-dapp/pull/1292)] - 2024-11-01
+
 - [Added ability to close modal on Escape key press](https://github.com/multiversx/mx-sdk-dapp/pull/1291)
 
 ## [[v3.0.4](https://github.com/multiversx/mx-sdk-dapp/pull/1290)] - 2024-10-31
+
 - [Update passkey provider to use sign modals](https://github.com/multiversx/mx-sdk-dapp/pull/1289)
 - [Fixed sass warnings](https://github.com/multiversx/mx-sdk-dapp/pull/1288)
 
 ## [[v3.0.3](https://github.com/multiversx/mx-sdk-dapp/pull/1287)] - 2024-10-28
+
 - [Fixed ledger shows redundant error on login](https://github.com/multiversx/mx-sdk-dapp/pull/1286)
 
 ## [[v3.0.2](https://github.com/multiversx/mx-sdk-dapp/pull/1285)] - 2024-10-22
+
 - [Upgrade @multiversx/sdk-passkey-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1284)
 
 ## [[v3.0.1](https://github.com/multiversx/mx-sdk-dapp/pull/1283)] - 2024-10-22
+
 - [Upgrade sdk-core to v.13.12.0](https://github.com/multiversx/mx-sdk-dapp/pull/1282)
 
 ## [⚠️ Breaking ⚠️[v3.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1281)] - 2024-10-21
+
 - [Upgrade providers login methods & signMessage. Upgrade sdk-core to v.13](https://github.com/multiversx/mx-sdk-dapp/pull/1279)
 
 ## [[v2.40.11](https://github.com/multiversx/mx-sdk-dapp/pull/1280)] - 2024-10-09
+
 - [Fixed axios interceptor concurrent calls](https://github.com/multiversx/mx-sdk-dapp/pull/1279)
 
 ## [[v2.40.10](https://github.com/multiversx/mx-sdk-dapp/pull/1277)] - 2024-10-04
