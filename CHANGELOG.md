@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.0.8](https://github.com/multiversx/mx-sdk-dapp/pull/1299)] - 2024-11-04
+
 - [Update skip method to clear only initiated login state](https://github.com/multiversx/mx-sdk-dapp/pull/1298)
 
 ## [[v3.0.7](https://github.com/multiversx/mx-sdk-dapp/pull/1296)] - 2024-11-01
