@@ -53,7 +53,7 @@ export const useCrossWindowLogin = ({
     }
 
     clearInitiatedLogins({
-      intiatedLogin: LoginMethodsEnum.crossWindow
+      intiatedLoginMethod: LoginMethodsEnum.crossWindow
     });
 
     setIsLoading(true);

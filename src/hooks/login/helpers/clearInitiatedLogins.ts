@@ -3,10 +3,10 @@ import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { LoginMethodsEnum } from 'types';
 
 export const clearInitiatedLogins = (props?: {
-  intiatedLogin: LoginMethodsEnum;
+  intiatedLoginMethod: LoginMethodsEnum;
 }) => {
   Object.values(LoginMethodsEnum).forEach((method) => {
-    if (props?.intiatedLogin && method !== props.intiatedLogin) {
+    if (props?.intiatedLoginMethod && method !== props.intiatedLoginMethod) {
       return;
     }
     const crossWindowProvider = CrossWindowProvider.getInstance();
