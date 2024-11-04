@@ -2,9 +2,11 @@ import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { LoginMethodsEnum } from 'types';
 
-export const clearInitiatedLogins = (props?: { skip: LoginMethodsEnum }) => {
+export const clearInitiatedLogins = (props?: {
+  intiatedLoginMethod: LoginMethodsEnum;
+}) => {
   Object.values(LoginMethodsEnum).forEach((method) => {
-    if (props?.skip && method === props.skip) {
+    if (props?.intiatedLoginMethod && method !== props.intiatedLoginMethod) {
       return;
     }
     const crossWindowProvider = CrossWindowProvider.getInstance();
