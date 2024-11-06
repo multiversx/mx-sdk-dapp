@@ -50,7 +50,7 @@ export const useIframeLogin = ({
     }
 
     clearInitiatedLogins({
-      intiatedLoginMethod: LoginMethodsEnum.iframe
+      skipLoginMethod: LoginMethodsEnum.iframe
     });
 
     setIsLoading(true);
