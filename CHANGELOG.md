@@ -7,10 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.0.9](https://github.com/multiversx/mx-sdk-dapp/pull/1299)] - 2024-11-06
+
+- [Fix clear initiated login](https://github.com/multiversx/mx-sdk-dapp/pull/1301)
+
 ## [[v3.0.8](https://github.com/multiversx/mx-sdk-dapp/pull/1299)] - 2024-11-04
 
 - [Update skip method to clear only initiated login state](https://github.com/multiversx/mx-sdk-dapp/pull/1298)
-
 - [Updated Iframe provider imports](https://github.com/multiversx/mx-sdk-dapp/pull/1297)
 - [Fixed Iframe provider reload](https://github.com/multiversx/mx-sdk-dapp/pull/1295)
 
