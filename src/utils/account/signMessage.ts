@@ -38,7 +38,7 @@ export const signMessage = async ({
     );
   }
 
-  return await provider.signMessage(signableMessage, {
+  return provider.signMessage(signableMessage, {
     callbackUrl: encodeURIComponent(callbackUrl)
   });
 };
