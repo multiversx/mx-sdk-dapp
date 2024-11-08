@@ -1,19 +1,31 @@
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
+import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { LoginMethodsEnum } from 'types';
 
-export const clearInitiatedLogins = (props?: { skip: LoginMethodsEnum }) => {
+export const clearInitiatedLogins = (props?: {
+  skipLoginMethod: LoginMethodsEnum;
+}) => {
   Object.values(LoginMethodsEnum).forEach((method) => {
-    if (props?.skip && method === props.skip) {
+    if (method === props?.skipLoginMethod) {
       return;
     }
-    const crossWindowProvider = CrossWindowProvider.getInstance();
-    if (crossWindowProvider.isInitialized()) {
-      crossWindowProvider.dispose();
-    }
-    const iframeProvider = IframeProvider.getInstance();
-    if (iframeProvider.isInitialized()) {
-      iframeProvider.dispose();
+    switch (method) {
+      case LoginMethodsEnum.crossWindow: {
+        const crossWindowProvider = CrossWindowProvider.getInstance();
+        if (crossWindowProvider.isInitialized()) {
+          crossWindowProvider.dispose();
+        }
+        break;
+      }
+      case LoginMethodsEnum.iframe: {
+        const iframeProvider = IframeProvider.getInstance();
+        if (iframeProvider.isInitialized()) {
+          iframeProvider.dispose();
+        }
+        break;
+      }
+      default:
+        break;
     }
   });
 

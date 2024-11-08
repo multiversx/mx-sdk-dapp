@@ -9,6 +9,7 @@ import { OperaWalletLoginButton } from 'UI/operaWallet/OperaWalletLoginButton';
 import { PasskeyLoginButton } from 'UI/passkey/PasskeyLoginButton';
 import { WalletConnectLoginButton } from 'UI/walletConnect/WalletConnectLoginButton';
 import { WebWalletLoginButton } from 'UI/webWallet/WebWalletLoginButton';
+import { redirect } from 'utils/window';
 
 // TODO: Rename to "UnlockPagePropsType" when sdk-dapp@3.0.0
 export interface Props {
@@ -70,7 +71,7 @@ const UnlockPageComponent = ({
 
   useEffect(() => {
     if (isLoggedIn && window) {
-      window.location.href = loginRoute;
+      redirect(loginRoute);
     }
   }, [isLoggedIn]);
 

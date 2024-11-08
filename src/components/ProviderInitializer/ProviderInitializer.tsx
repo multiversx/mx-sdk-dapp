@@ -14,12 +14,12 @@ import {
   ledgerAccountSelector
 } from 'reduxStore/selectors/accountInfoSelectors';
 import {
-  loginMethodSelector,
   walletConnectLoginSelector,
   walletLoginSelector,
   ledgerLoginSelector,
   isLoggedInSelector,
-  tokenLoginSelector
+  tokenLoginSelector,
+  loginInfoSelector
 } from 'reduxStore/selectors/loginInfoSelectors';
 import {
   chainIDSelector,
@@ -67,7 +67,7 @@ export function ProviderInitializer() {
   const network = useSelector(networkSelector);
   const walletAddress = useSelector(walletAddressSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
-  const loginMethod = useSelector(loginMethodSelector);
+  const { loginMethod, iframeLoginType } = useSelector(loginInfoSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
@@ -326,7 +326,8 @@ export function ProviderInitializer() {
     }
     const provider = await getIframeProvider({
       address,
-      walletUrl: network.metamaskSnapWalletAddress
+      walletUrl: network.metamaskSnapWalletAddress,
+      loginType: iframeLoginType
     });
     if (provider) {
       setAccountProvider(provider);
