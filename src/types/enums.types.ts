@@ -79,6 +79,7 @@ export enum TransactionTypesEnum {
 
 export enum TransactionsDefaultTitles {
   success = 'Transaction successful',
+  received = 'Transaction received',
   failed = 'Transaction failed',
   pending = 'Processing transaction',
   timedOut = 'Transaction timed out',

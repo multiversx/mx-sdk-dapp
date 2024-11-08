@@ -1,9 +1,9 @@
 import React from 'react';
+import { TransactionBatchStatusesEnum } from 'types';
+import { TransactionToast } from '../TransactionToast';
 import { IconToast, SimpleToast, CustomComponentToast } from './components';
 import { CustomToastPropsType } from './customToast.types';
 import { useRemoveCustomToast } from './helpers';
-import { TransactionToast } from '../TransactionToast';
-import { TransactionToastType } from 'types/toasts.types';
 
 export const CustomToast = (props: CustomToastPropsType) => {
   const { duration, onDelete } = props;
@@ -13,14 +13,15 @@ export const CustomToast = (props: CustomToastPropsType) => {
     return <CustomComponentToast {...props} />;
   }
 
-  const customToastProps = props as unknown as TransactionToastType;
+  if (props.transaction) {
+    const transaction = props.transaction as any;
+    const transactionHash = transaction.txHash || transaction.hash;
 
-  if (customToastProps.transaction) {
     return (
       <TransactionToast
-        {...customToastProps}
-        status={customToastProps.transaction.status}
-        transactions={[customToastProps.transaction]}
+        {...props}
+        status={TransactionBatchStatusesEnum[props.transaction.status]}
+        transactions={[{ ...transaction, hash: transactionHash }]}
       />
     );
   }

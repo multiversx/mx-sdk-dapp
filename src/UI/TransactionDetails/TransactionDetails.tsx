@@ -1,6 +1,10 @@
-import React, { useMemo, ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { SignedTransactionType } from 'types/index';
+import { useGetAccount } from 'hooks/account/useGetAccount';
+import {
+  SignedTransactionType,
+  TransactionServerStatusesEnum
+} from 'types/index';
 import { isServerTransactionPending } from 'utils/transactions/transactionStateByStatus';
 import {
   TransactionDetailsBody,
@@ -25,14 +29,20 @@ const TransactionDetailsComponent = ({
     return null;
   }
 
+  const { address } = useGetAccount();
+
   const processedTransactionsStatus = useMemo(() => {
     const processedTransactions = transactions.filter(
-      (tx) => !isServerTransactionPending(tx?.status)
+      (tx) =>
+        !isServerTransactionPending(TransactionServerStatusesEnum[tx?.status])
     ).length;
+
     const totalTransactions = transactions.length;
 
     if (totalTransactions === 1 && processedTransactions === 1) {
-      return isServerTransactionPending(transactions[0].status)
+      return isServerTransactionPending(
+        TransactionServerStatusesEnum[transactions[0].status]
+      )
         ? 'Processing transaction'
         : 'Transaction processed';
     }
@@ -40,17 +50,22 @@ const TransactionDetailsComponent = ({
     return `${processedTransactions} / ${totalTransactions} transactions processed`;
   }, [transactions]);
 
+  const hideProcessedTransactionsStatus =
+    transactions.length === 1 && transactions[0].sender !== address;
+
   return (
     <>
       {title && <div className={styles?.title}>{title}</div>}
 
-      <div className={styles?.status}>{processedTransactionsStatus}</div>
+      {!hideProcessedTransactionsStatus && (
+        <div className={styles?.status}>{processedTransactionsStatus}</div>
+      )}
 
       {transactions.map(({ hash, status }) => {
         const transactionDetailsBodyProps: TransactionDetailsBodyPropsType = {
           className,
           hash,
-          status,
+          status: TransactionServerStatusesEnum[status],
           isTimedOut
         };
 

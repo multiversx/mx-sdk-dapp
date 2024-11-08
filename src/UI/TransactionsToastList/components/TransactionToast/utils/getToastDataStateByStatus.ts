@@ -22,23 +22,27 @@ export interface ToastDataState {
 }
 
 interface GetToastsOptionsDataPropsType {
-  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
-  toastId: string;
+  address: string;
   classes?: Record<
     'success' | 'warning' | 'danger' | string,
     'success' | 'warning' | 'danger' | string
   >;
+  sender: string;
+  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
+  toastId: string;
   transactionDisplayInfo: TransactionsDisplayInfoType;
 }
 
 export const getToastDataStateByStatus = ({
-  status,
-  toastId,
+  address,
   classes = {
     success: 'success',
     danger: 'danger',
     warning: 'warning'
   },
+  sender,
+  status,
+  toastId,
   transactionDisplayInfo
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: ToastDataState = {
@@ -49,6 +53,15 @@ export const getToastDataStateByStatus = ({
     title:
       transactionDisplayInfo?.successMessage ??
       TransactionsDefaultTitles.success,
+    iconClassName: classes.success
+  };
+
+  const receivedToastData: ToastDataState = {
+    id: toastId,
+    icon: faCheck,
+    expires: 30000,
+    hasCloseButton: true,
+    title: TransactionsDefaultTitles.received,
     iconClassName: classes.success
   };
 
@@ -97,7 +110,7 @@ export const getToastDataStateByStatus = ({
     case TransactionBatchStatusesEnum.sent:
       return pendingToastData;
     case TransactionBatchStatusesEnum.success:
-      return successToastData;
+      return sender !== address ? receivedToastData : successToastData;
     case TransactionBatchStatusesEnum.cancelled:
     case TransactionBatchStatusesEnum.fail:
       return failToastData;
