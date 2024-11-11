@@ -18,17 +18,17 @@ export interface TransactionToastPropsType
 }
 
 const TransactionToastComponent = ({
-  toastId,
-  title = '',
   className = 'dapp-transaction-toast',
-  onDelete,
-  startTimestamp,
+  customization,
   endTimeProgress,
   lifetimeAfterSuccess,
+  onDelete,
+  startTimestamp,
   status,
-  transactions,
-  customization,
-  styles
+  styles,
+  title = '',
+  toastId,
+  transactions
 }: TransactionToastPropsType & WithStylesImportType) => {
   const {
     isCrossShard,
@@ -62,14 +62,14 @@ const TransactionToastComponent = ({
         isCrossShard={isCrossShard}
       >
         <TransactionToastContentComponent
+          customElements={customization?.TransactionToastContentCustomElements}
+          isTimedOut={isTimedOut}
+          onDeleteToast={handleDeleteToast}
+          showCloseButton={!isPending}
           style={styles ?? {}}
           toastDataState={toastDataState}
-          transactions={transactions ?? []}
           toastTitle={title}
-          isTimedOut={isTimedOut}
-          showCloseButton={!isPending}
-          onDeleteToast={handleDeleteToast}
-          customElements={customization?.TransactionToastContentCustomElements}
+          transactions={transactions ?? []}
         />
       </ProgressComponent>
     </TransactionToastWrapper>

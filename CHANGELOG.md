@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added ability to show transaction toast on demand](https://github.com/multiversx/mx-sdk-dapp/pull/1304)
+
 ## [[v3.0.9](https://github.com/multiversx/mx-sdk-dapp/pull/1299)] - 2024-11-06
 
 - [Fix clear initiated login](https://github.com/multiversx/mx-sdk-dapp/pull/1301)

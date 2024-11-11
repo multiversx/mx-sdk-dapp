@@ -1,4 +1,10 @@
 import React from 'react';
+import {
+  ServerTransactionType,
+  SignedTransactionType,
+  TransactionBatchStatusesEnum
+} from 'types';
+import { TransactionToast } from '../TransactionToast';
 import { IconToast, SimpleToast, CustomComponentToast } from './components';
 import { CustomToastPropsType } from './customToast.types';
 import { useRemoveCustomToast } from './helpers';
@@ -9,6 +15,22 @@ export const CustomToast = (props: CustomToastPropsType) => {
 
   if (props.component) {
     return <CustomComponentToast {...props} />;
+  }
+
+  if (props.transaction) {
+    const serverTransaction = props.transaction as ServerTransactionType;
+    const signedTransaction =
+      props.transaction as unknown as SignedTransactionType;
+
+    const transactionHash = serverTransaction.txHash || signedTransaction.hash;
+
+    return (
+      <TransactionToast
+        {...props}
+        status={TransactionBatchStatusesEnum[props.transaction.status]}
+        transactions={[{ ...signedTransaction, hash: transactionHash }]}
+      />
+    );
   }
 
   if (props.icon) {

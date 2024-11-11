@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { AVERAGE_TX_DURATION_MS, CROSS_SHARD_ROUNDS } from 'constants/index';
 import { useStyles } from 'hocs/useStyles';
-import { useGetTransactionDisplayInfo } from 'hooks';
+import { useGetAccount, useGetTransactionDisplayInfo } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { shardSelector } from 'reduxStore/selectors';
 import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';
@@ -37,6 +37,7 @@ export const useTransactionToast = ({
 
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
+  const { address } = useGetAccount();
   const timeoutRef = useRef<NodeJS.Timeout>();
   const areSameShardTransactions = useMemo(
     () => getAreTransactionsOnSameShard(transactions, accountShard),
@@ -71,10 +72,12 @@ export const useTransactionToast = ({
   const isCompleted = isFailed || isSuccess || isTimedOut;
 
   const toastDataState = getToastDataStateByStatus({
+    address,
+    classes: styles ?? {},
+    sender: transactions?.[0].sender || address,
     status,
     toastId,
-    transactionDisplayInfo,
-    classes: styles ?? {}
+    transactionDisplayInfo
   });
 
   const handleDeleteToast = () => {
