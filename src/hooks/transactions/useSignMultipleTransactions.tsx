@@ -183,6 +183,7 @@ export const useSignMultipleTransactions = ({
     setWaitingForDevice(isLedger);
 
     let signedTx: Nullable<Transaction | undefined>;
+
     try {
       signedTx = await onSignTransaction(currentTransaction.transaction);
     } catch (err) {
@@ -205,6 +206,7 @@ export const useSignMultipleTransactions = ({
     const newSignedTransactions = signedTransactions
       ? { ...signedTransactions, ...newSignedTx }
       : newSignedTx;
+
     setSignedTransactions(newSignedTransactions);
 
     if (!isLastTransaction) {
@@ -237,6 +239,7 @@ export const useSignMultipleTransactions = ({
       if (currentTransaction == null) {
         return;
       }
+
       const signature = currentTransaction.transaction.getSignature();
 
       if (signature.toString('hex') && !isLastTransaction) {
@@ -245,7 +248,8 @@ export const useSignMultipleTransactions = ({
       }
 
       await sign();
-    } catch {
+    } catch (e) {
+      console.error('Error during signing transaction');
       // the only way to check if tx has signature is with try catch
       await sign();
     }
@@ -274,15 +278,18 @@ export const useSignMultipleTransactions = ({
       setCurrentStep((exising) => exising + 1);
       return;
     }
+
     await signTx();
   };
 
   const onNext = () => {
     setCurrentStep((current) => {
       const nextStep = current + 1;
+
       if (nextStep > allTransactions?.length) {
         return current;
       }
+
       return nextStep;
     });
   };
@@ -290,9 +297,11 @@ export const useSignMultipleTransactions = ({
   const onPrev = () => {
     setCurrentStep((current) => {
       const nextStep = current - 1;
+
       if (nextStep < 0) {
         return current;
       }
+
       return nextStep;
     });
   };

@@ -96,6 +96,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
         ...(apiAddress ? { nativeAuthConfig: configuration } : {})
       })
     );
+
     return nativeAuthToken;
   };
 
@@ -119,6 +120,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     });
 
     tokenRef.current = loginToken;
+
     if (!loginToken) {
       return;
     }

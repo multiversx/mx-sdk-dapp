@@ -1,5 +1,6 @@
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { ServerTransactionType } from './serverTransactions.types';
+import { SignedTransactionType } from './transactions.types';
 
 interface SharedCustomToast {
   toastId: string;
@@ -60,7 +61,12 @@ export type CustomToastType =
   | TransactionIconToastType;
 
 export interface TransactionToastType {
-  toastId: string;
+  duration?: number;
+  icon?: IconDefinition;
+  iconClassName?: string;
   startTimestamp: number;
+  title?: string;
+  toastId: string;
+  transaction?: SignedTransactionType;
   type: string;
 }

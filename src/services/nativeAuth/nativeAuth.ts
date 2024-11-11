@@ -42,25 +42,36 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
 
     const getBlockHash = (): Promise<string> =>
       nativeAuthClient.getCurrentBlockHash();
-    const response =
-      initProps?.latestBlockInfo ??
-      (await getLatestBlockHash(
-        apiAddress,
-        blockHashShard,
-        getBlockHash,
-        initProps?.noCache
-      ));
 
-    const { hash, timestamp } = response;
-    const encodedExtraInfo = nativeAuthClient.encodeValue(
-      JSON.stringify({
-        ...(initProps?.extraInfo ?? extraInfoFromConfig),
-        ...(timestamp ? { timestamp } : {})
-      })
-    );
-    const encodedOrigin = nativeAuthClient.encodeValue(origin);
+    try {
+      const response =
+        initProps?.latestBlockInfo ??
+        (await getLatestBlockHash(
+          apiAddress,
+          blockHashShard,
+          getBlockHash,
+          initProps?.noCache
+        ));
 
-    return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
+      if (!response) {
+        return '';
+      }
+
+      const { hash, timestamp } = response;
+      const encodedExtraInfo = nativeAuthClient.encodeValue(
+        JSON.stringify({
+          ...(initProps?.extraInfo ?? extraInfoFromConfig),
+          ...(timestamp ? { timestamp } : {})
+        })
+      );
+
+      const encodedOrigin = nativeAuthClient.encodeValue(origin);
+
+      return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
+    } catch (err: any) {
+      console.error('Error getting native auth token: ', err.toString());
+      return '';
+    }
   };
 
   const getToken = ({

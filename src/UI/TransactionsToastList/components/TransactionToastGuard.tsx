@@ -29,6 +29,7 @@ export const TransactionToastGuard = ({
 
   const invalidCurrentTx =
     currentTx?.transactions == null || currentTx?.status == null;
+
   if (invalidCurrentTx) {
     return null;
   }

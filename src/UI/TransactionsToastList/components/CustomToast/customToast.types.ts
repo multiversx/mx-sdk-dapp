@@ -18,12 +18,16 @@ type SharedCustomToastPropsType = WithClassnameType & {
 
 export type MessageCustomToastPropsType = SharedCustomToastPropsType &
   MessageCustomToastType;
+
 export type MessageIconToastPropsType = SharedCustomToastPropsType &
   MessageIconToastType;
+
 export type TransactionIconToastPropsType = SharedCustomToastPropsType &
   TransactionIconToastType;
+
 export type ComponentIconToastPropsType = SharedCustomToastPropsType &
   ComponentIconToastType;
+
 export type CustomToastPropsType =
   | MessageCustomToastPropsType
   | MessageIconToastPropsType

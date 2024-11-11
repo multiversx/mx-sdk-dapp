@@ -1,14 +1,18 @@
 import { FontAwesomeIconProps } from '@fortawesome/react-fontawesome';
-import { SignedTransactionType, TransactionBatchStatusesEnum } from 'types';
+import {
+  SignedTransactionType,
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types';
 import { ProgressProps } from 'UI/Progress';
 import { TransactionDetailsType } from 'UI/TransactionDetails';
 import { ComponentTypeWithChildren } from '../types';
-import { TransactionToastContentProps } from './components/TransactionToastContent';
+import { TransactionToastContentProps } from './components';
 
 export interface TransactionToastDefaultProps {
   toastId: string;
   transactions?: SignedTransactionType[];
-  status?: TransactionBatchStatusesEnum;
+  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
   classes?: Record<string, string>;
   lifetimeAfterSuccess?: number;
   endTimeProgress?: number;
