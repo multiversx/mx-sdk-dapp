@@ -98,19 +98,21 @@ describe('Native Auth', () => {
       expect(token).toStrictEqual(TOKEN);
     });
 
-    it('Internal server error', async () => {
+    it('should return empty string when API call fails', async () => {
       server.use(...handlers.serverError);
 
       //this will make sure to expire the cache
       jest
         .useFakeTimers()
         .setSystemTime(new Date().setSeconds(new Date().getSeconds() + 60));
+
       const client = nativeAuth({
         origin: ORIGIN,
         apiAddress: API_URL
       });
 
-      await expect(client.initialize()).rejects.toThrow();
+      const nativeAuthToken = await client.initialize();
+      expect(nativeAuthToken).toStrictEqual('');
     });
 
     it('Generate Access token', () => {

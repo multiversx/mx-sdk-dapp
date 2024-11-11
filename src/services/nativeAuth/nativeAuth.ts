@@ -53,6 +53,10 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
           initProps?.noCache
         ));
 
+      if (!response) {
+        return '';
+      }
+
       const { hash, timestamp } = response;
       const encodedExtraInfo = nativeAuthClient.encodeValue(
         JSON.stringify({
@@ -64,8 +68,8 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
       const encodedOrigin = nativeAuthClient.encodeValue(origin);
 
       return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
-    } catch (err) {
-      console.error('Error getting native auth token: ', err);
+    } catch (err: any) {
+      console.error('Error getting native auth token: ', err.toString());
       return '';
     }
   };
