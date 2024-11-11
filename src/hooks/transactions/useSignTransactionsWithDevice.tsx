@@ -161,7 +161,11 @@ export function useSignTransactionsWithDevice(
       return null;
     }
 
-    return connectedProvider.signTransaction(transaction);
+    const signedTransaction = await connectedProvider.signTransaction(
+      transaction
+    );
+
+    return signedTransaction;
   }
 
   const signMultipleTxReturnValues = useSignMultipleTransactions({
