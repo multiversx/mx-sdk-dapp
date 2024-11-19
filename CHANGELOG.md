@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.0.11](https://github.com/multiversx/mx-sdk-dapp/pull/1308)] - 2024-11-19
+
 - [Updated transaction data decode functions](https://github.com/multiversx/mx-sdk-dapp/pull/1307)
 
 ## [[v3.0.10](https://github.com/multiversx/mx-sdk-dapp/pull/1305)] - 2024-11-11
