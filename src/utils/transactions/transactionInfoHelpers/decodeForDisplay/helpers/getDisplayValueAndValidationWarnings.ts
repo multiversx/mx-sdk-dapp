@@ -40,7 +40,7 @@ export const getDisplayValueAndValidationWarnings = ({
   });
 
   const decodedParts =
-    decodeMethod === 'smart'
+    decodeMethod === DecodeMethodEnum.smart
       ? getSmartDecodedParts({
           parts,
           decodedParts: initialDecodedParts,
