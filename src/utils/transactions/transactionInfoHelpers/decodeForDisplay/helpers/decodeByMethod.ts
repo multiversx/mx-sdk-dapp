@@ -5,32 +5,32 @@ import {
   TransactionTokensType
 } from 'types/serverTransactions.types';
 import { addressIsValid } from 'utils/account/addressIsValid';
-import { isUtf8, stringContainsNumbers } from 'utils/decoders';
+import { isUtf8 } from 'utils/decoders';
 
 export const decodeByMethod = (
   part: string,
   decodeMethod: DecodeMethodEnum | string,
   transactionTokens?: TransactionTokensType
 ) => {
-  try {
-    switch (decodeMethod) {
-      case DecodeMethodEnum.text:
-        if (!stringContainsNumbers(part)) {
-          return part;
-        }
-
+  switch (decodeMethod) {
+    case DecodeMethodEnum.text:
+      try {
         return Buffer.from(part, 'hex').toString('utf8');
-      case DecodeMethodEnum.decimal:
-        const bn = new BigNumber(part, 16);
+      } catch {}
 
-        return bn.toString(10);
-      case DecodeMethodEnum.smart:
+      return part;
+    case DecodeMethodEnum.decimal:
+      return part !== '' ? new BigNumber(part, 16).toString(10) : '';
+    case DecodeMethodEnum.smart:
+      try {
         const bech32Encoded = Address.fromHex(part).toString();
 
         if (addressIsValid(bech32Encoded)) {
           return bech32Encoded;
         }
+      } catch {}
 
+      try {
         const decoded = Buffer.from(part, 'hex').toString('utf8');
 
         if (!isUtf8(decoded)) {
@@ -47,20 +47,15 @@ export const decodeByMethod = (
 
           const bn = new BigNumber(part, 16);
 
-          return bn.toString(10);
+          return bn.isFinite() ? bn.toString(10) : part;
+        } else {
+          return decoded;
         }
+      } catch {}
 
-        return decoded;
-      case DecodeMethodEnum.raw:
-      default:
-        return part;
-    }
-  } catch (err) {
-    console.error(
-      `Error during data decoding of "${part}" as "${decodeMethod}"`,
-      err
-    );
-
-    return part;
+      return part;
+    case DecodeMethodEnum.raw:
+    default:
+      return part;
   }
 };

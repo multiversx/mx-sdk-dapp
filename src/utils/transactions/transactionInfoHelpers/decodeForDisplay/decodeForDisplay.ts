@@ -20,45 +20,44 @@ export const decodeForDisplay = ({
     validationWarnings: []
   };
 
-  if (input.includes('@')) {
-    const parts = input.split('@');
-    const decodedParts = getDisplayValueAndValidationWarnings({
-      parts,
-      identifier,
-      decodeMethod,
-      display
-    });
-    display.displayValue = decodedParts.join('@');
+  if (input.includes('@') || input.includes('\n')) {
+    if (input.includes('@')) {
+      const parts = input.split('@');
+      const decodedParts = getDisplayValueAndValidationWarnings({
+        parts,
+        identifier,
+        decodeMethod,
+        display
+      });
 
-    return display;
+      display.displayValue = decodedParts.join('@');
+    }
+
+    if (input.includes('\n')) {
+      const parts = input.split('\n');
+      const initialDecodedParts = parts.map((part) => {
+        const base64Buffer = Buffer.from(part, 'base64');
+        if (decodeMethod === DecodeMethodEnum.raw) {
+          return part;
+        } else {
+          return decodeByMethod(base64Buffer.toString('hex'), decodeMethod);
+        }
+      });
+
+      const decodedParts =
+        decodeMethod === DecodeMethodEnum.smart
+          ? getSmartDecodedParts({
+              parts,
+              decodedParts: initialDecodedParts,
+              identifier
+            })
+          : initialDecodedParts;
+
+      display.displayValue = decodedParts.join('\n');
+    }
+  } else {
+    display.displayValue = decodeByMethod(input, decodeMethod);
   }
-
-  if (input.includes('\n')) {
-    const parts = input.split('\n');
-    const initialDecodedParts = parts.map((part) => {
-      const base64Buffer = Buffer.from(String(part), 'base64');
-      if (decodeMethod === DecodeMethodEnum.raw) {
-        return part;
-      } else {
-        return decodeByMethod(base64Buffer.toString('hex'), decodeMethod);
-      }
-    });
-
-    const decodedParts =
-      decodeMethod === DecodeMethodEnum.smart
-        ? getSmartDecodedParts({
-            parts,
-            decodedParts: initialDecodedParts,
-            identifier
-          })
-        : initialDecodedParts;
-
-    display.displayValue = decodedParts.join('\n');
-
-    return display;
-  }
-
-  display.displayValue = decodeByMethod(input, decodeMethod);
 
   return display;
 };
