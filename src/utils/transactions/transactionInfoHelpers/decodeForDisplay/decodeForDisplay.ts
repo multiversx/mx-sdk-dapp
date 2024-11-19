@@ -20,6 +20,12 @@ export const decodeForDisplay = ({
     validationWarnings: []
   };
 
+  if (!input.includes('@') && !input.includes('\n')) {
+    display.displayValue = decodeByMethod(input, decodeMethod);
+
+    return display;
+  }
+
   if (input.includes('@')) {
     const parts = input.split('@');
     const decodedParts = getDisplayValueAndValidationWarnings({
@@ -28,20 +34,20 @@ export const decodeForDisplay = ({
       decodeMethod,
       display
     });
-    display.displayValue = decodedParts.join('@');
 
-    return display;
+    display.displayValue = decodedParts.join('@');
   }
 
   if (input.includes('\n')) {
     const parts = input.split('\n');
     const initialDecodedParts = parts.map((part) => {
-      const base64Buffer = Buffer.from(String(part), 'base64');
+      const base64Buffer = Buffer.from(part, 'base64');
+
       if (decodeMethod === DecodeMethodEnum.raw) {
         return part;
-      } else {
-        return decodeByMethod(base64Buffer.toString('hex'), decodeMethod);
       }
+
+      return decodeByMethod(base64Buffer.toString('hex'), decodeMethod);
     });
 
     const decodedParts =
@@ -54,11 +60,7 @@ export const decodeForDisplay = ({
         : initialDecodedParts;
 
     display.displayValue = decodedParts.join('\n');
-
-    return display;
   }
-
-  display.displayValue = decodeByMethod(input, decodeMethod);
 
   return display;
 };

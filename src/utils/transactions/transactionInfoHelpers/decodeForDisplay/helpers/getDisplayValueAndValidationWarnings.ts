@@ -39,11 +39,14 @@ export const getDisplayValueAndValidationWarnings = ({
     }
   });
 
-  return decodeMethod === DecodeMethodEnum.smart
-    ? getSmartDecodedParts({
-        parts,
-        decodedParts: initialDecodedParts,
-        identifier
-      })
-    : initialDecodedParts;
+  const decodedParts =
+    decodeMethod === DecodeMethodEnum.smart
+      ? getSmartDecodedParts({
+          parts,
+          decodedParts: initialDecodedParts,
+          identifier
+        })
+      : initialDecodedParts;
+
+  return decodedParts;
 };
