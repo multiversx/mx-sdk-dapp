@@ -54,4 +54,7 @@ describe('stringIsFloat tests', () => {
   it('denies caret separation', () => {
     expect(stringIsFloat(Infinity as any)).toBe(false);
   });
+  it('allows large numbers', () => {
+    expect(stringIsFloat('0.0000000011231723871623178236182376123')).toBe(true);
+  });
 });

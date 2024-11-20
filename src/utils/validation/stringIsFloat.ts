@@ -15,6 +15,16 @@ export const stringIsFloat = (amount: string) => {
   // eslint-disable-next-line
   let [wholes, decimals] = amount.split('.');
   if (decimals) {
+    const areAllNumbers = decimals
+      .split('')
+      .every((digit) => !isNaN(parseInt(digit)));
+
+    BigNumber.set({
+      DECIMAL_PLACES: areAllNumbers
+        ? decimals.length
+        : BigNumber.config().DECIMAL_PLACES
+    });
+
     while (decimals.charAt(decimals.length - 1) === ZERO) {
       decimals = decimals.slice(0, -1);
     }
