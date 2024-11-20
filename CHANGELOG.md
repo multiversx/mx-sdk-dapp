@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added transaction data decoder](https://github.com/multiversx/mx-sdk-dapp/pull/1311)
+
 ## [[v3.0.12](https://github.com/multiversx/mx-sdk-dapp/pull/1310)] - 2024-11-20
 
 - [Fixed "stringIsFloat" issue for huge decimal numbers](https://github.com/multiversx/mx-sdk-dapp/pull/1309)
