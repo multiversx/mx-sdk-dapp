@@ -86,4 +86,12 @@ describe('stringIsFloat tests', () => {
       false
     );
   });
+
+  it('denies numbers with special characters', () => {
+    expect(stringIsFloat('-0.12323')).toBe(false);
+    expect(stringIsFloat('-0,2230323...')).toBe(false);
+    expect(stringIsFloat('0.1123@tsd123')).toBe(false);
+    expect(stringIsFloat('0.11aaaa233')).toBe(false);
+    expect(stringIsFloat('0,1233oooosdd123')).toBe(false);
+  });
 });
