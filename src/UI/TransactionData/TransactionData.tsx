@@ -20,6 +20,7 @@ const allOccurences = (sourceStr: string, searchStr: string) => {
 };
 
 export interface TransactionDataPropsType extends WithClassnameType {
+  customCopyIcon?: IconProp;
   data: string;
   highlight?: string;
   innerTransactionDataClasses?: {
@@ -28,23 +29,24 @@ export interface TransactionDataPropsType extends WithClassnameType {
   };
   isScCall?: boolean;
   label?: ReactNode;
-  transactionIndex: number;
   showCopyButton?: boolean;
-  customCopyIcon?: IconProp;
+  showDataDecode?: boolean;
+  transactionIndex: number;
 }
 
 const TransactionDataComponent = ({
   className = 'dapp-transaction-data',
-  showCopyButton = true,
+  customCopyIcon,
   data,
   globalStyles,
   highlight,
   innerTransactionDataClasses,
   isScCall,
   label,
-  transactionIndex,
-  customCopyIcon,
-  styles
+  showCopyButton = true,
+  styles,
+  showDataDecode,
+  transactionIndex
 }: TransactionDataPropsType & WithStylesImportType) => {
   const [decodedData, setDecodedData] = useState(data);
 
@@ -58,10 +60,11 @@ const TransactionDataComponent = ({
   const [encodedScCall, ...remainingDataFields] =
     highlight && isScCall ? highlight.split('@') : [];
 
-  const isHighlightedData = decodedData && highlight;
+  const isHighlightedData = data && highlight;
   const occurrences = isHighlightedData
     ? allOccurences(decodedData, highlight)
     : [];
+
   const showHighlight = isHighlightedData && occurrences.length > 0;
 
   const handleElementReference = (element: HTMLElement | null) => {
@@ -177,19 +180,21 @@ const TransactionDataComponent = ({
       )}
 
       <div className={classNames(styles?.transactionData, className)}>
-        <span
+        <div
           className={classNames(
             styles?.transactionDataLabel,
             transactionDataInputLabelClassName
           )}
         >
           {label ?? 'Data'}
-        </span>
-        <TransactionDataDecode
-          data={data}
-          onDecode={handleDecode}
-          onDecodeError={handleDecodeError}
-        />
+          {showDataDecode && (
+            <TransactionDataDecode
+              data={data}
+              onDecode={handleDecode}
+              onDecodeError={handleDecodeError}
+            />
+          )}
+        </div>
 
         <div className={styles?.transactionDataValueWrapper}>
           <div

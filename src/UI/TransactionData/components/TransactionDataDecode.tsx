@@ -11,51 +11,6 @@ interface SelectOptionType {
   value: string;
 }
 
-const customStyles = {
-  control: (base: any) => ({
-    ...base,
-    backgroundColor: '#131313',
-    border: 'none',
-    borderRadius: '8px',
-    boxShadow: 'none',
-    cursor: 'pointer',
-    margin: '0 0 8px 0',
-    height: '24px',
-    width: '120px'
-  }),
-  menu: (base: any) => ({
-    ...base,
-    background: 'none',
-    border: 'none',
-    borderRadius: '8px',
-    marginTop: '2px'
-  }),
-  option: (
-    base: any,
-    { isFocused }: { isFocused: boolean; isSelected: boolean }
-  ) => ({
-    ...base,
-    backgroundColor: isFocused ? '#393b3c' : '#18191a',
-    color: '#ffffff',
-    cursor: 'pointer',
-    padding: '8px 12px',
-    ':active': {
-      backgroundColor: '#393b3c'
-    }
-  }),
-  singleValue: (base: any) => ({
-    ...base,
-    color: '#9ba5b4'
-  }),
-  dropdownIndicator: (base: any) => ({
-    ...base,
-    color: '#9ba5b4'
-  }),
-  indicatorSeparator: () => ({
-    display: 'none'
-  })
-};
-
 interface TransactionDataDecodePropsType extends WithClassnameType {
   data: string;
   onDecode: (decodedData: string) => void;
@@ -106,12 +61,12 @@ export const TransactionDataDecode = ({
   return (
     <Select
       className={classNames('transaction-data-decode', className)}
+      classNamePrefix='data-decode'
       isClearable={false}
       isSearchable={false}
       name='dataDecode'
       onChange={handleSelect}
       options={selectOptions}
-      styles={customStyles}
       value={method}
     />
   );
