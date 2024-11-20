@@ -75,13 +75,13 @@ describe('stringIsFloat tests', () => {
     expect(stringIsFloat('0.0000000011231723871623178236182376123')).toBe(true);
   });
 
-  it('allows large numbers with single comma', () => {
+  it('denies numbers with single comma', () => {
     expect(stringIsFloat('0,0000000011231723871623178236182376123')).toBe(
       false
     );
   });
 
-  it('allows large numbers with multiple commas', () => {
+  it('denies numbers with multiple commas', () => {
     expect(stringIsFloat('0,0000000011231723,87,162.317,8236182376123')).toBe(
       false
     );
