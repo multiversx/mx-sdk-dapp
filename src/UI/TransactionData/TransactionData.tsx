@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useState } from 'react';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import classNames from 'classnames';
 
@@ -9,6 +9,7 @@ import { decodePart } from 'utils/decoders/decodePart';
 import { getUnHighlightedDataFieldParts } from 'utils/transactions/getUnHighlightedDataFieldParts';
 
 import { WithClassnameType } from '../types';
+import { TransactionDataDecode } from './components';
 
 const allOccurences = (sourceStr: string, searchStr: string) => {
   const occurrences = [...sourceStr.matchAll(new RegExp(searchStr, 'gi'))].map(
@@ -45,18 +46,22 @@ const TransactionDataComponent = ({
   customCopyIcon,
   styles
 }: TransactionDataPropsType & WithStylesImportType) => {
+  const [decodedData, setDecodedData] = useState(data);
+
   const {
     transactionDataInputLabelClassName,
     transactionDataInputValueClassName
   } = innerTransactionDataClasses || {};
 
-  let output = <>{data}</>;
+  let output = <>{decodedData}</>;
 
   const [encodedScCall, ...remainingDataFields] =
     highlight && isScCall ? highlight.split('@') : [];
 
-  const isHighlightedData = data && highlight;
-  const occurrences = isHighlightedData ? allOccurences(data, highlight) : [];
+  const isHighlightedData = decodedData && highlight;
+  const occurrences = isHighlightedData
+    ? allOccurences(decodedData, highlight)
+    : [];
   const showHighlight = isHighlightedData && occurrences.length > 0;
 
   const handleElementReference = (element: HTMLElement | null) => {
@@ -67,10 +72,18 @@ const TransactionDataComponent = ({
     element.scrollIntoView();
   };
 
+  const handleDecode = (decoded: string) => {
+    setDecodedData(decoded);
+  };
+
+  const handleDecodeError = () => {
+    setDecodedData(data);
+  };
+
   if (showHighlight) {
     switch (true) {
-      case data.startsWith(highlight): {
-        const [, rest] = data.split(highlight);
+      case decodedData.startsWith(highlight): {
+        const [, rest] = decodedData.split(highlight);
 
         output = (
           <>
@@ -80,8 +93,8 @@ const TransactionDataComponent = ({
         );
         break;
       }
-      case data.endsWith(highlight): {
-        const [rest] = data.split(highlight);
+      case decodedData.endsWith(highlight): {
+        const [rest] = decodedData.split(highlight);
 
         output = (
           <>
@@ -101,7 +114,7 @@ const TransactionDataComponent = ({
         const { start, end } = getUnHighlightedDataFieldParts({
           occurrences,
           transactionIndex,
-          data,
+          data: decodedData,
           highlight
         });
 
@@ -152,7 +165,7 @@ const TransactionDataComponent = ({
                 {decodedScCall}
               </span>
 
-              {data && (
+              {decodedData && (
                 <CopyButton
                   text={decodedScCall}
                   className={styles?.transactionDataValueCopy}
@@ -172,6 +185,11 @@ const TransactionDataComponent = ({
         >
           {label ?? 'Data'}
         </span>
+        <TransactionDataDecode
+          data={data}
+          onDecode={handleDecode}
+          onDecodeError={handleDecodeError}
+        />
 
         <div className={styles?.transactionDataValueWrapper}>
           <div
@@ -182,13 +200,13 @@ const TransactionDataComponent = ({
             )}
           >
             <span className={styles?.transactionDataValueText}>
-              {data ? output : N_A}
+              {decodedData ? output : N_A}
             </span>
 
-            {data && showCopyButton && (
+            {decodedData && showCopyButton && (
               <CopyButton
                 copyIcon={customCopyIcon}
-                text={data}
+                text={decodedData}
                 className={styles?.transactionDataValueCopy}
               />
             )}
