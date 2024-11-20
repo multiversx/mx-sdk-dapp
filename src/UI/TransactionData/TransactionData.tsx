@@ -61,10 +61,7 @@ const TransactionDataComponent = ({
     highlight && isScCall ? highlight.split('@') : [];
 
   const isHighlightedData = data && highlight;
-  const occurrences = isHighlightedData
-    ? allOccurences(decodedData, highlight)
-    : [];
-
+  const occurrences = isHighlightedData ? allOccurences(data, highlight) : [];
   const showHighlight = isHighlightedData && occurrences.length > 0;
 
   const handleElementReference = (element: HTMLElement | null) => {
@@ -86,7 +83,7 @@ const TransactionDataComponent = ({
   if (showHighlight) {
     switch (true) {
       case decodedData.startsWith(highlight): {
-        const [, rest] = decodedData.split(highlight);
+        const [, rest] = data.split(highlight);
 
         output = (
           <>
@@ -96,8 +93,8 @@ const TransactionDataComponent = ({
         );
         break;
       }
-      case decodedData.endsWith(highlight): {
-        const [rest] = decodedData.split(highlight);
+      case data.endsWith(highlight): {
+        const [rest] = data.split(highlight);
 
         output = (
           <>
@@ -117,7 +114,7 @@ const TransactionDataComponent = ({
         const { start, end } = getUnHighlightedDataFieldParts({
           occurrences,
           transactionIndex,
-          data: decodedData,
+          data: data,
           highlight
         });
 
@@ -168,7 +165,7 @@ const TransactionDataComponent = ({
                 {decodedScCall}
               </span>
 
-              {decodedData && (
+              {data && (
                 <CopyButton
                   text={decodedScCall}
                   className={styles?.transactionDataValueCopy}
