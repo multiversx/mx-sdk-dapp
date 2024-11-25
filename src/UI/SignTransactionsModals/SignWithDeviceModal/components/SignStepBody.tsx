@@ -77,12 +77,13 @@ const SignStepBodyComponent = ({
             className={inputGroupClassName}
             data={data}
             highlight={multiTxData}
-            isScCall={!tokenId}
-            transactionIndex={currentTransaction.transactionIndex}
             innerTransactionDataClasses={{
               transactionDataInputLabelClassName: inputLabelClassName,
               transactionDataInputValueClassName: inputValueClassName
             }}
+            isScCall={!tokenId}
+            showDataDecode
+            transactionIndex={currentTransaction.transactionIndex}
           />
         )}
 
