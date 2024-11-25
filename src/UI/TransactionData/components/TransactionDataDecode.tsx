@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEventHandler, useEffect, useState } from 'react';
+import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import capitalize from 'lodash/capitalize';
-import Select, { SingleValue } from 'react-select';
 import { DecodeMethodEnum } from 'types';
 import { decodeForDisplay } from 'utils/transactions/transactionInfoHelpers/decodeForDisplay';
 import { WithClassnameType } from '../../types';
@@ -24,7 +25,6 @@ export const TransactionDataDecode = ({
   onDecode
 }: TransactionDataDecodePropsType) => {
   const rawMethodStr = capitalize(DecodeMethodEnum.raw.toString());
-
   const [method, setMethod] = useState<SelectOptionType>({
     label: rawMethodStr,
     value: rawMethodStr
@@ -39,9 +39,13 @@ export const TransactionDataDecode = ({
     };
   });
 
-  const handleSelect = (event: SingleValue<SelectOptionType>) => {
-    if (event) {
-      setMethod(event);
+  const handleSelect: ChangeEventHandler<HTMLSelectElement> = (e) => {
+    const selectedOption = selectOptions.find(
+      (option) => option.value === e.target.value
+    );
+
+    if (selectedOption) {
+      setMethod(selectedOption);
     }
   };
 
@@ -59,15 +63,22 @@ export const TransactionDataDecode = ({
   }, [method, data]);
 
   return (
-    <Select
-      className={classNames('transaction-data-decode', className)}
-      classNamePrefix='data-decode'
-      isClearable={false}
-      isSearchable={false}
-      name='dataDecode'
-      onChange={handleSelect}
-      options={selectOptions}
-      value={method}
-    />
+    <div className={classNames('transaction-data-decode', className)}>
+      <select
+        className='transaction-data-decode-select'
+        value={method.value}
+        onChange={handleSelect}
+      >
+        {selectOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      <FontAwesomeIcon
+        icon={faChevronDown}
+        className='transaction-data-decode-select-icon'
+      />
+    </div>
   );
 };
