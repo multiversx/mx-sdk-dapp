@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated default metamaskSnapWalletAddress](https://github.com/multiversx/mx-sdk-dapp/pull/1314)
+
 ## [[v3.0.13](https://github.com/multiversx/mx-sdk-dapp/pull/1313)] - 2024-11-25
 
 - [Fixed BigNumber configuration, scoped to a function level in "stringIsFloat"](https://github.com/multiversx/mx-sdk-dapp/pull/1312)
