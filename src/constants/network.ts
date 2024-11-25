@@ -20,7 +20,7 @@ export const fallbackNetworkConfigurations: Record<
     xAliasAddress: 'https://devnet.xalias.com',
     apiAddress: 'https://devnet-api.multiversx.com',
     explorerAddress: 'http://devnet-explorer.multiversx.com',
-    metamaskSnapWalletAddress: 'https://devnet-snap-wallet.multiversx.com',
+    metamaskSnapWalletAddress: 'https://devnet-iframe-wallet.multiversx.com',
     apiTimeout: '4000',
     roundDuration: 6000
   },
@@ -40,7 +40,7 @@ export const fallbackNetworkConfigurations: Record<
     xAliasAddress: 'https://testnet.xalias.com',
     apiAddress: 'https://testnet-api.multiversx.com',
     explorerAddress: 'http://testnet-explorer.multiversx.com',
-    metamaskSnapWalletAddress: 'https://testnet-snap-wallet.multiversx.com',
+    metamaskSnapWalletAddress: 'https://testnet-iframe-wallet.multiversx.com',
     apiTimeout: '4000',
     roundDuration: 6000
   },
@@ -60,7 +60,7 @@ export const fallbackNetworkConfigurations: Record<
     xAliasAddress: 'https://xalias.com',
     apiAddress: 'https://api.multiversx.com',
     explorerAddress: 'https://explorer.multiversx.com',
-    metamaskSnapWalletAddress: 'https://snap-wallet.multiversx.com',
+    metamaskSnapWalletAddress: 'https://iframe-wallet.multiversx.com',
     apiTimeout: '4000',
     roundDuration: 6000
   }
