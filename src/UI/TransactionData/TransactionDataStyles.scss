@@ -5,7 +5,10 @@
   gap: 8px;
 
   .transactionDataLabel {
+    align-items: center;
     color: #a3a3a3;
+    display: flex;
+    justify-content: space-between;
   }
 
   .transactionDataValueWrapper {
