@@ -60,6 +60,11 @@ import {
   getIframeProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
+import {
+  DEVNET_CHAIN_ID,
+  MAINNET_CHAIN_ID,
+  TESTNET_CHAIN_ID
+} from '../../constants';
 
 let initalizingLedger = false;
 
@@ -116,6 +121,16 @@ export function ProviderInitializer() {
   }, [ledgerAccount, isLoggedIn, ledgerData]);
 
   async function refreshNetworkConfig() {
+    const shouldGetConfig =
+      !network.chainId ||
+      ![DEVNET_CHAIN_ID, TESTNET_CHAIN_ID, MAINNET_CHAIN_ID].includes(
+        network.chainId
+      );
+
+    if (!shouldGetConfig) {
+      return;
+    }
+
     try {
       const networkConfig = await getNetworkConfigFromApi();
       const hasDifferentNetworkConfig =

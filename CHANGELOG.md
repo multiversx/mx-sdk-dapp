@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated get network config from API logic](https://github.com/multiversx/mx-sdk-dapp/pull/1317)
+
 ## [[v3.0.15](https://github.com/multiversx/mx-sdk-dapp/pull/1316)] - 2024-11-25
 
 - [Added transaction data decoder](https://github.com/multiversx/mx-sdk-dapp/pull/1311)
