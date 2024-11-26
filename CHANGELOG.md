@@ -5,9 +5,11 @@ All notable changes will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [[v3.0.16](https://github.com/multiversx/mx-sdk-dapp/pull/1318)] - 2024-11-26
 
 - [Updated provider initializer to use useGetAccountFromApi](https://github.com/multiversx/mx-sdk-dapp/pull/1317)
+
+## [Unreleased]
 
 ## [[v3.0.15](https://github.com/multiversx/mx-sdk-dapp/pull/1316)] - 2024-11-25
 
