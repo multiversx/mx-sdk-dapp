@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { getNetworkConfigFromApi } from 'apiCalls';
+import { getNetworkConfigFromApi, useGetAccountFromApi } from 'apiCalls';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
@@ -41,7 +41,6 @@ import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
 import {
   getAddress,
-  getAccount,
   getLatestNonce,
   newWalletProvider,
   emptyProvider,
@@ -84,6 +83,11 @@ export function ProviderInitializer() {
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
+  const {
+    data: account,
+    isLoading: isAccountLoading,
+    error: accountError
+  } = useGetAccountFromApi(address);
 
   const initializedAccountRef = useRef(false);
   const dispatch = useDispatch();
@@ -112,8 +116,8 @@ export function ProviderInitializer() {
   }, [tokenLogin?.nativeAuthToken, address]);
 
   useEffect(() => {
-    fetchAccount();
-  }, [address, network]);
+    setupAccount();
+  }, [account, isAccountLoading]);
 
   useEffect(() => {
     // prevent balance double fetching by handling ledgerAccount data separately
@@ -188,8 +192,17 @@ export function ProviderInitializer() {
     }
   }
 
-  async function fetchAccount() {
-    dispatch(setIsAccountLoading(true));
+  async function setupAccount() {
+    if (isAccountLoading) {
+      dispatch(setIsAccountLoading(true));
+      return;
+    }
+
+    if (accountError) {
+      dispatch(setAccountLoadingError('Failed getting account'));
+      console.error('Failed getting account ', accountError);
+      return;
+    }
 
     if (initializedAccountRef.current) {
       // account was recently initialized, skip refetching
@@ -198,26 +211,17 @@ export function ProviderInitializer() {
       return;
     }
 
-    if (address) {
-      try {
-        const account = await getAccount(address);
-
-        if (account) {
-          dispatch(
-            setAccount({
-              ...account,
-              address,
-              nonce: account.nonce.valueOf()
-            })
-          );
-        } else if (!isLoggedIn) {
-          // Clear the address and publicKey if account is not found
-          dispatch(setAddress(''));
-        }
-      } catch (e) {
-        dispatch(setAccountLoadingError('Failed getting account'));
-        console.error('Failed getting account ', e);
-      }
+    if (account) {
+      dispatch(
+        setAccount({
+          ...account,
+          address,
+          nonce: account.nonce.valueOf()
+        })
+      );
+    } else if (!isLoggedIn) {
+      // Clear the address and publicKey if account is not found
+      dispatch(setAddress(''));
     }
 
     dispatch(setIsAccountLoading(false));
