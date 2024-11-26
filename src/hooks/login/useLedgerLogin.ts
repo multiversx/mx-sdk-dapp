@@ -116,18 +116,16 @@ export const useLedgerLogin = ({
   };
 
   const onLoginFailed = (err: any, customMessage = '') => {
-    if (!err) {
-      return;
+    if (isLoading) {
+      const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
+
+      const message =
+        errorMessage ?? defaultErrorMessage ?? failInitializeErrorText;
+
+      setError(`${message}.${customMessage}`);
+      setIsLoading(false);
+      dispatch(setLedgerAccount(null));
     }
-
-    const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
-
-    const message =
-      errorMessage ?? defaultErrorMessage ?? failInitializeErrorText;
-
-    setError(`${message}.${customMessage}`);
-    setIsLoading(false);
-    dispatch(setLedgerAccount(null));
   };
 
   const isHWProviderInitialized = async () => {
@@ -239,12 +237,10 @@ export const useLedgerLogin = ({
         );
       }
 
-      setIsLoading(false);
       await loginUser();
+      setIsLoading(false);
     } catch (err) {
       onLoginFailed(err);
-    } finally {
-      setIsLoading(false);
     }
 
     setShowAddressList(false);
@@ -283,12 +279,10 @@ export const useLedgerLogin = ({
     }
 
     clearInitiatedLogins();
-
     setError('');
 
     try {
       setIsLoading(true);
-      await initHWProvider();
       const isInitialized = await isHWProviderInitialized();
 
       if (!isInitialized) {
@@ -323,19 +317,32 @@ export const useLedgerLogin = ({
 
         setShowAddressList(true);
       }
-    } catch (error) {
-      onLoginFailed(error);
-    } finally {
+
       setIsLoading(false);
+    } catch (err) {
+      onLoginFailed(err);
+    }
+  };
+
+  const initProviderAndAccounts = async () => {
+    try {
+      await initHWProvider();
+      const isInitialized = await isHWProviderInitialized();
+
+      if (!isInitialized) {
+        return onLoginFailed(failInitializeErrorText);
+      }
+
+      if (accounts.length === 0 || startIndex > 0) {
+        await fetchAccounts();
+      }
+    } catch (err) {
+      onLoginFailed(err, failInitializeErrorText);
     }
   };
 
   useEffect(() => {
-    initHWProvider();
-  }, [hwProvider]);
-
-  useEffect(() => {
-    fetchAccounts();
+    initProviderAndAccounts();
   }, [startIndex, showAddressList, hwProvider]);
 
   useEffect(() => {
