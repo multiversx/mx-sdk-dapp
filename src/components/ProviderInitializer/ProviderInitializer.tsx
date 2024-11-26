@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { getNetworkConfigFromApi, useGetAccountFromApi } from 'apiCalls';
+import {
+  DEVNET_CHAIN_ID,
+  MAINNET_CHAIN_ID,
+  TESTNET_CHAIN_ID
+} from 'constants/index';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
@@ -59,11 +64,6 @@ import {
   getIframeProvider
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
-import {
-  DEVNET_CHAIN_ID,
-  MAINNET_CHAIN_ID,
-  TESTNET_CHAIN_ID
-} from '../../constants';
 
 let initalizingLedger = false;
 
