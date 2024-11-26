@@ -21,7 +21,6 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
 
   const onMessage = () => {
     checkTransactionStatus({
-      shouldRefreshBalance: isWebsocketCompleted,
       getTransactionsByHash,
       ...props
     });
