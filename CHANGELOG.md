@@ -7,11 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fixed Ledger login](https://github.com/multiversx/mx-sdk-dapp/pull/1322)
-- [Removed refreshAccount on websocket event](https://github.com/multiversx/mx-sdk-dapp/pull/1321)
-
-## [[v3.0.17](https://github.com/multiversx/mx-sdk-dapp/pull/1320)] - 2024-11-26
-
+- [Removed refreshAccount on websocket event](https://github.com/multiversx/mx-sdk-dapp/pull/1320)
 - [Updated get network config from API logic](https://github.com/multiversx/mx-sdk-dapp/pull/1319)
 
 ## [[v3.0.16](https://github.com/multiversx/mx-sdk-dapp/pull/1318)] - 2024-11-26
