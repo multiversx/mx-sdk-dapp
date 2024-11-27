@@ -326,7 +326,7 @@ export const useLedgerLogin = ({
   };
 
   // Need to initialise the HWProvider before starting the login process
-  // and fetch the accounts immediately afterward only once
+  // and fetch the accounts immediately afterward only once or if the address page changes
   const initProviderAndAccounts = async () => {
     try {
       let isInitialized = await isHWProviderInitialized();
