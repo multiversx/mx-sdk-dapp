@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Removed refreshAccount on websocket event](https://github.com/multiversx/mx-sdk-dapp/pull/1320)
 - [Updated get network config from API logic](https://github.com/multiversx/mx-sdk-dapp/pull/1319)
 
 ## [[v3.0.16](https://github.com/multiversx/mx-sdk-dapp/pull/1318)] - 2024-11-26
