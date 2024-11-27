@@ -1,5 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { getNetworkConfigFromApi, useGetAccountFromApi } from 'apiCalls';
+import {
+  DEVNET_CHAIN_ID,
+  MAINNET_CHAIN_ID,
+  TESTNET_CHAIN_ID
+} from 'constants/index';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { useWalletConnectV2Login } from 'hooks/login/useWalletConnectV2Login';
 import { useWebViewLogin } from 'hooks/login/useWebViewLogin';
@@ -119,7 +124,23 @@ export function ProviderInitializer() {
     setLedgerAccountInfo();
   }, [ledgerAccount, isLoggedIn, ledgerData]);
 
+  // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
+  // The round duration is used for polling interval
   async function refreshNetworkConfig() {
+    const needsRoundDurationForPollingInterval =
+      network.chainId &&
+      ![DEVNET_CHAIN_ID, TESTNET_CHAIN_ID, MAINNET_CHAIN_ID].includes(
+        network.chainId
+      ) &&
+      !network.roundDuration;
+
+    const shouldGetConfig =
+      !network.chainId || needsRoundDurationForPollingInterval;
+
+    if (!shouldGetConfig) {
+      return;
+    }
+
     try {
       const networkConfig = await getNetworkConfigFromApi();
       const hasDifferentNetworkConfig =
