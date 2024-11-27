@@ -124,6 +124,8 @@ export function ProviderInitializer() {
     setLedgerAccountInfo();
   }, [ledgerAccount, isLoggedIn, ledgerData]);
 
+  // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
+  // The round duration is used for polling interval
   async function refreshNetworkConfig() {
     const shouldGetConfig =
       !network.chainId ||
