@@ -127,11 +127,15 @@ export function ProviderInitializer() {
   // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
   // The round duration is used for polling interval
   async function refreshNetworkConfig() {
-    const shouldGetConfig =
-      !network.chainId ||
+    const needsRoundDurationForPollingInterval =
+      network.chainId &&
       ![DEVNET_CHAIN_ID, TESTNET_CHAIN_ID, MAINNET_CHAIN_ID].includes(
         network.chainId
-      );
+      ) &&
+      !network.roundDuration;
+
+    const shouldGetConfig =
+      !network.chainId || needsRoundDurationForPollingInterval;
 
     if (!shouldGetConfig) {
       return;
