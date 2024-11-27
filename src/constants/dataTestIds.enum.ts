@@ -45,6 +45,7 @@ export enum DataTestIdsEnum {
   tokenFormattedAmount = 'tokenFormattedAmount',
   transactionAction = 'transactionAction',
   transactionAge = 'transactionAge',
+  transactionDataDecode = 'transactionDataDecode',
   transactionDetailsToastBody = 'transactionDetailsToastBody',
   transactionHash = 'transactionHash',
   transactionInfoFee = 'transactionInfoFee',
