@@ -3,6 +3,7 @@ import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import capitalize from 'lodash/capitalize';
+import { DataTestIdsEnum } from 'constants/dataTestIds.enum';
 import { DecodeMethodEnum } from 'types';
 import { decodeForDisplay } from 'utils/transactions/transactionInfoHelpers/decodeForDisplay';
 import { WithClassnameType } from '../../types';
@@ -63,7 +64,10 @@ export const TransactionDataDecode = ({
   }, [method, data]);
 
   return (
-    <div className={classNames('transaction-data-decode', className)}>
+    <div
+      data-testid={DataTestIdsEnum.transactionDataDecode}
+      className={classNames('transaction-data-decode', className)}
+    >
       <select
         className='transaction-data-decode-select'
         value={method.value}

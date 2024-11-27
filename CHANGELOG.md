@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.0.18](https://github.com/multiversx/mx-sdk-dapp/pull/1324)] - 2024-11-27
+
+- [Added transactionDataDecode dataTestId](https://github.com/multiversx/mx-sdk-dapp/pull/1323)
+
 ## [[v3.0.17](https://github.com/multiversx/mx-sdk-dapp/pull/1322)] - 2024-11-27
 
 - [Fixed Ledger login](https://github.com/multiversx/mx-sdk-dapp/pull/1321)
