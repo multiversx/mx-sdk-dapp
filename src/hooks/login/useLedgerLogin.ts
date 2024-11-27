@@ -116,18 +116,17 @@ export const useLedgerLogin = ({
   };
 
   const onLoginFailed = (err: any, customMessage = '') => {
-    if (!err) {
-      return;
+    // Show errors only if the user initiated the login process (isLoading is true)
+    if (isLoading) {
+      const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
+
+      const message =
+        errorMessage ?? defaultErrorMessage ?? failInitializeErrorText;
+
+      setError(`${message}.${customMessage}`);
+      setIsLoading(false);
+      dispatch(setLedgerAccount(null));
     }
-
-    const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
-
-    const message =
-      errorMessage ?? defaultErrorMessage ?? failInitializeErrorText;
-
-    setError(`${message}.${customMessage}`);
-    setIsLoading(false);
-    dispatch(setLedgerAccount(null));
   };
 
   const isHWProviderInitialized = async () => {
@@ -239,12 +238,10 @@ export const useLedgerLogin = ({
         );
       }
 
-      setIsLoading(false);
       await loginUser();
+      setIsLoading(false);
     } catch (err) {
       onLoginFailed(err);
-    } finally {
-      setIsLoading(false);
     }
 
     setShowAddressList(false);
@@ -283,12 +280,10 @@ export const useLedgerLogin = ({
     }
 
     clearInitiatedLogins();
-
     setError('');
 
     try {
       setIsLoading(true);
-      await initHWProvider();
       const isInitialized = await isHWProviderInitialized();
 
       if (!isInitialized) {
@@ -323,19 +318,39 @@ export const useLedgerLogin = ({
 
         setShowAddressList(true);
       }
-    } catch (error) {
-      onLoginFailed(error);
-    } finally {
+
       setIsLoading(false);
+    } catch (err) {
+      onLoginFailed(err);
+    }
+  };
+
+  // Need to initialise the HWProvider before starting the login process
+  // and fetch the accounts immediately afterward only once or if the address page changes
+  const initProviderAndAccounts = async () => {
+    try {
+      let isInitialized = await isHWProviderInitialized();
+
+      if (!isInitialized) {
+        await initHWProvider();
+      }
+
+      isInitialized = await isHWProviderInitialized();
+
+      if (!isInitialized) {
+        return onLoginFailed(failInitializeErrorText);
+      }
+
+      if (accounts.length === 0 || startIndex > 0) {
+        await fetchAccounts();
+      }
+    } catch (err) {
+      onLoginFailed(err);
     }
   };
 
   useEffect(() => {
-    initHWProvider();
-  }, [hwProvider]);
-
-  useEffect(() => {
-    fetchAccounts();
+    initProviderAndAccounts();
   }, [startIndex, showAddressList, hwProvider]);
 
   useEffect(() => {
