@@ -116,6 +116,7 @@ export const useLedgerLogin = ({
   };
 
   const onLoginFailed = (err: any, customMessage = '') => {
+    // Show errors only if the user initiated the login process (isLoading is true)
     if (isLoading) {
       const { errorMessage, defaultErrorMessage } = getLedgerErrorCodes(err);
 
@@ -324,10 +325,17 @@ export const useLedgerLogin = ({
     }
   };
 
+  // Need to initialise the HWProvider before starting the login process
+  // and fetch the accounts immediately afterward only once
   const initProviderAndAccounts = async () => {
     try {
-      await initHWProvider();
-      const isInitialized = await isHWProviderInitialized();
+      let isInitialized = await isHWProviderInitialized();
+
+      if (!isInitialized) {
+        await initHWProvider();
+      }
+
+      isInitialized = await isHWProviderInitialized();
 
       if (!isInitialized) {
         return onLoginFailed(failInitializeErrorText);
@@ -337,7 +345,7 @@ export const useLedgerLogin = ({
         await fetchAccounts();
       }
     } catch (err) {
-      onLoginFailed(err, failInitializeErrorText);
+      onLoginFailed(err);
     }
   };
 
