@@ -1,12 +1,14 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { DECIMALS } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
 import { useGetEgldPrice, useGetTokenDetails } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
 import { NftEnumType } from 'types/tokens.types';
 import { LoadingDots } from 'UI/LoadingDots';
 
+import { getEgldLabel } from 'utils';
 import { WithStylesImportType } from '../../../../../../hocs/useStyles';
 
 import {
@@ -43,15 +45,21 @@ const ConfirmAmountComponent = ({
     type: undefined,
     isLoading: false,
     esdtPrice: egldPrice,
-    identifier: 'EGLD-000000'
+    identifier: 'EGLD-000000',
+    tokenAvatar: '',
+    tokenDecimals: DECIMALS,
+    tokenLabel: getEgldLabel()
   };
+
+  const usedTokenDetails =
+    tokenId === egldTokenDetails.identifier ? egldTokenDetails : tokenDetails;
 
   const {
     type,
     esdtPrice,
     isLoading: isTokenDetailsLoading,
     identifier
-  } = tokenId === egldTokenDetails.identifier ? egldTokenDetails : tokenDetails;
+  } = usedTokenDetails;
 
   const isEgld = !tokenId;
   const tokenPrice = isEgld ? egldPrice : esdtPrice;
@@ -91,7 +99,7 @@ const ConfirmAmountComponent = ({
             <ConfirmAmountNftSft
               amount={amount}
               type={type}
-              tokenDetails={tokenDetails}
+              tokenDetails={usedTokenDetails}
             />
           ) : (
             <ConfirmAmountData
@@ -100,7 +108,7 @@ const ConfirmAmountComponent = ({
               amount={amount}
               handleReference={handleAmountReference}
               currentTransaction={currentTransaction}
-              tokenDetails={tokenDetails}
+              tokenDetails={usedTokenDetails}
               tokenPrice={tokenPrice}
             />
           )}
