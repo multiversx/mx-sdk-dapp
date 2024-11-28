@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fixed address is not shown on ledger login](https://github.com/multiversx/mx-sdk-dapp/pull/1325)
+- [Added support for custom web socket url](https://github.com/multiversx/mx-sdk-dapp/pull/1327)
+
+## [[v3.0.19](https://github.com/multiversx/mx-sdk-dapp/pull/1326)] - 2024-11-28
+
+- [Fix wallet hub webview](https://github.com/multiversx/mx-sdk-dapp/pull/1325)
 
 ## [[v3.0.18](https://github.com/multiversx/mx-sdk-dapp/pull/1324)] - 2024-11-27
 

@@ -68,7 +68,8 @@ export function useInitializeWebsocketConnection() {
         // To avoid multiple connections to the same endpoint, we have to guard the initialization before the logic started
         websocketConnection.status = WebsocketConnectionStatusEnum.PENDING;
 
-        const websocketUrl = await getWebsocketUrl(network.apiAddress);
+        const websocketUrl =
+          network.websocketUrl ?? (await getWebsocketUrl(network.apiAddress));
 
         if (websocketUrl == null) {
           console.warn('Can not get websocket url');
