@@ -238,8 +238,8 @@ export const useLedgerLogin = ({
         );
       }
 
-      await loginUser();
       setIsLoading(false);
+      await loginUser();
     } catch (err) {
       onLoginFailed(err);
     }

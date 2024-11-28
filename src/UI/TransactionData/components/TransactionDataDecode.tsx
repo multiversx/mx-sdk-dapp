@@ -64,12 +64,10 @@ export const TransactionDataDecode = ({
   }, [method, data]);
 
   return (
-    <div
-      data-testid={DataTestIdsEnum.transactionDataDecode}
-      className={classNames('transaction-data-decode', className)}
-    >
+    <div className={classNames('transaction-data-decode', className)}>
       <select
         className='transaction-data-decode-select'
+        data-testid={DataTestIdsEnum.transactionDataDecode}
         value={method.value}
         onChange={handleSelect}
       >
