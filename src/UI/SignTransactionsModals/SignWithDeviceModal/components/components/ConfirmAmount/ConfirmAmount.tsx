@@ -37,12 +37,21 @@ const ConfirmAmountComponent = ({
   });
 
   const { price: egldPrice } = useGetEgldPrice();
+
+  // TODO: Remove when EGLD-000000 is available on API
+  const egldTokenDetails = {
+    type: undefined,
+    isLoading: false,
+    esdtPrice: egldPrice,
+    identifier: 'EGLD-000000'
+  };
+
   const {
     type,
     esdtPrice,
     isLoading: isTokenDetailsLoading,
     identifier
-  } = tokenDetails;
+  } = tokenId === egldTokenDetails.identifier ? egldTokenDetails : tokenDetails;
 
   const isEgld = !tokenId;
   const tokenPrice = isEgld ? egldPrice : esdtPrice;
