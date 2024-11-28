@@ -48,7 +48,7 @@ export interface CustomNetworkType {
   walletConnectV2ProjectId?: string;
   walletConnectV2Options?: any;
   metamaskSnapWalletAddress?: string;
-  websoketUrl?: string;
+  websocketUrl?: string;
 }
 
 export interface ApiNetworkConfigType {
