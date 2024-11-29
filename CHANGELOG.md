@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix React Error: Conditional rendering of hook](https://github.com/multiversx/mx-sdk-dapp/pull/1333)
+
 ## [[v3.0.21](https://github.com/multiversx/mx-sdk-dapp/pull/1332)] - 2024-11-29
 
 - [Removed hardcoded `EGLD-000000` token](https://github.com/multiversx/mx-sdk-dapp/pull/1331)
