@@ -48,18 +48,18 @@ const ConfirmAmountDataComponent = ({
     });
 
   // TODO: Remove when EGLD-000000 is available on API
-  const usedIsEgld = isEgld || tokenDetails.identifier === 'EGLD-000000';
+  const isEgldToken = isEgld || tokenDetails.identifier === 'EGLD-000000';
   const formattedAmount = getFormattedAmount({ addCommas: true });
   const rawAmount = getFormattedAmount({ addCommas: false });
 
   return (
     <div className={styles?.confirmAmountData}>
       <div className={styles?.confirmAmountDataWrapper}>
-        {!usedIsEgld && tokenAvatar && (
+        {!isEgldToken && tokenAvatar && (
           <img src={tokenAvatar} className={styles?.confirmAmountDataIcon} />
         )}
 
-        {!usedIsEgld && !tokenAvatar && (
+        {!isEgldToken && !tokenAvatar && (
           <div
             className={classNames(
               styles?.confirmAmountDataIcon,
@@ -79,11 +79,11 @@ const ConfirmAmountDataComponent = ({
         >
           <Balance
             amount={formattedAmount}
-            egldIcon={usedIsEgld}
+            egldIcon={isEgldToken}
             data-testid={DataTestIdsEnum.confirmAmount}
             showTokenLabel
             showTokenLabelSup
-            tokenLabel={usedIsEgld ? network.egldLabel : identifier}
+            tokenLabel={isEgldToken ? network.egldLabel : identifier}
             className={styles?.confirmAmountDataBalance}
           />
         </div>

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Removed hardcoded `EGLD-000000` token](https://github.com/multiversx/mx-sdk-dapp/pull/1331)
+
 ## [[v3.0.20](https://github.com/multiversx/mx-sdk-dapp/pull/1330)] - 2024-11-28
 
 - [Fixed EGLD-000000 token is not found](https://github.com/multiversx/mx-sdk-dapp/pull/1329)
