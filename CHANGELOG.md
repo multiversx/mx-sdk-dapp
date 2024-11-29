@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix: Minified React error #310](https://github.com/multiversx/mx-sdk-dapp/pull/1334)
 - [Fix React Error: Conditional rendering of hook](https://github.com/multiversx/mx-sdk-dapp/pull/1333)
 
 ## [[v3.0.21](https://github.com/multiversx/mx-sdk-dapp/pull/1332)] - 2024-11-29
