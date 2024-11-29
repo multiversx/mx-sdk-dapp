@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix deps array which can cause minification errors](https://github.com/multiversx/mx-sdk-dapp/pull/1336)
+
 ## [[v3.0.22](https://github.com/multiversx/mx-sdk-dapp/pull/1335)] - 2024-11-29
 
 - [Fix: Minified React error #310](https://github.com/multiversx/mx-sdk-dapp/pull/1334)
