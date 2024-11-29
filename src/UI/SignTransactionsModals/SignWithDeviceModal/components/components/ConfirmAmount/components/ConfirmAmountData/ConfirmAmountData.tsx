@@ -3,7 +3,7 @@ import { faCoins } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 
-import { DataTestIdsEnum } from 'constants/index';
+import { DataTestIdsEnum, MULTI_TRANSFER_EGLD_TOKEN } from 'constants/index';
 import { withStyles } from 'hocs/withStyles';
 import { TokenOptionType, useGetNetworkConfig } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
@@ -47,19 +47,19 @@ const ConfirmAmountDataComponent = ({
       addCommas
     });
 
-  // TODO: Remove when EGLD-000000 is available on API
-  const usedIsEgld = isEgld || tokenDetails.identifier === 'EGLD-000000';
+  const isEgldToken =
+    isEgld || tokenDetails.identifier === MULTI_TRANSFER_EGLD_TOKEN;
   const formattedAmount = getFormattedAmount({ addCommas: true });
   const rawAmount = getFormattedAmount({ addCommas: false });
 
   return (
     <div className={styles?.confirmAmountData}>
       <div className={styles?.confirmAmountDataWrapper}>
-        {!usedIsEgld && tokenAvatar && (
+        {!isEgldToken && tokenAvatar && (
           <img src={tokenAvatar} className={styles?.confirmAmountDataIcon} />
         )}
 
-        {!usedIsEgld && !tokenAvatar && (
+        {!isEgldToken && !tokenAvatar && (
           <div
             className={classNames(
               styles?.confirmAmountDataIcon,
@@ -79,11 +79,11 @@ const ConfirmAmountDataComponent = ({
         >
           <Balance
             amount={formattedAmount}
-            egldIcon={usedIsEgld}
+            egldIcon={isEgldToken}
             data-testid={DataTestIdsEnum.confirmAmount}
             showTokenLabel
             showTokenLabelSup
-            tokenLabel={usedIsEgld ? network.egldLabel : identifier}
+            tokenLabel={isEgldToken ? network.egldLabel : identifier}
             className={styles?.confirmAmountDataBalance}
           />
         </div>
