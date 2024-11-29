@@ -36,7 +36,7 @@ const TransactionsTableComponent = ({
     return transactions.map((transaction) =>
       getInterpretedTransaction({ transaction, address, explorerAddress })
     );
-  }, [getInterpretedTransaction, transactions, explorerAddress, address]);
+  }, [transactions, explorerAddress, address]);
 
   if (!address) {
     return null;
