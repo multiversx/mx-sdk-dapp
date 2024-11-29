@@ -30,7 +30,9 @@ const TransactionsTableComponent = ({
   } = useGetNetworkConfig();
 
   const interpretedTransactions = useMemo(() => {
-    if (!address) return [];
+    if (!address) {
+      return [];
+    }
     return transactions.map((transaction) =>
       getInterpretedTransaction({ transaction, address, explorerAddress })
     );
