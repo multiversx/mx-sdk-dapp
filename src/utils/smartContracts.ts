@@ -41,7 +41,7 @@ export function isContract(
   }
 
   const isExtractedAddressContractCall =
-    Address.newFromBech32(extractedAddress).isContractAddress();
+    Address.newFromHex(extractedAddress).isContractAddress();
 
   return (
     isExtractedAddressContractCall || isSelfESDTContract(receiver, sender, data)
