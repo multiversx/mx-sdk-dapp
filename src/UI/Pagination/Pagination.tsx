@@ -13,7 +13,7 @@ import { DataTestIdsEnum } from 'constants/index';
 import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
 import { WithClassnameType } from 'UI/types';
-import { stringIsInteger } from 'utils';
+import { stringIsInteger } from 'utils/validation/stringIsInteger';
 
 import { PaginationEdgeButton } from './components';
 import { getPagination } from './helpers';
