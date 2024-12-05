@@ -52,7 +52,7 @@ const SignStepBodyComponent = ({
     currentTransaction.transactionTokenInfo;
 
   const transactionReceiver = multiTxData
-    ? new Address(receiver).toBech32()
+    ? Address.newFromBech32(receiver).toBech32()
     : currentTransaction.transaction.getReceiver().toString();
 
   const scamReport = currentTransaction.receiverScamInfo;

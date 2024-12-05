@@ -28,7 +28,7 @@ export function isContract(
     return false;
   }
 
-  const isContract = new Address(receiver).isContractAddress();
+  const isContract = Address.newFromBech32(receiver).isContractAddress();
 
   if (isContract) {
     return true;
@@ -40,9 +40,8 @@ export function isContract(
     return false;
   }
 
-  const isExtractedAddressContractCall = new Address(
-    extractedAddress
-  ).isContractAddress();
+  const isExtractedAddressContractCall =
+    Address.newFromBech32(extractedAddress).isContractAddress();
 
   return (
     isExtractedAddressContractCall || isSelfESDTContract(receiver, sender, data)
