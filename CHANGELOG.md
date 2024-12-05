@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added address table pagination to the Ledger authentication flow](https://github.com/multiversx/mx-sdk-dapp/pull/1338)
+
 ## [[v3.0.23](https://github.com/multiversx/mx-sdk-dapp/pull/1337)] - 2024-11-29
+
 - [Fix deps array which can cause minification errors](https://github.com/multiversx/mx-sdk-dapp/pull/1336)
 
 ## [[v3.0.22](https://github.com/multiversx/mx-sdk-dapp/pull/1335)] - 2024-11-29
