@@ -47,6 +47,11 @@ export const useAddressScreens = () => {
     setStartIndex((current) => current + 1);
   };
 
+  const onGoToSpecificPage = (page: number) => {
+    setSelectedAddress(null);
+    setStartIndex(page);
+  };
+
   const onGoToPrevPage = () => {
     setSelectedAddress(null);
     setStartIndex((current) => (current === 0 ? 0 : current - 1));
@@ -59,6 +64,7 @@ export const useAddressScreens = () => {
     isLoading,
     onGoToNextPage,
     onGoToPrevPage,
+    onGoToSpecificPage,
     onSelectAddress,
     selectedAddress,
     setAccounts,
