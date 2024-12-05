@@ -1,0 +1,243 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  user-select: none;
+  font-family: 'Roobert Regular', sans-serif;
+  line-height: 1;
+  justify-content: center;
+  font-size: 16px;
+  max-width: 480px;
+
+  @media (min-width: 768px) {
+    gap: 16px;
+  }
+
+  .pagination-angle {
+    cursor: pointer;
+    transition: all 200ms ease;
+    display: none;
+
+    @media (min-width: 576px) {
+      display: flex;
+    }
+
+    &.disabled {
+      color: #737373;
+      pointer-events: none;
+
+      .pagination-angle-icon {
+        color: #737373;
+      }
+    }
+
+    &:hover {
+      color: #23f7dd;
+
+      .pagination-angle-icon {
+        color: #23f7dd;
+      }
+    }
+
+    .pagination-angle-icon {
+      color: #e5e5e5;
+      font-size: 12px;
+
+      @media (min-width: 375px) {
+        font-size: 16px;
+      }
+    }
+  }
+
+  .pagination-edge-button {
+    margin: 0;
+
+    &.disabled {
+      pointer-events: none;
+    }
+
+    &.reversed {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .pagination-items {
+    display: flex;
+    gap: 8px;
+    margin: 0 4px;
+    align-items: center;
+
+    .pagination-item-wrapper {
+      cursor: pointer;
+      text-align: center;
+      height: calc(24px + 4px);
+      width: calc(24px + 4px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      @media (min-width: 768px) {
+        height: 32px;
+        width: 32px;
+      }
+
+      .pagination-item {
+        color: #e5e5e5;
+        transition: color 0.2s ease-out;
+        position: relative;
+        border-radius: 4px;
+        text-align: center;
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        height: calc(24px + 4px);
+        width: calc(24px + 4px);
+
+        @media (min-width: 768px) {
+          font-size: 16px;
+          height: 32px;
+          width: 32px;
+        }
+
+        &:before {
+          content: '';
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          transition: all 200ms ease;
+          background-color: #0e0e0e;
+          border-radius: 50%;
+          height: calc(24px + 4px);
+          width: calc(24px + 4px);
+          pointer-events: none;
+          z-index: 1;
+
+          @media (min-width: 768px) {
+            height: 32px;
+            width: 32px;
+          }
+        }
+
+        &:hover {
+          color: #23f7dd;
+
+          &:before {
+            background-color: #143736;
+          }
+        }
+
+        &.hundreds {
+          font-size: 8px;
+
+          @media (min-width: 768px) {
+            font-size: calc(20px / 2);
+          }
+        }
+
+        &.active {
+          color: #23f7dd;
+
+          &:before {
+            background-color: #143736;
+          }
+        }
+
+        &.disabled {
+          pointer-events: none;
+        }
+
+        &.ellipsis {
+          margin: 0;
+
+          &:before {
+            background-color: transparent;
+          }
+
+          &:hover:before {
+            background-color: #143736;
+          }
+        }
+
+        .pagination-item-text {
+          position: relative;
+          z-index: 2;
+        }
+      }
+
+      .pagination-item-tooltip {
+        position: relative;
+        z-index: 2;
+
+        .react-tooltip.react-tooltip__show ~ .tooltip-trigger {
+          color: #23f7dd;
+
+          &:before {
+            opacity: 1;
+          }
+        }
+
+        .react-tooltip.react-tooltip__place-bottom {
+          padding-top: 20px;
+
+          .tooltip-arrow {
+            top: 16px !important;
+          }
+        }
+
+        .react-tooltip.react-tooltip__place-top {
+          padding-bottom: 20px;
+
+          .tooltip-arrow {
+            bottom: 16px !important;
+          }
+        }
+
+        .tooltip-content,
+        .tooltip-arrow {
+          background-color: #000000;
+        }
+
+        .tooltip-trigger {
+          margin: 0;
+
+          &:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 200ms ease;
+            background-color: #143736;
+            opacity: 0;
+            border-radius: 50%;
+            height: calc(24px + 4px);
+            width: calc(24px + 4px);
+            pointer-events: none;
+            z-index: 1;
+
+            @media (min-width: 768px) {
+              height: 32px;
+              width: 32px;
+            }
+          }
+
+          &:hover {
+            color: #23f7dd;
+
+            &:before {
+              opacity: 1;
+            }
+          }
+        }
+
+        .pagination-item-tooltip-text {
+          position: relative;
+          z-index: 2;
+        }
+      }
+    }
+  }
+}

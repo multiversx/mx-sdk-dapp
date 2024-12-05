@@ -28,6 +28,7 @@ export const LedgerLoginContent = ({
     {
       accounts,
       onConfirmSelectedAddress,
+      onGoToSpecificPage,
       onGoToNextPage,
       onGoToPrevPage,
       onSelectAddress,
@@ -61,6 +62,7 @@ export const LedgerLoginContent = ({
     ledgerConnectClassNames,
     ledgerLoadingClassNames,
     onConfirmSelectedAddress,
+    onGoToSpecificPage,
     onGoToNextPage,
     onGoToPrevPage,
     onSelectAddress,
