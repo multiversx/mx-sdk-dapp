@@ -19,6 +19,7 @@ export interface LedgerLoginContentBodyProps {
   ledgerConnectClassNames?: LedgerConnectPropsType['ledgerConnectClassNames'];
   ledgerLoadingClassNames?: LedgerLoadingPropsType['ledgerLoadingClassNames'];
   onConfirmSelectedAddress: () => void;
+  onGoToSpecificPage: (page: number) => void;
   onGoToNextPage: () => void;
   onGoToPrevPage: () => void;
   onSelectAddress: (address: SelectedAddress | null) => void;
@@ -42,6 +43,7 @@ export const LedgerLoginContentBody = ({
   accounts,
   addressTableClassNames,
   onConfirmSelectedAddress,
+  onGoToSpecificPage,
   onGoToNextPage,
   onGoToPrevPage,
   onSelectAddress,
@@ -79,6 +81,7 @@ export const LedgerLoginContentBody = ({
         customContentComponent={customContentComponent}
         loading={isLoading}
         onConfirmSelectedAddress={onConfirmSelectedAddress}
+        onGoToSpecificPage={onGoToSpecificPage}
         onGoToNextPage={onGoToNextPage}
         onGoToPrevPage={onGoToPrevPage}
         onSelectAddress={onSelectAddress}
