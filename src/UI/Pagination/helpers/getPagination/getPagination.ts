@@ -3,6 +3,12 @@ import range from 'lodash/range';
 
 import { ELLIPSIS } from 'constants/index';
 
+import {
+  MAX_PAGINATION_BATCH_LENGTH,
+  MAX_PAGINATION_SLOTS,
+  MIN_PAGINATION_BATCH_LENGTH
+} from './getPagination.config';
+
 export interface GetPaginationType {
   currentPage: number;
   totalPages: number;
@@ -12,13 +18,10 @@ export const getPagination = ({
   currentPage,
   totalPages
 }: GetPaginationType) => {
-  const maxSlots = 7;
   const previousPage = currentPage - 1;
   const nextPage = currentPage + 1;
-  const minBatchLength = 3;
-  const maxBatchLength = 5;
 
-  if (totalPages <= maxSlots) {
+  if (totalPages <= MAX_PAGINATION_SLOTS) {
     return range(1, totalPages + 1).map((paginationItem) =>
       String(paginationItem)
     );
@@ -27,27 +30,27 @@ export const getPagination = ({
   const trimBatch = (batch: number[], comparableBatch: number[]) =>
     batch.includes(currentPage)
       ? batch
-      : batch.slice(0, maxSlots - comparableBatch.length - 1);
+      : batch.slice(0, MAX_PAGINATION_SLOTS - comparableBatch.length - 1);
 
   const isLeftBatchInRange = inRange(
     nextPage - 1,
-    minBatchLength,
-    maxBatchLength
+    MIN_PAGINATION_BATCH_LENGTH,
+    MAX_PAGINATION_BATCH_LENGTH
   );
 
   const isRightBatchInRange = inRange(
     previousPage + 1,
-    totalPages - minBatchLength,
+    totalPages - MIN_PAGINATION_BATCH_LENGTH,
     totalPages - 1
   );
 
   const leftBatch = isLeftBatchInRange
     ? range(1, nextPage + 1)
-    : range(1, maxBatchLength - 1);
+    : range(1, MAX_PAGINATION_BATCH_LENGTH - 1);
 
   const rightBatch = isRightBatchInRange
     ? range(previousPage, totalPages + 1)
-    : range(totalPages - minBatchLength + 1, totalPages + 1);
+    : range(totalPages - MIN_PAGINATION_BATCH_LENGTH + 1, totalPages + 1);
 
   const trimmedLeftBatch = trimBatch(leftBatch, rightBatch);
   const trimmedRightBatch = trimBatch(rightBatch.reverse(), leftBatch);
