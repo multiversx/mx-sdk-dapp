@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1339)] - 2024-12-05
+
 - [Added address table pagination to the Ledger authentication flow](https://github.com/multiversx/mx-sdk-dapp/pull/1338)
 
 ## [[v3.0.23](https://github.com/multiversx/mx-sdk-dapp/pull/1337)] - 2024-11-29
