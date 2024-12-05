@@ -260,14 +260,10 @@ export const useLedgerLogin = ({
     try {
       setIsLoading(true);
 
-      console.log({ startIndex, addressesPerPage });
-
       const accounts = await hwProvider.getAccounts(
         startIndex,
         addressesPerPage
       );
-
-      console.log({ accounts });
 
       const ledgerData = await getLedgerConfiguration(hwProvider);
       setVersion(ledgerData.version);
