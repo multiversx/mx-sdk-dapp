@@ -62,16 +62,17 @@ export function getTokenFromData(data?: string): {
     try {
       const [, /*ESDTNFTTransfer*/ collection, nonce, quantity, receiver] =
         decodeData(data);
+      console.log('zzzzz', receiver);
       if (
         [collection, nonce, quantity, receiver].every((el) => Boolean(el)) &&
-        addressIsValid(Address.newFromBech32(receiver).toBech32())
+        addressIsValid(Address.newFromHex(receiver).toBech32())
       ) {
         return {
           tokenId: `${collection}-${nonce}`,
           amount: new BigNumber(quantity, 16).toString(10),
           collection,
           nonce,
-          receiver: Address.newFromBech32(receiver).toBech32()
+          receiver: Address.newFromHex(receiver).toBech32()
         };
       }
     } catch (err) {}
