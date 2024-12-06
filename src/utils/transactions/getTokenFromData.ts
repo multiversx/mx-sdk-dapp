@@ -62,7 +62,6 @@ export function getTokenFromData(data?: string): {
     try {
       const [, /*ESDTNFTTransfer*/ collection, nonce, quantity, receiver] =
         decodeData(data);
-      console.log('zzzzz', receiver);
       if (
         [collection, nonce, quantity, receiver].every((el) => Boolean(el)) &&
         addressIsValid(Address.newFromHex(receiver).toBech32())

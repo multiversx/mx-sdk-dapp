@@ -36,7 +36,6 @@ export const useAppInitializer = ({
   environment,
   dappConfig
 }: UseAppInitializerPropsType) => {
-  console.log('herere123444');
   const [initialized, setInitialized] = useState(false);
   const account = useGetAccountInfo();
   const isLoginSessionInvalid = useSelector(isLoginSessionInvalidSelector);
