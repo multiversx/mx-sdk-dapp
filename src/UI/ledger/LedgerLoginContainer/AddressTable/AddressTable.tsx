@@ -1,19 +1,18 @@
 import React, { ReactNode, useEffect, useState } from 'react';
-import {
-  faChevronLeft,
-  faChevronRight
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
+
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { Pagination } from 'UI/Pagination';
 import { getAccountBalance } from 'utils/account/getAccountBalance';
+
 import { WithClassnameType } from '../../../types';
 import { AddressRow } from '../AddressRow';
 import { LedgerColumnsEnum } from '../enums';
 import { LedgerLoading } from '../LedgerLoading';
 
 const ADDRESSES_PER_PAGE = 10;
+const TOTAL_ADDRESSES_PAGES = 500;
 
 export interface AddressTablePropsType extends WithClassnameType {
   accounts: string[];
@@ -32,6 +31,7 @@ export interface AddressTablePropsType extends WithClassnameType {
   dataTestId?: string;
   loading: boolean;
   onConfirmSelectedAddress: () => void;
+  onGoToSpecificPage: (page: number) => void;
   onGoToNextPage: () => void;
   onGoToPrevPage: () => void;
   onSelectAddress: (address: { address: string; index: number } | null) => void;
@@ -47,6 +47,7 @@ const AddressTableComponent = ({
   dataTestId = DataTestIdsEnum.addressTableContainer,
   loading,
   onConfirmSelectedAddress,
+  onGoToSpecificPage,
   onGoToNextPage,
   onGoToPrevPage,
   onSelectAddress,
@@ -125,6 +126,20 @@ const AddressTableComponent = ({
     onConfirmSelectedAddress();
   };
 
+  const handlePageChange = (newPage: number) => {
+    if (newPage - 1 === startIndex + 1) {
+      onGoToNextPage();
+      return;
+    }
+
+    if (newPage - 1 === startIndex - 1) {
+      onGoToPrevPage();
+      return;
+    }
+
+    onGoToSpecificPage(newPage - 1);
+  };
+
   const columns = [
     LedgerColumnsEnum.Address,
     LedgerColumnsEnum.Balance,
@@ -195,49 +210,14 @@ const AddressTableComponent = ({
       </div>
 
       <div className={styles?.ledgerAddressTableBottom}>
-        <div className={styles?.ledgerAddressTableNavigation}>
-          <button
-            type='button'
-            onClick={onGoToPrevPage}
-            data-testid={DataTestIdsEnum.prevBtn}
-            className={classNames(
-              styles?.ledgerAddressTableNavigationButton,
-              {
-                [ledgerModalTableNavigationButtonDisabledClassName ?? '']:
-                  startIndex === 0,
-                [styles?.ledgerAddressTableNavigationButtonDisabled ?? '']:
-                  startIndex === 0
-              },
-              ledgerModalTableNavigationButtonClassName
-            )}
-          >
-            <FontAwesomeIcon size='1x' icon={faChevronLeft} />
-
-            <span className={styles?.ledgerAddressTableNavigationButtonLabel}>
-              Prev
-            </span>
-          </button>
-
-          <button
-            type='button'
-            onClick={onGoToNextPage}
-            data-testid={DataTestIdsEnum.nextBtn}
-            className={classNames(
-              styles?.ledgerAddressTableNavigationButton,
-              {
-                [styles?.ledgerAddressTableNavigationButtonDisabled]:
-                  accounts.length < 10
-              },
-              ledgerModalTableNavigationButtonClassName
-            )}
-          >
-            <span className={styles?.ledgerAddressTableNavigationButtonLabel}>
-              Next
-            </span>
-
-            <FontAwesomeIcon size='1x' icon={faChevronRight} />
-          </button>
-        </div>
+        <Pagination
+          className={styles?.ledgerAddressTablePagination}
+          currentPage={startIndex + 1}
+          totalPages={TOTAL_ADDRESSES_PAGES}
+          onPageChange={handlePageChange}
+          disabledClassName={ledgerModalTableNavigationButtonDisabledClassName}
+          buttonsClassNames={ledgerModalTableNavigationButtonClassName}
+        />
 
         <button
           disabled={!selectedAddress}
