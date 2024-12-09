@@ -2416,10 +2416,10 @@
   dependencies:
     qs "6.10.3"
 
-"@multiversx/sdk-webview-provider@2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-2.0.2.tgz#cd58d6e78394527b4a268112d10a1c8927f0aa80"
-  integrity sha512-jJa4/EsvnPi01aryMXHDsOOFJriQF2PsMnPVSDfq2YzjZb9AYdZQ4jbTB6eHyb0VQwcy1RM1jjKqZEzLk+LHJQ==
+"@multiversx/sdk-webview-provider@2.0.3":
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-2.0.3.tgz#d9c196a13b801eeead3def0099709e40ea0c2d1f"
+  integrity sha512-VCk/F1tGLPnDnDctXww5nIw14xQdtKn1maYnBP9o6DX94Sp8yWcSGsi5E3NnOGCkS6Y9RZlZxsjUGJ09CMSBrQ==
 
 "@napi-rs/wasm-runtime@^0.2.3", "@napi-rs/wasm-runtime@^0.2.4":
   version "0.2.5"
