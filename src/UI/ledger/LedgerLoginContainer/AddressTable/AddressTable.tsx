@@ -142,7 +142,7 @@ const AddressTableComponent = ({
     onGoToSpecificPage(newPage - 1);
   };
 
-  const totalPages = addressesCount / ADDRESSES_PER_PAGE;
+  const totalPages = Math.ceil(addressesCount / ADDRESSES_PER_PAGE);
   const columns = [
     LedgerColumnsEnum.Address,
     LedgerColumnsEnum.Balance,
