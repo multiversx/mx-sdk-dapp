@@ -12,7 +12,7 @@ import { LedgerColumnsEnum } from '../enums';
 import { LedgerLoading } from '../LedgerLoading';
 
 const ADDRESSES_PER_PAGE = 10;
-const TOTAL_ADDRESSES_PAGES = 500;
+const TOTAL_ADDRESSES_COUNT = 5000;
 
 export interface AddressTablePropsType extends WithClassnameType {
   accounts: string[];
@@ -27,6 +27,7 @@ export interface AddressTablePropsType extends WithClassnameType {
     ledgerModalTableSelectedItemClassName?: string;
     ledgerModalTableNavigationButtonDisabledClassName?: string;
   };
+  addressesCount?: number;
   customContentComponent?: ReactNode;
   dataTestId?: string;
   loading: boolean;
@@ -42,6 +43,7 @@ export interface AddressTablePropsType extends WithClassnameType {
 const AddressTableComponent = ({
   accounts,
   addressTableClassNames,
+  addressesCount = TOTAL_ADDRESSES_COUNT,
   className = 'dapp-ledger-address-table',
   customContentComponent,
   dataTestId = DataTestIdsEnum.addressTableContainer,
@@ -140,6 +142,7 @@ const AddressTableComponent = ({
     onGoToSpecificPage(newPage - 1);
   };
 
+  const totalPages = Math.ceil(addressesCount / ADDRESSES_PER_PAGE);
   const columns = [
     LedgerColumnsEnum.Address,
     LedgerColumnsEnum.Balance,
@@ -213,7 +216,7 @@ const AddressTableComponent = ({
         <Pagination
           className={styles?.ledgerAddressTablePagination}
           currentPage={startIndex + 1}
-          totalPages={TOTAL_ADDRESSES_PAGES}
+          totalPages={totalPages}
           onPageChange={handlePageChange}
           disabledClassName={ledgerModalTableNavigationButtonDisabledClassName}
           buttonsClassNames={ledgerModalTableNavigationButtonClassName}
