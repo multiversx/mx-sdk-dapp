@@ -40,7 +40,7 @@ export interface LedgerLoginHookCustomStateType {
   selectedAddress: SelectedAddress | null;
   version: string;
   contractDataEnabled: boolean;
-
+  onGoToSpecificPage: (page: number) => void;
   onGoToPrevPage: () => void;
   onGoToNextPage: () => void;
   onSelectAddress: (address: SelectedAddress | null) => void;
@@ -79,6 +79,7 @@ export const useLedgerLogin = ({
     selectedAddress,
     onGoToPrevPage,
     onGoToNextPage,
+    onGoToSpecificPage,
     onSelectAddress,
     error,
     setError,
@@ -341,7 +342,7 @@ export const useLedgerLogin = ({
         return onLoginFailed(failInitializeErrorText);
       }
 
-      if (accounts.length === 0 || startIndex > 0) {
+      if (accounts.length === 0 || startIndex >= 0) {
         await fetchAccounts();
       }
     } catch (err) {
@@ -380,6 +381,7 @@ export const useLedgerLogin = ({
       contractDataEnabled,
       onGoToPrevPage,
       onGoToNextPage,
+      onGoToSpecificPage,
       onSelectAddress,
       onConfirmSelectedAddress
     }
