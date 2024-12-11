@@ -91,7 +91,7 @@ const PaginationComponent = ({
     }
   }, [currentPage, currentPageIndex]);
 
-  if (totalPages === 1) {
+  if (totalPages <= 1) {
     return null;
   }
 

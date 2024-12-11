@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.1.2](https://github.com/multiversx/mx-sdk-dapp/pull/1344)] - 2024-12-09
+
+- [Add pagination item count support to "AddressTable"](https://github.com/multiversx/mx-sdk-dapp/pull/1343)
+
+## [[v3.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1342)] - 2024-12-09
+
+- [Fix dApp compatibility check (webview provider)](https://github.com/multiversx/mx-sdk-dapp/pull/1341)
+
 ## [[v3.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1339)] - 2024-12-05
 
 - [Added address table pagination to the Ledger authentication flow](https://github.com/multiversx/mx-sdk-dapp/pull/1338)
