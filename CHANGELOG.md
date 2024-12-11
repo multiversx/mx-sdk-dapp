@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed cancel action in cross window does not close child window](https://github.com/multiversx/mx-sdk-dapp/pull/1345)
+
 ## [[v3.1.2](https://github.com/multiversx/mx-sdk-dapp/pull/1344)] - 2024-12-09
 
 - [Add pagination item count support to "AddressTable"](https://github.com/multiversx/mx-sdk-dapp/pull/1343)
