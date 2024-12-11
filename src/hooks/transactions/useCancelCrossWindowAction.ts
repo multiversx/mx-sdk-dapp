@@ -12,9 +12,9 @@ export function useCancelCrossWindowAction() {
     }
 
     if (getIsProviderEqualTo(LoginMethodsEnum.crossWindow)) {
-      await (provider as unknown as CrossWindowProvider).cancelAction();
+      const crossWindowProvider = provider as unknown as CrossWindowProvider;
+      await crossWindowProvider.cancelAction();
+      await crossWindowProvider.dispose();
     }
-
-    return;
   };
 }
