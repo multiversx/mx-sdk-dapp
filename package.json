@@ -167,7 +167,7 @@
     "@multiversx/sdk-opera-provider": "1.0.0-alpha.1",
     "@multiversx/sdk-passkey-provider": "2.0.0",
     "@multiversx/sdk-wallet-connect-provider": "5.0.0",
-    "@multiversx/sdk-web-wallet-cross-window-provider": "2.0.2",
+    "@multiversx/sdk-web-wallet-cross-window-provider": "2.0.3",
     "@multiversx/sdk-web-wallet-iframe-provider": "2.0.1",
     "@multiversx/sdk-web-wallet-provider": "4.0.0",
     "@multiversx/sdk-webview-provider": "2.0.3",
