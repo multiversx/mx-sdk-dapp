@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useClearTransactionsToSignWithWarning } from 'hooks/transactions/helpers/useClearTransactionsToSignWithWarning';
+import { useCancelCrossWindowAction } from 'hooks/transactions/useCancelCrossWindowAction';
 import { SignModalPropsType } from 'types';
 import { ModalContainer } from 'UI/ModalContainer/ModalContainer';
 import { PageState } from 'UI/PageState';
@@ -24,6 +25,8 @@ const SignWaitingScreenModalComponent = ({
   globalStyles,
   styles
 }: SignWaitingScreenModalPropsType & WithStylesImportType) => {
+  const cancelAction = useCancelCrossWindowAction();
+
   const clearTransactionsToSignWithWarning =
     useClearTransactionsToSignWithWarning();
 
@@ -39,10 +42,11 @@ const SignWaitingScreenModalComponent = ({
     )
   };
 
-  const close = (event: MouseEvent) => {
+  const close = async (event: MouseEvent) => {
     event.preventDefault();
-    handleClose();
     clearTransactionsToSignWithWarning(sessionId);
+    await cancelAction();
+    handleClose();
   };
 
   return (
