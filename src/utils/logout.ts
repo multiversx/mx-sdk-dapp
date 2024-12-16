@@ -1,3 +1,4 @@
+import { safeWindow } from 'lib/sdkDappUtils';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAccountProvider, getProviderType } from 'providers';
 import { logoutAction } from 'reduxStore/commonActions';
@@ -70,13 +71,17 @@ export async function logout(
 
   const url = addOriginToLocationPath(callbackUrl);
   const location = getWindowLocation();
-  const callbackPathname = new URL(decodeURIComponent(url)).pathname;
+  const { pathname: callbackPathname, origin: callbackOrigin } = new URL(
+    decodeURIComponent(url)
+  );
 
   // Prevent page redirect if the logout callbackURL is equal to the current URL
   // or if is wallet provider
+  // or if we are in a child tab (redirects via window.assign cause automatic tab close)
   if (
     matchPath(location.pathname, callbackPathname) ||
-    (isWalletProvider && isProviderInitialised)
+    (isWalletProvider && isProviderInitialised) ||
+    (safeWindow?.opener && callbackOrigin === safeWindow?.origin)
   ) {
     preventRedirects();
   }
