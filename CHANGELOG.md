@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed logout doesn't work when `shouldBroadcastLogoutAcrossTabs` is `false`](https://github.com/multiversx/mx-sdk-dapp/pull/1348)
+
 ## [[v3.1.3](https://github.com/multiversx/mx-sdk-dapp/pull/1347)] - 2024-12-13
 
 - [Added session ID in the handshake payload to allow multiple DApp connections in parallel tabs](https://github.com/multiversx/mx-sdk-dapp/pull/1346)

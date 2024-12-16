@@ -54,7 +54,7 @@ export async function logout(
     hasConsentPopup: false
   }
 ) {
-  let address = '';
+  const address = await getAddress();
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
@@ -64,13 +64,8 @@ export async function logout(
     return provider.relogin();
   }
 
-  if (options.shouldBroadcastLogoutAcrossTabs) {
-    try {
-      address = await getAddress();
-      broadcastLogoutAcrossTabs(address);
-    } catch (err) {
-      console.error('error fetching logout address', err);
-    }
+  if (address && options.shouldBroadcastLogoutAcrossTabs) {
+    broadcastLogoutAcrossTabs(address);
   }
 
   const url = addOriginToLocationPath(callbackUrl);
