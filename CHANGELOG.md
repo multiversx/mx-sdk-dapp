@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.1.5](https://github.com/multiversx/mx-sdk-dapp/pull/1351)] - 2024-12-17
+
+- [Fixed cross window page reload on internal logout](https://github.com/multiversx/mx-sdk-dapp/pull/1350)
+
 ## [[v3.1.4](https://github.com/multiversx/mx-sdk-dapp/pull/1349)] - 2024-12-16
 
 - [Fixed logout doesn't work when `shouldBroadcastLogoutAcrossTabs` is `false`](https://github.com/multiversx/mx-sdk-dapp/pull/1348)
