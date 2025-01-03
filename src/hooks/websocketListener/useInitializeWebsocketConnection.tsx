@@ -18,6 +18,7 @@ const RETRY_INTERVAL = 500;
 const MESSAGE_DELAY = 1000;
 const BATCH_UPDATED_EVENT = 'batchUpdated';
 const CONNECT = 'connect';
+const CONNECT_ERROR = 'connect_error';
 const DISCONNECT = 'disconnect';
 
 export function useInitializeWebsocketConnection() {
@@ -48,6 +49,9 @@ export function useInitializeWebsocketConnection() {
   };
 
   const unsubscribeWS = () => {
+    websocketConnection.current?.off(CONNECT_ERROR);
+    websocketConnection.current?.off(CONNECT);
+    websocketConnection.current?.off(BATCH_UPDATED_EVENT);
     websocketConnection.current?.close();
     websocketConnection.current = null;
     websocketConnection.status = WebsocketConnectionStatusEnum.NOT_INITIALIZED;
@@ -55,12 +59,19 @@ export function useInitializeWebsocketConnection() {
     if (messageTimeout.current) {
       clearTimeout(messageTimeout.current);
     }
+
+    if (batchTimeout.current) {
+      clearTimeout(batchTimeout.current);
+    }
   };
 
   const initializeWebsocketConnection = useCallback(
     retryMultipleTimes(
       async () => {
         if (!address) {
+          websocketConnection.status =
+            WebsocketConnectionStatusEnum.NOT_INITIALIZED;
+
           return;
         }
 
@@ -78,6 +89,7 @@ export function useInitializeWebsocketConnection() {
 
         websocketConnection.current = io(websocketUrl, {
           forceNew: true,
+          reconnection: true,
           reconnectionAttempts: RECONNECTION_ATTEMPTS,
           timeout: TIMEOUT,
           query: {
@@ -85,14 +97,18 @@ export function useInitializeWebsocketConnection() {
           }
         });
 
-        websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
-
         websocketConnection.current.onAny(handleMessageReceived);
 
         websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
 
         websocketConnection.current.on(CONNECT, () => {
           console.log('Websocket connected.');
+          websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
+        });
+
+        websocketConnection.current.on(CONNECT_ERROR, (error) => {
+          console.log('Websocket connect error: ', error.message);
+          unsubscribeWS();
         });
 
         websocketConnection.current.on(DISCONNECT, () => {
@@ -107,6 +123,9 @@ export function useInitializeWebsocketConnection() {
                 websocketConnection.current?.connect();
               }
             }, RETRY_INTERVAL);
+          } else {
+            websocketConnection.status =
+              WebsocketConnectionStatusEnum.NOT_INITIALIZED;
           }
         });
       },
