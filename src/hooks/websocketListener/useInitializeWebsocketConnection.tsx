@@ -95,6 +95,9 @@ export function useInitializeWebsocketConnection() {
 
         if (websocketUrl == null) {
           console.warn('Can not get websocket url');
+          websocketConnection.status =
+            WebsocketConnectionStatusEnum.NOT_INITIALIZED;
+
           return;
         }
 
