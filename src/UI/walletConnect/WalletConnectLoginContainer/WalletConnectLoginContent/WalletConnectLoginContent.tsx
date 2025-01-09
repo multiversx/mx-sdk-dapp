@@ -103,6 +103,8 @@ const WalletConnectLoginContentComponent = ({
     ? getAuthorizationInfo(token, containerScamPhishingAlertClassName)
     : undefined;
 
+  const isInitialized = !isLoading && qrCodeSvg && walletConnectDeepLinkV2;
+
   return (
     <>
       {showScamPhishingAlert && (
@@ -150,7 +152,7 @@ const WalletConnectLoginContentComponent = ({
           )}
         </div>
 
-        {isLoading || !qrCodeSvg ? (
+        {!isInitialized ? (
           <div
             className={classNames(
               styles?.xPortalLoader,
@@ -168,44 +170,46 @@ const WalletConnectLoginContentComponent = ({
             )}
           </div>
         ) : (
-          <div
-            className={classNames(
-              styles?.xPortalQrCode,
-              containerQrCodeClassName
-            )}
-            dangerouslySetInnerHTML={{
-              __html: qrCodeSvg
-            }}
-          />
-        )}
+          <>
+            <div
+              className={classNames(
+                styles?.xPortalQrCode,
+                containerQrCodeClassName
+              )}
+              dangerouslySetInnerHTML={{
+                __html: qrCodeSvg
+              }}
+            />
 
-        {isMobileDevice && (
-          <a
-            id='accessWalletBtn'
-            data-testid={DataTestIdsEnum.accessWalletBtn}
-            href={walletConnectDeepLinkV2}
-            rel='noopener noreferrer nofollow'
-            target='_blank'
-            className={classNames(
-              globalStyles?.btn,
-              globalStyles?.btnPrimary,
-              styles?.xPortalContainerButton,
-              containerButtonClassName
+            {isMobileDevice && walletConnectDeepLinkV2 && (
+              <a
+                id='accessWalletBtn'
+                data-testid={DataTestIdsEnum.accessWalletBtn}
+                href={walletConnectDeepLinkV2}
+                rel='noopener noreferrer nofollow'
+                target='_blank'
+                className={classNames(
+                  globalStyles?.btn,
+                  globalStyles?.btnPrimary,
+                  styles?.xPortalContainerButton,
+                  containerButtonClassName
+                )}
+              >
+                <Lighting className={styles?.xPortalContainerButtonIcon} />
+                {loginButtonText}
+              </a>
             )}
-          >
-            <Lighting className={styles?.xPortalContainerButtonIcon} />
-            {loginButtonText}
-          </a>
-        )}
 
-        {activePairings.length > 0 && (
-          <Pairinglist
-            activePairings={activePairings}
-            connectExisting={connectExisting}
-            removeExistingPairing={removeExistingPairing}
-            className={className}
-            pairingListClasses={walletConnectPairingListClassNames}
-          />
+            {activePairings.length > 0 && (
+              <Pairinglist
+                activePairings={activePairings}
+                connectExisting={connectExisting}
+                removeExistingPairing={removeExistingPairing}
+                className={className}
+                pairingListClasses={walletConnectPairingListClassNames}
+              />
+            )}
+          </>
         )}
       </div>
     </>
