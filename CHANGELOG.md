@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.1.7-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1356)] - 2025-01-13
+
+- [Fix ledger stax signing error](https://github.com/multiversx/mx-sdk-dapp/pull/1355)
+
 ## [[v3.1.6](https://github.com/multiversx/mx-sdk-dapp/pull/1354)] - 2025-01-09
 
 - [WalletConnect: show loading state until initialized](https://github.com/multiversx/mx-sdk-dapp/pull/1353)
