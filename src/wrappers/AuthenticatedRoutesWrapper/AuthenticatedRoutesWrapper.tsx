@@ -1,6 +1,8 @@
 import React, { ReactNode, useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
+  accountSelector,
   isAccountLoadingSelector,
   isLoggedInSelector,
   walletLoginSelector
@@ -29,6 +31,7 @@ export const AuthenticatedRoutesWrapper = ({
   const searchParamAddress = getSearchParamAddress();
   const isLoggedIn = useSelector(isLoggedInSelector);
   const isAccountLoading = useSelector(isAccountLoadingSelector);
+  const account = useSelector(accountSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const isWebviewLogin = Boolean(getWebviewToken());
 
@@ -51,6 +54,10 @@ export const AuthenticatedRoutesWrapper = ({
     !isWebviewLogin;
 
   useEffect(() => {
+    console.log('\x1b[42m%s\x1b[0m', 'rendering here');
+  }, []);
+
+  useEffect(() => {
     if (!shouldRedirect) {
       return;
     }
@@ -63,10 +70,45 @@ export const AuthenticatedRoutesWrapper = ({
   }, [shouldRedirect, unlockRoute]);
 
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
+  const isBalanceReady = !new BigNumber(account.balance).isNaN();
 
-  if (isAccountLoading || isValidWalletLoginAttempt) {
+  /*
+
+  1. Am balanta, nu se face call => copii
+  2. Se face call de balanta => null
+  3. Se termina call-ul => copii
+
+  ----
+
+  1. Am balanta, nu se face call => copii
+  2. Se face call de balanta dar Am balanta => copii
+  3. Se termina call-ul => copii
+
+  ---- 
+  1. Nu am balanta, nu se face call => copii
+
+
+  */
+
+  if ((isAccountLoading && !isBalanceReady) || isValidWalletLoginAttempt) {
+    console.log('returning null', {
+      walletLogin,
+      searchParamAddress,
+      isAccountLoading,
+      isValidWalletLoginAttempt,
+      account
+    });
+
     return null;
   }
+
+  console.log('returning children', {
+    walletLogin,
+    searchParamAddress,
+    isAccountLoading,
+    isValidWalletLoginAttempt,
+    account
+  });
 
   return <>{children}</>;
 };
