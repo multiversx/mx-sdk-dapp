@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+## [[v3.1.7](https://github.com/multiversx/mx-sdk-dapp/pull/1358)] - 2025-01-14
+
+- [Fixed double rendering](https://github.com/multiversx/mx-sdk-dapp/pull/1357)
 
 ## [[v3.1.7-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1356)] - 2025-01-13
 
