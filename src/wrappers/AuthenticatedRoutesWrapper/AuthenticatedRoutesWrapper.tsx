@@ -1,6 +1,8 @@
 import React, { ReactNode, useEffect } from 'react';
+import BigNumber from 'bignumber.js';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
+  accountSelector,
   isAccountLoadingSelector,
   isLoggedInSelector,
   walletLoginSelector
@@ -29,6 +31,7 @@ export const AuthenticatedRoutesWrapper = ({
   const searchParamAddress = getSearchParamAddress();
   const isLoggedIn = useSelector(isLoggedInSelector);
   const isAccountLoading = useSelector(isAccountLoadingSelector);
+  const account = useSelector(accountSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const isWebviewLogin = Boolean(getWebviewToken());
 
@@ -63,8 +66,10 @@ export const AuthenticatedRoutesWrapper = ({
   }, [shouldRedirect, unlockRoute]);
 
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
+  const isBalanceReady = !new BigNumber(account.balance).isNaN();
 
-  if (isAccountLoading || isValidWalletLoginAttempt) {
+
+  if ((isAccountLoading && !isBalanceReady) || isValidWalletLoginAttempt) {
     return null;
   }
 
