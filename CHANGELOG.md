@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.1.8](https://github.com/multiversx/mx-sdk-dapp/pull/1360)] - 2025-01-15
+
 - [Added search tooltip to the Ledger address table pagination](https://github.com/multiversx/mx-sdk-dapp/pull/1359)
 
 ## [[v3.1.7](https://github.com/multiversx/mx-sdk-dapp/pull/1358)] - 2025-01-14
