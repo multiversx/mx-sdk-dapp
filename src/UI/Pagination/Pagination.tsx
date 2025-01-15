@@ -15,7 +15,7 @@ import { withStyles } from 'hocs/withStyles';
 import { WithClassnameType } from 'UI/types';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 
-import { PaginationEdgeButton } from './components';
+import { PaginationEdgeButton, PaginationEllipsisForm } from './components';
 import { getPagination } from './helpers';
 
 export interface PaginationPropsType
@@ -140,7 +140,6 @@ const PaginationComponent = ({
                   styles?.paginationItem,
                   buttonsClassNames,
                   { [styles?.active]: isCurrentPageActive(paginationItem) },
-                  { [styles?.ellipsis]: !stringIsInteger(paginationItem) },
                   { [styles?.disabled]: isDisabled },
                   {
                     [styles?.hundreds]:
@@ -154,9 +153,11 @@ const PaginationComponent = ({
                 </span>
               </div>
             ) : (
-              <span className={styles?.paginationItemText}>
-                {paginationItem}
-              </span>
+              <PaginationEllipsisForm
+                paginationItem={paginationItem}
+                maxPageToSearchFor={totalPages}
+                onSearch={handlePageClick}
+              />
             )}
           </div>
         ))}
