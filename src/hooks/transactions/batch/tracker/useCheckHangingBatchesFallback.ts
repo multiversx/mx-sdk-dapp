@@ -9,9 +9,9 @@ import {
 } from '../../../websocketListener/websocketConnection';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
+import { useUpdateTrackedTransactions } from '../../tracker/useUpdateTrackedTransactions';
 import { useGetPollingInterval } from '../../useGetPollingInterval';
 import { useGetBatches } from '../useGetBatches';
-import { useUpdateBatch } from './useUpdateBatch';
 
 /**
  * Fallback mechanism to check hanging batches
@@ -23,7 +23,7 @@ export const useCheckHangingBatchesFallback = (props?: {
 }) => {
   const { batchTransactionsArray } = useGetBatches();
   const pollingInterval = useGetPollingInterval();
-  const updateBatch = useUpdateBatch();
+  const updateBatch = useUpdateTrackedTransactions();
   const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
   const isWebsocketCompleted =
     websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
