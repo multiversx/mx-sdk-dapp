@@ -42,7 +42,7 @@ const PaginationEllipsisFormComponent = ({
     const isBelowMax = valueBigNumber.isLessThanOrEqualTo(maxPageToSearchFor);
 
     if (valueBigNumber.isNaN() || isBelowMax) {
-      setPageValue(event.target.value);
+      setPageValue(valueBigNumber.toString());
     }
   };
 
@@ -51,14 +51,16 @@ const PaginationEllipsisFormComponent = ({
     onSearch(parseInt(pageValue));
   };
 
-  const handleMagnifyigGlassClick = (event: MouseEvent<HTMLDivElement>) => {
+  const handleMagnifyingGlassClick = (event: MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     onSearch(parseInt(pageValue));
   };
 
   const handleEllipsisClick = (event: MouseEvent<HTMLElement>) => {
     event.preventDefault();
-    setIsEllipsisTooltipVisible(!isEllipsisTooltipVisible);
+    setIsEllipsisTooltipVisible(
+      (isEllipsisTooltipVisible) => !isEllipsisTooltipVisible
+    );
   };
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
@@ -107,7 +109,7 @@ const PaginationEllipsisFormComponent = ({
 
               <div
                 className={styles?.paginationEllipsisFormButton}
-                onClick={handleMagnifyigGlassClick}
+                onClick={handleMagnifyingGlassClick}
               >
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
