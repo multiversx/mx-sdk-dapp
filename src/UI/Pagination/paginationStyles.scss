@@ -149,18 +149,6 @@
           pointer-events: none;
         }
 
-        &.ellipsis {
-          margin: 0;
-
-          &:before {
-            background-color: transparent;
-          }
-
-          &:hover:before {
-            background-color: #143736;
-          }
-        }
-
         .pagination-item-text {
           position: relative;
           z-index: 2;

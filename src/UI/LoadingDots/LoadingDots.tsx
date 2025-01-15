@@ -1,19 +1,19 @@
 import React from 'react';
 import classNames from 'classnames';
+
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { WithClassnameType } from 'UI/types';
 
-const LoadingDotsComponent = ({
-  className,
-  styles
-}: WithClassnameType & WithStylesImportType) => (
+export type LoadingDotsPropsType = WithClassnameType & WithStylesImportType;
+
+const LoadingDotsComponent = ({ className, styles }: LoadingDotsPropsType) => (
   <div className={classNames(styles?.loadingDots, className)}>
-    {Array.from({ length: 3 }).map((_, index) => (
+    {Array.from({ length: 3 }).map((_, dotIndex) => (
       <span
-        key={`loading-dot-${index}`}
+        key={`loading-dot-${dotIndex}`}
         className={classNames(
           styles?.loadingDot,
-          styles?.[`loadingDot-${index}`]
+          styles?.[`loadingDot-${dotIndex}`]
         )}
       />
     ))}
