@@ -9,9 +9,9 @@ import {
 } from '../../../websocketListener/websocketConnection';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
+import { useUpdateTrackedTransactions } from '../../tracker/useUpdateTrackedTransactions';
 import { useGetPollingInterval } from '../../useGetPollingInterval';
 import { useGetBatches } from '../useGetBatches';
-import { useUpdateTrackedTransactions } from '../../tracker/useUpdateTrackedTransactions';
 
 /**
  * Fallback mechanism to check hanging batches

@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react';
+import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
-import { useGetPollingInterval } from '../useGetPollingInterval';
 import {
   websocketConnection,
   WebsocketConnectionStatusEnum
 } from '../../websocketListener/websocketConnection';
+import { useGetPollingInterval } from '../useGetPollingInterval';
 import { useCheckTransactionStatus } from './useCheckTransactionStatus';
-import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 
 /**
  * Fallback mechanism to check the transaction in case of ws connection failure

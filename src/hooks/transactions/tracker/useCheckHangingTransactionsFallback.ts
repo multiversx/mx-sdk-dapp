@@ -1,15 +1,15 @@
 import { useEffect, useRef } from 'react';
 import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionStatus';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
-import { useGetPendingTransactions } from '../useGetPendingTransactions';
-import { useCheckTransactionStatus } from './useCheckTransactionStatus';
+import { getTransactionsByHashes as defaultGetTxByHash } from '../../../apiCalls';
 import {
   websocketConnection,
   WebsocketConnectionStatusEnum
 } from '../../websocketListener/websocketConnection';
-import { useGetPollingInterval } from '../useGetPollingInterval';
 import { timestampIsOlderThan } from '../helpers/timestampIsOlderThan';
-import { getTransactionsByHashes as defaultGetTxByHash } from '../../../apiCalls';
+import { useGetPendingTransactions } from '../useGetPendingTransactions';
+import { useGetPollingInterval } from '../useGetPollingInterval';
+import { useCheckTransactionStatus } from './useCheckTransactionStatus';
 
 /**
  * Fallback mechanism to check hanging transactions

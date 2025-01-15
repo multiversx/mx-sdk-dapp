@@ -4,8 +4,8 @@ import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
-import { useCheckBatch } from './useCheckBatch';
 import { useUpdateTrackedTransactions } from '../../tracker/useUpdateTrackedTransactions';
+import { useCheckBatch } from './useCheckBatch';
 
 export const useVerifyBatchStatus = (props?: {
   onSuccess?: (sessionId: string | null) => void;
