@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Added ability to close transaction toasts on timeout](https://github.com/multiversx/mx-sdk-dapp/pull/1352)
 
+## [[v3.1.8](https://github.com/multiversx/mx-sdk-dapp/pull/1360)] - 2025-01-15
+
+- [Added search tooltip to the Ledger address table pagination](https://github.com/multiversx/mx-sdk-dapp/pull/1359)
+
+## [[v3.1.7](https://github.com/multiversx/mx-sdk-dapp/pull/1358)] - 2025-01-14
+
+- [Fixed double rendering](https://github.com/multiversx/mx-sdk-dapp/pull/1357)
+
+## [[v3.1.7-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1356)] - 2025-01-13
+
+- [Fix ledger stax signing error](https://github.com/multiversx/mx-sdk-dapp/pull/1355)
+
+## [[v3.1.6](https://github.com/multiversx/mx-sdk-dapp/pull/1354)] - 2025-01-09
+
+- [WalletConnect: show loading state until initialized](https://github.com/multiversx/mx-sdk-dapp/pull/1353)
+
 ## [[v3.1.5](https://github.com/multiversx/mx-sdk-dapp/pull/1351)] - 2024-12-17
 
 - [Fixed cross window page reload on internal logout](https://github.com/multiversx/mx-sdk-dapp/pull/1350)
