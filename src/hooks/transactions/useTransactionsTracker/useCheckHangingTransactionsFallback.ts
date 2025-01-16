@@ -1,14 +1,9 @@
 import { useEffect, useRef } from 'react';
+import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionStatus';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
-import { getTransactionsByHashes as defaultGetTxByHash } from '../../../apiCalls';
-import {
-  websocketConnection,
-  WebsocketConnectionStatusEnum
-} from '../../websocketListener/websocketConnection';
 import { timestampIsOlderThan } from '../helpers/timestampIsOlderThan';
 import { useGetPendingTransactions } from '../useGetPendingTransactions';
-import { useGetPollingInterval } from '../useGetPollingInterval';
 import { useCheckTransactionStatus } from './useCheckTransactionStatus';
 
 /**
@@ -19,11 +14,8 @@ export const useCheckHangingTransactionsFallback = (
   props?: TransactionsTrackerType
 ) => {
   const { pendingTransactionsArray } = useGetPendingTransactions();
-  const pollingInterval = useGetPollingInterval();
   const checkTransactionStatus = useCheckTransactionStatus();
   const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
-  const isWebsocketCompleted =
-    websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
 
   const getTransactionsByHash =
     props?.getTransactionsByHash ?? defaultGetTxByHash;
@@ -47,22 +39,13 @@ export const useCheckHangingTransactionsFallback = (
   };
 
   useEffect(() => {
-    if (isWebsocketCompleted) {
-      // Do not setInterval if we already subscribe to websocket event
-      if (pollingIntervalTimer.current) {
-        clearInterval(pollingIntervalTimer.current);
-      }
-
-      return;
-    }
-
     if (pollingIntervalTimer.current) {
       return;
     }
 
     pollingIntervalTimer.current = setInterval(() => {
       checkHangingTransactions();
-    }, pollingInterval);
+    }, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
 
     return () => {
       if (pollingIntervalTimer.current) {
