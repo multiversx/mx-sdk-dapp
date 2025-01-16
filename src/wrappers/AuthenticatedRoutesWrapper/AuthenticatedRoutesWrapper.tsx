@@ -68,7 +68,6 @@ export const AuthenticatedRoutesWrapper = ({
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
   const isBalanceReady = !new BigNumber(account.balance).isNaN();
 
-
   if ((isAccountLoading && !isBalanceReady) || isValidWalletLoginAttempt) {
     return null;
   }
