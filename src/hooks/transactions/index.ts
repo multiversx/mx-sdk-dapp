@@ -1,4 +1,4 @@
-export * from './tracker/useCheckTransactionStatus';
+export * from './useTransactionsTracker/useCheckTransactionStatus';
 export * from './useGetActiveTransactionsStatus';
 export * from './useGetFailedTransactions';
 export * from './useGetLastPendingTransactionHash';
@@ -16,4 +16,4 @@ export * from './useSignTransactions';
 export * from './useSignTransactionsCommonData';
 export * from './useSignTransactionsWithDevice';
 export * from './useSignTransactionsWithLedger';
-export * from './tracker/useTrackTransactionStatus';
+export * from './useTransactionsTracker/useTrackTransactionStatus';

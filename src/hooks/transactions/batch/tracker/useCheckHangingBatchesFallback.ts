@@ -9,7 +9,7 @@ import {
 } from '../../../websocketListener/websocketConnection';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
-import { useUpdateTrackedTransactions } from '../../tracker/useUpdateTrackedTransactions';
+import { useUpdateTrackedTransactions } from '../../useTransactionsTracker/useUpdateTrackedTransactions';
 import { useGetPollingInterval } from '../../useGetPollingInterval';
 import { useGetBatches } from '../useGetBatches';
 
