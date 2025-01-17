@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v3.1.9](https://github.com/multiversx/mx-sdk-dapp/pull/1360)] - 2025-01-17
 
-- [Update export](https://github.com/multiversx/mx-sdk-dapp/pull/1363)
+- [Fix useTransactionsTracker export](https://github.com/multiversx/mx-sdk-dapp/pull/1363)
 - [Added multiversxWallet](https://github.com/multiversx/mx-sdk-dapp/pull/1361)
 - [Added ability to close transaction toasts on timeout](https://github.com/multiversx/mx-sdk-dapp/pull/1352)
 
