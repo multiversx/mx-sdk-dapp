@@ -5,5 +5,7 @@ type SafeWindowType<T extends Window = Window> = {
 export const getIsExtensionAvailable = () => {
   const safeWindow =
     typeof window !== 'undefined' ? window : ({} as SafeWindowType);
-  return Boolean(safeWindow?.elrondWallet);
+  return (
+    Boolean(safeWindow?.elrondWallet) || Boolean(safeWindow?.multiversxWallet)
+  );
 };

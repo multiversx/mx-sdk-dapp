@@ -2481,10 +2481,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-utils/-/sdk-dapp-utils-1.0.0.tgz#915508726fad0cc57bd29791b58eec213ea81c4b"
   integrity sha512-aPjlbOI5v/95DXc7eqJKI7FlQGrs6s/gQnMAClWEbG6a+Ul3OQOxlLJrxQY1EHfV7roFcvM4yShU5tNILa1srQ==
 
-"@multiversx/sdk-extension-provider@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-4.0.0.tgz#77a7d45bf09ae22e569267270f17ac01c5f97d17"
-  integrity sha512-zFt4jUS7tu+MlDPou9wmzoW1dcvQuz0nBEYY75ynt82wC7aYjSDhsYh3U4DKtj5TgmyoOSZ31CLJN0wcoNYVaw==
+"@multiversx/sdk-extension-provider@4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-extension-provider/-/sdk-extension-provider-4.0.1.tgz#d0452536b4d7dbfb1882463112a511b84902b21f"
+  integrity sha512-RiRAh0kUFo4KJr+GTf5jyMgsKL06/wMv7Vwnv5/ieBZN8mDNWQO8bYF81ymQCxySEn6o4G2sIhmKMGFgJ4NJlQ==
 
 "@multiversx/sdk-hw-provider@7.0.0":
   version "7.0.0"
