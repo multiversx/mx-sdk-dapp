@@ -16,4 +16,4 @@ export * from './useSignTransactions';
 export * from './useSignTransactionsCommonData';
 export * from './useSignTransactionsWithDevice';
 export * from './useSignTransactionsWithLedger';
-export * from './useTransactionsTracker/useTrackTransactionStatus';
+export * from './useTransactionsTracker';
