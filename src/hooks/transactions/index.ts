@@ -1,4 +1,3 @@
-export * from './useTransactionsTracker/useCheckTransactionStatus';
 export * from './useGetActiveTransactionsStatus';
 export * from './useGetFailedTransactions';
 export * from './useGetLastPendingTransactionHash';

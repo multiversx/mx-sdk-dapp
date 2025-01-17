@@ -4,7 +4,7 @@ import { TransactionsTrackerType } from 'types/transactionsTracker.types';
 import { useRegisterWebsocketListener } from '../../websocketListener';
 import { useCheckHangingTransactionsFallback } from './useCheckHangingTransactionsFallback';
 import { useCheckTransactionOnWsFailureFallback } from './useCheckTransactionOnWsFailureFallback';
-import { useCheckTransactionStatus } from './useCheckTransactionStatus';
+import { useCheckTransactionStatus } from '../useCheckTransactionStatus';
 
 export function useTransactionsTracker(props?: TransactionsTrackerType) {
   const checkTransactionStatus = useCheckTransactionStatus();

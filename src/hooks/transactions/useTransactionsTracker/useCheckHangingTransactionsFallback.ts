@@ -4,7 +4,7 @@ import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionSt
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
 import { timestampIsOlderThan } from '../helpers/timestampIsOlderThan';
 import { useGetPendingTransactions } from '../useGetPendingTransactions';
-import { useCheckTransactionStatus } from './useCheckTransactionStatus';
+import { useCheckTransactionStatus } from '../useCheckTransactionStatus';
 
 /**
  * Fallback mechanism to check hanging transactions

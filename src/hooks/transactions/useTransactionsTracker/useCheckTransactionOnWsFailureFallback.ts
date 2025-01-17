@@ -6,7 +6,7 @@ import {
   WebsocketConnectionStatusEnum
 } from '../../websocketListener/websocketConnection';
 import { useGetPollingInterval } from '../useGetPollingInterval';
-import { useCheckTransactionStatus } from './useCheckTransactionStatus';
+import { useCheckTransactionStatus } from '../useCheckTransactionStatus';
 
 /**
  * Fallback mechanism to check the transaction in case of ws connection failure
