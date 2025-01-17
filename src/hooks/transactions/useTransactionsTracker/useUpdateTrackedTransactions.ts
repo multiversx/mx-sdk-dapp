@@ -10,23 +10,24 @@ import {
 } from 'types';
 import { refreshAccount } from 'utils/account/refreshAccount';
 
-export function useUpdateBatch() {
+// TODO: This function seems duplicate to the manageTransaction from checkBatch.ts file
+export function useUpdateTrackedTransactions() {
   const dispatch = useDispatch();
   const { address } = useGetAccount();
 
-  const handleBatchSuccess = useCallback(
+  const handleSuccess = useCallback(
     ({
       sessionId,
       dropUnprocessedTransactions,
       serverTransactions,
-      batchTransactions
+      signedTransactions
     }: {
       sessionId: string;
       dropUnprocessedTransactions?: boolean;
       serverTransactions: ServerTransactionType[];
-      batchTransactions: SignedTransactionType[];
+      signedTransactions: SignedTransactionType[];
     }) => {
-      for (const transaction of batchTransactions) {
+      for (const transaction of signedTransactions) {
         const apiTx = serverTransactions.find(
           (tx) => tx.txHash === transaction.hash
         );
@@ -60,7 +61,7 @@ export function useUpdateBatch() {
   return useCallback(
     async (props?: {
       sessionId: string;
-      isBatchFailed?: boolean;
+      isFailed?: boolean;
       dropUnprocessedTransactions?: boolean;
       shouldRefreshBalance?: boolean;
       transactions?: SignedTransactionType[];
@@ -69,13 +70,13 @@ export function useUpdateBatch() {
         return;
       }
 
-      const { transactions, isBatchFailed, sessionId } = props;
+      const { transactions, isFailed, sessionId } = props;
 
       if (!transactions || transactions.length === 0) {
         return;
       }
 
-      if (isBatchFailed) {
+      if (isFailed) {
         for (const transaction of transactions) {
           dispatch(
             updateSignedTransactionStatus({
@@ -93,11 +94,11 @@ export function useUpdateBatch() {
       );
 
       if (success && data) {
-        handleBatchSuccess({
+        handleSuccess({
           sessionId,
           dropUnprocessedTransactions: props.dropUnprocessedTransactions,
           serverTransactions: data,
-          batchTransactions: transactions
+          signedTransactions: transactions
         });
       }
 
@@ -105,6 +106,6 @@ export function useUpdateBatch() {
         await refreshAccount();
       }
     },
-    [dispatch, address, handleBatchSuccess]
+    [dispatch, address, handleSuccess]
   );
 }

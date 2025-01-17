@@ -38,7 +38,7 @@ export const useTransactionToast = ({
   const transactionDisplayInfo = useGetTransactionDisplayInfo(toastId);
   const accountShard = useSelector(shardSelector);
   const { address } = useGetAccount();
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const lifetimeAfterSuccessTimeoutRef = useRef<NodeJS.Timeout>();
   const areSameShardTransactions = useMemo(
     () => getAreTransactionsOnSameShard(transactions, accountShard),
     [transactions, accountShard]
@@ -85,21 +85,25 @@ export const useTransactionToast = ({
   };
 
   useEffect(() => {
-    if (!isCompleted || !lifetimeAfterSuccess || timeoutRef.current) {
+    if (
+      !isCompleted ||
+      !lifetimeAfterSuccess ||
+      lifetimeAfterSuccessTimeoutRef.current
+    ) {
       return;
     }
 
-    timeoutRef.current = setTimeout(() => {
+    lifetimeAfterSuccessTimeoutRef.current = setTimeout(() => {
       handleDeleteToast();
     }, lifetimeAfterSuccess);
 
     return () => {
-      if (timeoutRef.current) {
+      if (lifetimeAfterSuccessTimeoutRef.current) {
         // Clear timer on unmount and also delete the toast
         // The toast may have been removed before the timer finished by the re-rendering
         // of the toasts list during another toast removal from the store
         handleDeleteToast();
-        clearTimeout(timeoutRef.current);
+        clearTimeout(lifetimeAfterSuccessTimeoutRef.current);
       }
     };
   }, [lifetimeAfterSuccess, isCompleted]);

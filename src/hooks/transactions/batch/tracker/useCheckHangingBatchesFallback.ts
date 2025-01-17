@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useRef } from 'react';
-import { TRANSACTIONS_STATUS_DROP_INTERVAL_MS } from 'constants/transactionStatus';
+import {
+  TRANSACTIONS_STATUS_DROP_INTERVAL_MS,
+  TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
+} from 'constants/transactionStatus';
 import { removeBatchTransactions } from 'services/transactions';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
-import {
-  websocketConnection,
-  WebsocketConnectionStatusEnum
-} from '../../../websocketListener/websocketConnection';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';
-import { useGetPollingInterval } from '../../useGetPollingInterval';
+import { useUpdateTrackedTransactions } from '../../useTransactionsTracker/useUpdateTrackedTransactions';
 import { useGetBatches } from '../useGetBatches';
-import { useUpdateBatch } from './useUpdateBatch';
 
 /**
  * Fallback mechanism to check hanging batches
@@ -22,11 +20,8 @@ export const useCheckHangingBatchesFallback = (props?: {
   onFail?: (sessionId: string | null, errorMessage?: string) => void;
 }) => {
   const { batchTransactionsArray } = useGetBatches();
-  const pollingInterval = useGetPollingInterval();
-  const updateBatch = useUpdateBatch();
+  const updateBatch = useUpdateTrackedTransactions();
   const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
-  const isWebsocketCompleted =
-    websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
   const onSuccess = props?.onSuccess;
   const onFail = props?.onFail;
 
@@ -73,22 +68,13 @@ export const useCheckHangingBatchesFallback = (props?: {
   }, [batchTransactionsArray, updateBatch, onSuccess, onFail]);
 
   useEffect(() => {
-    if (isWebsocketCompleted) {
-      // Do not setInterval if we already subscribe to websocket event
-      if (pollingIntervalTimer.current) {
-        clearInterval(pollingIntervalTimer.current);
-      }
-
-      return;
-    }
-
     if (pollingIntervalTimer.current) {
       return;
     }
 
     pollingIntervalTimer.current = setInterval(() => {
       checkHangingBatches();
-    }, pollingInterval);
+    }, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
 
     return () => {
       if (pollingIntervalTimer.current) {

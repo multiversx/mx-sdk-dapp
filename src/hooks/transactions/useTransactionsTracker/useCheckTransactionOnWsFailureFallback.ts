@@ -1,15 +1,20 @@
 import { useEffect, useRef } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
-import { useRegisterWebsocketListener } from '../websocketListener';
 import {
   websocketConnection,
   WebsocketConnectionStatusEnum
-} from '../websocketListener/websocketConnection';
-import { useCheckTransactionStatus } from './useCheckTransactionStatus';
-import { useGetPollingInterval } from './useGetPollingInterval';
+} from '../../websocketListener/websocketConnection';
+import { useGetPollingInterval } from '../useGetPollingInterval';
+import { useCheckTransactionStatus } from '../useCheckTransactionStatus';
 
-export function useTransactionsTracker(props?: TransactionsTrackerType) {
+/**
+ * Fallback mechanism to check the transaction in case of ws connection failure
+ * Resolves the toast by checking the transaction after a certain time (90seconds)
+ * */
+export const useCheckTransactionOnWsFailureFallback = (
+  props?: TransactionsTrackerType
+) => {
   const checkTransactionStatus = useCheckTransactionStatus();
   const pollingInterval = useGetPollingInterval();
   const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
@@ -18,15 +23,6 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
 
   const getTransactionsByHash =
     props?.getTransactionsByHash ?? defaultGetTxByHash;
-
-  const onMessage = () => {
-    checkTransactionStatus({
-      getTransactionsByHash,
-      ...props
-    });
-  };
-
-  useRegisterWebsocketListener(onMessage);
 
   useEffect(() => {
     if (isWebsocketCompleted) {
@@ -42,12 +38,17 @@ export function useTransactionsTracker(props?: TransactionsTrackerType) {
       return;
     }
 
-    pollingIntervalTimer.current = setInterval(onMessage, pollingInterval);
+    pollingIntervalTimer.current = setInterval(() => {
+      checkTransactionStatus({
+        getTransactionsByHash,
+        ...props
+      });
+    }, pollingInterval);
 
     return () => {
       if (pollingIntervalTimer.current) {
         clearInterval(pollingIntervalTimer.current);
       }
     };
-  }, [onMessage, websocketConnection]);
-}
+  }, [checkTransactionStatus]);
+};

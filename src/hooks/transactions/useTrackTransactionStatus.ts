@@ -27,6 +27,7 @@ export interface UseTrackTransactionStatusArgsType {
   onCancelled?: (transactionId: string | null) => void;
 }
 
+// TODO: Seems unused and replaced by useCheckTransactionStatus
 export function useTrackTransactionStatus({
   transactionId: txId,
   onSuccess,
