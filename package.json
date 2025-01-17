@@ -160,7 +160,7 @@
     "@lifeomic/axios-fetch": "3.0.1",
     "@metamask/providers": "16.0.0",
     "@multiversx/sdk-dapp-utils": "1.0.0",
-    "@multiversx/sdk-extension-provider": "4.0.0",
+    "@multiversx/sdk-extension-provider": "4.0.1",
     "@multiversx/sdk-hw-provider": "7.0.0",
     "@multiversx/sdk-metamask-provider": "1.0.0",
     "@multiversx/sdk-native-auth-client": "1.0.9",
