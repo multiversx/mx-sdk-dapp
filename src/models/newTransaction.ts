@@ -26,6 +26,12 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     ...(rawTx.receiverUsername
       ? { receiverUsername: rawTx.receiverUsername }
       : {}),
+    ...(rawTx.relayer ? { relayer: new Address(rawTx.relayer) } : {}),
+    ...(rawTx.relayerSignature
+      ? {
+          relayerSignature: new Uint8Array(Buffer.from(rawTx.relayerSignature))
+        }
+      : {}),
     sender: new Address(rawTx.sender),
     ...(rawTx.senderUsername ? { senderUsername: rawTx.senderUsername } : {}),
     gasLimit: rawTx.gasLimit.valueOf() ?? GAS_LIMIT,
