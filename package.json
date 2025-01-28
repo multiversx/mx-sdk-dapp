@@ -38,7 +38,7 @@
     "@babel/preset-react": "7.23.3",
     "@babel/preset-typescript": "7.23.3",
     "@ledgerhq/hw-transport-mocker": "6.27.17",
-    "@multiversx/sdk-core": ">= 13.12.0",
+    "@multiversx/sdk-core": ">= 13.17.1",
     "@octokit/rest": "19.0.5",
     "@storybook/addon-actions": "6.5.14",
     "@storybook/addon-essentials": "6.5.14",
@@ -124,7 +124,7 @@
     "transaction"
   ],
   "peerDependencies": {
-    "@multiversx/sdk-core": ">= 13.12.0",
+    "@multiversx/sdk-core": ">= 13.17.1",
     "@types/react": "^18.0.24",
     "@types/react-dom": "^18.0.8",
     "axios": ">=1.7.4",
@@ -169,7 +169,7 @@
     "@multiversx/sdk-wallet-connect-provider": "5.0.2",
     "@multiversx/sdk-web-wallet-cross-window-provider": "2.0.3",
     "@multiversx/sdk-web-wallet-iframe-provider": "2.0.1",
-    "@multiversx/sdk-web-wallet-provider": "4.0.0",
+    "@multiversx/sdk-web-wallet-provider": "4.1.0",
     "@multiversx/sdk-webview-provider": "2.0.3",
     "@reduxjs/toolkit": "1.8.2",
     "bignumber.js": "9.x",

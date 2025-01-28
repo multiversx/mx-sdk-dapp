@@ -2453,10 +2453,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@>= 13.12.0":
-  version "13.16.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.16.0.tgz#e996ff30cbc983436dafc06e22050bbe2c61136e"
-  integrity sha512-+MXIhlgCFRGWiDTegSlLvyClQVJFXgzgNHJL04LALom4ec8eezkPuf8wNzDcBvpR/8Drt2cGGnbPiOo3r4j54A==
+"@multiversx/sdk-core@>= 13.17.1":
+  version "13.17.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-13.17.1.tgz#6dd584f74f80f1e223ad3f844f1188f05be1b9ae"
+  integrity sha512-ZqT/uhKBRM5XWZBLodpcLypCE5L6vjXENFnVl4PurTQNkOo8X6sFhKGdHzMeKUIDrMkXuRAQXlCRp1Us9qk4Lg==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     "@noble/ed25519" "1.7.3"
@@ -2561,10 +2561,10 @@
     "@types/qs" "6.9.10"
     qs "6.11.2"
 
-"@multiversx/sdk-web-wallet-provider@4.0.0":
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-provider/-/sdk-web-wallet-provider-4.0.0.tgz#eacff248b12ed192b43a11a4965abd5d93eb9b45"
-  integrity sha512-jcAUo1fhSKiFjbOvyRx1z8wz7VdKA/WSKtqoscL/GGqaSWD1f1UYHR9pDlvrswryE/dAZvMG+eqbOLhLxy6srg==
+"@multiversx/sdk-web-wallet-provider@4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-provider/-/sdk-web-wallet-provider-4.1.0.tgz#3b43f9121bc194adacb92fdd8cd56ba7778577f3"
+  integrity sha512-IZw+1FLrfBYdGjCp7G5zHDRpMMwpwbywzOm3ijGWut0EGySRoKYVEWEacrKiSuP8yAZb81zWEVom1Hl/a/dZfw==
   dependencies:
     qs "6.10.3"
 
