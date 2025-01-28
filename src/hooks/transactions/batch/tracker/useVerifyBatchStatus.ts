@@ -4,8 +4,8 @@ import { extractSessionId } from 'hooks/transactions/helpers/extractSessionId';
 import { useGetSignedTransactions } from 'hooks/transactions/useGetSignedTransactions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
+import { useUpdateTrackedTransactions } from '../../useTransactionsTracker/useUpdateTrackedTransactions';
 import { useCheckBatch } from './useCheckBatch';
-import { useUpdateBatch } from './useUpdateBatch';
 
 export const useVerifyBatchStatus = (props?: {
   onSuccess?: (sessionId: string | null) => void;
@@ -15,7 +15,7 @@ export const useVerifyBatchStatus = (props?: {
   const { signedTransactions } = useGetSignedTransactions();
 
   const checkBatch = useCheckBatch();
-  const updateBatch = useUpdateBatch();
+  const updateBatch = useUpdateTrackedTransactions();
   const resolveBatchStatusResponse = useResolveBatchStatusResponse();
 
   const onSuccess = props?.onSuccess;
@@ -56,7 +56,7 @@ export const useVerifyBatchStatus = (props?: {
         const data = await checkBatch({ batchId });
         await updateBatch({
           sessionId: sessionId.toString(),
-          isBatchFailed: data?.isBatchFailed,
+          isFailed: data?.isBatchFailed,
           shouldRefreshBalance: true,
           transactions: sessionTransactions
         });
