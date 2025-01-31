@@ -120,20 +120,16 @@ const ConfirmReceiverComponent = ({
             </span>
           )}
 
-          {shouldTrimReceiver && (
-            <CopyButton
-              text={receiver}
-              className={styles?.receiverCopy}
-              copyIcon={customCopyIcon}
-            />
-          )}
+          <CopyButton
+            text={receiver}
+            className={styles?.receiverCopy}
+            copyIcon={customCopyIcon}
+          />
 
           <ExplorerLink
             page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
             customExplorerIcon={customExplorerIcon}
-            className={classNames(styles?.receiverExternal, {
-              [styles?.large]: !shouldTrimReceiver
-            })}
+            className={styles?.receiverExternal}
           />
         </div>
       )}

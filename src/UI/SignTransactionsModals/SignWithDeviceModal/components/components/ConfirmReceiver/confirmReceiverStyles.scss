@@ -51,7 +51,6 @@
     }
 
     .receiverText {
-      font-size: 16px;
       word-break: break-all;
       line-height: 1.25;
     }
@@ -78,14 +77,6 @@
     .receiverExternal {
       margin: 0;
       max-height: 1rem;
-
-      &.large {
-        max-height: 16px;
-
-        svg {
-          height: 16px;
-        }
-      }
 
       &:hover * {
         color: #0ac2ae !important;
