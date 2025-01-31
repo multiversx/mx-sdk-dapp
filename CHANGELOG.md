@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added optional receiver trimming option](https://github.com/multiversx/mx-sdk-dapp/pull/1367)
+
 ## [[v3.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1366)] - 2025-01-28
 
 - [Added support for relayed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1365)
