@@ -44,8 +44,17 @@
     display: flex;
     align-items: center;
     line-height: 1;
-    white-space: nowrap;
     gap: 8px;
+
+    &.unwrappable {
+      white-space: nowrap;
+    }
+
+    .receiverText {
+      font-size: 16px;
+      word-break: break-all;
+      line-height: 1.25;
+    }
 
     .receiverData {
       color: #737373;
@@ -69,6 +78,14 @@
     .receiverExternal {
       margin: 0;
       max-height: 1rem;
+
+      &.large {
+        max-height: 16px;
+
+        svg {
+          height: 16px;
+        }
+      }
 
       &:hover * {
         color: #0ac2ae !important;

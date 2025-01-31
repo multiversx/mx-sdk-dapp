@@ -3,6 +3,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faExclamationTriangle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import BigNumber from 'bignumber.js';
+import classNames from 'classnames';
 
 import { useGetAccountFromApi, ACCOUNTS_ENDPOINT } from 'apiCalls';
 import MultiversXIconSimple from 'assets/icons/mvx-icon-simple.svg';
@@ -25,6 +26,7 @@ export interface ConfirmReceiverPropsType extends WithStylesImportType {
   receiver: string;
   receiverUsername?: string;
   scamReport: string | null;
+  shouldTrimReceiver?: boolean;
 }
 
 const ConfirmReceiverComponent = ({
@@ -35,6 +37,7 @@ const ConfirmReceiverComponent = ({
   receiverUsername,
   customCopyIcon,
   scamReport,
+  shouldTrimReceiver = true,
   styles
 }: ConfirmReceiverPropsType) => {
   const isSmartContract = isContract(receiver);
@@ -53,7 +56,8 @@ const ConfirmReceiverComponent = ({
     receiver && Boolean(foundReceiverUsername) && !usernameAccountError
   );
 
-  const defaultReceiverLabel = isAmountZero ? 'To interact with' : 'To';
+  const defaultReceiverLabel =
+    isAmountZero && isSmartContract ? 'To interact with' : 'To';
 
   return (
     <div className={styles?.receiver}>
@@ -85,10 +89,16 @@ const ConfirmReceiverComponent = ({
         </div>
       ) : (
         <div
-          className={styles?.receiverWrapper}
           data-testid={DataTestIdsEnum.confirmReceiver}
+          className={classNames(styles?.receiverWrapper, {
+            [styles?.unwrappable]: shouldTrimReceiver
+          })}
         >
-          <Trim text={receiver} className={styles?.receiverTrim} />
+          {shouldTrimReceiver ? (
+            <Trim text={receiver} className={styles?.receiverTrim} />
+          ) : (
+            <div className={styles?.receiverText}>{receiver}</div>
+          )}
 
           {hasUsername && !isSmartContract && (
             <span className={styles?.receiverData}>
@@ -110,16 +120,20 @@ const ConfirmReceiverComponent = ({
             </span>
           )}
 
-          <CopyButton
-            text={receiver}
-            className={styles?.receiverCopy}
-            copyIcon={customCopyIcon}
-          />
+          {shouldTrimReceiver && (
+            <CopyButton
+              text={receiver}
+              className={styles?.receiverCopy}
+              copyIcon={customCopyIcon}
+            />
+          )}
 
           <ExplorerLink
             page={`/${ACCOUNTS_ENDPOINT}/${receiver}`}
-            className={styles?.receiverExternal}
             customExplorerIcon={customExplorerIcon}
+            className={classNames(styles?.receiverExternal, {
+              [styles?.large]: !shouldTrimReceiver
+            })}
           />
         </div>
       )}
