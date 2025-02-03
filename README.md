@@ -9,6 +9,8 @@ See [Dapp template](https://template-dapp.multiversx.com/) for live demo or chec
 # Tests 
 [![Pre-Merge Unit Tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-unit-tests.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-unit-tests.yml)
 
+[![Template DApps Integration Tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml)
+
 # Installation
 
 The library can be installed via npm or yarn.
