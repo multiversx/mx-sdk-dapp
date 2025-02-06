@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.2.3](https://github.com/multiversx/mx-sdk-dapp/pull/1373)] - 2025-02-06
+
+- [Fixed wallet tab reopens immediately after close/cancel during cross window login](https://github.com/multiversx/mx-sdk-dapp/pull/1372)
+
 ## [[v3.2.2](https://github.com/multiversx/mx-sdk-dapp/pull/1371)] - 2025-02-04
 
 - [Fixed walletconnect init fails after cross window login attempt](https://github.com/multiversx/mx-sdk-dapp/pull/1370)
