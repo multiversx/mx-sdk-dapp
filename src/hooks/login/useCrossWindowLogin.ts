@@ -109,7 +109,7 @@ export const useCrossWindowLogin = ({
       if (!address) {
         setIsLoading(false);
         // Reset the `CrossWindowProvider` if the login failed
-        await CrossWindowProvider.getInstance().dispose();
+        CrossWindowProvider.getInstance().onDestroy();
         console.warn('Login cancelled.');
         return;
       }
