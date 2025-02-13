@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added a warning toast when an unconfirmed guardian change took place](https://github.com/multiversx/mx-sdk-dapp/pull/1375)
 - [Fixed metamask addon link to use new Chrome Web Store domain](https://github.com/multiversx/mx-sdk-dapp/pull/1374)
 
 ## [[v3.2.3](https://github.com/multiversx/mx-sdk-dapp/pull/1373)] - 2025-02-06
