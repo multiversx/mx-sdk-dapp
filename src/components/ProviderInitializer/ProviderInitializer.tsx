@@ -63,9 +63,10 @@ import {
   getPasskeyProvider,
   processModifiedAccount,
   getMetamaskProvider,
-  getIframeProvider
+  getIframeProvider,
+  handleGuardianWarning
 } from './helpers';
-import { useGuardianChangeToast, useSetLedgerProvider } from './hooks';
+import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
 
@@ -83,8 +84,8 @@ export function ProviderInitializer() {
   const chainID = useSelector(chainIDSelector);
   const tokenLogin = useSelector(tokenLoginSelector);
   const userAccount = useSelector(accountSelector);
-  const handleGuardianWarningToast = useGuardianChangeToast();
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
+  const handleGuardianWarningToast = handleGuardianWarning();
 
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
