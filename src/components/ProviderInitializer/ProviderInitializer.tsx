@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+
 import { getNetworkConfigFromApi, useGetAccountFromApi } from 'apiCalls';
 import {
   DEVNET_CHAIN_ID,
@@ -15,6 +16,7 @@ import {
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import {
+  accountSelector,
   addressSelector,
   ledgerAccountSelector
 } from 'reduxStore/selectors/accountInfoSelectors';
@@ -52,8 +54,8 @@ import {
   refreshAccount
 } from 'utils/account';
 import { parseNavigationParams } from 'utils/parseNavigationParams';
-
 import { isContract } from 'utils/smartContracts';
+
 import {
   getOperaProvider,
   getCrossWindowProvider,
@@ -61,17 +63,19 @@ import {
   getPasskeyProvider,
   processModifiedAccount,
   getMetamaskProvider,
-  getIframeProvider
+  getIframeProvider,
+  handleGuardianWarning
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
 
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
+  const { loginMethod, iframeLoginType } = useSelector(loginInfoSelector);
+
   const network = useSelector(networkSelector);
   const walletAddress = useSelector(walletAddressSelector);
   const walletConnectLogin = useSelector(walletConnectLoginSelector);
-  const { loginMethod, iframeLoginType } = useSelector(loginInfoSelector);
   const walletLogin = useSelector(walletLoginSelector);
   const address = useSelector(addressSelector);
   const ledgerAccount = useSelector(ledgerAccountSelector);
@@ -79,7 +83,9 @@ export function ProviderInitializer() {
   const isLoggedIn = useSelector(isLoggedInSelector);
   const chainID = useSelector(chainIDSelector);
   const tokenLogin = useSelector(tokenLoginSelector);
+  const userAccount = useSelector(accountSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
+
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
   );
@@ -123,6 +129,12 @@ export function ProviderInitializer() {
     // prevent balance double fetching by handling ledgerAccount data separately
     setLedgerAccountInfo();
   }, [ledgerAccount, isLoggedIn, ledgerData]);
+
+  useEffect(() => {
+    if (isLoggedIn && userAccount.address) {
+      handleGuardianWarning(userAccount);
+    }
+  }, [isLoggedIn, userAccount]);
 
   // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
   // The round duration is used for polling interval
