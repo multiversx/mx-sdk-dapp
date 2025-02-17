@@ -21,6 +21,7 @@ export * from './TransactionsToastList/components';
 export * from './Trim';
 export * from './Loader';
 export * from './Pagination';
+export * from './GuardianWarningToast';
 export * from './UsdValue';
 export * from './walletConnect/WalletConnectLoginButton';
 export * from './walletConnect/WalletConnectLoginContainer';
