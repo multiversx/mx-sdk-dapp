@@ -21,7 +21,7 @@ export const handleGuardianWarning = (userAccount: AccountType) => {
     });
   };
 
-  const guardianBreachToastDismissTimestamp = storage.local.getItem(
+  const guardianBreachToastDismissTimestamp = storage?.local.getItem(
     localStorageKeys.guardianBreachToastDismissTimestamp
   );
 
