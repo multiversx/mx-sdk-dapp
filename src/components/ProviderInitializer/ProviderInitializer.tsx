@@ -85,7 +85,6 @@ export function ProviderInitializer() {
   const tokenLogin = useSelector(tokenLoginSelector);
   const userAccount = useSelector(accountSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
-  const handleGuardianWarningToast = handleGuardianWarning();
 
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
@@ -133,7 +132,7 @@ export function ProviderInitializer() {
 
   useEffect(() => {
     if (isLoggedIn && userAccount.address) {
-      handleGuardianWarningToast(userAccount);
+      handleGuardianWarning(userAccount);
     }
   }, [isLoggedIn, userAccount]);
 
