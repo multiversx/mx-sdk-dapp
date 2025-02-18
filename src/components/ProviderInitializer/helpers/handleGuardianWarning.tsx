@@ -2,7 +2,7 @@ import React from 'react';
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
 
 import { AccountType } from 'types';
-import { GuardianWarningToast } from 'UI';
+import { GuardianWarningToast } from 'UI/GuardianWarningToast';
 import { addNewCustomToast, storage } from 'utils';
 import { localStorageKeys } from 'utils/storage/local';
 
