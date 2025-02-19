@@ -3,8 +3,9 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons';
 
 import { AccountType } from 'types';
 import { GuardianWarningToast } from 'UI/GuardianWarningToast';
-import { addNewCustomToast, storage } from 'utils';
+import { storage } from 'utils/storage';
 import { localStorageKeys } from 'utils/storage/local';
+import { addNewCustomToast } from 'utils/toasts';
 
 const DAYS_TO_SHOW_AGAIN_AFTER_DISMISSAL = 3;
 const SECONDS_IN_A_DAY = 24 * 60 * 60;
