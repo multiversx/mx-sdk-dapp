@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1376)] - 2025-02-17
+
+- [Added a warning toast when an unconfirmed guardian change took place](https://github.com/multiversx/mx-sdk-dapp/pull/1375)
+- [Fixed metamask addon link to use new Chrome Web Store domain](https://github.com/multiversx/mx-sdk-dapp/pull/1374)
+
 ## [[v3.2.3](https://github.com/multiversx/mx-sdk-dapp/pull/1373)] - 2025-02-06
 
 - [Fixed wallet tab reopens immediately after close/cancel during cross window login](https://github.com/multiversx/mx-sdk-dapp/pull/1372)
@@ -19,7 +24,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Added optional receiver trimming option](https://github.com/multiversx/mx-sdk-dapp/pull/1367)
 - [Added test badge on readme](https://github.com/multiversx/mx-sdk-dapp/pull/1369)
-
 
 ## [[v3.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1366)] - 2025-01-28
 
