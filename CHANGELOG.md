@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added gasPrice editing](https://github.com/multiversx/mx-sdk-dapp/pull/1377)
+
 ## [[v3.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1376)] - 2025-02-17
 
 - [Added a warning toast when an unconfirmed guardian change took place](https://github.com/multiversx/mx-sdk-dapp/pull/1375)
