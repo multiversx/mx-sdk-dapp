@@ -6,6 +6,7 @@ import {
   TransactionVersion
 } from '@multiversx/sdk-core';
 
+import BigNumber from 'bignumber.js';
 import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
 import { SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS } from 'constants/index';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
@@ -50,6 +51,8 @@ let verifiedAddresses: VerifiedAddressesType = {};
 export interface UseSignMultipleTransactionsReturnType
   extends Omit<UseSignTransactionsWithDeviceReturnType, 'callbackRoute'> {
   shouldContinueWithoutSigning: boolean;
+  updateCurrentTransaction: UseSignTransactionsWithDeviceReturnType['updateCurrentTransaction'];
+  currentTransaction: ActiveLedgerTransactionType | null;
   isFirstTransaction: boolean;
   hasMultipleTransactions: boolean;
 }
@@ -73,6 +76,12 @@ export const useSignMultipleTransactions = ({
     useState<DeviceSignedTransactions>();
   const [currentTransaction, setCurrentTransaction] =
     useState<ActiveLedgerTransactionType | null>(null);
+  const [gasPriceMap, setGasPriceMap] = useState<
+    Array<{
+      initialGasPrice: number;
+      gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
+    }>
+  >([]);
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
 
@@ -93,8 +102,11 @@ export const useSignMultipleTransactions = ({
         : transactionsToSign
     });
 
-  const isLastTransaction = currentStep === allTransactions.length - 1;
-  const currentTx = allTransactions[currentStep];
+  const [allEditedTransactions, setAllEditedTransactions] =
+    useState(allTransactions);
+
+  const isLastTransaction = currentStep === allEditedTransactions.length - 1;
+  const currentTx = allEditedTransactions[currentStep];
   const sender = currentTransaction?.transaction?.getSender().toString();
 
   // Skip account fetching if the sender is missing or same as current account
@@ -144,6 +156,7 @@ export const useSignMultipleTransactions = ({
 
     setCurrentTransaction({
       transaction,
+      gasPriceMultiplier: gasPriceMap[currentStep].gasPriceMultiplier || 1,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
@@ -151,6 +164,71 @@ export const useSignMultipleTransactions = ({
       transactionIndex
     });
   };
+
+  const updateCurrentTransaction = (
+    gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier']
+  ) => {
+    const currentMultiplier = gasPriceMap[currentStep].gasPriceMultiplier;
+    const initialGasPrice = gasPriceMap[currentStep].initialGasPrice;
+
+    if (currentMultiplier === gasPriceMultiplier) {
+      return;
+    }
+
+    setGasPriceMap((existing) => {
+      const newGasPriceMap = [...existing];
+      newGasPriceMap[currentStep] = {
+        ...newGasPriceMap[currentStep],
+        gasPriceMultiplier
+      };
+      return newGasPriceMap;
+    });
+
+    const currentEditedTransaction =
+      allEditedTransactions[currentStep].transaction;
+
+    const newGasPrice = new BigNumber(initialGasPrice)
+      .times(gasPriceMultiplier)
+      .toNumber();
+
+    const transaction = Transaction.fromPlainObject({
+      ...currentEditedTransaction.toPlainObject(),
+      gasPrice: newGasPrice
+    });
+
+    const newEditedTransaction = {
+      ...allEditedTransactions[currentStep],
+      transaction
+    };
+
+    setAllEditedTransactions((existing) => {
+      const newTransactions = [...existing];
+      newTransactions[currentStep] = newEditedTransaction;
+      return newTransactions;
+    });
+
+    setCurrentTransaction((existing) => {
+      if (!existing) {
+        return existing;
+      }
+
+      return {
+        ...existing,
+        transaction,
+        gasPriceMultiplier
+      };
+    });
+  };
+
+  useEffect(() => {
+    setGasPriceMap(
+      allTransactions.map((transaction) => ({
+        initialGasPrice: transaction.transaction.getGasPrice().valueOf(),
+        gasPriceMultiplier: 1
+      }))
+    );
+    setAllEditedTransactions(allTransactions);
+  }, [allTransactions]);
 
   useEffect(() => {
     extractTransactionsInfo();
@@ -307,7 +385,7 @@ export const useSignMultipleTransactions = ({
   };
 
   return {
-    allTransactions,
+    allTransactions: allEditedTransactions,
     onSignTransaction: handleSignTransaction,
     onNext,
     onPrev,
@@ -320,6 +398,7 @@ export const useSignMultipleTransactions = ({
     currentStep,
     signedTransactions,
     setSignedTransactions,
+    updateCurrentTransaction,
     currentTransaction
   };
 };

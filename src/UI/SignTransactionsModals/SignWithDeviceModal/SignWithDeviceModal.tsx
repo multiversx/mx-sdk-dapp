@@ -32,7 +32,8 @@ const SignWithDeviceModalComponent = ({
     setSignedTransactions,
     currentStep,
     callbackRoute,
-    currentTransaction
+    currentTransaction,
+    updateCurrentTransaction
   } = useSignTransactionsWithDevice({
     onCancel: handleClose,
     verifyReceiverScam,
@@ -69,6 +70,7 @@ const SignWithDeviceModalComponent = ({
             callbackRoute={callbackRoute}
             currentStep={currentStep}
             currentTransaction={currentTransaction}
+            updateCurrentTransaction={updateCurrentTransaction}
             error={error}
             GuardianScreen={GuardianScreen}
             handleClose={onAbort}

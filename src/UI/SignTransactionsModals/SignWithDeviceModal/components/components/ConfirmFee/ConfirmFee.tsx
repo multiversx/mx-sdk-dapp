@@ -1,5 +1,6 @@
-import React from 'react';
-import { Transaction } from '@multiversx/sdk-core/out';
+import React, { useState } from 'react';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import {
   DataTestIdsEnum,
@@ -16,16 +17,16 @@ import {
   calculateFeeLimit,
   formatAmount
 } from 'utils/operations';
-
-export interface FeePropsType {
-  transaction: Transaction;
-}
+import { GasDetails, GasDetailsPropsType } from './components/GasDetails';
 
 const ConfirmFeeComponent = ({
   transaction,
+  gasPriceMultiplier,
+  updateCurrentTransaction,
   styles
-}: FeePropsType & WithStylesImportType) => {
+}: GasDetailsPropsType & WithStylesImportType) => {
   const { price } = useGetEgldPrice();
+  const [showGasDetails, setShowGasDetails] = useState(false);
 
   const egldLabel = getEgldLabel();
   const feeLimit = calculateFeeLimit({
@@ -50,39 +51,59 @@ const ConfirmFeeComponent = ({
       })
     : null;
 
+  const expandGasDetails = () => {
+    setShowGasDetails(true);
+  };
+
   return (
-    <div className={styles?.confirmFee}>
-      <div className={styles?.confirmFeeLabel}>Transaction Fee</div>
+    <>
+      <div className={styles?.confirmFee}>
+        <div className={styles?.confirmFeeLabel}>
+          Transaction Fee
+          <FontAwesomeIcon
+            icon={faPencil}
+            className={styles?.svg}
+            onClick={expandGasDetails}
+          />
+        </div>
 
-      <div className={styles?.confirmFeeData}>
-        <Balance
-          className={styles?.confirmFeeDataBalance}
-          data-testid={DataTestIdsEnum.confirmFee}
-          egldIcon
-          showTokenLabel
-          showTokenLabelSup
-          tokenLabel={egldLabel}
-          amount={feeLimitFormatted}
-        />
+        <div className={styles?.confirmFeeData}>
+          <Balance
+            className={styles?.confirmFeeDataBalance}
+            data-testid={DataTestIdsEnum.confirmFee}
+            egldIcon
+            showTokenLabel
+            showTokenLabelSup
+            tokenLabel={egldLabel}
+            amount={feeLimitFormatted}
+          />
 
-        {feeInFiatLimit ? (
-          <span className={styles?.confirmFeeDataPriceWrapper}>
-            (
-            <Balance
-              amount={feeInFiatLimit}
-              displayAsUsd
-              addEqualSign
-              className={styles?.confirmFeeDataPrice}
-            />
-            )
-          </span>
-        ) : (
-          <span className={styles?.confirmFeeDataPriceWrapper}>
-            <LoadingDots />
-          </span>
-        )}
+          {feeInFiatLimit ? (
+            <span className={styles?.confirmFeeDataPriceWrapper}>
+              (
+              <Balance
+                amount={feeInFiatLimit}
+                displayAsUsd
+                addEqualSign
+                className={styles?.confirmFeeDataPrice}
+              />
+              )
+            </span>
+          ) : (
+            <span className={styles?.confirmFeeDataPriceWrapper}>
+              <LoadingDots />
+            </span>
+          )}
+        </div>
       </div>
-    </div>
+      {showGasDetails && (
+        <GasDetails
+          gasPriceMultiplier={gasPriceMultiplier}
+          transaction={transaction}
+          updateCurrentTransaction={updateCurrentTransaction}
+        />
+      )}
+    </>
   );
 };
 

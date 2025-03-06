@@ -1,0 +1,76 @@
+.gasDetails {
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+
+  .topSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .priceSection {
+    .label {
+      color: #6c757d;
+      font-size: 0.875rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .value {
+      display: flex;
+      align-items: center;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #212529;
+      margin: 0;
+    }
+  }
+
+  .radioGroup {
+    display: inline-flex;
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-left: 12px;
+  }
+
+  .radioOption {
+    position: relative;
+
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+      
+      &:checked + label {
+        background: #0d6efd;
+        color: white;
+      }
+    }
+
+    label {
+      display: inline-block;
+      padding: 4px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border-right: 1px solid #dee2e6;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        background: #e9ecef;
+      }
+    }
+
+    &:last-child label {
+      border-right: none;
+    }
+  }
+
+  .topSection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+}
