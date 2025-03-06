@@ -8,7 +8,7 @@ import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 export interface GasDetailsPropsType {
   transaction: Transaction;
   gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
-  updateCurrentTransaction: UseSignTransactionsWithDeviceReturnType['updateCurrentTransaction'];
+  updateGasPriceMultiplier: UseSignTransactionsWithDeviceReturnType['updateGasPriceMultiplier'];
 }
 
 const FIELD_NAME = 'gasPriceMultiplier';
@@ -16,7 +16,7 @@ const FIELD_NAME = 'gasPriceMultiplier';
 export const GasDetailsComponent = ({
   transaction,
   gasPriceMultiplier,
-  updateCurrentTransaction,
+  updateGasPriceMultiplier,
   styles
 }: GasDetailsPropsType & WithStylesImportType) => {
   const gasPrice = transaction.getGasPrice().valueOf().toString();
@@ -25,7 +25,7 @@ export const GasDetailsComponent = ({
   const handleMultiplierChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    updateCurrentTransaction(
+    updateGasPriceMultiplier(
       Number(
         event.target.value
       ) as ActiveLedgerTransactionType['gasPriceMultiplier']

@@ -51,7 +51,7 @@ let verifiedAddresses: VerifiedAddressesType = {};
 export interface UseSignMultipleTransactionsReturnType
   extends Omit<UseSignTransactionsWithDeviceReturnType, 'callbackRoute'> {
   shouldContinueWithoutSigning: boolean;
-  updateCurrentTransaction: UseSignTransactionsWithDeviceReturnType['updateCurrentTransaction'];
+  updateGasPriceMultiplier: UseSignTransactionsWithDeviceReturnType['updateGasPriceMultiplier'];
   currentTransaction: ActiveLedgerTransactionType | null;
   isFirstTransaction: boolean;
   hasMultipleTransactions: boolean;
@@ -165,7 +165,7 @@ export const useSignMultipleTransactions = ({
     });
   };
 
-  const updateCurrentTransaction = (
+  const updateGasPriceMultiplier = (
     gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier']
   ) => {
     const currentMultiplier = gasPriceMap[currentStep].gasPriceMultiplier;
@@ -398,7 +398,7 @@ export const useSignMultipleTransactions = ({
     currentStep,
     signedTransactions,
     setSignedTransactions,
-    updateCurrentTransaction,
+    updateGasPriceMultiplier: updateGasPriceMultiplier,
     currentTransaction
   };
 };

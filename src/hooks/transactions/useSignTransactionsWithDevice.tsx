@@ -48,7 +48,7 @@ export interface UseSignTransactionsWithDeviceReturnType {
     React.SetStateAction<DeviceSignedTransactions | undefined>
   >;
   currentTransaction: ActiveLedgerTransactionType | null;
-  updateCurrentTransaction: (
+  updateGasPriceMultiplier: (
     gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier']
   ) => void;
   callbackRoute?: string;

@@ -22,7 +22,7 @@ import { GasDetails, GasDetailsPropsType } from './components/GasDetails';
 const ConfirmFeeComponent = ({
   transaction,
   gasPriceMultiplier,
-  updateCurrentTransaction,
+  updateGasPriceMultiplier,
   styles
 }: GasDetailsPropsType & WithStylesImportType) => {
   const { price } = useGetEgldPrice();
@@ -100,7 +100,7 @@ const ConfirmFeeComponent = ({
         <GasDetails
           gasPriceMultiplier={gasPriceMultiplier}
           transaction={transaction}
-          updateCurrentTransaction={updateCurrentTransaction}
+          updateGasPriceMultiplier={updateGasPriceMultiplier}
         />
       )}
     </>
