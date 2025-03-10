@@ -30,7 +30,6 @@ export function useInitializeWebsocketConnection() {
   const { address } = useGetAccount();
   const dispatch = useDispatch();
   const { network } = useGetNetworkConfig();
-  const previousAddressRef = useRef<string | undefined>(address);
 
   const handleMessageReceived = (message: string) => {
     if (messageTimeout.current) {
@@ -186,8 +185,6 @@ export function useInitializeWebsocketConnection() {
   );
 
   useEffect(() => {
-    previousAddressRef.current = address;
-
     if (!address && websocketConnection.current) {
       console.info('Logged out. Unsubscribing websocket');
       unsubscribeWS();
