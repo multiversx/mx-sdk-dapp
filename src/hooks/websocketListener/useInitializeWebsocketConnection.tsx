@@ -182,7 +182,7 @@ export function useInitializeWebsocketConnection() {
   useEffect(() => {
     previousAddressRef.current = address;
 
-    if (!address) {
+    if (!address && websocketConnection.current) {
       console.info('Logged out. Unsubscribing websocket');
       unsubscribeWS();
       return;
