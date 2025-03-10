@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback } from 'react';
 import {
   TRANSACTIONS_STATUS_DROP_INTERVAL_MS,
   TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
 } from 'constants/transactionStatus';
+import { useWebsocketPollingFallback } from 'hooks/transactions/useTransactionsTracker/useWebsocketPollingFallback';
 import { removeBatchTransactions } from 'services/transactions';
 import { getTransactionsStatus } from 'utils/transactions/batch/getTransactionsStatus';
 import { sequentialToFlatArray } from 'utils/transactions/batch/sequentialToFlatArray';
@@ -21,7 +22,6 @@ export const useCheckHangingBatchesFallback = (props?: {
 }) => {
   const { batchTransactionsArray } = useGetBatches();
   const updateBatch = useUpdateTrackedTransactions();
-  const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
   const onSuccess = props?.onSuccess;
   const onFail = props?.onFail;
 
@@ -67,19 +67,8 @@ export const useCheckHangingBatchesFallback = (props?: {
     }
   }, [batchTransactionsArray, updateBatch, onSuccess, onFail]);
 
-  useEffect(() => {
-    if (pollingIntervalTimer.current) {
-      return;
-    }
-
-    pollingIntervalTimer.current = setInterval(() => {
-      checkHangingBatches();
-    }, TRANSACTIONS_STATUS_POLLING_INTERVAL_MS);
-
-    return () => {
-      if (pollingIntervalTimer.current) {
-        clearInterval(pollingIntervalTimer.current);
-      }
-    };
-  }, [checkHangingBatches]);
+  useWebsocketPollingFallback({
+    onPoll: checkHangingBatches,
+    pollingInterval: TRANSACTIONS_STATUS_POLLING_INTERVAL_MS
+  });
 };
