@@ -6,13 +6,13 @@ export enum WebsocketConnectionStatusEnum {
   COMPLETED = 'COMPLETED'
 }
 
-type StatusListener = (status: WebsocketConnectionStatusEnum) => void;
+type StatusListenerType = (status: WebsocketConnectionStatusEnum) => void;
 
 class WebsocketConnection {
   current: Socket | null = null;
   private _status: WebsocketConnectionStatusEnum =
     WebsocketConnectionStatusEnum.NOT_INITIALIZED;
-  private listeners: StatusListener[] = [];
+  private listeners: StatusListenerType[] = [];
 
   get status(): WebsocketConnectionStatusEnum {
     return this._status;
@@ -25,12 +25,12 @@ class WebsocketConnection {
     }
   }
 
-  subscribe(listener: StatusListener) {
+  subscribe(listener: StatusListenerType) {
     this.listeners.push(listener);
     return () => this.unsubscribe(listener);
   }
 
-  unsubscribe(listener: StatusListener) {
+  unsubscribe(listener: StatusListenerType) {
     this.listeners = this.listeners.filter((l) => l !== listener);
   }
 
