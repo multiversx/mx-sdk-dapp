@@ -7,8 +7,8 @@ import { setWebsocketBatchEvent, setWebsocketEvent } from 'reduxStore/slices';
 import { store } from 'reduxStore/store';
 import { BatchTransactionsWSResponseType } from 'types';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
-// import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
-// import { useGetNetworkConfig } from '../useGetNetworkConfig';
+import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
+import { useGetNetworkConfig } from '../useGetNetworkConfig';
 import {
   websocketConnection,
   WebsocketConnectionStatusEnum
@@ -28,7 +28,7 @@ export function useInitializeWebsocketConnection() {
   const batchTimeout = useRef<NodeJS.Timeout | null>(null);
   const { address } = useGetAccount();
   const dispatch = useDispatch();
-  // const { network } = useGetNetworkConfig();
+  const { network } = useGetNetworkConfig();
   const previousAddressRef = useRef<string | undefined>(address);
 
   const handleMessageReceived = (message: string) => {
@@ -113,8 +113,8 @@ export function useInitializeWebsocketConnection() {
         // To avoid multiple connections to the same endpoint, we have to guard the initialization before the logic started
         websocketConnection.status = WebsocketConnectionStatusEnum.PENDING;
 
-        const websocketUrl = 'wss://google.com';
-        //network.websocketUrl ?? (await getWebsocketUrl(network.apiAddress));
+        const websocketUrl =
+          network.websocketUrl ?? (await getWebsocketUrl(network.apiAddress));
 
         if (websocketUrl == null) {
           console.warn('Can not get websocket url');

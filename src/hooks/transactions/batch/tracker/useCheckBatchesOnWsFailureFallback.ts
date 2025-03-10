@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionStatus';
 import { useWebsocketPollingFallback } from 'hooks/transactions/useTransactionsTracker/useWebsocketPollingFallback';
 import { extractSessionId } from '../../helpers/extractSessionId';
 import { timestampIsOlderThan } from '../../helpers/timestampIsOlderThan';

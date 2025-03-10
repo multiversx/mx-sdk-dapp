@@ -64,6 +64,7 @@ export const useWebsocketPollingFallback = ({
       const isNowCompleted =
         currentStatus === WebsocketConnectionStatusEnum.COMPLETED;
 
+      // Get the address from store directly to avoid closure issues related to hooks
       const { address: currentAddress } = accountSelector(store.getState());
 
       if (!currentAddress || isNowCompleted) {
