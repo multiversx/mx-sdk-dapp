@@ -22,6 +22,7 @@ const BATCH_UPDATED_EVENT = 'batchUpdated';
 const CONNECT = 'connect';
 const CONNECT_ERROR = 'connect_error';
 const DISCONNECT = 'disconnect';
+let reconnectAttempt = 0;
 
 export function useInitializeWebsocketConnection() {
   const messageTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -146,9 +147,14 @@ export function useInitializeWebsocketConnection() {
         websocketConnection.current.on(CONNECT_ERROR, (error) => {
           console.warn('Websocket connect error: ', error.message);
 
-          if (currentAddressAtTimeOfCall) {
+          if (
+            currentAddressAtTimeOfCall &&
+            reconnectAttempt < RECONNECTION_ATTEMPTS
+          ) {
+            reconnectAttempt++;
             retryWebsocketConnect();
           } else {
+            reconnectAttempt = 0;
             websocketConnection.status =
               WebsocketConnectionStatusEnum.NOT_INITIALIZED;
           }
@@ -160,7 +166,7 @@ export function useInitializeWebsocketConnection() {
             store.getState()
           );
 
-          // Only attempt reconnect if we still have an address
+          // Only attempt reconnect if we still are logged in
           if (addressAtDisconnect) {
             console.warn('Websocket disconnected. Trying to reconnect...');
             retryWebsocketConnect();
@@ -188,7 +194,6 @@ export function useInitializeWebsocketConnection() {
       return;
     }
 
-    // Only try to initialize if we have an address and aren't already connected
     if (
       address &&
       websocketConnection.status ===

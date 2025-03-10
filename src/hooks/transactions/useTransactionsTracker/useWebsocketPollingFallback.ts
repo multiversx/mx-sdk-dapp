@@ -1,5 +1,5 @@
 // src/hooks/transactions/useTransactionsTracker/usePollingWithWebsocketFallback.ts
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { accountSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import { useGetAccount } from '../../account/useGetAccount';
@@ -32,7 +32,9 @@ export const useWebsocketPollingFallback = ({
   const usedPollingInterval = pollingInterval ?? defaultPollingInterval;
   const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
   const { address } = useGetAccount();
-  const prevWebsocketStatusRef = useRef(websocketConnection.status);
+  const [websocketStatus, setWebsocketStatus] = useState(
+    websocketConnection.status
+  );
 
   const clearFallbackTimer = () => {
     if (pollingIntervalTimer.current) {
@@ -42,13 +44,17 @@ export const useWebsocketPollingFallback = ({
   };
 
   useEffect(() => {
-    const currentStatus = websocketConnection.status;
-    const isWebsocketCompleted =
-      currentStatus === WebsocketConnectionStatusEnum.COMPLETED;
+    const unsubscribe = websocketConnection.subscribe((status) => {
+      console.info('Websocket status changed:', status);
+      setWebsocketStatus(status);
+    });
 
-    if (prevWebsocketStatusRef.current !== currentStatus) {
-      prevWebsocketStatusRef.current = currentStatus;
-    }
+    return () => unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    const isWebsocketCompleted =
+      websocketStatus === WebsocketConnectionStatusEnum.COMPLETED;
 
     if (!address || isWebsocketCompleted) {
       clearFallbackTimer();
@@ -59,6 +65,7 @@ export const useWebsocketPollingFallback = ({
       return;
     }
 
+    console.info('Websocket connection failed. Starting polling fallback...');
     pollingIntervalTimer.current = setInterval(() => {
       const currentStatus = websocketConnection.status;
       const isNowCompleted =
@@ -78,7 +85,7 @@ export const useWebsocketPollingFallback = ({
     return () => {
       clearFallbackTimer();
     };
-  }, [address, websocketConnection.status, onPoll, usedPollingInterval]);
+  }, [address, websocketStatus, onPoll, usedPollingInterval]);
 
   return {
     clearFallbackTimer
