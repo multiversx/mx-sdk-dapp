@@ -2,7 +2,9 @@ import { useCallback, useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useDispatch } from 'reduxStore/DappProviderContext';
+import { accountSelector } from 'reduxStore/selectors';
 import { setWebsocketBatchEvent, setWebsocketEvent } from 'reduxStore/slices';
+import { store } from 'reduxStore/store';
 import { BatchTransactionsWSResponseType } from 'types';
 import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 import { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';
@@ -27,6 +29,7 @@ export function useInitializeWebsocketConnection() {
   const { address } = useGetAccount();
   const dispatch = useDispatch();
   const { network } = useGetNetworkConfig();
+  const previousAddressRef = useRef<string | undefined>(address);
 
   const handleMessageReceived = (message: string) => {
     if (messageTimeout.current) {
@@ -67,11 +70,26 @@ export function useInitializeWebsocketConnection() {
 
   const retryWebsocketConnect = () => {
     setTimeout(() => {
-      if (address) {
-        // Make sure we are still logged in when the timeout is finished
-        console.log('Websocket reconnecting...');
+      // Get the address from store directly to avoid closure issues related to hooks
+      const { address: currentAddressAtTimeOfCall } = accountSelector(
+        store.getState()
+      );
+
+      if (
+        currentAddressAtTimeOfCall &&
+        currentAddressAtTimeOfCall === address
+      ) {
         websocketConnection.status = WebsocketConnectionStatusEnum.PENDING;
         websocketConnection.current?.connect();
+
+        return;
+      }
+
+      if (
+        websocketConnection.status === WebsocketConnectionStatusEnum.PENDING
+      ) {
+        websocketConnection.status =
+          WebsocketConnectionStatusEnum.NOT_INITIALIZED;
       }
     }, RETRY_INTERVAL);
   };
@@ -79,7 +97,12 @@ export function useInitializeWebsocketConnection() {
   const initializeWebsocketConnection = useCallback(
     retryMultipleTimes(
       async () => {
-        if (!address) {
+        // Get the address from store directly to avoid closure issues related to hooks
+        const { address: currentAddressAtTimeOfCall } = accountSelector(
+          store.getState()
+        );
+
+        if (!currentAddressAtTimeOfCall) {
           websocketConnection.status =
             WebsocketConnectionStatusEnum.NOT_INITIALIZED;
 
@@ -107,7 +130,7 @@ export function useInitializeWebsocketConnection() {
           reconnectionAttempts: RECONNECTION_ATTEMPTS,
           timeout: TIMEOUT,
           query: {
-            address
+            address: currentAddressAtTimeOfCall
           }
         });
 
@@ -116,14 +139,14 @@ export function useInitializeWebsocketConnection() {
         websocketConnection.current.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
 
         websocketConnection.current.on(CONNECT, () => {
-          console.log('Websocket connected.');
+          console.info('Websocket connected.');
           websocketConnection.status = WebsocketConnectionStatusEnum.COMPLETED;
         });
 
         websocketConnection.current.on(CONNECT_ERROR, (error) => {
           console.warn('Websocket connect error: ', error.message);
 
-          if (address) {
+          if (currentAddressAtTimeOfCall) {
             retryWebsocketConnect();
           } else {
             websocketConnection.status =
@@ -132,12 +155,17 @@ export function useInitializeWebsocketConnection() {
         });
 
         websocketConnection.current.on(DISCONNECT, () => {
-          if (address) {
-            // Make sure we are still logged in before retrying to connect to the websocket
-            console.warn('Websocket disconnected. Trying to reconnect...');
+          // Get fresh address value at time of disconnect
+          const { address: addressAtDisconnect } = accountSelector(
+            store.getState()
+          );
 
+          // Only attempt reconnect if we still have an address
+          if (addressAtDisconnect) {
+            console.warn('Websocket disconnected. Trying to reconnect...');
             retryWebsocketConnect();
           } else {
+            console.warn('Websocket disconnected.');
             websocketConnection.status =
               WebsocketConnectionStatusEnum.NOT_INITIALIZED;
           }
@@ -152,19 +180,23 @@ export function useInitializeWebsocketConnection() {
   );
 
   useEffect(() => {
+    previousAddressRef.current = address;
+
+    if (!address) {
+      console.info('Logged out. Unsubscribing websocket');
+      unsubscribeWS();
+      return;
+    }
+
+    // Only try to initialize if we have an address and aren't already connected
     if (
       address &&
       websocketConnection.status ===
         WebsocketConnectionStatusEnum.NOT_INITIALIZED &&
       !websocketConnection.current?.active
     ) {
+      console.info('Logged in. Initializing websocket connection');
       initializeWebsocketConnection();
-      return;
-    }
-
-    if (!address) {
-      // Close the websocket connection when we are not logged in
-      unsubscribeWS();
     }
   }, [address, initializeWebsocketConnection]);
 

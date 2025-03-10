@@ -1,12 +1,16 @@
 import { useEffect, useRef } from 'react';
 import { getTransactionsByHashes as defaultGetTxByHash } from 'apiCalls/transactions';
+
+import { accountSelector } from 'reduxStore/selectors';
+import { store } from 'reduxStore/store';
 import { TransactionsTrackerType } from 'types/transactionsTracker.types';
+import { useGetAccount } from '../../account/useGetAccount';
 import {
   websocketConnection,
   WebsocketConnectionStatusEnum
 } from '../../websocketListener/websocketConnection';
-import { useGetPollingInterval } from '../useGetPollingInterval';
 import { useCheckTransactionStatus } from '../useCheckTransactionStatus';
+import { useGetPollingInterval } from '../useGetPollingInterval';
 
 /**
  * Fallback mechanism to check the transaction in case of ws connection failure
@@ -18,19 +22,32 @@ export const useCheckTransactionOnWsFailureFallback = (
   const checkTransactionStatus = useCheckTransactionStatus();
   const pollingInterval = useGetPollingInterval();
   const pollingIntervalTimer = useRef<NodeJS.Timeout | null>(null);
-  const isWebsocketCompleted =
-    websocketConnection.status === WebsocketConnectionStatusEnum.COMPLETED;
+  const { address } = useGetAccount();
+
+  // Track websocket status changes
+  const prevWebsocketStatusRef = useRef(websocketConnection.status);
 
   const getTransactionsByHash =
     props?.getTransactionsByHash ?? defaultGetTxByHash;
 
-  useEffect(() => {
-    if (isWebsocketCompleted) {
-      // Do not setInterval if we already subscribe to websocket event
-      if (pollingIntervalTimer.current) {
-        clearInterval(pollingIntervalTimer.current);
-      }
+  const clearFallbackTimer = () => {
+    if (pollingIntervalTimer.current) {
+      clearInterval(pollingIntervalTimer.current);
+      pollingIntervalTimer.current = null;
+    }
+  };
 
+  useEffect(() => {
+    const currentStatus = websocketConnection.status;
+    const isWebsocketActive =
+      currentStatus === WebsocketConnectionStatusEnum.COMPLETED;
+
+    if (prevWebsocketStatusRef.current !== currentStatus) {
+      prevWebsocketStatusRef.current = currentStatus;
+    }
+
+    if (!address || !isWebsocketActive) {
+      clearFallbackTimer();
       return;
     }
 
@@ -39,6 +56,18 @@ export const useCheckTransactionOnWsFailureFallback = (
     }
 
     pollingIntervalTimer.current = setInterval(() => {
+      const currentStatus = websocketConnection.status;
+      const isNowActive =
+        currentStatus === WebsocketConnectionStatusEnum.COMPLETED;
+
+      // Get the address from store directly to avoid closure issues related to hooks
+      const { address: currentAddress } = accountSelector(store.getState());
+
+      if (!currentAddress || isNowActive) {
+        clearFallbackTimer();
+        return;
+      }
+
       checkTransactionStatus({
         getTransactionsByHash,
         ...props
@@ -46,9 +75,12 @@ export const useCheckTransactionOnWsFailureFallback = (
     }, pollingInterval);
 
     return () => {
-      if (pollingIntervalTimer.current) {
-        clearInterval(pollingIntervalTimer.current);
-      }
+      clearFallbackTimer();
     };
-  }, [checkTransactionStatus]);
+  }, [
+    checkTransactionStatus,
+    pollingInterval,
+    address,
+    websocketConnection.status
+  ]);
 };
