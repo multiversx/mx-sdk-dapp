@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1382)] - 2025-03-11
+
 - [Fixed sign screen layout and move decoder styles inside the package](https://github.com/multiversx/mx-sdk-dapp/pull/1381)
 
 ## [[v3.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1379)] - 2025-03-11
