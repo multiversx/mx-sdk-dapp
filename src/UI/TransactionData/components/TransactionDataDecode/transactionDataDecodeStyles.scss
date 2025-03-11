@@ -1,0 +1,45 @@
+.transaction-data-decode {
+  position: absolute;
+  margin-bottom: 16px;
+  right: 0;
+  width: 120px;
+
+  .transaction-data-decode-select {
+    appearance: none;
+    background-color: var(--action-bg);
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+    min-height: 32px;
+    padding: 0 24px 0 0;
+    text-align: center;
+    transition: var(--transition);
+    width: 100%;
+
+    &:hover,
+    &:focus {
+      background-color: var(--action-bg-light);
+
+      & + .transaction-data-decode-select-icon {
+        color: var(--primary) !important;
+      }
+    }
+  }
+
+  .transaction-data-decode-select-icon {
+    color: var(--muted);
+    font-size: 12px;
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    transform-origin: center;
+    transition: var(--transition);
+  }
+
+  .transaction-data-decode-select:focus + .transaction-data-decode-select-icon {
+    transform: translateY(-50%) rotate(180deg);
+  }
+}
