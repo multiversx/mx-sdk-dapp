@@ -26,11 +26,12 @@
 .modal-layout-content {
   --modal-offset: calc(100vh - 32px);
 
-  padding: 16px 16px 32px;
+  padding: 0 16px 32px;
   display: flex;
   flex-direction: column;
   position: relative;
   width: 100%;
+  padding-top: 48px !important;
   min-height: min(820px, var(--modal-offset));
 
   @media (min-width: 576px) {
