@@ -87,7 +87,5 @@ export const useWebsocketPollingFallback = ({
     };
   }, [address, websocketStatus, onPoll, usedPollingInterval]);
 
-  return {
-    clearFallbackTimer
-  };
+  return clearFallbackTimer;
 };
