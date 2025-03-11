@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1379)] - 2025-03-11
+
 - [Fixed websocket connection and falback mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/1378)
 
 ## [[v3.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1376)] - 2025-02-17
