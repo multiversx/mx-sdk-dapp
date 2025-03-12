@@ -1,98 +1,112 @@
 .gas-details {
   display: flex;
   flex-direction: column;
-  gap: 32px;
   padding: 0 16px;
+  overflow: hidden;
+  margin-top: calc(32px * -1);
+  transition: all 200ms ease;
+  max-height: 0px;
 
-  .gas-details-price,
-  .gas-details-limit {
+  &.visible {
+    max-height: 160px;
+  }
+
+  .gasDetailsWrapper {
+    padding-top: 32px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    position: relative;
+    gap: 32px;
 
-    &:before {
-      content: '';
-      position: absolute;
-      bottom: calc(20px / 2);
-      left: calc(12px * -1);
-      height: calc(64px - 8px);
-      width: 1px;
-      background-color: #404040;
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: calc(12px / 2);
-      bottom: 8px;
-      left: calc(12px * -1);
-      border: 1px solid #404040;
-      border-right: none;
-      border-top: none;
-      height: 8px;
-    }
-
-    .gas-details-price-label,
-    .gas-details-limit-label {
-      color: #a3a3a3;
+    .gas-details-price,
+    .gas-details-limit {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      line-height: 1;
+      flex-direction: column;
       gap: 8px;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+      position: relative;
 
-    .gas-details-price-label-text {
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+      &:before {
+        content: '';
+        position: absolute;
+        bottom: calc(20px / 2);
+        left: calc(12px * -1);
+        height: calc(64px - 8px);
+        width: 1px;
+        background-color: #404040;
+      }
 
-    .gas-details-price-multipliers {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      &:after {
+        content: '';
+        position: absolute;
+        width: calc(12px / 2);
+        bottom: calc(12px / 2);
+        left: calc(12px * -1);
+        border: 1px solid #404040;
+        border-right: none;
+        border-top: none;
+        height: 8px;
+      }
 
-      .gas-details-price-multiplier {
+      .gas-details-price-label,
+      .gas-details-limit-label {
+        color: #a3a3a3;
         display: flex;
         align-items: center;
-        cursor: pointer;
-        transition: all 200ms ease;
-        color: #a3a3a3;
+        justify-content: space-between;
+        line-height: 1;
+        gap: 8px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
 
-        &.checked {
-          color: #23f7dd;
-        }
+      .gas-details-price-label-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
 
-        .gas-details-price-multiplier-input {
-          height: 12px;
-          width: 12px;
-          min-height: auto;
-          border: 1px solid #a3a3a3;
+      .gas-details-price-multipliers {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        .gas-details-price-multiplier {
+          display: flex;
+          align-items: center;
           cursor: pointer;
-          border-radius: 50%;
-          appearance: none;
-          background-color: transparent;
+          transition: all 200ms ease;
+          color: #a3a3a3;
 
-          &:checked {
-            border-width: 4px;
-            border-color: #23f7dd;
+          &.checked {
+            color: #23f7dd;
           }
-        }
 
-        .gas-details-price-multiplier-label {
-          font-size: 12px;
-          padding-left: 4px;
-          cursor: pointer;
-          line-height: 1;
+          .gas-details-price-multiplier-input {
+            height: 12px;
+            width: 12px;
+            min-height: auto;
+            border: 1px solid #a3a3a3;
+            cursor: pointer;
+            border-radius: 50%;
+            appearance: none;
+            background-color: transparent;
+
+            &:checked {
+              border-width: 4px;
+              border-color: #23f7dd;
+            }
+          }
+
+          .gas-details-price-multiplier-label {
+            font-size: 12px;
+            padding-left: 4px;
+            cursor: pointer;
+            line-height: 1;
+          }
         }
       }
     }
-  }
 
-  .gas-details-limit:before {
-    height: 96px;
+    .gas-details-limit:before {
+      height: 96px;
+    }
   }
 }

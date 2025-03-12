@@ -17,6 +17,7 @@ const DEFAULT_GAS_PRICE_MULTIPLIER = 1;
 export const GasDetailsComponent = ({
   transaction,
   gasPriceMultiplier,
+  isVisible,
   needsSigning,
   updateGasPriceMultiplier,
   styles
@@ -47,63 +48,69 @@ export const GasDetailsComponent = ({
   ];
 
   return (
-    <div className={styles?.gasDetails}>
-      <div className={styles?.gasDetailsPrice}>
-        <div className={styles?.gasDetailsPriceLabel}>
-          <span className={styles?.gasDetailsPriceLabelText}>
-            Gas Price (per Gas Unit)
-          </span>
+    <div
+      className={classNames(styles?.gasDetails, {
+        [styles?.visible]: isVisible
+      })}
+    >
+      <div className={styles?.gasDetailsWrapper}>
+        <div className={styles?.gasDetailsPrice}>
+          <div className={styles?.gasDetailsPriceLabel}>
+            <span className={styles?.gasDetailsPriceLabelText}>
+              Gas Price (per Gas Unit)
+            </span>
 
-          <div className={styles?.gasDetailsPriceMultipliers}>
-            {gasMultiplierOptions.map((gasMultiplierOption) => (
-              <div
-                key={gasMultiplierOption.label}
-                className={classNames(styles?.gasDetailsPriceMultiplier, {
-                  [styles?.checked]:
-                    gasPriceMultiplier === gasMultiplierOption.value
-                })}
-              >
-                <input
-                  type='radio'
-                  disabled={!needsSigning}
-                  name={GAS_PRICE_MODIFIER_FIELD}
-                  value={gasMultiplierOption.value}
-                  onChange={handleMultiplierChange}
-                  className={styles?.gasDetailsPriceMultiplierInput}
-                  checked={gasPriceMultiplier === gasMultiplierOption.value}
-                  id={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
-                />
-
-                <label
-                  className={styles?.gasDetailsPriceMultiplierLabel}
-                  htmlFor={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
+            <div className={styles?.gasDetailsPriceMultipliers}>
+              {gasMultiplierOptions.map((gasMultiplierOption) => (
+                <div
+                  key={gasMultiplierOption.label}
+                  className={classNames(styles?.gasDetailsPriceMultiplier, {
+                    [styles?.checked]:
+                      gasPriceMultiplier === gasMultiplierOption.value
+                  })}
                 >
-                  {gasMultiplierOption.label}
-                </label>
-              </div>
-            ))}
+                  <input
+                    type='radio'
+                    disabled={!needsSigning}
+                    name={GAS_PRICE_MODIFIER_FIELD}
+                    value={gasMultiplierOption.value}
+                    onChange={handleMultiplierChange}
+                    className={styles?.gasDetailsPriceMultiplierInput}
+                    checked={gasPriceMultiplier === gasMultiplierOption.value}
+                    id={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
+                  />
+
+                  <label
+                    className={styles?.gasDetailsPriceMultiplierLabel}
+                    htmlFor={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
+                  >
+                    {gasMultiplierOption.label}
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
+
+          <Balance
+            className={styles?.gasDetailsPriceValue}
+            egldIcon
+            showTokenLabel
+            showTokenLabelSup
+            tokenLabel={egldLabel}
+            amount={formattedGasPrice}
+          />
         </div>
 
-        <Balance
-          className={styles?.gasDetailsPriceValue}
-          egldIcon
-          showTokenLabel
-          showTokenLabelSup
-          tokenLabel={egldLabel}
-          amount={formattedGasPrice}
-        />
-      </div>
+        <div className={styles?.gasDetailsLimit}>
+          <div className={styles?.gasDetailsLimitLabel}>Gas Limit</div>
 
-      <div className={styles?.gasDetailsLimit}>
-        <div className={styles?.gasDetailsLimitLabel}>Gas Limit</div>
-
-        <Balance
-          className={styles?.gasDetailsLimitValue}
-          showTokenLabel={false}
-          amount={gasLimit}
-          egldIcon
-        />
+          <Balance
+            className={styles?.gasDetailsLimitValue}
+            showTokenLabel={false}
+            amount={gasLimit}
+            egldIcon
+          />
+        </div>
       </div>
     </div>
   );

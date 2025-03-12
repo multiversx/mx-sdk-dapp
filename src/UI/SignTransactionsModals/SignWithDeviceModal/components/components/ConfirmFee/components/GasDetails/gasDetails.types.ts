@@ -5,9 +5,10 @@ import { UseSignTransactionsWithDeviceReturnType } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
 
 export interface GasDetailsPropsType extends WithStylesImportType {
+  isVisible: boolean;
+  needsSigning: boolean;
   transaction: Transaction;
   gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
-  needsSigning: boolean;
   updateGasPriceMultiplier: UseSignTransactionsWithDeviceReturnType['updateGasPriceMultiplier'];
 }
 

@@ -109,14 +109,13 @@ const ConfirmFeeComponent = ({
         </div>
       </div>
 
-      {showGasDetails && (
-        <GasDetails
-          gasPriceMultiplier={gasPriceMultiplier}
-          transaction={transaction}
-          updateGasPriceMultiplier={updateGasPriceMultiplier}
-          needsSigning={needsSigning}
-        />
-      )}
+      <GasDetails
+        transaction={transaction}
+        isVisible={showGasDetails}
+        needsSigning={needsSigning}
+        gasPriceMultiplier={gasPriceMultiplier}
+        updateGasPriceMultiplier={updateGasPriceMultiplier}
+      />
     </>
   );
 };
