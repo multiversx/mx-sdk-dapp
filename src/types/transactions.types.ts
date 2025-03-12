@@ -86,6 +86,7 @@ export interface MultiSignTransactionType {
   multiTxData?: string;
   transactionIndex: number;
   transaction: Transaction;
+  needsSigning: boolean;
 }
 
 export interface TokenOptionType {
@@ -171,6 +172,8 @@ export interface ActiveLedgerTransactionType {
   isTokenTransaction: boolean;
   receiverScamInfo: string | null;
   transaction: Transaction;
+  ppu: number;
+  needsSigning: boolean;
   transactionIndex: number;
   transactionTokenInfo: TransactionDataTokenType;
 }

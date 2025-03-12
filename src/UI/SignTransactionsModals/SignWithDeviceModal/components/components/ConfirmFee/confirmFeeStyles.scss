@@ -1,24 +1,41 @@
-.confirmFee {
+.confirm-fee {
   display: flex;
   flex-direction: column;
   line-height: 1;
   gap: 8px;
 
-  .confirmFeeLabel {
-    color: #a3a3a3;
-  }
-
-  .confirmFeeData {
+  .confirm-fee-label {
     display: flex;
     align-items: center;
     gap: 8px;
 
-    .confirmFeeDataPriceWrapper {
+    .confirm-fee-label-text {
+      color: #a3a3a3;
+    }
+
+    .confirm-fee-label-icon {
+      transition: all 200ms ease;
+      cursor: pointer;
+
+      &:hover,
+      &.toggled {
+        color: #23f7dd;
+        transform: rotateZ(45deg) scale(1.25);
+      }
+    }
+  }
+
+  .confirm-fee-data {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .confirm-fee-data-price-wrapper {
       display: flex;
       align-items: center;
       color: #737373;
 
-      .confirmFeeDataPrice {
+      .confirm-fee-data-price {
         color: #737373;
 
         * {

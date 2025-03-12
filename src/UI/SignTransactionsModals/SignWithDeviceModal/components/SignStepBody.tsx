@@ -3,6 +3,7 @@ import { Address } from '@multiversx/sdk-core/out';
 import classNames from 'classnames';
 
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
+import { UseSignTransactionsWithDeviceReturnType } from 'hooks/transactions/useSignTransactionsWithDevice';
 import { ActiveLedgerTransactionType, MultiSignTransactionType } from 'types';
 import { TransactionData } from 'UI/TransactionData';
 
@@ -25,6 +26,7 @@ export interface SignStepBodyPropsType {
   callbackRoute?: string;
   currentStep: number;
   currentTransaction: ActiveLedgerTransactionType | null;
+  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
   allTransactions: MultiSignTransactionType[];
   signStepInnerClasses?: SignStepInnerClassesType;
   isGuarded?: boolean;
@@ -34,6 +36,7 @@ const SignStepBodyComponent = ({
   currentTransaction,
   error,
   signStepInnerClasses,
+  updatePPU,
   globalStyles,
   styles
 }: SignStepBodyPropsType & WithStylesImportType) => {
@@ -70,7 +73,12 @@ const SignStepBodyComponent = ({
           amount={amount}
         />
 
-        <ConfirmFee transaction={currentTransaction.transaction} />
+        <ConfirmFee
+          needsSigning={currentTransaction.needsSigning}
+          ppu={currentTransaction.ppu}
+          transaction={currentTransaction.transaction}
+          updatePPU={updatePPU}
+        />
 
         {data && (
           <TransactionData
