@@ -18,9 +18,6 @@ export function recommendGasPrice({
   const MAX_GAS_PRICE = MIN_GAS_PRICE * 30;
 
   if (!ppu) {
-    console.error(
-      'No target PPU found, maybe bad desired level? Using fallback gas price...'
-    );
     return GAS_PRICE_FALLBACK;
   }
 
@@ -32,18 +29,10 @@ export function recommendGasPrice({
   );
 
   if (gasPrice < MIN_GAS_PRICE) {
-    console.error(
-      'Gas price too low, maybe bad formula? Using min gas price...'
-    );
     return MIN_GAS_PRICE;
   }
 
   if (gasPrice > MAX_GAS_PRICE) {
-    console.warn(
-      'Gas price too high, maybe bad formula?',
-      gasPrice,
-      'Using max gas price...'
-    );
     return MAX_GAS_PRICE;
   }
 
