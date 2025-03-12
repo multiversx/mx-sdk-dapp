@@ -1,5 +1,7 @@
-import React from 'react';
-import { Transaction } from '@multiversx/sdk-core/out';
+import React, { MouseEvent, useState } from 'react';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import {
   DataTestIdsEnum,
@@ -17,15 +19,20 @@ import {
   formatAmount
 } from 'utils/operations';
 
-export interface FeePropsType {
-  transaction: Transaction;
-}
+import { GasDetails } from './components';
+import { GasDetailsPropsType } from './components/GasDetails/gasDetails.types';
+
+export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
   transaction,
+  ppu,
+  needsSigning,
+  updatePPU,
   styles
-}: FeePropsType & WithStylesImportType) => {
+}: ConfirmFeePropsType) => {
   const { price } = useGetEgldPrice();
+  const [showGasDetails, setShowGasDetails] = useState(false);
 
   const egldLabel = getEgldLabel();
   const feeLimit = calculateFeeLimit({
@@ -50,39 +57,66 @@ const ConfirmFeeComponent = ({
       })
     : null;
 
+  const handleToggleGasDetails = (event: MouseEvent<SVGSVGElement>) => {
+    event.preventDefault();
+    setShowGasDetails((isDetailsVisible) => !isDetailsVisible);
+  };
+
   return (
-    <div className={styles?.confirmFee}>
-      <div className={styles?.confirmFeeLabel}>Transaction Fee</div>
+    <>
+      <div className={styles?.confirmFee}>
+        <div className={styles?.confirmFeeLabel}>
+          <span className={styles?.confirmFeeLabelText}>Transaction Fee</span>
 
-      <div className={styles?.confirmFeeData}>
-        <Balance
-          className={styles?.confirmFeeDataBalance}
-          data-testid={DataTestIdsEnum.confirmFee}
-          egldIcon
-          showTokenLabel
-          showTokenLabelSup
-          tokenLabel={egldLabel}
-          amount={feeLimitFormatted}
-        />
-
-        {feeInFiatLimit ? (
-          <span className={styles?.confirmFeeDataPriceWrapper}>
-            (
-            <Balance
-              amount={feeInFiatLimit}
-              displayAsUsd
-              addEqualSign
-              className={styles?.confirmFeeDataPrice}
+          {needsSigning && (
+            <FontAwesomeIcon
+              icon={faGear}
+              onClick={handleToggleGasDetails}
+              className={classNames(styles?.confirmFeeLabelIcon, {
+                [styles?.toggled]: showGasDetails
+              })}
             />
-            )
-          </span>
-        ) : (
-          <span className={styles?.confirmFeeDataPriceWrapper}>
-            <LoadingDots />
-          </span>
-        )}
+          )}
+        </div>
+
+        <div className={styles?.confirmFeeData}>
+          <Balance
+            className={styles?.confirmFeeDataBalance}
+            data-testid={DataTestIdsEnum.confirmFee}
+            egldIcon
+            showTokenLabel
+            showTokenLabelSup
+            tokenLabel={egldLabel}
+            amount={feeLimitFormatted}
+          />
+
+          {feeInFiatLimit ? (
+            <span className={styles?.confirmFeeDataPriceWrapper}>
+              (
+              <Balance
+                amount={feeInFiatLimit}
+                displayAsUsd
+                addEqualSign
+                className={styles?.confirmFeeDataPrice}
+              />
+              )
+            </span>
+          ) : (
+            <span className={styles?.confirmFeeDataPriceWrapper}>
+              <LoadingDots />
+            </span>
+          )}
+        </div>
       </div>
-    </div>
+
+      <GasDetails
+        transaction={transaction}
+        isVisible={showGasDetails}
+        needsSigning={needsSigning}
+        ppu={ppu}
+        updatePPU={updatePPU}
+      />
+    </>
   );
 };
 

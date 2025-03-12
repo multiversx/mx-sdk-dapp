@@ -30,14 +30,15 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     signStepInnerClasses,
     styles,
     title,
-    waitingForDevice
+    waitingForDevice,
+    updatePPU
   } = props;
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
 
   // a unique mapping between nonce + data and step to prevent signing same transaction twice
   const [nonceDataStepMap, setNonceDataStepMap] = useState<
-    Record<number, number | undefined>
+    Record<string, number | undefined>
   >({});
 
   if (!currentTransaction) {
@@ -110,6 +111,7 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
 
   const signStepBodyProps: SignStepBodyPropsType = {
     currentTransaction,
+    updatePPU,
     error,
     allTransactions,
     currentStep,

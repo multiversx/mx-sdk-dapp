@@ -7,7 +7,10 @@ import {
 } from '@multiversx/sdk-core';
 
 import { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';
-import { SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS } from 'constants/index';
+import {
+  EMPTY_PPU,
+  SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS
+} from 'constants/index';
 import { useParseMultiEsdtTransferData } from 'hooks/transactions/useParseMultiEsdtTransferData';
 import {
   ActiveLedgerTransactionType,
@@ -21,6 +24,7 @@ import {
   checkIsValidSender,
   getAreAllTransactionsSignedByGuardian
 } from './helpers';
+import { recommendGasPrice } from './helpers/recommendGasPrice';
 import { UseSignTransactionsWithDeviceReturnType } from './useSignTransactionsWithDevice';
 
 export interface UseSignMultipleTransactionsPropsType {
@@ -50,6 +54,8 @@ let verifiedAddresses: VerifiedAddressesType = {};
 export interface UseSignMultipleTransactionsReturnType
   extends Omit<UseSignTransactionsWithDeviceReturnType, 'callbackRoute'> {
   shouldContinueWithoutSigning: boolean;
+  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
+  currentTransaction: ActiveLedgerTransactionType | null;
   isFirstTransaction: boolean;
   hasMultipleTransactions: boolean;
 }
@@ -73,6 +79,15 @@ export const useSignMultipleTransactions = ({
     useState<DeviceSignedTransactions>();
   const [currentTransaction, setCurrentTransaction] =
     useState<ActiveLedgerTransactionType | null>(null);
+  const [ppuMap, setPpuMap] = useState<
+    Record<
+      number,
+      {
+        initialGasPrice: number;
+        ppu: ActiveLedgerTransactionType['ppu'];
+      }
+    >
+  >({});
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
 
@@ -93,8 +108,11 @@ export const useSignMultipleTransactions = ({
         : transactionsToSign
     });
 
-  const isLastTransaction = currentStep === allTransactions.length - 1;
-  const currentTx = allTransactions[currentStep];
+  const [allEditedTransactions, setAllEditedTransactions] =
+    useState(allTransactions);
+
+  const isLastTransaction = currentStep === allEditedTransactions.length - 1;
+  const currentTx = allEditedTransactions[currentStep];
   const sender = currentTransaction?.transaction?.getSender().toString();
 
   // Skip account fetching if the sender is missing or same as current account
@@ -142,15 +160,93 @@ export const useSignMultipleTransactions = ({
       tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
     );
 
+    const needsSigning = currentTx.needsSigning;
+    const nonce = transaction.getNonce().valueOf();
+
     setCurrentTransaction({
       transaction,
+      ppu: ppuMap[nonce].ppu || EMPTY_PPU,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
       dataField,
-      transactionIndex
+      transactionIndex,
+      needsSigning
     });
   };
+
+  const updatePPU = (newPPU: ActiveLedgerTransactionType['ppu']) => {
+    const currentEditedTransaction =
+      allEditedTransactions[currentStep].transaction;
+
+    const nonce = currentEditedTransaction.getNonce().valueOf();
+
+    const currentMultiplier = ppuMap[nonce].ppu;
+    const initialGasPrice = ppuMap[nonce].initialGasPrice;
+
+    if (currentMultiplier === newPPU) {
+      return;
+    }
+
+    setPpuMap((existing) => {
+      const newPpuMap = { ...existing };
+      newPpuMap[nonce] = {
+        ...newPpuMap[nonce],
+        ppu: newPPU
+      };
+      return newPpuMap;
+    });
+
+    const newGasPrice = newPPU
+      ? recommendGasPrice({
+          transactionDataLength: currentEditedTransaction.getData().toString()
+            .length,
+          transactionGasLimit: currentEditedTransaction.getGasLimit().valueOf(),
+          ppu: newPPU
+        })
+      : initialGasPrice;
+
+    const transaction = Transaction.fromPlainObject({
+      ...currentEditedTransaction.toPlainObject(),
+      gasPrice: newGasPrice
+    });
+
+    const newEditedTransaction = {
+      ...allEditedTransactions[currentStep],
+      transaction
+    };
+
+    setAllEditedTransactions((existing) => {
+      const newTransactions = [...existing];
+      newTransactions[currentStep] = newEditedTransaction;
+      return newTransactions;
+    });
+
+    setCurrentTransaction((existing) => {
+      if (!existing) {
+        return existing;
+      }
+
+      return {
+        ...existing,
+        transaction,
+        ppu: newPPU
+      };
+    });
+  };
+
+  useEffect(() => {
+    const newPpuMap: typeof ppuMap = {};
+    allTransactions.forEach((transaction) => {
+      const nonce = transaction.transaction.getNonce().valueOf();
+      newPpuMap[nonce] = {
+        initialGasPrice: transaction.transaction.getGasPrice().valueOf(),
+        ppu: EMPTY_PPU
+      };
+    });
+    setPpuMap(newPpuMap);
+    setAllEditedTransactions(allTransactions);
+  }, [allTransactions]);
 
   useEffect(() => {
     extractTransactionsInfo();
@@ -307,7 +403,7 @@ export const useSignMultipleTransactions = ({
   };
 
   return {
-    allTransactions,
+    allTransactions: allEditedTransactions,
     onSignTransaction: handleSignTransaction,
     onNext,
     onPrev,
@@ -320,6 +416,7 @@ export const useSignMultipleTransactions = ({
     currentStep,
     signedTransactions,
     setSignedTransactions,
+    updatePPU,
     currentTransaction
   };
 };
