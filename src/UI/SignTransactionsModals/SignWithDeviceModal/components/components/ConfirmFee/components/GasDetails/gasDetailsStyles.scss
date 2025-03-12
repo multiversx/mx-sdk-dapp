@@ -1,0 +1,98 @@
+.gas-details {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  padding: 0 16px;
+
+  .gas-details-price,
+  .gas-details-limit {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+
+    &:before {
+      content: '';
+      position: absolute;
+      bottom: calc(20px / 2);
+      left: calc(12px * -1);
+      height: calc(64px - 8px);
+      width: 1px;
+      background-color: #404040;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: calc(12px / 2);
+      bottom: 8px;
+      left: calc(12px * -1);
+      border: 1px solid #404040;
+      border-right: none;
+      border-top: none;
+      height: 8px;
+    }
+
+    .gas-details-price-label,
+    .gas-details-limit-label {
+      color: #a3a3a3;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      line-height: 1;
+      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .gas-details-price-label-text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .gas-details-price-multipliers {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .gas-details-price-multiplier {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: all 200ms ease;
+        color: #a3a3a3;
+
+        &.checked {
+          color: #23f7dd;
+        }
+
+        .gas-details-price-multiplier-input {
+          height: 12px;
+          width: 12px;
+          min-height: auto;
+          border: 1px solid #a3a3a3;
+          cursor: pointer;
+          border-radius: 50%;
+          appearance: none;
+          background-color: transparent;
+
+          &:checked {
+            border-width: 4px;
+            border-color: #23f7dd;
+          }
+        }
+
+        .gas-details-price-multiplier-label {
+          font-size: 12px;
+          padding-left: 4px;
+          cursor: pointer;
+          line-height: 1;
+        }
+      }
+    }
+  }
+
+  .gas-details-limit:before {
+    height: 96px;
+  }
+}

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import React, { MouseEvent, useState } from 'react';
+import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from 'classnames';
 
 import {
   DataTestIdsEnum,
@@ -17,7 +18,11 @@ import {
   calculateFeeLimit,
   formatAmount
 } from 'utils/operations';
-import { GasDetails, GasDetailsPropsType } from './components/GasDetails';
+
+import { GasDetails } from './components';
+import { GasDetailsPropsType } from './components/GasDetails/gasDetails.types';
+
+export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
   transaction,
@@ -25,7 +30,7 @@ const ConfirmFeeComponent = ({
   needsSigning,
   updateGasPriceMultiplier,
   styles
-}: GasDetailsPropsType & WithStylesImportType) => {
+}: ConfirmFeePropsType) => {
   const { price } = useGetEgldPrice();
   const [showGasDetails, setShowGasDetails] = useState(false);
 
@@ -52,20 +57,24 @@ const ConfirmFeeComponent = ({
       })
     : null;
 
-  const expandGasDetails = () => {
-    setShowGasDetails(true);
+  const handleToggleGasDetails = (event: MouseEvent<SVGSVGElement>) => {
+    event.preventDefault();
+    setShowGasDetails((isDetailsVisible) => !isDetailsVisible);
   };
 
   return (
     <>
       <div className={styles?.confirmFee}>
         <div className={styles?.confirmFeeLabel}>
-          Transaction Fee
+          <span className={styles?.confirmFeeLabelText}>Transaction Fee</span>
+
           {needsSigning && (
             <FontAwesomeIcon
-              icon={faPencil}
-              className={styles?.svg}
-              onClick={expandGasDetails}
+              icon={faGear}
+              onClick={handleToggleGasDetails}
+              className={classNames(styles?.confirmFeeLabelIcon, {
+                [styles?.toggled]: showGasDetails
+              })}
             />
           )}
         </div>
@@ -99,6 +108,7 @@ const ConfirmFeeComponent = ({
           )}
         </div>
       </div>
+
       {showGasDetails && (
         <GasDetails
           gasPriceMultiplier={gasPriceMultiplier}
