@@ -17,16 +17,24 @@ export function useCancelActionAndDispose() {
       return;
     }
 
+    const typedProvider = provider as unknown as {
+      cancelAction: () => Promise<boolean> | boolean;
+      dispose: () => Promise<void> | void;
+    };
+
     try {
       if (
-        'cancelAction' in provider &&
-        typeof provider.cancelAction === 'function'
+        'cancelAction' in typedProvider &&
+        typeof typedProvider.cancelAction === 'function'
       ) {
-        await provider.cancelAction();
+        await typedProvider.cancelAction();
       }
 
-      if ('dispose' in provider && typeof provider.dispose === 'function') {
-        await provider.dispose();
+      if (
+        'dispose' in typedProvider &&
+        typeof typedProvider.dispose === 'function'
+      ) {
+        await typedProvider.dispose();
       }
     } catch (error) {
       console.info('Failed to cancel action and/or dispose provider: ', {
