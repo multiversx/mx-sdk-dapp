@@ -1,30 +1,36 @@
 import React from 'react';
 import classNames from 'classnames';
-
+import { EMPTY_PPU } from 'constants/network';
 import { withStyles } from 'hocs/withStyles';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { networkConfigSelector } from 'reduxStore/selectors';
+
 import { ActiveLedgerTransactionType } from 'types/transactions.types';
 import { Balance } from 'UI/Balance';
-import { formatAmount, getEgldLabel } from 'utils';
+import { formatAmount } from 'utils';
 
 import {
   GasDetailsPropsType,
-  GasMultiplerOptionType
+  GasMultiplerOptionType,
+  GasMultiplierOptionLabelEnum
 } from './gasDetails.types';
 
 const GAS_PRICE_MODIFIER_FIELD = 'gasPriceMultiplier';
-const DEFAULT_GAS_PRICE_MULTIPLIER = 1;
 
 export const GasDetailsComponent = ({
   transaction,
-  gasPriceMultiplier,
+  ppu,
   isVisible,
   needsSigning,
-  updateGasPriceMultiplier,
+  updatePPU,
   styles
 }: GasDetailsPropsType) => {
   const gasPrice = transaction.getGasPrice().valueOf().toString();
   const gasLimit = transaction.getGasLimit().valueOf().toString();
-  const egldLabel = getEgldLabel();
+
+  const {
+    network: { egldLabel, ppuForGasPrice }
+  } = useSelector(networkConfigSelector);
 
   const formattedGasPrice = formatAmount({
     input: gasPrice,
@@ -34,17 +40,26 @@ export const GasDetailsComponent = ({
   const handleMultiplierChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    updateGasPriceMultiplier(
-      Number(
-        event.target.value
-      ) as ActiveLedgerTransactionType['gasPriceMultiplier']
-    );
+    updatePPU(Number(event.target.value) as ActiveLedgerTransactionType['ppu']);
   };
 
+  if (!ppuForGasPrice) {
+    return null;
+  }
+
   const gasMultiplierOptions: GasMultiplerOptionType[] = [
-    { label: 'Standard', value: DEFAULT_GAS_PRICE_MULTIPLIER },
-    { label: 'Fast', value: 2 },
-    { label: 'Faster', value: 3 }
+    {
+      label: GasMultiplierOptionLabelEnum.Standard,
+      value: EMPTY_PPU
+    },
+    {
+      label: GasMultiplierOptionLabelEnum.Fast,
+      value: ppuForGasPrice.fast
+    },
+    {
+      label: GasMultiplierOptionLabelEnum.Faster,
+      value: ppuForGasPrice.faster
+    }
   ];
 
   return (
@@ -65,8 +80,7 @@ export const GasDetailsComponent = ({
                 <div
                   key={gasMultiplierOption.label}
                   className={classNames(styles?.gasDetailsPriceMultiplier, {
-                    [styles?.checked]:
-                      gasPriceMultiplier === gasMultiplierOption.value
+                    [styles?.checked]: ppu === gasMultiplierOption.value
                   })}
                 >
                   <input
@@ -76,7 +90,7 @@ export const GasDetailsComponent = ({
                     value={gasMultiplierOption.value}
                     onChange={handleMultiplierChange}
                     className={styles?.gasDetailsPriceMultiplierInput}
-                    checked={gasPriceMultiplier === gasMultiplierOption.value}
+                    checked={ppu === gasMultiplierOption.value}
                     id={`${GAS_PRICE_MODIFIER_FIELD}-${gasMultiplierOption.value}`}
                   />
 

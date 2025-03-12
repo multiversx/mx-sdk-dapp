@@ -5,11 +5,11 @@ import { UseSignTransactionsWithDeviceReturnType } from 'hooks';
 import { ActiveLedgerTransactionType } from 'types';
 
 export interface GasDetailsPropsType extends WithStylesImportType {
-  isVisible: boolean;
+  isVisible?: boolean;
   needsSigning: boolean;
   transaction: Transaction;
-  gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
-  updateGasPriceMultiplier: UseSignTransactionsWithDeviceReturnType['updateGasPriceMultiplier'];
+  ppu: ActiveLedgerTransactionType['ppu'];
+  updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];
 }
 
 export enum GasMultiplierOptionLabelEnum {
@@ -19,6 +19,6 @@ export enum GasMultiplierOptionLabelEnum {
 }
 
 export interface GasMultiplerOptionType {
-  value: 1 | 2 | 3;
+  value: number;
   label: `${GasMultiplierOptionLabelEnum}`;
 }

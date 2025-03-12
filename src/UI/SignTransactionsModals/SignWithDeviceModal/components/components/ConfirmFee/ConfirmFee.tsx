@@ -26,9 +26,9 @@ export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
   transaction,
-  gasPriceMultiplier,
+  ppu,
   needsSigning,
-  updateGasPriceMultiplier,
+  updatePPU,
   styles
 }: ConfirmFeePropsType) => {
   const { price } = useGetEgldPrice();
@@ -113,8 +113,8 @@ const ConfirmFeeComponent = ({
         transaction={transaction}
         isVisible={showGasDetails}
         needsSigning={needsSigning}
-        gasPriceMultiplier={gasPriceMultiplier}
-        updateGasPriceMultiplier={updateGasPriceMultiplier}
+        ppu={ppu}
+        updatePPU={updatePPU}
       />
     </>
   );

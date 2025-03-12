@@ -31,7 +31,7 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
     styles,
     title,
     waitingForDevice,
-    updateGasPriceMultiplier: updateGasPriceMultiplier
+    updatePPU
   } = props;
 
   const [showGuardianScreen, setShowGuardianScreen] = useState(false);
@@ -111,7 +111,7 @@ const SignStepComponent = (props: SignStepType & WithStylesImportType) => {
 
   const signStepBodyProps: SignStepBodyPropsType = {
     currentTransaction,
-    updateGasPriceMultiplier: updateGasPriceMultiplier,
+    updatePPU,
     error,
     allTransactions,
     currentStep,
