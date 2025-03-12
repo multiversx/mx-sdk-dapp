@@ -165,7 +165,7 @@ export const useSignMultipleTransactions = ({
 
     setCurrentTransaction({
       transaction,
-      ppu: ppuMap[nonce].ppu || 0,
+      ppu: ppuMap[nonce].ppu || EMPTY_PPU,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
