@@ -18,13 +18,16 @@ export function useCancelActionAndDispose() {
     }
 
     try {
-      const typedProvider = provider as unknown as {
-        cancelAction: () => Promise<boolean> | boolean;
-        dispose: () => Promise<void> | void;
-      };
+      if (
+        'cancelAction' in provider &&
+        typeof provider.cancelAction === 'function'
+      ) {
+        await provider.cancelAction();
+      }
 
-      await typedProvider.cancelAction();
-      await typedProvider.dispose();
+      if ('dispose' in provider && typeof provider.dispose === 'function') {
+        await provider.dispose();
+      }
     } catch (error) {
       console.info('Failed to cancel action and/or dispose provider: ', {
         provider,
