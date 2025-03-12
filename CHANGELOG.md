@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[v3.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/1380)] - 2025-03-11
 - [Added gasPrice editing](https://github.com/multiversx/mx-sdk-dapp/pull/1377)
 
+## [[v3.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1384)] - 2025-03-11
+
+- [Fixed cancel action is not called on all providers](https://github.com/multiversx/mx-sdk-dapp/pull/1383)
+
+## [[v3.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1382)] - 2025-03-11
+
+- [Fixed sign screen layout and move decoder styles inside the package](https://github.com/multiversx/mx-sdk-dapp/pull/1381)
+
 ## [[v3.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1379)] - 2025-03-11
 - [Fixed websocket connection and fallback mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/1378)
 
