@@ -77,11 +77,14 @@ export const useSignMultipleTransactions = ({
   const [currentTransaction, setCurrentTransaction] =
     useState<ActiveLedgerTransactionType | null>(null);
   const [gasPriceMap, setGasPriceMap] = useState<
-    Array<{
-      initialGasPrice: number;
-      gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
-    }>
-  >([]);
+    Record<
+      number,
+      {
+        initialGasPrice: number;
+        gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
+      }
+    >
+  >({});
 
   const [waitingForDevice, setWaitingForDevice] = useState(false);
 
@@ -154,38 +157,44 @@ export const useSignMultipleTransactions = ({
       tokenId && isTokenTransfer({ tokenId, erdLabel: egldLabel })
     );
 
+    const needsSigning = currentTx.needsSigning;
+    const nonce = transaction.getNonce().valueOf();
+
     setCurrentTransaction({
       transaction,
-      gasPriceMultiplier: gasPriceMap[currentStep].gasPriceMultiplier || 1,
+      gasPriceMultiplier: gasPriceMap[nonce].gasPriceMultiplier || 1,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
       dataField,
-      transactionIndex
+      transactionIndex,
+      needsSigning
     });
   };
 
   const updateGasPriceMultiplier = (
     gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier']
   ) => {
-    const currentMultiplier = gasPriceMap[currentStep].gasPriceMultiplier;
-    const initialGasPrice = gasPriceMap[currentStep].initialGasPrice;
+    const currentEditedTransaction =
+      allEditedTransactions[currentStep].transaction;
+
+    const nonce = currentEditedTransaction.getNonce().valueOf();
+
+    const currentMultiplier = gasPriceMap[nonce].gasPriceMultiplier;
+    const initialGasPrice = gasPriceMap[nonce].initialGasPrice;
 
     if (currentMultiplier === gasPriceMultiplier) {
       return;
     }
 
     setGasPriceMap((existing) => {
-      const newGasPriceMap = [...existing];
-      newGasPriceMap[currentStep] = {
-        ...newGasPriceMap[currentStep],
+      const newGasPriceMap = { ...existing };
+      newGasPriceMap[nonce] = {
+        ...newGasPriceMap[nonce],
         gasPriceMultiplier
       };
       return newGasPriceMap;
     });
-
-    const currentEditedTransaction =
-      allEditedTransactions[currentStep].transaction;
 
     const newGasPrice = new BigNumber(initialGasPrice)
       .times(gasPriceMultiplier)
@@ -221,12 +230,15 @@ export const useSignMultipleTransactions = ({
   };
 
   useEffect(() => {
-    setGasPriceMap(
-      allTransactions.map((transaction) => ({
+    const gasMap: typeof gasPriceMap = {};
+    allTransactions.forEach((transaction) => {
+      const nonce = transaction.transaction.getNonce().valueOf();
+      gasMap[nonce] = {
         initialGasPrice: transaction.transaction.getGasPrice().valueOf(),
         gasPriceMultiplier: 1
-      }))
-    );
+      };
+    });
+    setGasPriceMap(gasMap);
     setAllEditedTransactions(allTransactions);
   }, [allTransactions]);
 
@@ -398,7 +410,7 @@ export const useSignMultipleTransactions = ({
     currentStep,
     signedTransactions,
     setSignedTransactions,
-    updateGasPriceMultiplier: updateGasPriceMultiplier,
+    updateGasPriceMultiplier,
     currentTransaction
   };
 };

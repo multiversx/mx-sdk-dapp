@@ -8,6 +8,7 @@ import { FormatAmount } from 'UI/FormatAmount/FormatAmount';
 export interface GasDetailsPropsType {
   transaction: Transaction;
   gasPriceMultiplier: ActiveLedgerTransactionType['gasPriceMultiplier'];
+  needsSigning: boolean;
   updateGasPriceMultiplier: UseSignTransactionsWithDeviceReturnType['updateGasPriceMultiplier'];
 }
 
@@ -16,6 +17,7 @@ const FIELD_NAME = 'gasPriceMultiplier';
 export const GasDetailsComponent = ({
   transaction,
   gasPriceMultiplier,
+  needsSigning,
   updateGasPriceMultiplier,
   styles
 }: GasDetailsPropsType & WithStylesImportType) => {
@@ -52,6 +54,7 @@ export const GasDetailsComponent = ({
               type='radio'
               id='multiplier1'
               name={FIELD_NAME}
+              disabled={!needsSigning}
               value={1}
               checked={gasPriceMultiplier === 1}
               onChange={handleMultiplierChange}
@@ -64,6 +67,7 @@ export const GasDetailsComponent = ({
               type='radio'
               id='multiplier2'
               name={FIELD_NAME}
+              disabled={!needsSigning}
               value={2}
               checked={gasPriceMultiplier === 2}
               onChange={handleMultiplierChange}
@@ -76,6 +80,7 @@ export const GasDetailsComponent = ({
               type='radio'
               id='multiplier3'
               name={FIELD_NAME}
+              disabled={!needsSigning}
               value={3}
               checked={gasPriceMultiplier === 3}
               onChange={handleMultiplierChange}

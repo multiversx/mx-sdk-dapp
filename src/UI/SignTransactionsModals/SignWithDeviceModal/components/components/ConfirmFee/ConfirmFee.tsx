@@ -22,6 +22,7 @@ import { GasDetails, GasDetailsPropsType } from './components/GasDetails';
 const ConfirmFeeComponent = ({
   transaction,
   gasPriceMultiplier,
+  needsSigning,
   updateGasPriceMultiplier,
   styles
 }: GasDetailsPropsType & WithStylesImportType) => {
@@ -60,11 +61,13 @@ const ConfirmFeeComponent = ({
       <div className={styles?.confirmFee}>
         <div className={styles?.confirmFeeLabel}>
           Transaction Fee
-          <FontAwesomeIcon
-            icon={faPencil}
-            className={styles?.svg}
-            onClick={expandGasDetails}
-          />
+          {needsSigning && (
+            <FontAwesomeIcon
+              icon={faPencil}
+              className={styles?.svg}
+              onClick={expandGasDetails}
+            />
+          )}
         </div>
 
         <div className={styles?.confirmFeeData}>
@@ -101,6 +104,7 @@ const ConfirmFeeComponent = ({
           gasPriceMultiplier={gasPriceMultiplier}
           transaction={transaction}
           updateGasPriceMultiplier={updateGasPriceMultiplier}
+          needsSigning={needsSigning}
         />
       )}
     </>

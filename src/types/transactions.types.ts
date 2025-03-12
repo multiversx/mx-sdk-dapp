@@ -86,6 +86,7 @@ export interface MultiSignTransactionType {
   multiTxData?: string;
   transactionIndex: number;
   transaction: Transaction;
+  needsSigning: boolean;
 }
 
 export interface TokenOptionType {
@@ -172,6 +173,7 @@ export interface ActiveLedgerTransactionType {
   receiverScamInfo: string | null;
   transaction: Transaction;
   gasPriceMultiplier: 1 | 2 | 3;
+  needsSigning: boolean;
   transactionIndex: number;
   transactionTokenInfo: TransactionDataTokenType;
 }
