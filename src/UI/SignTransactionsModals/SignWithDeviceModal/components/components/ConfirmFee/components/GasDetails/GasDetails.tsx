@@ -11,8 +11,7 @@ import { formatAmount } from 'utils';
 
 import {
   GasDetailsPropsType,
-  GasMultiplerOptionType,
-  GasMultiplierOptionLabelEnum
+  GasMultiplerOptionType
 } from './gasDetails.types';
 
 const GAS_PRICE_MODIFIER_FIELD = 'gasPriceMultiplier';
@@ -49,15 +48,15 @@ export const GasDetailsComponent = ({
 
   const gasMultiplierOptions: GasMultiplerOptionType[] = [
     {
-      label: GasMultiplierOptionLabelEnum.Standard,
+      label: 'Standard',
       value: EMPTY_PPU
     },
     {
-      label: GasMultiplierOptionLabelEnum.Fast,
+      label: 'Fast',
       value: ppuForGasPrice.fast
     },
     {
-      label: GasMultiplierOptionLabelEnum.Faster,
+      label: 'Faster',
       value: ppuForGasPrice.faster
     }
   ];
@@ -80,7 +79,8 @@ export const GasDetailsComponent = ({
                 <div
                   key={gasMultiplierOption.label}
                   className={classNames(styles?.gasDetailsPriceMultiplier, {
-                    [styles?.checked]: ppu === gasMultiplierOption.value
+                    [styles?.checked]: ppu === gasMultiplierOption.value,
+                    [styles?.disabled]: !needsSigning
                   })}
                 >
                   <input

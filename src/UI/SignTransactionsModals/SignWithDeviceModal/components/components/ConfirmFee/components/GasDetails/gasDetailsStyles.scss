@@ -79,6 +79,12 @@
             color: #23f7dd;
           }
 
+          &.disabled {
+            color: #a3a3a3;
+            opacity: 0.5;
+            pointer-events: none;
+          }
+
           .gas-details-price-multiplier-input {
             height: 12px;
             width: 12px;
@@ -92,6 +98,10 @@
             &:checked {
               border-width: 4px;
               border-color: #23f7dd;
+            }
+
+            &:disabled {
+              border-color: #a3a3a3;
             }
           }
 
