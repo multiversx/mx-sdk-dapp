@@ -1,6 +1,7 @@
-import React, { MouseEvent, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import {
@@ -10,9 +11,11 @@ import {
 } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetEgldPrice } from 'hooks';
+import { recommendGasPrice } from 'hooks/transactions/helpers/recommendGasPrice';
+import { useSelector } from 'reduxStore/DappProviderContext';
+import { networkConfigSelector } from 'reduxStore/selectors';
 import { Balance } from 'UI/Balance';
 import { LoadingDots } from 'UI/LoadingDots';
-import { getEgldLabel } from 'utils';
 import {
   calculateFeeInFiat,
   calculateFeeLimit,
@@ -21,7 +24,6 @@ import {
 
 import { GasDetails } from './components';
 import { GasDetailsPropsType } from './components/GasDetails/gasDetails.types';
-
 export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
@@ -34,7 +36,23 @@ const ConfirmFeeComponent = ({
   const { price } = useGetEgldPrice();
   const [showGasDetails, setShowGasDetails] = useState(false);
 
-  const egldLabel = getEgldLabel();
+  const nonce = transaction.getNonce().valueOf();
+
+  const [initialGasPriceInfo, setInitialGasPriceInfo] = useState({
+    [nonce]: transaction.getGasPrice().valueOf()
+  });
+
+  useEffect(() => {
+    setInitialGasPriceInfo((existing) => ({
+      ...existing,
+      [nonce]: transaction.getGasPrice().valueOf()
+    }));
+  }, [nonce]);
+
+  const {
+    network: { egldLabel, ppuForGasPrice }
+  } = useSelector(networkConfigSelector);
+
   const feeLimit = calculateFeeLimit({
     gasPerDataByte: String(GAS_PER_DATA_BYTE),
     gasPriceModifier: String(GAS_PRICE_MODIFIER),
@@ -57,6 +75,21 @@ const ConfirmFeeComponent = ({
       })
     : null;
 
+  const initialGasPrice = initialGasPriceInfo[nonce];
+
+  const fastGasPrice =
+    ppuForGasPrice && initialGasPrice
+      ? recommendGasPrice({
+          transactionDataLength: transaction.getData().toString().length,
+          transactionGasLimit: transaction.getGasLimit().valueOf(),
+          ppu: ppuForGasPrice.fast
+        })
+      : initialGasPrice;
+
+  const areRadiosEnabled = new BigNumber(fastGasPrice).isGreaterThan(
+    initialGasPrice || 0
+  );
+
   const handleToggleGasDetails = (event: MouseEvent<SVGSVGElement>) => {
     event.preventDefault();
     setShowGasDetails((isDetailsVisible) => !isDetailsVisible);
@@ -68,7 +101,7 @@ const ConfirmFeeComponent = ({
         <div className={styles?.confirmFeeLabel}>
           <span className={styles?.confirmFeeLabelText}>Transaction Fee</span>
 
-          {needsSigning && (
+          {needsSigning && areRadiosEnabled && (
             <FontAwesomeIcon
               icon={faGear}
               onClick={handleToggleGasDetails}
@@ -108,14 +141,15 @@ const ConfirmFeeComponent = ({
           )}
         </div>
       </div>
-
-      <GasDetails
-        transaction={transaction}
-        isVisible={showGasDetails}
-        needsSigning={needsSigning}
-        ppu={ppu}
-        updatePPU={updatePPU}
-      />
+      {areRadiosEnabled && (
+        <GasDetails
+          transaction={transaction}
+          isVisible={showGasDetails}
+          needsSigning={needsSigning}
+          ppu={ppu}
+          updatePPU={updatePPU}
+        />
+      )}
     </>
   );
 };
