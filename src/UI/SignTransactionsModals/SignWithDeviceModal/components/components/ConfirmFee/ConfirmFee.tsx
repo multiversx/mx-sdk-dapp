@@ -78,8 +78,12 @@ const ConfirmFeeComponent = ({
 
   const initialGasPrice = initialGasPriceInfo[nonce];
 
-  const fastPpu = gasStationMetadata?.[Number(shard)]?.fast;
-  const fasterPpu = gasStationMetadata?.[Number(shard)]?.faster;
+  const fastPpu = gasStationMetadata
+    ? gasStationMetadata[Number(shard)]?.fast
+    : 0;
+  const fasterPpu = gasStationMetadata
+    ? gasStationMetadata[Number(shard)]?.faster
+    : 0;
 
   const fastGasPrice = fastPpu
     ? recommendGasPrice({
