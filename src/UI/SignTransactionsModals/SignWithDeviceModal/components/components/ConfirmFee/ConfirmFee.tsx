@@ -10,7 +10,7 @@ import {
   GAS_PRICE_MODIFIER
 } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
-import { useGetEgldPrice } from 'hooks';
+import { useGetAccount, useGetEgldPrice } from 'hooks';
 import { recommendGasPrice } from 'hooks/transactions/helpers/recommendGasPrice';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { networkConfigSelector } from 'reduxStore/selectors';
@@ -35,6 +35,7 @@ const ConfirmFeeComponent = ({
 }: ConfirmFeePropsType) => {
   const { price } = useGetEgldPrice();
   const [showGasDetails, setShowGasDetails] = useState(false);
+  const { shard } = useGetAccount();
 
   const nonce = transaction.getNonce().valueOf();
 
@@ -50,7 +51,7 @@ const ConfirmFeeComponent = ({
   }, [nonce]);
 
   const {
-    network: { egldLabel, ppuForGasPrice }
+    network: { egldLabel, gasStationMetadata }
   } = useSelector(networkConfigSelector);
 
   const feeLimit = calculateFeeLimit({
@@ -77,18 +78,28 @@ const ConfirmFeeComponent = ({
 
   const initialGasPrice = initialGasPriceInfo[nonce];
 
-  const fastGasPrice =
-    ppuForGasPrice && initialGasPrice
-      ? recommendGasPrice({
-          transactionDataLength: transaction.getData().toString().length,
-          transactionGasLimit: transaction.getGasLimit().valueOf(),
-          ppu: ppuForGasPrice.fast
-        })
-      : initialGasPrice;
+  const fastPpu = gasStationMetadata?.[Number(shard)]?.fast;
+  const fasterPpu = gasStationMetadata?.[Number(shard)]?.faster;
 
-  const areRadiosEnabled = new BigNumber(fastGasPrice).isGreaterThan(
-    initialGasPrice || 0
-  );
+  const fastGasPrice = fastPpu
+    ? recommendGasPrice({
+        transactionDataLength: transaction.getData().toString().length,
+        transactionGasLimit: transaction.getGasLimit().valueOf(),
+        ppu: fastPpu
+      })
+    : initialGasPrice;
+
+  const fasterGasPrice = fasterPpu
+    ? recommendGasPrice({
+        transactionDataLength: transaction.getData().toString().length,
+        transactionGasLimit: transaction.getGasLimit().valueOf(),
+        ppu: fasterPpu
+      })
+    : initialGasPrice;
+
+  const areRadiosEnabled =
+    new BigNumber(fastGasPrice).isGreaterThan(initialGasPrice || 0) ||
+    new BigNumber(fasterGasPrice).isGreaterThan(initialGasPrice || 0);
 
   const handleToggleGasDetails = (event: MouseEvent<SVGSVGElement>) => {
     event.preventDefault();

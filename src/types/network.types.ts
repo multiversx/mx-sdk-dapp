@@ -17,10 +17,11 @@ export interface BaseNetworkType {
   roundDuration: number;
   metamaskSnapWalletAddress?: string;
   websocketUrl?: string;
-  ppuForGasPrice?: {
+  gasStationMetadata?: {
     fast: number;
     faster: number;
-  };
+    excellentJustLikeMoveBalance?: number;
+  }[];
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {

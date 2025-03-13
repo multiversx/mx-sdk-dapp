@@ -2,6 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import { EMPTY_PPU } from 'constants/network';
 import { withStyles } from 'hocs/withStyles';
+import { useGetAccount } from 'hooks';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { networkConfigSelector } from 'reduxStore/selectors';
 
@@ -26,9 +27,10 @@ export const GasDetailsComponent = ({
 }: GasDetailsPropsType) => {
   const gasPrice = transaction.getGasPrice().valueOf().toString();
   const gasLimit = transaction.getGasLimit().valueOf().toString();
+  const { shard } = useGetAccount();
 
   const {
-    network: { egldLabel, ppuForGasPrice }
+    network: { egldLabel, gasStationMetadata }
   } = useSelector(networkConfigSelector);
 
   const formattedGasPrice = formatAmount({
@@ -42,7 +44,7 @@ export const GasDetailsComponent = ({
     updatePPU(Number(event.target.value) as ActiveLedgerTransactionType['ppu']);
   };
 
-  if (!ppuForGasPrice) {
+  if (!gasStationMetadata) {
     return null;
   }
 
@@ -53,11 +55,11 @@ export const GasDetailsComponent = ({
     },
     {
       label: 'Fast',
-      value: ppuForGasPrice.fast
+      value: gasStationMetadata[Number(shard)].fast
     },
     {
       label: 'Faster',
-      value: ppuForGasPrice.faster
+      value: gasStationMetadata[Number(shard)].faster
     }
   ];
 
