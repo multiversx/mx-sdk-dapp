@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [[v3.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/1387)] - 2025-03-13
+- [Added conditional price radios visibility](https://github.com/multiversx/mx-sdk-dapp/pull/1386)
+
 ## [[v3.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/1380)] - 2025-03-11
 - [Added gasPrice editing](https://github.com/multiversx/mx-sdk-dapp/pull/1377)
 
