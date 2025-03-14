@@ -135,15 +135,13 @@ const ConfirmFeeComponent = ({
           )}
         </div>
       </div>
-      {areRadiosEditable && (
-        <GasDetails
-          transaction={transaction}
-          isVisible={showGasDetails}
-          needsSigning={needsSigning}
-          ppu={ppu}
-          updatePPU={updatePPU}
-        />
-      )}
+      <GasDetails
+        transaction={transaction}
+        isVisible={showGasDetails}
+        needsSigning={needsSigning}
+        ppu={ppu}
+        updatePPU={updatePPU}
+      />
     </>
   );
 };
