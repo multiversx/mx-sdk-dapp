@@ -12,8 +12,7 @@ import { formatAmount } from 'utils';
 
 import {
   GasDetailsPropsType,
-  GasMultiplerOptionType,
-  GasMultiplierOptionLabelEnum
+  GasMultiplerOptionType
 } from './gasDetails.types';
 import { getGasPriceDetails } from './helpers/getGasPriceDetails';
 
@@ -58,27 +57,23 @@ export const GasDetailsComponent = ({
     initialGasPrice
   });
 
+  const fastGasPriceRadio: GasMultiplerOptionType = {
+    label: 'Fast',
+    value: gasStationMetadata[Number(shard)].fast
+  };
+
+  const fasterGasPriceRadio: GasMultiplerOptionType = {
+    label: 'Faster',
+    value: gasStationMetadata[Number(shard)].faster
+  };
+
   const gasMultiplierOptions: GasMultiplerOptionType[] = [
     {
-      label: GasMultiplierOptionLabelEnum.Standard,
+      label: 'Standard',
       value: EMPTY_PPU
     },
-    ...(isFastGasPrice
-      ? [
-          {
-            label: GasMultiplierOptionLabelEnum.Fast,
-            value: gasStationMetadata[Number(shard)].fast
-          }
-        ]
-      : []),
-    ...(isFasterGasPrice
-      ? [
-          {
-            label: GasMultiplierOptionLabelEnum.Faster,
-            value: gasStationMetadata[Number(shard)].faster
-          }
-        ]
-      : [])
+    ...(isFastGasPrice ? [fastGasPriceRadio] : []),
+    ...(isFasterGasPrice ? [fasterGasPriceRadio] : [])
   ];
 
   return (
