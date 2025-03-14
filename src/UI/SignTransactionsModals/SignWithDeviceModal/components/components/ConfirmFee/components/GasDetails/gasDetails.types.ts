@@ -7,6 +7,7 @@ import { ActiveLedgerTransactionType } from 'types';
 export interface GasDetailsPropsType extends WithStylesImportType {
   isVisible?: boolean;
   needsSigning: boolean;
+  initialGasPrice?: number;
   transaction: Transaction;
   ppu: ActiveLedgerTransactionType['ppu'];
   updatePPU: UseSignTransactionsWithDeviceReturnType['updatePPU'];

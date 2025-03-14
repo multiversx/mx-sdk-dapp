@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added conditional price radios visibility per radio button](https://github.com/multiversx/mx-sdk-dapp/pull/1388)
+
 ## [[v3.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/1387)] - 2025-03-13
 - [Added conditional price radios visibility](https://github.com/multiversx/mx-sdk-dapp/pull/1386)
 
