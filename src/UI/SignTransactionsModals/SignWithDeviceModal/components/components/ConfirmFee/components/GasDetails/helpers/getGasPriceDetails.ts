@@ -3,17 +3,19 @@ import BigNumber from 'bignumber.js';
 import { recommendGasPrice } from 'hooks/transactions/helpers/recommendGasPrice';
 import { NetworkType } from 'types/network.types';
 
+type GetGasPriceDetailsParamsType = {
+  shard?: number;
+  gasStationMetadata: NetworkType['gasStationMetadata'];
+  transaction: Transaction;
+  initialGasPrice?: number;
+};
+
 export const getGasPriceDetails = ({
   shard,
   gasStationMetadata,
   transaction,
   initialGasPrice = 0
-}: {
-  shard?: number;
-  gasStationMetadata: NetworkType['gasStationMetadata'];
-  transaction: Transaction;
-  initialGasPrice?: number;
-}) => {
+}: GetGasPriceDetailsParamsType) => {
   const fastPpu = gasStationMetadata
     ? gasStationMetadata[Number(shard)]?.fast
     : 0;
