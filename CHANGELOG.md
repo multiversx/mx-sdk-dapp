@@ -7,12 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated address validation](https://github.com/multiversx/mx-sdk-dapp/pull/1389)
 - [Added conditional price radios visibility per radio button](https://github.com/multiversx/mx-sdk-dapp/pull/1388)
 
 ## [[v3.3.1](https://github.com/multiversx/mx-sdk-dapp/pull/1387)] - 2025-03-13
+
 - [Added conditional price radios visibility](https://github.com/multiversx/mx-sdk-dapp/pull/1386)
 
 ## [[v3.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/1380)] - 2025-03-11
+
 - [Added gasPrice editing](https://github.com/multiversx/mx-sdk-dapp/pull/1377)
 
 ## [[v3.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1384)] - 2025-03-11
@@ -24,9 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Fixed sign screen layout and move decoder styles inside the package](https://github.com/multiversx/mx-sdk-dapp/pull/1381)
 
 ## [[v3.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1379)] - 2025-03-11
+
 - [Fixed websocket connection and fallback mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/1378)
 
 ## [[v3.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1376)] - 2025-02-17
+
 - [Added a warning toast when an unconfirmed guardian change took place](https://github.com/multiversx/mx-sdk-dapp/pull/1375)
 - [Fixed metamask addon link to use new Chrome Web Store domain](https://github.com/multiversx/mx-sdk-dapp/pull/1374)
 
