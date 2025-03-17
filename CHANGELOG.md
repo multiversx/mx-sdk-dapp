@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v3.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/1391)] - 2025-03-17
+
 - [Fixed floating data field decode dropdown](https://github.com/multiversx/mx-sdk-dapp/pull/1390)
 - [Updated address validation](https://github.com/multiversx/mx-sdk-dapp/pull/1389)
 - [Added conditional price radios visibility per radio button](https://github.com/multiversx/mx-sdk-dapp/pull/1388)
