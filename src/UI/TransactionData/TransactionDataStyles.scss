@@ -1,22 +1,23 @@
-.transactionData {
+.transaction-data {
   display: flex;
   flex-direction: column;
   line-height: 1;
   gap: 8px;
 
-  .transactionDataLabel {
+  .transaction-data-label {
     align-items: center;
     color: #a3a3a3;
     display: flex;
+    position: relative;
     justify-content: space-between;
   }
 
-  .transactionDataValueWrapper {
+  .transaction-data-value-wrapper {
     border-radius: 8px;
     border: 1px solid #262626;
     padding: 4px;
 
-    .transactionDataValue {
+    .transaction-data-value {
       min-height: 60px;
       line-height: 1.25;
       max-height: 60px;
@@ -64,11 +65,11 @@
         background-color: transparent;
       }
 
-      .transactionDataValueText {
+      .transaction-data-value-text {
         flex: 1;
       }
 
-      .transactionDataValueCopy {
+      .transaction-data-value-copy {
         position: sticky;
         min-width: 1rem;
         max-width: 1rem;

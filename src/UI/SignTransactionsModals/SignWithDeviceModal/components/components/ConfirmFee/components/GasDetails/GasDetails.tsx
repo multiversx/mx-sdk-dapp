@@ -14,6 +14,7 @@ import {
   GasDetailsPropsType,
   GasMultiplerOptionType
 } from './gasDetails.types';
+import { getGasPriceDetails } from './helpers/getGasPriceDetails';
 
 const GAS_PRICE_MODIFIER_FIELD = 'gasPriceMultiplier';
 
@@ -23,6 +24,7 @@ export const GasDetailsComponent = ({
   isVisible,
   needsSigning,
   updatePPU,
+  initialGasPrice,
   styles
 }: GasDetailsPropsType) => {
   const gasPrice = transaction.getGasPrice().valueOf().toString();
@@ -48,19 +50,30 @@ export const GasDetailsComponent = ({
     return null;
   }
 
+  const { isFastGasPrice, isFasterGasPrice } = getGasPriceDetails({
+    shard,
+    gasStationMetadata,
+    transaction,
+    initialGasPrice
+  });
+
+  const fastGasPriceRadio: GasMultiplerOptionType = {
+    label: 'Fast',
+    value: gasStationMetadata[Number(shard)].fast
+  };
+
+  const fasterGasPriceRadio: GasMultiplerOptionType = {
+    label: 'Faster',
+    value: gasStationMetadata[Number(shard)].faster
+  };
+
   const gasMultiplierOptions: GasMultiplerOptionType[] = [
     {
       label: 'Standard',
       value: EMPTY_PPU
     },
-    {
-      label: 'Fast',
-      value: gasStationMetadata[Number(shard)].fast
-    },
-    {
-      label: 'Faster',
-      value: gasStationMetadata[Number(shard)].faster
-    }
+    ...(isFastGasPrice ? [fastGasPriceRadio] : []),
+    ...(isFasterGasPrice ? [fasterGasPriceRadio] : [])
   ];
 
   return (

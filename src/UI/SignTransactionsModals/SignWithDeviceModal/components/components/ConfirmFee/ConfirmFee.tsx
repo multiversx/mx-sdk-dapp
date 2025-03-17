@@ -1,7 +1,6 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import BigNumber from 'bignumber.js';
 import classNames from 'classnames';
 
 import {
@@ -11,7 +10,6 @@ import {
 } from 'constants/index';
 import { withStyles, WithStylesImportType } from 'hocs/withStyles';
 import { useGetAccount, useGetEgldPrice } from 'hooks';
-import { recommendGasPrice } from 'hooks/transactions/helpers/recommendGasPrice';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import { networkConfigSelector } from 'reduxStore/selectors';
 import { Balance } from 'UI/Balance';
@@ -24,6 +22,7 @@ import {
 
 import { GasDetails } from './components';
 import { GasDetailsPropsType } from './components/GasDetails/gasDetails.types';
+import { getGasPriceDetails } from './components/GasDetails/helpers/getGasPriceDetails';
 export type ConfirmFeePropsType = GasDetailsPropsType & WithStylesImportType;
 
 const ConfirmFeeComponent = ({
@@ -78,32 +77,12 @@ const ConfirmFeeComponent = ({
 
   const initialGasPrice = initialGasPriceInfo[nonce];
 
-  const fastPpu = gasStationMetadata
-    ? gasStationMetadata[Number(shard)]?.fast
-    : 0;
-  const fasterPpu = gasStationMetadata
-    ? gasStationMetadata[Number(shard)]?.faster
-    : 0;
-
-  const fastGasPrice = fastPpu
-    ? recommendGasPrice({
-        transactionDataLength: transaction.getData().toString().length,
-        transactionGasLimit: transaction.getGasLimit().valueOf(),
-        ppu: fastPpu
-      })
-    : initialGasPrice;
-
-  const fasterGasPrice = fasterPpu
-    ? recommendGasPrice({
-        transactionDataLength: transaction.getData().toString().length,
-        transactionGasLimit: transaction.getGasLimit().valueOf(),
-        ppu: fasterPpu
-      })
-    : initialGasPrice;
-
-  const areRadiosEnabled =
-    new BigNumber(fastGasPrice).isGreaterThan(initialGasPrice || 0) ||
-    new BigNumber(fasterGasPrice).isGreaterThan(initialGasPrice || 0);
+  const { areRadiosEditable } = getGasPriceDetails({
+    shard,
+    gasStationMetadata,
+    transaction,
+    initialGasPrice
+  });
 
   const handleToggleGasDetails = (event: MouseEvent<SVGSVGElement>) => {
     event.preventDefault();
@@ -116,7 +95,7 @@ const ConfirmFeeComponent = ({
         <div className={styles?.confirmFeeLabel}>
           <span className={styles?.confirmFeeLabelText}>Transaction Fee</span>
 
-          {needsSigning && areRadiosEnabled && (
+          {needsSigning && areRadiosEditable && (
             <FontAwesomeIcon
               icon={faGear}
               onClick={handleToggleGasDetails}
@@ -156,7 +135,7 @@ const ConfirmFeeComponent = ({
           )}
         </div>
       </div>
-      {areRadiosEnabled && (
+      {areRadiosEditable && (
         <GasDetails
           transaction={transaction}
           isVisible={showGasDetails}
