@@ -25,16 +25,16 @@ export const getGasPriceDetails = ({
 
   const fastGasPrice = fastPpu
     ? recommendGasPrice({
-        transactionDataLength: transaction.getData().toString().length,
-        transactionGasLimit: transaction.getGasLimit().valueOf(),
+        transactionDataLength: transaction.data.length,
+        transactionGasLimit: Number(transaction.gasLimit),
         ppu: fastPpu
       })
     : initialGasPrice;
 
   const fasterGasPrice = fasterPpu
     ? recommendGasPrice({
-        transactionDataLength: transaction.getData().toString().length,
-        transactionGasLimit: transaction.getGasLimit().valueOf(),
+        transactionDataLength: transaction.data.length,
+        transactionGasLimit: Number(transaction.gasLimit),
         ppu: fasterPpu
       })
     : initialGasPrice;

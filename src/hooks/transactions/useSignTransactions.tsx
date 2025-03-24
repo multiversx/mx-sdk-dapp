@@ -239,10 +239,11 @@ export const useSignTransactions = () => {
         (await provider.signTransactions(
           isGuarded && allowGuardian
             ? transactions?.map((transaction) => {
-                transaction.setVersion(TransactionVersion.withTxOptions());
-                transaction.setOptions(
-                  TransactionOptions.withOptions({ guarded: true })
-                );
+                transaction.version =
+                  TransactionVersion.withTxOptions().valueOf();
+                transaction.options = TransactionOptions.withOptions({
+                  guarded: true
+                }).valueOf();
                 return transaction;
               })
             : transactions

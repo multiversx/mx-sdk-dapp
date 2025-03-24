@@ -15,15 +15,15 @@ export const computeTransactionsNonce = ({
   return transactions.map((tx: Transaction, index: number) => {
     const nextNonce = latestNonce + index;
 
-    const transactionNonce = tx.getNonce().valueOf();
+    const transactionNonce = tx.nonce;
 
     // stop replacing nonce if transaction is configured with a higher nonce than the existing one
     const computedNonce = computeTransactionNonce({
       accountNonce: nextNonce,
-      transactionNonce
+      transactionNonce: Number(transactionNonce)
     });
 
-    tx.setNonce(computedNonce);
+    tx.nonce = BigInt(computedNonce);
 
     return tx;
   });
