@@ -2379,10 +2379,10 @@
   dependencies:
     bech32 "^2.0.0"
 
-"@multiversx/sdk-wallet-connect-provider@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-6.0.0.tgz#6a9858ecec54affcbe53c860887702dfcd103af4"
-  integrity sha512-ah04cRuwzESDgnE3zeE1Dmp/7WALbRzUoG7Jl3On4fs/QJZ7IQ4LYBadFq/XXUOUr+9SqFkjs3mE1JsvzFbZww==
+"@multiversx/sdk-wallet-connect-provider@6.0.1":
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-wallet-connect-provider/-/sdk-wallet-connect-provider-6.0.1.tgz#622dd175fce1f26c638b897194d0f3ba9e53be13"
+  integrity sha512-D0Ide3sN6LtLCM9KICnxV5og0M+1QGRCRPzadfggVC5DQCREro4CVBmChQy79WcnKx275xNUExyFEW64r5PLhg==
   dependencies:
     "@walletconnect/sign-client" "2.19.1"
     "@walletconnect/utils" "2.19.1"
