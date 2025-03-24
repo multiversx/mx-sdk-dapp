@@ -1,6 +1,9 @@
 import { ReactNode, Dispatch, SetStateAction } from 'react';
-import { Address, Transaction } from '@multiversx/sdk-core';
-import { IPlainTransactionObject } from '@multiversx/sdk-core/out/interface';
+import {
+  Address,
+  IPlainTransactionObject,
+  Transaction
+} from '@multiversx/sdk-core';
 
 import { SignStepInnerClassesType } from '../UI/SignTransactionsModals/SignWithDeviceModal/SignStep';
 import { WithClassnameType } from '../UI/types';

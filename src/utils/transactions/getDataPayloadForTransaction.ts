@@ -1,4 +1,3 @@
-import { TransactionPayload } from '@multiversx/sdk-core/out';
 import { isStringBase64 } from '../decoders';
 
 /**
@@ -11,10 +10,10 @@ import { isStringBase64 } from '../decoders';
  */
 export const getDataPayloadForTransaction = (
   data?: string
-): TransactionPayload => {
+): Buffer<ArrayBuffer> => {
   const defaultData = data ?? '';
 
   return isStringBase64(defaultData)
-    ? TransactionPayload.fromEncoded(defaultData)
-    : new TransactionPayload(defaultData);
+    ? Buffer.from(Buffer.from(defaultData, 'base64').toString().trim())
+    : Buffer.from(defaultData.trim());
 };
