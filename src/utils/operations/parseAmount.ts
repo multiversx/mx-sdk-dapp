@@ -10,5 +10,5 @@ export function parseAmount(amount: string, numDecimals: number = DECIMALS) {
       .shiftedBy(numDecimals)
       .decimalPlaces(0),
     numDecimals
-  });
+  }).toString();
 }
