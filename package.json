@@ -159,7 +159,7 @@
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
     "@metamask/providers": "16.0.0",
-    "@multiversx/sdk-dapp-utils": "1.0.0",
+    "@multiversx/sdk-dapp-utils": "2.0.0",
     "@multiversx/sdk-extension-provider": "5.0.0",
     "@multiversx/sdk-hw-provider": "8.0.0",
     "@multiversx/sdk-metamask-provider": "1.0.0",
