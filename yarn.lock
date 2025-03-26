@@ -2343,10 +2343,10 @@
     buffer "6.0.3"
     platform "1.3.6"
 
-"@multiversx/sdk-metamask-provider@1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-1.0.0.tgz"
-  integrity sha512-5AsaeAQlhgH/nH0fxGlUOzKcjxAlsqZ8JTwKev3mZWKrbugOOukp8rM3a3oUCRO4yTDI8z3VAYb8ELvnNfYM3Q==
+"@multiversx/sdk-metamask-provider@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-2.0.0.tgz#e68ec1c2718cb5660c66234419a1207ad0e0c1c1"
+  integrity sha512-e0erraJN0lMmUc2K7vwCNfNXstQ1XwUqGMU6k8yvc+t0YPy+jrEC4ZgnQpIHs5SIUKJ8E9GmGDQtIvF1mFfd4A==
   dependencies:
     "@metamask/providers" "16.0.0"
     protobufjs "7.4.0"
@@ -2363,10 +2363,10 @@
   resolved "https://registry.npmjs.org/@multiversx/sdk-opera-provider/-/sdk-opera-provider-1.0.0-alpha.1.tgz"
   integrity sha512-5hrqn+kNpuy/S6eV5wh5mE4lvQo0PduZ7fLsh/2Srcaz3K5kM5lE1VyQmWk4DTxToZSldrGbgWz/olezoC6fPg==
 
-"@multiversx/sdk-passkey-provider@2.0.0":
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-2.0.0.tgz"
-  integrity sha512-bX5Ns91F5GfB0gOOh9ft7oTMb+6X3T2IKSpsaT9+4PLLUq02wZf5c7uOXZky2jm8EDJo7pXd2YmIBsEwz4z1xw==
+"@multiversx/sdk-passkey-provider@2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-2.0.1.tgz#a17e6a42370836e56166fd0b23d9ea7c33389dfa"
+  integrity sha512-8WO+TOe6oTikz6i0ucSH5T2rFqKibw7SMlrNcJ+zqysNTVUJLgnXZFNEnYyiTa0+pKE4hSiFIGYp0Z44qu+xFg==
   dependencies:
     "@noble/ed25519" "2.1.0"
     "@types/jest" "29.5.11"
