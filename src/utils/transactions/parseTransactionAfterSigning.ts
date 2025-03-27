@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction, TransactionComputer } from '@multiversx/sdk-core/out';
 import { PlainSignedTransaction } from '@multiversx/sdk-web-wallet-provider/out/plainSignedTransaction';
 import { newTransaction } from 'models';
 import { SignedTransactionType } from 'types';
@@ -15,11 +15,13 @@ export function parseTransactionAfterSigning(
     ? (signedTransaction as Transaction)
     : newTransaction(signedTransaction as PlainSignedTransaction);
 
+  const transactionComputer = new TransactionComputer();
+
   const parsedTransaction: SignedTransactionType = {
     ...transaction.toPlainObject(),
-    hash: transaction.getHash().hex(),
-    senderUsername: transaction.getSenderUsername().valueOf(),
-    receiverUsername: transaction.getReceiverUsername().valueOf(),
+    hash: transactionComputer.computeTransactionHash(transaction),
+    senderUsername: transaction.senderUsername,
+    receiverUsername: transaction.receiverUsername,
     status: TransactionServerStatusesEnum.pending
   };
 

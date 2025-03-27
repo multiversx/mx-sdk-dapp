@@ -1,4 +1,4 @@
-import { Address, TransactionPayload } from '@multiversx/sdk-core';
+import { Address } from '@multiversx/sdk-core';
 import { TypesOfSmartContractCallsEnum } from 'types';
 import { addressIsValid } from './account/addressIsValid';
 import { isStringBase64 } from './decoders/base64Utils';
@@ -42,7 +42,7 @@ export function isContract(
 
   const isExtractedAddressContractCall = new Address(
     extractedAddress
-  ).isContractAddress();
+  ).isSmartContract();
 
   return (
     isExtractedAddressContractCall || isSelfESDTContract(receiver, sender, data)
@@ -87,7 +87,7 @@ export function getAddressFromDataField({
       return receiver;
     }
     const parsedData = isStringBase64(data)
-      ? TransactionPayload.fromEncoded(data).toString()
+      ? Buffer.from(data, 'base64').toString()
       : data;
 
     const addressIndex = getAddressIndex(parsedData);

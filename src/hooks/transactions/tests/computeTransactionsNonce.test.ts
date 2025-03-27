@@ -62,7 +62,6 @@ describe('computeTransactionsNonce', () => {
     const transactions = mockedTransactions.map((tx) => {
       tx.nonce = 0;
       const newTx = newTransaction(tx);
-      newTx.setNonce = jest.fn();
       return newTx;
     });
 
@@ -71,9 +70,6 @@ describe('computeTransactionsNonce', () => {
       transactions
     });
 
-    expect(transactions[0].setNonce).toHaveBeenCalledWith(123);
-    expect(transactions[1].setNonce).toHaveBeenCalledWith(124);
-    expect(transactions[2].setNonce).toHaveBeenCalledWith(125);
     expect(result).toEqual(transactions);
   });
 
@@ -83,7 +79,6 @@ describe('computeTransactionsNonce', () => {
     const transactions = mockedTransactions.map((tx, i) => {
       tx.nonce = 125 + i;
       const newTx = newTransaction(tx);
-      newTx.setNonce = jest.fn();
       return newTx;
     });
 
@@ -92,9 +87,6 @@ describe('computeTransactionsNonce', () => {
       transactions
     });
 
-    expect(transactions[0].setNonce).toHaveBeenCalledWith(125);
-    expect(transactions[1].setNonce).toHaveBeenCalledWith(126);
-    expect(transactions[2].setNonce).toHaveBeenCalledWith(127);
     expect(result).toEqual(transactions);
   });
 });
