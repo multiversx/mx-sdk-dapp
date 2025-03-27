@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.0.0-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1393)] - 2025-03-27
+
+- [Upgrade to sdk-core v.14](https://github.com/multiversx/mx-sdk-dapp/pull/1392)
+
 ## [[v3.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/1391)] - 2025-03-17
 
 - [Fixed floating data field decode dropdown](https://github.com/multiversx/mx-sdk-dapp/pull/1390)

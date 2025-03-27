@@ -95,14 +95,15 @@ export const useSignMultipleTransactions = ({
     useParseMultiEsdtTransferData({
       transactions: activeGuardianAddress
         ? transactionsToSign?.map((transaction) => {
-            transaction.setSender(Address.fromBech32(address));
-            transaction.setVersion(TransactionVersion.withTxOptions());
-            transaction.setGuardian(Address.fromBech32(activeGuardianAddress));
+            transaction.sender = Address.newFromBech32(address);
+            transaction.version = TransactionVersion.withTxOptions().valueOf();
+            transaction.guardian = Address.newFromBech32(activeGuardianAddress);
             const options = {
               guarded: true,
               ...(isLedger ? { hashSign: true } : {})
             };
-            transaction.setOptions(TransactionOptions.withOptions(options));
+            transaction.options =
+              TransactionOptions.withOptions(options).valueOf();
             return transaction;
           })
         : transactionsToSign
@@ -165,7 +166,7 @@ export const useSignMultipleTransactions = ({
 
     setCurrentTransaction({
       transaction,
-      ppu: ppuMap[nonce].ppu || EMPTY_PPU,
+      ppu: ppuMap[Number(nonce)].ppu || EMPTY_PPU,
       receiverScamInfo: verifiedAddresses[receiver]?.info || null,
       transactionTokenInfo,
       isTokenTransaction,
@@ -181,8 +182,8 @@ export const useSignMultipleTransactions = ({
 
     const nonce = currentEditedTransaction.getNonce().valueOf();
 
-    const currentMultiplier = ppuMap[nonce].ppu;
-    const initialGasPrice = ppuMap[nonce].initialGasPrice;
+    const currentMultiplier = ppuMap[Number(nonce)].ppu;
+    const initialGasPrice = ppuMap[Number(nonce)].initialGasPrice;
 
     if (currentMultiplier === newPPU) {
       return;
@@ -190,8 +191,8 @@ export const useSignMultipleTransactions = ({
 
     setPpuMap((existing) => {
       const newPpuMap = { ...existing };
-      newPpuMap[nonce] = {
-        ...newPpuMap[nonce],
+      newPpuMap[Number(nonce)] = {
+        ...newPpuMap[Number(nonce)],
         ppu: newPPU
       };
       return newPpuMap;
@@ -199,9 +200,8 @@ export const useSignMultipleTransactions = ({
 
     const newGasPrice = newPPU
       ? recommendGasPrice({
-          transactionDataLength: currentEditedTransaction.getData().toString()
-            .length,
-          transactionGasLimit: currentEditedTransaction.getGasLimit().valueOf(),
+          transactionDataLength: currentEditedTransaction.data.length,
+          transactionGasLimit: Number(currentEditedTransaction.gasLimit),
           ppu: newPPU
         })
       : initialGasPrice;
@@ -238,9 +238,9 @@ export const useSignMultipleTransactions = ({
   useEffect(() => {
     const newPpuMap: typeof ppuMap = {};
     allTransactions.forEach((transaction) => {
-      const nonce = transaction.transaction.getNonce().valueOf();
-      newPpuMap[nonce] = {
-        initialGasPrice: transaction.transaction.getGasPrice().valueOf(),
+      const nonce = transaction.transaction.nonce;
+      newPpuMap[Number(nonce)] = {
+        initialGasPrice: Number(transaction.transaction.gasPrice),
         ppu: EMPTY_PPU
       };
     });

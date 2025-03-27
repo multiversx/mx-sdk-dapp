@@ -36,16 +36,16 @@ const ConfirmFeeComponent = ({
   const [showGasDetails, setShowGasDetails] = useState(false);
   const { shard } = useGetAccount();
 
-  const nonce = transaction.getNonce().valueOf();
+  const nonce = Number(transaction.nonce);
 
   const [initialGasPriceInfo, setInitialGasPriceInfo] = useState({
-    [nonce]: transaction.getGasPrice().valueOf()
+    [nonce]: Number(transaction.gasPrice)
   });
 
   useEffect(() => {
     setInitialGasPriceInfo((existing) => ({
       ...existing,
-      [nonce]: transaction.getGasPrice().valueOf()
+      [nonce]: Number(transaction.gasPrice)
     }));
   }, [nonce]);
 
@@ -56,10 +56,10 @@ const ConfirmFeeComponent = ({
   const feeLimit = calculateFeeLimit({
     gasPerDataByte: String(GAS_PER_DATA_BYTE),
     gasPriceModifier: String(GAS_PRICE_MODIFIER),
-    gasLimit: transaction.getGasLimit().valueOf().toString(),
-    gasPrice: transaction.getGasPrice().valueOf().toString(),
-    data: transaction.getData().toString(),
-    chainId: transaction.getChainID().valueOf()
+    gasLimit: transaction.gasLimit.toString(),
+    gasPrice: transaction.gasPrice.toString(),
+    data: transaction.data.toString(),
+    chainId: transaction.chainID.valueOf()
   });
 
   const feeLimitFormatted = formatAmount({
