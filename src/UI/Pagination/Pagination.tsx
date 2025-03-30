@@ -12,6 +12,7 @@ import classNames from 'classnames';
 import { DataTestIdsEnum } from 'constants/index';
 import { WithStylesImportType } from 'hocs/useStyles';
 import { withStyles } from 'hocs/withStyles';
+import { Tooltip } from 'UI/Tooltip';
 import { WithClassnameType } from 'UI/types';
 import { stringIsInteger } from 'utils/validation/stringIsInteger';
 
@@ -153,11 +154,23 @@ const PaginationComponent = ({
                 </span>
               </div>
             ) : (
-              <PaginationEllipsisForm
-                paginationItem={paginationItem}
-                maxPageToSearchFor={totalPages}
-                onSearch={handlePageClick}
-              />
+              <Tooltip
+                triggerOnClick
+                trigger={(isTooltipVisible) => (
+                  <div
+                    className={classNames(styles?.paginationTooltip, {
+                      [styles?.active]: isTooltipVisible
+                    })}
+                  >
+                    {paginationItem}
+                  </div>
+                )}
+              >
+                <PaginationEllipsisForm
+                  maxPageToSearchFor={totalPages}
+                  onSearch={handlePageClick}
+                />
+              </Tooltip>
             )}
           </div>
         ))}
