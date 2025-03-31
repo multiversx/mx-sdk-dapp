@@ -1,106 +1,63 @@
-.pagination-ellipsis-form-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 200ms ease;
-  border-radius: 50%;
+.pagination-ellipsis-form {
+  text-align: left;
+  gap: 8px;
+  cursor: default;
 
-  &:hover,
-  &.active {
-    background-color: #143736;
+  .pagination-ellipsis-form-field-label {
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #a3a3a3;
+    cursor: pointer;
   }
 
-  .pagination-ellipsis-form-wrapper {
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: calc(100% + 24px);
-    position: absolute;
+  .pagination-ellipsis-form-field {
+    display: flex;
+    gap: 8px;
+    position: relative;
 
-    .pagination-ellipsis-form {
-      flex-direction: row;
-      text-align: left;
-      gap: 8px;
-      cursor: default;
-      background: #000000;
-      border-radius: 12px;
-      border: 1px solid #262626;
-      padding: 8px;
+    .pagination-ellipsis-form-field-input {
+      width: 80px;
+      height: calc(40px + 4px);
+      border-width: 1px;
+      box-shadow: none;
+      font-size: 1rem;
+      padding: 12px;
+      padding-right: calc(40px);
+      text-align: center;
+      transition: all 200ms ease;
+      border-color: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      appearance: none;
+      -moz-appearance: textfield;
+      margin: 0;
 
-      &:after {
-        width: 8px;
-        height: 8px;
-        border: 1px solid #262626;
-        background-color: #000000;
-        border-top: none;
-        border-right: none;
-        position: absolute;
-        content: '';
-        left: 50%;
-        transform-origin: center;
-        transform: translateX(calc(50% - 8px)) rotateZ(calc(45deg * -1));
-        bottom: calc(20px / 4 * -1);
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
       }
 
-      .pagination-ellipsis-form-field-label {
-        margin-bottom: 8px;
-        font-size: 12px;
-        color: #a3a3a3;
-        cursor: pointer;
+      &:focus {
+        border-color: #23f7dd;
       }
+    }
 
-      .pagination-ellipsis-form-field {
-        display: flex;
-        gap: 8px;
-        position: relative;
+    .pagination-ellipsis-form-button {
+      outline: none;
+      border: none;
+      background-color: transparent;
+      line-height: 1;
+      cursor: pointer;
+      position: absolute;
+      right: 4px;
+      transform: translateY(-50%);
+      font-size: 12px;
+      padding: calc(20px / 2);
+      top: 50%;
 
-        .pagination-ellipsis-form-field-input {
-          width: 80px;
-          height: calc(40px + 4px);
-          border-width: 1px;
-          box-shadow: none;
-          font-size: 1rem;
-          padding: 12px;
-          padding-right: calc(40px);
-          text-align: center;
-          transition: all 200ms ease;
-          border-color: transparent;
-          appearance: none;
-          -webkit-appearance: none;
-          appearance: none;
-          -moz-appearance: textfield;
-          margin: 0;
-
-          &::-webkit-outer-spin-button,
-          &::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-          }
-
-          &:focus {
-            border-color: #23f7dd;
-          }
-        }
-
-        .pagination-ellipsis-form-button {
-          outline: none;
-          border: none;
-          background-color: transparent;
-          line-height: 1;
-          cursor: pointer;
-          position: absolute;
-          right: 4px;
-          transform: translateY(-50%);
-          font-size: 12px;
-          padding: calc(20px / 2);
-          top: 50%;
-
-          &:hover .pagination-ellipsis-form-button-icon {
-            color: #23f7dd;
-          }
-        }
+      &:hover .pagination-ellipsis-form-button-icon {
+        color: #23f7dd;
       }
     }
   }

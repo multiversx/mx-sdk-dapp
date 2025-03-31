@@ -72,8 +72,30 @@
       flex: 1;
       display: flex;
 
+      .ledger-address-table-body-item-data-shard-trigger {
+        white-space: nowrap;
+        color: #737373;
+      }
+
+      @for $currentShard from 1 through 3 {
+        .ledger-address-table-body-item-data-shard-#{$currentShard - 1} {
+          height: auto;
+          width: 16px;
+          cursor: pointer;
+
+          path:not(:nth-child(#{$currentShard})) {
+            opacity: 20%;
+          }
+
+          path:nth-child(#{$currentShard}) {
+            opacity: 50%;
+          }
+        }
+      }
+
       .ledger-address-table-body-item-data-value {
         flex: 1;
+        margin-left: 8px;
 
         & > span {
           max-width: 84px;

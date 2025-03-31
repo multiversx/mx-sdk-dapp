@@ -32,5 +32,6 @@ export * from './webWallet/CrossWindowLoginButton';
 export * from './TransactionsTable';
 export * from './ScamPhishingAlert';
 export * from './TimeAgo';
+export * from './Tooltip';
 export * from './metamask/MetamaskLoginButton';
 export * from './iframe/IframeLoginButton';
