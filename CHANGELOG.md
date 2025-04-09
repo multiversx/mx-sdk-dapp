@@ -7,11 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1397)] - 2025-04-09
-- [Upgrade passkey provider and add `extrasApiAddress` to network](https://github.com/multiversx/mx-sdk-dapp/pull/1396)
+## [[v4.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1399)] - 2025-04-09
+- [Upgrade passkey provider and add `extrasApiAddress` to network](https://github.com/multiversx/mx-sdk-dapp/pull/1398)
 
+## [[v4.0.1](https://github.com/multiversx/mx-sdk-dapp/pull/1397)] - 2025-03-31
+- [Added shard data to the Ledger address table](https://github.com/multiversx/mx-sdk-dapp/pull/1396)
 
 ## [[v4.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1395)] - 2025-03-27
+
 - [Changed sdk-core dependecy to `^14x`](https://github.com/multiversx/mx-sdk-dapp/pull/1394)
 
 ## [[v4.0.0-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1393)] - 2025-03-27
