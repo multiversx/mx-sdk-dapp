@@ -2363,14 +2363,13 @@
   resolved "https://registry.npmjs.org/@multiversx/sdk-opera-provider/-/sdk-opera-provider-1.0.0-alpha.1.tgz"
   integrity sha512-5hrqn+kNpuy/S6eV5wh5mE4lvQo0PduZ7fLsh/2Srcaz3K5kM5lE1VyQmWk4DTxToZSldrGbgWz/olezoC6fPg==
 
-"@multiversx/sdk-passkey-provider@2.0.2-alpha.0":
-  version "2.0.2-alpha.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-2.0.2-alpha.0.tgz#207a0ccadb0860491363d8dce7ab1409ec412163"
-  integrity sha512-dO6enxZOmw1gWPTbx2QYr+2eseAPgiCIYC8b/659dWRHvJIvfExPXY4nI/GapbPwlM9RCp/4qLNk3PU1usP5tA==
+"@multiversx/sdk-passkey-provider@3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-3.0.0.tgz#03a77dd8e555820dcac919fdc56b7f768a721a3d"
+  integrity sha512-Lu350XbaPX5ErRgA7Vjs9hjtSzqay3mbL71UJiGIoYJnTwV3ekSZYH+9EM/uMmugTJRrqv97GTZYvHBjPByXPA==
   dependencies:
     "@noble/ed25519" "2.1.0"
     "@types/jest" "29.5.11"
-    axios "^1.8.4"
     short-unique-id "5.2.0"
 
 "@multiversx/sdk-transaction-decoder@1.0.2":
@@ -6071,15 +6070,6 @@ axios@^1.7.4:
   version "1.8.3"
   resolved "https://registry.npmjs.org/axios/-/axios-1.8.3.tgz"
   integrity sha512-iP4DebzoNlP/YN2dpwCgb8zoCmhtkajzS48JvwmkSkXvPI3DHc7m+XYL5tGnSlJtR6nImXZmdCuN5aP8dh1d8A==
-  dependencies:
-    follow-redirects "^1.15.6"
-    form-data "^4.0.0"
-    proxy-from-env "^1.1.0"
-
-axios@^1.8.4:
-  version "1.8.4"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-1.8.4.tgz#78990bb4bc63d2cae072952d374835950a82f447"
-  integrity sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==
   dependencies:
     follow-redirects "^1.15.6"
     form-data "^4.0.0"
