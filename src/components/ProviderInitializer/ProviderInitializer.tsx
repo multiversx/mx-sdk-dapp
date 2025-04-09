@@ -322,7 +322,10 @@ export function ProviderInitializer() {
 
   async function setPasskeyProvider() {
     const address = await getAddress();
-    const provider = await getPasskeyProvider(address);
+    const provider = await getPasskeyProvider({
+      address,
+      extrasApiAddress: network.extrasApiAddress
+    });
     if (provider) {
       setAccountProvider(provider);
     }
