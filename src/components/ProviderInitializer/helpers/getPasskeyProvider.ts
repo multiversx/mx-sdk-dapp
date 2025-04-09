@@ -1,8 +1,16 @@
 import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
 
-export async function getPasskeyProvider(address: string) {
+export async function getPasskeyProvider({
+  address,
+  extrasApiAddress = ''
+}: {
+  address: string;
+  extrasApiAddress?: string;
+}) {
   try {
-    const provider = PasskeyProvider.getInstance().setAddress(address);
+    const provider = PasskeyProvider.getInstance()
+      .setPasskeyServiceUrl(extrasApiAddress)
+      .setAddress(address);
 
     const success = await provider.init();
 

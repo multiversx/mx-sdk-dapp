@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
@@ -38,6 +39,9 @@ export const usePasskeyLogin = ({
   const hasNativeAuth = nativeAuth != null;
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
+  const {
+    network: { extrasApiAddress }
+  } = useGetNetworkConfig();
 
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
@@ -50,7 +54,10 @@ export const usePasskeyLogin = ({
     clearInitiatedLogins();
 
     setIsLoading(true);
-    const provider: PasskeyProvider = PasskeyProvider.getInstance();
+    const provider: PasskeyProvider =
+      PasskeyProvider.getInstance().setPasskeyServiceUrl(
+        extrasApiAddress ?? ''
+      );
 
     try {
       const isSuccessfullyInitialized: boolean = await provider.init();
@@ -123,7 +130,10 @@ export const usePasskeyLogin = ({
   }
 
   const createAccount = async (walletName: string) => {
-    const provider: PasskeyProvider = PasskeyProvider.getInstance();
+    const provider: PasskeyProvider =
+      PasskeyProvider.getInstance().setPasskeyServiceUrl(
+        extrasApiAddress ?? ''
+      );
     await provider.init();
     return await provider.createAccount({
       walletName
