@@ -154,6 +154,22 @@
           z-index: 2;
         }
       }
+
+      .pagination-tooltip {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 200ms ease;
+        border-radius: 50%;
+
+        &:hover,
+        &.active {
+          background-color: #143736;
+        }
+      }
     }
   }
 }

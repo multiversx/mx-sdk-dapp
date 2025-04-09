@@ -9,6 +9,7 @@ export interface BaseNetworkType {
   walletConnectDeepLink: string;
   walletAddress: string;
   apiAddress: string;
+  extrasApiAddress?: string;
   explorerAddress: string;
   apiTimeout: string;
   walletConnectV2ProjectId?: string;
