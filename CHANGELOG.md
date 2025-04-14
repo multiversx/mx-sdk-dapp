@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1400)] - 2025-04-14
+## [[v4.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1402)] - 2025-04-14
 - [Upgrade passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1400)
 
 ## [[v4.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1399)] - 2025-04-09
