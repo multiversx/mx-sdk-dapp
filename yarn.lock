@@ -2363,10 +2363,10 @@
   resolved "https://registry.npmjs.org/@multiversx/sdk-opera-provider/-/sdk-opera-provider-1.0.0-alpha.1.tgz"
   integrity sha512-5hrqn+kNpuy/S6eV5wh5mE4lvQo0PduZ7fLsh/2Srcaz3K5kM5lE1VyQmWk4DTxToZSldrGbgWz/olezoC6fPg==
 
-"@multiversx/sdk-passkey-provider@3.0.1":
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-3.0.1.tgz#0dcd77c1d3e1d2bbd039cc1aa8b4c805add095b7"
-  integrity sha512-CR5XbfSgc759d0Q3OOhy7dJE+LrJB8lygLehGQv0TU9WDi0TXgumpy3+diX9lHd8eqQjMgHdysCEh4Ep05PbJA==
+"@multiversx/sdk-passkey-provider@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-3.0.2.tgz#5fdaaeb553f3bd2fabaad32c27259ea3e3bd1aa8"
+  integrity sha512-JW0EKEKzw0gyOc/dXzhkFJuTdpYyWdD6Qs0GFeFI90DhSydsyTKJoMC8gkWtx9dlOyuTAW152qc+llkIgLCOyA==
   dependencies:
     "@noble/ed25519" "2.1.0"
     "@types/jest" "29.5.11"
