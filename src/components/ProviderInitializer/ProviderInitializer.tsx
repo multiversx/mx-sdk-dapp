@@ -145,6 +145,22 @@ export function ProviderInitializer() {
     }
   }, [isLoggedIn, userAccount]);
 
+  useEffect(() => {
+    const shouldGetGasMetadata =
+      isLoggedIn && userAccount.shard != null && !network.gasStationMetadata;
+
+    if (!shouldGetGasMetadata) {
+      return;
+    }
+
+    updateGasStationMetadata();
+  }, [
+    userAccount.shard,
+    userAccount.address,
+    isLoggedIn,
+    network.gasStationMetadata
+  ]);
+
   // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
   // The round duration is used for polling interval
   async function refreshNetworkConfig() {
@@ -157,30 +173,13 @@ export function ProviderInitializer() {
 
     const shouldGetBaseConfig =
       !network.chainId || needsRoundDurationForPollingInterval;
-    const shouldGetGasMetadata = !network.gasStationMetadata;
 
-    if (!shouldGetBaseConfig && !shouldGetGasMetadata) {
+    if (!shouldGetBaseConfig) {
       return;
     }
 
     try {
-      const promises = [];
-
-      if (shouldGetBaseConfig) {
-        promises.push(getNetworkConfigFromApi());
-      } else {
-        promises.push(Promise.resolve(null));
-      }
-
-      if (shouldGetGasMetadata && account.shard != null) {
-        promises.push(getGasStationMetadataFromApi(account.shard));
-      } else {
-        promises.push(Promise.resolve(null));
-      }
-
-      const [fetchedNetworkConfig, fetchedGasMetadata] = await Promise.all(
-        promises
-      );
+      const fetchedNetworkConfig = await getNetworkConfigFromApi();
 
       const updates: Partial<NetworkType> = {};
 
@@ -198,26 +197,41 @@ export function ProviderInitializer() {
         }
       }
 
-      if (fetchedGasMetadata) {
-        const gasMetadataResult =
-          fetchedGasMetadata as BaseNetworkType['gasStationMetadata'];
-
-        const currentGasMetaString = network.gasStationMetadata
-          ? JSON.stringify(network.gasStationMetadata)
-          : null;
-
-        const fetchedGasMetaString = JSON.stringify(gasMetadataResult);
-
-        if (currentGasMetaString !== fetchedGasMetaString) {
-          updates.gasStationMetadata = gasMetadataResult;
-        }
-      }
-
       if (Object.keys(updates).length > 0) {
         dispatch(updateNetworkConfig(updates));
       }
     } catch (err) {
-      console.error('Failed refreshing network config or gas metadata:', err);
+      console.error('Failed refreshing network config:', err);
+    }
+  }
+
+  async function updateGasStationMetadata() {
+    if (userAccount.shard == null) {
+      console.warn('Skipping gas metadata update: shard is missing.');
+      return;
+    }
+
+    try {
+      const fetchedGasMetadata = await getGasStationMetadataFromApi(
+        userAccount.shard
+      );
+
+      const gasMetadataResult =
+        fetchedGasMetadata as BaseNetworkType['gasStationMetadata'];
+
+      const currentGasMetaString = network.gasStationMetadata
+        ? JSON.stringify(network.gasStationMetadata)
+        : null;
+
+      const fetchedGasMetaString = JSON.stringify(gasMetadataResult);
+
+      if (currentGasMetaString !== fetchedGasMetaString) {
+        dispatch(
+          updateNetworkConfig({ gasStationMetadata: gasMetadataResult })
+        );
+      }
+    } catch (err) {
+      console.error('Failed refreshing gas metadata:', err);
     }
   }
 

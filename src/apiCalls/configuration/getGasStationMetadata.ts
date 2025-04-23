@@ -21,9 +21,11 @@ export async function getGasStationMetadataFromApi(
 
     if (data) {
       return {
-        lastBlock: data.lastBlock,
-        fast: data.fast,
-        faster: data.faster
+        [shard]: {
+          lastBlock: data.lastBlock,
+          fast: data.fast,
+          faster: data.faster
+        }
       };
     }
     return null;
