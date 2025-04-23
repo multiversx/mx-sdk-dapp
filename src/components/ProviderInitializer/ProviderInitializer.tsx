@@ -173,6 +173,10 @@ export function ProviderInitializer() {
 
     const hasDifferentChainId = lastChainId !== chainID;
 
+    if (hasDifferentChainId) {
+      setLastChainId(chainID);
+    }
+
     if (hasDifferentGasStationMetadata || hasDifferentChainId) {
       dispatch(
         updateNetworkConfig({
