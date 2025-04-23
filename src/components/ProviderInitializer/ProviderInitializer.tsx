@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   getNetworkConfigFromApi,
@@ -89,6 +89,7 @@ export function ProviderInitializer() {
   const tokenLogin = useSelector(tokenLoginSelector);
   const userAccount = useSelector(accountSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
+  const [lastChainId, setLastChainId] = useState<string>(chainID);
 
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
@@ -142,7 +143,13 @@ export function ProviderInitializer() {
 
   useEffect(() => {
     checkGasMetadata();
-  }, [userAccount.shard, userAccount.address, isLoggedIn]);
+  }, [
+    userAccount.shard,
+    userAccount.address,
+    isLoggedIn,
+    lastChainId,
+    chainID
+  ]);
 
   async function checkGasMetadata() {
     const hasAccountShard = isLoggedIn && userAccount.shard != null;
@@ -164,7 +171,9 @@ export function ProviderInitializer() {
       network.gasStationMetadata[shard].lastBlock !==
         fetchedGasMetadata[shard].lastBlock;
 
-    if (hasDifferentGasStationMetadata) {
+    const hasDifferentChainId = lastChainId !== chainID;
+
+    if (hasDifferentGasStationMetadata || hasDifferentChainId) {
       dispatch(
         updateNetworkConfig({
           gasStationMetadata: fetchedGasMetadata
