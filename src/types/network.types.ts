@@ -18,10 +18,10 @@ export interface BaseNetworkType {
   metamaskSnapWalletAddress?: string;
   websocketUrl?: string;
   gasStationMetadata?: {
+    lastBlock: number;
     fast: number;
     faster: number;
-    excellentJustLikeMoveBalance?: number;
-  }[];
+  };
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {

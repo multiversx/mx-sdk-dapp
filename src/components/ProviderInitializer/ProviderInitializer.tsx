@@ -1,6 +1,10 @@
 import { useEffect, useRef } from 'react';
 
-import { getNetworkConfigFromApi, useGetAccountFromApi } from 'apiCalls';
+import {
+  getNetworkConfigFromApi,
+  getGasStationMetadataFromApi,
+  useGetAccountFromApi
+} from 'apiCalls';
 import {
   DEVNET_CHAIN_ID,
   MAINNET_CHAIN_ID,
@@ -46,6 +50,11 @@ import {
 } from 'reduxStore/slices';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
+import {
+  NetworkType,
+  BaseNetworkType,
+  ApiNetworkConfigType
+} from 'types/network.types';
 import {
   getAddress,
   getLatestNonce,
@@ -146,30 +155,69 @@ export function ProviderInitializer() {
       ) &&
       !network.roundDuration;
 
-    const shouldGetConfig =
+    const shouldGetBaseConfig =
       !network.chainId || needsRoundDurationForPollingInterval;
+    const shouldGetGasMetadata = !network.gasStationMetadata;
 
-    if (!shouldGetConfig) {
+    if (!shouldGetBaseConfig && !shouldGetGasMetadata) {
       return;
     }
 
     try {
-      const networkConfig = await getNetworkConfigFromApi();
-      const hasDifferentNetworkConfig =
-        networkConfig &&
-        (network.chainId !== networkConfig.erd_chain_id ||
-          network.roundDuration !== networkConfig.erd_round_duration);
+      const promises = [];
 
-      if (hasDifferentNetworkConfig) {
-        dispatch(
-          updateNetworkConfig({
-            chainId: networkConfig.erd_chain_id,
-            roundDuration: networkConfig.erd_round_duration
-          })
-        );
+      if (shouldGetBaseConfig) {
+        promises.push(getNetworkConfigFromApi());
+      } else {
+        promises.push(Promise.resolve(null));
+      }
+
+      if (shouldGetGasMetadata && account.shard != null) {
+        promises.push(getGasStationMetadataFromApi(account.shard));
+      } else {
+        promises.push(Promise.resolve(null));
+      }
+
+      const [fetchedNetworkConfig, fetchedGasMetadata] = await Promise.all(
+        promises
+      );
+
+      const updates: Partial<NetworkType> = {};
+
+      if (fetchedNetworkConfig) {
+        const networkConfigResult =
+          fetchedNetworkConfig as ApiNetworkConfigType;
+
+        const hasDifferentNetworkConfig =
+          network.chainId !== networkConfigResult.erd_chain_id ||
+          network.roundDuration !== networkConfigResult.erd_round_duration;
+
+        if (hasDifferentNetworkConfig) {
+          updates.chainId = networkConfigResult.erd_chain_id;
+          updates.roundDuration = networkConfigResult.erd_round_duration;
+        }
+      }
+
+      if (fetchedGasMetadata) {
+        const gasMetadataResult =
+          fetchedGasMetadata as BaseNetworkType['gasStationMetadata'];
+
+        const currentGasMetaString = network.gasStationMetadata
+          ? JSON.stringify(network.gasStationMetadata)
+          : null;
+
+        const fetchedGasMetaString = JSON.stringify(gasMetadataResult);
+
+        if (currentGasMetaString !== fetchedGasMetaString) {
+          updates.gasStationMetadata = gasMetadataResult;
+        }
+      }
+
+      if (Object.keys(updates).length > 0) {
+        dispatch(updateNetworkConfig(updates));
       }
     } catch (err) {
-      console.error('failed refreshing chainId ', err);
+      console.error('Failed refreshing network config or gas metadata:', err);
     }
   }
 
