@@ -50,11 +50,7 @@ import {
 } from 'reduxStore/slices';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
-import {
-  NetworkType,
-  BaseNetworkType,
-  ApiNetworkConfigType
-} from 'types/network.types';
+import { NetworkType, ApiNetworkConfigType } from 'types/network.types';
 import {
   getAddress,
   getLatestNonce,
@@ -76,7 +72,6 @@ import {
   handleGuardianWarning
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
-
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
@@ -146,20 +141,39 @@ export function ProviderInitializer() {
   }, [isLoggedIn, userAccount]);
 
   useEffect(() => {
-    const shouldGetGasMetadata =
-      isLoggedIn && userAccount.shard != null && !network.gasStationMetadata;
+    checkGasMetadata();
+  }, [userAccount.shard, userAccount.address, isLoggedIn]);
 
-    if (!shouldGetGasMetadata) {
+  async function checkGasMetadata() {
+    const hasAccountShard = isLoggedIn && userAccount.shard != null;
+
+    if (!hasAccountShard) {
       return;
     }
 
-    updateGasStationMetadata();
-  }, [
-    userAccount.shard,
-    userAccount.address,
-    isLoggedIn,
-    network.gasStationMetadata
-  ]);
+    const shard = Number(userAccount.shard);
+    const fetchedGasMetadata = await getGasStationMetadataFromApi(shard);
+
+    if (!fetchedGasMetadata?.[shard]?.lastBlock) {
+      return;
+    }
+
+    const hasDifferentGasStationMetadata =
+      !network.gasStationMetadata ||
+      !network.gasStationMetadata[shard] ||
+      network.gasStationMetadata[shard].lastBlock !==
+        fetchedGasMetadata[shard].lastBlock;
+
+    if (!hasDifferentGasStationMetadata) {
+      return;
+    }
+
+    dispatch(
+      updateNetworkConfig({
+        gasStationMetadata: fetchedGasMetadata
+      })
+    );
+  }
 
   // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
   // The round duration is used for polling interval
@@ -202,36 +216,6 @@ export function ProviderInitializer() {
       }
     } catch (err) {
       console.error('Failed refreshing network config:', err);
-    }
-  }
-
-  async function updateGasStationMetadata() {
-    if (userAccount.shard == null) {
-      console.warn('Skipping gas metadata update: shard is missing.');
-      return;
-    }
-
-    try {
-      const fetchedGasMetadata = await getGasStationMetadataFromApi(
-        userAccount.shard
-      );
-
-      const gasMetadataResult =
-        fetchedGasMetadata as BaseNetworkType['gasStationMetadata'];
-
-      const currentGasMetaString = network.gasStationMetadata
-        ? JSON.stringify(network.gasStationMetadata)
-        : null;
-
-      const fetchedGasMetaString = JSON.stringify(gasMetadataResult);
-
-      if (currentGasMetaString !== fetchedGasMetaString) {
-        dispatch(
-          updateNetworkConfig({ gasStationMetadata: gasMetadataResult })
-        );
-      }
-    } catch (err) {
-      console.error('Failed refreshing gas metadata:', err);
     }
   }
 
