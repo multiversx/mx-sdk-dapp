@@ -164,15 +164,13 @@ export function ProviderInitializer() {
       network.gasStationMetadata[shard].lastBlock !==
         fetchedGasMetadata[shard].lastBlock;
 
-    if (!hasDifferentGasStationMetadata) {
-      return;
+    if (hasDifferentGasStationMetadata) {
+      dispatch(
+        updateNetworkConfig({
+          gasStationMetadata: fetchedGasMetadata
+        })
+      );
     }
-
-    dispatch(
-      updateNetworkConfig({
-        gasStationMetadata: fetchedGasMetadata
-      })
-    );
   }
 
   // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
