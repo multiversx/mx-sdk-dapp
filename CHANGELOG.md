@@ -7,13 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added dynamic gas station metadata fetch](https://github.com/multiversx/mx-sdk-dapp/pull/1404)
+
 ## [[v4.1.2](https://github.com/multiversx/mx-sdk-dapp/pull/1403)] - 2025-04-15
+
 - [Upgrade passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1403)
 
 ## [[v4.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1402)] - 2025-04-14
+
 - [Upgrade passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1400)
 
 ## [[v4.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1399)] - 2025-04-09
+
 - [Upgrade passkey provider and add `extrasApiAddress` to network](https://github.com/multiversx/mx-sdk-dapp/pull/1399)
 - [Added shard data to the Ledger address table](https://github.com/multiversx/mx-sdk-dapp/pull/1396)
 

@@ -18,20 +18,20 @@ describe('getGasPriceDetails', () => {
   it('should return the correct gas price details', () => {
     const gasPriceDetails = getGasPriceDetails({
       shard: 1,
-      gasStationMetadata: [
-        {
+      gasStationMetadata: {
+        0: {
           fast: 11_760_000,
           faster: 19_287_760
         },
-        {
+        1: {
           fast: 11_760_000,
           faster: 19_287_760
         },
-        {
+        2: {
           fast: 11_760_000,
           faster: 19_287_760
         }
-      ],
+      },
       transaction: secondTx,
       initialGasPrice: 1_000_000_000
     });
