@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
 import { recommendGasPrice } from 'hooks/transactions/helpers/recommendGasPrice';
 import { NetworkType } from 'types/network.types';

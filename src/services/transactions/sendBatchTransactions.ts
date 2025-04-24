@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from '@multiversx/sdk-core';
 import { addressSelector } from 'reduxStore/selectors';
 import { store } from 'reduxStore/store';
 import {
