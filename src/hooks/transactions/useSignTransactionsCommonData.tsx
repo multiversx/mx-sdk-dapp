@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from '@multiversx/sdk-core';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider';
 import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';
 import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';

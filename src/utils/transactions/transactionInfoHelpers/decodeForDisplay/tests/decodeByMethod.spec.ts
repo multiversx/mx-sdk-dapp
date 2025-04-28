@@ -1,10 +1,10 @@
-import { Address } from '@multiversx/sdk-core/out';
+import { Address } from '@multiversx/sdk-core';
 import { DecodeMethodEnum } from 'types';
 import { addressIsValid } from 'utils/account/addressIsValid';
 import { isUtf8 } from 'utils/decoders';
 import { decodeByMethod } from '../helpers';
 
-jest.mock('@multiversx/sdk-core/out', () => ({
+jest.mock('@multiversx/sdk-core', () => ({
   Address: {
     fromHex: jest.fn()
   }

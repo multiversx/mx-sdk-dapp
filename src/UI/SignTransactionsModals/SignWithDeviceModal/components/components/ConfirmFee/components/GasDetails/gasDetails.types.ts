@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from '@multiversx/sdk-core';
 
 import { WithStylesImportType } from 'hocs/useStyles';
 import { UseSignTransactionsWithDeviceReturnType } from 'hooks';
