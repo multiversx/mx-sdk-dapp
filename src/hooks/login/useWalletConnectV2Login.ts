@@ -418,6 +418,7 @@ export const useWalletConnectV2Login = ({
         console.error(WalletConnectV2Error.userRejected, err);
         setError(WalletConnectV2Error.userRejected);
         setIsLoading(true);
+        await initiateLogin(true);
       }
     } catch (err) {
       console.error(WalletConnectV2Error.connectError, err);
