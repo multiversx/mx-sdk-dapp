@@ -33,10 +33,9 @@ export const stringIsFloat = (amount: string) => {
   }
   const number = decimals ? [wholes, decimals].join('.') : wholes;
   const bNparsed = LocalBigNumber(number);
-  const bNcompared = bNparsed.comparedTo(0);
-  if (bNcompared !== null) {
-    return bNparsed.toString(10) === number && bNcompared >= 0;
-  }
 
-  return bNparsed.toString(10) === number;
+  const output =
+    bNparsed.toString(10) === number && bNparsed.isGreaterThanOrEqualTo(0);
+
+  return output;
 };
