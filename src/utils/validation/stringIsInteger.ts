@@ -10,8 +10,10 @@ export const stringIsInteger = (
   }
   const bNparsed = new BigNumber(stringInteger);
   const limit = positiveNumbersOnly ? 0 : -1;
-  return (
-    bNparsed.toString(10) === stringInteger &&
-    bNparsed.isGreaterThanOrEqualTo(limit)
-  );
+  const bNcompared = bNparsed.comparedTo(0);
+  if (bNcompared !== null) {
+    return bNparsed.toString(10) === stringInteger && bNcompared >= limit;
+  }
+
+  return bNparsed.toString(10) === stringInteger;
 };
