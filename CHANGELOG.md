@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.1.5](https://github.com/multiversx/mx-sdk-dapp/pull/1411)] - 2025-05-07
+## [[v4.1.5](https://github.com/multiversx/mx-sdk-dapp/pull/1412)] - 2025-05-07
 
-- [Added support for two cross-window wallets](https://github.com/multiversx/mx-sdk-dapp/pull/1410)
+- [Added support for two cross-window wallets](https://github.com/multiversx/mx-sdk-dapp/pull/1411)
 
 ## [[v4.1.4](https://github.com/multiversx/mx-sdk-dapp/pull/1409)] - 2025-05-07
 
