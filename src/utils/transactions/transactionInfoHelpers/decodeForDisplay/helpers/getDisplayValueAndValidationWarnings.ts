@@ -29,7 +29,7 @@ export const getDisplayValueAndValidationWarnings = ({
       }
     } else {
       const hexValidationWarnings = getHexValidationWarnings(part);
-      if (hexValidationWarnings.length) {
+      if (hexValidationWarnings?.length) {
         display.validationWarnings = Array.from(
           new Set([...display.validationWarnings, ...hexValidationWarnings])
         );

@@ -5,6 +5,7 @@ import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
+import { emptyAccount, setAccount } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -44,6 +45,7 @@ export const useMetamaskLogin = ({
     }
 
     clearInitiatedLogins();
+    dispatch(setAccount(emptyAccount));
 
     setIsLoading(true);
     const provider: MetamaskProvider = MetamaskProvider.getInstance();

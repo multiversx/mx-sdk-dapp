@@ -114,7 +114,7 @@ export const useSignMultipleTransactions = ({
 
   const isLastTransaction = currentStep === allEditedTransactions.length - 1;
   const currentTx = allEditedTransactions[currentStep];
-  const sender = currentTransaction?.transaction?.getSender().toString();
+  const sender = currentTransaction?.transaction?.sender.toBech32();
 
   // Skip account fetching if the sender is missing or same as current account
   const { data: senderAccount } = useGetAccountFromApi(
@@ -127,14 +127,14 @@ export const useSignMultipleTransactions = ({
     }
 
     const { transaction, multiTxData, transactionIndex } = currentTx;
-    const dataField = transaction.getData().toString();
+    const dataField = transaction.data.toString();
     const transactionTokenInfo = getTxInfoByDataField(
-      transaction.getData().toString(),
+      transaction.data.toString(),
       multiTxData
     );
 
     const { tokenId } = transactionTokenInfo;
-    const receiver = transaction.getReceiver().toString();
+    const receiver = transaction.receiver.toBech32();
 
     if (sender && sender !== address) {
       const isValidSender = checkIsValidSender(senderAccount, address);
