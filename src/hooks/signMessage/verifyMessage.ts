@@ -1,4 +1,4 @@
-import { Address, Message, MessageComputer } from '@multiversx/sdk-core/out';
+import { Address, Message, MessageComputer } from '@multiversx/sdk-core';
 import { getVerifier } from './getVerifier';
 
 export const verifyMessage = async (

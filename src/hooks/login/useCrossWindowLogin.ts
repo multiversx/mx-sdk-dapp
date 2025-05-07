@@ -7,7 +7,7 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { setAccount, setAddress } from 'reduxStore/slices';
+import { emptyAccount, setAccount, setAddress } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -55,6 +55,9 @@ export const useCrossWindowLogin = ({
     clearInitiatedLogins({
       skipLoginMethod: LoginMethodsEnum.crossWindow
     });
+
+    dispatch(setAddress(emptyAccount.address));
+    dispatch(setAccount(emptyAccount));
 
     setIsLoading(true);
     const isSuccessfullyInitialized: boolean =

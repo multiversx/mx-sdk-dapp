@@ -1,4 +1,4 @@
-import { Transaction, TransactionComputer } from '@multiversx/sdk-core/out';
+import { Transaction, TransactionComputer } from '@multiversx/sdk-core';
 import { PlainSignedTransaction } from '@multiversx/sdk-web-wallet-provider/out/plainSignedTransaction';
 import { newTransaction } from 'models';
 import { SignedTransactionType } from 'types';

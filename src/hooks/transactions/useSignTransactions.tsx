@@ -84,7 +84,7 @@ export const useSignTransactions = () => {
 
   const senderAddresses = uniq(
     transactionsToSign?.transactions
-      .map((tx) => tx.getSender().toString())
+      .map((tx) => tx.sender.toBech32())
       .filter((sender) => sender)
   ) as string[];
 

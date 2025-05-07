@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.1.3](https://github.com/multiversx/mx-sdk-dapp/pull/1407)] - 2025-04-15
+## [[v4.1.4](https://github.com/multiversx/mx-sdk-dapp/pull/1409)] - 2025-05-07
+
+- [Added account cleanup on login](https://github.com/multiversx/mx-sdk-dapp/pull/1408)
+- [Fixed sdk-core imports](https://github.com/multiversx/mx-sdk-dapp/pull/1405)
+- [Added dynamic gas station metadata fetch](https://github.com/multiversx/mx-sdk-dapp/pull/1404)
+
+## [[v4.1.3](https://github.com/multiversx/mx-sdk-dapp/pull/1407)] - 2025-05-06
 
 - [Update WalletConnect Provider](https://github.com/multiversx/mx-sdk-dapp/pull/1407)
 

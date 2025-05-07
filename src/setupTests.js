@@ -20,7 +20,7 @@ afterAll(() => server.close());
 
 window.scrollTo = jest.fn();
 
-jest.retryTimes(3);
+jest.retryTimes(0);
 
 jest.mock('./utils/network/getEgldLabel', () => {
   return {

@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from '@multiversx/sdk-core';
 import BigNumber from 'bignumber.js';
 import { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';
 import { calculateFeeLimit } from 'utils/operations/calculateFeeLimit';

@@ -1,6 +1,10 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import { getNetworkConfigFromApi, useGetAccountFromApi } from 'apiCalls';
+import {
+  getNetworkConfigFromApi,
+  getGasStationMetadataFromApi,
+  useGetAccountFromApi
+} from 'apiCalls';
 import {
   DEVNET_CHAIN_ID,
   MAINNET_CHAIN_ID,
@@ -46,6 +50,7 @@ import {
 } from 'reduxStore/slices';
 import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { NetworkType, ApiNetworkConfigType } from 'types/network.types';
 import {
   getAddress,
   getLatestNonce,
@@ -67,7 +72,6 @@ import {
   handleGuardianWarning
 } from './helpers';
 import { useSetLedgerProvider } from './hooks';
-
 let initalizingLedger = false;
 
 export function ProviderInitializer() {
@@ -85,6 +89,7 @@ export function ProviderInitializer() {
   const tokenLogin = useSelector(tokenLoginSelector);
   const userAccount = useSelector(accountSelector);
   const nativeAuthConfig = tokenLogin?.nativeAuthConfig;
+  const [lastChainId, setLastChainId] = useState<string>(chainID);
 
   const loginService = useLoginService(
     nativeAuthConfig ? nativeAuthConfig : false
@@ -136,6 +141,51 @@ export function ProviderInitializer() {
     }
   }, [isLoggedIn, userAccount]);
 
+  useEffect(() => {
+    checkGasMetadata();
+  }, [
+    userAccount.shard,
+    userAccount.address,
+    isLoggedIn,
+    lastChainId,
+    chainID
+  ]);
+
+  async function checkGasMetadata() {
+    const hasAccountShard = isLoggedIn && userAccount.shard != null;
+
+    if (!hasAccountShard) {
+      return;
+    }
+
+    const shard = Number(userAccount.shard);
+    const fetchedGasMetadata = await getGasStationMetadataFromApi(shard);
+
+    if (!fetchedGasMetadata?.[shard]?.lastBlock) {
+      return;
+    }
+
+    const hasDifferentGasStationMetadata =
+      !network.gasStationMetadata ||
+      !network.gasStationMetadata[shard] ||
+      network.gasStationMetadata[shard].lastBlock !==
+        fetchedGasMetadata[shard].lastBlock;
+
+    const hasDifferentChainId = lastChainId !== chainID;
+
+    if (hasDifferentChainId) {
+      setLastChainId(chainID);
+    }
+
+    if (hasDifferentGasStationMetadata || hasDifferentChainId) {
+      dispatch(
+        updateNetworkConfig({
+          gasStationMetadata: fetchedGasMetadata
+        })
+      );
+    }
+  }
+
   // We need to get the roundDuration for networks that do not support websocket (e.g. sovereign)
   // The round duration is used for polling interval
   async function refreshNetworkConfig() {
@@ -146,30 +196,37 @@ export function ProviderInitializer() {
       ) &&
       !network.roundDuration;
 
-    const shouldGetConfig =
+    const shouldGetBaseConfig =
       !network.chainId || needsRoundDurationForPollingInterval;
 
-    if (!shouldGetConfig) {
+    if (!shouldGetBaseConfig) {
       return;
     }
 
     try {
-      const networkConfig = await getNetworkConfigFromApi();
-      const hasDifferentNetworkConfig =
-        networkConfig &&
-        (network.chainId !== networkConfig.erd_chain_id ||
-          network.roundDuration !== networkConfig.erd_round_duration);
+      const fetchedNetworkConfig = await getNetworkConfigFromApi();
 
-      if (hasDifferentNetworkConfig) {
-        dispatch(
-          updateNetworkConfig({
-            chainId: networkConfig.erd_chain_id,
-            roundDuration: networkConfig.erd_round_duration
-          })
-        );
+      const updates: Partial<NetworkType> = {};
+
+      if (fetchedNetworkConfig) {
+        const networkConfigResult =
+          fetchedNetworkConfig as ApiNetworkConfigType;
+
+        const hasDifferentNetworkConfig =
+          network.chainId !== networkConfigResult.erd_chain_id ||
+          network.roundDuration !== networkConfigResult.erd_round_duration;
+
+        if (hasDifferentNetworkConfig) {
+          updates.chainId = networkConfigResult.erd_chain_id;
+          updates.roundDuration = networkConfigResult.erd_round_duration;
+        }
+      }
+
+      if (Object.keys(updates).length > 0) {
+        dispatch(updateNetworkConfig(updates));
       }
     } catch (err) {
-      console.error('failed refreshing chainId ', err);
+      console.error('Failed refreshing network config:', err);
     }
   }
 

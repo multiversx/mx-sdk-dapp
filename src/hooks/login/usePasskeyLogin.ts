@@ -5,6 +5,7 @@ import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
+import { emptyAccount, setAccount, setAddress } from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -52,7 +53,8 @@ export const usePasskeyLogin = ({
     }
 
     clearInitiatedLogins();
-
+    dispatch(setAddress(emptyAccount.address));
+    dispatch(setAccount(emptyAccount));
     setIsLoading(true);
     const provider: PasskeyProvider =
       PasskeyProvider.getInstance().setPasskeyServiceUrl(

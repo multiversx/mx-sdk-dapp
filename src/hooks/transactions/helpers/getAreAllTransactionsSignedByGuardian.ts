@@ -1,4 +1,4 @@
-import { Transaction } from '@multiversx/sdk-core/out';
+import { Transaction } from '@multiversx/sdk-core';
 
 export const getAreAllTransactionsSignedByGuardian = ({
   transactions,
