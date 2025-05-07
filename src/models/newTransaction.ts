@@ -22,11 +22,6 @@ export function newTransaction(rawTransaction: RawTransactionType) {
       ? { receiverUsername: rawTx.receiverUsername }
       : {}),
     ...(rawTx.relayer ? { relayer: new Address(rawTx.relayer) } : {}),
-    ...(rawTx.relayerSignature
-      ? {
-          relayerSignature: new Uint8Array(Buffer.from(rawTx.relayerSignature))
-        }
-      : {}),
     sender: new Address(rawTx.sender),
     ...(rawTx.senderUsername ? { senderUsername: rawTx.senderUsername } : {}),
     gasLimit: BigInt(rawTx.gasLimit.valueOf() ?? GAS_LIMIT),
@@ -36,6 +31,10 @@ export function newTransaction(rawTransaction: RawTransactionType) {
     ...(rawTx.options ? { options: rawTx.options } : {}),
     ...(rawTx.guardian ? { guardian: new Address(rawTx.guardian) } : {})
   });
+
+  if (rawTx.relayerSignature) {
+    transaction.relayerSignature = Buffer.from(rawTx.relayerSignature, 'hex');
+  }
 
   if (rawTx.guardianSignature) {
     transaction.guardianSignature = Buffer.from(rawTx.guardianSignature, 'hex');

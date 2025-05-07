@@ -408,7 +408,7 @@ export function ProviderInitializer() {
     const address = await getAddress();
     const provider = await getCrossWindowProvider({
       address,
-      walletUrl: network.walletAddress
+      walletUrl: network.customWalletAddress ?? network.walletAddress
     });
     if (provider) {
       setAccountProvider(provider);
