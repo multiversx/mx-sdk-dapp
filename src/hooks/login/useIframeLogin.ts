@@ -9,7 +9,7 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { emptyAccount, setAccount } from 'reduxStore/slices';
+import { emptyAccount, setAccount, setAddress } from 'reduxStore/slices';
 import {
   LoginHookGenericStateType,
   LoginMethodsEnum,
@@ -53,6 +53,7 @@ export const useIframeLogin = ({
       skipLoginMethod: LoginMethodsEnum.iframe
     });
 
+    dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
 
     setIsLoading(true);

@@ -56,6 +56,7 @@ export const useCrossWindowLogin = ({
       skipLoginMethod: LoginMethodsEnum.crossWindow
     });
 
+    dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
 
     setIsLoading(true);

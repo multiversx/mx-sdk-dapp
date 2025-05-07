@@ -16,6 +16,7 @@ import {
 import {
   emptyAccount,
   setAccount,
+  setAddress,
   setWalletConnectLogin
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
@@ -290,6 +291,7 @@ export const useWalletConnectV2Login = ({
 
   async function initiateLogin(loginProvider = true) {
     clearInitiatedLogins();
+    dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
     const chainId = await waitForChainID({ maxRetries: 15 });
 

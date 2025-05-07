@@ -9,6 +9,7 @@ import { ledgerAccountSelector } from 'reduxStore/selectors';
 import {
   emptyAccount,
   setAccount,
+  setAddress,
   setLedgerAccount,
   setLedgerLogin,
   updateLedgerAccount
@@ -283,6 +284,7 @@ export const useLedgerLogin = ({
     }
 
     clearInitiatedLogins();
+    dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
     setError('');
 
