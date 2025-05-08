@@ -291,8 +291,12 @@ export const useWalletConnectV2Login = ({
 
   async function initiateLogin(loginProvider = true) {
     clearInitiatedLogins();
-    dispatch(setAddress(emptyAccount.address));
-    dispatch(setAccount(emptyAccount));
+
+    if (loginProvider) {
+      dispatch(setAddress(emptyAccount.address));
+      dispatch(setAccount(emptyAccount));
+    }
+
     const chainId = await waitForChainID({ maxRetries: 15 });
 
     if (!chainId) {

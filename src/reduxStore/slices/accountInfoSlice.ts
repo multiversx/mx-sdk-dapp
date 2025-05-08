@@ -173,7 +173,7 @@ export const accountInfoSlice = createSlice({
       ) => {
         const { address } = action.payload;
         state.address = address;
-        state.publicKey = new Address(address).hex();
+        state.publicKey = new Address(address).toHex();
       }
     );
     builder.addCase(REHYDRATE, (state, action: any) => {
