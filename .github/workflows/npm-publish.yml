@@ -18,6 +18,8 @@ jobs:
       packages: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
       - uses: actions/setup-node@v1
         with:
           node-version: 18
@@ -30,7 +32,7 @@ jobs:
         run: yarn install
 
       - name: Run tests
-        run: yarn test --silent
+        run: yarn test
 
       - name: Build project
         run: yarn build
@@ -43,10 +45,10 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease == 'true'}}
-        run: echo ${{ steps.package.outputs.is-prerelease}} && cd dist && npm publish --tag next
+        run: echo ${{ steps.package.outputs.is-prerelease}} && npm publish --tag next
 
       - name: Publish to npmjs
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease == 'false' }}
-        run: cd dist && npm publish
+        run: npm publish
