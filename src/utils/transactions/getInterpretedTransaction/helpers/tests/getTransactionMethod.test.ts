@@ -7,7 +7,7 @@ import { getTransactionMethod } from '../getTransactionMethod';
 import { baseTransactionMock } from './base-transaction-mock';
 
 describe('getTransactionMethod', () => {
-  it('returns default value "Transaction" in case of missing "action" field ', () => {
+  it('returns default value "Transaction" in case of missing "action" field', () => {
     const transaction: ServerTransactionType = {
       ...baseTransactionMock,
       action: undefined

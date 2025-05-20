@@ -45,14 +45,20 @@ const getLatestBlockHashFromServer = retryMultipleTimes(
   }
 );
 
-// TODO: make getLatestBlockHash accept an object and make getBlockHash param mandatory (to replace axios call)
-export async function getLatestBlockHash(
-  apiUrl: string,
-  blockHashShard?: number,
-  getBlockHash?: () => Promise<string>,
-  noCache?: boolean
-): Promise<LatestBlockHashType> {
-  if (apiUrl == null) {
+type GetLatestBlockHashType = {
+  apiAddress: string;
+  blockHashShard?: number;
+  getBlockHash: () => Promise<string>;
+  noCache?: boolean;
+};
+
+export async function getLatestBlockHash({
+  apiAddress,
+  noCache,
+  blockHashShard,
+  getBlockHash
+}: GetLatestBlockHashType): Promise<LatestBlockHashType> {
+  if (apiAddress == null) {
     throw new Error('missing api url');
   }
 
@@ -73,7 +79,7 @@ export async function getLatestBlockHash(
 
   //if a promise is not in progress, get a new promise and add it to the promise
   requestPromise.current = getLatestBlockHashFromServer(
-    apiUrl,
+    apiAddress,
     blockHashShard,
     getBlockHash
   );
@@ -92,7 +98,7 @@ export async function getLatestBlockHash(
 
     requestPromise.current = null;
     return response;
-  } catch (err) {
+  } catch (_error) {
     requestPromise.current = null;
     return null as any;
   }

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { getCleanApiAddress } from 'apiCalls/utils';
-import { BaseNetworkType } from 'types/network.types';
+import { getCleanApiAddress } from 'apiCalls/configuration/getCleanApiAddress';
+import { NetworkType } from 'types/network.types';
 
 interface IGasStationApiResponse {
   lastBlock: number;
@@ -11,9 +11,10 @@ interface IGasStationApiResponse {
 const GAS_STATION_ENDPOINT = 'transactions/ppu';
 
 export async function getGasStationMetadataFromApi(
-  shard: number
-): Promise<BaseNetworkType['gasStationMetadata'] | null> {
-  const apiAddress = getCleanApiAddress();
+  shard: number,
+  customApiAddress?: string
+): Promise<NetworkType['gasStationMetadata'] | null> {
+  const apiAddress = getCleanApiAddress(customApiAddress);
   const gasStationUrl = `${apiAddress}/${GAS_STATION_ENDPOINT}/${shard}`;
 
   try {

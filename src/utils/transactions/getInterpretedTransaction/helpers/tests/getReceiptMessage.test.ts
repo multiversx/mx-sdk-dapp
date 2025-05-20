@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
-import { DECIMALS, DIGITS, REFUNDED_GAS } from 'constants/index';
-import { formatAmount } from 'utils/operations/formatAmount';
+import { REFUNDED_GAS } from 'constants/index';
+import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import { getReceiptMessage } from '../getReceiptMessage';
 import { baseTransactionMock } from './base-transaction-mock';
 

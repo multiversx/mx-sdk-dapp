@@ -1,11 +1,12 @@
 import { NativeAuthClient } from '@multiversx/sdk-native-auth-client';
-import { NativeAuthConfigType } from 'types';
+
 import {
   getLatestBlockHash,
   LatestBlockHashType
 } from './helpers/getLatestBlockHash';
 
-import { getNativeAuthConfig, getTokenExpiration } from './methods';
+import { buildNativeAuthConfig, getTokenExpiration } from './methods';
+import { NativeAuthConfigType } from './nativeAuth.types';
 
 interface NativeAuthInitType {
   extraInfo?: { [key: string]: string };
@@ -22,7 +23,7 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     extraInfo: extraInfoFromConfig,
     gatewayUrl,
     extraRequestHeaders
-  } = getNativeAuthConfig(config) as NativeAuthConfigType;
+  } = buildNativeAuthConfig(config);
 
   const nativeAuthClient = new NativeAuthClient({
     origin,
@@ -43,35 +44,27 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
     const getBlockHash = (): Promise<string> =>
       nativeAuthClient.getCurrentBlockHash();
 
-    try {
-      const response =
-        initProps?.latestBlockInfo ??
-        (await getLatestBlockHash(
-          apiAddress,
-          blockHashShard,
-          getBlockHash,
-          initProps?.noCache
-        ));
+    let latestBlockInfo = initProps?.latestBlockInfo;
 
-      if (!response) {
-        return '';
-      }
-
-      const { hash, timestamp } = response;
-      const encodedExtraInfo = nativeAuthClient.encodeValue(
-        JSON.stringify({
-          ...(initProps?.extraInfo ?? extraInfoFromConfig),
-          ...(timestamp ? { timestamp } : {})
-        })
-      );
-
-      const encodedOrigin = nativeAuthClient.encodeValue(origin);
-
-      return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
-    } catch (err: any) {
-      console.error('Error getting native auth token: ', err.toString());
-      return '';
+    if (!latestBlockInfo) {
+      latestBlockInfo = await getLatestBlockHash({
+        apiAddress,
+        blockHashShard,
+        getBlockHash,
+        noCache: initProps?.noCache
+      });
     }
+
+    const { hash, timestamp } = latestBlockInfo;
+    const encodedExtraInfo = nativeAuthClient.encodeValue(
+      JSON.stringify({
+        ...(initProps?.extraInfo ?? extraInfoFromConfig),
+        ...(timestamp ? { timestamp } : {})
+      })
+    );
+    const encodedOrigin = nativeAuthClient.encodeValue(origin);
+
+    return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
   };
 
   const getToken = ({
@@ -85,7 +78,6 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
   }): string => nativeAuthClient.getToken(address, token, signature);
 
   return {
-    getNativeAuthConfig,
     initialize,
     getToken,
     getTokenExpiration

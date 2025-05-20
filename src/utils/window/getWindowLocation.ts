@@ -1,4 +1,4 @@
-import { isWindowAvailable } from 'utils/isWindowAvailable';
+import { isWindowAvailable } from './isWindowAvailable';
 
 type GetWindowLocationType = {
   pathname: string;

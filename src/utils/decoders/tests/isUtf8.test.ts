@@ -6,7 +6,7 @@ describe('isUtf8', () => {
     expect(result).toStrictEqual(true);
   });
 
-  it('should return valid UTF-8', async () => {
+  it('should also return valid UTF-8', async () => {
     const result = isUtf8('ZEdWemRDQjBjbUZ1YzJGamRHbHZiaUR3bjVtQQ==');
     expect(result).toStrictEqual(true);
   });
@@ -16,7 +16,7 @@ describe('isUtf8', () => {
     expect(result).toStrictEqual(false);
   });
 
-  it('should return invalid UTF-8', async () => {
+  it('should return also invalid UTF-8', async () => {
     const result = isUtf8('��-');
     expect(result).toStrictEqual(false);
   });

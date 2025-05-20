@@ -1,1 +1,0 @@
-export { ModalContainer } from './ModalContainer';

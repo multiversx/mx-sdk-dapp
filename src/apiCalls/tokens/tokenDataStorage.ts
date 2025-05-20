@@ -9,6 +9,9 @@ export let tokenDataStorage = {
     }
   },
   getItem: async (key: string) => {
+    if (!memoryCache[key]) {
+      return null;
+    }
     try {
       return JSON.parse(memoryCache[key]);
     } catch (e) {
