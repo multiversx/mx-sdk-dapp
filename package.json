@@ -1,10 +1,10 @@
 {
-  "name": "@multiversx/sdk-dapp-core",
+  "name": "@multiversx/sdk-dapp",
   "version": "5.0.0-alpha.0",
   "main": "out/index.js",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
-  "description": "A library to hold core logic for building TypeScript dApps on the MultiversX blockchain",
+  "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "MIT",
   "directories": {
@@ -16,10 +16,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/multiversx/mx-sdk-dapp-core.git"
+    "url": "git+https://github.com/multiversx/mx-sdk-dapp.git"
   },
   "scripts": {
-    "unpublish-verdaccio": "npm unpublish @multiversx/sdk-dapp-core --force --registry http://localhost:4873",
+    "unpublish-verdaccio": "npm unpublish @multiversx/sdk-dapp --force --registry http://localhost:4873",
     "publish-verdaccio": "npm run unpublish-verdaccio && npm run build && npm publish --registry http://localhost:4873/",
     "compile": "tsc && tsc-alias",
     "build-esbuild": "rimraf out && node esbuild.js",
