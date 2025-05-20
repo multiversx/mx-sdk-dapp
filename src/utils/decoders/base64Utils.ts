@@ -35,7 +35,7 @@ export function isStringBase64(str: string) {
       // it is a regular base64 string
       return true;
     }
-  } catch (e) {
+  } catch (_e) {
     return false;
   }
 

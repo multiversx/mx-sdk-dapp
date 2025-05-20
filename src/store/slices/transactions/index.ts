@@ -1,0 +1,1 @@
+export { transactionsSlice } from './transactionsSlice';

@@ -1,8 +1,11 @@
 import { AssetType, ScamInfoType } from './account.types';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from './enums.types';
 import { EsdtEnumType, NftEnumType } from './tokens.types';
 import { SignedTransactionType } from './transactions.types';
 
-//#region server trasactions
 export interface ScResultType {
   callType: string;
   gasLimit: number;
@@ -240,7 +243,7 @@ export interface ServerTransactionType {
   sender: string;
   senderShard: number;
   signature: string;
-  status: string;
+  status: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
   inTransit?: boolean;
   timestamp: number;
   value: string;
@@ -282,10 +285,27 @@ export enum TransactionDirectionEnum {
   OUT = 'Out'
 }
 
+export interface TransactionAgeType {
+  timeAgo: string;
+  tooltip: string;
+}
+
+export interface TransactionMethodType {
+  name: string;
+  actionDescription?: string;
+}
+
+export interface TransactionIconInfoType {
+  icon?: string;
+  tooltip: string;
+}
+
 export interface InterpretedTransactionType extends ServerTransactionType {
   transactionDetails: {
+    age: TransactionAgeType;
     direction?: TransactionDirectionEnum;
-    method: string;
+    iconInfo: TransactionIconInfoType;
+    method: TransactionMethodType;
     transactionTokens: TokenArgumentType[];
     isContract?: boolean;
   };
@@ -304,10 +324,11 @@ export interface DecodeForDisplayPropsType {
   identifier?: string;
 }
 
-export interface DecodedDisplayType {
+export type DecodedDisplayType = {
   displayValue: string;
   validationWarnings: string[];
-}
+  highlight: string | null;
+};
 
 export enum DecodeMethodEnum {
   raw = 'raw',
@@ -339,8 +360,3 @@ export interface BatchTransactionsResponseType {
   message?: string;
   statusCode?: string;
 }
-
-export type BatchTransactionsWSResponseType = {
-  batchId: string;
-  txHashes: string[];
-};

@@ -1,1354 +1,518 @@
-# sdk-dapp
+# MultiversX SDK for Front-End DApps
 
-> A library that holds the core functional logic of a dapp on the MultiversX blockchain
+MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
 
-[![NPM](https://img.shields.io/npm/v/@multiversx/sdk-dapp.svg)](https://www.npmjs.com/package/@multiversx/sdk-dapp) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+## Introduction
 
-See [Dapp template](https://template-dapp.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
+`sdk-dapp-core` is a library that holds core functional logic that can be used to create a dApp on MultiversX Network.
 
-# Tests 
-[![Pre-Merge Unit Tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-unit-tests.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-unit-tests.yml)
+It is built for applications that use any of the following technologies:
 
-[![Template DApps Integration Tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml)
+- React
+- Angular
+- Vue
+- Any other JavaScript framework (e.g. Solid.js etc.)
+- React Native
+- Next.js
 
-# Installation
+## GitHub project
+
+The GitHub repository can be found here: [https://github.com/multiversx/mx-sdk-dapp-core](https://github.com/multiversx/mx-sdk-dapp-core)
+
+## Live demo: template-dapp
+
+See [Template dApp](https://template-dapp.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
+
+## Requirements
+
+- Node.js version 20.13.1+
+- Npm version 10.5.2+
+
+## Distribution
+
+[npm](https://www.npmjs.com/package/@multiversx/sdk-dapp-core)
+
+## Installation
 
 The library can be installed via npm or yarn.
 
 ```bash
-npm install @multiversx/sdk-dapp
+npm install @multiversx/sdk-dapp-core
 ```
 
 or
 
 ```bash
-yarn add @multiversx/sdk-dapp
+yarn add @multiversx/sdk-dapp-core
 ```
 
-If you need only the sdk-dapp basic logic, without the additional UI, consider using the `--no-optional` flag.
-This will not install the packages needed for the optional UI components.
+If you need only the core behaviour, without the additional UI, you can create a project-specific `.npmrc` file to configure per-package installation behavior. This will skip the installation of `@multiversx/sdk-dapp-core-ui`, but keep in mind that you may need to provide the UI components yourself.
+Also, make sure you run your app on `https`, not `http`, otherwise some providers will not work.
 
 ```bash
-npm install @multiversx/sdk-dapp --no-optional
+## .npmrc
+@multiversx/sdk-dapp-core:omit-optional=true
+## enable the option when needed with:
+## @multiversx/sdk-dapp-core:omit-optional=false
+
+## Run Installation
+## When you run npm install, NPM will use the configurations specified in the .npmrc file:
+npm install
 ```
 
-or
+If you're transitioning from @multiversx/sdk-dapp, you can check out the [Migration guide PR](https://github.com/multiversx/mx-template-dapp/pull/264) of Template Dapp
 
-```bash
-yarn add @multiversx/sdk-dapp --no-optional
+## Usage
+
+sdk-dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with new applications.
+
+```mermaid
+flowchart LR
+    A["Signing Providers & APIs"] <--> B["sdk-dapp-core"] <--> C["dApp"]
 ```
 
-### **If you're transitioning from dapp-core 1.x to @multiversx/sdk-dapp (dapp-core 2.0), please read the [Migration guide](https://github.com/multiversx/mx-sdk-dapp/wiki/Migration-guide-2.0)**
+The basic concepts you need to understand are configuration, provider interaction, transactions, and presenting data. These are the building blocks of any dApp, and they are abstracted in the `sdk-dapp-core` library.
 
-### **As of @multiversx/sdk-dapp@2.28.0 Node >=18 is required since Node 16 [reached its EOL](https://nodejs.org/en/blog/announcements/nodejs16-eol).**
+Having this knowledge, we can consider several steps needed to put a dApp together:
 
-# Usage
+**Table 1**. Steps to build a dApp
+| # | Step | Description |
+|---|------|-------------|
+| 1 | Configuration | - storage configuration (e.g. sessionStorage, localStorage etc.)<br>- chain configuration<br>- custom provider configuration (adding / disabling / changing providers) |
+| 2 | Provider interaction | - logging in and out<br>- signing transactions / messages |
+| 3 | Presenting data | - get store data (e.g. account balance, account address etc.)<br>- use components to display data (e.g. balance, address, transactions list) |
+| 4 | Transactions | - sending transactions<br>- tracking transactions |
 
-sdk-dapp aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with a new application or integrate sdk-dapp into an existing application.
+Each of these steps will be explained in more detail in the following sections.
 
-This library covers two main areas: **User Identity** and **Transactions**. The API for interacting with library's logic is exposed via hooks and methods that can be called for logging in the user, getting the status of the user or sending transactions.
+### 1. Configuration
 
-However, to simplify usage even further, the library also comes with a default UI that already uses these hooks and methods under the hood. These UI elements can be easily customized with custom css classes.
-
-The default UI is exposed via the `UI` module.
-
-`import * as DappUI from "@multiversx/sdk-dapp/UI";`
-
-**Please be aware that this style of importing might also import unused code.**
-
-To reduce the amount of dead code, you can use named imports for each component like
+Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `core/methods` folder.
 
 ```typescript
-import { UnlockPage } from '@multiversx/sdk-dapp/UI/pages';
-or;
-import { UnlockPage } from '@multiversx/sdk-dapp/UI/pages/UnlockPage';
-```
+// index.tsx
+import { initApp } from '@multiversx/sdk-dapp-core/out/core/methods/initApp/initApp';
+import type { InitAppType } from '@multiversx/sdk-dapp-core/out/core/methods/initApp/initApp.types';
+import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/out/types/enums.types';
+import { App } from "./App";
 
-More on this below.
-
-## Prerequisites
-
-There are a couple of requirements that need to be met for the application to work properly.
-
-**_If you experience bugs, please make sure that you read these, before opening an issue_**
-
-<details>
-  <summary>
-      React
-  </summary>
-
-### React
-
-This library was built for applications that use React, it might not be suitable for usage with other libraries or frameworks.
-
-  </details>
-
-<details>
-  <summary>
-    DappProvider
- </summary>
-
-### DappProvider
-
-You need to wrap your application with the **DappProvider** component, which is exported by the library, as we need to create a global Context to be able to manipulate the data.
-
-- import the Provider:
-
-```typescript
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers/DappProvider';
-or;
-import { DappProvider } from '@multiversx/sdk-dapp/wrappers';
-```
-
-- Wrap your application with this Provider.
-
-```jsx
-<DappProvider
-    environment="devnet"
-    customNetworkConfig={customNetworkConfig} // optional
-    dappConfig={dappConfig} // optional
->
-```
-
-`environment` is a required key that is needed to configure the app's endpoints for a specific environment. Accepted values are `testnet`, `devnet` and `mainnet` (also configured in `EnvironmentsEnum`)
-
-DappProvider also accepts an optional `customNetworkConfig` object with a couple of keys.
-This allows using different APIs and different connection providers to configure your network configuration.
-
-**All keys are optional**
-
-```typescript
-{
-  id?: string;
-  name?: string;
-  egldLabel?: string;
-  decimals?: string;
-  digits?: string;
-  gasPerDataByte?: string;
-  walletConnectDeepLink?: string; // a string that will create a deeplink for an application that is used on a mobile phone, instead of generating the login QR code.
-  walletConnectV2ProjectId?: string; // a unique ProjectID needed to access the WalletConnect 2.0 Relay Cloud
-  walletAddress?: string;
-  apiAddress?: string;
-  explorerAddress?: string;
-  apiTimeout?: 4000;
-}
-```
-
-DappProvider also accepts an optional `dappConfig` object.
-
-```typescript
-{
-  logoutRoute?: string;  // a route to redirect after auto-logout (session expired, native auth token expired or idle app)
-}
-```
-
-  </details>
-
-<details>
-  <summary>
-    UI Wrappers
- </summary>
-
-### UI Wrappers
-
-The library exposes a couple of Components that are connected to the redux store and are used to display various elements
-when something happens inside the app:
-
-- `TransactionsToastList` will display new transactions in nice toasts at the bottom of the screen. This component is fully customizable.
-
-```jsx
-  import {TransactionsToastList} from "@multiversx/sdk-dapp/UI/TransactionsToastList";
-
-  // all properties are optional
-  <TransactionsToastList
-    className = 'transactions-toast-list'
-    transactionToastClassName="transactions-toast-class"
-    successfulToastLifetime={30000}
-    parentElement={
-      /*
-        React NodeElement where the toast will be rendered
-        */
-    }
-  />
-
-```
-
-- `SignTransactionsModals` will show a modal when a new transaction is submitted, prompting the user to verify and sign it.
-
-**Important! This is required** to make transactions work, except when you use hooks to sign the transactions manually (more on this below).
-
-```jsx
-import { SignTransactionsModals } from '@multiversx/sdk-dapp/UI/SignTransactionsModals';
-
-<App>
-  <SignTransactionsModals />
-  <Content />
-</App>;
-```
-
-`NotificationModal` Will show a modal to the user with various warnings and errors.
-
-```jsx
-import { NotificationModal } from '@multiversx/sdk-dapp/UI/NotificationModal';
-
-<App>
-  <NotificationModal />
-  <Content />
-</App>;
-```
-
-If you want to show custom notifications, you can use the `useGetNotification` hook to get the notifications (like insufficient funds, errors etc).
-
-</details>
-
-## User Identity
-
-sdk-dapp makes logging in and persisting user's session easy and hassle-free.
-
-A handy component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
-
-Import from sdk-dapp:
-
-```typescript
-import { AuthenticatedRoutesWrapper } from '@multiversx/sdk-dapp/wrappers/AuthenticatedRoutesWrapper';
-or;
-import { AuthenticatedRoutesWrapper } from '@multiversx/sdk-dapp/wrappers';
-```
-
-Use with routes:
-
-```jsx
-<AuthenticatedRoutesWrapper routes={routes} unlockRoute='/unlock'>
-  {appContent}
-</AuthenticatedRoutesWrapper>
-```
-
-**routes** should be an array with objects with a signature similar to this:
-
-```typescript
-{
-    path: "/dashboard",
-    title: "Dashboard",
-    component: Dashboard,
-    authenticatedRoute: true,
+const config: InitAppType = {
+  storage: { getStorageCallback: () => sessionStorage },
+  dAppConfig: {
+    // nativeAuth: true, // optional
+    environment: EnvironmentsEnum.devnet,
+    // network: { // optional
+    //   walletAddress: 'https://devnet-wallet.multiversx.com'
+    // },
+    successfulToastLifetime: 5000
   }
-```
-
-The important parts that makes this component work are the flag **authenticatedRoute: true** and the key **path**, which means that this route should be accessible only to authenticated users.
-
-  <details>
-    <summary>
-      Login UI
-  </summary>
-
-### Login UI
-
-There are a couple of very handy React components that can be used to login the user and protect certain routes if the user is not logged in.
-
-Under the `DappUI` object mentioned above, you can find 4 buttons (one for each provider) which abstract away all the logic of loggin in the user and render the default UI. These buttons can be easily customized with a custom css class.
-The exported buttons are:
-
-- ExtensionLoginButton
-- WalletConnectLoginButton
-- LedgerLoginButton
-- WebWalletLoginButton
-
-example:
-
-```jsx
-<ExtensionLoginButton
-  callbackRoute='/dashboard'
-  buttonClassName='extension-login'
-  loginButtonText='Extension login'
-/>
-```
-
-They can also be used with children
-
-```jsx
-<ExtensionLoginButton
-  callbackRoute="/dashboard"
-  buttonClassName="extension-login"
-  loginButtonText="Extension login"
->
-  <>
-    <icon/>
-    <p>Login text</p>
-  <>
-</ExtensionLoginButton>
-```
-
-`WalletConnectLoginButton` and `LedgerLoginButton` will trigger a modal with a QR code and the ledger login UI, respectively.
-These are automatically triggered by the buttons.
-
-If, however, you want access to these containers without the buttons,
-you can easily import and use them.
-
-```jsx
-<WalletConnectLoginContainer
-  callbackRoute={callbackRoute}
-  loginButtonText='Login with xPortal'
-  title='xPortal Login'
-  className='wallect-connect-login-modal'
-  lead='Scan the QR code using xPortal'
-  wrapContentInsideModal={wrapContentInsideModal}
-  redirectAfterLogin={redirectAfterLogin}
-  token={token}
-  onLoginRedirect={onLoginRedirect}
-  onClose={onClose}
-/>
-```
-
-```jsx
-<LedgerLoginContainer
-  callbackRoute={callbackRoute}
-  className='ledger-login-modal'
-  wrapContentInsideModal={wrapContentInsideModal}
-  redirectAfterLogin={redirectAfterLogin}
-  nativeAuth
-  onClose={onClose}
-  onLoginRedirect={onLoginRedirect}
-/>
-```
-
-```jsx
-<WebWalletLoginButton
-  callbackRoute="/dashboard"
-  loginButtonText="Web Wallet login"
->
-```
-
-If you have a custom Web Wallet provider you can integrate it by using the `customWalletAddress` prop:
-
-```jsx
-<WebWalletLoginButton
-  callbackRoute="/dashboard"
-  loginButtonText="Custom Web Wallet login"
-  customWalletAddress="https://custom-web-wallet.com"
->
-```
-
-All login buttons and hooks accept a prop called `redirectAfterLogin` which specifies of the user should be redirected automatically after login.
-The default value for this boolean is false, since most apps listen for the "isLoggedIn" boolean and redirect programmatically.
-
-If you need to authenticate some requests, you can provide the `nativeAuth` flag to your login buttons. It comes as a boolean or as a configuration object. This token will be available in `useGetLoginInfo` hook later, inside `tokenLogin.nativeAuthToken`. If you need to use an interceptor for your requests, make sure to check out the implementation of `AxiosInterceptorContext`. Use it like:
-
-```typescript
-import { AxiosInterceptorContext } from '@multiversx/sdk-dapp/wrappers/AxiosInterceptorContext';
-```
-
-```jsx
-<AxiosInterceptorContext.Provider>
-  <AxiosInterceptorContext.Interceptor
-    authenticatedDomanis={['https://my-api.com']}
-  >
-    <Router>
-      <DappProvider environment={EnvironmentsEnum.devnet}>
-        <>
-          <AxiosInterceptorContext.Listener />
-          {/*
-              // other components below
-              */}
-          <TransactionsToastList />
-          <NotificationModal />
-          <SignTransactionsModals />
-
-          <Routes>...</Routes>
-        </>
-      </DappProvider>
-    </Router>
-  </AxiosInterceptorContext.Interceptor>
-</AxiosInterceptorContext.Provider>
-```
-
-Another handly component is AuthenticatedRoutesWrapper, which can be used to protect certain routes and redirect the user to login page if the user is not authenticated.
-
-Import from sdk-dapp:
-
-```typescript
-import { AuthenticatedRoutesWrapper } from '@multiversx/sdk-dapp/wrappers/AuthenticatedRoutesWrapper';
-```
-
-Use with routes:
-
-```jsx
-<AuthenticatedRoutesWrapper routes={routes} unlockRoute={routeNames.unlock}>
-  {appContent}
-</AuthenticatedRoutesWrapper>
-```
-
-**routes** should be an array with objects with a signature similar to this:
-
-```typescript
-{
-    path: "/dashboard",
-    title: "Dashboard",
-    component: Dashboard,
-    authenticatedRoute: true,
-  }
-```
-
-The important parts that makes this component work are the flag **authenticatedRoute: true** and the key **path**, which means that this route should be accessible only to authenticated users.
-
-</details>
-
-  <details><summary>
-Login hooks
-  </summary>
-
-### Login hooks
-
-This area covers the login hooks, which expose a trigger function and the login data, ready to be rendered.
-
-These hooks are exposed as named exports, which can be imported from sdk-dapp:
-
-```typescript
-import {
-  useExtensionLogin,
-  useWalletConnectV2Login,
-  useLedgerLogin,
-  useWebWalletLogin
-} from '@multiversx/sdk-dapp/hooks';
-or;
-import { useExtensionLogin } from '@multiversx/sdk-dapp/hooks/login/useExtensionLogin';
-import { useWalletConnectV2Login } from '@multiversx/sdk-dapp/hooks/login/useWalletConnectV2Login';
-import { useLedgerLogin } from '@multiversx/sdk-dapp/hooks/login/useLedgerLogin';
-import { useWebWalletLogin } from '@multiversx/sdk-dapp/hooks/login/useWebWalletLogin';
-```
-
-There are 4 available hooks:
-
-- useExtensionLogin
-- useWalletConnectV2Login
-- useLedgerLogin
-- useWebWalletLogin
-
-All hooks have the same response signature:
-
-return type is as follows:
-
-```typescript
-const [initiateLogin, genericLoginReturnType, customLoginReturnType] =
-  useLoginHook({
-    callbackRoute,
-    token,
-    nativeAuth,
-    onLoginRedirect
-  });
-```
-
-- **initiateLogin** is a function that needs to be called for the login flow to be initiated;
-- **genericLoginReturnType** is an object that is exactly the same for all hooks:
-
-```typescript
-{
-  error: string,
-  loginFailed: boolean,
-  isLoading: boolean,
-  isLoggedIn: boolean
-}
-```
-
-- **customLoginReturnType** is an object that is custom for each hook and returns specific data for that login:
-
-  - null for useExtensionLogin;
-
-  - null for useWebWalletLogin;
-
-  - `{ uriDeepLink: string, qrCodeSvg: svgElement }` for useWalletConnectV2Login;
-
-  -
-
-```typescript
-{
-  accounts: string[];
-  showAddressList: boolean;
-  startIndex: number;
-  selectedAddress: SelectedAddress | null;
-  onGoToPrevPage: () => void;
-  onGoToNextPage: () => void;
-  onSelectAddress: (address: SelectedAddress | null) => void;
-  onConfirmSelectedAddress: () => void;
-}
-```
-
-for useLedgerLogin;
-
-</details>
-
-  <details>
-<summary>
-Reading User State
-  </summary>
-
-### Reading User State
-
-Once logged in, the user's session is persisted and can be read and deleted via a couple of handy functions.
-
-For logging out, the library exposes a simple function called **logout**, which can be called to clear the user data.
-
-the function accepts 2 arguments:
-
-- `callbackUrl: string (optional)` the url to redirect the user to after logging him out
-- `onRedirect: (callbackUrl: string) => void (optional)` a function that will be called instead of redirecting the user.
-  This allows you to control how the redirect is done, for example, with react-router-dom, instead of window.location.href assignment.
-  _Important_ this function will not be called for web wallet logout
-
-You can opt-in for using the `useIdleTimer` hook, which logs out the user after a period of inactivity (default set to 10 minutes). Optionally it accepts an `onLogout` function that fulfills your dapp's specific logout business logic. Make sure to call the above `logout` function inside this `onLogout` callback.
-
-You can also opt-in for using the `useRegisterWebsocketListener` hook. The hooks accepts a callback which will get fired once a websocket message is received, receiving the `string` argument provided by the event. Optionally you can simply listen to changes on account/transactions with the `useGetWebsocketEvent` hook.
-
-There are 2 ways of reading the user current state: hooks (to be used inside components and for reacting to changes in the data) and simple functions (for reading data outside of React components or inside handlers).
-
-- hooks: `useGetLoginInfo, useGetAccountInfo, useGetNetworkConfig, useGetWebsocketEvent`;
-- functions: `getAccount, getAccountBalance, getAccountShard, getAddress, getIsLoggedIn;`
-
-</details>
-
-## Transactions
-
-The sdk-dapp library exposes a straight-forward way of sending transactions and tracking their status, with a couple of handy UI components;
-
-<details><summary>
-Sending Transactions
-  </summary>
-
-### Sending Transactions
-
-The API for sending transactions is a function called **sendTransactions**:
-
-`import { sendTransactions } from "@multiversx/sdk-dapp";`
-
-It can be used to send a transaction with minimum information:
-
-```typescript
-const { sessionId, error } = await sendTransactions({
-    transactions: [
-        {
-          value: '1000000000000000000',
-          data: 'ping',
-          receiver: contractAddress
-        },
-      ],
-    callbackRoute?: string // (optional, defaults to window.location.pathname) the route to be redirected to after signing. Will not redirect if the user is already on the specified route;
-    transactionsDisplayInfo: TransactionsDisplayInfoType // (optional, default to null) custom message for toasts texts;
-    minGasLimit?: number (optional, defaults to 50_000);
-    sessionInformation?: any (optional, defaults to null) extra sessionInformation that will be passed back to you via getSignedTransactions hook;
-    signWithoutSending?: boolean // (optional, defaults to false), the transaction will be signed without being sent to the blockchain;
-    completedTransactionsDelay?: number // delay the transaction status from going into "successful" state;
-    redirectAfterSigning?: boolean // (optional, defaults to true), whether to redirect to the provided callbackRoute;
-    });
-```
-
-It returns a Promise that will be fulfilled with `{error?: string; sessionId: string | null;}`
-
-`sessionId` is the transaction's batch id which can be used to track a transaction's status and react to it.
-
-**Important! For the transaction to be signed, you will have to use either `SignTransactionsModals` defined above, in the `Prerequisites` section,
-or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
-
-</details>
-
-<details>
-<summary>
-Sending sync transactions in batches (batch transactions mechanism)
-</summary>
-
-### Sending transactions synchronously in batches
-
-The API for sending sync transactions is a function called **sendBatchTransactions**:
-
-`import { sendBatchTransactions } from "@multiversx/sdk-dapp/services/transactions/sendBatchTransactions";`
-
-It can be used to send a group of transactions (that ca be synchronized) with minimum information:
-
-```typescript
-const { batchId, error } = await sendBatchTransactions({
-    transactions: [
-      [
-        {
-          value: '1000000000000000000',
-          data: 'tx1',
-          receiver: receiverAddress
-        },
-      ],
-      [
-        {
-          value: '1000000000000000000',
-          data: 'tx2',
-          receiver: receiverAddress
-        },
-        {
-          value: '1000000000000000000',
-          data: 'tx3',
-          receiver: receiverAddress
-        },
-      ]
-    ],
-  /**
-   * the route to be redirected to after signing. Will not redirect if the user is already on the specified route
-   * @default window.location.pathname
-   */
-  callbackRoute?: string;
-  /**
-   * custom message for toasts texts
-   * @default null
-   */
-  transactionsDisplayInfo: TransactionsDisplayInfoType;
-  /**
-   * Minimum amount of gas in order to process the transaction.
-   * @default 50_000
-   */
-  minGasLimit?: number (optional, defaults to 50_000);
-  /**
-   * Contains extra sessionInformation that will be passed back via getSignedTransactions hook
-   */
-  sessionInformation?: any (optional, defaults to null)
-  /**
-   * The transactions will be signed without being sent to the blockchain
-   */
-  signWithoutSending?: boolean;
-  /**
-   * Delay the transaction status from going into "successful" state
-   */
-  completedTransactionsDelay?: number;
-  /**
-   * If true, redirects to the provided callbackRoute
-   */
-  redirectAfterSigning?: boolean;
-  });
-```
-
-It returns a Promise that will be fulfilled with `{error?: string; batchId: string | null;}`
-
-- `batchId` is the transactions' batch id used to send the batch to the batch service and to track the transactions status and react to it. This is composed by the `sessionId` (received after signing) and the user address. Eg. `12123423123-erd1address...`.
-- `error` is the error that can appear during the signing/sending process.
-
-### How to synchronize transactions ?
-
-`sendBatchTransactions` accepts an argument `transactions` which is an array of transactions arrays.
-Each transaction array will be sent to the blockchain in the order they are provided.
-Having the example above, the transactions will be sent in the following order:
-
-- `tx1`
-- `tx2, tx3`
-
-`tx1` will be sent first, waits until is completed, then `tx2` and `tx3` will be sent in parallel. This means that the groups are sent synchronously, but the transactions inside a group are sent in parallel.
-
-** Important! This function will send the transactions automatically in batches, based on the provided transactions array, immediately after signing.
-If you do not want them to be sent automatically, but on demand, then you should use send callback exposed by the `useSendBatchTransactions` hook.
-Be sure to save the `sessionId` passed to the batch. We recommend to generate a new sessionId like this: `Date.now().toString();` **
-
-```typescript
-import { sendBatchTransactions } from '@multiversx/sdk-dapp/services/transactions/sendBatchTransactions';
-import { useSendBatchTransactions } from '@multiversx/sdk-dapp/hooks/transactions/batch/useSendBatchTransactions';
-
-const { send: sendBatchToBlockchain } = useSendBatchTransactions();
-
-// Use signWithoutSending: true to sign the transactions without sending them to the blockchain
-sendBatchTransactions({
-  transactions,
-  signWithoutSending: true,
-  callbackRoute: window.location.pathname,
-  redirectAfterSign: true
-});
-
-const { error, batchId, data } = await sendBatchToBlockchain({
-  transactions,
-  sessionId
+  // customProviders: [myCustomProvider] // optional
+};
+
+initApp(config).then(() => {
+  render(() => <App />, root!); // render your app
 });
 ```
 
-**Important! For the transaction to be signed, you will have to use either `SignTransactionsModals` defined above, in the `Prerequisites` section,
-or the `useSignTransactions` hook defined below. If you don't use one of these, the transactions won't be signed**
+### 2. Provider interaction
 
-</details>
-
-<details>
-<summary>
-Transaction Signing Flow
-</summary>
-
-### Transaction Signing Flow
-
-Once a transaction has been submitted, you have to use either the `SignTransactionsModals` or the `useSignTransactions` hook,
-for the user to be prompted in his provider (Extension, xPortal App etc) to sign the transaction.
-
-If you don't want to use the default modals that appear for the user when the signing process happens,
-you have to use the `useSignTransactions` hook to sign those transactions.
+Once your dApp has loaded, the first user action is logging in with a chosen provider.
 
 ```typescript
+import { ProviderTypeEnum } from '@multiversx/sdk-dapp-core/out/core/providers/types/providerFactory.types';
+import { ProviderFactory } from '@multiversx/sdk-dapp-core/out/core/providers/ProviderFactory';
+
+const provider = await ProviderFactory.create({
+  type: ProviderTypeEnum.extension
+});
+await provider.login();
+```
+
+### 3. Displaying user data
+
+Depending on the framework, you can either use hooks or selectors to get the user details:
+
+#### React hooks solution:
+
+```typescript
+import { useGetAccount } from '@multiversx/sdk-dapp-core/out/store/selectors/hooks/account/useGetAccount';
+import { useGetNetworkConfig } from '@multiversx/sdk-dapp-core/out/store/selectors/hooks/network/useGetNetworkConfig';
+
+const account = useGetAccount();
 const {
-  callbackRoute,
-  transactions,
-  error,
-  sessionId,
-  onAbort,
-  hasTransactions,
-  canceledTransactionsMessage
-} = useSignTransactions();
+  network: { egldLabel }
+} = useGetNetworkConfig();
+
+console.log(account.address);
+console.log(`${account.balance} ${egldLabel}`);
 ```
 
-This hook will let you know if there are any transactions and you can programmatically abort the signing process.
-
-We suggest displaying a message on the screen that confirms the transaction that needs to be signed.
-
-You can also get the provider via
+#### Store selector functions:
 
 ```typescript
-const { providerType, provider } = useGetAccountProvider();
+import { getAccount } from '@multiversx/sdk-dapp-core/out/core/methods/account/getAccount';
+import { getNetworkConfig } from '@multiversx/sdk-dapp-core/out/core/methods/network/getNetworkConfig';
+
+const account = getAccount();
+const { egldLabel } = getNetworkConfig();
 ```
 
-and use that to display an appropriate message to the user.
+### 4. Transactions
 
-For ledger, signing a transaction is simple if you're using the `SignTransactionsModal` component.
+#### Signing transactions
 
-It is fully customizable and will take care of walking the user through the signing flow.
-
-If, however, you want to implement a different experience, you will have to use the `useSignTransactionsWithLedger` hook.
-
-it accepts the following props:
+To sign transactions, you first need to create the `Transaction` object then pass it to the initialized provider.
 
 ```typescript
-{
-  onCancel: () => void;
-}
+import { Transaction, TransactionPayload } from '@multiversx/sdk-core/out';
+import {
+  GAS_PRICE,
+  GAS_LIMIT
+} from '@multiversx/sdk-dapp-core/out/constants/mvx.constants';
+import { getAccountProvider } from '@multiversx/sdk-dapp-core/out/core/providers/helpers/accountProvider';
+import { refreshAccount } from '@multiversx/sdk-dapp-core/out/utils/account/refreshAccount';
+
+const pongTransaction = new Transaction({
+  value: '0',
+  data: new TransactionPayload('pong'),
+  receiver: contractAddress,
+  gasLimit: GAS_LIMIT,
+  gasPrice: GAS_PRICE,
+  chainID: network.chainId,
+  nonce: account.nonce,
+  sender: account.address,
+  version: 1
+});
+
+await refreshAccount(); // optionally, to get the latest nonce
+const provider = getAccountProvider();
+const signedTransactions = await provider.signTransactions(transactions);
 ```
 
-and returns an object with the following keys:
+#### Sending and tracking transactions
+
+Then, to send the transactions, you need to use the `TransactionManager` class and pass in the signedTransactions to the send method. You can optionally track the transactions by using the track method. This will create a toast notification with the transaction hash and its status.
 
 ```typescript
-{
-  onSignTransaction: () => void;
-  onNext: () => void;
-  onPrev: () => void;
-  waitingForDevice: boolean;
-  onAbort: (e: React.MouseEvent) => void;
-  isLastTransaction: boolean;
-  currentStep: number;
-  signedTransactions?: Record<string, Transaction>;
-  currentTransaction: {
-      transaction: Transaction;
-      transactionTokenInfo: {
-          tokenId: string;
-          amount: string;
-          receiver: string;
-          type?: string;
-          nonce?: string;
-          multiTxData?: string;
-      };
-      isTokenTransaction: boolean;
-      tokenDecimals: number;
-      dataField: string;
-  };
+import { TransactionManager } from '@multiversx/sdk-dapp-core/out/core/managers/TransactionManager';
+
+const txManager = TransactionManager.getInstance();
+await txManager.send(signedTransactions);
+await txManager.track(signedTransactions);
+```
+
+Once the transactions are executed on the blockchain, the flow ends with the user logging out.
+
+```typescript
+import { getAccountProvider } from '@multiversx/sdk-dapp-core/out/core/providers/helpers/accountProvider';
+const provider = getAccountProvider();
+await provider.logout();
+```
+
+## Internal structure
+
+We have seen in the previous chapter what are the minimal steps to get up and running with a blockchain interaction using sdk-dapp-core. Next we will detail each element mentioned above
+
+**Table 2**. Elements needed to build a dApp
+| # | Type | Description |
+|---|------|-------------|
+| 1 | Network | Chain configuration |
+| 2 | Provider | The signing provider for logging in and singing transactions |
+| 3 | Account | Inspecting user address and balance |
+| 4 | Transactions Manager | Sending and tracking transactions |
+| 5 | UI Components | Displaying UI information like balance, public keys etc. |
+
+Since these are mixtures of business logic and UI components, the library is split into several folders to make it easier to navigate.
+When inspecting the package, there is more content under `src`, but the main folders of interest are:
+
+```bash
+src/
+├── apiCalls/ ### methods for interacting with the API
+├── constants/ ### useful constants from the ecosystem like ledger error codes, default gas limits for transactions etc.
+├── controllers/ ### business logic for UI elements like transactions and amount formatting
+├── core/ ### hosting the provider class, and all implementations for different signing providers
+└── store/ ### store initialization, middleware, slices, selectors and actions
+```
+
+Conceptually, these can be split into 3 main parts:
+
+- First is the business logic in `apiCalls`, `constants` and `core` (signing providers).
+- Then comes the persistence layer hosted in the `store` folder, using [Zustand](https://zustand.docs.pmnd.rs/) under the hood.
+- Last are the UI components hosted in [@multiversx/sdk-dapp-core](https://github.com/multiversx/mx-sdk-dapp-core-ui) with some components controlled on demand by classes defined in `controlles`
+
+Next, we will take the elements from Table 2 and detail them in the following sections.
+
+### 1. Network
+
+The network configuration is done in the `initApp` method, where you can make several confgurations like:
+
+- specifying the environment (devnet, testnet, mainnet)
+- overriding certain network parameters like wallet address, explorer address etc.
+
+Once the network is configured, the `network` slice in the store will hold the network configuration.
+
+To query different network parameters, you can use the `getNetworkConfig` method from the `core/methods/network` folder.
+
+### 2. Provider
+
+The provider is the main class that handles the signing of transactions and messages. It is initialized in the `initApp` method and can be accessed via the `getAccountProvider` method from the `core/providers/helpers` folder.
+
+#### Initialization
+
+It's important to initialize it on app load (this is take care of by `initApp`), since it restores the session from the store and allows signing transactions without the need to make a new login.
+
+#### Creating a custom provider
+
+If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method or add it to the [window object](https://github.com/multiversx/mx-template-dapp/tree/main/src/initConfig). Last step is to login using the custom provider.
+
+```typescript
+import { ProviderTypeEnum } from '@multiversx/sdk-dapp-core/out/core/providers/types/providerFactory.types';
+
+const ADDITIONAL_PROVIDERS = {
+  myCustomProvider: 'myCustomProvider'
+} as const;
+
+// do this if you want to reference it later in your code
+const ExtendedProviders = {
+  ...ProviderTypeEnum,
+  ...ADDITIONAL_PROVIDERS
+} as const;
+
+const provider = await ProviderFactory.create({
+  type: ExtendedProviders.myCustomProvider // or add a simple string here
+});
+await provider?.login();
+```
+
+#### Accessing provier methods
+
+Once the provider is initialized, you can get a reference to it using the `getAccountProvider` method. Then you can call the `login`, `logout`, `signTransactions`, `signMessage` methods, or other custom methods depending on the intialized provider (see ledger for example).
+
+### 3. Account
+
+#### Getting account data
+
+Once the user logs in, a call is made to the API for fetching the account data. This data is persisted in the store and is accessible through helpers found in `core/methods/account`. These functions are:
+
+**Table 3**. Getting account data
+| # | Helper | Description | React hook equivalent |
+|---|------|-------------|----|
+| | `core/methods/account` | path | `store/selectors/hooks/account` |
+| 1 | `getAccount()` | returns all account data |`useGetAccount()` |
+| 2 | `getAddress()` | returns just the user's public key | `useGetAddress()`|
+| 3 | `getIsLoggedIn()` | returns a login status boolean | `useGetIsLoggedIn()` |
+| 4 | `getLatestNonce()` | returns the account nonce | `useGetLatestNonce()`
+
+#### Nonce management
+
+sdk-dapp-core has a mechanism that does its best to manage the account nonce. For example, if the user sends a transaction, the nonce gets incremented on the client so that if he sends a new transaction, it will have the correct increased nonce. If you want to make sure the nonce is in sync with the API account, you can call `refreshAccount()` as shown above in the **Signing transactions** section.
+
+### 4. Transactions Manager
+
+#### Overview
+
+The `TransactionManager` is a class that handles sending and tracking transactions in the MultiversX ecosystem. It provides methods to send single and batch transactions while handling tracking, error management, and toasts for user notifications. It is initialized in the `initApp` method and can be accessed via `TransactionManager.getInstance()`.
+
+#### Features
+
+- **Supports Single and Batch Transactions:** Handles individual transactions as well as grouped batch transactions.
+- **Automatic Tracking:** Monitors transaction status and updates accordingly through a webhook or polling fallback mechanism.
+- **Toast Notifications:** Displays status updates for user feedback, with options to disable notifications and customize toast titles.
+- **Error Handling:** Catches and processes errors during transaction submission
+
+#### Transactions Lifecycle
+
+The transaction lifecycle consists of the following steps:
+
+1. **Creating** a `Transaction` object using the `@multiversx/sdk-core provider`
+2. **Signing** the transaction with the initialized provider and receiving a `SignedTransactionType` object
+3. **Sending** the signed transaction using TransactionManager's `send()` function. Signed transactions can be sent in 2 ways:
+
+**Table 4**. Sending signed transactions
+| # | Signature | Method | Description |
+|---|------|-------------|-------------|
+| 1 | `send([tx1, tx2])` | `POST` to `/transactions` | Transactions are executed in parallel
+| 2 | `send([[tx1, tx2], [tx3]])` | `POST` to `/batch` | First batch of two transactions is executed, and the second batch of one transaction waits for the finished results, and is then executed
+
+4. **Tracking** transactions is made by using `transactionManager.track()`. Since the `send()` function returns the same arguments it has received, the same array payload can be passed into the `track()` method. Under the hood, status updates are received via a WebSocket or polling mechanism.
+   Once a transaction array is tracked, it gets associated with a `sessionId`, returned by the `track()` method and stored in the `transactions` slice. Depending on the array's type (plain/batch), the session's status varies from initial (`pending`/`invalid`/`sent`) to final (`successful`/`failed`/`timedOut`).
+
+5. **User feedback** is provided through toast notifications, which are triggered to inform about transactions' progress. Additional tracking details can be optionally displayed in the toast UI.
+There is an option to add custom toast messages by using the `createCustomToast` helper.
+
+```ts
+import { createRoot } from 'react-dom/client';
+import { createCustomToast } from '@multiversx/sdk-dapp-core/out/store/actions/toasts/toastsActions';
+
+// by creating a custom toast element containing a component
+createCustomToast({
+  toastId: 'username-toast',
+  instantiateToastElement: () => {
+    const toastBody = document.createElement('div');
+    const root = createRoot(toastBody);
+    root.render(<ReloadButton />);
+    return toastBody;
   }
+});
+
+// or by creating a simple custom toast
+createCustomToast({
+  toastId: 'custom-toast',
+  icon: 'times',
+  iconClassName: 'warning',
+  message: 'This is a custom toast',
+  title: 'My custom toast'
+});
+      
+
 ```
 
-</details>
+6. **Error Handling & Recovery** is done through a custom toast that prompts the user to take appropriate action.
 
-<details><summary>
-Tracking a transaction
-  </summary>
+#### Methods
 
-### Tracking a transaction
+1. Sending Transactions
 
-The library has a built-in implementation for tracking the transactions sent normally or synchronously via batch transactions.
-Also, exposes a hook called `useTrackTransactionStatus`;
+In this way, all transactions are sent simultaneously. There is no limit to the number of transactions contained in the array.
 
-### 1. Built-in tracking
-
-There is a `TransactionTracker` component that is used to track transactions. It is used by default in the `DappProvider` component.
-This component is using the `useTransactionsTracker` and `useBatchTransactionsTracker` hooks to track the transactions.
-
-`useTransactionsTracker` - track transactions sent normally
-`useBatchTransactionsTracker` track batch transactions
-
-The developers are be able to create their own implementation for the transaction tracking component (using these hooks or creating their own logic) and pass it to the `DappProvider` component through `customComponents` field.
-
-```jsx
-import { TransactionsTracker } from "your/module";
-<DappProvider
-  environment={environment}
-  customNetworkConfig={{
-    name: 'customConfig',
-    apiTimeout,
-    walletConnectV2ProjectId
-  }}
-  customComponents={{
-    transactionTracker: {
-      component: TransactionsTracker,
-      props: {
-        onSuccess: (sessionId) => {
-          console.log(`Session ${sessionId} successfully completed`);
-        },
-        onFail: (sessionId, errorMessage) => {
-          if (errorMessage) {
-            console.log(`Session ${sessionId} failed, ${errorMessage}`);
-            return;
-          }
-
-          console.log(`Session ${sessionId} failed`);
-        }
-      }
-    }
-  }}
->
+```ts
+const transactionManager = TransactionManager.getInstance();
+const parallelTransactions: SigendTransactionType[] = [tx1, tx2, tx3, tx4];
+const sentTransactions = await transactionManager.send(parallelTransactions);
 ```
 
-The props passed to the `TransactionsTracker` component are:
+2. Sending Batch Transactions
 
-```typescript
-export interface TransactionsTrackerType {
-  getTransactionsByHash?: GetTransactionsByHashesType;
-  onSuccess?: (sessionId: string | null) => void;
-  onFail?: (sessionId: string | null, errorMessage?: string) => void;
-}
+In this sequential case, each batch waits for the previous one to complete.
+
+```ts
+const transactionManager = TransactionManager.getInstance();
+const batchTransactions: SignedTransactionType[][] = [
+  [tx1, tx2],
+  [tx3, tx4]
+];
+const sentTransactions = await transactionManager.send(batchTransactions);
 ```
 
-Also, the same props can be passed to the `useTransactionsTracker` and `useBatchTransactionsTracker` hooks.
+3. Tracking Transactions
 
-```typescript
-import { useBatchTransactionsTracker } from 'hooks/transactions/batch/tracker/useBatchTransactionsTracker';
-import { useTransactionsTracker } from 'hooks/transactions/useTransactionsTracker';
+The basic option is to use the built-in tracking, which displays toast notifications with default messages.
 
-const props = {
-  onSuccess: (sessionId) => {
-    console.log(`Session ${sessionId} successfully completed`);
-  },
-  onFail: (sessionId, errorMessage) => {
-    if (errorMessage) {
-      console.log(`Session ${sessionId} failed, ${errorMessage}`);
-      return;
-    }
+```ts
+const sessionId = await transactionManager.track(
+  sentTransactions
+  // { disableToasts: true } optionally disable toast notifications
+);
+```
 
-    console.log(`Session ${sessionId} failed`);
+If you want to provide more human-friendly messages to your users, you can enable tracking with custom toast messages:
+
+```ts
+const sessionId = await transactionManager.track(sentTransactions, {
+  transactionsDisplayInfo: {
+    errorMessage: 'Failed adding stake',
+    successMessage: 'Stake successfully added',
+    processingMessage: 'Staking in progress'
   }
-};
-
-useTransactionsTracker(props);
-useBatchTransactionsTracker(props);
-```
-
-The transactions trackers will automatically update the transactions statuses in the store. This functionality is used by the `TransactionToastList` component to display the transactions statuses.
-
-### 2. Tracking transaction status
-
-```typescript
-import {useTrackTransactionStatus} from @multiversx/sdk-dapp/hooks;
-
-const transactionStatus = useTrackTransactionStatus({
-  transactionId: sessionId,
-  onSuccess,
-  onFail,
-  onCancelled,
 });
 ```
 
-transactionStatus has the following information about the transaction:
+**Tracking transactions without being logged in**
+
+If your application needs to track transactions sent by a server and the user does not need to login to see the outcome of these transactions, there are several steps that you need to do to enable this process.
+
+Step 1. Enabling the tracking mechanism
+
+By default the tracking mechanism is enabled only after the user logs in. That is the moment when the WebSocket connection is established. If you want to enable tracking before the user logs in, you need to call the `trackTransactions` method from the `core/methods/trackTransactions` folder. This method will enable a polling mechanism.
 
 ```typescript
-{
-  isPending,
-    isSuccessful,
-    isFailed,
-    isCancelled,
-    errorMessage,
-    status,
-    transactions;
-}
+import { trackTransactions } from '@multiversx/sdk-dapp-core/out/core/methods/trackTransactions/trackTransactions';
+
+initApp(config).then(async () => {
+  await trackTransactions(); // enable here since by default tracking will be enabled only after login
+  render(() => <App />, root!);
+});
 ```
 
-It's safe to pass in `null` as a sessionId, so if the transaction wasn't yet sent, the hook will just return an empty object.
-
-</details>
-
-<details><summary>
-Tracking transactions' statuses
-  </summary>
-
-### Tracking transactions' statuses
-
-sdk-dapp also exposes a number of handy hooks for tracking all, pending, failed, successful and timed out transactions.
-
-Use:
-
-- `useGetPendingTransactions` to get a list of all pending transactions.
-- `useGetSuccessfulTransactions` to get a list of all successful transactions.
-- `useGetFailedTransactions` to get a list of all pending transactions.
-
-An especially useful hook called `useGetActiveTransactionsStatus` will keep you updated with the status
-of all transactions at a certain point in time.
-
-it's return signature is
+Then, you can track transactions by calling the `track` method from the `TransactionManager` class with a plain transaction containing the transaction hash.
 
 ```typescript
-{
-  pending: boolean, // at least one transaction is pending;
-  hasPendingTransactions: boolean, // the user has at least 1 pending transaction active;
-  timedOut: boolean, // there are no pending transactions and at least one has timed out;
-  fail: boolean, // there are no pending and no timedOut transactions and at least one has failed;
-  success: boolean, // all transactions are successful and all smart contract calls have been processed successfully;
-}
+import { Transaction, TransactionsConverter } from '@multiversx/sdk-core/out';
+
+const tManager = TransactionManager.getInstance();
+const txConverter = new TransactionsConverter();
+const transaction = txConverter.plainObjectToTransaction(signedTx);
+
+const hash = transaction.getHash().toString(); // get the transaction hash
+
+const plainTransaction = { ...transaction.toPlainObject(), hash };
+await tManager.track([plainTransaction]);
 ```
 
-</details>
+#### Advanced Usage
 
-  <details><summary>
-Transaction Toasts UI
-  </summary>
+If you need to check the status of the signed transactions, you can query the store direclty using the `sessionId` returned by the `track()` method.
 
-### Transaction Toasts UI
+```ts
+import { getStore } from '@multiversx/sdk-dapp-core/out/store/store';
+import { transactionsSliceSelector } from '@multiversx/sdk-dapp-core/out/store/selectors/transactionsSelector';
 
-sdk-dapp also exposes a toast component for tracking transactions that uses the above mentioned hooks and displays toasts with transactions statuses.
-
-The toasts list is exposed via **TransactionsToastList** UI component and can be used just by rendering it inside the application.
-`TransactionToastList` component renders also custom toasts. A custom toast can be added using the util function: `addNewCustomToast` and can be removed using `deleteCustomToast`
-
-When `TransactionToastList` is also used for displaying custom toasts, is enough to call `addNewCustomToast` to add new custom toast to the list;
-
-```jsx
-<App>
-  <Router />
-  <TransactionsToastList />
-</App>
-```
-
-**Important**: This has to be inside the `<DappProvider/>` children.
-
-In case you don't want to use `TransactionToastList` and just display a custom toast, then you have to import `CustomToast` component
-
-```jsx
-const customToast = addNewCustomToast(
-  {
-    toastId: 'toast-id',
-    message: '',
-    type: 'custom',
-    duration: 2000
+const state = transactionsSliceSelector(getStore());
+Object.entries(state).forEach(([sessionKey, data]) => {
+  if (sessionKey === sessionId) {
+    console.log(data.status);
   }
+});
+```
+
+### 5. UI Components
+
+sdk-dapp-core needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consitst of webcomponents hosted in the `@multiversx/sdk-dapp-core-ui` package. Thus, sdk-dapp-core does not hold any UI elements, just business logic that controls external components. We can consider two types of UI components: internal and external. They are differentiated by the way they are controlled: private components are controlled by sdk-dapp-core's signing or logging in flows, while public components can be controlled by the dApp.
+
+#### Public components
+
+#### Private components
+
+The way private components are controlled are trough a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing sdk-dapp-core to get a reference to it and use it for communication.
+
+```mermaid
+flowchart LR
+    A["Controller"] <--> B["Event Bus"] <--> C["webcomponent"]
+```
+
+```typescript
+const modalElement = await createUIElement<LedgerConnectModal>(
+  'ledger-connect-panel'
 );
-
-<CustomToast
-  {...customToast}
-  onDelete: () => deleteCustomToast(toastId)
- />
+const eventBus = await modalElement.getEventBus();
+eventBus.publish('TRANSACTION_TOAST_DATA_UPDATE', someData);
 ```
 
-</details>
+If you want to override private components and create your own, you can implement a similar strategy, of course by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp-core/blob/main/src/core/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
 
-  <details><summary>
-Removing transactions manually
-  </summary>
+## Debugging your dApp
 
-### Removing transactions manually
+The recommended way to debug your application is by using [lerna](https://lerna.js.org/). Make sure you have the same package version in sdk-daap-core's package.json and in your project's package.json.
 
-sdk-dapp takes care to change transactions' statuses and removes them when needed,
-but if you need to do this manually, you can use the exposed functions for this:
+If you preffer to use [npm link](https://docs.npmjs.com/cli/v11/commands/npm-link), make sure to use the `preserveSymlinks` option in the server configuration:
 
-```typescript
-removeTransactionsToSign(sessionId);
-removeSignedTransaction(sessionId);
-removeAllTransactionsToSign();
-removeAllSignedTransactions();
+```js
+  resolve: {
+    preserveSymlinks: true, // 👈
+    alias: {
+      src: "/src",
+    },
+  },
 ```
 
-</details>
+To build the library, run:
 
-# Unit testing with Jest
-
-The sdk-dapp library exposes bundles for both CommonJS and ESModules, however, in some environments, Jest might require manual mapping of the CommonJS output. To implement it, add the following snippet inside your jest config file.
-
-```javascript
-moduleNameMapper: {
-    '@multiversx/sdk-dapp/(.*)':
-      '<rootDir>/node_modules/@multiversx/sdk-dapp/__commonjs/$1.js'
-},
+```bash
+npm run build
 ```
 
-You may need in your setupJest.js file do:
-```javascript
-import 'isomorphic-fetch';
+To run the unit tests, run:
+
+```bash
+npm test
 ```
-
-# sdk-dapp exports
-
-Since version 2.0, sdk-dapp does not have a default export object.
-You have to import everything from its own separate module. Below you can find all the exports.
-
-You can either import everything from a module, or if you really want to make sure you're not importing anything
-that is not used, you can import everything from its own file.
-
-You can either go into their specific folder in the module for extra trimming, or import everything together.
-
-for example, these 2 imports are both valid:
-
-```typescript
-import {
-  useExtensionLogin,
-  useGetAccountInfo
-} from '@multiversx/sdk-dapp/hooks';
-```
-
-and
-
-```typescript
-import { useExtensionLogin } from '@multiversx/sdk-dapp/hooks/login';
-import { useGetAccountInfo } from '@multiversx/sdk-dapp/hooks/account';
-```
-
-## constants exports
-
-```typescript
-import {
-  GAS_PRICE_MODIFIER,
-  GAS_PER_DATA_BYTE,
-  GAS_LIMIT,
-  GAS_PRICE,
-  DECIMALS,
-  DIGITS,
-  mnemonicWords,
-  ledgerErrorCodes,
-  fallbackNetworkConfigurations
-} from '@multiversx/sdk-dapp/constants';
-```
-
-## hooks exports
-
-### Login
-
-```typescript
-import {
-  useExtensionLogin,
-  useLedgerLogin,
-  useWalletConnectV2Login,
-  useWebWalletLogin
-} from '@multiversx/sdk-dapp/hooks/login';
-```
-
-### Account
-
-```typescript
-import {
-  useGetAccount, // if you only need the account as on network
-  useGetAccountInfo, // if you need all account information from store
-  useGetAccountProvider,
-  useGetLoginInfo,
-  useGetWebsocketSignalTimestamp // get a Date.now() timestamp every time a change occurs on the account on network
-} from '@multiversx/sdk-dapp/hooks/account';
-```
-
-### Transactions
-
-```typescript
-import {
-  useCheckTransactionStatus,
-  useGetActiveTransactionsStatus,
-  useGetFailedTransactions,
-  useGetPendingTransactions,
-  useGetSignedTransactions,
-  useGetSignTransactionsError,
-  useGetSuccessfulTransactions,
-  useGetTokenDetails,
-  useGetTransactionDisplayInfo,
-  useParseMultiEsdtTransferData,
-  useParseSignedTransactions,
-  useSignMultipleTransactions,
-  useSignTransactions,
-  useSignTransactionsWithDevice,
-  useSignTransactionsWithLedger
-} from '@multiversx/sdk-dapp/hooks/transactions';
-```
-
-### Misc
-
-```typescript
-import {
-  useDebounce,
-  useGetNetworkConfig,
-  useGetNotification,
-  useUpdateEffect
-} from '@multiversx/sdk-dapp/hooks';
-```
-
-## services exports
-
-```typescript
-import {
-  removeTransactionsToSign,
-  removeSignedTransaction,
-  removeAllSignedTransactions,
-  removeAllTransactionsToSign,
-  isCrossShardTransaction,
-  sendTransactions,
-  signTransactions,
-  calcTotalFee
-} from '@multiversx/sdk-dapp/services';
-```
-
-## utils exports
-
-### Account
-
-```typescript
-import {
-  addressIsValid,
-  getAccount,
-  getAccountBalance,
-  getAccountShard,
-  getAddress,
-  getLatestNonce,
-  getShardOfAddress,
-  refreshAccount,
-  setNonce,
-  signMessage
-} from '@multiversx/sdk-dapp/utils/account';
-```
-
-### Operations
-
-```typescript
-import {
-  calculateFeeLimit,
-  formatAmount,
-  nominate,
-  getUsdValue
-} from '@multiversx/sdk-dapp/utils/operations';
-```
-
-### Transactions
-
-```typescript
-import {
-  getTokenFromData,
-  isTokenTransfer,
-  parseMultiEsdtTransferData,
-  parseTransactionAfterSigning
-} from '@multiversx/sdk-dapp/utils/transactions';
-```
-
-### Validation
-
-```typescript
-import {
-  getIdentifierType,
-  stringIsFloat,
-  stringIsInteger,
-  isContract,
-  isStringBase64
-} from '@multiversx/sdk-dapp/utils';
-```
-
-### Misc
-
-```typescript
-import {
-  encodeToBase64,
-  decodeBase64,
-  logout,
-  getTokenFromData,
-  getIsLoggedIn,
-  isSelfESDTContract,
-  getAddressFromDataField
-} from '@multiversx/sdk-dapp/utils';
-```
-
-## Wrappers
-
-```typescript
-import {
-  DappProvider,
-  AuthenticatedRoutesWrapper,
-  AppInitializer
-} from '@multiversx/sdk-dapp/wrappers';
-```
-
-## Web-specific imports
-
-```typescript
-import { useIdleTimer } from '@multiversx/sdk-dapp/web';
-```
-
-## UI
-
-```typescript
-import {
-  CopyButton,
-  FormatAmount,
-  ExplorerLink,
-  ExtensionLoginButton,
-  LedgerLoginButton,
-  LedgerLoginContainer,
-  NotificationModal,
-  PageState,
-  ProgressSteps,
-  SignTransactionsModals,
-  SignWithDeviceModal,
-  SignWithExtensionModal,
-  SignWithLedgerModal,
-  TransactionsToastList,
-  TransactionToast,
-  Trim,
-  UsdValue,
-  WalletConnectLoginButton,
-  WalletConnectLoginContainer,
-  WebWalletLoginButton
-} from '@multiversx/sdk-dapp/UI';
-```
-
-or
-
-```typescript
-import { CopyButton } from '@multiversx/sdk-dapp/UI/CopyButton';
-import { FormatAmount } from '@multiversx/sdk-dapp/UI/FormatAmount';
-import { ExplorerLink } from '@multiversx/sdk-dapp/UI/ExplorerLink';
-
-etc;
-```
-
-**Important**: `shouldRenderDefaultCss` was removed from all components.
-
-## React Native support
-
-We are aware that there are projects out there that would like to use this library to allow users to seamlessly authenticate with the xPortal App.
-
-You can use this library for its utility functions, like "formatAmount, parseAmount", mnemonic words list or its constants.
-
-However, certain architectural decisions that we made do not work out of the box with React Native runtime (neither Metro nor Re.pack).
-Due to this, you cannot yet use the DappProvider wrapping logic in a React Native application.
-
-We have a couple of solutions in mind and are actively working on exploring ways to overcome these limitations.
-Until then, you can use @multiversx/erdjs libraries and @walletconnect to connect to the xPortal App.
-There are also guide for doing this from the [community](https://github.com/sash20m/react-native-xportal)
-
-## Next.js support
-
-If you are using [Next.js](https://nextjs.org/), make sure to check out the [README](https://github.com/multiversx/mx-template-nextjs-dapp/blob/main/README.md) and implementation of the [Next.js Template dApp](https://github.com/multiversx/mx-template-nextjs-dapp).
-
-## WalletConnect 2.0 Setup
-
-Starting with the 2.0 version of the dApp SDK ( previously `@elrondnetwork/dapp-core@2.0.0` ) and `@multiversx/sdk-dapp@2.2.8` [WalletConnect 2.0](https://docs.walletconnect.com/2.0/) is available as a login and signing provider, allowing users to login by scanning a QR code with the Mobile App
-
-This is an implementation of [sdk-wallet-connect-provider](https://github.com/multiversx/mx-sdk-js-wallet-connect-provider) ( [docs](https://docs.multiversx.com/sdk-and-tools/sdk-js/sdk-js-signing-providers/#the-wallet-connect-provider) ) signing provider
-
-As a ProjectID is needed for the complete functionality, the following change is needed:
-
-### Set the `walletConnectV2ProjectId`
-
-In the [DappProvider](#dappprovider) wrapper a `walletConnectV2ProjectId` must be provided in the `customNetworkConfig`
-
-The Project ID can be generated for free here: [https://cloud.walletconnect.com/sign-in](https://cloud.walletconnect.com/sign-in)
-
-```jsx
-<DappProvider
-    environment="devnet"
-    customNetworkConfig={{
-      name: 'customConfig',
-      walletConnectV2ProjectId: '9b1a9564f91...'
-    }}
->
-```
-
-The WalletConnect Project ID grants you access to the [WalletConnect Cloud Relay](https://docs.walletconnect.com/2.0/cloud/relay) that securely manages communication between the device and the dApp.
-
-If the Project ID is valid, the new functionality will work out of the box with the [Transactions and Message signing](#transactions) flows.
-
-# Experimental features
-## ExperimentalWebviewProvider
-Serves as an interface for communication between a dApp and a parent window within an iframe or webview context.
-Its primary purpose is to enable embedding the dApp in a parent window and facilitating communication with it.
-
-### Usage
-The ExperimentalWebviewProvider is primarily utilized by the WebWallet Hub and the xPortal Hub.
-It implements all the methods of a signing provider, sending the transactions or messages to the parent window for signing.
-
-### Implementation
-The parent window must implement specific methods to handle requests, such as `signTransaction` and `signMessage`.
-These methods are called by the ExperimentalWebviewProvider to initiate the signing process.
-
-```jsx
-const handleMessages = (event: MessageEvent<RequestMessageType>) => {
-  const { type, payload } = event.data;
-
-  switch (type) {
-    case CrossWindowProviderRequestEnums.loginRequest:
-      // handle login request resulting in accessToken
-      iframe.target.contentWindow.postMessage({
-        type: CrossWindowProviderResponseEnums.loginResponse,
-        payload: {
-          data: {
-            address,
-            accessToken
-          }
-        },
-      })
-      break;
-    case CrossWindowProviderRequestEnums.signTransactionsRequest:
-      const transactions = payload.map((plainTransactionObject) =>
-        Transaction.fromPlainObject(plainTransactionObject)
-      );
-
-      // handle transaction signing resulting in signedTransactions
-
-      iframe.target.contentWindow.postMessage({
-        type: CrossWindowProviderResponseEnums.signTransactionsResponse,
-        payload: {
-          data: signedTransactions
-        },
-      })
-      break;
-    case CrossWindowProviderRequestEnums.signMessageRequest:
-      const messageToSign = payload?.message;
-
-      // handle message signing resulting in signature
-
-      windowTarget.postMessage({
-        type: CrossWindowProviderResponseEnums.signMessageResponse,
-        payload: {
-          data: {
-            signature,
-            status: SignMessageStatusEnum.signed
-          }
-        },
-      })
-      break;
-    default:
-      // handle other message types
-      break;
-  }
-};
-
-window.addEventListener('message', handleMessages);
-```
-
-### Development Status
-It's important to note that the `ExperimentalWebviewProvider` is still under development and should be used with caution.
-As such, it may undergo changes or updates that could affect its functionality.
-
-### Integration Guide
-For applications utilizing `@multiversx/sdk-dapp` and aiming to interact with the parent window, integration involves upgrading to the latest version of `@multiversx/sdk-dapp`
-and setting the iframe or webview URL. This URL should include the access token as a query parameter.
-
-### Example Integration
-```jsx
-<iframe src="https://your-dapp.com?accessToken=yourAccessToken" />
-<Webview source={{ uri: "https://your-dapp.com?accessToken=yourAccessToken" }} />
-```
-
-## Roadmap
-
-See the [open issues](https://github.com/multiversx/mx-sdk-dapp/issues) for a list of proposed features (and known issues).
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-One can contribute by creating _pull requests_, or by opening _issues_ for discovered bugs or desired features.
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## License
-
-GPL-3.0-or-later

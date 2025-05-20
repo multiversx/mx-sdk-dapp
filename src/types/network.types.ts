@@ -1,4 +1,4 @@
-export interface BaseNetworkType {
+export interface NetworkType {
   id: string;
   chainId: string;
   name: string;
@@ -6,17 +6,13 @@ export interface BaseNetworkType {
   decimals: string;
   digits: string;
   gasPerDataByte: string;
-  walletConnectDeepLink: string;
   walletAddress: string;
   apiAddress: string;
-  extrasApiAddress?: string;
   explorerAddress: string;
   apiTimeout: string;
-  walletConnectV2ProjectId?: string;
-  walletConnectV2Options?: Record<string, any>;
   xAliasAddress?: string;
   roundDuration: number;
-  metamaskSnapWalletAddress?: string;
+  iframeWalletAddress?: string;
   websocketUrl?: string;
   gasStationMetadata?: Record<
     number,
@@ -24,44 +20,14 @@ export interface BaseNetworkType {
   >;
 }
 
-export interface AccountInfoSliceNetworkType extends BaseNetworkType {
-  walletConnectBridgeAddress: string;
-  walletConnectV2RelayAddress: string;
-  customWalletAddress?: string;
-}
-
-export interface NetworkType extends BaseNetworkType {
-  walletConnectBridgeAddresses: string[];
-  walletConnectV2RelayAddresses: string[];
-}
-
-export interface CustomNetworkType {
-  id?: string;
-  chainId?: string;
-  name?: string;
-  egldLabel?: string;
-  decimals?: string;
-  digits?: string;
-  gasPerDataByte?: string;
-  walletConnectDeepLink?: string;
-  walletConnectBridgeAddresses?: string[];
-  walletAddress?: string;
-  apiAddress?: string;
+export type CustomNetworkType = {
+  [P in keyof NetworkType]?: NetworkType[P];
+} & {
   /**
-   * If set, allow editing gasPrice
+   * If set to `true`, network configuration in init app will prevent a call to `dapp/config`.
    */
-  ppuForGasPrice?: {
-    fast: number;
-    faster: number;
-  };
-  explorerAddress?: string;
   skipFetchFromServer?: boolean;
-  apiTimeout?: string | number;
-  walletConnectV2ProjectId?: string;
-  walletConnectV2Options?: any;
-  metamaskSnapWalletAddress?: string;
-  websocketUrl?: string;
-}
+};
 
 export interface ApiNetworkConfigType {
   erd_chain_id: string;

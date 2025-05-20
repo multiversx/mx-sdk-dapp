@@ -1,3 +1,1 @@
-export * from './getChainID';
-export * from './getNetworkConfig';
-export * from './getEgldLabel';
+export * from './setAxiosInterceptors';

@@ -73,10 +73,11 @@ export function timeRemaining(duration: number, short = true) {
   return short ? getShortDateTimeFormat(remaining) : remaining;
 }
 
-function getDifferenceInMs(timestamp: number) {
+export function getDifferenceInMs(timestamp: number) {
   const dateNow = new Date().getTime();
   const difference = dateNow - timestamp;
   const diffInMs = Math.max(difference, 0);
+
   return diffInMs;
 }
 
