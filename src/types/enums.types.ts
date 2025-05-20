@@ -1,7 +1,8 @@
-import {
-  WindowProviderRequestEnums,
-  WindowProviderResponseEnums
-} from 'lib/sdkWebWalletCrossWindowProvider';
+export enum EnvironmentsEnum {
+  testnet = 'testnet',
+  devnet = 'devnet',
+  mainnet = 'mainnet'
+}
 
 export enum TransactionServerStatusesEnum {
   pending = 'pending',
@@ -11,60 +12,6 @@ export enum TransactionServerStatusesEnum {
   executed = 'executed',
   notExecuted = 'not executed',
   rewardReverted = 'reward-reverted'
-}
-
-export enum SignedMessageStatusesEnum {
-  pending = 'pending',
-  failed = 'failed',
-  signed = 'signed',
-  cancelled = 'cancelled'
-}
-
-export enum TransactionBatchStatusesEnum {
-  signed = 'signed',
-  cancelled = 'cancelled',
-  success = 'success',
-  sent = 'sent',
-  fail = 'fail',
-  timedOut = 'timedOut',
-  invalid = 'invalid'
-}
-
-export enum LoginMethodsEnum {
-  ledger = 'ledger',
-  walletconnect = 'walletconnect',
-  walletconnectv2 = 'walletconnectv2',
-  wallet = 'wallet',
-  crossWindow = 'crossWindow',
-  iframe = 'iframe',
-  extension = 'extension',
-  passkey = 'passkey',
-  metamask = 'metamask',
-  opera = 'opera',
-  extra = 'extra',
-  none = ''
-}
-
-export enum NotificationTypesEnum {
-  warning = 'warning',
-  error = 'error',
-  success = 'success'
-}
-
-export enum TypesOfSmartContractCallsEnum {
-  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
-  ESDTNFTTransfer = 'ESDTNFTTransfer'
-}
-
-export enum EnvironmentsEnum {
-  testnet = 'testnet',
-  devnet = 'devnet',
-  mainnet = 'mainnet'
-}
-
-export enum ToastsEnum {
-  custom = 'custom',
-  transaction = 'transaction'
 }
 
 export enum TransactionTypesEnum {
@@ -77,38 +24,51 @@ export enum TransactionTypesEnum {
   scCall = 'scCall'
 }
 
-export enum TransactionsDefaultTitles {
-  success = 'Transaction successful',
-  received = 'Transaction received',
-  failed = 'Transaction failed',
-  pending = 'Processing transaction',
-  timedOut = 'Transaction timed out',
-  // Appears in batch transactions when the batch status is invalid (set the batch status to invalid for each transaction)
-  invalid = 'Transaction invalid'
+export enum TransactionBatchStatusesEnum {
+  signed = 'signed',
+  cancelled = 'cancelled',
+  success = 'success',
+  sent = 'sent',
+  fail = 'fail',
+  timedOut = 'timedOut',
+  invalid = 'invalid'
 }
 
-export enum PlatformsEnum {
-  ios = 'ios',
-  reactNative = 'reactNative',
-  web = 'web',
-  webWallet = 'webWallet'
+export enum TypesOfSmartContractCallsEnum {
+  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
+  ESDTNFTTransfer = 'ESDTNFTTransfer'
 }
 
-export enum WebViewProviderRequestBaseEnums {
-  signTransactionsWithGuardianResponse = 'SIGN_TRANSACTIONS_WITH_GUARDIAN_RESPONSE',
-  reloginRequest = 'RELOGIN_REQUEST'
+export enum ESDTTransferTypesEnum {
+  ESDTNFTTransfer = 'ESDTNFTTransfer',
+  ESDTNFTBurn = 'ESDTNFTBurn',
+  ESDTNFTAddQuantity = 'ESDTNFTAddQuantity',
+  ESDTNFTCreate = 'ESDTNFTCreate',
+  MultiESDTNFTTransfer = 'MultiESDTNFTTransfer',
+  ESDTTransfer = 'ESDTTransfer',
+  ESDTBurn = 'ESDTBurn',
+  ESDTLocalMint = 'ESDTLocalMint',
+  ESDTLocalBurn = 'ESDTLocalBurn',
+  ESDTWipe = 'ESDTWipe',
+  ESDTFreeze = 'ESDTFreeze'
 }
 
-export const WebViewProviderRequestEnums = {
-  ...WindowProviderRequestEnums,
-  ...WebViewProviderRequestBaseEnums
-};
-
-export enum WebViewProviderResponseBaseEnums {
-  reloginResponse = 'RELOGIN_RESPONSE'
+export enum GuardianActionsEnum {
+  SetGuardian = 'SetGuardian',
+  GuardAccount = 'GuardAccount',
+  UnGuardAccount = 'UnGuardAccount'
 }
 
-export const WebViewProviderResponseEnums = {
-  ...WindowProviderResponseEnums,
-  ...WebViewProviderResponseBaseEnums
-};
+export enum SigningErrorsEnum {
+  notInitialized = 'Provider not initialized',
+  errorSigning = 'Error when signing',
+  errorSigningTx = 'Error signing transaction',
+  missingProviderMessage = 'You need a signer/valid signer to send a transaction, use either WalletProvider, LedgerProvider or WalletConnect',
+  defaultTransactionStatusMessage = 'Undefined transaction status',
+  secondLoginAttemptError = 'Action not allowed. User is logged in. Call logout() first',
+  senderDifferentThanLoggedInAddress = 'You cannot sign transactions from a different account'
+}
+export enum SigningWarningsEnum {
+  cancelled = 'Signing canceled',
+  transactionCancelled = 'Transaction canceled'
+}

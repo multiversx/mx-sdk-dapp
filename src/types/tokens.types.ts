@@ -134,3 +134,47 @@ export interface NftType {
   }[];
   scamInfo?: ScamInfoType;
 }
+
+export interface TokenAssets {
+  description: string;
+  status: string;
+  svgUrl: string;
+  website?: string;
+  pngUrl?: string;
+  social?: any;
+  extraTokens?: string[];
+  lockedAccounts?: { [key: string]: string };
+}
+
+export interface TokenMediaType {
+  url?: string;
+  originalUrl?: string;
+  thumbnailUrl?: string;
+  fileType?: string;
+  fileSize?: number;
+}
+
+export interface TokenOptionType {
+  tokenLabel: string;
+  tokenDecimals: number;
+  tokenAvatar: string;
+  assets?: TokenAssets;
+  type?: NftEnumType;
+  error?: string;
+  esdtPrice?: number;
+  ticker?: string;
+  identifier?: string;
+  name?: string;
+  isLoading?: boolean;
+}
+
+export interface TokenInfoResponse {
+  identifier: string;
+  name: string;
+  ticker: string;
+  decimals: number;
+  type?: NftEnumType;
+  assets: TokenAssets;
+  media?: TokenMediaType[];
+  price: number;
+}

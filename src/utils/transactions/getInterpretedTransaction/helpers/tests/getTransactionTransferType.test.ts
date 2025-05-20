@@ -13,11 +13,11 @@ describe('getTransactionTransferType', () => {
       type: TransferTypeEnum.SmartContractResult
     };
 
-    const result = getTransactionTransferType(
-      'address-hash',
+    const result = getTransactionTransferType({
+      address: 'address-hash',
       transaction,
-      'receiver-hash'
-    );
+      receiver: 'receiver-hash'
+    });
 
     expect(result).toEqual(TransactionDirectionEnum.INTERNAL);
   });
@@ -30,7 +30,11 @@ describe('getTransactionTransferType', () => {
       sender
     };
 
-    const result = getTransactionTransferType(sender, transaction, sender);
+    const result = getTransactionTransferType({
+      address: sender,
+      transaction,
+      receiver: sender
+    });
 
     expect(result).toEqual(TransactionDirectionEnum.SELF);
   });
@@ -43,7 +47,11 @@ describe('getTransactionTransferType', () => {
       receiver
     };
 
-    const result = getTransactionTransferType(receiver, transaction, receiver);
+    const result = getTransactionTransferType({
+      address: receiver,
+      transaction,
+      receiver
+    });
 
     expect(result).toEqual(TransactionDirectionEnum.IN);
   });
@@ -56,11 +64,11 @@ describe('getTransactionTransferType', () => {
       sender
     };
 
-    const result = getTransactionTransferType(
-      sender,
+    const result = getTransactionTransferType({
+      address: sender,
       transaction,
-      'receiver-hash'
-    );
+      receiver: 'receiver-hash'
+    });
 
     expect(result).toEqual(TransactionDirectionEnum.OUT);
   });

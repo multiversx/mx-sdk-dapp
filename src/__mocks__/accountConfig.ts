@@ -1,4 +1,4 @@
-import { fallbackNetworkConfigurations } from 'constants/network';
+import { fallbackNetworkConfigurations } from 'constants/network.constants';
 import { EnvironmentsEnum } from 'types';
 
 export const testAddress =

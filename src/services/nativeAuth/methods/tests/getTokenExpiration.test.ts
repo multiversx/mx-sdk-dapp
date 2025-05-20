@@ -1,4 +1,4 @@
-import * as timestampModule from '../../../../utils/dateTime/getUnixTimestamp';
+import * as timestampModule from 'utils/dateTime/getUnixTimestamp';
 import { getTokenExpiration } from '../getTokenExpiration';
 
 jest.mock('../../../../utils/dateTime/getUnixTimestamp', () => {

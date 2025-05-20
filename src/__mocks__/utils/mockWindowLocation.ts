@@ -5,11 +5,9 @@ export const mockWindowLocation = () => {
 
   const location = window.location;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   delete window.location;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   window.location = Object.defineProperties(
     {},

@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { CONFIG_ENDPOINT } from 'apiCalls/endpoints';
-import { NetworkType } from 'types';
+import { NetworkType } from 'types/network.types';
+import { CONFIG_ENDPOINT } from '../endpoints';
 
 export async function getServerConfiguration(apiAddress: string) {
   const configUrl = `${apiAddress}/${CONFIG_ENDPOINT}`;
@@ -8,7 +8,7 @@ export async function getServerConfiguration(apiAddress: string) {
   try {
     const { data } = await axios.get<NetworkType>(configUrl);
     if (data != null) {
-      // TODO: egldDenomination will be removed from API when dapp-core v1 will be discontinued
+      // egldDenomination will be removed from API when dapp-core v1 will be discontinued
       const egldDenomination = 'egldDenomination';
       if (egldDenomination in data) {
         const {
@@ -27,7 +27,7 @@ export async function getServerConfiguration(apiAddress: string) {
       }
       return data;
     }
-  } catch (err) {
+  } catch (_err) {
     console.error('error fetching configuration for ', configUrl);
   }
   return null;

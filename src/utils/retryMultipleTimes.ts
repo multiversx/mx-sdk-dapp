@@ -6,13 +6,14 @@ interface Options {
 }
 
 const executeAsyncCall = async (
-  cb: (...args: any[]) => any,
+  cb: (..._args: any[]) => any,
   options: Options,
   args: any[],
   retries = 0
 ): Promise<any | null> => {
   try {
     return await cb(...args);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     if (retries < options.retries) {
       if (options?.delay != null) {
@@ -28,7 +29,7 @@ const executeAsyncCall = async (
 
 export const retryMultipleTimes =
   (
-    cb: (...args: any[]) => any,
+    cb: (..._args: any[]) => any,
     options: Options = { retries: 5, delay: 500 }
   ) =>
   async (...args: any[]) => {

@@ -1,4 +1,4 @@
-import { EmptyProvider } from 'providers';
+import { EmptyProvider } from 'core/providers/helpers/emptyProvider';
 
 type SessionEventTypes = any;
 type PairingTypes = any;

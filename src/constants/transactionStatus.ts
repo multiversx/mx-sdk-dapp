@@ -1,6 +1,0 @@
-export const CANCEL_TRANSACTION_TOAST_ID = 'cancel-transaction-toast';
-export const AVERAGE_TX_DURATION_MS = 6000;
-export const CROSS_SHARD_ROUNDS = 5;
-export const TRANSACTIONS_STATUS_POLLING_INTERVAL_MS = 90 * 1000; // 90sec
-export const TRANSACTIONS_STATUS_DROP_INTERVAL_MS = 10 * 60 * 1000; // 10min
-export const CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION = 20000;

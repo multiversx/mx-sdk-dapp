@@ -1,4 +1,4 @@
-import isString from 'lodash/isString';
+import isString from 'lodash.isstring';
 import { decodeBase64 } from 'utils/decoders/base64Utils';
 
 export interface DecodedLoginTokenType {

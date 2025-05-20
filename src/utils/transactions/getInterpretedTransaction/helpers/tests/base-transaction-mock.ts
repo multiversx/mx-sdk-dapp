@@ -1,3 +1,4 @@
+import { TransactionServerStatusesEnum } from 'types';
 import { TransactionActionsEnum } from 'types/serverTransactions.types';
 
 export const baseTransactionMock = {
@@ -16,7 +17,7 @@ export const baseTransactionMock = {
   sender: 'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
   senderShard: 0,
   signature: 'transaction-signature-hash',
-  status: 'fail',
+  status: TransactionServerStatusesEnum.fail,
   value: '1234',
   fee: '655440000000000',
   timestamp: 1660821528,

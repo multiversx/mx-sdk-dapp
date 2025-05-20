@@ -9,7 +9,9 @@ export function decodePart(part: string) {
     if (isUtf8(hexPart) && hexPart.length > 1) {
       decodedPart = hexPart;
     }
-  } catch (error) {}
+  } catch (_error) {
+    /* empty */
+  }
 
   return decodedPart;
 }
