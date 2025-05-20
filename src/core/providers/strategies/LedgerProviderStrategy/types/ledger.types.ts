@@ -1,4 +1,4 @@
-// types here need to be synced with the types in sdk-dapp-core-ui ledger-connect.types
+// types here need to be synced with the types in sdk-dapp-ui ledger-connect.types
 
 export interface IConnectScreenData {
   customContentMarkup?: string;

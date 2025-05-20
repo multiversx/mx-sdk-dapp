@@ -1,4 +1,4 @@
-// types here need to be synced with the types in sdk-dapp-core-ui sign-transactions-modal.types.ts
+// types here need to be synced with the types in sdk-dapp-ui sign-transactions-modal.types.ts
 import {
   DecodedDisplayType,
   DecodeMethodEnum
