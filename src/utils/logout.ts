@@ -87,7 +87,7 @@ export async function logout(
   }
 
   // We are already logged out, so we can redirect to the dapp
-  if (!address && !isProviderInitialised) {
+  if (!address) {
     return redirectToCallbackUrl({
       callbackUrl: url,
       onRedirect
@@ -97,7 +97,7 @@ export async function logout(
   try {
     store.dispatch(logoutAction());
 
-    if (isWalletProvider) {
+    if (isWalletProvider && isProviderInitialised) {
       // Allow redux store cleanup before redirect to web wallet
       return setTimeout(() => {
         provider.logout({ callbackUrl: url });
@@ -113,7 +113,9 @@ export async function logout(
       );
     }
 
-    await provider.logout({ callbackUrl: url });
+    if (isProviderInitialised) {
+      await provider.logout({ callbackUrl: url });
+    }
   } catch (err) {
     console.error('Logging out error:', err);
   } finally {
