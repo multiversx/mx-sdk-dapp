@@ -1,4 +1,4 @@
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import { getCachedItemSelector } from 'store/selectors/cacheSelector';
 import { getStore } from 'store/store';
 

@@ -1,5 +1,5 @@
 import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import { saveToCache } from 'store/actions/cache/cacheActions';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';

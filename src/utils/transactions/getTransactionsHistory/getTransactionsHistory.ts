@@ -1,5 +1,5 @@
 import isEmpty from 'lodash.isempty';
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import type { IGetHistoricalTransactionsParams } from 'types/transaction-list-item.types';
 import {
   createTransactionsHistoryFromSessions,

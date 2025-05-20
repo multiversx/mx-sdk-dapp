@@ -1,4 +1,4 @@
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum

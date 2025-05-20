@@ -1,4 +1,4 @@
-import { ITransactionListItemAsset } from 'lib/sdkDappCoreUi';
+import { ITransactionListItemAsset } from 'lib/sdkDappUi';
 import { AssetType } from 'types/account.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { TransactionIconTypeEnum } from 'types/transaction-list-item.types';

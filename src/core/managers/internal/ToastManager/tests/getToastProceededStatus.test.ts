@@ -1,5 +1,5 @@
 import { testAddress } from '__mocks__/accountConfig';
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import { isServerTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
 import { TransactionServerStatusesEnum } from 'types';
 import { getToastTransactionsStatus } from '../helpers/getToastTransactionsStatus';

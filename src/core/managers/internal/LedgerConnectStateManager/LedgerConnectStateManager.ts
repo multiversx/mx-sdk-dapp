@@ -8,7 +8,7 @@ import {
   IConnectScreenData,
   IConfirmScreenData
 } from 'core/providers/strategies/LedgerProviderStrategy/types/ledger.types';
-import { MvxLedgerFlow } from 'lib/sdkDappCoreUi';
+import { MvxLedgerFlow } from 'lib/sdkDappUi';
 import { LedgerConnectEventsEnum } from './types';
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
 
