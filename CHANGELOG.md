@@ -7,11 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added `refreshNativeAuthTokenLogin` helper](https://github.com/multiversx/mx-sdk-dapp/pull/1422)
+
 ## [[5.0.0-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1421)] - 2025-05-20
 
 - [Rename to sdk-dapp](https://github.com/multiversx/mx-sdk-dapp/pull/1420)
 
-----------------
+---
 
 - [Upgrade sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp-core/pull/172)
 - [Fix walletConnect login issues](https://github.com/multiversx/mx-sdk-dapp-core/pull/171)
@@ -172,7 +174,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [[v0.0.0]](https://github.com/multiversx/mx-sdk-dapp-core)] - 2024-04-17
 
----------------------
+---
 
 ## [[v4.1.8](https://github.com/multiversx/mx-sdk-dapp/pull/1418)] - 2025-05-20
 
