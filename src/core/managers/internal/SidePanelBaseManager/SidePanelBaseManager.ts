@@ -1,5 +1,5 @@
 import { UITagsEnum } from 'constants/UITags.enum';
-import { IEventBus } from 'lib/sdkDappCoreUi';
+import { IEventBus } from 'lib/sdkDappUi';
 import { setIsUnlockPanelOpen } from 'store/actions/ui/uiActions';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { createUIElement } from 'utils/createUIElement';

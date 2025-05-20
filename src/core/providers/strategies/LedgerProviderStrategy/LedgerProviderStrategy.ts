@@ -8,7 +8,7 @@ import { LedgerConnectStateManager } from 'core/managers/internal/LedgerConnectS
 import { ToastIconsEnum } from 'core/managers/internal/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'core/methods/account/getIsLoggedIn';
 import { IProvider } from 'core/providers/types/providerFactory.types';
-import { defineCustomElements } from 'lib/sdkDappCoreUi';
+import { defineCustomElements } from 'lib/sdkDappUi';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';

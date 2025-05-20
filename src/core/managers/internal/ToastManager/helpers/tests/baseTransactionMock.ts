@@ -1,5 +1,5 @@
 import { testAddress } from '__mocks__';
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import { TransactionServerStatusesEnum } from 'types';
 
 export const baseTransactionMock: ITransactionListItem = {

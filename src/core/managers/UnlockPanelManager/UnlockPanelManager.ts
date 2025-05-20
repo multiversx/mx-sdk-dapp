@@ -6,7 +6,7 @@ import {
   IProviderFactory,
   ProviderTypeEnum
 } from 'core/providers/types/providerFactory.types';
-import { MvxUnlockPanel } from 'lib/sdkDappCoreUi';
+import { MvxUnlockPanel } from 'lib/sdkDappUi';
 import { IEventBus } from 'types/manager.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { createUIElement } from 'utils/createUIElement';

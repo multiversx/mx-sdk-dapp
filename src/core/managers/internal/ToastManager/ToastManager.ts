@@ -2,7 +2,7 @@ import isEqual from 'lodash.isequal';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { NotificationsFeedManager } from 'core/managers/NotificationsFeedManager/NotificationsFeedManager';
 import { NotificationsFeedEventsEnum } from 'core/managers/NotificationsFeedManager/types';
-import { MvxToastList } from 'lib/sdkDappCoreUi';
+import { MvxToastList } from 'lib/sdkDappUi';
 import {
   customToastCloseHandlersDictionary,
   customToastComponentDictionary,

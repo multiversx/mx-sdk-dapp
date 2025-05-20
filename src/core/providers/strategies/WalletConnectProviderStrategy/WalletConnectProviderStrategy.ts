@@ -17,7 +17,7 @@ import {
   IProvider,
   ProviderTypeEnum
 } from 'core/providers/types/providerFactory.types';
-import { defineCustomElements } from 'lib/sdkDappCoreUi';
+import { defineCustomElements } from 'lib/sdkDappUi';
 import { logoutAction } from 'store/actions';
 import {
   chainIdSelector,

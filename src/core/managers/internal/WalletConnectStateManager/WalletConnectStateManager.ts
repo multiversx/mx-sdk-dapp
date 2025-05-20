@@ -4,7 +4,7 @@ import {
   WalletConnectEventsEnum,
   IWalletConnectModalData
 } from 'core/providers/strategies/WalletConnectProviderStrategy/types';
-import { MvxWalletConnectProvider } from 'lib/sdkDappCoreUi';
+import { MvxWalletConnectProvider } from 'lib/sdkDappUi';
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
 
 export class WalletConnectStateManager extends UIBaseManager<

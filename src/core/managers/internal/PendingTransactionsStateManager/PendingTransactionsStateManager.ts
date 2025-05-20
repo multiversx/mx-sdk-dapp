@@ -1,6 +1,6 @@
 import { UITagsEnum } from 'constants/UITags.enum';
 import { IProviderBase } from 'core/providers/types/providerFactory.types';
-import { MvxPendingTransactionsPanel } from 'lib/sdkDappCoreUi';
+import { MvxPendingTransactionsPanel } from 'lib/sdkDappUi';
 import { PendingTransactionsEventsEnum } from './types/pendingTransactions.types';
 import { SidePanelBaseManager } from '../SidePanelBaseManager/SidePanelBaseManager';
 
