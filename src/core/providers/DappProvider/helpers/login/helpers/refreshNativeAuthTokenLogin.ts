@@ -7,6 +7,10 @@ import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 
+/**
+ * Use this function if you support multiple networks with network switching
+ * @returns The native auth token
+ */
 export const refreshNativeAuthTokenLogin = async ({
   signMessageCallback,
   nativeAuthClientConfig
