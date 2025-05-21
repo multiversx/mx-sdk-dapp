@@ -136,6 +136,7 @@ export class UnlockPanelManager {
 
   private async destroyUnlockPanel() {
     this.eventBus = null;
+    await this.unlockPanelElement?.closeWithAnimation();
     this.unlockPanelElement?.remove();
     this.unlockPanelElement = null;
   }

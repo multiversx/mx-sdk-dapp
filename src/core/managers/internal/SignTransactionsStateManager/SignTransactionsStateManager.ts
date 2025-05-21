@@ -54,12 +54,17 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   }
 
   constructor() {
-    super('sign-transactions');
+    super({
+      uiDataUpdateEvent: SignEventsEnum.DATA_UPDATE,
+      uiTag: UITagsEnum.SIGN_TRANSACTIONS_PANEL,
+      uiSidePanelOpenEvent: SignEventsEnum.OPEN_SIGN_TRANSACTIONS_PANEL,
+      uiSidePanelCloseEvent: SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL
+    });
     this.data = { ...this.initialData };
   }
 
   public async init() {
-    await super.init();
+    // await super.init();
     this.resetData();
   }
 
@@ -166,22 +171,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
 
   public get ppuMap() {
     return this._ppuMap;
-  }
-
-  protected getUIElementName(): UITagsEnum {
-    return UITagsEnum.SIGN_TRANSACTIONS_PANEL;
-  }
-
-  protected getOpenEventName(): SignEventsEnum {
-    return SignEventsEnum.OPEN_SIGN_TRANSACTIONS_PANEL;
-  }
-
-  protected getCloseEventName(): SignEventsEnum {
-    return SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL;
-  }
-
-  protected getDataUpdateEventName(): SignEventsEnum {
-    return SignEventsEnum.DATA_UPDATE;
   }
 
   protected async setupEventListeners() {

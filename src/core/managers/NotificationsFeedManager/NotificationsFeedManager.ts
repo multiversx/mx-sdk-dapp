@@ -1,7 +1,7 @@
 import isEqual from 'lodash.isequal';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { TransactionsHistoryController } from 'controllers/TransactionsHistoryController';
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem, MvxNotificationsFeed } from 'lib/sdkDappCoreUi';
 import { clearCompletedTransactions } from 'store/actions/transactions/transactionsActions';
 import { getStore } from 'store/store';
 import { NotificationsFeedEventsEnum } from './types';
@@ -15,7 +15,7 @@ interface INotificationsFeedManagerData {
 }
 
 export class NotificationsFeedManager extends SidePanelBaseManager<
-  INotificationsFeedManagerData,
+  MvxNotificationsFeed,
   INotificationsFeedManagerData,
   NotificationsFeedEventsEnum
 > {
@@ -35,7 +35,13 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   }
 
   constructor() {
-    super('notifications-feed');
+    super({
+      uiDataUpdateEvent: NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED,
+      uiTag: UITagsEnum.NOTIFICATIONS_FEED,
+      uiSidePanelOpenEvent: NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED,
+      uiSidePanelCloseEvent:
+        NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED
+    });
     this.data = { ...this.initialData };
   }
 
@@ -43,9 +49,31 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     return this.isOpen;
   }
 
-  public async init() {
-    await super.init();
-    this.setInitialData();
+  // public async init() {
+  //   await super.init();
+  //   this.setInitialData();
+  //   this.resetData();
+  //   await this.updateDataAndNotifications();
+
+  //   const storeToastsUnsubscribe = this.store.subscribe(
+  //     async (
+  //       { toasts, transactions },
+  //       { toasts: prevToasts, transactions: prevTransactions }
+  //     ) => {
+  //       if (
+  //         !isEqual(prevToasts.transactionToasts, toasts.transactionToasts) ||
+  //         !isEqual(prevTransactions, transactions)
+  //       ) {
+  //         await this.updateDataAndNotifications();
+  //       }
+  //     }
+  //   );
+
+  //   this.unsubscribeFunctions.push(storeToastsUnsubscribe);
+  // }
+
+  public async openNotificationsFeed() {
+    await this.openUI();
     this.resetData();
     await this.updateDataAndNotifications();
 
@@ -64,31 +92,12 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     );
 
     this.unsubscribeFunctions.push(storeToastsUnsubscribe);
-  }
-
-  public async openNotificationsFeed() {
-    await this.openUI();
+    this.eventBus?.publish(NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED);
     await this.updateDataAndNotifications();
   }
 
-  public destroy() {
-    super.destroy();
-  }
-
-  protected getUIElementName(): UITagsEnum {
-    return UITagsEnum.NOTIFICATIONS_FEED;
-  }
-
-  protected getOpenEventName(): NotificationsFeedEventsEnum {
-    return NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED;
-  }
-
-  protected getCloseEventName(): NotificationsFeedEventsEnum {
-    return NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED;
-  }
-
-  protected getDataUpdateEventName(): NotificationsFeedEventsEnum {
-    return NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED;
+  public async destroy() {
+    await super.destroy();
   }
 
   protected handleCloseUI() {
@@ -173,10 +182,10 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     );
   }
 
-  private setInitialData() {
-    this.initialData = {
-      pendingTransactions: [],
-      historicTransactions: []
-    };
-  }
+  // private setInitialData() {
+  //   this.initialData = {
+  //     pendingTransactions: [],
+  //     historicTransactions: []
+  //   };
+  // }
 }

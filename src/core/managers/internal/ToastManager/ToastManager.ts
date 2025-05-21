@@ -60,7 +60,6 @@ export class ToastManager {
   public async init() {
     this.updateTransactionToastsList();
     this.updateCustomToastList();
-    await this.notificationsFeedManager.init();
     await this.subscribeToEventBusNotifications();
 
     this.storeToastsSubscription = this.store.subscribe(
@@ -206,23 +205,6 @@ export class ToastManager {
   }
 
   private async subscribeToEventBusNotifications() {
-    const notificationsFeedEventBus =
-      await this.notificationsFeedManager.getEventBus();
-
-    if (notificationsFeedEventBus) {
-      notificationsFeedEventBus.subscribe(
-        NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED,
-        this.publishTransactionToasts.bind(this)
-      );
-
-      this.eventBusUnsubscribeFunctions.push(() => {
-        notificationsFeedEventBus.unsubscribe(
-          NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED,
-          this.publishTransactionToasts.bind(this)
-        );
-      });
-    }
-
     const toastsElement = await this.createToastListElement();
     if (!toastsElement) {
       return;

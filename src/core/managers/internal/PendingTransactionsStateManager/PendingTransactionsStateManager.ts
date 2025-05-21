@@ -31,7 +31,14 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
   }
 
   constructor() {
-    super('pending-transactions');
+    super({
+      uiDataUpdateEvent: PendingTransactionsEventsEnum.DATA_UPDATE,
+      uiTag: UITagsEnum.PENDING_TRANSACTIONS_PANEL,
+      uiSidePanelOpenEvent:
+        PendingTransactionsEventsEnum.OPEN_PENDING_TRANSACTIONS_PANEL,
+      uiSidePanelCloseEvent:
+        PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS
+    });
     this.data = { ...this.initialData };
   }
 
@@ -41,22 +48,6 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
 
   public async openProviderIdleState(data: IPendingTransactionsState) {
     await this.openUI(data);
-  }
-
-  protected getUIElementName(): UITagsEnum {
-    return UITagsEnum.PENDING_TRANSACTIONS_PANEL;
-  }
-
-  protected getOpenEventName(): PendingTransactionsEventsEnum {
-    return PendingTransactionsEventsEnum.OPEN_PENDING_TRANSACTIONS_PANEL;
-  }
-
-  protected getCloseEventName(): PendingTransactionsEventsEnum {
-    return PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS;
-  }
-
-  protected getDataUpdateEventName(): PendingTransactionsEventsEnum {
-    return PendingTransactionsEventsEnum.DATA_UPDATE;
   }
 
   protected async setupEventListeners() {

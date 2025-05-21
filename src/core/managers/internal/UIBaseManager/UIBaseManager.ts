@@ -34,6 +34,9 @@ export abstract class UIBaseManager<
   }
 
   public async init(anchor?: HTMLElement) {
+    if (this.uiTag === UITagsEnum.NOTIFICATIONS_FEED) {
+      debugger;
+    }
     this.anchor = anchor;
     await this.createUIElement(anchor);
     await this.getEventBus();
@@ -73,25 +76,7 @@ export abstract class UIBaseManager<
     this.uiElement = null;
   }
 
-  protected getInitialData(): TData {
-    return this.initialData;
-  }
-
-  protected publishEvent(event: TEventEnum, data?: TData) {
-    this.eventBus?.publish(event, data || this.data);
-  }
-
-  protected resetData() {
-    this.data = this.getInitialData();
-  }
-
-  protected notifyDataUpdate() {
-    this.publishEvent(this.uiDataUpdateEvent, this.data);
-  }
-
-  protected abstract setupEventListeners(): Promise<void>;
-
-  private async createUIElement(
+  public async createUIElement(
     anchor: HTMLElement | undefined = this.anchor
   ): Promise<TElement | null> {
     if (this.isCreatingElement || this.uiElement) {
@@ -116,4 +101,18 @@ export abstract class UIBaseManager<
 
     return this.uiElement;
   }
+
+  protected getInitialData(): TData {
+    return this.initialData;
+  }
+
+  protected resetData() {
+    this.data = this.getInitialData();
+  }
+
+  protected notifyDataUpdate() {
+    this.eventBus?.publish(this.uiDataUpdateEvent, this.data);
+  }
+
+  protected abstract setupEventListeners(): Promise<void>;
 }
