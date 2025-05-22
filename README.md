@@ -227,7 +227,7 @@ export function useStore() {
 
 ### 4. Transactions
 
-#### Signing transactions
+#### 4.1 Signing transactions
 
 To sign transactions, you first need to create the `Transaction` object then pass it to the initialized provider.
 
@@ -257,7 +257,7 @@ const provider = getAccountProvider();
 const signedTransactions = await provider.signTransactions(transactions);
 ```
 
-#### Sending and tracking transactions
+#### 4.2 Sending and tracking transactions
 
 Then, to send the transactions, you need to use the `TransactionManager` class and pass in the signedTransactions to the send method. You can optionally track the transactions by using the track method. This will create a toast notification with the transaction hash and its status.
 
@@ -272,7 +272,37 @@ const sessionId = await txManager.track(sentTransactions, {
 });
 ```
 
-At this point, by default a toast will 
+#### 4.3 Using the Notifications Feed
+
+The Notifications Feed is a component that displays the transactions in a list. It is initialized in the `initApp` method and can be accessed via `NotificationManager.getInstance()`.
+
+```typescript
+const notificationManager = NotificationManager.getInstance();
+notificationManager.openNotificationsFeed();
+```
+
+#### 4.4 Inspecting transactions
+
+In case you need to inspect the transactions, you can use the `transactionsSliceSelector` from the store.
+
+```typescript
+import {
+  pendingTransactionsSessionsSelector,
+  transactionsSliceSelector
+} from '@multiversx/sdk-dapp/out/store/selectors/transactionsSelector';
+import { getStore } from '@multiversx/sdk-dapp/out/store/store';
+
+const store = getStore(); // or use useStore hook for reactivity
+const pendingSessions = pendingTransactionsSessionsSelector(store.getState());
+const allTransactionSessions = transactionsSliceSelector(store.getState());
+
+const isSessionIdPending =
+  Object.keys(pendingSessions).includes(sessionId);
+const currentSession = allTransactionSessions[sessionId];
+const currentSessionStatus = currentSession?.status;
+const currentTransaction = currentSession?.transactions?.[0];
+const currentTransactionStatus = currentTransaction?.status;
+```
 
 // document Activity panel
 // document inspecting transactions
