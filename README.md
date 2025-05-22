@@ -116,11 +116,56 @@ initApp(config).then(() => {
 
 ### 2. Provider interaction
 
-Once your dApp has loaded, the first user action is logging in with a chosen provider.
+Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login.
+
+#### 2.1 Using the `UnlockPanelManager`
+By using the provided UI, you get the benefit of having all supported providers ready for login in a side panel. You simply need to link the `unlockPanelManager.openUnlockPanel` to a user action.
+
+```typescript
+import { UnlockPanelManager } from '@multiversx/sdk-dapp/out/core/managers/UnlockPanelManager';
+import { ProviderFactory } from '@multiversx/sdk-dapp/out/core/providers/ProviderFactory';
+
+export const ConnectButton = () => {
+  const unlockPanelManager = UnlockPanelManager.init({
+    loginHandler: () => {
+      navigate('/dashboard');
+    } 
+  });
+  const handleOpenUnlockPanel = () => {
+    unlockPanelManager.openUnlockPanel();
+  };
+  return <Button onClick={handleOpenUnlockPanel}>Connect</Button>;
+};
+
+```
+
+If you want to perform some actions as soon as the user has logged in, you will need to call `ProviderFactory.create` inside a handler accepting arguments. 
+
+```typescript
+export const AdvancedConnectButton = () => {
+  const unlockPanelManager = UnlockPanelManager.init({
+    loginHandler: async ({ type, anchor }) => {
+      const provider = await ProviderFactory.create({
+        type,
+        anchor
+      });
+      const { address, signature } = await provider?.login();
+      navigate(`/dashboard?address=${address}`;
+    }
+  });
+  const handleOpenUnlockPanel = () => {
+    unlockPanelManager.openUnlockPanel();
+  };
+  return <Button onClick={handleOpenUnlockPanel}>Advanced Connect</Button>;
+};
+
+```
+
+#### 2.2 Programatic login using the `ProviderFactory`
+If you want to login using a custom UI, you can link your buttons to specific providers by calling the `ProviderFactory`.
 
 ```typescript
 import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/core/providers/types/providerFactory.types';
-import { ProviderFactory } from '@multiversx/sdk-dapp/out/core/providers/ProviderFactory';
 
 const provider = await ProviderFactory.create({
   type: ProviderTypeEnum.extension
@@ -132,7 +177,7 @@ await provider.login();
 
 Depending on the framework, you can either use hooks or selectors to get the user details:
 
-#### React hooks solution:
+#### 3.1 React hooks solution:
 
 ```typescript
 import { useGetAccount } from '@multiversx/sdk-dapp/out/store/selectors/hooks/account/useGetAccount';
@@ -147,7 +192,9 @@ console.log(account.address);
 console.log(`${account.balance} ${egldLabel}`);
 ```
 
-#### Store selector functions:
+#### 3.2 Store selector functions:
+
+If you are not using the React ecosystem, you can use store selectors to get the data, but note that information will not be reactive.
 
 ```typescript
 import { getAccount } from '@multiversx/sdk-dapp/out/core/methods/account/getAccount';
@@ -157,6 +204,27 @@ const account = getAccount();
 const { egldLabel } = getNetworkConfig();
 ```
 
+In order to get live updates you may need to subscribe to the store like this:
+
+```typescript
+import { createSignal, onCleanup } from 'solid-js';
+import { getStore } from '@multiversx/sdk-dapp/out/store/store';
+
+export function useStore() {
+  const store = getStore();
+  const [state, setState] = createSignal(store.getState());
+
+  const unsubscribe = store.subscribe((newState) => {
+    setState(newState);
+  });
+
+  onCleanup(() => unsubscribe());
+
+  return state;
+}
+```
+
+
 ### 4. Transactions
 
 #### Signing transactions
@@ -164,7 +232,7 @@ const { egldLabel } = getNetworkConfig();
 To sign transactions, you first need to create the `Transaction` object then pass it to the initialized provider.
 
 ```typescript
-import { Transaction, TransactionPayload } from '@multiversx/sdk-core/out';
+import { Address, Transaction, TransactionPayload } from '@multiversx/sdk-core';
 import {
   GAS_PRICE,
   GAS_LIMIT
@@ -173,14 +241,14 @@ import { getAccountProvider } from '@multiversx/sdk-dapp/out/core/providers/help
 import { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
 
 const pongTransaction = new Transaction({
-  value: '0',
+  value: BigInt(0),
   data: new TransactionPayload('pong'),
-  receiver: contractAddress,
-  gasLimit: GAS_LIMIT,
-  gasPrice: GAS_PRICE,
+  receiver: Address.newFromBech32(contractAddress),
+  gasLimit: BigInt(GAS_LIMIT),
+  gasPrice: BigInt(GAS_PRICE),
   chainID: network.chainId,
-  nonce: account.nonce,
-  sender: account.address,
+  nonce: BigInt(account.nonce),
+  sender: Address.newFromBech32(account.address),
   version: 1
 });
 
@@ -197,9 +265,16 @@ Then, to send the transactions, you need to use the `TransactionManager` class a
 import { TransactionManager } from '@multiversx/sdk-dapp/out/core/managers/TransactionManager';
 
 const txManager = TransactionManager.getInstance();
-await txManager.send(signedTransactions);
-await txManager.track(signedTransactions);
+const sentTransactions = await txManager.send(signedTransactions);
+const sessionId = await txManager.track(sentTransactions, {
+  transactionsDisplayInfo
+});
 ```
+
+At this point, by default a toast will 
+
+// document Activity panel
+// document inspecting transactions
 
 Once the transactions are executed on the blockchain, the flow ends with the user logging out.
 
