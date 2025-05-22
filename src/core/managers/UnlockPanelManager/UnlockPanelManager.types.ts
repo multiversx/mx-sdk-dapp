@@ -65,10 +65,11 @@ export type UnlockPanelManagerInitParamsType = {
    */
   allowedProviders?: AllowedProviderType[] | null;
   /**
-   * Callback function to handle closing the sidebar
-   * when the login process is not initiated.
+   * Callback function to handle UI behavior when the unlock panel is closed
+   * without completing the login process.
    *
-   * This can be useful in scenarios where the user chooses not to proceed with login
+   * Common use case: redirecting the user away from the `/unlock` route
+   * (e.g., back to the homepage or a previous screen) when login is cancelled or skipped.
    */
   closeCallback?: CloseCallbackType;
 };
