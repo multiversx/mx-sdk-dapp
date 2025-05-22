@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed build](https://github.com/multiversx/mx-sdk-dapp/pull/1420)
+
 ## [[v4.1.8](https://github.com/multiversx/mx-sdk-dapp/pull/1418)] - 2025-05-20
 
 - [Prevent calling `provider.logout()` if not initialized](https://github.com/multiversx/mx-sdk-dapp/pull/1416)
