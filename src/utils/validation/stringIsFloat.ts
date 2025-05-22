@@ -35,7 +35,7 @@ export const stringIsFloat = (amount: string) => {
   const bNparsed = LocalBigNumber(number);
 
   const output =
-    bNparsed.toString(10) === number && bNparsed.comparedTo(0) >= 0;
+    bNparsed.toString(10) === number && bNparsed.isGreaterThanOrEqualTo(0);
 
   return output;
 };
