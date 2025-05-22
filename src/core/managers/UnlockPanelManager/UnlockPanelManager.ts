@@ -50,7 +50,6 @@ export class UnlockPanelManager {
       this.closeCallback = params.closeCallback;
     }
 
-    console.log('Init UnlockPanelManager', { params });
     return this.getInstance();
   }
 
