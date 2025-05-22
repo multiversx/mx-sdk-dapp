@@ -36,6 +36,7 @@ export type CustomProviderViewType<
 export type LoginCallbackType = () => void;
 
 export type LoginHandlerType = LoginFunctonType | LoginCallbackType;
+export type CloseCallbackType = () => void;
 
 export type UnlockPanelManagerInitParamsType = {
   /**
@@ -63,4 +64,12 @@ export type UnlockPanelManagerInitParamsType = {
    * List of allowed providers
    */
   allowedProviders?: AllowedProviderType[] | null;
+  /**
+   * Callback function to handle UI behavior when the unlock panel is closed
+   * without completing the login process.
+   *
+   * Common use case: redirecting the user away from the `/unlock` route
+   * (e.g., back to the homepage or a previous screen) when login is cancelled or skipped.
+   */
+  closeCallback?: CloseCallbackType;
 };
