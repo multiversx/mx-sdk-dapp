@@ -12,6 +12,7 @@ import { ProviderErrorsEnum } from 'types/provider.types';
 import { createUIElement } from 'utils/createUIElement';
 import {
   AllowedProviderType,
+  CloseCallbackType,
   IUnlockPanel,
   LoginHandlerType,
   UnlockPanelEventsEnum,
@@ -21,6 +22,7 @@ import {
 export class UnlockPanelManager {
   private static instance: UnlockPanelManager;
   private static loginHandler: LoginHandlerType | null = null;
+  private static closeCallback: CloseCallbackType | null = null;
   private static allowedProviders?: AllowedProviderType[] | null = null;
 
   private data: IUnlockPanel = { isOpen: false };
@@ -43,6 +45,12 @@ export class UnlockPanelManager {
   public static init(params: UnlockPanelManagerInitParamsType) {
     this.loginHandler = params.loginHandler;
     this.allowedProviders = params.allowedProviders;
+
+    if (params.closeCallback) {
+      this.closeCallback = params.closeCallback;
+    }
+
+    console.log('Init UnlockPanelManager', { params });
     return this.getInstance();
   }
 
@@ -100,8 +108,13 @@ export class UnlockPanelManager {
     );
   }
 
-  private async handleCloseUI() {
+  private async handleCloseUI(options?: { isLoginFinished?: boolean }) {
     this.data = { ...this.initialData };
+
+    if (!options?.isLoginFinished && UnlockPanelManager.closeCallback) {
+      UnlockPanelManager.closeCallback();
+    }
+
     await this.destroyUnlockPanel();
   }
 
@@ -120,7 +133,7 @@ export class UnlockPanelManager {
       } else {
         UnlockPanelManager.loginHandler({ type, anchor });
       }
-      await this.handleCloseUI();
+      await this.handleCloseUI({ isLoginFinished: true });
     } catch (error) {
       console.error(error);
       this.eventBus?.publish(

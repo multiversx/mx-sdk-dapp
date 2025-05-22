@@ -36,6 +36,7 @@ export type CustomProviderViewType<
 export type LoginCallbackType = () => void;
 
 export type LoginHandlerType = LoginFunctonType | LoginCallbackType;
+export type CloseCallbackType = () => void;
 
 export type UnlockPanelManagerInitParamsType = {
   /**
@@ -63,4 +64,11 @@ export type UnlockPanelManagerInitParamsType = {
    * List of allowed providers
    */
   allowedProviders?: AllowedProviderType[] | null;
+  /**
+   * Callback function to handle closing the sidebar
+   * when the login process is not initiated.
+   *
+   * This can be useful in scenarios where the user chooses not to proceed with login
+   */
+  closeCallback?: CloseCallbackType;
 };
