@@ -268,6 +268,7 @@ const txManager = TransactionManager.getInstance();
 const sentTransactions = await txManager.send(signedTransactions);
 const sessionId = await txManager.track(sentTransactions, {
   transactionsDisplayInfo
+  // disableToasts: false, // optional, default false. Enable it if you do not want transaction tracking in toasts
 });
 ```
 
