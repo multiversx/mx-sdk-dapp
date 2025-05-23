@@ -81,7 +81,7 @@ Having this knowledge, we can consider several steps needed to put a dApp togeth
 | 1 | Configuration | - storage configuration (e.g. sessionStorage, localStorage etc.)<br>- chain configuration<br>- custom provider configuration (adding / disabling / changing providers) |
 | 2 | Provider interaction | - logging in and out<br>- signing transactions / messages |
 | 3 | Presenting data | - get store data (e.g. account balance, account address etc.)<br>- use components to display data (e.g. balance, address, transactions list) |
-| 4 | Transactions | - sending transactions<br>- tracking transactions |
+| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- transactions history |
 
 Each of these steps will be explained in more detail in the following sections.
 
@@ -149,7 +149,7 @@ export const AdvancedConnectButton = () => {
         type,
         anchor
       });
-      const { address, signature } = await provider?.login();
+      const { address, signature } = await provider.login();
       navigate(`/dashboard?address=${address}`;
     }
   });
@@ -162,7 +162,7 @@ export const AdvancedConnectButton = () => {
 ```
 
 #### 2.2 Programatic login using the `ProviderFactory`
-If you want to login using a custom UI, you can link your buttons to specific providers by calling the `ProviderFactory`.
+If you want to login using your custom UI, you can link user actions to specific providers by calling the `ProviderFactory`.
 
 ```typescript
 import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/core/providers/types/providerFactory.types';
@@ -178,6 +178,9 @@ await provider.login();
 Depending on the framework, you can either use hooks or selectors to get the user details:
 
 #### 3.1 React hooks solution:
+
+// TODO: move to src/react/account
+// TODO: move store to src/react/useStore
 
 ```typescript
 import { useGetAccount } from '@multiversx/sdk-dapp/out/store/selectors/hooks/account/useGetAccount';
@@ -195,6 +198,8 @@ console.log(`${account.balance} ${egldLabel}`);
 #### 3.2 Store selector functions:
 
 If you are not using the React ecosystem, you can use store selectors to get the data, but note that information will not be reactive.
+
+// TODO: remove /core/ folder
 
 ```typescript
 import { getAccount } from '@multiversx/sdk-dapp/out/core/methods/account/getAccount';
@@ -229,7 +234,7 @@ export function useStore() {
 
 #### 4.1 Signing transactions
 
-To sign transactions, you first need to create the `Transaction` object then pass it to the initialized provider.
+To sign transactions, you first need to create the `Transaction` object, then pass it to the initialized provider.
 
 ```typescript
 import { Address, Transaction, TransactionPayload } from '@multiversx/sdk-core';
@@ -259,22 +264,30 @@ const signedTransactions = await provider.signTransactions(transactions);
 
 #### 4.2 Sending and tracking transactions
 
-Then, to send the transactions, you need to use the `TransactionManager` class and pass in the signedTransactions to the send method. You can optionally track the transactions by using the track method. This will create a toast notification with the transaction hash and its status.
+Then, to send the transactions, you need to use the `TransactionManager` class and pass in the `signedTransactions` to the `send` method. You can then track the transactions by using the `track` method. This will create a toast notification with the transaction hash and its status.
 
 ```typescript
 import { TransactionManager } from '@multiversx/sdk-dapp/out/core/managers/TransactionManager';
+import type { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/out/types/transactions.types';
+
 
 const txManager = TransactionManager.getInstance();
 const sentTransactions = await txManager.send(signedTransactions);
+
+const toastInformation: TransactionsDisplayInfoType = {
+    processingMessage: 'Processing transactions',
+    errorMessage: 'An error has occurred during transaction execution',
+    successMessage: 'Transactions executed'
+  }
+
 const sessionId = await txManager.track(sentTransactions, {
-  transactionsDisplayInfo
-  // disableToasts: false, // optional, default false. Enable it if you do not want transaction tracking in toasts
+  transactionsDisplayInfo: toastInformation
 });
 ```
 
 #### 4.3 Using the Notifications Feed
 
-The Notifications Feed is a component that displays the transactions in a list. It is initialized in the `initApp` method and can be accessed via `NotificationManager.getInstance()`.
+The Notifications Feed is a component that displays session transactions in a list. It is initialized in the `initApp` method and can be accessed via `NotificationManager.getInstance()`.
 
 ```typescript
 const notificationManager = NotificationManager.getInstance();
