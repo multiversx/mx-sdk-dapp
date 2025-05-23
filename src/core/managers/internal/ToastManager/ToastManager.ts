@@ -1,7 +1,6 @@
 import isEqual from 'lodash.isequal';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { NotificationsFeedManager } from 'core/managers/NotificationsFeedManager/NotificationsFeedManager';
-import { NotificationsFeedEventsEnum } from 'core/managers/NotificationsFeedManager/types';
 import { MvxToastList } from 'lib/sdkDappUi';
 import {
   customToastCloseHandlersDictionary,
@@ -228,13 +227,13 @@ export class ToastManager {
     });
 
     this.eventBus.subscribe(
-      ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
+      ToastEventsEnum.OPEN,
       this.handleOpenNotificationsFeed.bind(this)
     );
 
     this.eventBusUnsubscribeFunctions.push(() => {
       this.eventBus?.unsubscribe(
-        ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
+        ToastEventsEnum.OPEN,
         this.handleOpenNotificationsFeed.bind(this)
       );
     });

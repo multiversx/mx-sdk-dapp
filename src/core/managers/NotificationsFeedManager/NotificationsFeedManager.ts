@@ -37,7 +37,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
 
   constructor() {
     super({
-      uiDataUpdateEvent: NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED,
+      uiDataUpdateEvent: NotificationsFeedEventsEnum.OPEN,
       uiTag: UITagsEnum.NOTIFICATIONS_FEED
     });
     this.data = { ...this.initialData };
@@ -47,6 +47,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     return this.isOpen;
   }
 
+  // open Notifications feed and toggeling ToastManager
   public async openNotificationsFeed() {
     const toastManager = ToastManager.getInstance();
     toastManager.hideToasts();
@@ -68,14 +69,15 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     );
     this.unsubscribeFunctions.push(storeToastsUnsubscribe);
 
-    this.eventBus?.publish(NotificationsFeedEventsEnum.OPEN_NOTIFICATIONS_FEED);
+    this.eventBus?.publish(NotificationsFeedEventsEnum.OPEN);
     await this.updateDataAndNotifications();
   }
 
+  // closing Notifications feed and toggeling ToastManager
   protected handleCloseUI() {
     const toastManager = ToastManager.getInstance();
-    toastManager.showToasts();
     this.closeUI();
+    toastManager.showToasts();
   }
 
   protected async setupEventListeners() {
@@ -84,12 +86,12 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     }
 
     this.subscribeToEventBus(
-      NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED,
+      NotificationsFeedEventsEnum.CLOSE,
       this.handleCloseUI.bind(this)
     );
 
     this.subscribeToEventBus(
-      NotificationsFeedEventsEnum.CLEAR_NOTIFICATIONS_FEED_HISTORY,
+      NotificationsFeedEventsEnum.CLEAR,
       this.handleClearNotificationsFeedHistory.bind(this)
     );
   }

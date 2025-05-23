@@ -17,7 +17,7 @@ export abstract class UIBaseManager<
   protected anchor?: HTMLElement;
   protected uiTag: UITagsEnum;
   protected uiDataUpdateEvent: TEventEnum;
-  protected unsubscribeFunctions: (() => void)[] = [];
+  protected unsubscribeFunctions: Map<TEventEnum, (() => void)[]> = new Map();
   protected abstract initialData: TData;
   protected data: TData;
 
@@ -51,7 +51,9 @@ export abstract class UIBaseManager<
 
     const unsubscribe = this.eventBus?.subscribe(event, callback);
     if (unsubscribe) {
-      this.unsubscribeFunctions.push(unsubscribe);
+      const existing = this.unsubscribeFunctions.get(event) || [];
+      existing.push(unsubscribe);
+      this.unsubscribeFunctions.set(event, existing);
     }
   }
 
@@ -60,8 +62,10 @@ export abstract class UIBaseManager<
   }
 
   protected destroy() {
-    this.unsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
-    this.unsubscribeFunctions = [];
+    this.unsubscribeFunctions.forEach((unsubList) =>
+      unsubList.forEach((unsubscribe) => unsubscribe())
+    );
+    this.unsubscribeFunctions.clear();
     this.eventBus = null;
     this.uiElement?.remove();
     this.uiElement = null;
