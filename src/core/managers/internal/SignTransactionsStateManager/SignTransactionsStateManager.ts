@@ -43,8 +43,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
     sftTransaction: null
   };
 
-  protected data: ISignTransactionsPanelData = { ...this.initialData };
-
   public static getInstance(): SignTransactionsStateManager {
     if (!SignTransactionsStateManager.instance) {
       SignTransactionsStateManager.instance =
