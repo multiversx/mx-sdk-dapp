@@ -5,7 +5,7 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import { LedgerConnectStateManager } from 'core/managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getExplorerAddress } from 'core/methods/network/getExplorerAddress';
 import { ProviderTypeEnum } from 'core/providers/types/providerFactory.types';
-import { IEventBus } from 'lib/sdkDappCoreUi';
+import { IEventBus } from 'lib/sdkDappUi';
 import { setLedgerAccount } from 'store/actions';
 import { setLedgerLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';

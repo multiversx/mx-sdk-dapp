@@ -1,6 +1,6 @@
 import startCase from 'lodash.startcase';
 import uniq from 'lodash.uniq';
-import { ITransactionListItemAction } from 'lib/sdkDappCoreUi';
+import { ITransactionListItemAction } from 'lib/sdkDappUi';
 
 import type { ServerTransactionType } from 'types/serverTransactions.types';
 import { TransactionActionMethodTypeEnum } from 'types/transaction-list-item.types';

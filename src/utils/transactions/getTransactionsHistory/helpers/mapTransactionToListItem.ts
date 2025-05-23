@@ -1,4 +1,4 @@
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { IBaseTransactionParams } from 'types/transaction-list-item.types';

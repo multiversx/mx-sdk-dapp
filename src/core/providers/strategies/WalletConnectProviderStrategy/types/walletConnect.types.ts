@@ -13,7 +13,7 @@ export enum WalletConnectV2Error {
   actionError = 'Unable to send event'
 }
 
-// types here need to be synced with the types in sdk-dapp-core-ui
+// types here need to be synced with the types in sdk-dapp-ui
 export enum WalletConnectEventsEnum {
   CLOSE = 'CLOSE',
   DATA_UPDATE = 'DATA_UPDATE',

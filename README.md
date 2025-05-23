@@ -4,7 +4,7 @@ MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
 
 ## Introduction
 
-`sdk-dapp-core` is a library that holds core functional logic that can be used to create a dApp on MultiversX Network.
+`sdk-dapp` is a library that holds core functional logic that can be used to create a dApp on MultiversX Network.
 
 It is built for applications that use any of the following technologies:
 
@@ -17,7 +17,7 @@ It is built for applications that use any of the following technologies:
 
 ## GitHub project
 
-The GitHub repository can be found here: [https://github.com/multiversx/mx-sdk-dapp-core](https://github.com/multiversx/mx-sdk-dapp-core)
+The GitHub repository can be found here: [https://github.com/multiversx/mx-sdk-dapp](https://github.com/multiversx/mx-sdk-dapp)
 
 ## Live demo: template-dapp
 
@@ -30,30 +30,30 @@ See [Template dApp](https://template-dapp.multiversx.com/) for live demo or chec
 
 ## Distribution
 
-[npm](https://www.npmjs.com/package/@multiversx/sdk-dapp-core)
+[npm](https://www.npmjs.com/package/@multiversx/sdk-dapp)
 
 ## Installation
 
 The library can be installed via npm or yarn.
 
 ```bash
-npm install @multiversx/sdk-dapp-core
+npm install @multiversx/sdk-dapp
 ```
 
 or
 
 ```bash
-yarn add @multiversx/sdk-dapp-core
+yarn add @multiversx/sdk-dapp
 ```
 
-If you need only the core behaviour, without the additional UI, you can create a project-specific `.npmrc` file to configure per-package installation behavior. This will skip the installation of `@multiversx/sdk-dapp-core-ui`, but keep in mind that you may need to provide the UI components yourself.
+If you need only the core behaviour, without the additional UI, you can create a project-specific `.npmrc` file to configure per-package installation behavior. This will skip the installation of `@multiversx/sdk-dapp-ui`, but keep in mind that you may need to provide the UI components yourself.
 Also, make sure you run your app on `https`, not `http`, otherwise some providers will not work.
 
 ```bash
 ## .npmrc
-@multiversx/sdk-dapp-core:omit-optional=true
+@multiversx/sdk-dapp:omit-optional=true
 ## enable the option when needed with:
-## @multiversx/sdk-dapp-core:omit-optional=false
+## @multiversx/sdk-dapp:omit-optional=false
 
 ## Run Installation
 ## When you run npm install, NPM will use the configurations specified in the .npmrc file:
@@ -64,14 +64,14 @@ If you're transitioning from @multiversx/sdk-dapp, you can check out the [Migrat
 
 ## Usage
 
-sdk-dapp-core aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with new applications.
+sdk-dapp aims to abstract and simplify the process of interacting with users' wallets and with the MultiversX blockchain, allowing developers to easily get started with new applications.
 
 ```mermaid
 flowchart LR
-    A["Signing Providers & APIs"] <--> B["sdk-dapp-core"] <--> C["dApp"]
+    A["Signing Providers & APIs"] <--> B["sdk-dapp"] <--> C["dApp"]
 ```
 
-The basic concepts you need to understand are configuration, provider interaction, transactions, and presenting data. These are the building blocks of any dApp, and they are abstracted in the `sdk-dapp-core` library.
+The basic concepts you need to understand are configuration, provider interaction, transactions, and presenting data. These are the building blocks of any dApp, and they are abstracted in the `sdk-dapp` library.
 
 Having this knowledge, we can consider several steps needed to put a dApp together:
 
@@ -91,9 +91,9 @@ Before your application bootstraps, you need to configure the storage, the netwo
 
 ```typescript
 // index.tsx
-import { initApp } from '@multiversx/sdk-dapp-core/out/core/methods/initApp/initApp';
-import type { InitAppType } from '@multiversx/sdk-dapp-core/out/core/methods/initApp/initApp.types';
-import { EnvironmentsEnum } from '@multiversx/sdk-dapp-core/out/types/enums.types';
+import { initApp } from '@multiversx/sdk-dapp/out/core/methods/initApp/initApp';
+import type { InitAppType } from '@multiversx/sdk-dapp/out/core/methods/initApp/initApp.types';
+import { EnvironmentsEnum } from '@multiversx/sdk-dapp/out/types/enums.types';
 import { App } from "./App";
 
 const config: InitAppType = {
@@ -119,8 +119,8 @@ initApp(config).then(() => {
 Once your dApp has loaded, the first user action is logging in with a chosen provider.
 
 ```typescript
-import { ProviderTypeEnum } from '@multiversx/sdk-dapp-core/out/core/providers/types/providerFactory.types';
-import { ProviderFactory } from '@multiversx/sdk-dapp-core/out/core/providers/ProviderFactory';
+import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/core/providers/types/providerFactory.types';
+import { ProviderFactory } from '@multiversx/sdk-dapp/out/core/providers/ProviderFactory';
 
 const provider = await ProviderFactory.create({
   type: ProviderTypeEnum.extension
@@ -135,8 +135,8 @@ Depending on the framework, you can either use hooks or selectors to get the use
 #### React hooks solution:
 
 ```typescript
-import { useGetAccount } from '@multiversx/sdk-dapp-core/out/store/selectors/hooks/account/useGetAccount';
-import { useGetNetworkConfig } from '@multiversx/sdk-dapp-core/out/store/selectors/hooks/network/useGetNetworkConfig';
+import { useGetAccount } from '@multiversx/sdk-dapp/out/store/selectors/hooks/account/useGetAccount';
+import { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/store/selectors/hooks/network/useGetNetworkConfig';
 
 const account = useGetAccount();
 const {
@@ -150,8 +150,8 @@ console.log(`${account.balance} ${egldLabel}`);
 #### Store selector functions:
 
 ```typescript
-import { getAccount } from '@multiversx/sdk-dapp-core/out/core/methods/account/getAccount';
-import { getNetworkConfig } from '@multiversx/sdk-dapp-core/out/core/methods/network/getNetworkConfig';
+import { getAccount } from '@multiversx/sdk-dapp/out/core/methods/account/getAccount';
+import { getNetworkConfig } from '@multiversx/sdk-dapp/out/core/methods/network/getNetworkConfig';
 
 const account = getAccount();
 const { egldLabel } = getNetworkConfig();
@@ -168,9 +168,9 @@ import { Transaction, TransactionPayload } from '@multiversx/sdk-core/out';
 import {
   GAS_PRICE,
   GAS_LIMIT
-} from '@multiversx/sdk-dapp-core/out/constants/mvx.constants';
-import { getAccountProvider } from '@multiversx/sdk-dapp-core/out/core/providers/helpers/accountProvider';
-import { refreshAccount } from '@multiversx/sdk-dapp-core/out/utils/account/refreshAccount';
+} from '@multiversx/sdk-dapp/out/constants/mvx.constants';
+import { getAccountProvider } from '@multiversx/sdk-dapp/out/core/providers/helpers/accountProvider';
+import { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
 
 const pongTransaction = new Transaction({
   value: '0',
@@ -194,7 +194,7 @@ const signedTransactions = await provider.signTransactions(transactions);
 Then, to send the transactions, you need to use the `TransactionManager` class and pass in the signedTransactions to the send method. You can optionally track the transactions by using the track method. This will create a toast notification with the transaction hash and its status.
 
 ```typescript
-import { TransactionManager } from '@multiversx/sdk-dapp-core/out/core/managers/TransactionManager';
+import { TransactionManager } from '@multiversx/sdk-dapp/out/core/managers/TransactionManager';
 
 const txManager = TransactionManager.getInstance();
 await txManager.send(signedTransactions);
@@ -204,14 +204,14 @@ await txManager.track(signedTransactions);
 Once the transactions are executed on the blockchain, the flow ends with the user logging out.
 
 ```typescript
-import { getAccountProvider } from '@multiversx/sdk-dapp-core/out/core/providers/helpers/accountProvider';
+import { getAccountProvider } from '@multiversx/sdk-dapp/out/core/providers/helpers/accountProvider';
 const provider = getAccountProvider();
 await provider.logout();
 ```
 
 ## Internal structure
 
-We have seen in the previous chapter what are the minimal steps to get up and running with a blockchain interaction using sdk-dapp-core. Next we will detail each element mentioned above
+We have seen in the previous chapter what are the minimal steps to get up and running with a blockchain interaction using sdk-dapp. Next we will detail each element mentioned above
 
 **Table 2**. Elements needed to build a dApp
 | # | Type | Description |
@@ -238,7 +238,7 @@ Conceptually, these can be split into 3 main parts:
 
 - First is the business logic in `apiCalls`, `constants` and `core` (signing providers).
 - Then comes the persistence layer hosted in the `store` folder, using [Zustand](https://zustand.docs.pmnd.rs/) under the hood.
-- Last are the UI components hosted in [@multiversx/sdk-dapp-core](https://github.com/multiversx/mx-sdk-dapp-core-ui) with some components controlled on demand by classes defined in `controlles`
+- Last are the UI components hosted in [@multiversx/sdk-dapp](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controlles`
 
 Next, we will take the elements from Table 2 and detail them in the following sections.
 
@@ -266,7 +266,7 @@ It's important to initialize it on app load (this is take care of by `initApp`),
 If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method or add it to the [window object](https://github.com/multiversx/mx-template-dapp/tree/main/src/initConfig). Last step is to login using the custom provider.
 
 ```typescript
-import { ProviderTypeEnum } from '@multiversx/sdk-dapp-core/out/core/providers/types/providerFactory.types';
+import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/core/providers/types/providerFactory.types';
 
 const ADDITIONAL_PROVIDERS = {
   myCustomProvider: 'myCustomProvider'
@@ -305,7 +305,7 @@ Once the user logs in, a call is made to the API for fetching the account data. 
 
 #### Nonce management
 
-sdk-dapp-core has a mechanism that does its best to manage the account nonce. For example, if the user sends a transaction, the nonce gets incremented on the client so that if he sends a new transaction, it will have the correct increased nonce. If you want to make sure the nonce is in sync with the API account, you can call `refreshAccount()` as shown above in the **Signing transactions** section.
+sdk-dapp has a mechanism that does its best to manage the account nonce. For example, if the user sends a transaction, the nonce gets incremented on the client so that if he sends a new transaction, it will have the correct increased nonce. If you want to make sure the nonce is in sync with the API account, you can call `refreshAccount()` as shown above in the **Signing transactions** section.
 
 ### 4. Transactions Manager
 
@@ -342,7 +342,7 @@ There is an option to add custom toast messages by using the `createCustomToast`
 
 ```ts
 import { createRoot } from 'react-dom/client';
-import { createCustomToast } from '@multiversx/sdk-dapp-core/out/store/actions/toasts/toastsActions';
+import { createCustomToast } from '@multiversx/sdk-dapp/out/store/actions/toasts/toastsActions';
 
 // by creating a custom toast element containing a component
 createCustomToast({
@@ -426,7 +426,7 @@ Step 1. Enabling the tracking mechanism
 By default the tracking mechanism is enabled only after the user logs in. That is the moment when the WebSocket connection is established. If you want to enable tracking before the user logs in, you need to call the `trackTransactions` method from the `core/methods/trackTransactions` folder. This method will enable a polling mechanism.
 
 ```typescript
-import { trackTransactions } from '@multiversx/sdk-dapp-core/out/core/methods/trackTransactions/trackTransactions';
+import { trackTransactions } from '@multiversx/sdk-dapp/out/core/methods/trackTransactions/trackTransactions';
 
 initApp(config).then(async () => {
   await trackTransactions(); // enable here since by default tracking will be enabled only after login
@@ -454,8 +454,8 @@ await tManager.track([plainTransaction]);
 If you need to check the status of the signed transactions, you can query the store direclty using the `sessionId` returned by the `track()` method.
 
 ```ts
-import { getStore } from '@multiversx/sdk-dapp-core/out/store/store';
-import { transactionsSliceSelector } from '@multiversx/sdk-dapp-core/out/store/selectors/transactionsSelector';
+import { getStore } from '@multiversx/sdk-dapp/out/store/store';
+import { transactionsSliceSelector } from '@multiversx/sdk-dapp/out/store/selectors/transactionsSelector';
 
 const state = transactionsSliceSelector(getStore());
 Object.entries(state).forEach(([sessionKey, data]) => {
@@ -467,13 +467,13 @@ Object.entries(state).forEach(([sessionKey, data]) => {
 
 ### 5. UI Components
 
-sdk-dapp-core needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consitst of webcomponents hosted in the `@multiversx/sdk-dapp-core-ui` package. Thus, sdk-dapp-core does not hold any UI elements, just business logic that controls external components. We can consider two types of UI components: internal and external. They are differentiated by the way they are controlled: private components are controlled by sdk-dapp-core's signing or logging in flows, while public components can be controlled by the dApp.
+sdk-dapp needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consitst of webcomponents hosted in the `@multiversx/sdk-dapp-ui` package. Thus, sdk-dapp does not hold any UI elements, just business logic that controls external components. We can consider two types of UI components: internal and external. They are differentiated by the way they are controlled: private components are controlled by sdk-dapp's signing or logging in flows, while public components can be controlled by the dApp.
 
 #### Public components
 
 #### Private components
 
-The way private components are controlled are trough a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing sdk-dapp-core to get a reference to it and use it for communication.
+The way private components are controlled are trough a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing sdk-dapp to get a reference to it and use it for communication.
 
 ```mermaid
 flowchart LR
@@ -488,7 +488,7 @@ const eventBus = await modalElement.getEventBus();
 eventBus.publish('TRANSACTION_TOAST_DATA_UPDATE', someData);
 ```
 
-If you want to override private components and create your own, you can implement a similar strategy, of course by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp-core/blob/main/src/core/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
+If you want to override private components and create your own, you can implement a similar strategy, of course by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp/blob/main/src/core/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
 
 ## Debugging your dApp
 

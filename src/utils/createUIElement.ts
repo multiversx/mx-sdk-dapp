@@ -1,7 +1,7 @@
 import { IEventBus } from '@multiversx/sdk-dapp-ui/dist/loader';
 import { safeWindow } from 'constants/index';
 import { UITagsEnum } from 'constants/UITags.enum';
-import { defineCustomElements } from 'lib/sdkDappCoreUi';
+import { defineCustomElements } from 'lib/sdkDappUi';
 
 export interface CreateEventBusUIElementType extends HTMLElement {
   getEventBus: () => Promise<IEventBus | null>;

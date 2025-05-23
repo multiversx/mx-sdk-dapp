@@ -43,7 +43,7 @@ const executeBuild = () =>
     .then(() => {
       console.log(
         '\x1b[36m%s\x1b[0m',
-        `[${new Date().toLocaleTimeString()}] sdk-dapp-core build succeeded for esm types`
+        `[${new Date().toLocaleTimeString()}] sdk-dapp build succeeded for esm types`
       );
     })
     .catch((err) => {

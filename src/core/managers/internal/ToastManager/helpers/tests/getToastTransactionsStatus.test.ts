@@ -1,4 +1,4 @@
-import { ITransactionListItem } from 'lib/sdkDappCoreUi';
+import { ITransactionListItem } from 'lib/sdkDappUi';
 import { isServerTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { getToastTransactionsStatus } from '../getToastTransactionsStatus';
