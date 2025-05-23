@@ -215,25 +215,25 @@ export class ToastManager {
     }
 
     this.eventBus.subscribe(
-      ToastEventsEnum.CLOSE_TOAST,
+      ToastEventsEnum.CLOSE,
       this.handleCloseToast.bind(this)
     );
 
     this.eventBusUnsubscribeFunctions.push(() => {
       this.eventBus?.unsubscribe(
-        ToastEventsEnum.CLOSE_TOAST,
+        ToastEventsEnum.CLOSE,
         this.handleCloseToast.bind(this)
       );
     });
 
     this.eventBus.subscribe(
-      ToastEventsEnum.OPEN,
+      ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
       this.handleOpenNotificationsFeed.bind(this)
     );
 
     this.eventBusUnsubscribeFunctions.push(() => {
       this.eventBus?.unsubscribe(
-        ToastEventsEnum.OPEN,
+        ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
         this.handleOpenNotificationsFeed.bind(this)
       );
     });

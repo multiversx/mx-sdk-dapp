@@ -15,10 +15,12 @@ interface INotificationsFeedManagerData {
   historicTransactions: ITransactionListItem[];
 }
 
+const NOTIFICATIONS_FEED_STORE_SUBSCRIBE = 'NOTIFICATIONS_FEED_STORE_SUBSCRIBE';
+
 export class NotificationsFeedManager extends SidePanelBaseManager<
   MvxNotificationsFeed,
   INotificationsFeedManagerData,
-  NotificationsFeedEventsEnum
+  NotificationsFeedEventsEnum | typeof NOTIFICATIONS_FEED_STORE_SUBSCRIBE
 > {
   private static instance: NotificationsFeedManager;
   private store = getStore();
@@ -67,7 +69,9 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
         }
       }
     );
-    this.unsubscribeFunctions.push(storeToastsUnsubscribe);
+    this.unsubscribeFunctions.set(NOTIFICATIONS_FEED_STORE_SUBSCRIBE, [
+      storeToastsUnsubscribe
+    ]);
 
     this.eventBus?.publish(NotificationsFeedEventsEnum.OPEN);
     await this.updateDataAndNotifications();
