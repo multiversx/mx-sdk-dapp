@@ -56,26 +56,13 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   constructor() {
     super({
       uiDataUpdateEvent: SignEventsEnum.DATA_UPDATE,
-      uiTag: UITagsEnum.SIGN_TRANSACTIONS_PANEL,
-      uiSidePanelOpenEvent: SignEventsEnum.OPEN_SIGN_TRANSACTIONS_PANEL,
-      uiSidePanelCloseEvent: SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL
+      uiTag: UITagsEnum.SIGN_TRANSACTIONS_PANEL
     });
     this.data = { ...this.initialData };
   }
 
-  public async init() {
-    // await super.init();
-    this.resetData();
-  }
-
   get transactionsCount() {
     return this.data.commonData.transactionsCount;
-  }
-
-  public async openSignTransactions(
-    data: ISignTransactionsPanelData = this.data
-  ) {
-    await this.openUI(data);
   }
 
   public initializeGasPriceMap(transactions: Transaction[]) {
@@ -178,9 +165,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
       return;
     }
 
-    this.eventBus.subscribe(
-      SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL,
-      this.handleCloseUI.bind(this)
-    );
+    this.eventBus.subscribe(SignEventsEnum.CLOSE, this.closeUI.bind(this));
   }
 }

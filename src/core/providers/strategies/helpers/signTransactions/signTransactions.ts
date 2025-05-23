@@ -43,31 +43,23 @@ export async function signTransactions({
   let signedIndexes: number[] = [];
 
   const manager = SignTransactionsStateManager.getInstance();
+  await manager.openUI();
 
   if (!manager) {
     throw new Error('Unable to establish connection with sign screens');
   }
 
-  const eventBus = await manager.getEventBus();
-
-  if (!eventBus) {
-    throw new Error(ProviderErrorsEnum.eventBusError);
-  }
-
   const handleCancel = async () => {
     await cancelCrossWindowAction();
-    manager.closeAndReset();
+    manager.closeUI();
   };
 
-  eventBus.subscribe(
-    SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL,
-    handleCancel
-  );
+  manager.subscribeToEventBus(SignEventsEnum.CLOSE, handleCancel);
 
   return new Promise<Transaction[]>(async (resolve, reject) => {
     const signedTransactions: Transaction[] = [];
     const economics = await getEconomics({ baseURL: network.apiAddress });
-    await manager.openSignTransactions();
+    manager.notifyDataUpdate();
     manager.initializeGasPriceMap(allTransactions.map((tx) => tx.transaction));
     const price = economics?.price;
 
@@ -159,8 +151,7 @@ export async function signTransactions({
     const onCancel = async () => {
       reject(new Error('Transaction signing cancelled by user'));
       await cancelCrossWindowAction();
-      unsubscribeFromEvents();
-      manager.closeAndReset();
+      manager.closeUI();
     };
 
     const onNext = () => {
@@ -225,15 +216,13 @@ export async function signTransactions({
         if (isLastScreen && areAllTransactionsSigned) {
           const optionallyGuardedTransactions =
             await guardTransactions(signedTransactions);
-          unsubscribeFromEvents();
-          manager.closeAndReset();
+          manager.closeUI();
           return resolve(optionallyGuardedTransactions);
         }
 
         onNext();
       } catch (error) {
-        unsubscribeFromEvents();
-        manager.closeAndReset();
+        manager.closeUI();
         reject(error);
       }
     };
@@ -241,28 +230,14 @@ export async function signTransactions({
     const eventHandlersMap = new Map([
       [SignEventsEnum.NEXT, onNext],
       [SignEventsEnum.CONFIRM, onSign],
-      [SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL, onCancel],
+      [SignEventsEnum.CLOSE, onCancel],
       [SignEventsEnum.BACK, onBack],
       [SignEventsEnum.SET_PPU, onSetPpu]
     ]);
 
     function setupEventListeners() {
-      if (!eventBus) {
-        return;
-      }
-
       for (const [event, handler] of eventHandlersMap) {
-        eventBus.subscribe(event, handler);
-      }
-    }
-
-    function unsubscribeFromEvents() {
-      if (!eventBus) {
-        return;
-      }
-
-      for (const [event, handler] of eventHandlersMap) {
-        eventBus.unsubscribe(event, handler);
+        manager.subscribeToEventBus(event, handler);
       }
     }
 

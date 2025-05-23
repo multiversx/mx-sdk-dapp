@@ -130,11 +130,6 @@ export class WalletConnectProviderStrategy {
 
     const walletConnectManager = WalletConnectStateManager.getInstance();
     await walletConnectManager.init(anchor);
-    const eventBus = await walletConnectManager.getEventBus();
-
-    if (!eventBus) {
-      throw new Error(ProviderErrorsEnum.eventBusError);
-    }
   };
 
   private createWalletConnectProvider = async (config: WalletConnectConfig) => {
@@ -273,22 +268,15 @@ export class WalletConnectProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { eventBus, manager, onClose } = await getPendingTransactionsHandlers(
-      {
-        cancelAction: this.cancelAction.bind(this)
-      }
-    );
+    const { manager, onClose } = await getPendingTransactionsHandlers({
+      cancelAction: this.cancelAction.bind(this)
+    });
 
-    eventBus.subscribe(
-      PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-      onClose
-    );
+    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
 
     manager.updateData({
-      provider: {
-        name: providerLabels.walletConnect,
-        type: ProviderTypeEnum.walletConnect
-      }
+      name: providerLabels.walletConnect,
+      type: ProviderTypeEnum.walletConnect
     });
     try {
       const signedTransactions: Transaction[] =
@@ -303,11 +291,7 @@ export class WalletConnectProviderStrategy {
       });
       throw error;
     } finally {
-      manager.closeAndReset();
-      eventBus.unsubscribe(
-        PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-        onClose
-      );
+      manager.closeUI();
     }
   };
 

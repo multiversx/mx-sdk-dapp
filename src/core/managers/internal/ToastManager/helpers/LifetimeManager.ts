@@ -8,15 +8,18 @@ interface IToastProgressManagerParams {
   successfulToastLifetime?: number;
 }
 
+const DEFAULT_SUCCESSFUL_TOAST_LIFETIME = 10000;
+
 export class LifetimeManager {
   private timeoutIntervals: Map<string, ReturnType<typeof setTimeout>> =
     new Map();
-  private successfulToastLifetime: number;
-  private static DEFAULT_TIMEOUT = 10000;
+  private successfulToastLifetime: number = DEFAULT_SUCCESSFUL_TOAST_LIFETIME;
 
-  constructor({ successfulToastLifetime }: IToastProgressManagerParams = {}) {
+  constructor() {}
+
+  public init({ successfulToastLifetime }: IToastProgressManagerParams) {
     this.successfulToastLifetime =
-      successfulToastLifetime || LifetimeManager.DEFAULT_TIMEOUT;
+      successfulToastLifetime || DEFAULT_SUCCESSFUL_TOAST_LIFETIME;
   }
 
   public start = (toastId: string) => {

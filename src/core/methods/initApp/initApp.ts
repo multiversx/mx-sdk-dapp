@@ -101,11 +101,11 @@ export async function initApp({
     }
   }
 
-  const toastManager = ToastManager.getInstance({
+  const toastManager = ToastManager.getInstance();
+
+  await toastManager.init({
     successfulToastLifetime: dAppConfig.successfulToastLifetime
   });
-
-  await Promise.all([toastManager.init()]);
 
   const usedProviders: ICustomProvider[] = [
     ...((safeWindow as any)?.multiversx?.providers ?? []),

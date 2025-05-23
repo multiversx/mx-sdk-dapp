@@ -94,22 +94,15 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { eventBus, onClose, manager } = await getPendingTransactionsHandlers(
-      {
-        cancelAction: this.provider.cancelAction.bind(this.provider)
-      }
-    );
+    const { onClose, manager } = await getPendingTransactionsHandlers({
+      cancelAction: this.provider.cancelAction.bind(this.provider)
+    });
 
-    eventBus.subscribe(
-      PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-      onClose
-    );
+    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
 
-    manager.openProviderIdleState({
-      provider: {
-        name: providerLabels.crossWindow,
-        type: ProviderTypeEnum.crossWindow
-      }
+    manager.updateData({
+      name: providerLabels.crossWindow,
+      type: ProviderTypeEnum.crossWindow
     });
 
     this.setPopupConsent();
@@ -127,11 +120,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
 
       throw error;
     } finally {
-      manager.closeAndReset();
-      eventBus.unsubscribe(
-        PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-        onClose
-      );
+      manager.closeUI();
     }
   };
 

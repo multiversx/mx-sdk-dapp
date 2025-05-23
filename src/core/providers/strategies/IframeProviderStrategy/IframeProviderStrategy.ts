@@ -75,23 +75,16 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { eventBus, manager, onClose } = await getPendingTransactionsHandlers(
-      {
-        cancelAction: this.provider.cancelAction.bind(this.provider)
-      }
-    );
+    const { manager, onClose } = await getPendingTransactionsHandlers({
+      cancelAction: this.provider.cancelAction.bind(this.provider)
+    });
 
-    eventBus.subscribe(
-      PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-      onClose
-    );
+    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
 
     if (this.type) {
       manager.updateData({
-        provider: {
-          name: providerLabels.iframe,
-          type: this.type
-        }
+        name: providerLabels.iframe,
+        type: this.type
       });
     }
 
@@ -104,11 +97,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       await onClose({ shouldCancelAction: true });
       throw error;
     } finally {
-      manager.closeAndReset();
-      eventBus.unsubscribe(
-        PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-        onClose
-      );
+      manager.closeUI();
     }
   };
 

@@ -19,26 +19,23 @@ export async function signMessage<T>({
 }: SignMessageWithModalPropsType<T>): Promise<Message> {
   const signedMsg = await new Promise<Awaited<Message>>(
     async (resolve, reject) => {
-      const { eventBus, manager, onClose } =
-        await getPendingTransactionsHandlers({
-          cancelAction
-        });
+      const { manager, onClose } = await getPendingTransactionsHandlers({
+        cancelAction
+      });
 
       const handleClose = async () => {
         await onClose({ shouldCancelAction: false });
         reject({ message: SigningWarningsEnum.cancelled });
       };
 
-      eventBus.subscribe(
-        PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
+      manager.subscribeToEventBus(
+        PendingTransactionsEventsEnum.CLOSE,
         handleClose
       );
 
       manager.updateData({
-        provider: {
-          name: providerLabels[providerType],
-          type: providerType
-        }
+        name: providerLabels[providerType],
+        type: providerType
       });
 
       try {
@@ -48,11 +45,7 @@ export async function signMessage<T>({
         await onClose({ shouldCancelAction: true });
         reject(err);
       } finally {
-        manager.closeAndReset();
-        eventBus.unsubscribe(
-          PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-          handleClose
-        );
+        manager.closeUI();
       }
     }
   );
