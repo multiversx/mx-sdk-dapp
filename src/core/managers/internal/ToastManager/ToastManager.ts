@@ -1,7 +1,6 @@
 import isEqual from 'lodash.isequal';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { NotificationsFeedManager } from 'core/managers/NotificationsFeedManager/NotificationsFeedManager';
-import { NotificationsFeedEventsEnum } from 'core/managers/NotificationsFeedManager/types';
 import { MvxToastList } from 'lib/sdkDappUi';
 import {
   customToastCloseHandlersDictionary,
@@ -46,21 +45,20 @@ export class ToastManager {
 
   store = getStore();
 
-  constructor({ successfulToastLifetime }: IToastManager = {}) {
+  constructor() {
     this.destroy();
-    this.successfulToastLifetime = successfulToastLifetime;
-
-    this.lifetimeManager = new LifetimeManager({
-      successfulToastLifetime
-    });
+    this.lifetimeManager = new LifetimeManager();
 
     this.notificationsFeedManager = NotificationsFeedManager.getInstance();
   }
 
-  public async init() {
+  public async init({ successfulToastLifetime }: IToastManager = {}) {
+    this.successfulToastLifetime = successfulToastLifetime;
+
+    this.lifetimeManager.init({ successfulToastLifetime });
+
     this.updateTransactionToastsList();
     this.updateCustomToastList();
-    await this.notificationsFeedManager.init();
     await this.subscribeToEventBusNotifications();
 
     this.storeToastsSubscription = this.store.subscribe(
@@ -82,9 +80,9 @@ export class ToastManager {
     );
   }
 
-  public static getInstance(config?: IToastManager): ToastManager {
+  public static getInstance(): ToastManager {
     if (!ToastManager.instance) {
-      ToastManager.instance = new ToastManager(config);
+      ToastManager.instance = new ToastManager();
     }
     return ToastManager.instance;
   }
@@ -206,23 +204,6 @@ export class ToastManager {
   }
 
   private async subscribeToEventBusNotifications() {
-    const notificationsFeedEventBus =
-      await this.notificationsFeedManager.getEventBus();
-
-    if (notificationsFeedEventBus) {
-      notificationsFeedEventBus.subscribe(
-        NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED,
-        this.publishTransactionToasts.bind(this)
-      );
-
-      this.eventBusUnsubscribeFunctions.push(() => {
-        notificationsFeedEventBus.unsubscribe(
-          NotificationsFeedEventsEnum.CLOSE_NOTIFICATIONS_FEED,
-          this.publishTransactionToasts.bind(this)
-        );
-      });
-    }
-
     const toastsElement = await this.createToastListElement();
     if (!toastsElement) {
       return;
@@ -234,13 +215,13 @@ export class ToastManager {
     }
 
     this.eventBus.subscribe(
-      ToastEventsEnum.CLOSE_TOAST,
+      ToastEventsEnum.CLOSE,
       this.handleCloseToast.bind(this)
     );
 
     this.eventBusUnsubscribeFunctions.push(() => {
       this.eventBus?.unsubscribe(
-        ToastEventsEnum.CLOSE_TOAST,
+        ToastEventsEnum.CLOSE,
         this.handleCloseToast.bind(this)
       );
     });
@@ -258,23 +239,25 @@ export class ToastManager {
     });
   }
 
-  private async handleOpenNotificationsFeed() {
-    const eventBus = await this.notificationsFeedManager.getEventBus();
-    if (!eventBus) {
-      return;
-    }
+  public showToasts() {
+    this.updateCustomToastList();
+    this.updateTransactionToastsList();
+  }
 
-    eventBus.publish(
-      NotificationsFeedEventsEnum.PENDING_TRANSACTIONS_UPDATE,
-      this.transactionToasts
-    );
-
+  public hideToasts() {
     this.transactionToasts = [];
+    this.customToasts = [];
     this.eventBus?.publish(
       ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
       this.transactionToasts
     );
+    this.eventBus?.publish(
+      ToastEventsEnum.CUSTOM_TOAST_DATA_UPDATE,
+      this.customToasts
+    );
+  }
 
+  private async handleOpenNotificationsFeed() {
     this.notificationsFeedManager.openNotificationsFeed();
   }
 

@@ -62,22 +62,15 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { eventBus, manager, onClose } = await getPendingTransactionsHandlers(
-      {
-        cancelAction: this.provider.cancelAction.bind(this.provider)
-      }
-    );
+    const { manager, onClose } = await getPendingTransactionsHandlers({
+      cancelAction: this.provider.cancelAction.bind(this.provider)
+    });
 
-    eventBus.subscribe(
-      PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-      onClose
-    );
+    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
 
     manager.updateData({
-      provider: {
-        name: providerLabels.extension,
-        type: ProviderTypeEnum.extension
-      }
+      name: providerLabels.extension,
+      type: ProviderTypeEnum.extension
     });
 
     try {
@@ -90,11 +83,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
 
       throw error;
     } finally {
-      manager.closeAndReset();
-      eventBus.unsubscribe(
-        PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-        onClose
-      );
+      manager.closeUI();
     }
   };
 

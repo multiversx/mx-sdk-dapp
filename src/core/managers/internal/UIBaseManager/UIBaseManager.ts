@@ -8,7 +8,7 @@ import {
 
 export abstract class UIBaseManager<
   TElement extends CreateEventBusUIElementType,
-  TData extends Record<string, any>,
+  TData extends Record<string, any> | null,
   TEventEnum extends string
 > {
   protected eventBus: IEventBus | null = null;
@@ -17,7 +17,7 @@ export abstract class UIBaseManager<
   protected anchor?: HTMLElement;
   protected uiTag: UITagsEnum;
   protected uiDataUpdateEvent: TEventEnum;
-
+  protected unsubscribeFunctions: Map<TEventEnum, (() => void)[]> = new Map();
   protected abstract initialData: TData;
   protected data: TData;
 
@@ -36,7 +36,6 @@ export abstract class UIBaseManager<
   public async init(anchor?: HTMLElement) {
     this.anchor = anchor;
     await this.createUIElement(anchor);
-    await this.getEventBus();
     await this.setupEventListeners();
   }
 
@@ -45,29 +44,28 @@ export abstract class UIBaseManager<
     this.notifyDataUpdate();
   }
 
-  public async getEventBus(): Promise<IEventBus | null> {
-    if (this.isCreatingElement) {
-      return this.eventBus;
-    }
-
-    if (!this.uiElement) {
-      await this.createUIElement();
-    }
-    if (!this.uiElement) {
-      throw new Error(`Failed to create ${this.uiTag} element`);
-    }
-    if (!this.eventBus) {
-      this.eventBus = await this.uiElement.getEventBus();
-    }
-
+  public subscribeToEventBus(event: TEventEnum, callback: Function) {
     if (!this.eventBus) {
       throw new Error(ProviderErrorsEnum.eventBusError);
     }
 
-    return this.eventBus;
+    const unsubscribe = this.eventBus?.subscribe(event, callback);
+    if (unsubscribe) {
+      const existing = this.unsubscribeFunctions.get(event) || [];
+      existing.push(unsubscribe);
+      this.unsubscribeFunctions.set(event, existing);
+    }
   }
 
-  public destroy() {
+  public notifyDataUpdate() {
+    this.eventBus?.publish(this.uiDataUpdateEvent, this.data);
+  }
+
+  protected destroy() {
+    this.unsubscribeFunctions.forEach((unsubList) =>
+      unsubList.forEach((unsubscribe) => unsubscribe())
+    );
+    this.unsubscribeFunctions.clear();
     this.eventBus = null;
     this.uiElement?.remove();
     this.uiElement = null;
@@ -77,16 +75,8 @@ export abstract class UIBaseManager<
     return this.initialData;
   }
 
-  protected publishEvent(event: TEventEnum, data?: TData) {
-    this.eventBus?.publish(event, data || this.data);
-  }
-
   protected resetData() {
     this.data = this.getInitialData();
-  }
-
-  protected notifyDataUpdate() {
-    this.publishEvent(this.uiDataUpdateEvent, this.data);
   }
 
   protected abstract setupEventListeners(): Promise<void>;
@@ -100,18 +90,23 @@ export abstract class UIBaseManager<
 
     this.isCreatingElement = true;
 
-    const element = await createUIElement<TElement>({
+    this.uiElement = await createUIElement<TElement>({
       name: this.uiTag,
       anchor
     });
-
-    this.uiElement = element || null;
-    await this.getEventBus();
 
     this.isCreatingElement = false;
 
     if (!this.uiElement) {
       throw new Error(`Failed to create ${this.uiTag} element`);
+    }
+
+    if (!this.eventBus) {
+      this.eventBus = await this.uiElement.getEventBus();
+    }
+
+    if (!this.eventBus) {
+      throw new Error(ProviderErrorsEnum.eventBusError);
     }
 
     return this.uiElement;
