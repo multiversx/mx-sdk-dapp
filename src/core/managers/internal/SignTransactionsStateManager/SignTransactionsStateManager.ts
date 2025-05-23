@@ -163,6 +163,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
       return;
     }
 
-    this.eventBus.subscribe(SignEventsEnum.CLOSE, this.closeUI.bind(this));
+    this.subscribeToEventBus(SignEventsEnum.CLOSE, this.closeUI.bind(this));
   }
 }

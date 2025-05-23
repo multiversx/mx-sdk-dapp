@@ -3,11 +3,6 @@ import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
 import { CreateEventBusUIElementType } from 'utils/createUIElement';
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
 
-type SidePanelBaseManagerInitParamsType<TEventEnum> = {
-  uiDataUpdateEvent: TEventEnum;
-  uiTag: UITagsEnum;
-};
-
 interface ISideManagerUIElement extends CreateEventBusUIElementType {
   closeWithAnimation?: () => Promise<unknown>;
 }
@@ -22,7 +17,10 @@ export abstract class SidePanelBaseManager<
   constructor({
     uiDataUpdateEvent,
     uiTag
-  }: SidePanelBaseManagerInitParamsType<TEventEnum>) {
+  }: {
+    uiTag: UITagsEnum;
+    uiDataUpdateEvent: TEventEnum;
+  }) {
     super({
       uiDataUpdateEvent,
       uiTag

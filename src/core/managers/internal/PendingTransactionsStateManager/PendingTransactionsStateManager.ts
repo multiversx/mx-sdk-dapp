@@ -39,7 +39,7 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
       return;
     }
 
-    this.eventBus.subscribe(
+    this.subscribeToEventBus(
       PendingTransactionsEventsEnum.CLOSE,
       this.closeUI.bind(this)
     );

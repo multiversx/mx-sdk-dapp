@@ -46,7 +46,7 @@ export abstract class UIBaseManager<
 
   public subscribeToEventBus(event: TEventEnum, callback: Function) {
     if (!this.eventBus) {
-      throw new Error('Event bus is not initialized');
+      throw new Error(ProviderErrorsEnum.eventBusError);
     }
 
     const unsubscribe = this.eventBus?.subscribe(event, callback);
