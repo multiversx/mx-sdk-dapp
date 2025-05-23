@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Refactor side panel managers](https://github.com/multiversx/mx-sdk-dapp/pull/1426)
+- [Refactor and streamline side panel managers, event handling, and state management for transaction-related UI flows.](https://github.com/multiversx/mx-sdk-dapp/pull/1426)
 - [Add closeCallback in UnlockPanelManager](https://github.com/multiversx/mx-sdk-dapp/pull/1425)
 
 ## [[5.0.0-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1421)] - 2025-05-20
