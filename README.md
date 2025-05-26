@@ -8,12 +8,12 @@ MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
 
 It is built for applications that use any of the following technologies:
 
-- React (example: [react-template-dapp](https://github.com/multiversx/mx-react-template-dapp))
+- React (example: [Template Dapp](https://github.com/multiversx/mx-template-dapp))
 - Angular
 - Vue
-- Any other JavaScript framework (e.g. Solid.js etc.) (example: [solidjs-template-dapp](https://github.com/multiversx/mx-solidjs-template-dapp))
+- Any other JavaScript framework (e.g. Solid.js etc.) (example: [Solid.js Dapp](https://github.com/multiversx/mx-solidjs-template-dapp))
 - React Native
-- Next.js (example: [nextjs-template-dapp](https://github.com/multiversx/mx-template-dapp-nextjs))
+- Next.js (example: [Next.js Dapp](https://github.com/multiversx/mx-template-dapp-nextjs))
 
 ## GitHub project
 
@@ -60,7 +60,7 @@ Also, make sure you run your app on `https`, not `http`, otherwise some provider
 npm install
 ```
 
-If you're transitioning from @multiversx/sdk-dapp, you can check out the [Migration guide PR](https://github.com/multiversx/mx-template-dapp/pull/264) of Template Dapp
+If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide PR](https://github.com/multiversx/mx-template-dapp/pull/264) of Template Dapp
 
 ## Usage
 
@@ -115,6 +115,7 @@ initApp(config).then(() => {
 ```
 
 ### 2. Provider interaction
+Using the Unlock Panel...
 
 Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login.
 
