@@ -1,5 +1,5 @@
-import { Address } from '@multiversx/sdk-core/out';
 import { WritableDraft } from 'immer';
+import { Address } from 'lib/sdkCore';
 import {
   addLoginExpiresAt,
   removeLoginExpiresAt

@@ -8,12 +8,25 @@ import jestPlugin from 'eslint-plugin-jest';
 /** @type {import('eslint').Linter.Config[]} */
 export default [
   {
+    ignores: [
+      'build/**',
+      'dist/**',
+      'node_modules/**',
+      '.snapshots/**',
+      '**/*.min.js'
+    ]
+  },
+  {
     files: ['**/*.{js,mjs,cjs,ts,tsx}', '**/*.{test,spec}.{js,ts,tsx}'],
     languageOptions: {
       globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...globals.jest
+        ...Object.fromEntries(
+          Object.entries({
+            ...globals.browser,
+            ...globals.node,
+            ...globals.jest
+          }).map(([key, value]) => [key.trim(), value])
+        )
       },
       parser: tseslint.parser,
       parserOptions: {

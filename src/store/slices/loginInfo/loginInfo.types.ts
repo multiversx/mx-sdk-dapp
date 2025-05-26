@@ -1,4 +1,4 @@
-import { ProviderTypeEnum } from 'core/providers/types/providerFactory.types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { TokenLoginType } from 'types/login.types';
 
 export interface WalletConnectLoginType {
