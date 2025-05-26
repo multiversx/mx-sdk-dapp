@@ -57,6 +57,6 @@ echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp-nextjs..."
-yarn build-devnet
+yarn build:devnet
 
 echo "Script executed successfully!"
