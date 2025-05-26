@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.1](https://github.com/multiversx/mx-sdk-dapp/pull/1429)] - 2025-05-26
+
 - [Removed `core` folder and added `react` folder](https://github.com/multiversx/mx-sdk-dapp/pull/1428)
 - [Update unlock panel to use side panel base](https://github.com/multiversx/mx-sdk-dapp/pull/1427)
 - [Refactor and streamline side panel managers, event handling, and state management for transaction-related UI flows.](https://github.com/multiversx/mx-sdk-dapp/pull/1426)
