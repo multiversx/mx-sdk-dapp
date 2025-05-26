@@ -123,14 +123,17 @@ Once your dApp has loaded, the first user action is logging in with a chosen pro
 By using the provided UI, you get the benefit of having all supported providers ready for login in a side panel. You simply need to link the `unlockPanelManager.openUnlockPanel` to a user action.
 
 ```typescript
-import { UnlockPanelManager } from '@multiversx/sdk-dapp/out/core/managers/UnlockPanelManager';
-import { ProviderFactory } from '@multiversx/sdk-dapp/out/core/providers/ProviderFactory';
+import { UnlockPanelManager } from '@multiversx/sdk-dapp/out/managers/UnlockPanelManager';
+import { ProviderFactory } from '@multiversx/sdk-dapp/out/providers/ProviderFactory';
 
 export const ConnectButton = () => {
   const unlockPanelManager = UnlockPanelManager.init({
     loginHandler: () => {
       navigate('/dashboard');
-    } 
+    },
+    onClose: () => { // optional callback to be called when the unlock panel is closed by the user
+      navigate('/');
+    }
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();

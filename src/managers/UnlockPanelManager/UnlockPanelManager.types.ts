@@ -30,25 +30,26 @@ export type CustomProviderViewType<
 export type LoginCallbackType = () => void;
 
 export type LoginHandlerType = LoginFunctonType | LoginCallbackType;
-export type CloseCallbackType = () => void;
+export type OnCloseUnlockPanelType = () => void;
 
 export type UnlockPanelManagerInitParamsType = {
   /**
-     * Handle the full login process or provide a callback to be executed after login is performed
+     * Accepts:
+     * - 1️⃣ a `callback` that is executed after login is performed
+     * - 2️⃣ a `function` that handles the full login process
      * @example
      * ```ts
+     *  // 1️⃣ callback
+        () => {
+          navigate('/dashboard');
+        };
+        // 2️⃣ login handler function
         async ({ type, anchor }: IProviderFactory) => {
           const provider = await ProviderFactory.create({
             type,
             anchor
           });
           await provider?.login();
-          navigate('/dashboard');
-        };
-
-        // or
-
-        () => {
           navigate('/dashboard');
         };
    *  ```
@@ -64,6 +65,13 @@ export type UnlockPanelManagerInitParamsType = {
    *
    * Common use case: redirecting the user away from the `/unlock` route
    * (e.g., back to the homepage or a previous screen) when login is cancelled or skipped.
+   * 
+   * @example
+   * ```ts
+     onClose: () => {
+       navigate('/');
+     }
+   *  ```
    */
-  closeCallback?: CloseCallbackType;
+  onClose?: OnCloseUnlockPanelType;
 };
