@@ -1,4 +1,4 @@
-import { ProviderTypeEnum } from 'core/providers/types/providerFactory.types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 
 export const providerLabels: Record<string, string> = {
   [ProviderTypeEnum.crossWindow]: 'MultiversX Web Wallet',

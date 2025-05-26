@@ -1,4 +1,4 @@
-import { getTransactionsSessionStatus } from 'core/managers/TransactionManager/helpers/getTransactionsStatus';
+import { getTransactionsSessionStatus } from 'managers/TransactionManager/helpers/getTransactionsStatus';
 import { getStore } from 'store/store';
 import {
   TransactionBatchStatusesEnum,

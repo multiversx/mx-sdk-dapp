@@ -1,4 +1,3 @@
-import { Address } from '@multiversx/sdk-core/out';
 import { WritableDraft } from 'immer';
 import {
   addLoginExpiresAt,
@@ -15,6 +14,7 @@ import { initialState as initialToastState } from 'store/slices/toast/toastSlice
 import { initialState as initialTransactionsState } from 'store/slices/transactions/transactionsSlice';
 import { getStore } from 'store/store';
 import { StoreType } from '../store.types';
+import { Address } from 'lib/sdkCore';
 
 export const resetStore = (store: WritableDraft<StoreType>) => {
   store.account = initialAccountState;

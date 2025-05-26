@@ -1,6 +1,6 @@
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
-import { CrossWindowConfig } from 'core/providers/strategies/CrossWindowProviderStrategy/types';
-import { WalletConnectConfig } from 'core/providers/strategies/WalletConnectProviderStrategy/types';
+import { CrossWindowConfig } from 'providers/strategies/CrossWindowProviderStrategy/types';
+import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 
 export interface ConfigSliceType {
