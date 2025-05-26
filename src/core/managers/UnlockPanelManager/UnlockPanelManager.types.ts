@@ -17,11 +17,6 @@ export enum UnlockPanelEventsEnum {
   ANCHOR_CLOSE = 'ANCHOR_CLOSE'
 }
 
-export interface IUnlockPanel {
-  isOpen: boolean;
-  allowedProviders?: IProviderBase[] | null;
-}
-
 export type LoginFunctonType = ({
   type,
   anchor
