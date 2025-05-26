@@ -87,12 +87,12 @@ Each of these steps will be explained in more detail in the following sections.
 
 ### 1. Configuration
 
-Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `core/methods` folder.
+Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `methods` folder.
 
 ```typescript
 // index.tsx
-import { initApp } from '@multiversx/sdk-dapp/out/core/methods/initApp/initApp';
-import type { InitAppType } from '@multiversx/sdk-dapp/out/core/methods/initApp/initApp.types';
+import { initApp } from '@multiversx/sdk-dapp/out/methods/initApp/initApp';
+import type { InitAppType } from '@multiversx/sdk-dapp/out/methods/initApp/initApp.types';
 import { EnvironmentsEnum } from '@multiversx/sdk-dapp/out/types/enums.types';
 import { App } from "./App";
 
@@ -131,9 +131,6 @@ export const ConnectButton = () => {
     loginHandler: () => {
       navigate('/dashboard');
     },
-    onClose: () => { // optional callback to be called when the unlock panel is closed by the user
-      navigate('/');
-    }
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();
@@ -169,7 +166,7 @@ export const AdvancedConnectButton = () => {
 If you want to login using your custom UI, you can link user actions to specific providers by calling the `ProviderFactory`.
 
 ```typescript
-import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/core/providers/types/providerFactory.types';
+import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/providers/types/providerFactory.types';
 
 const provider = await ProviderFactory.create({
   type: ProviderTypeEnum.extension
@@ -183,12 +180,9 @@ Depending on the framework, you can either use hooks or selectors to get the use
 
 #### 3.1 React hooks solution:
 
-// TODO: move to src/react/account
-// TODO: move store to src/react/useStore
-
 ```typescript
-import { useGetAccount } from '@multiversx/sdk-dapp/out/store/selectors/hooks/account/useGetAccount';
-import { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/store/selectors/hooks/network/useGetNetworkConfig';
+import { useGetAccount } from '@multiversx/sdk-dapp/out/react/account/useGetAccount';
+import { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/react/network/useGetNetworkConfig';
 
 const account = useGetAccount();
 const {
@@ -203,11 +197,9 @@ console.log(`${account.balance} ${egldLabel}`);
 
 If you are not using the React ecosystem, you can use store selectors to get the data, but note that information will not be reactive.
 
-# // TODO: remove /core/ folder
-
 ```typescript
-import { getAccount } from '@multiversx/sdk-dapp/out/core/methods/account/getAccount';
-import { getNetworkConfig } from '@multiversx/sdk-dapp/out/core/methods/network/getNetworkConfig';
+import { getAccount } from '@multiversx/sdk-dapp/out/methods/account/getAccount';
+import { getNetworkConfig } from '@multiversx/sdk-dapp/out/methods/network/getNetworkConfig';
 
 const account = getAccount();
 const { egldLabel } = getNetworkConfig();
@@ -246,7 +238,7 @@ import {
   GAS_PRICE,
   GAS_LIMIT
 } from '@multiversx/sdk-dapp/out/constants/mvx.constants';
-import { getAccountProvider } from '@multiversx/sdk-dapp/out/core/providers/helpers/accountProvider';
+import { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/accountProvider';
 import { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAccount';
 
 const pongTransaction = new Transaction({
@@ -271,7 +263,7 @@ const signedTransactions = await provider.signTransactions(transactions);
 Then, to send the transactions, you need to use the `TransactionManager` class and pass in the `signedTransactions` to the `send` method. You can then track the transactions by using the `track` method. This will create a toast notification with the transaction hash and its status.
 
 ```typescript
-import { TransactionManager } from '@multiversx/sdk-dapp/out/core/managers/TransactionManager';
+import { TransactionManager } from '@multiversx/sdk-dapp/out/managers/TransactionManager';
 import type { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/out/types/transactions.types';
 
 
@@ -326,7 +318,7 @@ const currentTransactionStatus = currentTransaction?.status;
 Once the transactions are executed on the blockchain, the flow ends with the user logging out.
 
 ```typescript
-import { getAccountProvider } from '@multiversx/sdk-dapp/out/core/providers/helpers/accountProvider';
+import { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/accountProvider';
 const provider = getAccountProvider();
 await provider.logout();
 ```
@@ -345,25 +337,27 @@ We have seen in the previous chapter what are the minimal steps to get up and ru
 | 5 | UI Components | Displaying UI information like balance, public keys etc. |
 
 Since these are mixtures of business logic and UI components, the library is split into several folders to make it easier to navigate.
-When inspecting the package, there is more content under `src`, but the main folders of interest are:
+When inspecting the package, there is more content under `src`, but the folders of interest are:
 
-
-# // TODO: move to src/
 
 ```bash
 src/
 ├── apiCalls/ ### methods for interacting with the API
 ├── constants/ ### useful constants from the ecosystem like ledger error codes, default gas limits for transactions etc.
-├── controllers/ ### business logic for UI elements like transactions and amount formatting
-├── core/ ### hosting the provider class, and all implementations for different signing providers
+├── controllers/ ### business logic for UI elements that are not bound to the store
+├── managers/ ### business logic for UI elements that are bound to the store
+├── providers/ ### signing providers
+├── methods/ ### utility functions to query and update the store
+├── react/ ### react hooks to query the store
 └── store/ ### store initialization, middleware, slices, selectors and actions
+
 ```
 
 Conceptually, these can be split into 3 main parts:
 
-- First is the business logic in `apiCalls`, `constants` and `core` (signing providers).
+- First is the business logic in `apiCalls`, `constants`, `providers` and `methods`
 - Then comes the persistence layer hosted in the `store` folder, using [Zustand](https://zustand.docs.pmnd.rs/) under the hood.
-- Last are the UI components hosted in [@multiversx/sdk-dapp](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controlles`
+- Last are the UI components hosted in [@multiversx/sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controlles` and `managers`
 
 Next, we will take the elements from Table 2 and detail them in the following sections.
 
@@ -376,11 +370,11 @@ The network configuration is done in the `initApp` method, where you can make se
 
 Once the network is configured, the `network` slice in the store will hold the network configuration.
 
-To query different network parameters, you can use the `getNetworkConfig` method from the ⚠️ `core/methods/network` folder.
+To query different network parameters, you can use the `getNetworkConfig` method from the `methods/network` folder.
 
 ### 2. Provider
 
-The provider is the main class that handles the signing of transactions and messages. It is initialized in the `initApp` method and can be accessed via the `getAccountProvider` method from the ⚠️ `core/providers/helpers` folder.
+The provider is the main class that handles the signing of transactions and messages. It is initialized in the `initApp` method and can be accessed via the `getAccountProvider` method from the `providers/helpers` folder.
 
 #### Initialization
 
@@ -391,7 +385,7 @@ An existing provider is initialized on app load (this is take care of by `initAp
 If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method or add it to the [window object](https://github.com/multiversx/mx-template-dapp/tree/main/src/initConfig). Last step is to login using the custom provider.
 
 ```typescript
-import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/core/providers/types/providerFactory.types';
+import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/providers/types/providerFactory.types';
 
 const ADDITIONAL_PROVIDERS = {
   myCustomProvider: 'myCustomProvider'
@@ -417,12 +411,12 @@ Once the provider is initialized, you can get a reference to it using the `getAc
 
 #### Getting account data
 
-Once the user logs in, a call is made to the API for fetching the account data. This data is persisted in the store and is accessible through helpers found in `core/methods/account`. These functions are:
+Once the user logs in, a call is made to the API for fetching the account data. This data is persisted in the store and is accessible through helpers found in `methods/account`. These functions are:
 
 **Table 3**. Getting account data
 | # | Helper | Description | React hook equivalent |
 |---|------|-------------|----|
-| | ⚠️`core/methods/account` | path | `store/selectors/hooks/account` |
+| | `methods/account` | path | `react/account` |
 | 1 | `getAccount()` | returns all account data |`useGetAccount()` |
 | 2 | `getAddress()` | returns just the user's public key | `useGetAddress()`|
 | 3 | `getIsLoggedIn()` | returns a login status boolean | `useGetIsLoggedIn()` |
@@ -549,10 +543,10 @@ If your application needs to track transactions sent by a server and the user do
 
 Step 1. Enabling the tracking mechanism
 
-By default the tracking mechanism is enabled only after the user logs in. That is the moment when the WebSocket connection is established. If you want to enable tracking before the user logs in, you need to call the `trackTransactions` method from the `core/methods/trackTransactions` folder. This method will enable a polling mechanism.
+By default the tracking mechanism is enabled only after the user logs in. That is the moment when the WebSocket connection is established. If you want to enable tracking before the user logs in, you need to call the `trackTransactions` method from the `methods/trackTransactions` folder. This method will enable a polling mechanism.
 
 ```typescript
-import { trackTransactions } from '@multiversx/sdk-dapp/out/⚠️core/methods/trackTransactions/trackTransactions';
+import { trackTransactions } from '@multiversx/sdk-dapp/out/methods/trackTransactions/trackTransactions';
 
 initApp(config).then(async () => {
   await trackTransactions(); // enable here since by default tracking will be enabled only after login
@@ -620,7 +614,7 @@ const eventBus = await modalElement.getEventBus();
 eventBus.publish('TRANSACTION_TOAST_DATA_UPDATE', someData);
 ```
 
-If you want to override private components and create your own, you can implement a similar strategy by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp/blob/main/src/core/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
+If you want to override private components and create your own, you can implement a similar strategy by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp/blob/main/src/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
 
 ## Debugging your dApp
 
