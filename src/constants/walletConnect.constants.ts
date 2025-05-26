@@ -1,4 +1,4 @@
-import { WalletConnectConfig } from 'core/providers';
+import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types/walletConnect.types';
 
 export const fallbackWalletConnectConfigurations: WalletConnectConfig = {
   walletConnectV2ProjectId: '',
