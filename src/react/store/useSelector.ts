@@ -1,5 +1,5 @@
-import { getReactStore } from 'react/store/getReactStore';
-import { StoreType } from 'store/store.types';
+import { getReactStore } from './getReactStore';
+import { StoreType } from '../../store/store.types';
 
 type ExtractState<S> = S extends { getState: () => infer T } ? T : StoreType;
 
