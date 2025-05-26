@@ -33,6 +33,7 @@ git clone https://github.com/multiversx/mx-template-dapp.git
 
 echo "cd mx-template-dapp..."
 cd mx-template-dapp
+git checkout development
 
 echo "Installing dependencies mx-template-dapp..."
 yarn install
