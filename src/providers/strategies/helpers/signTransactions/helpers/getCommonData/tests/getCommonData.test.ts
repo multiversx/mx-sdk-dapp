@@ -24,7 +24,7 @@ const mockData: GetCommonDataPropsType = {
   parsedTransactionsByDataField
 };
 
-jest.mock('core/methods/network/getExplorerAddress', () => ({
+jest.mock('methods/network/getExplorerAddress', () => ({
   getExplorerAddress: jest.fn(() => 'http://devnet-explorer.multiversx.com')
 }));
 
