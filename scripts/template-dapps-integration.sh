@@ -24,7 +24,7 @@ echo "Building mx-sdk-dapp..."
 yarn build
 
 echo "Publishing mx-sdk-dapp..."
-cd dist
+cd out
 yalc publish
 cd ../..
 
