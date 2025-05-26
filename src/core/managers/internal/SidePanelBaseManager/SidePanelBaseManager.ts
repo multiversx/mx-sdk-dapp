@@ -28,13 +28,13 @@ export abstract class SidePanelBaseManager<
     this.data = this.getInitialData();
   }
 
-  public async openUI(anchor?: HTMLElement) {
+  public async openUI() {
     if (this.isOpen && this.uiElement) {
       // UI element is already open
       return;
     }
 
-    await super.init(anchor);
+    await super.init();
     this.setIsSidePanelOpen(true);
   }
 
