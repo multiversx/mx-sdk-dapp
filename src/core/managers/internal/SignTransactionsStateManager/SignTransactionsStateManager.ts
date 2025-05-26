@@ -43,8 +43,6 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
     sftTransaction: null
   };
 
-  protected data: ISignTransactionsPanelData = { ...this.initialData };
-
   public static getInstance(): SignTransactionsStateManager {
     if (!SignTransactionsStateManager.instance) {
       SignTransactionsStateManager.instance =
@@ -54,23 +52,15 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
   }
 
   constructor() {
-    super('sign-transactions');
+    super({
+      uiDataUpdateEvent: SignEventsEnum.DATA_UPDATE,
+      uiTag: UITagsEnum.SIGN_TRANSACTIONS_PANEL
+    });
     this.data = { ...this.initialData };
-  }
-
-  public async init() {
-    await super.init();
-    this.resetData();
   }
 
   get transactionsCount() {
     return this.data.commonData.transactionsCount;
-  }
-
-  public async openSignTransactions(
-    data: ISignTransactionsPanelData = this.data
-  ) {
-    await this.openUI(data);
   }
 
   public initializeGasPriceMap(transactions: Transaction[]) {
@@ -168,30 +158,11 @@ export class SignTransactionsStateManager extends SidePanelBaseManager<
     return this._ppuMap;
   }
 
-  protected getUIElementName(): UITagsEnum {
-    return UITagsEnum.SIGN_TRANSACTIONS_PANEL;
-  }
-
-  protected getOpenEventName(): SignEventsEnum {
-    return SignEventsEnum.OPEN_SIGN_TRANSACTIONS_PANEL;
-  }
-
-  protected getCloseEventName(): SignEventsEnum {
-    return SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL;
-  }
-
-  protected getDataUpdateEventName(): SignEventsEnum {
-    return SignEventsEnum.DATA_UPDATE;
-  }
-
   protected async setupEventListeners() {
     if (!this.eventBus) {
       return;
     }
 
-    this.eventBus.subscribe(
-      SignEventsEnum.CLOSE_SIGN_TRANSACTIONS_PANEL,
-      this.handleCloseUI.bind(this)
-    );
+    this.subscribeToEventBus(SignEventsEnum.CLOSE, this.closeUI.bind(this));
   }
 }

@@ -122,11 +122,6 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
 
     const ledgerConnectManager = LedgerConnectStateManager.getInstance();
     await ledgerConnectManager.init(anchor);
-    const eventBus = await ledgerConnectManager.getEventBus();
-
-    if (!eventBus) {
-      throw new Error(ProviderErrorsEnum.eventBusError);
-    }
   };
 
   private readonly signTransactions = async (transactions: Transaction[]) => {

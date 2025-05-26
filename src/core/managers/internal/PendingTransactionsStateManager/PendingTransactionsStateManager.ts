@@ -4,22 +4,14 @@ import { MvxPendingTransactionsPanel } from 'lib/sdkDappUi';
 import { PendingTransactionsEventsEnum } from './types/pendingTransactions.types';
 import { SidePanelBaseManager } from '../SidePanelBaseManager/SidePanelBaseManager';
 
-interface IPendingTransactionsState {
-  provider: IProviderBase | null;
-  shouldClose?: boolean;
-}
-
 export class PendingTransactionsStateManager extends SidePanelBaseManager<
   MvxPendingTransactionsPanel,
-  IPendingTransactionsState,
+  IProviderBase | null,
   PendingTransactionsEventsEnum
 > {
   private static instance: PendingTransactionsStateManager;
 
-  protected initialData: IPendingTransactionsState = {
-    provider: null,
-    shouldClose: false
-  };
+  protected initialData: IProviderBase | null = null;
 
   public static getInstance(): PendingTransactionsStateManager {
     if (!PendingTransactionsStateManager.instance) {
@@ -31,32 +23,15 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
   }
 
   constructor() {
-    super('pending-transactions');
-    this.data = { ...this.initialData };
+    super({
+      uiDataUpdateEvent: PendingTransactionsEventsEnum.DATA_UPDATE,
+      uiTag: UITagsEnum.PENDING_TRANSACTIONS_PANEL
+    });
+    this.data = this.initialData;
   }
 
   public isPendingTransactionsOpen(): boolean {
     return this.isOpen;
-  }
-
-  public async openProviderIdleState(data: IPendingTransactionsState) {
-    await this.openUI(data);
-  }
-
-  protected getUIElementName(): UITagsEnum {
-    return UITagsEnum.PENDING_TRANSACTIONS_PANEL;
-  }
-
-  protected getOpenEventName(): PendingTransactionsEventsEnum {
-    return PendingTransactionsEventsEnum.OPEN_PENDING_TRANSACTIONS_PANEL;
-  }
-
-  protected getCloseEventName(): PendingTransactionsEventsEnum {
-    return PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS;
-  }
-
-  protected getDataUpdateEventName(): PendingTransactionsEventsEnum {
-    return PendingTransactionsEventsEnum.DATA_UPDATE;
   }
 
   protected async setupEventListeners() {
@@ -64,9 +39,9 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
       return;
     }
 
-    this.eventBus.subscribe(
-      PendingTransactionsEventsEnum.CLOSE_PENDING_TRANSACTIONS,
-      this.handleCloseUI.bind(this)
+    this.subscribeToEventBus(
+      PendingTransactionsEventsEnum.CLOSE,
+      this.closeUI.bind(this)
     );
   }
 }
