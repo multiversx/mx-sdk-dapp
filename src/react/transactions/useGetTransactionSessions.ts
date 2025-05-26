@@ -1,4 +1,4 @@
-import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
+import { transactionsSliceSelector } from '../../store/selectors/transactionsSelector';
 import { useSelector } from '../store/useSelector';
 
 export function useGetTransactionSessions() {

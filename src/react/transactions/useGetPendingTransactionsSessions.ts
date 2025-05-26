@@ -1,4 +1,4 @@
-import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
+import { pendingTransactionsSessionsSelector } from '../../store/selectors/transactionsSelector';
 import { useSelector } from '../store/useSelector';
 
 export function useGetPendingTransactions() {

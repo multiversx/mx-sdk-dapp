@@ -1,7 +1,7 @@
-import { accountNonceSelector } from 'store/selectors/accountSelectors';
-import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
-import { getState } from 'store/store';
-import { AccountType } from 'types/account.types';
+import { accountNonceSelector } from '../../store/selectors/accountSelectors';
+import { transactionsSliceSelector } from '../../store/selectors/transactionsSelector';
+import { getState } from '../../store/store';
+import { AccountType } from '../../types/account.types';
 
 export function getLatestNonce(apiAccount: AccountType | null) {
   const state = getState();

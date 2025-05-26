@@ -1,5 +1,5 @@
-import { isLoggedInSelector } from 'store/selectors/accountSelectors';
-import { loginInfoSelector } from 'store/selectors/loginInfoSelectors';
+import { isLoggedInSelector } from '../../store/selectors/accountSelectors';
+import { loginInfoSelector } from '../../store/selectors/loginInfoSelectors';
 import { useSelector } from '../store/useSelector';
 
 export const useGetLoginInfo = () => {
