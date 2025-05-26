@@ -6,6 +6,8 @@ import {
 } from '@multiversx/sdk-wallet-connect-provider/out';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { safeWindow } from 'constants/window.constants';
+import { Message, Transaction } from 'lib/sdkCore';
+import { defineCustomElements } from 'lib/sdkDappUi';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
@@ -15,7 +17,6 @@ import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { defineCustomElements } from 'lib/sdkDappUi';
 import { logoutAction } from 'store/actions';
 import {
   chainIdSelector,
@@ -30,7 +31,6 @@ import {
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { WalletConnectV2Error, WalletConnectConfig } from './types';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { Message, Transaction } from 'lib/sdkCore';
 
 const dappMethods: string[] = [
   WalletConnectOptionalMethodsEnum.CANCEL_ACTION,

@@ -2,6 +2,7 @@ import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
 import { providerLabels } from 'constants/providerFactory.constants';
+import { Message, Transaction } from 'lib/sdkCore';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import { getAccount } from 'methods/account/getAccount';
 import { IProvider } from 'providers/types/providerFactory.types';
@@ -12,7 +13,6 @@ import { IframeProviderType } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { Message, Transaction } from 'lib/sdkCore';
 
 export class IframeProviderStrategy extends BaseProviderStrategy {
   private provider: IframeProvider | null = null;

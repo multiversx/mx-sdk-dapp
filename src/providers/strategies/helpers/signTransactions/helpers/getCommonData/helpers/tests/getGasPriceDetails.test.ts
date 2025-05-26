@@ -1,6 +1,6 @@
 import { testAddress } from '__mocks__';
-import { getPpuOptions } from '../getPpuOptions';
 import { IPlainTransactionObject } from 'lib/sdkCore';
+import { getPpuOptions } from '../getPpuOptions';
 
 const secondTx: IPlainTransactionObject = {
   nonce: 0,

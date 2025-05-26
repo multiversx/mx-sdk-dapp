@@ -1,10 +1,10 @@
+import { Transaction } from 'lib/sdkCore';
 import {
   MultiSignTransactionType,
   TransactionDataTokenType
 } from 'types/transactions.types';
 import { getCommonData, GetCommonDataPropsType } from '../getCommonData';
 import { mockGetCommonDataInput } from './mockGetCommonDataInput';
-import { Transaction } from 'lib/sdkCore';
 
 const allTransactions: MultiSignTransactionType[] =
   mockGetCommonDataInput.allTransactions.map((tx) => ({

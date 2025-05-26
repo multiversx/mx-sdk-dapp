@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { BATCH_TRANSACTIONS_ID_SEPARATOR } from 'constants/transactions.constants';
-import { getAccount } from 'methods/account/getAccount';
 import { Transaction, TransactionComputer } from 'lib/sdkCore';
+import { getAccount } from 'methods/account/getAccount';
 import { addTransactionToast } from 'store/actions/toasts/toastsActions';
 import { createTransactionsSession } from 'store/actions/transactions/transactionsActions';
 import { networkSelector } from 'store/selectors';

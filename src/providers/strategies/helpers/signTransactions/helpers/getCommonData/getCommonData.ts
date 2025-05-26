@@ -2,13 +2,13 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import { getPersistedTokenDetails } from 'apiCalls/tokens/getPersistedTokenDetails';
 import { MULTI_TRANSFER_EGLD_TOKEN } from 'constants/mvx.constants';
 import { safeWindow } from 'constants/window.constants';
+import { formatAmount } from 'lib/sdkDappUtils';
 import {
   FungibleTransactionType,
   ISignTransactionsPanelCommonData
 } from 'managers/internal/SignTransactionsStateManager/types';
 import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
-import { formatAmount } from 'lib/sdkDappUtils';
 import { NetworkType } from 'types/network.types';
 import { NftEnumType } from 'types/tokens.types';
 import {

@@ -1,5 +1,6 @@
 import { UITagsEnum } from 'constants/UITags.enum';
 
+import { MvxLedgerFlow } from 'lib/sdkDappUi';
 import { UnlockPanelEventsEnum } from 'managers/UnlockPanelManager/UnlockPanelManager.types';
 import {
   IAccountScreenData,
@@ -8,7 +9,6 @@ import {
   IConnectScreenData,
   IConfirmScreenData
 } from 'providers/strategies/LedgerProviderStrategy/types/ledger.types';
-import { MvxLedgerFlow } from 'lib/sdkDappUi';
 import { LedgerConnectEventsEnum } from './types';
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
 

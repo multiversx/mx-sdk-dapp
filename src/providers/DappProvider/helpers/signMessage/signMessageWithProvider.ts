@@ -1,10 +1,10 @@
 import { Message, Address } from 'lib/sdkCore';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAddress } from 'methods/account/getAddress';
 import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { Nullable } from 'types';
 
 export type SignMessageType = {

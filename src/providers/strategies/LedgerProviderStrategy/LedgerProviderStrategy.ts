@@ -2,11 +2,13 @@ import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { safeWindow } from 'constants/index';
 
 import { CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION } from 'constants/transactions.constants';
+import { Message, Transaction } from 'lib/sdkCore';
+import { defineCustomElements } from 'lib/sdkDappUi';
+import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { IProvider } from 'providers/types/providerFactory.types';
-import { defineCustomElements } from 'lib/sdkDappUi';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
@@ -19,8 +21,6 @@ import {
   LoginOptionsTypes
 } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
-import { Message, Transaction } from 'lib/sdkCore';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 
 export class LedgerProviderStrategy extends BaseProviderStrategy {
   private provider: HWProvider | null = null;

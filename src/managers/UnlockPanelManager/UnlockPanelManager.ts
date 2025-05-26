@@ -1,12 +1,12 @@
 import { providerLabels } from 'constants/providerFactory.constants';
 import { UITagsEnum } from 'constants/UITags.enum';
+import { MvxUnlockPanel } from 'lib/sdkDappUi';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import {
   IProviderBase,
   IProviderFactory,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { MvxUnlockPanel } from 'lib/sdkDappUi';
 import {
   AllowedProviderType,
   CloseCallbackType,

@@ -1,7 +1,7 @@
 import { providerLabels } from 'constants/providerFactory.constants';
+import { Message } from 'lib/sdkCore';
 import { getLedgerErrorCodes } from './getLedgerErrorCodes';
 import { signMessage } from '../../helpers/signMessage/signMessage';
-import { Message } from 'lib/sdkCore';
 
 export async function signLedgerMessage({
   message,

@@ -1,8 +1,8 @@
 import { providerLabels } from 'constants/providerFactory.constants';
+import { Message } from 'lib/sdkCore';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import { SigningWarningsEnum } from 'types/enums.types';
 import { getPendingTransactionsHandlers } from '../getPendingTransactionsHandlers';
-import { Message } from 'lib/sdkCore';
 
 type SignMessageWithModalPropsType<T> = {
   message: Message;

@@ -1,12 +1,12 @@
 import { subscriptions } from 'constants/storage.constants';
 import { safeWindow } from 'constants/window.constants';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAddress } from 'methods/account/getAddress';
 import { websocketManager } from 'methods/initApp/websocket/registerWebsocket';
 import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 
 export type LogoutPropsType = {

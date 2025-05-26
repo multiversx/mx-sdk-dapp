@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 
 import { getEconomics } from 'apiCalls/economics/getEconomics';
-import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { formatAmount } from 'lib/sdkDappUtils';
+import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { ProviderErrorsEnum } from 'types';
 import { fetchAccount } from 'utils/account/fetchAccount';
 import { getUsdValue } from 'utils/operations/getUsdValue';

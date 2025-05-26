@@ -2,10 +2,10 @@ import { HWProvider } from '@multiversx/sdk-hw-provider/out';
 import { BigNumber } from 'bignumber.js';
 
 import { ACCOUNTS_ENDPOINT } from 'apiCalls';
+import { IEventBus } from 'lib/sdkDappUi';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { IEventBus } from 'lib/sdkDappUi';
 import { setLedgerAccount } from 'store/actions';
 import { setLedgerLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';

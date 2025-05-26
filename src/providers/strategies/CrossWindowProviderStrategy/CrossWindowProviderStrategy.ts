@@ -1,11 +1,12 @@
 import { isBrowserWithPopupConfirmation } from 'constants/browser.constants';
 import { providerLabels } from 'constants/providerFactory.constants';
+import { Message, Transaction } from 'lib/sdkCore';
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { crossWindowConfigSelector } from 'store/selectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
@@ -14,7 +15,6 @@ import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrate
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
-import { Message, Transaction } from 'lib/sdkCore';
 
 type CrossWindowProviderProps = {
   address?: string;

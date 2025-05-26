@@ -1,8 +1,8 @@
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { safeWindow } from 'constants/window.constants';
+import { Message, Transaction } from 'lib/sdkCore';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { Message, Transaction } from 'lib/sdkCore';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 
 type WebviewProviderProps = {

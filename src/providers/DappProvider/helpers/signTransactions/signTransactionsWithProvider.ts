@@ -1,14 +1,14 @@
-import { getAccount } from 'methods/account/getAccount';
-import {
-  IProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
 import {
   Address,
   Transaction,
   TransactionOptions,
   TransactionVersion
 } from 'lib/sdkCore';
+import { getAccount } from 'methods/account/getAccount';
+import {
+  IProvider,
+  ProviderTypeEnum
+} from 'providers/types/providerFactory.types';
 import { setAccountNonce } from 'store/actions';
 import { refreshAccount } from 'utils';
 import { computeNonces } from '../computeNonces/computeNonces';

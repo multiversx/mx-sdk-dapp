@@ -1,5 +1,6 @@
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider/out/extensionProvider';
 import { providerLabels } from 'constants/providerFactory.constants';
+import { Message, Transaction } from 'lib/sdkCore';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 
 import {
@@ -10,7 +11,6 @@ import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
-import { Message, Transaction } from 'lib/sdkCore';
 
 export class ExtensionProviderStrategy extends BaseProviderStrategy {
   private provider: ExtensionProvider | null = null;

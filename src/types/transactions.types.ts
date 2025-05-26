@@ -1,3 +1,4 @@
+import { IPlainTransactionObject, Transaction } from 'lib/sdkCore';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import {
   TransactionBatchStatusesEnum,
@@ -5,7 +6,6 @@ import {
   TransactionTypesEnum
 } from 'types/enums.types';
 import { ResultType } from './serverTransactions.types';
-import { IPlainTransactionObject, Transaction } from 'lib/sdkCore';
 
 export interface SignedTransactionType extends IPlainTransactionObject {
   hash: string;

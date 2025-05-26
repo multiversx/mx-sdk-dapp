@@ -1,5 +1,6 @@
 import { getEconomics } from 'apiCalls/economics/getEconomics';
 import { EMPTY_PPU } from 'constants/placeholders.constants';
+import { Transaction } from 'lib/sdkCore';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager';
 import {
   ISignTransactionsPanelCommonData,
@@ -9,7 +10,6 @@ import { getAccountInfo } from 'methods/account/getAccountInfo';
 import { getEgldLabel } from 'methods/network/getEgldLabel';
 import { cancelCrossWindowAction } from 'providers/helpers/cancelCrossWindowAction';
 import { IProvider } from 'providers/types/providerFactory.types';
-import { Transaction } from 'lib/sdkCore';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { getCommonData } from './helpers/getCommonData/getCommonData';
