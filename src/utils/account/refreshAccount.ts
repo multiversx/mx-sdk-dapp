@@ -1,7 +1,7 @@
-import { getAddress } from 'core/methods/account/getAddress';
-import { getLatestNonce } from 'core/methods/account/getLatestNonce';
-import { getNetworkConfig } from 'core/methods/network/getNetworkConfig';
-import { getAccountProvider } from 'core/providers/helpers/accountProvider';
+import { getAddress } from 'methods/account/getAddress';
+import { getLatestNonce } from 'methods/account/getLatestNonce';
+import { getNetworkConfig } from 'methods/network/getNetworkConfig';
+import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { setAccount } from 'store/actions';
 import { fetchAccount } from './fetchAccount';
 import { trimUsernameDomain } from './trimUsernameDomain';
