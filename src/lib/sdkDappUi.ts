@@ -1,7 +1,7 @@
 import type { CustomElementsDefineOptions } from '@multiversx/sdk-dapp-ui/dist/loader';
 export type { MvxLedgerFlow } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-ledger-flow';
 export type { MvxSignTransactionsPanel } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-sign-transactions-panel';
-export type { MvxWalletConnectProvider } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-wallet-connect-provider';
+export type { MvxWalletConnect } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-wallet-connect';
 export type { MvxPendingTransactionsPanel } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-pending-transactions-panel';
 export type { MvxNotificationsFeed } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-notifications-feed';
 export type { MvxToastList } from '@multiversx/sdk-dapp-ui/dist/web-components/mvx-toast-list';

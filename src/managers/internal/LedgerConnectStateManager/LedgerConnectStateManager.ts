@@ -81,7 +81,7 @@ export class LedgerConnectStateManager extends UIBaseManager<
   constructor() {
     super({
       uiDataUpdateEvent: LedgerConnectEventsEnum.DATA_UPDATE,
-      uiTag: UITagsEnum.LEDGER_FLOW
+      uiTag: UITagsEnum.LEDGER
     });
     this.data = this.getInitialData();
   }
