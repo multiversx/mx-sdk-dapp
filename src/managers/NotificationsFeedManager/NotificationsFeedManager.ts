@@ -23,7 +23,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   NotificationsFeedEventsEnum | typeof NOTIFICATIONS_FEED_STORE_SUBSCRIBE
 > {
   private static instance: NotificationsFeedManager;
-  private store = getStore();
+  private readonly store = getStore();
 
   protected initialData: INotificationsFeedManagerData = {
     pendingTransactions: [],

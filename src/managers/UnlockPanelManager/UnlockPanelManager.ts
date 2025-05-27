@@ -9,7 +9,7 @@ import {
 } from 'providers/types/providerFactory.types';
 import {
   AllowedProviderType,
-  CloseCallbackType,
+  OnCloseUnlockPanelType,
   LoginHandlerType,
   UnlockPanelEventsEnum,
   UnlockPanelManagerInitParamsType
@@ -25,7 +25,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
   private static instance: UnlockPanelManager;
   private static loginHandler: LoginHandlerType | null = null;
-  private static closeCallback: CloseCallbackType | null = null;
+  private static onClose: OnCloseUnlockPanelType | null = null;
   private static allowedProviders?: AllowedProviderType[] | null = null;
 
   constructor() {
@@ -48,8 +48,8 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     this.loginHandler = params.loginHandler;
     this.allowedProviders = params.allowedProviders;
 
-    if (params.closeCallback) {
-      this.closeCallback = params.closeCallback;
+    if (params.onClose) {
+      this.onClose = params.onClose;
     }
 
     return this.getInstance();
@@ -75,8 +75,8 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   };
 
   private handleCloseUI = async (options?: { isLoginFinished?: boolean }) => {
-    if (!options?.isLoginFinished && UnlockPanelManager.closeCallback) {
-      UnlockPanelManager.closeCallback();
+    if (!options?.isLoginFinished && UnlockPanelManager.onClose) {
+      UnlockPanelManager.onClose();
     }
 
     this.closeUI();
