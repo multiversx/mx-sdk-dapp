@@ -177,7 +177,7 @@ await provider.login();
 
 Depending on the framework, you can either use hooks or selectors to get the user details:
 
-#### 3.1 React hooks.
+#### 3.1 React hooks
 
 If you are using React, all hooks can be found under the `/out/react` folder. All store information can be accessed via different hooks but below you will find the main hook related to most common use cases
 
@@ -207,7 +207,7 @@ console.log(`${account.balance} ${egldLabel}`);
 
 #### 3.2 Store selector functions:
 
-If you are not using the React ecosystem, you can use store selectors to get the data, but note that information will not be reactive.
+If you are not using the React ecosystem, you can use store selectors to get the store data, but note that information will not be reactive unless you subscribe to store changes.
 
 ```typescript
 import { getAccount } from '@multiversx/sdk-dapp/out/methods/account/getAccount';
@@ -236,7 +236,6 @@ export function useStore() {
   return state;
 }
 ```
-
 
 ### 4. Transactions
 
@@ -283,10 +282,10 @@ const txManager = TransactionManager.getInstance();
 const sentTransactions = await txManager.send(signedTransactions);
 
 const toastInformation: TransactionsDisplayInfoType = {
-    processingMessage: 'Processing transactions',
-    errorMessage: 'An error has occurred during transaction execution',
-    successMessage: 'Transactions executed'
-  }
+  processingMessage: 'Processing transactions',
+  errorMessage: 'An error has occurred during transaction execution',
+  successMessage: 'Transactions executed'
+}
 
 const sessionId = await txManager.track(sentTransactions, {
   transactionsDisplayInfo: toastInformation
@@ -305,7 +304,17 @@ notificationManager.openNotificationsFeed();
 
 #### 4.4 Inspecting transactions
 
-In case you need to inspect the transactions, you can use the `transactionsSliceSelector` from the store.
+You can find both methods and hooks to access transactions data, as seen in the table below.
+
+**Table 2**. Inspectig transactions
+| # | Helper | Description | React hook equivalent |
+|---|------|-------------|----|
+| | `methods/transactions` | path | `react/transactions` |
+| 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
+| 2 | `getPendingTransactionsSessions()` | returns an array of pending sessions | `useGetPendingTransactionsSessions()`|
+| 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
+
+There is a way to inspect store information regarding a specific transaction, using the `transactionsSliceSelector`. An example is shown below:
 
 ```typescript
 import {
@@ -339,7 +348,7 @@ await provider.logout();
 
 We have seen in the previous chapter what are the minimal steps to get up and running with a blockchain interaction using sdk-dapp. Next we will detail each element mentioned above
 
-**Table 2**. Elements needed to build a dApp
+**Table 3**. Elements needed to build a dApp
 | # | Type | Description |
 |---|------|-------------|
 | 1 | Network | Chain configuration |
@@ -370,7 +379,7 @@ Conceptually, these can be split into 3 main parts:
 - Then comes the persistence layer hosted in the `store` folder, using [Zustand](https://zustand.docs.pmnd.rs/) under the hood.
 - Last are the UI components hosted in [@multiversx/sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controlles` and `managers`
 
-Next, we will take the elements from Table 2 and detail them in the following sections.
+Next, we will take the elements from Table 3 and detail them in the following sections.
 
 ### 1. Network
 
@@ -424,7 +433,7 @@ Once the provider is initialized, you can get a reference to it using the `getAc
 
 Once the user logs in, a call is made to the API for fetching the account data. This data is persisted in the store and is accessible through helpers found in `methods/account`. These functions are:
 
-**Table 3**. Getting account data
+**Table 4**. Getting account data
 | # | Helper | Description | React hook equivalent |
 |---|------|-------------|----|
 | | `methods/account` | path | `react/account` |
@@ -458,7 +467,7 @@ The transaction lifecycle consists of the following steps:
 2. **Signing** the transaction with the initialized provider and receiving a `SignedTransactionType` object
 3. **Sending** the signed transaction using TransactionManager's `send()` function. Signed transactions can be sent in 2 ways:
 
-**Table 4**. Sending signed transactions
+**Table 5**. Sending signed transactions
 | # | Signature | Method | Description |
 |---|------|-------------|-------------|
 | 1 | `send([tx1, tx2])` | `POST` to `/transactions` | Transactions are executed in parallel
