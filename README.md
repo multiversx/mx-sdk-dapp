@@ -115,9 +115,8 @@ initApp(config).then(() => {
 ```
 
 ### 2. Provider interaction
-Using the Unlock Panel...
 
-Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login.
+Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login, namely using the `UnlockPanelManager` and programatic login using the `ProviderFactory`.
 
 #### 2.1 Using the `UnlockPanelManager`
 By using the provided UI, you get the benefit of having all supported providers ready for login in a side panel. You simply need to link the `unlockPanelManager.openUnlockPanel` to a user action.
@@ -174,11 +173,24 @@ const provider = await ProviderFactory.create({
 await provider.login();
 ```
 
-### 3. Displaying user data
+### 3. Displaying app data
 
 Depending on the framework, you can either use hooks or selectors to get the user details:
 
-#### 3.1 React hooks solution:
+#### 3.1 React hooks.
+
+If you are using React, all hooks can be found under the `/out/react` folder. All store information can be accessed via different hooks but below you will find the main hook related to most common use cases
+
+```bash
+out/react/
+├── account/useGetAccount ### access account data like address, balance and nonce
+├── loginInfo/useGetLoginInfo ### access login data like accessToken and provider type
+├── network/useGetNetworkConfig ### access network information like chainId and egldLabel
+├── store/useSelector ### make use of the useSelector hook for querying the store via selectors
+└── transactions/useGetTransactionSessions ### access all current and historic transaction sessions
+```
+
+Below is an example of using the hooks to display the user address and balance.
 
 ```typescript
 import { useGetAccount } from '@multiversx/sdk-dapp/out/react/account/useGetAccount';
@@ -283,7 +295,8 @@ const sessionId = await txManager.track(sentTransactions, {
 
 #### 4.3 Using the Notifications Feed
 
-The Notifications Feed is a component that displays session transactions in a list. It is initialized in the `initApp` method and can be accessed via `NotificationManager.getInstance()`.
+The Notifications Feed is a component that displays **session transactions** in a list. Internally it gets initialized in the `initApp` method. It can be accessed via the `NotificationManager.getInstance()` method. 
+Once the user logs out of the dApp, all transactions displayed by the Notifications Feed are removed from the store. Note that you can switch between toast notifications and Notifications Feed by pressing the View All button above the current pending transaction toast in the UI.
 
 ```typescript
 const notificationManager = NotificationManager.getInstance();
@@ -349,7 +362,6 @@ src/
 ├── methods/ ### utility functions to query and update the store
 ├── react/ ### react hooks to query the store
 └── store/ ### store initialization, middleware, slices, selectors and actions
-
 ```
 
 Conceptually, these can be split into 3 main parts:
