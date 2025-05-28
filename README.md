@@ -130,6 +130,9 @@ export const ConnectButton = () => {
     loginHandler: () => {
       navigate('/dashboard');
     },
+    onClose: () => { // optional action to be performed when the user closes the Unlock Panel
+      navigate('/');
+    },
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();
