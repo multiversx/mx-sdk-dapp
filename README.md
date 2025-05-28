@@ -60,7 +60,7 @@ Also, make sure you run your app on `https`, not `http`, otherwise some provider
 npm install
 ```
 
-If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide PR](https://github.com/multiversx/mx-template-dapp/pull/264) of Template Dapp
+If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/0eb7bc6194195b6c364b8010023d351d914db65e/MIGRATION_GUIDE.md) and  [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
 
 ## Usage
 
@@ -81,13 +81,13 @@ Having this knowledge, we can consider several steps needed to put a dApp togeth
 | 1 | Configuration | - storage configuration (e.g. sessionStorage, localStorage etc.)<br>- chain configuration<br>- custom provider configuration (adding / disabling / changing providers) |
 | 2 | Provider interaction | - logging in and out<br>- signing transactions / messages |
 | 3 | Presenting data | - get store data (e.g. account balance, account address etc.)<br>- use components to display data (e.g. balance, address, transactions list) |
-| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- transactions history |
+| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- displayingtransactions history |
 
 Each of these steps will be explained in more detail in the following sections.
 
 ### 1. Configuration
 
-Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `methods` folder.
+Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `methods` folder. It is recommended to call this method in the `index.tsx` to ensure the sdk-dapp internal functions are initialized before rendering the app.
 
 ```typescript
 // index.tsx
@@ -115,9 +115,8 @@ initApp(config).then(() => {
 ```
 
 ### 2. Provider interaction
-Using the Unlock Panel...
 
-Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login.
+Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login, namely using the `UnlockPanelManager` and programatic login using the `ProviderFactory`.
 
 #### 2.1 Using the `UnlockPanelManager`
 By using the provided UI, you get the benefit of having all supported providers ready for login in a side panel. You simply need to link the `unlockPanelManager.openUnlockPanel` to a user action.
@@ -130,6 +129,9 @@ export const ConnectButton = () => {
   const unlockPanelManager = UnlockPanelManager.init({
     loginHandler: () => {
       navigate('/dashboard');
+    },
+    onClose: () => { // optional action to be performed when the user closes the Unlock Panel
+      navigate('/');
     },
   });
   const handleOpenUnlockPanel = () => {
@@ -174,11 +176,24 @@ const provider = await ProviderFactory.create({
 await provider.login();
 ```
 
-### 3. Displaying user data
+### 3. Displaying app data
 
 Depending on the framework, you can either use hooks or selectors to get the user details:
 
-#### 3.1 React hooks solution:
+#### 3.1 React hooks
+
+If you are using React, all hooks can be found under the `/out/react` folder. All store information can be accessed via different hooks but below you will find the main hook related to most common use cases
+
+```bash
+out/react/
+├── account/useGetAccount ### access account data like address, balance and nonce
+├── loginInfo/useGetLoginInfo ### access login data like accessToken and provider type
+├── network/useGetNetworkConfig ### access network information like chainId and egldLabel
+├── store/useSelector ### make use of the useSelector hook for querying the store via selectors
+└── transactions/useGetTransactionSessions ### access all current and historic transaction sessions
+```
+
+Below is an example of using the hooks to display the user address and balance.
 
 ```typescript
 import { useGetAccount } from '@multiversx/sdk-dapp/out/react/account/useGetAccount';
@@ -195,7 +210,7 @@ console.log(`${account.balance} ${egldLabel}`);
 
 #### 3.2 Store selector functions:
 
-If you are not using the React ecosystem, you can use store selectors to get the data, but note that information will not be reactive.
+If you are not using the React ecosystem, you can use store selectors to get the store data, but note that information will not be reactive unless you subscribe to store changes.
 
 ```typescript
 import { getAccount } from '@multiversx/sdk-dapp/out/methods/account/getAccount';
@@ -224,7 +239,6 @@ export function useStore() {
   return state;
 }
 ```
-
 
 ### 4. Transactions
 
@@ -271,10 +285,10 @@ const txManager = TransactionManager.getInstance();
 const sentTransactions = await txManager.send(signedTransactions);
 
 const toastInformation: TransactionsDisplayInfoType = {
-    processingMessage: 'Processing transactions',
-    errorMessage: 'An error has occurred during transaction execution',
-    successMessage: 'Transactions executed'
-  }
+  processingMessage: 'Processing transactions',
+  errorMessage: 'An error has occurred during transaction execution',
+  successMessage: 'Transactions executed'
+}
 
 const sessionId = await txManager.track(sentTransactions, {
   transactionsDisplayInfo: toastInformation
@@ -283,7 +297,8 @@ const sessionId = await txManager.track(sentTransactions, {
 
 #### 4.3 Using the Notifications Feed
 
-The Notifications Feed is a component that displays session transactions in a list. It is initialized in the `initApp` method and can be accessed via `NotificationManager.getInstance()`.
+The Notifications Feed is a component that displays **session transactions** in a list. Internally it gets initialized in the `initApp` method. It can be accessed via the `NotificationManager.getInstance()` method. 
+Once the user logs out of the dApp, all transactions displayed by the Notifications Feed are removed from the store. Note that you can switch between toast notifications and Notifications Feed by pressing the View All button above the current pending transaction toast in the UI.
 
 ```typescript
 const notificationManager = NotificationManager.getInstance();
@@ -292,7 +307,17 @@ notificationManager.openNotificationsFeed();
 
 #### 4.4 Inspecting transactions
 
-In case you need to inspect the transactions, you can use the `transactionsSliceSelector` from the store.
+You can find both methods and hooks to access transactions data, as seen in the table below.
+
+**Table 2**. Inspectig transactions
+| # | Helper | Description | React hook equivalent |
+|---|------|-------------|----|
+| | `methods/transactions` | path | `react/transactions` |
+| 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
+| 2 | `getPendingTransactionsSessions()` | returns an array of pending sessions | `useGetPendingTransactionsSessions()`|
+| 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
+
+There is a way to inspect store information regarding a specific transaction, using the `transactionsSliceSelector`. An example is shown below:
 
 ```typescript
 import {
@@ -313,9 +338,8 @@ const currentTransaction = currentSession?.transactions?.[0];
 const currentTransactionStatus = currentTransaction?.status;
 ```
 
-# // TODO document inspecting transactions
-
-Once the transactions are executed on the blockchain, the flow ends with the user logging out.
+#### 4.5 Logging out
+The user journey ends with calling the `provider.logout()` method.
 
 ```typescript
 import { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/accountProvider';
@@ -327,7 +351,7 @@ await provider.logout();
 
 We have seen in the previous chapter what are the minimal steps to get up and running with a blockchain interaction using sdk-dapp. Next we will detail each element mentioned above
 
-**Table 2**. Elements needed to build a dApp
+**Table 3**. Elements needed to build a dApp
 | # | Type | Description |
 |---|------|-------------|
 | 1 | Network | Chain configuration |
@@ -350,7 +374,6 @@ src/
 ├── methods/ ### utility functions to query and update the store
 ├── react/ ### react hooks to query the store
 └── store/ ### store initialization, middleware, slices, selectors and actions
-
 ```
 
 Conceptually, these can be split into 3 main parts:
@@ -359,7 +382,7 @@ Conceptually, these can be split into 3 main parts:
 - Then comes the persistence layer hosted in the `store` folder, using [Zustand](https://zustand.docs.pmnd.rs/) under the hood.
 - Last are the UI components hosted in [@multiversx/sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controlles` and `managers`
 
-Next, we will take the elements from Table 2 and detail them in the following sections.
+Next, we will take the elements from Table 3 and detail them in the following sections.
 
 ### 1. Network
 
@@ -413,7 +436,7 @@ Once the provider is initialized, you can get a reference to it using the `getAc
 
 Once the user logs in, a call is made to the API for fetching the account data. This data is persisted in the store and is accessible through helpers found in `methods/account`. These functions are:
 
-**Table 3**. Getting account data
+**Table 4**. Getting account data
 | # | Helper | Description | React hook equivalent |
 |---|------|-------------|----|
 | | `methods/account` | path | `react/account` |
@@ -447,7 +470,7 @@ The transaction lifecycle consists of the following steps:
 2. **Signing** the transaction with the initialized provider and receiving a `SignedTransactionType` object
 3. **Sending** the signed transaction using TransactionManager's `send()` function. Signed transactions can be sent in 2 ways:
 
-**Table 4**. Sending signed transactions
+**Table 5**. Sending signed transactions
 | # | Signature | Method | Description |
 |---|------|-------------|-------------|
 | 1 | `send([tx1, tx2])` | `POST` to `/transactions` | Transactions are executed in parallel
