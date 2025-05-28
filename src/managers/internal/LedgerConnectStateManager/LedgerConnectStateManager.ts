@@ -1,6 +1,6 @@
 import { UITagsEnum } from 'constants/UITags.enum';
 
-import { MvxLedgerFlow } from 'lib/sdkDappUi';
+import { MvxLedgerConnect } from 'lib/sdkDappUi';
 import { UnlockPanelEventsEnum } from 'managers/UnlockPanelManager/UnlockPanelManager.types';
 import {
   IAccountScreenData,
@@ -27,7 +27,7 @@ type ProviderInitEventsParams = {
 };
 
 export class LedgerConnectStateManager extends UIBaseManager<
-  MvxLedgerFlow,
+  MvxLedgerConnect,
   ILedgerConnectPanelData,
   LedgerConnectEventsEnum
 > {
@@ -81,7 +81,7 @@ export class LedgerConnectStateManager extends UIBaseManager<
   constructor() {
     super({
       uiDataUpdateEvent: LedgerConnectEventsEnum.DATA_UPDATE,
-      uiTag: UITagsEnum.LEDGER_FLOW
+      uiTag: UITagsEnum.LEDGER_CONNECT
     });
     this.data = this.getInitialData();
   }

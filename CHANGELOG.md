@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.3](https://github.com/multiversx/mx-sdk-dapp/pull/1437)] - 2025-05-28
+
+- [Update README and add transaciton methods](https://github.com/multiversx/mx-sdk-dapp/pull/1436)
+- [Fixed imports of some Ledger & xPortal components](https://github.com/multiversx/mx-sdk-dapp/pull/1434)
+- [Update README and change UnlockPanelManager onClose type](https://github.com/multiversx/mx-sdk-dapp/pull/1433)
+
 ## [[5.0.0-alpha.2](https://github.com/multiversx/mx-sdk-dapp/pull/1431)] - 2025-05-26
 
 - [Fixed react store imports](https://github.com/multiversx/mx-sdk-dapp/pull/1430)
