@@ -74,7 +74,9 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     this.subscribeToEventBus(UnlockPanelEventsEnum.CLOSE, this.handleCloseUI);
   };
 
-  private handleCloseUI = async (options?: { isLoginFinished?: boolean }) => {
+  private readonly handleCloseUI = async (options?: {
+    isLoginFinished?: boolean;
+  }) => {
     if (!options?.isLoginFinished && UnlockPanelManager.onClose) {
       UnlockPanelManager.onClose();
     }
@@ -82,7 +84,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     this.closeUI();
   };
 
-  private handleLogin = async ({ type, anchor }: IProviderFactory) => {
+  private readonly handleLogin = async ({ type, anchor }: IProviderFactory) => {
     if (!UnlockPanelManager.loginHandler) {
       throw new Error(
         'Login callback not initialized. Please call `init()` first.'
@@ -107,11 +109,11 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     }
   };
 
-  private handleCancelLogin = async () => {
+  private readonly handleCancelLogin = async () => {
     await ProviderFactory.destroy();
   };
 
-  private isSimpleLoginCallback = (
+  private readonly isSimpleLoginCallback = (
     login: LoginHandlerType
   ): login is () => void => {
     const takesZeroArguments = login.length === 0;
