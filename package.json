@@ -63,7 +63,7 @@
     "bignumber.js": "9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.4"
+    "@multiversx/sdk-dapp-ui": ">=0.0.5"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
