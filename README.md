@@ -60,7 +60,7 @@ Also, make sure you run your app on `https`, not `http`, otherwise some provider
 npm install
 ```
 
-If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide PR](https://github.com/multiversx/mx-template-dapp/pull/264) of Template Dapp
+If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/0eb7bc6194195b6c364b8010023d351d914db65e/MIGRATION_GUIDE.md) and  [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
 
 ## Usage
 
@@ -81,13 +81,13 @@ Having this knowledge, we can consider several steps needed to put a dApp togeth
 | 1 | Configuration | - storage configuration (e.g. sessionStorage, localStorage etc.)<br>- chain configuration<br>- custom provider configuration (adding / disabling / changing providers) |
 | 2 | Provider interaction | - logging in and out<br>- signing transactions / messages |
 | 3 | Presenting data | - get store data (e.g. account balance, account address etc.)<br>- use components to display data (e.g. balance, address, transactions list) |
-| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- transactions history |
+| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- displayingtransactions history |
 
 Each of these steps will be explained in more detail in the following sections.
 
 ### 1. Configuration
 
-Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `methods` folder.
+Before your application bootstraps, you need to configure the storage, the network, and the signing providers. This is done by calling the `initApp` method from the `methods` folder. It is recommended to call this method in the `index.tsx` to ensure the sdk-dapp internal functions are initialized before rendering the app.
 
 ```typescript
 // index.tsx
