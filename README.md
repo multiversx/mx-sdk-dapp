@@ -313,9 +313,8 @@ const currentTransaction = currentSession?.transactions?.[0];
 const currentTransactionStatus = currentTransaction?.status;
 ```
 
-# // TODO document inspecting transactions
-
-Once the transactions are executed on the blockchain, the flow ends with the user logging out.
+#### 4.5 Logging out
+The user journey ends with calling the `provider.logout()` method.
 
 ```typescript
 import { getAccountProvider } from '@multiversx/sdk-dapp/out/providers/helpers/accountProvider';
