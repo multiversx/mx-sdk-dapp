@@ -1,5 +1,5 @@
 import { UITagsEnum } from 'constants/UITags.enum';
-import { MvxWalletConnectProvider } from 'lib/sdkDappUi';
+import { MvxWalletConnect } from 'lib/sdkDappUi';
 import { UnlockPanelEventsEnum } from 'managers/UnlockPanelManager/UnlockPanelManager.types';
 import {
   WalletConnectEventsEnum,
@@ -8,7 +8,7 @@ import {
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
 
 export class WalletConnectStateManager extends UIBaseManager<
-  MvxWalletConnectProvider,
+  MvxWalletConnect,
   IWalletConnectModalData,
   WalletConnectEventsEnum
 > {
