@@ -49,6 +49,12 @@ export type DappConfigType =
 export type InitAppType = {
   /**
    * The storage configuration for the dApp.
+   * @example
+   * ```ts
+   * {
+   *   getStorageCallback: () => window.localStorage
+   * }
+   * ```
    */
   storage?: {
     /**
@@ -56,6 +62,38 @@ export type InitAppType = {
      */
     getStorageCallback: StorageCallback;
   };
+  /**
+   * The dApp configuration.
+   * @example
+   * ```ts
+   * {
+      nativeAuth: true,
+      environment: EnvironmentsEnum.devnet,
+      network: {
+        walletAddress: 'https://wallet.multiversx.com'
+        // ...other network properties to override
+      },
+      providers: {
+        walletConnect: {
+          walletConnectV2ProjectId
+        }
+      },
+      successfulToastLifetime: DEFAULT_TOAST_LIEFTIME
+    }
+   * ```
+   */
   dAppConfig: DappConfigType;
+  /**
+   * If you want to extend the default providers, you can pass in a list of custom providers.
+   * @example
+   * ```ts
+   * [{
+        name: 'Custom Provider',
+        type: 'custom',
+        iconUrl: `${window.location.origin}/multiversx-white.svg`,
+        constructor: async (options) => new CustomProvider(options)
+    * }]
+   * ```
+   */
   customProviders?: ICustomProvider[];
 };

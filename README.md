@@ -102,7 +102,7 @@ const config: InitAppType = {
     // nativeAuth: true, // optional
     environment: EnvironmentsEnum.devnet,
     // network: { // optional
-    //   walletAddress: 'https://devnet-wallet.multiversx.com'
+    //   walletAddress: 'https://devnet-wallet.multiversx.com' // or other props you want to override
     // },
     successfulToastLifetime: 5000
   }
@@ -302,7 +302,7 @@ Once the user logs out of the dApp, all transactions displayed by the Notificati
 
 ```typescript
 const notificationManager = NotificationManager.getInstance();
-notificationManager.openNotificationsFeed();
+await notificationManager.openNotificationsFeed();
 ```
 
 #### 4.4 Inspecting transactions
