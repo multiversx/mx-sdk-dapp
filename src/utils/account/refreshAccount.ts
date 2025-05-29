@@ -9,7 +9,7 @@ import { trimUsernameDomain } from './trimUsernameDomain';
 const setNewAccount = async () => {
   try {
     const address = getAddress();
-    const network = getNetworkConfig();
+    const { network } = getNetworkConfig();
 
     try {
       const account = await fetchAccount({

@@ -32,7 +32,7 @@ export const updateAccountsList = async ({
     throw new Error(ProviderErrorsEnum.notInitialized);
   }
 
-  const network = getNetworkConfig();
+  const { network } = getNetworkConfig();
   const startIndex = manager.getAccountScreenData()?.startIndex || 0;
   const allAccounts = manager.getAllAccounts();
   const economics = await getEconomics({ baseURL: network.apiAddress });
