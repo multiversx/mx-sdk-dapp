@@ -11,7 +11,9 @@ import { accountLogin } from './helpers/accountLogin';
 import { extractAddressFromToken } from './helpers/extractAddressFromToken';
 
 async function loginWithoutNativeToken(provider: IProvider) {
-  const { apiAddress } = getNetworkConfig();
+  const {
+    network: { apiAddress }
+  } = getNetworkConfig();
 
   await provider.login();
 
@@ -32,7 +34,9 @@ async function loginWithNativeToken(
   provider: IProvider,
   nativeAuthConfig: NativeAuthConfigType
 ) {
-  const { apiAddress } = getNetworkConfig();
+  const {
+    network: { apiAddress }
+  } = getNetworkConfig();
 
   const nativeAuthClient = nativeAuth(nativeAuthConfig);
 
