@@ -49,8 +49,10 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     return this.isOpen;
   }
 
-  // open Notifications feed and toggeling ToastManager
-  public async openNotificationsFeed() {
+  /**
+   * Open the notifications feed and toggle off the toast manager.
+   */
+  public async openNotificationsFeed(): Promise<void> {
     const toastManager = ToastManager.getInstance();
     toastManager.hideToasts();
     await this.openUI();
@@ -77,7 +79,9 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     await this.updateDataAndNotifications();
   }
 
-  // closing Notifications feed and toggeling ToastManager
+  /**
+   * Close the notifications feed and toggle on the toast manager.
+   */
   protected handleCloseUI() {
     const toastManager = ToastManager.getInstance();
     this.closeUI();
