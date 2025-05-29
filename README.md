@@ -616,13 +616,78 @@ Object.entries(state).forEach(([sessionKey, data]) => {
 
 #### 5.1 Public components
 
-The public components are the ones that are used in the dApp and are controlled by the dApp. They are defined in the `@multiversx/sdk-dapp-ui` package.
+The business logic for these components is served by a controller. The components are:
 
-// TODO: add examples
+- `MvxTransactionsTable` - used to display the user's transactions
 
-#### 5.2 Internal components
+```tsx
+import { TransactionsTableController } from '@multiversx/sdk-dapp/out/controllers/TransactionsTableController';
+import { MvxTransactionsTable } from '@multiversx/sdk-dapp-ui/react';
+ 
+const processedTransactions = await TransactionsTableController.processTransactions({
+        address,
+        egldLabel: network.egldLabel,
+        explorerAddress: network.explorerAddress,
+        transactions
+      });
 
-The way internal components are controlled are trough a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing `sdk-dapp` to get a reference to it and use it for communication.
+// and use like this:
+<MvxTransactionsTable transactions={processedTransaction} />;
+
+```
+
+- `MvxFormatAmount` - used to format the amount of the user's balance
+
+
+```tsx
+import { MvxFormatAmount } from '@multiversx/sdk-dapp-ui/react';
+import { MvxFormatAmountPropsType } from '@multiversx/sdk-dapp-ui/types';
+export { DECIMALS, DIGITS } from '@multiversx/sdk-dapp-utils/out/constants';
+import { FormatAmountController } from '@multiversx/sdk-dapp/out/controllers/FormatAmountController';
+export { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/react/network/useGetNetworkConfig';
+
+
+interface IFormatAmountProps
+  extends Partial<MvxFormatAmountPropsType> {
+  value: string;
+  className?: string;
+}
+
+export const FormatAmount = (props: IFormatAmountProps) => {
+  const {
+    network: { egldLabel }
+  } = useGetNetworkConfig();
+
+  const { isValid, valueDecimal, valueInteger, label } =
+    FormatAmountController.getData({
+      digits: DIGITS,
+      decimals: DECIMALS,
+      egldLabel,
+      ...props,
+      input: props.value
+    });
+
+  return (
+    <MvxFormatAmount
+      class={props.className}
+      dataTestId={props['data-testid']}
+      isValid={isValid}
+      label={label}
+      showLabel={props.showLabel}
+      valueDecimal={valueDecimal}
+      valueInteger={valueInteger}
+    />
+  );
+};
+
+
+
+```
+
+
+#### 5.2 Internal components (advanced usage)
+
+The way internal components are controlled is through a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing `sdk-dapp` to get a reference to it and use it for communication.
 
 ```mermaid
 flowchart LR
