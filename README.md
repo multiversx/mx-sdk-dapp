@@ -102,7 +102,7 @@ const config: InitAppType = {
     // nativeAuth: true, // optional
     environment: EnvironmentsEnum.devnet,
     // network: { // optional
-    //   walletAddress: 'https://devnet-wallet.multiversx.com'
+    //   walletAddress: 'https://devnet-wallet.multiversx.com' // or other props you want to override
     // },
     successfulToastLifetime: 5000
   }

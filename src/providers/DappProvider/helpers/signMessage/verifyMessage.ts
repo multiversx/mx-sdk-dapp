@@ -4,7 +4,7 @@ import { getVerifier } from './getVerifier';
 export type VerifyMessageReturnType = {
   isVerified: boolean;
   message: string;
-  address: any;
+  address: string;
 };
 
 export async function verifyMessage(

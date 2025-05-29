@@ -91,7 +91,8 @@ export async function login(provider: IProvider) {
   const nativeAuthConfig = nativeAuthConfigSelector(getState());
 
   if (nativeAuthConfig) {
-    return await loginWithNativeToken(provider, nativeAuthConfig);
+    const data = await loginWithNativeToken(provider, nativeAuthConfig);
+    return data;
   }
 
   const { address } = await loginWithoutNativeToken(provider);
