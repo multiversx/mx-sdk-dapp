@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.4](https://github.com/multiversx/mx-sdk-dapp/pull/1438)] - 2025-05-29
+
 - [Revert `useGetNetworkConfig` breaking change](https://github.com/multiversx/mx-sdk-dapp/pull/1438)
 
 ## [[5.0.0-alpha.3](https://github.com/multiversx/mx-sdk-dapp/pull/1437)] - 2025-05-28
