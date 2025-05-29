@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Update README and add TSDoc comments](https://github.com/multiversx/mx-sdk-dapp/pull/1440)
+
 ## [[5.0.0-alpha.4](https://github.com/multiversx/mx-sdk-dapp/pull/1439)] - 2025-05-29
 
 - [Fixed network imports](https://github.com/multiversx/mx-sdk-dapp/pull/1439)
