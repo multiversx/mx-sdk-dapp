@@ -302,7 +302,7 @@ Once the user logs out of the dApp, all transactions displayed by the Notificati
 
 ```typescript
 const notificationManager = NotificationManager.getInstance();
-notificationManager.openNotificationsFeed();
+await notificationManager.openNotificationsFeed();
 ```
 
 #### 4.4 Inspecting transactions
