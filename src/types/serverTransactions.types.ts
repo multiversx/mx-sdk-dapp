@@ -285,20 +285,20 @@ export enum TransactionDirectionEnum {
   OUT = 'Out'
 }
 
-export interface TransactionAgeType {
+export type TransactionAgeType = {
   timeAgo: string;
   tooltip: string;
-}
+};
 
-export interface TransactionMethodType {
+export type TransactionMethodType = {
   name: string;
   actionDescription?: string;
-}
+};
 
-export interface TransactionIconInfoType {
+export type TransactionIconInfoType = {
   icon?: string;
   tooltip: string;
-}
+};
 
 export interface InterpretedTransactionType extends ServerTransactionType {
   transactionDetails: {
