@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.5](https://github.com/multiversx/mx-sdk-dapp/pull/1440)] - 2025-05-30
+
 - [Update Transaction Table types](https://github.com/multiversx/mx-sdk-dapp/pull/1441)
 - [Update README and add TSDoc comments](https://github.com/multiversx/mx-sdk-dapp/pull/1440)
 
