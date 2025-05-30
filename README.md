@@ -612,11 +612,7 @@ Object.entries(state).forEach(([sessionKey, data]) => {
 
 ### 5. UI Components
 
-`sdk-dapp` needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consitst of webcomponents hosted in the `@multiversx/sdk-dapp-ui` package. Thus, `sdk-dapp` does not hold any UI elements, just business logic that controls external components. We can consider two types of UI components: internal and public. They are differentiated by the way they are controlled: internal components are controlled by `sdk-dapp`'s signing or logging in flows, while public components should be controlled by the dApp.
-
-#### 5.1 Public components
-
-The business logic for these components is served by a controller. The components are:
+`sdk-dapp` needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consitst of webcomponents hosted in the `@multiversx/sdk-dapp-ui` package. Thus, `sdk-dapp` does not hold any UI elements, just business logic that controls external components. The business logic for these components is contained in a controller. The components are:
 
 - `MvxTransactionsTable` - used to display the user's transactions
 
@@ -635,9 +631,7 @@ const processedTransactions = await TransactionsTableController.processTransacti
 <MvxTransactionsTable transactions={processedTransaction} />;
 
 ```
-
 - `MvxFormatAmount` - used to format the amount of the user's balance
-
 
 ```tsx
 import { MvxFormatAmount } from '@multiversx/sdk-dapp-ui/react';
@@ -685,9 +679,9 @@ export const FormatAmount = (props: IFormatAmountProps) => {
 ```
 
 
-#### 5.2 Internal components (advanced usage)
+#### Advanced usage
 
-The way internal components are controlled is through a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing `sdk-dapp` to get a reference to it and use it for communication.
+The library holds logic for some internal components that control specific parts of the UI like logging in with the Ledger or signing transactions. These components are controlled through a [pub-sub pattern](https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern) called EventBus. Each webcomponent has a method of exposing its EventBus, thus allowing `sdk-dapp` to get a reference to it and use it for communication.
 
 ```mermaid
 flowchart LR
@@ -702,7 +696,7 @@ const eventBus = await modalElement.getEventBus();
 eventBus.publish('TRANSACTION_TOAST_DATA_UPDATE', someData);
 ```
 
-If you want to override private components and create your own, you can implement a similar strategy by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp/blob/main/src/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
+If you want to override internal components and create your own, you can implement a similar strategy by respecting each webcomponent's API (see an interface example [here](https://github.com/multiversx/mx-sdk-dapp/blob/main/src/providers/strategies/LedgerProviderStrategy/types/ledger.types.ts)).
 
 ## Debugging your dApp
 
