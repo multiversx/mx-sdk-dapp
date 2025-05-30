@@ -41,7 +41,7 @@ export async function logout({
     shouldBroadcastLogoutAcrossTabs: true,
     hasConsentPopup: false
   }
-}: IProviderLogout) {
+}: IProviderLogout): Promise<boolean> {
   let address = getAddress();
 
   if (options.shouldBroadcastLogoutAcrossTabs && safeWindow.localStorage) {
@@ -63,8 +63,10 @@ export async function logout({
     subscriptions.forEach((unsubscribe) => unsubscribe());
     subscriptions.clear();
     websocketManager.closeConnectionRef?.();
-    await provider.logout();
+    const isLoggedOut = await provider.logout();
+    return isLoggedOut;
   } catch (err) {
     console.error('Logging out error:', err);
+    return false;
   }
 }

@@ -20,15 +20,16 @@ export class DappProvider {
     this.provider = provider;
   }
 
-  init() {
+  init(): Promise<boolean> {
     return this.provider.init();
   }
 
   async login() {
-    return await login(this.provider);
+    const data = await login(this.provider);
+    return data;
   }
 
-  isInitialized() {
+  isInitialized(): boolean {
     return this.provider.isInitialized();
   }
 
@@ -37,11 +38,11 @@ export class DappProvider {
       shouldBroadcastLogoutAcrossTabs: true,
       hasConsentPopup: false
     }
-  ) {
+  ): Promise<boolean> {
     return await logout({ provider: this.provider, options });
   }
 
-  setShouldShowConsentPopup(shouldShow: boolean) {
+  setShouldShowConsentPopup(shouldShow: boolean): void {
     this.provider.setShouldShowConsentPopup?.(shouldShow);
   }
 
@@ -49,6 +50,9 @@ export class DappProvider {
     return this.provider.getType();
   }
 
+  /**
+   * @returns The original provider instance.
+   */
   getProvider() {
     return this.provider;
   }
@@ -89,11 +93,15 @@ export class DappProvider {
     }
   }
 
+  /**
+   * @param signedMessage - The signed message to verify in form of a JSON string with `address`, `message` and `signature` properties.
+   * @returns The verification result with `isVerified`, `message` and `address` properties.
+   */
   async verifyMessage(signedMessage: string): Promise<VerifyMessageReturnType> {
     return await verifyMessage(signedMessage);
   }
 
-  async cancelLogin() {
+  cancelLogin(): void {
     this.provider.cancelLogin?.();
   }
 }

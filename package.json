@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.0-alpha.4",
+  "version": "5.0.0-alpha.5",
   "main": "out/index.js",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -49,9 +49,9 @@
     "lodash.isempty": "4.4.0",
     "lodash.isequal": "4.5.0",
     "lodash.isstring": "4.0.1",
+    "lodash.startcase": "4.4.0",
     "lodash.trimend": "4.5.0",
     "lodash.uniq": "4.5.0",
-    "lodash.startcase": "4.4.0",
     "protobufjs": "7.3.0",
     "socket.io-client": "4.7.5",
     "zustand": "4.4.7"
@@ -63,7 +63,7 @@
     "bignumber.js": "9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.5"
+    "@multiversx/sdk-dapp-ui": ">=0.0.6"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",

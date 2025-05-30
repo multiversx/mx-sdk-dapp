@@ -5,7 +5,6 @@ import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
-import { Nullable } from 'types';
 
 export type SignMessageType = {
   provider: IProvider;
@@ -19,7 +18,7 @@ export async function signMessageWithProvider({
   message,
   provider,
   options
-}: SignMessageType): Promise<Nullable<Message>> {
+}: SignMessageType): Promise<Message | null> {
   const address = getAddress();
 
   const messageToSign = new Message({

@@ -10,7 +10,7 @@ import { getLockedAccountName } from 'utils/transactions/getInterpretedTransacti
 import { getShardText } from 'utils/transactions/getInterpretedTransaction/helpers/getShardText';
 import { isContract } from 'utils/validation/isContract';
 import {
-  TransactionsTableRowType,
+  TransactionsRowType,
   TransactionValueType
 } from './transactionsTableController.types';
 import { FormatAmountController } from '../FormatAmountController';
@@ -29,7 +29,7 @@ export class TransactionsTableController {
     explorerAddress,
     transactions
   }: TransactionsTableProcessTransactionsParamsType): Promise<
-    TransactionsTableRowType[]
+    TransactionsRowType[]
   > {
     const interpretedTransactions = transactions.map((transaction) =>
       getInterpretedTransaction({
@@ -110,7 +110,7 @@ export class TransactionsTableController {
         const receiverShard = getShardText(transaction.receiverShard);
         const senderShard = getShardText(transaction.senderShard);
 
-        const transactionRow: TransactionsTableRowType = {
+        const transactionRow: TransactionsRowType = {
           age: transaction.transactionDetails.age,
           direction: transaction.transactionDetails.direction,
           method: transaction.transactionDetails.method,
@@ -120,7 +120,7 @@ export class TransactionsTableController {
           receiver: {
             address: transaction.receiver,
             name: receiverName ?? '',
-            description: `${receiverName || transaction.receiver} (${
+            description: `${receiverName ?? transaction.receiver} (${
               transaction.receiver
             })`,
             isContract: isContract(transaction.receiver),
@@ -135,7 +135,7 @@ export class TransactionsTableController {
           sender: {
             address: transaction.sender,
             name: senderName ?? '',
-            description: `${senderName || transaction.sender} (${
+            description: `${senderName ?? transaction.sender} (${
               transaction.sender
             })`,
             isContract: isContract(transaction.sender),
