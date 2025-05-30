@@ -2,7 +2,7 @@ import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import { getPersistedTokenDetails } from 'apiCalls/tokens/getPersistedTokenDetails';
 import { MULTI_TRANSFER_EGLD_TOKEN } from 'constants/mvx.constants';
 import { safeWindow } from 'constants/window.constants';
-import { formatAmount } from 'lib/sdkDappUtils';
+import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import {
   FungibleTransactionType,
   ISignTransactionsPanelCommonData
@@ -27,6 +27,7 @@ import { getPpuOptions } from './helpers/getPpuOptions';
 import { getRecommendedGasPrice } from './helpers/getRecommendedGasPrice';
 import { getScCall } from './helpers/getScCall';
 import { getTokenType } from './helpers/getTokenType';
+import { formatWithDot } from 'utils/formats/formatWithDot';
 
 export type GetCommonDataPropsType = {
   allTransactions: MultiSignTransactionType[];
@@ -180,12 +181,19 @@ export async function getCommonData({
     transactionsCount === 1 ||
     (txInfo?.needsSigning && !signedIndexes.includes(currentScreenIndex));
 
+  const formattedGasPrice = formatAmount({
+    input: gasPrice.toString(),
+    decimals: DECIMALS,
+    addCommas: true,
+    digits: DIGITS
+  });
+
   const commonData: ISignTransactionsPanelCommonData = {
     receiver: plainTransaction.receiver.toString(),
     data: decodeBase64(currentTransaction.transaction.data.toString() ?? ''),
     decodedData,
-    gasPrice: gasPrice.toString(),
-    gasLimit: plainTransaction.gasLimit.toString(),
+    gasPrice: formattedGasPrice,
+    gasLimit: formatWithDot(plainTransaction.gasLimit),
     explorerLink,
     ppu: gasPriceData.ppu,
     ppuOptions,
