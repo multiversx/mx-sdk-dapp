@@ -1,3 +1,4 @@
+import { BigNumber } from 'bignumber.js';
 import { ACCOUNTS_ENDPOINT } from 'apiCalls';
 import { getPersistedTokenDetails } from 'apiCalls/tokens/getPersistedTokenDetails';
 import { MULTI_TRANSFER_EGLD_TOKEN } from 'constants/mvx.constants';
@@ -27,7 +28,6 @@ import { getPpuOptions } from './helpers/getPpuOptions';
 import { getRecommendedGasPrice } from './helpers/getRecommendedGasPrice';
 import { getScCall } from './helpers/getScCall';
 import { getTokenType } from './helpers/getTokenType';
-import { formatWithDot } from 'utils/formats/formatWithDot';
 
 export type GetCommonDataPropsType = {
   allTransactions: MultiSignTransactionType[];
@@ -188,12 +188,18 @@ export async function getCommonData({
     digits: DIGITS
   });
 
+  const formattedGasLimit = new BigNumber(plainTransaction.gasLimit).toFormat({
+    decimalSeparator: ',',
+    groupSeparator: '.',
+    groupSize: 3
+  });
+
   const commonData: ISignTransactionsPanelCommonData = {
     receiver: plainTransaction.receiver.toString(),
     data: decodeBase64(currentTransaction.transaction.data.toString() ?? ''),
     decodedData,
     gasPrice: formattedGasPrice,
-    gasLimit: formatWithDot(plainTransaction.gasLimit),
+    gasLimit: formattedGasLimit,
     explorerLink,
     ppu: gasPriceData.ppu,
     ppuOptions,
