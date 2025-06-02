@@ -42,8 +42,8 @@ export class ProviderFactory {
 
     switch (type) {
       case ProviderTypeEnum.extension: {
-        const providerInstance = new ExtensionProviderStrategy();
-        createdProvider = await providerInstance.createProvider();
+        createdProvider = new ExtensionProviderStrategy();
+        await createdProvider.init();
 
         break;
       }
@@ -115,6 +115,8 @@ export class ProviderFactory {
     }
 
     createdProvider.getType = () => type;
+
+    console.log('=====', { createdProvider });
     const dappProvider = new DappProvider(createdProvider);
 
     setAccountProvider(dappProvider);

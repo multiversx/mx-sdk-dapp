@@ -1,64 +1,83 @@
+import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider/out/extensionProvider';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
+import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 
-import {
-  IProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
+import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
-export class ExtensionProviderStrategy extends BaseProviderStrategy {
-  private provider: ExtensionProvider | null = null;
-  private _signTransactions:
-    | ((transactions: Transaction[]) => Promise<Transaction[]>)
-    | null = null;
-  private _signMessage: ((messageToSign: Message) => Promise<Message>) | null =
-    null;
+export class ExtensionProviderStrategy extends BaseProviderStrategyV2 {
+  private readonly provider: ExtensionProvider;
 
   constructor(address?: string) {
     super(address);
+    this.provider = ExtensionProvider.getInstance();
+    this._login = this.provider.login.bind(this.provider);
   }
 
-  public createProvider = async (): Promise<IProvider> => {
+  static async getInstance(
+    address?: string
+  ): Promise<ExtensionProviderStrategy> {
+    const instance = new ExtensionProviderStrategy(address);
+    await instance.init();
+
+    return instance;
+  }
+
+  async init(): Promise<boolean> {
+    const initialized = await this.provider.init();
     this.initialize();
 
-    if (!this.provider) {
-      this.provider = ExtensionProvider.getInstance();
-      await this.provider.init();
+    if (this.address) {
+      this.setAccount({ address: this.address });
     }
 
-    this._signTransactions = this.provider.signTransactions.bind(this.provider);
-    this._signMessage = this.provider.signMessage.bind(this.provider);
-    this._login = this.provider.login.bind(this.provider);
-
-    return this.buildProvider();
-  };
-
-  protected override cancelAction() {
-    return this.provider?.cancelAction?.bind(this.provider)();
+    return initialized;
   }
 
-  private readonly buildProvider = () => {
+  getAddress(): Promise<string | undefined> {
+    return this.provider.getAddress();
+  }
+
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error('Method not implemented.');
+  }
+
+  setAccount(account: IDAppProviderAccount): void {
+    console.log({ account });
+    return this.provider.setAccount(account);
+  }
+
+  isInitialized(): boolean {
+    return this.provider.isInitialized();
+  }
+
+  signTransaction(
+    _transaction: Transaction,
+    _options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>> {
+    throw new Error('Method not implemented.');
+  }
+
+  logout(): Promise<boolean> {
+    return this.provider.logout();
+  }
+
+  getType(): ProviderTypeEnum {
+    return ProviderTypeEnum.extension;
+  }
+
+  protected async cancelAction(): Promise<void> {
+    return this.provider.cancelAction();
+  }
+
+  signTransactions = async (transactions: Transaction[]) => {
     if (!this.provider) {
-      throw new Error(ProviderErrorsEnum.notInitialized);
-    }
-
-    const provider = this.provider as unknown as IProvider;
-    provider.signTransactions = this.signTransactions;
-    provider.signMessage = this.signMessage;
-    provider.setAccount({ address: this.address });
-    provider.cancelLogin = this.cancelLogin;
-
-    return provider;
-  };
-
-  private readonly signTransactions = async (transactions: Transaction[]) => {
-    if (!this.provider || !this._signTransactions) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
@@ -75,26 +94,25 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
 
     try {
       const signedTransactions: Transaction[] =
-        (await this._signTransactions(transactions)) ?? [];
+        (await this.provider.signTransactions(transactions)) ?? [];
 
       return signedTransactions;
     } catch (error) {
-      await onClose({ shouldCancelAction: false }); // action was triggered by user in extension, no need to retrigger it
-
+      await onClose({ shouldCancelAction: false });
       throw error;
     } finally {
       manager.closeUI();
     }
   };
 
-  private readonly signMessage = async (message: Message) => {
-    if (!this.provider || !this._signMessage) {
+  signMessage = async (message: Message) => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     const signedMessage = await signMessage({
       message,
-      handleSignMessage: this._signMessage.bind(this.provider),
+      handleSignMessage: this.provider.signMessage.bind(this.provider),
       cancelAction: this.provider.cancelAction.bind(this.provider),
       providerType: providerLabels.extension
     });
