@@ -1,3 +1,4 @@
+import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { safeWindow } from 'constants/index';
 
@@ -8,7 +9,7 @@ import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { IProvider } from 'providers/types/providerFactory.types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
@@ -17,33 +18,81 @@ import { initializeLedgerProvider } from './helpers/initializeLedgerProvider';
 import { signLedgerMessage } from './helpers/signLedgerMessage';
 import { LedgerConfigType } from './types/ledgerProvider.types';
 import {
-  BaseProviderStrategy,
+  BaseProviderStrategyV2,
   LoginOptionsTypes
-} from '../BaseProviderStrategy/BaseProviderStrategy';
+} from '../BaseProviderStrategy/BaseProviderStrategyV2';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
 
-export class LedgerProviderStrategy extends BaseProviderStrategy {
+type LedgerOptions = {
+  address?: string;
+  anchor?: HTMLElement;
+  shouldInitProvider?: boolean;
+};
+
+export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
   private provider: HWProvider | null = null;
   private config: LedgerConfigType | null = null;
-  private _signTransactions:
-    | ((
-        transactions: Transaction[],
-        options?: IDAppProviderOptions
-      ) => Promise<Transaction[]>)
-    | null = null;
-  private _signMessage: ((message: Message) => Promise<Message>) | null = null;
+  private readonly options: LedgerOptions;
 
-  constructor(address?: string) {
+  constructor({ address, anchor, shouldInitProvider }: LedgerOptions) {
     super(address);
+    this.options = { anchor, shouldInitProvider };
+    this._login = this.ledgerLogin.bind(this);
   }
 
-  public createProvider = async (options?: {
-    anchor?: HTMLElement;
-    shouldInitProvider?: boolean;
-  }): Promise<IProvider> => {
+  async init(): Promise<boolean> {
+    try {
+      await this.setupProvider();
+    } catch {
+      return false;
+    }
+
+    return true;
+  }
+
+  logout(): Promise<boolean> {
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    return this.provider.logout();
+  }
+
+  getType(): ProviderTypeEnum {
+    return ProviderTypeEnum.ledger;
+  }
+
+  getAddress(): Promise<string | undefined> {
+    throw new Error('Method not implemented.');
+  }
+
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error('Method not implemented.');
+  }
+
+  setAccount(account: IDAppProviderAccount): void {
+    return this.provider?.setAccount(account);
+  }
+
+  isInitialized(): boolean {
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    return this.provider.isInitialized();
+  }
+
+  signTransaction(
+    _transaction: Transaction,
+    _options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>> {
+    throw new Error('Method not implemented.');
+  }
+
+  public setupProvider = async () => {
     this.initialize();
     await defineCustomElements(safeWindow);
-    await this.initLegderConnectManager(options?.anchor);
+    await this.initLegderConnectManager(this.options.anchor);
     const ledgerConnectManager = LedgerConnectStateManager.getInstance();
 
     const { ledgerProvider, ledgerConfig } = await new Promise<
@@ -53,33 +102,12 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
         manager: ledgerConnectManager,
         resolve,
         reject,
-        shouldInitProvider: options?.shouldInitProvider
+        shouldInitProvider: this.options?.shouldInitProvider
       })
     );
 
     this.config = ledgerConfig;
     this.provider = ledgerProvider;
-    this._login = this.ledgerLogin.bind(this);
-    this._signTransactions =
-      ledgerProvider.signTransactions.bind(ledgerProvider);
-    this._signMessage = ledgerProvider.signMessage.bind(ledgerProvider);
-
-    return this.buildProvider();
-  };
-
-  private readonly buildProvider = async () => {
-    if (!this.provider) {
-      throw new Error(ProviderErrorsEnum.notInitialized);
-    }
-
-    const provider = this.provider as unknown as IProvider;
-    provider.setAccount({ address: this.address });
-    provider.signTransactions = this.signTransactions;
-    provider.signMessage = this.signMessage;
-    provider.login = this.login.bind(this);
-    provider.cancelLogin = this.cancelLogin;
-
-    return provider;
   };
 
   private readonly ledgerLogin = async (
@@ -101,13 +129,13 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
   };
 
   public override loginOperation = async (options?: LoginOptionsTypes) => {
-    if (!this.provider) {
+    if (!this.provider || !this.config) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     return await authenticateLedgerAccount({
       options,
-      config: this.config!,
+      config: this.config,
       provider: this.provider,
       login: this.ledgerLogin.bind(this)
     });
@@ -124,23 +152,23 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
     await ledgerConnectManager.init(anchor);
   };
 
-  private readonly signTransactions = async (transactions: Transaction[]) => {
-    if (!this._signTransactions) {
-      throw new Error(ProviderErrorsEnum.signTransactionsNotInitialized);
+  signTransactions = async (transactions: Transaction[]) => {
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     await this.rebuildProvider();
 
     const signedTransactions = await signTransactions({
       transactions,
-      handleSign: this._signTransactions.bind(this.provider)
+      handleSign: this.provider.signTransactions.bind(this.provider)
     });
 
     return signedTransactions;
   };
 
-  private readonly signMessage = async (message: Message): Promise<Message> => {
-    if (!this.provider || !this._signMessage) {
+  signMessage = async (message: Message): Promise<Message> => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
@@ -148,7 +176,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
 
     const signedMessage = await signLedgerMessage({
       message,
-      handleSignMessage: this._signMessage.bind(this.provider)
+      handleSignMessage: this.provider.signMessage.bind(this.provider)
     });
 
     return signedMessage;
@@ -166,9 +194,6 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
           shouldInitProvider: true
         });
         this.provider = ledgerProvider;
-        this._signTransactions =
-          ledgerProvider.signTransactions.bind(ledgerProvider);
-        this._signMessage = ledgerProvider.signMessage.bind(ledgerProvider);
       } catch (error) {
         createCustomToast({
           toastId: 'ledger-provider-rebuild-error',

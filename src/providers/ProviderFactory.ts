@@ -56,8 +56,8 @@ export class ProviderFactory {
       }
 
       case ProviderTypeEnum.ledger: {
-        const providerInstance = new LedgerProviderStrategy();
-        createdProvider = await providerInstance.createProvider({ anchor });
+        createdProvider = new LedgerProviderStrategy({ anchor });
+        await createdProvider.init();
 
         const ledgerIdleStateManager = LedgerIdleStateManager.getInstance();
         await ledgerIdleStateManager.init();
