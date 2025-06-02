@@ -32,8 +32,13 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   async init(): Promise<boolean> {
+    this.initializeAddress();
+    return this.initializeProvider();
+  }
+
+  private async initializeProvider() {
     const network = networkSelector(getState());
-    this.initialize();
+
     const isProviderInitialized = await this.provider.init();
 
     this.provider.setWalletUrl(this.walletAddress ?? network.walletAddress);

@@ -92,10 +92,12 @@ export class LedgerIdleStateManager {
     }
 
     try {
-      const providerInstance = new LedgerProviderStrategy();
-      const createdProvider = await providerInstance.createProvider({
+      const createdProvider = new LedgerProviderStrategy({
         shouldInitProvider: true
       });
+
+      await createdProvider.init();
+
       const dappProvider = new DappProvider(createdProvider);
       createdProvider.getType = () => ProviderTypeEnum.ledger;
       setAccountProvider(dappProvider);

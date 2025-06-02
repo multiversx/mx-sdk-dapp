@@ -1,6 +1,5 @@
 import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import {
-  IProviderAccount,
   SessionEventTypes,
   SessionTypes,
   OptionalOperation
@@ -45,12 +44,6 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategyV2 {
   private config: WalletConnectProviderStrategyConfigType | undefined;
   private methods: string[] = [];
   private _approval: (() => Promise<SessionTypes.Struct>) | null = null;
-  _login:
-    | ((options?: {
-        approval?: () => Promise<SessionTypes.Struct>;
-        token?: string;
-      }) => Promise<IProviderAccount | null>)
-    | null = null;
 
   constructor(config?: WalletConnectProviderStrategyConfigType) {
     super('');
@@ -58,8 +51,12 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   async init(): Promise<boolean> {
-    this.initialize();
-    await this.setupProvider();
+    try {
+      this.initializeConfig();
+      await this.initializeProvider();
+    } catch {
+      return false;
+    }
 
     return true;
   }
@@ -103,7 +100,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategyV2 {
     throw new Error('Method not implemented.');
   }
 
-  private async setupProvider() {
+  private async initializeProvider() {
     await defineCustomElements(safeWindow);
     await this.initWalletConnectManager();
 
@@ -126,7 +123,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategyV2 {
     walletConnectManager.updateData({ wcURI: uri });
   }
 
-  initialize = () => {
+  initializeConfig = () => {
     if (this.config?.walletConnectV2ProjectId) {
       return;
     }

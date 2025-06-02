@@ -42,7 +42,8 @@ export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
 
   async init(): Promise<boolean> {
     try {
-      await this.setupProvider();
+      this.initializeAddress();
+      await this.initializeProvider();
     } catch {
       return false;
     }
@@ -89,8 +90,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
     throw new Error('Method not implemented.');
   }
 
-  public setupProvider = async () => {
-    this.initialize();
+  private async initializeProvider() {
     await defineCustomElements(safeWindow);
     await this.initLegderConnectManager(this.options.anchor);
     const ledgerConnectManager = LedgerConnectStateManager.getInstance();
@@ -108,7 +108,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
 
     this.config = ledgerConfig;
     this.provider = ledgerProvider;
-  };
+  }
 
   private readonly ledgerLogin = async (
     options?: LoginOptionsTypes & { addressIndex?: number }

@@ -20,18 +20,13 @@ export class ExtensionProviderStrategy extends BaseProviderStrategyV2 {
     this._login = this.provider.login.bind(this.provider);
   }
 
-  static async getInstance(
-    address?: string
-  ): Promise<ExtensionProviderStrategy> {
-    const instance = new ExtensionProviderStrategy(address);
-    await instance.init();
-
-    return instance;
+  async init(): Promise<boolean> {
+    this.initializeAddress();
+    return this.initializeProvider();
   }
 
-  async init(): Promise<boolean> {
+  private async initializeProvider() {
     const initialized = await this.provider.init();
-    this.initialize();
 
     if (this.address) {
       this.setAccount({ address: this.address });

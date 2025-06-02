@@ -123,7 +123,7 @@ export abstract class BaseProviderStrategyV2 implements IProvider {
   /**
    * Initializes the provider by setting the address if it is not already set.
    */
-  protected initialize = () => {
+  protected initializeAddress = () => {
     if (this.address) {
       return;
     }
