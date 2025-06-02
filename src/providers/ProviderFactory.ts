@@ -49,8 +49,8 @@ export class ProviderFactory {
       }
 
       case ProviderTypeEnum.crossWindow: {
-        const providerInstance = new CrossWindowProviderStrategy();
-        createdProvider = await providerInstance.createProvider();
+        createdProvider = new CrossWindowProviderStrategy();
+        await createdProvider.init();
 
         break;
       }
