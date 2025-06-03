@@ -44,7 +44,6 @@ export class ExtensionProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   setAccount(account: IDAppProviderAccount): void {
-    console.log({ account });
     return this.provider.setAccount(account);
   }
 
