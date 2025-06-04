@@ -5,13 +5,13 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
+import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 
 type WebviewProviderProps = {
   address?: string;
 };
 
-export class WebviewProviderStrategy extends BaseProviderStrategyV2 {
+export class WebviewProviderStrategy extends BaseProviderStrategy {
   private readonly provider: WebviewProvider;
 
   constructor(config?: WebviewProviderProps) {

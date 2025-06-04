@@ -27,7 +27,7 @@ import {
   WalletConnectV2Provider
 } from 'utils/walletconnect/__sdkWalletconnectProvider';
 import { WalletConnectV2Error, WalletConnectConfig } from './types';
-import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
+import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
 const dappMethods: string[] = [
@@ -39,7 +39,7 @@ type WalletConnectProviderStrategyConfigType = WalletConnectConfig & {
   anchor?: HTMLElement;
 };
 
-export class WalletConnectProviderStrategy extends BaseProviderStrategyV2 {
+export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   private provider: WalletConnectV2Provider | null = null;
   private config: WalletConnectProviderStrategyConfigType | undefined;
   private methods: string[] = [];
@@ -74,7 +74,11 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   getAddress(): Promise<string | undefined> {
-    throw new Error('Method not implemented.');
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    return Promise.resolve(this.provider.getAddress());
   }
 
   getAccount(): IDAppProviderAccount | null {

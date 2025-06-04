@@ -18,9 +18,9 @@ import { initializeLedgerProvider } from './helpers/initializeLedgerProvider';
 import { signLedgerMessage } from './helpers/signLedgerMessage';
 import { LedgerConfigType } from './types/ledgerProvider.types';
 import {
-  BaseProviderStrategyV2,
+  BaseProviderStrategy,
   LoginOptionsTypes
-} from '../BaseProviderStrategy/BaseProviderStrategyV2';
+} from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
 
 type LedgerProviderStrategyType = {
@@ -31,7 +31,7 @@ type LedgerProviderStrategyType = {
   };
 };
 
-export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
+export class LedgerProviderStrategy extends BaseProviderStrategy {
   private provider: HWProvider | null = null;
   private config: LedgerConfigType | null = null;
   private readonly options?: LedgerProviderStrategyType['options'];
@@ -66,7 +66,11 @@ export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   getAddress(): Promise<string | undefined> {
-    throw new Error('Method not implemented.');
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    return this.provider.getAddress();
   }
 
   getAccount(): IDAppProviderAccount | null {

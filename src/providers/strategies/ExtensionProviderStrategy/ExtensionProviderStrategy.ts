@@ -7,11 +7,11 @@ import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransact
 
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
+import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
-export class ExtensionProviderStrategy extends BaseProviderStrategyV2 {
+export class ExtensionProviderStrategy extends BaseProviderStrategy {
   private readonly provider: ExtensionProvider;
 
   constructor(address?: string) {

@@ -11,11 +11,16 @@ import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { IframeProviderType } from './types';
-import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
+import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
-export class IframeProviderStrategy extends BaseProviderStrategyV2 {
+const IFRAME_PROVIDER_MAP: Record<IframeLoginTypes, ProviderTypeEnum> = {
+  passkey: ProviderTypeEnum.passkey,
+  metamask: ProviderTypeEnum.metamask
+};
+
+export class IframeProviderStrategy extends BaseProviderStrategy {
   private readonly provider: IframeProvider;
   private readonly type: IframeLoginTypes;
 
@@ -38,7 +43,6 @@ export class IframeProviderStrategy extends BaseProviderStrategyV2 {
       this.setAccount({ address: this.address });
     }
 
-    console.log('init?', this.provider.isInitialized());
     const network = networkSelector(getState());
     this.provider.setLoginType(this.type);
     this.provider.setWalletUrl(String(network.iframeWalletAddress));
@@ -47,15 +51,19 @@ export class IframeProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   logout(): Promise<boolean> {
-    throw new Error('Method not implemented.');
+    return this.provider.logout();
   }
 
   getType(): ProviderTypeEnum {
-    throw new Error('Method not implemented.');
+    return IFRAME_PROVIDER_MAP[this.type];
   }
 
   getAddress(): Promise<string | undefined> {
-    throw new Error('Method not implemented.');
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    return this.provider.getAddress();
   }
 
   getAccount(): IDAppProviderAccount | null {

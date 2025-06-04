@@ -1,12 +1,19 @@
+import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { IProviderAccount } from '@multiversx/sdk-wallet-connect-provider/out';
+import { Transaction, Message } from 'lib/sdkCore';
+import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { getAddress } from 'methods/account/getAddress';
+import {
+  IProvider,
+  ProviderTypeEnum
+} from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 
 export type LoginOptionsTypes = {
   token?: string;
 };
 
-export abstract class BaseProviderStrategy {
+export abstract class BaseProviderStrategy implements IProvider {
   protected address: string = '';
   protected _login:
     | ((options?: LoginOptionsTypes) => Promise<IProviderAccount | null>)
@@ -16,6 +23,36 @@ export abstract class BaseProviderStrategy {
   constructor(address?: string) {
     this.address = address ?? '';
   }
+
+  // Abstract methods that subclasses **must implement**
+  abstract init(): Promise<boolean>;
+  abstract logout(): Promise<boolean>;
+  abstract getType(): ProviderTypeEnum;
+
+  abstract getAddress(): Promise<string | undefined>;
+  abstract getAccount(): IDAppProviderAccount | null;
+
+  // set as method notimplements
+  abstract setAccount(account: IDAppProviderAccount): void;
+  abstract isInitialized(): boolean;
+
+  // Optional: You can declare this abstract if every subclass should implement connection check
+  isConnected?(): boolean;
+
+  abstract signTransaction(
+    transaction: Transaction,
+    options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>>;
+
+  abstract signTransactions(
+    transactions: Transaction[],
+    options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction[]>>;
+
+  abstract signMessage(
+    messageToSign: Message,
+    options?: IDAppProviderOptions
+  ): Promise<Nullable<Message>>;
 
   public async login(
     options?: LoginOptionsTypes
@@ -85,16 +122,14 @@ export abstract class BaseProviderStrategy {
 
   /**
    * Initializes the provider by setting the address if it is not already set.
-   * This method is typically used during the creation of a provider to ensure
-   * that the address is properly initialized. If the address is already set
-   * or cannot be retrieved, the method will exit without making changes.
    */
-  protected initialize = () => {
+  protected initializeAddress = () => {
     if (this.address) {
       return;
     }
 
     const address = getAddress();
+
     if (!address) {
       return;
     }
@@ -103,13 +138,9 @@ export abstract class BaseProviderStrategy {
   };
 
   /**
-   * This method is intended to be overridden by subclasses to define the specific
-   * action to be executed when a cancel login event occurs.
-   *
-   * Subclasses should provide their own implementation to handle the cancel login
-   * behavior appropriately.
+   * This method should be overridden by subclasses to handle cancel login event.
    */
-  protected cancelAction() {
-    return;
+  protected async cancelAction(): Promise<void> {
+    // default no-op
   }
 }

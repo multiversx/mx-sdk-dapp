@@ -10,7 +10,7 @@ import { crossWindowConfigSelector } from 'store/selectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
+import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
@@ -20,7 +20,7 @@ type CrossWindowProviderProps = {
   walletAddress?: string;
 };
 
-export class CrossWindowProviderStrategy extends BaseProviderStrategyV2 {
+export class CrossWindowProviderStrategy extends BaseProviderStrategy {
   private readonly provider: CrossWindowProvider;
   private readonly walletAddress?: string;
 
@@ -61,8 +61,13 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategyV2 {
   }
 
   getAddress(): Promise<string | undefined> {
-    throw new Error('Method not implemented.');
+    if (!this.provider) {
+      throw new Error(ProviderErrorsEnum.notInitialized);
+    }
+
+    return this.provider.getAddress();
   }
+
   getAccount(): IDAppProviderAccount | null {
     throw new Error('Method not implemented.');
   }
