@@ -24,7 +24,6 @@ export abstract class BaseProviderStrategy implements IProvider {
     this.address = address ?? '';
   }
 
-  // Abstract methods that subclasses **must implement**
   abstract init(): Promise<boolean>;
   abstract logout(): Promise<boolean>;
   abstract getType(): ProviderTypeEnum;
@@ -32,11 +31,9 @@ export abstract class BaseProviderStrategy implements IProvider {
   abstract getAddress(): Promise<string | undefined>;
   abstract getAccount(): IDAppProviderAccount | null;
 
-  // set as method notimplements
   abstract setAccount(account: IDAppProviderAccount): void;
   abstract isInitialized(): boolean;
 
-  // Optional: You can declare this abstract if every subclass should implement connection check
   isConnected?(): boolean;
 
   abstract signTransaction(
