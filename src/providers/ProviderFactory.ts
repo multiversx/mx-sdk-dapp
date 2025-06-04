@@ -103,6 +103,7 @@ export class ProviderFactory {
               address,
               anchor
             });
+            await createdProvider.init();
           }
         }
         break;
