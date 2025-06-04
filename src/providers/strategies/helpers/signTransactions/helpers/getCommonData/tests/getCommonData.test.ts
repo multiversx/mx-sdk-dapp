@@ -40,8 +40,8 @@ describe('getCommonData', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0018',
         feeLimit: '0.0001',
-        gasLimit: '4200000',
-        gasPrice: '1000000000',
+        gasLimit: '4.200.000',
+        gasPrice: '0.000000001',
         decodedData: {
           decimal: {
             displayValue: 'NaN',
@@ -167,8 +167,8 @@ describe('when the gas limit is updated', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0036',
         feeLimit: '0.0002',
-        gasLimit: '20700000',
-        gasPrice: '1455441207',
+        gasLimit: '20.700.000',
+        gasPrice: '0.000000001455441207',
         highlight: null,
         isEditable: true,
         needsSigning: true,
@@ -226,7 +226,7 @@ describe('when the gas limit is updated', () => {
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0998',
         feeLimit: '0.0056',
-        gasLimit: '520000000',
+        gasLimit: '520.000.000',
         decodedData: {
           raw: {
             displayValue:
@@ -256,7 +256,7 @@ describe('when the gas limit is updated', () => {
               'addLiquidity@990000000000000000@1054088355837700843124135'
           }
         },
-        gasPrice: '1069322720',
+        gasPrice: '0.00000000106932272',
         highlight:
           '6164644c6971756964697479@0dbd2fc137a30000@df363e8872ed0d9235a7',
         isEditable: true,
