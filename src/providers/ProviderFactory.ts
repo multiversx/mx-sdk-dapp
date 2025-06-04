@@ -90,8 +90,8 @@ export class ProviderFactory {
         break;
       }
       case ProviderTypeEnum.webview: {
-        const providerInstance = new WebviewProviderStrategy();
-        createdProvider = await providerInstance.createProvider();
+        createdProvider = new WebviewProviderStrategy();
+        await createdProvider.init();
         break;
       }
 

@@ -1,74 +1,88 @@
+import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { IProvider } from 'providers/types/providerFactory.types';
+import { IDAppProviderOptions } from 'lib/sdkDappUtils';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
+import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
 
 type WebviewProviderProps = {
   address?: string;
 };
 
-export class WebviewProviderStrategy extends BaseProviderStrategy {
-  private provider: WebviewProvider | null = null;
-  private _signTransactions:
-    | ((transactions: Transaction[]) => Promise<Transaction[] | null>)
-    | null = null;
-  private _signMessage: ((message: Message) => Promise<Message | null>) | null =
-    null;
+export class WebviewProviderStrategy extends BaseProviderStrategyV2 {
+  private readonly provider: WebviewProvider;
 
   constructor(config?: WebviewProviderProps) {
     super(config?.address);
-  }
-
-  public createProvider = async (): Promise<IProvider> => {
-    this.initialize();
-
-    if (!this.provider) {
-      this.provider = WebviewProvider.getInstance({
-        resetStateCallback: () => {
-          safeWindow.localStorage?.clear?.();
-          safeWindow.sessionStorage?.clear?.();
-        }
-      });
-      await this.provider.init();
-    }
-
-    // Bind in order to break reference
-    this._signTransactions = this.provider.signTransactions.bind(this.provider);
-    this._signMessage = this.provider.signMessage.bind(this.provider);
+    this.provider = WebviewProvider.getInstance({
+      resetStateCallback: () => {
+        safeWindow.localStorage?.clear?.();
+        safeWindow.sessionStorage?.clear?.();
+      }
+    });
     this._login = this.provider.login.bind(this.provider);
-
-    return this.buildProvider();
-  };
-
-  protected override cancelAction() {
-    return this.provider?.cancelAction?.bind(this.provider)();
   }
 
-  private buildProvider = () => {
-    if (!this.provider) {
-      throw new Error(ProviderErrorsEnum.notInitialized);
+  async init(): Promise<boolean> {
+    this.initializeAddress();
+    return this.initializeProvider();
+  }
+
+  logout(): Promise<boolean> {
+    return this.provider.logout();
+  }
+
+  getType(): ProviderTypeEnum {
+    return ProviderTypeEnum.webview;
+  }
+
+  getAddress(): Promise<string | undefined> {
+    throw new Error('Method not implemented.');
+  }
+
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error('Method not implemented.');
+  }
+
+  setAccount(account: IDAppProviderAccount): void {
+    return this.provider.setAccount(account);
+  }
+
+  isInitialized(): boolean {
+    return this.provider.isInitialized();
+  }
+
+  signTransaction(
+    _transaction: Transaction,
+    _options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>> {
+    throw new Error('Method not implemented.');
+  }
+
+  private async initializeProvider() {
+    const isInitialized = await this.provider.init();
+
+    if (this.address) {
+      this.setAccount({ address: this.address });
     }
 
-    const provider = this.provider as unknown as IProvider;
+    return isInitialized;
+  }
 
-    provider.setAccount({ address: this.address });
-    provider.login = this.login;
-    provider.signTransactions = this.signTransactions;
-    provider.signMessage = this.signMessage;
-    provider.cancelLogin = this.cancelLogin;
+  async cancelAction() {
+    await this.provider?.cancelAction();
+  }
 
-    return provider;
-  };
-
-  private signTransactions = async (transactions: Transaction[]) => {
-    if (!this.provider || !this._signTransactions) {
+  signTransactions = async (transactions: Transaction[]) => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     try {
-      const signedTransactions = await this._signTransactions(transactions);
+      const signedTransactions =
+        await this.provider.signTransactions(transactions);
       return signedTransactions || [];
     } catch (error) {
       this.provider.cancelAction();
@@ -76,13 +90,13 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
     }
   };
 
-  private signMessage = async (message: Message) => {
-    if (!this.provider || !this._signMessage) {
+  signMessage = async (message: Message) => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     try {
-      const signedMessage = await this._signMessage(message);
+      const signedMessage = await this.provider.signMessage(message);
       return signedMessage;
     } catch (error) {
       this.provider.cancelAction();
