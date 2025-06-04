@@ -114,9 +114,6 @@ export class ProviderFactory {
       throw new Error('Unable to create provider');
     }
 
-    createdProvider.getType = () => type;
-
-    console.log('=====', { createdProvider });
     const dappProvider = new DappProvider(createdProvider);
 
     setAccountProvider(dappProvider);
