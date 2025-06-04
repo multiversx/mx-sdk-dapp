@@ -1,82 +1,93 @@
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
+import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
+import { IDAppProviderOptions } from 'lib/sdkDappUtils';
+import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
-import { getAccount } from 'methods/account/getAccount';
-import { IProvider } from 'providers/types/providerFactory.types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { IframeProviderType } from './types';
-import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
+import { BaseProviderStrategyV2 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
 import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
-export class IframeProviderStrategy extends BaseProviderStrategy {
-  private provider: IframeProvider | null = null;
-  private type: IframeLoginTypes | null = null;
-  private _signTransactions:
-    | ((transactions: Transaction[]) => Promise<Transaction[]>)
-    | null = null;
-  private _signMessage: ((message: Message) => Promise<Message>) | null = null;
+export class IframeProviderStrategy extends BaseProviderStrategyV2 {
+  private readonly provider: IframeProvider;
+  private readonly type: IframeLoginTypes;
 
   constructor({ type, address }: IframeProviderType) {
     super(address);
     this.type = type;
+    this.provider = IframeProvider.getInstance();
+    this._login = this.provider.login.bind(this.provider);
   }
 
-  public createProvider = async (): Promise<IProvider> => {
-    this.initialize();
+  init(): Promise<boolean> {
+    this.initializeAddress();
+    return this.initializeProvider();
+  }
+
+  private async initializeProvider() {
+    await this.provider.init();
+
+    if (this.address) {
+      this.setAccount({ address: this.address });
+    }
+
+    console.log('init?', this.provider.isInitialized());
     const network = networkSelector(getState());
-
-    if (!this.type) {
-      throw new Error(ProviderErrorsEnum.invalidProviderType);
-    }
-
-    if (!this.provider) {
-      this.provider = IframeProvider.getInstance();
-      await this.provider.init();
-    }
-
     this.provider.setLoginType(this.type);
     this.provider.setWalletUrl(String(network.iframeWalletAddress));
-    this._signTransactions = this.provider.signTransactions.bind(this.provider);
-    this._signMessage = this.provider.signMessage.bind(this.provider);
-    this._login = this.provider.login.bind(this.provider);
 
-    return this.buildProvider();
-  };
-
-  protected override cancelAction() {
-    return this.provider?.cancelAction?.bind(this.provider)();
+    return true;
   }
 
-  private buildProvider = () => {
-    const { address } = getAccount();
+  logout(): Promise<boolean> {
+    throw new Error('Method not implemented.');
+  }
 
+  getType(): ProviderTypeEnum {
+    throw new Error('Method not implemented.');
+  }
+
+  getAddress(): Promise<string | undefined> {
+    throw new Error('Method not implemented.');
+  }
+
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error('Method not implemented.');
+  }
+
+  setAccount(account: IDAppProviderAccount): void {
+    this.provider.setAccount(account);
+  }
+
+  isInitialized(): boolean {
+    throw new Error('Method not implemented.');
+  }
+
+  signTransaction(
+    _transaction: Transaction,
+    _options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>> {
+    throw new Error('Method not implemented.');
+  }
+
+  async cancelAction(): Promise<void> {
+    await this.provider.cancelAction();
+  }
+
+  signTransactions = async (transactions: Transaction[]) => {
     if (!this.provider) {
-      throw new Error(ProviderErrorsEnum.notInitialized);
-    }
-
-    const provider = this.provider as unknown as IProvider;
-    provider.setAccount({ address: this.address || address });
-    provider.signTransactions = this.signTransactions;
-    provider.signMessage = this.signMessage;
-    provider.login = this.login;
-    provider.cancelLogin = this.cancelLogin;
-
-    return provider;
-  };
-
-  private signTransactions = async (transactions: Transaction[]) => {
-    if (!this.provider || !this._signTransactions) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     const { manager, onClose } = await getPendingTransactionsHandlers({
-      cancelAction: this.provider.cancelAction.bind(this.provider)
+      cancelAction: this.cancelAction.bind(this)
     });
 
     manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
@@ -90,7 +101,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
 
     try {
       const signedTransactions: Transaction[] =
-        await this._signTransactions(transactions);
+        await this.provider.signTransactions(transactions);
 
       return signedTransactions;
     } catch (error) {
@@ -101,15 +112,15 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     }
   };
 
-  private signMessage = async (message: Message) => {
-    if (!this.provider || !this._signMessage || !this.type) {
+  signMessage = async (message: Message) => {
+    if (!this.provider || !this.type) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     const signedMessage = await signMessage({
       message,
-      handleSignMessage: this._signMessage.bind(this.provider),
-      cancelAction: this.provider.cancelAction.bind(this.provider),
+      handleSignMessage: this.provider.signMessage.bind(this.provider),
+      cancelAction: this.cancelAction.bind(this),
       providerType: providerLabels[this.type]
     });
 

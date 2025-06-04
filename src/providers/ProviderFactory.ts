@@ -66,20 +66,19 @@ export class ProviderFactory {
       }
 
       case ProviderTypeEnum.metamask: {
-        const providerInstance = new IframeProviderStrategy({
+        createdProvider = new IframeProviderStrategy({
           type: IframeLoginTypes.metamask
         });
-
-        createdProvider = await providerInstance.createProvider();
+        await createdProvider.init();
 
         break;
       }
 
       case ProviderTypeEnum.passkey: {
-        const providerInstance = new IframeProviderStrategy({
+        createdProvider = new IframeProviderStrategy({
           type: IframeLoginTypes.passkey
         });
-        createdProvider = await providerInstance.createProvider();
+        await createdProvider.init();
 
         break;
       }
