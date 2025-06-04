@@ -23,20 +23,22 @@ import {
 } from '../BaseProviderStrategy/BaseProviderStrategyV2';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
 
-type LedgerOptions = {
+type LedgerProviderStrategyType = {
   address?: string;
-  anchor?: HTMLElement;
-  shouldInitProvider?: boolean;
+  options?: {
+    anchor?: HTMLElement;
+    shouldInitProvider?: boolean;
+  };
 };
 
 export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
   private provider: HWProvider | null = null;
   private config: LedgerConfigType | null = null;
-  private readonly options: LedgerOptions;
+  private readonly options?: LedgerProviderStrategyType['options'];
 
-  constructor({ address, anchor, shouldInitProvider }: LedgerOptions) {
+  constructor({ address, options }: LedgerProviderStrategyType) {
     super(address);
-    this.options = { anchor, shouldInitProvider };
+    this.options = options;
     this._login = this.ledgerLogin.bind(this);
   }
 
@@ -92,7 +94,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategyV2 {
 
   private async initializeProvider() {
     await defineCustomElements(safeWindow);
-    await this.initLegderConnectManager(this.options.anchor);
+    await this.initLegderConnectManager(this.options?.anchor);
     const ledgerConnectManager = LedgerConnectStateManager.getInstance();
 
     const { ledgerProvider, ledgerConfig } = await new Promise<
