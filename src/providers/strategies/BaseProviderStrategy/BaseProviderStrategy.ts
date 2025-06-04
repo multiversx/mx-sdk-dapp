@@ -14,7 +14,7 @@ export type LoginOptionsTypes = {
 };
 
 export abstract class BaseProviderStrategy implements IProvider {
-  protected address: string = '';
+  protected address?: string = '';
   protected _login:
     | ((options?: LoginOptionsTypes) => Promise<IProviderAccount | null>)
     | null = null;

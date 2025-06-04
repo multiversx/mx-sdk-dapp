@@ -46,7 +46,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   private _approval: (() => Promise<SessionTypes.Struct>) | null = null;
 
   constructor(config?: WalletConnectProviderStrategyConfigType) {
-    super('');
+    super();
     this.config = config;
   }
 
