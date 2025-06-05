@@ -52,7 +52,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
     return ProviderTypeEnum.extension;
   }
 
-  protected async cancelAction(): Promise<void> {
+  async cancelAction(): Promise<void> {
     this.provider.cancelAction();
   }
 

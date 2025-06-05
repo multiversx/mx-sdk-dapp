@@ -144,7 +144,7 @@ export abstract class BaseProviderStrategy implements IProvider {
   /**
    * This method should be overridden by subclasses to handle cancel login event.
    */
-  protected async cancelAction(): Promise<void> {
+  async cancelAction(): Promise<void> {
     throw new Error('Method not implemented.');
   }
 
