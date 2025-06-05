@@ -1,17 +1,14 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { isBrowserWithPopupConfirmation } from 'constants/browser.constants';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
-import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { crossWindowConfigSelector } from 'store/selectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
-import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
 
@@ -68,10 +65,6 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     return this.provider.getAddress();
   }
 
-  getAccount(): IDAppProviderAccount | null {
-    throw new Error('Method not implemented.');
-  }
-
   setAccount(account: IDAppProviderAccount): void {
     return this.provider.setAccount(account);
   }
@@ -79,23 +72,6 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
   isInitialized(): boolean {
     return this.provider.isInitialized();
   }
-
-  signTransaction(
-    _transaction: Transaction,
-    _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
-    throw new Error('Method not implemented.');
-  }
-
-  cancelLogin = () => {
-    if (this.loginAbortController) {
-      this.loginAbortController.abort();
-    }
-
-    this.provider.cancelAction();
-    this.provider.onDestroy();
-    this.loginAbortController = null;
-  };
 
   async cancelAction(): Promise<void> {
     await this.provider.cancelAction();
@@ -106,16 +82,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { onClose, manager } = await getPendingTransactionsHandlers({
-      cancelAction: this.provider.cancelAction.bind(this.provider)
-    });
-
-    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
-
-    manager.updateData({
-      name: providerLabels.crossWindow,
-      type: ProviderTypeEnum.crossWindow
-    });
+    const { onClose, manager } = await this.initSignState();
 
     this.setPopupConsent();
 
@@ -146,7 +113,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.provider.cancelAction.bind(this.provider),
+      cancelAction: this.cancelAction.bind(this),
       providerType: providerLabels.crossWindow
     });
 

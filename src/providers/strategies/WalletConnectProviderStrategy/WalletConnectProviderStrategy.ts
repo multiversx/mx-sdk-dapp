@@ -1,4 +1,4 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import {
   SessionEventTypes,
   SessionTypes,
@@ -8,11 +8,8 @@ import { providerLabels } from 'constants/providerFactory.constants';
 import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
-import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { getPendingTransactionsHandlers } from 'providers/strategies/helpers';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions';
 import {
@@ -41,11 +38,11 @@ type WalletConnectProviderStrategyConfigType = WalletConnectConfig & {
 
 export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   private provider: WalletConnectV2Provider | null = null;
-  private config: WalletConnectProviderStrategyConfigType | undefined;
+  private config: Partial<WalletConnectProviderStrategyConfigType> | undefined;
   private methods: string[] = [];
   private _approval: (() => Promise<SessionTypes.Struct>) | null = null;
 
-  constructor(config?: WalletConnectProviderStrategyConfigType) {
+  constructor(config?: Partial<WalletConnectProviderStrategyConfigType>) {
     super();
     this.config = config;
   }
@@ -81,10 +78,6 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     return Promise.resolve(this.provider.getAddress());
   }
 
-  getAccount(): IDAppProviderAccount | null {
-    throw new Error('Method not implemented.');
-  }
-
   setAccount(account: IDAppProviderAccount): void {
     return this.provider?.setAccount(account);
   }
@@ -95,13 +88,6 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     }
 
     return this.provider.isInitialized();
-  }
-
-  signTransaction(
-    _transaction: Transaction,
-    _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
-    throw new Error('Method not implemented.');
   }
 
   private async initializeProvider() {
@@ -152,7 +138,9 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     await walletConnectManager.init(this.config?.anchor);
   }
 
-  private async createWalletConnectProvider(config: WalletConnectConfig) {
+  private async createWalletConnectProvider(
+    config: Partial<WalletConnectConfig>
+  ) {
     const isLoggedIn = getIsLoggedIn();
     const chainId = chainIdSelector(getState());
     const nativeAuthConfig = nativeAuthConfigSelector(getState());
@@ -275,16 +263,8 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { manager, onClose } = await getPendingTransactionsHandlers({
-      cancelAction: this.cancelAction.bind(this)
-    });
+    const { manager, onClose } = await this.initSignState();
 
-    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
-
-    manager.updateData({
-      name: providerLabels.walletConnect,
-      type: ProviderTypeEnum.walletConnect
-    });
     try {
       const signedTransactions: Transaction[] =
         await this.provider.signTransactions(transactions);

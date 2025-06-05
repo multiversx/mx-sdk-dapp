@@ -1,8 +1,7 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
@@ -42,23 +41,12 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
     throw new Error('Method not implemented.');
   }
 
-  getAccount(): IDAppProviderAccount | null {
-    throw new Error('Method not implemented.');
-  }
-
   setAccount(account: IDAppProviderAccount): void {
     return this.provider.setAccount(account);
   }
 
   isInitialized(): boolean {
     return this.provider.isInitialized();
-  }
-
-  signTransaction(
-    _transaction: Transaction,
-    _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
-    throw new Error('Method not implemented.');
   }
 
   private async initializeProvider() {
@@ -85,7 +73,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
         await this.provider.signTransactions(transactions);
       return signedTransactions || [];
     } catch (error) {
-      this.provider.cancelAction();
+      this.cancelAction();
       throw error;
     }
   };
@@ -99,7 +87,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
       const signedMessage = await this.provider.signMessage(message);
       return signedMessage;
     } catch (error) {
-      this.provider.cancelAction();
+      this.cancelAction();
       throw error;
     }
   };

@@ -1,14 +1,11 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider/out/extensionProvider';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
-import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
-import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
 export class ExtensionProviderStrategy extends BaseProviderStrategy {
@@ -39,23 +36,12 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
     return this.provider.getAddress();
   }
 
-  getAccount(): IDAppProviderAccount | null {
-    throw new Error('Method not implemented.');
-  }
-
   setAccount(account: IDAppProviderAccount): void {
     return this.provider.setAccount(account);
   }
 
   isInitialized(): boolean {
     return this.provider.isInitialized();
-  }
-
-  signTransaction(
-    _transaction: Transaction,
-    _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
-    throw new Error('Method not implemented.');
   }
 
   logout(): Promise<boolean> {
@@ -75,16 +61,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { manager, onClose } = await getPendingTransactionsHandlers({
-      cancelAction: this.provider.cancelAction.bind(this.provider)
-    });
-
-    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
-
-    manager.updateData({
-      name: providerLabels.extension,
-      type: ProviderTypeEnum.extension
-    });
+    const { manager, onClose } = await this.initSignState();
 
     try {
       const signedTransactions: Transaction[] =
@@ -107,7 +84,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.provider.cancelAction.bind(this.provider),
+      cancelAction: this.cancelAction.bind(this),
       providerType: providerLabels.extension
     });
 

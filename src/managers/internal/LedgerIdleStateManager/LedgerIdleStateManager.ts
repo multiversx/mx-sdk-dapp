@@ -93,7 +93,7 @@ export class LedgerIdleStateManager {
 
     try {
       const createdProvider = new LedgerProviderStrategy({
-        options: { shouldInitProvider: true }
+        shouldInitProvider: true
       });
 
       await createdProvider.init();

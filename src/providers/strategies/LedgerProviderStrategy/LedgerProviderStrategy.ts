@@ -1,11 +1,10 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { safeWindow } from 'constants/index';
 
 import { CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION } from 'constants/transactions.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
@@ -23,22 +22,27 @@ import {
 } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
 
-type LedgerProviderStrategyType = {
+type LedgerProviderStrategyOptionsType = {
+  anchor?: HTMLElement;
+  shouldInitProvider?: boolean;
+};
+
+type LedgerProviderStrategyType = LedgerProviderStrategyOptionsType & {
   address?: string;
-  options?: {
-    anchor?: HTMLElement;
-    shouldInitProvider?: boolean;
-  };
 };
 
 export class LedgerProviderStrategy extends BaseProviderStrategy {
   private provider: HWProvider | null = null;
   private config: LedgerConfigType | null = null;
-  private readonly options?: LedgerProviderStrategyType['options'];
+  private readonly options?: LedgerProviderStrategyOptionsType;
 
-  constructor({ address, options }: LedgerProviderStrategyType) {
+  constructor({
+    address,
+    anchor,
+    shouldInitProvider
+  }: LedgerProviderStrategyType) {
     super(address);
-    this.options = options;
+    this.options = { anchor, shouldInitProvider };
     this._login = this.ledgerLogin.bind(this);
   }
 
@@ -73,10 +77,6 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
     return this.provider.getAddress();
   }
 
-  getAccount(): IDAppProviderAccount | null {
-    throw new Error('Method not implemented.');
-  }
-
   setAccount(account: IDAppProviderAccount): void {
     return this.provider?.setAccount(account);
   }
@@ -87,13 +87,6 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
     }
 
     return this.provider.isInitialized();
-  }
-
-  signTransaction(
-    _transaction: Transaction,
-    _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
-    throw new Error('Method not implemented.');
   }
 
   private async initializeProvider() {

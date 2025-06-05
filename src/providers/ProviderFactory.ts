@@ -43,21 +43,18 @@ export class ProviderFactory {
     switch (type) {
       case ProviderTypeEnum.extension: {
         createdProvider = new ExtensionProviderStrategy();
-        await createdProvider.init();
 
         break;
       }
 
       case ProviderTypeEnum.crossWindow: {
         createdProvider = new CrossWindowProviderStrategy();
-        await createdProvider.init();
 
         break;
       }
 
       case ProviderTypeEnum.ledger: {
-        createdProvider = new LedgerProviderStrategy({ options: { anchor } });
-        await createdProvider.init();
+        createdProvider = new LedgerProviderStrategy({ anchor });
 
         const ledgerIdleStateManager = LedgerIdleStateManager.getInstance();
         await ledgerIdleStateManager.init();
@@ -69,7 +66,6 @@ export class ProviderFactory {
         createdProvider = new IframeProviderStrategy({
           type: IframeLoginTypes.metamask
         });
-        await createdProvider.init();
 
         break;
       }
@@ -78,19 +74,16 @@ export class ProviderFactory {
         createdProvider = new IframeProviderStrategy({
           type: IframeLoginTypes.passkey
         });
-        await createdProvider.init();
 
         break;
       }
       case ProviderTypeEnum.walletConnect: {
         createdProvider = new WalletConnectProviderStrategy({ anchor });
-        await createdProvider.init();
 
         break;
       }
       case ProviderTypeEnum.webview: {
         createdProvider = new WebviewProviderStrategy();
-        await createdProvider.init();
         break;
       }
 
@@ -103,7 +96,6 @@ export class ProviderFactory {
               address,
               anchor
             });
-            await createdProvider.init();
           }
         }
         break;
@@ -114,6 +106,7 @@ export class ProviderFactory {
       throw new Error('Unable to create provider');
     }
 
+    await createdProvider.init();
     const dappProvider = new DappProvider(createdProvider);
 
     setAccountProvider(dappProvider);

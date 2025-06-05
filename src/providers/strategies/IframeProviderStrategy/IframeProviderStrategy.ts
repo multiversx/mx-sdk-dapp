@@ -1,18 +1,15 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
-import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { IframeProviderType } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
-import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
 const IFRAME_PROVIDER_MAP: Record<IframeLoginTypes, ProviderTypeEnum> = {
@@ -66,23 +63,12 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     return this.provider.getAddress();
   }
 
-  getAccount(): IDAppProviderAccount | null {
-    throw new Error('Method not implemented.');
-  }
-
   setAccount(account: IDAppProviderAccount): void {
     this.provider.setAccount(account);
   }
 
   isInitialized(): boolean {
-    throw new Error('Method not implemented.');
-  }
-
-  signTransaction(
-    _transaction: Transaction,
-    _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
-    throw new Error('Method not implemented.');
+    return this.provider.isInitialized();
   }
 
   async cancelAction(): Promise<void> {
@@ -94,18 +80,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { manager, onClose } = await getPendingTransactionsHandlers({
-      cancelAction: this.cancelAction.bind(this)
-    });
-
-    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
-
-    if (this.type) {
-      manager.updateData({
-        name: providerLabels.iframe,
-        type: this.type
-      });
-    }
+    const { manager, onClose } = await this.initSignState();
 
     try {
       const signedTransactions: Transaction[] =

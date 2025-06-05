@@ -1,13 +1,16 @@
 import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { IProviderAccount } from '@multiversx/sdk-wallet-connect-provider/out';
+import { providerLabels } from 'constants/index';
 import { Transaction, Message } from 'lib/sdkCore';
 import { IDAppProviderOptions } from 'lib/sdkDappUtils';
+import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';
 import { getAddress } from 'methods/account/getAddress';
 import {
   IProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
+import { getPendingTransactionsHandlers } from '../helpers';
 
 export type LoginOptionsTypes = {
   token?: string;
@@ -29,17 +32,21 @@ export abstract class BaseProviderStrategy implements IProvider {
   abstract getType(): ProviderTypeEnum;
 
   abstract getAddress(): Promise<string | undefined>;
-  abstract getAccount(): IDAppProviderAccount | null;
-
   abstract setAccount(account: IDAppProviderAccount): void;
   abstract isInitialized(): boolean;
 
   isConnected?(): boolean;
 
-  abstract signTransaction(
-    transaction: Transaction,
-    options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>>;
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error('Method not implemented.');
+  }
+
+  signTransaction(
+    _transaction: Transaction,
+    _options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>> {
+    throw new Error('Method not implemented.');
+  }
 
   abstract signTransactions(
     transactions: Transaction[],
@@ -138,6 +145,22 @@ export abstract class BaseProviderStrategy implements IProvider {
    * This method should be overridden by subclasses to handle cancel login event.
    */
   protected async cancelAction(): Promise<void> {
-    // default no-op
+    throw new Error('Method not implemented.');
+  }
+
+  protected async initSignState() {
+    const { onClose, manager } = await getPendingTransactionsHandlers({
+      cancelAction: this.cancelAction.bind(this)
+    });
+
+    const type = this.getType();
+    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
+
+    manager.updateData({
+      name: providerLabels[type],
+      type
+    });
+
+    return { onClose, manager };
   }
 }

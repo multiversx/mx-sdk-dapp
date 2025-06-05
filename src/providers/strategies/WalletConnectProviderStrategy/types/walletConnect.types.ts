@@ -25,7 +25,7 @@ export interface IWalletConnectModalData {
 }
 
 export interface WalletConnectConfig {
-  walletConnectV2ProjectId?: string;
+  walletConnectV2ProjectId: string;
   walletConnectV2RelayAddress?: string;
   walletConnectV2Options?: WalletConnectV2ProviderOptionsType;
   customRequestMethods?: string[];
