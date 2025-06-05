@@ -12,11 +12,7 @@ import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateM
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions';
-import {
-  chainIdSelector,
-  nativeAuthConfigSelector,
-  walletConnectConfigSelector
-} from 'store/selectors';
+import { chainIdSelector, nativeAuthConfigSelector } from 'store/selectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import {
@@ -38,18 +34,17 @@ type WalletConnectProviderStrategyConfigType = WalletConnectConfig & {
 
 export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   private provider: WalletConnectV2Provider | null = null;
-  private config: Partial<WalletConnectProviderStrategyConfigType> | undefined;
+  private readonly config: WalletConnectProviderStrategyConfigType;
   private methods: string[] = [];
   private _approval: (() => Promise<SessionTypes.Struct>) | null = null;
 
-  constructor(config?: Partial<WalletConnectProviderStrategyConfigType>) {
+  constructor(config: WalletConnectProviderStrategyConfigType) {
     super();
     this.config = config;
   }
 
   async init(): Promise<boolean> {
     try {
-      this.initializeConfig();
       await this.initializeProvider();
     } catch {
       return false;
@@ -113,20 +108,6 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     walletConnectManager.updateData({ wcURI: uri });
   }
 
-  initializeConfig = () => {
-    if (this.config?.walletConnectV2ProjectId) {
-      return;
-    }
-
-    const walletConnectConfig = walletConnectConfigSelector(getState());
-
-    if (!walletConnectConfig) {
-      throw new Error(WalletConnectV2Error.invalidConfig);
-    }
-
-    this.config = { ...this.config, ...walletConnectConfig };
-  };
-
   private async initWalletConnectManager() {
     const shouldInitiateLogin = !getIsLoggedIn();
 
@@ -138,9 +119,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     await walletConnectManager.init(this.config?.anchor);
   }
 
-  private async createWalletConnectProvider(
-    config: Partial<WalletConnectConfig>
-  ) {
+  private async createWalletConnectProvider(config: WalletConnectConfig) {
     const isLoggedIn = getIsLoggedIn();
     const chainId = chainIdSelector(getState());
     const nativeAuthConfig = nativeAuthConfigSelector(getState());
@@ -282,12 +261,13 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     }
   };
 
-  async cancelAction() {
+  cancelAction = async () => {
+    console.log('sending custom req');
     await this.sendCustomRequest({
       method: WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
       action: OptionalOperation.CANCEL_ACTION
     });
-  }
+  };
 
   signMessage = async (message: Message) => {
     if (!this.provider) {
@@ -297,7 +277,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.cancelAction.bind(this),
+      cancelAction: this.cancelAction,
       providerType: providerLabels.extension
     });
 

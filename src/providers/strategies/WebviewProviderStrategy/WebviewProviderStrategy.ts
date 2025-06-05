@@ -53,9 +53,9 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
     return isInitialized;
   }
 
-  async cancelAction() {
+  cancelAction = async () => {
     this.provider.cancelAction();
-  }
+  };
 
   signTransactions = async (transactions: Transaction[]) => {
     if (!this.provider) {

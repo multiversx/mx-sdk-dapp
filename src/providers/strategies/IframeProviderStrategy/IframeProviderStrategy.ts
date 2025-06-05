@@ -20,17 +20,34 @@ const IFRAME_PROVIDER_MAP: Record<IframeLoginTypes, ProviderTypeEnum> = {
 export class IframeProviderStrategy extends BaseProviderStrategy {
   private readonly provider: IframeProvider;
   private readonly type: IframeLoginTypes;
+  private walletUrl: string;
 
-  constructor({ type, address }: IframeProviderType) {
+  constructor({ type, address, walletUrl }: IframeProviderType) {
     super(address);
     this.type = type;
+    this.walletUrl = walletUrl ?? '';
     this.provider = IframeProvider.getInstance();
     this._login = this.provider.login.bind(this.provider);
   }
 
   init(): Promise<boolean> {
     this.initializeAddress();
+    this.initializeWalletUrl();
     return this.initializeProvider();
+  }
+
+  private initializeWalletUrl() {
+    if (this.walletUrl) {
+      return;
+    }
+
+    const network = networkSelector(getState());
+
+    if (!network.iframeWalletAddress) {
+      throw new Error('Invalid walletUrl');
+    }
+
+    this.walletUrl = network.iframeWalletAddress;
   }
 
   private async initializeProvider() {
@@ -40,9 +57,8 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       this.setAccount({ address: this.address });
     }
 
-    const network = networkSelector(getState());
     this.provider.setLoginType(this.type);
-    this.provider.setWalletUrl(String(network.iframeWalletAddress));
+    this.provider.setWalletUrl(this.walletUrl);
 
     return true;
   }
@@ -71,9 +87,9 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     return this.provider.isInitialized();
   }
 
-  async cancelAction(): Promise<void> {
+  cancelAction = async () => {
     this.provider.cancelAction();
-  }
+  };
 
   signTransactions = async (transactions: Transaction[]) => {
     if (!this.provider) {
@@ -103,7 +119,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.cancelAction.bind(this),
+      cancelAction: this.cancelAction,
       providerType: providerLabels[this.type]
     });
 

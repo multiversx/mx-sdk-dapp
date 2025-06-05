@@ -73,9 +73,9 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     return this.provider.isInitialized();
   }
 
-  async cancelAction(): Promise<void> {
+  cancelAction = async () => {
     this.provider.cancelAction();
-  }
+  };
 
   signTransactions = async (transactions: Transaction[]) => {
     if (!this.provider) {
@@ -113,7 +113,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.cancelAction.bind(this),
+      cancelAction: this.cancelAction,
       providerType: providerLabels.crossWindow
     });
 

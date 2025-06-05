@@ -6,9 +6,12 @@ import {
   ExtensionProviderStrategy,
   IframeProviderStrategy,
   LedgerProviderStrategy,
-  WalletConnectProviderStrategy
+  WalletConnectProviderStrategy,
+  WalletConnectV2Error
 } from 'providers/strategies';
 import { setProviderType } from 'store/actions/loginInfo/loginInfoActions';
+import { walletConnectConfigSelector } from 'store/selectors/configSelectors';
+import { getState } from 'store/store';
 import { DappProvider } from './DappProvider/DappProvider';
 import {
   getAccountProvider,
@@ -78,7 +81,16 @@ export class ProviderFactory {
         break;
       }
       case ProviderTypeEnum.walletConnect: {
-        createdProvider = new WalletConnectProviderStrategy({ anchor });
+        const walletConnectConfig = walletConnectConfigSelector(getState());
+
+        if (!walletConnectConfig?.walletConnectV2ProjectId) {
+          throw new Error(WalletConnectV2Error.invalidConfig);
+        }
+
+        createdProvider = new WalletConnectProviderStrategy({
+          anchor,
+          ...walletConnectConfig
+        });
 
         break;
       }

@@ -52,9 +52,9 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
     return ProviderTypeEnum.extension;
   }
 
-  async cancelAction(): Promise<void> {
+  cancelAction = async () => {
     this.provider.cancelAction();
-  }
+  };
 
   signTransactions = async (transactions: Transaction[]) => {
     if (!this.provider) {
@@ -84,7 +84,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.cancelAction.bind(this),
+      cancelAction: this.cancelAction,
       providerType: providerLabels.extension
     });
 

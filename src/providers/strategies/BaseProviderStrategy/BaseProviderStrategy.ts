@@ -23,6 +23,9 @@ export abstract class BaseProviderStrategy implements IProvider {
     | null = null;
   protected loginAbortController: AbortController | null = null;
 
+  /*
+   * Allow setting provider address without store login
+   */
   constructor(address?: string) {
     this.address = address ?? '';
   }
@@ -100,7 +103,7 @@ export abstract class BaseProviderStrategy implements IProvider {
       this.loginAbortController.abort();
     }
 
-    this.cancelAction();
+    this.cancelAction?.();
     this.loginAbortController = null;
   };
 
@@ -141,16 +144,18 @@ export abstract class BaseProviderStrategy implements IProvider {
     this.address = address;
   };
 
+  cancelAction: (() => Promise<void>) | undefined = undefined;
+
   /**
    * This method should be overridden by subclasses to handle cancel login event.
    */
-  async cancelAction(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
+  // async cancelAction(): Promise<void> {
+  //   throw new Error('Method not implemented.');
+  // }
 
   protected async initSignState() {
     const { onClose, manager } = await getPendingTransactionsHandlers({
-      cancelAction: this.cancelAction.bind(this)
+      cancelAction: this.cancelAction?.bind(this)
     });
 
     const type = this.getType();
