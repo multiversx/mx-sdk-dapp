@@ -53,7 +53,7 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
   }
 
   protected async cancelAction(): Promise<void> {
-    return this.provider.cancelAction();
+    this.provider.cancelAction();
   }
 
   signTransactions = async (transactions: Transaction[]) => {
