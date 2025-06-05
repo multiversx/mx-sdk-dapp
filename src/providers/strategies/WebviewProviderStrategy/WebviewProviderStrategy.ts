@@ -1,6 +1,5 @@
 import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
-import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
@@ -15,12 +14,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
 
   constructor(config?: WebviewProviderProps) {
     super(config?.address);
-    this.provider = WebviewProvider.getInstance({
-      resetStateCallback: () => {
-        safeWindow.localStorage?.clear?.();
-        safeWindow.sessionStorage?.clear?.();
-      }
-    });
+    this.provider = WebviewProvider.getInstance();
     this._login = this.provider.login.bind(this.provider);
   }
 
@@ -60,7 +54,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
   }
 
   async cancelAction() {
-    await this.provider?.cancelAction();
+    this.provider.cancelAction();
   }
 
   signTransactions = async (transactions: Transaction[]) => {
