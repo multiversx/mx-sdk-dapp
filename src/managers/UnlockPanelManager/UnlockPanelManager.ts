@@ -7,6 +7,8 @@ import {
   IProviderFactory,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
+import { networkSelector } from 'store/selectors';
+import { getState } from 'store/store';
 import {
   AllowedProviderType,
   OnCloseUnlockPanelType,
@@ -16,12 +18,20 @@ import {
 } from './UnlockPanelManager.types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager';
 
+interface IUnlockPanelManagerData {
+  providers: IProviderBase[] | null;
+  walletAddress: string | null;
+}
+
 export class UnlockPanelManager extends SidePanelBaseManager<
   MvxUnlockPanel,
-  IProviderBase[] | null,
+  IUnlockPanelManagerData,
   UnlockPanelEventsEnum
 > {
-  protected initialData: IProviderBase[] | null = null;
+  protected initialData: IUnlockPanelManagerData = {
+    providers: null,
+    walletAddress: null
+  };
 
   private static instance: UnlockPanelManager;
   private static loginHandler: LoginHandlerType | null = null;
@@ -56,7 +66,13 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   }
 
   public openUnlockPanel = async () => {
-    this.data = UnlockPanelManager.getProvidersList();
+    const { walletAddress } = networkSelector(getState());
+
+    this.data = {
+      providers: UnlockPanelManager.getProvidersList(),
+      walletAddress
+    };
+
     await this.openUI();
     this.notifyDataUpdate();
   };

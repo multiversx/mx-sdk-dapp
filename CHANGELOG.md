@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added support for the dyamic Wallet address](https://github.com/multiversx/mx-sdk-dapp/pull/1447)
 - [Sync all providers to extend and implement BaseStrategyProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1446)
 - [Removed getShardOfAddress helper](https://github.com/multiversx/mx-sdk-dapp/pull/1445)
 - [Added formatted gasLimit and gasPrice](https://github.com/multiversx/mx-sdk-dapp/pull/1444)
