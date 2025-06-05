@@ -72,7 +72,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
   }
 
   async cancelAction(): Promise<void> {
-    await this.provider.cancelAction();
+    this.provider.cancelAction();
   }
 
   signTransactions = async (transactions: Transaction[]) => {
