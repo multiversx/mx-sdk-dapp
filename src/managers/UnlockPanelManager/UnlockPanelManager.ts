@@ -18,10 +18,10 @@ import {
 } from './UnlockPanelManager.types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager';
 
-type IUnlockPanelManagerData = {
+interface IUnlockPanelManagerData {
   providers: IProviderBase[] | null;
   walletAddress: string | null;
-};
+}
 
 export class UnlockPanelManager extends SidePanelBaseManager<
   MvxUnlockPanel,
