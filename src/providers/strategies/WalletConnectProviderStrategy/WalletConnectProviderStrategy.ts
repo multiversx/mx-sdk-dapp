@@ -262,7 +262,6 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   };
 
   cancelAction = async () => {
-    console.log('sending custom req');
     await this.sendCustomRequest({
       method: WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
       action: OptionalOperation.CANCEL_ACTION
