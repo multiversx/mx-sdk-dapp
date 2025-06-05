@@ -1,96 +1,106 @@
-import { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
-import { getAccount } from 'methods/account/getAccount';
-import { IProvider } from 'providers/types/providerFactory.types';
+import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { IframeProviderType } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
-import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
-export class IframeProviderStrategy extends BaseProviderStrategy {
-  private provider: IframeProvider | null = null;
-  private type: IframeLoginTypes | null = null;
-  private _signTransactions:
-    | ((transactions: Transaction[]) => Promise<Transaction[]>)
-    | null = null;
-  private _signMessage: ((message: Message) => Promise<Message>) | null = null;
+const IFRAME_PROVIDER_MAP: Record<IframeLoginTypes, ProviderTypeEnum> = {
+  passkey: ProviderTypeEnum.passkey,
+  metamask: ProviderTypeEnum.metamask
+};
 
-  constructor({ type, address }: IframeProviderType) {
+export class IframeProviderStrategy extends BaseProviderStrategy {
+  private readonly provider: IframeProvider;
+  private readonly type: IframeLoginTypes;
+  private walletUrl: string;
+
+  constructor({ type, address, walletUrl }: IframeProviderType) {
     super(address);
     this.type = type;
+    this.walletUrl = walletUrl ?? '';
+    this.provider = IframeProvider.getInstance();
+    this._login = this.provider.login.bind(this.provider);
   }
 
-  public createProvider = async (): Promise<IProvider> => {
-    this.initialize();
-    const network = networkSelector(getState());
+  init(): Promise<boolean> {
+    this.initializeAddress();
+    this.initializeWalletUrl();
+    return this.initializeProvider();
+  }
 
-    if (!this.type) {
-      throw new Error(ProviderErrorsEnum.invalidProviderType);
+  private initializeWalletUrl() {
+    if (this.walletUrl) {
+      return;
     }
 
-    if (!this.provider) {
-      this.provider = IframeProvider.getInstance();
-      await this.provider.init();
+    const network = networkSelector(getState());
+
+    if (!network.iframeWalletAddress) {
+      throw new Error('Invalid walletUrl');
+    }
+
+    this.walletUrl = network.iframeWalletAddress;
+  }
+
+  private async initializeProvider() {
+    await this.provider.init();
+
+    if (this.address) {
+      this.setAccount({ address: this.address });
     }
 
     this.provider.setLoginType(this.type);
-    this.provider.setWalletUrl(String(network.iframeWalletAddress));
-    this._signTransactions = this.provider.signTransactions.bind(this.provider);
-    this._signMessage = this.provider.signMessage.bind(this.provider);
-    this._login = this.provider.login.bind(this.provider);
+    this.provider.setWalletUrl(this.walletUrl);
 
-    return this.buildProvider();
-  };
-
-  protected override cancelAction() {
-    return this.provider?.cancelAction?.bind(this.provider)();
+    return true;
   }
 
-  private buildProvider = () => {
-    const { address } = getAccount();
+  logout(): Promise<boolean> {
+    return this.provider.logout();
+  }
 
+  getType(): ProviderTypeEnum {
+    return IFRAME_PROVIDER_MAP[this.type];
+  }
+
+  getAddress(): Promise<string | undefined> {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const provider = this.provider as unknown as IProvider;
-    provider.setAccount({ address: this.address || address });
-    provider.signTransactions = this.signTransactions;
-    provider.signMessage = this.signMessage;
-    provider.login = this.login;
-    provider.cancelLogin = this.cancelLogin;
+    return this.provider.getAddress();
+  }
 
-    return provider;
+  setAccount(account: IDAppProviderAccount): void {
+    this.provider.setAccount(account);
+  }
+
+  isInitialized(): boolean {
+    return this.provider.isInitialized();
+  }
+
+  cancelAction = async () => {
+    this.provider.cancelAction();
   };
 
-  private signTransactions = async (transactions: Transaction[]) => {
-    if (!this.provider || !this._signTransactions) {
+  signTransactions = async (transactions: Transaction[]) => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { manager, onClose } = await getPendingTransactionsHandlers({
-      cancelAction: this.provider.cancelAction.bind(this.provider)
-    });
-
-    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
-
-    if (this.type) {
-      manager.updateData({
-        name: providerLabels.iframe,
-        type: this.type
-      });
-    }
+    const { manager, onClose } = await this.initSignState();
 
     try {
       const signedTransactions: Transaction[] =
-        await this._signTransactions(transactions);
+        await this.provider.signTransactions(transactions);
 
       return signedTransactions;
     } catch (error) {
@@ -101,15 +111,15 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     }
   };
 
-  private signMessage = async (message: Message) => {
-    if (!this.provider || !this._signMessage || !this.type) {
+  signMessage = async (message: Message) => {
+    if (!this.provider || !this.type) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
     const signedMessage = await signMessage({
       message,
-      handleSignMessage: this._signMessage.bind(this.provider),
-      cancelAction: this.provider.cancelAction.bind(this.provider),
+      handleSignMessage: this.provider.signMessage.bind(this.provider),
+      cancelAction: this.cancelAction,
       providerType: providerLabels[this.type]
     });
 

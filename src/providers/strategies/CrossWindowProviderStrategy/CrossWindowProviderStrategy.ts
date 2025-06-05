@@ -1,18 +1,14 @@
+import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { isBrowserWithPopupConfirmation } from 'constants/browser.constants';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
-import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
-import {
-  IProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { crossWindowConfigSelector } from 'store/selectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
-import { getPendingTransactionsHandlers } from '../helpers/getPendingTransactionsHandlers';
 import { signMessage } from '../helpers/signMessage/signMessage';
 import { guardTransactions } from '../helpers/signTransactions/helpers/guardTransactions/guardTransactions';
 
@@ -22,94 +18,77 @@ type CrossWindowProviderProps = {
 };
 
 export class CrossWindowProviderStrategy extends BaseProviderStrategy {
-  private provider: CrossWindowProvider | null = null;
+  private readonly provider: CrossWindowProvider;
   private readonly walletAddress?: string;
-  private _signTransactions:
-    | ((transactions: Transaction[]) => Promise<Transaction[]>)
-    | null = null;
-  private _signMessage: ((messageToSign: Message) => Promise<Message>) | null =
-    null;
 
   constructor(config?: CrossWindowProviderProps) {
     super(config?.address);
     this.walletAddress = config?.walletAddress;
+    this.provider = CrossWindowProvider.getInstance();
+    this._login = this.provider.login.bind(this.provider);
   }
 
-  public createProvider = async (): Promise<IProvider> => {
-    this.initialize();
+  async init(): Promise<boolean> {
+    this.initializeAddress();
+    return this.initializeProvider();
+  }
+
+  private async initializeProvider() {
     const network = networkSelector(getState());
 
-    if (!this.provider) {
-      this.provider = CrossWindowProvider.getInstance();
-      this.provider.init();
-    }
-
-    // Bind in order to break reference
-    this._signTransactions = this.provider.signTransactions.bind(this.provider);
-    this._signMessage = this.provider.signMessage.bind(this.provider);
-    this._login = this.provider.login.bind(this.provider);
+    const isProviderInitialized = await this.provider.init();
 
     this.provider.setWalletUrl(this.walletAddress ?? network.walletAddress);
-    this.provider.setAddress(this.address);
 
     this.setPopupConsent();
 
-    return this.buildProvider();
-  };
-
-  override cancelLogin = () => {
-    if (this.loginAbortController) {
-      this.loginAbortController.abort();
+    if (this.address) {
+      this.provider.setAddress(this.address);
     }
 
-    // is called instead of provider.cancelAction()
-    CrossWindowProvider.getInstance().onDestroy();
-    this.loginAbortController = null;
-  };
-
-  protected override cancelAction() {
-    const cancelActionReference = this.provider?.cancelAction?.bind(
-      this.provider
-    );
-
-    cancelActionReference?.();
+    return isProviderInitialized;
   }
 
-  private readonly buildProvider = () => {
+  logout(): Promise<boolean> {
+    return this.provider.logout();
+  }
+
+  getType(): ProviderTypeEnum {
+    return ProviderTypeEnum.crossWindow;
+  }
+
+  getAddress(): Promise<string | undefined> {
     if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const provider = this.provider as unknown as IProvider;
-    provider.setAccount({ address: this.address });
-    provider.signTransactions = this.signTransactions;
-    provider.signMessage = this.signMessage;
-    provider.cancelLogin = this.cancelLogin;
+    return this.provider.getAddress();
+  }
 
-    return provider;
+  setAccount(account: IDAppProviderAccount): void {
+    return this.provider.setAccount(account);
+  }
+
+  isInitialized(): boolean {
+    return this.provider.isInitialized();
+  }
+
+  cancelAction = async () => {
+    this.provider.cancelAction();
   };
 
-  private readonly signTransactions = async (transactions: Transaction[]) => {
-    if (!this.provider || !this._signTransactions) {
+  signTransactions = async (transactions: Transaction[]) => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const { onClose, manager } = await getPendingTransactionsHandlers({
-      cancelAction: this.provider.cancelAction.bind(this.provider)
-    });
-
-    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
-
-    manager.updateData({
-      name: providerLabels.crossWindow,
-      type: ProviderTypeEnum.crossWindow
-    });
+    const { onClose, manager } = await this.initSignState();
 
     this.setPopupConsent();
 
     try {
       const signedTransactions: Transaction[] =
-        (await this._signTransactions(transactions)) ?? [];
+        (await this.provider.signTransactions(transactions)) ?? [];
 
       const optionallyGuardedTransactions =
         await guardTransactions(signedTransactions);
@@ -124,8 +103,8 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     }
   };
 
-  private readonly signMessage = async (message: Message) => {
-    if (!this.provider || !this._signMessage) {
+  signMessage = async (message: Message) => {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
@@ -133,8 +112,8 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
 
     const signedMessage = await signMessage({
       message,
-      handleSignMessage: this._signMessage.bind(this.provider),
-      cancelAction: this.provider.cancelAction.bind(this.provider),
+      handleSignMessage: this.provider.signMessage.bind(this.provider),
+      cancelAction: this.cancelAction,
       providerType: providerLabels.crossWindow
     });
 

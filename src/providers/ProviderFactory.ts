@@ -6,9 +6,12 @@ import {
   ExtensionProviderStrategy,
   IframeProviderStrategy,
   LedgerProviderStrategy,
-  WalletConnectProviderStrategy
+  WalletConnectProviderStrategy,
+  WalletConnectV2Error
 } from 'providers/strategies';
 import { setProviderType } from 'store/actions/loginInfo/loginInfoActions';
+import { walletConnectConfigSelector } from 'store/selectors/configSelectors';
+import { getState } from 'store/store';
 import { DappProvider } from './DappProvider/DappProvider';
 import {
   getAccountProvider,
@@ -42,22 +45,19 @@ export class ProviderFactory {
 
     switch (type) {
       case ProviderTypeEnum.extension: {
-        const providerInstance = new ExtensionProviderStrategy();
-        createdProvider = await providerInstance.createProvider();
+        createdProvider = new ExtensionProviderStrategy();
 
         break;
       }
 
       case ProviderTypeEnum.crossWindow: {
-        const providerInstance = new CrossWindowProviderStrategy();
-        createdProvider = await providerInstance.createProvider();
+        createdProvider = new CrossWindowProviderStrategy();
 
         break;
       }
 
       case ProviderTypeEnum.ledger: {
-        const providerInstance = new LedgerProviderStrategy();
-        createdProvider = await providerInstance.createProvider({ anchor });
+        createdProvider = new LedgerProviderStrategy({ anchor });
 
         const ledgerIdleStateManager = LedgerIdleStateManager.getInstance();
         await ledgerIdleStateManager.init();
@@ -66,32 +66,36 @@ export class ProviderFactory {
       }
 
       case ProviderTypeEnum.metamask: {
-        const providerInstance = new IframeProviderStrategy({
+        createdProvider = new IframeProviderStrategy({
           type: IframeLoginTypes.metamask
         });
-
-        createdProvider = await providerInstance.createProvider();
 
         break;
       }
 
       case ProviderTypeEnum.passkey: {
-        const providerInstance = new IframeProviderStrategy({
+        createdProvider = new IframeProviderStrategy({
           type: IframeLoginTypes.passkey
         });
-        createdProvider = await providerInstance.createProvider();
 
         break;
       }
       case ProviderTypeEnum.walletConnect: {
-        const providerInstance = new WalletConnectProviderStrategy();
-        createdProvider = await providerInstance.createProvider({ anchor });
+        const walletConnectConfig = walletConnectConfigSelector(getState());
+
+        if (!walletConnectConfig?.walletConnectV2ProjectId) {
+          throw new Error(WalletConnectV2Error.invalidConfig);
+        }
+
+        createdProvider = new WalletConnectProviderStrategy({
+          anchor,
+          ...walletConnectConfig
+        });
 
         break;
       }
       case ProviderTypeEnum.webview: {
-        const providerInstance = new WebviewProviderStrategy();
-        createdProvider = await providerInstance.createProvider();
+        createdProvider = new WebviewProviderStrategy();
         break;
       }
 
@@ -114,7 +118,7 @@ export class ProviderFactory {
       throw new Error('Unable to create provider');
     }
 
-    createdProvider.getType = () => type;
+    await createdProvider.init();
     const dappProvider = new DappProvider(createdProvider);
 
     setAccountProvider(dappProvider);
