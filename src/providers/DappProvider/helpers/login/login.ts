@@ -45,11 +45,13 @@ async function loginWithNativeToken({
 
   const nativeAuthClient = nativeAuth(nativeAuthConfig);
 
-  const loginToken =
-    token ??
-    (await nativeAuthClient.initialize({
+  let loginToken = token;
+
+  if (!loginToken) {
+    loginToken = await nativeAuthClient.initialize({
       noCache: true
-    }));
+    });
+  }
 
   const { address, signature, ...loginResult } = await provider.login({
     token: loginToken
