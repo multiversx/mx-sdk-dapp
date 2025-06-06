@@ -44,7 +44,6 @@ async function loginWithNativeToken({
   } = getNetworkConfig();
 
   const nativeAuthClient = nativeAuth(nativeAuthConfig);
-
   let loginToken = token;
 
   if (!loginToken) {
