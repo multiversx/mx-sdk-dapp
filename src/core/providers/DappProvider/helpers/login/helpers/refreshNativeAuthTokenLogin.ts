@@ -1,5 +1,5 @@
-import { getAccount } from 'core/methods/account/getAccount';
 import { Address, Message } from 'lib/sdkCore';
+import { getAccount } from 'methods/account/getAccount';
 import { nativeAuth } from 'services/nativeAuth';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
