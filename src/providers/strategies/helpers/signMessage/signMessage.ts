@@ -3,7 +3,8 @@ import { Message } from 'lib/sdkCore';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
 import {
   ProviderType,
-  ProviderTypeEnum
+  ProviderTypeEnum,
+  ICustomProvider
 } from 'providers/types/providerFactory.types';
 import { SigningWarningsEnum } from 'types/enums.types';
 import { getPendingTransactionsHandlers } from '../getPendingTransactionsHandlers';
@@ -15,6 +16,12 @@ type SignMessageWithModalPropsType<T> = {
   cancelAction?: () => Promise<T> | undefined;
   providerType: string;
 };
+
+const isProviderType = (
+  allProviders: ICustomProvider[],
+  type: string
+): type is ProviderType =>
+  allProviders.some((provider) => provider.type === type);
 
 export async function signMessage<T>({
   message,
@@ -42,10 +49,6 @@ export async function signMessage<T>({
         ...allCustomProviderLabels
       };
 
-      function isProviderType(type: string): type is ProviderType {
-        return allProviders.some((provider) => provider.type === type);
-      }
-
       const handleClose = async () => {
         await onClose({ shouldCancelAction: true });
         reject({ message: SigningWarningsEnum.cancelled });
@@ -56,7 +59,7 @@ export async function signMessage<T>({
         handleClose
       );
 
-      const providerKey = isProviderType(providerType)
+      const providerKey = isProviderType(allProviders, providerType)
         ? providerType
         : ProviderTypeEnum.none;
 
