@@ -8,7 +8,10 @@ import { defineCustomElements } from 'lib/sdkDappUi';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
@@ -65,7 +68,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
     return this.provider.logout();
   }
 
-  getType(): ProviderTypeEnum {
+  getType(): ProviderType {
     return ProviderTypeEnum.ledger;
   }
 

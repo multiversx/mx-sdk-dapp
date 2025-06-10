@@ -4,7 +4,10 @@ import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
@@ -12,7 +15,14 @@ import { IframeProviderType } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
 
-const IFRAME_PROVIDER_MAP: Record<IframeLoginTypes, ProviderTypeEnum> = {
+type IframeProviderStrategyType =
+  | typeof ProviderTypeEnum.passkey
+  | typeof ProviderTypeEnum.metamask;
+
+const IFRAME_PROVIDER_MAP: Record<
+  IframeLoginTypes,
+  IframeProviderStrategyType
+> = {
   passkey: ProviderTypeEnum.passkey,
   metamask: ProviderTypeEnum.metamask
 };
@@ -67,7 +77,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     return this.provider.logout();
   }
 
-  getType(): ProviderTypeEnum {
+  getType(): ProviderType {
     return IFRAME_PROVIDER_MAP[this.type];
   }
 

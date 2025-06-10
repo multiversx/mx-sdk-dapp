@@ -5,12 +5,12 @@ import { ProviderFactory } from 'providers/ProviderFactory';
 import {
   IProviderBase,
   IProviderFactory,
+  ICustomProvider,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors';
 import { getState } from 'store/store';
 import {
-  AllowedProviderType,
   OnCloseUnlockPanelType,
   LoginHandlerType,
   UnlockPanelEventsEnum,
@@ -36,7 +36,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   private static instance: UnlockPanelManager;
   private static loginHandler: LoginHandlerType | null = null;
   private static onClose: OnCloseUnlockPanelType | null = null;
-  private static allowedProviders?: AllowedProviderType[] | null = null;
+  private static allowedProviders?: ICustomProvider[] | null = null;
 
   constructor() {
     super({
@@ -54,12 +54,12 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     return UnlockPanelManager.instance;
   }
 
-  public static init(params: UnlockPanelManagerInitParamsType) {
-    this.loginHandler = params.loginHandler;
-    this.allowedProviders = params.allowedProviders;
+  public static init(props: UnlockPanelManagerInitParamsType) {
+    this.loginHandler = props.loginHandler;
+    this.allowedProviders = props.allowedProviders;
 
-    if (params.onClose) {
-      this.onClose = params.onClose;
+    if (props.onClose) {
+      this.onClose = props.onClose;
     }
 
     return this.getInstance();
@@ -69,7 +69,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     const { walletAddress } = networkSelector(getState());
 
     this.data = {
-      providers: UnlockPanelManager.getProvidersList(),
+      providers: this.getProvidersList(),
       walletAddress
     };
 
@@ -136,26 +136,26 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     return takesZeroArguments;
   };
 
-  private static getProvidersList(): IProviderBase[] {
+  private getProvidersList(): IProviderBase[] {
     const customProviders = ProviderFactory.customProviders;
 
-    const enumProviderTypes = Object.values(ProviderTypeEnum).filter(
+    const defaultProviderTypes = Object.values(ProviderTypeEnum).filter(
       (type) =>
         type !== ProviderTypeEnum.none && type !== ProviderTypeEnum.webview
     );
 
     const allAvailableProviderTypes = [
-      ...enumProviderTypes,
+      ...defaultProviderTypes,
       ...customProviders.map((p) => p.type)
     ];
 
-    const allowedProviderTypes = this.allowedProviders
-      ? this.allowedProviders.filter((type) =>
-          allAvailableProviderTypes.includes(type)
-        )
+    const allowedProviderTypes = UnlockPanelManager.allowedProviders
+      ? UnlockPanelManager?.allowedProviders
+          .map((p) => p.type)
+          .filter((type) => allAvailableProviderTypes.includes(type))
       : allAvailableProviderTypes;
 
-    const providerList: IProviderBase[] = allowedProviderTypes.map((type) => {
+    const providerList = allowedProviderTypes.map((type) => {
       const custom = customProviders.find(
         (customProvider) => customProvider.type === type
       );
@@ -164,7 +164,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       }
 
       return {
-        name: providerLabels[type as ProviderTypeEnum] ?? type,
+        name: type in providerLabels ? providerLabels[type] : type,
         type
       };
     });

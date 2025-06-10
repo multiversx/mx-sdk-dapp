@@ -1,4 +1,4 @@
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import { ProviderType } from 'providers/types/providerFactory.types';
 import { TokenLoginType } from 'types/login.types';
 
 export interface WalletConnectLoginType {
@@ -17,10 +17,8 @@ export interface LoginInfoType {
   expires: number;
 }
 
-export interface LoginInfoSliceType<
-  T extends ProviderTypeEnum = ProviderTypeEnum
-> {
-  providerType: T[keyof T] | null;
+export interface LoginInfoSliceType<T extends ProviderType = ProviderType> {
+  providerType: T | null;
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;

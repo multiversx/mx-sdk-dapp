@@ -10,7 +10,10 @@ import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions';
 import { chainIdSelector, nativeAuthConfigSelector } from 'store/selectors';
 import { getState } from 'store/store';
@@ -61,7 +64,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     return this.provider.logout();
   }
 
-  getType(): ProviderTypeEnum {
+  getType(): ProviderType {
     return ProviderTypeEnum.walletConnect;
   }
 

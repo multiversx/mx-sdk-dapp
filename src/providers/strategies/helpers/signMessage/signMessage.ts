@@ -1,8 +1,16 @@
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message } from 'lib/sdkCore';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
+import {
+  ProviderType,
+  ProviderTypeEnum
+} from 'providers/types/providerFactory.types';
 import { SigningWarningsEnum } from 'types/enums.types';
 import { getPendingTransactionsHandlers } from '../getPendingTransactionsHandlers';
+
+function isProviderType(type: string): type is ProviderType {
+  return Object.values(ProviderTypeEnum).includes(type as ProviderType);
+}
 
 type SignMessageWithModalPropsType<T> = {
   message: Message;
@@ -33,9 +41,13 @@ export async function signMessage<T>({
         handleClose
       );
 
+      const providerKey = isProviderType(providerType)
+        ? providerType
+        : ProviderTypeEnum.none;
+
       manager.updateData({
-        name: providerLabels[providerType],
-        type: providerType
+        name: providerLabels[providerKey],
+        type: providerKey
       });
 
       try {
