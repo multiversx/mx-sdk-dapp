@@ -10,3 +10,4 @@ export {
   FormatAmountPropsType
 } from '@multiversx/sdk-dapp-utils/out/helpers/formatAmount';
 export { recommendGasPrice } from '@multiversx/sdk-dapp-utils/out/helpers/recommendGasPrice';
+export type { IDAppProviderOptions } from '@multiversx/sdk-dapp-utils/out/models/dappProviderBase';

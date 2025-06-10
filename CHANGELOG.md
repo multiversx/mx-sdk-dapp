@@ -8,6 +8,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Added `refreshNativeAuthTokenLogin` helper](https://github.com/multiversx/mx-sdk-dapp/pull/1422)
+- [Added custom login token support](https://github.com/multiversx/mx-sdk-dapp/pull/1448)
+- [Sync all providers to extend and implement BaseStrategyProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1446)
+- [Removed getShardOfAddress helper](https://github.com/multiversx/mx-sdk-dapp/pull/1445)
+- [Added formatted gasLimit and gasPrice](https://github.com/multiversx/mx-sdk-dapp/pull/1444)
+- [Improve getPppuOptions readalibity](https://github.com/multiversx/mx-sdk-dapp/pull/1443)
+
+## [[5.0.0-alpha.5](https://github.com/multiversx/mx-sdk-dapp/pull/1442)] - 2025-05-30
+
+- [Update Transaction Table types](https://github.com/multiversx/mx-sdk-dapp/pull/1441)
+- [Update README and add TSDoc comments](https://github.com/multiversx/mx-sdk-dapp/pull/1440)
+
+## [[5.0.0-alpha.4](https://github.com/multiversx/mx-sdk-dapp/pull/1439)] - 2025-05-29
+
+- [Fixed network imports](https://github.com/multiversx/mx-sdk-dapp/pull/1439)
+- [Revert `useGetNetworkConfig` breaking change](https://github.com/multiversx/mx-sdk-dapp/pull/1438)
+
+## [[5.0.0-alpha.3](https://github.com/multiversx/mx-sdk-dapp/pull/1437)] - 2025-05-28
+
+- [Update README and add transaciton methods](https://github.com/multiversx/mx-sdk-dapp/pull/1436)
+- [Fixed imports of some Ledger & xPortal components](https://github.com/multiversx/mx-sdk-dapp/pull/1434)
+- [Update README and change UnlockPanelManager onClose type](https://github.com/multiversx/mx-sdk-dapp/pull/1433)
+
+## [[5.0.0-alpha.2](https://github.com/multiversx/mx-sdk-dapp/pull/1431)] - 2025-05-26
+
+- [Fixed react store imports](https://github.com/multiversx/mx-sdk-dapp/pull/1430)
+
+## [[5.0.0-alpha.1](https://github.com/multiversx/mx-sdk-dapp/pull/1429)] - 2025-05-26
+
+- [Removed `core` folder and added `react` folder](https://github.com/multiversx/mx-sdk-dapp/pull/1428)
+- [Update unlock panel to use side panel base](https://github.com/multiversx/mx-sdk-dapp/pull/1427)
+- [Refactor and streamline side panel managers, event handling, and state management for transaction-related UI flows.](https://github.com/multiversx/mx-sdk-dapp/pull/1426)
+- [Add closeCallback in UnlockPanelManager](https://github.com/multiversx/mx-sdk-dapp/pull/1425)
 
 ## [[5.0.0-alpha.0](https://github.com/multiversx/mx-sdk-dapp/pull/1421)] - 2025-05-20
 

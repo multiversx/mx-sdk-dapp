@@ -1,9 +1,10 @@
 import {
   TransactionAgeType,
+  TransactionIconInfoType,
   TransactionMethodType
 } from 'types/serverTransactions.types';
 
-export interface TransactionsTableRowType {
+export type TransactionsRowType = {
   age: TransactionAgeType;
   direction?: string;
   method: TransactionMethodType;
@@ -13,14 +14,9 @@ export interface TransactionsTableRowType {
   sender: TransactionAccountType;
   txHash: string;
   value: TransactionValueType;
-}
+};
 
-export interface TransactionIconInfoType {
-  icon?: string;
-  tooltip: string;
-}
-
-export interface TransactionAccountType {
+type TransactionAccountType = {
   address: string;
   description: string;
   isContract: boolean;
@@ -30,9 +26,9 @@ export interface TransactionAccountType {
   shard?: string;
   shardLink?: string;
   showLink: boolean;
-}
+};
 
-export interface TransactionValueType {
+export type TransactionValueType = {
   badge?: string;
   collection?: string;
   egldLabel: string;
@@ -45,4 +41,4 @@ export interface TransactionValueType {
   titleText?: string;
   valueDecimal: string;
   valueInteger: string;
-}
+};

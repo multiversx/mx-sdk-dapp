@@ -1,4 +1,4 @@
-import { IPlainTransactionObject, Transaction } from '@multiversx/sdk-core/out';
+import { IPlainTransactionObject, Transaction } from 'lib/sdkCore';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import {
   TransactionBatchStatusesEnum,
