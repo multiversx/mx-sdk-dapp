@@ -6,7 +6,8 @@ import {
   IProviderBase,
   IProviderFactory,
   ICustomProvider,
-  ProviderTypeEnum
+  ProviderTypeEnum,
+  ProviderType
 } from 'providers/types/providerFactory.types';
 import { networkSelector } from 'store/selectors';
 import { getState } from 'store/store';
@@ -149,6 +150,19 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       ...customProviders.map((p) => p.type)
     ];
 
+    const customProviderLabels = customProviders.reduce(
+      (acc, provider) => {
+        acc[provider.type] = provider.name;
+        return acc;
+      },
+      {} as Record<ProviderType, string>
+    );
+
+    const allAvailableLabels = {
+      ...providerLabels,
+      ...customProviderLabels
+    };
+
     const allowedProviderTypes = UnlockPanelManager.allowedProviders
       ? UnlockPanelManager?.allowedProviders
           .map((p) => p.type)
@@ -164,7 +178,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       }
 
       return {
-        name: type in providerLabels ? providerLabels[type] : type,
+        name: type in allAvailableLabels ? allAvailableLabels[type] : type,
         type
       };
     });

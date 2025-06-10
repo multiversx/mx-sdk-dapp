@@ -7,10 +7,7 @@ import {
 } from 'providers/types/providerFactory.types';
 import { SigningWarningsEnum } from 'types/enums.types';
 import { getPendingTransactionsHandlers } from '../getPendingTransactionsHandlers';
-
-function isProviderType(type: string): type is ProviderType {
-  return Object.values(ProviderTypeEnum).includes(type as ProviderType);
-}
+import { ProviderFactory } from 'providers/ProviderFactory';
 
 type SignMessageWithModalPropsType<T> = {
   message: Message;
@@ -31,6 +28,24 @@ export async function signMessage<T>({
         cancelAction
       });
 
+      const allProviders = Object.values(ProviderFactory.customProviders);
+      const allCustomProviderLabels = allProviders.reduce(
+        (acc, provider) => {
+          acc[provider.type] = provider.name;
+          return acc;
+        },
+        {} as Record<ProviderType, string>
+      );
+
+      const allProviderLabels = {
+        ...providerLabels,
+        ...allCustomProviderLabels
+      };
+
+      function isProviderType(type: string): type is ProviderType {
+        return allProviders.some((provider) => provider.type === type);
+      }
+
       const handleClose = async () => {
         await onClose({ shouldCancelAction: true });
         reject({ message: SigningWarningsEnum.cancelled });
@@ -46,7 +61,7 @@ export async function signMessage<T>({
         : ProviderTypeEnum.none;
 
       manager.updateData({
-        name: providerLabels[providerKey],
+        name: allProviderLabels[providerKey],
         type: providerKey
       });
 
