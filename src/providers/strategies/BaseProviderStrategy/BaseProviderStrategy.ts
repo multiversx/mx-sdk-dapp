@@ -1,21 +1,65 @@
+import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { IProviderAccount } from '@multiversx/sdk-wallet-connect-provider/out';
+import { providerLabels } from 'constants/index';
+import { Transaction, Message } from 'lib/sdkCore';
+import { IDAppProviderOptions } from 'lib/sdkDappUtils';
+import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';
 import { getAddress } from 'methods/account/getAddress';
+import {
+  IProvider,
+  ProviderTypeEnum
+} from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
+import { getPendingTransactionsHandlers } from '../helpers';
 
 export type LoginOptionsTypes = {
   token?: string;
 };
 
-export abstract class BaseProviderStrategy {
-  protected address: string = '';
+export abstract class BaseProviderStrategy implements IProvider {
+  protected address?: string = '';
   protected _login:
     | ((options?: LoginOptionsTypes) => Promise<IProviderAccount | null>)
     | null = null;
   protected loginAbortController: AbortController | null = null;
 
+  /*
+   * Allow setting provider address without store login
+   */
   constructor(address?: string) {
     this.address = address ?? '';
   }
+
+  abstract init(): Promise<boolean>;
+  abstract logout(): Promise<boolean>;
+  abstract getType(): ProviderTypeEnum;
+
+  abstract getAddress(): Promise<string | undefined>;
+  abstract setAccount(account: IDAppProviderAccount): void;
+  abstract isInitialized(): boolean;
+
+  isConnected?(): boolean;
+
+  getAccount(): IDAppProviderAccount | null {
+    throw new Error('Method not implemented.');
+  }
+
+  signTransaction(
+    _transaction: Transaction,
+    _options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction | undefined>> {
+    throw new Error('Method not implemented.');
+  }
+
+  abstract signTransactions(
+    transactions: Transaction[],
+    options?: IDAppProviderOptions
+  ): Promise<Nullable<Transaction[]>>;
+
+  abstract signMessage(
+    messageToSign: Message,
+    options?: IDAppProviderOptions
+  ): Promise<Nullable<Message>>;
 
   public async login(
     options?: LoginOptionsTypes
@@ -59,7 +103,7 @@ export abstract class BaseProviderStrategy {
       this.loginAbortController.abort();
     }
 
-    this.cancelAction();
+    this.cancelAction?.();
     this.loginAbortController = null;
   };
 
@@ -85,16 +129,14 @@ export abstract class BaseProviderStrategy {
 
   /**
    * Initializes the provider by setting the address if it is not already set.
-   * This method is typically used during the creation of a provider to ensure
-   * that the address is properly initialized. If the address is already set
-   * or cannot be retrieved, the method will exit without making changes.
    */
-  protected initialize = () => {
+  protected initializeAddress = () => {
     if (this.address) {
       return;
     }
 
     const address = getAddress();
+
     if (!address) {
       return;
     }
@@ -102,14 +144,28 @@ export abstract class BaseProviderStrategy {
     this.address = address;
   };
 
+  cancelAction: (() => Promise<void>) | undefined = undefined;
+
   /**
-   * This method is intended to be overridden by subclasses to define the specific
-   * action to be executed when a cancel login event occurs.
-   *
-   * Subclasses should provide their own implementation to handle the cancel login
-   * behavior appropriately.
+   * This method should be overridden by subclasses to handle cancel login event.
    */
-  protected cancelAction() {
-    return;
+  // async cancelAction(): Promise<void> {
+  //   throw new Error('Method not implemented.');
+  // }
+
+  protected async initSignState() {
+    const { onClose, manager } = await getPendingTransactionsHandlers({
+      cancelAction: this.cancelAction?.bind(this)
+    });
+
+    const type = this.getType();
+    manager.subscribeToEventBus(PendingTransactionsEventsEnum.CLOSE, onClose);
+
+    manager.updateData({
+      name: providerLabels[type],
+      type
+    });
+
+    return { onClose, manager };
   }
 }

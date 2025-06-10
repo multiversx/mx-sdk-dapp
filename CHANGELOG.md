@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.6](https://github.com/multiversx/mx-sdk-dapp/pull/1449)] - 2025-06-10
+
+- [Added support for dyamic Wallet address](https://github.com/multiversx/mx-sdk-dapp/pull/1447)
+- [Added `refreshNativeAuthTokenLogin` helper](https://github.com/multiversx/mx-sdk-dapp/pull/1422)
+- [Added custom login token support](https://github.com/multiversx/mx-sdk-dapp/pull/1448)
+- [Sync all providers to extend and implement BaseStrategyProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1446)
+- [Removed getShardOfAddress helper](https://github.com/multiversx/mx-sdk-dapp/pull/1445)
+- [Added formatted gasLimit and gasPrice](https://github.com/multiversx/mx-sdk-dapp/pull/1444)
+- [Improve getPppuOptions readalibity](https://github.com/multiversx/mx-sdk-dapp/pull/1443)
+
 ## [[5.0.0-alpha.5](https://github.com/multiversx/mx-sdk-dapp/pull/1442)] - 2025-05-30
 
 - [Update Transaction Table types](https://github.com/multiversx/mx-sdk-dapp/pull/1441)

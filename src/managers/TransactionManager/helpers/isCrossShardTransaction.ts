@@ -1,5 +1,4 @@
-import { Address } from 'lib/sdkCore';
-import { getShardOfAddress } from './getShardOfAddress';
+import { Address, AddressComputer } from 'lib/sdkCore';
 
 export interface IsCrossShardTransactionPropsType {
   receiverAddress: string;
@@ -11,14 +10,16 @@ export function isCrossShardTransaction({
   senderShard,
   senderAddress
 }: IsCrossShardTransactionPropsType) {
+  const addressComputer = new AddressComputer();
   try {
     const receiver = new Address(receiverAddress);
-    const receiverShard = getShardOfAddress(receiver.pubkey());
+    const computedReceiverShard = addressComputer.getShardOfAddress(receiver);
     if (senderShard == null && senderAddress != null) {
       const sender = new Address(senderAddress);
-      return getShardOfAddress(sender.pubkey()) !== receiverShard;
+      const computedSenderShard = addressComputer.getShardOfAddress(sender);
+      return computedSenderShard !== computedReceiverShard;
     }
-    return receiverShard !== senderShard;
+    return computedReceiverShard !== senderShard;
   } catch (_err) {
     return false;
   }

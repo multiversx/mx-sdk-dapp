@@ -24,7 +24,7 @@ export async function signMessage<T>({
       });
 
       const handleClose = async () => {
-        await onClose({ shouldCancelAction: false });
+        await onClose({ shouldCancelAction: true });
         reject({ message: SigningWarningsEnum.cancelled });
       };
 

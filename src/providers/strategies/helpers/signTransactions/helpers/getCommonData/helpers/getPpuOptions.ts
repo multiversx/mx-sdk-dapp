@@ -48,33 +48,32 @@ export const getPpuOptions = ({
   const isFasterGasPrice = new BigNumber(fasterGasPrice).isGreaterThan(
     initialGasPrice || 0
   );
-
   const isEditingGasPriceEnabled = isFastGasPrice || isFasterGasPrice;
 
-  const ppuOptions = isEditingGasPriceEnabled
-    ? [
-        {
-          label: 'Standard',
-          value: EMPTY_PPU
-        },
-        ...(isFastGasPrice
-          ? [
-              {
-                label: 'Fast',
-                value: fastPpu
-              }
-            ]
-          : []),
-        ...(isFasterGasPrice
-          ? [
-              {
-                label: 'Faster',
-                value: fasterPpu
-              }
-            ]
-          : [])
-      ]
-    : [];
+  if (!isEditingGasPriceEnabled) {
+    return [];
+  }
+
+  const ppuOptions = [
+    {
+      label: 'Standard',
+      value: EMPTY_PPU
+    }
+  ];
+
+  if (isFastGasPrice) {
+    ppuOptions.push({
+      label: 'Fast',
+      value: fastPpu
+    });
+  }
+
+  if (isFasterGasPrice) {
+    ppuOptions.push({
+      label: 'Faster',
+      value: fasterPpu
+    });
+  }
 
   return ppuOptions;
 };

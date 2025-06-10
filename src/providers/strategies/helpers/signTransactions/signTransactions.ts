@@ -1,6 +1,7 @@
 import { getEconomics } from 'apiCalls/economics/getEconomics';
 import { EMPTY_PPU } from 'constants/placeholders.constants';
 import { Transaction } from 'lib/sdkCore';
+import { DECIMALS, DIGITS, formatAmount } from 'lib/sdkDappUtils';
 import { SignTransactionsStateManager } from 'managers/internal/SignTransactionsStateManager/SignTransactionsStateManager';
 import {
   ISignTransactionsPanelCommonData,
@@ -139,10 +140,17 @@ export async function signTransactions({
         price
       });
 
+      const formattedGasPrice = formatAmount({
+        input: newGasPrice.toString(),
+        decimals: DECIMALS,
+        addCommas: true,
+        digits: DIGITS
+      });
+
       manager.updateCommonData({
         feeLimit: feeData.feeLimitFormatted,
         feeInFiatLimit: feeData.feeInFiatLimit,
-        gasPrice: newGasPrice.toString(),
+        gasPrice: formattedGasPrice,
         ppu
       });
     };

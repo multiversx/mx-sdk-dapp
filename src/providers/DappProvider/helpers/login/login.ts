@@ -30,19 +30,27 @@ async function loginWithoutNativeToken(provider: IProvider) {
   };
 }
 
-async function loginWithNativeToken(
-  provider: IProvider,
-  nativeAuthConfig: NativeAuthConfigType
-) {
+async function loginWithNativeToken({
+  provider,
+  nativeAuthConfig,
+  token
+}: {
+  provider: IProvider;
+  nativeAuthConfig: NativeAuthConfigType;
+  token?: string;
+}) {
   const {
     network: { apiAddress }
   } = getNetworkConfig();
 
   const nativeAuthClient = nativeAuth(nativeAuthConfig);
+  let loginToken = token;
 
-  const loginToken = await nativeAuthClient.initialize({
-    noCache: true
-  });
+  if (!loginToken) {
+    loginToken = await nativeAuthClient.initialize({
+      noCache: true
+    });
+  }
 
   const { address, signature, ...loginResult } = await provider.login({
     token: loginToken
@@ -91,11 +99,15 @@ async function loginWithNativeToken(
   };
 }
 
-export async function login(provider: IProvider) {
+export async function login(provider: IProvider, options?: { token?: string }) {
   const nativeAuthConfig = nativeAuthConfigSelector(getState());
 
   if (nativeAuthConfig) {
-    const data = await loginWithNativeToken(provider, nativeAuthConfig);
+    const data = await loginWithNativeToken({
+      provider,
+      nativeAuthConfig,
+      token: options?.token
+    });
     return data;
   }
 

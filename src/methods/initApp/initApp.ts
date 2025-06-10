@@ -1,6 +1,5 @@
 import { safeWindow } from 'constants/index';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
-import { login } from 'providers/DappProvider/helpers/login/login';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import {
@@ -94,10 +93,10 @@ export async function initApp({
       type: ProviderTypeEnum.webview
     });
 
-    const isInitialized = provider.isInitialized();
+    const isInitialized = await provider.init();
 
     if (isInitialized && !isLoggedIn) {
-      await login(provider.getProvider());
+      await provider.login();
     }
   }
 

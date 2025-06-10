@@ -2,6 +2,7 @@ export {
   Transaction,
   TransactionVersion,
   Address,
+  AddressComputer,
   TransactionComputer,
   TransactionOptions,
   Message,
