@@ -24,8 +24,8 @@ export class DappProvider {
     return this.provider.init();
   }
 
-  async login() {
-    const data = await login(this.provider);
+  async login(options?: { token?: string }) {
+    const data = await login(this.provider, options);
     return data;
   }
 
