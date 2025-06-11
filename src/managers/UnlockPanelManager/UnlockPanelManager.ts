@@ -55,12 +55,12 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     return UnlockPanelManager.instance;
   }
 
-  public static init(props: UnlockPanelManagerInitParamsType) {
-    this.loginHandler = props.loginHandler;
-    this.allowedProviders = props.allowedProviders;
+  public static init(params: UnlockPanelManagerInitParamsType) {
+    this.loginHandler = params.loginHandler;
+    this.allowedProviders = params.allowedProviders;
 
-    if (props.onClose) {
-      this.onClose = props.onClose;
+    if (params.onClose) {
+      this.onClose = params.onClose;
     }
 
     return this.getInstance();
