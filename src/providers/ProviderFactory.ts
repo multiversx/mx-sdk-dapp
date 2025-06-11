@@ -122,18 +122,19 @@ export class ProviderFactory {
     const dappProvider = new DappProvider(createdProvider);
 
     setAccountProvider(dappProvider);
-    const providerType = type as ProviderTypeEnum;
-    setProviderType(providerType);
+    setProviderType(type);
 
-    const shouldClearInitiatedLogins = [
-      ProviderTypeEnum.crossWindow,
-      ProviderTypeEnum.metamask,
-      ProviderTypeEnum.passkey
-    ].includes(providerType);
+    const shouldClearInitiatedLogins =
+      type in
+      [
+        ProviderTypeEnum.crossWindow,
+        ProviderTypeEnum.metamask,
+        ProviderTypeEnum.passkey
+      ];
 
     // Clear initiated logins and skip the login method if it's crossWindow or metamask
     clearInitiatedLogins(
-      shouldClearInitiatedLogins ? { skipLoginMethod: providerType } : null
+      shouldClearInitiatedLogins ? { skipLoginMethod: type } : null
     );
 
     return dappProvider;

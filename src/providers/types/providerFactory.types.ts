@@ -1,6 +1,6 @@
 import type { IDAppProviderBase } from '@multiversx/sdk-dapp-utils';
 
-export interface IProvider<T extends ProviderTypeEnum = ProviderTypeEnum>
+export interface IProvider<T extends ProviderType = ProviderType>
   extends IDAppProviderBase {
   init: () => Promise<boolean>;
   login: (options?: { callbackUrl?: string; token?: string }) => Promise<{
@@ -13,7 +13,7 @@ export interface IProvider<T extends ProviderTypeEnum = ProviderTypeEnum>
   logout: () => Promise<boolean>;
   cancelLogin?: () => void;
   setShouldShowConsentPopup?: (shouldShow: boolean) => void;
-  getType: () => T[keyof T] | string;
+  getType: () => T;
   getAddress(): Promise<string | undefined>;
 }
 
@@ -23,30 +23,31 @@ export interface IProviderConfig {
   };
 }
 
-export enum ProviderTypeEnum {
-  extension = 'extension',
-  metamask = 'metamask',
-  passkey = 'passkey',
-  walletConnect = 'walletConnect',
-  ledger = 'ledger',
-  crossWindow = 'crossWindow',
-  webview = 'webview',
-  none = ''
-}
+export const ProviderTypeEnum = {
+  extension: 'extension',
+  metamask: 'metamask',
+  passkey: 'passkey',
+  walletConnect: 'walletConnect',
+  ledger: 'ledger',
+  crossWindow: 'crossWindow',
+  webview: 'webview',
+  none: ''
+} as const;
 
-export interface IProviderFactory<
-  T extends ProviderTypeEnum = ProviderTypeEnum
-> {
-  type: T[keyof T];
+export type ProviderType =
+  (typeof ProviderTypeEnum)[keyof typeof ProviderTypeEnum];
+
+export interface IProviderFactory<T extends ProviderType = ProviderType> {
+  type: T;
   anchor?: HTMLElement;
 }
 
-export interface IProviderBase<T extends ProviderTypeEnum = ProviderTypeEnum> {
+export interface IProviderBase<T extends ProviderType = ProviderType> {
   name: string;
-  type: T[keyof T];
+  type: T;
   iconUrl?: string;
 }
-export interface ICustomProvider<T extends ProviderTypeEnum = ProviderTypeEnum>
+export interface ICustomProvider<T extends ProviderType = ProviderType>
   extends IProviderBase<T> {
   constructor: (options?: {
     address?: string;

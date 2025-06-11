@@ -1,10 +1,10 @@
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
-import { ProviderTypeEnum } from '../types/providerFactory.types';
+import { ProviderTypeEnum, ProviderType } from '../types/providerFactory.types';
 
 export const clearInitiatedLogins = (
   props?: {
-    skipLoginMethod: ProviderTypeEnum;
+    skipLoginMethod: ProviderType;
   } | null
 ) => {
   Object.values(ProviderTypeEnum).forEach((method) => {

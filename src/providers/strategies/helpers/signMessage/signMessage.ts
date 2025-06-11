@@ -1,8 +1,14 @@
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message } from 'lib/sdkCore';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager/types/pendingTransactions.types';
+import {
+  ProviderType,
+  ProviderTypeEnum,
+  ICustomProvider
+} from 'providers/types/providerFactory.types';
 import { SigningWarningsEnum } from 'types/enums.types';
 import { getPendingTransactionsHandlers } from '../getPendingTransactionsHandlers';
+import { ProviderFactory } from 'providers/ProviderFactory';
 
 type SignMessageWithModalPropsType<T> = {
   message: Message;
@@ -10,6 +16,12 @@ type SignMessageWithModalPropsType<T> = {
   cancelAction?: () => Promise<T> | undefined;
   providerType: string;
 };
+
+const isProviderType = (
+  allProviders: ICustomProvider[],
+  type: string
+): type is ProviderType =>
+  allProviders.some((provider) => provider.type === type);
 
 export async function signMessage<T>({
   message,
@@ -23,6 +35,20 @@ export async function signMessage<T>({
         cancelAction
       });
 
+      const allProviders = Object.values(ProviderFactory.customProviders);
+      const allCustomProviderLabels = allProviders.reduce(
+        (acc, provider) => {
+          acc[provider.type] = provider.name;
+          return acc;
+        },
+        {} as Record<ProviderType, string>
+      );
+
+      const allProviderLabels = {
+        ...providerLabels,
+        ...allCustomProviderLabels
+      };
+
       const handleClose = async () => {
         await onClose({ shouldCancelAction: true });
         reject({ message: SigningWarningsEnum.cancelled });
@@ -33,9 +59,13 @@ export async function signMessage<T>({
         handleClose
       );
 
+      const providerKey = isProviderType(allProviders, providerType)
+        ? providerType
+        : ProviderTypeEnum.none;
+
       manager.updateData({
-        name: providerLabels[providerType],
-        type: providerType
+        name: allProviderLabels[providerKey],
+        type: providerKey
       });
 
       try {
