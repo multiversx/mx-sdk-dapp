@@ -2361,12 +2361,13 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-opera-provider/-/sdk-opera-provider-1.0.0-alpha.1.tgz#2beebd5423fdc2e667b33660f17cbff325449097"
   integrity sha512-5hrqn+kNpuy/S6eV5wh5mE4lvQo0PduZ7fLsh/2Srcaz3K5kM5lE1VyQmWk4DTxToZSldrGbgWz/olezoC6fPg==
 
-"@multiversx/sdk-passkey-provider@3.0.2":
-  version "3.0.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-3.0.2.tgz#5fdaaeb553f3bd2fabaad32c27259ea3e3bd1aa8"
-  integrity sha512-JW0EKEKzw0gyOc/dXzhkFJuTdpYyWdD6Qs0GFeFI90DhSydsyTKJoMC8gkWtx9dlOyuTAW152qc+llkIgLCOyA==
+"@multiversx/sdk-passkey-provider@3.0.3":
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-passkey-provider/-/sdk-passkey-provider-3.0.3.tgz#46404a9c8a347532f7d338b4e659befed2bbe77d"
+  integrity sha512-wP6+JVUlqCe5IH2qBlB2+w4Sd5MZjFYUujZV9ysEHX6R4cGEDa7KvUm2GvkxuHP5a8ltGy25Bx6B471Cj/zJig==
   dependencies:
     "@noble/ed25519" "2.1.0"
+    "@noble/hashes" "1.8.0"
     "@types/jest" "29.5.11"
     short-unique-id "5.2.0"
 
@@ -2386,17 +2387,17 @@
     "@walletconnect/utils" "2.20.2"
     bech32 "1.1.4"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-3.0.0.tgz#f7a3f5cf16e6a91ae9ac6f2a0a2e5d05f7b97379"
-  integrity sha512-D1y49UOdjAxqU7o8JqBlFnfZD+KvUDq+hU6qNEcJjgiQYo4eY3tFGbssxPnooXOCUNa4AUtUVyabQSupd4BEfQ==
+"@multiversx/sdk-web-wallet-cross-window-provider@3.1.1":
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-3.1.1.tgz#62534fb4a2cadfc173a54d4d85343a7b1be98226"
+  integrity sha512-1hw9Z7HwceQXk6XpOIvYSwmIxDrdoIhUNzLP4VGvsVHJcLw7mqbhA+txXqqevCgB61VmHBV6FNLRWp6U6JvgEw==
   dependencies:
     qs "6.11.2"
 
-"@multiversx/sdk-web-wallet-iframe-provider@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-iframe-provider/-/sdk-web-wallet-iframe-provider-3.0.0.tgz#65068b2fa9fc0084a2c4fb90d8e686df14258e5e"
-  integrity sha512-qEPARy3iMsmnOiRKBsAN2PCXP1l1kHpNn+8MvVFmdHC6jt5mdyKJw5Dj7CgReoLeuHwUtGDp5OGjUUGk6Cf9gg==
+"@multiversx/sdk-web-wallet-iframe-provider@3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-iframe-provider/-/sdk-web-wallet-iframe-provider-3.0.1.tgz#e3b9d1584f6a7b02ee1d27ff0c56bc0524c3a911"
+  integrity sha512-fXqkWPhuEiyg57JzZjgkktzRfL/pQ/7fM4wuIN8dIYUngfwEwa0uqpJy5DU90Pcqm0S2gf8whPmAeSZ7K8H5aQ==
   dependencies:
     "@types/jest" "^29.5.11"
     "@types/qs" "6.9.10"
