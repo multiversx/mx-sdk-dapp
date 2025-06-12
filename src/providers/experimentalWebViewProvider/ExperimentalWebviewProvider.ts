@@ -40,13 +40,17 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     });
   }
 
-  init = async () => {
-    return await this._provider.init();
+  init = async (version?: string) => {
+    return await this._provider.init(version);
   };
 
-  login = async () => {
-    const data = await this._provider.login();
-    return { address: data?.address ?? '' };
+  login = async (options?: { token?: string }) => {
+    const data = await this._provider.login(options);
+    return {
+      address: data?.address ?? '',
+      signature: data?.signature ?? '',
+      accessToken: data?.accessToken ?? ''
+    };
   };
 
   logout = async () => {

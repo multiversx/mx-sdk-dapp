@@ -1,33 +1,19 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
-import { ExperimentalWebviewProvider } from 'providers/experimentalWebViewProvider/ExperimentalWebviewProvider';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
-import { setWebviewLogin } from 'reduxStore/slices';
 import { persistor, store } from 'reduxStore/store';
-import { getAccessTokenFromSearchParams } from 'utils/account/getAccessTokenFromSearchParams';
 import { CustomNetworkType, IDappProvider, DappConfigType } from '../../types';
 import {
   AppInitializer,
   UseAppInitializerPropsType
 } from './../../wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
+import { useInitiateExperimentalWebviewLogin } from 'providers/experimentalWebViewProvider/useInitiateExperimentalWebviewLogin';
 
 export { DappConfigType };
-
-const setWebviewProvider = () => {
-  const providerInstance = ExperimentalWebviewProvider.getInstance();
-
-  const accessToken = getAccessTokenFromSearchParams();
-  setWebviewLogin({
-    data: accessToken
-  });
-
-  providerInstance.init?.();
-  setExternalProvider(providerInstance);
-};
 
 export interface DappProviderPropsType {
   children: React.ReactNode | ReactElement;
@@ -52,11 +38,15 @@ export const DappProvider = ({
     throw new Error('missing environment flag');
   }
 
-  if (externalProvider != null) {
-    setExternalProvider(externalProvider);
-  } else if (dappConfig?.shouldUseWebViewProvider) {
-    setWebviewProvider();
-  }
+  const experimentalWebviewLogin = useInitiateExperimentalWebviewLogin();
+
+  useEffect(() => {
+    if (externalProvider != null) {
+      setExternalProvider(externalProvider);
+    } else if (dappConfig?.shouldUseWebViewProvider) {
+      experimentalWebviewLogin();
+    }
+  }, []);
 
   return (
     <Provider context={DappCoreContext} store={store}>

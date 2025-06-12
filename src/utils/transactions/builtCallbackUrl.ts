@@ -1,4 +1,4 @@
-import { SDK_DAPP_VERSION } from 'constants/index';
+import { SDK_DAPP_VERSION, version } from 'constants/index';
 
 function buildUrlParams(
   search: string,
@@ -16,8 +16,6 @@ function buildUrlParams(
 
   return { nextUrlParams, params };
 }
-
-const version = '__sdkDappVersion'; // will be replaced at build time
 
 export interface ReplyUrlType {
   callbackUrl: string;
