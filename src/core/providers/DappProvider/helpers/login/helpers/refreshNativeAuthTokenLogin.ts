@@ -20,7 +20,7 @@ export const refreshNativeAuthTokenLogin = async ({
     options: Record<any, any>
   ) => Promise<Message>;
   nativeAuthClientConfig?: NativeAuthConfigType;
-}): Promise<string> => {
+}): Promise<string | null> => {
   const { address } = getAccount();
   const network = networkSelector(getState());
   const defaultNativeAuthConfig = getDefaultNativeAuthConfig(
@@ -36,7 +36,7 @@ export const refreshNativeAuthTokenLogin = async ({
   });
 
   if (!loginToken) {
-    return '';
+    return null;
   }
 
   const messageToSign = new Message({
