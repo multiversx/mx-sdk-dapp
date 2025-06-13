@@ -20,7 +20,7 @@ export const refreshNativeAuthTokenLogin = async ({
     options: Record<any, any>
   ) => Promise<Message>;
   nativeAuthClientConfig?: NativeAuthConfigType;
-}) => {
+}): Promise<string> => {
   const { address } = getAccount();
   const network = networkSelector(getState());
   const defaultNativeAuthConfig = getDefaultNativeAuthConfig(
@@ -36,7 +36,7 @@ export const refreshNativeAuthTokenLogin = async ({
   });
 
   if (!loginToken) {
-    return;
+    return '';
   }
 
   const messageToSign = new Message({
@@ -50,10 +50,14 @@ export const refreshNativeAuthTokenLogin = async ({
     throw 'Message not signed';
   }
 
-  const nativeAuthToken = setTokenLogin({
+  setTokenLogin({
     loginToken,
     signature: Buffer.from(signedMessage.signature).toString('hex')
   });
 
-  return nativeAuthToken;
+  return nativeAuthClient.getToken({
+    address,
+    token: loginToken,
+    signature: Buffer.from(signedMessage.signature).toString('hex')
+  });
 };

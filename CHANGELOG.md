@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Refactor `refreshNativeAuthTokenLogin` to return netivateAuthToken](https://github.com/multiversx/mx-sdk-dapp/pull/1450)
+
 ## [[5.0.0-alpha.6](https://github.com/multiversx/mx-sdk-dapp/pull/1449)] - 2025-06-10
 
 - [Added support for dyamic Wallet address](https://github.com/multiversx/mx-sdk-dapp/pull/1447)
