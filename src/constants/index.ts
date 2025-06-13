@@ -30,6 +30,7 @@ export const ALL_SHARDS_SHARD_ID = 4294967280;
 export const DAPP_INIT_ROUTE = '/dapp/init';
 export const WALLET_SIGN_SESSION = 'signSession';
 export const SDK_DAPP_VERSION = 'sdk-dapp-version';
+export const version = '__sdkDappVersion'; // will be replaced at build time
 
 export const LOGOUT_ACTION_NAME = 'logout';
 export const LOGIN_ACTION_NAME = 'login';
