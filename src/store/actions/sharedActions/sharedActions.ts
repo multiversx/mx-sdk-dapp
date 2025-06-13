@@ -1,14 +1,15 @@
 import { Address } from 'lib/sdkCore';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import { resetStore } from 'store/middleware/logoutMiddleware';
 import { getStore } from 'store/store';
 
 export const logoutAction = () => getStore().setState(resetStore);
-export interface LoginActionPayloadType<
-  T extends ProviderTypeEnum = ProviderTypeEnum
-> {
+export interface LoginActionPayloadType<T extends ProviderType = ProviderType> {
   address: string;
-  providerType: T[keyof T];
+  providerType: T;
 }
 
 export const loginAction = ({

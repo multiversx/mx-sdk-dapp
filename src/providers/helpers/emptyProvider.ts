@@ -5,6 +5,7 @@ import {
 } from '@multiversx/sdk-dapp-utils/out';
 import {
   IProvider,
+  ProviderType,
   ProviderTypeEnum
 } from 'providers/types/providerFactory.types';
 
@@ -113,7 +114,7 @@ export class EmptyProvider implements IProvider {
     throw new Error(notInitializedError('getAddress'));
   }
 
-  getType(): ProviderTypeEnum {
+  getType(): ProviderType {
     return ProviderTypeEnum.none;
   }
 }

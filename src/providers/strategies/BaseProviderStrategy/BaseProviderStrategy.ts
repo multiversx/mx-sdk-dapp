@@ -5,10 +5,7 @@ import { Transaction, Message } from 'lib/sdkCore';
 import { IDAppProviderOptions } from 'lib/sdkDappUtils';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';
 import { getAddress } from 'methods/account/getAddress';
-import {
-  IProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { IProvider, ProviderType } from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getPendingTransactionsHandlers } from '../helpers';
 
@@ -16,7 +13,10 @@ export type LoginOptionsTypes = {
   token?: string;
 };
 
-export abstract class BaseProviderStrategy implements IProvider {
+export abstract class BaseProviderStrategy<
+  T extends ProviderType = ProviderType
+> implements IProvider<T>
+{
   protected address?: string = '';
   protected _login:
     | ((options?: LoginOptionsTypes) => Promise<IProviderAccount | null>)
@@ -32,7 +32,7 @@ export abstract class BaseProviderStrategy implements IProvider {
 
   abstract init(): Promise<boolean>;
   abstract logout(): Promise<boolean>;
-  abstract getType(): ProviderTypeEnum;
+  abstract getType(): T;
 
   abstract getAddress(): Promise<string | undefined>;
   abstract setAccount(account: IDAppProviderAccount): void;

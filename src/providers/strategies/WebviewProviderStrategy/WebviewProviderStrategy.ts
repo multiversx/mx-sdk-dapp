@@ -1,7 +1,10 @@
 import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { Message, Transaction } from 'lib/sdkCore';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 
@@ -27,7 +30,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
     return this.provider.logout();
   }
 
-  getType(): ProviderTypeEnum {
+  getType(): ProviderType {
     return ProviderTypeEnum.webview;
   }
 

@@ -3,7 +3,10 @@ import { isBrowserWithPopupConfirmation } from 'constants/browser.constants';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import { crossWindowConfigSelector } from 'store/selectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
@@ -53,7 +56,7 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     return this.provider.logout();
   }
 
-  getType(): ProviderTypeEnum {
+  getType(): ProviderType {
     return ProviderTypeEnum.crossWindow;
   }
 
