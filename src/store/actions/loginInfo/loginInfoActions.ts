@@ -1,4 +1,7 @@
-import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
+import {
+  ProviderTypeEnum,
+  ProviderType
+} from 'providers/types/providerFactory.types';
 import {
   LedgerLoginType,
   LoginInfoType,
@@ -7,7 +10,7 @@ import {
 import { getStore } from 'store/store';
 import { TokenLoginType } from 'types/login.types';
 
-export const setProviderType = <T extends ProviderTypeEnum = ProviderTypeEnum>(
+export const setProviderType = <T extends ProviderType = ProviderType>(
   providerType: T
 ) =>
   getStore().setState(
