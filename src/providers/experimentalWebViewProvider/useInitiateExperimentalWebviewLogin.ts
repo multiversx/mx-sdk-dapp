@@ -35,13 +35,21 @@ export function useInitiateExperimentalWebviewLogin() {
     const provider: ExperimentalWebviewProvider =
       ExperimentalWebviewProvider.getInstance();
 
-    // maybe not needed
     const accessToken = getAccessTokenFromSearchParams();
-    setWebviewLogin({
-      data: accessToken
-    });
+
+    // is logging in from URL
+    if (accessToken) {
+      setWebviewLogin({
+        data: accessToken
+      });
+      provider.init();
+      setExternalProvider(provider);
+      return;
+    }
 
     try {
+      const token = await loginService.getNativeAuthLoginToken();
+
       const isSuccessfullyInitialized: boolean = await provider.init(version);
 
       if (!isSuccessfullyInitialized) {
@@ -50,8 +58,6 @@ export function useInitiateExperimentalWebviewLogin() {
         );
         return;
       }
-
-      const token = await loginService.getNativeAuthLoginToken();
 
       // Fetching block failed
       if (!token) {
@@ -79,9 +85,7 @@ export function useInitiateExperimentalWebviewLogin() {
         });
       }
 
-      dispatch(
-        loginAction({ address, loginMethod: LoginMethodsEnum.extension })
-      );
+      dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.extra }));
     } catch (error) {
       console.error('error logging in', error);
     }

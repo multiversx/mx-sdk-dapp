@@ -7,7 +7,11 @@ import { store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
-import { setExternalProviderAsAccountProvider } from '../accountProvider';
+import {
+  setAccountProvider,
+  setExternalProviderAsAccountProvider
+} from '../accountProvider';
+import { emptyProvider } from 'utils';
 
 /**
  * This is an experimental provider that uses @multiversx/webview-provider to handle the communication between .
@@ -38,6 +42,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     this._provider = WebviewProvider.getInstance({
       resetStateCallback: () => store.dispatch(logoutAction())
     });
+    this._provider.setHandshakeResponseTimeout(2000);
   }
 
   init = async (version?: string) => {
@@ -54,6 +59,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   };
 
   logout = async () => {
+    setAccountProvider(emptyProvider);
     store.dispatch(logoutAction());
     return await this._provider.logout();
   };
