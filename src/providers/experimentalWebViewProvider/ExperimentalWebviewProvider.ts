@@ -3,15 +3,11 @@ import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { providerNotInitializedError } from '@multiversx/sdk-dapp-utils/out/helpers/providerNotInitializedError';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
 import { logoutAction } from 'reduxStore/commonActions';
-import { store } from 'reduxStore/store';
+import { persistor, store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
-import {
-  setAccountProvider,
-  setExternalProviderAsAccountProvider
-} from '../accountProvider';
-import { emptyProvider } from 'utils';
+import { setExternalProviderAsAccountProvider } from '../accountProvider';
 
 /**
  * This is an experimental provider that uses @multiversx/webview-provider to handle the communication between .
@@ -59,8 +55,7 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   };
 
   logout = async () => {
-    setAccountProvider(emptyProvider);
-    store.dispatch(logoutAction());
+    persistor.purge(); // clear the storage
     return await this._provider.logout();
   };
 

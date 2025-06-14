@@ -1,7 +1,10 @@
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { version } from 'constants/index';
 import { clearInitiatedLogins } from 'hooks/login/helpers';
+import { useLoginService } from 'hooks/login/useLoginService';
 import { setExternalProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
+import { useDispatch } from 'reduxStore/DappProviderContext';
 import {
   emptyAccount,
   setAccount,
@@ -10,12 +13,9 @@ import {
 } from 'reduxStore/slices';
 
 import { LoginMethodsEnum } from 'types/enums.types';
+import { getAccessTokenFromSearchParams } from 'utils/account/getAccessTokenFromSearchParams';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { ExperimentalWebviewProvider } from './ExperimentalWebviewProvider';
-import { getAccessTokenFromSearchParams } from 'utils/account/getAccessTokenFromSearchParams';
-import { version } from 'constants/index';
-import { useDispatch } from 'reduxStore/DappProviderContext';
-import { useLoginService } from 'hooks/login/useLoginService';
 
 export function useInitiateExperimentalWebviewLogin() {
   const isLoggedIn = getIsLoggedIn();
