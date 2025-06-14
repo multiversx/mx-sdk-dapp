@@ -59,6 +59,7 @@ export async function logout(
   const provider = getAccountProvider();
   const providerType = getProviderType(provider);
   const isWalletProvider = providerType === LoginMethodsEnum.wallet;
+  const isExtraProvider = providerType === LoginMethodsEnum.extra;
   const isProviderInitialised = provider?.isInitialized?.() === true;
 
   if (shouldAttemptReLogin && provider?.relogin != null) {
@@ -119,7 +120,9 @@ export async function logout(
   } catch (err) {
     console.error('Logging out error:', err);
   } finally {
-    if (!isWalletProvider) {
+    const skipReload = isWalletProvider || isExtraProvider;
+
+    if (!skipReload) {
       redirectToCallbackUrl({
         callbackUrl: url,
         onRedirect

@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ProviderInitializer } from 'components/ProviderInitializer/ProviderInitializer';
 import { setExternalProvider } from 'providers/accountProvider';
+import { useInitiateExperimentalWebviewLogin } from 'providers/experimentalWebViewProvider/useInitiateExperimentalWebviewLogin';
 import { DappCoreContext } from 'reduxStore/DappProviderContext';
 import { persistor, store } from 'reduxStore/store';
 import { CustomNetworkType, IDappProvider, DappConfigType } from '../../types';
@@ -11,7 +12,6 @@ import {
   UseAppInitializerPropsType
 } from './../../wrappers/AppInitializer';
 import { CustomComponents, CustomComponentsType } from './CustomComponents';
-import { useInitiateExperimentalWebviewLogin } from 'providers/experimentalWebViewProvider/useInitiateExperimentalWebviewLogin';
 
 export { DappConfigType };
 
