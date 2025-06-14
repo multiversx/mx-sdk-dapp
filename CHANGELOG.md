@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.2.1](https://github.com/multiversx/mx-sdk-dapp/pull/1455)] - 2025-06-16
+
+- [Fixed webview logout](https://github.com/multiversx/mx-sdk-dapp/pull/1456)
+
 ## [[v4.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1455)] - 2025-06-13
 
 - [Added send login token on webview login](https://github.com/multiversx/mx-sdk-dapp/pull/1455)
