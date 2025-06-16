@@ -112,6 +112,8 @@ export interface SimpleTransactionType {
   options?: number;
   guardian?: string;
   guardianSignature?: string;
+  relayer?: string;
+  relayerSignature?: string;
   nonce?: number;
 }
 

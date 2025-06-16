@@ -28,7 +28,7 @@ export async function signTransactions({
     : [transactions];
 
   const hasValidChainId = transactionsPayload?.every(
-    (tx) => tx.getChainID().valueOf() === storeChainId.valueOf()
+    (tx) => tx.chainID === storeChainId
   );
   if (!hasValidChainId) {
     const notificationPayload = {
@@ -59,8 +59,8 @@ export async function signTransactions({
 
       return {
         ...transaction,
-        senderUsername: tx.getSenderUsername().valueOf(),
-        receiverUsername: tx.getReceiverUsername().valueOf()
+        senderUsername: tx.senderUsername,
+        receiverUsername: tx.receiverUsername
       };
     })
   };
