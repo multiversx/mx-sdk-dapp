@@ -1,4 +1,4 @@
-import { Address, Transaction } from '@multiversx/sdk-core';
+import { Transaction } from '@multiversx/sdk-core';
 import { transformAndSignTransactions } from '../transformAndSignTransactions';
 import * as accountUtils from 'utils/account/getAccount';
 import * as nonceUtils from 'utils/account/getLatestNonce';
