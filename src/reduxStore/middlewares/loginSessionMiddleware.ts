@@ -14,7 +14,7 @@ const throttledSetNewExpires = throttle(() => {
   setLoginExpiresAt(getNewLoginExpiresTimestamp());
 }, 5000);
 
-export const loginSessionMiddleware: any =
+export const loginSessionMiddleware =
   (store: any) =>
   (next: (action: PayloadAction) => void) =>
   (action: PayloadAction) => {
@@ -34,7 +34,8 @@ export const loginSessionMiddleware: any =
     }
 
     if (loginTimestamp == null) {
-      return setLoginExpiresAt(getNewLoginExpiresTimestamp());
+      setLoginExpiresAt(getNewLoginExpiresTimestamp());
+      return next(action);
     }
 
     // create a unique key for this account and it's allowed session
