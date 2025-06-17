@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.2.2](https://github.com/multiversx/mx-sdk-dapp/pull/1456)] - 2025-06-17
+
 - [Added `relayer` and `relayerSignature` in the transaction in `transformAndSignTransactions`](https://github.com/multiversx/mx-sdk-dapp/pull/1457)
 
 ## [[v4.2.1](https://github.com/multiversx/mx-sdk-dapp/pull/1455)] - 2025-06-16
