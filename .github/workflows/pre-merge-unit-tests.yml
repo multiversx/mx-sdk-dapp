@@ -1,7 +1,7 @@
-name: "Jest Unit Tests"
+name: 'Jest Unit Tests'
 on:
   pull_request:
-    branches: [main]
+    branches: [main, old-main]
     paths:
       - 'src/**'
       - '**.js'
