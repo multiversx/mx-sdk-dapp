@@ -62,13 +62,15 @@ export async function transformAndSignTransactions({
       }),
       guardian,
       guardianSignature,
+      relayer,
+      relayerSignature,
       nonce: transactionNonce = 0
     } = tx;
     let validatedReceiver = receiver;
 
     try {
       const addr = new Address(receiver);
-      validatedReceiver = addr.hex();
+      validatedReceiver = addr.toHex();
     } catch (err) {
       throw ErrorCodesEnum.invalidReceiver;
     }
@@ -87,12 +89,14 @@ export async function transformAndSignTransactions({
       gasPrice,
       gasLimit: Number(gasLimit),
       nonce: Number(computedNonce.valueOf().toString()),
-      sender: new Address(address).hex(),
+      sender: new Address(address).toHex(),
       chainID: transactionsChainId,
       version,
       options,
       guardian,
-      guardianSignature
+      guardianSignature,
+      relayer,
+      relayerSignature
     });
   });
 }
