@@ -46,6 +46,7 @@
     "@multiversx/sdk-web-wallet-provider": "5.0.0",
     "@multiversx/sdk-webview-provider": "3.0.1",
     "immer": "10.1.1",
+    "linkifyjs": "4.3.1",
     "lodash.isempty": "4.4.0",
     "lodash.isequal": "4.5.0",
     "lodash.isstring": "4.0.1",
