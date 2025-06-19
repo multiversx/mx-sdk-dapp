@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.8](https://github.com/multiversx/mx-sdk-dapp/pull/1455)] - 2025-06-19
+
 - [Added `getScamFlag` utility](https://github.com/multiversx/mx-sdk-dapp/pull/1454)
 
 ## [[5.0.0-alpha.7](https://github.com/multiversx/mx-sdk-dapp/pull/1453)] - 2025-06-13
