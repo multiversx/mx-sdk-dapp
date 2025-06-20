@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
-    "@multiversx/sdk-core": "14.0.2",
+    "@multiversx/sdk-core": "^14.x",
     "@multiversx/sdk-dapp-utils": "^2.x",
     "@multiversx/sdk-extension-provider": "5.0.0",
     "@multiversx/sdk-hw-provider": "8.0.0",
@@ -57,7 +57,7 @@
     "zustand": "4.4.7"
   },
   "peerDependencies": {
-    "@multiversx/sdk-core": "14.0.2",
+    "@multiversx/sdk-core": "^14.x",
     "@multiversx/sdk-dapp-utils": "^2.x",
     "axios": ">=1.7.4",
     "bignumber.js": "9.x"

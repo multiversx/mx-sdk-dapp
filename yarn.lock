@@ -1021,10 +1021,10 @@
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-bls-wasm/-/sdk-bls-wasm-0.3.5.tgz#2e83308fdc7a0928c6d5a7f910d796fd8eb2d90b"
   integrity sha512-c0tIdQUnbBLSt6NYU+OpeGPYdL0+GV547HeHT8Xc0BKQ7Cj0v82QUoA2QRtWrR1G4MNZmLsIacZSsf6DrIS2Bw==
 
-"@multiversx/sdk-core@14.0.2":
-  version "14.0.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-14.0.2.tgz#e910f94f930fdbbf7a9c8587022d9c41f8aa9318"
-  integrity sha512-bVrKH23NSsfVyIZKujFrc8k+mBMM4pJDNe+8CHG3M0OUPi/kOVBev6VFmLpQyW9/t25VHU1lR6c4A/qhZOl1Mw==
+"@multiversx/sdk-core@^14.x":
+  version "14.2.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-core/-/sdk-core-14.2.2.tgz#af90a26bb1591b232d4377ddd945395d89b81d59"
+  integrity sha512-/iAZgjRAaXg+nvOwhvoTZ9oRq81c73AUWIFlXOK4PPHf6mfAHGU84Cn8iKJdzNEIwnoYeK42kLhY2rHmxfoO6Q==
   dependencies:
     "@multiversx/sdk-transaction-decoder" "1.0.2"
     "@noble/ed25519" "1.7.3"
