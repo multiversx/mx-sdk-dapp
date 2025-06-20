@@ -1,8 +1,7 @@
-import { IDAppProviderAccount, Nullable } from '@multiversx/sdk-dapp-utils/out';
 import { IProviderAccount } from '@multiversx/sdk-wallet-connect-provider/out';
 import { providerLabels } from 'constants/index';
 import { Transaction, Message } from 'lib/sdkCore';
-import { IDAppProviderOptions } from 'lib/sdkDappUtils';
+import { IDAppProviderOptions, IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { PendingTransactionsEventsEnum } from 'managers/internal/PendingTransactionsStateManager';
 import { getAddress } from 'methods/account/getAddress';
 import { IProvider, ProviderType } from 'providers/types/providerFactory.types';
@@ -47,19 +46,19 @@ export abstract class BaseProviderStrategy<
   signTransaction(
     _transaction: Transaction,
     _options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction | undefined>> {
+  ): Promise<Transaction | null> {
     throw new Error('Method not implemented.');
   }
 
   abstract signTransactions(
     transactions: Transaction[],
     options?: IDAppProviderOptions
-  ): Promise<Nullable<Transaction[]>>;
+  ): Promise<Transaction[] | null>;
 
   abstract signMessage(
     messageToSign: Message,
     options?: IDAppProviderOptions
-  ): Promise<Nullable<Message>>;
+  ): Promise<Message | null>;
 
   public async login(
     options?: LoginOptionsTypes
