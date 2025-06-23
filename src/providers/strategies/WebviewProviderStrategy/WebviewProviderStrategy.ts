@@ -1,6 +1,7 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
+import { version } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -47,7 +48,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
   }
 
   private async initializeProvider() {
-    const isInitialized = await this.provider.init();
+    const isInitialized = await this.provider.init(version);
 
     if (this.address) {
       this.setAccount({ address: this.address });

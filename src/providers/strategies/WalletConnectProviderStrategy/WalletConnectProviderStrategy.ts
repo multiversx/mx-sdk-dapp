@@ -1,4 +1,3 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import {
   SessionEventTypes,
   SessionTypes,
@@ -8,6 +7,7 @@ import { providerLabels } from 'constants/providerFactory.constants';
 import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import {

@@ -84,21 +84,8 @@ export async function initApp({
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
-  const isInIframe = getIsInIframe();
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
-
-  if (isInIframe) {
-    const provider = await ProviderFactory.create({
-      type: ProviderTypeEnum.webview
-    });
-
-    const isInitialized = await provider.init();
-
-    if (isInitialized && !isLoggedIn) {
-      await provider.login();
-    }
-  }
 
   const toastManager = ToastManager.getInstance();
 
@@ -118,10 +105,12 @@ export async function initApp({
 
   ProviderFactory.customProviders = uniqueProviders || [];
 
-  if (isLoggedIn && !isAppInitialized) {
+  if (!isAppInitialized) {
     await restoreProvider();
-    await registerWebsocketListener(account.address);
-    trackTransactions();
+    if (isLoggedIn) {
+      await registerWebsocketListener(account.address);
+      trackTransactions();
+    }
   }
 
   if (account.shard != null) {
