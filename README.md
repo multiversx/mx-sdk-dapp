@@ -176,6 +176,8 @@ const provider = await ProviderFactory.create({
 await provider.login();
 ```
 
+> **Note:** Extension and Ledger login will only work if dApp is served over HTTPS protocol
+
 ### 3. Displaying app data
 
 Depending on the framework, you can either use hooks or selectors to get the user details:

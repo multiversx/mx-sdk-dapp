@@ -39,14 +39,16 @@ export class TransactionManager {
 
     try {
       if (!isBatchTransaction(signedTransactions)) {
-        const flatTransactions =
-          await this.sendSignedTransactions(signedTransactions);
+        const flatTransactions = await this.sendSignedTransactions(
+          signedTransactions
+        );
 
         return flatTransactions;
       }
 
-      const sentTransactions =
-        await this.sendSignedBatchTransactions(signedTransactions);
+      const sentTransactions = await this.sendSignedBatchTransactions(
+        signedTransactions
+      );
 
       if (!sentTransactions.data || sentTransactions.data.error) {
         throw new Error(
