@@ -11,8 +11,8 @@ import { ToastsSliceType } from 'store/slices/toast/toastSlice.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { SessionTransactionType } from 'types/transactions.types';
 import { mapServerTransactionsToListItems } from 'utils/transactions/getTransactionsHistory/helpers';
-import { ITransactionToast } from '../types/toast.types';
 import { createTransactionToast } from './createTransactionToast';
+import { ITransactionToast } from '../types/toast.types';
 interface CreateToastsFromTransactionsReturnType {
   pendingTransactionToasts: ITransactionToast[];
   completedTransactionToasts: ITransactionToast[];

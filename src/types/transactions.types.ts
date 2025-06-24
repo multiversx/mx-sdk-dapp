@@ -123,4 +123,8 @@ export type SessionTransactionType = {
    */
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
   interpretedTransactions?: Record<string, ITransactionListItem>;
+  /**
+   * Optional custom information to be associated with the transaction session.
+   */
+  sessionInformation?: any;
 };
