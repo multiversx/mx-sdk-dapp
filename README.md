@@ -316,8 +316,12 @@ You can find both methods and hooks to access transactions data, as seen in the 
 |---|------|-------------|----|
 | | `methods/transactions` | path | `react/transactions` |
 | 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
-| 2 | `getPendingTransactionsSessions()` | returns an array of pending sessions | `useGetPendingTransactionsSessions()`|
+| 2 | `getPendingTransactionsSessions()` | returns an record of pending sessions | `useGetPendingTransactionsSessions()`|
 | 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
+| 4 | `getFailedTransactionsSessions()` | returns an record of failed sessions | `useGetFailedTransactionsSessions()`|
+| 5 | `getFailedTransactions()` | returns an array of failed transactions | `useGetFailedTransactions()`|
+| 6 | `getSuccessfulTransactionsSessions()` | returns an record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
+| 7 | `getSuccessfulTransactions()` | returns an array of successful transactions | `useGetSuccessfulTransactions()`|
 
 There is a way to inspect store information regarding a specific transaction, using the `transactionsSliceSelector`. An example is shown below:
 
