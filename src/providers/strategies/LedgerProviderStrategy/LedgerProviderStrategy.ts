@@ -1,10 +1,10 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { safeWindow } from 'constants/index';
 
 import { CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION } from 'constants/transactions.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';

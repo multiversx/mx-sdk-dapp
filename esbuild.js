@@ -1,5 +1,6 @@
 const esbuild = require('esbuild');
 const glob = require('glob');
+const { replace } = require('esbuild-plugin-replace');
 const plugin = require('node-stdlib-browser/helpers/esbuild/plugin');
 const stdLibBrowser = require('node-stdlib-browser');
 const { nodeExternalsPlugin } = require('esbuild-node-externals');
@@ -38,7 +39,13 @@ const executeBuild = () =>
         process: 'process',
         Buffer: 'Buffer'
       },
-      plugins: [plugin(stdLibBrowser), nodeExternalsPlugin()]
+      plugins: [
+        plugin(stdLibBrowser),
+        nodeExternalsPlugin(),
+        replace({
+          __sdkDappVersion: process.env.npm_package_version
+        })
+      ]
     })
     .then(() => {
       console.log(
