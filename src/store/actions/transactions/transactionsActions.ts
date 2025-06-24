@@ -9,15 +9,19 @@ import {
   SignedTransactionType
 } from 'types/transactions.types';
 
-export const createTransactionsSession = ({
-  transactions,
-  transactionsDisplayInfo,
-  status
-}: {
+export type CreateTransactionsSessionType = {
   transactions: SignedTransactionType[];
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
   status: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
-}) => {
+  sessionInformation?: any;
+};
+
+export const createTransactionsSession = ({
+  transactions,
+  transactionsDisplayInfo,
+  status,
+  sessionInformation
+}: CreateTransactionsSessionType) => {
   const sessionId = Date.now().toString();
   getStore().setState(
     ({ transactions: state }) => {
@@ -25,7 +29,8 @@ export const createTransactionsSession = ({
         transactions,
         status,
         transactionsDisplayInfo,
-        interpretedTransactions: {}
+        interpretedTransactions: {},
+        sessionInformation
       };
     },
     false,

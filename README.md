@@ -544,9 +544,23 @@ const sentTransactions = await transactionManager.send(batchTransactions);
 The basic option is to use the built-in tracking, which displays toast notifications with default messages.
 
 ```typescript
+import { TransactionManagerTrackOptionsType } from '@multiversx/sdk-dapp/out/managers/TransactionManager/TransactionManager.types';
+
+const options: TransactionManagerTrackOptionsType = {
+  disableToasts: false, // `false` by default
+  transactionsDisplayInfo: { // `undefined` by default
+    errorMessage: 'Failed adding stake',
+    successMessage: 'Stake successfully added',
+    processingMessage: 'Staking in progress'
+  },
+  sessionInformation: { // `undefined` by default. Use to perform additional actions based on the session information
+    stakeAmount: '1000000000000000000000000'
+  }
+};
+
 const sessionId = await transactionManager.track(
-  sentTransactions
-  // { disableToasts: true } optionally disable toast notifications
+  sentTransactions,
+  options // optional
 );
 ```
 
