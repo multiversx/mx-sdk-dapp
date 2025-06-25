@@ -31,7 +31,7 @@ type BaseDappConfigType = {
    *   theme: ThemesEnum.dark
    * ```
    */
-  theme?: ThemesEnum;
+  theme?: `${ThemesEnum}`;
 };
 
 export type EnvironmentDappConfigType = BaseDappConfigType & {

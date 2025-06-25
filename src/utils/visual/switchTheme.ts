@@ -1,7 +1,7 @@
 import { safeWindow } from 'constants/window.constants';
 import { ThemesEnum } from 'types';
 
-export function switchTheme(theme: ThemesEnum) {
+export function switchTheme(theme: `${ThemesEnum}`) {
   if (!safeWindow) {
     return;
   }
