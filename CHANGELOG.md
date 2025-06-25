@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added support for theme switching](https://github.com/multiversx/mx-sdk-dapp/pull/1467)
 - [Added resetState on logout for WebviewProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1466)
 
 ## [[5.0.0-alpha.10](https://github.com/multiversx/mx-sdk-dapp/pull/1465)] - 2025-06-25
