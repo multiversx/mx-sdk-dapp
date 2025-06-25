@@ -1,4 +1,4 @@
-import { DappThemeType } from 'types';
+import { DappThemeEnum } from 'types';
 
-export const switchDappTheme = (theme: DappThemeType) =>
+export const switchDappTheme = (theme: `${DappThemeEnum}`) =>
   (document.documentElement.dataset.theme = theme);

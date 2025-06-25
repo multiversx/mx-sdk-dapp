@@ -3,7 +3,7 @@ import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderS
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { StorageCallback } from 'store/storage';
-import { DappThemeType } from 'types';
+import { DappThemeEnum } from 'types';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
 
@@ -25,7 +25,7 @@ type BaseDappConfigType = {
   /**
    * Choose from the supported themes of the sdk.
    */
-  dappTheme?: DappThemeType;
+  dappTheme?: `${DappThemeEnum}`;
 };
 
 export type EnvironmentDappConfigType = BaseDappConfigType & {

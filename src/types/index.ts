@@ -4,4 +4,4 @@ export * from './provider.types';
 export * from './subscriptions.type';
 export * from './websocket.types';
 export * from './suspiciousLink.types';
-export * from './visual.types';
+export * from './theme.types';
