@@ -6,4 +6,5 @@ export * from './network';
 export * from './retryMultipleTimes';
 export * from './transactions';
 export * from './validation';
+export * from './visual';
 export * from './window';
