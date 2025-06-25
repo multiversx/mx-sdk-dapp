@@ -3,6 +3,7 @@ import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderS
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { StorageCallback } from 'store/storage';
+import { DappThemeType } from 'types';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
 
@@ -96,4 +97,14 @@ export type InitAppType = {
    * ```
    */
   customProviders?: ICustomProvider[];
+  /**
+   * The dApp theme
+   * @example
+   * ```ts
+   * {
+        dappTheme: 'mvx:light-theme'
+      }
+   * ```
+   */
+  dappTheme?: DappThemeType;
 };

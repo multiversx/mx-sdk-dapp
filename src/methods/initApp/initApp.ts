@@ -16,6 +16,7 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
+import { switchDappTheme } from 'utils/visual/switchDappTheme';
 import { getIsInIframe } from 'utils/window/getIsInIframe';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
@@ -57,7 +58,8 @@ let isAppInitialized = false;
 export async function initApp({
   storage = defaultInitAppProps.storage,
   dAppConfig,
-  customProviders
+  customProviders,
+  dappTheme
 }: InitAppType) {
   initStore(storage.getStorageCallback);
 
@@ -84,9 +86,12 @@ export async function initApp({
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
+  if (dappTheme) {
+    switchDappTheme(dappTheme);
+  }
+
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
-
   const toastManager = ToastManager.getInstance();
 
   await toastManager.init({
