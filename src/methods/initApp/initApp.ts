@@ -58,8 +58,7 @@ let isAppInitialized = false;
 export async function initApp({
   storage = defaultInitAppProps.storage,
   dAppConfig,
-  customProviders,
-  dappTheme
+  customProviders
 }: InitAppType) {
   initStore(storage.getStorageCallback);
 
@@ -86,8 +85,8 @@ export async function initApp({
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
-  if (dappTheme) {
-    switchDappTheme(dappTheme);
+  if (dAppConfig?.dappTheme) {
+    switchDappTheme(dAppConfig.dappTheme);
   }
 
   const isLoggedIn = getIsLoggedIn();

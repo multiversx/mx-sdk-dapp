@@ -22,6 +22,10 @@ type BaseDappConfigType = {
     crossWindow?: CrossWindowConfig;
     walletConnect?: WalletConnectConfig;
   };
+  /**
+   * Choose from the supported themes of the sdk.
+   */
+  dappTheme?: DappThemeType;
 };
 
 export type EnvironmentDappConfigType = BaseDappConfigType & {
@@ -70,6 +74,7 @@ export type InitAppType = {
    * {
       nativeAuth: true,
       environment: EnvironmentsEnum.devnet,
+      dappTheme: 'mvx:light-theme',
       network: {
         walletAddress: 'https://wallet.multiversx.com'
         // ...other network properties to override
@@ -97,14 +102,4 @@ export type InitAppType = {
    * ```
    */
   customProviders?: ICustomProvider[];
-  /**
-   * The dApp theme
-   * @example
-   * ```ts
-   * {
-        dappTheme: 'mvx:light-theme'
-      }
-   * ```
-   */
-  dappTheme?: DappThemeType;
 };
