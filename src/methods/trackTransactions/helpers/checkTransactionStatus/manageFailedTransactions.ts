@@ -1,6 +1,6 @@
 import {
   updateTransactionStatus,
-  updateTransactionsSession
+  updateSessionStatus
 } from 'store/actions/transactions/transactionsActions';
 import {
   TransactionBatchStatusesEnum,
@@ -8,8 +8,9 @@ import {
 } from 'types/enums.types';
 import { ResultType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
+import { runSessionCallbacks } from './runSessionCallbacks';
 
-export function manageFailedTransactions({
+export async function manageFailedTransactions({
   results,
   hash,
   sessionId
@@ -32,9 +33,14 @@ export function manageFailedTransactions({
     }
   });
 
-  updateTransactionsSession({
+  updateSessionStatus({
     sessionId,
     status: TransactionBatchStatusesEnum.fail,
     errorMessage: resultWithError?.returnMessage
+  });
+
+  await runSessionCallbacks({
+    sessionId,
+    status: TransactionBatchStatusesEnum.fail
   });
 }

@@ -1,11 +1,9 @@
 import { safeWindow } from 'constants/index';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
+import { registerSessionCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
-import {
-  ICustomProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { initializeNetwork } from 'store/actions';
@@ -16,7 +14,6 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
-import { getIsInIframe } from 'utils/window/getIsInIframe';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
@@ -90,7 +87,8 @@ export async function initApp({
   const toastManager = ToastManager.getInstance();
 
   await toastManager.init({
-    successfulToastLifetime: dAppConfig.successfulToastLifetime
+    successfulToastLifetime:
+      dAppConfig.transactionTracking?.successfulToastLifetime
   });
 
   const usedProviders: ICustomProvider[] = [
@@ -110,6 +108,10 @@ export async function initApp({
     if (isLoggedIn) {
       await registerWebsocketListener(account.address);
       trackTransactions();
+      registerSessionCallbacks({
+        onSuccess: dAppConfig.transactionTracking?.onSuccess,
+        onFail: dAppConfig.transactionTracking?.onFail
+      });
     }
   }
 

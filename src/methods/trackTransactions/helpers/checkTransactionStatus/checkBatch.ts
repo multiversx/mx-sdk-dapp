@@ -1,7 +1,7 @@
 import { getTransactionsByHashes } from 'apiCalls/transactions/getTransactionsByHashes';
 import {
   updateTransactionStatus,
-  updateTransactionsSession
+  updateSessionStatus
 } from 'store/actions/transactions/transactionsActions';
 import { getIsTransactionFailed } from 'store/actions/transactions/transactionStateByStatus';
 import {
@@ -15,6 +15,7 @@ import {
 
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
+import { runSessionCallbacks } from './runSessionCallbacks';
 
 export interface TransactionStatusTrackerPropsType {
   sessionId: string;
@@ -34,7 +35,7 @@ interface ManageTransactionType {
   isSequential?: boolean;
 }
 
-function manageTransaction({
+async function manageTransaction({
   serverTransaction: transaction,
   sessionId,
   isSequential
@@ -45,10 +46,16 @@ function manageTransaction({
     const retriesForThisHash = retries[hash];
     if (retriesForThisHash > 30) {
       // consider transaction as stuck after 1 minute
-      updateTransactionsSession({
+      updateSessionStatus({
         sessionId,
         status: TransactionBatchStatusesEnum.timedOut
       });
+
+      await runSessionCallbacks({
+        sessionId,
+        status: TransactionBatchStatusesEnum.timedOut
+      });
+
       return;
     }
 
@@ -60,29 +67,46 @@ function manageTransaction({
       return;
     }
 
+    console.log('\x1b[42m%s\x1b[0m', 'isSequential', isSequential);
+    console.log('\x1b[42m%s\x1b[0m', 'status', status);
+
     // The tx is from a sequential batch.
     // If the transactions before this are not successful then it means that no other tx will be processed
     if (isSequential && !status) {
-      updateTransactionStatus({
+      const newStatus = updateTransactionStatus({
         sessionId,
         transaction
+      });
+      await runSessionCallbacks({
+        sessionId,
+        status: newStatus
       });
       return;
     }
 
     if (hasStatusChanged) {
-      updateTransactionStatus({
+      const newStatus = updateTransactionStatus({
         sessionId,
         transaction
+      });
+      console.log('hasStatusChanged -->', { newStatus, status });
+
+      await runSessionCallbacks({
+        sessionId,
+        status: newStatus
       });
     }
 
     if (getIsTransactionFailed(status)) {
-      manageFailedTransactions({ sessionId, hash, results });
+      await manageFailedTransactions({ sessionId, hash, results });
     }
   } catch (error) {
     console.error(error);
-    updateTransactionsSession({
+    updateSessionStatus({
+      sessionId,
+      status: TransactionBatchStatusesEnum.timedOut
+    });
+    await runSessionCallbacks({
       sessionId,
       status: TransactionBatchStatusesEnum.timedOut
     });
@@ -105,7 +129,7 @@ export async function checkBatch({
       await getTransactionsByHashes(pendingTransactions);
 
     for (const serverTransaction of serverTransactions) {
-      manageTransaction({
+      await manageTransaction({
         serverTransaction,
         sessionId,
         isSequential
@@ -125,7 +149,7 @@ export async function checkBatch({
       );
 
       if (isSuccessful) {
-        return updateTransactionsSession({
+        return updateSessionStatus({
           sessionId,
           status: TransactionBatchStatusesEnum.success
         });
@@ -136,7 +160,7 @@ export async function checkBatch({
       );
 
       if (isFailed) {
-        return updateTransactionsSession({
+        return updateSessionStatus({
           sessionId,
           status: TransactionBatchStatusesEnum.fail
         });
@@ -145,7 +169,7 @@ export async function checkBatch({
       const isInvalid = serverTransactions.every((tx) => tx.invalidTransaction);
 
       if (isInvalid) {
-        return updateTransactionsSession({
+        return updateSessionStatus({
           sessionId,
           status: TransactionBatchStatusesEnum.invalid
         });
