@@ -15,7 +15,8 @@ export class WalletConnectStateManager extends UIBaseManager<
   private static instance: WalletConnectStateManager;
 
   protected initialData: IWalletConnectModalData = {
-    wcURI: ''
+    wcURI: '',
+    walletConnectDeepLink: ''
   };
 
   public static getInstance(): WalletConnectStateManager {

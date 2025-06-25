@@ -108,7 +108,10 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
 
     this._approval = approval;
     const walletConnectManager = WalletConnectStateManager.getInstance();
-    walletConnectManager.updateData({ wcURI: uri });
+    walletConnectManager.updateData({
+      wcURI: uri,
+      walletConnectDeepLink: this.config.walletConnectDeepLink
+    });
   }
 
   private async initWalletConnectManager() {
@@ -203,7 +206,10 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
           methods: this.methods
         });
 
-        walletConnectManager.updateData({ wcURI: uri });
+        walletConnectManager.updateData({
+          wcURI: uri,
+          walletConnectDeepLink: this.config.walletConnectDeepLink
+        });
 
         const providerInfo = await this.provider.login({
           approval: wcApproval,
