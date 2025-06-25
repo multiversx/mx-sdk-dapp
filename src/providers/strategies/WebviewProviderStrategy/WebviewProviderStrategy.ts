@@ -1,5 +1,5 @@
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
-import { version } from 'constants/window.constants';
+import { safeWindow, version } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import {
@@ -18,7 +18,16 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
 
   constructor(config?: WebviewProviderProps) {
     super(config?.address);
-    this.provider = WebviewProvider.getInstance();
+    this.provider = WebviewProvider.getInstance({
+      resetStateCallback: () => {
+        /* 
+          Used in Hub to clear storage when logging out via the hub header.
+        */
+        safeWindow.localStorage?.clear?.();
+        safeWindow.sessionStorage?.clear?.();
+      }
+    });
+
     this._login = this.provider.login.bind(this.provider);
   }
 
