@@ -11,14 +11,12 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { BatchTransactionsResponseType } from 'types/serverTransactions.types';
-import {
-  TransactionsDisplayInfoType,
-  SignedTransactionType
-} from 'types/transactions.types';
+import { SignedTransactionType } from 'types/transactions.types';
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { getToastDuration } from './helpers/getToastDuration';
 import { getTransactionsSessionStatus } from './helpers/getTransactionsStatus';
 import { isBatchTransaction } from './helpers/isBatchTransaction';
+import { TransactionManagerTrackOptionsType } from './TransactionManager.types';
 
 export class TransactionManager {
   private static instance: TransactionManager | null = null;
@@ -39,16 +37,14 @@ export class TransactionManager {
 
     try {
       if (!isBatchTransaction(signedTransactions)) {
-        const flatTransactions = await this.sendSignedTransactions(
-          signedTransactions
-        );
+        const flatTransactions =
+          await this.sendSignedTransactions(signedTransactions);
 
         return flatTransactions;
       }
 
-      const sentTransactions = await this.sendSignedBatchTransactions(
-        signedTransactions
-      );
+      const sentTransactions =
+        await this.sendSignedBatchTransactions(signedTransactions);
 
       if (!sentTransactions.data || sentTransactions.data.error) {
         throw new Error(
@@ -69,10 +65,7 @@ export class TransactionManager {
 
   public track = async (
     sentTransactions: SignedTransactionType[] | SignedTransactionType[][],
-    options: {
-      disableToasts?: boolean;
-      transactionsDisplayInfo?: TransactionsDisplayInfoType;
-    } = { disableToasts: false }
+    options: TransactionManagerTrackOptionsType = { disableToasts: false }
   ): Promise<string> => {
     const flatTransactions = this.sequentialToFlatArray(sentTransactions).map(
       (transaction) => ({
@@ -86,7 +79,8 @@ export class TransactionManager {
     const sessionId = createTransactionsSession({
       transactions: flatTransactions,
       transactionsDisplayInfo: options.transactionsDisplayInfo,
-      status: status ?? TransactionBatchStatusesEnum.sent
+      status: status ?? TransactionBatchStatusesEnum.sent,
+      sessionInformation: options.sessionInformation
     });
 
     if (options.disableToasts === true) {

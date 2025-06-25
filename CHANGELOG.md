@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.10](https://github.com/multiversx/mx-sdk-dapp/pull/1465)] - 2025-06-25
+
+- [Added `useGetFailedTransactions` hook, `getFailedTransactionsSessions` method, `getFailedTransactions` method, `useGetSuccessfulTransactions` hook, `getSuccessfulTransactionsSessions` method, `getSuccessfulTransactions` method, `useGetPendingTransactions` hook, `getPendingTransactionsSessions` method, `getPendingTransactions` method](https://github.com/multiversx/mx-sdk-dapp/pull/1464)
+
 ## [[5.0.0-alpha.9](https://github.com/multiversx/mx-sdk-dapp/pull/1462)] - 2025-06-24
 
 - [Updated README](https://github.com/multiversx/mx-sdk-dapp/pull/1463)
