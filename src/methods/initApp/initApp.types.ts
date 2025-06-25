@@ -3,9 +3,9 @@ import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderS
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { StorageCallback } from 'store/storage';
-import { DappThemeEnum } from 'types';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
+import { ThemesEnum } from 'types/theme.types';
 
 type BaseDappConfigType = {
   /**
@@ -23,9 +23,15 @@ type BaseDappConfigType = {
     walletConnect?: WalletConnectConfig;
   };
   /**
-   * Choose from the supported themes of the sdk.
+   * Customize the dApp theme.
+   * @example
+   * ```ts
+   * import { ThemesEnum } from '@multiversx/sdk-dapp/out/types/theme.types';
+   *
+   *   theme: ThemesEnum.dark
+   * ```
    */
-  dappTheme?: `${DappThemeEnum}`;
+  theme?: ThemesEnum;
 };
 
 export type EnvironmentDappConfigType = BaseDappConfigType & {
@@ -74,7 +80,7 @@ export type InitAppType = {
    * {
       nativeAuth: true,
       environment: EnvironmentsEnum.devnet,
-      dappTheme: 'mvx:light-theme',
+      theme: ThemesEnum.light,
       network: {
         walletAddress: 'https://wallet.multiversx.com'
         // ...other network properties to override

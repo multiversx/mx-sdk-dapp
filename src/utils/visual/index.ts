@@ -1,1 +1,1 @@
-export * from './switchDappTheme';
+export * from './switchTheme';

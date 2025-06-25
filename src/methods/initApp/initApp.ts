@@ -2,10 +2,7 @@ import { safeWindow } from 'constants/index';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
-import {
-  ICustomProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { initializeNetwork } from 'store/actions';
@@ -16,8 +13,7 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
-import { switchDappTheme } from 'utils/visual/switchDappTheme';
-import { getIsInIframe } from 'utils/window/getIsInIframe';
+import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
@@ -85,8 +81,8 @@ export async function initApp({
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
-  if (dAppConfig?.dappTheme) {
-    switchDappTheme(dAppConfig.dappTheme);
+  if (dAppConfig?.theme) {
+    switchTheme(dAppConfig.theme);
   }
 
   const isLoggedIn = getIsLoggedIn();
