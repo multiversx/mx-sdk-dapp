@@ -107,13 +107,15 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       methods: this.methods
     });
 
+    const walletConnectDeepLink =
+      this.config.walletConnectDeepLink ??
+      fallbackWalletConnectConfigurations.walletConnectDeepLink;
+
     this._approval = approval;
     const walletConnectManager = WalletConnectStateManager.getInstance();
     walletConnectManager.updateData({
       wcURI: uri,
-      walletConnectDeepLink:
-        this.config.walletConnectDeepLink ??
-        fallbackWalletConnectConfigurations.walletConnectDeepLink
+      walletConnectDeepLink: `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`
     });
   }
 
@@ -209,11 +211,13 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
           methods: this.methods
         });
 
+        const walletConnectDeepLink =
+          this.config.walletConnectDeepLink ??
+          fallbackWalletConnectConfigurations.walletConnectDeepLink;
+
         walletConnectManager.updateData({
           wcURI: uri,
-          walletConnectDeepLink:
-            this.config.walletConnectDeepLink ??
-            fallbackWalletConnectConfigurations.walletConnectDeepLink
+          walletConnectDeepLink: `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`
         });
 
         const providerInfo = await this.provider.login({
