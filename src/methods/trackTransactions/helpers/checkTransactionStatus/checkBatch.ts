@@ -67,9 +67,6 @@ async function manageTransaction({
       return;
     }
 
-    console.log('\x1b[42m%s\x1b[0m', 'isSequential', isSequential);
-    console.log('\x1b[42m%s\x1b[0m', 'status', status);
-
     // The tx is from a sequential batch.
     // If the transactions before this are not successful then it means that no other tx will be processed
     if (isSequential && !status) {
@@ -89,7 +86,6 @@ async function manageTransaction({
         sessionId,
         transaction
       });
-      console.log('hasStatusChanged -->', { newStatus, status });
 
       await runSessionCallbacks({
         sessionId,
