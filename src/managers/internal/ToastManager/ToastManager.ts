@@ -1,4 +1,5 @@
 import isEqual from 'lodash.isequal';
+import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { MvxToastList } from 'lib/sdkDappUi';
 import { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
@@ -52,7 +53,9 @@ export class ToastManager {
     this.notificationsFeedManager = NotificationsFeedManager.getInstance();
   }
 
-  public async init({ successfulToastLifetime }: IToastManager = {}) {
+  public async init({
+    successfulToastLifetime = DEFAULT_TOAST_LIEFTIME
+  }: IToastManager = {}) {
     this.successfulToastLifetime = successfulToastLifetime;
 
     this.lifetimeManager.init({ successfulToastLifetime });

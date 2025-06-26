@@ -39,7 +39,7 @@ export const createTransactionsSession = ({
   return sessionId;
 };
 
-export const updateTransactionsSession = ({
+export const updateSessionStatus = ({
   sessionId,
   status,
   errorMessage
@@ -64,7 +64,8 @@ export const updateTransactionStatus = ({
 }: {
   sessionId: string;
   transaction: SignedTransactionType;
-}) => {
+}): TransactionBatchStatusesEnum | null => {
+  let newStatus: TransactionBatchStatusesEnum | null = null;
   getStore().setState(
     ({ transactions: state }) => {
       const transactions = state[sessionId]?.transactions;
@@ -79,15 +80,24 @@ export const updateTransactionStatus = ({
           return transaction;
         });
 
-        const status = getTransactionsSessionStatus(transactions);
+        const status = getTransactionsSessionStatus([
+          ...state[sessionId].transactions // Create a copy of the transactions array to avoid Proxy issues
+        ]);
+
         if (status) {
-          state[sessionId].status = status;
+          updateSessionStatus({
+            sessionId,
+            status
+          });
+          newStatus = status;
         }
       }
     },
     false,
     'updateTransactionStatus'
   );
+
+  return newStatus;
 };
 
 export const clearCompletedTransactions = () => {

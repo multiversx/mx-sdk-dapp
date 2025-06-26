@@ -35,7 +35,8 @@ export const ProviderTypeEnum = {
 } as const;
 
 export type ProviderType =
-  (typeof ProviderTypeEnum)[keyof typeof ProviderTypeEnum];
+  | (typeof ProviderTypeEnum)[keyof typeof ProviderTypeEnum]
+  | (string & {}); // This allows custom providers to be used as a string
 
 export interface IProviderFactory<T extends ProviderType = ProviderType> {
   type: T;
