@@ -4,6 +4,7 @@ import {
   OptionalOperation
 } from '@multiversx/sdk-wallet-connect-provider/out';
 import { providerLabels } from 'constants/providerFactory.constants';
+import { fallbackWalletConnectConfigurations } from 'constants/walletConnect.constants';
 import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
@@ -110,7 +111,9 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
     const walletConnectManager = WalletConnectStateManager.getInstance();
     walletConnectManager.updateData({
       wcURI: uri,
-      walletConnectDeepLink: this.config.walletConnectDeepLink
+      walletConnectDeepLink:
+        this.config.walletConnectDeepLink ??
+        fallbackWalletConnectConfigurations.walletConnectDeepLink
     });
   }
 
@@ -208,7 +211,9 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
 
         walletConnectManager.updateData({
           wcURI: uri,
-          walletConnectDeepLink: this.config.walletConnectDeepLink
+          walletConnectDeepLink:
+            this.config.walletConnectDeepLink ??
+            fallbackWalletConnectConfigurations.walletConnectDeepLink
         });
 
         const providerInfo = await this.provider.login({
