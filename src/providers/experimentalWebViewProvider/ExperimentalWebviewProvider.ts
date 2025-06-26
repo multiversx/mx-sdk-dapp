@@ -36,7 +36,10 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
   constructor() {
     this._provider = WebviewProvider.getInstance({
-      resetStateCallback: () => store.dispatch(logoutAction())
+      resetStateCallback: () => {
+        store.dispatch(logoutAction());
+        this.logout();
+      }
     });
     this._provider.setHandshakeResponseTimeout(2000);
   }
