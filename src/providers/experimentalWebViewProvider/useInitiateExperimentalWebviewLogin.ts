@@ -16,15 +16,16 @@ import { LoginMethodsEnum } from 'types/enums.types';
 import { getAccessTokenFromSearchParams } from 'utils/account/getAccessTokenFromSearchParams';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { ExperimentalWebviewProvider } from './ExperimentalWebviewProvider';
+import { isInIframe } from 'utils/isInIframe';
 
 export function useInitiateExperimentalWebviewLogin() {
-  const isLoggedIn = getIsLoggedIn();
   const dispatch = useDispatch();
+  const isLoggedIn = getIsLoggedIn();
   const nativeAuth = true;
   const loginService = useLoginService(nativeAuth);
 
   return async () => {
-    if (isLoggedIn) {
+    if (isLoggedIn && !isInIframe) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
 
