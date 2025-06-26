@@ -104,7 +104,14 @@ const config: InitAppType = {
     // network: { // optional
     //   walletAddress: 'https://devnet-wallet.multiversx.com' // or other props you want to override
     // },
-    successfulToastLifetime: 5000
+    // transactionTracking: { // optional
+    //   successfulToastLifetime: 5000,
+    //   onSuccess: async (sessionId) => {
+    //     console.log('Transaction session successful', sessionId);
+    //   },
+    //   onFail: async (sessionId) => {
+    //     console.log('Transaction session failed', sessionId);
+    // }
   }
   // customProviders: [myCustomProvider] // optional
 };
