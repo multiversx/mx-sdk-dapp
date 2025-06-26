@@ -14,6 +14,7 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
+import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
@@ -81,9 +82,12 @@ export async function initApp({
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
+  if (dAppConfig?.theme) {
+    switchTheme(dAppConfig.theme);
+  }
+
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
-
   const toastManager = ToastManager.getInstance();
 
   await toastManager.init({
