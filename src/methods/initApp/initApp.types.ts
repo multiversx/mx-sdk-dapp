@@ -34,13 +34,25 @@ type BaseDappConfigType = {
   theme?: `${ThemesEnum}`;
 };
 
+export type TransactionTrackingConfigType = {
+  successfulToastLifetime?: number;
+  /**
+   * The callback to run when the transaction session is successful.
+   */
+  onSuccess?: (sessionId: string) => Promise<void>;
+  /**
+   * The callback to run when the transaction session fails.
+   */
+  onFail?: (sessionId: string) => Promise<void>;
+};
+
 export type EnvironmentDappConfigType = BaseDappConfigType & {
   /**
    * If passed in, will automatically initialize the network with the given environment and skip fetching `/dapp/config` data from server.
    */
   environment: EnvironmentsEnum;
   network?: CustomNetworkType;
-  successfulToastLifetime?: number;
+  transactionTracking?: TransactionTrackingConfigType;
 };
 
 export type CustomNetworkDappConfigType = BaseDappConfigType & {
@@ -50,7 +62,7 @@ export type CustomNetworkDappConfigType = BaseDappConfigType & {
    */
   network: CustomNetworkType & { apiAddress: string };
   environment?: never;
-  successfulToastLifetime?: number;
+  transactionTracking?: TransactionTrackingConfigType;
 };
 
 export type DappConfigType =
@@ -90,7 +102,15 @@ export type InitAppType = {
           walletConnectV2ProjectId
         }
       },
-      successfulToastLifetime: DEFAULT_TOAST_LIEFTIME
+      transactionTracking: {
+        successfulToastLifetime: DEFAULT_TOAST_LIEFTIME,
+        onSuccess: async (sessionId) => {
+          console.log('Transactions execution successful', sessionId);
+        },
+        onFail: async (sessionId) => {
+          console.log('Transactions execution failed', sessionId);
+        }
+      }
     }
    * ```
    */
