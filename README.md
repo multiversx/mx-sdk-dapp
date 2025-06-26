@@ -421,20 +421,8 @@ An existing provider is initialized on app load (this is take care of by `initAp
 If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method or add it to the [window object](https://github.com/multiversx/mx-template-dapp/tree/main/src/initConfig). Last step is to login using the custom provider.
 
 ```typescript
-import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/providers/types/providerFactory.types';
-
-const ADDITIONAL_PROVIDERS = {
-  myCustomProvider: 'myCustomProvider'
-} as const;
-
-// do this if you want to reference it later in your code
-const ExtendedProviders = {
-  ...ProviderTypeEnum,
-  ...ADDITIONAL_PROVIDERS
-} as const;
-
 const provider = await ProviderFactory.create({
-  type: ExtendedProviders.myCustomProvider // or add a simple string here
+  type: 'custom-provider'
 });
 await provider?.login();
 ```
