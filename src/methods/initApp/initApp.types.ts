@@ -5,6 +5,7 @@ import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { StorageCallback } from 'store/storage';
 import { EnvironmentsEnum } from 'types/enums.types';
 import { CustomNetworkType } from 'types/network.types';
+import { ThemesEnum } from 'types/theme.types';
 
 type BaseDappConfigType = {
   /**
@@ -21,6 +22,28 @@ type BaseDappConfigType = {
     crossWindow?: CrossWindowConfig;
     walletConnect?: WalletConnectConfig;
   };
+  /**
+   * Customize the dApp theme.
+   * @example
+   * ```ts
+   * import { ThemesEnum } from '@multiversx/sdk-dapp/out/types/theme.types';
+   *
+   *   theme: ThemesEnum.dark
+   * ```
+   */
+  theme?: `${ThemesEnum}`;
+};
+
+export type TransactionTrackingConfigType = {
+  successfulToastLifetime?: number;
+  /**
+   * The callback to run when the transaction session is successful.
+   */
+  onSuccess?: (sessionId: string) => Promise<void>;
+  /**
+   * The callback to run when the transaction session fails.
+   */
+  onFail?: (sessionId: string) => Promise<void>;
 };
 
 export type EnvironmentDappConfigType = BaseDappConfigType & {
@@ -29,7 +52,7 @@ export type EnvironmentDappConfigType = BaseDappConfigType & {
    */
   environment: EnvironmentsEnum;
   network?: CustomNetworkType;
-  successfulToastLifetime?: number;
+  transactionTracking?: TransactionTrackingConfigType;
 };
 
 export type CustomNetworkDappConfigType = BaseDappConfigType & {
@@ -39,7 +62,7 @@ export type CustomNetworkDappConfigType = BaseDappConfigType & {
    */
   network: CustomNetworkType & { apiAddress: string };
   environment?: never;
-  successfulToastLifetime?: number;
+  transactionTracking?: TransactionTrackingConfigType;
 };
 
 export type DappConfigType =
@@ -69,6 +92,7 @@ export type InitAppType = {
    * {
       nativeAuth: true,
       environment: EnvironmentsEnum.devnet,
+      theme: ThemesEnum.light,
       network: {
         walletAddress: 'https://wallet.multiversx.com'
         // ...other network properties to override
@@ -78,7 +102,15 @@ export type InitAppType = {
           walletConnectV2ProjectId
         }
       },
-      successfulToastLifetime: DEFAULT_TOAST_LIEFTIME
+      transactionTracking: {
+        successfulToastLifetime: DEFAULT_TOAST_LIEFTIME,
+        onSuccess: async (sessionId) => {
+          console.log('Transactions execution successful', sessionId);
+        },
+        onFail: async (sessionId) => {
+          console.log('Transactions execution failed', sessionId);
+        }
+      }
     }
    * ```
    */
