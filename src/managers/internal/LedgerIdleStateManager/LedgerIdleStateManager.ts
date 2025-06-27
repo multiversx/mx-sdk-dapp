@@ -5,11 +5,11 @@ import {
 } from 'providers/helpers/accountProvider';
 import { LedgerProviderStrategy } from 'providers/strategies/LedgerProviderStrategy/LedgerProviderStrategy';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
-import { createCustomToast } from 'store/actions/toasts/toastsActions';
-import { accountSelector, loginInfoSelector } from 'store/selectors';
+import { isLoggedInSelector, loginInfoSelector } from 'store/selectors';
 import { isSidePanelOpenSelector } from 'store/selectors/uiSelectors';
 import { getState, getStore } from 'store/store';
 import { ToastIconsEnum } from '../ToastManager/helpers/getToastDataStateByStatus';
+import { ToastManager } from '../ToastManager/ToastManager';
 
 const LEDGER_IDLE_STATE_CHECK_INTERVAL = 30_000;
 const LEDGER_IDLE_STATE_RECONNECT_INTERVAL = 5_000;
@@ -36,9 +36,10 @@ export class LedgerIdleStateManager {
   };
 
   private readonly shouldCheckConnection = (): boolean => {
-    const { providerType } = loginInfoSelector(this.store.getState());
-    const address = accountSelector(this.store.getState()).address;
-    return Boolean(providerType === ProviderTypeEnum.ledger && address);
+    const state = this.store.getState();
+    const { providerType } = loginInfoSelector(state);
+    const isLoggedIn = isLoggedInSelector(state);
+    return Boolean(providerType === ProviderTypeEnum.ledger && isLoggedIn);
   };
 
   private readonly startCheckConnectionLoop = () => {
@@ -57,7 +58,7 @@ export class LedgerIdleStateManager {
         const ledgerProvider = getAccountProvider().getProvider();
         await ledgerProvider.getAddress();
       } catch (_error) {
-        createCustomToast({
+        ToastManager.getInstance().createCustomToast({
           toastId: 'ledger-provider-idle-warning',
           icon: ToastIconsEnum.times,
           iconClassName: 'warning',
@@ -74,16 +75,6 @@ export class LedgerIdleStateManager {
         );
       }
     }, LEDGER_IDLE_STATE_CHECK_INTERVAL);
-  };
-
-  private readonly getLedgerAddress = async () => {
-    if (!this.shouldCheckConnection()) {
-      return;
-    }
-
-    const ledgerProvider = getAccountProvider().getProvider();
-    const address = await ledgerProvider.getAddress();
-    return address;
   };
 
   private readonly reconnectProvider = async () => {
@@ -106,7 +97,7 @@ export class LedgerIdleStateManager {
       clearInterval(this.recreateProviderInterval ?? 0);
       this.recreateProviderInterval = null;
 
-      createCustomToast({
+      ToastManager.getInstance().createCustomToast({
         toastId: 'ledger-provider-idle-warning',
         duration: RECONNECT_SUCCESS_DURATION,
         icon: ToastIconsEnum.check,

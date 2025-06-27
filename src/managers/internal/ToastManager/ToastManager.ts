@@ -9,7 +9,8 @@ import {
   removeAllCustomToasts,
   removeCustomToast,
   removeTransactionToast,
-  addTransactionToast
+  addTransactionToast,
+  createCustomToast
 } from 'store/actions/toasts/toastsActions';
 import {
   getIsTransactionFailed,
@@ -115,14 +116,24 @@ export class ToastManager {
     return isCompleted;
   }
 
-  public createTransactionToast(toastId: string, totalDuration: number) {
-    addTransactionToast({
+  public createTransactionToast(
+    toastId: string,
+    totalDuration: number
+  ): string {
+    const newToastId = addTransactionToast({
       toastId,
       totalDuration
     });
 
     this.handleCompletedTransaction(toastId);
     this.updateTransactionToastsList();
+    return newToastId;
+  }
+
+  public createCustomToast(toast: CustomToastType): string {
+    const toastId = createCustomToast(toast);
+    this.updateCustomToastList();
+    return toastId;
   }
 
   private async updateTransactionToastsList() {
