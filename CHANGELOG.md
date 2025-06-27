@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-[Fixed issue with wallet login](https://github.com/multiversx/mx-sdk-dapp/pull/1475)
+
 ## [[5.0.0-alpha.12](https://github.com/multiversx/mx-sdk-dapp/pull/1472)] - 2025-06-27
 
 - [Added `LogoutManager` to handle automatic logout upon native auth expiration](https://github.com/multiversx/mx-sdk-dapp/pull/1471)
