@@ -1,4 +1,4 @@
-import { safeWindow } from 'constants/index';
+import { safeWindow } from 'constants/window.constants';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
 import { registerSessionCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
@@ -22,6 +22,7 @@ import { registerWebsocketListener } from './websocket/registerWebsocket';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
 import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
+import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 
 const defaultInitAppProps = {
   storage: {
@@ -112,6 +113,7 @@ export async function initApp({
     if (isLoggedIn) {
       await registerWebsocketListener(account.address);
       trackTransactions();
+      LogoutManager.getInstance().init();
       registerSessionCallbacks({
         onSuccess: dAppConfig.transactionTracking?.onSuccess,
         onFail: dAppConfig.transactionTracking?.onFail
