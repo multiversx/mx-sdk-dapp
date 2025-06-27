@@ -148,6 +148,30 @@ export const ConnectButton = () => {
 };
 
 ```
+Once the user has logged in, if `nativeAuth` is configured in the `initApp` method, an automatic logout will be performed upon native auth expiration. Before the actual logout is performed, the `LogoutManager` will show a warning toast to the user. This toast can be customized by passing a `tokenExpirationToastWarningSeconds` to the `nativeAuth` config.
+
+```typescript
+// in initAoo config
+const config: InitAppType = {
+ // ...
+ nativeAuth: {
+    expirySeconds: 30, // test auto logout after 30 seconds
+    tokenExpirationToastWarningSeconds: 10 // show warning toast 10 seconds before auto logout
+ },
+}
+```
+
+You have the option to stop this behavior by calling `LogoutManager.getInstance().stop()` after the user has logged in.
+
+```typescript
+import { LogoutManager } from '@multiversx/sdk-dapp/out/managers/LogoutManager/LogoutManager';
+
+  loginHandler: () => {
+    navigate('/dashboard');
+    // optional, to stop the automatic logout upon native auth expiration
+    LogoutManager.getInstance().stop(); 
+  },
+```
 
 If you want to perform some actions as soon as the user has logged in, you will need to call `ProviderFactory.create` inside a handler accepting arguments. 
 
