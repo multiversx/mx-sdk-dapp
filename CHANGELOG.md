@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Added `LogoutManager` to handle automatic logout upon native auth expiration](https://github.com/multiversx/mx-sdk-dapp/pull/1471)
-
+ 
 ## [[5.0.0-alpha.11](https://github.com/multiversx/mx-sdk-dapp/pull/1470)] - 2025-06-26
 
 - [Added callbacks for transaction tracking](https://github.com/multiversx/mx-sdk-dapp/pull/1469)
