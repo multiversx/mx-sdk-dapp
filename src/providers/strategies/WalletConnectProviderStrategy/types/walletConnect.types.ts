@@ -22,6 +22,7 @@ export enum WalletConnectEventsEnum {
 
 export interface IWalletConnectModalData {
   wcURI: string;
+  walletConnectDeepLink: string;
 }
 
 export interface WalletConnectConfig {

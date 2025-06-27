@@ -14,6 +14,7 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
+import { ThemesEnum } from 'types';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
@@ -57,6 +58,9 @@ export async function initApp({
   dAppConfig,
   customProviders
 }: InitAppType) {
+  const defaultTheme = dAppConfig?.theme ?? ThemesEnum.dark;
+
+  switchTheme(defaultTheme);
   initStore(storage.getStorageCallback);
 
   const { apiAddress } = await initializeNetwork({
@@ -80,10 +84,6 @@ export async function initApp({
 
   if (dAppConfig?.providers?.crossWindow) {
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
-  }
-
-  if (dAppConfig?.theme) {
-    switchTheme(dAppConfig.theme);
   }
 
   const isLoggedIn = getIsLoggedIn();
