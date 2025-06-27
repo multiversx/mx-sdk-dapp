@@ -1,7 +1,4 @@
-import {
-  ProviderTypeEnum,
-  ProviderType
-} from 'providers/types/providerFactory.types';
+import { ProviderType } from 'providers/types/providerFactory.types';
 import {
   LedgerLoginType,
   LoginInfoType,

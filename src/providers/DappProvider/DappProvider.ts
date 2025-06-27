@@ -1,4 +1,5 @@
 import { Message, Transaction } from 'lib/sdkCore';
+import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { IProvider } from '../types/providerFactory.types';
 import { login } from './helpers/login/login';
 import { logout } from './helpers/logout/logout';
@@ -26,6 +27,7 @@ export class DappProvider {
 
   async login(options?: { token?: string }) {
     const data = await login(this.provider, options);
+    LogoutManager.getInstance().init();
     return data;
   }
 
