@@ -91,27 +91,22 @@ export async function initApp({
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
   const toastManager = ToastManager.getInstance();
-  console.log(1);
   await toastManager.init({
     successfulToastLifetime:
       dAppConfig.transactionTracking?.successfulToastLifetime
   });
-  console.log(2);
 
   const usedProviders: ICustomProvider[] = [
     ...((safeWindow as any)?.multiversx?.providers ?? []),
     ...(customProviders || [])
   ];
-  console.log(3);
 
   const uniqueProviders = usedProviders.filter(
     (provider, index, arr) =>
       index === arr.findIndex((item) => item.type === provider.type)
   );
-  console.log(4);
 
   ProviderFactory.customProviders = uniqueProviders || [];
-  console.log(5);
 
   if (!isAppInitialized) {
     await restoreProvider();
@@ -127,7 +122,6 @@ export async function initApp({
       });
     }
   }
-  console.log(7);
 
   if (account.shard != null) {
     await setGasStationMetadata({
@@ -135,7 +129,6 @@ export async function initApp({
       apiAddress
     });
   }
-  console.log(8);
 
   isAppInitialized = true;
 }

@@ -22,7 +22,7 @@ import { CustomToastType } from 'store/slices/toast/toastSlice.types';
 import { getStore } from 'store/store';
 import { IEventBus } from 'types/manager.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { createUIElement } from 'utils/createUIElement';
+import { ComponentFactory } from 'utils/ComponentFactory';
 import { createToastsFromTransactions } from './helpers/createToastsFromTransactions';
 import { LifetimeManager } from './helpers/LifetimeManager';
 import { ITransactionToast, ToastEventsEnum } from './types';
@@ -83,7 +83,6 @@ export class ToastManager {
         }
       }
     );
-    console.log('\x1b[42m%s\x1b[0m', 1.4);
   }
 
   public static getInstance(): ToastManager {
@@ -200,12 +199,10 @@ export class ToastManager {
 
     if (!this.isCreatingElement) {
       this.isCreatingElement = true;
-      console.log('\x1b[42m%s\x1b[0m', 1.1, 'createUIElement');
 
-      this.toastsElement = await createUIElement<MvxToastList>({
+      this.toastsElement = await ComponentFactory.create<MvxToastList>({
         name: UITagsEnum.TOAST_LIST
       });
-      console.log('\x1b[42m%s\x1b[0m', 1.2);
 
       this.isCreatingElement = false;
     }
