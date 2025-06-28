@@ -11,6 +11,8 @@ export const accountFetcher = ({
   address: string | null;
   baseURL: string;
 }) => {
+  console.log('apiAddress --> ', baseURL);
+
   const apiAddress = getCleanApiAddress(baseURL);
   const url = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
   // we need to get it with an axios instance because of cross-window user interaction issues

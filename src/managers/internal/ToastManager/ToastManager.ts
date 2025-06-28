@@ -32,7 +32,7 @@ interface IToastManager {
 }
 
 export class ToastManager {
-  private lifetimeManager: LifetimeManager;
+  private readonly lifetimeManager: LifetimeManager;
   private isCreatingElement = false;
   private static instance: ToastManager;
   private toastsElement: MvxToastList | null = null;
@@ -40,7 +40,7 @@ export class ToastManager {
   private customToasts: CustomToastType[] = [];
   private successfulToastLifetime?: number;
   private storeToastsSubscription: () => void = () => null;
-  private notificationsFeedManager: NotificationsFeedManager;
+  private readonly notificationsFeedManager: NotificationsFeedManager;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
   private eventBus: IEventBus<ITransactionToast[] | CustomToastType[]> | null =
     null;
@@ -63,6 +63,7 @@ export class ToastManager {
 
     this.updateTransactionToastsList();
     this.updateCustomToastList();
+
     await this.subscribeToEventBusNotifications();
 
     this.storeToastsSubscription = this.store.subscribe(
@@ -82,6 +83,7 @@ export class ToastManager {
         }
       }
     );
+    console.log('\x1b[42m%s\x1b[0m', 1.4);
   }
 
   public static getInstance(): ToastManager {
@@ -198,10 +200,12 @@ export class ToastManager {
 
     if (!this.isCreatingElement) {
       this.isCreatingElement = true;
+      console.log('\x1b[42m%s\x1b[0m', 1.1, 'createUIElement');
 
       this.toastsElement = await createUIElement<MvxToastList>({
         name: UITagsEnum.TOAST_LIST
       });
+      console.log('\x1b[42m%s\x1b[0m', 1.2);
 
       this.isCreatingElement = false;
     }
@@ -219,6 +223,7 @@ export class ToastManager {
 
   private async subscribeToEventBusNotifications() {
     const toastsElement = await this.createToastListElement();
+
     if (!toastsElement) {
       return;
     }

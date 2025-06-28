@@ -23,6 +23,7 @@ async function loginWithoutNativeToken(provider: IProvider) {
     throw new Error('Address not found');
   }
 
+  console.log('loginWithoutNativeToken --> ', apiAddress);
   await accountLogin({ address, provider, apiAddress });
 
   return {
@@ -86,6 +87,8 @@ async function loginWithNativeToken({
     },
     address
   });
+
+  console.log('loginWithNativeToken --> ', apiAddress);
 
   await accountLogin({
     address: extractedAddress,

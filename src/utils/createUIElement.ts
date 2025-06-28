@@ -7,6 +7,10 @@ export interface CreateEventBusUIElementType extends HTMLElement {
   getEventBus: () => Promise<IEventBus | null>;
 }
 
+const ComponentFactory = {
+  create: () => {}
+};
+
 export const createUIElement = async <T = CreateEventBusUIElementType>({
   name,
   anchor
