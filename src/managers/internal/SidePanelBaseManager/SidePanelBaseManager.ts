@@ -1,6 +1,6 @@
 import { UITagsEnum } from 'constants/UITags.enum';
 import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
-import { CreateEventBusUIElementType } from 'utils/createUIElement';
+import { CreateEventBusUIElementType } from 'utils/ComponentFactory';
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
 
 interface ISideManagerUIElement extends CreateEventBusUIElementType {

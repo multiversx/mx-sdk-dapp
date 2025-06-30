@@ -1,5 +1,6 @@
 import { safeWindow } from 'constants/window.constants';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
+import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { registerSessionCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
@@ -22,7 +23,6 @@ import { registerWebsocketListener } from './websocket/registerWebsocket';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
 import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
-import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 
 const defaultInitAppProps = {
   storage: {
@@ -62,6 +62,7 @@ export async function initApp({
   const defaultTheme = dAppConfig?.theme ?? ThemesEnum.dark;
 
   switchTheme(defaultTheme);
+
   initStore(storage.getStorageCallback);
 
   const { apiAddress } = await initializeNetwork({
@@ -90,7 +91,6 @@ export async function initApp({
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
   const toastManager = ToastManager.getInstance();
-
   await toastManager.init({
     successfulToastLifetime:
       dAppConfig.transactionTracking?.successfulToastLifetime
@@ -110,6 +110,7 @@ export async function initApp({
 
   if (!isAppInitialized) {
     await restoreProvider();
+
     if (isLoggedIn) {
       await registerWebsocketListener(account.address);
       trackTransactions();
