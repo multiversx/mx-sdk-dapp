@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.14](https://github.com/multiversx/mx-sdk-dapp/pull/1479)] - 2025-06-30
+
+- [Updated version of "mx-sdk-dapp-ui@0.0.8"](https://github.com/multiversx/mx-sdk-dapp/pull/1478)
+
 ## [[5.0.0-alpha.13](https://github.com/multiversx/mx-sdk-dapp/pull/1477)] - 2025-06-30
 
 - [Refactor `createUiElement` to ComponentFactory](https://github.com/multiversx/mx-sdk-dapp/pull/1476)
@@ -30,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[5.0.0-alpha.9](https://github.com/multiversx/mx-sdk-dapp/pull/1462)] - 2025-06-24
 
 - [Updated README](https://github.com/multiversx/mx-sdk-dapp/pull/1463)
-- [Updated version of "mx-sdk-dapp-ui@0.0.7"]
+- [Updated version of "mx-sdk-dapp-ui@0.0.7"](https://github.com/multiversx/mx-sdk-dapp/pull/1461)
 - [Updated webview login with version handshake](https://github.com/multiversx/mx-sdk-dapp/pull/1460)
 
 ## [[5.0.0-alpha.8](https://github.com/multiversx/mx-sdk-dapp/pull/1459)] - 2025-06-19
