@@ -22,7 +22,7 @@ import { CustomToastType } from 'store/slices/toast/toastSlice.types';
 import { getStore } from 'store/store';
 import { IEventBus } from 'types/manager.types';
 import { ProviderErrorsEnum } from 'types/provider.types';
-import { createUIElement } from 'utils/createUIElement';
+import { ComponentFactory } from 'utils/ComponentFactory';
 import { createToastsFromTransactions } from './helpers/createToastsFromTransactions';
 import { LifetimeManager } from './helpers/LifetimeManager';
 import { ITransactionToast, ToastEventsEnum } from './types';
@@ -32,7 +32,7 @@ interface IToastManager {
 }
 
 export class ToastManager {
-  private lifetimeManager: LifetimeManager;
+  private readonly lifetimeManager: LifetimeManager;
   private isCreatingElement = false;
   private static instance: ToastManager;
   private toastsElement: MvxToastList | null = null;
@@ -40,7 +40,7 @@ export class ToastManager {
   private customToasts: CustomToastType[] = [];
   private successfulToastLifetime?: number;
   private storeToastsSubscription: () => void = () => null;
-  private notificationsFeedManager: NotificationsFeedManager;
+  private readonly notificationsFeedManager: NotificationsFeedManager;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
   private eventBus: IEventBus<ITransactionToast[] | CustomToastType[]> | null =
     null;
@@ -63,6 +63,7 @@ export class ToastManager {
 
     this.updateTransactionToastsList();
     this.updateCustomToastList();
+
     await this.subscribeToEventBusNotifications();
 
     this.storeToastsSubscription = this.store.subscribe(
@@ -199,7 +200,7 @@ export class ToastManager {
     if (!this.isCreatingElement) {
       this.isCreatingElement = true;
 
-      this.toastsElement = await createUIElement<MvxToastList>({
+      this.toastsElement = await ComponentFactory.create<MvxToastList>({
         name: UITagsEnum.TOAST_LIST
       });
 
@@ -219,6 +220,7 @@ export class ToastManager {
 
   private async subscribeToEventBusNotifications() {
     const toastsElement = await this.createToastListElement();
+
     if (!toastsElement) {
       return;
     }

@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
--[Fixed issue with wallet login](https://github.com/multiversx/mx-sdk-dapp/pull/1475)
+- [Refactor `createUiElement` to ComponentFactory](https://github.com/multiversx/mx-sdk-dapp/pull/1476)
+- [Fixed issue with wallet login](https://github.com/multiversx/mx-sdk-dapp/pull/1475)
 
 ## [[5.0.0-alpha.12](https://github.com/multiversx/mx-sdk-dapp/pull/1472)] - 2025-06-27
 
