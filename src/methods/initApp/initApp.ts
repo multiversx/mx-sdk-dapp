@@ -110,7 +110,6 @@ export async function initApp({
 
   if (!isAppInitialized) {
     await restoreProvider();
-    console.log(6);
 
     if (isLoggedIn) {
       await registerWebsocketListener(account.address);
