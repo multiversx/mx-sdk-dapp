@@ -113,17 +113,27 @@ export async function signTransactions({
           });
 
         if (tokenTransaction) {
+          console.log('signTransactions - updating token transaction');
           manager.updateTokenTransaction(tokenTransaction);
+          console.log('signTransactions - after updating token transaction');
         }
 
         if (fungibleTransaction) {
+          console.log('signTransactions - updating token fungible transaction');
           manager.updateNonFungibleTransaction(
             fungibleTransaction.type,
             fungibleTransaction
           );
+          console.log('signTransactions - after updating fungible transaction');
         }
 
+        console.log(
+          `signTransactions - updating common data for transaction at index ${currentScreenIndex}`
+        );
         manager.updateCommonData(commonData);
+        console.log(
+          `signTransactions - common data updated for transaction at index ${currentScreenIndex}`
+        );
       } catch (error) {
         console.error(
           `Error fetching common data for transaction at index ${currentScreenIndex}:`,
