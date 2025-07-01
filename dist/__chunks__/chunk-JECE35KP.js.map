@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/dappConfig.types.ts"],
+  "sourcesContent": ["export type DappConfigType = {\n  logoutRoute?: string;\n  shouldUseWebViewProvider?: boolean;\n  cancelTransactionToastDuration?: number;\n  /**\n   * @param {boolean} shouldFetchWalletUrlOnLoad if set,\n   * `useParseSignedTransactions` will read the walletUrl\n   * at application boot instead of hook mount time\n   */\n  shouldFetchWalletUrlOnLoad?: boolean;\n  isSSR?: boolean;\n};\n"],
+  "mappings": "0CAAA",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/useDataDecodeMethod.ts"],
+  "sourcesContent": ["import { useEffect, useState } from 'react';\nimport { DecodeMethodEnum } from 'types';\nimport { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const useDataDecodeMethod = () => {\n  const { hash, pathname } = getWindowLocation();\n  const hashDecodeMethod = hash.replace('#', '');\n  const initialDecodeMethod =\n    hashDecodeMethod &&\n    Object.values<string>(DecodeMethodEnum).includes(hashDecodeMethod)\n      ? hashDecodeMethod\n      : DecodeMethodEnum.raw;\n  const [decodeMethod, setDecodeMethod] = useState<string>(hashDecodeMethod);\n\n  useEffect(() => {\n    if (decodeMethod && decodeMethod !== DecodeMethodEnum.raw) {\n      window?.history.replaceState(\n        {},\n        document?.title,\n        `${pathname}#${decodeMethod}`\n      );\n    }\n  }, [decodeMethod, pathname]);\n\n  return { initialDecodeMethod, decodeMethod, setDecodeMethod };\n};\n"],
+  "mappings": "8KAAA,mDAIa,GAJb,aACA,IACA,IAEO,AAAM,EAAsB,IAAM,CACvC,GAAM,CAAE,OAAM,YAAa,EAAkB,EACvC,EAAmB,EAAK,QAAQ,IAAK,EAAE,EACvC,EACJ,GACA,OAAO,OAAe,CAAgB,EAAE,SAAS,CAAgB,EAC7D,EACA,MACA,CAAC,EAAc,GAAmB,EAAiB,CAAgB,EAEzE,SAAU,IAAM,CACd,AAAI,GAAgB,IAAiB,OACnC,sBAAQ,QAAQ,aACd,CAAC,EACD,+BAAU,MACV,GAAG,KAAY,KAGrB,EAAG,CAAC,EAAc,CAAQ,CAAC,EAEpB,CAAE,sBAAqB,eAAc,iBAAgB,CAC9D",
+  "names": []
+}

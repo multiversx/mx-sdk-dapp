@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/TransactionSender/utils/handleSendBatchTransactionsErrors.ts"],
+  "sourcesContent": ["import { updateSignedTransactions } from 'reduxStore/slices';\nimport { store } from 'reduxStore/store';\nimport {\n  SignedTransactionType,\n  TransactionBatchStatusesEnum,\n  TransactionServerStatusesEnum\n} from 'types';\n\nexport const handleSendBatchTransactionsErrors = ({\n  errorMessage,\n  sessionId,\n  transactions,\n  clearSignInfo\n}: {\n  errorMessage: string;\n  sessionId: string;\n  transactions: SignedTransactionType[];\n  clearSignInfo?: () => void;\n}) => {\n  console.error('Unable to send transactions', errorMessage);\n  store.dispatch(\n    updateSignedTransactions({\n      sessionId,\n      status: TransactionBatchStatusesEnum.fail,\n      errorMessage,\n      transactions: transactions.map((transaction) => ({\n        ...transaction,\n        status: TransactionServerStatusesEnum.notExecuted\n      }))\n    })\n  );\n  clearSignInfo?.();\n};\n"],
+  "mappings": "wNAAA,QACA,IACA,IAMO,GAAM,GAAoC,CAAC,CAChD,eACA,YACA,eACA,mBAMI,CACJ,QAAQ,MAAM,8BAA+B,CAAY,EACzD,EAAM,SACJ,EAAyB,CACvB,YACA,OAAQ,OACR,eACA,aAAc,EAAa,IAAI,AAAC,GAAiB,OAC5C,GAD4C,CAE/C,OAAQ,cACV,EAAE,CACJ,CAAC,CACH,EACA,YACF",
+  "names": []
+}

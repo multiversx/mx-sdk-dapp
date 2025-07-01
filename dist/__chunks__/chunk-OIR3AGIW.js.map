@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/useCheckTransactionStatus/getPendingTransactions.ts"],
+  "sourcesContent": ["import { SignedTransactionType } from 'types';\nimport { getIsTransactionPending } from 'utils/transactions/transactionStateByStatus';\n\nexport interface PendingTransactionType {\n  hash: string;\n  previousStatus: string;\n}\n\nexport function getPendingTransactions(\n  transactions: SignedTransactionType[],\n  timedOutHashes: string[]\n): PendingTransactionType[] {\n  const pendingTransactions = transactions.reduce(\n    (acc: PendingTransactionType[], { status, hash }) => {\n      if (\n        hash != null &&\n        !timedOutHashes.includes(hash) &&\n        getIsTransactionPending(status)\n      ) {\n        acc.push({\n          hash,\n          previousStatus: status\n        });\n      }\n      return acc;\n    },\n    []\n  );\n  return pendingTransactions;\n}\n"],
+  "mappings": "uFAAA,IACA,IAOO,WACL,EACA,EAC0B,CAiB1B,MAhB4B,GAAa,OACvC,CAAC,EAA+B,CAAE,SAAQ,UAEtC,IAAQ,MACR,CAAC,EAAe,SAAS,CAAI,GAC7B,EAAwB,CAAM,GAE9B,EAAI,KAAK,CACP,OACA,eAAgB,CAClB,CAAC,EAEI,GAET,CAAC,CACH,CAEF",
+  "names": []
+}

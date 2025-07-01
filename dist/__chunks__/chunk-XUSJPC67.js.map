@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/operaWallet/helpers/getIsOperaWalletAvailable.ts"],
+  "sourcesContent": ["import { safeWindow } from 'lib/sdkDappUtils';\n\nexport const getIsOperaWalletAvailable = () => {\n  return Boolean(safeWindow?.isOpera && safeWindow?.elrond);\n};\n"],
+  "mappings": "uFAAA,QAEO,GAAM,GAA4B,IAAM,CAF/C,QAGE,MAAO,SAAQ,sBAAY,UAAW,sBAAY,OAAM,CAC1D",
+  "names": []
+}

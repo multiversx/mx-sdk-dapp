@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoNonce/index.tsx"],
+  "sourcesContent": ["export * from './TransactionInfoNonce';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

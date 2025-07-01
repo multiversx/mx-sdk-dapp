@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/nativeAuth/index.tsx"],
+  "sourcesContent": ["export * from './nativeAuth';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

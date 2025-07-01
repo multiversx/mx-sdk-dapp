@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/validation/getIdentifierType.ts"],
+  "sourcesContent": ["const esdtParts = 2;\nconst nftParts = 3;\n\nconst defaultResult = {\n  isEsdt: false,\n  isNft: false,\n  isEgld: false\n};\n\nexport function getIdentifierType(identifier?: string): {\n  isEsdt: boolean;\n  isNft: boolean;\n  isEgld: boolean;\n} {\n  const parts = identifier?.split('-').length;\n\n  if (parts === esdtParts) {\n    return {\n      ...defaultResult,\n      isEsdt: true\n    };\n  }\n  if (parts === nftParts) {\n    return {\n      ...defaultResult,\n      isNft: true\n    };\n  }\n  return {\n    ...defaultResult,\n    isEgld: true\n  };\n}\n"],
+  "mappings": "6DASO,WAA2B,EAIhC,CACA,GAAM,GAAQ,iBAAY,MAAM,KAAK,OAErC,MAAI,KAAU,EACL,OACF,GADE,CAEL,OAAQ,EACV,GAEE,IAAU,EACL,OACF,GADE,CAEL,MAAO,EACT,GAEK,OACF,GADE,CAEL,OAAQ,EACV,EACF,CAhCA,GAGM,GAHN,aAGA,AAAM,EAAgB,CACpB,OAAQ,GACR,MAAO,GACP,OAAQ,EACV",
+  "names": []
+}

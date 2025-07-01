@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getScResultsDecodedData.ts"],
+  "sourcesContent": ["import { decodePart } from 'utils/decoders/decodePart';\n\nexport const getScResultsDecodedData = (data: string) => {\n  const parts = Buffer.from(data, 'base64').toString().split('@');\n\n  if (parts.length >= 2) {\n    if (parts[0].length > 0) {\n      parts[0] = decodePart(parts[0]);\n    } else {\n      parts[1] = decodePart(parts[1]);\n    }\n  }\n\n  return parts.join('@');\n};\n"],
+  "mappings": "qGAAA,GAEa,GAFb,iBAEO,AAAM,EAA0B,AAAC,GAAiB,CACvD,GAAM,GAAQ,SAAO,KAAK,EAAM,QAAQ,EAAE,SAAS,EAAE,MAAM,GAAG,EAE9D,MAAI,GAAM,QAAU,GAClB,CAAI,EAAM,GAAG,OAAS,EACpB,EAAM,GAAK,EAAW,EAAM,EAAE,EAE9B,EAAM,GAAK,EAAW,EAAM,EAAE,GAI3B,EAAM,KAAK,GAAG,CACvB",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{a as o,b as C}from"./chunk-27DX5WIQ.js";import{e as l,m as n}from"./chunk-HBP5N4FR.js";function x(e){let t=null;if((e==null?void 0:e.statusCode)in o){let s=e==null?void 0:e.statusCode,{message:r}=o[s];t=g.includes(s)?d:r}return{errorMessage:t,defaultErrorMessage:d}}var d,a,c,g,i=l(()=>{n();C();d="Check if the MultiversX app is open on Ledger",a=28161,c=28160,g=[a,c]});export{x as a,i as b};
+//# sourceMappingURL=chunk-J42ZO72F.js.map

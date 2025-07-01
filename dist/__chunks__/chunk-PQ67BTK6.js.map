@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/NotificationModal/index.tsx"],
+  "sourcesContent": ["export * from './NotificationModal';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

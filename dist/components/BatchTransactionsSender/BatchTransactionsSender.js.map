@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/components/BatchTransactionsSender/BatchTransactionsSender.ts"],
+  "sourcesContent": [""],
+  "mappings": "oEAAA",
+  "names": []
+}

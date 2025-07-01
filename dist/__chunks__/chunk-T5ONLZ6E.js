@@ -1,0 +1,2 @@
+import{d as t,e as l}from"./chunk-2PVUEXHG.js";import{a as d,b as g}from"./chunk-RYPCCLPH.js";import{e as T,m as i}from"./chunk-HBP5N4FR.js";var y,p=T(()=>{i();g();l();y=(e,u=1)=>e!=null&&e.length?e.reduce((n,{receiver:m,data:r})=>{let o=t({receiver:m,data:r!=null?r:""});return o==null?n:n&&d({receiverAddress:o,senderShard:u})},!0):!0});export{y as a,p as b};
+//# sourceMappingURL=chunk-T5ONLZ6E.js.map

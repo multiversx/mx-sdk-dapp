@@ -1,0 +1,2 @@
+import{a}from"./chunk-CXGKMOCJ.js";import{h as f,m}from"./chunk-HBP5N4FR.js";m();var u=f(a()),c=t=>{if(t<=0||isNaN(t)||!t||(0,u.isString)(t))return"N/A time";if(t>=86400)return"more than one day";let r=Math.floor(t/3600),n=t%3600,o=Math.floor(n/60),e=n%60,i=[];return r>0&&i.push(`${r}h`),o>0&&i.push(`${o}min`),e>0&&i.push(`${e}sec`),i.join(" ")};export{c as a};
+//# sourceMappingURL=chunk-HY3IEKEL.js.map

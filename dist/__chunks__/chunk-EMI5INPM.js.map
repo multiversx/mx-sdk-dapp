@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/DappModal/components/index.ts"],
+  "sourcesContent": ["export { DappModal } from './DappModal';\nexport { DappModalBody } from './DappModalBody';\nexport { DappModalFooter } from './DappModalFooter';\nexport { DappModalHeader } from './DappModalHeader';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

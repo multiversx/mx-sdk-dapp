@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/signMessage/useGetSignMessageSession.ts"],
+  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { signedMessageInfoSliceSelector } from 'reduxStore/selectors';\n\nexport const useGetSignMessageSession = (sessionId: string) => {\n  const signedMessageInfo = useSelector(signedMessageInfoSliceSelector);\n\n  if (!sessionId) {\n    return;\n  }\n\n  return signedMessageInfo.signedSessions[sessionId];\n};\n"],
+  "mappings": "gKAAA,IACA,IAEO,GAAM,GAA2B,AAAC,GAAsB,CAC7D,GAAM,GAAoB,EAAY,CAA8B,EAEpE,GAAI,EAAC,EAIL,MAAO,GAAkB,eAAe,EAC1C",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{b as i}from"./chunk-A6KCXJ2P.js";import{a as s}from"./chunk-ZV7QWZXL.js";import{d as n}from"./chunk-JUB6TCFX.js";import{s as l}from"./chunk-7OZRG2YY.js";import{a as e}from"./chunk-HKOZWGGV.js";import{m as t}from"./chunk-HBP5N4FR.js";t();import f,{useEffect as u}from"react";l();var S=({children:m=null})=>{let{address:o}=s(),r=n(e),{setLoginInfo:c,setAddress:p}=i();return u(()=>{p(o),c(r)},[r,o]),f.createElement(f.Fragment,null,m)};export{S as a};
+//# sourceMappingURL=chunk-MGV3D2F5.js.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsTable/components/ShardSpan.tsx"],
+  "sourcesContent": ["import React from 'react';\n\nimport { getShardText } from 'utils/transactions/transactionInfoHelpers/getShardText';\n\nexport interface ShardSpanPropsType {\n  shard: number | string;\n  ['data-testid']?: string;\n}\n\nexport const ShardSpan = ({ shard, ...rest }: ShardSpanPropsType) => (\n  <span {...rest}>{getShardText(shard)}</span>\n);\n"],
+  "mappings": "gGAAA,IAEA,IAFA,qBASO,GAAM,GAAY,AAAC,GAAwC,CAAxC,QAAE,UAAF,EAAY,IAAZ,EAAY,CAAV,UAC1B,uBAAC,YAAS,GAAO,EAAa,CAAK,CAAE",
+  "names": []
+}

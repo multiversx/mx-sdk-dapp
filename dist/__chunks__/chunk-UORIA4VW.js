@@ -1,0 +1,2 @@
+import{b as c}from"./chunk-UGBEFOBM.js";import{b as n}from"./chunk-7XYHQ72T.js";import{a as m,b as l}from"./chunk-OWBHRN3S.js";import{e as f,m as o}from"./chunk-HBP5N4FR.js";var x=f(()=>{o();n();p();l();c()});var D,p=f(()=>{o();x();D=()=>{let{pathname:r,search:t,hash:e}=m();return`${r!=null?r:""}${t!=null?t:""}${e!=null?e:""}`}});export{D as a,p as b,x as c};
+//# sourceMappingURL=chunk-UORIA4VW.js.map

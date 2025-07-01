@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/helpers/getAreAllTransactionsSignedByGuardian.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core/out';\n\nexport const getAreAllTransactionsSignedByGuardian = ({\n  transactions,\n  isGuarded\n}: {\n  transactions: Transaction[];\n  isGuarded?: boolean;\n}) => {\n  if (!isGuarded) {\n    return true;\n  }\n\n  if (transactions.length === 0) {\n    return false;\n  }\n\n  return transactions.every((tx) =>\n    Boolean(tx.getGuardianSignature().toString('hex'))\n  );\n};\n"],
+  "mappings": "wCAAA,IAEO,GAAM,GAAwC,CAAC,CACpD,eACA,eAKK,EAID,EAAa,SAAW,EACnB,GAGF,EAAa,MAAM,AAAC,GACzB,QAAQ,EAAG,qBAAqB,EAAE,SAAS,KAAK,CAAC,CACnD,EATS",
+  "names": []
+}

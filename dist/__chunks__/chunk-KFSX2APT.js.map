@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/account/getLatestNonce.tsx"],
+  "sourcesContent": ["import { accountNonceSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\nimport { AccountType } from 'types';\n\nexport function getLatestNonce(account: AccountType | null) {\n  const appState = store.getState();\n  const currentAccountNonce = accountNonceSelector(appState);\n  if (!account) {\n    return currentAccountNonce;\n  }\n  return currentAccountNonce && !isNaN(currentAccountNonce)\n    ? Math.max(currentAccountNonce, account.nonce)\n    : account.nonce;\n}\n"],
+  "mappings": "8KAIO,WAAwB,EAA6B,CAC1D,GAAM,GAAW,EAAM,SAAS,EAC1B,EAAsB,EAAqB,CAAQ,EACzD,MAAK,GAGE,GAAuB,CAAC,MAAM,CAAmB,EACpD,KAAK,IAAI,EAAqB,EAAQ,KAAK,EAC3C,EAAQ,MAJH,CAKX,CAbA,qBACA",
+  "names": []
+}

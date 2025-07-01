@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/account/helpers/trimUsernameDomain.ts"],
+  "sourcesContent": ["export const trimUsernameDomain = (username?: string) => {\n  if (!username) {\n    return;\n  }\n\n  const elrondSuffixExists = username.lastIndexOf('.elrond') > 0;\n  const trimmedPartBeforeLastDot = elrondSuffixExists\n    ? username.substring(0, username.lastIndexOf('.'))\n    : username;\n\n  return trimmedPartBeforeLastDot;\n};\n"],
+  "mappings": "wCAAA,IAAO,GAAM,GAAqB,AAAC,GAC5B,EAK4B,AADN,EAAS,YAAY,SAAS,EAAI,EAEzD,EAAS,UAAU,EAAG,EAAS,YAAY,GAAG,CAAC,EAC/C,EANF",
+  "names": []
+}

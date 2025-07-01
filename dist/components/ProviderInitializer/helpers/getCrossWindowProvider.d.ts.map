@@ -1,0 +1,1 @@
+{"version":3,"file":"getCrossWindowProvider.d.ts","sourceRoot":"","sources":["../../../../src/components/ProviderInitializer/helpers/getCrossWindowProvider.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,mBAAmB,EAAE,MAAM,qCAAqC,CAAC;AAE1E,wBAAsB,sBAAsB,CAAC,EAC3C,OAAO,EACP,SAAS,EACV,EAAE;IACD,OAAO,EAAE,MAAM,CAAC;IAChB,SAAS,EAAE,MAAM,CAAC;CACnB,uCAgBA"}

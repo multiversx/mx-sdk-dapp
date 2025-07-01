@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/account/useGetIsLoggedIn.ts"],
+  "sourcesContent": ["import { useGetLoginInfo } from './useGetLoginInfo';\n\nexport const useGetIsLoggedIn = () => {\n  const { isLoggedIn } = useGetLoginInfo();\n  return isLoggedIn;\n};\n"],
+  "mappings": "gFAAA,IAEO,GAAM,GAAmB,IAAM,CACpC,GAAM,CAAE,cAAe,EAAgB,EACvC,MAAO,EACT",
+  "names": []
+}

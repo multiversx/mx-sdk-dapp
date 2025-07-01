@@ -1,0 +1,1 @@
+{"version":3,"file":"getTransactionTransferType.d.ts","sourceRoot":"","sources":["../../../../../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionTransferType.ts"],"names":[],"mappings":"AAAA,OAAO,EACL,qBAAqB,EAErB,wBAAwB,EACzB,MAAM,gCAAgC,CAAC;AAExC,wBAAgB,0BAA0B,CACxC,OAAO,EAAE,MAAM,EACf,WAAW,EAAE,qBAAqB,EAClC,QAAQ,EAAE,MAAM,GACf,wBAAwB,CAiB1B"}

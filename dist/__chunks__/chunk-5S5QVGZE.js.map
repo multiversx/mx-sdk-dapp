@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/operations/nominate.ts"],
+  "sourcesContent": ["import { DECIMALS } from 'constants/index';\nimport { parseAmount } from './parseAmount';\n\nlet deprecationMessageDisplayed = false;\n\n/**\n * !!! This function is deprecated. Please use parseAmount instead.\n * */\nexport function nominate(amount: string, numDecimals: number = DECIMALS) {\n  if (!deprecationMessageDisplayed) {\n    console.warn(\n      '!!! Be aware !!! The \"nominate\" function is deprecated. Please use \"parseAmount\" instead.'\n    );\n    deprecationMessageDisplayed = true;\n  }\n\n  return parseAmount(amount, numDecimals);\n}\n"],
+  "mappings": "6IAQO,WAAkB,EAAgB,EAAsB,EAAU,CACvE,MAAK,IACH,SAAQ,KACN,2FACF,EACA,EAA8B,IAGzB,EAAY,EAAQ,CAAW,CACxC,CAjBA,GAGI,GAHJ,iBACA,IAEA,AAAI,EAA8B",
+  "names": []
+}

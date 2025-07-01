@@ -1,0 +1,2 @@
+import{a as n}from"./chunk-43PHZ72L.js";import{a as t}from"./chunk-BTO2QZZF.js";import{c as m}from"./chunk-UORIA4VW.js";import{a as i}from"./chunk-OWBHRN3S.js";import{m as o}from"./chunk-HBP5N4FR.js";o();import s from"react";m();var A=({showScamPhishingAlert:e,token:a,ledgerScamPhishingAlertClassName:r})=>{if(!e)return null;let h=t(a,r);return s.createElement(n,{authorizationInfo:h,className:r,url:i().origin})};export{A as a};
+//# sourceMappingURL=chunk-L27W6TNZ.js.map

@@ -1,0 +1,2 @@
+import{a as o}from"./chunk-NO7WX5IM.js";import{a as d}from"./chunk-OPT3JYNI.js";import{m as a}from"./chunk-HBP5N4FR.js";a();d();var b=()=>{var t,e;let{hasPendingTransactions:i,pendingTransactions:s}=o();if(!i)return"";let c=Object.keys(s).sort().reverse();for(let h of c){let n=(e=(t=s[h].transactions)==null?void 0:t.filter(r=>r.status==="pending"))!=null?e:[];if(n.length>0)return n[n.length-1].hash}return""};export{b as a};
+//# sourceMappingURL=chunk-T4KWPVLZ.js.map

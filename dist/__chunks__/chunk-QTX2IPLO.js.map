@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/helpers/useSetTransactionNonces.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport { useGetAccountFromApi } from 'apiCalls/accounts/useGetAccountFromApi';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { addressSelector } from 'reduxStore/selectors';\nimport { getAccount } from 'utils/account/getAccount';\nimport { getLatestNonce } from 'utils/account/getLatestNonce';\nimport { computeTransactionsNonce } from './computeTransactionsNonce';\n\nexport const useSetTransactionNonces = () => {\n  const address = useSelector(addressSelector);\n  const { data: account } = useGetAccountFromApi(address);\n\n  return async (transactions: Transaction[]) => {\n    const currentAccount = account ?? (await getAccount(address));\n    const latestNonce = getLatestNonce(currentAccount);\n    const transactionsWithIncrementalNonces = computeTransactionsNonce({\n      latestNonce,\n      transactions\n    });\n\n    return transactionsWithIncrementalNonces;\n  };\n};\n"],
+  "mappings": "gVAAA,IAGA,IACA,IACA,IAGO,GAAM,GAA0B,IAAM,CAC3C,GAAM,GAAU,EAAY,CAAe,EACrC,CAAE,KAAM,GAAY,EAAqB,CAAO,EAEtD,MAAO,AAAO,IAAgC,0BAC5C,GAAM,GAAiB,UAAY,KAAM,GAAW,CAAO,EACrD,EAAc,EAAe,CAAc,EAMjD,MAL0C,GAAyB,CACjE,cACA,cACF,CAAC,CAGH,EACF",
+  "names": []
+}

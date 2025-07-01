@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getScResultsInitialDecodeMethod.ts"],
+  "sourcesContent": ["import { DecodeMethodEnum } from 'types';\nimport { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const getInitialScResultsDecodeMethod = () => {\n  const { hash } = getWindowLocation();\n\n  const initialDecodeMethod =\n    hash.indexOf('/') > 0\n      ? hash.substring(hash.indexOf('/') + 1)\n      : DecodeMethodEnum.raw;\n\n  const isInitialDecodedMethod =\n    initialDecodeMethod &&\n    Object.values<string>(DecodeMethodEnum).includes(initialDecodeMethod);\n\n  return isInitialDecodedMethod ? initialDecodeMethod : DecodeMethodEnum.raw;\n};\n"],
+  "mappings": "uKAAA,QACA,IAEO,GAAM,GAAkC,IAAM,CACnD,GAAM,CAAE,QAAS,EAAkB,EAE7B,EACJ,EAAK,QAAQ,GAAG,EAAI,EAChB,EAAK,UAAU,EAAK,QAAQ,GAAG,EAAI,CAAC,EACpC,MAMN,MAAO,AAHL,IACA,OAAO,OAAe,CAAgB,EAAE,SAAS,CAAmB,EAEtC,EAAsB,KACxD",
+  "names": []
+}

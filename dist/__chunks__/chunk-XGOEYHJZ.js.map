@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/helpers/getShouldMoveTransactionsToSignedState.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport { transactionsToSignSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\n/**\n * If user cancels signing in SignTransactionsModal, and transactionsToSign were cleared from store make sure we access the latest store information before proceeeding\n */\nexport function getShouldMoveTransactionsToSignedState(\n  signedTransactions: Transaction[]\n) {\n  const currentTransactions = transactionsToSignSelector(store.getState());\n\n  const hasSameTransactions =\n    Object.keys(signedTransactions).length ===\n    currentTransactions?.transactions.length;\n\n  const hasAllTransactionsSigned = signedTransactions && hasSameTransactions;\n  return signedTransactions && hasAllTransactionsSigned;\n}\n"],
+  "mappings": "iIAAA,IACA,IACA,IAKO,WACL,EACA,CACA,GAAM,GAAsB,EAA2B,EAAM,SAAS,CAAC,EAEjE,EACJ,OAAO,KAAK,CAAkB,EAAE,SAChC,kBAAqB,aAAa,QAGpC,MAAO,IAD0B,IAAsB,EAEzD",
+  "names": []
+}

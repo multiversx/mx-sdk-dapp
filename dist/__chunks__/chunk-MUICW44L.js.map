@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithPasskeyModal/SignWithPasskeyModal.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport { SignModalPropsType } from 'types';\n\nimport {\n  SignWaitingScreenModal,\n  SignWaitingScreenModalPropsType\n} from '../components';\n\nexport const SignWithPasskeyModal = (props: SignModalPropsType) => {\n  const description = props.error\n    ? props.error\n    : props.transactions?.length > 1\n    ? 'Please signin with your passkey in order to sign the transactions'\n    : 'Please signin with your passkey in order to sign the transaction';\n\n  const waitingScreenProps: SignWaitingScreenModalPropsType = {\n    ...props,\n    description,\n    title: 'Confirm by signing in with passkey'\n  };\n\n  return <SignWaitingScreenModal {...waitingScreenProps} />;\n};\n"],
+  "mappings": "8FAAA,yBAQO,GAAM,GAAuB,AAAC,GAA8B,CARnE,MASE,GAAM,GAAc,EAAM,MACtB,EAAM,MACN,MAAM,eAAN,cAAoB,QAAS,EAC7B,oEACA,mEAEE,EAAsD,OACvD,GADuD,CAE1D,cACA,MAAO,oCACT,GAEA,MAAO,iBAAC,OAA2B,EAAoB,CACzD",
+  "names": []
+}

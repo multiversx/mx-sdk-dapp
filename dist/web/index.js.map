@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/web/index.ts"],
+  "sourcesContent": ["export * from './hooks';\n"],
+  "mappings": "qoRAAA",
+  "names": []
+}

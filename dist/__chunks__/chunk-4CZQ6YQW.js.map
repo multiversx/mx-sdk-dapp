@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/internal/optionalRedirect.ts"],
+  "sourcesContent": ["import { OnLoginRedirectOptionsType, OnProviderLoginType } from '../../types';\nimport { safeRedirect } from '../redirect';\n\ninterface OptionalRedirectType extends Omit<OnProviderLoginType, 'token'> {\n  options?: OnLoginRedirectOptionsType;\n}\n\nconst DEFAULT_TIMEOUT = 200;\n\nexport function optionalRedirect({\n  callbackRoute,\n  onLoginRedirect,\n  options\n}: OptionalRedirectType) {\n  const shouldRedirect = Boolean(callbackRoute);\n  const hasOnLoginRedirect = typeof onLoginRedirect === 'function';\n\n  if (shouldRedirect && callbackRoute != null) {\n    // if onLoginRedirect is defined, it has priority over safeRedirect\n    if (hasOnLoginRedirect) {\n      return onLoginRedirect(callbackRoute, options);\n    }\n\n    safeRedirect({\n      url: callbackRoute,\n      timeout: DEFAULT_TIMEOUT\n    });\n  }\n}\n"],
+  "mappings": "8FASO,WAA0B,CAC/B,gBACA,kBACA,WACuB,CACvB,GAAM,GAAiB,QAAQ,CAAa,EACtC,EAAqB,MAAO,IAAoB,WAEtD,GAAI,GAAkB,GAAiB,KAAM,CAE3C,GAAI,EACF,MAAO,GAAgB,EAAe,CAAO,EAG/C,EAAa,CACX,IAAK,EACL,QAAS,CACX,CAAC,CACH,CACF,CA5BA,GAOM,GAPN,aACA,IAMA,AAAM,EAAkB",
+  "names": []
+}

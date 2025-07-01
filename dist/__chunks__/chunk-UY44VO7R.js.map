@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/DataField/components/Linkified/Link.tsx"],
+  "sourcesContent": ["import React from 'react';\n\nimport { LinkComponent, LinkComponentProps } from './linkified.types';\nimport { getProtocol, truncateText } from './utils';\n\nexport interface LinkPropsType extends LinkComponentProps {\n  linkComponent?: LinkComponent;\n}\n\nexport const Link = ({\n  href,\n  linkComponent,\n  truncate,\n  ...rest\n}: LinkPropsType): JSX.Element => {\n  const Component = linkComponent ?? 'a';\n  const protocol = getProtocol(href);\n  const text = truncate ? truncateText(href, truncate) : href;\n\n  return (\n    <Component {...rest} href={`${protocol}${href}`}>\n      {text}\n    </Component>\n  );\n};\n"],
+  "mappings": "4GAAA,yBASO,GAAM,GAAO,AAAC,GAKa,CALb,QACnB,QACA,gBACA,YAHmB,EAIhB,IAJgB,EAIhB,CAHH,OACA,gBACA,aAGA,GAAM,GAAY,UAAiB,IAC7B,EAAW,EAAY,CAAI,EAC3B,EAAO,EAAW,EAAa,EAAM,CAAQ,EAAI,EAEvD,MACE,iBAAC,SAAc,GAAd,CAAoB,KAAM,GAAG,IAAW,MACtC,CACH,CAEJ",
+  "names": []
+}

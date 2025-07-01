@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/DappModal/index.ts"],
+  "sourcesContent": ["export * from './components';\nexport * from './hooks';\nexport * from './dappModal.types';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

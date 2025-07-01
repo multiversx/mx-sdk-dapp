@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/isWindowAvailable.ts"],
+  "sourcesContent": ["export const isWindowAvailable = () =>\n  typeof window != 'undefined' && typeof window?.location != 'undefined';\n"],
+  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAAoB,IAC/B,MAAO,SAAU,aAAe,MAAO,4BAAQ,WAAY",
+  "names": []
+}

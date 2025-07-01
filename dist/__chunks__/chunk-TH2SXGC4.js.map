@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/operaWallet/helpers/index.tsx"],
+  "sourcesContent": ["export * from './getIsOperaWalletAvailable';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

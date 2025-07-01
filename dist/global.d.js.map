@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/global.d.ts"],
+  "sourcesContent": ["declare module '*.scss' {\n  const content: Record<any, any>;\n  export default content;\n}\n"],
+  "mappings": "gEAAA",
+  "names": []
+}

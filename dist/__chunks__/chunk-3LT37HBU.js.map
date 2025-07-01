@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/isSSR.ts"],
+  "sourcesContent": ["import { isWindowAvailable } from './isWindowAvailable';\n\nexport const isSSR = () => !isWindowAvailable();\n"],
+  "mappings": "uFAAA,QAEO,GAAM,GAAQ,IAAM,CAAC,EAAkB",
+  "names": []
+}

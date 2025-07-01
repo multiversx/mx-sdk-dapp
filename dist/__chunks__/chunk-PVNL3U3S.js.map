@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/lib/sdkWebWalletIframeProvider.ts"],
+  "sourcesContent": ["export { IframeProvider } from '@multiversx/sdk-web-wallet-iframe-provider/out';\nexport { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';\n"],
+  "mappings": "wCAAA,oFACA",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{m as n}from"./chunk-HBP5N4FR.js";n();import{useState as o}from"react";var p=10,v=()=>{let[d,r]=o(""),[c,i]=o(!1),[l,t]=o(0),[a,g]=o([]),[u,s]=o(null),[S,A]=o(!1);return{accounts:a,defaultAddressesPerPage:p,error:d,isLoading:c,onGoToNextPage:()=>{s(null),t(e=>e+1)},onGoToPrevPage:()=>{s(null),t(e=>e===0?0:e-1)},onGoToSpecificPage:e=>{s(null),t(e)},onSelectAddress:e=>{s(e)},selectedAddress:u,setAccounts:g,setError:r,setIsLoading:i,setShowAddressList:A,showAddressList:S,startIndex:l}};export{v as a};
+//# sourceMappingURL=chunk-R5ZOBQLY.js.map

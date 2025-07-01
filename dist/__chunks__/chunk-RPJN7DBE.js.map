@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/ProviderInitializer/helpers/getPasskeyProvider.ts"],
+  "sourcesContent": ["import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';\n\nexport async function getPasskeyProvider(address: string) {\n  try {\n    const provider = PasskeyProvider.getInstance().setAddress(address);\n\n    const success = await provider.init();\n\n    if (success) {\n      return provider;\n    } else {\n      console.error('Could not initialise passkey provider');\n    }\n  } catch (err) {\n    console.error('Unable to login to PasskeyProvider', err);\n  }\n  return null;\n}\n"],
+  "mappings": "+CAAA,2EAEA,WAAyC,EAAiB,gCACxD,GAAI,CACF,GAAM,GAAW,EAAgB,YAAY,EAAE,WAAW,CAAO,EAIjE,GAFgB,KAAM,GAAS,KAAK,EAGlC,MAAO,GAEP,QAAQ,MAAM,uCAAuC,CAEzD,OAAS,EAAP,CACA,QAAQ,MAAM,qCAAsC,CAAG,CACzD,CACA,MAAO,KACT",
+  "names": []
+}

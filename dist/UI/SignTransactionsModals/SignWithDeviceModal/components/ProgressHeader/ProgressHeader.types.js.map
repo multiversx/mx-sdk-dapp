@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/ProgressHeader/ProgressHeader.types.ts"],
+  "sourcesContent": ["import { ReactNode } from 'react';\n\nexport interface ProgressHeaderStepType {\n  title?: ReactNode;\n  active: boolean;\n  completed?: boolean;\n  hidden?: boolean;\n}\n\nexport interface ProgressHeaderPropsType {\n  type?: 'detailed' | 'simple';\n  steps: ProgressHeaderStepType[];\n  collapsible?: boolean;\n  size?: 'small' | 'large';\n}\n"],
+  "mappings": "6EAAA",
+  "names": []
+}

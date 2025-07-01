@@ -1,0 +1,1 @@
+{"version":3,"file":"getTransactionReceiverAssets.d.ts","sourceRoot":"","sources":["../../../../../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionReceiverAssets.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,gCAAgC,CAAC;AAGvE;;KAEK;AACL,wBAAgB,4BAA4B,CAC1C,WAAW,EAAE,qBAAqB,qDAOnC"}

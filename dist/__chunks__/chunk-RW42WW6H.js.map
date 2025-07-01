@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/walletConnect/WalletConnectConnectionStatus/index.ts"],
+  "sourcesContent": ["export * from './WalletConnectConnectionStatus';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

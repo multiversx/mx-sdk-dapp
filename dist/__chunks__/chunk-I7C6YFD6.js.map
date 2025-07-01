@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/DataField/components/Linkified/index.tsx"],
+  "sourcesContent": ["export * from './Linkified';\nexport * from './linkified.types';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

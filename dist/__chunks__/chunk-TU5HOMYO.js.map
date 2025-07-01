@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/utils/getScamAddressData.ts"],
+  "sourcesContent": ["import axios from 'axios';\nimport { networkConfigSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\nimport { ScamInfoType } from 'types/account.types';\nimport { ACCOUNTS_ENDPOINT } from '../endpoints';\n\nexport async function getScamAddressData(addressToVerify: string) {\n  const {\n    network: { apiAddress, apiTimeout }\n  } = networkConfigSelector(store.getState());\n\n  const { data } = await axios.get<{\n    scamInfo?: ScamInfoType;\n    code?: string;\n  }>(`${apiAddress}/${ACCOUNTS_ENDPOINT}/${addressToVerify}`, {\n    timeout: Number(apiTimeout)\n  });\n\n  return data;\n}\n"],
+  "mappings": "oOAAA,qBAMA,WAAyC,EAAyB,gCAChE,GAAM,CACJ,QAAS,CAAE,aAAY,eACrB,EAAsB,EAAM,SAAS,CAAC,EAEpC,CAAE,QAAS,KAAM,GAAM,IAG1B,GAAG,KAAc,KAAqB,IAAmB,CAC1D,QAAS,OAAO,CAAU,CAC5B,CAAC,EAED,MAAO,EACT,GAnBA,iBACA,IACA,IAEA",
+  "names": []
+}

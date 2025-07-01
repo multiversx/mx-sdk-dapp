@@ -1,0 +1,2 @@
+import{a as d}from"./chunk-ZXZXEDS2.js";import{m as i}from"./chunk-HBP5N4FR.js";i();import n from"react";import e from"classnames";var f=({text:r,className:p,"data-testid":m="nftBadge",globalStyles:t})=>n.createElement("div",{"data-testid":m,className:e(t==null?void 0:t.badge,t==null?void 0:t.badgeSecondary,t==null?void 0:t.badgePill,t==null?void 0:t.fontWeightLight,p)},r),P=d(f,{});export{P as a};
+//# sourceMappingURL=chunk-WXMK6MJG.js.map

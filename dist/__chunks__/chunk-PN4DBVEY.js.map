@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/DataField/components/Linkified/linkified.types.ts"],
+  "sourcesContent": ["import { HTMLProps, ElementType } from 'react';\n\nexport type LinkifiedProps = Omit<HTMLProps<HTMLAnchorElement>, 'href'> & {\n  truncate?: number;\n};\n\nexport type LinkComponentProps = {\n  href: string;\n} & LinkifiedProps;\n\nexport type LinkComponent = ElementType<LinkComponentProps>;\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

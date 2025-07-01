@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/ScResultsList/components/ResultWrapper/ResultWrapper.tsx"],
+  "sourcesContent": ["import React, { ReactNode } from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\n\nexport interface ResultWrapperPropsType {\n  children: ReactNode;\n  label: string;\n}\n\nconst ResultWrapperComponent = ({\n  label,\n  children,\n  globalStyles,\n  styles\n}: ResultWrapperPropsType & WithStylesImportType) => (\n  <div className={classNames(globalStyles?.row, styles?.scResultWrapper)}>\n    <div className={classNames(globalStyles?.colSm2, styles?.label)}>\n      {label}\n    </div>\n\n    <div className={classNames(globalStyles?.colSm10, styles?.data)}>\n      {children}\n    </div>\n  </div>\n);\n\nconst ResultWrapper = withStyles(ResultWrapperComponent, {\n  ssrStyles: () =>\n    import(\n      'UI/TransactionInfo/components/ScResultsList/components/ResultWrapper/styles.scss'\n    ),\n  clientStyles: () =>\n    require('UI/TransactionInfo/components/ScResultsList/components/ResultWrapper/styles.scss')\n      .default\n});\n\nexport default ResultWrapper;\n"],
+  "mappings": "sIAAA,yBACA,0BAQA,GAAM,GAAyB,CAAC,CAC9B,QACA,WACA,eACA,YAEA,gBAAC,OAAI,UAAW,EAAW,iBAAc,IAAK,iBAAQ,eAAe,GACnE,gBAAC,OAAI,UAAW,EAAW,iBAAc,OAAQ,iBAAQ,KAAK,GAC3D,CACH,EAEA,gBAAC,OAAI,UAAW,EAAW,iBAAc,QAAS,iBAAQ,IAAI,GAC3D,CACH,CACF,EAGI,EAAgB,EAAW,EAAwB,CACvD,UAAW,IACT,OACE,qFAEJ,aAAc,IACZ,WACG,OACP,CAAC,EAEM,EAAQ",
+  "names": []
+}

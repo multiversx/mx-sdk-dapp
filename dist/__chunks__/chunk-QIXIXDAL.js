@@ -1,0 +1,2 @@
+import{c as d,d as i}from"./chunk-LULB6556.js";import{a as p}from"./chunk-ZXZXEDS2.js";import{i as r,m as e}from"./chunk-HBP5N4FR.js";e();import m from"react";import l from"classnames";var s=({className:t,children:a,styles:o})=>m.createElement("div",{className:l(o==null?void 0:o.dappModalBody,t)},a),S=p(s,{ssrStyles:()=>import("../UI/DappModal/dappModalStyles.js"),clientStyles:()=>(i(),r(d)).default});export{S as a};
+//# sourceMappingURL=chunk-QIXIXDAL.js.map

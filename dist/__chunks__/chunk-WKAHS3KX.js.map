@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/transactions/utils.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core/out';\nimport BigNumber from 'bignumber.js';\nimport { GAS_PER_DATA_BYTE, GAS_PRICE_MODIFIER } from 'constants/index';\nimport { calculateFeeLimit } from 'utils/operations/calculateFeeLimit';\n\nexport function calcTotalFee(transactions: Transaction[], minGasLimit: number) {\n  let totalFee = new BigNumber(0);\n\n  transactions.forEach((tx) => {\n    const fee = calculateFeeLimit({\n      gasPerDataByte: String(GAS_PER_DATA_BYTE),\n      gasPriceModifier: String(GAS_PRICE_MODIFIER),\n      minGasLimit: String(minGasLimit),\n      gasLimit: tx.getGasLimit().valueOf().toString(),\n      gasPrice: tx.getGasPrice().valueOf().toString(),\n      data: tx.getData().toString(),\n      chainId: tx.getChainID().valueOf()\n    });\n    totalFee = totalFee.plus(new BigNumber(fee));\n  });\n\n  return totalFee;\n}\n"],
+  "mappings": "wIAAA,IAEA,IACA,IAFA,4BAIO,WAAsB,EAA6B,EAAqB,CAC7E,GAAI,GAAW,GAAI,GAAU,CAAC,EAE9B,SAAa,QAAQ,AAAC,GAAO,CAC3B,GAAM,GAAM,EAAkB,CAC5B,eAAgB,OAAO,CAAiB,EACxC,iBAAkB,OAAO,CAAkB,EAC3C,YAAa,OAAO,CAAW,EAC/B,SAAU,EAAG,YAAY,EAAE,QAAQ,EAAE,SAAS,EAC9C,SAAU,EAAG,YAAY,EAAE,QAAQ,EAAE,SAAS,EAC9C,KAAM,EAAG,QAAQ,EAAE,SAAS,EAC5B,QAAS,EAAG,WAAW,EAAE,QAAQ,CACnC,CAAC,EACD,EAAW,EAAS,KAAK,GAAI,GAAU,CAAG,CAAC,CAC7C,CAAC,EAEM,CACT",
+  "names": []
+}

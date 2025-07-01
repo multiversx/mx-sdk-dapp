@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/useGetLastPendingTransactionHash.ts"],
+  "sourcesContent": ["import { useGetPendingTransactions } from 'hooks/transactions/useGetPendingTransactions';\nimport { TransactionServerStatusesEnum } from 'types';\n\n// TODO: Add `useGetBatchTransactionHashes`\nexport const useGetLastPendingTransactionHash = (): string => {\n  const { hasPendingTransactions, pendingTransactions } =\n    useGetPendingTransactions();\n\n  if (!hasPendingTransactions) {\n    return '';\n  }\n\n  const sortedSessionIdsDesc = Object.keys(pendingTransactions)\n    .sort()\n    .reverse();\n\n  for (const sessionId of sortedSessionIdsDesc) {\n    const batch = pendingTransactions[sessionId];\n    const batchWithPendingTx =\n      batch.transactions?.filter(\n        (tx) => tx.status === TransactionServerStatusesEnum.pending\n      ) ?? [];\n\n    if (batchWithPendingTx.length > 0) {\n      const lastTransaction = batchWithPendingTx[batchWithPendingTx.length - 1];\n\n      return lastTransaction.hash;\n    }\n  }\n\n  return '';\n};\n"],
+  "mappings": "wHAAA,IACA,IAGO,GAAM,GAAmC,IAAc,CAJ9D,QAKE,GAAM,CAAE,yBAAwB,uBAC9B,EAA0B,EAE5B,GAAI,CAAC,EACH,MAAO,GAGT,GAAM,GAAuB,OAAO,KAAK,CAAmB,EACzD,KAAK,EACL,QAAQ,EAEX,OAAW,KAAa,GAAsB,CAE5C,GAAM,GACJ,MAFY,EAAoB,GAE1B,eAAN,cAAoB,OAClB,AAAC,GAAO,EAAG,SAAW,aADxB,OAEK,CAAC,EAER,GAAI,EAAmB,OAAS,EAG9B,MAAO,AAFiB,GAAmB,EAAmB,OAAS,GAEhD,IAE3B,CAEA,MAAO,EACT",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{c as m,d}from"./chunk-LULB6556.js";import{a as r}from"./chunk-ZXZXEDS2.js";import{i as n,m as p}from"./chunk-HBP5N4FR.js";p();import t from"react";import s from"classnames";var f=({visible:i,customFooter:e,className:a,footerText:l,styles:o})=>i?t.createElement("div",{className:s(o==null?void 0:o.dappModalFooter,a)},e!=null?e:t.createElement("div",null,l)):null,D=r(f,{ssrStyles:()=>import("../UI/DappModal/dappModalStyles.js"),clientStyles:()=>(d(),n(m)).default});export{D as a};
+//# sourceMappingURL=chunk-YMH2KQQK.js.map

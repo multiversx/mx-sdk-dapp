@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getScResultsHighlight.ts"],
+  "sourcesContent": ["import { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const getScResultsHighlight = (resultHash: string) => {\n  const { hash } = getWindowLocation();\n  const formattedHash = hash\n    .substring(0, hash.indexOf('/') > 0 ? hash.indexOf('/') : hash.length)\n    .replace('#', '');\n  const highlight = formattedHash === resultHash;\n  return highlight;\n};\n"],
+  "mappings": "8FAAA,GAEa,GAFb,iBAEO,AAAM,EAAwB,AAAC,GAAuB,CAC3D,GAAM,CAAE,QAAS,EAAkB,EAKnC,MADkB,AAHI,GACnB,UAAU,EAAG,EAAK,QAAQ,GAAG,EAAI,EAAI,EAAK,QAAQ,GAAG,EAAI,EAAK,MAAM,EACpE,QAAQ,IAAK,EAAE,IACkB,CAEtC",
+  "names": []
+}

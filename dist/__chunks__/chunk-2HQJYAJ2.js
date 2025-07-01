@@ -1,0 +1,2 @@
+import{a,d}from"./chunk-PCK656QH.js";import{a as e}from"./chunk-NJJDLNA3.js";import{c as r}from"./chunk-LRON2GMF.js";import{a as i}from"./chunk-OPT3JYNI.js";import{m as o}from"./chunk-HBP5N4FR.js";o();e();d();i();var b=({errorMessage:t,sessionId:n,clearSignInfo:s})=>{console.error("Unable to send transactions",t),a.dispatch(r({sessionId:n,status:"fail",errorMessage:t})),s==null||s()};export{b as a};
+//# sourceMappingURL=chunk-2HQJYAJ2.js.map

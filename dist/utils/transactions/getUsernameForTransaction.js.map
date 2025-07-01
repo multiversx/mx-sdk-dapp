@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../src/utils/transactions/getUsernameForTransaction.ts"],
+  "sourcesContent": ["import { isStringBase64 } from '../decoders';\n\nexport const getUsernameForTransaction = (username?: string) => {\n  if (!username) {\n    return;\n  }\n\n  const defaultData = username ?? '';\n\n  return isStringBase64(defaultData)\n    ? defaultData\n    : Buffer.from(defaultData, 'base64').toString();\n};\n"],
+  "mappings": "qWAAA,QAEO,GAAM,GAA4B,AAAC,GAAsB,CAC9D,GAAI,CAAC,EACH,OAGF,GAAM,GAAc,UAAY,GAEhC,MAAO,GAAe,CAAW,EAC7B,EACA,SAAO,KAAK,EAAa,QAAQ,EAAE,SAAS,CAClD",
+  "names": []
+}

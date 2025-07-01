@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/accounts/useGetAccountFromApi.ts"],
+  "sourcesContent": ["import { ACCOUNTS_ENDPOINT } from '../endpoints';\nimport { useApiFetch } from '../utils';\n\nexport const useGetAccountFromApi = (address: string | null) =>\n  useApiFetch({\n    apiEndpoint: address\n      ? `${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`\n      : null\n  });\n"],
+  "mappings": "uKAAA,QACA,IAEO,GAAM,GAAuB,AAAC,GACnC,EAAY,CACV,YAAa,EACT,GAAG,KAAqB,0BACxB,IACN,CAAC",
+  "names": []
+}

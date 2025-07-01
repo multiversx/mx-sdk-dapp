@@ -1,0 +1,2 @@
+import{a as n}from"./chunk-AX7PM6XW.js";import{c as r}from"./chunk-JUB6TCFX.js";import{a as u}from"./chunk-NJJDLNA3.js";import{c}from"./chunk-IJ22BTFZ.js";import{j as e,m as o}from"./chunk-HBP5N4FR.js";o();import{useCallback as i}from"react";u();function d(){let s=r(),a=n();return i(v=>e(this,[v],function*({batchId:p}){let t=yield a({batchId:p});return t.statusResponse&&s(c(t.statusResponse)),t}),[s,a])}export{d as a};
+//# sourceMappingURL=chunk-TF3XHNNN.js.map

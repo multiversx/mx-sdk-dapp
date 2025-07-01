@@ -1,0 +1,1 @@
+{"version":3,"file":"builtCallbackUrl.d.ts","sourceRoot":"","sources":["../../../../src/utils/transactions/builtCallbackUrl.ts"],"names":[],"mappings":"AAqBA,MAAM,WAAW,YAAY;IAC3B,WAAW,EAAE,MAAM,CAAC;IACpB,SAAS,CAAC,EAAE;QAAE,CAAC,GAAG,EAAE,MAAM,GAAG,MAAM,CAAA;KAAE,CAAC;CACvC;AAED,wBAAgB,gBAAgB,CAAC,EAC/B,WAAW,EACX,SAAc,EACf,EAAE,YAAY,UAmBd"}

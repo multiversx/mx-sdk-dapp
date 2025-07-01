@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/components/IconToast/components/IconToastFooter/components/MessageIconToastFooter.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { MessageIconToastPropsType } from 'UI/TransactionsToastList/components/CustomToast/customToast.types';\nimport { SharedToastFooter } from './SharedToastFooter';\n\nconst MessageIconToastFooterComponent = (\n  props: MessageIconToastPropsType & WithStylesImportType\n) => {\n  const { className, message, status } = props;\n  return (\n    <SharedToastFooter>\n      {status && <div className={props.styles?.status}>{status}</div>}\n      <div className={classNames(props.styles?.container, className)}>\n        {message}\n      </div>\n    </SharedToastFooter>\n  );\n};\n\nexport const MessageIconToastFooter = withStyles(\n  MessageIconToastFooterComponent,\n  {\n    ssrStyles: () =>\n      import('UI/TransactionDetails/transactionDetails.styles.scss'),\n    clientStyles: () =>\n      require('UI/TransactionDetails/transactionDetails.styles.scss').default\n  }\n);\n"],
+  "mappings": "yKAAA,yBACA,0BAKA,GAAM,GAAkC,AACtC,GACG,CARL,QASE,GAAM,CAAE,YAAW,UAAS,UAAW,EACvC,MACE,iBAAC,OACE,GAAU,gBAAC,OAAI,UAAW,KAAM,SAAN,cAAc,QAAS,CAAO,EACzD,gBAAC,OAAI,UAAW,EAAW,KAAM,SAAN,cAAc,UAAW,CAAS,GAC1D,CACH,CACF,CAEJ,EAEa,EAAyB,EACpC,EACA,CACE,UAAW,IACT,OAAO,yDACT,aAAc,IACZ,WAAgE,OACpE,CACF",
+  "names": []
+}

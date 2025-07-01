@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/Loader/Loader.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport { faCircleNotch } from '@fortawesome/free-solid-svg-icons';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { PageState } from 'UI/PageState';\nimport { WithClassnameType } from '../types';\n\nexport interface LoaderPropsType extends WithClassnameType {\n  noText?: boolean;\n}\n\nconst LoaderComponent = ({\n  'data-testid': dataTestId = 'loader',\n  noText = false,\n  className = 'dapp-loader',\n  globalStyles\n}: LoaderPropsType & WithStylesImportType) => (\n  <PageState\n    title={noText ? '' : 'Loading...'}\n    iconBgClass={classNames(globalStyles?.textPrimary, 'fa-spin')}\n    data-testid={dataTestId}\n    icon={faCircleNotch}\n    className={className}\n  />\n);\n\nexport const Loader = withStyles(LoaderComponent, {});\n"],
+  "mappings": "wHAAA,yBACA,kEACA,0BASA,GAAM,GAAkB,CAAC,CACvB,cAAe,EAAa,SAC5B,SAAS,GACT,YAAY,cACZ,kBAEA,gBAAC,GACC,MAAO,EAAS,GAAK,aACrB,YAAa,EAAW,iBAAc,YAAa,SAAS,EAC5D,cAAa,EACb,KAAM,EACN,UAAW,EACb,EAGW,EAAS,EAAW,EAAiB,CAAC,CAAC",
+  "names": []
+}

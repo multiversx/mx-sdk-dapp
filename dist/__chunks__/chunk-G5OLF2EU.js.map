@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/ProgressSteps/Dot.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { WithClassnameType } from '../types';\n\nexport interface DotPropsType extends WithClassnameType {\n  color: string;\n  'data-testid'?: string;\n}\n\nconst DotComponent = ({\n  color,\n  'data-testid': dataTestId,\n  className = 'dapp-dot',\n  globalStyles\n}: DotPropsType & WithStylesImportType) => (\n  <span\n    className={classNames(globalStyles?.dot, color, className)}\n    data-testid={dataTestId}\n  />\n);\n\nexport const Dot = withStyles(DotComponent, {\n  ssrStyles: () => import('UI/LoadingDots/loadingDotsStyle.scss'),\n  clientStyles: () => require('UI/LoadingDots/loadingDotsStyle.scss').default\n});\n"],
+  "mappings": "iIAAA,yBACA,0BASA,GAAM,GAAe,CAAC,CACpB,QACA,cAAe,EACf,YAAY,WACZ,kBAEA,gBAAC,QACC,UAAW,EAAW,iBAAc,IAAK,EAAO,CAAS,EACzD,cAAa,EACf,EAGW,EAAM,EAAW,EAAc,CAC1C,UAAW,IAAM,OAAO,yCACxB,aAAc,IAAM,WAAgD,OACtE,CAAC",
+  "names": []
+}

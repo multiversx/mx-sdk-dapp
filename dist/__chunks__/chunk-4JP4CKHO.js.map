@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/walletconnect/__sdkWalletconnectProvider.ts"],
+  "sourcesContent": ["import {\n  SessionEventTypes,\n  PairingTypes,\n  EngineTypes\n} from '@multiversx/sdk-wallet-connect-provider';\nimport {\n  Operation as WalletConnectMethodsEnum,\n  OptionalOperation as WalletConnectOptionalMethodsEnum\n} from '@multiversx/sdk-wallet-connect-provider/out/operation';\nimport { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';\n\n/**\n * These members are ingnored when compiling to commonJS\n */\nexport {\n  EngineTypes,\n  PairingTypes,\n  SessionEventTypes,\n  WalletConnectMethodsEnum,\n  WalletConnectOptionalMethodsEnum,\n  WalletConnectV2Provider\n};\n"],
+  "mappings": "wCAAA,mHAKA,yGAIA",
+  "names": []
+}

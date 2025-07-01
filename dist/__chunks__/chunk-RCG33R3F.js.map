@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/ledger/LedgerLoginContainer/LedgerScamPhishingAlert/index.ts"],
+  "sourcesContent": ["export * from './LedgerScamPhishingAlert';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

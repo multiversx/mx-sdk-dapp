@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/FormatAmount/index.ts"],
+  "sourcesContent": ["export * from './FormatAmount';\nexport * from './formatAmount.types';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

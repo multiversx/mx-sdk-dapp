@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/dateTime/getUnixTimestampWithAddedSeconds.ts"],
+  "sourcesContent": ["export const getUnixTimestampWithAddedSeconds = (addedSeconds: number) => {\n  return new Date().setSeconds(new Date().getSeconds() + addedSeconds);\n};\n"],
+  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAAmC,AAAC,GACxC,GAAI,MAAK,EAAE,WAAW,GAAI,MAAK,EAAE,WAAW,EAAI,CAAY",
+  "names": []
+}

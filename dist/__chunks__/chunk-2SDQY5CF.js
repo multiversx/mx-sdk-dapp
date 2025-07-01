@@ -1,0 +1,2 @@
+import{e as r,m as o}from"./chunk-HBP5N4FR.js";import{CrossWindowProvider as p}from"@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider";import{WindowProviderRequestEnums as u,WindowProviderResponseEnums as v}from"@multiversx/sdk-web-wallet-cross-window-provider/out/enums";var e=r(()=>{o()});export{p as a,u as b,v as c,e as d};
+//# sourceMappingURL=chunk-2SDQY5CF.js.map

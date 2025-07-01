@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/decodeForDisplay/helpers/getHexValidationWarnings.ts"],
+  "sourcesContent": ["export const isHexValidCharacters = (str: string) => {\n  return str.toLowerCase().match(/^[0-9a-f]+$/i);\n};\n\nexport const isHexValidLength = (str: string) => {\n  return str.length % 2 === 0;\n};\n\nexport const getHexValidationWarnings = (str: string) => {\n  const warnings = [];\n\n  if (str && !isHexValidCharacters(str)) {\n    warnings.push(`Invalid Hex characters on argument @${str}`);\n  }\n\n  if (str && !isHexValidLength(str)) {\n    warnings.push(`Odd number of Hex characters on argument @${str}`);\n  }\n\n  return warnings;\n};\n"],
+  "mappings": "+CAAA,GAAa,GAIA,EAIA,EARb,aAAO,AAAM,EAAuB,AAAC,GAC5B,EAAI,YAAY,EAAE,MAAM,cAAc,EAGlC,EAAmB,AAAC,GACxB,EAAI,OAAS,IAAM,EAGf,EAA2B,AAAC,GAAgB,CACvD,GAAM,GAAW,CAAC,EAElB,MAAI,IAAO,CAAC,EAAqB,CAAG,GAClC,EAAS,KAAK,uCAAuC,GAAK,EAGxD,GAAO,CAAC,EAAiB,CAAG,GAC9B,EAAS,KAAK,6CAA6C,GAAK,EAG3D,CACT",
+  "names": []
+}

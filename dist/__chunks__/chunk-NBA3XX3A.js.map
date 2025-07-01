@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/useGetPollingInterval.ts"],
+  "sourcesContent": ["import { TRANSACTIONS_STATUS_POLLING_INTERVAL_MS } from 'constants/transactionStatus';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { roundDurationSelectorSelector } from 'reduxStore/selectors';\n\nexport const useGetPollingInterval = () => {\n  const roundDuration = useSelector(roundDurationSelectorSelector);\n\n  if (!roundDuration) {\n    return TRANSACTIONS_STATUS_POLLING_INTERVAL_MS;\n  }\n\n  // Polling interval should not be less than 1s\n  return Math.max(1000, roundDuration / 2);\n};\n"],
+  "mappings": "+MAAA,QAEA,IAEO,GAAM,GAAwB,IAAM,CACzC,GAAM,GAAgB,EAAY,CAA6B,EAE/D,MAAK,GAKE,KAAK,IAAI,IAAM,EAAgB,CAAC,EAJ9B,GAKX",
+  "names": []
+}

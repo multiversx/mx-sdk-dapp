@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getTransactionStatusText.ts"],
+  "sourcesContent": ["import { TransactionServerStatusesEnum } from 'types/enums.types';\nimport { InterpretedTransactionType } from 'types/serverTransactions.types';\n\nexport const getTransactionStatusText = (\n  transaction: InterpretedTransactionType\n) => {\n  switch (true) {\n    case transaction.pendingResults:\n      return 'Pending (Smart Contract Execution)';\n    case transaction.status === TransactionServerStatusesEnum.rewardReverted:\n      return TransactionServerStatusesEnum.fail;\n    default:\n      return transaction.status.toString();\n  }\n};\n"],
+  "mappings": "uFAAA,GAGa,GAHb,iBAGO,AAAM,EAA2B,AACtC,GACG,CACH,OAAQ,QACD,GAAY,eACf,MAAO,yCACJ,GAAY,SAAW,kBAC1B,MAAO,eAEP,MAAO,GAAY,OAAO,SAAS,EAEzC",
+  "names": []
+}

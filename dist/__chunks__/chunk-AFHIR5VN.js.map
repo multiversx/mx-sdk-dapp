@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/account/useGetAccountProvider.ts"],
+  "sourcesContent": ["import { getAccountProvider, getProviderType } from 'providers';\n\nexport const useGetAccountProvider = () => {\n  const provider = getAccountProvider();\n  const providerType = getProviderType(provider);\n  return { provider, providerType };\n};\n"],
+  "mappings": "wHAAA,IAEO,GAAM,GAAwB,IAAM,CACzC,GAAM,GAAW,EAAmB,EAC9B,EAAe,EAAgB,CAAQ,EAC7C,MAAO,CAAE,WAAU,cAAa,CAClC",
+  "names": []
+}

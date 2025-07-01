@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/transactions/utils/transformTransactionsToSign.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport { SimpleTransactionType } from 'types';\nimport { transformAndSignTransactions } from '../transformAndSignTransactions';\n\nexport const transformTransactionsToSign = async ({\n  transactions,\n  minGasLimit\n}: {\n  transactions: (SimpleTransactionType | Transaction)[];\n  minGasLimit?: number;\n}) => {\n  const areComplexTransactions = transactions.every(\n    (tx) => Object.getPrototypeOf(tx).toPlainObject != null\n  );\n\n  let transactionsToSign = transactions;\n\n  if (!areComplexTransactions) {\n    transactionsToSign = await transformAndSignTransactions({\n      transactions: transactions as SimpleTransactionType[],\n      minGasLimit\n    });\n  }\n\n  return transactionsToSign;\n};\n"],
+  "mappings": "qGAAA,GAIa,GAJb,aAEA,IAEO,AAAM,EAA8B,AAAO,GAM5C,UAN4C,GAM5C,UAN4C,CAChD,eACA,eAII,CACJ,GAAM,GAAyB,EAAa,MAC1C,AAAC,GAAO,OAAO,eAAe,CAAE,EAAE,eAAiB,IACrD,EAEI,EAAqB,EAEzB,MAAK,IACH,GAAqB,KAAM,GAA6B,CACtD,aAAc,EACd,aACF,CAAC,GAGI,CACT",
+  "names": []
+}

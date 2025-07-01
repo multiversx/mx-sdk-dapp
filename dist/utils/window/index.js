@@ -1,0 +1,2 @@
+"use strict";import{a as c,c as e}from"../../__chunks__/chunk-UORIA4VW.js";import{a as d}from"../../__chunks__/chunk-UGBEFOBM.js";import{a as b}from"../../__chunks__/chunk-7XYHQ72T.js";import"../../__chunks__/chunk-RY7YMBVF.js";import{a}from"../../__chunks__/chunk-OWBHRN3S.js";import"../../__chunks__/chunk-3HHAVSUJ.js";import"../../__chunks__/chunk-HBP5N4FR.js";e();export{b as addOriginToLocationPath,c as getDefaultCallbackUrl,a as getWindowLocation,d as redirect};
+//# sourceMappingURL=index.js.map

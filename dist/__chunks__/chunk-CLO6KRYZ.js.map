@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/components/SignWaitingScreenModal/index.tsx"],
+  "sourcesContent": ["export * from './SignWaitingScreenModal';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

@@ -1,0 +1,1 @@
+{"version":3,"file":"useCrossWindowLogin.d.ts","sourceRoot":"","sources":["../../../src/hooks/login/useCrossWindowLogin.ts"],"names":[],"mappings":"AAUA,OAAO,EACL,yBAAyB,EACzB,yBAAyB,EACzB,mBAAmB,EACpB,MAAM,OAAO,CAAC;AASf,oBAAY,6BAA6B,GAAG;IAC1C,yBAAyB;IACzB,yBAAyB;CAC1B,CAAC;AAEF,eAAO,MAAM,mBAAmB;;;mCA4I/B,CAAC"}

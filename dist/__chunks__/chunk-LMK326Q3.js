@@ -1,0 +1,2 @@
+import{a as n}from"./chunk-GAGVTIFK.js";import{a as r}from"./chunk-ZXZXEDS2.js";import{m as o}from"./chunk-HBP5N4FR.js";o();import i from"react";import{faExchangeAlt as m}from"@fortawesome/free-solid-svg-icons/faExchangeAlt";function p({globalStyles:t}){return i.createElement(n,{icon:m,title:"No transactions",className:t==null?void 0:t.myAuto})}var u=r(p,{});export{u as a};
+//# sourceMappingURL=chunk-LMK326Q3.js.map

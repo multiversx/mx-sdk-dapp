@@ -1,0 +1,2 @@
+import{j as r,m as s}from"./chunk-HBP5N4FR.js";s();import{PasskeyProvider as t}from"@multiversx/sdk-passkey-provider/out";function d(o){return r(this,null,function*(){try{let e=t.getInstance().setAddress(o);if(yield e.init())return e;console.error("Could not initialise passkey provider")}catch(e){console.error("Unable to login to PasskeyProvider",e)}return null})}export{d as a};
+//# sourceMappingURL=chunk-RPJN7DBE.js.map

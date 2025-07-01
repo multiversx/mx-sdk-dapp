@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/websocket/getWebsocketUrl.ts"],
+  "sourcesContent": ["import axios from 'axios';\n\nexport async function getWebsocketUrl(apiAddress: string) {\n  try {\n    const { data } = await axios.get<{ url: string }>(\n      `${apiAddress}/websocket/config`\n    );\n    return `wss://${data.url}`;\n  } catch (err) {\n    console.error(err);\n    throw new Error('Can not get websocket url');\n  }\n}\n"],
+  "mappings": "+CAAA,yBAEA,WAAsC,EAAoB,gCACxD,GAAI,CACF,GAAM,CAAE,QAAS,KAAM,GAAM,IAC3B,GAAG,oBACL,EACA,MAAO,SAAS,EAAK,KACvB,OAAS,EAAP,CACA,cAAQ,MAAM,CAAG,EACX,GAAI,OAAM,2BAA2B,CAC7C,CACF",
+  "names": []
+}

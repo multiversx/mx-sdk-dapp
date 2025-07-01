@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionReceiverAssets.ts"],
+  "sourcesContent": ["import { ServerTransactionType } from 'types/serverTransactions.types';\nimport { getTransactionReceiver } from './getTransactionReceiver';\n\n/**\n * The information about an account like name, icon, etc...\n * */\nexport function getTransactionReceiverAssets(\n  transaction: ServerTransactionType\n) {\n  const receiver = getTransactionReceiver(transaction);\n\n  return transaction.receiver === receiver\n    ? transaction.receiverAssets\n    : undefined;\n}\n"],
+  "mappings": "8FAMO,WACL,EACA,CACA,GAAM,GAAW,EAAuB,CAAW,EAEnD,MAAO,GAAY,WAAa,EAC5B,EAAY,eACZ,MACN,CAdA,iBACA",
+  "names": []
+}

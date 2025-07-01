@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/components/ConfirmAmountLabel/confirmAmountLabelStyles.scss"],
+  "sourcesContent": ["const css = `.dapp-core-component__confirmAmountLabelStyles__confirmAmountLabel {\n  color: #a3a3a3;\n  display: flex;\n  align-items: center;\n  gap: 4px;\n}\n.dapp-core-component__confirmAmountLabelStyles__confirmAmountLabel .dapp-core-component__confirmAmountLabelStyles__confirmAmountLabelValue {\n  color: #a5fcf0;\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"confirmAmountLabel\": \"dapp-core-component__confirmAmountLabelStyles__confirmAmountLabel\",\n  \"confirmAmountLabelValue\": \"dapp-core-component__confirmAmountLabelStyles__confirmAmountLabelValue\"\n};"],
+  "mappings": "sDAAA,2CAAM,GAaC,EAbP,aAAM,EAAM;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,GASZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,AAAO,EAAQ,CACb,mBAAsB,oEACtB,wBAA2B,wEAC7B",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../src/utils/transactions/getInterpretedTransaction/helpers/types.ts"],
+  "sourcesContent": ["import { TokenArgumentType } from 'types';\n\nexport interface ESDTValueDataType {\n  tokenFormattedAmount: string | null;\n  tokenExplorerLink: string;\n  tokenLinkText: string;\n  transactionTokens: TokenArgumentType[];\n  token: TokenArgumentType;\n  value: string | null;\n  decimals: number | null;\n  titleText: string;\n}\n\nexport interface NFTValueDataType extends ESDTValueDataType {\n  badgeText: string | null;\n}\n\nexport interface TokenValueDataType extends ESDTValueDataType {\n  showFormattedAmount: boolean;\n}\n\nexport interface EgldValueDataType {\n  value: string;\n  formattedValue: string;\n  decimals: number;\n}\n"],
+  "mappings": "0EAAA",
+  "names": []
+}

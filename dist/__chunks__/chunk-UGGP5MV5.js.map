@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/LoadingDots/LoadingDots.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { WithClassnameType } from 'UI/types';\n\nconst LoadingDotsComponent = ({\n  className,\n  styles\n}: WithClassnameType & WithStylesImportType) => (\n  <div className={classNames(styles?.loadingDots, className)}>\n    {Array.from({ length: 3 }).map((_, index) => (\n      <span\n        key={`loading-dot-${index}`}\n        className={classNames(\n          styles?.loadingDot,\n          styles?.[`loadingDot-${index}`]\n        )}\n      />\n    ))}\n\n    <span>Loading...</span>\n  </div>\n);\n\nexport const LoadingDots = withStyles(LoadingDotsComponent, {\n  ssrStyles: () => import('UI/LoadingDots/loadingDotsStyle.scss'),\n  clientStyles: () => require('UI/LoadingDots/loadingDotsStyle.scss').default\n});\n"],
+  "mappings": "iIAAA,yBACA,0BAIA,GAAM,GAAuB,CAAC,CAC5B,YACA,YAEA,gBAAC,OAAI,UAAW,EAAW,iBAAQ,YAAa,CAAS,GACtD,MAAM,KAAK,CAAE,OAAQ,CAAE,CAAC,EAAE,IAAI,CAAC,EAAG,IACjC,gBAAC,QACC,IAAK,eAAe,IACpB,UAAW,EACT,iBAAQ,WACR,iBAAS,cAAc,IACzB,EACF,CACD,EAED,gBAAC,YAAK,YAAU,CAClB,EAGW,EAAc,EAAW,EAAsB,CAC1D,UAAW,IAAM,OAAO,yCACxB,aAAc,IAAM,WAAgD,OACtE,CAAC",
+  "names": []
+}

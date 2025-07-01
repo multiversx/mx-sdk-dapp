@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/models/TransactionParameter.ts"],
+  "sourcesContent": ["import { Address } from '@multiversx/sdk-core';\n\nexport class TransactionParameter {\n  sender: Address;\n  receiver: Address;\n  functionName: string;\n  inputParameters: string[];\n  outputParameters: string[];\n\n  constructor(\n    sender: Address,\n    receiver: Address,\n    functionName: string,\n    inputParameters: string[],\n    outputParameters: string[]\n  ) {\n    this.sender = sender;\n    this.receiver = receiver;\n    this.functionName = functionName;\n    this.inputParameters = inputParameters;\n    this.outputParameters = outputParameters;\n  }\n}\n"],
+  "mappings": "+CAAA,GAEa,GAFb,aAEO,AAAM,EAAN,KAA2B,CAOhC,YACE,EACA,EACA,EACA,EACA,EACA,CACA,KAAK,OAAS,EACd,KAAK,SAAW,EAChB,KAAK,aAAe,EACpB,KAAK,gBAAkB,EACvB,KAAK,iBAAmB,CAC1B,CACF",
+  "names": []
+}

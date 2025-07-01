@@ -1,0 +1,2 @@
+import{a as n,b as s}from"./chunk-3SJHCATS.js";import{a,b as r,x as f}from"./chunk-UDZUNVED.js";import{m as e}from"./chunk-HBP5N4FR.js";e();f();s();import o from"bignumber.js";function E(g,m){let i=new o(0);return g.forEach(t=>{let c=n({gasPerDataByte:String(r),gasPriceModifier:String(a),minGasLimit:String(m),gasLimit:t.getGasLimit().valueOf().toString(),gasPrice:t.getGasPrice().valueOf().toString(),data:t.getData().toString(),chainId:t.getChainID().valueOf()});i=i.plus(new o(c))}),i}export{E as a};
+//# sourceMappingURL=chunk-WKAHS3KX.js.map

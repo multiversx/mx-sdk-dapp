@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/components/ConfirmAmountNftSft/index.ts"],
+  "sourcesContent": ["export * from './ConfirmAmountNftSft';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

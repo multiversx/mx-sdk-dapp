@@ -1,0 +1,2 @@
+import{a as r}from"./chunk-3YP3FYL4.js";import{a as l,b as o,m as y}from"./chunk-HBP5N4FR.js";y();import S from"react";function u(p,t){return n=>{let{globalStyles:e,styles:s}=r({ssrGlobalImportCallback:t.ssrGlobalStyles,ssrImportCallback:t.ssrStyles,clientImportCallback:t.clientStyles});return S.createElement(p,o(l({},n),{globalStyles:e!=null?e:{},styles:s!=null?s:{}}))}}export{u as a};
+//# sourceMappingURL=chunk-ZXZXEDS2.js.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/ProviderInitializer/helpers/getCrossWindowProvider.ts"],
+  "sourcesContent": ["import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';\n\nexport async function getCrossWindowProvider({\n  address,\n  walletUrl\n}: {\n  address: string;\n  walletUrl: string;\n}) {\n  try {\n    const success = await CrossWindowProvider.getInstance().init();\n    const provider = CrossWindowProvider.getInstance()\n      .setAddress(address)\n      .setWalletUrl(walletUrl);\n\n    if (success) {\n      return provider;\n    } else {\n      console.error('Could not initialise Cross Window Wallet provider');\n    }\n  } catch (err) {\n    console.error('Unable to login to CrossWindowWalletProvider', err);\n  }\n  return null;\n}\n"],
+  "mappings": "8FAAA,QAEA,WAA6C,EAM1C,mCAN0C,CAC3C,UACA,aAIC,CACD,GAAI,CACF,GAAM,GAAU,KAAM,GAAoB,YAAY,EAAE,KAAK,EACvD,EAAW,EAAoB,YAAY,EAC9C,WAAW,CAAO,EAClB,aAAa,CAAS,EAEzB,GAAI,EACF,MAAO,GAEP,QAAQ,MAAM,mDAAmD,CAErE,OAAS,EAAP,CACA,QAAQ,MAAM,+CAAgD,CAAG,CACnE,CACA,MAAO,KACT",
+  "names": []
+}

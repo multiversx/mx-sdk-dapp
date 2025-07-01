@@ -1,0 +1,4 @@
+/// <reference types="react" />
+import { WalletConnectLoginButtonPropsType } from './types';
+export declare const WalletConnectLoginButton: ({ buttonClassName, callbackRoute, children, className, customSpinnerComponent, "data-testid": dataTestId, disabled, hideButtonWhenModalOpens, innerWalletConnectComponentsClasses, isWalletConnectV2, lead, loginButtonText, logoutRoute, modalClassName, nativeAuth, onLoginRedirect, onContentHide, onContentShow, onModalCloses, onModalOpens, showScamPhishingAlert, title, token, wrapContentInsideModal, customRequestMethods }: WalletConnectLoginButtonPropsType) => JSX.Element;
+//# sourceMappingURL=WalletConnectLoginButton.d.ts.map

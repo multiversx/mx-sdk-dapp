@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/NonceMessage/index.tsx"],
+  "sourcesContent": ["export * from './NonceMessage';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

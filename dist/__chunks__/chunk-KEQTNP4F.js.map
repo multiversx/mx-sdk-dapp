@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/providers/index.ts"],
+  "sourcesContent": ["export { getAccountProvider, getExternalProvider } from './accountProvider';\nexport * from './utils';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

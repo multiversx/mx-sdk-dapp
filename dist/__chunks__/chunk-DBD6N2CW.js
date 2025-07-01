@@ -1,0 +1,2 @@
+import{m as t}from"./chunk-HBP5N4FR.js";t();import e from"bignumber.js";var l=i=>{let o=new e(i).dividedBy(1e3).integerValue(e.ROUND_FLOOR),n=new e(o).dividedBy(60).integerValue(e.ROUND_FLOOR),r=new e(n).dividedBy(60).integerValue(e.ROUND_FLOOR),u=r.modulo(60).isGreaterThan(1),s=n.modulo(60).isGreaterThan(1),d=n.modulo(60).isLessThan(1);return u?`${r} hours`:s?`${n} minutes`:d?"less than 1 minute":`${n} minute`};export{l as a};
+//# sourceMappingURL=chunk-DBD6N2CW.js.map

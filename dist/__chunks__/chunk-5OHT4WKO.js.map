@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/wrappers/AxiosInterceptorContext/AxiosInterceptorContext.tsx"],
+  "sourcesContent": ["import {\n  AxiosInterceptor,\n  LoginInfoListener,\n  AxiosInterceptorContextProvider\n} from './components';\n\nexport const AxiosInterceptorContext = {\n  Interceptor: AxiosInterceptor,\n  Listener: LoginInfoListener,\n  Provider: AxiosInterceptorContextProvider\n};\n"],
+  "mappings": "gKAAA,IAMO,GAAM,GAA0B,CACrC,YAAa,EACb,SAAU,EACV,SAAU,CACZ",
+  "names": []
+}

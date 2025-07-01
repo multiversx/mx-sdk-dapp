@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/ledger/LedgerLoginContainer/enums.ts"],
+  "sourcesContent": ["export enum LedgerColumnsEnum {\n  Address = 'Address',\n  Balance = 'Balance',\n  Hash = '#'\n}\n"],
+  "mappings": "wCAAA,IAAO,GAAK,GAAL,CAAK,GACV,WAAU,UACV,UAAU,UACV,OAAO,IAHG",
+  "names": []
+}

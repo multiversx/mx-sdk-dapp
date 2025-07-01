@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/account/addressIsValid.ts"],
+  "sourcesContent": ["import { Address } from '@multiversx/sdk-core';\n\nfunction canTransformToPublicKey(address: string) {\n  try {\n    const checkAddress = new Address(address);\n    return Boolean(checkAddress.bech32());\n  } catch {\n    return false;\n  }\n}\n\nexport function addressIsValid(destinationAddress: string) {\n  const isValidBach =\n    destinationAddress?.length === 62 && /^\\w+$/.test(destinationAddress);\n\n  return isValidBach && canTransformToPublicKey(destinationAddress);\n}\n"],
+  "mappings": "+CAAA,+CAEA,WAAiC,EAAiB,CAChD,GAAI,CACF,GAAM,GAAe,GAAI,GAAQ,CAAO,EACxC,MAAO,SAAQ,EAAa,OAAO,CAAC,CACtC,OAAQ,EAAN,CACA,MAAO,EACT,CACF,CAEO,WAAwB,EAA4B,CAIzD,MAAO,AAFL,kBAAoB,UAAW,IAAM,QAAQ,KAAK,CAAkB,GAEhD,EAAwB,CAAkB,CAClE,CAhBA",
+  "names": []
+}

@@ -1,0 +1,2 @@
+"use strict";import{a,b,c,d,e,f,g,h,i,j}from"../__chunks__/chunk-7YHU2LQD.js";import"../__chunks__/chunk-HBP5N4FR.js";j();export{b as CANCELLED,g as DEFAULT_TRANSACTION_STATUS_MESSAGE,a as ERROR_SIGNING,d as ERROR_SIGNING_TX,f as MISSING_PROVIDER_MESSAGE,e as PROVIDER_NOT_INITIALIZED,h as SECOND_LOGIN_ATTEMPT_ERROR,i as SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS,c as TRANSACTION_CANCELLED};
+//# sourceMappingURL=errorsMessages.js.map

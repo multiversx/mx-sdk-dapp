@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/components/confirmationScreen.types.ts"],
+  "sourcesContent": ["import { SignPropsType } from '../types/signTransactionsModals.types';\n\nexport interface ExtraConfirmationScreenPropsType {\n  Screen?: (signProps: SignPropsType) => JSX.Element;\n  GuardianScreen?: SignPropsType['GuardianScreen'];\n  verifyReceiverScam?: boolean;\n  className?: string;\n}\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

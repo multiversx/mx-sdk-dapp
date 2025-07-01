@@ -1,0 +1,2 @@
+import{a as r,b as k}from"./chunk-NW3HMCKZ.js";import{a as T}from"./chunk-O3TBK5D4.js";import{j as s,m as g}from"./chunk-HBP5N4FR.js";g();k();var A=y=>s(void 0,[y],function*({loginToken:c,extraInfoData:n,address:o,signature:e,loginService:t}){let i=yield T({loginToken:c,extraInfoData:n}),u=n.multisig||n.impersonate||o,d=i!=null?u:o;return i!=null&&t.setLoginToken(i),e&&t.setTokenLoginInfo({signature:e,address:o}),yield r(d)});export{A as a};
+//# sourceMappingURL=chunk-JESPSC4I.js.map

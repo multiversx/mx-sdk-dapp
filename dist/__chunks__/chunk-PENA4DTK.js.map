@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/delayWithPromise.ts"],
+  "sourcesContent": ["export function delayWithPromise(ms: number) {\n  return new Promise((resolve) => setTimeout(resolve, ms));\n}\n"],
+  "mappings": "wCAAA,IAAO,WAA0B,EAAY,CAC3C,MAAO,IAAI,SAAQ,AAAC,GAAY,WAAW,EAAS,CAAE,CAAC,CACzD",
+  "names": []
+}

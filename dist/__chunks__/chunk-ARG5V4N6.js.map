@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/Pagination/components/PaginationEdgeButton/index.ts"],
+  "sourcesContent": ["export * from './PaginationEdgeButton';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

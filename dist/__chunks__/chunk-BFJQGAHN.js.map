@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/iframe/IframeLoginButton/index.ts"],
+  "sourcesContent": ["export * from './IframeButton';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

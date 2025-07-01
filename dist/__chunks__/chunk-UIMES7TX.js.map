@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/helpers/buildBatchId.ts"],
+  "sourcesContent": ["import { BATCH_TRANSACTIONS_ID_SEPARATOR } from 'constants/index';\n\nexport const buildBatchId = ({\n  sessionId,\n  address\n}: {\n  sessionId: string | number;\n  address: string;\n}) => {\n  return `${sessionId}${BATCH_TRANSACTIONS_ID_SEPARATOR}${address}`;\n};\n"],
+  "mappings": "uFAAA,QAEO,GAAM,GAAe,CAAC,CAC3B,YACA,aAKO,GAAG,IAAY,IAAkC",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/account/helpers/index.ts"],
+  "sourcesContent": ["export * from './trimUsernameDomain';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

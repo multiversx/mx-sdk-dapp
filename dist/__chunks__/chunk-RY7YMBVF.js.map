@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/lib/sdkDappUtils.ts"],
+  "sourcesContent": ["export { safeWindow } from '@multiversx/sdk-dapp-utils/out/constants/browserConstants';\n"],
+  "mappings": "0CAAA",
+  "names": []
+}

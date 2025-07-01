@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/configuration/getNetworkConfig.ts"],
+  "sourcesContent": ["import axios from 'axios';\nimport { NETWORK_CONFIG_ENDPOINT } from 'apiCalls/endpoints';\nimport { getCleanApiAddress } from 'apiCalls/utils';\nimport { ApiNetworkConfigType } from 'types';\n\nconst urlIsValid = (url: string) => {\n  try {\n    return Boolean(new URL(url));\n  } catch {\n    return false;\n  }\n};\n\nexport async function getNetworkConfigFromApi() {\n  const apiAddress = getCleanApiAddress();\n\n  if (!urlIsValid(apiAddress)) {\n    return null;\n  }\n\n  const configUrl = `${apiAddress}/${NETWORK_CONFIG_ENDPOINT}`;\n\n  try {\n    const { data } = await axios.get<{\n      data: { config: ApiNetworkConfigType };\n    }>(configUrl);\n    if (data != null) {\n      return data?.data?.config;\n    }\n  } catch (err) {\n    console.error('error fetching configuration for ', configUrl);\n  }\n  return null;\n}\n"],
+  "mappings": "8KAAA,IACA,IACA,IAFA,qBAKA,GAAM,GAAa,AAAC,GAAgB,CAClC,GAAI,CACF,MAAO,SAAQ,GAAI,KAAI,CAAG,CAAC,CAC7B,OAAQ,EAAN,CACA,MAAO,EACT,CACF,EAEA,YAAgD,gCAbhD,MAcE,GAAM,GAAa,EAAmB,EAEtC,GAAI,CAAC,EAAW,CAAU,EACxB,MAAO,MAGT,GAAM,GAAY,GAAG,KAAc,IAEnC,GAAI,CACF,GAAM,CAAE,QAAS,KAAM,GAAM,IAE1B,CAAS,EACZ,GAAI,GAAQ,KACV,MAAO,oBAAM,OAAN,cAAY,MAEvB,OAAS,EAAP,CACA,QAAQ,MAAM,oCAAqC,CAAS,CAC9D,CACA,MAAO,KACT",
+  "names": []
+}

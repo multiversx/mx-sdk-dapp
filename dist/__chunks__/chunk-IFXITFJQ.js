@@ -1,0 +1,2 @@
+import{j as n,k as i,x as s}from"./chunk-UDZUNVED.js";import{e as o,m as r}from"./chunk-HBP5N4FR.js";var A,g=o(()=>{r();s();A=e=>{let t=e;typeof t=="string"&&t.includes("Shard")&&(t=t.replace("Shard","").replace(" ",""));let S=n.toString()===String(t).toString()||String(t)==="metachain",a=i.toString()===String(t).toString();return S?"Metachain":a?"All Shards":`Shard ${t}`}});export{A as a,g as b};
+//# sourceMappingURL=chunk-IFXITFJQ.js.map

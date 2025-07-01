@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/reduxStore/selectors/helpers.ts"],
+  "sourcesContent": ["import isEqual from 'lodash.isequal';\nimport { createSelectorCreator, defaultMemoize } from 'reselect';\n\nexport const createDeepEqualSelector = createSelectorCreator(\n  defaultMemoize,\n  isEqual\n);\n"],
+  "mappings": "+CAAA,8BACA,qEADA,GAGa,GAHb,aAGO,AAAM,EAA0B,EACrC,EACA,CACF",
+  "names": []
+}

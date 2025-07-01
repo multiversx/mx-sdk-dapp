@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/transactions/computeTransactionNonce.ts"],
+  "sourcesContent": ["/**\n * Returns the higher nonce between the latest nonce of the account and the transaction nonce\n * Used to set the correct nonce for a transaction in the batch\n */\nexport const computeTransactionNonce = ({\n  accountNonce,\n  transactionNonce\n}: {\n  accountNonce: number;\n  transactionNonce?: number;\n}) => {\n  if (!transactionNonce) {\n    return accountNonce;\n  }\n\n  return transactionNonce > accountNonce ? transactionNonce : accountNonce;\n};\n"],
+  "mappings": "+CAAA,GAIa,GAJb,aAIO,AAAM,EAA0B,CAAC,CACtC,eACA,sBAKK,GAIE,EAAmB,EAAe,EAHhC",
+  "names": []
+}

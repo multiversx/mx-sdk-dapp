@@ -1,0 +1,111 @@
+import { RootState } from 'reduxStore/store';
+export declare const loginInfoSelector: (state: RootState) => import("../slices").LoginInfoStateType;
+export declare const loginMethodSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, import("../../types").LoginMethodsEnum, (res: import("../slices").LoginInfoStateType) => import("../../types").LoginMethodsEnum>;
+export declare const isLoggedInSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, boolean, (res1: import("../slices").LoginInfoStateType, res2: string) => boolean>;
+export declare const walletConnectLoginSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, import("../slices").WalletConnectLoginType | null, (res: import("../slices").LoginInfoStateType) => import("../slices").WalletConnectLoginType | null>;
+export declare const ledgerLoginSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, import("../slices").LedgerLoginType | null, (res: import("../slices").LoginInfoStateType) => import("../slices").LedgerLoginType | null>;
+export declare const walletLoginSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, import("../slices").LoginInfoType | null, (res: import("../slices").LoginInfoStateType) => import("../slices").LoginInfoType | null>;
+export declare const isLoginSessionInvalidSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, boolean, (res: import("../slices").LoginInfoStateType) => boolean>;
+export declare const tokenLoginSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, import("../../types").TokenLoginType | null, (res: import("../slices").LoginInfoStateType) => import("../../types").TokenLoginType | null>;
+export declare const logoutRouteSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, string | undefined, (res: import("../slices").LoginInfoStateType) => string | undefined>;
+export declare const isWalletConnectV2InitializedSelector: import("reselect").OutputSelector<import("redux").CombinedState<{
+    account: import("../slices").AccountInfoSliceType;
+    dappConfig: import("../../types").DappConfigType;
+    loginInfo: import("../slices").LoginInfoStateType;
+    modals: import("../slices").ModalsSliceState;
+    networkConfig: import("../slices").NetworkConfigStateType;
+    signedMessageInfo: import("../slices").SignedMessageInfoStateType;
+    toasts: import("../slices").ToastsSliceState;
+    transactionsInfo: import("../slices").StateType;
+    transactions: import("../slices").TransactionsSliceStateType;
+    batchTransactions: import("../slices").BatchTransactionsSliceStateType;
+}>, boolean | undefined, (res: import("../slices").LoginInfoStateType) => boolean | undefined>;
+//# sourceMappingURL=loginInfoSelectors.d.ts.map

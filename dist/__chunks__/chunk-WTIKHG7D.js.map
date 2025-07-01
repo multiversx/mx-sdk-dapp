@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/dateTime/getUnixTimestamp.ts"],
+  "sourcesContent": ["export const getUnixTimestamp = () => {\n  return Date.now() / 1000;\n};\n"],
+  "mappings": "0CAAA,GAAa,GAAb,aAAO,AAAM,EAAmB,IACvB,KAAK,IAAI,EAAI",
+  "names": []
+}

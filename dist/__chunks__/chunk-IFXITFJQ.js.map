@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getShardText.ts"],
+  "sourcesContent": ["import { ALL_SHARDS_SHARD_ID, METACHAIN_SHARD_ID } from 'constants/index';\n\nexport const getShardText = (shard: number | string) => {\n  let shardText = shard;\n\n  if (typeof shardText === 'string' && shardText.includes('Shard')) {\n    shardText = shardText.replace('Shard', '').replace(' ', '');\n  }\n\n  const isMetachain =\n    METACHAIN_SHARD_ID.toString() === String(shardText).toString() ||\n    String(shardText) === 'metachain';\n\n  const isAllShards =\n    ALL_SHARDS_SHARD_ID.toString() === String(shardText).toString();\n\n  if (isMetachain) {\n    return 'Metachain';\n  }\n  if (isAllShards) {\n    return 'All Shards';\n  }\n  return `Shard ${shardText}`;\n};\n"],
+  "mappings": "qGAAA,GAEa,GAFb,iBAEO,AAAM,EAAe,AAAC,GAA2B,CACtD,GAAI,GAAY,EAEhB,AAAI,MAAO,IAAc,UAAY,EAAU,SAAS,OAAO,GAC7D,GAAY,EAAU,QAAQ,QAAS,EAAE,EAAE,QAAQ,IAAK,EAAE,GAG5D,GAAM,GACJ,EAAmB,SAAS,IAAM,OAAO,CAAS,EAAE,SAAS,GAC7D,OAAO,CAAS,IAAM,YAElB,EACJ,EAAoB,SAAS,IAAM,OAAO,CAAS,EAAE,SAAS,EAEhE,MAAI,GACK,YAEL,EACK,aAEF,SAAS,GAClB",
+  "names": []
+}

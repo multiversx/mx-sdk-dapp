@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/utils/getCleanApiAddress.ts"],
+  "sourcesContent": ["import { apiAddressSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport const getCleanApiAddress = (customApiAddress?: string) => {\n  const apiAddress = customApiAddress ?? apiAddressSelector(store.getState());\n  return apiAddress.endsWith('/') ? apiAddress.slice(0, -1) : apiAddress;\n};\n"],
+  "mappings": "8KAAA,GAGa,GAHb,iBACA,IAEO,AAAM,EAAqB,AAAC,GAA8B,CAC/D,GAAM,GAAa,UAAoB,EAAmB,EAAM,SAAS,CAAC,EAC1E,MAAO,GAAW,SAAS,GAAG,EAAI,EAAW,MAAM,EAAG,EAAE,EAAI,CAC9D",
+  "names": []
+}

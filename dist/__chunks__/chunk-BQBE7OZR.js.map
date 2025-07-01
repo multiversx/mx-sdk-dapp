@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/operations/pipe.ts"],
+  "sourcesContent": ["export function pipe<ValueType>(previous: ValueType) {\n  return {\n    if: function (condition: boolean) {\n      if (condition) {\n        return {\n          then: (newValue: ValueType | ((prop: ValueType) => ValueType)) =>\n            // if a callback is passed, callback is executed with previous value\n            newValue instanceof Function\n              ? pipe(newValue(previous))\n              : pipe(newValue)\n        };\n      } else {\n        return {\n          then: () => pipe(previous)\n        };\n      }\n    },\n\n    then: (newValue: ValueType | ((prop: ValueType) => ValueType)) =>\n      newValue instanceof Function ? pipe(newValue(previous)) : pipe(newValue),\n\n    valueOf: function () {\n      return previous;\n    }\n  };\n}\n"],
+  "mappings": "+CAAO,WAAyB,EAAqB,CACnD,MAAO,CACL,GAAI,SAAU,EAAoB,CAChC,MAAI,GACK,CACL,KAAM,AAAC,GAEL,YAAoB,UAChB,EAAK,EAAS,CAAQ,CAAC,EACvB,EAAK,CAAQ,CACrB,EAEO,CACL,KAAM,IAAM,EAAK,CAAQ,CAC3B,CAEJ,EAEA,KAAM,AAAC,GACL,YAAoB,UAAW,EAAK,EAAS,CAAQ,CAAC,EAAI,EAAK,CAAQ,EAEzE,QAAS,UAAY,CACnB,MAAO,EACT,CACF,CACF,CAzBA",
+  "names": []
+}

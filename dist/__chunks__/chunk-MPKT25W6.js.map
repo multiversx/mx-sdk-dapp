@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/types/withClassname.types.ts"],
+  "sourcesContent": ["import {\n  InterpretedTransactionType,\n  OperationType\n} from '../../types/serverTransactions.types';\n\nexport interface WithClassnameType {\n  className?: string;\n  'data-testid'?: string;\n}\n\nexport interface WithTransactionType {\n  transaction: InterpretedTransactionType;\n}\n\nexport interface WithOperationType {\n  operation: OperationType;\n}\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

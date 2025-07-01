@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/LogoutListener/helpers/useNativeAuthLogoutWarning/helpers/index.ts"],
+  "sourcesContent": ["export * from './getHumanReadableTokenExpirationTime';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

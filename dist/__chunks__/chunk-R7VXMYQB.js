@@ -1,0 +1,2 @@
+import{j as n,m as r}from"./chunk-HBP5N4FR.js";r();import{ExtensionProvider as s}from"@multiversx/sdk-extension-provider";function u(t){return n(this,null,function*(){try{let e=s.getInstance().setAddress(t);if(yield e.init())return e;console.error("Could not initialise extension, make sure MultiversX wallet extension is installed.")}catch(e){console.error("Unable to login to ExtensionProvider",e)}return null})}export{u as a};
+//# sourceMappingURL=chunk-R7VXMYQB.js.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoValue/styles.scss"],
+  "sourcesContent": ["const css = `.dapp-core-component__styles__value .dapp-core-component__styles__price {\n  color: #6c757d;\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"value\": \"dapp-core-component__styles__value\",\n  \"price\": \"dapp-core-component__styles__price\"\n};"],
+  "mappings": "sDAAA,2CAAM,GAOC,EAPP,aAAM,EAAM;AAAA;AAAA,GAGZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,AAAO,EAAQ,CACb,MAAS,qCACT,MAAS,oCACX",
+  "names": []
+}

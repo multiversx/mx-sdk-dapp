@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getExplorerLink.ts"],
+  "sourcesContent": ["let errorMessageDisplayed = false;\n\nfunction logError(error: string) {\n  if (!errorMessageDisplayed) {\n    console.error(error);\n    errorMessageDisplayed = true;\n  }\n}\n\nexport function getExplorerLink({\n  explorerAddress,\n  to\n}: {\n  explorerAddress: string;\n  to: string;\n}) {\n  try {\n    // if a valid url is sent, return the original url\n    const url = new URL(to);\n    return url.href;\n  } catch {\n    if (!to.startsWith('/')) {\n      logError(`Link not prepended by / : ${to}`);\n      to = `/${to}`;\n    }\n    return explorerAddress ? `${explorerAddress}${to}` : to;\n  }\n}\n"],
+  "mappings": "+CAEA,WAAkB,EAAe,CAC/B,AAAK,GACH,SAAQ,MAAM,CAAK,EACnB,EAAwB,GAE5B,CAEO,WAAyB,CAC9B,kBACA,MAIC,CACD,GAAI,CAGF,MAAO,AADK,IAAI,KAAI,CAAE,EACX,IACb,OAAQ,EAAN,CACA,MAAK,GAAG,WAAW,GAAG,GACpB,GAAS,6BAA6B,GAAI,EAC1C,EAAK,IAAI,KAEJ,EAAkB,GAAG,IAAkB,IAAO,CACvD,CACF,CA3BA,GAAI,GAAJ,aAAI,EAAwB",
+  "names": []
+}

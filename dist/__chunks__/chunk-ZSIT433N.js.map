@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/configuration/getEnvironmentForChainId.ts"],
+  "sourcesContent": ["import { chainIdToEnvironment } from 'constants/network';\n\nexport function getEnvironmentForChainId(chainId: string) {\n  return chainIdToEnvironment[chainId];\n}\n"],
+  "mappings": "uFAAA,QAEO,WAAkC,EAAiB,CACxD,MAAO,GAAqB,EAC9B",
+  "names": []
+}

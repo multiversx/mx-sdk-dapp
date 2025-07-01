@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/signedMessage.types.ts"],
+  "sourcesContent": ["export enum SignedMessageQueryParamsEnum {\n  signature = 'signature',\n  sessionId = 'sessionId',\n  status = 'status',\n  address = 'address'\n}\n"],
+  "mappings": "+CAAA,GAAY,GAAZ,aAAO,AAAK,EAAL,CAAK,GACV,aAAY,YACZ,YAAY,YACZ,SAAS,SACT,UAAU,UAJA",
+  "names": []
+}

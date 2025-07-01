@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../src/typings.d.ts"],
+  "sourcesContent": ["/**\n * Default CSS definition for typescript,\n * will be overridden with file-specific definitions by rollup\n */\ndeclare module '*.css' {\n  const content: { [className: string]: string };\n  export default content;\n}\n\ntype SvgrComponent = React.FunctionComponent<\n  React.PropsWithChildren<\n    React.PropsWithChildren<React.SVGAttributes<SVGElement>>\n  >\n>;\n\ndeclare module '*.svg' {\n  const svgUrl: string;\n  const svgComponent: SvgrComponent;\n  export default svgComponent;\n}\n\ndeclare module 'react-redux/lib/utils/Subscription' {\n  declare type VoidFunc = () => void;\n  declare type Listener = {\n    callback: VoidFunc;\n    next: Listener | null;\n    prev: Listener | null;\n  };\n  declare function createListenerCollection(): {\n    clear(): void;\n    notify(): void;\n    get(): Listener[];\n    subscribe(callback: () => void): () => void;\n  };\n  declare type ListenerCollection = ReturnType<typeof createListenerCollection>;\n  export interface Subscription {\n    addNestedSub: (listener: VoidFunc) => VoidFunc;\n    notifyNestedSubs: VoidFunc;\n    handleChangeWrapper: VoidFunc;\n    isSubscribed: () => boolean;\n    onStateChange?: VoidFunc | null;\n    trySubscribe: VoidFunc;\n    tryUnsubscribe: VoidFunc;\n    getListeners: () => ListenerCollection;\n  }\n  export declare function createSubscription(\n    store: any,\n    parentSub?: Subscription\n  ): Subscription;\n  export {};\n}\n"],
+  "mappings": "gEAAA",
+  "names": []
+}

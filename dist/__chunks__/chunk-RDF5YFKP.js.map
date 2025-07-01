@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/web/hooks/useIdleTimer.tsx"],
+  "sourcesContent": ["import { useIdleTimer as useReactIdleTimer } from 'react-idle-timer';\nimport { useGetIsLoggedIn } from 'hooks/account/useGetIsLoggedIn';\nimport { useClosureRef } from 'hooks/useClosureRef';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { logoutRouteSelector } from 'reduxStore/selectors';\nimport { logout as dappLogout } from 'utils/logout';\n\nconst getTimeout = (minutes: number) => 1000 * 60 * minutes;\nconst debounce = 500;\n\nexport interface IdleTimerType {\n  minutes?: number;\n  onLogout?: (props?: any) => void;\n}\n\nexport const useIdleTimer = ({ minutes = 10, onLogout }: IdleTimerType) => {\n  const isLoggedIn = useGetIsLoggedIn();\n  const isLoggedInRef = useClosureRef(isLoggedIn);\n  const logoutRoute = useSelector(logoutRouteSelector);\n\n  const logout = onLogout || dappLogout;\n  const timeout = getTimeout(minutes);\n\n  const onIdle = () => {\n    if (isLoggedInRef.current) {\n      logout(logoutRoute);\n    }\n  };\n\n  useReactIdleTimer({ timeout, onIdle, debounce });\n};\n"],
+  "mappings": "wRAAA,oDAIA,IAGA,GAAM,GAAa,AAAC,GAAoB,IAAO,GAAK,EAC9C,EAAW,IAOJ,EAAe,CAAC,CAAE,UAAU,GAAI,cAA8B,CACzE,GAAM,GAAa,EAAiB,EAC9B,EAAgB,EAAc,CAAU,EACxC,EAAc,EAAY,CAAmB,EAE7C,EAAS,GAAY,EACrB,EAAU,EAAW,CAAO,EAQlC,EAAkB,CAAE,UAAS,OANd,IAAM,CACnB,AAAI,EAAc,SAChB,EAAO,CAAW,CAEtB,EAEqC,UAAS,CAAC,CACjD",
+  "names": []
+}

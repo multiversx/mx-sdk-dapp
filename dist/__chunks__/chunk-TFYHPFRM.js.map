@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/configuration/useGetNetworkConfigFromApi.ts"],
+  "sourcesContent": ["import { NETWORK_CONFIG_ENDPOINT } from '../endpoints';\nimport { useApiFetch } from '../utils';\n\nexport const useGetNetworkConfigFromApi = () =>\n  useApiFetch({\n    apiEndpoint: NETWORK_CONFIG_ENDPOINT\n  });\n"],
+  "mappings": "uKAAA,QACA,IAEO,GAAM,GAA6B,IACxC,EAAY,CACV,YAAa,CACf,CAAC",
+  "names": []
+}

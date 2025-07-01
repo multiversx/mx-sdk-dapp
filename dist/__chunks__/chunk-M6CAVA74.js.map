@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/__mocks__/utils/index.ts"],
+  "sourcesContent": ["export * from './renderWithProvider';\nexport * from './mockWindowLocation';\nexport * from './mockWindowHistory';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

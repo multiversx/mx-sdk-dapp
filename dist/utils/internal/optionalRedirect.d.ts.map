@@ -1,0 +1,1 @@
+{"version":3,"file":"optionalRedirect.d.ts","sourceRoot":"","sources":["../../../src/utils/internal/optionalRedirect.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,0BAA0B,EAAE,mBAAmB,EAAE,MAAM,aAAa,CAAC;AAG9E,UAAU,oBAAqB,SAAQ,IAAI,CAAC,mBAAmB,EAAE,OAAO,CAAC;IACvE,OAAO,CAAC,EAAE,0BAA0B,CAAC;CACtC;AAID,wBAAgB,gBAAgB,CAAC,EAC/B,aAAa,EACb,eAAe,EACf,OAAO,EACR,EAAE,oBAAoB,QAetB"}

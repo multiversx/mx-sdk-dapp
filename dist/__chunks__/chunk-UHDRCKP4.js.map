@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/providers/experimentalWebViewProvider/index.ts"],
+  "sourcesContent": ["export * from './ExperimentalWebviewProvider';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

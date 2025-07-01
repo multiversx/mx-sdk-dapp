@@ -1,0 +1,1 @@
+{"version":3,"file":"useRegisterWebsocketListener.d.ts","sourceRoot":"","sources":["../../../src/hooks/websocketListener/useRegisterWebsocketListener.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,+BAA+B,EAAE,MAAM,OAAO,CAAC;AAIxD,wBAAgB,4BAA4B,CAC1C,SAAS,EAAE,CAAC,OAAO,EAAE,MAAM,KAAK,IAAI,EACpC,cAAc,CAAC,EAAE,CAAC,IAAI,EAAE,+BAA+B,KAAK,IAAI,QAqBjE"}

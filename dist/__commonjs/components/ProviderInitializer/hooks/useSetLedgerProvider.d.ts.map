@@ -1,0 +1,1 @@
+{"version":3,"file":"useSetLedgerProvider.d.ts","sourceRoot":"","sources":["../../../../../src/components/ProviderInitializer/hooks/useSetLedgerProvider.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,UAAU,EAAE,MAAM,6BAA6B,CAAC;AAczD,aAAK,qBAAqB,GAAG;IAC3B,SAAS,CAAC,EAAE,OAAO,CAAC;CACrB,CAAC;AAEF,eAAO,MAAM,oBAAoB;gCA2CU,qBAAqB;;iBAnCjD,MAAM;qBACF,OAAO;;CAoEzB,CAAC"}

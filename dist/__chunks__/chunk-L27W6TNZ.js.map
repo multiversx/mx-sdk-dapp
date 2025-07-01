@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/ledger/LedgerLoginContainer/LedgerScamPhishingAlert/LedgerScamPhishingAlert.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport { getAuthorizationInfo } from 'services/nativeAuth/helpers';\nimport { ScamPhishingAlert } from 'UI/ScamPhishingAlert';\nimport { getWindowLocation } from 'utils/window';\n\ninterface LedgerScamPhishingAlertPropsType {\n  ledgerScamPhishingAlertClassName?: string;\n  showScamPhishingAlert?: boolean;\n  token?: string;\n}\n\nexport const LedgerScamPhishingAlert = ({\n  showScamPhishingAlert,\n  token,\n  ledgerScamPhishingAlertClassName\n}: LedgerScamPhishingAlertPropsType) => {\n  if (!showScamPhishingAlert) {\n    return null;\n  }\n\n  const authorizationInfo = getAuthorizationInfo(\n    token,\n    ledgerScamPhishingAlertClassName\n  );\n\n  return (\n    <ScamPhishingAlert\n      authorizationInfo={authorizationInfo}\n      className={ledgerScamPhishingAlertClassName}\n      url={getWindowLocation().origin}\n    />\n  );\n};\n"],
+  "mappings": "wMAAA,yBAGA,IAQO,GAAM,GAA0B,CAAC,CACtC,wBACA,QACA,sCACsC,CACtC,GAAI,CAAC,EACH,MAAO,MAGT,GAAM,GAAoB,EACxB,EACA,CACF,EAEA,MACE,iBAAC,GACC,kBAAmB,EACnB,UAAW,EACX,IAAK,EAAkB,EAAE,OAC3B,CAEJ",
+  "names": []
+}

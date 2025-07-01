@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hocs/withStyles.tsx"],
+  "sourcesContent": ["import React, { FunctionComponent } from 'react';\nimport { useStyles } from './useStyles';\n\ntype StylesType = typeof import('*.scss');\n\nexport type WithStylesImportType = {\n  globalStyles?: Record<any, any>;\n  styles?: Record<any, any>;\n};\n\nexport function withStyles<TProps>(\n  Component: FunctionComponent<TProps & WithStylesImportType>,\n  imports: {\n    ssrGlobalStyles?: () => Promise<StylesType>;\n    ssrStyles?: () => Promise<StylesType>;\n    clientStyles?: () => StylesType;\n  }\n) {\n  return (props: TProps) => {\n    const { globalStyles, styles } = useStyles({\n      ssrGlobalImportCallback: imports.ssrGlobalStyles,\n      ssrImportCallback: imports.ssrStyles,\n      clientImportCallback: imports.clientStyles\n    });\n\n    return (\n      <Component\n        {...props}\n        globalStyles={globalStyles ?? {}}\n        styles={styles ?? {}}\n      />\n    );\n  };\n}\n"],
+  "mappings": "8FAAA,yBAUO,WACL,EACA,EAKA,CACA,MAAO,AAAC,IAAkB,CACxB,GAAM,CAAE,eAAc,UAAW,EAAU,CACzC,wBAAyB,EAAQ,gBACjC,kBAAmB,EAAQ,UAC3B,qBAAsB,EAAQ,YAChC,CAAC,EAED,MACE,iBAAC,SACK,GADL,CAEC,aAAc,UAAgB,CAAC,EAC/B,OAAQ,UAAU,CAAC,GACrB,CAEJ,CACF",
+  "names": []
+}

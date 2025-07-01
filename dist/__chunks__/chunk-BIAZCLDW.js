@@ -1,0 +1,2 @@
+import{a as x}from"./chunk-SWRV4LUB.js";import{a as c,b as a}from"./chunk-WTIKHG7D.js";import{m as p}from"./chunk-HBP5N4FR.js";p();a();var n={isExpired:!1},b=i=>{if(!i)return n;let o=x(i);if(!o)return n;let r=c(),{ttl:m,extraInfo:e}=o,s=e==null?void 0:e.timestamp;if(!s)return n;let t=s+m,d=r>t,u=t-r;return{isExpired:d,expiresAt:t,secondsUntilExpires:u}};export{b as a};
+//# sourceMappingURL=chunk-BIAZCLDW.js.map

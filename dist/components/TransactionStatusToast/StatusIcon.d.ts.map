@@ -1,0 +1,1 @@
+{"version":3,"file":"StatusIcon.d.ts","sourceRoot":"","sources":["../../../src/components/TransactionStatusToast/StatusIcon.tsx"],"names":[],"mappings":";AAKA,OAAO,EAAE,cAAc,EAAE,MAAM,gCAAgC,CAAC;AAEhE,MAAM,WAAW,mBAAmB;IAClC,IAAI,EAAE,cAAc,CAAC;CACtB;AAkDD,eAAO,MAAM,UAAU,6CAQrB,CAAC"}

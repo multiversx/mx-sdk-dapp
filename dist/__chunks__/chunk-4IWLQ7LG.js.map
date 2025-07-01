@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/LoadingDots/index.ts"],
+  "sourcesContent": ["export * from './LoadingDots';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

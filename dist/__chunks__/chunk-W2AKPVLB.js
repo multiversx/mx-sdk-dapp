@@ -1,0 +1,2 @@
+import{s as f}from"./chunk-7OZRG2YY.js";import{i as a}from"./chunk-S55DZJQR.js";import{a as e,d}from"./chunk-PCK656QH.js";import{w as n}from"./chunk-326XWAT2.js";import{k as s,l as T}from"./chunk-XXEKL2DH.js";import{j as r,m as o}from"./chunk-HBP5N4FR.js";o();import S from"axios";T();f();d();function I(R){return r(this,arguments,function*({batchId:c,address:i}){let{apiAddress:p,apiTimeout:t}=a(e.getState()),{data:m}=yield S.get(`${p}/${n}/${i}/${c}`,{timeout:Number(t!=null?t:s)});return m})}export{I as a};
+//# sourceMappingURL=chunk-W2AKPVLB.js.map

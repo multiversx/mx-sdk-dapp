@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithWalletConnectModal/index.tsx"],
+  "sourcesContent": ["export * from './SignWithWalletConnectModal';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

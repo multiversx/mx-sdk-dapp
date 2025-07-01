@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/economics/useGetEgldPrice.ts"],
+  "sourcesContent": ["import useSwr from 'swr';\n\nimport { getEconomics } from 'apiCalls';\nimport { ECONOMICS_ENDPOINT } from 'apiCalls/endpoints';\n\nexport function useGetEgldPrice() {\n  const fetcher = (url: string) =>\n    getEconomics(url).then((response) => response.data);\n\n  const { data, error } = useSwr(ECONOMICS_ENDPOINT, fetcher);\n\n  return {\n    price: data?.price,\n    error\n  };\n}\n"],
+  "mappings": "+HAAA,uBAGA,IAEO,YAA2B,CAChC,GAAM,GAAU,AAAC,GACf,EAAa,CAAG,EAAE,KAAK,AAAC,GAAa,EAAS,IAAI,EAE9C,CAAE,OAAM,SAAU,EAAO,EAAoB,CAAO,EAE1D,MAAO,CACL,MAAO,iBAAM,MACb,OACF,CACF",
+  "names": []
+}

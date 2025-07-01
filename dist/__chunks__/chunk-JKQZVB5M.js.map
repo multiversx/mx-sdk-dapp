@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/LogoutListener/LogoutListener.tsx"],
+  "sourcesContent": ["import {\n  useLogoutFromMultipleTabs,\n  useNativeAuthLogout,\n  useNativeAuthLogoutWarning\n} from './helpers';\n\nexport const LogoutListener = () => {\n  useNativeAuthLogoutWarning();\n  useLogoutFromMultipleTabs();\n  useNativeAuthLogout();\n\n  return null;\n};\n"],
+  "mappings": "gKAAA,IAMO,GAAM,GAAiB,IAC5B,GAA2B,EAC3B,EAA0B,EAC1B,EAAoB,EAEb",
+  "names": []
+}

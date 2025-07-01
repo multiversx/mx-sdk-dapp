@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/batch/useGetBatches.ts"],
+  "sourcesContent": ["import { useMemo } from 'react';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { batchesSelector } from 'reduxStore/selectors/batchTransactionsSelectors';\n\nexport function useGetBatches() {\n  const batches = useSelector(batchesSelector);\n  const batchTransactionsArray = useMemo(\n    () =>\n      Object.entries(batches).map(([batchId, batch]) => ({\n        batchId,\n        transactions: batch.transactions\n      })),\n    [batches]\n  );\n\n  return {\n    batches,\n    batchTransactionsArray\n  };\n}\n"],
+  "mappings": "wHAAA,oCAIO,YAAyB,CAC9B,GAAM,GAAU,EAAY,CAAe,EACrC,EAAyB,EAC7B,IACE,OAAO,QAAQ,CAAO,EAAE,IAAI,CAAC,CAAC,EAAS,KAAY,EACjD,UACA,aAAc,EAAM,YACtB,EAAE,EACJ,CAAC,CAAO,CACV,EAEA,MAAO,CACL,UACA,wBACF,CACF",
+  "names": []
+}

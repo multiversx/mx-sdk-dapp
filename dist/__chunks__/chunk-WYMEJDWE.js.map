@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/__mocks__/accountConfig.ts"],
+  "sourcesContent": ["import { fallbackNetworkConfigurations } from 'constants/network';\nimport { EnvironmentsEnum } from 'types';\n\nexport const testAddress =\n  'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3';\n\nexport const testNetwork =\n  fallbackNetworkConfigurations[EnvironmentsEnum.devnet];\n\nexport const testReceiver =\n  'erd1qqqqqqqqqqqqqpgqp699jngundfqw07d8jzkepucvpzush6k3wvqyc44rx';\n"],
+  "mappings": "+HAAA,QACA,IAEO,GAAM,GACX,iEAEW,EACX,EAA8B,UAEnB,EACX",
+  "names": []
+}

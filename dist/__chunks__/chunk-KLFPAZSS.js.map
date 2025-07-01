@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getEventListHighlight.ts"],
+  "sourcesContent": ["import { EventType } from 'types/serverTransactions.types';\nimport { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const getEventListHighlight = (event: EventType, id?: string) => {\n  const { hash } = getWindowLocation();\n  const hashValues = hash.split('/');\n  const formattedHash = hashValues[0] ? hashValues[0].replace('#', '') : '';\n  const eventOrder = hashValues[1] ?? 0;\n\n  const highlight = formattedHash === id && event.order === Number(eventOrder);\n\n  return highlight;\n};\n"],
+  "mappings": "8FAAA,GAGa,GAHb,aACA,IAEO,AAAM,EAAwB,CAAC,EAAkB,IAAgB,CAHxE,MAIE,GAAM,CAAE,QAAS,EAAkB,EAC7B,EAAa,EAAK,MAAM,GAAG,EAC3B,EAAgB,EAAW,GAAK,EAAW,GAAG,QAAQ,IAAK,EAAE,EAAI,GACjE,EAAa,KAAW,KAAX,OAAiB,EAIpC,MAFkB,KAAkB,GAAM,EAAM,QAAU,OAAO,CAAU,CAG7E",
+  "names": []
+}

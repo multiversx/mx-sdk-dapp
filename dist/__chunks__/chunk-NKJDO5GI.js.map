@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/DappModal/hooks/useDappModal.ts"],
+  "sourcesContent": ["import { useEffect, useState } from 'react';\n\nimport { DappModalInteractionConfig } from '../dappModal.types';\n\nexport const useDappModal = (props?: DappModalInteractionConfig) => {\n  const [showModal, setShowModal] = useState(false);\n\n  const handleShowModal = () => {\n    setShowModal(true);\n  };\n\n  const handleHideModal = () => {\n    setShowModal(false);\n  };\n\n  useEffect(() => {\n    if (props?.visible === true) {\n      handleShowModal();\n    } else if (props?.visible === false) {\n      handleHideModal();\n    }\n  }, [props?.visible]);\n\n  return {\n    handleShowModal,\n    handleHideModal,\n    showModal\n  };\n};\n"],
+  "mappings": "wCAAA,oDAIO,GAAM,GAAe,AAAC,GAAuC,CAClE,GAAM,CAAC,EAAW,GAAgB,EAAS,EAAK,EAE1C,EAAkB,IAAM,CAC5B,EAAa,EAAI,CACnB,EAEM,EAAkB,IAAM,CAC5B,EAAa,EAAK,CACpB,EAEA,SAAU,IAAM,CACd,AAAI,kBAAO,WAAY,GACrB,EAAgB,EACP,kBAAO,WAAY,IAC5B,EAAgB,CAEpB,EAAG,CAAC,iBAAO,OAAO,CAAC,EAEZ,CACL,kBACA,kBACA,WACF,CACF",
+  "names": []
+}

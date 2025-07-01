@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/pages/index.ts"],
+  "sourcesContent": ["export { UnlockPage } from './UnlockPage/index';\n"],
+  "mappings": "uFAAA",
+  "names": []
+}

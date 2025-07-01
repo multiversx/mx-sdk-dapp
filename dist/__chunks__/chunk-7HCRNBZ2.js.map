@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock/index.tsx"],
+  "sourcesContent": ["import { TransactionActionCollection } from './components/TransactionActionCollection';\nimport { TransactionActionNft } from './components/TransactionActionNft';\nimport { TransactionActionToken } from './components/TransactionActionToken';\n\nexport const TransactionActionBlock = {\n  Collection: TransactionActionCollection,\n  Nft: TransactionActionNft,\n  Token: TransactionActionToken\n};\n"],
+  "mappings": "gKAAA,IAIO,GAAM,GAAyB,CACpC,WAAY,EACZ,IAAK,EACL,MAAO,CACT",
+  "names": []
+}

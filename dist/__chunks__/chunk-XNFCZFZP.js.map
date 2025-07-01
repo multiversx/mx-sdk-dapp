@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/isTokenTransfer.ts"],
+  "sourcesContent": ["export function isTokenTransfer({\n  tokenId,\n  erdLabel\n}: {\n  tokenId: string | undefined;\n  erdLabel: string;\n}) {\n  return Boolean(tokenId && tokenId !== erdLabel);\n}\n"],
+  "mappings": "+CAAO,WAAyB,CAC9B,UACA,YAIC,CACD,MAAO,SAAQ,GAAW,IAAY,CAAQ,CAChD,CARA",
+  "names": []
+}

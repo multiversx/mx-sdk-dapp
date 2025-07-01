@@ -1,0 +1,2 @@
+import{a as n}from"./chunk-3OCOE6GZ.js";import{a as i}from"./chunk-NKJDO5GI.js";import{m as e}from"./chunk-HBP5N4FR.js";e();import t from"react";var g=o=>{let{showModal:l}=i({visible:o.visible}),d=()=>{var a;(a=o.onClose)==null||a.call(o)};return t.createElement(n,{className:o.className,closeOnEscape:o.closeOnEscape,config:o.modalConfig,onHide:d,visible:l},o.children)};export{g as a};
+//# sourceMappingURL=chunk-RPRXCYLL.js.map

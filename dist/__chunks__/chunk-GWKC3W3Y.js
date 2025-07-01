@@ -1,0 +1,2 @@
+import{a as s}from"./chunk-ASTGED3W.js";import{c as m,d as i}from"./chunk-6LYEHBML.js";import{a as o}from"./chunk-ZXZXEDS2.js";import{i as n,m as e}from"./chunk-HBP5N4FR.js";e();import p from"react";var S=({type:r,message:a,styles:t})=>p.createElement("div",{className:t==null?void 0:t.transactionsStatusToastContent},p.createElement(s,{type:r}),a),l=o(S,{ssrStyles:()=>import("../components/TransactionStatusToast/transactionStatusToastStyles.js"),clientStyles:()=>(i(),n(m)).default});export{l as a};
+//# sourceMappingURL=chunk-GWKC3W3Y.js.map

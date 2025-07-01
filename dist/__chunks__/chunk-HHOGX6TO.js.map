@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/batch/getTransactionsStatus.ts"],
+  "sourcesContent": ["import { SignedTransactionType, TransactionServerStatusesEnum } from 'types';\n\nexport const getTransactionsStatus = ({\n  transactions,\n  hasUnrelatedTransactions\n}: {\n  transactions: SignedTransactionType[];\n  hasUnrelatedTransactions?: boolean;\n}) => {\n  const allTxFailed = transactions.every(\n    ({ status }) => status === TransactionServerStatusesEnum.fail\n  );\n\n  const someTxFailed = transactions.some(\n    ({ status }) => status === TransactionServerStatusesEnum.fail\n  );\n\n  const isPending = transactions.some(\n    ({ status }) => status === TransactionServerStatusesEnum.pending\n  );\n\n  const isSuccessful = transactions.every(\n    ({ status }) => status === TransactionServerStatusesEnum.success\n  );\n\n  const isIncompleteFailed =\n    hasUnrelatedTransactions &&\n    Boolean(!isPending && !allTxFailed && someTxFailed);\n\n  const isFailed = hasUnrelatedTransactions\n    ? isIncompleteFailed\n      ? false\n      : allTxFailed\n    : someTxFailed;\n\n  return { isPending, isSuccessful, isFailed, isIncompleteFailed };\n};\n"],
+  "mappings": "gFAAA,QAEO,GAAM,GAAwB,CAAC,CACpC,eACA,8BAII,CACJ,GAAM,GAAc,EAAa,MAC/B,CAAC,CAAE,YAAa,IAAW,MAC7B,EAEM,EAAe,EAAa,KAChC,CAAC,CAAE,YAAa,IAAW,MAC7B,EAEM,EAAY,EAAa,KAC7B,CAAC,CAAE,YAAa,IAAW,SAC7B,EAEM,EAAe,EAAa,MAChC,CAAC,CAAE,YAAa,IAAW,SAC7B,EAEM,EACJ,GACA,QAAQ,CAAC,GAAa,CAAC,GAAe,CAAY,EAQpD,MAAO,CAAE,YAAW,eAAc,SANjB,EACb,EACE,GACA,EACF,EAEwC,oBAAmB,CACjE",
+  "names": []
+}

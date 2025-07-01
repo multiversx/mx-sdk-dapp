@@ -1,0 +1,2 @@
+import{a as e,d as l}from"./chunk-2SDQY5CF.js";import{j as o,m as s}from"./chunk-HBP5N4FR.js";s();l();function g(w){return o(this,arguments,function*({address:t,walletUrl:n}){try{let r=yield e.getInstance().init(),i=e.getInstance().setAddress(t).setWalletUrl(n);if(r)return i;console.error("Could not initialise Cross Window Wallet provider")}catch(r){console.error("Unable to login to CrossWindowWalletProvider",r)}return null})}export{g as a};
+//# sourceMappingURL=chunk-P64EA6SQ.js.map

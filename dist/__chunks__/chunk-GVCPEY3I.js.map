@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/account.types.ts"],
+  "sourcesContent": ["export interface AssetType {\n  name: string;\n  description: string;\n  tags: string[];\n  iconPng?: string;\n  iconSvg?: string;\n}\n\nexport interface AccountType {\n  address: string;\n  balance: string;\n  nonce: number;\n  txCount: number;\n  scrCount: number;\n  claimableRewards: string;\n  code?: string;\n  username?: string;\n  shard?: number;\n  ownerAddress?: string;\n  developerReward?: string;\n  deployedAt?: number;\n  scamInfo?: ScamInfoType;\n  isUpgradeable?: boolean;\n  isReadable?: boolean;\n  isPayable?: boolean;\n  isPayableBySmartContract?: boolean;\n  assets?: AssetType;\n  isGuarded: boolean;\n  activeGuardianActivationEpoch?: number;\n  activeGuardianAddress?: string;\n  activeGuardianServiceUid?: string;\n  pendingGuardianActivationEpoch?: number;\n  pendingGuardianAddress?: string;\n  pendingGuardianServiceUid?: string;\n}\n\nexport interface ScamInfoType {\n  type: string;\n  info: string;\n}\n"],
+  "mappings": "+CAAA",
+  "names": []
+}

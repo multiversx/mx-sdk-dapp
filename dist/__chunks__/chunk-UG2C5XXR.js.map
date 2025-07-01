@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/economics/index.ts"],
+  "sourcesContent": ["export * from './useGetEgldPrice';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

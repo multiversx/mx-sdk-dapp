@@ -1,0 +1,1 @@
+{"version":3,"file":"batchTransactionsSelectors.d.ts","sourceRoot":"","sources":["../../../../src/reduxStore/selectors/batchTransactionsSelectors.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,SAAS,EAAE,MAAM,UAAU,CAAC;AAGrC,eAAO,MAAM,0BAA0B,UAAW,SAAS,wDAClC,CAAC;AAE1B,eAAO,MAAM,eAAe;;;;;;;;;;;;;;;EAU3B,CAAC"}

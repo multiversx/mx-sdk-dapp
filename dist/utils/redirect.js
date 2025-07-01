@@ -1,0 +1,2 @@
+"use strict";import{a,b,c}from"../__chunks__/chunk-TGDCWKZH.js";import"../__chunks__/chunk-UORIA4VW.js";import"../__chunks__/chunk-UGBEFOBM.js";import"../__chunks__/chunk-7XYHQ72T.js";import"../__chunks__/chunk-RY7YMBVF.js";import"../__chunks__/chunk-OWBHRN3S.js";import"../__chunks__/chunk-3HHAVSUJ.js";import"../__chunks__/chunk-HBP5N4FR.js";c();export{a as preventRedirects,b as safeRedirect};
+//# sourceMappingURL=redirect.js.map

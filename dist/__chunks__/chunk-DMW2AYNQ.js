@@ -1,0 +1,2 @@
+import{a as s,b as e,m as o}from"./chunk-HBP5N4FR.js";o();var b=r=>r?{timeout:parseInt(String(r))}:{},d=({sender:r,receiver:n,page:a=1,transactionSize:t=15,condition:m="should",withScResults:p=!0,after:u,before:T,search:c,status:g,withUsername:i})=>e(s({sender:r,receiver:n,condition:m,after:u,before:T,search:c,from:(a-1)*t},t>0?{size:t}:{}),{withScResults:p,withUsername:i,status:g});export{b as a,d as b};
+//# sourceMappingURL=chunk-DMW2AYNQ.js.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/transactions/getBatchTransactionsStatus.ts"],
+  "sourcesContent": ["import axios from 'axios';\nimport { TRANSACTIONS_BATCH } from 'apiCalls';\nimport { TIMEOUT } from 'constants/network';\nimport { networkSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\nimport { BatchTransactionsResponseType } from 'types';\n\nexport interface SendBatchTransactionsPropsType {\n  batchId: string;\n  address: string;\n}\n\nexport async function getBatchTransactionsStatus({\n  batchId,\n  address\n}: SendBatchTransactionsPropsType) {\n  const { apiAddress, apiTimeout } = networkSelector(store.getState());\n\n  const { data } = await axios.get<BatchTransactionsResponseType>(\n    `${apiAddress}/${TRANSACTIONS_BATCH}/${address}/${batchId}`,\n    {\n      timeout: Number(apiTimeout ?? TIMEOUT)\n    }\n  );\n  return data;\n}\n"],
+  "mappings": "gQAAA,yBAEA,IACA,IACA,IAQA,WAAiD,EAGd,mCAHc,CAC/C,UACA,WACiC,CACjC,GAAM,CAAE,aAAY,cAAe,EAAgB,EAAM,SAAS,CAAC,EAE7D,CAAE,QAAS,KAAM,GAAM,IAC3B,GAAG,KAAc,KAAsB,KAAW,IAClD,CACE,QAAS,OAAO,UAAc,CAAO,CACvC,CACF,EACA,MAAO,EACT",
+  "names": []
+}

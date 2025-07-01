@@ -1,0 +1,1 @@
+{"version":3,"file":"AxiosInterceptor.d.ts","sourceRoot":"","sources":["../../../../src/wrappers/AxiosInterceptorContext/components/AxiosInterceptor.tsx"],"names":[],"mappings":"AAAA,OAAc,EAAU,iBAAiB,EAAW,MAAM,OAAO,CAAC;AAIlE,MAAM,WAAW,oBAAqB,SAAQ,iBAAiB;IAC7D,oBAAoB,EAAE,MAAM,EAAE,CAAC;CAChC;AAED,eAAO,MAAM,gBAAgB,uCAG1B,oBAAoB,gBA0CtB,CAAC"}

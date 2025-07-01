@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/getAreTransactionsOnSameShard.ts"],
+  "sourcesContent": ["import { isCrossShardTransaction } from 'services/transactions/isCrossShardTransaction';\nimport { SignedTransactionType } from 'types';\nimport { getAddressFromDataField } from 'utils/smartContracts';\n\nexport const getAreTransactionsOnSameShard = (\n  transactions?: SignedTransactionType[],\n  accountShard = 1\n): boolean => {\n  if (!transactions?.length) {\n    return true;\n  }\n\n  return transactions.reduce(\n    (prevTxIsSameShard: boolean, { receiver, data }: SignedTransactionType) => {\n      const receiverAddress = getAddressFromDataField({\n        receiver,\n        data: data ?? ''\n      });\n      if (receiverAddress == null) {\n        return prevTxIsSameShard;\n      }\n      return (\n        prevTxIsSameShard &&\n        isCrossShardTransaction({\n          receiverAddress,\n          senderShard: accountShard\n        })\n      );\n    },\n    true\n  );\n};\n"],
+  "mappings": "6IAAA,GAIa,GAJb,iBAEA,IAEO,AAAM,EAAgC,CAC3C,EACA,EAAe,IAEV,WAAc,OAIZ,EAAa,OAClB,CAAC,EAA4B,CAAE,WAAU,UAAkC,CACzE,GAAM,GAAkB,EAAwB,CAC9C,WACA,KAAM,UAAQ,EAChB,CAAC,EACD,MAAI,IAAmB,KACd,EAGP,GACA,EAAwB,CACtB,kBACA,YAAa,CACf,CAAC,CAEL,EACA,EACF,EArBS",
+  "names": []
+}

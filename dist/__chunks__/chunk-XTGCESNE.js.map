@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/network/getChainID.ts"],
+  "sourcesContent": ["import { chainIDSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport function getChainID() {\n  return chainIDSelector(store.getState());\n}\n"],
+  "mappings": "uKAAA,QACA,IAEO,YAAsB,CAC3B,MAAO,GAAgB,EAAM,SAAS,CAAC,CACzC",
+  "names": []
+}

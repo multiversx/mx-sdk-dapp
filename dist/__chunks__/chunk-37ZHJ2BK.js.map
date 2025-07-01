@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/nativeAuth/methods/index.ts"],
+  "sourcesContent": ["export * from './getTokenExpiration';\nexport * from './getNativeAuthConfig';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/getHasNativeAuth/getHasNativeAuth.ts"],
+  "sourcesContent": ["import isObject from 'lodash/isObject';\nimport { safeWindow } from 'lib/sdkDappUtils';\nimport { OnProviderLoginType } from '../../types/login.types';\n\nconst isDevelopment = safeWindow?.location?.origin?.includes('localhost');\n\nexport const getHasNativeAuth = (\n  nativeAuth: OnProviderLoginType['nativeAuth']\n) => {\n  const hasNativeAuth = isObject(nativeAuth);\n\n  if (!hasNativeAuth) {\n    return Boolean(nativeAuth);\n  }\n\n  const nativeAuthClone = { ...nativeAuth };\n  const preventWalletConnectV2Signing = Boolean(isDevelopment);\n\n  if (preventWalletConnectV2Signing) {\n    delete nativeAuthClone.origin;\n  }\n\n  const isNativeAuthConfigured = Object.keys(nativeAuthClone).length > 0;\n  return isNativeAuthConfigured;\n};\n"],
+  "mappings": "6IAAA,UAAqB,OACrB,IADA,UAIM,EAAgB,2BAAY,WAAZ,cAAsB,SAAtB,cAA8B,SAAS,aAEhD,EAAmB,AAC9B,GACG,CAGH,GAAI,CAFkB,cAAS,CAAU,EAGvC,MAAO,SAAQ,CAAU,EAG3B,GAAM,GAAkB,KAAK,GAG7B,MAAI,AAFkC,SAAQ,CAAa,GAGzD,MAAO,GAAgB,OAGM,OAAO,KAAK,CAAe,EAAE,OAAS,CAEvE",
+  "names": []
+}

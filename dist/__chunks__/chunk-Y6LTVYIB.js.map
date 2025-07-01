@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithExtensionModal/index.tsx"],
+  "sourcesContent": ["export * from './SignWithExtensionModal';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

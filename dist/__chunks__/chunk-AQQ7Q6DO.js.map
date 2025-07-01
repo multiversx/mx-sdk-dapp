@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/helpers/esdtNftUnwrapper.ts"],
+  "sourcesContent": ["import {\n  TransactionActionType,\n  UnwrapperType,\n  TransactionActionsEnum\n} from 'types/serverTransactions.types';\n\nexport const esdtNftUnwrapper = (\n  action: TransactionActionType\n): Array<string | UnwrapperType> => {\n  switch (action.name) {\n    case TransactionActionsEnum.transfer:\n      return [\n        'Transfer',\n        { token: action.arguments?.transfers },\n        'to',\n        { address: action.arguments?.receiver }\n      ];\n\n    default:\n      return [];\n  }\n};\n"],
+  "mappings": "uFAAA,GAMa,GANb,iBAMO,AAAM,EAAmB,AAC9B,GACkC,CARpC,QASE,OAAQ,EAAO,UACR,WACH,MAAO,CACL,WACA,CAAE,MAAO,KAAO,YAAP,cAAkB,SAAU,EACrC,KACA,CAAE,QAAS,KAAO,YAAP,cAAkB,QAAS,CACxC,UAGA,MAAO,CAAC,EAEd",
+  "names": []
+}

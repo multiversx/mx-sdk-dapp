@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/TransactionsTracker/TransactionTracker.tsx"],
+  "sourcesContent": ["import { useBatchTransactionsTracker } from 'hooks/transactions/batch/tracker/useBatchTransactionsTracker';\nimport { useTransactionsTracker } from 'hooks/transactions/useTransactionsTracker';\nimport { TransactionsTrackerType } from 'types/transactionsTracker.types';\n\nexport function TransactionsTracker(props: TransactionsTrackerType) {\n  useTransactionsTracker(props);\n  useBatchTransactionsTracker(props);\n  return null;\n}\n"],
+  "mappings": "wHAAA,IAIO,WAA6B,EAAgC,CAClE,SAAuB,CAAK,EAC5B,EAA4B,CAAK,EAC1B,IACT",
+  "names": []
+}

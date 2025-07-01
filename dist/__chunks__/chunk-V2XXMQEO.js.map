@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/constants/extension.constants.ts"],
+  "sourcesContent": ["export const FIREFOX_ADDON_LINK =\n  'https://addons.mozilla.org/en-US/firefox/addon/multiversx-defi-wallet';\n\nexport const CHROME_EXTENSION_LINK =\n  'https://chrome.google.com/webstore/detail/multiversx-defi-wallet/dngmlblcodfobpdpecaadgfbcggfjfnm';\n\nexport const FIREFOX_METAMASK_ADDON_LINK =\n  'https://addons.mozilla.org/en-US/firefox/addon/metamask-flask/';\n\nexport const CHROME_METAMASK_EXTENSION_LINK =\n  'https://chromewebstore.google.com/detail/metamask-flask-developmen/ljfoeinjpaedjfecbmggjgodbgkmjkjk';\n"],
+  "mappings": "+CAAA,GAAa,GAGA,EAGA,EAGA,EATb,aAAO,AAAM,EACX,wEAEW,EACX,oGAEW,EACX,iEAEW,EACX",
+  "names": []
+}

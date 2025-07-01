@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/TransactionSender/utils/handleSendTransactionsErrors.ts"],
+  "sourcesContent": ["import { updateSignedTransactions } from 'reduxStore/slices';\nimport { store } from 'reduxStore/store';\nimport { TransactionBatchStatusesEnum } from 'types';\n\nexport const handleSendTransactionsErrors = ({\n  errorMessage,\n  sessionId,\n  clearSignInfo\n}: {\n  errorMessage: string;\n  sessionId: string;\n  clearSignInfo?: () => void;\n}) => {\n  console.error('Unable to send transactions', errorMessage);\n  store.dispatch(\n    updateSignedTransactions({\n      sessionId,\n      status: TransactionBatchStatusesEnum.fail,\n      errorMessage\n    })\n  );\n  clearSignInfo?.();\n};\n"],
+  "mappings": "qMAAA,QACA,IACA,IAEO,GAAM,GAA+B,CAAC,CAC3C,eACA,YACA,mBAKI,CACJ,QAAQ,MAAM,8BAA+B,CAAY,EACzD,EAAM,SACJ,EAAyB,CACvB,YACA,OAAQ,OACR,cACF,CAAC,CACH,EACA,YACF",
+  "names": []
+}

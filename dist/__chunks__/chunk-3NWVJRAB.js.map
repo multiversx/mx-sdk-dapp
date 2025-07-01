@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoMiniblock/index.tsx"],
+  "sourcesContent": ["export * from './TransactionInfoMiniblock';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

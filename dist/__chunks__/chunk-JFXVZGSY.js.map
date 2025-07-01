@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/buildUrlParams.ts"],
+  "sourcesContent": ["export function buildUrlParams(\n  search: string,\n  urlParams: {\n    [key: string]: string;\n  }\n) {\n  const urlSearchParams: any = new URLSearchParams(search);\n  const params = Object.fromEntries(urlSearchParams);\n  const nextUrlParams = new URLSearchParams({\n    ...params,\n    ...urlParams\n  }).toString();\n  return { nextUrlParams, params };\n}\n"],
+  "mappings": "+CAAA,IAAO,WACL,EACA,EAGA,CACA,GAAM,GAAuB,GAAI,iBAAgB,CAAM,EACjD,EAAS,OAAO,YAAY,CAAe,EAKjD,MAAO,CAAE,cAJa,GAAI,iBAAgB,OACrC,GACA,EACJ,EAAE,SAAS,EACY,QAAO,CACjC",
+  "names": []
+}

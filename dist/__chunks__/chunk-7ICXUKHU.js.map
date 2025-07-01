@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/useGetFailedTransactions.ts"],
+  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { failedTransactionsSelector } from 'reduxStore/selectors';\nimport { SignedTransactionsType, SignedTransactionsBodyType } from 'types';\n\nexport interface useGetFailedTransactionsReturnType {\n  failedTransactions: SignedTransactionsType;\n  failedTransactionsArray: [string, SignedTransactionsBodyType][];\n  hasFailedTransactions: boolean;\n}\n\n//this is a hook to be able to take advantage of memoization offered by useSelector\nexport function useGetFailedTransactions(): useGetFailedTransactionsReturnType {\n  const failedTransactions = useSelector(failedTransactionsSelector);\n  const failedTransactionsArray: [string, SignedTransactionsBodyType][] =\n    Object.entries(failedTransactions);\n  const hasFailedTransactions = failedTransactionsArray?.length > 0;\n  return {\n    failedTransactions,\n    failedTransactionsArray,\n    hasFailedTransactions\n  };\n}\n"],
+  "mappings": "+HAAA,IACA,IAUO,YAAwE,CAC7E,GAAM,GAAqB,EAAY,CAA0B,EAC3D,EACJ,OAAO,QAAQ,CAAkB,EAC7B,EAAwB,kBAAyB,QAAS,EAChE,MAAO,CACL,qBACA,0BACA,uBACF,CACF",
+  "names": []
+}

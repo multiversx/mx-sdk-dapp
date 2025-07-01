@@ -1,0 +1,2 @@
+import{t as o,x as p}from"./chunk-UDZUNVED.js";import{e as u,m as l}from"./chunk-HBP5N4FR.js";import c from"bignumber.js";var I,g=u(()=>{l();p();I=e=>{if(isNaN(e)||e==null||String(e).includes("Infinity"))return!1;let[r,t]=e.split("."),s=c.clone();if(t){let a=t.split("").every(f=>!isNaN(parseInt(f)));for(s.set({DECIMAL_PLACES:a?t.length:c.config().DECIMAL_PLACES});t.charAt(t.length-1)===o;)t=t.slice(0,-1)}let i=t?[r,t].join("."):r,n=s(i);return n.toString(10)===i&&n.comparedTo(0)>=0}});export{I as a,g as b};
+//# sourceMappingURL=chunk-3ZQDEH2Z.js.map

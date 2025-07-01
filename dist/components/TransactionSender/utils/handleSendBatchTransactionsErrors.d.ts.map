@@ -1,0 +1,1 @@
+{"version":3,"file":"handleSendBatchTransactionsErrors.d.ts","sourceRoot":"","sources":["../../../../src/components/TransactionSender/utils/handleSendBatchTransactionsErrors.ts"],"names":[],"mappings":"AAEA,OAAO,EACL,qBAAqB,EAGtB,MAAM,OAAO,CAAC;AAEf,eAAO,MAAM,iCAAiC;kBAM9B,MAAM;eACT,MAAM;kBACH,qBAAqB,EAAE;2BACf,IAAI;UAe3B,CAAC"}

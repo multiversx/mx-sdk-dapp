@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/reduxStore/persistReduxStore.ts"],
+  "sourcesContent": ["import { persistStore } from 'redux-persist';\n\nexport default function persistReduxStore(store: any) {\n  return persistStore(store);\n}\n"],
+  "mappings": "sDAAA,2EAEe,WAA2B,EAAY,CACpD,MAAO,GAAa,CAAK,CAC3B,CAJA",
+  "names": []
+}

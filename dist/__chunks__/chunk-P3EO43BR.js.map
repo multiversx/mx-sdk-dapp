@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/removeSearchParamsFromUrl.ts"],
+  "sourcesContent": ["import qs from 'qs';\nimport { clearNavigationHistory } from 'utils/clearNavigationHistory';\nimport { isWindowAvailable } from 'utils/isWindowAvailable';\nimport { parseNavigationParams } from 'utils/parseNavigationParams';\n\ninterface RemoveSearchParamsFromUrlParamsType {\n  removeParams: string[];\n  search?: string;\n}\n\nexport const removeSearchParamsFromUrl = ({\n  removeParams,\n  search\n}: RemoveSearchParamsFromUrlParamsType) => {\n  const windowSearch = isWindowAvailable() ? window.location.search : '';\n  const defaultSearch = search ?? windowSearch;\n\n  if (!defaultSearch) {\n    return {};\n  }\n\n  const searchData = qs.parse(defaultSearch.replace('?', ''));\n\n  const preserveParams = Object.keys(searchData).filter(\n    (key) => !removeParams.includes(key)\n  );\n\n  const { remainingParams } = parseNavigationParams(preserveParams, {\n    search,\n    removeParams\n  });\n\n  clearNavigationHistory(remainingParams);\n\n  return remainingParams;\n};\n"],
+  "mappings": "4LAAA,qBAUa,GAVb,aACA,IACA,IACA,IAOO,AAAM,EAA4B,CAAC,CACxC,eACA,YACyC,CACzC,GAAM,GAAe,EAAkB,EAAI,OAAO,SAAS,OAAS,GAC9D,EAAgB,UAAU,EAEhC,GAAI,CAAC,EACH,MAAO,CAAC,EAGV,GAAM,GAAa,EAAG,MAAM,EAAc,QAAQ,IAAK,EAAE,CAAC,EAEpD,EAAiB,OAAO,KAAK,CAAU,EAAE,OAC7C,AAAC,GAAQ,CAAC,EAAa,SAAS,CAAG,CACrC,EAEM,CAAE,mBAAoB,EAAsB,EAAgB,CAChE,SACA,cACF,CAAC,EAED,SAAuB,CAAe,EAE/B,CACT",
+  "names": []
+}

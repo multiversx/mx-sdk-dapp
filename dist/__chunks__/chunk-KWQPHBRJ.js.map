@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getOperationsMessages.ts"],
+  "sourcesContent": ["import { ServerTransactionType } from 'types/serverTransactions.types';\n\nexport function getOperationsMessages(transaction: ServerTransactionType) {\n  return (\n    transaction?.operations\n      ?.map((operation) => operation.message)\n      .filter((messages): messages is string => Boolean(messages)) ?? []\n  );\n}\n"],
+  "mappings": "+CAEO,WAA+B,EAAoC,CAF1E,QAGE,MACE,uBAAa,aAAb,cACI,IAAI,AAAC,GAAc,EAAU,SAC9B,OAAO,AAAC,GAAiC,QAAQ,CAAQ,KAF5D,OAEkE,CAAC,CAEvE,CARA",
+  "names": []
+}

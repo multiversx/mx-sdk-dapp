@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/batch/tracker/useCheckBatch.ts"],
+  "sourcesContent": ["import { useCallback } from 'react';\nimport { useDispatch } from 'reduxStore/DappProviderContext';\nimport { updateBatchTransactions } from 'reduxStore/slices';\nimport { useResolveBatchStatusResponse } from '../useResolveBatchStatusResponse';\n\nexport function useCheckBatch() {\n  const dispatch = useDispatch();\n  const resolveBatchStatusResponse = useResolveBatchStatusResponse();\n\n  return useCallback(\n    async ({ batchId }: { batchId: string }) => {\n      const batchData = await resolveBatchStatusResponse({\n        batchId\n      });\n\n      if (batchData.statusResponse) {\n        dispatch(updateBatchTransactions(batchData.statusResponse));\n      }\n\n      return batchData;\n    },\n    [dispatch, resolveBatchStatusResponse]\n  );\n}\n"],
+  "mappings": "0MAAA,wCAEA,IAGO,YAAyB,CAC9B,GAAM,GAAW,EAAY,EACvB,EAA6B,EAA8B,EAEjE,MAAO,GACL,AAAO,GAAqC,QAArC,GAAqC,UAArC,CAAE,WAAmC,CAC1C,GAAM,GAAY,KAAM,GAA2B,CACjD,SACF,CAAC,EAED,MAAI,GAAU,gBACZ,EAAS,EAAwB,EAAU,cAAc,CAAC,EAGrD,CACT,GACA,CAAC,EAAU,CAA0B,CACvC,CACF",
+  "names": []
+}

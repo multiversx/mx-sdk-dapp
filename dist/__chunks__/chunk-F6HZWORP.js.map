@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsToastList/components/TransactionToast/components/TransactionToastWrapper.tsx"],
+  "sourcesContent": ["import React, { ReactNode } from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\n\nexport interface TransactionToastWrapperPropsType {\n  className?: string;\n  children?: ReactNode;\n  id?: string;\n}\n\nconst TransactionToastWrapperComponent = ({\n  className = 'dapp-transaction-toast-wrapper',\n  children,\n  id,\n  styles: wrapperStyles\n}: TransactionToastWrapperPropsType & WithStylesImportType) => (\n  <div\n    id={id}\n    className={classNames(\n      wrapperStyles?.toasts,\n      wrapperStyles?.toastWrapper,\n      className\n    )}\n  >\n    {children}\n  </div>\n);\n\nexport const TransactionToastWrapper = withStyles(\n  TransactionToastWrapperComponent,\n  {\n    ssrStyles: () =>\n      import('UI/TransactionsToastList/transactionsToastList.styles.scss'),\n    clientStyles: () =>\n      require('UI/TransactionsToastList/transactionsToastList.styles.scss')\n        .default\n  }\n);\n"],
+  "mappings": "iIAAA,yBACA,0BASA,GAAM,GAAmC,CAAC,CACxC,YAAY,iCACZ,WACA,KACA,OAAQ,KAER,gBAAC,OACC,GAAI,EACJ,UAAW,EACT,iBAAe,OACf,iBAAe,aACf,CACF,GAEC,CACH,EAGW,EAA0B,EACrC,EACA,CACE,UAAW,IACT,OAAO,+DACT,aAAc,IACZ,WACG,OACP,CACF",
+  "names": []
+}

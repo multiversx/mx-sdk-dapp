@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionMethod.ts"],
+  "sourcesContent": ["import {\n  TransactionActionCategoryEnum,\n  TransactionActionsEnum,\n  ServerTransactionType\n} from 'types/serverTransactions.types';\n\nexport const getTransactionMethod = (transaction: ServerTransactionType) => {\n  let transactionAction = 'Transaction';\n  const transactionHasAction =\n    transaction.action?.name && transaction.action?.category;\n\n  if (transactionHasAction) {\n    if (\n      transaction.action?.category === TransactionActionCategoryEnum.esdtNft &&\n      transaction.action?.name === TransactionActionsEnum.transfer\n    ) {\n      transactionAction = 'Transaction';\n    } else if (transaction.action) {\n      transactionAction = transaction.action.name;\n    }\n\n    if (transaction.action?.arguments?.functionName) {\n      transactionAction = transaction.action.arguments.functionName;\n    }\n  }\n\n  return transactionAction;\n};\n"],
+  "mappings": "uFAAA,GAMa,GANb,iBAMO,AAAM,EAAuB,AAAC,GAAuC,CAN5E,gBAOE,GAAI,GAAoB,cAIxB,MAAI,AAFF,MAAY,SAAZ,cAAoB,OAAQ,MAAY,SAAZ,cAAoB,WAGhD,CACE,MAAY,SAAZ,cAAoB,YAAa,WACjC,MAAY,SAAZ,cAAoB,QAAS,WAE7B,EAAoB,cACX,EAAY,QACrB,GAAoB,EAAY,OAAO,MAGrC,QAAY,SAAZ,cAAoB,YAApB,QAA+B,cACjC,GAAoB,EAAY,OAAO,UAAU,eAI9C,CACT",
+  "names": []
+}

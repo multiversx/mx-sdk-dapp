@@ -1,0 +1,1 @@
+{"version":3,"file":"StatusMessageComponent.d.ts","sourceRoot":"","sources":["../../../../src/components/TransactionStatusToast/StatusMessageComponent.tsx"],"names":[],"mappings":";AAGA,OAAO,EAAE,cAAc,EAAE,MAAM,gCAAgC,CAAC;AAEhE,MAAM,WAAW,+BAA+B;IAC9C,IAAI,EAAE,cAAc,CAAC;IACrB,OAAO,CAAC,EAAE,MAAM,CAAC;CAClB;AAaD,eAAO,MAAM,sBAAsB,yDAQjC,CAAC"}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/economics/useGetEconomicsInfoFromApi.ts"],
+  "sourcesContent": ["import { ECONOMICS_ENDPOINT } from '../endpoints';\nimport { useApiFetch } from '../utils';\n\nexport const useGetEconomicsInfoFromApi = () =>\n  useApiFetch({ apiEndpoint: ECONOMICS_ENDPOINT });\n"],
+  "mappings": "uKAAA,QACA,IAEO,GAAM,GAA6B,IACxC,EAAY,CAAE,YAAa,CAAmB,CAAC",
+  "names": []
+}

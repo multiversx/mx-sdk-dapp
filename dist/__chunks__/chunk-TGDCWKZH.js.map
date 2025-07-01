@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/redirect.ts"],
+  "sourcesContent": ["import { redirect } from './window';\n\nlet preventRedirect = false;\n\nexport const preventRedirects = (shouldPreventRedirect = true) => {\n  preventRedirect = shouldPreventRedirect;\n};\n\nexport const safeRedirect = ({\n  timeout = 0,\n  url\n}: {\n  timeout?: number;\n  url: string;\n}) => {\n  if (!preventRedirect) {\n    setTimeout(() => {\n      if (!window) {\n        return;\n      }\n\n      return redirect(url);\n    }, timeout);\n  }\n};\n"],
+  "mappings": "+HAAA,GAEI,GAES,EAIA,EARb,iBAEA,AAAI,EAAkB,GAET,EAAmB,CAAC,EAAwB,KAAS,CAChE,EAAkB,CACpB,EAEa,EAAe,CAAC,CAC3B,UAAU,EACV,SAII,CACJ,AAAK,GACH,WAAW,IAAM,CACf,GAAI,EAAC,OAIL,MAAO,GAAS,CAAG,CACrB,EAAG,CAAO,CAEd",
+  "names": []
+}

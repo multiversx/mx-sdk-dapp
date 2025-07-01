@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getOperationDirection.ts"],
+  "sourcesContent": ["import { TransactionDirectionEnum } from 'types/serverTransactions.types';\n\nimport { WithOperationType } from '../../../UI/types';\n\nexport const getOperationDirection = ({\n  operation,\n  address\n}: { address: string } & WithOperationType) => {\n  const directionOut = address === operation.sender;\n  const directionIn = address === operation.receiver;\n  const directionSelf = directionOut && directionIn;\n  const directionInternal = !directionSelf;\n\n  let direction = '';\n  switch (true) {\n    case directionOut:\n      direction = TransactionDirectionEnum.OUT;\n      break;\n    case directionIn:\n      direction = TransactionDirectionEnum.IN;\n      break;\n    case directionSelf:\n      direction = TransactionDirectionEnum.SELF;\n      break;\n    case directionInternal:\n      direction = TransactionDirectionEnum.INTERNAL;\n      break;\n  }\n\n  return {\n    direction\n  };\n};\n"],
+  "mappings": "uFAAA,GAIa,GAJb,iBAIO,AAAM,EAAwB,CAAC,CACpC,YACA,aAC6C,CAC7C,GAAM,GAAe,IAAY,EAAU,OACrC,EAAc,IAAY,EAAU,SACpC,EAAgB,GAAgB,EAChC,EAAoB,CAAC,EAEvB,EAAY,GAChB,OAAQ,QACD,GACH,EAAY,MACZ,UACG,GACH,EAAY,KACZ,UACG,GACH,EAAY,OACZ,UACG,GACH,EAAY,WACZ,MAGJ,MAAO,CACL,WACF,CACF",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/FormatAmount/formatAmount.types.ts"],
+  "sourcesContent": ["import { WithClassnameType } from '../types/withClassname.types';\n\nexport interface FormatAmountPropsType extends WithClassnameType {\n  value: string;\n  showLastNonZeroDecimal?: boolean;\n  showLabel?: boolean;\n  token?: string;\n  digits?: number;\n  decimals?: number;\n  egldLabel?: string;\n  'data-testid'?: string;\n}\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

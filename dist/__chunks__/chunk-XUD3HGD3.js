@@ -1,0 +1,2 @@
+import{a as s}from"./chunk-PVNL3U3S.js";import{a as d}from"./chunk-OPT3JYNI.js";import{d as t}from"./chunk-EOZJRV5E.js";import{a as n,d as a}from"./chunk-2SDQY5CF.js";import{m as r}from"./chunk-HBP5N4FR.js";r();a();d();var I=e=>(Object.values(t).forEach(o=>{if(o!==(e==null?void 0:e.skipLoginMethod))switch(o){case"crossWindow":{let i=n.getInstance();i.isInitialized()&&i.dispose();break}case"iframe":{let i=s.getInstance();i.isInitialized()&&i.dispose();break}default:break}}),null);export{I as a};
+//# sourceMappingURL=chunk-XUD3HGD3.js.map

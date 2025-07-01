@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/index.ts"],
+  "sourcesContent": ["export * from './SignStepBody';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

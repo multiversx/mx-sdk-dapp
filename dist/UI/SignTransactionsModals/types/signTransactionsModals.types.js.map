@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/UI/SignTransactionsModals/types/signTransactionsModals.types.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\n\nimport { LoginMethodsEnum, SignModalPropsType } from 'types';\n\nexport interface SignPropsType {\n  handleClose: () => void;\n  error: string | null;\n  sessionId?: string;\n  transactions: Transaction[];\n  providerType: LoginMethodsEnum;\n  callbackRoute: string;\n  className?: string;\n  verifyReceiverScam?: boolean;\n  isGuarded?: boolean;\n  GuardianScreen?: SignModalPropsType['GuardianScreen'];\n}\n\nexport type ScreenType = (signProps: SignPropsType) => JSX.Element;\n\nexport interface CustomConfirmScreensType {\n  Ledger?: ScreenType;\n  Extension?: ScreenType;\n  Passkey?: ScreenType;\n  Metamask?: ScreenType;\n  Opera?: ScreenType;\n  CrossWindow?: ScreenType;\n  WalletConnect?: ScreenType;\n  Wallet?: ScreenType;\n  Extra?: ScreenType;\n  Iframe?: ScreenType;\n}\n"],
+  "mappings": "uEAAA",
+  "names": []
+}

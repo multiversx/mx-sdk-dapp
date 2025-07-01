@@ -1,0 +1,2 @@
+import{a}from"./chunk-5SHUFNSU.js";import{x as i}from"./chunk-UDZUNVED.js";import{g as m}from"./chunk-XXEKL2DH.js";import{a as e,b as t,m as r}from"./chunk-HBP5N4FR.js";r();i();import l from"react";var n=!1,D=o=>{n||(console.warn('!!! Be aware !!! The "Denominate" component is deprecated. Please use "FormatAmount" instead.'),n=!0);let s=o.egldLabel||m,p=t(e({},o),{egldLabel:s});return l.createElement(a,e({},p))};export{D as a};
+//# sourceMappingURL=chunk-RIHJ7QE4.js.map

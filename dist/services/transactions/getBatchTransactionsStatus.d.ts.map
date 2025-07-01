@@ -1,0 +1,1 @@
+{"version":3,"file":"getBatchTransactionsStatus.d.ts","sourceRoot":"","sources":["../../../src/services/transactions/getBatchTransactionsStatus.ts"],"names":[],"mappings":"AAKA,OAAO,EAAE,6BAA6B,EAAE,MAAM,OAAO,CAAC;AAEtD,MAAM,WAAW,8BAA8B;IAC7C,OAAO,EAAE,MAAM,CAAC;IAChB,OAAO,EAAE,MAAM,CAAC;CACjB;AAED,wBAAsB,0BAA0B,CAAC,EAC/C,OAAO,EACP,OAAO,EACR,EAAE,8BAA8B,0CAUhC"}

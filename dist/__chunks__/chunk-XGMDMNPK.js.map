@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/account/getAccountBalance.tsx"],
+  "sourcesContent": ["import { accountSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\nimport { getAccount } from './getAccount';\n\nexport async function getAccountBalance(address?: string) {\n  let accountAddress = address;\n  if (accountAddress == null) {\n    const account = accountSelector(store.getState());\n    accountAddress = account.address;\n  }\n  const account = await getAccount(accountAddress);\n  if (account == null) {\n    throw 'Could not read account, user not logged in';\n  }\n  return account?.balance;\n}\n"],
+  "mappings": "mNAAA,QACA,IACA,IAEA,WAAwC,EAAkB,gCACxD,GAAI,GAAiB,EACrB,AAAI,GAAkB,MAEpB,GAAiB,AADD,EAAgB,EAAM,SAAS,CAAC,EACvB,SAE3B,GAAM,GAAU,KAAM,GAAW,CAAc,EAC/C,GAAI,GAAW,KACb,KAAM,6CAER,MAAO,kBAAS,OAClB",
+  "names": []
+}

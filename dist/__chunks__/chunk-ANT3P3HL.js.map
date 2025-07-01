@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/helpers/useRemoveCustomToast.ts"],
+  "sourcesContent": ["import { useEffect } from 'react';\nimport { CustomToastPropsType } from '../customToast.types';\n\ninterface UseRemoveCustomToastType {\n  duration: CustomToastPropsType['duration'];\n  onDelete: CustomToastPropsType['onDelete'];\n}\n\nexport const useRemoveCustomToast = ({\n  duration,\n  onDelete\n}: UseRemoveCustomToastType) => {\n  useEffect(() => {\n    let timeout: NodeJS.Timeout | undefined;\n    if (duration) {\n      timeout = setTimeout(onDelete, duration);\n    }\n    return () => {\n      clearTimeout(timeout);\n    };\n  }, [duration]);\n};\n"],
+  "mappings": "wCAAA,sCAQO,GAAM,GAAuB,CAAC,CACnC,WACA,cAC8B,CAC9B,EAAU,IAAM,CACd,GAAI,GACJ,MAAI,IACF,GAAU,WAAW,EAAU,CAAQ,GAElC,IAAM,CACX,aAAa,CAAO,CACtB,CACF,EAAG,CAAC,CAAQ,CAAC,CACf",
+  "names": []
+}

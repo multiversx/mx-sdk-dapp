@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/platform/index.ts"],
+  "sourcesContent": ["export * from './detectCurrentPlatform';\nexport * from './getIsExtensionAvailable';\nexport * from './getIsMetamaskAvailable';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

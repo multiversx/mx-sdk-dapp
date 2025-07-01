@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/index.tsx"],
+  "sourcesContent": ["export * from './SignWithDeviceModal';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

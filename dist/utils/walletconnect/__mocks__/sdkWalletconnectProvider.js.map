@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/utils/walletconnect/__mocks__/sdkWalletconnectProvider.ts"],
+  "sourcesContent": ["import { EmptyProvider } from 'providers';\n\ntype SessionEventTypes = any;\ntype PairingTypes = any;\ntype EngineTypes = any;\nconst WalletConnectMethodsEnum = {};\nconst WalletConnectOptionalMethodsEnum = {};\nconst WalletConnectV2Provider = EmptyProvider;\n\nexport {\n  EngineTypes,\n  PairingTypes,\n  SessionEventTypes,\n  WalletConnectMethodsEnum,\n  WalletConnectOptionalMethodsEnum,\n  WalletConnectV2Provider\n};\n"],
+  "mappings": "u7CAAA,IAKA,GAAM,GAA2B,CAAC,EAC5B,EAAmC,CAAC,EACpC,EAA0B",
+  "names": []
+}

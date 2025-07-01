@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/DataField/components/Linkified/utils.ts"],
+  "sourcesContent": ["import * as linkify from 'linkifyjs';\n\nconst protocolRegex = /^((file:\\/\\/\\/)|(https?:|ftps?:)\\/\\/|(mailto:))/i;\n\nconst hasProtocol = (input: string) => protocolRegex.test(input);\n\nexport const getProtocol = (input: string): string => {\n  if (hasProtocol(input)) return '';\n\n  return linkify.find(input).some((link) => link.type === 'email')\n    ? 'mailto:'\n    : 'http://';\n};\n\nexport const truncateText = (input: string, maxLength: number): string => {\n  if (process.env.NODE_ENV !== 'production') {\n    if (maxLength <= 0) {\n      throw new Error('\u2693\uFE0F maxLength should be positive number');\n    }\n  }\n\n  return input.length > maxLength ? input.substring(0, maxLength) + '\u2026' : input;\n};\n"],
+  "mappings": "wCAAA,gCAEA,GAAM,GAAgB,mDAEhB,EAAc,AAAC,GAAkB,EAAc,KAAK,CAAK,EAElD,EAAc,AAAC,GACtB,EAAY,CAAK,EAAU,GAExB,AAAQ,OAAK,CAAK,EAAE,KAAK,AAAC,GAAS,EAAK,OAAS,OAAO,EAC3D,UACA,UAGO,EAAe,CAAC,EAAe,IAOnC,EAAM,OAAS,EAAY,EAAM,UAAU,EAAG,CAAS,EAAI,SAAM",
+  "names": []
+}

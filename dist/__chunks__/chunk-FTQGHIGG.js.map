@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/__mocks__/data/dappConfig.ts"],
+  "sourcesContent": ["export const dappConfig = {\n  id: 'devnet',\n  name: 'Devnet',\n  egldLabel: 'xEGLD',\n  decimals: '4',\n  egldDenomination: '18',\n  gasPerDataByte: '1500',\n  apiTimeout: '4000',\n  walletConnectDeepLink:\n    'https://maiar.page.link/?apn=com.elrond.maiar.wallet&isi=1519405832&ibi=com.elrond.maiar.wallet&link=https://xportal.com/',\n  walletConnectBridgeAddresses: ['https://bridge.walletconnect.org'],\n  walletAddress: 'https://devnet-wallet.multiversx.com',\n  apiAddress: 'https://devnet-api.multiversx.com',\n  explorerAddress: 'http://devnet-explorer.multiversx.com',\n  chainId: 'D'\n};\n"],
+  "mappings": "wCAAA,IAAO,GAAM,GAAa,CACxB,GAAI,SACJ,KAAM,SACN,UAAW,QACX,SAAU,IACV,iBAAkB,KAClB,eAAgB,OAChB,WAAY,OACZ,sBACE,4HACF,6BAA8B,CAAC,kCAAkC,EACjE,cAAe,uCACf,WAAY,oCACZ,gBAAiB,wCACjB,QAAS,GACX",
+  "names": []
+}

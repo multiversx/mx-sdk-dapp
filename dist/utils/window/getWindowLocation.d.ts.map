@@ -1,0 +1,1 @@
+{"version":3,"file":"getWindowLocation.d.ts","sourceRoot":"","sources":["../../../src/utils/window/getWindowLocation.ts"],"names":[],"mappings":"AAEA,aAAK,qBAAqB,GAAG;IAC3B,QAAQ,EAAE,MAAM,CAAC;IACjB,IAAI,EAAE,MAAM,CAAC;IACb,MAAM,EAAE,MAAM,CAAC;IACf,IAAI,EAAE,MAAM,CAAC;IACb,MAAM,EAAE,MAAM,CAAC;CAChB,CAAC;AAEF,eAAO,MAAM,iBAAiB,QAAO,qBAwBpC,CAAC"}

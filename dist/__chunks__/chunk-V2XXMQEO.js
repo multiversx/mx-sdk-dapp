@@ -1,0 +1,2 @@
+import{e as o,m as e}from"./chunk-HBP5N4FR.js";var s,m,f,g,t=o(()=>{e();s="https://addons.mozilla.org/en-US/firefox/addon/multiversx-defi-wallet",m="https://chrome.google.com/webstore/detail/multiversx-defi-wallet/dngmlblcodfobpdpecaadgfbcggfjfnm",f="https://addons.mozilla.org/en-US/firefox/addon/metamask-flask/",g="https://chromewebstore.google.com/detail/metamask-flask-developmen/ljfoeinjpaedjfecbmggjgodbgkmjkjk"});export{s as a,m as b,f as c,g as d,t as e};
+//# sourceMappingURL=chunk-V2XXMQEO.js.map

@@ -1,0 +1,2 @@
+import{c as p,d as h}from"./chunk-3H5JN4LM.js";import{a as r}from"./chunk-ZXZXEDS2.js";import{i,m as o}from"./chunk-HBP5N4FR.js";o();import m from"react";var n=({children:e,styles:t})=>m.createElement("div",{className:t==null?void 0:t.footer},e),T=r(n,{ssrStyles:()=>import("../UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.js"),clientStyles:()=>(h(),i(p)).default});export{T as a};
+//# sourceMappingURL=chunk-PDQPLX7X.js.map

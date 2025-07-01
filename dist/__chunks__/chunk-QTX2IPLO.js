@@ -1,0 +1,2 @@
+import{a as i}from"./chunk-YJFNSJWQ.js";import{a as m,b as l}from"./chunk-KFSX2APT.js";import{a,b as d}from"./chunk-NW3HMCKZ.js";import{d as s}from"./chunk-JUB6TCFX.js";import{a as c}from"./chunk-U6HTR5RX.js";import{s as N}from"./chunk-7OZRG2YY.js";import{a as e}from"./chunk-S6FCTAUC.js";import{j as n,m as r}from"./chunk-HBP5N4FR.js";r();N();d();l();var F=()=>{let o=s(e),{data:t}=c(o);return p=>n(void 0,null,function*(){let u=t!=null?t:yield a(o),f=m(u);return i({latestNonce:f,transactions:p})})};export{F as a};
+//# sourceMappingURL=chunk-QTX2IPLO.js.map

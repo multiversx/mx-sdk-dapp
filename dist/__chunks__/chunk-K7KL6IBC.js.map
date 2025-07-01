@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoScResults/TransactionInfoScResults.tsx"],
+  "sourcesContent": ["import React from 'react';\n\nimport {\n  WithClassnameType,\n  WithTransactionType\n} from '../../../../../UI/types';\nimport { DetailItem } from '../../DetailItem';\nimport { ScResultsList } from '../../ScResultsList/ScResultsList';\n\nexport const TransactionInfoScResults = ({\n  className,\n  transaction\n}: WithTransactionType & WithClassnameType) => {\n  const showResults = transaction.results && transaction.results?.length > 0;\n\n  if (!showResults) {\n    return null;\n  }\n\n  return (\n    <DetailItem className={className} title='Smart Contract Results'>\n      <ScResultsList results={transaction.results ?? []} />\n    </DetailItem>\n  );\n};\n"],
+  "mappings": "wHAAA,yBASO,GAAM,GAA2B,CAAC,CACvC,YACA,iBAC6C,CAZ/C,QAeE,MAFoB,GAAY,SAAW,MAAY,UAAZ,cAAqB,QAAS,EAOvE,gBAAC,GAAW,UAAW,EAAW,MAAM,0BACtC,gBAAC,GAAc,QAAS,KAAY,UAAZ,OAAuB,CAAC,EAAG,CACrD,EANO,IAQX",
+  "names": []
+}

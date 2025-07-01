@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getScResultsMessages.ts"],
+  "sourcesContent": ["import { ServerTransactionType } from 'types/serverTransactions.types';\n\nexport default function getScResultsMessages(\n  transaction: ServerTransactionType\n) {\n  return (\n    transaction?.results\n      ?.map((result) => result.returnMessage)\n      .filter((messages): messages is string => Boolean(messages)) ?? []\n  );\n}\n"],
+  "mappings": "+CAEe,WACb,EACA,CAJF,QAKE,MACE,uBAAa,UAAb,cACI,IAAI,AAAC,GAAW,EAAO,eACxB,OAAO,AAAC,GAAiC,QAAQ,CAAQ,KAF5D,OAEkE,CAAC,CAEvE,CAVA",
+  "names": []
+}

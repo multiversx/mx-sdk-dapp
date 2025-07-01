@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/toasts/useGetToasts.ts"],
+  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport {\n  customToastsSelector,\n  transactionToastsSelector\n} from 'reduxStore/selectors';\n\nexport const useGetToasts = () => {\n  const customToasts = useSelector(customToastsSelector);\n  const transactionToasts = useSelector(transactionToastsSelector);\n\n  return {\n    customToasts,\n    transactionToasts\n  };\n};\n"],
+  "mappings": "uKAAA,IACA,IAKO,GAAM,GAAe,IAAM,CAChC,GAAM,GAAe,EAAY,CAAoB,EAC/C,EAAoB,EAAY,CAAyB,EAE/D,MAAO,CACL,eACA,mBACF,CACF",
+  "names": []
+}

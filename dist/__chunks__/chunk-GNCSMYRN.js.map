@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/__mocks__/data/index.ts"],
+  "sourcesContent": ["export * from './account';\nexport * from './blocks';\nexport * from './networkConfig';\nexport * from './dappConfig';\nexport * from './socketResponse';\nexport * from './websocketConfig';\nexport * from './blocks';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

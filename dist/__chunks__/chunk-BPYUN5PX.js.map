@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/storage/local.ts"],
+  "sourcesContent": ["import { storage } from 'utils/storage';\nimport { localStorageKeys } from 'utils/storage/local';\n\nexport function getNewLoginExpiresTimestamp() {\n  return new Date().setHours(new Date().getHours() + 24);\n}\n\nexport function setLoginExpiresAt(expiresAt: number) {\n  storage.local.setItem({\n    key: localStorageKeys.loginExpiresAt,\n    data: expiresAt,\n    expires: expiresAt\n  });\n}\n"],
+  "mappings": "6IAGO,YAAuC,CAC5C,MAAO,IAAI,MAAK,EAAE,SAAS,GAAI,MAAK,EAAE,SAAS,EAAI,EAAE,CACvD,CAEO,WAA2B,EAAmB,CACnD,EAAQ,MAAM,QAAQ,CACpB,IAAK,EAAiB,eACtB,KAAM,EACN,QAAS,CACX,CAAC,CACH,CAbA,qBACA",
+  "names": []
+}

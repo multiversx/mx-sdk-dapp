@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/accounts/getAccountFromApi.ts"],
+  "sourcesContent": ["import { ACCOUNTS_ENDPOINT } from 'apiCalls/endpoints';\nimport { getCleanApiAddress } from 'apiCalls/utils';\nimport { axiosInstance } from 'apiCalls/utils/axiosInstance';\n\nexport const accountFetcher = (address: string | null) => {\n  const apiAddress = getCleanApiAddress();\n  const url = `${apiAddress}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;\n  return axiosInstance.get(url);\n};\n\nexport const getAccountFromApi = async (address?: string) => {\n  if (!address) {\n    return null;\n  }\n\n  try {\n    const { data } = await accountFetcher(address);\n    return data;\n  } catch (err) {\n    console.error('error fetching configuration for ', address, err);\n  }\n\n  return null;\n};\n"],
+  "mappings": "oOAAA,GAIa,GAMA,EAVb,iBACA,IACA,IAEO,AAAM,EAAiB,AAAC,GAA2B,CAExD,GAAM,GAAM,GADO,EAAmB,KACT,KAAqB,0BAClD,MAAO,GAAc,IAAI,CAAG,CAC9B,EAEa,EAAoB,AAAO,GAAqB,0BAC3D,GAAI,CAAC,EACH,MAAO,MAGT,GAAI,CACF,GAAM,CAAE,QAAS,KAAM,GAAe,CAAO,EAC7C,MAAO,EACT,OAAS,EAAP,CACA,QAAQ,MAAM,oCAAqC,EAAS,CAAG,CACjE,CAEA,MAAO,KACT",
+  "names": []
+}

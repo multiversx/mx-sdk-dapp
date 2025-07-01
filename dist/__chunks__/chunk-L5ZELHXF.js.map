@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/LogoutListener/helpers/useNativeAuthLogoutWarning/index.ts"],
+  "sourcesContent": ["export * from './useNativeAuthLogoutWarning';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

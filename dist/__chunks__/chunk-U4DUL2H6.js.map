@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithExtensionModal/SignWithExtensionModal.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport { SignModalPropsType } from 'types';\n\nimport {\n  SignWaitingScreenModal,\n  SignWaitingScreenModalPropsType\n} from '../components';\n\nexport const SignWithExtensionModal = (props: SignModalPropsType) => {\n  const description = props.error\n    ? props.error\n    : props.transactions?.length > 1\n    ? 'Check your MultiversX Wallet Extension to sign the transactions'\n    : 'Check your MultiversX Wallet Extension to sign the transaction';\n\n  const waitingScreenProps: SignWaitingScreenModalPropsType = {\n    ...props,\n    description,\n    title: 'Confirm on MultiversX DeFi Wallet'\n  };\n\n  return <SignWaitingScreenModal {...waitingScreenProps} />;\n};\n"],
+  "mappings": "8FAAA,yBAQO,GAAM,GAAyB,AAAC,GAA8B,CARrE,MASE,GAAM,GAAc,EAAM,MACtB,EAAM,MACN,MAAM,eAAN,cAAoB,QAAS,EAC7B,kEACA,iEAEE,EAAsD,OACvD,GADuD,CAE1D,cACA,MAAO,mCACT,GAEA,MAAO,iBAAC,OAA2B,EAAoB,CACzD",
+  "names": []
+}

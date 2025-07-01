@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/getHasNativeAuth/index.ts"],
+  "sourcesContent": ["export * from './getHasNativeAuth';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

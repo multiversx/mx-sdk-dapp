@@ -30,6 +30,8 @@ export async function signTransactions({
   handleSign,
   guardTransactions = getGuardedTransactions
 }: SignTransactionsParamsType): Promise<Transaction[]> {
+  console.log('signTransactions');
+
   const {
     account: { address, shard, username }
   } = getAccountInfo();
@@ -41,6 +43,10 @@ export async function signTransactions({
     getMultiEsdtTransferData(transactions);
 
   let signedIndexes: number[] = [];
+
+  console.log(
+    'signTransactions - creating SignTransactionsStateManager instance'
+  );
 
   const manager = SignTransactionsStateManager.getInstance();
   await manager.openUI();
@@ -54,18 +60,33 @@ export async function signTransactions({
     manager.closeUI();
   };
 
+  console.log('signTransactions - subscribing to SignEventsEnum.CLOSE event');
+
   manager.subscribeToEventBus(SignEventsEnum.CLOSE, handleCancel);
 
   return new Promise<Transaction[]>(async (resolve, reject) => {
+    console.log('signTransactions - starting transaction signing process');
+
     const signedTransactions: Transaction[] = [];
     const economics = await getEconomics({ baseURL: network.apiAddress });
+
+    console.log('signTransactions - economics fetched:', economics);
+    console.log('signTransactions - notifying data update:');
+
     manager.notifyDataUpdate();
+
+    console.log('signTransactions - initializeGasPriceMap');
     manager.initializeGasPriceMap(allTransactions.map((tx) => tx.transaction));
     const price = economics?.price;
+
+    console.log('signTransactions - price = ', price);
 
     let currentScreenIndex = 0;
 
     const updateScreen = async () => {
+      console.log(
+        `signTransactions - updating screen for transaction at index ${currentScreenIndex}`
+      );
       const currentTransaction = allTransactions[currentScreenIndex];
       const transaction = currentTransaction?.transaction;
 
@@ -113,6 +134,7 @@ export async function signTransactions({
     const onSetPpu = (
       ppu: ISignTransactionsPanelCommonData['ppu'] = EMPTY_PPU
     ) => {
+      console.log('signTransactions - onSetPpu called with ppu:', ppu);
       const currentTransaction = allTransactions[currentScreenIndex];
       const transaction = currentTransaction.transaction;
       const currentNonce = Number(transaction.nonce);
@@ -169,6 +191,8 @@ export async function signTransactions({
     };
 
     const onSign = async () => {
+      console.log('signTransactions - onSign called');
+
       const currentTransaction = allTransactions[currentScreenIndex];
       const transaction = currentTransaction.transaction;
       const currentNonce = Number(transaction.nonce);

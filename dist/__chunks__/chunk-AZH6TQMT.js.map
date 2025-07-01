@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/batch/useGetBatchStatus.ts"],
+  "sourcesContent": ["import { useCallback } from 'react';\nimport { useGetAccount } from 'hooks/account';\nimport { getBatchTransactionsStatus } from 'services/transactions/getBatchTransactionsStatus';\n\nexport const useGetBatchStatus = () => {\n  const { address } = useGetAccount();\n\n  return useCallback(\n    async (id: string) => {\n      try {\n        return await getBatchTransactionsStatus({\n          batchId: id,\n          address\n        });\n      } catch (error) {\n        console.error(error);\n        return null;\n      }\n    },\n    [address]\n  );\n};\n"],
+  "mappings": "0HAAA,wCAIO,GAAM,GAAoB,IAAM,CACrC,GAAM,CAAE,WAAY,EAAc,EAElC,MAAO,GACL,AAAO,GAAe,0BACpB,GAAI,CACF,MAAO,MAAM,GAA2B,CACtC,QAAS,EACT,SACF,CAAC,CACH,OAAS,EAAP,CACA,eAAQ,MAAM,CAAK,EACZ,IACT,CACF,GACA,CAAC,CAAO,CACV,CACF",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/helpers/checkIsValidSender.ts"],
+  "sourcesContent": ["import { AccountType } from 'types/account.types';\n\n// Don't allow signing if the logged in account's address\n// is neither the sender or the sender account's active guardian\nexport const checkIsValidSender = (\n  senderAccount: Partial<AccountType> | null,\n  address: string | string[]\n) => {\n  if (!senderAccount) {\n    return true;\n  }\n\n  if (Array.isArray(address)) {\n    return address.some(\n      (addr) =>\n        senderAccount.address === addr ||\n        senderAccount.activeGuardianAddress === addr\n    );\n  }\n\n  return (\n    senderAccount.address === address ||\n    senderAccount.activeGuardianAddress === address\n  );\n};\n"],
+  "mappings": "wCAAA,IAIO,GAAM,GAAqB,CAChC,EACA,IAEK,EAID,MAAM,QAAQ,CAAO,EAChB,EAAQ,KACb,AAAC,GACC,EAAc,UAAY,GAC1B,EAAc,wBAA0B,CAC5C,EAIA,EAAc,UAAY,GAC1B,EAAc,wBAA0B,EAbjC",
+  "names": []
+}

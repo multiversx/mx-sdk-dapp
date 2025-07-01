@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/TransactionSender/index.ts"],
+  "sourcesContent": ["export * from './TransactionSender';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

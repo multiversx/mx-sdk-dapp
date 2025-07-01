@@ -1,0 +1,2 @@
+import{j as e,m as t}from"./chunk-HBP5N4FR.js";t();import{OperaProvider as s}from"@multiversx/sdk-opera-provider";function p(o){return e(this,null,function*(){try{let r=s.getInstance().setAddress(o);if(yield r.init())return r;console.error("Could not initialise opera crypto wallet, make sure that opera crypto wallet is installed.")}catch(r){console.error("Unable to login to OperaProvider",r)}return null})}export{p as a};
+//# sourceMappingURL=chunk-PAVHGJ7A.js.map

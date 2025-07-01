@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/batch/generateBatchTransactionsGrouping.ts"],
+  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core/out';\nimport { SimpleTransactionType } from 'types';\n\nexport const generateBatchTransactionsGrouping = (\n  transactions: (Transaction | SimpleTransactionType)[][]\n) => {\n  let indexInFlatArray = 0;\n  return transactions.map((group) => {\n    return group.map(() => indexInFlatArray++);\n  });\n};\n"],
+  "mappings": "0CAAA,GAGa,GAHb,aAGO,AAAM,EAAoC,AAC/C,GACG,CACH,GAAI,GAAmB,EACvB,MAAO,GAAa,IAAI,AAAC,GAChB,EAAM,IAAI,IAAM,GAAkB,CAC1C,CACH",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{f as g,z as w}from"./chunk-326XWAT2.js";import{a as e,b as i,c,d as s,j as a,m as f}from"./chunk-HBP5N4FR.js";f();w();import N from"axios";function h(l){return a(this,null,function*(){let t=`${l}/${g}`;try{let{data:r}=yield N.get(t);if(r!=null){let o="egldDenomination";if(o in r){let n=r,{[o]:m,decimals:p}=n,u=s(n,[c(o),"decimals"]);return i(e({},u),{decimals:m,digits:p})}return r}}catch(r){console.error("error fetching configuration for ",t)}return null})}export{h as a};
+//# sourceMappingURL=chunk-G3MFJX2K.js.map

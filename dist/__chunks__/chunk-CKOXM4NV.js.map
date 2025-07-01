@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/ScrDetailItem/index.tsx"],
+  "sourcesContent": ["export * from './ScrDetailItem';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

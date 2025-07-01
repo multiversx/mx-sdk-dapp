@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/validation/stringIsInteger.ts"],
+  "sourcesContent": ["import BigNumber from 'bignumber.js';\n\nexport const stringIsInteger = (\n  integer: string,\n  positiveNumbersOnly = true\n) => {\n  const stringInteger = String(integer);\n  if (!stringInteger.match(/^[-]?\\d+$/)) {\n    return false;\n  }\n  const bNparsed = new BigNumber(stringInteger);\n  const limit = positiveNumbersOnly ? 0 : -1;\n  return (\n    bNparsed.toString(10) === stringInteger && bNparsed.comparedTo(0) >= limit\n  );\n};\n"],
+  "mappings": "+CAAA,+BAEa,GAFb,aAEO,AAAM,EAAkB,CAC7B,EACA,EAAsB,KACnB,CACH,GAAM,GAAgB,OAAO,CAAO,EACpC,GAAI,CAAC,EAAc,MAAM,WAAW,EAClC,MAAO,GAET,GAAM,GAAW,GAAI,GAAU,CAAa,EACtC,EAAQ,EAAsB,EAAI,GACxC,MACE,GAAS,SAAS,EAAE,IAAM,GAAiB,EAAS,WAAW,CAAC,GAAK,CAEzE",
+  "names": []
+}

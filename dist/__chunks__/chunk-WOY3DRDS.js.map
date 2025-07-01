@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/webWallet/WebWalletLoginButton/index.tsx"],
+  "sourcesContent": ["export * from './WebWalletLoginButton';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

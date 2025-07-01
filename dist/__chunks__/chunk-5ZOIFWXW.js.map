@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithLedgerModal/LedgerGuardianSigningModalError.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport { LEDGER_WITH_GUARDIANS_MINIMUM_VERSION } from 'constants/ledger.constants';\nimport { SignModalPropsType } from 'types';\nimport {\n  SignWaitingScreenModal,\n  SignWaitingScreenModalPropsType\n} from '../components';\n\nexport const LedgerGuardianSigningModalError = (props: SignModalPropsType) => {\n  const waitingScreenProps: SignWaitingScreenModalPropsType = {\n    ...props,\n    description: `You need at least MultiversX app version ${LEDGER_WITH_GUARDIANS_MINIMUM_VERSION}. Update MultiversX app to continue`,\n    title: 'Signing transactions unavailable'\n  };\n\n  return <SignWaitingScreenModal {...waitingScreenProps} />;\n};\n"],
+  "mappings": "6IAAA,IACA,IADA,qBAQO,GAAM,GAAkC,AAAC,GAA8B,CAC5E,GAAM,GAAsD,OACvD,GADuD,CAE1D,YAAa,4CAA4C,uCACzD,MAAO,kCACT,GAEA,MAAO,iBAAC,OAA2B,EAAoB,CACzD",
+  "names": []
+}

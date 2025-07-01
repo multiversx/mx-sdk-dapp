@@ -1,0 +1,2 @@
+import{a as e}from"./chunk-PDWGUQLF.js";import{a as n,b as t,m as i}from"./chunk-HBP5N4FR.js";i();import g from"react";var W=o=>{var r;let a=o.error?o.error:((r=o.transactions)==null?void 0:r.length)>1?"Check your Wallet Window to sign the transactions":"Check your Wallet Window to sign the transaction",c=t(n({},o),{description:a,title:"Confirm on your authenticated provider"});return g.createElement(e,n({},c))};export{W as a};
+//# sourceMappingURL=chunk-XZ5ZFHMU.js.map

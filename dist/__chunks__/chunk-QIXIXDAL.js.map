@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/DappModal/components/DappModalBody.tsx"],
+  "sourcesContent": ["import React, { ReactNode } from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { WithClassnameType } from '../../types';\n\nexport interface DappModalBodyPropsType extends WithClassnameType {\n  children?: ReactNode;\n}\n\nconst DappModalBodyComponent = ({\n  className,\n  children,\n  styles\n}: DappModalBodyPropsType & WithStylesImportType) => {\n  return (\n    <div className={classNames(styles?.dappModalBody, className)}>\n      {children}\n    </div>\n  );\n};\n\nexport const DappModalBody = withStyles(DappModalBodyComponent, {\n  ssrStyles: () => import('UI/DappModal/dappModalStyles.scss'),\n  clientStyles: () => require('UI/DappModal/dappModalStyles.scss').default\n});\n"],
+  "mappings": "sIAAA,yBACA,0BAQA,GAAM,GAAyB,CAAC,CAC9B,YACA,WACA,YAGE,gBAAC,OAAI,UAAW,EAAW,iBAAQ,cAAe,CAAS,GACxD,CACH,EAIS,EAAgB,EAAW,EAAwB,CAC9D,UAAW,IAAM,OAAO,sCACxB,aAAc,IAAM,WAA6C,OACnE,CAAC",
+  "names": []
+}

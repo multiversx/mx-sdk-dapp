@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/hooks/index.ts"],
+  "sourcesContent": ["export * from './useSignStepsClasses';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

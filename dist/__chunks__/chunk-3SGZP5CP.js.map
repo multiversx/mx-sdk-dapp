@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/websocketListener/websocketConnection.ts"],
+  "sourcesContent": ["import { Socket } from 'socket.io-client';\n\nexport enum WebsocketConnectionStatusEnum {\n  NOT_INITIALIZED = 'not_initialized',\n  PENDING = 'pending',\n  COMPLETED = 'completed'\n}\n\nexport const websocketConnection: {\n  current: Socket | null;\n  // Use the connection status to avoid multiple websocket connections\n  status: WebsocketConnectionStatusEnum;\n} = {\n  current: null,\n  status: WebsocketConnectionStatusEnum.NOT_INITIALIZED\n};\n"],
+  "mappings": "wCAAA,IAEO,GAAK,GAAL,CAAK,GACV,mBAAkB,kBAClB,UAAU,UACV,YAAY,YAHF,WAMC,EAIT,CACF,QAAS,KACT,OAAQ,iBACV",
+  "names": []
+}

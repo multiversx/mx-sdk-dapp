@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/account/getIsProviderEqualTo.ts"],
+  "sourcesContent": ["import { getAccountProviderType } from 'utils/account/getAccountProviderType';\n\nexport function getIsProviderEqualTo(comparedProviderType: any) {\n  const providerType = getAccountProviderType();\n  return providerType === comparedProviderType;\n}\n"],
+  "mappings": "gFAAA,IAEO,WAA8B,EAA2B,CAE9D,MAAO,AADc,GAAuB,IACpB,CAC1B",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/components/ProviderInitializer/helpers/index.ts"],
+  "sourcesContent": ["export * from './getOperaProvider';\nexport * from './getExtensionProvider';\nexport * from './getCrossWindowProvider';\nexport * from './getIframeProvider';\nexport * from './processModifiedAccount';\nexport * from './getModifiedLoginToken';\nexport * from './getMetamaskProvider';\nexport * from './getPasskeyProvider';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

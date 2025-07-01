@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/wrappers/AuthenticatedRoutesWrapper/helpers/matchRoute.ts"],
+  "sourcesContent": ["import { RouteType } from 'types';\nimport { matchPath } from './matchPath';\n\n/**\n * Allow detecting authenticated routes with pattern parameters\n * @example \n * routes = [\n  * {\n      path: \"/users/:id\",\n      component: () => <></>,\n      authenticatedRoute: true\n    }\n]\n */\nexport const matchRoute = (routes: RouteType[], pathname: string) => {\n  const authenticatedRoutes = routes.filter(({ authenticatedRoute }) =>\n    Boolean(authenticatedRoute)\n  );\n\n  const isOnAuthenticatedRoute = authenticatedRoutes.some(\n    ({ path }) => matchPath(path, pathname) !== null\n  );\n\n  return isOnAuthenticatedRoute;\n};\n"],
+  "mappings": "gFAAA,IAcO,GAAM,GAAa,CAAC,EAAqB,IAKf,AAJH,EAAO,OAAO,CAAC,CAAE,wBAC3C,QAAQ,CAAkB,CAC5B,EAEmD,KACjD,CAAC,CAAE,UAAW,EAAU,EAAM,CAAQ,IAAM,IAC9C",
+  "names": []
+}

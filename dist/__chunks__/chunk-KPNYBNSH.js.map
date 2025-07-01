@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/transactions/useSignTransactionsWithLedger.tsx"],
+  "sourcesContent": ["import {\n  useSignTransactionsWithDevice,\n  UseSignTransactionsWithDevicePropsType,\n  UseSignTransactionsWithDeviceReturnType\n} from './useSignTransactionsWithDevice';\n\nexport function useSignTransactionsWithLedger(\n  props: UseSignTransactionsWithDevicePropsType\n): UseSignTransactionsWithDeviceReturnType {\n  return useSignTransactionsWithDevice(props);\n}\n"],
+  "mappings": "gFAAA,IAMO,WACL,EACyC,CACzC,MAAO,GAA8B,CAAK,CAC5C",
+  "names": []
+}

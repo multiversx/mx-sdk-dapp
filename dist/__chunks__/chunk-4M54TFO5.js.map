@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/operations/truncate.tsx"],
+  "sourcesContent": ["export function truncate(\n  text: string | undefined,\n  length: number,\n  end: string | undefined = '...'\n) {\n  if (isNaN(length)) {\n    length = 10;\n  }\n\n  if (!end) {\n    end = '...';\n  }\n\n  const showWholeText =\n    text != null &&\n    (text.length <= length || text.length - end.length <= length);\n\n  if (showWholeText) {\n    return text;\n  }\n\n  return String(text).substring(0, length - end.length) + end;\n}\n"],
+  "mappings": "+CAAO,WACL,EACA,EACA,EAA0B,MAC1B,CAaA,MAZI,OAAM,CAAM,GACd,GAAS,IAGN,GACH,GAAM,OAIN,GAAQ,MACP,GAAK,QAAU,GAAU,EAAK,OAAS,EAAI,QAAU,GAG/C,EAGF,OAAO,CAAI,EAAE,UAAU,EAAG,EAAS,EAAI,MAAM,EAAI,CAC1D,CAtBA",
+  "names": []
+}

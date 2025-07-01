@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/components/IconToast/components/IconToastFooter/IconToastFooter.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport { getIsTransaction } from 'UI/TransactionsToastList/components/CustomToast/helpers';\nimport { IconToastPropsType } from '../../iconToast.types';\nimport {\n  MessageIconToastFooter,\n  SharedToastFooter,\n  TransactionToastFooter,\n  ComponentToastFooter\n} from './components';\n\nexport const IconToastFooter = (props: IconToastPropsType) => {\n  const { transaction, message, component } = props;\n  const isTransaction = transaction && getIsTransaction(transaction);\n\n  if (isTransaction) {\n    return <TransactionToastFooter {...props} />;\n  }\n  if (message) {\n    return <MessageIconToastFooter {...props} />;\n  }\n  // a null component means footer needs to search for it in componentsDictionary\n  if (component !== undefined) {\n    return <ComponentToastFooter {...props} />;\n  }\n  return <SharedToastFooter />;\n};\n"],
+  "mappings": "kPAAA,yBAUO,GAAM,GAAkB,AAAC,GAA8B,CAC5D,GAAM,CAAE,cAAa,UAAS,aAAc,EAG5C,MAFsB,IAAe,EAAiB,CAAW,EAGxD,gBAAC,OAA2B,EAAO,EAExC,EACK,gBAAC,OAA2B,EAAO,EAGxC,IAAc,OACT,gBAAC,OAAyB,EAAO,EAEnC,gBAAC,MAAkB,CAC5B",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{a as p}from"./chunk-U5VNSGLU.js";import{a as c,b as l}from"./chunk-FN7APMDR.js";import{a as i}from"./chunk-XIGG2I7M.js";import{a as e,z as u}from"./chunk-326XWAT2.js";import{e as s,j as n,m as o}from"./chunk-HBP5N4FR.js";var f,I,g=s(()=>{o();u();p();l();f=r=>{let a=`${i()}/${e}/${r}?withGuardianInfo=true`;return c.get(a)},I=r=>n(void 0,null,function*(){if(!r)return null;try{let{data:t}=yield f(r);return t}catch(t){console.error("error fetching configuration for ",r,t)}return null})});export{f as a,I as b,g as c};
+//# sourceMappingURL=chunk-J5CSWMAT.js.map

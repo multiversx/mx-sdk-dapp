@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoStatus/TransactionInfoStatus.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport {\n  WithClassnameType,\n  WithTransactionType\n} from '../../../../../UI/types';\nimport { DetailItem } from '../../DetailItem';\nimport { TransactionStatus } from '../../TransactionStatus';\n\nconst TransactionInfoStatusComponents = ({\n  className,\n  transaction,\n  globalStyles\n}: WithTransactionType & WithClassnameType & WithStylesImportType) => (\n  <DetailItem className={className} title='Status'>\n    <div\n      className={classNames(\n        globalStyles?.dFlex,\n        globalStyles?.alignItemsCenter,\n        globalStyles?.flexWrap\n      )}\n    >\n      <TransactionStatus transaction={transaction} />\n    </div>\n  </DetailItem>\n);\n\nexport const TransactionInfoStatus = withStyles(\n  TransactionInfoStatusComponents,\n  {}\n);\n"],
+  "mappings": "2JAAA,yBACA,0BASA,GAAM,GAAkC,CAAC,CACvC,YACA,cACA,kBAEA,gBAAC,GAAW,UAAW,EAAW,MAAM,UACtC,gBAAC,OACC,UAAW,EACT,iBAAc,MACd,iBAAc,iBACd,iBAAc,QAChB,GAEA,gBAAC,GAAkB,YAAa,EAAa,CAC/C,CACF,EAGW,EAAwB,EACnC,EACA,CAAC,CACH",
+  "names": []
+}

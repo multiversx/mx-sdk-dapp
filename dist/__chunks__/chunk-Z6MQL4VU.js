@@ -1,0 +1,2 @@
+import{p as d}from"./chunk-EOZJRV5E.js";import{e as c,m as n}from"./chunk-HBP5N4FR.js";function m(e){let t=i=>e.status.toLowerCase()===i.toLowerCase(),s=t("fail")||t("reward-reverted"),r=t("success"),o=t("not executed")||t("invalid"),a=t("pending")||e.pendingResults;return{failed:s,success:r,invalid:o,pending:a}}var u=c(()=>{n();d()});export{m as a,u as b};
+//# sourceMappingURL=chunk-Z6MQL4VU.js.map

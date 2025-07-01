@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionDetails/components/index.tsx"],
+  "sourcesContent": ["export * from './TransactionDetailsBody';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

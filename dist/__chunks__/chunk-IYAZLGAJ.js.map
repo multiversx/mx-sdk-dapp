@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithLedgerModal/index.tsx"],
+  "sourcesContent": ["export * from './SignWithLedgerModal';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

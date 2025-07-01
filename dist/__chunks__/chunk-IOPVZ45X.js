@@ -1,0 +1,2 @@
+import{a as l}from"./chunk-OPT3JYNI.js";import{e as c,m as o}from"./chunk-HBP5N4FR.js";var S,L=c(()=>{o();l();S=({transaction:e,direction:n})=>{var a;let T=n==="Internal",r=e.sender;if(T)return{link:(a=e.links.senderLink)!=null?a:"",label:"Smart Contract transaction",address:r};let i=n==="Out",t=i?e.links.receiverLink:e.links.senderLink,s="";return n==="Self"&&e.receiverAssets?s=e.receiverAssets.name:(r=i?e.receiver:e.sender,s=i?"To:":"From:"),{label:s,address:r,link:t!=null?t:""}}});export{S as a,L as b};
+//# sourceMappingURL=chunk-IOPVZ45X.js.map

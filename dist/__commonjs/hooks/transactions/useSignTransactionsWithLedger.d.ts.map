@@ -1,0 +1,1 @@
+{"version":3,"file":"useSignTransactionsWithLedger.d.ts","sourceRoot":"","sources":["../../../../src/hooks/transactions/useSignTransactionsWithLedger.tsx"],"names":[],"mappings":"AAAA,OAAO,EAEL,sCAAsC,EACtC,uCAAuC,EACxC,MAAM,iCAAiC,CAAC;AAEzC,wBAAgB,6BAA6B,CAC3C,KAAK,EAAE,sCAAsC,GAC5C,uCAAuC,CAEzC"}

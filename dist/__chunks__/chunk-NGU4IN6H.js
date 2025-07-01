@@ -1,0 +1,2 @@
+import{j as f}from"./chunk-OKLK5GYW.js";import{e as m,m as s}from"./chunk-HBP5N4FR.js";var v,T=m(()=>{s();f();v=n=>{var a,o,e,i,c,r;let t="Transaction";return((a=n.action)==null?void 0:a.name)&&((o=n.action)==null?void 0:o.category)&&(((e=n.action)==null?void 0:e.category)==="esdtNft"&&((i=n.action)==null?void 0:i.name)==="transfer"?t="Transaction":n.action&&(t=n.action.name),(r=(c=n.action)==null?void 0:c.arguments)!=null&&r.functionName&&(t=n.action.arguments.functionName)),t}});export{v as a,T as b};
+//# sourceMappingURL=chunk-NGU4IN6H.js.map

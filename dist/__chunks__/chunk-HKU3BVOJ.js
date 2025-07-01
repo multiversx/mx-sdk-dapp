@@ -1,0 +1,2 @@
+import{a as u}from"./chunk-SWRV4LUB.js";import{a as s,d}from"./chunk-PCK656QH.js";import{a as h}from"./chunk-NJJDLNA3.js";import{e as f}from"./chunk-L5S5P5OY.js";import{b as m,c as a}from"./chunk-7RBRFERR.js";import{a as g}from"./chunk-OPT3JYNI.js";import{m as e}from"./chunk-HBP5N4FR.js";e();a();h();d();g();function M(o,t=s.dispatch){let i=u(o);if(i==null)return;let{signature:n,address:r}=i;n&&o&&r&&(t(f({loginToken:o,signature:n,nativeAuthToken:o})),t(m({address:r,loginMethod:"extra"})))}export{M as a};
+//# sourceMappingURL=chunk-HKU3BVOJ.js.map

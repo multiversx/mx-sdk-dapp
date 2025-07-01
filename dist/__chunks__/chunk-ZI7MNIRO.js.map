@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/configuration/getServerConfigurationForEnvironment.ts"],
+  "sourcesContent": ["import { fallbackNetworkConfigurations } from 'constants/network';\nimport { EnvironmentsEnum, NetworkType } from 'types';\nimport { getServerConfiguration } from './getServerConfiguration';\n\nexport interface GetServerConfigurationForEnvironmentOptionsType {\n  apiAddress?: string;\n}\n\nexport async function getServerConfigurationForEnvironment(\n  environment: EnvironmentsEnum,\n  options?: GetServerConfigurationForEnvironmentOptionsType\n): Promise<NetworkType> {\n  const fallbackConfig = fallbackNetworkConfigurations[environment];\n  const serverApiAddress = options?.apiAddress ?? fallbackConfig.apiAddress;\n  const config = await getServerConfiguration(serverApiAddress);\n\n  return config !== null ? config : fallbackConfig;\n}\n"],
+  "mappings": "iIAAA,QAQA,WACE,EACA,EACsB,gCAXxB,MAYE,GAAM,GAAiB,EAA8B,GAC/C,EAAmB,oBAAS,aAAT,OAAuB,EAAe,WACzD,EAAS,KAAM,GAAuB,CAAgB,EAE5D,MAAO,KAAW,KAAO,EAAS,CACpC",
+  "names": []
+}

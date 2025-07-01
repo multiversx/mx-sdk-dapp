@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/Progress/progressStyles.scss"],
+  "sourcesContent": ["const css = `.dapp-core-component__progressStyles__progress {\n  position: relative;\n}\n.dapp-core-component__progressStyles__progress .dapp-core-component__progressStyles__bar {\n  position: absolute;\n  pointer-events: none;\n  left: -0.5rem;\n  right: -0.5rem;\n  bottom: -0.5rem;\n  top: -0.5rem;\n  background-color: #495057;\n  opacity: 0.25;\n  transition: width 0.6s ease;\n  max-width: calc(100% + 1rem);\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"progress\": \"dapp-core-component__progressStyles__progress\",\n  \"bar\": \"dapp-core-component__progressStyles__bar\"\n};"],
+  "mappings": "sDAAA,2CAAM,GAmBC,EAnBP,aAAM,EAAM;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,GAeZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,AAAO,EAAQ,CACb,SAAY,gDACZ,IAAO,0CACT",
+  "names": []
+}

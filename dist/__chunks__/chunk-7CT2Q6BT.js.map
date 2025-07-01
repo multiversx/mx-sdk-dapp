@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/login.types.ts"],
+  "sourcesContent": ["export interface LoginHookGenericStateType {\n  error: string;\n  loginFailed: boolean;\n  isLoading: boolean;\n  isLoggedIn: boolean;\n}\n\nexport type InitiateLoginFunctionType = () => void;\n\nexport type LoginHookReturnType = [\n  LoginHookReturnType,\n  LoginHookGenericStateType\n];\n\nexport interface OnLoginRedirectOptionsType {\n  signature?: string;\n  address: string;\n}\n\nexport type OnLoginRedirectType = (\n  callbackRoute: string,\n  options?: OnLoginRedirectOptionsType\n) => void;\n\nexport interface NativeAuthConfigType {\n  origin?: string;\n  apiAddress?: string;\n  expirySeconds?: number;\n  blockHashShard?: number;\n  gatewayUrl?: string;\n  extraRequestHeaders?: { [key: string]: string };\n  extraInfo?: {\n    [key: string]: string;\n  };\n  /**\n   * Displays a logout toast warning before token expiration. Defaults to 5 minutes.\n   *\n   * If set to `null`, will not trigger any warning.\n   */\n  tokenExpirationToastWarningSeconds?: number | null;\n}\n\nexport interface OnProviderLoginType {\n  callbackRoute?: string;\n  token?: string;\n  /**\n   * If specified, `onLoginRedirect` will overwrite callbackRoute default navigation\n   */\n  onLoginRedirect?: OnLoginRedirectType;\n  /**\n   * If set to `true`, will fallback on default configuration\n   */\n  nativeAuth?: NativeAuthConfigType | boolean;\n}\n"],
+  "mappings": "+CAAA",
+  "names": []
+}

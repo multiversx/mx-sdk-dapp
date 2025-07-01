@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/DataField/components/ModalLink/index.tsx"],
+  "sourcesContent": ["export * from './ModalLink';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

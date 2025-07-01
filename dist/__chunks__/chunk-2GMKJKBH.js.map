@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoTokenOperations/index.tsx"],
+  "sourcesContent": ["export * from './TransactionInfoTokenOperations';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/walletConnect/WalletConnectLoginButton/types.ts"],
+  "sourcesContent": ["import { ReactNode } from 'react';\n\nimport { OnProviderLoginType } from '../../../types';\nimport { WithClassnameType } from '../../types';\nimport { InnerWalletConnectComponentsClassesType } from '../types';\n\nexport interface WalletConnectLoginButtonPropsType\n  extends WithClassnameType,\n    OnProviderLoginType {\n  buttonClassName?: string;\n  children?: ReactNode;\n  customSpinnerComponent?: ReactNode;\n  disabled?: boolean;\n  hideButtonWhenModalOpens?: boolean;\n  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;\n  isWalletConnectV2?: boolean;\n  lead?: string;\n  loginButtonText?: string;\n  logoutRoute?: string;\n  modalClassName?: string;\n  onContentHide?: (props?: any) => void;\n  onContentShow?: (props?: any) => void;\n  onModalCloses?: (props?: any) => void;\n  onModalOpens?: (props?: any) => void;\n  showScamPhishingAlert?: boolean;\n  title?: string;\n  wrapContentInsideModal?: boolean;\n  customRequestMethods?: Array<string>;\n}\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

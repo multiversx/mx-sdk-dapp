@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/ModalContainer/ModalContainer.tsx"],
+  "sourcesContent": ["import React, { ReactNode } from 'react';\nimport {\n  DappModal,\n  DappModalConfig,\n  DappModalInteractionConfig,\n  useDappModal\n} from 'UI/DappModal';\nimport { WithClassnameType } from '../types';\n\nexport interface ModalContainerPropsType extends WithClassnameType {\n  children: ReactNode;\n  closeOnEscape?: boolean;\n  modalConfig?: DappModalConfig;\n  modalInteractionConfig?: DappModalInteractionConfig;\n  onClose?: () => void;\n  visible?: boolean;\n}\n\nexport const ModalContainer = (props: ModalContainerPropsType) => {\n  const { showModal } = useDappModal({ visible: props.visible });\n\n  const hideModalHandler = () => {\n    props.onClose?.();\n  };\n\n  return (\n    <DappModal\n      className={props.className}\n      closeOnEscape={props.closeOnEscape}\n      config={props.modalConfig}\n      onHide={hideModalHandler}\n      visible={showModal}\n    >\n      {props.children}\n    </DappModal>\n  );\n};\n"],
+  "mappings": "wHAAA,yBAkBO,GAAM,GAAiB,AAAC,GAAmC,CAChE,GAAM,CAAE,aAAc,EAAa,CAAE,QAAS,EAAM,OAAQ,CAAC,EAEvD,EAAmB,IAAM,CArBjC,MAsBI,KAAM,UAAN,eACF,EAEA,MACE,iBAAC,GACC,UAAW,EAAM,UACjB,cAAe,EAAM,cACrB,OAAQ,EAAM,YACd,OAAQ,EACR,QAAS,GAER,EAAM,QACT,CAEJ",
+  "names": []
+}

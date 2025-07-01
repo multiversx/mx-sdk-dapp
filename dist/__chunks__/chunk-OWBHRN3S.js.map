@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/window/getWindowLocation.ts"],
+  "sourcesContent": ["import { isWindowAvailable } from 'utils/isWindowAvailable';\n\ntype GetWindowLocationType = {\n  pathname: string;\n  hash: string;\n  origin: string;\n  href: string;\n  search: string;\n};\n\nexport const getWindowLocation = (): GetWindowLocationType => {\n  const isAvailable = isWindowAvailable();\n\n  if (!isAvailable) {\n    return {\n      pathname: '',\n      hash: '',\n      origin: '',\n      href: '',\n      search: ''\n    };\n  }\n\n  const {\n    location: { pathname, hash, origin, href, search }\n  } = window;\n\n  return {\n    pathname,\n    hash,\n    origin,\n    href,\n    search\n  };\n};\n"],
+  "mappings": "8FAAA,GAUa,GAVb,iBAUO,AAAM,EAAoB,IAA6B,CAG5D,GAAI,CAFgB,EAAkB,EAGpC,MAAO,CACL,SAAU,GACV,KAAM,GACN,OAAQ,GACR,KAAM,GACN,OAAQ,EACV,EAGF,GAAM,CACJ,SAAU,CAAE,WAAU,OAAM,SAAQ,OAAM,WACxC,OAEJ,MAAO,CACL,WACA,OACA,SACA,OACA,QACF,CACF",
+  "names": []
+}

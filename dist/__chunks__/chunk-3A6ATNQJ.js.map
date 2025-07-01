@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/Pagination/index.ts"],
+  "sourcesContent": ["export * from './Pagination';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

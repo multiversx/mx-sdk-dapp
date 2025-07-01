@@ -1,0 +1,1 @@
+{"version":3,"file":"useGetActiveTransactionsStatus.d.ts","sourceRoot":"","sources":["../../../src/hooks/transactions/useGetActiveTransactionsStatus.ts"],"names":[],"mappings":"AAQA,MAAM,WAAW,wCAAwC;IACvD,QAAQ,EAAE,OAAO,CAAC;IAClB,IAAI,EAAE,OAAO,CAAC;IACd,OAAO,EAAE,OAAO,CAAC;IACjB,OAAO,EAAE,OAAO,CAAC;CAClB;AAGD,wBAAgB,8BAA8B,IAAI,wCAAwC,CAyBzF"}

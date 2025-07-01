@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/transactionsTracker.types.ts"],
+  "sourcesContent": ["import { GetTransactionsByHashesType } from 'types/index';\n\nexport interface TransactionsTrackerType {\n  getTransactionsByHash?: GetTransactionsByHashesType;\n  onSuccess?: (sessionId: string | null) => void;\n  onFail?: (sessionId: string | null, errorMessage?: string) => void;\n}\n"],
+  "mappings": "iEAAA",
+  "names": []
+}

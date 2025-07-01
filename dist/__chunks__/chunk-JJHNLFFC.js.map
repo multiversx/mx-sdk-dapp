@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/account/useGetLoginInfo.ts"],
+  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { isLoggedInSelector, loginInfoSelector } from 'reduxStore/selectors';\nimport { useAxiosInterceptorContext } from 'wrappers/AxiosInterceptorContext';\n\nexport const useGetLoginInfo = () => {\n  // if AxiosInterceptor is mounted, prioritize information comming from AxiosContext\n  try {\n    const { loginInfo, isLoggedIn } = useAxiosInterceptorContext();\n\n    return { ...loginInfo, isLoggedIn };\n    // if not mounted, proceed to returning information from store\n  } catch {\n    const loginInfo = useSelector(loginInfoSelector);\n    const isLoggedIn = useSelector(isLoggedInSelector);\n\n    return { ...loginInfo, isLoggedIn };\n  }\n};\n"],
+  "mappings": "wNAAA,IACA,IAGO,GAAM,GAAkB,IAAM,CAEnC,GAAI,CACF,GAAM,CAAE,YAAW,cAAe,EAA2B,EAE7D,MAAO,QAAK,GAAL,CAAgB,YAAW,EAEpC,OAAQ,EAAN,CACA,GAAM,GAAY,EAAY,CAAiB,EACzC,EAAa,EAAY,CAAkB,EAEjD,MAAO,QAAK,GAAL,CAAgB,YAAW,EACpC,CACF",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/ledger/LedgerLoginContainer/ConfirmAddress/helpers/index.ts"],
+  "sourcesContent": ["export * from './getAuthTokenText';\nexport * from './secondsToTimeString';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

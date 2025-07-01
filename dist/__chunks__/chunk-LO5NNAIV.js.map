@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/asyncActions/timeoutPromise.ts"],
+  "sourcesContent": ["export const timeoutPromise = async (\n  promise: Promise<any> | undefined,\n  time: number,\n  exception: symbol\n) => {\n  let timer: NodeJS.Timeout;\n  return Promise.race([\n    promise,\n    new Promise((_r, rej) => (timer = setTimeout(rej, time, exception)))\n  ]).finally(() => clearTimeout(timer));\n};\n"],
+  "mappings": "+CAAA,IAAO,GAAM,GAAiB,CAC5B,EACA,EACA,IACG,0BACH,GAAI,GACJ,MAAO,SAAQ,KAAK,CAClB,EACA,GAAI,SAAQ,CAAC,EAAI,IAAS,EAAQ,WAAW,EAAK,EAAM,CAAS,CAAE,CACrE,CAAC,EAAE,QAAQ,IAAM,aAAa,CAAK,CAAC,CACtC",
+  "names": []
+}

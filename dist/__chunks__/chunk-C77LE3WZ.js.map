@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/transactions/getTransactionsCount.ts"],
+  "sourcesContent": ["import axios from 'axios';\nimport { TRANSACTIONS_COUNT_ENDPOINT } from 'apiCalls/endpoints';\nimport { GetTransactionsType } from './getTransactions.types';\nimport { getTimeout, getTransactionsParams } from './helpers';\n\nexport const getTransactionsCount = (props: GetTransactionsType) => {\n  const params = getTransactionsParams(props);\n  return axios.get<number>(\n    `${props.apiAddress}/${TRANSACTIONS_COUNT_ENDPOINT}`,\n    {\n      params,\n      ...getTimeout(props.apiTimeout)\n    }\n  );\n};\n"],
+  "mappings": "6IAAA,IACA,IADA,qBAKO,GAAM,GAAuB,AAAC,GAA+B,CAClE,GAAM,GAAS,EAAsB,CAAK,EAC1C,MAAO,GAAM,IACX,GAAG,EAAM,cAAc,IACvB,GACE,UACG,EAAW,EAAM,UAAU,EAElC,CACF",
+  "names": []
+}

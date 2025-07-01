@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../src/UI/ledger/LedgerLoginContainer/types.ts"],
+  "sourcesContent": ["import { AddressTablePropsType } from './AddressTable';\nimport { ConfirmAddressPropsType } from './ConfirmAddress';\nimport { LedgerConnectPropsType } from './LedgerConnect';\nimport { LedgerLoadingPropsType } from './LedgerLoading';\nimport { LedgerProgressBarPropsType } from './LedgerProgressBar';\n\nexport interface InnerLedgerComponentsClassesType {\n  confirmAddressClassNames?: ConfirmAddressPropsType['confirmAddressClassNames'];\n  addressTableClassNames?: AddressTablePropsType['addressTableClassNames'];\n  ledgerLoadingClassNames?: LedgerLoadingPropsType['ledgerLoadingClassNames'];\n  ledgerConnectClassNames?: LedgerConnectPropsType['ledgerConnectClassNames'];\n  ledgerProgressBarClassNames?: LedgerProgressBarPropsType['ledgerProgressBarClassNames'];\n  ledgerScamPhishingAlertClassName?: string;\n}\n"],
+  "mappings": "uEAAA",
+  "names": []
+}

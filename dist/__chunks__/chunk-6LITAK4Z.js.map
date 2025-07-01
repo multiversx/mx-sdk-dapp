@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/types/suspiciousLink.ts"],
+  "sourcesContent": ["import { ScamInfoType } from './account.types';\n\nexport interface SuspiciousLinkType {\n  isSuspicious: boolean;\n  message: string;\n  textWithLinks: string;\n}\n\nexport interface SuspiciousLinkPropsType {\n  message: string;\n  messagePrefix?: string;\n  scamInfo?: ScamInfoType;\n  isNsfw?: boolean;\n  verified?: boolean;\n}\n\nexport interface TextWithLinksType {\n  textWithLinks: string;\n  hasLinks: boolean;\n}\n"],
+  "mappings": "+CAAA",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/DappModal/components/DappModalFooter.tsx"],
+  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { WithClassnameType } from '../../types';\n\nexport interface DappModalFooterPropsType extends WithClassnameType {\n  visible?: boolean;\n  footerText?: string;\n  customFooter?: JSX.Element;\n}\n\nconst DappModalFooterComponent = ({\n  visible,\n  customFooter,\n  className,\n  footerText,\n  styles\n}: DappModalFooterPropsType & WithStylesImportType) => {\n  if (!visible) {\n    return null;\n  }\n\n  return (\n    <div className={classNames(styles?.dappModalFooter, className)}>\n      {customFooter ?? <div>{footerText}</div>}\n    </div>\n  );\n};\n\nexport const DappModalFooter = withStyles(DappModalFooterComponent, {\n  ssrStyles: () => import('UI/DappModal/dappModalStyles.scss'),\n  clientStyles: () => require('UI/DappModal/dappModalStyles.scss').default\n});\n"],
+  "mappings": "iIAAA,yBACA,0BAUA,GAAM,GAA2B,CAAC,CAChC,UACA,eACA,YACA,aACA,YAEK,EAKH,gBAAC,OAAI,UAAW,EAAW,iBAAQ,gBAAiB,CAAS,GAC1D,UAAgB,gBAAC,WAAK,CAAW,CACpC,EANO,KAUE,EAAkB,EAAW,EAA0B,CAClE,UAAW,IAAM,OAAO,sCACxB,aAAc,IAAM,WAA6C,OACnE,CAAC",
+  "names": []
+}

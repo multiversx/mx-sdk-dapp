@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsToastList/components/TransactionToast/index.tsx"],
+  "sourcesContent": ["export * from './TransactionToast';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

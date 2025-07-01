@@ -1,0 +1,2 @@
+import{a as n}from"./chunk-CBX5VUZ5.js";import{a as s}from"./chunk-3REEEXD4.js";import{a as m}from"./chunk-JVZLMSFE.js";import{d as r}from"./chunk-JUB6TCFX.js";import{s as g}from"./chunk-7OZRG2YY.js";import{i as t}from"./chunk-HKOZWGGV.js";import{m as e}from"./chunk-HBP5N4FR.js";e();import{useIdleTimer as I}from"react-idle-timer";g();var f=o=>1e3*60*o,T=500,h=({minutes:o=10,onLogout:u})=>{let i=s(),c=n(i),l=r(t),p=u||m,d=f(o);I({timeout:d,onIdle:()=>{c.current&&p(l)},debounce:T})};export{h as a};
+//# sourceMappingURL=chunk-RDF5YFKP.js.map

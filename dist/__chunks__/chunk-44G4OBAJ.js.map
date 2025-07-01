@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TimeAgo/index.tsx"],
+  "sourcesContent": ["export * from './TimeAgo';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

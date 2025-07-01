@@ -1,0 +1,2 @@
+import{a}from"./chunk-RU3P65MQ.js";import{m as n}from"./chunk-HBP5N4FR.js";n();import u from"react";var S=({className:e,signedTransactionsToRender:r,successfulToastLifetime:i,handleDeleteTransactionToast:o,startTimestamp:T,toastId:t})=>{let s=r[t];if(s==null||(s==null?void 0:s.transactions)==null||(s==null?void 0:s.status)==null)return null;let{transactions:c,status:l}=s;return u.createElement(a,{key:t,startTimestamp:T,toastId:t,transactions:c,status:l,lifetimeAfterSuccess:i,onDelete:o,className:e})};export{S as a};
+//# sourceMappingURL=chunk-7BWVPERW.js.map

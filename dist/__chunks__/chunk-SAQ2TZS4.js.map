@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/decoders/isUtf8.ts"],
+  "sourcesContent": ["export function isUtf8(str: string) {\n  for (let i = 0; i < str.length; i++) {\n    if (str.charCodeAt(i) > 127) return false;\n  }\n  return true;\n}\n"],
+  "mappings": "+CAAO,WAAgB,EAAa,CAClC,OAAS,GAAI,EAAG,EAAI,EAAI,OAAQ,IAC9B,GAAI,EAAI,WAAW,CAAC,EAAI,IAAK,MAAO,GAEtC,MAAO,EACT,CALA",
+  "names": []
+}

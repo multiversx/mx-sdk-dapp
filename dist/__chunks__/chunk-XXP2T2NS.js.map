@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/__mocks__/data/socketResponse.ts"],
+  "sourcesContent": ["export const socketResponse = {\n  sid: 'RlV7upxKjiJRyIhRAKb5',\n  upgrades: ['websocket'],\n  pingInterval: 25000,\n  pingTimeout: 20000,\n  maxPayload: 1000000\n};\n"],
+  "mappings": "wCAAA,IAAO,GAAM,GAAiB,CAC5B,IAAK,uBACL,SAAU,CAAC,WAAW,EACtB,aAAc,KACd,YAAa,IACb,WAAY,GACd",
+  "names": []
+}

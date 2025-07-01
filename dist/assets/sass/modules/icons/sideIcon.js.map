@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../src/assets/sass/modules/icons/sideIcon.scss"],
+  "sourcesContent": ["const css = `.dapp-core-component__sideIcon__side-icon {\n  width: 1.5rem;\n  height: 1.5rem;\n  min-width: 1.5rem;\n  min-height: 1.5rem;\n  color: transparent;\n  border-radius: 50%;\n  overflow: hidden;\n  border: 1px solid #dee2e6;\n}\n.dapp-core-component__sideIcon__side-icon svg {\n  color: #cacbcc;\n}\n\ndiv.dapp-core-component__sideIcon__side-icon {\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\ndiv.dapp-core-component__sideIcon__side-icon img {\n  transform: scale(0.75);\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"side-icon\": \"dapp-core-component__sideIcon__side-icon\",\n  \"sideIcon\": \"dapp-core-component__sideIcon__side-icon\"\n};"],
+  "mappings": "0EAAA,OAAM,GAAM;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,GAsBZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,GAAO,GAAQ,CACb,YAAa,2CACb,SAAY,0CACd",
+  "names": []
+}

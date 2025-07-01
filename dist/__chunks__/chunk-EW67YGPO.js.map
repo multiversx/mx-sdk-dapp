@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoNonce/TransactionInfoNonce.tsx"],
+  "sourcesContent": ["import React from 'react';\n\nimport {\n  WithClassnameType,\n  WithTransactionType\n} from '../../../../../UI/types';\nimport { DetailItem } from '../../DetailItem';\nimport { NonceMessage } from '../../NonceMessage/NonceMessage';\n\nexport const TransactionInfoNonce = ({\n  className,\n  transaction\n}: WithTransactionType & WithClassnameType) => (\n  <DetailItem className={className} title='Nonce'>\n    <>\n      {transaction.nonce}\n\n      <NonceMessage transaction={transaction} />\n    </>\n  </DetailItem>\n);\n"],
+  "mappings": "wHAAA,yBASO,GAAM,GAAuB,CAAC,CACnC,YACA,iBAEA,gBAAC,GAAW,UAAW,EAAW,MAAM,SACtC,gCACG,EAAY,MAEb,gBAAC,GAAa,YAAa,EAAa,CAC1C,CACF",
+  "names": []
+}

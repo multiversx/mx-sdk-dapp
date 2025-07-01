@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/internal/getRandomAddressFromNetwork.ts"],
+  "sourcesContent": ["export function getRandomAddressFromNetwork(walletConnectAddresses: string[]) {\n  return walletConnectAddresses[\n    Math.floor(Math.random() * walletConnectAddresses.length)\n  ];\n}\n"],
+  "mappings": "+CAAO,WAAqC,EAAkC,CAC5E,MAAO,GACL,KAAK,MAAM,KAAK,OAAO,EAAI,EAAuB,MAAM,EAE5D,CAJA",
+  "names": []
+}

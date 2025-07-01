@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/decodeForDisplay/helpers/getSmartDecodedParts.ts"],
+  "sourcesContent": ["import { DecodeMethodEnum, TransactionTypesEnum } from 'types';\nimport { decodeByMethod } from './decodeByMethod';\n\ninterface SmartDecodedPartsType {\n  parts: string[];\n  decodedParts: string[];\n  identifier?: string;\n}\n\nexport const getSmartDecodedParts = ({\n  parts,\n  decodedParts,\n  identifier\n}: SmartDecodedPartsType) => {\n  const updatedParts = [...decodedParts];\n\n  if (parts[0] === TransactionTypesEnum.ESDTNFTTransfer && parts[2]) {\n    updatedParts[2] = decodeByMethod(parts[2], DecodeMethodEnum.decimal);\n  }\n\n  if (identifier === TransactionTypesEnum.ESDTNFTTransfer && parts[1]) {\n    const base64Buffer = Buffer.from(String(parts[1]), 'base64');\n    updatedParts[1] = decodeByMethod(\n      base64Buffer.toString('hex'),\n      DecodeMethodEnum.decimal\n    );\n  }\n\n  return updatedParts;\n};\n"],
+  "mappings": "6IAAA,GASa,GATb,iBACA,IAQO,AAAM,EAAuB,CAAC,CACnC,QACA,eACA,gBAC2B,CAC3B,GAAM,GAAe,CAAC,GAAG,CAAY,EAMrC,GAJI,EAAM,KAAO,mBAAwC,EAAM,IAC7D,GAAa,GAAK,EAAe,EAAM,GAAI,SAAwB,GAGjE,IAAe,mBAAwC,EAAM,GAAI,CACnE,GAAM,GAAe,SAAO,KAAK,OAAO,EAAM,EAAE,EAAG,QAAQ,EAC3D,EAAa,GAAK,EAChB,EAAa,SAAS,KAAK,EAC3B,SACF,CACF,CAEA,MAAO,EACT",
+  "names": []
+}

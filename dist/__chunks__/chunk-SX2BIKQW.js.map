@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/reduxStore/rootReducer.ts"],
+  "sourcesContent": ["import getRootReducer from './reducers';\nexport default getRootReducer();\n"],
+  "mappings": "qGAAA,iCACO,GADP,iBACA,AAAO,EAAQ,EAAe",
+  "names": []
+}

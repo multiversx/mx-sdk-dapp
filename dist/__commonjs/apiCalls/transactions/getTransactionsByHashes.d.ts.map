@@ -1,0 +1,1 @@
+{"version":3,"file":"getTransactionsByHashes.d.ts","sourceRoot":"","sources":["../../../../src/apiCalls/transactions/getTransactionsByHashes.ts"],"names":[],"mappings":"AAIA,OAAO,EAAE,qBAAqB,EAAE,MAAM,OAAO,CAAC;AAC9C,OAAO,EACL,iCAAiC,EACjC,uBAAuB,EACxB,MAAM,0BAA0B,CAAC;AAElC,eAAO,MAAM,uBAAuB,oDAEjC,QAAQ,iCAAiC,CA8B3C,CAAC;AAEF,eAAO,MAAM,2BAA2B,SAAU,MAAM,uEASvD,CAAC"}

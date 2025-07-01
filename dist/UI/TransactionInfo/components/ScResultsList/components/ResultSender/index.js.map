@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../../../../../../src/UI/TransactionInfo/components/ScResultsList/components/ResultSender/index.ts"],
+  "sourcesContent": ["export * from './ResultSender';\n"],
+  "mappings": "+wvBAAA",
+  "names": []
+}

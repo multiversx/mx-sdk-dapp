@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/__mocks__/utils/renderWithProvider.tsx"],
+  "sourcesContent": ["import React, { PropsWithChildren } from 'react';\nimport { render, RenderResult } from '@testing-library/react';\nimport { createMemoryHistory, MemoryHistory } from 'history';\nimport { EnvironmentsEnum } from 'types';\n\nimport { DappProvider } from 'wrappers/DappProvider';\n\nexport interface RenderType extends RenderResult {\n  history: MemoryHistory;\n}\n\nexport const renderWithProvider = ({\n  children,\n  route = '/'\n}: PropsWithChildren & {\n  route?: string;\n}): RenderType => {\n  const history = createMemoryHistory({ initialEntries: [route] });\n\n  return {\n    ...render(\n      <DappProvider environment={EnvironmentsEnum.devnet}>\n        <>{children}</>\n      </DappProvider>\n    ),\n    history\n  };\n};\n"],
+  "mappings": "sIAAA,IAGA,IAHA,qBACA,gDACA,8CASO,GAAM,GAAqB,CAAC,CACjC,WACA,QAAQ,OAGQ,CAChB,GAAM,GAAU,EAAoB,CAAE,eAAgB,CAAC,CAAK,CAAE,CAAC,EAE/D,MAAO,QACF,EACD,gBAAC,GAAa,YAAa,UACzB,gCAAG,CAAS,CACd,CACF,GALK,CAML,SACF,EACF",
+  "names": []
+}

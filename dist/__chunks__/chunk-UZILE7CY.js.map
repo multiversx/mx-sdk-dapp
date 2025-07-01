@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/ProgressHeader/index.ts"],
+  "sourcesContent": ["export * from './ProgressHeader';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

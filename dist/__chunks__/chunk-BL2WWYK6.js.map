@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/signMessage/useGetLastSignedMessageSession.ts"],
+  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { lastSignedSessionSelector } from 'reduxStore/selectors';\n\nexport const useGetLastSignedMessageSession = () => {\n  const lastSignedMessage = useSelector(lastSignedSessionSelector);\n\n  return lastSignedMessage;\n};\n"],
+  "mappings": "gKAAA,IACA,IAEO,GAAM,GAAiC,IAClB,EAAY,CAAyB",
+  "names": []
+}

@@ -1,0 +1,2 @@
+import{j as u,x as d}from"./chunk-UDZUNVED.js";import{e as i,k as t,m as f}from"./chunk-HBP5N4FR.js";var h,A,l=i(()=>{f();d();h=r=>{let e=t.Buffer.from([0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]);if(r.slice(0,e.length).equals(e))return!0;let s=t.Buffer.alloc(32).fill(0);return r.equals(s)},A=r=>{try{let a=parseInt("11",2),s=parseInt("01",2),o=t.Buffer.from(r,"hex"),c=o[31];if(h(o))return u;let n=c&a;return n>3-1&&(n=c&s),n}catch(e){return-1}}});export{A as a,l as b};
+//# sourceMappingURL=chunk-7CT4Y3HU.js.map

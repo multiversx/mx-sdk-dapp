@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/helpers/useMemoizedCloseButton.tsx"],
+  "sourcesContent": ["import React, { useMemo } from 'react';\nimport { useStyles } from 'hocs/useStyles';\nimport { DefaultToastDeleteButton } from '../../TransactionToast/components';\nimport { CustomToastPropsType } from '../customToast.types';\n\ninterface MemoizedCloseButtonPropsType {\n  CustomCloseButton: CustomToastPropsType['CustomCloseButton'];\n  onDelete: CustomToastPropsType['onDelete'];\n}\n\nexport const useMemoizedCloseButton = ({\n  CustomCloseButton,\n  onDelete\n}: MemoizedCloseButtonPropsType) => {\n  const { styles } = useStyles({\n    ssrImportCallback: () =>\n      import(\n        'UI/TransactionsToastList/components/CustomToast/customToast.styles.scss'\n      ),\n    clientImportCallback: () =>\n      require('UI/TransactionsToastList/components/CustomToast/customToast.styles.scss')\n        .default\n  });\n\n  const closeButton = useMemo(() => {\n    return CustomCloseButton ? (\n      <CustomCloseButton onClick={onDelete} />\n    ) : (\n      <DefaultToastDeleteButton onClick={onDelete} className={styles?.close} />\n    );\n  }, [CustomCloseButton, onDelete, styles]);\n\n  return closeButton;\n};\n"],
+  "mappings": "8KAAA,uCAUO,GAAM,GAAyB,CAAC,CACrC,oBACA,cACkC,CAClC,GAAM,CAAE,UAAW,EAAU,CAC3B,kBAAmB,IACjB,OACE,4EAEJ,qBAAsB,IACpB,WACG,OACP,CAAC,EAUD,MARoB,GAAQ,IACnB,EACL,gBAAC,GAAkB,QAAS,EAAU,EAEtC,gBAAC,GAAyB,QAAS,EAAU,UAAW,iBAAQ,MAAO,EAExE,CAAC,EAAmB,EAAU,CAAM,CAAC,CAG1C",
+  "names": []
+}

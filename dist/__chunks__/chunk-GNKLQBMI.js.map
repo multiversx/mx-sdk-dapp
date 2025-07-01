@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/account/useGetIsWalletConnectV2Initialized.ts"],
+  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { isWalletConnectV2InitializedSelector } from 'reduxStore/selectors';\n\nexport const useGetIsWalletConnectV2Initialized = () => {\n  return useSelector(isWalletConnectV2InitializedSelector);\n};\n"],
+  "mappings": "gKAAA,IACA,IAEO,GAAM,GAAqC,IACzC,EAAY,CAAoC",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/services/nativeAuth/helpers/getIsNativeAuthSingingForbidden.ts"],
+  "sourcesContent": ["import { MULTIVERSX_ORIGIN } from 'constants/index';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { tokenLoginSelector } from 'reduxStore/selectors';\nimport { decodeLoginToken } from './decodeLoginToken';\n\nexport const getIsNativeAuthSingingForbidden = (token?: string) => {\n  const tokenLogin = useSelector(tokenLoginSelector);\n  const loginToken = tokenLogin?.loginToken ?? token;\n\n  if (!loginToken) {\n    return;\n  }\n\n  const decoded = decodeLoginToken(loginToken);\n\n  if (!decoded) {\n    return;\n  }\n\n  return decoded.origin.toLowerCase().startsWith(MULTIVERSX_ORIGIN);\n};\n"],
+  "mappings": "wRAAA,QAEA,IAGO,GAAM,GAAkC,AAAC,GAAmB,CALnE,MAME,GAAM,GAAa,EAAY,CAAkB,EAC3C,EAAa,oBAAY,aAAZ,OAA0B,EAE7C,GAAI,CAAC,EACH,OAGF,GAAM,GAAU,EAAiB,CAAU,EAE3C,GAAI,EAAC,EAIL,MAAO,GAAQ,OAAO,YAAY,EAAE,WAAW,CAAiB,CAClE",
+  "names": []
+}

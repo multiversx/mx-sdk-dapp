@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/progress/getRemainingValue.ts"],
+  "sourcesContent": ["import { progressiveDecrement } from '../math';\n\nexport const SAME_SHARD_MAX_TOAST_WIDTH_PERCENT_DECREASE = 75;\nexport const CROSS_SHARD_MAX_TOAST_WIDTH_PERCENT_DECREASE = 25;\nexport const PROGRESS_INTERVAL_DURATION_MS = 100;\n\ninterface GetRemainingValuePropsType {\n  remaining: number;\n  totalSeconds: number;\n  isCrossShard: boolean;\n}\n\nexport const getRemainingValue = ({\n  remaining,\n  totalSeconds,\n  isCrossShard\n}: GetRemainingValuePropsType) => {\n  const widthPercent = isCrossShard\n    ? CROSS_SHARD_MAX_TOAST_WIDTH_PERCENT_DECREASE\n    : SAME_SHARD_MAX_TOAST_WIDTH_PERCENT_DECREASE;\n  const intervalSec = PROGRESS_INTERVAL_DURATION_MS / 1000;\n  const linearDecrease = 1 / (totalSeconds * intervalSec);\n\n  const algoDecrement = Math.min(\n    progressiveDecrement(remaining) - 1,\n    linearDecrease\n  );\n\n  const decrement =\n    remaining >= 100 - widthPercent ? linearDecrease : algoDecrement;\n\n  return remaining - decrement;\n};\n"],
+  "mappings": "gFAAA,IAEO,GAAM,GAA8C,GAC9C,EAA+C,GAC/C,EAAgC,IAQhC,EAAoB,CAAC,CAChC,YACA,eACA,kBACgC,CAChC,GAAM,GAAe,EACjB,EACA,EACE,EAAc,EAAgC,IAC9C,EAAiB,EAAK,GAAe,GAErC,EAAgB,KAAK,IACzB,EAAqB,CAAS,EAAI,EAClC,CACF,EAEM,EACJ,GAAa,IAAM,EAAe,EAAiB,EAErD,MAAO,GAAY,CACrB",
+  "names": []
+}

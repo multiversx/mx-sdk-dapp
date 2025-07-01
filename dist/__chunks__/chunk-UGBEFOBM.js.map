@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/window/redirect.ts"],
+  "sourcesContent": ["import { safeWindow } from 'lib/sdkDappUtils';\n\nexport const redirect = (to: string) => {\n  if (!safeWindow.location) {\n    return;\n  }\n\n  const url = new URL(safeWindow.location.href);\n\n  const isBrowser = url.protocol.startsWith('http');\n\n  if (!isBrowser) {\n    return safeWindow.location.reload();\n  }\n\n  safeWindow.location.assign(to);\n};\n"],
+  "mappings": "8FAAA,GAEa,GAFb,iBAEO,AAAM,EAAW,AAAC,GAAe,CACtC,GAAI,CAAC,EAAW,SACd,OAOF,GAAI,CAFc,AAFN,GAAI,KAAI,EAAW,SAAS,IAAI,EAEtB,SAAS,WAAW,MAAM,EAG9C,MAAO,GAAW,SAAS,OAAO,EAGpC,EAAW,SAAS,OAAO,CAAE,CAC/B",
+  "names": []
+}

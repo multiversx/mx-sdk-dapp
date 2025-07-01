@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/pages/UnlockPage/unlockPageStyles.scss"],
+  "sourcesContent": ["const css = `.dapp-core-component__unlockPageStyles__wrapper {\n  color: inherit;\n}\n\n.dapp-core-component__unlockPageStyles__home {\n  color: inherit;\n}\n\n.dapp-core-component__unlockPageStyles__unlock-page {\n  color: inherit;\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"wrapper\": \"dapp-core-component__unlockPageStyles__wrapper\",\n  \"home\": \"dapp-core-component__unlockPageStyles__home\",\n  \"unlock-page\": \"dapp-core-component__unlockPageStyles__unlock-page\",\n  \"unlockPage\": \"dapp-core-component__unlockPageStyles__unlock-page\"\n};"],
+  "mappings": "sDAAA,2CAAM,GAeC,EAfP,aAAM,EAAM;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,GAWZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,AAAO,EAAQ,CACb,QAAW,iDACX,KAAQ,8CACR,cAAe,qDACf,WAAc,oDAChB",
+  "names": []
+}

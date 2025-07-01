@@ -1,0 +1,3 @@
+import { SendBatchTransactionReturnType, SendBatchTransactionsPropsType } from 'types';
+export declare function sendBatchTransactions({ transactions, transactionsDisplayInfo, redirectAfterSign, callbackRoute, signWithoutSending, completedTransactionsDelay, sessionInformation, skipGuardian, hasConsentPopup, minGasLimit }: SendBatchTransactionsPropsType): Promise<SendBatchTransactionReturnType>;
+//# sourceMappingURL=sendBatchTransactions.d.ts.map

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/apiCalls/utils/axiosFetcher.ts"],
+  "sourcesContent": ["import { axiosInstance } from 'apiCalls/utils/axiosInstance';\n\nexport const axiosFetcher = (url: string) =>\n  axiosInstance.get(url).then((response) => response.data);\n"],
+  "mappings": "8FAAA,GAEa,GAFb,iBAEO,AAAM,EAAe,AAAC,GAC3B,EAAc,IAAI,CAAG,EAAE,KAAK,AAAC,GAAa,EAAS,IAAI",
+  "names": []
+}

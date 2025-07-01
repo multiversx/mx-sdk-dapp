@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/useGetNotification.ts"],
+  "sourcesContent": ["import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';\nimport { notificationModalSelector } from 'reduxStore/selectors';\nimport { clearNotificationModal } from 'reduxStore/slices';\n\nexport function useGetNotification() {\n  const notification = useSelector(notificationModalSelector);\n  const dispatch = useDispatch();\n  const clearNotification = () => dispatch(clearNotificationModal());\n\n  return { notification, clearNotification };\n}\n"],
+  "mappings": "kPAAA,IACA,IACA,IAEO,YAA8B,CACnC,GAAM,GAAe,EAAY,CAAyB,EACpD,EAAW,EAAY,EAG7B,MAAO,CAAE,eAAc,kBAFG,IAAM,EAAS,EAAuB,CAAC,CAExB,CAC3C",
+  "names": []
+}

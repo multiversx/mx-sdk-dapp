@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/UI/webWallet/XaliasCrossWindowLoginButton/index.tsx"],
+  "sourcesContent": ["export * from './XaliasCrossWindowLoginButton';\n"],
+  "mappings": "wCAAA",
+  "names": []
+}

@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getTransactionMessages.ts"],
+  "sourcesContent": ["import { InterpretedTransactionType } from 'types';\nimport { getOperationsMessages } from '../getInterpretedTransaction/helpers/getOperationsMessages';\nimport { getReceiptMessage } from '../getInterpretedTransaction/helpers/getReceiptMessage';\nimport getScResultsMessages from '../getInterpretedTransaction/helpers/getScResultsMessages';\n\nexport function getTransactionMessages(\n  transaction: InterpretedTransactionType\n) {\n  const transactionMessages = Array.from(\n    new Set([\n      ...getScResultsMessages(transaction),\n      ...getOperationsMessages(transaction),\n      getReceiptMessage(transaction)\n    ])\n  ).filter((el) => Boolean(el));\n  return transactionMessages;\n}\n"],
+  "mappings": "4LAKO,WACL,EACA,CAQA,MAP4B,OAAM,KAChC,GAAI,KAAI,CACN,GAAG,EAAqB,CAAW,EACnC,GAAG,EAAsB,CAAW,EACpC,EAAkB,CAAW,CAC/B,CAAC,CACH,EAAE,OAAO,AAAC,GAAO,QAAQ,CAAE,CAAC,CAE9B,CAhBA,iBACA,IACA,IACA",
+  "names": []
+}

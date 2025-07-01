@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["../../src/hooks/login/useWebViewLogin.ts"],
+  "sourcesContent": ["import { useEffect } from 'react';\nimport { useDispatch, useSelector } from 'reduxStore/DappProviderContext';\nimport { shouldUseWebViewProviderSelector } from 'reduxStore/selectors';\nimport { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';\nimport { getWebviewToken } from 'utils/account/getWebviewToken';\n\nexport function useWebViewLogin() {\n  const dispatch = useDispatch();\n  const shouldUseWebViewProvider = useSelector(\n    shouldUseWebViewProviderSelector\n  );\n\n  const token = getWebviewToken();\n\n  useEffect(() => {\n    if (!shouldUseWebViewProvider || !token) {\n      return;\n    }\n\n    loginWithNativeAuthToken(token, dispatch);\n  }, [token, shouldUseWebViewProvider]);\n}\n"],
+  "mappings": "uPAAA,sCAEA,IAIO,YAA2B,CAChC,GAAM,GAAW,EAAY,EACvB,EAA2B,EAC/B,CACF,EAEM,EAAQ,EAAgB,EAE9B,EAAU,IAAM,CACd,AAAI,CAAC,GAA4B,CAAC,GAIlC,EAAyB,EAAO,CAAQ,CAC1C,EAAG,CAAC,EAAO,CAAwB,CAAC,CACtC",
+  "names": []
+}

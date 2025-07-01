@@ -1,0 +1,1 @@
+{"version":3,"file":"useCheckBatchesOnWsFailureFallback.d.ts","sourceRoot":"","sources":["../../../../../src/hooks/transactions/batch/tracker/useCheckBatchesOnWsFailureFallback.ts"],"names":[],"mappings":"AAYA;;;KAGK;AACL,eAAO,MAAM,kCAAkC;6BACrB,MAAM,GAAG,IAAI,KAAK,IAAI;0BACzB,MAAM,GAAG,IAAI,iBAAiB,MAAM,KAAK,IAAI;sBAqDnE,CAAC"}

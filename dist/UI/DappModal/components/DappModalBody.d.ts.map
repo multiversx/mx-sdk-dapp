@@ -1,0 +1,1 @@
+{"version":3,"file":"DappModalBody.d.ts","sourceRoot":"","sources":["../../../../src/UI/DappModal/components/DappModalBody.tsx"],"names":[],"mappings":"AAAA,OAAc,EAAE,SAAS,EAAE,MAAM,OAAO,CAAC;AAGzC,OAAO,EAAE,iBAAiB,EAAE,MAAM,aAAa,CAAC;AAEhD,MAAM,WAAW,sBAAuB,SAAQ,iBAAiB;IAC/D,QAAQ,CAAC,EAAE,SAAS,CAAC;CACtB;AAcD,eAAO,MAAM,aAAa,gDAGxB,CAAC"}

@@ -1,0 +1,2 @@
+import{a as n,b as r}from"./chunk-3DHA63I3.js";import{e as i,m as g}from"./chunk-HBP5N4FR.js";var t,I,l,f,M,S=i(()=>{g();r();t=e=>e.signedMessageInfo,I=n(t,e=>e.isSigning),l=n(t,e=>e.errorMessage),f=n(t,e=>{let s=Object.keys(e.signedSessions),o=s.length;return e.signedSessions[s[o-1]]}),M=n(t,e=>{let s=Object.keys(e.signedSessions),o=s.length;return s.length>0?s[o-1]:""})});export{t as a,I as b,l as c,f as d,M as e,S as f};
+//# sourceMappingURL=chunk-BQNI2XMA.js.map
