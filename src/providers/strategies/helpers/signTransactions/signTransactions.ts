@@ -92,36 +92,43 @@ export async function signTransactions({
 
       const currentNonce = Number(transaction.nonce);
 
-      manager.updateIsLoading(true);
-      const { commonData, tokenTransaction, fungibleTransaction } =
-        await getCommonData({
-          allTransactions,
-          currentScreenIndex,
-          egldLabel,
-          network,
-          gasPriceData: manager.ppuMap[currentNonce],
-          price,
-          address,
-          username,
-          shard,
-          signedIndexes,
-          parsedTransactionsByDataField
-        });
+      try {
+        manager.updateIsLoading(true);
+        const { commonData, tokenTransaction, fungibleTransaction } =
+          await getCommonData({
+            allTransactions,
+            currentScreenIndex,
+            egldLabel,
+            network,
+            gasPriceData: manager.ppuMap[currentNonce],
+            price,
+            address,
+            username,
+            shard,
+            signedIndexes,
+            parsedTransactionsByDataField
+          });
 
-      manager.updateIsLoading(false);
+        if (tokenTransaction) {
+          manager.updateTokenTransaction(tokenTransaction);
+        }
 
-      if (tokenTransaction) {
-        manager.updateTokenTransaction(tokenTransaction);
-      }
+        if (fungibleTransaction) {
+          manager.updateNonFungibleTransaction(
+            fungibleTransaction.type,
+            fungibleTransaction
+          );
+        }
 
-      if (fungibleTransaction) {
-        manager.updateNonFungibleTransaction(
-          fungibleTransaction.type,
-          fungibleTransaction
+        manager.updateCommonData(commonData);
+      } catch (error) {
+        console.error(
+          `Error fetching common data for transaction at index ${currentScreenIndex}:`,
+          error
         );
+      } finally {
+        manager.updateIsLoading(false);
       }
-
-      manager.updateCommonData(commonData);
     };
 
     const onBack = () => {
