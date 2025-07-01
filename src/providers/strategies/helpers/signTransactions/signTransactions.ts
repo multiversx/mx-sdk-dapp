@@ -94,6 +94,9 @@ export async function signTransactions({
 
       try {
         manager.updateIsLoading(true);
+
+        console.log('signTransactions - before getCommonData', currentNonce);
+
         const { commonData, tokenTransaction, fungibleTransaction } =
           await getCommonData({
             allTransactions,
