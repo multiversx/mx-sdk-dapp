@@ -791,77 +791,7 @@ export const TransactionStatus = () => {
 };
 ```
 
-## Custom Hooks Examples
 
-### useAccountBalance Hook
-
-```typescript
-// hooks/useAccountBalance.ts
-import { useMemo } from 'react';
-import { useGetAccount } from '@multiversx/sdk-dapp/out/react/account/useGetAccount';
-import { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/react/network/useGetNetworkConfig';
-import { formatAmount } from '@multiversx/sdk-dapp/out/utils/operations/formatAmount';
-
-export const useAccountBalance = () => {
-  const account = useGetAccount();
-  const { network } = useGetNetworkConfig();
-
-  const balanceData = useMemo(() => {
-    const rawBalance = account.balance;
-    const formattedBalance = formatAmount({
-      input: rawBalance,
-      decimals: network.decimals,
-      digits: 4
-    });
-
-    const balanceInEgld = parseFloat(rawBalance) / Math.pow(10, network.decimals);
-
-    return {
-      raw: rawBalance,
-      formatted: formattedBalance,
-      egld: balanceInEgld,
-      symbol: network.egldLabel,
-      hasBalance: balanceInEgld > 0
-    };
-  }, [account.balance, network.decimals, network.egldLabel]);
-
-  return balanceData;
-};
-```
-
-### useTransactionTracker Hook
-
-```typescript
-// hooks/useTransactionTracker.ts
-import { useState, useEffect } from 'react';
-import { useGetTransactionSessions } from '@multiversx/sdk-dapp/out/react/transactions/useGetTransactionSessions';
-
-export const useTransactionTracker = (sessionId?: string) => {
-  const sessions = useGetTransactionSessions();
-  const [isTracking, setIsTracking] = useState(false);
-
-  const session = sessionId ? sessions[sessionId] : null;
-
-  useEffect(() => {
-    if (session) {
-      const isPending = session.status === 'pending' || session.status === 'sent';
-      setIsTracking(isPending);
-    }
-  }, [session]);
-
-  const trackingData = {
-    session,
-    isTracking,
-    isCompleted: session && ['success', 'failed', 'invalid'].includes(session.status),
-    isSuccessful: session?.status === 'success',
-    isFailed: session && ['failed', 'invalid'].includes(session.status),
-    transactions: session?.transactions || [],
-    errorMessage: session?.errorMessage
-  };
-
-  return trackingData;
-};
-```
 
 ## Error Handling Examples
 
