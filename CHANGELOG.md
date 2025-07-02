@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added dataTestId to custom provider buttons](https://github.com/multiversx/mx-sdk-dapp/pull/1460)
+- [Added dataTestId to custom provider buttons](https://github.com/multiversx/mx-sdk-dapp/pull/1481)
 
 ## [[5.0.0-alpha.8](https://github.com/multiversx/mx-sdk-dapp/pull/1459)] - 2025-06-19
 
