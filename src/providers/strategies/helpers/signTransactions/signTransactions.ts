@@ -271,6 +271,8 @@ export async function signTransactions({
           return resolve(optionallyGuardedTransactions);
         }
 
+        console.log('signTransactions - onSign - calling onNext');
+
         onNext();
       } catch (error) {
         manager.closeUI();
