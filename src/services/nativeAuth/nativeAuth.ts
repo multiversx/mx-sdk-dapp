@@ -46,14 +46,12 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
 
     let latestBlockInfo = initProps?.latestBlockInfo;
 
-    if (!latestBlockInfo) {
-      latestBlockInfo = await getLatestBlockHash({
-        apiAddress,
-        blockHashShard,
-        getBlockHash,
-        noCache: initProps?.noCache
-      });
-    }
+    latestBlockInfo ??= await getLatestBlockHash({
+      apiAddress,
+      blockHashShard,
+      getBlockHash,
+      noCache: initProps?.noCache
+    });
 
     const { hash, timestamp } = latestBlockInfo;
     const encodedExtraInfo = nativeAuthClient.encodeValue(

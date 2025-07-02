@@ -1,8 +1,8 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import {
   ProviderTypeEnum,

@@ -1,11 +1,10 @@
-import { safeWindow } from 'constants/index';
+import { safeWindow } from 'constants/window.constants';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
+import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
+import { registerSessionCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
-import {
-  ICustomProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { initializeNetwork } from 'store/actions';
@@ -16,7 +15,8 @@ import {
 } from 'store/actions/config/configActions';
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
-import { getIsInIframe } from 'utils/window/getIsInIframe';
+import { ThemesEnum } from 'types';
+import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
@@ -59,6 +59,10 @@ export async function initApp({
   dAppConfig,
   customProviders
 }: InitAppType) {
+  const defaultTheme = dAppConfig?.theme ?? ThemesEnum.dark;
+
+  switchTheme(defaultTheme);
+
   initStore(storage.getStorageCallback);
 
   const { apiAddress } = await initializeNetwork({
@@ -84,26 +88,12 @@ export async function initApp({
     setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
-  const isInIframe = getIsInIframe();
   const isLoggedIn = getIsLoggedIn();
   const account = getAccount();
-
-  if (isInIframe) {
-    const provider = await ProviderFactory.create({
-      type: ProviderTypeEnum.webview
-    });
-
-    const isInitialized = await provider.init();
-
-    if (isInitialized && !isLoggedIn) {
-      await provider.login();
-    }
-  }
-
   const toastManager = ToastManager.getInstance();
-
   await toastManager.init({
-    successfulToastLifetime: dAppConfig.successfulToastLifetime
+    successfulToastLifetime:
+      dAppConfig.transactionTracking?.successfulToastLifetime
   });
 
   const usedProviders: ICustomProvider[] = [
@@ -118,10 +108,18 @@ export async function initApp({
 
   ProviderFactory.customProviders = uniqueProviders || [];
 
-  if (isLoggedIn && !isAppInitialized) {
+  if (!isAppInitialized) {
     await restoreProvider();
-    await registerWebsocketListener(account.address);
-    trackTransactions();
+
+    if (isLoggedIn) {
+      await registerWebsocketListener(account.address);
+      trackTransactions();
+      LogoutManager.getInstance().init();
+      registerSessionCallbacks({
+        onSuccess: dAppConfig.transactionTracking?.onSuccess,
+        onFail: dAppConfig.transactionTracking?.onFail
+      });
+    }
   }
 
   if (account.shard != null) {

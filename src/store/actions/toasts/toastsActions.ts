@@ -88,7 +88,8 @@ export const addTransactionToast = ({
 }: {
   toastId: string;
   totalDuration: number;
-}) => {
+}): string => {
+  let newToastId: string = '';
   getStore().setState(
     ({ toasts: state }) => {
       const lastToastIndex =
@@ -99,7 +100,7 @@ export const addTransactionToast = ({
               )
             )
           : 0;
-      const newToastId = toastId || `transaction-toast-${lastToastIndex + 1}`;
+      newToastId = toastId ?? `transaction-toast-${lastToastIndex + 1}`;
 
       state.transactionToasts.push({
         startTime: getUnixTimestamp(),
@@ -110,6 +111,8 @@ export const addTransactionToast = ({
     false,
     'addTransactionToast'
   );
+
+  return newToastId;
 };
 
 export const removeTransactionToast = (toastId: string) => {

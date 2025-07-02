@@ -1,7 +1,7 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { isBrowserWithPopupConfirmation } from 'constants/browser.constants';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import {
   ProviderTypeEnum,

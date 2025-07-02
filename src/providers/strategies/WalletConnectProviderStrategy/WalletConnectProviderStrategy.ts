@@ -1,13 +1,14 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import {
   SessionEventTypes,
   SessionTypes,
   OptionalOperation
 } from '@multiversx/sdk-wallet-connect-provider/out';
 import { providerLabels } from 'constants/providerFactory.constants';
+import { fallbackWalletConnectConfigurations } from 'constants/walletConnect.constants';
 import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { defineCustomElements } from 'lib/sdkDappUi';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import {
@@ -106,9 +107,16 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       methods: this.methods
     });
 
+    const walletConnectDeepLink =
+      this.config.walletConnectDeepLink ??
+      fallbackWalletConnectConfigurations.walletConnectDeepLink;
+
     this._approval = approval;
     const walletConnectManager = WalletConnectStateManager.getInstance();
-    walletConnectManager.updateData({ wcURI: uri });
+    walletConnectManager.updateData({
+      wcURI: uri,
+      walletConnectDeepLink: `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`
+    });
   }
 
   private async initWalletConnectManager() {
@@ -203,7 +211,14 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
           methods: this.methods
         });
 
-        walletConnectManager.updateData({ wcURI: uri });
+        const walletConnectDeepLink =
+          this.config.walletConnectDeepLink ??
+          fallbackWalletConnectConfigurations.walletConnectDeepLink;
+
+        walletConnectManager.updateData({
+          wcURI: uri,
+          walletConnectDeepLink: `${walletConnectDeepLink}?wallet-connect=${encodeURIComponent(uri)}`
+        });
 
         const providerInfo = await this.provider.login({
           approval: wcApproval,

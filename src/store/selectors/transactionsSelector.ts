@@ -28,6 +28,47 @@ export const pendingTransactionsSessionsSelector = ({
   return pendingSessions;
 };
 
+export const successfulTransactionsSessionsSelector = ({
+  transactions: state
+}: StoreType): Record<string, SessionTransactionType> => {
+  const successfulSessions: Record<string, SessionTransactionType> = {};
+
+  Object.entries(state).forEach(([sessionId, data]) => {
+    const hasSuccessfulTransactions = data.transactions.some(
+      ({ status }) => status === TransactionServerStatusesEnum.success
+    );
+    if (hasSuccessfulTransactions && data.status === 'sent') {
+      successfulSessions[sessionId] = data;
+    }
+  });
+
+  return successfulSessions;
+};
+
+export const failedTransactionsSessionsSelector = ({
+  transactions: state
+}: StoreType): Record<string, SessionTransactionType> => {
+  const failedSessions: Record<string, SessionTransactionType> = {};
+
+  Object.entries(state).forEach(([sessionId, data]) => {
+    const hasFailedTransactions = data.transactions.some(
+      ({ status }) =>
+        status &&
+        [
+          TransactionServerStatusesEnum.fail,
+          TransactionServerStatusesEnum.invalid,
+          TransactionBatchStatusesEnum.cancelled,
+          TransactionBatchStatusesEnum.timedOut
+        ].includes(status)
+    );
+    if (hasFailedTransactions && data.status === 'sent') {
+      failedSessions[sessionId] = data;
+    }
+  });
+
+  return failedSessions;
+};
+
 export const pendingTransactionsSelector = ({
   transactions: state
 }: StoreType): SignedTransactionType[] => {

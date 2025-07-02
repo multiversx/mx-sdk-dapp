@@ -1,6 +1,7 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out/WebviewProvider';
+import { safeWindow, version } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import {
   ProviderTypeEnum,
   ProviderType
@@ -17,7 +18,16 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
 
   constructor(config?: WebviewProviderProps) {
     super(config?.address);
-    this.provider = WebviewProvider.getInstance();
+    this.provider = WebviewProvider.getInstance({
+      resetStateCallback: () => {
+        /* 
+          Used in Hub to clear storage when logging out via the hub header.
+        */
+        safeWindow.localStorage?.clear?.();
+        safeWindow.sessionStorage?.clear?.();
+      }
+    });
+
     this._login = this.provider.login.bind(this.provider);
   }
 
@@ -47,7 +57,7 @@ export class WebviewProviderStrategy extends BaseProviderStrategy {
   }
 
   private async initializeProvider() {
-    const isInitialized = await this.provider.init();
+    const isInitialized = await this.provider.init(version);
 
     if (this.address) {
       this.setAccount({ address: this.address });

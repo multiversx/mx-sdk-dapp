@@ -104,7 +104,14 @@ const config: InitAppType = {
     // network: { // optional
     //   walletAddress: 'https://devnet-wallet.multiversx.com' // or other props you want to override
     // },
-    successfulToastLifetime: 5000
+    // transactionTracking: { // optional
+    //   successfulToastLifetime: 5000,
+    //   onSuccess: async (sessionId) => {
+    //     console.log('Transaction session successful', sessionId);
+    //   },
+    //   onFail: async (sessionId) => {
+    //     console.log('Transaction session failed', sessionId);
+    // }
   }
   // customProviders: [myCustomProvider] // optional
 };
@@ -141,6 +148,30 @@ export const ConnectButton = () => {
 };
 
 ```
+Once the user has logged in, if `nativeAuth` is configured in the `initApp` method, an automatic logout will be performed upon native auth expiration. Before the actual logout is performed, the `LogoutManager` will show a warning toast to the user. This toast can be customized by passing a `tokenExpirationToastWarningSeconds` to the `nativeAuth` config.
+
+```typescript
+// in initAoo config
+const config: InitAppType = {
+ // ...
+ nativeAuth: {
+    expirySeconds: 30, // test auto logout after 30 seconds
+    tokenExpirationToastWarningSeconds: 10 // show warning toast 10 seconds before auto logout
+ },
+}
+```
+
+You have the option to stop this behavior by calling `LogoutManager.getInstance().stop()` after the user has logged in.
+
+```typescript
+import { LogoutManager } from '@multiversx/sdk-dapp/out/managers/LogoutManager/LogoutManager';
+
+  loginHandler: () => {
+    navigate('/dashboard');
+    // optional, to stop the automatic logout upon native auth expiration
+    LogoutManager.getInstance().stop(); 
+  },
+```
 
 If you want to perform some actions as soon as the user has logged in, you will need to call `ProviderFactory.create` inside a handler accepting arguments. 
 
@@ -175,6 +206,8 @@ const provider = await ProviderFactory.create({
 });
 await provider.login();
 ```
+
+> **Note:** Extension and Ledger login will only work if dApp is served over HTTPS protocol
 
 ### 3. Displaying app data
 
@@ -314,8 +347,12 @@ You can find both methods and hooks to access transactions data, as seen in the 
 |---|------|-------------|----|
 | | `methods/transactions` | path | `react/transactions` |
 | 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
-| 2 | `getPendingTransactionsSessions()` | returns an array of pending sessions | `useGetPendingTransactionsSessions()`|
+| 2 | `getPendingTransactionsSessions()` | returns an record of pending sessions | `useGetPendingTransactionsSessions()`|
 | 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
+| 4 | `getFailedTransactionsSessions()` | returns an record of failed sessions | `useGetFailedTransactionsSessions()`|
+| 5 | `getFailedTransactions()` | returns an array of failed transactions | `useGetFailedTransactions()`|
+| 6 | `getSuccessfulTransactionsSessions()` | returns an record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
+| 7 | `getSuccessfulTransactions()` | returns an array of successful transactions | `useGetSuccessfulTransactions()`|
 
 There is a way to inspect store information regarding a specific transaction, using the `transactionsSliceSelector`. An example is shown below:
 
@@ -408,20 +445,8 @@ An existing provider is initialized on app load (this is take care of by `initAp
 If you need to create a custom signing provider, make sure to extend the `IProvider` interface and implement all required methods (see example [here](https://github.com/multiversx/mx-template-dapp/tree/main/src/provider)). Next step would be to include it in the `customProviders` array in the `initApp` method or add it to the [window object](https://github.com/multiversx/mx-template-dapp/tree/main/src/initConfig). Last step is to login using the custom provider.
 
 ```typescript
-import { ProviderTypeEnum } from '@multiversx/sdk-dapp/out/providers/types/providerFactory.types';
-
-const ADDITIONAL_PROVIDERS = {
-  myCustomProvider: 'myCustomProvider'
-} as const;
-
-// do this if you want to reference it later in your code
-const ExtendedProviders = {
-  ...ProviderTypeEnum,
-  ...ADDITIONAL_PROVIDERS
-} as const;
-
 const provider = await ProviderFactory.create({
-  type: ExtendedProviders.myCustomProvider // or add a simple string here
+  type: 'custom-provider'
 });
 await provider?.login();
 ```
@@ -542,9 +567,23 @@ const sentTransactions = await transactionManager.send(batchTransactions);
 The basic option is to use the built-in tracking, which displays toast notifications with default messages.
 
 ```typescript
+import { TransactionManagerTrackOptionsType } from '@multiversx/sdk-dapp/out/managers/TransactionManager/TransactionManager.types';
+
+const options: TransactionManagerTrackOptionsType = {
+  disableToasts: false, // `false` by default
+  transactionsDisplayInfo: { // `undefined` by default
+    errorMessage: 'Failed adding stake',
+    successMessage: 'Stake successfully added',
+    processingMessage: 'Staking in progress'
+  },
+  sessionInformation: { // `undefined` by default. Use to perform additional actions based on the session information
+    stakeAmount: '1000000000000000000000000'
+  }
+};
+
 const sessionId = await transactionManager.track(
-  sentTransactions
-  // { disableToasts: true } optionally disable toast notifications
+  sentTransactions,
+  options // optional
 );
 ```
 

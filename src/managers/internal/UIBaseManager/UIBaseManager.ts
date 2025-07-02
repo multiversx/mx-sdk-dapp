@@ -2,9 +2,9 @@ import { UITagsEnum } from 'constants/UITags.enum';
 import { IEventBus } from 'lib/sdkDappUi';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import {
-  CreateEventBusUIElementType,
-  createUIElement
-} from 'utils/createUIElement';
+  ComponentFactory,
+  CreateEventBusUIElementType
+} from 'utils/ComponentFactory';
 
 export abstract class UIBaseManager<
   TElement extends CreateEventBusUIElementType,
@@ -90,7 +90,7 @@ export abstract class UIBaseManager<
 
     this.isCreatingElement = true;
 
-    this.uiElement = await createUIElement<TElement>({
+    this.uiElement = await ComponentFactory.create<TElement>({
       name: this.uiTag,
       anchor
     });

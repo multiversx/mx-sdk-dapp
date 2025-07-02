@@ -1,8 +1,7 @@
-import { IDAppProviderAccount } from '@multiversx/sdk-dapp-utils/out';
 import { ExtensionProvider } from '@multiversx/sdk-extension-provider/out/extensionProvider';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-
+import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import {
   ProviderTypeEnum,
   ProviderType

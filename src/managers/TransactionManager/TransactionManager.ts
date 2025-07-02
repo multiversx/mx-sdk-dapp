@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { BATCH_TRANSACTIONS_ID_SEPARATOR } from 'constants/transactions.constants';
 import { Transaction, TransactionComputer } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
+import { TransactionTrackingConfigType } from 'methods/initApp/initApp.types';
 import { addTransactionToast } from 'store/actions/toasts/toastsActions';
 import { createTransactionsSession } from 'store/actions/transactions/transactionsActions';
 import { networkSelector } from 'store/selectors';
@@ -11,14 +12,13 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { BatchTransactionsResponseType } from 'types/serverTransactions.types';
-import {
-  TransactionsDisplayInfoType,
-  SignedTransactionType
-} from 'types/transactions.types';
+import { SignedTransactionType } from 'types/transactions.types';
 import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { getToastDuration } from './helpers/getToastDuration';
 import { getTransactionsSessionStatus } from './helpers/getTransactionsStatus';
 import { isBatchTransaction } from './helpers/isBatchTransaction';
+import { registerSessionCallbacks } from './helpers/sessionCallbacks';
+import { TransactionManagerTrackOptionsType } from './TransactionManager.types';
 
 export class TransactionManager {
   private static instance: TransactionManager | null = null;
@@ -29,6 +29,25 @@ export class TransactionManager {
     }
     return TransactionManager.instance;
   }
+
+  /**
+   * Set callbacks to be executed when the transaction session is successful or fails.
+   * @param onSuccess - The callback to run when the transaction session is successful.
+   * @param onFail - The callback to run when the transaction session fails.
+   * @example
+   * ```ts
+   * TransactionManager.setCallbacks({
+   *   onSuccess: (sessionId) => {
+   *     console.log('Transaction session successful', sessionId);
+   *   },
+   * });
+   */
+  public setCallbacks = ({
+    onSuccess,
+    onFail
+  }: TransactionTrackingConfigType) => {
+    registerSessionCallbacks({ onSuccess, onFail });
+  };
 
   public send = async (
     signedTransactions: Transaction[] | Transaction[][]
@@ -67,10 +86,7 @@ export class TransactionManager {
 
   public track = async (
     sentTransactions: SignedTransactionType[] | SignedTransactionType[][],
-    options: {
-      disableToasts?: boolean;
-      transactionsDisplayInfo?: TransactionsDisplayInfoType;
-    } = { disableToasts: false }
+    options: TransactionManagerTrackOptionsType = { disableToasts: false }
   ): Promise<string> => {
     const flatTransactions = this.sequentialToFlatArray(sentTransactions).map(
       (transaction) => ({
@@ -84,7 +100,8 @@ export class TransactionManager {
     const sessionId = createTransactionsSession({
       transactions: flatTransactions,
       transactionsDisplayInfo: options.transactionsDisplayInfo,
-      status: status ?? TransactionBatchStatusesEnum.sent
+      status: status ?? TransactionBatchStatusesEnum.sent,
+      sessionInformation: options.sessionInformation
     });
 
     if (options.disableToasts === true) {

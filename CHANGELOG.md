@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [Added dataTestId to custom provider buttons](https://github.com/multiversx/mx-sdk-dapp/pull/1481)
 
+## [[5.0.0-alpha.14](https://github.com/multiversx/mx-sdk-dapp/pull/1479)] - 2025-06-30
+
+- [Updated version of "mx-sdk-dapp-ui@0.0.8"](https://github.com/multiversx/mx-sdk-dapp/pull/1478)
+
+## [[5.0.0-alpha.13](https://github.com/multiversx/mx-sdk-dapp/pull/1477)] - 2025-06-30
+
+- [Refactor `createUiElement` to ComponentFactory](https://github.com/multiversx/mx-sdk-dapp/pull/1476)
+- [Fixed issue with wallet login](https://github.com/multiversx/mx-sdk-dapp/pull/1475)
+
+## [[5.0.0-alpha.12](https://github.com/multiversx/mx-sdk-dapp/pull/1472)] - 2025-06-27
+
+- [Added `LogoutManager` to handle automatic logout upon native auth expiration](https://github.com/multiversx/mx-sdk-dapp/pull/1471)
+- [Added support for xPortal deep link accesibility](https://github.com/multiversx/mx-sdk-dapp/pull/1468)
+
+## [[5.0.0-alpha.11](https://github.com/multiversx/mx-sdk-dapp/pull/1470)] - 2025-06-26
+
+- [Added callbacks for transaction tracking](https://github.com/multiversx/mx-sdk-dapp/pull/1469)
+- [Added support for theme switching](https://github.com/multiversx/mx-sdk-dapp/pull/1467)
+- [Added resetState on logout for WebviewProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1466)
+
+## [[5.0.0-alpha.10](https://github.com/multiversx/mx-sdk-dapp/pull/1465)] - 2025-06-25
+
+- [Added `useGetFailedTransactions` hook, `getFailedTransactionsSessions` method, `getFailedTransactions` method, `useGetSuccessfulTransactions` hook, `getSuccessfulTransactionsSessions` method, `getSuccessfulTransactions` method, `useGetPendingTransactions` hook, `getPendingTransactionsSessions` method, `getPendingTransactions` method](https://github.com/multiversx/mx-sdk-dapp/pull/1464)
+
+## [[5.0.0-alpha.9](https://github.com/multiversx/mx-sdk-dapp/pull/1462)] - 2025-06-24
+
+- [Updated README](https://github.com/multiversx/mx-sdk-dapp/pull/1463)
+- [Updated version of "mx-sdk-dapp-ui@0.0.7"](https://github.com/multiversx/mx-sdk-dapp/pull/1461)
+- [Updated webview login with version handshake](https://github.com/multiversx/mx-sdk-dapp/pull/1460)
+
 ## [[5.0.0-alpha.8](https://github.com/multiversx/mx-sdk-dapp/pull/1459)] - 2025-06-19
 
 - [Added `getScamFlag` utility](https://github.com/multiversx/mx-sdk-dapp/pull/1458)
