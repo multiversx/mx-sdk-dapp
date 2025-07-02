@@ -91,6 +91,7 @@ export type InitAppType = {
         name: 'Custom Provider',
         type: 'custom',
         iconUrl: `${window.location.origin}/multiversx-white.svg`,
+        dataTestId: 'custom-provider',
         constructor: async (options) => new CustomProvider(options)
     * }]
    * ```
