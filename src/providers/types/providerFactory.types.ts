@@ -47,7 +47,6 @@ export interface IProviderBase<T extends ProviderType = ProviderType> {
   name: string;
   type: T;
   iconUrl?: string;
-  dataTestId?: string;
 }
 export interface ICustomProvider<T extends ProviderType = ProviderType>
   extends IProviderBase<T> {
