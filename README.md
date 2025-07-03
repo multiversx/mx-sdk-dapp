@@ -45,20 +45,7 @@ or
 ```bash
 yarn add @multiversx/sdk-dapp
 ```
-
-If you need only the core behaviour, without the additional UI, you can create a project-specific `.npmrc` file to configure per-package installation behavior. This will skip the installation of `@multiversx/sdk-dapp-ui`, but keep in mind that you may need to provide the UI components yourself.
-Also, make sure you run your app on `https`, not `http`, otherwise some providers will not work.
-
-```bash
-## .npmrc
-@multiversx/sdk-dapp:omit-optional=true
-## enable the option when needed with:
-## @multiversx/sdk-dapp:omit-optional=false
-
-## Run Installation
-## When you run npm install, NPM will use the configurations specified in the .npmrc file:
-npm install
-```
+> **Note:** Make sure you run your app on `https`, not `http`, otherwise some providers will not work.
 
 If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/0eb7bc6194195b6c364b8010023d351d914db65e/MIGRATION_GUIDE.md) and  [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
 
@@ -140,6 +127,7 @@ export const ConnectButton = () => {
     onClose: () => { // optional action to be performed when the user closes the Unlock Panel
       navigate('/');
     },
+    // allowedProviders: [ProviderTypeEnum.walletConnect, 'myCustomProvider'] // optionally, only show specific providers
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();
@@ -185,7 +173,7 @@ export const AdvancedConnectButton = () => {
       });
       const { address, signature } = await provider.login();
       navigate(`/dashboard?address=${address}`;
-    }
+    },
   });
   const handleOpenUnlockPanel = () => {
     unlockPanelManager.openUnlockPanel();
@@ -280,7 +268,7 @@ export function useStore() {
 To sign transactions, you first need to create the `Transaction` object, then pass it to the initialized provider.
 
 ```typescript
-import { Address, Transaction, TransactionPayload } from '@multiversx/sdk-core';
+import { Address, Transaction } from '@multiversx/sdk-core';
 import {
   GAS_PRICE,
   GAS_LIMIT
@@ -290,7 +278,7 @@ import { refreshAccount } from '@multiversx/sdk-dapp/out/utils/account/refreshAc
 
 const pongTransaction = new Transaction({
   value: BigInt(0),
-  data: new TransactionPayload('pong'),
+  data: Buffer.from('pong'),
   receiver: Address.newFromBech32(contractAddress),
   gasLimit: BigInt(GAS_LIMIT),
   gasPrice: BigInt(GAS_PRICE),
@@ -309,12 +297,15 @@ const signedTransactions = await provider.signTransactions(transactions);
 
 Then, to send the transactions, you need to use the `TransactionManager` class and pass in the `signedTransactions` to the `send` method. You can then track the transactions by using the `track` method. This will create a toast notification with the transaction hash and its status.
 
+> **Note:** You can set callbacks for the transaction manager to handle the session status, by using the `setCallbacks` method on the `TransactionManager` class. This can also be configured globally in the `initApp` method.
+
 ```typescript
 import { TransactionManager } from '@multiversx/sdk-dapp/out/managers/TransactionManager';
 import type { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/out/types/transactions.types';
 
 
 const txManager = TransactionManager.getInstance();
+
 const sentTransactions = await txManager.send(signedTransactions);
 
 const toastInformation: TransactionsDisplayInfoType = {
@@ -324,7 +315,7 @@ const toastInformation: TransactionsDisplayInfoType = {
 }
 
 const sessionId = await txManager.track(sentTransactions, {
-  transactionsDisplayInfo: toastInformation
+  transactionsDisplayInfo: toastInformation,
 });
 ```
 
@@ -503,6 +494,18 @@ The transaction lifecycle consists of the following steps:
 
 4. **Tracking** transactions is made by using `transactionManager.track()`. Since the `send()` function returns the same arguments it has received, the same array payload can be passed into the `track()` method. Under the hood, status updates are received via a WebSocket or polling mechanism.
    Once a transaction array is tracked, it gets associated with a `sessionId`, returned by the `track()` method and stored in the `transactions` slice. Depending on the array's type (plain/batch), the session's status varies from initial (`pending`/`invalid`/`sent`) to final (`successful`/`failed`/`timedOut`).
+
+**Table 6**. Inspecting transaction sessions
+| # | Helper | Description | React hook equivalent |
+|---|------|-------------|----|
+| | `methods/transactions` | path | `react/transactions` |
+| 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
+| 2 | `getPendingTransactionsSessions()` | returns an record of pending sessions | `useGetPendingTransactionsSessions()`|
+| 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
+| 4 | `getFailedTransactionsSessions()` | returns an record of failed sessions | `useGetFailedTransactionsSessions()`|
+| 5 | `getFailedTransactions()` | returns an array of failed transactions | `useGetFailedTransactions()`|
+| 6 | `getSuccessfulTransactionsSessions()` | returns an record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
+| 7 | `getSuccessfulTransactions()` | returns an array of successful transactions | `useGetSuccessfulTransactions()`|
 
 5. **User feedback** is provided through toast notifications, which are triggered to inform about transactions' progress. Additional tracking details can be optionally displayed in the toast UI.
 There is an option to add custom toast messages by using the `createCustomToast` helper.
@@ -718,9 +721,6 @@ export const FormatAmount = (props: IFormatAmountProps) => {
     />
   );
 };
-
-
-
 ```
 
 
@@ -734,7 +734,9 @@ flowchart LR
 ```
 
 ```typescript
-const modalElement = await createUIElement<LedgerConnectModal>(
+import { ComponentFactory } from '@multiversx/sdk-dapp/out/utils/ComponentFactory';
+
+const modalElement = await ComponentFactory.create<LedgerConnectModal>(
   'mvx-ledger-connect-panel'
 );
 const eventBus = await modalElement.getEventBus();

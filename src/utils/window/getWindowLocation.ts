@@ -9,7 +9,13 @@ type GetWindowLocationType = {
 };
 
 export const getWindowLocation = (): GetWindowLocationType => {
-  const isAvailable = isWindowAvailable();
+  let isAvailable: boolean;
+
+  try {
+    isAvailable = isWindowAvailable();
+  } catch (_error) {
+    isAvailable = false;
+  }
 
   if (!isAvailable) {
     return {
