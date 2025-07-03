@@ -74,8 +74,8 @@ export async function initApp({
     const nativeAuthConfig: NativeAuthConfigType =
       typeof dAppConfig.nativeAuth === 'boolean' &&
       dAppConfig.nativeAuth === true
-        ? getDefaultNativeAuthConfig(apiAddress)
-        : dAppConfig.nativeAuth;
+        ? getDefaultNativeAuthConfig({ apiAddress })
+        : getDefaultNativeAuthConfig(dAppConfig.nativeAuth);
 
     setNativeAuthConfig(nativeAuthConfig);
   }
