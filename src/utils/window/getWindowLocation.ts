@@ -13,7 +13,7 @@ export const getWindowLocation = (): GetWindowLocationType => {
 
   try {
     isAvailable = isWindowAvailable();
-  } catch (_err) {
+  } catch (_error) {
     isAvailable = false;
   }
 
