@@ -4,8 +4,6 @@ import { nativeAuth } from 'services/nativeAuth';
 import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefaultNativeAuthConfig';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
-import { networkSelector } from 'store/selectors/networkSelectors';
-import { getState } from 'store/store';
 
 /**
  * Use this function if you support multiple networks with network switching
@@ -22,10 +20,7 @@ export const refreshNativeAuthTokenLogin = async ({
   nativeAuthClientConfig?: NativeAuthConfigType;
 }): Promise<string | null> => {
   const { address } = getAccount();
-  const network = networkSelector(getState());
-  const defaultNativeAuthConfig = getDefaultNativeAuthConfig(
-    network.apiAddress
-  );
+  const defaultNativeAuthConfig = getDefaultNativeAuthConfig();
 
   const nativeAuthClient = nativeAuth(
     nativeAuthClientConfig || defaultNativeAuthConfig
