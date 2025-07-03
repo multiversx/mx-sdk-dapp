@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added allowedProviders as list of strings](https://github.com/multiversx/mx-sdk-dapp/pull/1482)
+
 ## [[5.0.0-alpha.14](https://github.com/multiversx/mx-sdk-dapp/pull/1479)] - 2025-06-30
 
 - [Updated version of "mx-sdk-dapp-ui@0.0.8"](https://github.com/multiversx/mx-sdk-dapp/pull/1478)
