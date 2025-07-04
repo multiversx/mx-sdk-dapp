@@ -217,7 +217,7 @@ export async function getCommonData({
     providerName,
     address,
     username,
-    origin: safeWindow.location.origin
+    origin: safeWindow.location?.origin
   };
 
   return { commonData, tokenTransaction, fungibleTransaction };

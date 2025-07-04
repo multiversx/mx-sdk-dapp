@@ -59,7 +59,9 @@ export async function signTransactions({
   return new Promise<Transaction[]>(async (resolve, reject) => {
     const signedTransactions: Transaction[] = [];
     const economics = await getEconomics({ baseURL: network.apiAddress });
+
     manager.notifyDataUpdate();
+
     manager.initializeGasPriceMap(allTransactions.map((tx) => tx.transaction));
     const price = economics?.price;
 
@@ -71,36 +73,44 @@ export async function signTransactions({
 
       const currentNonce = Number(transaction.nonce);
 
-      manager.updateIsLoading(true);
-      const { commonData, tokenTransaction, fungibleTransaction } =
-        await getCommonData({
-          allTransactions,
-          currentScreenIndex,
-          egldLabel,
-          network,
-          gasPriceData: manager.ppuMap[currentNonce],
-          price,
-          address,
-          username,
-          shard,
-          signedIndexes,
-          parsedTransactionsByDataField
-        });
+      try {
+        manager.updateIsLoading(true);
 
-      manager.updateIsLoading(false);
+        const { commonData, tokenTransaction, fungibleTransaction } =
+          await getCommonData({
+            allTransactions,
+            currentScreenIndex,
+            egldLabel,
+            network,
+            gasPriceData: manager.ppuMap[currentNonce],
+            price,
+            address,
+            username,
+            shard,
+            signedIndexes,
+            parsedTransactionsByDataField
+          });
 
-      if (tokenTransaction) {
-        manager.updateTokenTransaction(tokenTransaction);
-      }
+        if (tokenTransaction) {
+          manager.updateTokenTransaction(tokenTransaction);
+        }
 
-      if (fungibleTransaction) {
-        manager.updateNonFungibleTransaction(
-          fungibleTransaction.type,
-          fungibleTransaction
+        if (fungibleTransaction) {
+          manager.updateNonFungibleTransaction(
+            fungibleTransaction.type,
+            fungibleTransaction
+          );
+        }
+
+        manager.updateCommonData(commonData);
+      } catch (error) {
+        console.error(
+          `Error fetching common data for transaction at index ${currentScreenIndex}:`,
+          error
         );
+      } finally {
+        manager.updateIsLoading(false);
       }
-
-      manager.updateCommonData(commonData);
     };
 
     const onBack = () => {
