@@ -26,7 +26,7 @@ const executeBuild = () =>
       format: 'esm',
       outdir: 'out',
       treeShaking: true,
-      minify: false,
+      minify: true,
       bundle: true,
       sourcemap: true,
       chunkNames: '__chunks__/[name]-[hash]',
