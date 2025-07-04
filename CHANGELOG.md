@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added readme and Cursor instructions for apiCalls](https://github.com/multiversx/mx-sdk-dapp/pull/1488)
+
 ## [[5.0.0-alpha.16](https://github.com/multiversx/mx-sdk-dapp/pull/1487)] - 2025-07-04
 
 - [RN small fixes around sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/14836
