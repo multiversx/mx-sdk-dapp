@@ -7,9 +7,7 @@ import {
   RequestPayloadType
 } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
-import { nativeAuth } from 'services/nativeAuth';
-import { decodeNativeAuthToken } from 'services/nativeAuth/helpers';
-import { accountSelector, loginInfoSelector } from 'store/selectors';
+import { accountSelector } from 'store/selectors';
 import { getStore } from 'store/store';
 
 type MessageHandler = (event: MessageEvent) => void;
@@ -68,48 +66,26 @@ export class WebviewClient {
     }
   }
 
-  private async getNativeAuthToken({
-    origin,
-    token
-  }: {
-    origin: string;
-    token: string;
-  }) {
-    const nativeAuthClient = nativeAuth({
-      origin
-    });
-
-    const { tokenLogin } = loginInfoSelector(this.store.getState());
-    const { address } = accountSelector(this.store.getState());
-
-    return nativeAuthClient.getToken({
-      address,
-      token,
-      signature: Buffer.from(tokenLogin?.signature ?? '').toString('hex')
-    });
-  }
-
   private async login({
     event,
     payload
   }: MessageEventType & { payload: RequestPayloadType['LOGIN_REQUEST'] }) {
-    const { token } = payload;
+    const accessToken = payload?.token;
 
-    if (!token) {
+    if (!accessToken) {
       return;
     }
 
-    const nativeAuthToken = await this.getNativeAuthToken({
-      origin: event.origin,
-      token
+    const { address } = accountSelector(this.store.getState());
+    const provider = getAccountProvider();
+
+    const messageToSign = new Message({
+      address: new Address(address),
+      data: new Uint8Array(Buffer.from(accessToken))
     });
-    const decodedToken = decodeNativeAuthToken(nativeAuthToken);
 
-    if (!decodedToken) {
-      return;
-    }
-
-    const { address, signature } = decodedToken;
+    const signedMessage = await provider.signMessage(messageToSign);
+    const signature = signedMessage?.signature ?? '';
 
     event.source?.postMessage(
       {
@@ -117,8 +93,8 @@ export class WebviewClient {
         payload: {
           data: {
             address,
-            accessToken: nativeAuthToken,
-            signature
+            accessToken,
+            signature: Buffer.from(signature).toString('hex')
           }
         }
       },
@@ -152,17 +128,16 @@ export class WebviewClient {
       data: new Uint8Array(Buffer.from(message))
     });
 
-    const accountProvider = getAccountProvider();
-    const signedMessage = await accountProvider.signMessage(messageToSign);
+    const provider = getAccountProvider();
+    const signedMessage = await provider.signMessage(messageToSign);
+    const signature = signedMessage?.signature ?? '';
 
     event.source?.postMessage(
       {
         type: WindowProviderResponseEnums.signMessageResponse,
         payload: {
           data: {
-            signature: Buffer.from(signedMessage?.signature ?? '').toString(
-              'hex'
-            ),
+            signature: Buffer.from(signature).toString('hex'),
             status: 'signed'
           }
         }
@@ -172,7 +147,7 @@ export class WebviewClient {
   }
 
   private async signTransactions({ event }: MessageEventType) {
-    const accountProvider = getAccountProvider();
+    const provider = getAccountProvider();
     const { payload } = event.data;
 
     if (!Array.isArray(payload)) {
@@ -183,7 +158,7 @@ export class WebviewClient {
       Transaction.newFromPlainObject(plainTransactionObject)
     );
 
-    const signedTx = await accountProvider.signTransactions(transactions);
+    const signedTx = await provider.signTransactions(transactions);
     event.source?.postMessage(
       {
         type: WindowProviderResponseEnums.signTransactionsResponse,
