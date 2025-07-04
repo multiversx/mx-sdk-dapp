@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/commonActions.ts"],
-  "sourcesContent": ["import { createAction } from '@reduxjs/toolkit';\nimport { LOGIN_ACTION_NAME, LOGOUT_ACTION_NAME } from 'constants/index';\nimport { IframeLoginTypes } from 'lib/sdkWebWalletIframeProvider';\nimport { LoginMethodsEnum } from 'types/enums.types';\n\nexport interface LoginActionPayloadType {\n  address: string;\n  loginMethod: LoginMethodsEnum;\n  iframeLoginType?: IframeLoginTypes;\n}\n\nexport const logoutAction = createAction(LOGOUT_ACTION_NAME);\n\nexport const loginAction = createAction(\n  LOGIN_ACTION_NAME,\n  (payload: LoginActionPayloadType) => ({ payload })\n);\n"],
-  "mappings": "qGAAA,mDAWa,GAEA,EAbb,aACA,IAUO,AAAM,EAAe,EAAa,CAAkB,EAE9C,EAAc,EACzB,EACA,AAAC,GAAqC,EAAE,SAAQ,EAClD",
-  "names": []
-}

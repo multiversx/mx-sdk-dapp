@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithIframeModal/index.tsx"],
-  "sourcesContent": ["export * from './SignWithIframeModal';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

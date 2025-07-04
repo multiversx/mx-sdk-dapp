@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoAge/index.tsx"],
-  "sourcesContent": ["export * from './TransactionInfoAge';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

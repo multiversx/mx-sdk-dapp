@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsTable/components/ScAddressIcon.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { faFileAlt } from '@fortawesome/free-solid-svg-icons/faFileAlt';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport classNames from 'classnames';\nimport { DataTestIdsEnum } from 'constants/index';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { isContract } from 'utils/smartContracts';\n\nexport interface ScAddressIconPropsType {\n  initiator: string;\n  secondInitiator?: string;\n}\n\nconst ScAddressIconComponent = ({\n  initiator,\n  secondInitiator,\n  globalStyles\n}: ScAddressIconPropsType & WithStylesImportType) => {\n  const showIcon = isContract(initiator) || isContract(secondInitiator ?? '');\n\n  if (showIcon) {\n    return (\n      <FontAwesomeIcon\n        title='Smart Contract'\n        icon={faFileAlt}\n        className={classNames(globalStyles?.mr1, globalStyles?.textSecondary)}\n        data-testid={DataTestIdsEnum.scIcon}\n      />\n    );\n  }\n\n  return null;\n};\n\nexport const ScAddressIcon = withStyles(ScAddressIconComponent, {});\n"],
-  "mappings": "kKAAA,IAIA,IAJA,qBACA,wEACA,iEACA,0BAGA,IAOA,GAAM,GAAyB,CAAC,CAC9B,YACA,kBACA,kBAEiB,EAAW,CAAS,GAAK,EAAW,UAAmB,EAAE,EAItE,gBAAC,GACC,MAAM,iBACN,KAAM,EACN,UAAW,EAAW,iBAAc,IAAK,iBAAc,aAAa,EACpE,cAAa,SACf,EAIG,KAGI,EAAgB,EAAW,EAAwB,CAAC,CAAC",
-  "names": []
-}

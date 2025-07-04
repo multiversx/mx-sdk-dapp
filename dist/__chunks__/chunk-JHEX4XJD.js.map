@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/index.ts"],
-  "sourcesContent": ["export * from './transactionActionUnwrapper';\n"],
-  "mappings": "uFAAA",
-  "names": []
-}

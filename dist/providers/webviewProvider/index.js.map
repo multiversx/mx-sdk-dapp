@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/providers/webviewProvider/index.ts"],
-  "sourcesContent": ["export * from './webviewProvider';\n"],
-  "mappings": "i3GAAA",
-  "names": []
-}

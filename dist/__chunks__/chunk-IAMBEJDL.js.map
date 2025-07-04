@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsTable/components/TransactionDirectionBadge.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { WithTransactionType } from '../../../UI/types';\n\nconst TransactionDirectionBadgeComponent = ({\n  transaction,\n  globalStyles,\n  styles\n}: WithTransactionType & WithStylesImportType) => (\n  <div className={globalStyles?.dFlex}>\n    <span\n      className={classNames(\n        styles?.directionBadge,\n        transaction.transactionDetails.direction?.toLowerCase()\n      )}\n    >\n      {transaction.transactionDetails.direction?.toUpperCase()}\n    </span>\n  </div>\n);\n\nexport const TransactionDirectionBadge = withStyles(\n  TransactionDirectionBadgeComponent,\n  {\n    ssrStyles: () =>\n      import('UI/TransactionsTable/components/transactionsTable.styles.scss'),\n    clientStyles: () =>\n      require('UI/TransactionsTable/components/transactionsTable.styles.scss')\n        .default\n  }\n);\n"],
-  "mappings": "iIAAA,yBACA,0BAIA,GAAM,GAAqC,CAAC,CAC1C,cACA,eACA,YAC6C,CAT/C,QAUE,uBAAC,OAAI,UAAW,iBAAc,OAC5B,gBAAC,QACC,UAAW,EACT,iBAAQ,eACR,KAAY,mBAAmB,YAA/B,cAA0C,aAC5C,GAEC,KAAY,mBAAmB,YAA/B,cAA0C,aAC7C,CACF,GAGW,EAA4B,EACvC,EACA,CACE,UAAW,IACT,OAAO,kEACT,aAAc,IACZ,WACG,OACP,CACF",
-  "names": []
-}

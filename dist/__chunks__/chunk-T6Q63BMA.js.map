@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/wrappers/AuthenticatedRoutesWrapper/index.tsx"],
-  "sourcesContent": ["export * from './AuthenticatedRoutesWrapper';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

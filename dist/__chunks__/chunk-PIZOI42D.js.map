@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/clearNavigationHistory.ts"],
-  "sourcesContent": ["import { getWindowLocation } from './window';\n\nexport const clearNavigationHistory = (remainingParams: any) => {\n  const newUrlParams = new URLSearchParams(remainingParams).toString();\n  const { pathname, hash } = getWindowLocation();\n  const newSearch = newUrlParams ? `?${newUrlParams}` : '';\n  const fullPath = pathname ? `${pathname}${newSearch}${hash}` : './';\n\n  setTimeout(() => {\n    window?.history.replaceState({}, document?.title, fullPath);\n  });\n};\n"],
-  "mappings": "+HAAA,GAEa,GAFb,iBAEO,AAAM,EAAyB,AAAC,GAAyB,CAC9D,GAAM,GAAe,GAAI,iBAAgB,CAAe,EAAE,SAAS,EAC7D,CAAE,WAAU,QAAS,EAAkB,EACvC,EAAY,EAAe,IAAI,IAAiB,GAChD,EAAW,EAAW,GAAG,IAAW,IAAY,IAAS,KAE/D,WAAW,IAAM,CACf,qBAAQ,QAAQ,aAAa,CAAC,EAAG,+BAAU,MAAO,EACpD,CAAC,CACH",
-  "names": []
-}

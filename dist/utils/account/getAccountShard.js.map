@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/utils/account/getAccountShard.tsx"],
-  "sourcesContent": ["import axios from 'axios';\nimport {\n  addressSelector,\n  apiAddressSelector,\n  shardSelector\n} from 'reduxStore/selectors';\n\nimport { setAccountShard } from 'reduxStore/slices';\nimport { store } from 'reduxStore/store';\nimport { AccountType } from 'types';\n\nexport async function getAccountShard() {\n  const appState = store.getState();\n  const apiAddress = apiAddressSelector(appState);\n  const address = addressSelector(appState);\n  const shard = shardSelector(appState);\n\n  try {\n    if (shard == null && address) {\n      const { data: account } = await axios.get<AccountType>(\n        `${apiAddress}/accounts/${address}`\n      );\n      store.dispatch(setAccountShard(Number(account.shard)));\n      return account.shard;\n    } else {\n      return shard;\n    }\n  } catch (err) {\n    console.error(err);\n    return null;\n  }\n}\n"],
-  "mappings": "uoPAAA,IACA,IAMA,IACA,IARA,qBAWA,YAAwC,gCACtC,GAAM,GAAW,EAAM,SAAS,EAC1B,EAAa,EAAmB,CAAQ,EACxC,EAAU,EAAgB,CAAQ,EAClC,EAAQ,EAAc,CAAQ,EAEpC,GAAI,CACF,GAAI,GAAS,MAAQ,EAAS,CAC5B,GAAM,CAAE,KAAM,GAAY,KAAM,GAAM,IACpC,GAAG,cAAuB,GAC5B,EACA,SAAM,SAAS,EAAgB,OAAO,EAAQ,KAAK,CAAC,CAAC,EAC9C,EAAQ,KACjB,KACE,OAAO,EAEX,OAAS,EAAP,CACA,eAAQ,MAAM,CAAG,EACV,IACT,CACF",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/environment/isWebEnvironment.ts"],
-  "sourcesContent": ["export function isWebEnvironment() {\n  return typeof sessionStorage !== 'undefined';\n}\n"],
-  "mappings": "+CAAO,YAA4B,CACjC,MAAO,OAAO,iBAAmB,WACnC,CAFA",
-  "names": []
-}

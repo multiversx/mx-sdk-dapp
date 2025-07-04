@@ -1,1 +1,0 @@
-{"version":3,"file":"isTokenTransfer.d.ts","sourceRoot":"","sources":["../../../src/utils/transactions/isTokenTransfer.ts"],"names":[],"mappings":"AAAA,wBAAgB,eAAe,CAAC,EAC9B,OAAO,EACP,QAAQ,EACT,EAAE;IACD,OAAO,EAAE,MAAM,GAAG,SAAS,CAAC;IAC5B,QAAQ,EAAE,MAAM,CAAC;CAClB,WAEA"}

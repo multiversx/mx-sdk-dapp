@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/network/index.ts"],
-  "sourcesContent": ["export * from './getChainID';\nexport * from './getNetworkConfig';\nexport * from './getEgldLabel';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithMetamaskModal/SignWithMetamaskModal.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { SignModalPropsType } from 'types';\nimport { SignWithDeviceModal } from '../SignWithDeviceModal';\n\nexport const SignWithMetamaskModal = (props: SignModalPropsType) => {\n  return (\n    <SignWithDeviceModal\n      {...props}\n      title={props.title || 'Confirm on Metamask'}\n    />\n  );\n};\n"],
-  "mappings": "8FAAA,yBAIO,GAAM,GAAwB,AAAC,GAElC,gBAAC,SACK,GADL,CAEC,MAAO,EAAM,OAAS,uBACxB",
-  "names": []
-}

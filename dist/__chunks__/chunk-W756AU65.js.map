@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/platform/getIsExtensionAvailable.ts"],
-  "sourcesContent": ["type SafeWindowType<T extends Window = Window> = {\n  [K in keyof T]?: T[K];\n};\n\nexport const getIsExtensionAvailable = () => {\n  const safeWindow =\n    typeof window !== 'undefined' ? window : ({} as SafeWindowType);\n  return Boolean(safeWindow?.elrondWallet);\n};\n"],
-  "mappings": "wCAAA,IAIO,GAAM,GAA0B,IAAM,CAC3C,GAAM,GACJ,MAAO,SAAW,YAAc,OAAU,CAAC,EAC7C,MAAO,SAAQ,iBAAY,YAAY,CACzC",
-  "names": []
-}

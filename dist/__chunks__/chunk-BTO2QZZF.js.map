@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/services/nativeAuth/helpers/getAuthorizationInfo.ts"],
-  "sourcesContent": ["import { getHumanReadableTokenExpirationTime } from 'components/LogoutListener/helpers/useNativeAuthLogoutWarning/helpers';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { tokenLoginSelector } from 'reduxStore/selectors';\nimport { WithClassnameType } from 'UI/types';\nimport { decodeLoginToken } from './decodeLoginToken';\n\nexport const getAuthorizationInfo = (\n  token?: string,\n  className?: WithClassnameType['className']\n) => {\n  const tokenLogin = useSelector(tokenLoginSelector);\n  const loginToken = tokenLogin?.loginToken ?? token;\n\n  if (!loginToken) {\n    return;\n  }\n\n  const decoded = decodeLoginToken(loginToken);\n\n  if (!decoded) {\n    return;\n  }\n\n  return {\n    className,\n    url: decoded.origin,\n    duration: getHumanReadableTokenExpirationTime(decoded.ttl * 1000)\n  };\n};\n"],
-  "mappings": "2OAAA,IAEA,IAIO,GAAM,GAAuB,CAClC,EACA,IACG,CATL,MAUE,GAAM,GAAa,EAAY,CAAkB,EAC3C,EAAa,oBAAY,aAAZ,OAA0B,EAE7C,GAAI,CAAC,EACH,OAGF,GAAM,GAAU,EAAiB,CAAU,EAE3C,GAAI,EAAC,EAIL,MAAO,CACL,YACA,IAAK,EAAQ,OACb,SAAU,EAAoC,EAAQ,IAAM,GAAI,CAClE,CACF",
-  "names": []
-}

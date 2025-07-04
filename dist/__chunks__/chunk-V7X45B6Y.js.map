@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/DataField/index.tsx"],
-  "sourcesContent": ["export * from './DataField';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

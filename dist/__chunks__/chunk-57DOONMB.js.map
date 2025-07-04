@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/account/setNonce.tsx"],
-  "sourcesContent": ["import { setAccountNonce } from 'reduxStore/slices';\nimport { store } from 'reduxStore/store';\n\n// this is is needed to allow the users to set the nonce dynamically from outside the library\n// without getting access to store.dispatch function\nexport function setNonce(nonce: number) {\n  store.dispatch(setAccountNonce(nonce));\n}\n"],
-  "mappings": "uKAAA,QACA,IAIO,WAAkB,EAAe,CACtC,EAAM,SAAS,EAAgB,CAAK,CAAC,CACvC",
-  "names": []
-}

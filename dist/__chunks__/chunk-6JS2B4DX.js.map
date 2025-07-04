@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithLedgerModal/SignWithLedgerModal.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { useGetAccountInfo, useGetLoginInfo } from 'hooks';\nimport { LoginMethodsEnum, SignModalPropsType } from 'types';\nimport { getLedgerVersionOptions } from 'utils/operations/ledger';\nimport { SignWithDeviceModal } from '../SignWithDeviceModal';\nimport { LedgerGuardianSigningModalError } from './LedgerGuardianSigningModalError';\n\nexport const SignWithLedgerModal = (props: SignModalPropsType) => {\n  const {\n    ledgerAccount,\n    account: { isGuarded }\n  } = useGetAccountInfo();\n  const { loginMethod } = useGetLoginInfo();\n\n  const { ledgerWithGuardians } = getLedgerVersionOptions(\n    ledgerAccount?.version ?? ''\n  );\n\n  const isProviderAllowed =\n    loginMethod === LoginMethodsEnum.ledger ? ledgerWithGuardians : true;\n\n  if (isGuarded && !isProviderAllowed) {\n    return <LedgerGuardianSigningModalError {...props} />;\n  }\n\n  return (\n    <SignWithDeviceModal\n      {...props}\n      title={props.title || 'Confirm on Ledger'}\n      className={props.className || 'dapp-ledger-modal'}\n    />\n  );\n};\n"],
-  "mappings": "yUAAA,yBAEA,IACA,IAIO,GAAM,GAAsB,AAAC,GAA8B,CAPlE,MAQE,GAAM,CACJ,gBACA,QAAS,CAAE,cACT,EAAkB,EAChB,CAAE,eAAgB,EAAgB,EAElC,CAAE,uBAAwB,EAC9B,oBAAe,UAAf,OAA0B,EAC5B,EAEM,EACJ,IAAgB,SAA0B,EAAsB,GAElE,MAAI,IAAa,CAAC,EACT,gBAAC,OAAoC,EAAO,EAInD,gBAAC,SACK,GADL,CAEC,MAAO,EAAM,OAAS,oBACtB,UAAW,EAAM,WAAa,qBAChC,CAEJ",
-  "names": []
-}

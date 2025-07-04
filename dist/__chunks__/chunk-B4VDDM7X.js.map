@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/platform/getIsMetamaskAvailable.ts"],
-  "sourcesContent": ["import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';\n\nexport const getIsMetamaskAvailable = () => {\n  return MetamaskProvider.isMetamaskInstalled();\n};\n"],
-  "mappings": "wCAAA,8FAEO,GAAM,GAAyB,IAC7B,EAAiB,oBAAoB",
-  "names": []
-}

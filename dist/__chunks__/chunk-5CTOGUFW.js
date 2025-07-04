@@ -1,2 +1,0 @@
-import{a as e}from"./chunk-GAGVTIFK.js";import{a as o}from"./chunk-ZXZXEDS2.js";import{x as i}from"./chunk-UDZUNVED.js";import{m as r}from"./chunk-HBP5N4FR.js";r();i();import n from"react";import{faExchangeAlt as a}from"@fortawesome/free-solid-svg-icons/faExchangeAlt";function m({globalStyles:t}){return n.createElement(e,{icon:a,title:"Unable to load transactions",className:t==null?void 0:t.myAuto,"data-testid":"errorScreen"})}var y=o(m,{});export{y as a};
-//# sourceMappingURL=chunk-5CTOGUFW.js.map

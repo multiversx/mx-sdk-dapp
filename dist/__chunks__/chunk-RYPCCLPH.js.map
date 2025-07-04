@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/services/transactions/isCrossShardTransaction.ts"],
-  "sourcesContent": ["import { Address } from '@multiversx/sdk-core/out';\n\nimport { getShardOfAddress } from 'utils/account/getShardOfAddress';\n\nexport interface IsCrossShardTransactionPropsType {\n  receiverAddress: string;\n  senderShard?: number;\n  senderAddress?: string;\n}\nexport function isCrossShardTransaction({\n  receiverAddress,\n  senderShard,\n  senderAddress\n}: IsCrossShardTransactionPropsType) {\n  try {\n    const receiver = new Address(receiverAddress);\n    const receiverShard = getShardOfAddress(receiver.pubkey());\n    if (senderShard == null && senderAddress != null) {\n      const sender = new Address(senderAddress);\n      return getShardOfAddress(sender) === receiverShard;\n    }\n    return receiverShard === senderShard;\n  } catch (err) {\n    return false;\n  }\n}\n"],
-  "mappings": "8FAAA,mDASO,WAAiC,CACtC,kBACA,cACA,iBACmC,CACnC,GAAI,CACF,GAAM,GAAW,GAAI,GAAQ,CAAe,EACtC,EAAgB,EAAkB,EAAS,OAAO,CAAC,EACzD,GAAI,GAAe,MAAQ,GAAiB,KAAM,CAChD,GAAM,GAAS,GAAI,GAAQ,CAAa,EACxC,MAAO,GAAkB,CAAM,IAAM,CACvC,CACA,MAAO,KAAkB,CAC3B,OAAS,EAAP,CACA,MAAO,EACT,CACF,CAzBA,iBAEA",
-  "names": []
-}

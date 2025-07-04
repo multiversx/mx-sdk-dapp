@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/components/IconToast/components/IconToastFooter/components/ComponentToastFooter.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { ComponentIconToastPropsType } from 'UI/TransactionsToastList/components/CustomToast/customToast.types';\nimport { getRegisteredCustomIconComponents } from 'utils/toasts/customToastsActions';\nimport { SharedToastFooter } from './SharedToastFooter';\n\nexport const ComponentToastFooter = (props: ComponentIconToastPropsType) => {\n  const Component = getRegisteredCustomIconComponents(props.toastId);\n\n  return (\n    <SharedToastFooter {...props}>\n      {Component && <Component />}\n    </SharedToastFooter>\n  );\n};\n"],
-  "mappings": "+HAAA,yBAKO,GAAM,GAAuB,AAAC,GAAuC,CAC1E,GAAM,GAAY,EAAkC,EAAM,OAAO,EAEjE,MACE,iBAAC,OAAsB,GACpB,GAAa,gBAAC,MAAU,CAC3B,CAEJ",
-  "names": []
-}

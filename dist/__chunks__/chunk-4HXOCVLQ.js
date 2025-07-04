@@ -1,2 +1,0 @@
-import{x as a}from"./chunk-UDZUNVED.js";import{m as t}from"./chunk-HBP5N4FR.js";t();a();import e from"react";import{faTimes as n}from"@fortawesome/free-solid-svg-icons";import{FontAwesomeIcon as r}from"@fortawesome/react-fontawesome";var D=({className:o="dapp-default-toast-delete-button",onClick:s})=>e.createElement("button",{type:"button",className:o,onClick:s,"data-testid":"deleteToastButton"},e.createElement(r,{icon:n,size:"xs"}));export{D as a};
-//# sourceMappingURL=chunk-4HXOCVLQ.js.map

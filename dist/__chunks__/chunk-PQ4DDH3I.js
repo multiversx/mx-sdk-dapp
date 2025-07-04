@@ -1,2 +1,0 @@
-import{j as r,m as s}from"./chunk-HBP5N4FR.js";s();import{MetamaskProvider as o}from"@multiversx/sdk-metamask-provider/out/metamaskProvider";function m(t){return r(this,null,function*(){try{let e=o.getInstance().setAddress(t);if(yield e.init())return e;console.error("Could not initialise metamask, make suremetamask flask is installed.")}catch(e){console.error("Unable to login to MetamaskProvider",e)}return null})}export{m as a};
-//# sourceMappingURL=chunk-PQ4DDH3I.js.map

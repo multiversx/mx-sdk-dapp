@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/selectors/dappConfigSelector.ts"],
-  "sourcesContent": ["import { RootState } from '../store';\nimport { createDeepEqualSelector } from './helpers';\n\nexport const dappConfigSelector = (state: RootState) => state.dappConfig;\n\nexport const shouldUseWebViewProviderSelector = createDeepEqualSelector(\n  dappConfigSelector,\n  (state) => state.shouldUseWebViewProvider\n);\n"],
-  "mappings": "8FAAA,GAGa,GAEA,EALb,aACA,IAEO,AAAM,EAAqB,AAAC,GAAqB,EAAM,WAEjD,EAAmC,EAC9C,EACA,AAAC,GAAU,EAAM,wBACnB",
-  "names": []
-}

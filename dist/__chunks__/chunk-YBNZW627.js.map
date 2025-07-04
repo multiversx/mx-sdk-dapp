@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/index.tsx"],
-  "sourcesContent": ["export * from './TransactionInfoHash';\nexport * from './TransactionInfoAge';\nexport * from './TransactionInfoStatus';\nexport * from './TransactionInfoMiniblock';\nexport * from './TransactionInfoFee';\nexport * from './TransactionInfoFrom';\nexport * from './TransactionInfoTo';\nexport * from './TransactionInfoValue';\nexport * from './TransactionInfoMethod';\nexport * from './TransactionInfoTokenOperations';\nexport * from './TransactionInfoEgldPrice';\nexport * from './TransactionInfoGasLimit';\nexport * from './TransactionInfoGasUsed';\nexport * from './TransactionInfoGasPrice';\nexport * from './TransactionInfoNonce';\nexport * from './TransactionInfoScResults';\nexport * from './TransactionInfoInputData';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/components/IconToast/index.tsx"],
-  "sourcesContent": ["export * from './IconToast';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/TransactionsTracker/index.ts"],
-  "sourcesContent": ["export * from './TransactionTracker';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

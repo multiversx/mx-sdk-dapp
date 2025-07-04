@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/extension/ExtensionLoginButton/index.ts"],
-  "sourcesContent": ["export * from './ExtensionLoginButton';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

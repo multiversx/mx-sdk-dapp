@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/helpers/useClearTransactionsToSignWithWarning.ts"],
-  "sourcesContent": ["import { TRANSACTION_CANCELLED } from 'constants/errorsMessages';\nimport { useDispatch } from 'reduxStore/DappProviderContext';\nimport {\n  clearAllTransactionsToSign,\n  clearTransactionsInfoForSessionId,\n  setSignTransactionsCancelMessage\n} from 'reduxStore/slices';\n\nexport function useClearTransactionsToSignWithWarning() {\n  const dispatch = useDispatch();\n\n  return (sessionId?: string) => {\n    dispatch(clearAllTransactionsToSign());\n    dispatch(clearTransactionsInfoForSessionId(sessionId));\n    dispatch(setSignTransactionsCancelMessage(TRANSACTION_CANCELLED));\n  };\n}\n"],
-  "mappings": "8PAAA,QAEA,IAMO,YAAiD,CACtD,GAAM,GAAW,EAAY,EAE7B,MAAO,AAAC,IAAuB,CAC7B,EAAS,EAA2B,CAAC,EACrC,EAAS,EAAkC,CAAS,CAAC,EACrD,EAAS,EAAiC,CAAqB,CAAC,CAClE,CACF",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/selectors/batchTransactionsSelectors.ts"],
-  "sourcesContent": ["import { RootState } from '../store';\nimport { createDeepEqualSelector } from './helpers';\n\nexport const batchTransactionsSelectors = (state: RootState) =>\n  state.batchTransactions;\n\nexport const batchesSelector = createDeepEqualSelector(\n  batchTransactionsSelectors,\n  (state) => {\n    const batches = {\n      ...state\n    };\n    delete batches._persist;\n\n    return batches;\n  }\n);\n"],
-  "mappings": "8FAAA,IACA,IAEO,GAAM,GAA6B,AAAC,GACzC,EAAM,kBAEK,EAAkB,EAC7B,EACA,AAAC,GAAU,CACT,GAAM,GAAU,KACX,GAEL,aAAO,GAAQ,SAER,CACT,CACF",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/helpers/index.ts"],
-  "sourcesContent": ["export * from './checkIsValidSender';\nexport * from './getShouldMoveTransactionsToSignedState';\nexport * from './useSetTransactionNonces';\nexport * from './getAreAllTransactionsSignedByGuardian';\nexport * from './checkNeedsGuardianSigning';\nexport * from './useGetLedgerProvider';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

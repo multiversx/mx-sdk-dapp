@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/toasts/index.ts"],
-  "sourcesContent": ["export { useTransactionsToasts } from './useTransactionsToasts';\nexport { useGetToasts } from './useGetToasts';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

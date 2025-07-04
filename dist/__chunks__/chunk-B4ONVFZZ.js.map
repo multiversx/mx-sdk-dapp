@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/operations/calculateFeeInFiat.ts"],
-  "sourcesContent": ["import { DIGITS, DECIMALS } from 'constants/index';\n\nimport { formatAmount } from './formatAmount';\nimport { getUsdValue } from './getUsdValue';\n\nexport interface CalculateFeeInFiatType {\n  feeLimit: string;\n  egldPriceInUsd: number;\n  hideEqualSign?: boolean;\n}\n\nexport const calculateFeeInFiat = ({\n  feeLimit,\n  egldPriceInUsd,\n  hideEqualSign\n}: CalculateFeeInFiatType) => {\n  const amount = formatAmount({\n    input: feeLimit,\n    decimals: DECIMALS,\n    digits: DIGITS,\n    showLastNonZeroDecimal: true\n  });\n\n  const feeAsUsdValue = getUsdValue({\n    amount,\n    usd: egldPriceInUsd,\n    decimals: DIGITS\n  });\n\n  if (hideEqualSign) {\n    return feeAsUsdValue;\n  }\n\n  return `\u2248 ${feeAsUsdValue}`;\n};\n"],
-  "mappings": "mMAAA,GAWa,GAXb,iBAEA,IACA,IAQO,AAAM,EAAqB,CAAC,CACjC,WACA,iBACA,mBAC4B,CAC5B,GAAM,GAAS,EAAa,CAC1B,MAAO,EACP,SAAU,EACV,OAAQ,EACR,uBAAwB,EAC1B,CAAC,EAEK,EAAgB,EAAY,CAChC,SACA,IAAK,EACL,SAAU,CACZ,CAAC,EAED,MAAI,GACK,EAGF,UAAK,GACd",
-  "names": []
-}

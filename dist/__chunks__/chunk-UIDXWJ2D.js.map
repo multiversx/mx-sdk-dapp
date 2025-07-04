@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/data/blocks.ts"],
-  "sourcesContent": ["export const blocks = [\n  {\n    hash: 'fff67d31476ad920d53093a3a4c2178e198179b35656eeefa419107fa718b780',\n    timestamp: 1671204768\n  }\n];\n"],
-  "mappings": "wCAAA,IAAO,GAAM,GAAS,CACpB,CACE,KAAM,mEACN,UAAW,UACb,CACF",
-  "names": []
-}

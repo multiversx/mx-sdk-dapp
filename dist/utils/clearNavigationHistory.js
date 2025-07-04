@@ -1,2 +1,0 @@
-"use strict";import{a,b}from"../__chunks__/chunk-PIZOI42D.js";import"../__chunks__/chunk-UORIA4VW.js";import"../__chunks__/chunk-UGBEFOBM.js";import"../__chunks__/chunk-7XYHQ72T.js";import"../__chunks__/chunk-RY7YMBVF.js";import"../__chunks__/chunk-OWBHRN3S.js";import"../__chunks__/chunk-3HHAVSUJ.js";import"../__chunks__/chunk-HBP5N4FR.js";b();export{a as clearNavigationHistory};
-//# sourceMappingURL=clearNavigationHistory.js.map

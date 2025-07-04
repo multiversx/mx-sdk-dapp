@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/transactions/getTransactions.types.ts"],
-  "sourcesContent": ["import { TransactionServerStatusesEnum } from 'types';\n\nexport interface GetTransactionsType {\n  apiAddress: string;\n  apiTimeout?: string | number;\n  sender?: string;\n  receiver?: string;\n  page?: number;\n  transactionSize?: number;\n  after?: number;\n  condition?: 'should' | 'must';\n  before?: number;\n  withScResults?: boolean;\n  withUsername?: boolean;\n  status?: TransactionServerStatusesEnum;\n  /**\n   * Search in data object\n   */\n  search?: string;\n}\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,1 +1,0 @@
-{"version":3,"file":"signTransactions.d.ts","sourceRoot":"","sources":["../../../../src/services/transactions/signTransactions.ts"],"names":[],"mappings":"AAQA,OAAO,EAEL,yBAAyB,EACzB,yBAAyB,EAC1B,MAAM,OAAO,CAAC;AAGf,wBAAsB,gBAAgB,CAAC,EACrC,YAAY,EACZ,aAAa,EACb,4BAA4B,EAC5B,uBAAuB,EACxB,EAAE,yBAAyB,GAAG,OAAO,CAAC,yBAAyB,CAAC,CAoDhE"}

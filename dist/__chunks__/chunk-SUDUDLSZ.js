@@ -1,2 +1,0 @@
-import{a as i}from"./chunk-OZYCOQRW.js";import{a as s}from"./chunk-OPT3JYNI.js";import{a as e,b as o,m as t}from"./chunk-HBP5N4FR.js";t();s();import r from"react";import{render as d}from"@testing-library/react";import{createMemoryHistory as y}from"history";var W=({children:n,route:m="/"})=>{let p=y({initialEntries:[m]});return o(e({},d(r.createElement(i,{environment:"devnet"},r.createElement(r.Fragment,null,n)))),{history:p})};export{W as a};
-//# sourceMappingURL=chunk-SUDUDLSZ.js.map

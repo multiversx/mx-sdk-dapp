@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionValue/helpers/getValueFromDataField.ts"],
-  "sourcesContent": ["import BigNumber from 'bignumber.js';\nimport { InterpretedTransactionType } from 'types/serverTransactions.types';\nimport { decodeBase64 } from 'utils/decoders';\nimport { getEgldValueData } from './getEgldValueData';\n\nlet warningLogged = false;\n\nexport function getValueFromDataField(transaction: InterpretedTransactionType) {\n  try {\n    const data = decodeBase64(transaction.data);\n    const encodedValue = data.replace(`${transaction.action?.name}@`, '');\n    const value = new BigNumber(encodedValue, 16);\n    if (!value.isNaN()) {\n      return getEgldValueData(value.toString(10));\n    }\n  } catch (err) {\n    if (!warningLogged) {\n      console.error(\n        `Unable to extract value for txHash: ${transaction.txHash}`\n      );\n      warningLogged = true;\n    }\n  }\n\n  // fallback on transaction value\n  return getEgldValueData(transaction.value);\n}\n"],
-  "mappings": "8KAAA,4BAOO,WAA+B,EAAyC,CAP/E,MAQE,GAAI,CAEF,GAAM,GAAe,AADR,EAAa,EAAY,IAAI,EAChB,QAAQ,GAAG,KAAY,SAAZ,cAAoB,QAAS,EAAE,EAC9D,EAAQ,GAAI,GAAU,EAAc,EAAE,EAC5C,GAAI,CAAC,EAAM,MAAM,EACf,MAAO,GAAiB,EAAM,SAAS,EAAE,CAAC,CAE9C,OAAS,EAAP,CACA,AAAK,GACH,SAAQ,MACN,uCAAuC,EAAY,QACrD,EACA,EAAgB,GAEpB,CAGA,MAAO,GAAiB,EAAY,KAAK,CAC3C,CA1BA,GAKI,GALJ,aAEA,IACA,IAEA,AAAI,EAAgB",
-  "names": []
-}

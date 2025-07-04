@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/sanitizeCallbackUrl.ts"],
-  "sourcesContent": ["export const sanitizeCallbackUrl = (\n  targetURL: string,\n  vulnerableItems: string[] = ['address']\n) => {\n  const url = new URL(targetURL);\n  const params = new URLSearchParams(url.search);\n\n  vulnerableItems.forEach((vulnerableItem) => params.delete(vulnerableItem));\n\n  const questionMark = Array.from(params.values()).length > 0 ? '?' : '';\n\n  const pathname =\n    url.pathname === '/' && !targetURL.endsWith('/') ? '' : url.pathname;\n\n  if (url.protocol === 'vscode:') {\n    return targetURL;\n  }\n\n  return `${url.origin}${pathname}${questionMark}${params.toString()}${\n    url.hash\n  }`;\n};\n"],
-  "mappings": "wCAAA,IAAO,GAAM,GAAsB,CACjC,EACA,EAA4B,CAAC,SAAS,IACnC,CACH,GAAM,GAAM,GAAI,KAAI,CAAS,EACvB,EAAS,GAAI,iBAAgB,EAAI,MAAM,EAE7C,EAAgB,QAAQ,AAAC,GAAmB,EAAO,OAAO,CAAc,CAAC,EAEzE,GAAM,GAAe,MAAM,KAAK,EAAO,OAAO,CAAC,EAAE,OAAS,EAAI,IAAM,GAE9D,EACJ,EAAI,WAAa,KAAO,CAAC,EAAU,SAAS,GAAG,EAAI,GAAK,EAAI,SAE9D,MAAI,GAAI,WAAa,UACZ,EAGF,GAAG,EAAI,SAAS,IAAW,IAAe,EAAO,SAAS,IAC/D,EAAI,MAER",
-  "names": []
-}

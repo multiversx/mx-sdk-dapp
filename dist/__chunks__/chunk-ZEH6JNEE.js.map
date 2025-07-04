@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/operations/index.ts"],
-  "sourcesContent": ["export * from './denominate';\nexport * from './formatAmount';\nexport * from './nominate';\nexport * from './parseAmount';\nexport * from './calculateFeeLimit';\nexport * from './getUsdValue';\nexport * from './pipe';\nexport * from './timeRemaining';\nexport * from './truncate';\nexport * from './ledger';\nexport * from './calculateFeeInFiat';\n"],
-  "mappings": "ueAAA,qBACA,IACA,IACA,IACA,IACA,IACA,IACA,IACA,IACA,IACA",
-  "names": []
-}

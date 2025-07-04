@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/asyncActions/sleep.ts"],
-  "sourcesContent": ["export async function sleep(time: number) {\n  return await new Promise<void>((resolve) => {\n    //timeouts are broken in jest, if this is a test env\n    //exit the sleep state immediately\n    if (process.env.NODE_ENV === 'test') {\n      resolve();\n    }\n    setTimeout(() => resolve(), time);\n  });\n}\n"],
-  "mappings": "+CAAA,eAA4B,EAAc,gCACxC,MAAO,MAAM,IAAI,SAAc,AAAC,GAAY,CAM1C,WAAW,IAAM,EAAQ,EAAG,CAAI,CAClC,CAAC,CACH",
-  "names": []
-}

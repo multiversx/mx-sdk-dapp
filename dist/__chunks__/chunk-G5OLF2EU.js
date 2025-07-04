@@ -1,2 +1,0 @@
-import{c as m,d as a}from"./chunk-NHXJOOWR.js";import{a as o}from"./chunk-ZXZXEDS2.js";import{i,m as e}from"./chunk-HBP5N4FR.js";e();import n from"react";import d from"classnames";var c=({color:s,"data-testid":r,className:p="dapp-dot",globalStyles:t})=>n.createElement("span",{className:d(t==null?void 0:t.dot,s,p),"data-testid":r}),C=o(c,{ssrStyles:()=>import("../UI/LoadingDots/loadingDotsStyle.js"),clientStyles:()=>(a(),i(m)).default});export{C as a};
-//# sourceMappingURL=chunk-G5OLF2EU.js.map

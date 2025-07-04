@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/operaWallet/OperaWalletLoginButton/index.tsx"],
-  "sourcesContent": ["export * from './OperaWalletLoginButton';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

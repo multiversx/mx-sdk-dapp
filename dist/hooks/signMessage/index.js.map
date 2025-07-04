@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/hooks/signMessage/index.ts"],
-  "sourcesContent": ["export * from './getVerifier';\nexport * from './useGetLastSignedMessageSession';\nexport * from './useGetSignMessageSession';\nexport * from './useGetSignedMessageStatus';\nexport * from './useSignMessage';\nexport * from './verifyMessage';\n"],
-  "mappings": "61UAAA",
-  "names": []
-}

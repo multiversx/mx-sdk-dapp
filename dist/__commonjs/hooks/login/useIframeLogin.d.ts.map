@@ -1,1 +1,0 @@
-{"version":3,"file":"useIframeLogin.d.ts","sourceRoot":"","sources":["../../../../src/hooks/login/useIframeLogin.ts"],"names":[],"mappings":"AAGA,OAAO,EACL,gBAAgB,EAEjB,MAAM,gCAAgC,CAAC;AAMxC,OAAO,EACL,yBAAyB,EAEzB,mBAAmB,EACpB,MAAM,OAAO,CAAC;AAOf,oBAAY,wBAAwB,GAAG;IACrC,CAAC,SAAS,EAAE,gBAAgB,KAAK,IAAI;IACrC,yBAAyB;CAC1B,CAAC;AAEF,eAAO,MAAM,cAAc;;8BAmI1B,CAAC"}

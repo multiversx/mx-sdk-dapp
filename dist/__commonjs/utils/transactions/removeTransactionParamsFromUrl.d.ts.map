@@ -1,1 +1,0 @@
-{"version":3,"file":"removeTransactionParamsFromUrl.d.ts","sourceRoot":"","sources":["../../../../src/utils/transactions/removeTransactionParamsFromUrl.ts"],"names":[],"mappings":"AAIA,UAAU,wCAAwC;IAChD,WAAW,EAAE,GAAG,CAAC;IACjB,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB;AAED,eAAO,MAAM,8BAA8B,4BAGxC,wCAAwC,2BAU1C,CAAC"}

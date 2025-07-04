@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/reduxPersistIgnoredActions.ts"],
-  "sourcesContent": ["import {\n  FLUSH,\n  PAUSE,\n  PERSIST,\n  PURGE,\n  REGISTER,\n  REHYDRATE\n} from 'redux-persist';\n\nconst reduxPersistIgnoredActions = [\n  FLUSH,\n  REHYDRATE,\n  PAUSE,\n  PERSIST,\n  PURGE,\n  REGISTER\n];\n\nexport default reduxPersistIgnoredActions;\n"],
-  "mappings": "sDAAA,uIASM,GASC,EAlBP,aASA,AAAM,EAA6B,CACjC,EACA,EACA,EACA,EACA,EACA,CACF,EAEO,EAAQ",
-  "names": []
-}

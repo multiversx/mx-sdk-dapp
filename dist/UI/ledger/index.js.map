@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/UI/ledger/index.ts"],
-  "sourcesContent": ["export * from './LedgerLoginContainer';\nexport * from './LedgerLoginButton';\n"],
-  "mappings": "00mBAAA",
-  "names": []
-}

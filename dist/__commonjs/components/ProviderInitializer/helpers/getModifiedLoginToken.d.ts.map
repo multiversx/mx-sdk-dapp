@@ -1,1 +1,0 @@
-{"version":3,"file":"getModifiedLoginToken.d.ts","sourceRoot":"","sources":["../../../../../src/components/ProviderInitializer/helpers/getModifiedLoginToken.ts"],"names":[],"mappings":"AAIA,MAAM,WAAW,yBAAyB;IACxC,UAAU,CAAC,EAAE,MAAM,CAAC;IACpB,aAAa,EAAE;QACb,QAAQ,CAAC,EAAE,MAAM,CAAC;QAClB,WAAW,CAAC,EAAE,MAAM,CAAC;KACtB,CAAC;CACH;AAED,eAAO,MAAM,qBAAqB,kCAG/B,yBAAyB,2BA2B3B,CAAC"}

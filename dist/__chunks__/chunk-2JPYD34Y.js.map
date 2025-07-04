@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/extension/helpers/index.tsx"],
-  "sourcesContent": ["// TODO: v3 breaking change remove this file in v3 (breaking change) and use directly from utils\nexport * from 'utils/platform/getIsExtensionAvailable';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

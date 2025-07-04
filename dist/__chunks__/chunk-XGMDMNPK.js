@@ -1,2 +1,0 @@
-import{a,b as i}from"./chunk-NW3HMCKZ.js";import{s}from"./chunk-7OZRG2YY.js";import{b as e}from"./chunk-S6FCTAUC.js";import{a as r,d as l}from"./chunk-PCK656QH.js";import{j as n,m as c}from"./chunk-HBP5N4FR.js";c();s();l();i();function S(u){return n(this,null,function*(){let o=u;o==null&&(o=e(r.getState()).address);let t=yield a(o);if(t==null)throw"Could not read account, user not logged in";return t==null?void 0:t.balance})}export{S as a};
-//# sourceMappingURL=chunk-XGMDMNPK.js.map

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/selectors/transactionsInfoSelectors.ts"],
-  "sourcesContent": ["import { createDeepEqualSelector } from 'reduxStore/selectors/helpers';\nimport {\n  defaultTransactionErrorMessage,\n  defaultTransactionProcessingMessage,\n  defaultTransactionSuccessMessage\n} from 'reduxStore/slices';\nimport { RootState } from 'reduxStore/store';\nimport { TransactionsDisplayInfoType } from 'types';\n\nconst defaultTransactionInfo: TransactionsDisplayInfoType = {\n  errorMessage: defaultTransactionErrorMessage,\n  successMessage: defaultTransactionSuccessMessage,\n  processingMessage: defaultTransactionProcessingMessage\n};\n\nexport const transactionsInfoSelectors = (state: RootState) =>\n  state.transactionsInfo;\n\nexport const transactionDisplayInfoSelector = createDeepEqualSelector(\n  transactionsInfoSelectors,\n  (_: RootState, transactionSessionId: string | null) => transactionSessionId,\n  (\n    transactionsDisplayInfo: TransactionsDisplayInfoType,\n    transactionSessionId: string | null\n  ) =>\n    transactionSessionId != null\n      ? transactionsDisplayInfo?.[Number(transactionSessionId)] ||\n        defaultTransactionInfo\n      : defaultTransactionInfo\n);\n"],
-  "mappings": "4LAAA,GASM,GAMO,EAGA,EAlBb,iBACA,IAQA,AAAM,EAAsD,CAC1D,aAAc,EACd,eAAgB,EAChB,kBAAmB,CACrB,EAEa,EAA4B,AAAC,GACxC,EAAM,iBAEK,EAAiC,EAC5C,EACA,CAAC,EAAc,IAAwC,EACvD,CACE,EACA,IAEA,GAAwB,MACpB,kBAA0B,OAAO,CAAoB,KACrD,CAER",
-  "names": []
-}

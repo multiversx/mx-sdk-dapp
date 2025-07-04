@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/lib/sdkWebWalletCrossWindowProvider.ts"],
-  "sourcesContent": ["export { CrossWindowProvider } from '@multiversx/sdk-web-wallet-cross-window-provider/out/CrossWindowProvider/CrossWindowProvider';\nexport {\n  WindowProviderRequestEnums,\n  WindowProviderResponseEnums\n} from '@multiversx/sdk-web-wallet-cross-window-provider/out/enums';\n"],
-  "mappings": "+CAAA,mIACA,yIADA",
-  "names": []
-}

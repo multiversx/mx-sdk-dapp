@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/account/useGetWebsocketEvent.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { websocketEventSelector } from 'reduxStore/selectors';\n\nexport const useGetWebsocketEvent = () => {\n  return useSelector(websocketEventSelector);\n};\n"],
-  "mappings": "gKAAA,IACA,IAEO,GAAM,GAAuB,IAC3B,EAAY,CAAsB",
-  "names": []
-}

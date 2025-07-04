@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/batch/getIsSequential.ts"],
-  "sourcesContent": ["import { SignedTransactionType } from 'types';\n\nexport function getIsSequential({\n  transactions\n}: {\n  transactions?: SignedTransactionType[] | SignedTransactionType[][];\n}) {\n  return transactions?.some((transaction) => Array.isArray(transaction));\n}\n"],
-  "mappings": "wCAAA,IAEO,WAAyB,CAC9B,gBAGC,CACD,MAAO,kBAAc,KAAK,AAAC,GAAgB,MAAM,QAAQ,CAAW,EACtE",
-  "names": []
-}

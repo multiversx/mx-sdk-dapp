@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/network/getEgldLabel.ts"],
-  "sourcesContent": ["import { egldLabelSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport function getEgldLabel() {\n  return egldLabelSelector(store.getState());\n}\n"],
-  "mappings": "uKAAA,QACA,IAEO,YAAwB,CAC7B,MAAO,GAAkB,EAAM,SAAS,CAAC,CAC3C",
-  "names": []
-}

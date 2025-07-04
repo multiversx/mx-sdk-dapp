@@ -1,1 +1,0 @@
-{"version":3,"file":"getTokenExpiration.d.ts","sourceRoot":"","sources":["../../../../../src/services/nativeAuth/methods/getTokenExpiration.ts"],"names":[],"mappings":"AAGA,MAAM,WAAW,4BAA4B;IAC3C,SAAS,EAAE,OAAO,CAAC;IACnB,SAAS,CAAC,EAAE,MAAM,CAAC;IACnB,mBAAmB,CAAC,EAAE,MAAM,CAAC;CAC9B;AAMD,eAAO,MAAM,kBAAkB,WACrB,MAAM,KACb,4BA2BF,CAAC"}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useCheckTransactionStatus/manageFailedTransactions.ts"],
-  "sourcesContent": ["import {\n  updateSignedTransactions,\n  updateSignedTransactionStatus\n} from 'reduxStore/slices';\nimport { store } from 'reduxStore/store';\nimport { ServerTransactionType, SmartContractResult } from 'types';\nimport {\n  TransactionBatchStatusesEnum,\n  TransactionServerStatusesEnum\n} from 'types/enums.types';\n\nexport function manageFailedTransactions({\n  results,\n  hash,\n  sessionId\n}: {\n  results: SmartContractResult[];\n  hash: string;\n  sessionId: string;\n}) {\n  const resultWithError = results?.find(\n    (scResult) => scResult?.returnMessage !== ''\n  );\n\n  store.dispatch(\n    updateSignedTransactionStatus({\n      transactionHash: hash,\n      sessionId,\n      status: TransactionServerStatusesEnum.fail,\n      errorMessage: resultWithError?.returnMessage,\n      inTransit: false,\n      serverTransaction: resultWithError as unknown as ServerTransactionType\n    })\n  );\n  store.dispatch(\n    updateSignedTransactions({\n      sessionId,\n      status: TransactionBatchStatusesEnum.fail,\n      errorMessage: resultWithError?.returnMessage\n    })\n  );\n}\n"],
-  "mappings": "sNAAA,QAIA,IAEA,IAKO,WAAkC,CACvC,UACA,OACA,aAKC,CACD,GAAM,GAAkB,iBAAS,KAC/B,AAAC,GAAa,kBAAU,iBAAkB,IAG5C,EAAM,SACJ,EAA8B,CAC5B,gBAAiB,EACjB,YACA,OAAQ,OACR,aAAc,iBAAiB,cAC/B,UAAW,GACX,kBAAmB,CACrB,CAAC,CACH,EACA,EAAM,SACJ,EAAyB,CACvB,YACA,OAAQ,OACR,aAAc,iBAAiB,aACjC,CAAC,CACH,CACF",
-  "names": []
-}

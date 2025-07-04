@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/components/index.tsx"],
-  "sourcesContent": ["export * from './ConfirmationScreen';\nexport * from './DeviceConfirmationScreen';\nexport * from './confirmationScreen.types';\nexport * from './TransactionStatusToast';\nexport * from './SignWaitingScreenModal';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

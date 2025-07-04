@@ -1,2 +1,0 @@
-import{m as e}from"./chunk-HBP5N4FR.js";e();import{SessionEventTypes as r,PairingTypes as p,EngineTypes as a}from"@multiversx/sdk-wallet-connect-provider";import{Operation as l,OptionalOperation as m}from"@multiversx/sdk-wallet-connect-provider/out/operation";import{WalletConnectV2Provider as O}from"@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider";export{r as a,p as b,a as c,l as d,m as e,O as f};
-//# sourceMappingURL=chunk-4JP4CKHO.js.map

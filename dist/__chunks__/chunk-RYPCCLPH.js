@@ -1,2 +1,0 @@
-import{a as r,b as p}from"./chunk-7CT4Y3HU.js";import{e as d,m as o}from"./chunk-HBP5N4FR.js";import{Address as a}from"@multiversx/sdk-core/out";function T({receiverAddress:i,senderShard:e,senderAddress:s}){try{let n=new a(i),t=r(n.pubkey());if(e==null&&s!=null){let c=new a(s);return r(c)===t}return t===e}catch(n){return!1}}var u=d(()=>{o();p()});export{T as a,u as b};
-//# sourceMappingURL=chunk-RYPCCLPH.js.map

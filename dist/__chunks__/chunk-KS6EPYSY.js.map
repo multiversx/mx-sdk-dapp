@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useGetSignTransactionsError.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { signTransactionsErrorSelector } from 'reduxStore/selectors';\n\nexport const useGetSignTransactionsError = () => {\n  return useSelector(signTransactionsErrorSelector);\n};\n"],
-  "mappings": "+HAAA,IACA,IAEO,GAAM,GAA8B,IAClC,EAAY,CAA6B",
-  "names": []
-}

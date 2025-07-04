@@ -1,2 +1,0 @@
-import{e as T,m as o}from"./chunk-HBP5N4FR.js";function U({value:n,noSeconds:i,utc:m,meridiem:t=!0}){let e=new Date(n*1e3),[,a]=e.toLocaleString("en-US",{hour:"numeric",hour12:t}).split(" "),r=e.toUTCString(),[,c]=r.split(","),[s,u,f,l]=c.trim().split(" "),[d,$,p]=l.split(":"),S=`:${p}`,b=`${d}:${$}${i?"":S}`,x=`${t?a:""} ${m?"UTC":""}`.trim();return`${u} ${s}, ${f} ${b} ${x}`.trim()}var h=T(()=>{o()});export{U as a,h as b};
-//# sourceMappingURL=chunk-N3QTYKLF.js.map

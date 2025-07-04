@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/Trim/index.tsx"],
-  "sourcesContent": ["export * from './Trim';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

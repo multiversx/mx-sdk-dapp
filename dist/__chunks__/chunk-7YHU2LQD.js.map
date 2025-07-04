@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/constants/errorsMessages.ts"],
-  "sourcesContent": ["export const ERROR_SIGNING = 'error when signing';\nexport const CANCELLED = 'cancelled';\nexport const TRANSACTION_CANCELLED = 'Transaction canceled';\nexport const ERROR_SIGNING_TX = 'error signing transaction';\nexport const PROVIDER_NOT_INITIALIZED = 'provider not initialized';\nexport const MISSING_PROVIDER_MESSAGE =\n  'You need a signer/valid signer to send a transaction,use either WalletProvider, LedgerProvider or WalletConnect';\nexport const DEFAULT_TRANSACTION_STATUS_MESSAGE =\n  'Undefined transaction status';\nexport const SECOND_LOGIN_ATTEMPT_ERROR =\n  'Action not allowed. User is logged in. Call logout() first';\nexport const SENDER_DIFFERENT_THAN_LOGGED_IN_ADDRESS =\n  'You cannot sign transactions from a different account';\n"],
-  "mappings": "+CAAA,GAAa,GACA,EACA,EACA,EACA,EACA,EAEA,EAEA,EAEA,EAXb,aAAO,AAAM,EAAgB,qBAChB,EAAY,YACZ,EAAwB,uBACxB,EAAmB,4BACnB,EAA2B,2BAC3B,EACX,kHACW,EACX,+BACW,EACX,6DACW,EACX",
-  "names": []
-}

@@ -1,1 +1,0 @@
-{"version":3,"file":"removeSearchParamsFromUrl.d.ts","sourceRoot":"","sources":["../../src/utils/removeSearchParamsFromUrl.ts"],"names":[],"mappings":"AAKA,UAAU,mCAAmC;IAC3C,YAAY,EAAE,MAAM,EAAE,CAAC;IACvB,MAAM,CAAC,EAAE,MAAM,CAAC;CACjB;AAED,eAAO,MAAM,yBAAyB,6BAGnC,mCAAmC,2BAsBrC,CAAC"}

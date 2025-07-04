@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getTransactionStatus.ts"],
-  "sourcesContent": ["import { TransactionServerStatusesEnum } from 'types/enums.types';\nimport { InterpretedTransactionType } from 'types/serverTransactions.types';\n\nexport function getTransactionStatus(transaction: InterpretedTransactionType) {\n  const statusIs = (compareTo: string) =>\n    transaction.status.toLowerCase() === compareTo.toLowerCase();\n\n  const failed =\n    statusIs(TransactionServerStatusesEnum.fail) ||\n    statusIs(TransactionServerStatusesEnum.rewardReverted);\n  const success = statusIs(TransactionServerStatusesEnum.success);\n  const invalid =\n    statusIs(TransactionServerStatusesEnum.notExecuted) ||\n    statusIs(TransactionServerStatusesEnum.invalid);\n  const pending =\n    statusIs(TransactionServerStatusesEnum.pending) ||\n    transaction.pendingResults;\n  return {\n    failed,\n    success,\n    invalid,\n    pending\n  };\n}\n"],
-  "mappings": "uFAGO,WAA8B,EAAyC,CAC5E,GAAM,GAAW,AAAC,GAChB,EAAY,OAAO,YAAY,IAAM,EAAU,YAAY,EAEvD,EACJ,EAAS,MAAkC,GAC3C,EAAS,iBAA4C,EACjD,EAAU,EAAS,SAAqC,EACxD,EACJ,EAAS,cAAyC,GAClD,EAAS,SAAqC,EAC1C,EACJ,EAAS,SAAqC,GAC9C,EAAY,eACd,MAAO,CACL,SACA,UACA,UACA,SACF,CACF,CAvBA",
-  "names": []
-}

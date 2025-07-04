@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/types/dappProvider.types.ts"],
-  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport type { IDAppProviderBase } from '@multiversx/sdk-dapp-utils/out/models/dappProviderBase';\nimport { EngineTypes } from 'utils/walletconnect/__sdkWalletconnectProvider';\nimport { Nullable } from './transactions.types';\n\nexport interface DappOptions {\n  callbackUrl?: string;\n}\n\nexport interface IDappProvider extends IDAppProviderBase {\n  init?(): Promise<boolean>;\n  getAddress(): Promise<string>;\n  isInitialized(): boolean;\n  isConnected(): boolean;\n  sendTransaction?(\n    transaction: Transaction,\n    options?: DappOptions\n  ): Promise<Transaction | void>;\n  sendCustomMessage?({\n    method,\n    params\n  }: {\n    method: string;\n    params: any;\n  }): Promise<any>;\n  sendCustomRequest?(options?: {\n    request: EngineTypes.RequestParams['request'];\n  }): Promise<any>;\n  ping?(): Promise<boolean>;\n  relogin?: () => Promise<Nullable<string | void>>;\n  setShouldShowConsentPopup?: (shouldShow: boolean) => void;\n}\n"],
-  "mappings": "+CAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/waitForChainID.ts"],
-  "sourcesContent": ["import { chainIDSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport const waitForChainID = ({\n  maxRetries\n}: {\n  maxRetries: number;\n}): Promise<string | null> =>\n  new Promise((resolve, reject) => {\n    let retries = 0;\n\n    // Function to periodically check the value of chainID\n    const checkChainID = () => {\n      const chainID = chainIDSelector(store.getState());\n\n      if (chainID) {\n        resolve(chainID);\n        return;\n      }\n\n      if (retries < maxRetries) {\n        retries++;\n        setTimeout(checkChainID, 1000);\n        return;\n      }\n\n      reject(null);\n    };\n\n    checkChainID();\n  });\n"],
-  "mappings": "uKAAA,QACA,IAEO,GAAM,GAAiB,CAAC,CAC7B,gBAIA,GAAI,SAAQ,CAAC,EAAS,IAAW,CAC/B,GAAI,GAAU,EAGR,EAAe,IAAM,CACzB,GAAM,GAAU,EAAgB,EAAM,SAAS,CAAC,EAEhD,GAAI,EAAS,CACX,EAAQ,CAAO,EACf,MACF,CAEA,GAAI,EAAU,EAAY,CACxB,IACA,WAAW,EAAc,GAAI,EAC7B,MACF,CAEA,EAAO,IAAI,CACb,EAEA,EAAa,CACf,CAAC",
-  "names": []
-}

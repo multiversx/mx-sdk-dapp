@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/constants/browser.ts"],
-  "sourcesContent": ["import { safeWindow } from 'lib/sdkDappUtils';\n\nconst userAgent = String(safeWindow?.navigator?.userAgent);\n\nexport const isSafari = /^((?!chrome|android).)*safari/i.test(userAgent);\n\nconst isFirefoxOnWindows =\n  /firefox/i.test(userAgent) && /windows/i.test(userAgent);\n\nexport const isBrowserWithPopupConfirmation = isSafari || isFirefoxOnWindows;\n"],
-  "mappings": "8FAAA,QAEM,EAEO,EAEP,EAGO,EATb,iBAEM,EAAY,OAAO,wBAAY,YAAZ,cAAuB,SAAS,EAE5C,EAAW,iCAAiC,KAAK,CAAS,EAEjE,EACJ,WAAW,KAAK,CAAS,GAAK,WAAW,KAAK,CAAS,EAE5C,EAAiC,GAAY",
-  "names": []
-}

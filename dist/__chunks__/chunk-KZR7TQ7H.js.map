@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/retryMultipleTimes.ts"],
-  "sourcesContent": ["import { sleep } from './asyncActions';\n\ninterface Options {\n  retries: number;\n  delay?: number;\n}\n\nconst executeAsyncCall = async (\n  cb: (...args: any[]) => any,\n  options: Options,\n  args: any[],\n  retries = 0\n): Promise<any | null> => {\n  try {\n    return await cb(...args);\n  } catch (error) {\n    if (retries < options.retries) {\n      if (options?.delay != null) {\n        await sleep(options.delay);\n      }\n\n      return await executeAsyncCall(cb, options, args, retries + 1);\n    }\n\n    return null;\n  }\n};\n\nexport const retryMultipleTimes =\n  (\n    cb: (...args: any[]) => any,\n    options: Options = { retries: 5, delay: 500 }\n  ) =>\n  async (...args: any[]) => {\n    return await executeAsyncCall(cb, options, args);\n  };\n"],
-  "mappings": "uFAAA,IAOA,GAAM,GAAmB,CACvB,EACA,EACA,EACA,EAAU,IACc,0BACxB,GAAI,CACF,MAAO,MAAM,GAAG,GAAG,CAAI,CACzB,OAAS,EAAP,CACA,MAAI,GAAU,EAAQ,QAChB,mBAAS,QAAS,MACpB,MAAM,GAAM,EAAQ,KAAK,GAGpB,KAAM,GAAiB,EAAI,EAAS,EAAM,EAAU,CAAC,GAGvD,IACT,CACF,GAEa,EACX,CACE,EACA,EAAmB,CAAE,QAAS,EAAG,MAAO,GAAI,IAE9C,IAAU,IAAgB,0BACxB,MAAO,MAAM,GAAiB,EAAI,EAAS,CAAI,CACjD",
-  "names": []
-}

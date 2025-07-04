@@ -1,2 +1,0 @@
-import{a as T}from"./chunk-HJD3JB4Z.js";import{a as i}from"./chunk-YC7HKHXJ.js";import{a as e}from"./chunk-M6B5TKYN.js";import{a as m}from"./chunk-3SOAVVKV.js";import{a}from"./chunk-PDQPLX7X.js";import{a as t,m as s}from"./chunk-HBP5N4FR.js";s();import n from"react";var P=o=>{let{transaction:r,message:c,component:f}=o;return r&&e(r)?n.createElement(i,t({},o)):c?n.createElement(T,t({},o)):f!==void 0?n.createElement(m,t({},o)):n.createElement(a,null)};export{P as a};
-//# sourceMappingURL=chunk-YCN4HSRA.js.map

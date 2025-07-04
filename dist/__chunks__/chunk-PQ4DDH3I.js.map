@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/ProviderInitializer/helpers/getMetamaskProvider.ts"],
-  "sourcesContent": ["import { MetamaskProvider } from '@multiversx/sdk-metamask-provider/out/metamaskProvider';\n\nexport async function getMetamaskProvider(address: string) {\n  try {\n    const provider = MetamaskProvider.getInstance().setAddress(address);\n\n    const success = await provider.init();\n\n    if (success) {\n      return provider;\n    } else {\n      console.error(\n        'Could not initialise metamask, make suremetamask flask is installed.'\n      );\n    }\n  } catch (err) {\n    console.error('Unable to login to MetamaskProvider', err);\n  }\n  return null;\n}\n"],
-  "mappings": "+CAAA,8FAEA,WAA0C,EAAiB,gCACzD,GAAI,CACF,GAAM,GAAW,EAAiB,YAAY,EAAE,WAAW,CAAO,EAIlE,GAFgB,KAAM,GAAS,KAAK,EAGlC,MAAO,GAEP,QAAQ,MACN,sEACF,CAEJ,OAAS,EAAP,CACA,QAAQ,MAAM,sCAAuC,CAAG,CAC1D,CACA,MAAO,KACT",
-  "names": []
-}

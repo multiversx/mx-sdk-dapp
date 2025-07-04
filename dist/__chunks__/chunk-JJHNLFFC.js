@@ -1,2 +1,0 @@
-import{b as g}from"./chunk-A6KCXJ2P.js";import{d as n}from"./chunk-JUB6TCFX.js";import{s as f}from"./chunk-7OZRG2YY.js";import{a as s,c}from"./chunk-HKOZWGGV.js";import{a as t,b as e,m as i}from"./chunk-HBP5N4FR.js";i();f();var x=()=>{try{let{loginInfo:r,isLoggedIn:o}=g();return e(t({},r),{isLoggedIn:o})}catch(r){let o=n(s),I=n(c);return e(t({},o),{isLoggedIn:I})}};export{x as a};
-//# sourceMappingURL=chunk-JJHNLFFC.js.map

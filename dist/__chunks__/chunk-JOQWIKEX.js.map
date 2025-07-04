@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoHash/index.tsx"],
-  "sourcesContent": ["export * from './TransactionInfoHash';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

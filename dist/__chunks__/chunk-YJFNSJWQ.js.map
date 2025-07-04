@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/helpers/computeTransactionsNonce.ts"],
-  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport { computeTransactionNonce } from 'services/transactions/computeTransactionNonce';\n\nexport const computeTransactionsNonce = ({\n  latestNonce,\n  transactions\n}: {\n  latestNonce: number;\n  transactions: Array<Transaction>;\n}): Array<Transaction> => {\n  if (transactions.length === 0) {\n    return transactions;\n  }\n\n  return transactions.map((tx: Transaction, index: number) => {\n    const nextNonce = latestNonce + index;\n\n    const transactionNonce = tx.getNonce().valueOf();\n\n    // stop replacing nonce if transaction is configured with a higher nonce than the existing one\n    const computedNonce = computeTransactionNonce({\n      accountNonce: nextNonce,\n      transactionNonce\n    });\n\n    tx.setNonce(computedNonce);\n\n    return tx;\n  });\n};\n"],
-  "mappings": "uFAAA,IACA,IAEO,GAAM,GAA2B,CAAC,CACvC,cACA,kBAKI,EAAa,SAAW,EACnB,EAGF,EAAa,IAAI,CAAC,EAAiB,IAAkB,CAC1D,GAAM,GAAY,EAAc,EAE1B,EAAmB,EAAG,SAAS,EAAE,QAAQ,EAGzC,EAAgB,EAAwB,CAC5C,aAAc,EACd,kBACF,CAAC,EAED,SAAG,SAAS,CAAa,EAElB,CACT,CAAC",
-  "names": []
-}

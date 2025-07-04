@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoInputData/TransactionInfoInputData.tsx"],
-  "sourcesContent": ["import React from 'react';\n\nimport {\n  WithClassnameType,\n  WithTransactionType\n} from '../../../../../UI/types';\nimport { DataField } from '../../DataField';\nimport { DetailItem } from '../../DetailItem';\n\nexport const TransactionInfoInputData = ({\n  className,\n  transaction\n}: WithTransactionType & WithClassnameType) => (\n  <DetailItem className={className} title='Input Data'>\n    <DataField data={transaction.data} scamInfo={transaction.scamInfo} />\n  </DetailItem>\n);\n"],
-  "mappings": "wHAAA,yBASO,GAAM,GAA2B,CAAC,CACvC,YACA,iBAEA,gBAAC,GAAW,UAAW,EAAW,MAAM,cACtC,gBAAC,GAAU,KAAM,EAAY,KAAM,SAAU,EAAY,SAAU,CACrE",
-  "names": []
-}

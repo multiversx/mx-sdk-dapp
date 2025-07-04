@@ -1,2 +1,0 @@
-import{a as r}from"./chunk-PDWGUQLF.js";import{a as t,b as e,m as o}from"./chunk-HBP5N4FR.js";o();import l from"react";var m=n=>{var i;let a=n.error?n.error:((i=n.transactions)==null?void 0:i.length)>1?"Check your MultiversX Wallet Extension to sign the transactions":"Check your MultiversX Wallet Extension to sign the transaction",s=e(t({},n),{description:a,title:"Confirm on MultiversX DeFi Wallet"});return l.createElement(r,t({},s))};export{m as a};
-//# sourceMappingURL=chunk-U4DUL2H6.js.map

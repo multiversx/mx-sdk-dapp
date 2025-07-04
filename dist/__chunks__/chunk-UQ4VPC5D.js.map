@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionValue/helpers/getValueFromOperations.ts"],
-  "sourcesContent": ["import { InterpretedTransactionType } from 'types/serverTransactions.types';\nimport { getVisibleOperations } from 'utils/transactions/transactionInfoHelpers/getVisibleOperations';\nimport { getEgldValueData } from './getEgldValueData';\n\nlet warningLogged = false;\n\nconst logError = (hash: string) => {\n  if (!warningLogged) {\n    console.error(\n      `Operations field missing for txHash: ${hash}.\n        Unable to compute value field.`\n    );\n    warningLogged = true;\n  }\n};\n\nexport function getValueFromOperations(\n  transaction: InterpretedTransactionType\n) {\n  try {\n    if (transaction.operations) {\n      const [operation] = getVisibleOperations(transaction);\n      return getEgldValueData(operation?.value);\n    } else {\n      logError(transaction.txHash);\n    }\n  } catch (err) {\n    logError(transaction.txHash);\n  }\n  return getEgldValueData(transaction.value);\n}\n"],
-  "mappings": "6IAgBO,WACL,EACA,CACA,GAAI,CACF,GAAI,EAAY,WAAY,CAC1B,GAAM,CAAC,GAAa,EAAqB,CAAW,EACpD,MAAO,GAAiB,iBAAW,KAAK,CAC1C,KACE,GAAS,EAAY,MAAM,CAE/B,OAAS,EAAP,CACA,EAAS,EAAY,MAAM,CAC7B,CACA,MAAO,GAAiB,EAAY,KAAK,CAC3C,CA9BA,GAII,GAEE,EANN,aACA,IACA,IAEA,AAAI,EAAgB,GAEd,EAAW,AAAC,GAAiB,CACjC,AAAK,GACH,SAAQ,MACN,wCAAwC;AAAA,uCAE1C,EACA,EAAgB,GAEpB",
-  "names": []
-}

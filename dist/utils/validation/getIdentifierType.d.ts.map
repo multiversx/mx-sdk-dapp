@@ -1,1 +1,0 @@
-{"version":3,"file":"getIdentifierType.d.ts","sourceRoot":"","sources":["../../../src/utils/validation/getIdentifierType.ts"],"names":[],"mappings":"AASA,wBAAgB,iBAAiB,CAAC,UAAU,CAAC,EAAE,MAAM,GAAG;IACtD,MAAM,EAAE,OAAO,CAAC;IAChB,KAAK,EAAE,OAAO,CAAC;IACf,MAAM,EAAE,OAAO,CAAC;CACjB,CAmBA"}

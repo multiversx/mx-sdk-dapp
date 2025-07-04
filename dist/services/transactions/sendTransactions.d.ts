@@ -1,3 +1,0 @@
-import { SendTransactionReturnType, SendTransactionsPropsType } from 'types';
-export declare function sendTransactions({ transactions, transactionsDisplayInfo, redirectAfterSign, callbackRoute, signWithoutSending, completedTransactionsDelay, sessionInformation, skipGuardian, minGasLimit, hasConsentPopup }: SendTransactionsPropsType): Promise<SendTransactionReturnType>;
-//# sourceMappingURL=sendTransactions.d.ts.map

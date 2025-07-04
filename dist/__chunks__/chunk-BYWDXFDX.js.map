@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/economics/getEconomicsInfo.ts"],
-  "sourcesContent": ["import axios from 'axios';\nimport { ECONOMICS_ENDPOINT } from 'apiCalls/endpoints';\nimport { getCleanApiAddress } from 'apiCalls/utils/getCleanApiAddress';\n\nexport interface EconomicsInfoType {\n  totalSupply: number;\n  circulatingSupply: number;\n  staked: number;\n  price: number;\n  marketCap: number;\n  apr: number;\n  topUpApr: number;\n}\n\nexport function getEconomics(url = ECONOMICS_ENDPOINT) {\n  const apiAddress = getCleanApiAddress();\n  const configUrl = `${apiAddress}/${url}`;\n\n  return axios.get<EconomicsInfoType>(configUrl);\n}\n\nexport async function getEconomicsInfo() {\n  try {\n    const { data } = await getEconomics();\n    return data;\n  } catch (err) {\n    console.error('err fetching economics info', err);\n    return null;\n  }\n}\n"],
-  "mappings": "6IAAA,IACA,IACA,IAFA,qBAcO,WAAsB,EAAM,EAAoB,CAErD,GAAM,GAAY,GADC,EAAmB,KACH,IAEnC,MAAO,GAAM,IAAuB,CAAS,CAC/C,CAEA,YAAyC,gCACvC,GAAI,CACF,GAAM,CAAE,QAAS,KAAM,GAAa,EACpC,MAAO,EACT,OAAS,EAAP,CACA,eAAQ,MAAM,8BAA+B,CAAG,EACzC,IACT,CACF",
-  "names": []
-}

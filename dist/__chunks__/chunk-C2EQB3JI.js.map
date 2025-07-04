@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithCrossWindowWalletModal/index.tsx"],
-  "sourcesContent": ["export * from './SignWithCrossWindowWalletModal';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,2 +1,0 @@
-import{a as u}from"./chunk-35YX2WD6.js";import{a as i,b as g}from"./chunk-RY7YMBVF.js";import{a as n,h as c,m as o}from"./chunk-HBP5N4FR.js";o();var l=c(u());g();var r,s,a,v=(a=(s=(r=i)==null?void 0:r.location)==null?void 0:s.origin)==null?void 0:a.includes("localhost"),N=e=>{if(!(0,l.default)(e))return Boolean(e);let t=n({},e);return Boolean(v)&&delete t.origin,Object.keys(t).length>0};export{N as a};
-//# sourceMappingURL=chunk-HCNYEZXZ.js.map

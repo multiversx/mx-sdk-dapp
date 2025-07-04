@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/CopyButton/index.tsx"],
-  "sourcesContent": ["export * from './CopyButton';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

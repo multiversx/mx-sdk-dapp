@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/constants.ts"],
-  "sourcesContent": ["import { TransactionActionsEnum } from 'types/serverTransactions.types';\n\n/**\n * If `action.name` or `function` is in `ACTIONS_WITH_MANDATORY_OPERATIONS[]`, transaction value will be computed based `operations` field\n */\nexport const ACTIONS_WITH_MANDATORY_OPERATIONS = [\n  TransactionActionsEnum.reDelegateRewards,\n  TransactionActionsEnum.claimRewards,\n  TransactionActionsEnum.unBond\n];\n\n/**\n * If `action.name` is in `ACTIONS_WITH_EGLD_VALUE[]`, transaction value will be returned directly\n */\nexport const ACTIONS_WITH_EGLD_VALUE = [\n  TransactionActionsEnum.wrapEgld,\n  TransactionActionsEnum.unwrapEgld\n];\n\n/**\n * If `action.name` is in `ACTIONS_WITH_VALUE_IN_DATA_FIELD[]`, transaction value will be computed based `data` field\n */\nexport const ACTIONS_WITH_VALUE_IN_DATA_FIELD = [\n  TransactionActionsEnum.unStake\n];\n\n/**\n * If `action.name` is in `ACTIONS_WITH_VALUE_IN_ACTION_FIELD[]`, transaction value will be computed based `action` field\n */\nexport const ACTIONS_WITH_VALUE_IN_ACTION_FIELD = [\n  TransactionActionsEnum.unDelegate\n];\n"],
-  "mappings": "kFAAA,GAKa,GASA,EAQA,EAOA,EA7Bb,iBAKO,AAAM,EAAoC,CAC/C,oBACA,eACA,QACF,EAKa,EAA0B,CACrC,WACA,YACF,EAKa,EAAmC,CAC9C,SACF,EAKa,EAAqC,CAChD,YACF",
-  "names": []
-}

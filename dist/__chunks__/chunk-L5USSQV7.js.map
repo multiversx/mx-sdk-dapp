@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/tokens/getPersistedToken.ts"],
-  "sourcesContent": ["import { axiosInstance } from 'apiCalls/utils/axiosInstance';\nimport { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';\nimport { store } from 'reduxStore/store';\nimport { tokenDataStorage } from './tokenDataStorage';\n\nexport async function getPersistedToken<T>(url: string): Promise<T> {\n  const { apiAddress, apiTimeout } = networkSelector(store.getState());\n\n  const config = {\n    baseURL: apiAddress,\n    timeout: Number(apiTimeout)\n  };\n\n  const cachedToken: T | null = await tokenDataStorage.getItem(url);\n\n  if (cachedToken) {\n    return cachedToken;\n  }\n\n  const response = await axiosInstance.get<T>(url, config);\n\n  await tokenDataStorage.setItem(url, response.data);\n\n  return response.data;\n}\n"],
-  "mappings": "+NAAA,QACA,IACA,IAGA,WAA2C,EAAyB,gCAClE,GAAM,CAAE,aAAY,cAAe,EAAgB,EAAM,SAAS,CAAC,EAE7D,EAAS,CACb,QAAS,EACT,QAAS,OAAO,CAAU,CAC5B,EAEM,EAAwB,KAAM,GAAiB,QAAQ,CAAG,EAEhE,GAAI,EACF,MAAO,GAGT,GAAM,GAAW,KAAM,GAAc,IAAO,EAAK,CAAM,EAEvD,YAAM,GAAiB,QAAQ,EAAK,EAAS,IAAI,EAE1C,EAAS,IAClB",
-  "names": []
-}

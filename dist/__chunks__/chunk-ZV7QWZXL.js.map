@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/account/useGetAccount.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { accountSelector } from 'reduxStore/selectors';\n\nexport const useGetAccount = () => {\n  return useSelector(accountSelector);\n};\n"],
-  "mappings": "gKAAA,IACA,IAEO,GAAM,GAAgB,IACpB,EAAY,CAAe",
-  "names": []
-}

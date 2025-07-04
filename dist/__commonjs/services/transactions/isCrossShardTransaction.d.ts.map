@@ -1,1 +1,0 @@
-{"version":3,"file":"isCrossShardTransaction.d.ts","sourceRoot":"","sources":["../../../../src/services/transactions/isCrossShardTransaction.ts"],"names":[],"mappings":"AAIA,MAAM,WAAW,gCAAgC;IAC/C,eAAe,EAAE,MAAM,CAAC;IACxB,WAAW,CAAC,EAAE,MAAM,CAAC;IACrB,aAAa,CAAC,EAAE,MAAM,CAAC;CACxB;AACD,wBAAgB,uBAAuB,CAAC,EACtC,eAAe,EACf,WAAW,EACX,aAAa,EACd,EAAE,gCAAgC,WAYlC"}

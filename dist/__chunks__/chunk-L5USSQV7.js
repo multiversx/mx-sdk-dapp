@@ -1,2 +1,0 @@
-import{a as e}from"./chunk-NGOTHU6C.js";import{a as m,b as d}from"./chunk-FN7APMDR.js";import{i,o as g}from"./chunk-S55DZJQR.js";import{a as s,d as T}from"./chunk-PCK656QH.js";import{j as r,m as n}from"./chunk-HBP5N4FR.js";n();d();g();T();function P(t){return r(this,null,function*(){let{apiAddress:c,apiTimeout:p}=i(s.getState()),f={baseURL:c,timeout:Number(p)},o=yield e.getItem(t);if(o)return o;let a=yield m.get(t,f);return yield e.setItem(t,a.data),a.data})}export{P as a};
-//# sourceMappingURL=chunk-L5USSQV7.js.map

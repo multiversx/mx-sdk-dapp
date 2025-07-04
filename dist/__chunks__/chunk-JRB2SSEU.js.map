@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens.ts"],
-  "sourcesContent": ["import {\n  ServerTransactionType,\n  TokenArgumentType\n} from 'types/serverTransactions.types';\n\nexport const getTransactionTokens = (\n  transaction: ServerTransactionType\n): TokenArgumentType[] => {\n  if (transaction.action) {\n    const merged = [\n      transaction.action.arguments?.token,\n      transaction.action.arguments?.token1,\n      transaction.action.arguments?.token2,\n      transaction.action.arguments?.transfers // array of tokens\n    ].filter((x) => x != null);\n    const flattenTransfers = [].concat(...merged);\n    return flattenTransfers;\n  }\n\n  return [];\n};\n"],
-  "mappings": "+CAAA,GAKa,GALb,aAKO,AAAM,EAAuB,AAClC,GACwB,CAP1B,YAQE,GAAI,EAAY,OAAQ,CACtB,GAAM,GAAS,CACb,KAAY,OAAO,YAAnB,cAA8B,MAC9B,KAAY,OAAO,YAAnB,cAA8B,OAC9B,KAAY,OAAO,YAAnB,cAA8B,OAC9B,KAAY,OAAO,YAAnB,cAA8B,SAChC,EAAE,OAAO,AAAC,GAAM,GAAK,IAAI,EAEzB,MADyB,CAAC,EAAE,OAAO,GAAG,CAAM,CAE9C,CAEA,MAAO,CAAC,CACV",
-  "names": []
-}

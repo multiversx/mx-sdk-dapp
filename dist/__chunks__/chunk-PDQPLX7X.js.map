@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/components/IconToast/components/IconToastFooter/components/SharedToastFooter.tsx"],
-  "sourcesContent": ["import React, { PropsWithChildren } from 'react';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\n\nconst SharedToastFooterComponent = ({\n  children,\n  styles\n}: PropsWithChildren & WithStylesImportType) => {\n  return <div className={styles?.footer}>{children}</div>;\n};\n\nexport const SharedToastFooter = withStyles(SharedToastFooterComponent, {\n  ssrStyles: () =>\n    import(\n      'UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss'\n    ),\n  clientStyles: () =>\n    require('UI/TransactionsToastList/components/TransactionToast/transactionToast.styles.scss')\n      .default\n});\n"],
-  "mappings": "iIAAA,yBAGA,GAAM,GAA6B,CAAC,CAClC,WACA,YAEO,gBAAC,OAAI,UAAW,iBAAQ,QAAS,CAAS,EAGtC,EAAoB,EAAW,EAA4B,CACtE,UAAW,IACT,OACE,sFAEJ,aAAc,IACZ,WACG,OACP,CAAC",
-  "names": []
-}

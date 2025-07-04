@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/data/websocketConfig.ts"],
-  "sourcesContent": ["export const websocketConfig = { url: 'devnet-socket-api.multiversx.com' };\n"],
-  "mappings": "wCAAA,IAAO,GAAM,GAAkB,CAAE,IAAK,kCAAmC",
-  "names": []
-}

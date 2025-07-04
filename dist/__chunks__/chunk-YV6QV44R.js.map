@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionTransferType.ts"],
-  "sourcesContent": ["import {\n  ServerTransactionType,\n  TransferTypeEnum,\n  TransactionDirectionEnum\n} from 'types/serverTransactions.types';\n\nexport function getTransactionTransferType(\n  address: string,\n  transaction: ServerTransactionType,\n  receiver: string\n): TransactionDirectionEnum {\n  const directionOut = address === transaction.sender;\n  const directionIn = address === receiver;\n  const directionSelf = directionOut && directionIn;\n  const isScResult = transaction?.type === TransferTypeEnum.SmartContractResult;\n\n  switch (true) {\n    case isScResult:\n      return TransactionDirectionEnum.INTERNAL;\n    case directionSelf:\n      return TransactionDirectionEnum.SELF;\n    case directionIn:\n      return TransactionDirectionEnum.IN;\n    case directionOut:\n    default:\n      return TransactionDirectionEnum.OUT;\n  }\n}\n"],
-  "mappings": "uFAMO,WACL,EACA,EACA,EAC0B,CAC1B,GAAM,GAAe,IAAY,EAAY,OACvC,EAAc,IAAY,EAC1B,EAAgB,GAAgB,EAChC,EAAa,kBAAa,QAAS,sBAEzC,OAAQ,QACD,GACH,MAAO,eACJ,GACH,MAAO,WACJ,GACH,MAAO,SACJ,WAEH,MAAO,MAEb,CA3BA",
-  "names": []
-}

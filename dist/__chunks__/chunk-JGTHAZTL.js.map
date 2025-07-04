@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithExtraModal/SignWithExtraModal.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { useSignTransactions } from 'hooks/transactions/useSignTransactions';\n\nexport function SignWithExtraModal() {\n  useSignTransactions();\n  return <></>;\n}\n"],
-  "mappings": "gFAAA,yBAGO,YAA8B,CACnC,SAAoB,EACb,+BAAE,CACX",
-  "names": []
-}

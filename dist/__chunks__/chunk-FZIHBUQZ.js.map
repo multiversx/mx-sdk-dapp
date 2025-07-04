@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/account/useGetBatchWebsocketEvent.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { websocketBatchEventSelector } from 'reduxStore/selectors';\n\nexport const useGetBatchWebsocketEvent = () => {\n  return useSelector(websocketBatchEventSelector);\n};\n"],
-  "mappings": "gKAAA,IACA,IAEO,GAAM,GAA4B,IAChC,EAAY,CAA2B",
-  "names": []
-}

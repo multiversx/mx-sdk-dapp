@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/selectors/modalsSelectors.ts"],
-  "sourcesContent": ["import { RootState } from '../store';\nimport { createDeepEqualSelector } from './helpers';\n\nexport const modalsSliceSelector = (state: RootState) => state.modals;\n\nexport const txSubmittedModalSelector = createDeepEqualSelector(\n  modalsSliceSelector,\n  (state) => state.txSubmittedModal\n);\n\nexport const notificationModalSelector = createDeepEqualSelector(\n  modalsSliceSelector,\n  (state) => state.notificationModal\n);\n"],
-  "mappings": "8FAAA,GAGa,GAEA,EAKA,EAVb,aACA,IAEO,AAAM,EAAsB,AAAC,GAAqB,EAAM,OAElD,EAA2B,EACtC,EACA,AAAC,GAAU,EAAM,gBACnB,EAEa,EAA4B,EACvC,EACA,AAAC,GAAU,EAAM,iBACnB",
-  "names": []
-}

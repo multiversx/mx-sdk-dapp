@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getDataPayloadForTransaction.ts"],
-  "sourcesContent": ["import { TransactionPayload } from '@multiversx/sdk-core/out';\nimport { isStringBase64 } from '../decoders';\n\n/**\n * @description We need to check if the data field was already encoded and to prevent additional encoding\n * The TransactionPayload is used in the context of the Transaction class\n * which must always have a non-encoded data field\n *\n * @see The tests for this function are in src/utils/transactions/tests/getDataPayloadForTransaction.test.ts\n * @param data - data field from transaction\n */\nexport const getDataPayloadForTransaction = (\n  data?: string\n): TransactionPayload => {\n  const defaultData = data ?? '';\n\n  return isStringBase64(defaultData)\n    ? TransactionPayload.fromEncoded(defaultData)\n    : new TransactionPayload(defaultData);\n};\n"],
-  "mappings": "+HAAA,iEAWa,GAXb,aACA,IAUO,AAAM,EAA+B,AAC1C,GACuB,CACvB,GAAM,GAAc,UAAQ,GAE5B,MAAO,GAAe,CAAW,EAC7B,EAAmB,YAAY,CAAW,EAC1C,GAAI,GAAmB,CAAW,CACxC",
-  "names": []
-}

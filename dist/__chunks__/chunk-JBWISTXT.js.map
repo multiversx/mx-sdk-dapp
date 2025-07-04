@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/economics/index.ts"],
-  "sourcesContent": ["export * from './getEconomicsInfo';\nexport * from './useGetEconomicsInfoFromApi';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

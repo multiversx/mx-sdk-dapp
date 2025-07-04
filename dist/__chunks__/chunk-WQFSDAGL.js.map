@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/constants/web-wallet.constants.ts"],
-  "sourcesContent": ["export {\n  WALLET_PROVIDER_MAINNET,\n  WALLET_PROVIDER_DEVNET,\n  WALLET_PROVIDER_TESTNET,\n  WALLET_PROVIDER_CONNECT_URL,\n  WALLET_PROVIDER_DISCONNECT_URL,\n  WALLET_PROVIDER_SEND_TRANSACTION_URL,\n  WALLET_PROVIDER_SIGN_TRANSACTION_URL,\n  WALLET_PROVIDER_SIGN_MESSAGE_URL,\n  WALLET_PROVIDER_CALLBACK_PARAM,\n  WALLET_PROVIDER_CALLBACK_PARAM_TX_SIGNED\n} from '@multiversx/sdk-web-wallet-provider';\n"],
-  "mappings": "+CAAA",
-  "names": []
-}

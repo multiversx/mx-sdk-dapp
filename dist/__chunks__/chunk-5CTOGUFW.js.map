@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsTable/components/FailedTransactions.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { faExchangeAlt } from '@fortawesome/free-solid-svg-icons/faExchangeAlt';\nimport { DataTestIdsEnum } from 'constants/index';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { PageState } from 'UI/PageState';\n\nfunction FailedTransactionsComponent({ globalStyles }: WithStylesImportType) {\n  return (\n    <PageState\n      icon={faExchangeAlt}\n      title='Unable to load transactions'\n      className={globalStyles?.myAuto}\n      data-testid={DataTestIdsEnum.errorScreen}\n    />\n  );\n}\n\nexport const FailedTransactions = withStyles(FailedTransactionsComponent, {});\n"],
-  "mappings": "gKAAA,IAEA,IAFA,qBACA,gFAKA,WAAqC,CAAE,gBAAsC,CAC3E,MACE,iBAAC,GACC,KAAM,EACN,MAAM,8BACN,UAAW,iBAAc,OACzB,cAAa,cACf,CAEJ,CAEO,GAAM,GAAqB,EAAW,EAA6B,CAAC,CAAC",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/login/helpers/clearInitiatedLogins.ts"],
-  "sourcesContent": ["import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';\nimport { IframeProvider } from 'lib/sdkWebWalletIframeProvider';\nimport { LoginMethodsEnum } from 'types';\n\nexport const clearInitiatedLogins = (props?: {\n  skipLoginMethod: LoginMethodsEnum;\n}) => {\n  Object.values(LoginMethodsEnum).forEach((method) => {\n    if (method === props?.skipLoginMethod) {\n      return;\n    }\n    switch (method) {\n      case LoginMethodsEnum.crossWindow: {\n        const crossWindowProvider = CrossWindowProvider.getInstance();\n        if (crossWindowProvider.isInitialized()) {\n          crossWindowProvider.dispose();\n        }\n        break;\n      }\n      case LoginMethodsEnum.iframe: {\n        const iframeProvider = IframeProvider.getInstance();\n        if (iframeProvider.isInitialized()) {\n          iframeProvider.dispose();\n        }\n        break;\n      }\n      default:\n        break;\n    }\n  });\n\n  return null;\n};\n"],
-  "mappings": "+MAAA,QAEA,IAEO,GAAM,GAAuB,AAAC,GAGnC,QAAO,OAAO,CAAgB,EAAE,QAAQ,AAAC,GAAW,CAClD,GAAI,IAAW,kBAAO,iBAGtB,OAAQ,OACD,cAA8B,CACjC,GAAM,GAAsB,EAAoB,YAAY,EAC5D,AAAI,EAAoB,cAAc,GACpC,EAAoB,QAAQ,EAE9B,KACF,KACK,SAAyB,CAC5B,GAAM,GAAiB,EAAe,YAAY,EAClD,AAAI,EAAe,cAAc,GAC/B,EAAe,QAAQ,EAEzB,KACF,SAEE,MAEN,CAAC,EAEM",
-  "names": []
-}

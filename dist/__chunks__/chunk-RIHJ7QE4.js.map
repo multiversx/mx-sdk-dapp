@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/Denominate/index.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { MAINNET_EGLD_LABEL } from 'constants/index';\nimport { FormatAmount } from 'UI/FormatAmount/FormatAmount';\nimport { FormatAmountPropsType } from 'UI/FormatAmount/formatAmount.types';\n\nlet deprecationMessageDisplayed = false;\n\n/**\n * !!! This function is deprecated. Please use formatAmount instead.\n * @param props.egldLabel  if not provided, will fallback on **EGLD**\n */\nexport const Denominate = (props: FormatAmountPropsType) => {\n  if (!deprecationMessageDisplayed) {\n    console.warn(\n      '!!! Be aware !!! The \"Denominate\" component is deprecated. Please use \"FormatAmount\" instead.'\n    );\n\n    deprecationMessageDisplayed = true;\n  }\n\n  const egldLabel = props.egldLabel || MAINNET_EGLD_LABEL;\n\n  const formatAmountProps = { ...props, egldLabel };\n\n  return <FormatAmount {...formatAmountProps} />;\n};\n"],
-  "mappings": "yKAAA,IACA,IADA,qBAKA,GAAI,GAA8B,GAMrB,EAAa,AAAC,GAAiC,CAC1D,AAAK,GACH,SAAQ,KACN,+FACF,EAEA,EAA8B,IAGhC,GAAM,GAAY,EAAM,WAAa,EAE/B,EAAoB,OAAK,GAAL,CAAY,WAAU,GAEhD,MAAO,iBAAC,OAAiB,EAAmB,CAC9C",
-  "names": []
-}

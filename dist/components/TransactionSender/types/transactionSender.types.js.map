@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../src/components/TransactionSender/types/transactionSender.types.ts"],
-  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport {\n  SendBatchTransactionsPropsType,\n  SendSignedBatchTransactionsReturnType,\n  SendSignedTransactionsReturnType\n} from 'apiCalls/transactions';\n\nexport interface TransactionSenderType {\n  sendSignedTransactionsAsync?: (\n    signedTransactions: Transaction[]\n  ) => Promise<SendSignedTransactionsReturnType>;\n  sendSignedBatchTransactionsAsync?: (\n    props: SendBatchTransactionsPropsType\n  ) => Promise<SendSignedBatchTransactionsReturnType>;\n}\n"],
-  "mappings": "uEAAA",
-  "names": []
-}

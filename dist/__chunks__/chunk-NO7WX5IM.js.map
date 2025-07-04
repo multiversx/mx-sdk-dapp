@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useGetPendingTransactions.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { pendingSignedTransactionsSelector } from 'reduxStore/selectors';\nimport { SignedTransactionsType, SignedTransactionsBodyType } from 'types';\n\nexport interface UseGetPendingTransactionsReturnType {\n  pendingTransactions: SignedTransactionsType;\n  pendingTransactionsArray: [string, SignedTransactionsBodyType][];\n  hasPendingTransactions: boolean;\n}\n\n//this is a hook to be able to take advantage of memoization offered by useSelector\nexport function useGetPendingTransactions(): UseGetPendingTransactionsReturnType {\n  const pendingTransactions = useSelector(pendingSignedTransactionsSelector);\n  const pendingTransactionsArray: [string, SignedTransactionsBodyType][] =\n    Object.entries(pendingTransactions);\n  const hasPendingTransactions = pendingTransactionsArray?.length > 0;\n\n  return {\n    pendingTransactions,\n    pendingTransactionsArray,\n    hasPendingTransactions\n  };\n}\n"],
-  "mappings": "+HAAA,IACA,IAUO,YAA0E,CAC/E,GAAM,GAAsB,EAAY,CAAiC,EACnE,EACJ,OAAO,QAAQ,CAAmB,EAC9B,EAAyB,kBAA0B,QAAS,EAElE,MAAO,CACL,sBACA,2BACA,wBACF,CACF",
-  "names": []
-}

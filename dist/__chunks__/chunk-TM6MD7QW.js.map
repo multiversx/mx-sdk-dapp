@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoHash/TransactionInfoHash.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { CopyButton } from 'UI/CopyButton';\nimport {\n  WithClassnameType,\n  WithTransactionType\n} from '../../../../../UI/types';\nimport { DetailItem } from '../../DetailItem';\n\nconst TransactionInfoHashComponent = ({\n  className,\n  transaction,\n  styles\n}: WithTransactionType & WithClassnameType & WithStylesImportType) => (\n  <DetailItem className={className} title='Hash'>\n    <div className={styles?.hash}>\n      {transaction.txHash}\n\n      <CopyButton text={transaction.txHash} className={styles?.copy} />\n    </div>\n  </DetailItem>\n);\n\nexport const TransactionInfoHash = withStyles(TransactionInfoHashComponent, {\n  ssrStyles: () =>\n    import(\n      'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoHash/styles.scss'\n    ),\n  clientStyles: () =>\n    require('UI/TransactionInfo/components/transactionInfoFields/TransactionInfoHash/styles.scss')\n      .default\n});\n"],
-  "mappings": "sNAAA,yBASA,GAAM,GAA+B,CAAC,CACpC,YACA,cACA,YAEA,gBAAC,GAAW,UAAW,EAAW,MAAM,QACtC,gBAAC,OAAI,UAAW,iBAAQ,MACrB,EAAY,OAEb,gBAAC,GAAW,KAAM,EAAY,OAAQ,UAAW,iBAAQ,KAAM,CACjE,CACF,EAGW,EAAsB,EAAW,EAA8B,CAC1E,UAAW,IACT,OACE,wFAEJ,aAAc,IACZ,WACG,OACP,CAAC",
-  "names": []
-}

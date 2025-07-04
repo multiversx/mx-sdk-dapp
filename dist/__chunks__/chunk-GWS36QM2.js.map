@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/Loader/index.tsx"],
-  "sourcesContent": ["export * from './Loader';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

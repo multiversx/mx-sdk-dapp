@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/DataField/components/Linkified/Linkified.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport Linkify from 'linkify-react';\nimport { Opts } from 'linkifyjs';\nimport { Link } from './Link';\nimport { LinkifiedProps, LinkComponent } from './linkified.types';\n\nexport interface LinkifiedPropsType extends LinkifiedProps {\n  children: string;\n  linkComponent?: LinkComponent;\n}\n\nexport const Linkified = ({ children, ...rest }: LinkifiedPropsType) => {\n  const renderLink = ({ attributes }: Opts) => {\n    const { href } = attributes as any;\n\n    return <Link {...rest} href={href} />;\n  };\n\n  return <Linkify options={{ render: renderLink }}>{children}</Linkify>;\n};\n"],
-  "mappings": "qGAAA,yBACA,6BAUO,GAAM,GAAY,AAAC,GAA8C,CAA9C,QAAE,aAAF,EAAe,IAAf,EAAe,CAAb,aAO1B,MAAO,iBAAC,GAAQ,QAAS,CAAE,OANR,CAAC,CAAE,gBAAuB,CAC3C,GAAM,CAAE,QAAS,EAEjB,MAAO,iBAAC,SAAS,GAAT,CAAe,KAAM,GAAM,CACrC,CAE8C,GAAI,CAAS,CAC7D",
-  "names": []
-}

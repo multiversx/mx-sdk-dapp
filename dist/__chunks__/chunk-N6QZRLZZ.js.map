@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/accounts/index.ts"],
-  "sourcesContent": ["export * from './getAccountFromApi';\nexport * from './useGetAccountFromApi';\n"],
-  "mappings": "gFAAA",
-  "names": []
-}

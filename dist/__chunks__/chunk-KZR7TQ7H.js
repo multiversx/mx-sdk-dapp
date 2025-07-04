@@ -1,2 +1,0 @@
-import{a as l}from"./chunk-NAN2H6P3.js";import{j as n,m as y}from"./chunk-HBP5N4FR.js";y();var u=(r,e,a,t=0)=>n(void 0,null,function*(){try{return yield r(...a)}catch(i){return t<e.retries?((e==null?void 0:e.delay)!=null&&(yield l(e.delay)),yield u(r,e,a,t+1)):null}}),f=(r,e={retries:5,delay:500})=>(...a)=>n(void 0,null,function*(){return yield u(r,e,a)});export{f as a};
-//# sourceMappingURL=chunk-KZR7TQ7H.js.map

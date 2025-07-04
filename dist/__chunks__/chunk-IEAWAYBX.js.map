@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/walletConnect/WalletConnectLoginButton/index.ts"],
-  "sourcesContent": ["export * from './WalletConnectLoginButton';\nexport * from './types';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

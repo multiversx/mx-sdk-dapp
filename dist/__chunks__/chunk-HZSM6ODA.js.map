@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/websocketListener/index.ts"],
-  "sourcesContent": ["export * from './useGetWebsocketUrl';\nexport * from './useRegisterWebsocketListener';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

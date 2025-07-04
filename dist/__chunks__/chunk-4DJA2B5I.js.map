@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsTable/components/index.tsx"],
-  "sourcesContent": ["export * from './AccountName';\nexport * from './FailedTransactions';\nexport * from './LockedTokenAddressIcon';\nexport * from './NoTransactions';\nexport * from './ScAddressIcon';\nexport * from './ShardSpan';\nexport * from './TransactionDirectionBadge';\nexport * from './TransactionHash';\nexport * from './TransactionMethod';\nexport * from './TransactionReceiver';\nexport * from './TransactionSender';\nexport * from './TransactionValue';\nexport * from './TransactionShardsTransition';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useGetTransactionDisplayInfo.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { transactionDisplayInfoSelector } from 'reduxStore/selectors';\nimport { RootState } from 'reduxStore/store';\n\nexport function useGetTransactionDisplayInfo(toastId: string | null) {\n  return useSelector((state: RootState) =>\n    transactionDisplayInfoSelector(state, toastId)\n  );\n}\n"],
-  "mappings": "gKAAA,IACA,IAGO,WAAsC,EAAwB,CACnE,MAAO,GAAY,AAAC,GAClB,EAA+B,EAAO,CAAO,CAC/C,CACF",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/constants/guardianActions.enum.ts"],
-  "sourcesContent": ["export enum GuardianActionsEnum {\n  SetGuardian = 'SetGuardian',\n  GuardAccount = 'GuardAccount',\n  UnGuardAccount = 'UnGuardAccount'\n}\n"],
-  "mappings": "0CAAA,GAAY,GAAZ,aAAO,AAAK,EAAL,CAAK,GACV,eAAc,cACd,eAAe,eACf,iBAAiB,iBAHP",
-  "names": []
-}

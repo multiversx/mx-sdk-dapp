@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../../src/UI/TransactionInfo/components/ScResultsList/components/ResultHash/index.ts"],
-  "sourcesContent": ["export * from './ResultHash';\n"],
-  "mappings": "6psBAAA",
-  "names": []
-}

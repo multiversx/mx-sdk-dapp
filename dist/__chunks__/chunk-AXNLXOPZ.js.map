@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/ledger/LedgerLoginContainer/LedgerLoginContentBody/index.ts"],
-  "sourcesContent": ["export * from './LedgerLoginContentBody';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

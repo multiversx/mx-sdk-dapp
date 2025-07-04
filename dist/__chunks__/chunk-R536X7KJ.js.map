@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/login/useXaliasLogin.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { xAliasAddressSelector } from 'reduxStore/selectors';\nimport {\n  UseWebWalletLoginPropsType,\n  useWebWalletLogin,\n  UseWebWalletLoginReturnType\n} from './useWebWalletLogin';\n\nexport const useXaliasLogin = (\n  props: UseWebWalletLoginPropsType\n): UseWebWalletLoginReturnType => {\n  const xAliasAddress = useSelector(xAliasAddressSelector);\n  return useWebWalletLogin({\n    ...props,\n    customWalletAddress: props.customWalletAddress ?? xAliasAddress\n  });\n};\n"],
-  "mappings": "sNAAA,IACA,IAOO,GAAM,GAAiB,AAC5B,GACgC,CAVlC,MAWE,GAAM,GAAgB,EAAY,CAAqB,EACvD,MAAO,GAAkB,OACpB,GADoB,CAEvB,oBAAqB,KAAM,sBAAN,OAA6B,CACpD,EAAC,CACH",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getTrimmedHash.ts"],
-  "sourcesContent": ["export const getTrimmedHash = (address: string, divider = 4): string =>\n  `${address.substring(\n    0,\n    Math.floor(address.length / divider)\n  )}...${address.substring(\n    address.length - Math.ceil(address.length / divider)\n  )}`;\n"],
-  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAAiB,CAAC,EAAiB,EAAU,IACxD,GAAG,EAAQ,UACT,EACA,KAAK,MAAM,EAAQ,OAAS,CAAO,CACrC,OAAO,EAAQ,UACb,EAAQ,OAAS,KAAK,KAAK,EAAQ,OAAS,CAAO,CACrD",
-  "names": []
-}

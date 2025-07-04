@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/DappProviderContext.ts"],
-  "sourcesContent": ["import { createContext } from 'react';\nimport {\n  createDispatchHook,\n  createSelectorHook,\n  createStoreHook,\n  ReactReduxContextValue\n} from 'react-redux';\nimport { store, subscription } from './store';\n\nconst defaultContextValue: ReactReduxContextValue = {\n  store,\n  subscription\n};\n\nexport const DappCoreContext = createContext(defaultContextValue);\n\nexport const useStore = createStoreHook(DappCoreContext);\nexport const useDispatch = createDispatchHook(DappCoreContext);\nexport const useSelector = createSelectorHook(DappCoreContext);\n"],
-  "mappings": "8FAAA,IAOA,IAPA,sCACA,8FAQA,GAAM,GAA8C,CAClD,QACA,cACF,EAEa,EAAkB,EAAc,CAAmB,EAEnD,EAAW,EAAgB,CAAe,EAC1C,EAAc,EAAmB,CAAe,EAChD,EAAc,EAAmB,CAAe",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/types/reducers.types.ts"],
-  "sourcesContent": ["export enum ReducersEnum {\n  account = 'account',\n  dappModal = 'dappModal',\n  dappConfig = 'dappConfig',\n  loginInfo = 'loginInfo',\n  modals = 'modals',\n  networkConfig = 'networkConfig',\n  signedMessageInfo = 'signedMessageInfo',\n  toasts = 'toasts',\n  transactions = 'transactions',\n  batchTransactions = 'batchTransactions',\n  transactionsInfo = 'transactionsInfo',\n  transactionsToSign = 'transactionsToSign'\n}\n"],
-  "mappings": "+CAAA,GAAY,GAAZ,aAAO,AAAK,EAAL,CAAK,GACV,WAAU,UACV,YAAY,YACZ,aAAa,aACb,YAAY,YACZ,SAAS,SACT,gBAAgB,gBAChB,oBAAoB,oBACpB,SAAS,SACT,eAAe,eACf,oBAAoB,oBACpB,mBAAmB,mBACnB,qBAAqB,qBAZX",
-  "names": []
-}

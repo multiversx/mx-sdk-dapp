@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/index.ts"],
-  "sourcesContent": ["export * from './ConfirmAmount';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

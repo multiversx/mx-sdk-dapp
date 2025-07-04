@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/websocketListener/useGetWebsocketUrl.ts"],
-  "sourcesContent": ["import { useEffect, useState } from 'react';\n\nimport { getWebsocketUrl } from 'utils/websocket/getWebsocketUrl';\n\nexport function useGetWebsocketUrl(apiAddress: string) {\n  const [url, setUrl] = useState<string>();\n  const [error, setError] = useState<unknown>();\n\n  async function getUrl() {\n    try {\n      const fetchedUrl = await getWebsocketUrl(apiAddress);\n      setUrl(fetchedUrl);\n    } catch (err) {\n      setError(err);\n    }\n  }\n\n  useEffect(() => {\n    getUrl();\n  }, []);\n\n  return { data: url, error, getUrl };\n}\n"],
-  "mappings": "uFAAA,oDAIO,WAA4B,EAAoB,CACrD,GAAM,CAAC,EAAK,GAAU,EAAiB,EACjC,CAAC,EAAO,GAAY,EAAkB,EAE5C,YAAwB,gCACtB,GAAI,CACF,GAAM,GAAa,KAAM,GAAgB,CAAU,EACnD,EAAO,CAAU,CACnB,OAAS,EAAP,CACA,EAAS,CAAG,CACd,CACF,GAEA,SAAU,IAAM,CACd,EAAO,CACT,EAAG,CAAC,CAAC,EAEE,CAAE,KAAM,EAAK,QAAO,QAAO,CACpC",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/utils/account/getWebviewPlatform.ts"],
-  "sourcesContent": ["import { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const getWebviewPlatform = () => {\n  const { search } = getWindowLocation();\n  const urlSearchParams = new URLSearchParams(search);\n  const searchParams = Object.fromEntries(urlSearchParams);\n\n  return searchParams?.platform;\n};\n"],
-  "mappings": "6KAAA,QAEO,GAAM,GAAqB,IAAM,CACtC,GAAM,CAAE,UAAW,EAAkB,EAC/B,EAAkB,GAAI,iBAAgB,CAAM,EAC5C,EAAe,OAAO,YAAY,CAAe,EAEvD,MAAO,kBAAc,QACvB",
-  "names": []
-}

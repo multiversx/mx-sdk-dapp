@@ -1,2 +1,0 @@
-import{a as t}from"./chunk-PDWGUQLF.js";import{a as n,b as e,m as o}from"./chunk-HBP5N4FR.js";o();import g from"react";var P=i=>{var r;let s=i.error?i.error:((r=i.transactions)==null?void 0:r.length)>1?"Please signin with your passkey in order to sign the transactions":"Please signin with your passkey in order to sign the transaction",a=e(n({},i),{description:s,title:"Confirm by signing in with passkey"});return g.createElement(t,n({},a))};export{P as a};
-//# sourceMappingURL=chunk-MUICW44L.js.map

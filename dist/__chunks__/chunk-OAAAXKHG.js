@@ -1,2 +1,0 @@
-import{a as t,b as m}from"./chunk-4GKSQE2H.js";import{a as c}from"./chunk-OPT3JYNI.js";import{e as s,k as d,m as o}from"./chunk-HBP5N4FR.js";var p,f=s(()=>{o();c();m();p=({parts:e,decodedParts:n,identifier:i})=>{let r=[...n];if(e[0]==="ESDTNFTTransfer"&&e[2]&&(r[2]=t(e[2],"decimal")),i==="ESDTNFTTransfer"&&e[1]){let a=d.Buffer.from(String(e[1]),"base64");r[1]=t(a.toString("hex"),"decimal")}return r}});export{p as a,f as b};
-//# sourceMappingURL=chunk-OAAAXKHG.js.map

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/useUpdateEffect.ts"],
-  "sourcesContent": ["import { useRef, useEffect } from 'react';\n\nexport function useUpdateEffect(effect: any, dependencies: any[] = []) {\n  const isInitialMount = useRef(true);\n\n  useEffect(() => {\n    if (isInitialMount.current) {\n      isInitialMount.current = false;\n    } else {\n      effect();\n    }\n  }, dependencies);\n}\n"],
-  "mappings": "wCAAA,kDAEO,WAAyB,EAAa,EAAsB,CAAC,EAAG,CACrE,GAAM,GAAiB,EAAO,EAAI,EAElC,EAAU,IAAM,CACd,AAAI,EAAe,QACjB,EAAe,QAAU,GAEzB,EAAO,CAEX,EAAG,CAAY,CACjB",
-  "names": []
-}

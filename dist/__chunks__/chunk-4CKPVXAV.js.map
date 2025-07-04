@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/walletConnect/WalletConnectLoginContainer/PairingList/index.ts"],
-  "sourcesContent": ["export * from './PairingList';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

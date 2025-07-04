@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/dateTime/getUnixTimestampWithAddedMilliseconds.ts"],
-  "sourcesContent": ["export const getUnixTimestampWithAddedMilliseconds = (\n  addedMilliseconds: number\n) => {\n  return (\n    new Date().setMilliseconds(\n      new Date().getMilliseconds() + addedMilliseconds\n    ) / 1000\n  );\n};\n"],
-  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAAwC,AACnD,GAGE,GAAI,MAAK,EAAE,gBACT,GAAI,MAAK,EAAE,gBAAgB,EAAI,CACjC,EAAI",
-  "names": []
-}

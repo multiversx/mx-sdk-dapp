@@ -1,1 +1,0 @@
-{"version":3,"file":"invokeSendTransactions.d.ts","sourceRoot":"","sources":["../../../../../src/components/TransactionSender/utils/invokeSendTransactions.ts"],"names":[],"mappings":"AAUA,OAAO,EAAE,0BAA0B,EAAyB,MAAM,OAAO,CAAC;AAE1E,OAAO,EAAE,qBAAqB,EAAE,MAAM,kCAAkC,CAAC;AAkEzE,eAAO,MAAM,sBAAsB;aAOxB,0BAA0B;eACxB,MAAM;2BACK,IAAI;kEA0C3B,CAAC"}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/operations/denominate.ts"],
-  "sourcesContent": ["import { DECIMALS, DIGITS } from 'constants/index';\nimport { formatAmount } from './formatAmount';\n\nlet deprecationMessageDisplayed = false;\n\nexport interface DenominateType {\n  input: string;\n  denomination?: number;\n  decimals?: number;\n  showIsLessThanDecimalsLabel?: boolean;\n  showLastNonZeroDecimal?: boolean;\n  addCommas?: boolean;\n}\n\n/**\n * !!! This function is deprecated. Please use formatAmount instead.\n * */\nexport function denominate({\n  input,\n  denomination = DECIMALS,\n  decimals = DIGITS,\n  showLastNonZeroDecimal = true,\n  showIsLessThanDecimalsLabel = false,\n  addCommas = false\n}: DenominateType) {\n  if (!deprecationMessageDisplayed) {\n    console.warn(\n      '!!! Be aware !!! The \"denominate\" function is deprecated. Please use \"formatAmount\" instead.'\n    );\n\n    deprecationMessageDisplayed = true;\n  }\n\n  return formatAmount({\n    input,\n    decimals: denomination,\n    addCommas,\n    digits: decimals,\n    showIsLessThanDecimalsLabel,\n    showLastNonZeroDecimal\n  });\n}\n"],
-  "mappings": "oJAiBO,WAAoB,CACzB,QACA,eAAe,EACf,WAAW,EACX,yBAAyB,GACzB,8BAA8B,GAC9B,YAAY,IACK,CACjB,MAAK,IACH,SAAQ,KACN,8FACF,EAEA,EAA8B,IAGzB,EAAa,CAClB,QACA,SAAU,EACV,YACA,OAAQ,EACR,8BACA,wBACF,CAAC,CACH,CAzCA,GAGI,GAHJ,iBACA,IAEA,AAAI,EAA8B",
-  "names": []
-}

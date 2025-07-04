@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/operations/parseAmount.ts"],
-  "sourcesContent": ["import { TokenPayment } from '@multiversx/sdk-core';\nimport { DECIMALS } from 'constants/index';\n\nexport function parseAmount(amount: string, numDecimals: number = DECIMALS) {\n  return TokenPayment.fungibleFromAmount('', amount, numDecimals).toString();\n}\n"],
-  "mappings": "8FAAA,oDAGO,WAAqB,EAAgB,EAAsB,EAAU,CAC1E,MAAO,GAAa,mBAAmB,GAAI,EAAQ,CAAW,EAAE,SAAS,CAC3E,CALA,iBACA",
-  "names": []
-}

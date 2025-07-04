@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/batch/sequentialToFlatArray.ts"],
-  "sourcesContent": ["import { SignedTransactionType } from 'types';\nimport { getIsSequential } from './getIsSequential';\n\nexport function sequentialToFlatArray({\n  transactions = []\n}: {\n  transactions?: SignedTransactionType[] | SignedTransactionType[][];\n}) {\n  return getIsSequential({ transactions })\n    ? transactions.flat()\n    : (transactions as SignedTransactionType[]);\n}\n"],
-  "mappings": "2EAAA,IAGO,WAA+B,CACpC,eAAe,CAAC,GAGf,CACD,MAAO,GAAgB,CAAE,cAAa,CAAC,EACnC,EAAa,KAAK,EACjB,CACP",
-  "names": []
-}

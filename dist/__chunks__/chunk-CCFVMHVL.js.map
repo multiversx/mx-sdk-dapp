@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/components/components/ConfirmAmount/hooks/index.ts"],
-  "sourcesContent": ["export * from './useHandleAmountReference';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

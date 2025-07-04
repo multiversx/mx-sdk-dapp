@@ -1,1 +1,0 @@
-{"version":3,"file":"getHumanReadableTokenExpirationTime.d.ts","sourceRoot":"","sources":["../../../../../../src/components/LogoutListener/helpers/useNativeAuthLogoutWarning/helpers/getHumanReadableTokenExpirationTime.ts"],"names":[],"mappings":"AAEA,eAAO,MAAM,mCAAmC,iBAAkB,MAAM,WA8BvE,CAAC"}

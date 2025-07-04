@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/ledger/LedgerLoginContainer/ConfirmAddress/helpers/secondsToTimeString.ts"],
-  "sourcesContent": ["import { isString } from 'lodash';\n\nexport const secondsToTimeString = (seconds: number) => {\n  if (seconds <= 0 || isNaN(seconds) || !seconds || isString(seconds)) {\n    return 'N/A time';\n  }\n\n  if (seconds >= 86400) {\n    return 'more than one day';\n  }\n\n  const hours = Math.floor(seconds / 3600);\n  const remainingSeconds = seconds % 3600;\n  const minutes = Math.floor(remainingSeconds / 60);\n  const remainingSecondsAfterMinutes = remainingSeconds % 60;\n\n  const parts = [];\n  if (hours > 0) {\n    parts.push(`${hours}h`);\n  }\n  if (minutes > 0) {\n    parts.push(`${minutes}min`);\n  }\n  if (remainingSecondsAfterMinutes > 0) {\n    parts.push(`${remainingSecondsAfterMinutes}sec`);\n  }\n\n  return parts.join(' ');\n};\n"],
-  "mappings": "6EAAA,UAAyB,OAEZ,EAAsB,AAAC,GAAoB,CACtD,GAAI,GAAW,GAAK,MAAM,CAAO,GAAK,CAAC,GAAW,eAAS,CAAO,EAChE,MAAO,WAGT,GAAI,GAAW,MACb,MAAO,oBAGT,GAAM,GAAQ,KAAK,MAAM,EAAU,IAAI,EACjC,EAAmB,EAAU,KAC7B,EAAU,KAAK,MAAM,EAAmB,EAAE,EAC1C,EAA+B,EAAmB,GAElD,EAAQ,CAAC,EACf,MAAI,GAAQ,GACV,EAAM,KAAK,GAAG,IAAQ,EAEpB,EAAU,GACZ,EAAM,KAAK,GAAG,MAAY,EAExB,EAA+B,GACjC,EAAM,KAAK,GAAG,MAAiC,EAG1C,EAAM,KAAK,GAAG,CACvB",
-  "names": []
-}

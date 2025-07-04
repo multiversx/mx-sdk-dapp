@@ -1,2 +1,0 @@
-import{a as N}from"./chunk-U5VNSGLU.js";import{a as m}from"./chunk-IOBQVW4H.js";import{f,z as l}from"./chunk-326XWAT2.js";import{a as i,b as t,c as s,d as a,m as c}from"./chunk-HBP5N4FR.js";c();l();N();var E=()=>{let{data:r,isLoading:p,error:e}=m({apiEndpoint:f});if(p)return null;e&&console.error("Error fetching server configuration:",e);let o="egldDenomination";if(!(o in r))return r;let n=r,{[o]:g,decimals:d}=n,u=a(n,[s(o),"decimals"]);return t(i({},u),{decimals:g,digits:d})};export{E as a};
-//# sourceMappingURL=chunk-TFB3C6O7.js.map

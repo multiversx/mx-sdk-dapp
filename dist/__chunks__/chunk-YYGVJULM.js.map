@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/DappModal/dappModal.types.ts"],
-  "sourcesContent": ["export interface DappModalConfig {\n  customModalFooter?: JSX.Element;\n  customModalHeader?: JSX.Element;\n  footerText?: string;\n  headerText?: string;\n  modalBodyClassName?: string;\n  modalCloseButtonClassName?: string;\n  modalContentClassName?: string;\n  modalDialogClassName?: string;\n  modalFooterClassName?: string;\n  modalHeaderClassName?: string;\n  modalHeaderTextClassName?: string;\n  showFooter?: boolean;\n  showHeader?: boolean;\n}\n\nexport interface DappModalInteractionConfig {\n  visible?: boolean;\n}\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

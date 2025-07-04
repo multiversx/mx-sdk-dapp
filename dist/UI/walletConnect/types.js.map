@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/UI/walletConnect/types.ts"],
-  "sourcesContent": ["import { WalletConnectPairingListClassesType } from './WalletConnectLoginContainer/PairingList';\n\nexport interface InnerWalletConnectComponentsClassesType {\n  containerContentClassName?: string;\n  containerScamPhishingAlertClassName?: string;\n  containerTitleClassName?: string;\n  containerSubtitleClassName?: string;\n  containerErrorClassName?: string;\n  containerQrCodeClassName?: string;\n  containerLoaderClassName?: string;\n  containerLegacyClassName?: string;\n  containerButtonClassName?: string;\n  walletConnectPairingListClassNames?: WalletConnectPairingListClassesType;\n}\n"],
-  "mappings": "oEAAA",
-  "names": []
-}

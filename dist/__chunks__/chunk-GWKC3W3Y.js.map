@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/TransactionStatusToast/StatusMessageComponent.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { StatusIcon } from './StatusIcon';\nimport { StatusIconType } from './transactionStatusToast.types';\n\nexport interface StatusMessageComponentPropsType {\n  type: StatusIconType;\n  message?: string;\n}\n\nconst StatusMessage = ({\n  type,\n  message,\n  styles\n}: StatusMessageComponentPropsType & WithStylesImportType) => (\n  <div className={styles?.transactionsStatusToastContent}>\n    <StatusIcon type={type} />\n    {message}\n  </div>\n);\n\nexport const StatusMessageComponent = withStyles(StatusMessage, {\n  ssrStyles: () =>\n    import(\n      'components/TransactionStatusToast/transactionStatusToastStyles.scss'\n    ),\n  clientStyles: () =>\n    require('components/TransactionStatusToast/transactionStatusToastStyles.scss')\n      .default\n});\n"],
-  "mappings": "8KAAA,yBAUA,GAAM,GAAgB,CAAC,CACrB,OACA,UACA,YAEA,gBAAC,OAAI,UAAW,iBAAQ,gCACtB,gBAAC,GAAW,KAAM,EAAM,EACvB,CACH,EAGW,EAAyB,EAAW,EAAe,CAC9D,UAAW,IACT,OACE,wEAEJ,aAAc,IACZ,WACG,OACP,CAAC",
-  "names": []
-}

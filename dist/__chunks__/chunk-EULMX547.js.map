@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/platform/detectCurrentPlatform.ts"],
-  "sourcesContent": ["import { safeWindow } from 'lib/sdkDappUtils';\nimport { PlatformsEnum } from 'types/enums.types';\n\nexport const detectCurrentPlatform = () => {\n  if ((safeWindow as any)?.ReactNativeWebView) {\n    return PlatformsEnum.reactNative;\n  }\n  if ((safeWindow as any)?.webkit) {\n    return PlatformsEnum.ios;\n  }\n\n  return PlatformsEnum.web;\n};\n"],
-  "mappings": "+HAAA,QACA,IAEO,GAAM,GAAwB,IAAM,CAH3C,QAIE,MAAK,eAAoB,mBAChB,cAEJ,eAAoB,OAChB,MAGF,KACT",
-  "names": []
-}

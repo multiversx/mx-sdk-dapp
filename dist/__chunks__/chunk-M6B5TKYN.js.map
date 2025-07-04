@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/helpers/getIsTransaction.ts"],
-  "sourcesContent": ["import { newTransaction } from 'models';\nimport { RawTransactionType } from 'types';\n\nexport function getIsTransaction<T>(transaction: T) {\n  try {\n    const rawTransaction = transaction as unknown as RawTransactionType;\n    const validTransaction = newTransaction({\n      ...rawTransaction,\n      // API transactions do not have chainID\n      chainID: rawTransaction.chainID ?? 'D'\n    });\n    return Boolean(validTransaction);\n  } catch (err) {\n    return false;\n  }\n}\n"],
-  "mappings": "sIAAA,QAGO,WAA6B,EAAgB,CAHpD,MAIE,GAAI,CACF,GAAM,GAAiB,EACjB,EAAmB,EAAe,OACnC,GADmC,CAGtC,QAAS,KAAe,UAAf,OAA0B,GACrC,EAAC,EACD,MAAO,SAAQ,CAAgB,CACjC,OAAS,EAAP,CACA,MAAO,EACT,CACF",
-  "names": []
-}

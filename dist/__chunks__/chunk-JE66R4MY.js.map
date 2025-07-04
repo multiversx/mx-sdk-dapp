@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsTable/index.ts"],
-  "sourcesContent": ["export { TransactionMethod } from './components/TransactionMethod';\nexport { TransactionReceiver } from './components/TransactionReceiver';\nexport { TransactionRow } from './components/TransactionRow';\nexport { TransactionSender } from './components/TransactionSender';\nexport { TransactionShardsTransition } from './components/TransactionShardsTransition';\nexport { TransactionsTable } from './TransactionsTable';\nexport { TransactionValue } from './components/TransactionValue';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

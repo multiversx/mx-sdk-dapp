@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/packages/index.ts"],
-  "sourcesContent": ["export * from './createSubscription';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

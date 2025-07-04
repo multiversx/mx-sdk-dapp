@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/ledger/LedgerLoginButton/index.tsx"],
-  "sourcesContent": ["export * from './LedgerLoginButton';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

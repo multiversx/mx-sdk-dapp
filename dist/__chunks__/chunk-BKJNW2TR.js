@@ -1,2 +1,0 @@
-import{a as i}from"./chunk-AFHIR5VN.js";import{a as s}from"./chunk-YNZZNQYQ.js";import{j as n,m as d}from"./chunk-HBP5N4FR.js";d();var P=()=>{let{provider:e}=i(),{setLedgerProvider:c}=s();return function(){return n(this,null,function*(){let r;try{let o=yield e.getAddress();r=Boolean(o)}catch(o){r=!1}if(r)return e;let t=yield c({isRelogin:!0});return t||e})}};export{P as a};
-//# sourceMappingURL=chunk-BKJNW2TR.js.map

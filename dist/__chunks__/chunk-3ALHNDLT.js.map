@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/ScResultsList/components/ResultData/ResultData.tsx"],
-  "sourcesContent": ["import React from 'react';\n\nimport {\n  DataDecode,\n  DataDecodePropsType\n} from 'UI/TransactionInfo/components/DataDecode';\n\nimport ResultWrapper from '../ResultWrapper/ResultWrapper';\n\nconst ResultData = (props: DataDecodePropsType) => (\n  <ResultWrapper label='Data'>\n    <DataDecode {...props} />\n  </ResultWrapper>\n);\n\nexport default ResultData;\n"],
-  "mappings": "+HAAA,yBASA,GAAM,GAAa,AAAC,GAClB,gBAAC,GAAc,MAAM,QACnB,gBAAC,OAAe,EAAO,CACzB,EAGK,EAAQ",
-  "names": []
-}

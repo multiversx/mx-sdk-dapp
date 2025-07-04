@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/ModalContainer/index.ts"],
-  "sourcesContent": ["export { ModalContainer } from './ModalContainer';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

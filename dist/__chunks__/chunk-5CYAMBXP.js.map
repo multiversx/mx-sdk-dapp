@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/websocketListener/useRegisterWebsocketListener.ts"],
-  "sourcesContent": ["import { useEffect } from 'react';\nimport { BatchTransactionsWSResponseType } from 'types';\nimport { useGetBatchWebsocketEvent, useGetWebsocketEvent } from '../account';\nimport { useInitializeWebsocketConnection } from './useInitializeWebsocketConnection';\n\nexport function useRegisterWebsocketListener(\n  onMessage: (message: string) => void,\n  onBatchMessage?: (data: BatchTransactionsWSResponseType) => void\n) {\n  useInitializeWebsocketConnection();\n  const websocketEvent = useGetWebsocketEvent();\n  const websocketBatchEvent = useGetBatchWebsocketEvent();\n\n  useEffect(() => {\n    const message = websocketEvent?.message;\n\n    if (message) {\n      onMessage(message);\n    }\n  }, [onMessage, websocketEvent]);\n\n  useEffect(() => {\n    const data = websocketBatchEvent?.data;\n\n    if (data) {\n      onBatchMessage?.(data);\n    }\n  }, [onBatchMessage, websocketBatchEvent]);\n}\n"],
-  "mappings": "gKAAA,sCAKO,WACL,EACA,EACA,CACA,EAAiC,EACjC,GAAM,GAAiB,EAAqB,EACtC,EAAsB,EAA0B,EAEtD,EAAU,IAAM,CACd,GAAM,GAAU,iBAAgB,QAEhC,AAAI,GACF,EAAU,CAAO,CAErB,EAAG,CAAC,EAAW,CAAc,CAAC,EAE9B,EAAU,IAAM,CACd,GAAM,GAAO,iBAAqB,KAElC,AAAI,GACF,YAAiB,GAErB,EAAG,CAAC,EAAgB,CAAmB,CAAC,CAC1C",
-  "names": []
-}

@@ -1,2 +1,0 @@
-import{a as e}from"./chunk-PDWGUQLF.js";import{e as o,g as p}from"./chunk-FDSDVDKW.js";import{a as i,b as r,m as n}from"./chunk-HBP5N4FR.js";n();p();import g from"react";var u=t=>{let a=r(i({},t),{description:`You need at least MultiversX app version ${o}. Update MultiversX app to continue`,title:"Signing transactions unavailable"});return g.createElement(e,i({},a))};export{u as a};
-//# sourceMappingURL=chunk-5ZOIFWXW.js.map

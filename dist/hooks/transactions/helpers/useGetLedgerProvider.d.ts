@@ -1,2 +1,0 @@
-export declare const useGetLedgerProvider: () => () => Promise<import("@multiversx/sdk-hw-provider/out").HWProvider | import("../../../types").IDappProvider>;
-//# sourceMappingURL=useGetLedgerProvider.d.ts.map

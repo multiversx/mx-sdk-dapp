@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/account/loginWithExternalProvider.ts"],
-  "sourcesContent": ["import { loginAction } from 'reduxStore/commonActions';\nimport { store } from 'reduxStore/store';\nimport { LoginMethodsEnum } from 'types';\n\nexport function loginWithExternalProvider(address: string) {\n  store.dispatch(loginAction({ address, loginMethod: LoginMethodsEnum.extra }));\n}\n"],
-  "mappings": "8KAAA,QACA,IACA,IAEO,WAAmC,EAAiB,CACzD,EAAM,SAAS,EAAY,CAAE,UAAS,YAAa,OAAuB,CAAC,CAAC,CAC9E",
-  "names": []
-}

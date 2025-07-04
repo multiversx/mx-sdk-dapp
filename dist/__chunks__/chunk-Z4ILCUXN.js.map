@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionValue/helpers/getEgldValueData.ts"],
-  "sourcesContent": ["import { DECIMALS } from 'constants/index';\nimport { formatAmount } from 'utils/operations/formatAmount';\n\nexport const getEgldValueData = (value: string) => ({\n  egldValueData: {\n    value,\n    formattedValue: formatAmount({ input: value }),\n    decimals: DECIMALS\n  }\n});\n"],
-  "mappings": "6IAAA,GAGa,GAHb,iBACA,IAEO,AAAM,EAAmB,AAAC,GAAmB,EAClD,cAAe,CACb,QACA,eAAgB,EAAa,CAAE,MAAO,CAAM,CAAC,EAC7C,SAAU,CACZ,CACF",
-  "names": []
-}

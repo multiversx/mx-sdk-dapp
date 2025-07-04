@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/removeTransactionParamsFromUrl.ts"],
-  "sourcesContent": ["import { WALLET_PROVIDER_CALLBACK_PARAM } from '@multiversx/sdk-web-wallet-provider';\nimport { SDK_DAPP_VERSION, WALLET_SIGN_SESSION } from 'constants/index';\nimport { removeSearchParamsFromUrl } from '../removeSearchParamsFromUrl';\n\ninterface RemoveTransactionParamsFromUrlParamsType {\n  transaction: any;\n  search?: string;\n}\n\nexport const removeTransactionParamsFromUrl = ({\n  transaction,\n  search\n}: RemoveTransactionParamsFromUrlParamsType) => {\n  return removeSearchParamsFromUrl({\n    removeParams: [\n      ...Object.keys(transaction),\n      WALLET_PROVIDER_CALLBACK_PARAM,\n      WALLET_SIGN_SESSION,\n      SDK_DAPP_VERSION\n    ],\n    search\n  });\n};\n"],
-  "mappings": "oJAAA,wFASa,GATb,aACA,IACA,IAOO,AAAM,EAAiC,CAAC,CAC7C,cACA,YAEO,EAA0B,CAC/B,aAAc,CACZ,GAAG,OAAO,KAAK,CAAW,EAC1B,EACA,EACA,CACF,EACA,QACF,CAAC",
-  "names": []
-}

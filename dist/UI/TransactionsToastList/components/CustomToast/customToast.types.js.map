@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../src/UI/TransactionsToastList/components/CustomToast/customToast.types.ts"],
-  "sourcesContent": ["import { ReactNode } from 'react';\nimport {\n  ComponentIconToastType,\n  MessageCustomToastType,\n  MessageIconToastType,\n  TransactionIconToastType\n} from '../../../../types/toasts.types';\nimport { WithClassnameType } from '../../../types';\nimport { ComponentTypeWithChildren } from '../types';\n\ntype SharedCustomToastPropsType = WithClassnameType & {\n  onDelete: () => void;\n  messageComponent?: ReactNode;\n  CustomCloseButton?: ComponentTypeWithChildren<{\n    onClick?: () => void;\n  }>;\n};\n\nexport type MessageCustomToastPropsType = SharedCustomToastPropsType &\n  MessageCustomToastType;\n\nexport type MessageIconToastPropsType = SharedCustomToastPropsType &\n  MessageIconToastType;\n\nexport type TransactionIconToastPropsType = SharedCustomToastPropsType &\n  TransactionIconToastType;\n\nexport type ComponentIconToastPropsType = SharedCustomToastPropsType &\n  ComponentIconToastType;\n\nexport type CustomToastPropsType =\n  | MessageCustomToastPropsType\n  | MessageIconToastPropsType\n  | ComponentIconToastPropsType\n  | TransactionIconToastPropsType;\n"],
-  "mappings": "0EAAA",
-  "names": []
-}

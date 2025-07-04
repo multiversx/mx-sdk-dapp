@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithOperaModal/signWithOperaModalStyles.scss"],
-  "sourcesContent": ["const css = `.dapp-core-component__signWithOperaModalStyles__extension-modal {\n  color: inherit;\n}\n\n.dapp-core-component__signWithOperaModalStyles__modal-container {\n  color: inherit;\n}\n\n.dapp-core-component__signWithOperaModalStyles__extension {\n  color: inherit;\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"extension-modal\": \"dapp-core-component__signWithOperaModalStyles__extension-modal\",\n  \"extensionModal\": \"dapp-core-component__signWithOperaModalStyles__extension-modal\",\n  \"modal-container\": \"dapp-core-component__signWithOperaModalStyles__modal-container\",\n  \"modalContainer\": \"dapp-core-component__signWithOperaModalStyles__modal-container\",\n  \"extension\": \"dapp-core-component__signWithOperaModalStyles__extension\"\n};"],
-  "mappings": "sDAAA,2CAAM,GAeC,EAfP,aAAM,EAAM;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,GAWZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,AAAO,EAAQ,CACb,kBAAmB,iEACnB,eAAkB,iEAClB,kBAAmB,iEACnB,eAAkB,iEAClB,UAAa,0DACf",
-  "names": []
-}

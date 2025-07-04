@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsTable/components/NoTransactions.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { faExchangeAlt } from '@fortawesome/free-solid-svg-icons/faExchangeAlt';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { PageState } from 'UI/PageState';\n\nfunction NoTransactionsComponent({ globalStyles }: WithStylesImportType) {\n  return (\n    <PageState\n      icon={faExchangeAlt}\n      title='No transactions'\n      className={globalStyles?.myAuto}\n    />\n  );\n}\n\nexport const NoTransactions = withStyles(NoTransactionsComponent, {});\n"],
-  "mappings": "wHAAA,yBACA,gFAIA,WAAiC,CAAE,gBAAsC,CACvE,MACE,iBAAC,GACC,KAAM,EACN,MAAM,kBACN,UAAW,iBAAc,OAC3B,CAEJ,CAEO,GAAM,GAAiB,EAAW,EAAyB,CAAC,CAAC",
-  "names": []
-}

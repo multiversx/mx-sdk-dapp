@@ -1,1 +1,0 @@
-{"version":3,"file":"getIsSequential.d.ts","sourceRoot":"","sources":["../../../../../src/utils/transactions/batch/getIsSequential.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,qBAAqB,EAAE,MAAM,OAAO,CAAC;AAE9C,wBAAgB,eAAe,CAAC,EAC9B,YAAY,EACb,EAAE;IACD,YAAY,CAAC,EAAE,qBAAqB,EAAE,GAAG,qBAAqB,EAAE,EAAE,CAAC;CACpE,uBAEA"}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getEventListDataHexValue.ts"],
-  "sourcesContent": ["import { EventType } from 'types/serverTransactions.types';\n\nexport const getEventListDataHexValue = (event: EventType) => {\n  const dataBase64Buffer = Buffer.from(String(event?.data), 'base64');\n  const dataHexValue = dataBase64Buffer.toString('hex');\n  return dataHexValue;\n};\n"],
-  "mappings": "sDAAA,GAEa,GAFb,aAEO,AAAM,EAA2B,AAAC,GAElB,AADI,SAAO,KAAK,OAAO,iBAAO,IAAI,EAAG,QAAQ,EAC5B,SAAS,KAAK",
-  "names": []
-}

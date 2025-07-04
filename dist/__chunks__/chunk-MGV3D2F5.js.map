@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/wrappers/AxiosInterceptorContext/components/LoginInfoListener.tsx"],
-  "sourcesContent": ["import React, { PropsWithChildren, useEffect } from 'react';\nimport { useGetAccount } from 'hooks/account/useGetAccount';\nimport { useSelector } from 'reduxStore/DappProviderContext';\nimport { loginInfoSelector } from 'reduxStore/selectors';\nimport { useAxiosInterceptorContext } from './AxiosInterceptorContextProvider';\n\nexport const LoginInfoListener = ({ children = null }: PropsWithChildren) => {\n  const { address } = useGetAccount();\n  const loginInfo = useSelector(loginInfoSelector);\n\n  const { setLoginInfo, setAddress } = useAxiosInterceptorContext();\n\n  useEffect(() => {\n    setAddress(address);\n    setLoginInfo(loginInfo);\n  }, [loginInfo, address]);\n\n  return <>{children}</>;\n};\n"],
-  "mappings": "gPAAA,yCAGA,IAGO,GAAM,GAAoB,CAAC,CAAE,WAAW,QAA8B,CAC3E,GAAM,CAAE,WAAY,EAAc,EAC5B,EAAY,EAAY,CAAiB,EAEzC,CAAE,eAAc,cAAe,EAA2B,EAEhE,SAAU,IAAM,CACd,EAAW,CAAO,EAClB,EAAa,CAAS,CACxB,EAAG,CAAC,EAAW,CAAO,CAAC,EAEhB,gCAAG,CAAS,CACrB",
-  "names": []
-}

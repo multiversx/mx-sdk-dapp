@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/configuration/index.ts"],
-  "sourcesContent": ["export * from './getServerConfigurationForEnvironment';\nexport * from './getServerConfiguration';\nexport * from './getNetworkConfig';\nexport * from './getApiAddressForChainId';\nexport * from './getEnvironmentForChainId';\nexport * from './useGetNetworkConfigFromApi';\nexport * from './useGetServerConfigurationFromApi';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

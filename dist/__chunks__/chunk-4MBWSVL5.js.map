@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/getIsLoggedIn.ts"],
-  "sourcesContent": ["import { isLoggedInSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport function getIsLoggedIn() {\n  return isLoggedInSelector(store.getState());\n}\n"],
-  "mappings": "uKAAA,QACA,IAEO,YAAyB,CAC9B,MAAO,GAAmB,EAAM,SAAS,CAAC,CAC5C",
-  "names": []
-}

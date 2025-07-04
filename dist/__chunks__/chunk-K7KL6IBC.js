@@ -1,2 +1,0 @@
-import{a as o}from"./chunk-VRSUVK3A.js";import{a as l}from"./chunk-XVSQYXHY.js";import{m as r}from"./chunk-HBP5N4FR.js";r();import i from"react";var f=({className:m,transaction:t})=>{var s,e;return t.results&&((s=t.results)==null?void 0:s.length)>0?i.createElement(l,{className:m,title:"Smart Contract Results"},i.createElement(o,{results:(e=t.results)!=null?e:[]})):null};export{f as a};
-//# sourceMappingURL=chunk-K7KL6IBC.js.map

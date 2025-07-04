@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/account/getAccessTokenFromSearchParams.ts"],
-  "sourcesContent": ["import { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const getAccessTokenFromSearchParams = () => {\n  const { search } = getWindowLocation();\n  const urlSearchParams = new URLSearchParams(search) as any;\n  const searchParams = Object.fromEntries(urlSearchParams);\n\n  return searchParams?.accessToken;\n};\n"],
-  "mappings": "uFAAA,QAEO,GAAM,GAAiC,IAAM,CAClD,GAAM,CAAE,UAAW,EAAkB,EAC/B,EAAkB,GAAI,iBAAgB,CAAM,EAC5C,EAAe,OAAO,YAAY,CAAe,EAEvD,MAAO,kBAAc,WACvB",
-  "names": []
-}

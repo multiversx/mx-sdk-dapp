@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/services/nativeAuth/methods/getTokenExpiration.ts"],
-  "sourcesContent": ["import { getUnixTimestamp } from 'utils/dateTime/getUnixTimestamp';\nimport { decodeNativeAuthToken } from '../helpers/decodeNativeAuthToken';\n\nexport interface GetTokenExpirationReturnType {\n  isExpired: boolean;\n  expiresAt?: number;\n  secondsUntilExpires?: number;\n}\n\nconst notFound = {\n  isExpired: false\n};\n\nexport const getTokenExpiration = (\n  token?: string\n): GetTokenExpirationReturnType => {\n  if (!token) {\n    return notFound;\n  }\n\n  const decodedToken = decodeNativeAuthToken(token);\n\n  if (!decodedToken) {\n    return notFound;\n  }\n\n  const unixNow = getUnixTimestamp();\n  const { ttl, extraInfo } = decodedToken;\n\n  const timestamp = extraInfo?.timestamp;\n\n  if (!timestamp) {\n    return notFound;\n  }\n\n  const expiresAt = timestamp + ttl;\n\n  const isExpired = unixNow > expiresAt;\n\n  const secondsUntilExpires = expiresAt - unixNow;\n\n  return { isExpired, expiresAt, secondsUntilExpires };\n};\n"],
-  "mappings": "+HAAA,QASA,GAAM,GAAW,CACf,UAAW,EACb,EAEa,EAAqB,AAChC,GACiC,CACjC,GAAI,CAAC,EACH,MAAO,GAGT,GAAM,GAAe,EAAsB,CAAK,EAEhD,GAAI,CAAC,EACH,MAAO,GAGT,GAAM,GAAU,EAAiB,EAC3B,CAAE,MAAK,aAAc,EAErB,EAAY,iBAAW,UAE7B,GAAI,CAAC,EACH,MAAO,GAGT,GAAM,GAAY,EAAY,EAExB,EAAY,EAAU,EAEtB,EAAsB,EAAY,EAExC,MAAO,CAAE,YAAW,YAAW,qBAAoB,CACrD",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/configuration/useGetServerConfigurationFromApi.ts"],
-  "sourcesContent": ["import { CONFIG_ENDPOINT } from 'apiCalls/endpoints';\nimport { NetworkType } from 'types';\nimport { useApiFetch } from '../utils';\n\nexport const useGetServerConfigurationFromApi = () => {\n  const { data, isLoading, error } = useApiFetch({\n    apiEndpoint: CONFIG_ENDPOINT\n  });\n\n  if (isLoading) {\n    return null;\n  }\n\n  if (error) {\n    console.error('Error fetching server configuration:', error);\n  }\n\n  const egldDenomination = 'egldDenomination';\n\n  if (!(egldDenomination in data)) {\n    return data;\n  }\n\n  const {\n    [egldDenomination]: decimals,\n    decimals: digits,\n    ...rest\n  } = data as NetworkType & {\n    [egldDenomination]: string;\n  };\n\n  const networkConfig: NetworkType = {\n    ...rest,\n    decimals,\n    digits\n  };\n\n  return networkConfig;\n};\n"],
-  "mappings": "8LAAA,QAEA,IAEO,GAAM,GAAmC,IAAM,CACpD,GAAM,CAAE,OAAM,YAAW,SAAU,EAAY,CAC7C,YAAa,CACf,CAAC,EAED,GAAI,EACF,MAAO,MAGT,AAAI,GACF,QAAQ,MAAM,uCAAwC,CAAK,EAG7D,GAAM,GAAmB,mBAEzB,GAAI,CAAE,KAAoB,IACxB,MAAO,GAGT,GAII,KAHD,KAAmB,EACpB,SAAU,GAER,EADC,IACD,EADC,CAFF,KACD,aAYF,MANmC,QAC9B,GAD8B,CAEjC,WACA,QACF,EAGF",
-  "names": []
-}

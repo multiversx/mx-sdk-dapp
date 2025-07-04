@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getUnHighlightedDataFieldParts.ts"],
-  "sourcesContent": ["export const getUnHighlightedDataFieldParts = ({\n  data,\n  highlight,\n  occurrences,\n  transactionIndex\n}: {\n  data: string;\n  highlight: string;\n  occurrences: number[];\n  transactionIndex: number;\n}) => {\n  const highlightIndex =\n    occurrences[transactionIndex] || data.indexOf(highlight);\n  const highlightLength = highlight.length;\n  const start = data.slice(0, highlightIndex);\n  const end = data.slice(highlightIndex + highlightLength);\n\n  return {\n    start,\n    end\n  };\n};\n"],
-  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAAiC,CAAC,CAC7C,OACA,YACA,cACA,sBAMI,CACJ,GAAM,GACJ,EAAY,IAAqB,EAAK,QAAQ,CAAS,EACnD,EAAkB,EAAU,OAC5B,EAAQ,EAAK,MAAM,EAAG,CAAc,EACpC,EAAM,EAAK,MAAM,EAAiB,CAAe,EAEvD,MAAO,CACL,QACA,KACF,CACF",
-  "names": []
-}

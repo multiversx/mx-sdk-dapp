@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../src/assets/sass/themes/icons.scss"],
-  "sourcesContent": ["const css = `.dapp-core-component__icons__locked-icon {\n  color: inherit;\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"locked-icon\": \"dapp-core-component__icons__locked-icon\",\n  \"lockedIcon\": \"dapp-core-component__icons__locked-icon\"\n};"],
-  "mappings": "uEAAA,OAAM,GAAM;AAAA;AAAA,GAGZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,GAAO,GAAQ,CACb,cAAe,0CACf,WAAc,yCAChB",
-  "names": []
-}

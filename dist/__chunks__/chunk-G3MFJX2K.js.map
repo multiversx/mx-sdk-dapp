@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/configuration/getServerConfiguration.ts"],
-  "sourcesContent": ["import axios from 'axios';\nimport { CONFIG_ENDPOINT } from 'apiCalls/endpoints';\nimport { NetworkType } from 'types';\n\nexport async function getServerConfiguration(apiAddress: string) {\n  const configUrl = `${apiAddress}/${CONFIG_ENDPOINT}`;\n\n  try {\n    const { data } = await axios.get<NetworkType>(configUrl);\n    if (data != null) {\n      // TODO: egldDenomination will be removed from API when dapp-core v1 will be discontinued\n      const egldDenomination = 'egldDenomination';\n      if (egldDenomination in data) {\n        const {\n          [egldDenomination]: decimals,\n          decimals: digits,\n          ...rest\n        } = data as NetworkType & {\n          [egldDenomination]: string;\n        };\n        const networkConfig: NetworkType = {\n          ...rest,\n          decimals,\n          digits\n        };\n        return networkConfig;\n      }\n      return data;\n    }\n  } catch (err) {\n    console.error('error fetching configuration for ', configUrl);\n  }\n  return null;\n}\n"],
-  "mappings": "qHAAA,IACA,IADA,qBAIA,WAA6C,EAAoB,gCAC/D,GAAM,GAAY,GAAG,KAAc,IAEnC,GAAI,CACF,GAAM,CAAE,QAAS,KAAM,GAAM,IAAiB,CAAS,EACvD,GAAI,GAAQ,KAAM,CAEhB,GAAM,GAAmB,mBACzB,GAAI,IAAoB,GAAM,CAC5B,GAII,KAHD,KAAmB,EACpB,SAAU,GAER,EADC,IACD,EADC,CAFF,KACD,aAUF,MALmC,QAC9B,GAD8B,CAEjC,WACA,QACF,EAEF,CACA,MAAO,EACT,CACF,OAAS,EAAP,CACA,QAAQ,MAAM,oCAAqC,CAAS,CAC9D,CACA,MAAO,KACT",
-  "names": []
-}

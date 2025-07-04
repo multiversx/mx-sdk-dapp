@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/account/getSearchParamAddress.ts"],
-  "sourcesContent": ["import { getWindowLocation } from 'utils/window/getWindowLocation';\nimport { addressIsValid } from './addressIsValid';\n\nexport const getSearchParamAddress = () => {\n  const { search } = getWindowLocation();\n  const urlSearchParams = new URLSearchParams(search);\n  const params = Object.fromEntries(urlSearchParams as any);\n  const address: string = params?.address;\n  if (addressIsValid(address)) {\n    return address;\n  }\n  return null;\n};\n"],
-  "mappings": "iIAAA,QACA,IAEO,GAAM,GAAwB,IAAM,CACzC,GAAM,CAAE,UAAW,EAAkB,EAC/B,EAAkB,GAAI,iBAAgB,CAAM,EAC5C,EAAS,OAAO,YAAY,CAAsB,EAClD,EAAkB,iBAAQ,QAChC,MAAI,GAAe,CAAO,EACjB,EAEF,IACT",
-  "names": []
-}

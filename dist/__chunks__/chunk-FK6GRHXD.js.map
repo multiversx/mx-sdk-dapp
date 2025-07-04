@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/transactions/getTransaction.ts"],
-  "sourcesContent": ["import axios from 'axios';\nimport { ServerTransactionType } from 'types/serverTransactions.types';\nimport { TRANSACTIONS_ENDPOINT } from '../endpoints';\nimport { getTimeout } from './helpers';\n\nexport interface GetTransactionType {\n  apiAddress: string;\n  apiTimeout?: string | number;\n  hash: string;\n}\n\nexport const getTransaction = ({\n  hash,\n  apiAddress,\n  apiTimeout\n}: GetTransactionType) => {\n  return axios.get<ServerTransactionType[]>(\n    `${apiAddress}/${TRANSACTIONS_ENDPOINT}/${hash}`,\n    {\n      ...getTimeout(apiTimeout)\n    }\n  );\n};\n"],
-  "mappings": "sIAAA,IAEA,IAFA,qBAWO,GAAM,GAAiB,CAAC,CAC7B,OACA,aACA,gBAEO,EAAM,IACX,GAAG,KAAc,KAAyB,IAC1C,KACK,EAAW,CAAU,EAE5B",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/transactions/sendSignedTransactions.ts"],
-  "sourcesContent": ["import { Transaction } from '@multiversx/sdk-core';\nimport axios from 'axios';\nimport { networkSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport type SendSignedTransactionsReturnType = string[];\n\nexport async function sendSignedTransactions(\n  signedTransactions: Transaction[]\n): Promise<SendSignedTransactionsReturnType> {\n  const { apiAddress, apiTimeout } = networkSelector(store.getState());\n  const promises = signedTransactions.map((transaction) => {\n    return axios.post(\n      `${apiAddress}/transactions`,\n      transaction.toPlainObject(),\n      { timeout: parseInt(apiTimeout) }\n    );\n  });\n  const response = await Promise.all(promises);\n\n  return response.map(({ data }) => data.txHash);\n}\n"],
-  "mappings": "8KAAA,IAEA,IACA,IAFA,qBAMA,WACE,EAC2C,gCAC3C,GAAM,CAAE,aAAY,cAAe,EAAgB,EAAM,SAAS,CAAC,EAC7D,EAAW,EAAmB,IAAI,AAAC,GAChC,EAAM,KACX,GAAG,iBACH,EAAY,cAAc,EAC1B,CAAE,QAAS,SAAS,CAAU,CAAE,CAClC,CACD,EAGD,MAAO,AAFU,MAAM,SAAQ,IAAI,CAAQ,GAE3B,IAAI,CAAC,CAAE,UAAW,EAAK,MAAM,CAC/C",
-  "names": []
-}

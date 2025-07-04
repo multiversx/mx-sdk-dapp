@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useCheckTransactionStatus/index.ts"],
-  "sourcesContent": ["export * from './useCheckTransactionStatus';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

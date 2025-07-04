@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/window/addOriginToLocationPath.ts"],
-  "sourcesContent": ["import { getWindowLocation } from './getWindowLocation';\n\nexport const addOriginToLocationPath = (path = '') => {\n  const location = getWindowLocation();\n  const isHrefUrl = path.startsWith('http') || path.startsWith('www.');\n\n  const shouldNotChangePath =\n    !location.origin || path.startsWith(location.origin) || isHrefUrl;\n\n  if (shouldNotChangePath) {\n    return path;\n  }\n\n  return `${location.origin}/${path.replace('/', '')}`;\n};\n"],
-  "mappings": "8FAAA,GAEa,GAFb,iBAEO,AAAM,EAA0B,CAAC,EAAO,KAAO,CACpD,GAAM,GAAW,EAAkB,EAC7B,EAAY,EAAK,WAAW,MAAM,GAAK,EAAK,WAAW,MAAM,EAKnE,MAFE,CAAC,EAAS,QAAU,EAAK,WAAW,EAAS,MAAM,GAAK,EAGjD,EAGF,GAAG,EAAS,UAAU,EAAK,QAAQ,IAAK,EAAE,GACnD",
-  "names": []
-}

@@ -1,2 +1,0 @@
-import{a as r}from"./chunk-GAGVTIFK.js";import{a as o}from"./chunk-ZXZXEDS2.js";import{m as e}from"./chunk-HBP5N4FR.js";e();import m from"react";import{faCircleNotch as s}from"@fortawesome/free-solid-svg-icons";import n from"classnames";var d=({"data-testid":a="loader",noText:p=!1,className:i="dapp-loader",globalStyles:t})=>m.createElement(r,{title:p?"":"Loading...",iconBgClass:n(t==null?void 0:t.textPrimary,"fa-spin"),"data-testid":a,icon:s,className:i}),W=o(d,{});export{W as a};
-//# sourceMappingURL=chunk-PYHZP5Z3.js.map

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/ProviderInitializer/helpers/getOperaProvider.ts"],
-  "sourcesContent": ["import { OperaProvider } from '@multiversx/sdk-opera-provider';\n\nexport async function getOperaProvider(address: string) {\n  try {\n    const provider = OperaProvider.getInstance().setAddress(address);\n\n    const success = await provider.init();\n\n    if (success) {\n      return provider;\n    } else {\n      console.error(\n        'Could not initialise opera crypto wallet, make sure that opera crypto wallet is installed.'\n      );\n    }\n  } catch (err) {\n    console.error('Unable to login to OperaProvider', err);\n  }\n  return null;\n}\n"],
-  "mappings": "+CAAA,mEAEA,WAAuC,EAAiB,gCACtD,GAAI,CACF,GAAM,GAAW,EAAc,YAAY,EAAE,WAAW,CAAO,EAI/D,GAFgB,KAAM,GAAS,KAAK,EAGlC,MAAO,GAEP,QAAQ,MACN,4FACF,CAEJ,OAAS,EAAP,CACA,QAAQ,MAAM,mCAAoC,CAAG,CACvD,CACA,MAAO,KACT",
-  "names": []
-}

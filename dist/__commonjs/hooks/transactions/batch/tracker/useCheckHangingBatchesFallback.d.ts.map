@@ -1,1 +1,0 @@
-{"version":3,"file":"useCheckHangingBatchesFallback.d.ts","sourceRoot":"","sources":["../../../../../../src/hooks/transactions/batch/tracker/useCheckHangingBatchesFallback.ts"],"names":[],"mappings":"AAeA;;;KAGK;AACL,eAAO,MAAM,8BAA8B;6BACjB,MAAM,GAAG,IAAI,KAAK,IAAI;0BACzB,MAAM,GAAG,IAAI,iBAAiB,MAAM,KAAK,IAAI;sBA6EnE,CAAC"}

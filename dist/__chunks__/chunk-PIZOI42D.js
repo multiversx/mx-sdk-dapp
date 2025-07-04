@@ -1,2 +1,0 @@
-import{c as h}from"./chunk-UORIA4VW.js";import{a as e}from"./chunk-OWBHRN3S.js";import{e as s,m as a}from"./chunk-HBP5N4FR.js";var $,m=s(()=>{a();h();$=n=>{let t=new URLSearchParams(n).toString(),{pathname:o,hash:r}=e(),c=t?`?${t}`:"",i=o?`${o}${c}${r}`:"./";setTimeout(()=>{window==null||window.history.replaceState({},document==null?void 0:document.title,i)})}});export{$ as a,m as b};
-//# sourceMappingURL=chunk-PIZOI42D.js.map

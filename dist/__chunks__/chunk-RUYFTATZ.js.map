@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/isGuardianTx.tsx"],
-  "sourcesContent": ["import { GuardianActionsEnum } from 'constants/index';\n\nexport const isGuardianTx = ({\n  data,\n  onlySetGuardian\n}: {\n  data?: string;\n  onlySetGuardian?: boolean;\n}) => {\n  if (!data) {\n    return false;\n  }\n\n  if (onlySetGuardian) {\n    return data.startsWith(GuardianActionsEnum.SetGuardian);\n  }\n\n  return Object.values(GuardianActionsEnum).some((action) =>\n    data.startsWith(action)\n  );\n};\n"],
-  "mappings": "0HAAA,GAEa,GAFb,iBAEO,AAAM,EAAe,CAAC,CAC3B,OACA,qBAKK,EAID,EACK,EAAK,WAAW,aAA+B,EAGjD,OAAO,OAAO,CAAmB,EAAE,KAAK,AAAC,GAC9C,EAAK,WAAW,CAAM,CACxB,EATS",
-  "names": []
-}

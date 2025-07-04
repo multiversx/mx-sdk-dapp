@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/math.ts"],
-  "sourcesContent": ["/**\n * Decreases the remaining animation of the transaction toast progressively\n * @param positionPercent The toast animation position (%)\n */\nexport const progressiveDecrement = (positionPercent: number) => {\n  return Math.exp(positionPercent / 100);\n};\n"],
-  "mappings": "wCAAA,IAIO,GAAM,GAAuB,AAAC,GAC5B,KAAK,IAAI,EAAkB,GAAG",
-  "names": []
-}

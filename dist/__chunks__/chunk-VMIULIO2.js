@@ -1,2 +1,0 @@
-import{a as r,b as u}from"./chunk-Z4ILCUXN.js";import{a as m}from"./chunk-6QDOHWW2.js";import{c as n}from"./chunk-UHY5IKDN.js";import{e as c,m as o}from"./chunk-HBP5N4FR.js";import p from"bignumber.js";function y(e){var t;try{let i=n(e.data).replace(`${(t=e.action)==null?void 0:t.name}@`,""),a=new p(i,16);if(!a.isNaN())return r(a.toString(10))}catch(d){l||(console.error(`Unable to extract value for txHash: ${e.txHash}`),l=!0)}return r(e.value)}var l,f=c(()=>{o();m();u();l=!1});export{y as a,f as b};
-//# sourceMappingURL=chunk-VMIULIO2.js.map

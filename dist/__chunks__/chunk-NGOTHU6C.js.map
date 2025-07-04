@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/tokens/tokenDataStorage.ts"],
-  "sourcesContent": ["let memoryCache: Record<string, string> = {};\n\nexport let tokenDataStorage = {\n  setItem: async <T>(key: string, tokenData: T) => {\n    try {\n      memoryCache[key] = JSON.stringify(tokenData);\n    } catch (e) {\n      console.error('tokenDataStorage unable to serialize', e);\n    }\n  },\n  getItem: async (key: string) => {\n    try {\n      return JSON.parse(memoryCache[key]);\n    } catch (e) {\n      console.error('tokenDataStorage unable to parse', e);\n    }\n  },\n  clear: async () => {\n    memoryCache = {};\n  },\n  removeItem: async (key: string) => {\n    delete memoryCache[key];\n  }\n};\n\nexport const setTokenDataStorage = (\n  tokenDataCacheStorage: typeof tokenDataStorage\n) => {\n  tokenDataStorage = tokenDataCacheStorage;\n};\n"],
-  "mappings": "+CAAA,OAAI,GAAsC,CAAC,EAEhC,EAAmB,CAC5B,QAAS,CAAU,EAAa,IAAiB,0BAC/C,GAAI,CACF,EAAY,GAAO,KAAK,UAAU,CAAS,CAC7C,OAAS,EAAP,CACA,QAAQ,MAAM,uCAAwC,CAAC,CACzD,CACF,GACA,QAAS,AAAO,GAAgB,0BAC9B,GAAI,CACF,MAAO,MAAK,MAAM,EAAY,EAAI,CACpC,OAAS,EAAP,CACA,QAAQ,MAAM,mCAAoC,CAAC,CACrD,CACF,GACA,MAAO,IAAY,0BACjB,EAAc,CAAC,CACjB,GACA,WAAY,AAAO,GAAgB,0BACjC,MAAO,GAAY,EACrB,EACF,EAEa,EAAsB,AACjC,GACG,CACH,EAAmB,CACrB",
-  "names": []
-}

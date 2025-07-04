@@ -1,2 +1,0 @@
-import{e as c,m as a}from"./chunk-HBP5N4FR.js";var k,m=c(()=>{a();k=e=>{var n,r,t,o;if(e.action){let s=[(n=e.action.arguments)==null?void 0:n.token,(r=e.action.arguments)==null?void 0:r.token1,(t=e.action.arguments)==null?void 0:t.token2,(o=e.action.arguments)==null?void 0:o.transfers].filter(T=>T!=null);return[].concat(...s)}return[]}});export{k as a,m as b};
-//# sourceMappingURL=chunk-JRB2SSEU.js.map

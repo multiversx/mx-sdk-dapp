@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionValue/helpers/getValueFromActions.ts"],
-  "sourcesContent": ["import BigNumber from 'bignumber.js';\nimport { InterpretedTransactionType } from 'types/serverTransactions.types';\nimport { getEgldValueData } from './getEgldValueData';\n\nlet warningLogged = false;\n\nexport function getValueFromActions(transaction: InterpretedTransactionType) {\n  const value = new BigNumber(transaction.action?.arguments?.value);\n\n  if (!value.isNaN()) {\n    return getEgldValueData(transaction.action?.arguments?.value);\n  }\n\n  if (!warningLogged) {\n    console.error(\n      `Unable to interpret ${transaction.action?.name} data for txHash: ${transaction.txHash}`\n    );\n    warningLogged = true;\n  }\n\n  // fallback on transaction value\n  return getEgldValueData(transaction.value);\n}\n"],
-  "mappings": "8FAAA,4BAMO,WAA6B,EAAyC,CAN7E,cASE,MAAK,AAFS,IAAI,GAAU,QAAY,SAAZ,cAAoB,YAApB,cAA+B,KAAK,EAErD,MAAM,EAIZ,IACH,SAAQ,MACN,uBAAuB,KAAY,SAAZ,cAAoB,yBAAyB,EAAY,QAClF,EACA,EAAgB,IAIX,EAAiB,EAAY,KAAK,GAXhC,EAAiB,QAAY,SAAZ,cAAoB,YAApB,cAA+B,KAAK,CAYhE,CAtBA,GAII,GAJJ,aAEA,IAEA,AAAI,EAAgB",
-  "names": []
-}

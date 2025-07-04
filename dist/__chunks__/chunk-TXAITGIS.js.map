@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/environment/isMobileEnvironment.ts"],
-  "sourcesContent": ["import platform from 'platform';\n\nexport function isMobileEnvironment() {\n  return platform?.os?.family === 'iOS' || platform?.os?.family === 'Android';\n}\n"],
-  "mappings": "mCAAA,4BAEO,YAA+B,CAFtC,YAGE,MAAO,yBAAU,KAAV,cAAc,UAAW,OAAS,yBAAU,KAAV,cAAc,UAAW,SACpE",
-  "names": []
-}

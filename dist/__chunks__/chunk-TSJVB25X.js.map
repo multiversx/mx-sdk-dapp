@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/login/index.ts"],
-  "sourcesContent": ["export { useExtensionLogin } from './useExtensionLogin';\nexport { useOperaLogin } from './useOperaLogin';\nexport { useCrossWindowLogin } from './useCrossWindowLogin';\nexport { useWebWalletLogin } from './useWebWalletLogin';\nexport { useGetModalLoginMethods } from './useGetModalLoginMethods';\nexport { useLedgerLogin } from './useLedgerLogin';\nexport { useXaliasLogin } from './useXaliasLogin';\nexport { useWalletConnectV2Login } from './useWalletConnectV2Login';\nexport { useMetamaskLogin } from './useMetamaskLogin';\nexport { usePasskeyLogin } from './usePasskeyLogin';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

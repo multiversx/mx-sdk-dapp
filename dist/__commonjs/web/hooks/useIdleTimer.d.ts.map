@@ -1,1 +1,0 @@
-{"version":3,"file":"useIdleTimer.d.ts","sourceRoot":"","sources":["../../../../src/web/hooks/useIdleTimer.tsx"],"names":[],"mappings":"AAUA,MAAM,WAAW,aAAa;IAC5B,OAAO,CAAC,EAAE,MAAM,CAAC;IACjB,QAAQ,CAAC,EAAE,CAAC,KAAK,CAAC,EAAE,GAAG,KAAK,IAAI,CAAC;CAClC;AAED,eAAO,MAAM,YAAY,0BAAgC,aAAa,SAerE,CAAC"}

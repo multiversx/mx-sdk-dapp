@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithExtraModal/index.tsx"],
-  "sourcesContent": ["export * from './SignWithExtraModal';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/storage/index.ts"],
-  "sourcesContent": ["import * as local from './local';\nimport * as session from './session';\n\nexport const storage = { session, local };\n"],
-  "mappings": "6IAAA,GAGa,GAHb,iBACA,IAEO,AAAM,EAAU,CAAE,UAAS,OAAM",
-  "names": []
-}

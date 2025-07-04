@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/TransactionStatus/index.tsx"],
-  "sourcesContent": ["export * from './TransactionStatus';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

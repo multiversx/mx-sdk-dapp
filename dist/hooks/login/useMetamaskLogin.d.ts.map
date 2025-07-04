@@ -1,1 +1,0 @@
-{"version":3,"file":"useMetamaskLogin.d.ts","sourceRoot":"","sources":["../../../src/hooks/login/useMetamaskLogin.ts"],"names":[],"mappings":"AAOA,OAAO,EACL,yBAAyB,EACzB,yBAAyB,EACzB,mBAAmB,EACpB,MAAM,OAAO,CAAC;AASf,oBAAY,0BAA0B,GAAG;IACvC,yBAAyB;IACzB,yBAAyB;CAC1B,CAAC;AAEF,eAAO,MAAM,gBAAgB,uEAK1B,mBAAmB,+BAuGrB,CAAC"}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/persistConfig.ts"],
-  "sourcesContent": ["import { isWebEnvironment } from 'utils/environment/isWebEnvironment';\n\n//this will make sure that when importing store in the app,\n// in non-browser or mobile envs there will be no warnings/errors caused by redux-persist\n\nexport const reducers = isWebEnvironment()\n  ? require('./persistedRootReducer').default\n  : require('./rootReducer').default;\n\nexport const persistIgnoredActions = isWebEnvironment()\n  ? require('./reduxPersistIgnoredActions').default\n  : [];\n\nexport const persistStore = isWebEnvironment()\n  ? require('./persistReduxStore').default\n  : (store: any) => store;\n"],
-  "mappings": "4RAAA,GAKa,GAIA,EAIA,EAbb,iBAKO,AAAM,EAAW,EAAiB,EACrC,WAAkC,QAClC,WAAyB,QAEhB,EAAwB,EAAiB,EAClD,WAAwC,QACxC,CAAC,EAEQ,EAAe,EAAiB,EACzC,WAA+B,QAC/B,AAAC,GAAe",
-  "names": []
-}

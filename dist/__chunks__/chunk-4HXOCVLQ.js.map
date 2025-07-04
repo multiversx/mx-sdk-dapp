@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsToastList/components/TransactionToast/components/DefaultToastDeleteButton.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { faTimes } from '@fortawesome/free-solid-svg-icons';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\n\nimport { DataTestIdsEnum } from 'constants/index';\nimport { WithClassnameType } from 'UI/types';\n\nexport interface DefaultToastDeleteButtonPropsType extends WithClassnameType {\n  onClick?: () => void;\n}\n\nexport const DefaultToastDeleteButton = ({\n  className = 'dapp-default-toast-delete-button',\n  onClick\n}: DefaultToastDeleteButtonPropsType) => {\n  return (\n    <button\n      type='button'\n      className={className}\n      onClick={onClick}\n      data-testid={DataTestIdsEnum.deleteToastButton}\n    >\n      <FontAwesomeIcon icon={faTimes} size='xs' />\n    </button>\n  );\n};\n"],
-  "mappings": "gFAAA,IAIA,IAJA,qBACA,4DACA,iEASO,GAAM,GAA2B,CAAC,CACvC,YAAY,mCACZ,aAGE,gBAAC,UACC,KAAK,SACL,UAAW,EACX,QAAS,EACT,cAAa,qBAEb,gBAAC,GAAgB,KAAM,EAAS,KAAK,KAAK,CAC5C",
-  "names": []
-}

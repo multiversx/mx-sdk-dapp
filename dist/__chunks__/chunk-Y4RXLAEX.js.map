@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/data/account.ts"],
-  "sourcesContent": ["export const account = {\n  address: 'erd1spyavw0956vq68xj8y4tenjpq2wd5a9p2c6j8gsz7ztyrnpxrruqzu66jx',\n  balance: '116893786890813785912',\n  nonce: 12320,\n  shard: 0,\n  rootHash: 'wICKVeNpCg/TsBRyRyZMMMhcW1KENpAbopfinRVyENQ=',\n  txCount: 12655,\n  scrCount: 14084,\n  developerReward: '0'\n};\n"],
-  "mappings": "wCAAA,IAAO,GAAM,GAAU,CACrB,QAAS,iEACT,QAAS,wBACT,MAAO,MACP,MAAO,EACP,SAAU,+CACV,QAAS,MACT,SAAU,MACV,gBAAiB,GACnB",
-  "names": []
-}

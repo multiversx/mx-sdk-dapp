@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useGetSignedTransactions.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { signedTransactionsSelector } from 'reduxStore/selectors';\n\nimport {\n  SignedTransactionsType,\n  SignedTransactionsBodyType\n} from '../../types';\n\nexport interface useGetSignedTransactionsReturnType {\n  signedTransactions: SignedTransactionsType;\n  signedTransactionsArray: [string, SignedTransactionsBodyType][];\n  hasSignedTransactions: boolean;\n}\n\nexport function useGetSignedTransactions(): useGetSignedTransactionsReturnType {\n  const signedTransactions = useSelector(signedTransactionsSelector);\n  const signedTransactionsArray: [string, SignedTransactionsBodyType][] =\n    Object.entries(signedTransactions);\n  const hasSignedTransactions = signedTransactionsArray?.length > 0;\n  return {\n    signedTransactions,\n    signedTransactionsArray,\n    hasSignedTransactions\n  };\n}\n"],
-  "mappings": "+HAAA,IACA,IAaO,YAAwE,CAC7E,GAAM,GAAqB,EAAY,CAA0B,EAC3D,EACJ,OAAO,QAAQ,CAAkB,EAC7B,EAAwB,kBAAyB,QAAS,EAChE,MAAO,CACL,qBACA,0BACA,uBACF,CACF",
-  "names": []
-}

@@ -1,2 +1,0 @@
-import{a as t,b as p}from"./chunk-XIGG2I7M.js";import{h as n,z as i}from"./chunk-326XWAT2.js";import{j as o,m as e}from"./chunk-HBP5N4FR.js";e();i();p();import m from"axios";function s(r=n){let c=`${t()}/${r}`;return m.get(c)}function y(){return o(this,null,function*(){try{let{data:r}=yield s();return r}catch(r){return console.error("err fetching economics info",r),null}})}export{s as a,y as b};
-//# sourceMappingURL=chunk-BYWDXFDX.js.map

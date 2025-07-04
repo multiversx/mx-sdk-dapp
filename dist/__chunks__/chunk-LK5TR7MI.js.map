@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/switchTrue.ts"],
-  "sourcesContent": ["export interface SwitchTrueType {\n  default: any;\n  [key: string]: any;\n}\n\ntype ReturnKeys = 'true' | 'false';\n\nexport function switchTrue(object: SwitchTrueType) {\n  const { default: defaultValue, ...rest } = object;\n  const obj = { default: defaultValue, ...rest };\n  const result = Object.keys(obj).reduce((acc, cur) => {\n    return {\n      ...acc,\n      [cur === 'default' ? 'true' : cur]: (obj as any)[cur as ReturnKeys]\n    };\n  }, {} as Record<ReturnKeys, any>);\n  return result['true'];\n}\n"],
-  "mappings": "6DAAA,IAOO,WAAoB,EAAwB,CACjD,GAA2C,KAAnC,SAAS,GAA0B,EAAT,IAAS,EAAT,CAA1B,YACF,EAAM,GAAE,QAAS,GAAiB,GAOxC,MAAO,AANQ,QAAO,KAAK,CAAG,EAAE,OAAO,CAAC,EAAK,IACpC,OACF,GADE,CAEL,CAAC,IAAQ,UAAY,OAAS,GAAO,EAAY,EACnD,GACC,CAAC,CAA4B,EAClB,IAChB",
-  "names": []
-}

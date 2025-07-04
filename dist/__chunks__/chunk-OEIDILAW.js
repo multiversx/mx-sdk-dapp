@@ -1,2 +1,0 @@
-import{a as t,c as r}from"./chunk-7RBRFERR.js";import{e as n,m as p}from"./chunk-HBP5N4FR.js";import{createSlice as c}from"@reduxjs/toolkit";var o,a,y,D,f=n(()=>{p();r();o={},a=c({name:"dappConfigSlice",initialState:o,reducers:{setDappConfig:(e,i)=>i.payload},extraReducers:e=>{e.addCase(t,()=>o)}}),{setDappConfig:y}=a.actions,D=a.reducer});export{a,y as b,D as c,f as d};
-//# sourceMappingURL=chunk-OEIDILAW.js.map

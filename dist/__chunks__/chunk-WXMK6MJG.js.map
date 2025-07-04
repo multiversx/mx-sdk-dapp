@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock/components/NftBadge.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\n\nexport interface NftBadgePropsType {\n  text: string;\n  className?: string;\n  ['data-testid']?: string;\n}\n\nconst NftBadgeComponent = ({\n  text,\n  className,\n  'data-testid': dataTestId = 'nftBadge',\n  globalStyles\n}: NftBadgePropsType & WithStylesImportType) => (\n  <div\n    data-testid={dataTestId}\n    className={classNames(\n      globalStyles?.badge,\n      globalStyles?.badgeSecondary,\n      globalStyles?.badgePill,\n      globalStyles?.fontWeightLight,\n      className\n    )}\n  >\n    {text}\n  </div>\n);\n\nexport const NftBadge = withStyles(NftBadgeComponent, {});\n"],
-  "mappings": "gFAAA,yBACA,0BASA,GAAM,GAAoB,CAAC,CACzB,OACA,YACA,cAAe,EAAa,WAC5B,kBAEA,gBAAC,OACC,cAAa,EACb,UAAW,EACT,iBAAc,MACd,iBAAc,eACd,iBAAc,UACd,iBAAc,gBACd,CACF,GAEC,CACH,EAGW,EAAW,EAAW,EAAmB,CAAC,CAAC",
-  "names": []
-}

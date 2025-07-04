@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/slices/dappConfigSlice.ts"],
-  "sourcesContent": ["import { createSlice, PayloadAction } from '@reduxjs/toolkit';\nimport { DappConfigType } from 'types';\nimport { logoutAction } from '../commonActions';\n\nexport type DappConfigSliceStateType = DappConfigType | undefined;\n\nconst initialState: DappConfigSliceStateType = {};\n\nexport const dappConfigSlice = createSlice({\n  name: 'dappConfigSlice',\n  initialState,\n  reducers: {\n    setDappConfig: (\n      _state: DappConfigSliceStateType,\n      action: PayloadAction<DappConfigSliceStateType>\n    ) => action.payload\n  },\n  extraReducers: (builder) => {\n    builder.addCase(logoutAction, () => {\n      return initialState;\n    });\n  }\n});\n\nexport const { setDappConfig } = dappConfigSlice.actions;\n\nexport default dappConfigSlice.reducer;\n"],
-  "mappings": "8FAAA,kDAMM,GAEO,EAgBE,EAER,EA1BP,aAEA,IAIA,AAAM,EAAyC,CAAC,EAEnC,EAAkB,EAAY,CACzC,KAAM,kBACN,eACA,SAAU,CACR,cAAe,CACb,EACA,IACG,EAAO,OACd,EACA,cAAe,AAAC,GAAY,CAC1B,EAAQ,QAAQ,EAAc,IACrB,CACR,CACH,CACF,CAAC,EAEY,CAxBb,AAwBe,iBAAkB,EAAgB,QAE1C,EAAQ,EAAgB",
-  "names": []
-}

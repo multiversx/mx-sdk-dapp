@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/helpers/extractSessionId.ts"],
-  "sourcesContent": ["import { BATCH_TRANSACTIONS_ID_SEPARATOR } from 'constants/index';\nimport { stringIsInteger } from 'utils/validation/stringIsInteger';\n\nexport const extractSessionId = (batchId: string) => {\n  if (!batchId || typeof batchId !== 'string') {\n    return null;\n  }\n\n  const timestamp = batchId.split(BATCH_TRANSACTIONS_ID_SEPARATOR)[0];\n\n  if (stringIsInteger(timestamp)) {\n    return parseInt(timestamp, 10);\n  }\n\n  return null;\n};\n"],
-  "mappings": "sIAAA,QACA,IAEO,GAAM,GAAmB,AAAC,GAAoB,CACnD,GAAI,CAAC,GAAW,MAAO,IAAY,SACjC,MAAO,MAGT,GAAM,GAAY,EAAQ,MAAM,CAA+B,EAAE,GAEjE,MAAI,GAAgB,CAAS,EACpB,SAAS,EAAW,EAAE,EAGxB,IACT",
-  "names": []
-}

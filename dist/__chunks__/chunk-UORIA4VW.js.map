@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/window/index.ts", "../../src/utils/window/getDefaultCallbackUrl.ts"],
-  "sourcesContent": ["export * from './addOriginToLocationPath';\nexport * from './getDefaultCallbackUrl';\nexport * from './getWindowLocation';\nexport * from './redirect';\n", "import { getWindowLocation } from './index';\n\nexport const getDefaultCallbackUrl = () => {\n  const { pathname, search, hash } = getWindowLocation();\n\n  return `${pathname ?? ''}${search ?? ''}${hash ?? ''}`;\n};\n"],
-  "mappings": "8KAAA,qBACA,IACA,IACA,MCHA,GAEa,GAFb,iBAEO,AAAM,EAAwB,IAAM,CACzC,GAAM,CAAE,WAAU,SAAQ,QAAS,EAAkB,EAErD,MAAO,GAAG,UAAY,KAAK,UAAU,KAAK,UAAQ,IACpD",
-  "names": []
-}

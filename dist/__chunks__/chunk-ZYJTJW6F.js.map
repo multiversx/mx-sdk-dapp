@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/getAllStringOccurrences.ts"],
-  "sourcesContent": ["export const getAllStringOccurrences = (\n  sourceStr: string,\n  searchStr: string\n) => {\n  const startingIndices = [];\n\n  let indexOccurence = sourceStr.indexOf(searchStr, 0);\n\n  while (indexOccurence >= 0) {\n    startingIndices.push(indexOccurence);\n    indexOccurence = sourceStr.indexOf(searchStr, indexOccurence + 1);\n  }\n\n  return startingIndices;\n};\n"],
-  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAA0B,CACrC,EACA,IACG,CACH,GAAM,GAAkB,CAAC,EAErB,EAAiB,EAAU,QAAQ,EAAW,CAAC,EAEnD,KAAO,GAAkB,GACvB,EAAgB,KAAK,CAAc,EACnC,EAAiB,EAAU,QAAQ,EAAW,EAAiB,CAAC,EAGlE,MAAO,EACT",
-  "names": []
-}

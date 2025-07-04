@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/transactions/helpers.ts"],
-  "sourcesContent": ["import { GetTransactionsType } from './getTransactions.types';\n\nexport const getTimeout = (apiTimeout?: string | number) =>\n  apiTimeout ? { timeout: parseInt(String(apiTimeout)) } : {};\n\nexport const getTransactionsParams = ({\n  sender,\n  receiver,\n  page = 1,\n  transactionSize = 15,\n  condition = 'should',\n  withScResults = true,\n  after,\n  before,\n  search,\n  status,\n  withUsername\n}: GetTransactionsType) => {\n  const params = {\n    sender,\n    receiver,\n    condition,\n    after,\n    before,\n    search,\n    from: (page - 1) * transactionSize,\n    ...(transactionSize > 0 ? { size: transactionSize } : {}),\n    withScResults,\n    withUsername,\n    status\n  };\n\n  return params;\n};\n"],
-  "mappings": "sDAAA,IAEO,GAAM,GAAa,AAAC,GACzB,EAAa,CAAE,QAAS,SAAS,OAAO,CAAU,CAAC,CAAE,EAAI,CAAC,EAE/C,EAAwB,CAAC,CACpC,SACA,WACA,OAAO,EACP,kBAAkB,GAClB,YAAY,SACZ,gBAAgB,GAChB,QACA,SACA,SACA,SACA,kBAEe,KACb,SACA,WACA,YACA,QACA,SACA,SACA,KAAO,GAAO,GAAK,GACf,EAAkB,EAAI,CAAE,KAAM,CAAgB,EAAI,CAAC,GAR1C,CASb,gBACA,eACA,QACF",
-  "names": []
-}

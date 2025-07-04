@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/helpers/useGetLedgerProvider.ts"],
-  "sourcesContent": ["import { useSetLedgerProvider } from 'components/ProviderInitializer/hooks';\nimport { useGetAccountProvider } from 'hooks/account/useGetAccountProvider';\n\nexport const useGetLedgerProvider = () => {\n  const { provider } = useGetAccountProvider();\n  const { setLedgerProvider } = useSetLedgerProvider();\n\n  return async function getLedgerProvider() {\n    let isConnected: boolean;\n\n    try {\n      const address = await provider.getAddress();\n      isConnected = Boolean(address);\n    } catch (error) {\n      isConnected = false;\n    }\n\n    if (isConnected) {\n      return provider;\n    }\n\n    const ledgerProvider = await setLedgerProvider({ isRelogin: true });\n\n    if (!ledgerProvider) {\n      return provider;\n    }\n\n    return ledgerProvider;\n  };\n};\n"],
-  "mappings": "+HAAA,IAGO,GAAM,GAAuB,IAAM,CACxC,GAAM,CAAE,YAAa,EAAsB,EACrC,CAAE,qBAAsB,EAAqB,EAEnD,MAAO,WAAmC,gCACxC,GAAI,GAEJ,GAAI,CACF,GAAM,GAAU,KAAM,GAAS,WAAW,EAC1C,EAAc,QAAQ,CAAO,CAC/B,OAAS,EAAP,CACA,EAAc,EAChB,CAEA,GAAI,EACF,MAAO,GAGT,GAAM,GAAiB,KAAM,GAAkB,CAAE,UAAW,EAAK,CAAC,EAElE,MAAK,IACI,CAIX,GACF",
-  "names": []
-}

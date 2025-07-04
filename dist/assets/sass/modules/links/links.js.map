@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../src/assets/sass/modules/links/links.scss"],
-  "sourcesContent": ["const css = `a.dapp-core-component__links__side-link::after {\n  right: 0;\n  left: unset;\n  width: calc(100% - 1.85rem);\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"side-link\": \"dapp-core-component__links__side-link\",\n  \"sideLink\": \"dapp-core-component__links__side-link\"\n};"],
-  "mappings": "0EAAA,OAAM,GAAM;AAAA;AAAA;AAAA;AAAA,GAKZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,GAAO,GAAQ,CACb,YAAa,wCACb,SAAY,uCACd",
-  "names": []
-}

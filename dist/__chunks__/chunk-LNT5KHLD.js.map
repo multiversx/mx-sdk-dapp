@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/walletConnect/WalletConnectLoginContainer/types.ts"],
-  "sourcesContent": ["import { ReactNode, MutableRefObject } from 'react';\n\nimport { OnProviderLoginType } from '../../../types/login.types';\nimport { WithClassnameType } from '../../types';\nimport { InnerWalletConnectComponentsClassesType } from '../types';\n\nexport interface WalletConnectLoginModalPropsType\n  extends OnProviderLoginType,\n    WithClassnameType {\n  loginButtonText: ReactNode;\n  customSpinnerComponent?: ReactNode;\n  innerWalletConnectComponentsClasses?: InnerWalletConnectComponentsClassesType;\n  lead?: string;\n  legacyMessage?: string;\n  logoutRoute?: string;\n  onClose?: () => void;\n  showLoginContent?: boolean;\n  showLoginModal?: boolean;\n  showScamPhishingAlert?: boolean;\n  title?: string;\n  wrapContentInsideModal?: boolean;\n  customRequestMethods?: Array<string>;\n  // deprecated/not used - kept for compatibility\n  isWalletConnectV2?: boolean;\n  canLoginRef?: MutableRefObject<boolean>;\n}\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/useDebounce.ts"],
-  "sourcesContent": ["import { useState, useEffect } from 'react';\n\nexport const useDebounce = (value: any, timeout: number) => {\n  const [state, setState] = useState(value);\n\n  const effect = () => {\n    const handler = setTimeout(() => setState(value), timeout);\n\n    return () => clearTimeout(handler);\n  };\n\n  useEffect(effect, [value]);\n\n  return state;\n};\n"],
-  "mappings": "wCAAA,oDAEO,GAAM,GAAc,CAAC,EAAY,IAAoB,CAC1D,GAAM,CAAC,EAAO,GAAY,EAAS,CAAK,EAQxC,SANe,IAAM,CACnB,GAAM,GAAU,WAAW,IAAM,EAAS,CAAK,EAAG,CAAO,EAEzD,MAAO,IAAM,aAAa,CAAO,CACnC,EAEkB,CAAC,CAAK,CAAC,EAElB,CACT",
-  "names": []
-}

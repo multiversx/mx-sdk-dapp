@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithPasskeyModal/index.tsx"],
-  "sourcesContent": ["export * from './SignWithPasskeyModal';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/Balance/index.ts"],
-  "sourcesContent": ["export * from './Balance';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

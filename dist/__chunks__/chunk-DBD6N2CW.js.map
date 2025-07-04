@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/LogoutListener/helpers/useNativeAuthLogoutWarning/helpers/getHumanReadableTokenExpirationTime.ts"],
-  "sourcesContent": ["import BigNumber from 'bignumber.js';\n\nexport const getHumanReadableTokenExpirationTime = (milliseconds: number) => {\n  const seconds = new BigNumber(milliseconds)\n    .dividedBy(1000)\n    .integerValue(BigNumber.ROUND_FLOOR);\n\n  const minutes = new BigNumber(seconds)\n    .dividedBy(60)\n    .integerValue(BigNumber.ROUND_FLOOR);\n\n  const hours = new BigNumber(minutes)\n    .dividedBy(60)\n    .integerValue(BigNumber.ROUND_FLOOR);\n\n  const overOneHour = hours.modulo(60).isGreaterThan(1);\n  const overOneMinute = minutes.modulo(60).isGreaterThan(1);\n  const underOneMinute = minutes.modulo(60).isLessThan(1);\n\n  if (overOneHour) {\n    return `${hours} hours`;\n  }\n\n  if (overOneMinute) {\n    return `${minutes} minutes`;\n  }\n\n  if (underOneMinute) {\n    return 'less than 1 minute';\n  }\n\n  return `${minutes} minute`;\n};\n"],
-  "mappings": "wCAAA,gCAEO,GAAM,GAAsC,AAAC,GAAyB,CAC3E,GAAM,GAAU,GAAI,GAAU,CAAY,EACvC,UAAU,GAAI,EACd,aAAa,EAAU,WAAW,EAE/B,EAAU,GAAI,GAAU,CAAO,EAClC,UAAU,EAAE,EACZ,aAAa,EAAU,WAAW,EAE/B,EAAQ,GAAI,GAAU,CAAO,EAChC,UAAU,EAAE,EACZ,aAAa,EAAU,WAAW,EAE/B,EAAc,EAAM,OAAO,EAAE,EAAE,cAAc,CAAC,EAC9C,EAAgB,EAAQ,OAAO,EAAE,EAAE,cAAc,CAAC,EAClD,EAAiB,EAAQ,OAAO,EAAE,EAAE,WAAW,CAAC,EAEtD,MAAI,GACK,GAAG,UAGR,EACK,GAAG,YAGR,EACK,qBAGF,GAAG,UACZ",
-  "names": []
-}

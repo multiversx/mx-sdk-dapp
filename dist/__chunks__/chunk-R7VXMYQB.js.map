@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/ProviderInitializer/helpers/getExtensionProvider.ts"],
-  "sourcesContent": ["import { ExtensionProvider } from '@multiversx/sdk-extension-provider';\n\nexport async function getExtensionProvider(address: string) {\n  try {\n    const provider = ExtensionProvider.getInstance().setAddress(address);\n\n    const success = await provider.init();\n\n    if (success) {\n      return provider;\n    } else {\n      console.error(\n        'Could not initialise extension, make sure MultiversX wallet extension is installed.'\n      );\n    }\n  } catch (err) {\n    console.error('Unable to login to ExtensionProvider', err);\n  }\n  return null;\n}\n"],
-  "mappings": "+CAAA,2EAEA,WAA2C,EAAiB,gCAC1D,GAAI,CACF,GAAM,GAAW,EAAkB,YAAY,EAAE,WAAW,CAAO,EAInE,GAFgB,KAAM,GAAS,KAAK,EAGlC,MAAO,GAEP,QAAQ,MACN,qFACF,CAEJ,OAAS,EAAP,CACA,QAAQ,MAAM,uCAAwC,CAAG,CAC3D,CACA,MAAO,KACT",
-  "names": []
-}

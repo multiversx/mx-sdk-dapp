@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/types/index.ts"],
-  "sourcesContent": ["import { NativeAuthConfigType } from './login.types';\nexport * from './signedMessage.types';\n\nexport interface WalletConnectSignatureType {\n  id?: number;\n  jsonrpc?: string;\n  signature: string;\n}\n\nexport interface RouteType {\n  path: string;\n  component: any;\n  authenticatedRoute?: boolean;\n}\n\nexport interface TokenLoginType {\n  loginToken: string;\n  signature?: string;\n  nativeAuthToken?: string;\n  /**\n   * config to be restored when web wallet provider returns url signature\n   */\n  nativeAuthConfig?: NativeAuthConfigType;\n}\n\nexport * from './account.types';\nexport * from './dappProvider.types';\nexport * from './enums.types';\nexport * from './login.types';\nexport * from './network.types';\nexport * from './serverTransactions.types';\nexport * from './suspiciousLink';\nexport * from './transactions.types';\nexport * from './dappConfig.types';\n"],
-  "mappings": "+bAAA,iBACA,IAwBA,IACA,IACA,IACA,IACA,IACA,IACA,IACA,IACA",
-  "names": []
-}

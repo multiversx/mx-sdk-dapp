@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/web/hooks/index.ts"],
-  "sourcesContent": ["export * from './useIdleTimer';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

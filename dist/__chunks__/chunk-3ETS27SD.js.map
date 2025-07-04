@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionsToastList/components/CustomToast/helpers/index.ts"],
-  "sourcesContent": ["export * from './useRemoveCustomToast';\nexport * from './useMemoizedCloseButton';\nexport * from './getIsTransaction';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

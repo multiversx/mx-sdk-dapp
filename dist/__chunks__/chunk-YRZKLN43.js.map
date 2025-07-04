@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/operations/getUsdValue.tsx"],
-  "sourcesContent": ["export const getUsdValue = ({\n  amount,\n  usd,\n  decimals = 2,\n  addEqualSign\n}: {\n  amount: string;\n  usd: number;\n  decimals?: number;\n  addEqualSign?: boolean;\n}) => {\n  const sum = (parseFloat(amount) * usd).toFixed(decimals);\n  const formattedValue = parseFloat(sum).toLocaleString('en', {\n    maximumFractionDigits: decimals,\n    minimumFractionDigits: decimals\n  });\n  const equalSign = parseFloat(amount) > 0 ? '\u2248' : '=';\n  const equalSignPrefix = addEqualSign ? `${equalSign} ` : '';\n  return `${equalSignPrefix}$${formattedValue}`;\n};\n"],
-  "mappings": "+CAAA,GAAa,GAAb,aAAO,AAAM,EAAc,CAAC,CAC1B,SACA,MACA,WAAW,EACX,kBAMI,CACJ,GAAM,GAAO,YAAW,CAAM,EAAI,GAAK,QAAQ,CAAQ,EACjD,EAAiB,WAAW,CAAG,EAAE,eAAe,KAAM,CAC1D,sBAAuB,EACvB,sBAAuB,CACzB,CAAC,EACK,EAAY,WAAW,CAAM,EAAI,EAAI,SAAM,IAEjD,MAAO,GADiB,EAAe,GAAG,KAAe,MAC5B,GAC/B",
-  "names": []
-}

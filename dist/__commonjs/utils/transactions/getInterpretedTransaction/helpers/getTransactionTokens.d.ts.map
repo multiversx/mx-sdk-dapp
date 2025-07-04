@@ -1,1 +1,0 @@
-{"version":3,"file":"getTransactionTokens.d.ts","sourceRoot":"","sources":["../../../../../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionTokens.ts"],"names":[],"mappings":"AAAA,OAAO,EACL,qBAAqB,EACrB,iBAAiB,EAClB,MAAM,gCAAgC,CAAC;AAExC,eAAO,MAAM,oBAAoB,gBAClB,qBAAqB,KACjC,iBAAiB,EAanB,CAAC"}

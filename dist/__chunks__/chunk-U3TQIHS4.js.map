@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/getInterpretedTransaction/helpers/getTransactionReceiver.ts"],
-  "sourcesContent": ["import { ServerTransactionType } from 'types/serverTransactions.types';\n\nexport function getTransactionReceiver(transaction: ServerTransactionType) {\n  let receiver = transaction.receiver;\n  if (transaction.action?.arguments?.receiver) {\n    receiver = transaction.action.arguments.receiver;\n  }\n\n  return receiver;\n}\n"],
-  "mappings": "+CAEO,WAAgC,EAAoC,CAF3E,QAGE,GAAI,GAAW,EAAY,SAC3B,MAAI,QAAY,SAAZ,cAAoB,YAApB,QAA+B,UACjC,GAAW,EAAY,OAAO,UAAU,UAGnC,CACT,CATA",
-  "names": []
-}

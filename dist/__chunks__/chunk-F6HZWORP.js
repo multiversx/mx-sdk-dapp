@@ -1,2 +1,0 @@
-import{c,d as e}from"./chunk-IDKV6QEI.js";import{a as s}from"./chunk-ZXZXEDS2.js";import{i as r,m as o}from"./chunk-HBP5N4FR.js";o();import m from"react";import T from"classnames";var p=({className:a="dapp-transaction-toast-wrapper",children:i,id:n,styles:t})=>m.createElement("div",{id:n,className:T(t==null?void 0:t.toasts,t==null?void 0:t.toastWrapper,a)},i),v=s(p,{ssrStyles:()=>import("../UI/TransactionsToastList/transactionsToastList.styles.js"),clientStyles:()=>(e(),r(c)).default});export{v as a};
-//# sourceMappingURL=chunk-F6HZWORP.js.map

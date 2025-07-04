@@ -1,2 +1,0 @@
-import{j as t,m as o}from"./chunk-HBP5N4FR.js";o();var r={},s={setItem:(e,a)=>t(void 0,null,function*(){try{r[e]=JSON.stringify(a)}catch(n){console.error("tokenDataStorage unable to serialize",n)}}),getItem:e=>t(void 0,null,function*(){try{return JSON.parse(r[e])}catch(a){console.error("tokenDataStorage unable to parse",a)}}),clear:()=>t(void 0,null,function*(){r={}}),removeItem:e=>t(void 0,null,function*(){delete r[e]})},l=e=>{s=e};export{s as a,l as b};
-//# sourceMappingURL=chunk-NGOTHU6C.js.map

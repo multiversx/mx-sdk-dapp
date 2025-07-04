@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/webWallet/XaliasLoginButton/index.tsx"],
-  "sourcesContent": ["export * from './XaliasLoginButton';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

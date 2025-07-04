@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../src/UI/TransactionInfo/components/TransactionAction/components/index.tsx"],
-  "sourcesContent": ["export * from './ActionText';\n"],
-  "mappings": "i0qBAAA",
-  "names": []
-}

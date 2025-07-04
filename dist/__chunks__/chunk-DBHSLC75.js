@@ -1,2 +1,0 @@
-import{s as c}from"./chunk-7OZRG2YY.js";import{i as o}from"./chunk-S55DZJQR.js";import{a as r,d as m}from"./chunk-PCK656QH.js";import{j as n,m as e}from"./chunk-HBP5N4FR.js";e();c();m();import d from"axios";function y(s){return n(this,null,function*(){let{apiAddress:a,apiTimeout:i}=o(r.getState()),p=s.map(t=>d.post(`${a}/transactions`,t.toPlainObject(),{timeout:parseInt(i)}));return(yield Promise.all(p)).map(({data:t})=>t.txHash)})}export{y as a};
-//# sourceMappingURL=chunk-DBHSLC75.js.map

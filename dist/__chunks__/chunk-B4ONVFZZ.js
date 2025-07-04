@@ -1,2 +1,0 @@
-import{a as o,b as d}from"./chunk-YISB6TS7.js";import{a as r,b as f}from"./chunk-YRZKLN43.js";import{f as i,g as e,x as c}from"./chunk-UDZUNVED.js";import{e as u,m as a}from"./chunk-HBP5N4FR.js";var L,p=u(()=>{a();c();d();f();L=({feeLimit:n,egldPriceInUsd:l,hideEqualSign:m})=>{let s=o({input:n,decimals:i,digits:e,showLastNonZeroDecimal:!0}),t=r({amount:s,usd:l,decimals:e});return m?t:`\u2248 ${t}`}});export{L as a,p as b};
-//# sourceMappingURL=chunk-B4ONVFZZ.js.map

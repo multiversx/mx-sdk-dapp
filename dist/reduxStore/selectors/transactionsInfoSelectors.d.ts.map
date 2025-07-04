@@ -1,1 +1,0 @@
-{"version":3,"file":"transactionsInfoSelectors.d.ts","sourceRoot":"","sources":["../../../src/reduxStore/selectors/transactionsInfoSelectors.ts"],"names":[],"mappings":"AAMA,OAAO,EAAE,SAAS,EAAE,MAAM,kBAAkB,CAAC;AAC7C,OAAO,EAAE,2BAA2B,EAAE,MAAM,OAAO,CAAC;AAQpD,eAAO,MAAM,yBAAyB,UAAW,SAAS,0CAClC,CAAC;AAEzB,eAAO,MAAM,8BAA8B;;;;;;;;;;;wFAW1C,CAAC"}

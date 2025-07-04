@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/utils/useApiFetch.ts"],
-  "sourcesContent": ["import useSWR from 'swr';\nimport { axiosFetcher } from './axiosFetcher';\nimport { getCleanApiAddress } from './getCleanApiAddress';\n\nexport const useApiFetch = ({\n  apiEndpoint\n}: {\n  apiEndpoint: string | null;\n}) => {\n  const apiAddress = getCleanApiAddress();\n  const url = apiEndpoint ? `${apiAddress}/${apiEndpoint}` : null;\n\n  return useSWR(url, axiosFetcher);\n};\n"],
-  "mappings": "6IAAA,sBAIa,GAJb,aACA,IACA,IAEO,AAAM,EAAc,CAAC,CAC1B,iBAGI,CACJ,GAAM,GAAa,EAAmB,EAChC,EAAM,EAAc,GAAG,KAAc,IAAgB,KAE3D,MAAO,GAAO,EAAK,CAAY,CACjC",
-  "names": []
-}

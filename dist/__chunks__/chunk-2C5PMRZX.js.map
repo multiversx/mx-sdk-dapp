@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/transactions/useGetTransactionsFromApi.ts"],
-  "sourcesContent": ["import { TRANSACTIONS_ENDPOINT } from '../endpoints';\nimport { useApiFetch } from '../utils';\n\nexport const useGetTransactionsFromApi = (hash: string) =>\n  useApiFetch({\n    apiEndpoint: hash\n      ? `${TRANSACTIONS_ENDPOINT}/${hash}`\n      : TRANSACTIONS_ENDPOINT\n  });\n"],
-  "mappings": "uKAAA,QACA,IAEO,GAAM,GAA4B,AAAC,GACxC,EAAY,CACV,YAAa,EACT,GAAG,KAAyB,IAC5B,CACN,CAAC",
-  "names": []
-}

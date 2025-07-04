@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/walletConnect/WalletConnectConnectionStatus/WalletConnectConnectionHint.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\n\nconst WalletConnectConnectionHintComponent = ({\n  globalStyles\n}: WithStylesImportType) => (\n  <div\n    className={classNames(\n      globalStyles?.dFlex,\n      globalStyles?.flexColumn,\n      globalStyles?.alignItemsCenter,\n\n      globalStyles?.mt2\n    )}\n  >\n    <small className={globalStyles?.textSecondary}>\n      Make sure that the phone is unlocked and the app is opened.\n    </small>\n    <small>\n      Hint:{' '}\n      <span className={globalStyles?.textSecondary}>\n        Battery saving mode might have an effect on the connection quality.\n      </span>\n    </small>\n  </div>\n);\n\nexport const WalletConnectConnectionHint = withStyles(\n  WalletConnectConnectionHintComponent,\n  {}\n);\n"],
-  "mappings": "gFAAA,yBACA,0BAGA,GAAM,GAAuC,CAAC,CAC5C,kBAEA,gBAAC,OACC,UAAW,EACT,iBAAc,MACd,iBAAc,WACd,iBAAc,iBAEd,iBAAc,GAChB,GAEA,gBAAC,SAAM,UAAW,iBAAc,eAAe,6DAE/C,EACA,gBAAC,aAAM,QACC,IACN,gBAAC,QAAK,UAAW,iBAAc,eAAe,qEAE9C,CACF,CACF,EAGW,EAA8B,EACzC,EACA,CAAC,CACH",
-  "names": []
-}

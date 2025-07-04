@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/useGetNetworkConfig.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { networkConfigSelector } from 'reduxStore/selectors';\n\nexport const useGetNetworkConfig = () => {\n  return useSelector(networkConfigSelector);\n};\n"],
-  "mappings": "gKAAA,IACA,IAEO,GAAM,GAAsB,IAC1B,EAAY,CAAqB",
-  "names": []
-}

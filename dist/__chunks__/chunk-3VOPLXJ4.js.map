@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/helpers/timestampIsOlderThan.ts"],
-  "sourcesContent": ["export const timestampIsOlderThan = (\n  timestamp: number,\n  olderThanMs: number\n) => {\n  const diff = new Date().getTime() - timestamp;\n  return diff > olderThanMs;\n};\n"],
-  "mappings": "wCAAA,IAAO,GAAM,GAAuB,CAClC,EACA,IAGO,AADM,GAAI,MAAK,EAAE,QAAQ,EAAI,EACtB",
-  "names": []
-}

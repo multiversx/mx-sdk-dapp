@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/account/getAccount.tsx"],
-  "sourcesContent": ["import { getAccountFromApi } from 'apiCalls/accounts/getAccountFromApi';\n\nexport const getAccount = (address?: string) => getAccountFromApi(address);\n"],
-  "mappings": "8FAAA,GAEa,GAFb,iBAEO,AAAM,EAAa,AAAC,GAAqB,EAAkB,CAAO",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/validation/maxDecimals.ts"],
-  "sourcesContent": ["import { DECIMALS } from 'constants/index';\n\nexport const maxDecimals = (amount: string, customDecimals?: number) => {\n  const decimals = customDecimals === undefined ? DECIMALS : customDecimals;\n  if (\n    amount != null &&\n    amount.toString().indexOf('.') >= 0 &&\n    (amount as any).toString().split('.').pop().length > decimals\n  ) {\n    return false;\n  }\n  return true;\n};\n"],
-  "mappings": "8FAAA,GAEa,GAFb,iBAEO,AAAM,EAAc,CAAC,EAAgB,IAA4B,CACtE,GAAM,GAAW,IAAmB,OAAY,EAAW,EAC3D,MACE,KAAU,MACV,EAAO,SAAS,EAAE,QAAQ,GAAG,GAAK,GACjC,EAAe,SAAS,EAAE,MAAM,GAAG,EAAE,IAAI,EAAE,OAAS,EAKzD",
-  "names": []
-}

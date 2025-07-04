@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/ScResultsList/components/ResultWrapper/styles.scss"],
-  "sourcesContent": ["const css = `.dapp-core-component__styles__scResultWrapper {\n  display: flex;\n  flex-direction: column;\n  flex-wrap: wrap;\n  margin-bottom: 1rem;\n}\n@media (min-width: 576px) {\n  .dapp-core-component__styles__scResultWrapper {\n    flex-direction: row;\n  }\n}\n.dapp-core-component__styles__scResultWrapper .dapp-core-component__styles__label {\n  color: #6c757d;\n}\n@media (min-width: 576px) {\n  .dapp-core-component__styles__scResultWrapper .dapp-core-component__styles__label {\n    text-align: right;\n  }\n}\n.dapp-core-component__styles__scResultWrapper .dapp-core-component__styles__data {\n  display: flex;\n  align-items: center;\n}`;\ndocument.head\n    .appendChild(document.createElement(\"style\"))\n    .appendChild(document.createTextNode(css));\nexport {css};\nexport default {\n  \"scResultWrapper\": \"dapp-core-component__styles__scResultWrapper\",\n  \"label\": \"dapp-core-component__styles__label\",\n  \"data\": \"dapp-core-component__styles__data\"\n};"],
-  "mappings": "sDAAA,2CAAM,GA2BC,EA3BP,aAAM,EAAM;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA,GAuBZ,SAAS,KACJ,YAAY,SAAS,cAAc,OAAO,CAAC,EAC3C,YAAY,SAAS,eAAe,CAAG,CAAC,EAE7C,AAAO,EAAQ,CACb,gBAAmB,+CACnB,MAAS,qCACT,KAAQ,mCACV",
-  "names": []
-}

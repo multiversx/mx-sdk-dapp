@@ -1,2 +1,0 @@
-export declare function loginWithNativeAuthToken(token: string, dispatch?: import("redux-thunk").ThunkDispatch<any, undefined, import("redux").AnyAction> & import("redux").Dispatch<import("redux").AnyAction>): void;
-//# sourceMappingURL=loginWithNativeAuthToken.d.ts.map

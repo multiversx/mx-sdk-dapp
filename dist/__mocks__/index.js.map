@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/index.ts"],
-  "sourcesContent": ["export * from './accountConfig';\nexport * from './packages';\nexport * from './server';\nexport * from './utils';\n"],
-  "mappings": "g0jBAAA",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getEventListInitialDecodeMethod.ts"],
-  "sourcesContent": ["import { DecodeMethodEnum } from 'types/serverTransactions.types';\nimport { getWindowLocation } from 'utils/window/getWindowLocation';\n\nexport const getEventListInitialDecodeMethod = () => {\n  const { hash } = getWindowLocation();\n  const hashValues = hash.split('/');\n  const initialDecodeMethod = hashValues[2] ?? DecodeMethodEnum.raw;\n  return initialDecodeMethod;\n};\n"],
-  "mappings": "+HAAA,QACA,IAEO,GAAM,GAAkC,IAAM,CAHrD,MAIE,GAAM,CAAE,QAAS,EAAkB,EAGnC,MAD4B,GADT,EAAK,MAAM,GAAG,EACM,KAAX,OAAiB,KAE/C",
-  "names": []
-}

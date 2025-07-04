@@ -1,1 +1,0 @@
-{"version":3,"file":"useCheckTransactionStatus.d.ts","sourceRoot":"","sources":["../../../../src/hooks/transactions/useCheckTransactionStatus/useCheckTransactionStatus.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,uBAAuB,EAAE,MAAM,iCAAiC,CAAC;AAK1E,wBAAgB,yBAAyB,YAI9B,uBAAuB,GAAG;IAC/B,oBAAoB,CAAC,EAAE,OAAO,CAAC;CAChC,mBAyBJ"}

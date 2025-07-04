@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/components/TransactionStatusToast/transactionStatusToast.types.ts"],
-  "sourcesContent": ["export enum StatusIconType {\n  INFO = 'info',\n  ERROR = 'error',\n  WARNING = 'warning'\n}\n"],
-  "mappings": "wCAAA,IAAO,GAAK,GAAL,CAAK,GACV,QAAO,OACP,QAAQ,QACR,UAAU,UAHA",
-  "names": []
-}

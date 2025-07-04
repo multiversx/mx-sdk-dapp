@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/utils/mockWindowLocation.ts"],
-  "sourcesContent": ["export const mockWindowLocation = () => {\n  if (!window) {\n    return;\n  }\n\n  const location = window.location;\n\n  // eslint-disable-next-line @typescript-eslint/ban-ts-comment\n  // @ts-ignore\n  delete window.location;\n\n  // eslint-disable-next-line @typescript-eslint/ban-ts-comment\n  // @ts-ignore\n  window.location = Object.defineProperties(\n    {},\n    {\n      ...Object.getOwnPropertyDescriptors(location),\n      assign: {\n        configurable: true,\n        value: jest.fn()\n      }\n    }\n  );\n};\n"],
-  "mappings": "sDAAA,IAAO,GAAM,GAAqB,IAAM,CACtC,GAAI,CAAC,OACH,OAGF,GAAM,GAAW,OAAO,SAIxB,MAAO,QAAO,SAId,OAAO,SAAW,OAAO,iBACvB,CAAC,EACD,OACK,OAAO,0BAA0B,CAAQ,GAD9C,CAEE,OAAQ,CACN,aAAc,GACd,MAAO,KAAK,GAAG,CACjB,CACF,EACF,CACF",
-  "names": []
-}

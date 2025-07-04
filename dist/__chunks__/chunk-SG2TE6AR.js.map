@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/transactions/useGetSuccessfulTransactions.ts"],
-  "sourcesContent": ["import { useSelector } from 'reduxStore/DappProviderContext';\nimport { successfulTransactionsSelector } from 'reduxStore/selectors';\nimport { SignedTransactionsType, SignedTransactionsBodyType } from 'types';\n\nexport interface useGetSuccessfulTransactionsReturnType {\n  successfulTransactions: SignedTransactionsType;\n  successfulTransactionsArray: [string, SignedTransactionsBodyType][];\n  hasSuccessfulTransactions: boolean;\n}\n\n//this is a hook to be able to take advantage of memoization offered by useSelector\nexport function useGetSuccessfulTransactions(): useGetSuccessfulTransactionsReturnType {\n  const successfulTransactions = useSelector(successfulTransactionsSelector);\n  const successfulTransactionsArray: [string, SignedTransactionsBodyType][] =\n    Object.entries(successfulTransactions);\n  const hasSuccessfulTransactions = successfulTransactionsArray?.length > 0;\n  return {\n    successfulTransactions,\n    successfulTransactionsArray,\n    hasSuccessfulTransactions\n  };\n}\n"],
-  "mappings": "+HAAA,IACA,IAUO,YAAgF,CACrF,GAAM,GAAyB,EAAY,CAA8B,EACnE,EACJ,OAAO,QAAQ,CAAsB,EACjC,EAA4B,kBAA6B,QAAS,EACxE,MAAO,CACL,yBACA,8BACA,2BACF,CACF",
-  "names": []
-}

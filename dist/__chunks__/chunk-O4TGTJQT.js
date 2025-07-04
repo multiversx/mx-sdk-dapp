@@ -1,2 +1,0 @@
-import{m as s}from"./chunk-HBP5N4FR.js";s();import{useState as f}from"react";var z=()=>{let[o,r]=f(!0),d=e=>e.getBoundingClientRect().width,l=e=>parseInt(getComputedStyle(e).getPropertyValue("font-size"));return{isFontSizeLoading:o,handleAmountReference:e=>{if(!e)return;let t=e.firstChild,n={parent:e.offsetWidth,firstChild:l(t)};if(!!t){for(;n.parent<d(t);){let i=n.firstChild-.1,a={fontSize:`${i}px`},c={firstChild:i};Object.assign(t.style,a),Object.assign(n,c)}r(!1)}}}};export{z as a};
-//# sourceMappingURL=chunk-O4TGTJQT.js.map

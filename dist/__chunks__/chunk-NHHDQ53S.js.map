@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/__mocks__/data/networkConfig.ts"],
-  "sourcesContent": ["export const networkConfig = {\n  data: {\n    config: {\n      erd_adaptivity: 'false',\n      erd_chain_id: 'D',\n      erd_denomination: 18,\n      erd_gas_per_data_byte: 1500,\n      erd_gas_price_modifier: '0.01',\n      erd_hysteresis: '0.200000',\n      erd_latest_tag_software_version: 'D1.3.50.0-hf01',\n      erd_max_gas_per_transaction: 600000000,\n      erd_meta_consensus_group_size: 58,\n      erd_min_gas_limit: 50000,\n      erd_min_gas_price: 1000000000,\n      erd_min_transaction_version: 1,\n      erd_num_metachain_nodes: 58,\n      erd_num_nodes_in_shard: 58,\n      erd_num_shards_without_meta: 3,\n      erd_rewards_top_up_gradient_point: '2000000000000000000000000',\n      erd_round_duration: 6000,\n      erd_rounds_per_epoch: 1200,\n      erd_shard_consensus_group_size: 21,\n      erd_start_time: 1648551600,\n      erd_top_up_factor: '0.500000'\n    }\n  },\n  code: 'successful'\n};\n"],
-  "mappings": "wCAAA,IAAO,GAAM,GAAgB,CAC3B,KAAM,CACJ,OAAQ,CACN,eAAgB,QAChB,aAAc,IACd,iBAAkB,GAClB,sBAAuB,KACvB,uBAAwB,OACxB,eAAgB,WAChB,gCAAiC,iBACjC,4BAA6B,IAC7B,8BAA+B,GAC/B,kBAAmB,IACnB,kBAAmB,IACnB,4BAA6B,EAC7B,wBAAyB,GACzB,uBAAwB,GACxB,4BAA6B,EAC7B,kCAAmC,4BACnC,mBAAoB,IACpB,qBAAsB,KACtB,+BAAgC,GAChC,eAAgB,WAChB,kBAAmB,UACrB,CACF,EACA,KAAM,YACR",
-  "names": []
-}

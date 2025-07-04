@@ -1,2 +1,0 @@
-import{d as m}from"./chunk-JUB6TCFX.js";import{a}from"./chunk-WPT4VLWW.js";import{a as s}from"./chunk-DBD6N2CW.js";import{s as p}from"./chunk-7OZRG2YY.js";import{h as i}from"./chunk-HKOZWGGV.js";import{m as n}from"./chunk-HBP5N4FR.js";n();p();var x=(l,c)=>{var r;let o=m(i),t=(r=o==null?void 0:o.loginToken)!=null?r:l;if(!t)return;let e=a(t);if(!!e)return{className:c,url:e.origin,duration:s(e.ttl*1e3)}};export{x as a};
-//# sourceMappingURL=chunk-BTO2QZZF.js.map

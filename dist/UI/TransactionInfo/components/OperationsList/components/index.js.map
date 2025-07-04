@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../src/UI/TransactionInfo/components/OperationsList/components/index.tsx"],
-  "sourcesContent": ["export * from './OperationRow';\n"],
-  "mappings": "qltBAAA",
-  "names": []
-}

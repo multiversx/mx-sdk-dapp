@@ -1,2 +1,0 @@
-import{a as m}from"./chunk-HKU3BVOJ.js";import{a as n}from"./chunk-OHGHWXS3.js";import{c as r,d as s}from"./chunk-JUB6TCFX.js";import{s as f}from"./chunk-7OZRG2YY.js";import{b as i}from"./chunk-H6BZGL2Y.js";import{m as t}from"./chunk-HBP5N4FR.js";t();import{useEffect as u}from"react";f();function a(){let c=r(),o=s(i),e=n();u(()=>{!o||!e||m(e,c)},[e,o])}export{a};
-//# sourceMappingURL=chunk-QO2VZGTA.js.map

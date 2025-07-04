@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/services/nativeAuth/helpers/loginWithNativeAuthToken.ts"],
-  "sourcesContent": ["import { loginAction } from 'reduxStore/commonActions';\nimport { setTokenLogin } from 'reduxStore/slices';\nimport { store } from 'reduxStore/store';\nimport { LoginMethodsEnum } from 'types';\nimport { decodeNativeAuthToken } from './decodeNativeAuthToken';\n\nexport function loginWithNativeAuthToken(\n  token: string,\n  dispatch = store.dispatch\n) {\n  const nativeAuthInfo = decodeNativeAuthToken(token);\n\n  if (nativeAuthInfo == null) {\n    return;\n  }\n\n  const { signature, address } = nativeAuthInfo;\n\n  if (signature && token && address) {\n    dispatch(\n      setTokenLogin({\n        loginToken: token,\n        signature,\n        nativeAuthToken: token\n      })\n    );\n\n    dispatch(\n      loginAction({\n        address,\n        loginMethod: LoginMethodsEnum.extra\n      })\n    );\n  }\n}\n"],
-  "mappings": "iSAAA,QACA,IACA,IACA,IAGO,WACL,EACA,EAAW,EAAM,SACjB,CACA,GAAM,GAAiB,EAAsB,CAAK,EAElD,GAAI,GAAkB,KACpB,OAGF,GAAM,CAAE,YAAW,WAAY,EAE/B,AAAI,GAAa,GAAS,GACxB,GACE,EAAc,CACZ,WAAY,EACZ,YACA,gBAAiB,CACnB,CAAC,CACH,EAEA,EACE,EAAY,CACV,UACA,YAAa,OACf,CAAC,CACH,EAEJ",
-  "names": []
-}

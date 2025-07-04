@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/TransactionInfo/components/transactionInfoFields/TransactionInfoGasLimit/TransactionInfoGasLimit.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { N_A } from 'constants/index';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport {\n  WithTransactionType,\n  WithClassnameType\n} from '../../../../../UI/types';\nimport { DetailItem } from '../../DetailItem';\n\nconst TransactionInfoGasLimitComponent = ({\n  className,\n  transaction,\n  styles\n}: WithTransactionType & WithClassnameType & WithStylesImportType) => (\n  <DetailItem className={className} title='Gas Limit'>\n    {transaction.gasLimit != null ? (\n      transaction.gasLimit.toLocaleString('en')\n    ) : (\n      <span className={styles?.gas}>{N_A}</span>\n    )}\n  </DetailItem>\n);\n\nexport const TransactionInfoGasLimit = withStyles(\n  TransactionInfoGasLimitComponent,\n  {\n    ssrStyles: () =>\n      import(\n        'UI/TransactionInfo/components/transactionInfoFields/TransactionInfoGasLimit/styles.scss'\n      ),\n    clientStyles: () =>\n      require('UI/TransactionInfo/components/transactionInfoFields/TransactionInfoGasLimit/styles.scss')\n        .default\n  }\n);\n"],
-  "mappings": "6NAAA,IACA,IADA,qBASA,GAAM,GAAmC,CAAC,CACxC,YACA,cACA,YAEA,gBAAC,GAAW,UAAW,EAAW,MAAM,aACrC,EAAY,UAAY,KACvB,EAAY,SAAS,eAAe,IAAI,EAExC,gBAAC,QAAK,UAAW,iBAAQ,KAAM,CAAI,CAEvC,EAGW,EAA0B,EACrC,EACA,CACE,UAAW,IACT,OACE,4FAEJ,aAAc,IACZ,WACG,OACP,CACF",
-  "names": []
-}

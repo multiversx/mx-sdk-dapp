@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/walletConnect/WalletConnectLoginContainer/WalletConnectLoginContent/index.ts"],
-  "sourcesContent": ["export * from './WalletConnectLoginContent';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

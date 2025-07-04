@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/environment/index.ts"],
-  "sourcesContent": ["export * from './isWebEnvironment';\nexport * from './isMobileEnvironment';\n"],
-  "mappings": "gFAAA",
-  "names": []
-}

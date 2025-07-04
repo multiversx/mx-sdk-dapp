@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getVisibleOperations.ts"],
-  "sourcesContent": ["import {\n  InterpretedTransactionType,\n  VisibleTransactionOperationType\n} from 'types/serverTransactions.types';\n\nexport const getVisibleOperations = (\n  transaction: InterpretedTransactionType\n) => {\n  const operations =\n    transaction?.operations?.filter((operation) =>\n      Object.values<string>(VisibleTransactionOperationType).includes(\n        operation.type\n      )\n    ) ?? [];\n\n  return operations;\n};\n"],
-  "mappings": "8FAAA,GAKa,GALb,iBAKO,AAAM,EAAuB,AAClC,GACG,CAPL,QAeE,MANE,uBAAa,aAAb,cAAyB,OAAO,AAAC,GAC/B,OAAO,OAAe,CAA+B,EAAE,SACrD,EAAU,IACZ,KAHF,OAIK,CAAC,CAGV",
-  "names": []
-}

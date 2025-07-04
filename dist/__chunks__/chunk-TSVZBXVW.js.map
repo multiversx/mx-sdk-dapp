@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/metamask/MetamaskLoginButton/index.ts"],
-  "sourcesContent": ["export * from './MetamaskLoginButton';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

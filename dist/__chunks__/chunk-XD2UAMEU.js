@@ -1,2 +1,0 @@
-import{b as p}from"./chunk-QBV4ORH5.js";import{a as n}from"./chunk-XVSQYXHY.js";import{a as r}from"./chunk-ZXZXEDS2.js";import{m}from"./chunk-HBP5N4FR.js";m();import i from"react";import o from"classnames";var T=({className:a,transaction:s,globalStyles:t})=>i.createElement(n,{className:a,title:"Status"},i.createElement("div",{className:o(t==null?void 0:t.dFlex,t==null?void 0:t.alignItemsCenter,t==null?void 0:t.flexWrap)},i.createElement(p,{transaction:s}))),x=r(T,{});export{x as a};
-//# sourceMappingURL=chunk-XD2UAMEU.js.map

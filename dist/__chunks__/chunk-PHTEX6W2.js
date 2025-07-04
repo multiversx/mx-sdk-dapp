@@ -1,2 +1,0 @@
-import{a as o,b as P}from"./chunk-P3EO43BR.js";import{m as a,n as m,x as n}from"./chunk-UDZUNVED.js";import{e as t,m as r}from"./chunk-HBP5N4FR.js";import{WALLET_PROVIDER_CALLBACK_PARAM as c}from"@multiversx/sdk-web-wallet-provider";var R,i=t(()=>{r();n();P();R=({transaction:e,search:s})=>o({removeParams:[...Object.keys(e),c,a,m],search:s})});export{R as a,i as b};
-//# sourceMappingURL=chunk-PHTEX6W2.js.map

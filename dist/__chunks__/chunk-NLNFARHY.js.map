@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/index.ts"],
-  "sourcesContent": ["export * from './useGetNetworkConfig';\nexport * from './useUpdateEffect';\nexport * from './useGetNotification';\nexport * from './transactions';\nexport * from './account';\nexport * from './useDebounce';\nexport * from './login';\nexport * from './websocketListener';\nexport * from './toasts';\nexport * from './economics';\n"],
-  "mappings": "wCAAA",
-  "names": []
-}

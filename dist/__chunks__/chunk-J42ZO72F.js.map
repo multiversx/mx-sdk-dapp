@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/internal/getLedgerErrorCodes.ts"],
-  "sourcesContent": ["import { ledgerErrorCodes } from 'constants/ledgerErrorCodes';\n\nconst ledgerAppErrorText = 'Check if the MultiversX app is open on Ledger';\nconst notConnectedCode = 0x6e01;\nconst wrongClaCode = 0x6e00;\nconst inactiveAppCodes = [notConnectedCode, wrongClaCode];\n\nexport function getLedgerErrorCodes(err?: any) {\n  let errorMessage: string | null = null;\n  if (err?.statusCode in ledgerErrorCodes) {\n    const statusCode: keyof typeof ledgerErrorCodes = err?.statusCode;\n    const { message } = ledgerErrorCodes[statusCode];\n    errorMessage = inactiveAppCodes.includes(statusCode)\n      ? ledgerAppErrorText\n      : message;\n  }\n  return {\n    errorMessage,\n    defaultErrorMessage: ledgerAppErrorText\n  };\n}\n"],
-  "mappings": "8FAOO,WAA6B,EAAW,CAC7C,GAAI,GAA8B,KAClC,GAAI,kBAAK,aAAc,GAAkB,CACvC,GAAM,GAA4C,iBAAK,WACjD,CAAE,WAAY,EAAiB,GACrC,EAAe,EAAiB,SAAS,CAAU,EAC/C,EACA,CACN,CACA,MAAO,CACL,eACA,oBAAqB,CACvB,CACF,CApBA,GAEM,GACA,EACA,EACA,EALN,iBAEA,AAAM,EAAqB,gDACrB,EAAmB,MACnB,EAAe,MACf,EAAmB,CAAC,EAAkB,CAAY",
-  "names": []
-}

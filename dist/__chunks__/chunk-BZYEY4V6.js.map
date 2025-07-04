@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/getTransactionFee.ts"],
-  "sourcesContent": ["import BigNumber from 'bignumber.js';\nimport { InterpretedTransactionType } from 'types';\n\nconst getFee = (transaction: InterpretedTransactionType) => {\n  const bNgasPrice = new BigNumber(transaction.gasPrice);\n  const bNgasUsed = new BigNumber(transaction.gasUsed);\n  const output = bNgasPrice.times(bNgasUsed).toString();\n\n  return output;\n};\n\nexport function getTransactionFee(transaction: InterpretedTransactionType) {\n  if (transaction.fee) {\n    return transaction.fee;\n  }\n\n  if (transaction.gasUsed === undefined) {\n    return null;\n  }\n\n  return getFee(transaction);\n}\n"],
-  "mappings": "+CAAA,4BAWO,WAA2B,EAAyC,CACzE,MAAI,GAAY,IACP,EAAY,IAGjB,EAAY,UAAY,OACnB,KAGF,EAAO,CAAW,CAC3B,CArBA,GAGM,GAHN,aAGA,AAAM,EAAS,AAAC,GAA4C,CAC1D,GAAM,GAAa,GAAI,GAAU,EAAY,QAAQ,EAC/C,EAAY,GAAI,GAAU,EAAY,OAAO,EAGnD,MAFe,GAAW,MAAM,CAAS,EAAE,SAAS,CAGtD",
-  "names": []
-}

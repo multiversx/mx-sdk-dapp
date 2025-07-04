@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/account/getWebviewToken.ts"],
-  "sourcesContent": ["import { loginInfoSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\nimport { getAccessTokenFromSearchParams } from './getAccessTokenFromSearchParams';\n\nexport const getWebviewToken = () => {\n  const accessToken = getAccessTokenFromSearchParams();\n  const loginInfo = loginInfoSelector(store.getState());\n\n  return accessToken ?? loginInfo.webviewLogin?.data;\n};\n"],
-  "mappings": "+MAAA,QACA,IAGO,GAAM,GAAkB,IAAM,CAJrC,MAKE,GAAM,GAAc,EAA+B,EAC7C,EAAY,EAAkB,EAAM,SAAS,CAAC,EAEpD,MAAO,WAAe,KAAU,eAAV,cAAwB,IAChD",
-  "names": []
-}

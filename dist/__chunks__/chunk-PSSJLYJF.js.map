@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/signMessage/getVerifier.ts"],
-  "sourcesContent": ["import { Address, UserPublicKey, UserVerifier } from '@multiversx/sdk-core';\n\nexport const getVerifier = (address: string) => {\n  const publicKey = new UserPublicKey(new Address(address).pubkey());\n\n  return new UserVerifier(publicKey);\n};\n"],
-  "mappings": "wCAAA,wFAEO,GAAM,GAAc,AAAC,GAAoB,CAC9C,GAAM,GAAY,GAAI,GAAc,GAAI,GAAQ,CAAO,EAAE,OAAO,CAAC,EAEjE,MAAO,IAAI,GAAa,CAAS,CACnC",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../../src/UI/TransactionsToastList/components/CustomToast/components/IconToast/iconToast.types.ts"],
-  "sourcesContent": ["import {\n  ComponentIconToastPropsType,\n  MessageIconToastPropsType,\n  TransactionIconToastPropsType\n} from '../../customToast.types';\n\nexport type IconToastPropsType =\n  | MessageIconToastPropsType\n  | TransactionIconToastPropsType\n  | ComponentIconToastPropsType;\n"],
-  "mappings": "gFAAA",
-  "names": []
-}

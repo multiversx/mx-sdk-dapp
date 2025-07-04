@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/apiCalls/configuration/getApiAddressForChainId.ts"],
-  "sourcesContent": ["import { fallbackNetworkConfigurations } from 'constants/network';\nimport { getEnvironmentForChainId } from './getEnvironmentForChainId';\n\nexport function getApiAddressForChainId(chainId: string) {\n  const environment = getEnvironmentForChainId(chainId);\n  const apiAddress = fallbackNetworkConfigurations[environment].apiAddress;\n  if (!apiAddress) {\n    throw 'Could not extract api address for environment, check if you have a valid chainID';\n  }\n  return apiAddress;\n}\n"],
-  "mappings": "+HAAA,QAGO,WAAiC,EAAiB,CACvD,GAAM,GAAc,EAAyB,CAAO,EAC9C,EAAa,EAA8B,GAAa,WAC9D,GAAI,CAAC,EACH,KAAM,mFAER,MAAO,EACT",
-  "names": []
-}

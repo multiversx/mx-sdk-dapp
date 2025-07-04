@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../../../../../src/UI/TransactionInfo/components/TransactionAction/components/TransactionActionBlock/components/index.tsx"],
-  "sourcesContent": ["export * from './NftBadge';\nexport * from './TransactionActionCollection';\nexport * from './TransactionActionNft';\nexport * from './TransactionActionToken';\n"],
-  "mappings": "qyWAAA",
-  "names": []
-}

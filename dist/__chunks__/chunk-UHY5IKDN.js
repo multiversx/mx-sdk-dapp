@@ -1,2 +1,0 @@
-import{e as u,k as o,m as a}from"./chunk-HBP5N4FR.js";function f(t){try{let e=atob(t),n=btoa(e),i=o.Buffer.from(t,"base64").toString(),r=o.Buffer.from(i).toString("base64"),s=t===n||n.startsWith(t),c=t===r||r.startsWith(t);if(s&&c)return!0}catch(e){return!1}return!1}function B(t){return btoa(t)}function E(t){return f(t)?atob(t):t}var d=u(()=>{a()});export{f as a,B as b,E as c,d};
-//# sourceMappingURL=chunk-UHY5IKDN.js.map

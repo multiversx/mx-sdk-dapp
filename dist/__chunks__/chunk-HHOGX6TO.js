@@ -1,2 +1,0 @@
-import{a as r}from"./chunk-OPT3JYNI.js";import{m as c}from"./chunk-HBP5N4FR.js";c();r();var g=({transactions:s,hasUnrelatedTransactions:n})=>{let o=s.every(({status:e})=>e==="fail"),i=s.some(({status:e})=>e==="fail"),a=s.some(({status:e})=>e==="pending"),l=s.every(({status:e})=>e==="success"),t=n&&Boolean(!a&&!o&&i);return{isPending:a,isSuccessful:l,isFailed:n?t?!1:o:i,isIncompleteFailed:t}};export{g as a};
-//# sourceMappingURL=chunk-HHOGX6TO.js.map

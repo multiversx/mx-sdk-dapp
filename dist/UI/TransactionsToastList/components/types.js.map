@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../../src/UI/TransactionsToastList/components/types.ts"],
-  "sourcesContent": ["import { PropsWithChildren, ComponentType } from 'react';\n\nexport type ComponentTypeWithChildren<T> = ComponentType<PropsWithChildren<T>>;\n"],
-  "mappings": "uEAAA",
-  "names": []
-}

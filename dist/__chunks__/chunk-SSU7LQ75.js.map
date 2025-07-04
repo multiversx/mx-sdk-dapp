@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/UI/SignTransactionsModals/SignWithDeviceModal/signWithDeviceModal.types.ts"],
-  "sourcesContent": ["import {\n  ActiveLedgerTransactionType,\n  DeviceSignedTransactions,\n  GuardianScreenType,\n  MultiSignTransactionType\n} from '../../../types';\nimport { WithClassnameType } from '../../types';\nimport { SignPropsType } from '../types/signTransactionsModals.types';\n\nexport { DeviceSignedTransactions };\n\nexport interface SignStepInnerClassesType {\n  buttonsWrapperClassName?: string;\n  inputGroupClassName?: string;\n  inputLabelClassName?: string;\n  inputValueClassName?: string;\n  errorClassName?: string;\n  scamAlertClassName?: string;\n  buttonClassName?: string;\n  progressClassName?: string;\n}\n\nexport interface SignStepPropsType\n  extends WithClassnameType,\n    GuardianScreenType {\n  allTransactions: MultiSignTransactionType[];\n  callbackRoute?: string;\n  currentStep: number;\n  currentTransaction: ActiveLedgerTransactionType | null;\n  GuardianScreen?: SignPropsType['GuardianScreen'];\n  error: string | null;\n  handleClose: () => void;\n  handleSubmit?: () => void;\n  isLastTransaction: boolean;\n  waitingForDevice: boolean;\n}\n"],
-  "mappings": "gFAAA",
-  "names": []
-}

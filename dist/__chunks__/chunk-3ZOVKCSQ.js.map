@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/network/getNetworkConfig.ts"],
-  "sourcesContent": ["import { networkSelector } from 'reduxStore/selectors';\nimport { store } from 'reduxStore/store';\n\nexport function getNetworkConfig() {\n  return networkSelector(store.getState());\n}\n"],
-  "mappings": "uKAAA,QACA,IAEO,YAA4B,CACjC,MAAO,GAAgB,EAAM,SAAS,CAAC,CACzC",
-  "names": []
-}

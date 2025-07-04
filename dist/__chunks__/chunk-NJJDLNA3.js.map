@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/reduxStore/slices/index.ts"],
-  "sourcesContent": ["export * from './accountInfoSlice';\nexport * from './loginInfoSlice';\nexport * from './modalsSlice';\nexport * from './networkConfigSlice';\nexport * from './signedMessageInfoSlice';\nexport * from './toastsSlice';\nexport * from './transactionsInfoSlice';\nexport * from './transactionsSlice';\nexport * from './batchTransactionsSlice';\nexport * from './dappConfigSlice';\n"],
-  "mappings": "0bAAA,qBACA,IACA,IACA,IACA,IACA,IACA,IACA,IACA,IACA",
-  "names": []
-}

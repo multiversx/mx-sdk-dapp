@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/hooks/useClosureRef.ts"],
-  "sourcesContent": ["import { useEffect, useRef } from 'react';\n\nexport const useClosureRef = <T>(value: T) => {\n  const refVal = useRef<T>(value);\n\n  useEffect(() => {\n    refVal.current = value;\n  }, [value]);\n\n  return refVal;\n};\n"],
-  "mappings": "wCAAA,kDAEO,GAAM,GAAgB,AAAI,GAAa,CAC5C,GAAM,GAAS,EAAU,CAAK,EAE9B,SAAU,IAAM,CACd,EAAO,QAAU,CACnB,EAAG,CAAC,CAAK,CAAC,EAEH,CACT",
-  "names": []
-}

@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../../src/UI/IconState/index.tsx"],
-  "sourcesContent": ["import React from 'react';\nimport { IconProp } from '@fortawesome/fontawesome-svg-core';\nimport { FontAwesomeIcon } from '@fortawesome/react-fontawesome';\nimport classNames from 'classnames';\nimport { withStyles, WithStylesImportType } from 'hocs/withStyles';\nimport { WithClassnameType } from '../types';\n\n// TODO: Rename to \"IconStatePropsType\" when sdk-dapp@3.0.0\nexport interface IconStateProps extends WithClassnameType {\n  icon: IconProp;\n  iconSize?: '2x' | '3x' | '5x';\n}\n\nconst IconStateComponent = ({\n  icon,\n  iconSize = '3x',\n  className = 'dapp-icon-state',\n  globalStyles\n}: IconStateProps & WithStylesImportType) => {\n  const classes = {\n    wrapper: classNames(\n      globalStyles?.iconState,\n      globalStyles?.mxAuto,\n      {\n        half: iconSize === '2x'\n      },\n      className\n    ),\n    icon: globalStyles?.textWhite\n  };\n\n  return (\n    <span className={classes.wrapper}>\n      <FontAwesomeIcon icon={icon} size={iconSize} className={classes.icon} />\n    </span>\n  );\n};\n\nexport const IconState = withStyles(IconStateComponent, {});\n"],
-  "mappings": "uSAAA,yBAEA,iEACA,0BAUA,GAAM,GAAqB,CAAC,CAC1B,OACA,WAAW,KACX,YAAY,kBACZ,kBAC2C,CAC3C,GAAM,GAAU,CACd,QAAS,EACP,iBAAc,UACd,iBAAc,OACd,CACE,KAAM,IAAa,IACrB,EACA,CACF,EACA,KAAM,iBAAc,SACtB,EAEA,MACE,iBAAC,QAAK,UAAW,EAAQ,SACvB,gBAAC,GAAgB,KAAM,EAAM,KAAM,EAAU,UAAW,EAAQ,KAAM,CACxE,CAEJ,EAEa,EAAY,EAAW,EAAoB,CAAC,CAAC",
-  "names": []
-}

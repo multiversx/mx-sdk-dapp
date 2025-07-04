@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["../../src/utils/transactions/transactionInfoHelpers/transactionActionUnwrapper/transactionActionUnwrapper.ts"],
-  "sourcesContent": ["import {\n  TransactionActionType,\n  UnwrapperType,\n  TransactionActionCategoryEnum\n} from 'types/serverTransactions.types';\nimport { esdtNftUnwrapper } from './helpers/esdtNftUnwrapper';\nimport { mexUnwrapper } from './helpers/mexUnwrapper';\nimport { stakeUnwrapper } from './helpers/stakeUnwrapper';\n\nexport const transactionActionUnwrapper = (\n  action: TransactionActionType\n): Array<string | UnwrapperType> => {\n  if (!action.arguments) {\n    return action.description ? [action.description] : [action.name];\n  }\n\n  switch (action.category) {\n    case TransactionActionCategoryEnum.esdtNft:\n      return esdtNftUnwrapper(action);\n    case TransactionActionCategoryEnum.mex:\n      return mexUnwrapper(action);\n    case TransactionActionCategoryEnum.stake:\n      return stakeUnwrapper(action);\n    default:\n      return action.description ? [action.description] : [];\n  }\n};\n"],
-  "mappings": "oOAAA,GASa,GATb,iBAKA,IACA,IACA,IAEO,AAAM,EAA6B,AACxC,GACkC,CAClC,GAAI,CAAC,EAAO,UACV,MAAO,GAAO,YAAc,CAAC,EAAO,WAAW,EAAI,CAAC,EAAO,IAAI,EAGjE,OAAQ,EAAO,cACR,UACH,MAAO,GAAiB,CAAM,MAC3B,MACH,MAAO,GAAa,CAAM,MACvB,QACH,MAAO,GAAe,CAAM,UAE5B,MAAO,GAAO,YAAc,CAAC,EAAO,WAAW,EAAI,CAAC,EAE1D",
-  "names": []
-}
