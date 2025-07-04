@@ -8,6 +8,7 @@ export interface NetworkType {
   gasPerDataByte: string;
   walletAddress: string;
   apiAddress: string;
+  headers?: Record<string, string>;
   explorerAddress: string;
   apiTimeout: string;
   xAliasAddress?: string;
