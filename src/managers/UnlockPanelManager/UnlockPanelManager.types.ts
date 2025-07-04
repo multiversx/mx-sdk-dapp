@@ -1,5 +1,4 @@
 import {
-  ICustomProvider,
   IProviderFactory,
   ProviderType
 } from 'providers/types/providerFactory.types';
@@ -21,17 +20,12 @@ export type LoginFunctonType = ({
   anchor
 }: IProviderFactory) => Promise<void>;
 
-export type CustomProviderViewType<T extends ProviderType = ProviderType> =
-  Omit<ICustomProvider<T>, 'constructor'>;
-
 export type LoginCallbackType = () => void;
 
 export type LoginHandlerType = LoginFunctonType | LoginCallbackType;
 export type OnCloseUnlockPanelType = () => void;
 
-export type UnlockPanelManagerInitParamsType<
-  T extends ProviderType = ProviderType
-> = {
+export type UnlockPanelManagerInitParamsType = {
   /**
      * Accepts:
      * - 1️⃣ a `callback` that is executed after login is performed
@@ -55,9 +49,17 @@ export type UnlockPanelManagerInitParamsType<
    */
   loginHandler: LoginHandlerType;
   /**
-   * List of allowed providers
+   * Controls which providers are shown in the unlock panel. By default, all providers are shown.
+   * Editing this property will allow you to:
+   * - Hide specific providers
+   * - Show only specific providers
+   * - Reorder the providers
+   * @example
+   * ```ts
+   *  allowedProviders: [ProviderTypeEnum.walletConnect, 'inMemoryProvider']
+   * ```
    */
-  allowedProviders?: ICustomProvider<T>[] | null;
+  allowedProviders?: ProviderType[];
   /**
    * Callback function to handle UI behavior when the unlock panel is closed
    * without completing the login process.

@@ -5,7 +5,6 @@ import { ProviderFactory } from 'providers/ProviderFactory';
 import {
   IProviderBase,
   IProviderFactory,
-  ICustomProvider,
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
@@ -37,7 +36,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   private static instance: UnlockPanelManager;
   private static loginHandler: LoginHandlerType | null = null;
   private static onClose: OnCloseUnlockPanelType | null = null;
-  private static allowedProviders?: ICustomProvider[] | null = null;
+  private static allowedProviders?: ProviderType[] | null = null;
 
   constructor() {
     super({
@@ -164,9 +163,9 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     };
 
     const allowedProviderTypes = UnlockPanelManager.allowedProviders
-      ? UnlockPanelManager?.allowedProviders
-          .map((p) => p.type)
-          .filter((type) => allAvailableProviderTypes.includes(type))
+      ? UnlockPanelManager?.allowedProviders.filter((type) =>
+          allAvailableProviderTypes.includes(type)
+        )
       : allAvailableProviderTypes;
 
     const providerList = allowedProviderTypes.map((type) => {
