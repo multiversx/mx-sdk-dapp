@@ -37,8 +37,6 @@ export async function signTransactionsWithProvider({
     transactions
   });
 
-  console.log('signTransactionsWithProvider', transactionsWithComputedNonce);
-
   const transactionsToSign =
     activeGuardianAddress && isGuarded && !options.skipGuardian
       ? transactionsWithComputedNonce?.map((transaction) => {
