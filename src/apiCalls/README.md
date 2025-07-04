@@ -43,8 +43,10 @@ const transactionsUrl = `${apiAddress}/${TRANSACTIONS_ENDPOINT}`;
 
 **Usage Example**:
 ```typescript
-import { getAccountFromApi, getEconomics } from 'apiCalls';
+import { getAccountFromApi } from 'apiCalls';
 ```
+
+**Note**: The economics module is not currently exported from the main index.ts.
 
 ## Account Module
 
@@ -63,7 +65,7 @@ import { getAccountFromApi, getEconomics } from 'apiCalls';
 
 **Usage Example**:
 ```typescript
-import { getAccountFromApi } from 'apiCalls/account';
+import { getAccountFromApi } from 'apiCalls/account/getAccountFromApi';
 
 const account = await getAccountFromApi({
   address: 'erd1...',
@@ -71,7 +73,12 @@ const account = await getAccountFromApi({
 });
 ```
 
-**Dependencies**: Uses `axiosInstance` for cross-window compatibility and includes guardian info in the response.
+**Dependencies**: 
+- Uses `axiosInstance` from `apiCalls/utils/axiosInstance` for cross-window compatibility
+- Uses `getCleanApiAddress` from `apiCalls/utils/getCleanApiAddress`
+- Includes guardian info in the response via `withGuardianInfo=true` parameter
+
+**Note**: This function is exported from the account module index.ts.
 
 ### `account/getScamAddressData.ts`
 **Purpose**: Fetches scam information for a given address.
@@ -87,7 +94,7 @@ const account = await getAccountFromApi({
 
 **Usage Example**:
 ```typescript
-import { getScamAddressData } from 'apiCalls/account';
+import { getScamAddressData } from 'apiCalls/account/getScamAddressData';
 
 const scamData = await getScamAddressData({
   addressToVerify: 'erd1...',
@@ -95,10 +102,19 @@ const scamData = await getScamAddressData({
 });
 ```
 
+**Dependencies**: 
+- Uses `axios` for HTTP requests
+- Uses `getCleanApiAddress` from `apiCalls/utils`
+- Uses `TIMEOUT` constant from `constants/index`
+
+**Note**: This function is NOT exported from the account module index.ts.
+
 ### `account/index.ts`
 **Purpose**: Exports account-related functions for easy importing.
 
 **Main Functions**: Re-exports `getAccountFromApi` function.
+
+**Note**: `getScamAddressData` is not exported from this index file.
 
 ## Economics Module
 
@@ -123,14 +139,19 @@ const scamData = await getScamAddressData({
 
 **Usage Example**:
 ```typescript
-import { getEconomics } from 'apiCalls/economics';
+import { getEconomics } from 'apiCalls/economics/getEconomics';
 
 const economics = await getEconomics({
   baseURL: 'https://api.multiversx.com'
 });
 ```
 
-**Dependencies**: Uses axios for HTTP requests and includes error handling.
+**Dependencies**: 
+- Uses `axios` for HTTP requests
+- Uses `getCleanApiAddress` from `apiCalls/utils/getCleanApiAddress`
+- Includes error handling that returns `null` on failure
+
+**Note**: This function is NOT exported from the main index.ts and there is no index.ts file in the economics folder.
 
 ## Transactions Module
 
@@ -149,7 +170,7 @@ const economics = await getEconomics({
 - `transactionSize`: Number of transactions per page (default: 15)
 - `after`: Filter transactions after this timestamp
 - `before`: Filter transactions before this timestamp
-- `condition`: Search condition ('should' or 'must')
+- `condition`: Search condition ('should' or 'must', default: 'should')
 - `withScResults`: Include smart contract results (default: true)
 - `withUsername`: Include username information
 - `status`: Filter by transaction status
@@ -159,7 +180,7 @@ const economics = await getEconomics({
 
 **Usage Example**:
 ```typescript
-import { getTransactions } from 'apiCalls/transactions';
+import { getTransactions } from 'apiCalls/transactions/getTransactions';
 
 const transactions = await getTransactions({
   apiAddress: 'https://api.multiversx.com',
@@ -169,6 +190,11 @@ const transactions = await getTransactions({
   withScResults: true
 });
 ```
+
+**Dependencies**: 
+- Uses `axios` for HTTP requests
+- Uses `TRANSACTIONS_ENDPOINT` from `apiCalls/endpoints`
+- Supports pagination via `from` and `size` parameters
 
 ### `transactions/getTransactionByHash.ts`
 **Purpose**: Fetches a single transaction by its hash.
@@ -183,12 +209,15 @@ const transactions = await getTransactions({
 
 **Usage Example**:
 ```typescript
-import { getTransactionByHash } from 'apiCalls/transactions';
+import { getTransactionByHash } from 'apiCalls/transactions/getTransactionByHash';
 
 const transaction = await getTransactionByHash('tx_hash_here');
 ```
 
-**Dependencies**: Uses network selector from the store to get the API address.
+**Dependencies**: 
+- Uses `networkSelector` from `store/selectors` to get the API address
+- Uses `getState` from `store/store`
+- Sets a 10-second timeout for the request
 
 ### `transactions/getServerTransactionsByHashes.ts`
 **Purpose**: Fetches multiple transactions by their hashes in a single request.
@@ -203,7 +232,7 @@ const transaction = await getTransactionByHash('tx_hash_here');
 
 **Usage Example**:
 ```typescript
-import { getServerTransactionsByHashes } from 'apiCalls/transactions';
+import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
 
 const transactions = await getServerTransactionsByHashes([
   'hash1',
@@ -212,7 +241,10 @@ const transactions = await getServerTransactionsByHashes([
 ]);
 ```
 
-**Dependencies**: Uses network selector from the store and includes smart contract results.
+**Dependencies**: 
+- Uses `networkSelector` from `store/selectors/networkSelectors` to get the API address
+- Uses `getState` from `store/store`
+- Includes smart contract results via `withScResults: true` parameter
 
 ### `transactions/getTransactionsByHashes.ts`
 **Purpose**: Tracks and updates the status of pending transactions by comparing them with server data.
@@ -227,31 +259,33 @@ const transactions = await getServerTransactionsByHashes([
 
 **Usage Example**:
 ```typescript
-import { getTransactionsByHashes } from 'apiCalls/transactions';
+import { getTransactionsByHashes } from 'apiCalls/transactions/getTransactionsByHashes';
 
 const trackedTransactions = await getTransactionsByHashes(pendingTransactions);
 ```
 
-**Dependencies**: Uses `getServerTransactionsByHashes` internally and includes status comparison logic.
+**Dependencies**: 
+- Uses `getServerTransactionsByHashes` internally
+- Compares transaction statuses and marks invalid transactions
+- Updates transaction results and status change tracking
+
+**Note**: There is no index.ts file in the transactions folder, so functions must be imported directly.
 
 ## Important Notes
 
 ### Error Handling
 Most API call functions include try-catch blocks and return `null` or empty arrays when errors occur. Check the return values before using the data.
 
-### Dependencies
-- **axios**: Used for HTTP requests in most functions
-- **axiosInstance**: Used for cross-window compatibility in account fetching
-- **Store selectors**: Some functions use Redux store selectors to get network configuration
-- **Type definitions**: All functions use TypeScript types from the `types` folder
-
-### Timeouts
-- Default timeout is defined in `constants/network.constants`
-- Some functions allow custom timeout configuration
-- `getTransactionByHash` uses a 10-second timeout
+### Import Guidelines
+- Always import functions directly from their specific files, not from index.ts files
+- Example: `import { getAccountFromApi } from 'apiCalls/account/getAccountFromApi'`
+- Avoid: `import { getAccountFromApi } from 'apiCalls/account'`
 
 ### Cross-Window Compatibility
-The `accountFetcher` function uses `axiosInstance` instead of regular axios to handle cross-window user interaction issues.
+Some functions use `axiosInstance` instead of regular `axios` to handle cross-window user interaction issues, particularly in the account module.
 
-### API Address Cleaning
-Most functions use `getCleanApiAddress` utility to ensure proper API address formatting before making requests. 
+### Timeout Configuration
+Most functions use the `TIMEOUT` constant from `constants/network.constants` or `constants/index`, while some have hardcoded timeouts (e.g., `getTransactionByHash` uses 10 seconds).
+
+### Network Configuration
+Functions that need API addresses typically use the network selector from the store to get the current network configuration. 
