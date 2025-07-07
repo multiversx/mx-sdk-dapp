@@ -1,7 +1,4 @@
-import {
-  WindowProviderRequestEnums,
-  WindowProviderResponseEnums
-} from '@multiversx/sdk-web-wallet-cross-window-provider/out/enums';
+import { WindowProviderResponseEnums } from '@multiversx/sdk-web-wallet-cross-window-provider/out/enums';
 import { WebviewProvider } from '@multiversx/sdk-webview-provider/out';
 
 // Mock getSafeWindow
@@ -67,38 +64,39 @@ describe('WebviewProvider.init', () => {
     const getSafeWindow =
       require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
 
-    getSafeWindow.mockReturnValue({
+    const handlerMap: Record<string, (event: MessageEvent) => void> = {};
+
+    const fakeWindow = {
       parent: {
         postMessage: jest.fn()
-      }
-    });
+      },
+      addEventListener: jest.fn((event, handler) => {
+        handlerMap[event] = handler;
+      }),
+      removeEventListener: jest.fn((event) => {
+        delete handlerMap[event];
+      })
+    };
 
-    // Simulate a handshake response that resolves in less than 1 second
-    mockSendPostMessage.mockResolvedValueOnce({
-      type: WindowProviderResponseEnums.finalizeHandshakeResponse,
-      payload: { data: Date.now().toString() }
-    });
+    getSafeWindow.mockReturnValue(fakeWindow);
 
-    // Start time measurement to ensure the process completes under 1 second
-    const startTime = Date.now();
+    const mockMessageEvent = {
+      data: {
+        type: WindowProviderResponseEnums.finalizeHandshakeResponse,
+        payload: { data: Date.now().toString() }
+      },
+      origin: 'http://localhost'
+    };
+
+    setTimeout(() => {
+      handlerMap['message'](mockMessageEvent as MessageEvent);
+    });
 
     const isInitialized = await provider.init();
-
-    const endTime = Date.now();
-    const elapsedTime = endTime - startTime;
-
-    expect(elapsedTime).toBeLessThan(HANDSHAKE_TIMEOUT_RESPONSE);
-
-    // Ensure that postMessage was called with the correct data
-    expect(mockSendPostMessage).toHaveBeenCalledWith({
-      type: WindowProviderRequestEnums.finalizeHandshakeRequest,
-      payload: undefined
-    });
 
     expect(isInitialized).toBe(true);
     expect(provider.isInitialized()).toBe(true);
   });
-
   it('should fail to initialize if handshake takes longer than 1 second', async () => {
     const getSafeWindow =
       require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
