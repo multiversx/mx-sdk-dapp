@@ -674,44 +674,21 @@ This is especially useful in scenarios where:
 1. The **parent dApp** logs in with the MultiversX Web Wallet using Native Auth.
 2. The **child iframe** is embedded into the parent dApp.
 3. When the child iframe needs to authenticate a request:
-   - It sends a `SIGN_MESSAGE_REQUEST` using `postMessage`.
-   - The parent uses its existing session to sign the message.
-   - The signature is returned to the child iframe via a `signMessageResponse`.
-
----
-
-### 🔁 Reusing Parent Login for Child Iframes
-
-This architecture **delegates authentication** and **signing responsibility** to the parent dApp, avoiding the need to re-authenticate in child iframes.
+   - It sends a `LOGIN_REQUEST` using `postMessage` in which it generates a nativeAuth and sends it to be signed
+   - If sign is success then login is finished
+   - If sign is cancelled it will perform onLoginCancelled
 
 ````ts
-// ✅ Inside child iframe
-window.parent.postMessage(
-  {
-    type: 'SIGN_MESSAGE_REQUEST',
-    payload: {
-      message: 'Authenticate this child iframe'
-    }
-  },
-  '*'
-);
-
-// 🔁 Parent iframe receives this via WebviewClient,
-// signs the message, and sends back a response like:
-{
-  type: 'SIGN_MESSAGE_RESPONSE',
-  payload: {
-    data: {
-      signature: '0xabc...',
-      status: 'signed'
-    }
-  }
-}
-
 ### Usage example
 import { WebviewClient } from '@multiversx/sdk-dapp/out/providers/strategies/WebviewProviderStrategy/WebviewClient';
 
-const webviewClient = new WebviewClient();
+const webviewClient = new WebviewClient({
+  // Perform action when login is cancelled
+  onLoginCancelled: async () => {
+    setApp(null)
+  }
+});
+
 webviewClient.startListening();
 
 // Optional: Register a custom event handler
@@ -719,14 +696,11 @@ webviewClient.registerEvent('dAppcustomEvent', (event) => {
   console.log('Received data:', event.data.payload);
 });
 
-
-const nativeAuthToken = '<your_native_auth_token_here>';
-
 <iframe
   title="dApp"
   id="dAppFrame"
   sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-top-navigation-by-user-activation"
-  src={`https://example.com?accessToken=${nativeAuthToken}`}
+  src={"https://devnet.template-dapp.multiversx.com/"}
 />
 
 ### 5. UI Components
