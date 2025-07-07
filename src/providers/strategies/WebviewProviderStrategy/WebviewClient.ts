@@ -13,15 +13,26 @@ import { getStore } from 'store/store';
 type MessageHandler = (event: MessageEvent) => void;
 
 type MessageEventType = {
-  event: MessageEvent<RequestMessageType>;
+  event: MessageEvent<MessageType>;
 };
+
+type MessageType =
+  | RequestMessageType
+  | { type: 'cancelAction'; payload: unknown }
+  | {
+      type: WindowProviderResponseEnums.cancelResponse;
+      payload: unknown;
+    };
 
 export class WebviewClient {
   private readonly handlers: Map<string, MessageHandler> = new Map();
   private readonly store = getStore();
+  private isLoginInitiated = false;
+  private readonly handleLoginCancelled: () => Promise<void>;
 
-  constructor() {
+  constructor({ onLoginCancelled }: { onLoginCancelled: () => Promise<void> }) {
     this.handleMessage = this.handleMessage.bind(this);
+    this.handleLoginCancelled = onLoginCancelled;
   }
 
   public startListening() {
@@ -40,7 +51,7 @@ export class WebviewClient {
     this.handlers.delete(type);
   }
 
-  private async handleMessage(event: MessageEvent<RequestMessageType>) {
+  private async handleMessage(event: MessageEvent<MessageType>) {
     const type = event.data?.type;
 
     if (typeof type === 'string' && this.handlers.has(type)) {
@@ -56,10 +67,17 @@ export class WebviewClient {
         this.signMessage({ event, payload: event.data.payload });
         break;
       case WindowProviderRequestEnums.loginRequest:
+        this.isLoginInitiated = true;
         this.login({ event, payload: event.data.payload });
         break;
       case WindowProviderRequestEnums.signTransactionsRequest:
         this.signTransactions({ event });
+        break;
+      case WindowProviderResponseEnums.cancelResponse:
+      case 'cancelAction':
+        if (this.isLoginInitiated) {
+          await this.handleLoginCancelled();
+        }
         break;
       default:
         break;
@@ -70,36 +88,43 @@ export class WebviewClient {
     event,
     payload
   }: MessageEventType & { payload: RequestPayloadType['LOGIN_REQUEST'] }) {
-    const accessToken = payload?.token;
+    const loginToken = payload?.token;
 
-    if (!accessToken) {
+    if (!loginToken) {
       return;
     }
 
-    const { address } = accountSelector(this.store.getState());
-    const provider = getAccountProvider();
+    try {
+      const { address } = accountSelector(this.store.getState());
+      const provider = getAccountProvider();
 
-    const messageToSign = new Message({
-      address: new Address(address),
-      data: new Uint8Array(Buffer.from(accessToken))
-    });
+      const messageToSign = new Message({
+        address: new Address(address),
+        data: new Uint8Array(Buffer.from(loginToken))
+      });
 
-    const signedMessage = await provider.signMessage(messageToSign);
-    const signature = signedMessage?.signature ?? '';
+      const signedMessage = await provider.signMessage(messageToSign);
+      const signature = signedMessage?.signature ?? '';
 
-    event.source?.postMessage(
-      {
-        type: WindowProviderResponseEnums.loginResponse,
-        payload: {
-          data: {
-            address,
-            accessToken,
-            signature: Buffer.from(signature).toString('hex')
+      event.source?.postMessage(
+        {
+          type: WindowProviderResponseEnums.loginResponse,
+          payload: {
+            data: {
+              address,
+              signature: Buffer.from(signature).toString('hex')
+            }
           }
-        }
-      },
-      { targetOrigin: event.origin }
-    );
+        },
+        { targetOrigin: event.origin }
+      );
+    } catch {
+      if (this.isLoginInitiated) {
+        this.handleLoginCancelled();
+      }
+    } finally {
+      this.isLoginInitiated = false;
+    }
   }
 
   private handshake({ event }: MessageEventType) {

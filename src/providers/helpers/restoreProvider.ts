@@ -1,4 +1,3 @@
-import { safeWindow } from 'constants/index';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { providerTypeSelector } from 'store/selectors';
 import { getState } from 'store/store';
@@ -31,10 +30,7 @@ export async function restoreProvider() {
     - false: the parent is not a dApp and proceed with initializing the current app as a standalone iframe.
   */
   if (type === ProviderTypeEnum.webview && provider.isInitialized()) {
-    const urlParams = new URLSearchParams(safeWindow.location?.search);
-    const token = urlParams.get('accessToken') ?? '';
-
-    await provider.login({ token });
+    await provider.login();
   }
 
   setAccountProvider(provider);
