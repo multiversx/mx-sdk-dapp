@@ -22,6 +22,7 @@ export interface BaseNetworkType {
     number,
     { lastBlock?: number; fast: number; faster: number }
   >;
+  headers?: Record<string, string>;
 }
 
 export interface AccountInfoSliceNetworkType extends BaseNetworkType {
