@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1491)] - 2025-07-07
+## [[v4.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1490)] - 2025-07-07
 
 - [Add support for headers on getAccountFromApi and accountFetcher](https://github.com/multiversx/mx-sdk-dapp/pull/1490)
 
