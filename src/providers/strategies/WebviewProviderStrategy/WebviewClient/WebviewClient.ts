@@ -18,10 +18,10 @@ type MessageEventType = {
 
 type MessageType =
   | RequestMessageType
-  | { type: 'cancelAction'; payload: unknown }
+  | { type: 'cancelAction'; payload: null }
   | {
       type: WindowProviderResponseEnums.cancelResponse;
-      payload: unknown;
+      payload: null;
     };
 
 export class WebviewClient {

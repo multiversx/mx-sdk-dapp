@@ -44,3 +44,19 @@ webviewClient.registerEvent('dAppcustomEvent', (event) => {
   src={"https://devnet.template-dapp.multiversx.com/"}
 />
 ```
+
+### 🧠 Usecases
+
+- User logs into Hub dApp using a wallet provider (e.g extension)
+- User selects a Template dApp from a list displayed in the Hub dApp UI
+- Hub dApp constructs the URL for the selected Template dApp and embeds it in an iframe
+- Template dApp is mounted in the iframe within the Hub dApp.
+- Inside the iframe, the Template dApp's sdk-dapp detects the iframe context and attempts to log in via the Webview Provider
+- The sdk-dapp in the Template dApp:
+  - Builds a Native Auth loginToken.
+  - Sends a LOGIN_REQUEST via the Webview Provider to the parent (Hub dApp).
+- In the Hub dApp:
+  - the WebviewClient (within sdk-dapp) receives the LOGIN_REQUEST.
+  - it initiates a sign message request using the original provider (e.g extension) with the loginToken.
+  - once signed, it responds with a LOGIN_RESPONSE, including the user's address and signature.
+- The Template dApp receives the LOGIN_RESPONSE from the parent and completes the login process.
