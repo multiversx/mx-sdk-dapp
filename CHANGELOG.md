@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.17](https://github.com/multiversx/mx-sdk-dapp/pull/1491)] - 2025-07-07
+
+- [Added support for nested iframes](https://github.com/multiversx/mx-sdk-dapp/pull/1488)
+
 ## [[5.0.0-alpha.16](https://github.com/multiversx/mx-sdk-dapp/pull/1487)] - 2025-07-04
 
 - [RN small fixes around sign transactions flow](https://github.com/multiversx/mx-sdk-dapp/pull/14836
