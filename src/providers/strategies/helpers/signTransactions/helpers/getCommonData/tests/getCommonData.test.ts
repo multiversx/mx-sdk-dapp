@@ -39,7 +39,7 @@ describe('getCommonData', () => {
         data: 'wrapEgld',
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0018',
-        feeLimit: '0.0001',
+        feeLimit: '0.00010338',
         gasLimit: '4.200.000',
         gasPrice: '0.000000001',
         decodedData: {
@@ -84,7 +84,7 @@ describe('getCommonData', () => {
       },
       fungibleTransaction: null,
       tokenTransaction: {
-        amount: '1.0000',
+        amount: '1',
         identifier: 'xEGLD',
         usdValue: '≈ $17.82'
       }
@@ -165,8 +165,8 @@ describe('when the gas limit is updated', () => {
           }
         },
         egldLabel: 'xEGLD',
-        feeInFiatLimit: '$0.0036',
-        feeLimit: '0.0002',
+        feeInFiatLimit: '$0.0048',
+        feeLimit: '0.00026838',
         gasLimit: '20.700.000',
         gasPrice: '0.000000001455441207',
         highlight: null,
@@ -199,7 +199,7 @@ describe('when the gas limit is updated', () => {
 
       fungibleTransaction: null,
       tokenTransaction: {
-        amount: '1.0000',
+        amount: '1',
         identifier: 'xEGLD',
         usdValue: '≈ $17.82'
       }
@@ -225,7 +225,7 @@ describe('when the gas limit is updated', () => {
         data: 'MultiESDTNFTTransfer@00000000000000000500139ed7ae4aa03792e6bcb332394a40fe746eefa47ceb@02@5745474c442d613238633539@@0de0b6b3a7640000@4d45582d613635396430@@e177704bc43f9bee3106@6164644c6971756964697479@0dbd2fc137a30000@df363e8872ed0d9235a7',
         egldLabel: 'xEGLD',
         feeInFiatLimit: '$0.0998',
-        feeLimit: '0.0056',
+        feeLimit: '0.005601445',
         gasLimit: '520.000.000',
         decodedData: {
           raw: {
