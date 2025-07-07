@@ -73,8 +73,8 @@ export class WebviewClient {
       case WindowProviderRequestEnums.signTransactionsRequest:
         this.signTransactions({ event });
         break;
-      case WindowProviderResponseEnums.cancelResponse:
-      case 'cancelAction':
+      case WindowProviderResponseEnums.cancelResponse: // sent by web-wallet CrossWindow provider
+      case 'cancelAction': // sent by Extension provider
         if (this.isLoginInitiated) {
           await this.handleLoginCancelled();
         }
@@ -148,27 +148,31 @@ export class WebviewClient {
     const { address } = accountSelector(this.store.getState());
     const { message } = payload;
 
-    const messageToSign = new Message({
-      address: new Address(address),
-      data: new Uint8Array(Buffer.from(message))
-    });
+    try {
+      const messageToSign = new Message({
+        address: new Address(address),
+        data: new Uint8Array(Buffer.from(message))
+      });
 
-    const provider = getAccountProvider();
-    const signedMessage = await provider.signMessage(messageToSign);
-    const signature = signedMessage?.signature ?? '';
+      const provider = getAccountProvider();
+      const signedMessage = await provider.signMessage(messageToSign);
+      const signature = signedMessage?.signature ?? '';
 
-    event.source?.postMessage(
-      {
-        type: WindowProviderResponseEnums.signMessageResponse,
-        payload: {
-          data: {
-            signature: Buffer.from(signature).toString('hex'),
-            status: 'signed'
+      event.source?.postMessage(
+        {
+          type: WindowProviderResponseEnums.signMessageResponse,
+          payload: {
+            data: {
+              signature: Buffer.from(signature).toString('hex'),
+              status: 'signed'
+            }
           }
-        }
-      },
-      { targetOrigin: event.origin }
-    );
+        },
+        { targetOrigin: event.origin }
+      );
+    } catch {
+      throw new Error('Could not sign message');
+    }
   }
 
   private async signTransactions({ event }: MessageEventType) {
@@ -179,19 +183,23 @@ export class WebviewClient {
       return;
     }
 
-    const transactions = payload.map((plainTransactionObject) =>
-      Transaction.newFromPlainObject(plainTransactionObject)
-    );
+    try {
+      const transactions = payload.map((plainTransactionObject) =>
+        Transaction.newFromPlainObject(plainTransactionObject)
+      );
 
-    const signedTx = await provider.signTransactions(transactions);
-    event.source?.postMessage(
-      {
-        type: WindowProviderResponseEnums.signTransactionsResponse,
-        payload: {
-          data: signedTx.map((tx) => tx.toPlainObject())
-        }
-      },
-      { targetOrigin: event.origin }
-    );
+      const signedTx = await provider.signTransactions(transactions);
+      event.source?.postMessage(
+        {
+          type: WindowProviderResponseEnums.signTransactionsResponse,
+          payload: {
+            data: signedTx.map((tx) => tx.toPlainObject())
+          }
+        },
+        { targetOrigin: event.origin }
+      );
+    } catch {
+      throw new Error('Could not sign transactions');
+    }
   }
 }
