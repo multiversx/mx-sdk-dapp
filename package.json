@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.0-alpha.16",
+  "version": "5.0.0-alpha.17",
   "main": "out/index.js",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -36,13 +36,13 @@
     "@multiversx/sdk-extension-provider": "5.0.0",
     "@multiversx/sdk-hw-provider": "8.0.0",
     "@multiversx/sdk-metamask-provider": "2.0.0",
-    "@multiversx/sdk-native-auth-client": "1.0.9",
+    "@multiversx/sdk-native-auth-client": "2.0.0",
     "@multiversx/sdk-wallet": "4.6.0",
     "@multiversx/sdk-wallet-connect-provider": "6.0.1",
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.1.1",
     "@multiversx/sdk-web-wallet-iframe-provider": "3.0.3",
     "@multiversx/sdk-web-wallet-provider": "5.0.0",
-    "@multiversx/sdk-webview-provider": "3.1.1",
+    "@multiversx/sdk-webview-provider": "3.1.2",
     "immer": "10.1.1",
     "linkifyjs": "4.3.1",
     "lodash.isempty": "4.4.0",
@@ -62,7 +62,7 @@
     "bignumber.js": "9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.9"
+    "@multiversx/sdk-dapp-ui": ">=0.0.10"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
