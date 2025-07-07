@@ -1091,10 +1091,10 @@
     "@metamask/providers" "16.0.0"
     protobufjs "7.4.0"
 
-"@multiversx/sdk-native-auth-client@1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-native-auth-client/-/sdk-native-auth-client-1.0.9.tgz#24807976a150602e5c691df138056a88d3910e43"
-  integrity sha512-q1/cDRKz7QQsr8lQskUsfGkqJbIut772/MBX52Td4OTGg/G1HAm2xsELe+06y7L537A2rqz5/W9KkJ5yWt968g==
+"@multiversx/sdk-native-auth-client@2.0.0":
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-native-auth-client/-/sdk-native-auth-client-2.0.0.tgz#92091379ee89c4c7132f9b2c3bb274af0238f2b0"
+  integrity sha512-HlH8vQOKAtWA281mt6RMMaElkeYVJMhl8kARpqcKEbRXn2e7ApM+sojjjgAXf1HCYnEIjSW+QUbaQhWOVXvSQQ==
   dependencies:
     axios "^1.7.4"
 
@@ -1155,10 +1155,10 @@
   dependencies:
     qs "6.10.3"
 
-"@multiversx/sdk-webview-provider@3.1.1":
-  version "3.1.1"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-3.1.1.tgz#35124895353e269f418fa8f4d06e441b5f62b419"
-  integrity sha512-HwGL0m4DAirw087MZyGUcq1mWR1tTzommpdhMhhPQLNeeUJT+uZKTIAbBEHef7wehxSPp15QVCrI6uoOOPN+jA==
+"@multiversx/sdk-webview-provider@3.1.2":
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-webview-provider/-/sdk-webview-provider-3.1.2.tgz#d65ca0bc2fece8dcc5a97fa30f0a1986f84ca491"
+  integrity sha512-3461dHVlEKWJb4/FCuoyCvuO8EAZqdGW6k7K47nb0O0kuDC4hXgjVk70lPRX3TSyFyQCpOJ988U5eRW0EPCQEA==
 
 "@noble/ciphers@1.2.1":
   version "1.2.1"
@@ -7634,6 +7634,7 @@ word-wrap@^1.2.5:
   integrity sha512-BN22B5eaMMI9UMtjrGd5g5eCYPpCPDUy0FJXbYsaT5zYxjFOckS53SQDE3pWkVoWpHXVb3BrYcEN4Twa55B5cA==
 
 "wrap-ansi-cjs@npm:wrap-ansi@^7.0.0", wrap-ansi@^7.0.0:
+  name wrap-ansi-cjs
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/wrap-ansi/-/wrap-ansi-7.0.0.tgz#67e145cff510a6a6984bdf1152911d69d2eb9e43"
   integrity sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==
