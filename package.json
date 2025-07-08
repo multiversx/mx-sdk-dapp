@@ -36,9 +36,9 @@
     "@multiversx/sdk-extension-provider": "5.0.0",
     "@multiversx/sdk-hw-provider": "8.0.0",
     "@multiversx/sdk-metamask-provider": "2.0.0",
-    "@multiversx/sdk-native-auth-client": "2.0.0",
+    "@multiversx/sdk-native-auth-client": "2.0.1",
     "@multiversx/sdk-wallet": "4.6.0",
-    "@multiversx/sdk-wallet-connect-provider": "6.0.1",
+    "@multiversx/sdk-wallet-connect-provider": "6.0.2",
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.1.1",
     "@multiversx/sdk-web-wallet-iframe-provider": "3.0.3",
     "@multiversx/sdk-web-wallet-provider": "5.0.0",
@@ -58,11 +58,11 @@
   "peerDependencies": {
     "@multiversx/sdk-core": "^14.x",
     "@multiversx/sdk-dapp-utils": "^2.x",
-    "axios": ">=1.7.4",
-    "bignumber.js": "9.x"
+    "axios": ">=1.10.0",
+    "bignumber.js": "^9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.10"
+    "@multiversx/sdk-dapp-ui": ">=0.0.11"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
@@ -85,9 +85,9 @@
     "@types/react": "18.2.23",
     "@typescript-eslint/eslint-plugin": "8.15.0",
     "@typescript-eslint/parser": "8.15.0",
-    "axios": ">=1.7.4",
+    "axios": ">=1.10.0",
     "axios-mock-adapter": "1.22.0",
-    "bignumber.js": "9.x",
+    "bignumber.js": "^9.x",
     "esbuild": "0.21.1",
     "esbuild-node-externals": "1.14.0",
     "esbuild-plugin-replace": "1.3.0",
