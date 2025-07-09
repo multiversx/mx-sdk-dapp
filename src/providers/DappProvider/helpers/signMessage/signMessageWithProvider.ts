@@ -1,10 +1,6 @@
 import { Message, Address } from 'lib/sdkCore';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAddress } from 'methods/account/getAddress';
-import {
-  IProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { IProvider } from 'providers/types/providerFactory.types';
 
 export type SignMessageType = {
   provider: IProvider;
@@ -25,15 +21,6 @@ export async function signMessageWithProvider({
     address: new Address(address),
     data: message.data
   });
-
-  if (
-    options?.hasConsentPopup &&
-    provider.getType() === ProviderTypeEnum.crossWindow
-  ) {
-    (provider as unknown as CrossWindowProvider).setShouldShowConsentPopup(
-      true
-    ); // TODO: is this still needed ?
-  }
 
   const signedMessage = await provider.signMessage(messageToSign, options);
 
