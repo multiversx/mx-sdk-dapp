@@ -1,5 +1,5 @@
 import isEqual from 'lodash.isequal';
-import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
+// import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { MvxToastList } from 'lib/sdkDappUi';
 import { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
@@ -31,6 +31,8 @@ interface IToastManager {
   successfulToastLifetime?: number;
 }
 
+const DEFAULT_SUCCESSFUL_TOAST_LIFETIME = 1000;
+
 export class ToastManager {
   private readonly lifetimeManager: LifetimeManager;
   private isCreatingElement = false;
@@ -42,8 +44,9 @@ export class ToastManager {
   private storeToastsSubscription: () => void = () => null;
   private readonly notificationsFeedManager: NotificationsFeedManager;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
-  private eventBus: IEventBus<ITransactionToast[] | CustomToastType[]> | null =
-    null;
+  private eventBus: IEventBus<
+    ITransactionToast[] | CustomToastType[] | null
+  > | null = null;
 
   store = getStore();
 
@@ -55,7 +58,7 @@ export class ToastManager {
   }
 
   public async init({
-    successfulToastLifetime = DEFAULT_TOAST_LIEFTIME
+    successfulToastLifetime = DEFAULT_SUCCESSFUL_TOAST_LIFETIME
   }: IToastManager = {}) {
     this.successfulToastLifetime = successfulToastLifetime;
 
@@ -256,21 +259,24 @@ export class ToastManager {
   }
 
   public showToasts() {
-    this.updateCustomToastList();
-    this.updateTransactionToastsList();
+    this.eventBus?.publish(ToastEventsEnum.SHOW, null);
+    // this.updateCustomToastList();
+    // this.updateTransactionToastsList();
   }
 
   public hideToasts() {
-    this.transactionToasts = [];
-    this.customToasts = [];
-    this.eventBus?.publish(
-      ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
-      this.transactionToasts
-    );
-    this.eventBus?.publish(
-      ToastEventsEnum.CUSTOM_TOAST_DATA_UPDATE,
-      this.customToasts
-    );
+    // this.transactionToasts = [];
+    // this.customToasts = [];
+    // this.eventBus?.publish(
+    //   ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
+    //   this.transactionToasts
+    // );
+    // this.eventBus?.publish(
+    //   ToastEventsEnum.CUSTOM_TOAST_DATA_UPDATE,
+    //   this.customToasts
+    // );
+
+    this.eventBus?.publish(ToastEventsEnum.HIDE, null);
   }
 
   private async handleOpenNotificationsFeed() {
@@ -294,7 +300,19 @@ export class ToastManager {
   }
 
   private async publishTransactionToasts() {
-    if (this.notificationsFeedManager.isNotificationsFeedOpen()) {
+    if (
+      this.notificationsFeedManager.isNotificationsFeedOpen() &&
+      this.eventBus
+    ) {
+      this.eventBus.publish(
+        ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
+        this.transactionToasts
+      );
+      console.log(
+        'Publishing data update in notifications feed',
+        this.transactionToasts
+      );
+      this.hideToasts();
       return;
     }
 
@@ -310,6 +328,10 @@ export class ToastManager {
 
     this.eventBus.publish(
       ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
+      this.transactionToasts
+    );
+    console.log(
+      'Publishing data update in toast manager',
       this.transactionToasts
     );
   }

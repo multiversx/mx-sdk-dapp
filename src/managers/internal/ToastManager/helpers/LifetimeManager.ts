@@ -8,7 +8,7 @@ interface IToastProgressManagerParams {
   successfulToastLifetime?: number;
 }
 
-const DEFAULT_SUCCESSFUL_TOAST_LIFETIME = 10000;
+const DEFAULT_SUCCESSFUL_TOAST_LIFETIME = 1000;
 
 export class LifetimeManager {
   private timeoutIntervals: Map<string, ReturnType<typeof setTimeout>> =

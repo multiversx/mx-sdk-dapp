@@ -79,12 +79,24 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     await this.updateDataAndNotifications();
   }
 
+  closeUI = async () => {
+    if (this.data.pendingTransactions.length > 0) {
+      this.unsubscribeFunctions.forEach((unsubList) =>
+        unsubList.forEach((unsubscribe) => unsubscribe())
+      );
+      this.unsubscribeFunctions.clear();
+      await this.uiElement?.closeWithAnimation();
+    } else {
+      super.closeUI();
+    }
+  };
+
   /**
    * Close the notifications feed and toggle on the toast manager.
    */
-  protected handleCloseUI() {
+  protected async handleCloseUI() {
     const toastManager = ToastManager.getInstance();
-    this.closeUI();
+    await this.closeUI();
     toastManager.showToasts();
   }
 
