@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fixed issue with clearInitiatedLogins for CrossWindow](https://github.com/multiversx/mx-sdk-dapp/pull/1494)
+- [Fixed issues with clearInitiatedLogins for CrossWindow and accountProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1494)
 
 ## [[5.0.0-alpha.18](https://github.com/multiversx/mx-sdk-dapp/pull/1493)] - 2025-07-08
 
