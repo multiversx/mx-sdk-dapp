@@ -1,5 +1,4 @@
 import isEqual from 'lodash.isequal';
-// import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
 import { UITagsEnum } from 'constants/UITags.enum';
 import { MvxToastList } from 'lib/sdkDappUi';
 import { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
@@ -156,7 +155,14 @@ export class ToastManager {
 
     this.transactionToasts = [
       ...pendingTransactionToasts,
-      ...completedTransactionToasts
+      ...completedTransactionToasts.filter((toast) => {
+        const maxTxTimestamp = Math.max(
+          ...toast.transactions.map((tx) => tx.timestamp)
+        );
+        const now = Date.now() / 1000;
+        const isRecent = now <= 10 + maxTxTimestamp;
+        return isRecent; // transactions are recent, not older than 10 seconds
+      })
     ];
 
     for (const toast of toastList.transactionToasts) {
@@ -260,22 +266,11 @@ export class ToastManager {
 
   public showToasts() {
     this.eventBus?.publish(ToastEventsEnum.SHOW, null);
-    // this.updateCustomToastList();
-    // this.updateTransactionToastsList();
+    this.updateCustomToastList();
+    this.updateTransactionToastsList();
   }
 
   public hideToasts() {
-    // this.transactionToasts = [];
-    // this.customToasts = [];
-    // this.eventBus?.publish(
-    //   ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
-    //   this.transactionToasts
-    // );
-    // this.eventBus?.publish(
-    //   ToastEventsEnum.CUSTOM_TOAST_DATA_UPDATE,
-    //   this.customToasts
-    // );
-
     this.eventBus?.publish(ToastEventsEnum.HIDE, null);
   }
 
