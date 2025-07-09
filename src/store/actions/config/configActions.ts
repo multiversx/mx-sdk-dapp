@@ -1,6 +1,5 @@
 import { fallbackWalletConnectConfigurations } from 'constants/walletConnect.constants';
 import { WebsocketConnectionStatusEnum } from 'constants/websocket.constants';
-import { CrossWindowConfig } from 'providers/strategies/CrossWindowProviderStrategy/types';
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { getStore } from 'store/store';
@@ -41,13 +40,4 @@ export const setWalletConnectConfig = (config: WalletConnectConfig) =>
     },
     false,
     'setWalletConnectConfig'
-  );
-
-export const setCrossWindowConfig = (config: CrossWindowConfig) =>
-  getStore().setState(
-    ({ config: state }) => {
-      state.crossWindowConfig = config;
-    },
-    false,
-    'setCrossWindowConfig'
   );
