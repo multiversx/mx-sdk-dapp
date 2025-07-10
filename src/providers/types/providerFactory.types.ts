@@ -12,7 +12,6 @@ export interface IProvider<T extends ProviderType = ProviderType>
   }>;
   logout: () => Promise<boolean>;
   cancelLogin?: () => void;
-  setShouldShowConsentPopup?: (shouldShow: boolean) => void;
   getType: () => T;
   getAddress(): Promise<string | undefined>;
 }

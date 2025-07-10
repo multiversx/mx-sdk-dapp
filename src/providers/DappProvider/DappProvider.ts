@@ -18,6 +18,7 @@ import {
 
 export class DappProvider {
   private provider: IProvider;
+  private _isLoggingOut = false;
 
   constructor(provider: IProvider) {
     this.provider = provider;
@@ -41,15 +42,21 @@ export class DappProvider {
 
   async logout(
     options = {
-      shouldBroadcastLogoutAcrossTabs: true,
-      hasConsentPopup: false
+      shouldBroadcastLogoutAcrossTabs: true
     }
   ): Promise<boolean> {
-    return await logout({ provider: this.provider, options });
-  }
+    if (this._isLoggingOut) {
+      console.warn('Logout already in progress');
+      return false;
+    }
 
-  setShouldShowConsentPopup(shouldShow: boolean): void {
-    this.provider.setShouldShowConsentPopup?.(shouldShow);
+    this._isLoggingOut = true;
+
+    const isLoggedOut = await logout({ provider: this.provider, options });
+
+    this._isLoggingOut = false;
+
+    return isLoggedOut;
   }
 
   getType() {
