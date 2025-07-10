@@ -1,4 +1,3 @@
-import { CrossWindowConfig } from 'providers/strategies/CrossWindowProviderStrategy/types/crossWindow.types';
 import { WalletConnectConfig } from 'providers/strategies/WalletConnectProviderStrategy/types/walletConnect.types';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
@@ -19,7 +18,6 @@ type BaseDappConfigType = {
    * Customize exising providers
    */
   providers?: {
-    crossWindow?: CrossWindowConfig;
     walletConnect?: WalletConnectConfig;
   };
   /**
