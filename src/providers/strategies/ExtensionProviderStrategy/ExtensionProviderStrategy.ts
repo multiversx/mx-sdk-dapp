@@ -27,7 +27,6 @@ export class ExtensionProviderStrategy extends BaseProviderStrategy {
   private async initializeProvider() {
     const initialized = await this.provider.init();
 
-    console.log({ isInit: initialized });
     if (this.address) {
       this.setAccount({ address: this.address });
     }
