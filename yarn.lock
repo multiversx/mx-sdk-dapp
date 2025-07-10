@@ -1043,10 +1043,10 @@
     axios "^1.7.4"
     bip39 "3.1.0"
 
-"@multiversx/sdk-dapp-ui@>=0.0.12":
-  version "0.0.12"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.0.12.tgz#862eb7ccc27ed610f660ae5ec8d3c38a9866c891"
-  integrity sha512-y5p8F6qpsmS9ngcL8vUQUtQz0Fw9jLo2Or1IBj4g+oKiRi5P/LimRjGrjP9wktk12PmlmkBm5jUheKUYHi3txw==
+"@multiversx/sdk-dapp-ui@>=0.0.13":
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.0.13.tgz#b5b8bf9443e1cd836970dafcca944fb5ba8397f2"
+  integrity sha512-C060upDRwFYp8m5oaRu8kYvxvN4hycuwp67yyrjHFDHLcwP9h5CUbVJyLjzNFv8glIO4sh9VwpMc7oFXBzBLxA==
   dependencies:
     "@fortawesome/fontawesome-svg-core" ">= 6.7.2"
     "@fortawesome/free-solid-svg-icons" ">= 6.7.2"
@@ -1129,10 +1129,10 @@
     tweetnacl "1.0.3"
     uuid "8.3.2"
 
-"@multiversx/sdk-web-wallet-cross-window-provider@3.1.2":
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-3.1.2.tgz#943e8f27af5fe5883a2b111b48bcf40f729e474c"
-  integrity sha512-AVOGqMFH9g7MFdNvGBTwhIlgdXPLmZcIJ/0hfxnE2PhfN5Xr+w6AHyHZwq3S9XM0FZq+AkrQ9V/L198zlMwmAQ==
+"@multiversx/sdk-web-wallet-cross-window-provider@3.1.3":
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-web-wallet-cross-window-provider/-/sdk-web-wallet-cross-window-provider-3.1.3.tgz#f15c365b0cb0e5d67e0de470693d7693df871962"
+  integrity sha512-GcK7dPMBuP2YtThAtGVRJ3n6n6KvVAGhegFT7JM8yAE8Y7lwU0Aq0Bvop0ElJIwdXAAOJi0Q0KPGPdHM2BuuJA==
   dependencies:
     qs "6.11.2"
 
