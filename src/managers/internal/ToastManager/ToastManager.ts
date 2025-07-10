@@ -154,14 +154,7 @@ export class ToastManager {
 
     this.transactionToasts = [
       ...pendingTransactionToasts,
-      ...completedTransactionToasts.filter((toast) => {
-        const maxTxTimestamp = Math.max(
-          ...toast.transactions.map((tx) => tx.timestamp)
-        );
-        const now = Date.now() / 1000;
-        const isRecent = now <= 15 + maxTxTimestamp;
-        return isRecent; // transactions are recent
-      })
+      ...completedTransactionToasts
     ];
 
     for (const toast of toastList.transactionToasts) {
