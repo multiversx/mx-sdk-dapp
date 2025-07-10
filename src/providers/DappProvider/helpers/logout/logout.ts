@@ -1,12 +1,8 @@
 import { subscriptions } from 'constants/storage.constants';
 import { safeWindow } from 'constants/window.constants';
-import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { getAddress } from 'methods/account/getAddress';
 import { websocketManager } from 'methods/initApp/websocket/registerWebsocket';
-import {
-  IProvider,
-  ProviderTypeEnum
-} from 'providers/types/providerFactory.types';
+import { IProvider } from 'providers/types/providerFactory.types';
 import { logoutAction } from 'store/actions/sharedActions/sharedActions';
 
 export type LogoutPropsType = {
@@ -49,15 +45,6 @@ export async function logout({
   }
   try {
     logoutAction();
-
-    if (
-      options.hasConsentPopup &&
-      provider.getType() === ProviderTypeEnum.crossWindow
-    ) {
-      (provider as unknown as CrossWindowProvider).setShouldShowConsentPopup(
-        true
-      );
-    }
 
     // Clear all active subscriptions on logout
     subscriptions.forEach((unsubscribe) => unsubscribe());

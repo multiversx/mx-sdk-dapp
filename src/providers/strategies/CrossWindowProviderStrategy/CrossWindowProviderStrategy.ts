@@ -1,4 +1,3 @@
-import { isBrowserWithPopupConfirmation } from 'constants/browser.constants';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
@@ -7,7 +6,6 @@ import {
   ProviderTypeEnum,
   ProviderType
 } from 'providers/types/providerFactory.types';
-import { crossWindowConfigSelector } from 'store/selectors';
 import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { ProviderErrorsEnum } from 'types/provider.types';
@@ -42,8 +40,6 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     const isProviderInitialized = await this.provider.init();
 
     this.provider.setWalletUrl(this.walletAddress ?? network.walletAddress);
-
-    this.setPopupConsent();
 
     if (this.address) {
       this.provider.setAddress(this.address);
@@ -87,8 +83,6 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
 
     const { onClose, manager } = await this.initSignState();
 
-    this.setPopupConsent();
-
     try {
       const signedTransactions: Transaction[] =
         (await this.provider.signTransactions(transactions)) ?? [];
@@ -111,8 +105,6 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    this.setPopupConsent();
-
     const signedMessage = await signMessage({
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
@@ -121,20 +113,5 @@ export class CrossWindowProviderStrategy extends BaseProviderStrategy {
     });
 
     return signedMessage;
-  };
-
-  private readonly setPopupConsent = () => {
-    const crossWindowDappConfig = crossWindowConfigSelector(getState());
-
-    if (!this.provider) {
-      throw new Error(ProviderErrorsEnum.notInitialized);
-    }
-
-    if (
-      crossWindowDappConfig?.isBrowserWithPopupConfirmation ||
-      isBrowserWithPopupConfirmation
-    ) {
-      this.provider.setShouldShowConsentPopup(true);
-    }
   };
 }

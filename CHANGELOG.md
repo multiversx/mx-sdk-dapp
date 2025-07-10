@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.0-alpha.19](https://github.com/multiversx/mx-sdk-dapp/pull/1498)] - 2025-07-10
+
+- [Fixed transaction toast loading](https://github.com/multiversx/mx-sdk-dapp/pull/1497)
+- [Remove PopupConsent code and update CrossWindow to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1495)
+- [Fixed issues with clearInitiatedLogins for CrossWindow and accountProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1494)
+
 ## [[5.0.0-alpha.18](https://github.com/multiversx/mx-sdk-dapp/pull/1493)] - 2025-07-08
 
 - [Added readme and Cursor instructions for apiCalls and controllers, updated axios, bignumber.js and native auth client](https://github.com/multiversx/mx-sdk-dapp/pull/1489)
