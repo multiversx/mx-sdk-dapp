@@ -50,6 +50,7 @@ git clone https://github.com/multiversx/mx-template-dapp-nextjs.git
 
 echo "cd mx-template-dapp-nextjs..."
 cd mx-template-dapp-nextjs
+git checkout development
 
 echo "Installing dependencies mx-template-dapp-nextjs..."
 yarn install
