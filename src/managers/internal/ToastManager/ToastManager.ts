@@ -160,7 +160,7 @@ export class ToastManager {
         );
         const now = Date.now() / 1000;
         const isRecent = now <= 15 + maxTxTimestamp;
-        return isRecent; // transactions are recent, not older than 30 seconds
+        return isRecent; // transactions are recent
       })
     ];
 
