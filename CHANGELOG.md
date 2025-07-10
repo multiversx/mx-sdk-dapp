@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[🚀 5.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1501)] - 2025-07-10
+
 - [Added logout safeguard for multiple requests](https://github.com/multiversx/mx-sdk-dapp/pull/1500)
 - [Allow toasts to be filled in ToastManager](https://github.com/multiversx/mx-sdk-dapp/pull/1499)
 
