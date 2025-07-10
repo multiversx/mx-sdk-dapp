@@ -1,6 +1,7 @@
 import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
+import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import {
   CrossWindowProviderStrategy,
   ExtensionProviderStrategy,
@@ -120,10 +121,13 @@ export class ProviderFactory {
     }
 
     await createdProvider.init();
+
+    const isLoggedIn = getIsLoggedIn();
     const dappProvider = new DappProvider(createdProvider);
 
-    setAccountProvider(dappProvider);
-    setProviderType(type);
+    if (isLoggedIn) {
+      setAccountProvider(dappProvider);
+    }
 
     const shouldClearInitiatedLogins = (
       [

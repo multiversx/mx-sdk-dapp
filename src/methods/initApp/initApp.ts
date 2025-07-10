@@ -9,7 +9,6 @@ import { getDefaultNativeAuthConfig } from 'services/nativeAuth/methods/getDefau
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { initializeNetwork } from 'store/actions';
 import {
-  setCrossWindowConfig,
   setNativeAuthConfig,
   setWalletConnectConfig
 } from 'store/actions/config/configActions';
@@ -82,10 +81,6 @@ export async function initApp({
 
   if (dAppConfig?.providers?.walletConnect) {
     setWalletConnectConfig(dAppConfig.providers.walletConnect);
-  }
-
-  if (dAppConfig?.providers?.crossWindow) {
-    setCrossWindowConfig(dAppConfig.providers.crossWindow);
   }
 
   const isLoggedIn = getIsLoggedIn();

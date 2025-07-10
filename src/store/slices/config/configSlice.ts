@@ -10,7 +10,6 @@ import { ConfigSliceType } from './config.types';
 const initialState: ConfigSliceType = {
   nativeAuthConfig: null,
   walletConnectConfig: null,
-  crossWindowConfig: null,
   websocketStatus: WebsocketConnectionStatusEnum.NOT_INITIALIZED
 };
 

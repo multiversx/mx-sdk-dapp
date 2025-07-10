@@ -16,7 +16,8 @@ export const clearInitiatedLogins = (
       case ProviderTypeEnum.crossWindow: {
         const crossWindowProvider = CrossWindowProvider.getInstance();
         if (crossWindowProvider.isInitialized()) {
-          crossWindowProvider.dispose();
+          // Clean up the crossWindowProvider state without triggering a full logout.
+          crossWindowProvider.onDestroy();
         }
         break;
       }
