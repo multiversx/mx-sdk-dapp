@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.0-alpha.18",
+  "version": "5.0.0-alpha.19",
   "main": "out/index.js",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -62,7 +62,7 @@
     "bignumber.js": "^9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.11"
+    "@multiversx/sdk-dapp-ui": ">=0.0.12"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
@@ -82,7 +82,7 @@
     "@types/lodash.trimend": "4.5.9",
     "@types/lodash.uniq": "4.5.9",
     "@types/node": "20.12.8",
-    "@types/react": "18.2.23",
+    "@types/react": "18.2.0",
     "@typescript-eslint/eslint-plugin": "8.15.0",
     "@typescript-eslint/parser": "8.15.0",
     "axios": ">=1.10.0",
@@ -107,7 +107,7 @@
     "msw": "1.3.1",
     "node-stdlib-browser": "1.2.0",
     "prettier": "3.2.5",
-    "react": "18.3.1",
+    "react": "18.2.0",
     "rimraf": "5.0.6",
     "ts-jest": "29.1.2",
     "tsc-alias": "1.8.9",

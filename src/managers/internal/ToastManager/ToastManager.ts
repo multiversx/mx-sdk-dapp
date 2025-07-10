@@ -42,8 +42,9 @@ export class ToastManager {
   private storeToastsSubscription: () => void = () => null;
   private readonly notificationsFeedManager: NotificationsFeedManager;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
-  private eventBus: IEventBus<ITransactionToast[] | CustomToastType[]> | null =
-    null;
+  private eventBus: IEventBus<
+    ITransactionToast[] | CustomToastType[] | null
+  > | null = null;
 
   store = getStore();
 
@@ -61,13 +62,13 @@ export class ToastManager {
 
     this.lifetimeManager.init({ successfulToastLifetime });
 
-    this.updateTransactionToastsList();
-    this.updateCustomToastList();
+    await this.updateTransactionToastsList();
+    await this.updateCustomToastList();
 
     await this.subscribeToEventBusNotifications();
 
     this.storeToastsSubscription = this.store.subscribe(
-      (
+      async (
         { toasts, transactions },
         { toasts: prevToasts, transactions: prevTransactions }
       ) => {
@@ -75,11 +76,11 @@ export class ToastManager {
           !isEqual(prevToasts.transactionToasts, toasts.transactionToasts) ||
           !isEqual(prevTransactions, transactions)
         ) {
-          this.updateTransactionToastsList();
+          await this.updateTransactionToastsList();
         }
 
         if (!isEqual(prevToasts.customToasts, toasts.customToasts)) {
-          this.updateCustomToastList();
+          await this.updateCustomToastList();
         }
       }
     );
@@ -117,17 +118,17 @@ export class ToastManager {
     return isCompleted;
   }
 
-  public createTransactionToast(
+  public async createTransactionToast(
     toastId: string,
     totalDuration: number
-  ): string {
+  ): Promise<string> {
     const newToastId = addTransactionToast({
       toastId,
       totalDuration
     });
 
     this.handleCompletedTransaction(toastId);
-    this.updateTransactionToastsList();
+    await this.updateTransactionToastsList();
     return newToastId;
   }
 
@@ -153,7 +154,14 @@ export class ToastManager {
 
     this.transactionToasts = [
       ...pendingTransactionToasts,
-      ...completedTransactionToasts
+      ...completedTransactionToasts.filter((toast) => {
+        const maxTxTimestamp = Math.max(
+          ...toast.transactions.map((tx) => tx.timestamp)
+        );
+        const now = Date.now() / 1000;
+        const isRecent = now <= 15 + maxTxTimestamp;
+        return isRecent; // transactions are recent
+      })
     ];
 
     for (const toast of toastList.transactionToasts) {
@@ -255,22 +263,15 @@ export class ToastManager {
     });
   }
 
-  public showToasts() {
-    this.updateCustomToastList();
-    this.updateTransactionToastsList();
+  public async showToasts() {
+    this.eventBus?.publish(ToastEventsEnum.SHOW, null);
+
+    await this.updateCustomToastList();
+    await this.updateTransactionToastsList();
   }
 
   public hideToasts() {
-    this.transactionToasts = [];
-    this.customToasts = [];
-    this.eventBus?.publish(
-      ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
-      this.transactionToasts
-    );
-    this.eventBus?.publish(
-      ToastEventsEnum.CUSTOM_TOAST_DATA_UPDATE,
-      this.customToasts
-    );
+    this.eventBus?.publish(ToastEventsEnum.HIDE, null);
   }
 
   private async handleOpenNotificationsFeed() {
@@ -294,7 +295,16 @@ export class ToastManager {
   }
 
   private async publishTransactionToasts() {
-    if (this.notificationsFeedManager.isNotificationsFeedOpen()) {
+    if (
+      this.notificationsFeedManager.isNotificationsFeedOpen() &&
+      this.eventBus
+    ) {
+      this.eventBus.publish(
+        ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
+        this.transactionToasts
+      );
+
+      this.hideToasts();
       return;
     }
 

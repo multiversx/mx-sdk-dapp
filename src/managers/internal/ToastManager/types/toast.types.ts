@@ -52,5 +52,7 @@ export enum ToastEventsEnum {
   // Event to update the transaction toast data
   TRANSACTION_TOAST_DATA_UPDATE = 'TRANSACTION_TOAST_DATA_UPDATE',
   // Event to update the custom toast data
-  CUSTOM_TOAST_DATA_UPDATE = 'CUSTOM_TOAST_DATA_UPDATE'
+  CUSTOM_TOAST_DATA_UPDATE = 'CUSTOM_TOAST_DATA_UPDATE',
+  HIDE = 'HIDE_TOAST_LIST',
+  SHOW = 'SHOW_TOAST_LIST'
 }
