@@ -30,7 +30,7 @@ interface IToastManager {
   successfulToastLifetime?: number;
 }
 
-const DEFAULT_SUCCESSFUL_TOAST_LIFETIME = 1000;
+const DEFAULT_SUCCESSFUL_TOAST_LIFETIME = 10_000;
 
 export class ToastManager {
   private readonly lifetimeManager: LifetimeManager;
@@ -303,10 +303,7 @@ export class ToastManager {
         ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
         this.transactionToasts
       );
-      console.log(
-        'Publishing data update in notifications feed',
-        this.transactionToasts
-      );
+
       this.hideToasts();
       return;
     }
@@ -323,10 +320,6 @@ export class ToastManager {
 
     this.eventBus.publish(
       ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
-      this.transactionToasts
-    );
-    console.log(
-      'Publishing data update in toast manager',
       this.transactionToasts
     );
   }
