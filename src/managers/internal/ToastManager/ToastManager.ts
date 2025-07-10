@@ -62,13 +62,13 @@ export class ToastManager {
 
     this.lifetimeManager.init({ successfulToastLifetime });
 
-    this.updateTransactionToastsList();
-    this.updateCustomToastList();
+    await this.updateTransactionToastsList();
+    await this.updateCustomToastList();
 
     await this.subscribeToEventBusNotifications();
 
     this.storeToastsSubscription = this.store.subscribe(
-      (
+      async (
         { toasts, transactions },
         { toasts: prevToasts, transactions: prevTransactions }
       ) => {
@@ -76,11 +76,11 @@ export class ToastManager {
           !isEqual(prevToasts.transactionToasts, toasts.transactionToasts) ||
           !isEqual(prevTransactions, transactions)
         ) {
-          this.updateTransactionToastsList();
+          await this.updateTransactionToastsList();
         }
 
         if (!isEqual(prevToasts.customToasts, toasts.customToasts)) {
-          this.updateCustomToastList();
+          await this.updateCustomToastList();
         }
       }
     );
@@ -118,17 +118,17 @@ export class ToastManager {
     return isCompleted;
   }
 
-  public createTransactionToast(
+  public async createTransactionToast(
     toastId: string,
     totalDuration: number
-  ): string {
+  ): Promise<string> {
     const newToastId = addTransactionToast({
       toastId,
       totalDuration
     });
 
     this.handleCompletedTransaction(toastId);
-    this.updateTransactionToastsList();
+    await this.updateTransactionToastsList();
     return newToastId;
   }
 
@@ -159,8 +159,8 @@ export class ToastManager {
           ...toast.transactions.map((tx) => tx.timestamp)
         );
         const now = Date.now() / 1000;
-        const isRecent = now <= 10 + maxTxTimestamp;
-        return isRecent; // transactions are recent, not older than 10 seconds
+        const isRecent = now <= 15 + maxTxTimestamp;
+        return isRecent; // transactions are recent, not older than 30 seconds
       })
     ];
 
@@ -263,10 +263,11 @@ export class ToastManager {
     });
   }
 
-  public showToasts() {
+  public async showToasts() {
     this.eventBus?.publish(ToastEventsEnum.SHOW, null);
-    this.updateCustomToastList();
-    this.updateTransactionToastsList();
+
+    await this.updateCustomToastList();
+    await this.updateTransactionToastsList();
   }
 
   public hideToasts() {

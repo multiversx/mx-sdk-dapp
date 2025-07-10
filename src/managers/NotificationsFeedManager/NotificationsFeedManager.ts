@@ -97,7 +97,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   protected async handleCloseUI() {
     const toastManager = ToastManager.getInstance();
     await this.closeUI();
-    toastManager.showToasts();
+    await toastManager.showToasts();
   }
 
   protected async setupEventListeners() {
