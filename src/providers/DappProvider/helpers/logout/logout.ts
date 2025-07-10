@@ -34,8 +34,7 @@ const broadcastLogoutAcrossTabs = (address: string, localStorage: Storage) => {
 export async function logout({
   provider,
   options = {
-    shouldBroadcastLogoutAcrossTabs: true,
-    hasConsentPopup: false
+    shouldBroadcastLogoutAcrossTabs: true
   }
 }: IProviderLogout): Promise<boolean> {
   let address = getAddress();
