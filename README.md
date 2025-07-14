@@ -747,7 +747,9 @@ If you want to override private components and create your own, you can implemen
 
 ## Debugging your dApp
 
-The recommended way to debug your application is by using [lerna](https://lerna.js.org/). Make sure you have the same package version in sdk-daap-core's package.json and in your project's package.json.
+> **Note:** For an advanced documentation on how internal flows are implemented, you can check out the [deepwiki](https://deepwiki.com/multiversx/mx-sdk-dapp) diagrams.
+
+The recommended way to debug your application is by using [lerna](https://lerna.js.org/). Make sure you have the same package version in sdk-dapp's package.json and in your project's package.json.
 
 If you preffer to use [npm link](https://docs.npmjs.com/cli/v11/commands/npm-link), make sure to use the `preserveSymlinks` option in the server configuration:
 
@@ -759,6 +761,8 @@ If you preffer to use [npm link](https://docs.npmjs.com/cli/v11/commands/npm-lin
     },
   },
 ```
+
+Crome Redux DevTools are by default enabled to help you debug your application. You can find the extension in the Chrome Extensions store.
 
 To build the library, run:
 
