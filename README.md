@@ -8,9 +8,9 @@ MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
 
 It is built for applications that use any of the following technologies:
 
-- React (example: [Template Dapp](https://github.com/multiversx/mx-template-dapp))
-- Angular
-- Vue
+- React (example: [React Template Dapp](https://github.com/multiversx/mx-template-dapp))
+- Angular (example: [Angular Template Dapp](https://github.com/multiversx/mx-template-dapp-angular))
+- Vue (example: [Vue Template Dapp](https://github.com/multiversx/mx-template-dapp-vue))
 - Any other JavaScript framework (e.g. Solid.js etc.) (example: [Solid.js Dapp](https://github.com/multiversx/mx-solidjs-template-dapp))
 - React Native
 - Next.js (example: [Next.js Dapp](https://github.com/multiversx/mx-template-dapp-nextjs))
@@ -47,7 +47,7 @@ yarn add @multiversx/sdk-dapp
 ```
 > **Note:** Make sure you run your app on `https`, not `http`, otherwise some providers will not work.
 
-If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/0eb7bc6194195b6c364b8010023d351d914db65e/MIGRATION_GUIDE.md) and  [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
+If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/main/MIGRATION_GUIDE.md) and  [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
 
 ## Usage
 
