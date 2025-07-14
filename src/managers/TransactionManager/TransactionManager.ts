@@ -129,12 +129,25 @@ export class TransactionManager {
     );
 
     const response = await Promise.all(promises);
+    const transactionComputer = new TransactionComputer();
 
-    return response.map(({ data }) => ({
-      ...data,
-      status: TransactionServerStatusesEnum.pending,
-      hash: data.txHash
-    }));
+    const mergedTransactions = response.map(({ data }) => {
+      const foundTransaction = signedTransactions.find((tx) => {
+        const txHash = transactionComputer.computeTransactionHash(tx);
+        return txHash === data.txHash;
+      });
+
+      const currentTransaction = {
+        ...foundTransaction?.toPlainObject(),
+        ...data,
+        status: TransactionServerStatusesEnum.pending,
+        hash: data.txHash
+      };
+
+      return currentTransaction;
+    });
+
+    return mergedTransactions;
   };
 
   private readonly sendSignedBatchTransactions = async (
