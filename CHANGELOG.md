@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added plain transaction fields to transaction object](https://github.com/multiversx/mx-sdk-dapp/pull/1503)
 - [Set accountProvider when intializing ProviderFactory](https://github.com/multiversx/mx-sdk-dapp/pull/1502)
 
 ## [[🚀 5.0.0](https://github.com/multiversx/mx-sdk-dapp/pull/1501)] - 2025-07-10
