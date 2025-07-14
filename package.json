@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.1",
+  "version": "5.0.2",
   "main": "out/index.js",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
