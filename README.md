@@ -21,7 +21,7 @@ The GitHub repository can be found here: [https://github.com/multiversx/mx-sdk-d
 
 ## Live demo: template-dapp
 
-See [Template dApp](https://template-dapp.multiversx.com/) for live demo or checkout usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
+See [Template dApp](https://template-dapp.multiversx.com/) for live demo or check out usage in the [Github repo](https://github.com/multiversx/mx-template-dapp)
 
 ## Requirements
 
@@ -47,7 +47,7 @@ yarn add @multiversx/sdk-dapp
 ```
 > **Note:** Make sure you run your app on `https`, not `http`, otherwise some providers will not work.
 
-If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/main/MIGRATION_GUIDE.md) and  [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
+If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/main/MIGRATION_GUIDE.md) and the [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
 
 ## Usage
 
@@ -110,7 +110,7 @@ initApp(config).then(() => {
 
 ### 2. Provider interaction
 
-Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login, namely using the `UnlockPanelManager` and programatic login using the `ProviderFactory`.
+Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login: using the `UnlockPanelManager` and programmatic login using the `ProviderFactory`.
 
 #### 2.1 Using the `UnlockPanelManager`
 By using the provided UI, you get the benefit of having all supported providers ready for login in a side panel. You simply need to link the `unlockPanelManager.openUnlockPanel` to a user action.
@@ -139,7 +139,7 @@ export const ConnectButton = () => {
 Once the user has logged in, if `nativeAuth` is configured in the `initApp` method, an automatic logout will be performed upon native auth expiration. Before the actual logout is performed, the `LogoutManager` will show a warning toast to the user. This toast can be customized by passing a `tokenExpirationToastWarningSeconds` to the `nativeAuth` config.
 
 ```typescript
-// in initAoo config
+// in initApp config
 const config: InitAppType = {
  // ...
  nativeAuth: {
@@ -172,7 +172,7 @@ export const AdvancedConnectButton = () => {
         anchor
       });
       const { address, signature } = await provider.login();
-      navigate(`/dashboard?address=${address}`;
+      navigate(`/dashboard?address=${address}`);
     },
   });
   const handleOpenUnlockPanel = () => {
@@ -203,7 +203,7 @@ Depending on the framework, you can either use hooks or selectors to get the use
 
 #### 3.1 React hooks
 
-If you are using React, all hooks can be found under the `/out/react` folder. All store information can be accessed via different hooks but below you will find the main hook related to most common use cases
+If you are using React, all hooks can be found under the `/out/react` folder. All store information can be accessed via different hooks, but below you will find the main hooks related to the most common use cases
 
 ```bash
 out/react/
@@ -333,16 +333,16 @@ await notificationManager.openNotificationsFeed();
 
 You can find both methods and hooks to access transactions data, as seen in the table below.
 
-**Table 2**. Inspectig transactions
+**Table 2**. Inspecting transactions
 | # | Helper | Description | React hook equivalent |
 |---|------|-------------|----|
 | | `methods/transactions` | path | `react/transactions` |
-| 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
-| 2 | `getPendingTransactionsSessions()` | returns an record of pending sessions | `useGetPendingTransactionsSessions()`|
+| 1 | `getTransactionSessions()` | returns all transaction sessions |`useGetTransactionSessions()` |
+| 2 | `getPendingTransactionsSessions()` | returns a record of pending sessions | `useGetPendingTransactionsSessions()`|
 | 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
-| 4 | `getFailedTransactionsSessions()` | returns an record of failed sessions | `useGetFailedTransactionsSessions()`|
+| 4 | `getFailedTransactionsSessions()` | returns a record of failed sessions | `useGetFailedTransactionsSessions()`|
 | 5 | `getFailedTransactions()` | returns an array of failed transactions | `useGetFailedTransactions()`|
-| 6 | `getSuccessfulTransactionsSessions()` | returns an record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
+| 6 | `getSuccessfulTransactionsSessions()` | returns a record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
 | 7 | `getSuccessfulTransactions()` | returns an array of successful transactions | `useGetSuccessfulTransactions()`|
 
 There is a way to inspect store information regarding a specific transaction, using the `transactionsSliceSelector`. An example is shown below:
@@ -499,12 +499,12 @@ The transaction lifecycle consists of the following steps:
 | # | Helper | Description | React hook equivalent |
 |---|------|-------------|----|
 | | `methods/transactions` | path | `react/transactions` |
-| 1 | `getTransactionSessions()` | returns all trabsaction sessions |`useGetTransactionSessions()` |
+| 1 | `getTransactionSessions()` | returns all transaction sessions |`useGetTransactionSessions()` |
 | 2 | `getPendingTransactionsSessions()` | returns an record of pending sessions | `useGetPendingTransactionsSessions()`|
 | 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
-| 4 | `getFailedTransactionsSessions()` | returns an record of failed sessions | `useGetFailedTransactionsSessions()`|
+| 4 | `getFailedTransactionsSessions()` | returns a record of failed sessions | `useGetFailedTransactionsSessions()`|
 | 5 | `getFailedTransactions()` | returns an array of failed transactions | `useGetFailedTransactions()`|
-| 6 | `getSuccessfulTransactionsSessions()` | returns an record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
+| 6 | `getSuccessfulTransactionsSessions()` | returns a record of successful sessions | `useGetSuccessfulTransactionsSessions()`|
 | 7 | `getSuccessfulTransactions()` | returns an array of successful transactions | `useGetSuccessfulTransactions()`|
 
 5. **User feedback** is provided through toast notifications, which are triggered to inform about transactions' progress. Additional tracking details can be optionally displayed in the toast UI.
