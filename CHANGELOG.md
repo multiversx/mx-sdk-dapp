@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.3](https://github.com/multiversx/mx-sdk-dapp/pull/1509)] - 2025-07-15
+
 - [Updated bundler to use esm](https://github.com/multiversx/mx-sdk-dapp/pull/1508)
 - [Updated README with test badges](https://github.com/multiversx/mx-sdk-dapp/pull/1507)
 
