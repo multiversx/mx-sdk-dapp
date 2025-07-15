@@ -16,8 +16,6 @@ export type {
 export async function defineCustomElements(opts?: any): Promise<void> {
   try {
     const loader = await import('@multiversx/sdk-dapp-ui');
-
-    console.log({ loader });
     loader.defineCustomElements(opts);
   } catch (err) {
     throw new Error('@multiversx/sdk-dapp-ui not found' + err);
