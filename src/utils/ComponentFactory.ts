@@ -26,7 +26,7 @@ export class ComponentFactory {
   }) => {
     const webComponent = safeWindow?.customElements?.get(name);
 
-    if (!safeWindow?.document || !webComponent) {
+    if (!webComponent) {
       return null as T;
     }
 
