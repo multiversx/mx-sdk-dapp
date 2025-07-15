@@ -7,7 +7,8 @@ export {
   TransactionOptions,
   Message,
   UserPublicKey,
-  IPlainTransactionObject,
   MessageComputer,
   UserVerifier
 } from '@multiversx/sdk-core';
+
+export type { IPlainTransactionObject } from '@multiversx/sdk-core';

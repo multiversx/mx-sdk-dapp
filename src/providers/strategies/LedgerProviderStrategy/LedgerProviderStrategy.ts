@@ -1,9 +1,7 @@
 import { HWProvider } from '@multiversx/sdk-hw-provider';
-import { safeWindow } from 'constants/index';
 
 import { CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION } from 'constants/transactions.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { defineCustomElements } from 'lib/sdkDappUi';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
 import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
@@ -93,7 +91,6 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
   }
 
   private async initializeProvider() {
-    await defineCustomElements(safeWindow);
     await this.initLegderConnectManager(this.options?.anchor);
     const ledgerConnectManager = LedgerConnectStateManager.getInstance();
 

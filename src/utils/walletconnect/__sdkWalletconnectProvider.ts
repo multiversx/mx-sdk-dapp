@@ -12,10 +12,8 @@ import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider
 /**
  * These members are ingnored when compiling to commonJS
  */
+export type { EngineTypes, PairingTypes, SessionEventTypes };
 export {
-  EngineTypes,
-  PairingTypes,
-  SessionEventTypes,
   WalletConnectMethodsEnum,
   WalletConnectOptionalMethodsEnum,
   WalletConnectV2Provider
