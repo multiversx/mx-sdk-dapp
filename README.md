@@ -1,7 +1,7 @@
 # MultiversX SDK for Front-End DApps
 
-[![Unit tests](https://github.com/multiversx/mx-wallet-dapp/actions/workflows/pre-merge-main-unit-tests.yml/badge.svg)](https://github.com/multiversx/mx-wallet-dapp/actions/workflows/pre-merge-main-unit-tests.yml)
-[![Integration tests](https://github.com/multiversx/mx-wallet-dapp/actions/workflows/run-template-dapps-integration.yml/badge.svg)](https://github.com/multiversx/mx-wallet-dapp/actions/workflows/prun-template-dapps-integration.yml)
+[![Unit tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-main-unit-tests.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/pre-merge-main-unit-tests.yml)
+[![Integration tests](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml/badge.svg)](https://github.com/multiversx/mx-sdk-dapp/actions/workflows/run-template-dapps-integration.yml)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/multiversx/mx-sdk-dapp)
 
 MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
