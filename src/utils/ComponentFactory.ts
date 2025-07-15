@@ -1,7 +1,6 @@
-import { IEventBus } from '@multiversx/sdk-dapp-ui/dist/loader';
 import { safeWindow } from 'constants/index';
 import { UITagsEnum } from 'constants/UITags.enum';
-import { defineCustomElements } from 'lib/sdkDappUi';
+import { IEventBus } from 'lib/sdkDappUi';
 
 export interface CreateEventBusUIElementType extends HTMLElement {
   getEventBus: () => Promise<IEventBus | null>;
@@ -25,10 +24,10 @@ export class ComponentFactory {
     name: `${UITagsEnum}`;
     anchor?: HTMLElement;
   }) => {
-    await defineCustomElements(safeWindow);
+    const webComponent = safeWindow?.customElements?.get(name);
 
-    if (!safeWindow.document) {
-      return {} as T;
+    if (!safeWindow?.document || !webComponent) {
+      return null as T;
     }
 
     const element = safeWindow.document.createElement(name);

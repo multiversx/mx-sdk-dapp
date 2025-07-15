@@ -1,4 +1,5 @@
 import { safeWindow } from 'constants/window.constants';
+import { defineCustomElements } from 'lib/sdkDappUi';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
 import { registerSessionCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
@@ -59,6 +60,7 @@ export async function initApp({
   customProviders
 }: InitAppType) {
   const defaultTheme = dAppConfig?.theme ?? ThemesEnum.dark;
+  await defineCustomElements();
 
   switchTheme(defaultTheme);
 
