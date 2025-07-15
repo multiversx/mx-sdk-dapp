@@ -33,7 +33,6 @@ git clone https://github.com/multiversx/mx-template-dapp.git
 
 echo "cd mx-template-dapp..."
 cd mx-template-dapp
-git checkout development
 
 echo "Installing dependencies mx-template-dapp..."
 yarn install
@@ -42,7 +41,7 @@ echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
 
 echo "Building mx-template-dapp..."
-yarn build:devnet
+yarn build-devnet
 
 
 # Consume mx-sdk-dapp in mx-template-dapp-nextjs
