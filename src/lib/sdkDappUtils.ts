@@ -7,7 +7,7 @@ export { stringIsInteger } from '@multiversx/sdk-dapp-utils/out/helpers/stringIs
 export { stringIsFloat } from '@multiversx/sdk-dapp-utils/out/helpers/stringIsFloat';
 export {
   formatAmount,
-  FormatAmountPropsType
+  type FormatAmountPropsType
 } from '@multiversx/sdk-dapp-utils/out/helpers/formatAmount';
 export { recommendGasPrice } from '@multiversx/sdk-dapp-utils/out/helpers/recommendGasPrice';
 export type {

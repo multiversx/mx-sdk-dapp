@@ -1,3 +1,4 @@
+import { isMobileWebview } from 'lib/sdkWebviewProvider';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { providerTypeSelector } from 'store/selectors';
 import { getState } from 'store/store';
@@ -6,11 +7,13 @@ import { setAccountProvider } from './accountProvider';
 import { ProviderFactory } from '../ProviderFactory';
 
 export async function restoreProvider() {
+  const isMobile = isMobileWebview();
   const isInIframe = getIsInIframe();
 
-  const type = isInIframe
-    ? ProviderTypeEnum.webview
-    : providerTypeSelector(getState());
+  const type =
+    isInIframe || isMobile
+      ? ProviderTypeEnum.webview
+      : providerTypeSelector(getState());
 
   if (!type) {
     return;
@@ -29,7 +32,10 @@ export async function restoreProvider() {
     - true: the app is embedded within another dApp (e.g., inside an iframe) and perform login using the provider.
     - false: the parent is not a dApp and proceed with initializing the current app as a standalone iframe.
   */
-  if (type === ProviderTypeEnum.webview && provider.isInitialized()) {
+  if (
+    isMobile ||
+    (type === ProviderTypeEnum.webview && provider.isInitialized())
+  ) {
     await provider.login();
   }
 

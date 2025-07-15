@@ -7,10 +7,8 @@ const WalletConnectMethodsEnum = {};
 const WalletConnectOptionalMethodsEnum = {};
 const WalletConnectV2Provider = EmptyProvider;
 
+export type { EngineTypes, PairingTypes, SessionEventTypes };
 export {
-  EngineTypes,
-  PairingTypes,
-  SessionEventTypes,
   WalletConnectMethodsEnum,
   WalletConnectOptionalMethodsEnum,
   WalletConnectV2Provider

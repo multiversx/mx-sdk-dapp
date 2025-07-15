@@ -5,9 +5,7 @@ import {
 } from '@multiversx/sdk-wallet-connect-provider/out';
 import { providerLabels } from 'constants/providerFactory.constants';
 import { fallbackWalletConnectConfigurations } from 'constants/walletConnect.constants';
-import { safeWindow } from 'constants/window.constants';
 import { Message, Transaction } from 'lib/sdkCore';
-import { defineCustomElements } from 'lib/sdkDappUi';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { WalletConnectStateManager } from 'managers/internal/WalletConnectStateManager/WalletConnectStateManager';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
@@ -90,7 +88,6 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   }
 
   private async initializeProvider() {
-    await defineCustomElements(safeWindow);
     await this.initWalletConnectManager();
 
     if (!this.config) {
