@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.0",
+  "version": "5.0.2",
   "main": "out/index.js",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -62,7 +62,7 @@
     "bignumber.js": "^9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.13"
+    "@multiversx/sdk-dapp-ui": ">=0.0.14"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
