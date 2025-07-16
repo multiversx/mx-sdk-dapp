@@ -311,7 +311,7 @@ export class ToastManager {
       this.eventBus = await toastsElement.getEventBus();
     }
 
-    this.eventBus.publish(
+    this.eventBus?.publish(
       ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
       this.transactionToasts
     );
