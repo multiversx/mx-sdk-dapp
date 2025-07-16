@@ -41,6 +41,7 @@ const defaultInitAppProps = {
  * @internal
  */
 let isAppInitialized = false;
+let isInitializing = false;
 
 /**
  * Initializes the dApp with the given configuration.
@@ -59,6 +60,12 @@ export async function initApp({
   dAppConfig,
   customProviders
 }: InitAppType) {
+  if (isInitializing) {
+    return;
+  }
+
+  isInitializing = true;
+
   const defaultTheme = dAppConfig?.theme ?? ThemesEnum.dark;
   await defineCustomElements();
 
@@ -127,4 +134,5 @@ export async function initApp({
   }
 
   isAppInitialized = true;
+  isInitializing = false;
 }
