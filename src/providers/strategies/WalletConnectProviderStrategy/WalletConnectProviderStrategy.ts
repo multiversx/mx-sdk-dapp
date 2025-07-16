@@ -39,6 +39,7 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   private readonly config: WalletConnectProviderStrategyConfigType;
   private methods: string[] = [];
   private _approval: (() => Promise<SessionTypes.Struct>) | null = null;
+  protected cancelActionAbortController: AbortController | null = null;
 
   constructor(config: WalletConnectProviderStrategyConfigType) {
     super();
@@ -259,17 +260,24 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
 
     const { manager, onClose } = await this.initSignState();
 
+    this.cancelActionAbortController = new AbortController();
+    const signal = this.cancelActionAbortController.signal;
+
     try {
-      const signedTransactions: Transaction[] =
-        await this.provider.signTransactions(transactions);
+      const abortPromise = new Promise<never>((_, reject) => {
+        signal.addEventListener('abort', () => {
+          reject(new Error('cancelled by user'));
+        });
+      });
+
+      const signedTransactions: Transaction[] = await Promise.race([
+        this.provider.signTransactions(transactions),
+        abortPromise
+      ]);
 
       return signedTransactions;
     } catch (error) {
       await onClose({ shouldCancelAction: true });
-      await this.sendCustomRequest({
-        method: WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
-        action: OptionalOperation.CANCEL_ACTION
-      });
       throw error;
     } finally {
       manager.closeUI();
@@ -277,10 +285,12 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
   };
 
   cancelAction = async () => {
-    await this.sendCustomRequest({
+    this.sendCustomRequest({
       method: WalletConnectOptionalMethodsEnum.CANCEL_ACTION,
       action: OptionalOperation.CANCEL_ACTION
     });
+
+    this.cancelActionAbortController?.abort();
   };
 
   signMessage = async (message: Message) => {
@@ -288,12 +298,24 @@ export class WalletConnectProviderStrategy extends BaseProviderStrategy {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
-    const signedMessage = await signMessage({
-      message,
-      handleSignMessage: this.provider.signMessage.bind(this.provider),
-      cancelAction: this.cancelAction,
-      providerType: providerLabels.extension
+    this.cancelActionAbortController = new AbortController();
+    const signal = this.cancelActionAbortController.signal;
+
+    const abortPromise = new Promise<never>((_, reject) => {
+      signal.addEventListener('abort', () => {
+        reject(new Error('cancelled by user'));
+      });
     });
+
+    const signedMessage = await Promise.race([
+      signMessage({
+        message,
+        handleSignMessage: this.provider.signMessage.bind(this.provider),
+        cancelAction: this.cancelAction,
+        providerType: providerLabels.extension
+      }),
+      abortPromise
+    ]);
 
     return signedMessage;
   };

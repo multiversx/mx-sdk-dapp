@@ -1,4 +1,4 @@
-name: run-template-dapps-integration
+name: "Integration tests"
 
 on:
   pull_request:
