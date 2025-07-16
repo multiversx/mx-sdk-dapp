@@ -1,7 +1,7 @@
 {
   "name": "@multiversx/sdk-dapp",
   "version": "5.0.4",
-  "main": "out/index.js",
+  "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",

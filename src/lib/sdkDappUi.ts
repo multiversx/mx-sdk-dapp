@@ -1,3 +1,4 @@
+import { safeWindow } from '../constants/window.constants';
 export { MvxLedgerConnect } from '@multiversx/sdk-dapp-ui/web-components/mvx-ledger-connect';
 export type { MvxSignTransactionsPanel } from '@multiversx/sdk-dapp-ui/web-components/mvx-sign-transactions-panel';
 export type { MvxWalletConnect } from '@multiversx/sdk-dapp-ui/web-components/mvx-wallet-connect';
@@ -14,10 +15,18 @@ export type {
 } from '@multiversx/sdk-dapp-ui/types/components/visual/transaction-list-item/transaction-list-item.types';
 
 export async function defineCustomElements(opts?: any): Promise<void> {
+  const isReactNative =
+    typeof safeWindow.navigator !== 'undefined' &&
+    safeWindow.navigator.product === 'ReactNative';
+
+  if (isReactNative) {
+    return;
+  }
+
   try {
     const loader = await import('@multiversx/sdk-dapp-ui');
     loader.defineCustomElements(opts);
   } catch (err) {
-    throw new Error('@multiversx/sdk-dapp-ui not found' + err);
+    console.warn('@multiversx/sdk-dapp-ui not found' + err);
   }
 }

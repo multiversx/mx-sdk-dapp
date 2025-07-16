@@ -1,6 +1,6 @@
 import { safeWindow } from 'constants/index';
 import { UITagsEnum } from 'constants/UITags.enum';
-import { IEventBus } from 'lib/sdkDappUi';
+import type { IEventBus } from 'lib/sdkDappUi';
 
 export interface CreateEventBusUIElementType extends HTMLElement {
   getEventBus: () => Promise<IEventBus | null>;
