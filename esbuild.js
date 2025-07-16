@@ -18,7 +18,7 @@ const files = allFiles.filter((file) => {
   return !hasTestFiles;
 });
 
-const executeBuild = () =>
+const executeBuildEsm = () =>
   esbuild
     .build({
       entryPoints: files,
@@ -54,8 +54,46 @@ const executeBuild = () =>
       );
     })
     .catch((err) => {
-      console.log(11, err);
+      console.log(err);
       process.exit(1);
     });
 
-executeBuild();
+const executeBuildCommonJs = () =>
+  esbuild
+    .build({
+      entryPoints: files,
+      format: 'cjs',
+      outdir: 'out',
+      minify: false,
+      sourcemap: true,
+      // chunkNames: '__chunks__/[name]-[hash]',
+      target: ['es2021'],
+      outExtension: { '.js': '.cjs' },
+      tsconfig: './tsconfig.cjs.json',
+      platform: 'node',
+      define: {
+        global: 'global',
+        process: 'process',
+        Buffer: 'Buffer'
+      },
+      plugins: [
+        plugin(stdLibBrowser),
+        nodeExternalsPlugin(),
+        replace({
+          __sdkDappVersion: process.env.npm_package_version
+        })
+      ]
+    })
+    .then(() => {
+      console.log(
+        '\x1b[36m%s\x1b[0m',
+        `[${new Date().toLocaleTimeString()}] sdk-dapp build succeeded for cjs types`
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      process.exit(1);
+    });
+
+executeBuildEsm();
+executeBuildCommonJs();
