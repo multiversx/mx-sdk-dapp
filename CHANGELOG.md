@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added support for custom theme](https://github.com/multiversx/mx-sdk-dapp/pull/1514)
 - [Fixed init app double init](https://github.com/multiversx/mx-sdk-dapp/pull/1513)
 
 ## [[5.0.3](https://github.com/multiversx/mx-sdk-dapp/pull/1509)] - 2025-07-15
