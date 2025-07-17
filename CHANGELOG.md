@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed token login from hub](https://github.com/multiversx/mx-sdk-dapp/pull/1520)
 - [Added cjs support for esbuild](https://github.com/multiversx/mx-sdk-dapp/pull/1517)
 
 ## [[5.0.4](https://github.com/multiversx/mx-sdk-dapp/pull/1516)] - 2025-07-16
