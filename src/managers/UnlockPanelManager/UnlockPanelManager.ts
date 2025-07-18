@@ -140,8 +140,14 @@ export class UnlockPanelManager extends SidePanelBaseManager<
     const customProviders = ProviderFactory.customProviders;
 
     const defaultProviderTypes = Object.values(ProviderTypeEnum).filter(
-      (type) =>
-        type !== ProviderTypeEnum.none && type !== ProviderTypeEnum.webview
+      (type) => {
+        const excludedProviders: string[] = [
+          ProviderTypeEnum.none,
+          ProviderTypeEnum.webview,
+          ProviderTypeEnum.passkey // temporary disabled
+        ];
+        return !excludedProviders.includes(type);
+      }
     );
 
     const allAvailableProviderTypes = [
