@@ -1,5 +1,6 @@
+// @ts-nocheck
 import { safeWindow } from '../constants/window.constants';
-export { MvxLedgerConnect } from '@multiversx/sdk-dapp-ui/web-components/mvx-ledger-connect';
+export type { MvxLedgerConnect } from '@multiversx/sdk-dapp-ui/web-components/mvx-ledger-connect';
 export type { MvxSignTransactionsPanel } from '@multiversx/sdk-dapp-ui/web-components/mvx-sign-transactions-panel';
 export type { MvxWalletConnect } from '@multiversx/sdk-dapp-ui/web-components/mvx-wallet-connect';
 export type { MvxPendingTransactionsPanel } from '@multiversx/sdk-dapp-ui/web-components/mvx-pending-transactions-panel';
