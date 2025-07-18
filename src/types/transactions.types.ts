@@ -1,5 +1,5 @@
 import { IPlainTransactionObject, Transaction } from 'lib/sdkCore';
-import { ITransactionListItem } from 'lib/sdkDappUi';
+import type { ITransactionListItem } from 'lib/sdkDappUi';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum,

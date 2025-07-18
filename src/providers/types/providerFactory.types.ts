@@ -8,6 +8,7 @@ export interface IProvider<T extends ProviderType = ProviderType>
     signature: string;
     multisig?: string;
     impersonate?: string;
+    accessToken?: string;
     [key: string]: unknown;
   }>;
   logout: () => Promise<boolean>;

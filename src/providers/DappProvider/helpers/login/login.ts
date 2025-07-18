@@ -3,6 +3,7 @@ import { getNetworkConfig } from 'methods/network/getNetworkConfig';
 import { trackTransactions } from 'methods/trackTransactions/trackTransactions';
 import { IProvider } from 'providers/types/providerFactory.types';
 import { nativeAuth } from 'services/nativeAuth';
+import { decodeNativeAuthToken } from 'services/nativeAuth/helpers/decodeNativeAuthToken';
 import { NativeAuthConfigType } from 'services/nativeAuth/nativeAuth.types';
 import { setTokenLogin } from 'store/actions/loginInfo/loginInfoActions';
 import { nativeAuthConfigSelector } from 'store/selectors';
@@ -66,11 +67,16 @@ async function loginWithNativeToken({
     return null;
   }
 
-  const nativeAuthToken = nativeAuthClient.getToken({
-    address,
-    token: loginToken,
-    signature
-  });
+  // nativeAuthToken received from hub login
+  const decodedToken = decodeNativeAuthToken(loginResult?.accessToken);
+
+  const nativeAuthToken = decodedToken
+    ? loginResult.accessToken
+    : nativeAuthClient.getToken({
+        address,
+        token: loginToken,
+        signature
+      });
 
   setTokenLogin({
     loginToken,
