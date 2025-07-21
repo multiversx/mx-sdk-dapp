@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.6](https://github.com/multiversx/mx-sdk-dapp/pull/1524)] - 2025-07-21
+
+- [Upgrade webview provider](https://github.com/multiversx/mx-sdk-dapp/pull/1523)
+
 ## [[5.0.5](https://github.com/multiversx/mx-sdk-dapp/pull/1522)] - 2025-07-17
 
 - [Temporary disable passkeys](https://github.com/multiversx/mx-sdk-dapp/pull/1521)

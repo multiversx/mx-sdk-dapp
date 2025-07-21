@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -42,7 +42,7 @@
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.1.3",
     "@multiversx/sdk-web-wallet-iframe-provider": "3.0.3",
     "@multiversx/sdk-web-wallet-provider": "5.0.0",
-    "@multiversx/sdk-webview-provider": "3.1.2",
+    "@multiversx/sdk-webview-provider": "3.1.3",
     "immer": "10.1.1",
     "linkifyjs": "4.3.1",
     "lodash.isempty": "4.4.0",
