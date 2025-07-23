@@ -60,8 +60,10 @@ export const updateAccountsList = async ({
   }
 
   try {
+    const page = Math.floor(startIndex / manager.addressesPerPage);
+
     const accountsArray = await provider.getAccounts(
-      startIndex,
+      page,
       manager.addressesPerPage
     );
 
