@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.8](https://github.com/multiversx/mx-sdk-dapp/pull/1528)] - 2025-07-24
+
+- [Updated data-theme](https://github.com/multiversx/mx-sdk-dapp/pull/1527)
+
 ## [[5.0.7](https://github.com/multiversx/mx-sdk-dapp/pull/1526)] - 2025-07-23
 
 - [Fixed ledger pagination](https://github.com/multiversx/mx-sdk-dapp/pull/1525)
