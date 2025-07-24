@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1492)] - 2025-07-25
+## [[v4.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1531)] - 2025-07-25
 
-- [Unified the nativeAuth token logic for login hooks](https://github.com/multiversx/mx-sdk-dapp/pull/1491)
+- [Unified the nativeAuth token logic for login hooks](https://github.com/multiversx/mx-sdk-dapp/pull/1530)
 
 ## [[v4.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1490)] - 2025-07-07
 
