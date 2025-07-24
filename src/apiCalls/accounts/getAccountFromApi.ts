@@ -4,17 +4,17 @@ import { axiosInstance } from 'apiCalls/utils/axiosInstance';
 
 export const accountFetcher = (
   address: string | null,
-  options?: { apiAddress?: string, headers?: Record<string, string> }
+  options?: { apiAddress?: string; headers?: Record<string, string> }
 ) => {
   const apiUrl = options?.apiAddress ?? getCleanApiAddress();
-  const config = options?.headers ? { headers: options?.headers } : undefined ;
+  const config = options?.headers ? { headers: options?.headers } : undefined;
   const url = `${apiUrl}/${ACCOUNTS_ENDPOINT}/${address}?withGuardianInfo=true`;
   return axiosInstance.get(url, config);
 };
 
 export const getAccountFromApi = async (
   address?: string,
-  options?: { apiAddress?: string, headers?: Record<string, string> }
+  options?: { apiAddress?: string; headers?: Record<string, string> }
 ) => {
   if (!address) {
     return null;

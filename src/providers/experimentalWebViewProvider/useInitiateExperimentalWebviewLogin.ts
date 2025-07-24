@@ -15,8 +15,8 @@ import {
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getAccessTokenFromSearchParams } from 'utils/account/getAccessTokenFromSearchParams';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
-import { ExperimentalWebviewProvider } from './ExperimentalWebviewProvider';
 import { isInIframe } from 'utils/isInIframe';
+import { ExperimentalWebviewProvider } from './ExperimentalWebviewProvider';
 
 export function useInitiateExperimentalWebviewLogin() {
   const dispatch = useDispatch();

@@ -21,7 +21,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types';
-import { getIsLoggedIn } from '../../utils';
+import { getHasNativeAuth, getIsLoggedIn } from '../../utils';
 import { clearInitiatedLogins } from './helpers';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
@@ -67,8 +67,8 @@ export const useLedgerLogin = ({
   const hwProvider = getAccountProvider() as unknown as HWProvider;
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
-  const hasNativeAuth = nativeAuth != null;
-  const loginService = useLoginService(nativeAuth);
+  const hasNativeAuth = getHasNativeAuth(nativeAuth);
+  const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
   let token = tokenToSign;
 
   const {
@@ -309,13 +309,9 @@ export const useLedgerLogin = ({
           return onLoginFailed('Login cancelled.');
         }
 
-        dispatch(
-          loginAction({ address, loginMethod: LoginMethodsEnum.ledger })
-        );
-
-        optionalRedirect({
-          callbackRoute,
-          onLoginRedirect
+        dispatchLoginActions({
+          address,
+          index: selectedAddress.index.valueOf()
         });
       } else {
         if (!accounts?.length) {

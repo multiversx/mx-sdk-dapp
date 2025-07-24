@@ -1,8 +1,8 @@
 import { Transaction } from '@multiversx/sdk-core';
-import { transformAndSignTransactions } from '../transformAndSignTransactions';
+import { newTransaction } from 'models/newTransaction';
 import * as accountUtils from 'utils/account/getAccount';
 import * as nonceUtils from 'utils/account/getLatestNonce';
-import { newTransaction } from 'models/newTransaction';
+import { transformAndSignTransactions } from '../transformAndSignTransactions';
 
 jest.mock('@multiversx/sdk-core', () => {
   const originalModule = jest.requireActual('@multiversx/sdk-core');

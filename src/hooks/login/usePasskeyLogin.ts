@@ -12,6 +12,7 @@ import {
   OnProviderLoginType
 } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { addOriginToLocationPath } from 'utils/window';
@@ -37,7 +38,7 @@ export const usePasskeyLogin = ({
 }: OnProviderLoginType): UsePasskeyLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const hasNativeAuth = nativeAuth != null;
+  const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
   const {
