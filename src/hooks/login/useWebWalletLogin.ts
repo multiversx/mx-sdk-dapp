@@ -9,7 +9,7 @@ import {
   emptyAccount,
   setAddress
 } from 'reduxStore/slices';
-import { newWalletProvider } from 'utils';
+import { getHasNativeAuth, newWalletProvider } from 'utils';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
@@ -56,8 +56,8 @@ export const useWebWalletLogin = ({
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
   const isLoggedIn = getIsLoggedIn();
-  const hasNativeAuth = Boolean(nativeAuth);
-  const loginService = useLoginService(nativeAuth);
+  const hasNativeAuth = getHasNativeAuth(nativeAuth);
+  const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
   let token = tokenToSign;
 
   async function initiateLogin() {

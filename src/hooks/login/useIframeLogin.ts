@@ -16,6 +16,7 @@ import {
   OnProviderLoginType
 } from 'types';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import { clearInitiatedLogins } from './helpers';
@@ -36,7 +37,7 @@ export const useIframeLogin = ({
 }): UseIframeLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const hasNativeAuth = nativeAuth != null;
+  const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
   const network = useSelector(networkSelector);

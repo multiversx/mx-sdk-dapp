@@ -12,6 +12,7 @@ import {
   OnProviderLoginType
 } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
+import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { addOriginToLocationPath } from 'utils/window';
@@ -32,8 +33,8 @@ export const useExtensionLogin = ({
 }: OnProviderLoginType): UseExtensionLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const hasNativeAuth = nativeAuth != null;
-  const loginService = useLoginService(nativeAuth);
+  const hasNativeAuth = getHasNativeAuth(nativeAuth);
+  const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
   let token = tokenToSign;
 
   const dispatch = useDispatch();
@@ -96,7 +97,7 @@ export const useExtensionLogin = ({
         return;
       }
 
-      if (signature && token) {
+      if (signature) {
         loginService.setTokenLoginInfo({
           signature,
           address

@@ -16,6 +16,7 @@ import {
 } from 'types';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getLatestNonce } from 'utils/account/getLatestNonce';
+import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
@@ -40,7 +41,7 @@ export const useCrossWindowLogin = ({
 }): UseCrossWindowLoginReturnType => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const hasNativeAuth = nativeAuth != null;
+  const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
   let token = tokenToSign;
   const network = useSelector(networkSelector);
