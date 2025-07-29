@@ -19,7 +19,7 @@ export const getFeeData = ({
     gasLimit: transaction.gasLimit.valueOf().toString(),
     gasPrice: transaction.gasPrice.valueOf().toString(),
     data: transaction.data.toString(),
-    chainId: transaction.chainID.valueOf()
+    chainId: transaction.chainID.valueOf().toString()
   });
 
   const feeLimitFormatted = formatAmount({
