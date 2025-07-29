@@ -17,12 +17,12 @@ export interface CalculateFeeLimitType {
   chainId: string;
   minGasLimit?: string;
   defaultGasPrice?: string;
+  from: string;
+  to: string;
 }
-const placeholderData = {
-  from: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa',
-  to: 'erd12dnfhej64s6c56ka369gkyj3hwv5ms0y5rxgsk2k7hkd2vuk7rvqxkalsa'
-};
 export function calculateFeeLimit({
+  from,
+  to,
   minGasLimit = String(GAS_LIMIT),
   gasLimit,
   gasPrice,
@@ -45,8 +45,8 @@ export function calculateFeeLimit({
   const transaction = new Transaction({
     nonce: BigInt(0),
     value: BigInt(0),
-    receiver: new Address(placeholderData.to),
-    sender: new Address(placeholderData.to),
+    receiver: new Address(to),
+    sender: new Address(from),
     gasPrice: BigInt(validGasPrice),
     gasLimit: BigInt(usedGasLimit),
     data: Buffer.from(data.trim()),

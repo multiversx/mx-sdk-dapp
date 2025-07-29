@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed error when signing transactions with custom hrp](https://github.com/multiversx/mx-sdk-dapp/pull/1532)
+
 ## [[5.0.9](https://github.com/multiversx/mx-sdk-dapp/pull/1532)] - 2025-07-25
 
 - [Updated sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp/pull/1531)
