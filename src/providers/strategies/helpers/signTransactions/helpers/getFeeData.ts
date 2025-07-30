@@ -12,12 +12,14 @@ export const getFeeData = ({
   price?: number;
 }) => {
   const feeLimit = calculateFeeLimit({
+    from: transaction.sender.toBech32(),
+    to: transaction.receiver.toBech32(),
     gasPerDataByte: String(GAS_PER_DATA_BYTE),
     gasPriceModifier: String(GAS_PRICE_MODIFIER),
-    gasLimit: transaction.getGasLimit().valueOf().toString(),
-    gasPrice: transaction.getGasPrice().valueOf().toString(),
-    data: transaction.getData().toString(),
-    chainId: transaction.getChainID().valueOf()
+    gasLimit: transaction.gasLimit.valueOf().toString(),
+    gasPrice: transaction.gasPrice.valueOf().toString(),
+    data: transaction.data.toString(),
+    chainId: transaction.chainID.valueOf().toString()
   });
 
   const feeLimitFormatted = formatAmount({
