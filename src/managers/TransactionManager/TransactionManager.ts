@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { BATCH_TRANSACTIONS_ID_SEPARATOR } from 'constants/transactions.constants';
-import { Transaction, TransactionComputer } from 'lib/sdkCore';
+import { Transaction } from 'lib/sdkCore';
 import { getAccount } from 'methods/account/getAccount';
 import { TransactionTrackingConfigType } from 'methods/initApp/initApp.types';
 import { addTransactionToast } from 'store/actions/toasts/toastsActions';
@@ -80,7 +80,7 @@ export class TransactionManager {
       const responseData = <{ message: string }>(
         (error as AxiosError).response?.data
       );
-      throw responseData?.message ?? (error as any).message;
+      throw responseData?.message ?? (error as Error).message;
     }
   };
 
@@ -122,30 +122,24 @@ export class TransactionManager {
   ): Promise<SignedTransactionType[]> => {
     const { apiAddress, apiTimeout } = networkSelector(getState());
 
-    const promises = signedTransactions.map((transaction) =>
-      axios.post(`${apiAddress}/transactions`, transaction.toPlainObject(), {
-        timeout: Number(apiTimeout)
+    const mergedTransactions = await Promise.all(
+      signedTransactions.map(async (transaction) => {
+        const response = await axios.post(
+          `${apiAddress}/transactions`,
+          transaction.toPlainObject(),
+          { timeout: Number(apiTimeout) }
+        );
+
+        const txHash = response.data.txHash;
+
+        return {
+          ...transaction.toPlainObject(),
+          ...response.data,
+          status: TransactionServerStatusesEnum.pending,
+          hash: txHash
+        };
       })
     );
-
-    const response = await Promise.all(promises);
-    const transactionComputer = new TransactionComputer();
-
-    const mergedTransactions = response.map(({ data }) => {
-      const foundTransaction = signedTransactions.find((tx) => {
-        const txHash = transactionComputer.computeTransactionHash(tx);
-        return txHash === data.txHash;
-      });
-
-      const currentTransaction = {
-        ...foundTransaction?.toPlainObject(),
-        ...data,
-        status: TransactionServerStatusesEnum.pending,
-        hash: data.txHash
-      };
-
-      return currentTransaction;
-    });
 
     return mergedTransactions;
   };
@@ -164,14 +158,13 @@ export class TransactionManager {
     }
 
     const batchId = this.buildBatchId(address);
-    const parsedTransactions = signedTransactions.map((transactions) =>
-      transactions.map((transaction) =>
-        this.parseSignedTransaction(transaction)
-      )
+
+    const plainTransactions = signedTransactions.map((group) =>
+      group.map((tx) => tx.toPlainObject())
     );
 
     const payload = {
-      transactions: parsedTransactions,
+      transactions: plainTransactions,
       id: batchId
     };
 
@@ -183,7 +176,30 @@ export class TransactionManager {
       }
     );
 
-    return { data };
+    const parsedTransactions = data.transactions.map((group) =>
+      group.map((tx) => {
+        const parsedTx: SignedTransactionType = {
+          ...tx,
+          status: TransactionServerStatusesEnum.pending,
+          hash: tx.hash
+        };
+
+        // Remove when the protocol supports usernames for guardian transactions
+        if (isGuardianTx({ data: parsedTx.data })) {
+          delete parsedTx.senderUsername;
+          delete parsedTx.receiverUsername;
+        }
+
+        return parsedTx;
+      })
+    );
+
+    return {
+      data: {
+        ...data,
+        transactions: parsedTransactions
+      }
+    };
   };
 
   private readonly buildBatchId = (address: string) => {
@@ -200,24 +216,4 @@ export class TransactionManager {
   private readonly getIsSequential = (
     transactions?: SignedTransactionType[] | SignedTransactionType[][]
   ) => transactions?.every((transaction) => Array.isArray(transaction));
-
-  private readonly parseSignedTransaction = (
-    signedTransaction: Transaction
-  ): SignedTransactionType => {
-    const transactionComputer = new TransactionComputer();
-
-    const parsedTransaction = {
-      ...signedTransaction.toPlainObject(),
-      hash: transactionComputer.computeTransactionHash(signedTransaction),
-      status: TransactionServerStatusesEnum.pending
-    };
-
-    // Remove when the protocol supports usernames for guardian transactions
-    if (isGuardianTx({ data: parsedTransaction.data })) {
-      delete parsedTransaction.senderUsername;
-      delete parsedTransaction.receiverUsername;
-    }
-
-    return parsedTransaction;
-  };
 }
