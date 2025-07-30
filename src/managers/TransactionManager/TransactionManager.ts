@@ -181,7 +181,7 @@ export class TransactionManager {
         const parsedTx: SignedTransactionType = {
           ...tx,
           status: TransactionServerStatusesEnum.pending,
-          hash: tx.hash // confirm if this should be tx.txHash instead
+          hash: tx.hash
         };
 
         if (isGuardianTx({ data: parsedTx.data })) {
