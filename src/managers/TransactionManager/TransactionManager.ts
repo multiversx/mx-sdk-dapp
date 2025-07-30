@@ -184,6 +184,7 @@ export class TransactionManager {
           hash: tx.hash
         };
 
+        // Remove when the protocol supports usernames for guardian transactions
         if (isGuardianTx({ data: parsedTx.data })) {
           delete parsedTx.senderUsername;
           delete parsedTx.receiverUsername;
