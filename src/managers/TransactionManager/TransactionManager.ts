@@ -80,7 +80,7 @@ export class TransactionManager {
       const responseData = <{ message: string }>(
         (error as AxiosError).response?.data
       );
-      throw responseData?.message ?? (error as any).message;
+      throw responseData?.message ?? (error as Error).message;
     }
   };
 
