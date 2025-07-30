@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Replace computeTransactionHash with hash from API response](https://github.com/multiversx/mx-sdk-dapp/pull/1536)
+
 ## [[5.0.10](https://github.com/multiversx/mx-sdk-dapp/pull/1535)] - 2025-07-30
 
 - [Fixed error when signing transactions with custom hrp](https://github.com/multiversx/mx-sdk-dapp/pull/1533)
