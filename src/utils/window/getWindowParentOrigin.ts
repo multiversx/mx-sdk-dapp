@@ -13,7 +13,8 @@ export const getWindowParentOrigin = () => {
     }
 
     return new URL(referrer).origin;
-  } catch {
+  } catch (e) {
+    console.error(e);
     return '';
   }
 };
