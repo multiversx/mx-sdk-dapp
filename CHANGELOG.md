@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Remove ancestorOrigins from getWindowParentOrigin](https://github.com/multiversx/mx-sdk-dapp/pull/1538)
+
 ## [[5.0.11](https://github.com/multiversx/mx-sdk-dapp/pull/1537)] - 2025-07-30
 
 - [Replace computeTransactionHash with hash from API response](https://github.com/multiversx/mx-sdk-dapp/pull/1536)
