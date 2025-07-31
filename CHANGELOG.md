@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.0.12](https://github.com/multiversx/mx-sdk-dapp/pull/1541)] - 2025-07-31
+
+- [Fixed sign transactions error is not re-thrown](http://github.com/multiversx/mx-sdk-dapp/pull/1540)
 - [Fixed issue with account nonce](http://github.com/multiversx/mx-sdk-dapp/pull/1539)
 - [Remove ancestorOrigins from getWindowParentOrigin](https://github.com/multiversx/mx-sdk-dapp/pull/1538)
 

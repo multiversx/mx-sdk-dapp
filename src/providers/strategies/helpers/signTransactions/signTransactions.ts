@@ -108,6 +108,8 @@ export async function signTransactions({
           `Error fetching common data for transaction at index ${currentScreenIndex}:`,
           error
         );
+
+        throw error;
       } finally {
         manager.updateIsLoading(false);
       }
