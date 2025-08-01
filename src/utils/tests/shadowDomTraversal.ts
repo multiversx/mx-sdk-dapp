@@ -25,17 +25,18 @@ export function walkShadowDom(
 
   try {
     found = root.querySelector(selector);
-  } catch (err: any) {
-    if (
-      (typeof DOMException !== 'undefined' &&
-        err instanceof DOMException &&
-        err.name === 'SyntaxError') ||
-      (err &&
-        typeof err.message === 'string' &&
-        /syntax error|unrecognized expression/i.test(err.message))
-    ) {
+  } catch (err) {
+    const isSyntaxError =
+      err instanceof DOMException && err.name === 'SyntaxError';
+
+    const hasInvalidSelectorMessage =
+      err instanceof Error &&
+      /syntax error|unrecognized expression/i.test(err.message);
+
+    if (isSyntaxError || hasInvalidSelectorMessage) {
       throw new Error(`walkShadowDom: Invalid CSS selector: '${selector}'`);
     }
+
     throw err;
   }
 
@@ -65,7 +66,7 @@ export function createDataTestIdSelector(testId: string): string {
   const escape =
     window.CSS && typeof window.CSS.escape === 'function'
       ? window.CSS.escape
-      : (s: string) => s.replace(/"/g, '"').replace(/'/g, "\\'");
+      : (s: string) => s.replace(/"/g, '\\"').replace(/'/g, "\\'");
 
   return `[data-testid="${escape(testId)}"]`;
 }
