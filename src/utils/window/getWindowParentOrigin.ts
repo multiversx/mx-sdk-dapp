@@ -8,18 +8,11 @@ export const getWindowParentOrigin = () => {
   try {
     const referrer = safeWindow.document?.referrer;
 
-    if (referrer) {
-      return new URL(referrer).origin;
+    if (!referrer) {
+      return '';
     }
 
-    // Check ancestorOrigins when referrer is not available
-    const ancestorOrigins = safeWindow.location?.ancestorOrigins;
-    if (ancestorOrigins && ancestorOrigins.length > 0) {
-      // Return the last ancestor origin (immediate parent)
-      return ancestorOrigins[ancestorOrigins.length - 1];
-    }
-
-    return '';
+    return new URL(referrer).origin;
   } catch (e) {
     console.error(e);
     return '';

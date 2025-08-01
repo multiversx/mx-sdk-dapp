@@ -37,7 +37,7 @@ describe('getWindowParentOrigin', () => {
     expect(getWindowParentOrigin()).toBe('https://example.com');
   });
 
-  it('should return origin from ancestorOrigins when referrer is not available', () => {
+  it('should not return origin from ancestorOrigins when referrer is not available', () => {
     Object.defineProperty(document, 'referrer', {
       configurable: true,
       value: ''
@@ -62,7 +62,7 @@ describe('getWindowParentOrigin', () => {
     constants.safeWindow = mockWindow;
 
     const { getWindowParentOrigin } = require('../getWindowParentOrigin');
-    expect(getWindowParentOrigin()).toBe('https://second.com');
+    expect(getWindowParentOrigin()).toBe('');
   });
 
   it('should return empty string when no ancestorOrigins are available', () => {
