@@ -12,21 +12,11 @@ export interface LedgerLoginType {
   loginType: string;
 }
 
-export interface LoginInfoType {
-  data: any;
-  expires: number;
-}
-
 export interface LoginInfoSliceType<T extends ProviderType = ProviderType> {
   providerType: T | null;
   walletConnectLogin: WalletConnectLoginType | null;
   ledgerLogin: LedgerLoginType | null;
   tokenLogin: TokenLoginType | null;
-  walletLogin: LoginInfoType | null;
-  extensionLogin: LoginInfoType | null;
-  operaLogin: LoginInfoType | null;
-  crossWindowLogin: LoginInfoType | null;
-  logoutRoute?: string;
   isWalletConnectV2Initialized?: boolean;
   loginExpiresAt: number | null;
 }

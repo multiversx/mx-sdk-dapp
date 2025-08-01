@@ -29,7 +29,8 @@ export function getLatestNonce(apiAccount: AccountType | null) {
   }
 
   const currentNonce = Math.max(
-    lastTransactionNonce || apiAccount.nonce,
+    lastTransactionNonce,
+    apiAccount.nonce,
     currentAccountNonce
   );
 

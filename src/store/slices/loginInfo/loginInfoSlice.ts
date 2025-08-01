@@ -7,10 +7,6 @@ export const initialState: LoginInfoSliceType = {
   walletConnectLogin: null,
   ledgerLogin: null,
   tokenLogin: null,
-  walletLogin: null,
-  extensionLogin: null,
-  operaLogin: null,
-  crossWindowLogin: null,
   loginExpiresAt: null
 };
 
