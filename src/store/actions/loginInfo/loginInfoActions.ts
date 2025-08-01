@@ -1,7 +1,6 @@
 import { ProviderType } from 'providers/types/providerFactory.types';
 import {
   LedgerLoginType,
-  LoginInfoType,
   WalletConnectLoginType
 } from 'store/slices/loginInfo/loginInfo.types';
 import { getStore } from 'store/store';
@@ -53,15 +52,6 @@ export const setTokenLoginSignature = (signature: string) =>
     'setTokenLoginSignature'
   );
 
-export const setWalletLogin = (walletLogin: LoginInfoType | null) =>
-  getStore().setState(
-    ({ loginInfo: state }) => {
-      state.walletLogin = walletLogin;
-    },
-    false,
-    'setWalletLogin'
-  );
-
 export const setWalletConnectLogin = (
   walletConnectLogin: WalletConnectLoginType | null
 ) =>
@@ -80,15 +70,6 @@ export const setLedgerLogin = (ledgerLogin: LedgerLoginType | null) =>
     },
     false,
     'setLedgerLogin'
-  );
-
-export const setLogoutRoute = (logoutRoute: string | undefined) =>
-  getStore().setState(
-    ({ loginInfo: state }) => {
-      state.logoutRoute = logoutRoute;
-    },
-    false,
-    'setLogoutRoute'
   );
 
 export const setIsWalletConnectV2Initialized = (isInitialized: boolean) =>
