@@ -40,9 +40,14 @@ export abstract class SidePanelBaseManager<
 
   public destroy() {
     this.setIsSidePanelOpen(false);
-    this.uiElement?.closeWithAnimation?.().then(() => {
-      super.destroy();
-    });
+
+    if (this.uiElement?.closeWithAnimation) {
+      this.uiElement?.closeWithAnimation?.().finally(() => {
+        super.destroy();
+      });
+      return;
+    }
+    super.destroy();
   }
 
   public closeUI(): void {
