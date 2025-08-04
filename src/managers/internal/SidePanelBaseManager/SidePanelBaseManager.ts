@@ -39,7 +39,6 @@ export abstract class SidePanelBaseManager<
   }
 
   public destroy() {
-    console.log('Destroying SidePanelBaseManager');
     this.setIsSidePanelOpen(false);
 
     if (this.uiElement?.closeWithAnimation) {
