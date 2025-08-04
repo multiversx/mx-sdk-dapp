@@ -61,13 +61,13 @@ export abstract class UIBaseManager<
     this.eventBus?.publish(this.uiDataUpdateEvent, this.data);
   }
 
-  protected destroy() {
+  public destroy() {
     this.unsubscribeFunctions.forEach((unsubList) =>
       unsubList.forEach((unsubscribe) => unsubscribe())
     );
     this.unsubscribeFunctions.clear();
     this.eventBus = null;
-    this.uiElement?.remove();
+    this.uiElement?.remove?.();
     this.uiElement = null;
   }
 
