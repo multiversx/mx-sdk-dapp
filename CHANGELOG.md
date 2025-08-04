@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix WalletConnect Provider issues related to consecutive signings](https://github.com/multiversx/mx-sdk-dapp/pull/1546)
 - [Fixed token login from hub](https://github.com/multiversx/mx-sdk-dapp/pull/1520)
 - [Added cjs support for esbuild](https://github.com/multiversx/mx-sdk-dapp/pull/1517)
 
