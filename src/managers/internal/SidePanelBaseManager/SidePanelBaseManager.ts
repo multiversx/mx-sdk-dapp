@@ -55,7 +55,7 @@ export abstract class SidePanelBaseManager<
     this.destroy();
   }
 
-  protected setIsSidePanelOpen(isOpen: boolean): void {
+  private setIsSidePanelOpen(isOpen: boolean): void {
     this.isOpen = isOpen;
     setIsSidePanelOpen(isOpen);
   }
