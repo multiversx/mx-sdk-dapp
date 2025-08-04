@@ -2,7 +2,6 @@ import { UITagsEnum } from 'constants/UITags.enum';
 import { setIsSidePanelOpen } from 'store/actions/ui/uiActions';
 import { CreateEventBusUIElementType } from 'utils/ComponentFactory';
 import { UIBaseManager } from '../UIBaseManager/UIBaseManager';
-import * as console from 'node:console';
 
 interface ISideManagerUIElement extends CreateEventBusUIElementType {
   closeWithAnimation?: () => Promise<unknown>;
