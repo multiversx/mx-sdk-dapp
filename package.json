@@ -29,7 +29,8 @@
     "lint:fix": "eslint --fix src"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "http://localhost:4873"
   },
   "dependencies": {
     "@lifeomic/axios-fetch": "3.0.1",
