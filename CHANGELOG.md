@@ -8,6 +8,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Fix WalletConnect Provider issues related to consecutive signings](https://github.com/multiversx/mx-sdk-dapp/pull/1546)
+
+## [[5.0.12](https://github.com/multiversx/mx-sdk-dapp/pull/1541)] - 2025-08-01
+
+- [Removed loginInfo unused members](http://github.com/multiversx/mx-sdk-dapp/pull/1543)
+- [Added shadow dom test utils](https://github.com/multiversx/mx-sdk-dapp/pull/1542)
+- [Fixed sign transactions error is not re-thrown](http://github.com/multiversx/mx-sdk-dapp/pull/1540)
+- [Fixed issue with account nonce](http://github.com/multiversx/mx-sdk-dapp/pull/1539)
+- [Remove ancestorOrigins from getWindowParentOrigin](https://github.com/multiversx/mx-sdk-dapp/pull/1538)
+
+## [[5.0.11](https://github.com/multiversx/mx-sdk-dapp/pull/1537)] - 2025-07-30
+
+- [Replace computeTransactionHash with hash from API response](https://github.com/multiversx/mx-sdk-dapp/pull/1536)
+
+## [[5.0.10](https://github.com/multiversx/mx-sdk-dapp/pull/1535)] - 2025-07-30
+
+- [Fixed error when signing transactions with custom hrp](https://github.com/multiversx/mx-sdk-dapp/pull/1533)
+
+## [[5.0.9](https://github.com/multiversx/mx-sdk-dapp/pull/1532)] - 2025-07-25
+
+- [Updated sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp/pull/1531)
+
+## [[5.0.8](https://github.com/multiversx/mx-sdk-dapp/pull/1529)] - 2025-07-24
+
+- [Updated data-theme](https://github.com/multiversx/mx-sdk-dapp/pull/1527)
+
+## [[5.0.7](https://github.com/multiversx/mx-sdk-dapp/pull/1526)] - 2025-07-23
+
+- [Fixed ledger pagination](https://github.com/multiversx/mx-sdk-dapp/pull/1525)
+
+## [[5.0.6](https://github.com/multiversx/mx-sdk-dapp/pull/1524)] - 2025-07-21
+
+- [Upgrade webview provider](https://github.com/multiversx/mx-sdk-dapp/pull/1523)
+
+## [[5.0.5](https://github.com/multiversx/mx-sdk-dapp/pull/1522)] - 2025-07-17
+
+- [Temporary disable passkeys](https://github.com/multiversx/mx-sdk-dapp/pull/1521)
 - [Fixed token login from hub](https://github.com/multiversx/mx-sdk-dapp/pull/1520)
 - [Added cjs support for esbuild](https://github.com/multiversx/mx-sdk-dapp/pull/1517)
 

@@ -13,6 +13,7 @@ MultiversX Front-End SDK for JavaScript and TypeScript (written in TypeScript).
 It is built for applications that use any of the following technologies:
 
 - React (example: [React Template Dapp](https://github.com/multiversx/mx-template-dapp))
+- React JS (example: [React JS Template Dapp](https://github.com/multiversx/mx-template-dapp-reactjs))
 - Angular (example: [Angular Template Dapp](https://github.com/multiversx/mx-template-dapp-angular))
 - Vue (example: [Vue Template Dapp](https://github.com/multiversx/mx-template-dapp-vue))
 - Any other JavaScript framework (e.g. Solid.js etc.) (example: [Solid.js Dapp](https://github.com/multiversx/mx-solidjs-template-dapp))

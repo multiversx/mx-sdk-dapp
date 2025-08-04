@@ -6,6 +6,8 @@ export function switchTheme(theme: `${ThemesEnum}`) {
     if (!safeWindow) {
       return;
     }
-    safeWindow.document.documentElement.dataset.theme = theme;
-  } catch (_err) {}
+    safeWindow.document.documentElement.dataset.mvxTheme = theme;
+  } catch (_err) {
+    console.log('Error switching the theme!');
+  }
 }
