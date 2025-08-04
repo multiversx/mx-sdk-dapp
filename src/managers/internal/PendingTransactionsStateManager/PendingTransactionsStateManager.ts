@@ -45,19 +45,13 @@ export class PendingTransactionsStateManager extends SidePanelBaseManager<
     );
   }
 
-  public destroy() {
-    this.unsubscribeFunctions.forEach((unsubList) =>
-      unsubList.forEach((unsubscribe) => unsubscribe())
-    );
-    this.unsubscribeFunctions.clear();
-    this.eventBus = null;
-    this.uiElement?.remove?.();
-    this.uiElement = null;
-  }
-
-  // public closeUI(): void {
-  //   this.resetData();
-  //   this.setIsSidePanelOpen(false);
-  //   this.uiElement?.closeWithAnimation?.();
+  // public destroy() {
+  //   this.unsubscribeFunctions.forEach((unsubList) =>
+  //     unsubList.forEach((unsubscribe) => unsubscribe())
+  //   );
+  //   this.unsubscribeFunctions.clear();
+  //   this.eventBus = null;
+  //   this.uiElement?.remove?.();
+  //   this.uiElement = null;
   // }
 }
