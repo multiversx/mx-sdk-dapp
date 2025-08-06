@@ -16,4 +16,4 @@ export const storage = safeWindow
 
 export const subscriptions = new Map<SubscriptionsEnum, () => void>();
 
-export const HYDRATE_STORE_TIMEOUT = 5000; // 5 seconds
+export const HYDRATE_STORE_TIMEOUT = 3000; // 3 seconds
