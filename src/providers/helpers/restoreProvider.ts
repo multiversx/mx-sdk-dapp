@@ -10,18 +10,10 @@ export async function restoreProvider() {
   const isMobile = isMobileWebview();
   const isInIframe = getIsInIframe();
 
-  const { loginInfo } = getState();
-  const { providerType } = loginInfo;
-  const providerTypeFromSelector = providerTypeSelector(getState());
-
-  console.error({
-    isMobile,
-    isInIframe,
-    providerType,
-    providerTypeFromSelector
-  });
-
-  const type = isInIframe || isMobile ? ProviderTypeEnum.webview : providerType;
+  const type =
+    isInIframe || isMobile
+      ? ProviderTypeEnum.webview
+      : providerTypeSelector(getState());
 
   if (!type) {
     return;
