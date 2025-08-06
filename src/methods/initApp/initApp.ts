@@ -71,7 +71,32 @@ export async function initApp({
 
   switchTheme(defaultTheme);
 
-  initStore(storage.getStorageCallback);
+  const store = initStore(storage.getStorageCallback);
+
+  // Wait for store rehydration when using async storage (like React Native AsyncStorage)
+  // This ensures the store is fully populated before restoreProvider() executes
+  if (storage.getStorageCallback !== defaultStorageCallback) {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        if (store.persist.hasHydrated()) {
+          resolve();
+        }
+
+        store.persist.onFinishHydration(() => {
+          resolve();
+        });
+
+        setTimeout(() => {
+          reject();
+        }, 5000);
+      });
+    } catch (error: any) {
+      console.warn(
+        'Store hydration timed out after 5 seconds. Continuing initialization...',
+        error.message
+      );
+    }
+  }
 
   const { apiAddress } = await initializeNetwork({
     customNetworkConfig: dAppConfig.network,
