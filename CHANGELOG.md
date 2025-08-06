@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fix provider restoration when async storage is setup in the client](https://github.com/multiversx/mx-sdk-dapp/pull/1547)
 
 ## [[5.0.12](https://github.com/multiversx/mx-sdk-dapp/pull/1541)] - 2025-08-01
 
