@@ -18,6 +18,7 @@ import { initStore } from 'store/store';
 import { ThemesEnum } from 'types';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
+import { REHYDRATE_STORE_TIMEOUT } from '../../constants';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
@@ -71,7 +72,32 @@ export async function initApp({
 
   switchTheme(defaultTheme);
 
-  initStore(storage.getStorageCallback);
+  const store = initStore(storage.getStorageCallback);
+
+  // Wait for store rehydration when using async storage (like React Native AsyncStorage)
+  // This ensures the store is fully populated before restoreProvider() executes
+  if (storage.getStorageCallback !== defaultStorageCallback) {
+    try {
+      await new Promise<void>((resolve, reject) => {
+        if (store.persist.hasHydrated()) {
+          resolve();
+        }
+
+        store.persist.onFinishHydration(() => {
+          resolve();
+        });
+
+        setTimeout(() => {
+          reject();
+        }, REHYDRATE_STORE_TIMEOUT);
+      });
+    } catch (error: any) {
+      console.warn(
+        `Store rehydration timed out after ${REHYDRATE_STORE_TIMEOUT / 1000} seconds. Continuing initialization...`,
+        error.message
+      );
+    }
+  }
 
   const { apiAddress } = await initializeNetwork({
     customNetworkConfig: dAppConfig.network,

@@ -15,3 +15,5 @@ export const storage = safeWindow
   : undefined;
 
 export const subscriptions = new Map<SubscriptionsEnum, () => void>();
+
+export const REHYDRATE_STORE_TIMEOUT = 3000; // 3 seconds
