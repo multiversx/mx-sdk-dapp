@@ -7,10 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Fix WalletConnect Provider issues related to consecutive signings](https://github.com/multiversx/mx-sdk-dapp/pull/1546)
 
 ## [[5.0.12](https://github.com/multiversx/mx-sdk-dapp/pull/1541)] - 2025-08-01
 
+- [Fix WalletConnect Provider issues related to consecutive signings](https://github.com/multiversx/mx-sdk-dapp/pull/1546)
 - [Removed loginInfo unused members](http://github.com/multiversx/mx-sdk-dapp/pull/1543)
 - [Added shadow dom test utils](https://github.com/multiversx/mx-sdk-dapp/pull/1542)
 - [Fixed sign transactions error is not re-thrown](http://github.com/multiversx/mx-sdk-dapp/pull/1540)
