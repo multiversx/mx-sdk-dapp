@@ -18,6 +18,7 @@ import { initStore } from 'store/store';
 import { ThemesEnum } from 'types';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
+import { HYDRATE_STORE_TIMEOUT } from '../../constants';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
@@ -88,7 +89,7 @@ export async function initApp({
 
         setTimeout(() => {
           reject();
-        }, 5000);
+        }, HYDRATE_STORE_TIMEOUT);
       });
     } catch (error: any) {
       console.warn(
