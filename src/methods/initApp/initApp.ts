@@ -18,7 +18,7 @@ import { initStore } from 'store/store';
 import { ThemesEnum } from 'types';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
-import { HYDRATE_STORE_TIMEOUT } from '../../constants';
+import { REHYDRATE_STORE_TIMEOUT } from '../../constants';
 import { getIsLoggedIn } from '../account/getIsLoggedIn';
 import { registerWebsocketListener } from './websocket/registerWebsocket';
 import { trackTransactions } from '../trackTransactions/trackTransactions';
@@ -89,11 +89,11 @@ export async function initApp({
 
         setTimeout(() => {
           reject();
-        }, HYDRATE_STORE_TIMEOUT);
+        }, REHYDRATE_STORE_TIMEOUT);
       });
     } catch (error: any) {
       console.warn(
-        'Store hydration timed out after 5 seconds. Continuing initialization...',
+        `Store rehydration timed out after ${REHYDRATE_STORE_TIMEOUT / 1000} seconds. Continuing initialization...`,
         error.message
       );
     }
