@@ -66,7 +66,7 @@ export function createDataTestIdSelector(testId: string): string {
   const escape =
     window.CSS && typeof window.CSS.escape === 'function'
       ? window.CSS.escape
-      : (s: string) => s.replace(/"/g, '\\"').replace(/'/g, "\\'");
+      : (s: string) => s.replace(/"/g, '\\"').replace(/'/g, "\\'"); // eslint-disable-line quotes
 
   return `[data-testid="${escape(testId)}"]`;
 }

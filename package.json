@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.0.13",
+  "version": "5.1.0",
   "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -56,13 +56,13 @@
     "zustand": "4.4.7"
   },
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x",
-    "@multiversx/sdk-dapp-utils": "^2.x",
+    "@multiversx/sdk-core": "^14.x | ^15.x",
+    "@multiversx/sdk-dapp-utils": "^3.x",
     "axios": ">=1.10.0",
     "bignumber.js": "^9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.20"
+    "@multiversx/sdk-dapp-ui": ">=0.0.23"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
@@ -70,9 +70,9 @@
   },
   "devDependencies": {
     "@eslint/js": "9.15.0",
+    "@multiversx/sdk-core": "^15.x",
+    "@multiversx/sdk-dapp-utils": "^3.x",
     "@swc/core": "1.4.17",
-    "@multiversx/sdk-core": "^14.x",
-    "@multiversx/sdk-dapp-utils": "^2.x",
     "@swc/jest": "0.2.36",
     "@types/jest": "29.5.13",
     "@types/lodash.isempty": "4.4.9",

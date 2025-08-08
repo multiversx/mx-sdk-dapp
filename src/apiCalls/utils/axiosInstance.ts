@@ -1,6 +1,13 @@
 import { buildAxiosFetch } from '@lifeomic/axios-fetch';
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
+type RequestInit = {
+  method?: string;
+  headers?: Record<string, string>;
+  body?: string;
+  [key: string]: any;
+};
+
 // Needs to be used beacause an async call made after cross-window user interaction makes the dapp unresponsive
 
 const fetch = buildAxiosFetch(axios);

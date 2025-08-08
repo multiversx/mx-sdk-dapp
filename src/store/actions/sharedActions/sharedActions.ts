@@ -1,8 +1,5 @@
 import { Address } from 'lib/sdkCore';
-import {
-  ProviderTypeEnum,
-  ProviderType
-} from 'providers/types/providerFactory.types';
+import { ProviderType } from 'providers/types/providerFactory.types';
 import { resetStore } from 'store/middleware/logoutMiddleware';
 import { getStore } from 'store/store';
 
@@ -19,7 +16,7 @@ export const loginAction = ({
   getStore().setState(
     ({ account, loginInfo }) => {
       account.address = address;
-      account.publicKey = new Address(address).hex();
+      account.publicKey = new Address(address).toHex();
 
       if (loginInfo) {
         loginInfo.providerType = providerType;
