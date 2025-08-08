@@ -96,7 +96,7 @@ describe('when the gas limit is updated', () => {
   const transactionsToModify: MultiSignTransactionType[] =
     mockGetCommonDataInput.allTransactions.map((tx) => ({
       ...tx,
-      transaction: Transaction.fromPlainObject(tx.transaction)
+      transaction: Transaction.newFromPlainObject(tx.transaction)
     }));
 
   const updatedTransactions = [...transactionsToModify].map((tx, i) => {

@@ -56,8 +56,8 @@
     "zustand": "4.4.7"
   },
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x",
-    "@multiversx/sdk-dapp-utils": "^2.x",
+    "@multiversx/sdk-core": "^14.x | ^15.x",
+    "@multiversx/sdk-dapp-utils": "^3.x",
     "axios": ">=1.10.0",
     "bignumber.js": "^9.x"
   },
@@ -70,9 +70,9 @@
   },
   "devDependencies": {
     "@eslint/js": "9.15.0",
+    "@multiversx/sdk-core": "^15.x",
+    "@multiversx/sdk-dapp-utils": "^3.x",
     "@swc/core": "1.4.17",
-    "@multiversx/sdk-core": "^14.x",
-    "@multiversx/sdk-dapp-utils": "^2.x",
     "@swc/jest": "0.2.36",
     "@types/jest": "29.5.13",
     "@types/lodash.isempty": "4.4.9",
