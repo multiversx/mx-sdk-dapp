@@ -1048,7 +1048,7 @@
     axios "^1.10.0"
     bip39 "3.1.0"
 
-"@multiversx/sdk-dapp-ui@>=0.0.20":
+"@multiversx/sdk-dapp-ui@>=0.0.23":
   version "0.0.23"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-ui/-/sdk-dapp-ui-0.0.23.tgz#7c925943b32830f8cea81b16fae957c189fb8515"
   integrity sha512-hewc8gf+7MzEqIbwvTQKp52gCdLN9DtV1Esm77M/Yp9FlN69zCr8CYtusSiP3swJ/rkfG8KC0E8MWpzQvRcoQw==
@@ -1063,7 +1063,7 @@
     qrcode ">=1.5.4"
     sass-embedded "^1.85.1"
 
-"@multiversx/sdk-dapp-utils@3.x":
+"@multiversx/sdk-dapp-utils@^3.x":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@multiversx/sdk-dapp-utils/-/sdk-dapp-utils-3.0.1.tgz#7d742715e4cb942162e01d5742c2aa7b706a404f"
   integrity sha512-njaULbnYYS+VmHvBUx2EEIccFibmwSYABYSSLSxevhXSUtteKeK5RK9joDiNSJdG82BR3ZDTGm3eJLT54249Kw==
