@@ -40,7 +40,7 @@ export const logoutMiddleware = (state: StoreType) => {
   const loginTimestamp = loginExpiresAtSelector(state);
   const { address, publicKey } = accountInfoSelector(state);
 
-  if (address && publicKey !== new Address(address).hex()) {
+  if (address && publicKey !== new Address(address).toHex()) {
     resetStore(state);
   }
 
