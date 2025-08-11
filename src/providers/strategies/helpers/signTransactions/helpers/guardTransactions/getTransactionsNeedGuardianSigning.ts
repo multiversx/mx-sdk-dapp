@@ -12,7 +12,7 @@ export const getTransactionsNeedGuardianSigning = ({
   }
 
   const allSigned = transactions.every((tx) =>
-    Boolean(tx.getGuardianSignature().toString('hex'))
+    Boolean(tx.guardianSignature.toString())
   );
 
   return !allSigned;
