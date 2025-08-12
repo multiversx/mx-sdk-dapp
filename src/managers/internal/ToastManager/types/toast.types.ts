@@ -20,6 +20,7 @@ export interface GetToastsOptionsDataPropsType {
   status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
   toastId: string;
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
+  txActionName?: string;
 }
 
 export interface IToastDataState {
