@@ -15,6 +15,11 @@ dist
 .rpt2_cache
 .yalc
 .husky
+CLAUDE.md
+docs/
+.bmad-core
+.claude
+.vscode
 
 # misc
 .DS_Store
