@@ -17,7 +17,8 @@ export const getToastDataStateByStatus = ({
   sender,
   status,
   toastId,
-  transactionsDisplayInfo
+  transactionsDisplayInfo,
+  txActionName
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: IToastDataState = {
     id: toastId,
@@ -25,6 +26,7 @@ export const getToastDataStateByStatus = ({
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.successMessage ??
+      txActionName ??
       TransactionsDefaultTitles.success,
     iconClassName: 'success'
   };
@@ -35,6 +37,7 @@ export const getToastDataStateByStatus = ({
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.receivedMessage ??
+      txActionName ??
       TransactionsDefaultTitles.received,
     iconClassName: 'success'
   };
@@ -45,6 +48,7 @@ export const getToastDataStateByStatus = ({
     hasCloseButton: false,
     title:
       transactionsDisplayInfo?.processingMessage ??
+      txActionName ??
       TransactionsDefaultTitles.pending,
     iconClassName: 'warning'
   };
@@ -53,7 +57,9 @@ export const getToastDataStateByStatus = ({
     id: toastId,
     icon: ToastIconsEnum.times,
     title:
-      transactionsDisplayInfo?.errorMessage ?? TransactionsDefaultTitles.failed,
+      transactionsDisplayInfo?.errorMessage ??
+      txActionName ??
+      TransactionsDefaultTitles.failed,
     hasCloseButton: true,
     iconClassName: 'danger'
   };
@@ -63,6 +69,7 @@ export const getToastDataStateByStatus = ({
     icon: ToastIconsEnum.ban,
     title:
       transactionsDisplayInfo?.invalidMessage ??
+      txActionName ??
       TransactionsDefaultTitles.invalid,
     hasCloseButton: true,
     iconClassName: 'warning'
@@ -73,6 +80,7 @@ export const getToastDataStateByStatus = ({
     icon: ToastIconsEnum.times,
     title:
       transactionsDisplayInfo?.timedOutMessage ??
+      txActionName ??
       TransactionsDefaultTitles.timedOut,
     hasCloseButton: true,
     iconClassName: 'warning'
