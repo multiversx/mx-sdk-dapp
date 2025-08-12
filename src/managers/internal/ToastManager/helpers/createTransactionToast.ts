@@ -26,13 +26,16 @@ export const createTransactionToast = ({
   endTime
 }: CreateTransactionToastParamsType): ITransactionToast => {
   const isPending = getIsTransactionPending(status);
+  // Extracts action name from the first transaction
+  const txActionName = transactions[0]?.action?.name;
 
   const toastDataState = getToastDataStateByStatus({
     address,
     sender: transactions[0]?.interactor ?? '',
     toastId,
     status,
-    transactionsDisplayInfo
+    transactionsDisplayInfo,
+    txActionName
   });
 
   const processedTransactionsStatus = getToastTransactionsStatus(transactions);
