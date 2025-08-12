@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added support for `onCancelLogin` handler in `UnlockPanelManager`](https://github.com/multiversx/mx-sdk-dapp/pull/1560)
+
 ## [[5.0.13](https://github.com/multiversx/mx-sdk-dapp/pull/1548)] - 2025-08-06
 
 - [Fix provider restoration when async storage is setup in the client](https://github.com/multiversx/mx-sdk-dapp/pull/1547)

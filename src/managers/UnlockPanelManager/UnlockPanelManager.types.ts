@@ -75,4 +75,14 @@ export type UnlockPanelManagerInitParamsType = {
    *  ```
    */
   onClose?: OnCloseUnlockPanelType;
+  /**
+   * Callback function to handle UI behavior when the login is cancelled
+   * @example
+   * ```ts
+   *  onCancelLogin: () => {
+   *    navigate('/');
+   *  }
+   *  ```
+   */
+  onCancelLogin?: OnCloseUnlockPanelType;
 };

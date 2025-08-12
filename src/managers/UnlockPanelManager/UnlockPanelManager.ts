@@ -37,6 +37,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
   private static loginHandler: LoginHandlerType | null = null;
   private static onClose: OnCloseUnlockPanelType | null = null;
   private static allowedProviders?: ProviderType[] | null = null;
+  private static onCancelLogin: OnCloseUnlockPanelType | null = null;
 
   constructor() {
     super({
@@ -60,6 +61,10 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
     if (params.onClose) {
       this.onClose = params.onClose;
+    }
+
+    if (params.onCancelLogin) {
+      this.onCancelLogin = params.onCancelLogin;
     }
 
     return this.getInstance();
@@ -127,6 +132,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
   private readonly handleCancelLogin = async () => {
     await ProviderFactory.destroy();
+    UnlockPanelManager.onCancelLogin?.();
   };
 
   private readonly isSimpleLoginCallback = (

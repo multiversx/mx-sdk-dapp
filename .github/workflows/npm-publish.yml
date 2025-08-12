@@ -17,13 +17,19 @@ jobs:
       contents: write
       packages: write
     steps:
-      - uses: actions/checkout@v3
+      - name: Fix permissions
+        run: |
+          sudo chown -R $USER:$USER ${{ github.workspace }}
+          sudo chmod -R 755 ${{ github.workspace }}
+        continue-on-error: true
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
-      - uses: actions/setup-node@v1
+          clean: true
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
-          registry-url: https://registry.npmjs.org/
 
       - name: Setup yarn
         run: npm install -g yarn
