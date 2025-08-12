@@ -7,7 +7,7 @@ set -e
 echo "Installing pnpm..."
 npm install --global pnpm
 echo "Installing yalc..."
-npm install -global yalc
+npm install --global yalc
 
 
 # Prepare mx-sdk-dapp for publishing
