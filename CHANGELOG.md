@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added support for `onCancelLogin` handler in `UnlockPanelManager` and added pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1554)
+- [Added pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1554)
 
 ## [[5.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1553)] - 2025-08-12
 
