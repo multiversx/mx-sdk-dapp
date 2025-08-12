@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -56,13 +56,13 @@
     "zustand": "4.4.7"
   },
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x | ^15.x",
+    "@multiversx/sdk-core": "^14.x || ^15.x",
     "@multiversx/sdk-dapp-utils": "^3.x",
     "axios": ">=1.10.0",
     "bignumber.js": "^9.x"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.23"
+    "@multiversx/sdk-dapp-ui": ">=0.0.24"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
