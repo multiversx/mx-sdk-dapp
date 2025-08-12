@@ -4,10 +4,10 @@
 set -e
 
 # Install prerequisites
-echo "Installing yarn..."
-npm install --global yarn
+echo "Installing pnpm..."
+npm install --global pnpm
 echo "Installing yalc..."
-npm install -global yalc
+npm install --global yalc
 
 
 # Prepare mx-sdk-dapp for publishing
@@ -18,10 +18,10 @@ cd mx-sdk-dapp
 git checkout development
 
 echo "Installing dependencies for mx-sdk-dapp..."
-yarn install
+pnpm install
 
 echo "Building mx-sdk-dapp..."
-yarn build
+pnpm build
 
 echo "Publishing mx-sdk-dapp..."
 yalc publish

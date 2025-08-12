@@ -2,7 +2,7 @@
   "compilerOptions": {
     "outDir": "out",
     "target": "es2021",
-    "lib": ["ES2021"],
+    "lib": ["ES2021", "DOM", "DOM.Iterable"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "isolatedModules": true,
