@@ -178,12 +178,11 @@ describe('addressIsValid tests', () => {
   });
 
   describe('Regex pattern validation (/^\\w+$/)', () => {
-    it('returns true for string containing only word characters (letters, digits, underscores)', () => {
+    it('returns false for string containing only word characters (letters, digits, underscores)', () => {
       // This tests the regex but will fail Address.isValid validation
       const result = addressIsValid('abc123_DEF456');
       expect(result).toBe(false); // False because it's not a valid MultiversX address
     });
-
     it('returns false for string with non-word characters', () => {
       const result = addressIsValid('abc-123');
       expect(result).toBe(false);

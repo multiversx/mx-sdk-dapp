@@ -132,7 +132,14 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
   private readonly handleCancelLogin = async () => {
     await ProviderFactory.destroy();
-    UnlockPanelManager.onCancelLogin?.();
+
+    if (UnlockPanelManager.onCancelLogin) {
+      UnlockPanelManager.onCancelLogin();
+    } else {
+      UnlockPanelManager.onClose?.();
+    }
+
+    this.closeUI();
   };
 
   private readonly isSimpleLoginCallback = (
