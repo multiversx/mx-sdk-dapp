@@ -1,8 +1,5 @@
 import { Address } from 'lib/sdkCore';
-import {
-  ProviderTypeEnum,
-  ProviderType
-} from 'providers/types/providerFactory.types';
+import { ProviderType } from 'providers/types/providerFactory.types';
 import { resetStore } from 'store/middleware/logoutMiddleware';
 import { getStore } from 'store/store';
 

@@ -33,14 +33,11 @@ jobs:
         with:
           node-version: 20
           registry-url: 'https://registry.npmjs.org'
-      - name: Setup yarn
-        run: npm install -g yarn
-      - name: Clean up
-        run: |
-          rm -rf node_modules build
+      - name: Setup pnpm
+        run: npm install -g pnpm
       - name: Install Dependencies
-        run: yarn install
+        run: pnpm install
       - name: Build
-        run: yarn build
+        run: pnpm build
       - name: Run unit tests
-        run: yarn test --silent
+        run: pnpm test --silent
