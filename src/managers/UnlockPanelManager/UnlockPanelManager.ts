@@ -135,11 +135,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
 
     if (UnlockPanelManager.onCancelLogin) {
       UnlockPanelManager.onCancelLogin();
-    } else {
-      UnlockPanelManager.onClose?.();
     }
-
-    this.closeUI();
   };
 
   private readonly isSimpleLoginCallback = (
