@@ -85,9 +85,9 @@ export const getStore = () => {
  * initStore(() => new InMemoryStorage());
  * */
 export const initStore = (getStorageCallback = defaultStorageCallback) => {
-  const initializedStore = createDAppStore(getStorageCallback);
-  setDAppStore(initializedStore);
-  return initializedStore;
+  const dappStore = createDAppStore(getStorageCallback);
+  setDAppStore(dappStore);
+  return dappStore;
 };
 
 export const getState = () => getStore().getState();

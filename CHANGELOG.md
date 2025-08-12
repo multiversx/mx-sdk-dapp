@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- [Added support for `onCancelLogin` handler in `UnlockPanelManager` and added pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1560)
+- [Added support for `onCancelLogin` handler in `UnlockPanelManager` and added pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1554)
+
+## [[5.1.1](https://github.com/multiversx/mx-sdk-dapp/pull/1553)] - 2025-08-12
+
+- [Fixed sdk-core peerDependency options](https://github.com/multiversx/mx-sdk-dapp/pull/1552)
+- [Fixed transaction toast not displaying after closing NotificationManager](https://github.com/multiversx/mx-sdk-dapp/pull/1550)
+
+## [[5.1.0](https://github.com/multiversx/mx-sdk-dapp/pull/1551)] - 2025-08-11
+
+- [Allow @multiversx/sdk-core v^15](https://github.com/multiversx/mx-sdk-dapp/pull/1549)
 
 ## [[5.0.13](https://github.com/multiversx/mx-sdk-dapp/pull/1548)] - 2025-08-06
 
