@@ -56,7 +56,7 @@
     "zustand": "4.4.7"
   },
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x | ^15.x",
+    "@multiversx/sdk-core": "^14.x || ^15.x",
     "@multiversx/sdk-dapp-utils": "^3.x",
     "axios": ">=1.10.0",
     "bignumber.js": "^9.x"
