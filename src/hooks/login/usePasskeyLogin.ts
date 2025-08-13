@@ -60,8 +60,6 @@ export const usePasskeyLogin = ({
     setIsLoading(true);
 
     const provider: PasskeyProvider = PasskeyProvider.getInstance();
-
-    // Only set the service URL if extrasApiAddress is valid
     setServiceUrlIfValid(provider, extrasApiAddress);
 
     try {
@@ -136,8 +134,6 @@ export const usePasskeyLogin = ({
 
   const createAccount = async (walletName: string) => {
     const provider: PasskeyProvider = PasskeyProvider.getInstance();
-
-    // Only set the service URL if extrasApiAddress is valid
     setServiceUrlIfValid(provider, extrasApiAddress);
 
     await provider.init();
