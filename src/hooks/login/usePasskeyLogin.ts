@@ -15,7 +15,7 @@ import { LoginMethodsEnum } from 'types/enums.types';
 import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
-import { isValidUrl } from 'utils/validation';
+import { setServiceUrlIfValid } from 'utils/validation';
 import { addOriginToLocationPath } from 'utils/window';
 import { getDefaultCallbackUrl } from 'utils/window';
 import { clearInitiatedLogins } from './helpers';
@@ -62,14 +62,7 @@ export const usePasskeyLogin = ({
     const provider: PasskeyProvider = PasskeyProvider.getInstance();
 
     // Only set the service URL if extrasApiAddress is valid
-    if (extrasApiAddress && isValidUrl(extrasApiAddress)) {
-      provider.setPasskeyServiceUrl(extrasApiAddress);
-    } else if (extrasApiAddress) {
-      console.warn(
-        'Invalid extrasApiAddress provided for passkey service:',
-        extrasApiAddress
-      );
-    }
+    setServiceUrlIfValid(provider, extrasApiAddress);
 
     try {
       const isSuccessfullyInitialized: boolean = await provider.init();
@@ -145,14 +138,7 @@ export const usePasskeyLogin = ({
     const provider: PasskeyProvider = PasskeyProvider.getInstance();
 
     // Only set the service URL if extrasApiAddress is valid
-    if (extrasApiAddress && isValidUrl(extrasApiAddress)) {
-      provider.setPasskeyServiceUrl(extrasApiAddress);
-    } else if (extrasApiAddress) {
-      console.warn(
-        'Invalid extrasApiAddress provided for passkey service:',
-        extrasApiAddress
-      );
-    }
+    setServiceUrlIfValid(provider, extrasApiAddress);
 
     await provider.init();
     return await provider.createAccount({

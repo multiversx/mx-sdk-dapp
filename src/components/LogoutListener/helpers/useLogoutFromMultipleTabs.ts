@@ -4,6 +4,7 @@ import { useSelector } from 'reduxStore/DappProviderContext';
 import { logoutRouteSelector } from 'reduxStore/selectors';
 import { logout } from 'utils/logout';
 import { localStorageKeys } from 'utils/storage/local';
+import { isStaleLogoutEvent } from 'utils/logout/isStaleLogoutEvent';
 
 const { logoutEvent } = localStorageKeys;
 const storageKey = 'storage';
@@ -28,11 +29,8 @@ export const useLogoutFromMultipleTabs = () => {
         const parsedData: LogoutEventData = JSON.parse(ev.newValue);
         const currentTime = Date.now();
 
-        // Only act on logout events for the current address and ignore stale events (older than 5 seconds)
-        if (
-          parsedData.address === address &&
-          currentTime - parsedData.ts <= 5000
-        ) {
+        // Only act on logout events for the current address and ignore stale events
+        if (!isStaleLogoutEvent({ parsedData, currentAddress: address, currentTime })) {
           logout(logoutRoute);
         }
       } catch (err) {

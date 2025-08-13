@@ -10,6 +10,7 @@ import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
 import { addOriginToLocationPath, getWindowLocation } from './window';
+import { isStaleLogoutEvent } from './logout/isStaleLogoutEvent';
 
 interface RedirectToCallbackUrlParamsType {
   callbackUrl?: string;
@@ -46,11 +47,8 @@ const broadcastLogoutAcrossTabs = (address: string) => {
       const parsedData: LogoutEventData = JSON.parse(storedData);
       const currentTime = Date.now();
 
-      // Ignore stale events (older than 5 seconds) or events for different addresses
-      if (
-        parsedData.address !== address ||
-        currentTime - parsedData.ts > 5000
-      ) {
+      // Ignore stale events or events for different addresses
+      if (isStaleLogoutEvent({ parsedData, currentAddress: address, currentTime })) {
         return;
       }
     } catch (error) {
