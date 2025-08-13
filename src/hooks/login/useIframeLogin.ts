@@ -9,7 +9,7 @@ import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
-import { emptyAccount, setAccount, setAddress } from 'reduxStore/slices';
+import { emptyAccount, setAccount, setAddress, setTokenLogin } from 'reduxStore/slices';
 import {
   LoginHookGenericStateType,
   LoginMethodsEnum,
@@ -64,6 +64,7 @@ export const useIframeLogin = ({
 
     if (!walletUrl) {
       setError('Iframe snap wallet URL is not set');
+      setIsLoading(false);
       return;
     }
 
@@ -77,6 +78,7 @@ export const useIframeLogin = ({
         console.warn(
           'Something went wrong trying to redirect to wallet login..'
         );
+        setIsLoading(false);
         return;
       }
 
@@ -91,6 +93,7 @@ export const useIframeLogin = ({
         // Fetching block failed
         if (!token) {
           console.warn('Fetching block failed. Login cancelled.');
+          setIsLoading(false);
           return;
         }
       }
@@ -124,6 +127,10 @@ export const useIframeLogin = ({
       });
 
       if (!account) {
+        setError('Failed to process account information. Login cancelled.');
+        setIsLoading(false);
+        // Clear any temporary login token
+        dispatch(setTokenLogin(null));
         return;
       }
 

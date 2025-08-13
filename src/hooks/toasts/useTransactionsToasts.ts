@@ -5,10 +5,13 @@ import {
   transactionToastsSelector
 } from 'reduxStore/selectors';
 import { TransactionBatchStatusesEnum } from 'types';
+import { TransactionToastType } from 'types/toasts.types';
 import { useGetSignedTransactions } from '../transactions';
 
 export const useTransactionsToasts = () => {
-  const transactionsToasts = useSelector(transactionToastsSelector);
+  const transactionsToasts = useSelector(
+    transactionToastsSelector
+  ) as TransactionToastType[];
   const transactionsInfo = useSelector(transactionsInfoSelectors);
   const { signedTransactions } = useGetSignedTransactions();
 

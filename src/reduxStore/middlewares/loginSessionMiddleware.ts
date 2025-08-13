@@ -9,10 +9,32 @@ import { localStorageKeys } from 'utils/storage/local';
 
 const whitelistedActions = [LOGOUT_ACTION_NAME];
 let invalidatedSession = false;
+let invalidationTimer: NodeJS.Timeout | null = null;
 
 const throttledSetNewExpires = throttle(() => {
   setLoginExpiresAt(getNewLoginExpiresTimestamp());
 }, 5000);
+
+const clearInvalidationTimer = () => {
+  if (invalidationTimer) {
+    clearTimeout(invalidationTimer);
+    invalidationTimer = null;
+  }
+};
+
+const scheduleInvalidation = (store: any) => {
+  // Clear any existing timer to prevent multiple dispatches
+  clearInvalidationTimer();
+
+  // Set atomic state immediately to prevent race conditions
+  invalidatedSession = true;
+
+  // Schedule the dispatch with debounce
+  invalidationTimer = setTimeout(() => {
+    store.dispatch(invalidateLoginSession());
+    invalidationTimer = null;
+  }, 1000);
+};
 
 export const loginSessionMiddleware =
   (store: any) =>
@@ -43,12 +65,11 @@ export const loginSessionMiddleware =
     const isExpired = loginTimestamp - now < 0;
 
     if (isExpired && !invalidatedSession) {
-      setTimeout(() => {
-        invalidatedSession = true;
-        store.dispatch(invalidateLoginSession());
-      }, 1000);
+      scheduleInvalidation(store);
     } else {
       if (invalidatedSession) {
+        // Clear the timer and reset state when session is valid
+        clearInvalidationTimer();
         invalidatedSession = false;
       }
 

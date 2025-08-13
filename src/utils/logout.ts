@@ -10,11 +10,23 @@ import { preventRedirects, safeRedirect } from './redirect';
 import { storage } from './storage';
 import { localStorageKeys } from './storage/local';
 import { addOriginToLocationPath, getWindowLocation } from './window';
+import { isStaleLogoutEvent } from './logout/isStaleLogoutEvent';
 
 interface RedirectToCallbackUrlParamsType {
   callbackUrl?: string;
   onRedirect?: (callbackUrl?: string) => void;
 }
+
+interface LogoutEventData {
+  address: string;
+  ts: number;
+  id: string;
+}
+
+// Generate a random ID for logout events to prevent race conditions
+const generateLogoutEventId = (): string => {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+};
 
 const redirectToCallbackUrl = ({
   callbackUrl,
@@ -29,19 +41,34 @@ const redirectToCallbackUrl = ({
 
 const broadcastLogoutAcrossTabs = (address: string) => {
   const storedData = storage.local.getItem(localStorageKeys.logoutEvent);
-  const { data } = storedData ? JSON.parse(storedData) : { data: address };
 
-  if (address !== data) {
-    return;
+  if (storedData) {
+    try {
+      const parsedData: LogoutEventData = JSON.parse(storedData);
+      const currentTime = Date.now();
+
+      if (
+        isStaleLogoutEvent({ parsedData, currentAddress: address, currentTime })
+      ) {
+        return;
+      }
+    } catch (error) {
+      // If parsing fails, continue with the logout event
+      console.warn('Failed to parse existing logout event:', error);
+    }
   }
+
+  const logoutEvent: LogoutEventData = {
+    address,
+    ts: Date.now(),
+    id: generateLogoutEventId()
+  };
 
   storage.local.setItem({
     key: localStorageKeys.logoutEvent,
-    data: address,
+    data: JSON.stringify(logoutEvent),
     expires: 0
   });
-
-  storage.local.removeItem(localStorageKeys.logoutEvent);
 };
 
 const CLEAR_SESSION_TIMEOUT_MS = 500;
@@ -63,7 +90,11 @@ export async function logout(
   const isProviderInitialised = provider?.isInitialized?.() === true;
 
   if (shouldAttemptReLogin && provider?.relogin != null) {
-    return provider.relogin();
+    try {
+      return await provider.relogin();
+    } catch (error) {
+      console.error('Relogin failed, proceeding with normal logout:', error);
+    }
   }
 
   if (address && options.shouldBroadcastLogoutAcrossTabs) {
@@ -100,9 +131,16 @@ export async function logout(
 
     if (isWalletProvider && isProviderInitialised) {
       // Allow redux store cleanup before redirect to web wallet
-      return setTimeout(() => {
-        provider.logout({ callbackUrl: url });
-      }, CLEAR_SESSION_TIMEOUT_MS);
+      return new Promise((resolve, reject) => {
+        setTimeout(async () => {
+          try {
+            await provider.logout({ callbackUrl: url });
+            resolve(true);
+          } catch (error) {
+            reject(error);
+          }
+        }, CLEAR_SESSION_TIMEOUT_MS);
+      });
     }
 
     if (

@@ -27,9 +27,28 @@ export async function signTransactions({
     ? transactions
     : [transactions];
 
-  const hasValidChainId = transactionsPayload?.every(
+  // Validate transactions array
+  if (!transactionsPayload || transactionsPayload.length === 0) {
+    return { error: 'No transactions provided', sessionId: null };
+  }
+
+  // Validate each transaction has required fields
+  const invalidTransaction = transactionsPayload.find(
+    (tx) => !tx || !tx.sender || !tx.receiver || tx.value === undefined
+  );
+
+  if (invalidTransaction) {
+    return {
+      error: 'Invalid transaction: missing required fields',
+      sessionId: null
+    };
+  }
+
+  // Validate each transaction has a valid chainID
+  const hasValidChainId = transactionsPayload.every(
     (tx) => tx.chainID === storeChainId
   );
+
   if (!hasValidChainId) {
     const notificationPayload = {
       type: NotificationTypesEnum.warning,

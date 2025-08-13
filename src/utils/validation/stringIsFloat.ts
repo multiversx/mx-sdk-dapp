@@ -2,7 +2,7 @@ import BigNumber from 'bignumber.js';
 import { ZERO } from 'constants/index';
 
 export const stringIsFloat = (amount: string) => {
-  if (isNaN(amount as any)) {
+  if (isNaN(Number(amount))) {
     return false;
   }
   if (amount == null) {
@@ -32,7 +32,14 @@ export const stringIsFloat = (amount: string) => {
     }
   }
   const number = decimals ? [wholes, decimals].join('.') : wholes;
-  const bNparsed = LocalBigNumber(number);
+
+  let bNparsed;
+
+  try {
+    bNparsed = new LocalBigNumber(number);
+  } catch (error) {
+    return false;
+  }
 
   const output =
     bNparsed.toString(10) === number && bNparsed.isGreaterThanOrEqualTo(0);

@@ -15,6 +15,7 @@ import { LoginMethodsEnum } from 'types/enums.types';
 import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
+import { setServiceUrlIfValid } from 'utils/validation';
 import { addOriginToLocationPath } from 'utils/window';
 import { getDefaultCallbackUrl } from 'utils/window';
 import { clearInitiatedLogins } from './helpers';
@@ -57,10 +58,9 @@ export const usePasskeyLogin = ({
     dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
     setIsLoading(true);
-    const provider: PasskeyProvider =
-      PasskeyProvider.getInstance().setPasskeyServiceUrl(
-        extrasApiAddress ?? ''
-      );
+
+    const provider: PasskeyProvider = PasskeyProvider.getInstance();
+    setServiceUrlIfValid(provider, extrasApiAddress);
 
     try {
       const isSuccessfullyInitialized: boolean = await provider.init();
@@ -109,7 +109,7 @@ export const usePasskeyLogin = ({
         return;
       }
 
-      if (signature && token) {
+      if (signature) {
         loginService.setTokenLoginInfo({
           signature,
           address
@@ -133,10 +133,9 @@ export const usePasskeyLogin = ({
   }
 
   const createAccount = async (walletName: string) => {
-    const provider: PasskeyProvider =
-      PasskeyProvider.getInstance().setPasskeyServiceUrl(
-        extrasApiAddress ?? ''
-      );
+    const provider: PasskeyProvider = PasskeyProvider.getInstance();
+    setServiceUrlIfValid(provider, extrasApiAddress);
+
     await provider.init();
     return await provider.createAccount({
       walletName

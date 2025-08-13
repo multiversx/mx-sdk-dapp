@@ -39,5 +39,5 @@ module.exports = {
     'jest-watch-typeahead/testname'
   ],
   workerIdleMemoryLimit: '512MB', // Memory used per worker. Required to prevent memory leaks
-  maxWorkers: '50%' // Maximum tests ran in parallel. Required to prevent CPU usage at 100%
+  maxWorkers: '100%' // Maximum tests ran in parallel. Required to prevent CPU usage at 100%
 };
