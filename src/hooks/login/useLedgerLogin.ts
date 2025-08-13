@@ -183,13 +183,12 @@ export const useLedgerLogin = ({
     if (hasNativeAuth && !currentToken) {
       try {
         currentToken = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
         if (!currentToken) {
           const errorMessage =
             'Failed to fetch native auth login token. Login cancelled.';
+
           console.error('Native auth login token fetch failed:', errorMessage);
 
-          // Show toast notification for better user experience
           addNewCustomToast({
             toastId: `ledger-login-error-${Date.now()}`,
             title: 'Login Failed',
@@ -209,7 +208,6 @@ export const useLedgerLogin = ({
         const errorMessage = 'Error fetching native auth login token';
         console.error(errorMessage, error);
 
-        // Show toast notification for better user experience
         addNewCustomToast({
           toastId: `ledger-login-error-${Date.now()}`,
           title: 'Login Failed',
@@ -313,7 +311,6 @@ export const useLedgerLogin = ({
       setContractDataEnabled(ledgerData.dataEnabled);
       setAccounts(accounts);
 
-      // Set showAddressList synchronously when accounts are successfully fetched
       if (accounts.length > 0) {
         setShowAddressList(true);
       }
