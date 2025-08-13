@@ -7,7 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1557)] - 2025-08-13
+- [Error handling improvements](https://github.com/multiversx/mx-sdk-dapp/pull/1557)
+
+## [[v4.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1558)] - 2025-08-13
 
 - [Fixed 'Token not found' error is thrown during extension login](https://github.com/multiversx/mx-sdk-dapp/pull/1556)
 
