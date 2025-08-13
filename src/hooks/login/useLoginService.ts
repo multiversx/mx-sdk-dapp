@@ -6,7 +6,11 @@ import { networkSelector, tokenLoginSelector } from 'reduxStore/selectors';
 import { setTokenLogin } from 'reduxStore/slices';
 import { nativeAuth } from 'services/nativeAuth';
 import { getNativeAuthConfig } from 'services/nativeAuth/methods';
-import { NativeAuthConfigType, OnProviderLoginType } from 'types';
+import {
+  NativeAuthConfigType,
+  OnProviderLoginType,
+  TokenLoginType
+} from 'types';
 
 const getApiAddress = (
   apiAddress: string,
@@ -68,18 +72,18 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
   }) => {
     const loginToken = tokenRef.current;
 
-    if (!loginToken) {
-      throw 'Token not found. Call `setLoginToken` first.';
-    }
-
     if (!hasNativeAuth) {
       dispatch(
         setTokenLogin({
-          loginToken,
+          ...(loginToken ? { loginToken } : {}),
           signature
-        })
+        } as TokenLoginType)
       );
       return;
+    }
+
+    if (!loginToken) {
+      throw 'Token not found. Call `setLoginToken` first.';
     }
 
     const nativeAuthToken = client.getToken({
