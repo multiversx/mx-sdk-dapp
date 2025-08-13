@@ -8,9 +8,15 @@ import { localStorageKeys } from 'utils/storage/local';
 const { logoutEvent } = localStorageKeys;
 const storageKey = 'storage';
 
+interface LogoutEventData {
+  address: string;
+  ts: number;
+  id: string;
+}
+
 export const useLogoutFromMultipleTabs = () => {
   const { address } = useGetAccountInfo();
-  const logoutRoute = useSelector(logoutRouteSelector);
+  const logoutRoute: string | undefined = useSelector(logoutRouteSelector);
 
   useEffect(() => {
     const receiveMessage = (ev: StorageEvent) => {
@@ -19,9 +25,14 @@ export const useLogoutFromMultipleTabs = () => {
       }
 
       try {
-        const { data } = JSON.parse(ev.newValue);
+        const parsedData: LogoutEventData = JSON.parse(ev.newValue);
+        const currentTime = Date.now();
 
-        if (data === address) {
+        // Only act on logout events for the current address and ignore stale events (older than 5 seconds)
+        if (
+          parsedData.address === address &&
+          currentTime - parsedData.ts <= 5000
+        ) {
           logout(logoutRoute);
         }
       } catch (err) {

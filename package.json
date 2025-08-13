@@ -151,7 +151,6 @@
   },
   "files": [
     "*.js",
-    "*.js",
     "**/*.js",
     "*.d.ts",
     "**/*.d.ts"
@@ -173,8 +172,9 @@
     "@multiversx/sdk-webview-provider": "3.1.1",
     "@reduxjs/toolkit": "1.8.2",
     "bignumber.js": "9.x",
-    "linkify-react": "4.0.2",
-    "linkifyjs": "4.0.2",
+    "linkify-react": "4.3.2",
+    "linkifyjs": "4.3.2",
+    "lodash": "4.17.21",
     "lodash.debounce": "4.0.8",
     "lodash.isequal": "4.5.0",
     "lodash.omit": "4.5.0",

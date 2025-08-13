@@ -8,7 +8,12 @@ import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors/networkConfigSelectors';
 import { setCustomWalletAddress } from 'reduxStore/slices';
-import { emptyAccount, setAccount, setAddress } from 'reduxStore/slices';
+import {
+  emptyAccount,
+  setAccount,
+  setAddress,
+  setTokenLogin
+} from 'reduxStore/slices';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -134,6 +139,12 @@ export const useCrossWindowLogin = ({
       });
 
       if (!account) {
+        setError('Failed to process account information. Login cancelled.');
+        setIsLoading(false);
+        // Clear any temporary login token
+        dispatch(setTokenLogin(null));
+        // Reset the CrossWindowProvider
+        CrossWindowProvider.getInstance().onDestroy();
         return;
       }
 

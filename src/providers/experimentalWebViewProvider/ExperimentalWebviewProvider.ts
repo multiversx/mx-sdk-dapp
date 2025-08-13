@@ -7,7 +7,19 @@ import { persistor, store } from 'reduxStore/store';
 import { loginWithNativeAuthToken } from 'services/nativeAuth/helpers/loginWithNativeAuthToken';
 import { removeAllTransactionsToSign } from 'services/transactions';
 import { IDappProvider } from 'types/dappProvider.types';
+import { WebViewProviderRequestEnums } from 'types/index';
 import { setExternalProviderAsAccountProvider } from '../accountProvider';
+
+// Type definition for valid WebView provider request methods
+type ValidWebViewMethod =
+  typeof WebViewProviderRequestEnums[keyof typeof WebViewProviderRequestEnums];
+
+// Type guard function to validate WebView provider methods
+const isValidWebViewMethod = (method: string): method is ValidWebViewMethod => {
+  return Object.values(WebViewProviderRequestEnums).includes(
+    method as ValidWebViewMethod
+  );
+};
 
 /**
  * This is an experimental provider that uses @multiversx/webview-provider to handle the communication between .
@@ -66,8 +78,10 @@ export class ExperimentalWebviewProvider implements IDappProvider {
     const accessToken = await this._provider.relogin();
 
     if (!accessToken) {
-      console.error('Unable to re-login. Missing accessToken.');
-      return null;
+      const errorMessage =
+        'Unable to re-login. Missing accessToken from webview provider.';
+      console.error(errorMessage);
+      throw new Error(errorMessage);
     }
 
     loginWithNativeAuthToken(accessToken);
@@ -82,7 +96,12 @@ export class ExperimentalWebviewProvider implements IDappProvider {
 
     if (!response) {
       removeAllTransactionsToSign();
-      this._provider.cancelAction();
+
+      try {
+        await this._provider.cancelAction();
+      } catch (error) {
+        console.error('Error cancelling action:', error);
+      }
       return null;
     }
 
@@ -112,8 +131,19 @@ export class ExperimentalWebviewProvider implements IDappProvider {
   sendCustomRequest = async (payload: {
     request: { method: string; params: any };
   }) => {
+    const method = payload.request.method;
+
+    if (!isValidWebViewMethod(method)) {
+      const validMethods = Object.values(WebViewProviderRequestEnums);
+      const errorMessage = `Invalid method "${method}". Allowed methods are: ${validMethods.join(
+        ', '
+      )}`;
+      console.error(errorMessage);
+      throw new Error(errorMessage);
+    }
+
     this._provider.sendPostMessage({
-      type: payload.request.method as any,
+      type: method as any,
       payload: payload.request.params
     });
   };

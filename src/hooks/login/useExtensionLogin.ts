@@ -72,7 +72,9 @@ export const useExtensionLogin = ({
 
         // Fetching block failed
         if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
+          console.error('Native token fetch failed. Login cancelled.');
+          setError('Failed to fetch authentication token. Please try again.');
+          setIsLoading(false);
           return;
         }
       }

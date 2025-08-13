@@ -40,12 +40,18 @@ export function useInitiateExperimentalWebviewLogin() {
 
     // is logging in from URL
     if (accessToken) {
-      setWebviewLogin({
-        data: accessToken
-      });
-      provider.init();
-      setExternalProvider(provider);
-      return;
+      try {
+        await setWebviewLogin({
+          data: accessToken
+        });
+
+        await provider.init();
+        setExternalProvider(provider);
+        return;
+      } catch (error) {
+        console.error('Failed to set webview login state:', error);
+        return;
+      }
     }
 
     try {

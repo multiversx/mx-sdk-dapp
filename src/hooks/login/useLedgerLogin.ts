@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { getAccountProvider, getLedgerConfiguration } from 'providers';
@@ -16,6 +17,7 @@ import {
 } from 'reduxStore/slices';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { getLedgerErrorCodes, optionalRedirect } from 'utils/internal';
+import { addNewCustomToast } from 'utils/toasts/customToastsActions';
 import {
   InitiateLoginFunctionType,
   LoginHookGenericStateType,
@@ -69,7 +71,7 @@ export const useLedgerLogin = ({
   const isLoggedIn = getIsLoggedIn();
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
-  let token = tokenToSign;
+  let currentToken = tokenToSign;
 
   const {
     accounts,
@@ -178,21 +180,59 @@ export const useLedgerLogin = ({
 
     const { index } = selectedAddress;
 
-    if (hasNativeAuth && !token) {
-      token = await loginService.getNativeAuthLoginToken();
-      // Fetching block failed
-      if (!token) {
-        console.warn('Fetching block failed. Login cancelled.');
-        return;
+    if (hasNativeAuth && !currentToken) {
+      try {
+        currentToken = await loginService.getNativeAuthLoginToken();
+        // Fetching block failed
+        if (!currentToken) {
+          const errorMessage =
+            'Failed to fetch native auth login token. Login cancelled.';
+          console.error('Native auth login token fetch failed:', errorMessage);
+
+          // Show toast notification for better user experience
+          addNewCustomToast({
+            toastId: `ledger-login-error-${Date.now()}`,
+            title: 'Login Failed',
+            message:
+              'Unable to authenticate. Please try again or check your network connection.',
+            icon: faTimes,
+            duration: 5000
+          });
+
+          onLoginFailed(
+            new Error(errorMessage),
+            '. Please try again or check your network connection.'
+          );
+          return false;
+        }
+      } catch (error) {
+        const errorMessage = 'Error fetching native auth login token';
+        console.error(errorMessage, error);
+
+        // Show toast notification for better user experience
+        addNewCustomToast({
+          toastId: `ledger-login-error-${Date.now()}`,
+          title: 'Login Failed',
+          message:
+            'Unable to authenticate. Please try again or check your network connection.',
+          icon: faTimes,
+          duration: 5000
+        });
+
+        onLoginFailed(
+          error,
+          '. Please try again or check your network connection.'
+        );
+        return false;
       }
     }
 
-    if (token) {
-      loginService.setLoginToken(token);
+    if (currentToken) {
+      loginService.setLoginToken(currentToken);
 
       try {
         const loginInfo = await hwProvider.tokenLogin({
-          token: Buffer.from(`${token}{}`),
+          token: Buffer.from(`${currentToken}{}`),
           addressIndex: index
         });
 
@@ -272,6 +312,12 @@ export const useLedgerLogin = ({
       setVersion(ledgerData.version);
       setContractDataEnabled(ledgerData.dataEnabled);
       setAccounts(accounts);
+
+      // Set showAddressList synchronously when accounts are successfully fetched
+      if (accounts.length > 0) {
+        setShowAddressList(true);
+      }
+
       setIsLoading(false);
     } catch (err) {
       onLoginFailed(err);
@@ -317,8 +363,6 @@ export const useLedgerLogin = ({
         if (!accounts?.length) {
           await fetchAccounts();
         }
-
-        setShowAddressList(true);
       }
 
       setIsLoading(false);
@@ -354,14 +398,6 @@ export const useLedgerLogin = ({
   useEffect(() => {
     initProviderAndAccounts();
   }, [startIndex, showAddressList, hwProvider]);
-
-  useEffect(() => {
-    const shouldShowAddressList = accounts?.length > 0 && !showAddressList;
-
-    if (shouldShowAddressList) {
-      setShowAddressList(true);
-    }
-  }, [accounts]);
 
   const loginFailed = Boolean(error);
 

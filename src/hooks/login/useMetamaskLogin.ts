@@ -59,6 +59,7 @@ export const useMetamaskLogin = ({
         console.warn(
           'Something went wrong trying to redirect to wallet login..'
         );
+        setIsLoading(false);
         return;
       }
 
@@ -73,6 +74,7 @@ export const useMetamaskLogin = ({
         // Fetching block failed
         if (!token) {
           console.warn('Fetching block failed. Login cancelled.');
+          setIsLoading(false);
           return;
         }
       }

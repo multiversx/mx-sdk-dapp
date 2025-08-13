@@ -59,13 +59,14 @@ export const useOperaLogin = ({
         console.warn(
           'Something went wrong trying to redirect to wallet login..'
         );
+        setIsLoading(false);
         return;
       }
 
       const { origin } = getWindowLocation();
-      const defaulCallbackUrl = getDefaultCallbackUrl();
+      const defaultCallbackUrl = getDefaultCallbackUrl();
       const callbackUrl: string = encodeURIComponent(
-        `${origin}${callbackRoute ?? defaulCallbackUrl}`
+        `${origin}${callbackRoute ?? defaultCallbackUrl}`
       );
 
       if (hasNativeAuth && !token) {
@@ -74,6 +75,7 @@ export const useOperaLogin = ({
         // Fetching block failed
         if (!token) {
           console.warn('Fetching block failed. Login cancelled.');
+          setIsLoading(false);
           return;
         }
       }
@@ -113,10 +115,14 @@ export const useOperaLogin = ({
         onLoginRedirect,
         options: { signature, address }
       });
-    } catch (error) {
-      console.error('error loging in', error);
-      // TODO: can be any or typed error
-      setError('error logging in' + (error as any).message);
+    } catch (error: unknown) {
+      console.error('error logging in', error);
+
+      setError(
+        `Error logging in: ${
+          error instanceof Error ? error.message : String(error)
+        }`
+      );
     } finally {
       setIsLoading(false);
     }

@@ -2,6 +2,7 @@
  * MSW config code
  ***************/
 import 'isomorphic-fetch';
+import '@testing-library/jest-dom';
 import { server } from './__mocks__/server';
 
 // Establish API mocking before all tests.

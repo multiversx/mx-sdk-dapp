@@ -83,7 +83,7 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     }
 
     if (!loginToken) {
-      throw 'Token not found. Call `setLoginToken` first.';
+      throw new Error('Token not found. Call `setLoginToken` first.');
     }
 
     const nativeAuthToken = client.getToken({

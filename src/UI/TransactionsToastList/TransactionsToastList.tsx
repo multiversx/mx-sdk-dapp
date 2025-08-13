@@ -22,7 +22,7 @@ import {
   SignedTransactionsType,
   TransactionBatchStatusesEnum
 } from 'types';
-import { TransactionToastType } from 'types/toasts.types';
+import { CustomToastType, TransactionToastType } from 'types/toasts.types';
 
 import {
   deleteCustomToast,
@@ -60,8 +60,10 @@ export const TransactionsToastListComponent = ({
   styles
 }: TransactionsToastListPropsType & WithStylesImportType) => {
   const [isBrowser, setIsBrowser] = useState(false);
-  const customToasts = useSelector(customToastsSelector);
-  const transactionsToasts = useSelector(transactionToastsSelector);
+  const customToasts = useSelector(customToastsSelector) as CustomToastType[];
+  const transactionsToasts = useSelector(
+    transactionToastsSelector
+  ) as TransactionToastType[];
   const dispatch = useDispatch();
 
   const { signedTransactions: signedTransactionsFromStore } =
@@ -113,7 +115,10 @@ export const TransactionsToastListComponent = ({
   const MemoizedTransactionsToastsList = useMemo(
     () =>
       transactionsToasts.map(
-        ({ toastId, type, startTimestamp }: TransactionToastType, i) => {
+        (
+          { toastId, type, startTimestamp }: TransactionToastType,
+          i: number
+        ) => {
           const transactionToastGuardProps: TransactionToastGuardPropsType = {
             signedTransactionsToRender,
             toastId,

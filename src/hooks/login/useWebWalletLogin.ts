@@ -87,6 +87,7 @@ export const useWebWalletLogin = ({
         // Fetching block failed
         if (!token) {
           console.warn('Login cancelled.');
+          setIsLoading(false);
           return;
         }
       }

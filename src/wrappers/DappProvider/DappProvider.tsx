@@ -46,7 +46,11 @@ export const DappProvider = ({
     } else if (dappConfig?.shouldUseWebViewProvider) {
       experimentalWebviewLogin();
     }
-  }, []);
+  }, [
+    externalProvider,
+    dappConfig?.shouldUseWebViewProvider,
+    experimentalWebviewLogin
+  ]);
 
   return (
     <Provider context={DappCoreContext} store={store}>
