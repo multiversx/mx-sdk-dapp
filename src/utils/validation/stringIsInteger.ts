@@ -2,7 +2,9 @@ import BigNumber from 'bignumber.js';
 
 export const stringIsInteger = (value: string, positiveNumbersOnly = true) => {
   // Validate input is a non-empty string
-  if (value == null || typeof value !== 'string' || value.trim() === '') {
+  const isEmptyString = typeof value === 'string' && value.trim() === '';
+
+  if (value == null || isEmptyString) {
     return false;
   }
 
