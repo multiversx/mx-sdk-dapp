@@ -47,8 +47,9 @@ const broadcastLogoutAcrossTabs = (address: string) => {
       const parsedData: LogoutEventData = JSON.parse(storedData);
       const currentTime = Date.now();
 
-      // Ignore stale events or events for different addresses
-      if (isStaleLogoutEvent({ parsedData, currentAddress: address, currentTime })) {
+      if (
+        isStaleLogoutEvent({ parsedData, currentAddress: address, currentTime })
+      ) {
         return;
       }
     } catch (error) {
@@ -57,7 +58,6 @@ const broadcastLogoutAcrossTabs = (address: string) => {
     }
   }
 
-  // Create a new logout event with timestamp and random ID
   const logoutEvent: LogoutEventData = {
     address,
     ts: Date.now(),
