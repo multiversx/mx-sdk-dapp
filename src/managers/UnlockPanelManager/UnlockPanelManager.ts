@@ -143,8 +143,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       (type) => {
         const excludedProviders: string[] = [
           ProviderTypeEnum.none,
-          ProviderTypeEnum.webview,
-          ProviderTypeEnum.passkey // temporary disabled
+          ProviderTypeEnum.webview
         ];
         return !excludedProviders.includes(type);
       }
@@ -155,13 +154,10 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       ...customProviders.map((p) => p.type)
     ];
 
-    const customProviderLabels = customProviders.reduce(
-      (acc, provider) => {
-        acc[provider.type] = provider.name;
-        return acc;
-      },
-      {} as Record<ProviderType, string>
-    );
+    const customProviderLabels = customProviders.reduce((acc, provider) => {
+      acc[provider.type] = provider.name;
+      return acc;
+    }, {} as Record<ProviderType, string>);
 
     const allAvailableLabels = {
       ...providerLabels,
