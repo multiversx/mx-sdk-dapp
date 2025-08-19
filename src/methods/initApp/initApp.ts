@@ -16,6 +16,7 @@ import {
 import { defaultStorageCallback } from 'store/storage';
 import { initStore } from 'store/store';
 import { ThemesEnum } from 'types';
+import { refreshAccount } from 'utils';
 import { switchTheme } from 'utils/visual/switchTheme';
 import { InitAppType } from './initApp.types';
 import { REHYDRATE_STORE_TIMEOUT } from '../../constants';
@@ -142,6 +143,7 @@ export async function initApp({
     await restoreProvider();
 
     if (isLoggedIn) {
+      await refreshAccount();
       await registerWebsocketListener(account.address);
       trackTransactions();
       LogoutManager.getInstance().init();
