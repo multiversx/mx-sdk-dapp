@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Rework websocket retry mechanism](https://github.com/multiversx/mx-sdk-dapp/pull/1559)
 - [Update sdk-wallet-connect-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1558)
 - [Fixed issue with transaction toast title](https://github.com/multiversx/mx-sdk-dapp/pull/1555)
 - [Added pnpm](https://github.com/multiversx/mx-sdk-dapp/pull/1554)
