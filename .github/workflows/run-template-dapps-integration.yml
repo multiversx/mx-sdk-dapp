@@ -1,4 +1,4 @@
-name: "Integration tests"
+name: 'Integration tests'
 
 on:
   pull_request:
@@ -11,9 +11,15 @@ jobs:
   run_template_dapps_integration_script:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Fix permissions
+        run: |
+          sudo chown -R $USER:$USER ${{ github.workspace }}
+          sudo chmod -R 755 ${{ github.workspace }}
+        continue-on-error: true
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
+          clean: true
       - name: Run script file
         run: |
           chmod +x ./scripts/template-dapps-integration.sh

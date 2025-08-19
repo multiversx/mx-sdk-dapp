@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -23,7 +23,7 @@
     "publish-verdaccio": "npm run unpublish-verdaccio && npm run build && npm publish --registry http://localhost:4873/",
     "compile": "tsc && tsc-alias",
     "build-esbuild": "rimraf out && node esbuild.js",
-    "build": "yarn build-esbuild && yarn compile",
+    "build": "npm run build-esbuild && npm run compile",
     "test": "jest",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
@@ -38,7 +38,7 @@
     "@multiversx/sdk-metamask-provider": "3.0.0",
     "@multiversx/sdk-native-auth-client": "2.0.1",
     "@multiversx/sdk-wallet": "4.6.0",
-    "@multiversx/sdk-wallet-connect-provider": "6.1.1",
+    "@multiversx/sdk-wallet-connect-provider": "6.1.2",
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.2.1",
     "@multiversx/sdk-web-wallet-iframe-provider": "3.1.1",
     "@multiversx/sdk-web-wallet-provider": "5.1.1",
@@ -101,6 +101,7 @@
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-promise": "7.1.0",
     "glob": "10.3.14",
+    "globals": "^16.3.0",
     "isomorphic-fetch": "3.0.0",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",

@@ -12,13 +12,11 @@ import { setWebsocketStatus } from 'store/actions/config/configActions';
 import { networkSelector } from 'store/selectors';
 import { getStore } from 'store/store';
 import { BatchTransactionsWSResponseType } from 'types/websocket.types';
-import { retryMultipleTimes } from 'utils/retryMultipleTimes';
 
 const TIMEOUT = 3000;
 const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
 const MESSAGE_DELAY = 1000;
-const SOCKET_CONNECTION_DELAY = 1000;
 const BATCH_UPDATED_EVENT = 'batchUpdated';
 const CONNECT = 'connect';
 const CONNECT_ERROR = 'connect_error';
@@ -85,109 +83,44 @@ export async function initializeWebsocketConnection(address: string) {
     }
   };
 
-  const initializeConnection = retryMultipleTimes(
-    async () => {
-      const retryWebsocketConnect = async (
-        retries = RECONNECTION_ATTEMPTS,
-        delay = RETRY_INTERVAL
-      ) => {
-        let attempt = 0;
-        let connectionCheckTimeout: TimeoutType = null;
-        let retryTimeout: TimeoutType = null;
+  const initializeConnection = async () => {
+    updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
 
-        const tryReconnect = async () => {
-          if (attempt >= retries) {
-            console.warn('WebSocket reconnection failed after max attempts.');
-            updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
-            return;
-          }
+    const websocketUrl =
+      customWebsocketUrl ?? (await getWebsocketUrl(apiAddress));
 
-          attempt++;
+    if (!websocketUrl) {
+      updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
+      return;
+    }
 
-          // Clean up previous socket
-          websocketConnection.instance?.off();
-          websocketConnection.instance?.close();
-          websocketConnection.instance = null;
+    websocketConnection.instance = io(websocketUrl, {
+      forceNew: true,
+      reconnection: true,
+      reconnectionAttempts: RECONNECTION_ATTEMPTS,
+      reconnectionDelay: RETRY_INTERVAL,
+      timeout: TIMEOUT,
+      query: { address }
+    });
 
-          try {
-            // Attempt to reconnect
-            await initializeConnection(); // attempt to reconnect
+    websocketConnection.instance.onAny(handleMessageReceived);
 
-            // Wait briefly and check if socket is actually connected
-            connectionCheckTimeout = setTimeout(() => {
-              const isConnected = websocketConnection.instance?.connected;
+    websocketConnection.instance.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
 
-              if (!isConnected) {
-                // If not connected, retry the connection
-                retryTimeout = setTimeout(tryReconnect, delay);
-              }
-            }, SOCKET_CONNECTION_DELAY);
-          } catch {
-            // If reconnect fails, retry after delay
-            retryTimeout = setTimeout(tryReconnect, delay);
-          }
-        };
+    websocketConnection.instance.on(CONNECT, () => {
+      console.log('Websocket connected.');
+      updateSocketStatus(WebsocketConnectionStatusEnum.COMPLETED);
+    });
 
-        // Start the reconnection process
-        tryReconnect();
+    websocketConnection.instance.on(CONNECT_ERROR, (error) => {
+      console.warn('Websocket connect error: ', error.message);
+    });
 
-        // Clear any timeouts
-        const clearTimeouts = () => {
-          if (connectionCheckTimeout) {
-            clearTimeout(connectionCheckTimeout);
-            connectionCheckTimeout = null;
-          }
-
-          if (retryTimeout) {
-            clearTimeout(retryTimeout);
-            retryTimeout = null;
-          }
-        };
-
-        return clearTimeouts;
-      };
-
+    websocketConnection.instance.on(DISCONNECT, (reason) => {
+      console.warn('Websocket disconnected: ', reason);
       updateSocketStatus(WebsocketConnectionStatusEnum.PENDING);
-
-      const websocketUrl =
-        customWebsocketUrl ?? (await getWebsocketUrl(apiAddress));
-
-      if (!websocketUrl) {
-        updateSocketStatus(WebsocketConnectionStatusEnum.NOT_INITIALIZED);
-        return;
-      }
-
-      websocketConnection.instance = io(websocketUrl, {
-        forceNew: true,
-        reconnection: true,
-        reconnectionAttempts: RECONNECTION_ATTEMPTS,
-        timeout: TIMEOUT,
-        query: { address }
-      });
-
-      websocketConnection.instance.onAny(handleMessageReceived);
-
-      websocketConnection.instance.on(BATCH_UPDATED_EVENT, handleBatchUpdate);
-
-      websocketConnection.instance.on(CONNECT, () => {
-        console.log('Websocket connected.');
-        updateSocketStatus(WebsocketConnectionStatusEnum.COMPLETED);
-      });
-
-      websocketConnection.instance.on(CONNECT_ERROR, async (error) => {
-        console.warn('Websocket connect error: ', error.message);
-        const clearTimeouts = await retryWebsocketConnect();
-        clearTimeouts();
-      });
-
-      websocketConnection.instance.on(DISCONNECT, async () => {
-        console.warn('Websocket disconnected. Trying to reconnect...');
-        const clearTimeouts = await retryWebsocketConnect();
-        clearTimeouts();
-      });
-    },
-    { retries: 2, delay: RETRY_INTERVAL }
-  );
+    });
+  };
 
   if (
     websocketConnection.status ===

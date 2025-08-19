@@ -1,7 +1,7 @@
-name: "Jest Unit Tests"
+name: 'Jest Unit Tests'
 on:
   pull_request:
-    branches: [main]
+    branches: [main, development]
     paths:
       - 'src/**'
       - '**.js'
@@ -19,22 +19,25 @@ jobs:
   run-unit-tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Fix permissions
+        run: |
+          sudo chown -R $USER:$USER ${{ github.workspace }}
+          sudo chmod -R 755 ${{ github.workspace }}
+        continue-on-error: true
+      - uses: actions/checkout@v4
         with:
           ref: ${{ github.ref }}
-          if: ${{ !github.event.pull_request.draft }}
+          clean: true
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
-      - name: Setup yarn
-        run: npm install -g yarn
-      - name: Clean up
-        run: |
-          rm -rf node_modules build
+          node-version: 20
+          registry-url: 'https://registry.npmjs.org'
+      - name: Setup pnpm
+        run: npm install -g pnpm
       - name: Install Dependencies
-        run: yarn install
+        run: pnpm install
       - name: Build
-        run: yarn build
+        run: pnpm build
       - name: Run unit tests
-        run: yarn test --silent
+        run: pnpm test --silent
