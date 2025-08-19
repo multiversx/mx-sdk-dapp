@@ -143,8 +143,7 @@ export class UnlockPanelManager extends SidePanelBaseManager<
       (type) => {
         const excludedProviders: string[] = [
           ProviderTypeEnum.none,
-          ProviderTypeEnum.webview,
-          ProviderTypeEnum.passkey // temporary disabled
+          ProviderTypeEnum.webview
         ];
         return !excludedProviders.includes(type);
       }
