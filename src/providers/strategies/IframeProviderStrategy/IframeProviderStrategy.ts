@@ -69,7 +69,6 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
 
     this.provider.setLoginType(this.type);
     this.provider.setWalletUrl(this.walletUrl);
-    console.log('initializeProvider', this.address);
 
     return true;
   }
