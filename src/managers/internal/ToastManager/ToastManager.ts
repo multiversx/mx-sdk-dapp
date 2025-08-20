@@ -231,15 +231,12 @@ export class ToastManager {
       throw new Error(ProviderErrorsEnum.eventBusError);
     }
 
-    this.eventBus.subscribe(
-      ToastEventsEnum.CLOSE,
-      this.handleCloseToast.bind(this)
-    );
+    this.eventBus.subscribe(ToastEventsEnum.CLOSE, this.closeToast.bind(this));
 
     this.eventBusUnsubscribeFunctions.push(() => {
       this.eventBus?.unsubscribe(
         ToastEventsEnum.CLOSE,
-        this.handleCloseToast.bind(this)
+        this.closeToast.bind(this)
       );
     });
 
@@ -271,7 +268,7 @@ export class ToastManager {
     this.notificationsFeedManager.openNotificationsFeed();
   }
 
-  private handleCloseToast(toastId: string) {
+  public closeToast(toastId: string) {
     const customToast = this.customToasts.find(
       (toast) => toast.toastId === toastId
     );
