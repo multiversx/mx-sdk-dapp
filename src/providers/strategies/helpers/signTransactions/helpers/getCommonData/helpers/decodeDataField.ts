@@ -2,7 +2,7 @@ import {
   DecodeMethodEnum,
   DecodedDisplayType
 } from 'types/serverTransactions.types';
-import { getDecodedDataField } from 'utils';
+import { getDecodedDataField } from 'utils/transactions/getDecodedDataField';
 
 export const getAllDecodedFormats = ({
   data,
