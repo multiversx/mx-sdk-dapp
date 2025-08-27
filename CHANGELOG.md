@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Skip smart and decimal decoding on large data fields](https://github.com/multiversx/mx-sdk-dapp/pull/1563)
 - [Add closeToast as public method in ToastManager](https://github.com/multiversx/mx-sdk-dapp/pull/1562)
 
 ## [[5.1.2](https://github.com/multiversx/mx-sdk-dapp/pull/1561)] - 2025-08-19
