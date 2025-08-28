@@ -2,6 +2,8 @@ import {
   updateTransactionStatus,
   updateSessionStatus
 } from 'store/actions/transactions/transactionsActions';
+import { getIsTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
+import { getStore } from 'store/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -33,14 +35,22 @@ export async function manageFailedTransactions({
     }
   });
 
-  updateSessionStatus({
-    sessionId,
-    status: TransactionBatchStatusesEnum.fail,
-    errorMessage: resultWithError?.returnMessage
-  });
+  const { transactions: sessions } = getStore().getState();
+  const session = sessions[sessionId];
+  const hasPendingTransactions = session.transactions.some((tx) =>
+    getIsTransactionPending(tx.status)
+  );
 
-  await runSessionCallbacks({
-    sessionId,
-    status: TransactionBatchStatusesEnum.fail
-  });
+  if (!hasPendingTransactions) {
+    updateSessionStatus({
+      sessionId,
+      status: TransactionBatchStatusesEnum.fail,
+      errorMessage: resultWithError?.returnMessage
+    });
+
+    await runSessionCallbacks({
+      sessionId,
+      status: TransactionBatchStatusesEnum.fail
+    });
+  }
 }

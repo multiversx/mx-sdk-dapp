@@ -140,7 +140,7 @@ export async function checkBatch({
     // The batch transactions mechanism will call the callbacks separately.
 
     if (hasCompleted) {
-      const isSuccessful = serverTransactions.every(
+      const isSuccessful = transactions.every(
         (tx) => tx.status === TransactionServerStatusesEnum.success
       );
 
@@ -151,10 +151,9 @@ export async function checkBatch({
         });
       }
 
-      const isFailed = serverTransactions.some(
+      const isFailed = transactions.some(
         (tx) => tx.status === TransactionServerStatusesEnum.fail
       );
-
       if (isFailed) {
         return updateSessionStatus({
           sessionId,
@@ -162,8 +161,9 @@ export async function checkBatch({
         });
       }
 
-      const isInvalid = serverTransactions.every((tx) => tx.invalidTransaction);
-
+      const isInvalid = transactions.every(
+        (tx) => tx.status === TransactionServerStatusesEnum.notExecuted
+      );
       if (isInvalid) {
         return updateSessionStatus({
           sessionId,

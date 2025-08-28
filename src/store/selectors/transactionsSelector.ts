@@ -74,10 +74,9 @@ export const pendingTransactionsSelector = ({
 }: StoreType): SignedTransactionType[] => {
   const pendingTransactions: SignedTransactionType[] = [];
 
-  Object.values(state).forEach(({ transactions, status: sessionStatus }) => {
+  Object.values(state).forEach(({ transactions }) => {
     transactions.forEach((transaction) => {
       if (
-        sessionStatus === TransactionBatchStatusesEnum.sent &&
         transaction.status &&
         [
           TransactionServerStatusesEnum.pending,
