@@ -4,6 +4,7 @@ import {
   updateSessionStatus
 } from 'store/actions/transactions/transactionsActions';
 import { getIsTransactionFailed } from 'store/actions/transactions/transactionStateByStatus';
+import { getStore } from 'store/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -140,7 +141,10 @@ export async function checkBatch({
     // The batch transactions mechanism will call the callbacks separately.
 
     if (hasCompleted) {
-      const isSuccessful = serverTransactions.every(
+      const { transactions: sessions } = getStore().getState();
+      const session = sessions[sessionId];
+
+      const isSuccessful = session.transactions.every(
         (tx) => tx.status === TransactionServerStatusesEnum.success
       );
 
@@ -151,10 +155,9 @@ export async function checkBatch({
         });
       }
 
-      const isFailed = serverTransactions.some(
+      const isFailed = session.transactions.some(
         (tx) => tx.status === TransactionServerStatusesEnum.fail
       );
-
       if (isFailed) {
         return updateSessionStatus({
           sessionId,
@@ -162,8 +165,9 @@ export async function checkBatch({
         });
       }
 
-      const isInvalid = serverTransactions.every((tx) => tx.invalidTransaction);
-
+      const isInvalid = session.transactions.every(
+        (tx) => tx.status === TransactionServerStatusesEnum.notExecuted
+      );
       if (isInvalid) {
         return updateSessionStatus({
           sessionId,

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed toast closing before all pending transactions finished](https://github.com/multiversx/mx-sdk-dapp/pull/1565)
+
 ## [[5.1.3](https://github.com/multiversx/mx-sdk-dapp/pull/1564)] - 2025-08-27
 
 - [Skip smart and decimal decoding on large data fields](https://github.com/multiversx/mx-sdk-dapp/pull/1563)
