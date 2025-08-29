@@ -37,6 +37,7 @@ export async function manageFailedTransactions({
 
   const { transactions: sessions } = getStore().getState();
   const session = sessions[sessionId];
+
   const hasPendingTransactions = session.transactions.some((tx) =>
     getIsTransactionPending(tx.status)
   );
