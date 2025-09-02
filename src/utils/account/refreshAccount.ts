@@ -56,7 +56,9 @@ export async function refreshAccount() {
       return;
     }
 
-    return setNewAccount();
+    const account = await setNewAccount();
+
+    return account;
   } catch (e) {
     console.error('Failed initializing provider ', e);
   }
