@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added refresh account after completed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1567)
 - [Added docs for clearing a custom toast](https://github.com/multiversx/mx-sdk-dapp/pull/1566)
 - [Fixed toast closing before all pending transactions finished](https://github.com/multiversx/mx-sdk-dapp/pull/1565)
 
