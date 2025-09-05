@@ -12,7 +12,14 @@
     "test": "__tests__"
   },
   "files": [
-    "out/**/*"
+    "out/**/*",
+    "!**/*.test.*",
+    "!**/*.jest.*",
+    "!**/*.playwright.*",
+    "!**/*.puppeteer.*",
+    "!**/__mocks__/**",
+    "!**/__tests__/**",
+    "!**/*-mock.*"
   ],
   "repository": {
     "type": "git",
