@@ -82,7 +82,7 @@ export async function getLatestBlockHash(
     const response = await requestPromise.current;
     if (response == null) {
       requestPromise.current = null;
-      throw new Error('could not get block hash');
+      throw new Error('Could not retrieve block hash from API');
     }
     //set the new response, the new expiry and unlock the regeneration flow for the next expiration period
     cachedResponse.current = {
@@ -94,6 +94,8 @@ export async function getLatestBlockHash(
     return response;
   } catch (err) {
     requestPromise.current = null;
-    return null as any;
+    const errorMessage = err instanceof Error ? err.message : String(err);
+    console.error('Failed to fetch latest block hash:', errorMessage);
+    throw new Error(`Block hash fetch failed: ${errorMessage}`);
   }
 }

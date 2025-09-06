@@ -238,10 +238,13 @@ export const useWalletConnectV2Login = ({
       await cancelLogin();
 
       if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
-        if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
+        try {
+          token = await loginService.getNativeAuthLoginToken();
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          console.error('Native auth token generation failed:', errorMessage);
+          setError(`Native auth error: ${errorMessage}`);
           return;
         }
       }
@@ -399,10 +402,13 @@ export const useWalletConnectV2Login = ({
       }
 
       if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
-        if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
+        try {
+          token = await loginService.getNativeAuthLoginToken();
+        } catch (error) {
+          const errorMessage =
+            error instanceof Error ? error.message : String(error);
+          console.error('Native auth token generation failed:', errorMessage);
+          setError(`Native auth error: ${errorMessage}`);
           return;
         }
       }

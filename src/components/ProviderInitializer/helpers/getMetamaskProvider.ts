@@ -10,7 +10,7 @@ export async function getMetamaskProvider(address: string) {
       return provider;
     } else {
       console.error(
-        'Could not initialise metamask, make suremetamask flask is installed.'
+        'Could not initialise metamask, make sure metamask is installed.'
       );
     }
   } catch (err) {

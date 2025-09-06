@@ -63,7 +63,7 @@ const ProgressComponent = ({
   }, [progress, done]);
 
   function removeTxFromSession() {
-    const toastProgress: Record<number, number> =
+    const toastProgress: Record<string, number> =
       storage.session.getItem(TOAST_PROGRESS_KEY);
 
     const hasSessionStoredTx = Boolean(toastProgress?.[id]);
@@ -78,7 +78,7 @@ const ProgressComponent = ({
   }
 
   function updateTxFromSession(value: number) {
-    const toastProgress: Record<number, number> =
+    const toastProgress: Record<string, number> =
       storage.session.getItem(TOAST_PROGRESS_KEY) || {};
 
     toastProgress[id] = value;
@@ -86,7 +86,7 @@ const ProgressComponent = ({
     saveToSession(toastProgress);
   }
 
-  function saveToSession(data: Record<number, number>) {
+  function saveToSession(data: Record<string, number>) {
     storage.session.setItem({
       key: TOAST_PROGRESS_KEY,
       data: data,
@@ -122,7 +122,7 @@ const ProgressComponent = ({
   }
 
   function handleRunningProgress() {
-    const toastProgress: Record<number, number> =
+    const toastProgress: Record<string, number> =
       storage.session.getItem(TOAST_PROGRESS_KEY) || {};
     const currentToast = toastProgress[id];
 

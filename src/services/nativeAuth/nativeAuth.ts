@@ -36,8 +36,14 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
   const initialize = async (
     initProps?: NativeAuthInitType
   ): Promise<string> => {
-    if (!apiAddress || !origin) {
-      return '';
+    if (!apiAddress) {
+      throw new Error(
+        'Native auth configuration error: apiAddress is required'
+      );
+    }
+
+    if (!origin) {
+      throw new Error('Native auth configuration error: origin is required');
     }
 
     const getBlockHash = (): Promise<string> =>
@@ -69,8 +75,9 @@ export const nativeAuth = (config?: NativeAuthConfigType) => {
 
       return `${encodedOrigin}.${hash}.${expirySeconds}.${encodedExtraInfo}`;
     } catch (err: any) {
-      console.error('Error getting native auth token: ', err.toString());
-      return '';
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      console.error('Native auth token creation failed:', errorMessage);
+      throw new Error(`Native auth token creation failed: ${errorMessage}`);
     }
   };
 

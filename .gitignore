@@ -15,6 +15,7 @@ dist
 .rpt2_cache
 .yalc
 .husky
+.vscode
 
 # misc
 .DS_Store

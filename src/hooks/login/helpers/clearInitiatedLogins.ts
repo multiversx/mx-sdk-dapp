@@ -1,5 +1,4 @@
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
-import { IframeProvider } from 'lib/sdkWebWalletIframeProvider';
 import { LoginMethodsEnum } from 'types';
 
 export const clearInitiatedLogins = (props?: {
@@ -19,13 +18,6 @@ export const clearInitiatedLogins = (props?: {
         break;
       }
 
-      case LoginMethodsEnum.iframe: {
-        const iframeProvider = IframeProvider.getInstance();
-        if (iframeProvider.isInitialized()) {
-          iframeProvider.dispose();
-        }
-        break;
-      }
       default:
         break;
     }

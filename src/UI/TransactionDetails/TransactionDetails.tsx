@@ -34,14 +34,14 @@ const TransactionDetailsComponent = ({
   const processedTransactionsStatus = useMemo(() => {
     const processedTransactions = transactions.filter(
       (tx) =>
-        !isServerTransactionPending(TransactionServerStatusesEnum[tx?.status])
+        !isServerTransactionPending(tx?.status as TransactionServerStatusesEnum)
     ).length;
 
     const totalTransactions = transactions.length;
 
     if (totalTransactions === 1 && processedTransactions === 1) {
       return isServerTransactionPending(
-        TransactionServerStatusesEnum[transactions[0].status]
+        transactions[0].status as TransactionServerStatusesEnum
       )
         ? 'Processing transaction'
         : 'Transaction processed';
@@ -65,7 +65,7 @@ const TransactionDetailsComponent = ({
         const transactionDetailsBodyProps: TransactionDetailsBodyPropsType = {
           className,
           hash,
-          status: TransactionServerStatusesEnum[status],
+          status: status as TransactionServerStatusesEnum,
           isTimedOut
         };
 

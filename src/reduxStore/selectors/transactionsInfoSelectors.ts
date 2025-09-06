@@ -2,7 +2,8 @@ import { createDeepEqualSelector } from 'reduxStore/selectors/helpers';
 import {
   defaultTransactionErrorMessage,
   defaultTransactionProcessingMessage,
-  defaultTransactionSuccessMessage
+  defaultTransactionSuccessMessage,
+  StateType
 } from 'reduxStore/slices';
 import { RootState } from 'reduxStore/store';
 import { TransactionsDisplayInfoType } from 'types';
@@ -19,12 +20,9 @@ export const transactionsInfoSelectors = (state: RootState) =>
 export const transactionDisplayInfoSelector = createDeepEqualSelector(
   transactionsInfoSelectors,
   (_: RootState, transactionSessionId: string | null) => transactionSessionId,
-  (
-    transactionsDisplayInfo: TransactionsDisplayInfoType,
-    transactionSessionId: string | null
-  ) =>
+  (transactionsDisplayInfo: StateType, transactionSessionId: string | null) =>
     transactionSessionId != null
-      ? transactionsDisplayInfo?.[Number(transactionSessionId)] ||
+      ? transactionsDisplayInfo?.[transactionSessionId] ||
         defaultTransactionInfo
       : defaultTransactionInfo
 );

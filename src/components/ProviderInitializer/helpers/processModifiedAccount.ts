@@ -19,7 +19,7 @@ export const processModifiedAccount = async <
     }: {
       address: string;
       signature: string;
-    }) => string | undefined;
+    }) => string | null | undefined;
   }
 >({
   loginToken: token,
