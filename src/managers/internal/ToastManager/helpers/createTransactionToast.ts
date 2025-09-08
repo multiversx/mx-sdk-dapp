@@ -1,6 +1,9 @@
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { getIsTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
-import { TransactionServerStatusesEnum } from 'types/enums.types';
+import {
+  TransactionBatchStatusesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
 import { TransactionsDisplayInfoType } from 'types/transactions.types';
 import { getToastDataStateByStatus } from './getToastDataStateByStatus';
 import { getToastTransactionsStatus } from './getToastTransactionsStatus';
@@ -8,7 +11,7 @@ import { ITransactionToast } from '../types/toast.types';
 interface CreateTransactionToastParamsType {
   toastId: string;
   address: string;
-  status: TransactionServerStatusesEnum;
+  status: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
   transactions: ITransactionListItem[];
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
   explorerAddress: string;
@@ -25,7 +28,11 @@ export const createTransactionToast = ({
   startTime,
   endTime
 }: CreateTransactionToastParamsType): ITransactionToast => {
-  const isPending = getIsTransactionPending(status);
+  const hasPendingTransaction = transactions.some((tx) =>
+    getIsTransactionPending(
+      tx.status as TransactionServerStatusesEnum | TransactionBatchStatusesEnum
+    )
+  );
   // Extracts action name from the first transaction
   const txActionName = transactions[0]?.action?.name;
 
@@ -40,7 +47,7 @@ export const createTransactionToast = ({
 
   const processedTransactionsStatus = getToastTransactionsStatus(transactions);
 
-  const transactionProgressState = isPending
+  const transactionProgressState = hasPendingTransaction
     ? {
         endTime,
         startTime

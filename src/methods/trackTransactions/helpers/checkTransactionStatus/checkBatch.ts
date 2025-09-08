@@ -1,9 +1,11 @@
 import { getTransactionsByHashes } from 'apiCalls/transactions/getTransactionsByHashes';
+import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import {
   updateTransactionStatus,
   updateSessionStatus
 } from 'store/actions/transactions/transactionsActions';
 import { getIsTransactionFailed } from 'store/actions/transactions/transactionStateByStatus';
+import { getStore } from 'store/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -13,6 +15,7 @@ import {
   SignedTransactionType
 } from 'types/transactions.types';
 
+import { refreshAccount } from 'utils';
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { runSessionCallbacks } from './runSessionCallbacks';
@@ -119,6 +122,8 @@ export async function checkBatch({
       return;
     }
 
+    const isLoggedIn = getIsLoggedIn();
+
     const pendingTransactions = getPendingTransactions(transactions);
 
     const serverTransactions =
@@ -136,40 +141,51 @@ export async function checkBatch({
       (tx) => tx.status !== TransactionServerStatusesEnum.pending
     );
 
+    if (!hasCompleted) {
+      return;
+    }
+
+    if (isLoggedIn) {
+      await refreshAccount();
+    }
+
     // Call the onSuccess or onFail callback only if the transactions are sent normally (not using batch transactions mechanism).
     // The batch transactions mechanism will call the callbacks separately.
 
-    if (hasCompleted) {
-      const isSuccessful = serverTransactions.every(
-        (tx) => tx.status === TransactionServerStatusesEnum.success
-      );
+    const { transactions: sessions } = getStore().getState();
+    const session = sessions[sessionId];
 
-      if (isSuccessful) {
-        return updateSessionStatus({
-          sessionId,
-          status: TransactionBatchStatusesEnum.success
-        });
-      }
+    const isSuccessful = session.transactions.every(
+      (tx) => tx.status === TransactionServerStatusesEnum.success
+    );
 
-      const isFailed = serverTransactions.some(
-        (tx) => tx.status === TransactionServerStatusesEnum.fail
-      );
+    if (isSuccessful) {
+      return updateSessionStatus({
+        sessionId,
+        status: TransactionBatchStatusesEnum.success
+      });
+    }
 
-      if (isFailed) {
-        return updateSessionStatus({
-          sessionId,
-          status: TransactionBatchStatusesEnum.fail
-        });
-      }
+    const isFailed = session.transactions.some(
+      (tx) => tx.status === TransactionServerStatusesEnum.fail
+    );
 
-      const isInvalid = serverTransactions.every((tx) => tx.invalidTransaction);
+    if (isFailed) {
+      return updateSessionStatus({
+        sessionId,
+        status: TransactionBatchStatusesEnum.fail
+      });
+    }
 
-      if (isInvalid) {
-        return updateSessionStatus({
-          sessionId,
-          status: TransactionBatchStatusesEnum.invalid
-        });
-      }
+    const isInvalid = session.transactions.every(
+      (tx) => tx.status === TransactionServerStatusesEnum.notExecuted
+    );
+
+    if (isInvalid) {
+      return updateSessionStatus({
+        sessionId,
+        status: TransactionBatchStatusesEnum.invalid
+      });
     }
   } catch (error) {
     console.error(error);
