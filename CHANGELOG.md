@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.1.4](https://github.com/multiversx/mx-sdk-dapp/pull/1573)] - 2025-09-08
+
+- [Fixed security exploit](https://github.com/multiversx/mx-sdk-dapp/pull/1572)
 - [Removed test files from publish](https://github.com/multiversx/mx-sdk-dapp/pull/1569)
 - [Added refresh account after completed transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1567)
 - [Added docs for clearing a custom toast](https://github.com/multiversx/mx-sdk-dapp/pull/1566)
