@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1558)] - 2025-09-08
+## [[v4.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1571)] - 2025-09-08
 
-- [Improvements to error handling on login failures](https://github.com/multiversx/mx-sdk-dapp/pull/1558)
+- [Improvements to error handling on login failures](https://github.com/multiversx/mx-sdk-dapp/pull/1570)
 
 ## [[v4.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1557)] - 2025-08-13
 

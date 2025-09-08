@@ -19,7 +19,7 @@ export const clearInitiatedLogins = (props?: {
         break;
       }
 
-      case LoginMethodsEnum.metamask: {
+      case LoginMethodsEnum.iframe: {
         const iframeProvider = IframeProvider.getInstance();
         if (iframeProvider.isInitialized()) {
           iframeProvider.dispose();
