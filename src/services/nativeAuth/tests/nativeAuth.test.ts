@@ -98,7 +98,7 @@ describe('Native Auth', () => {
       expect(token).toStrictEqual(TOKEN);
     });
 
-    it('should return empty string when API call fails', async () => {
+    it('should throw error when API call fails', async () => {
       server.use(...handlers.serverError);
 
       //this will make sure to expire the cache
@@ -111,8 +111,9 @@ describe('Native Auth', () => {
         apiAddress: API_URL
       });
 
-      const nativeAuthToken = await client.initialize();
-      expect(nativeAuthToken).toStrictEqual('');
+      await expect(client.initialize()).rejects.toThrow(
+        'Native auth token creation failed: Block hash fetch failed: Request failed with status code 500'
+      );
     });
 
     it('Generate Access token', () => {
