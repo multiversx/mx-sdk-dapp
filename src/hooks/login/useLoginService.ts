@@ -100,22 +100,39 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
       );
     }
 
-    const nativeAuthToken = client.getToken({
-      address,
-      token: loginToken,
-      signature
-    });
+    try {
+      const nativeAuthToken = client.getToken({
+        address,
+        token: loginToken,
+        signature
+      });
 
-    dispatch(
-      setTokenLogin({
-        loginToken,
-        signature,
-        nativeAuthToken,
-        ...(apiAddress ? { nativeAuthConfig: configuration } : {})
-      })
-    );
+      dispatch(
+        setTokenLogin({
+          loginToken,
+          signature,
+          nativeAuthToken,
+          ...(apiAddress ? { nativeAuthConfig: configuration } : {})
+        })
+      );
 
-    return nativeAuthToken;
+      return nativeAuthToken;
+    } catch (error) {
+      console.error(
+        'SDK setTokenLoginInfo - Error generating nativeAuthToken:',
+        error
+      );
+
+      dispatch(
+        setTokenLogin({
+          loginToken,
+          signature,
+          ...(apiAddress ? { nativeAuthConfig: configuration } : {})
+        })
+      );
+
+      return null;
+    }
   };
 
   // TODO: @StanislavSava verify and maybe refactor to separate function

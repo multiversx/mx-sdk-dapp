@@ -21,5 +21,6 @@ export const getHasNativeAuth = (
   }
 
   const isNativeAuthConfigured = Object.keys(nativeAuthClone).length > 0;
+
   return isNativeAuthConfigured;
 };
