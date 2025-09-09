@@ -50,8 +50,8 @@ importers:
         specifier: 10.1.1
         version: 10.1.1
       linkifyjs:
-        specifier: 4.3.1
-        version: 4.3.1
+        specifier: 4.3.2
+        version: 4.3.2
       lodash.isempty:
         specifier: 4.4.0
         version: 4.4.0
@@ -65,8 +65,8 @@ importers:
         specifier: 4.4.0
         version: 4.4.0
       lodash.trimend:
-        specifier: 4.5.0
-        version: 4.5.0
+        specifier: 4.5.1
+        version: 4.5.1
       lodash.uniq:
         specifier: 4.5.0
         version: 4.5.0
@@ -3843,8 +3843,8 @@ packages:
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
 
-  linkifyjs@4.3.1:
-    resolution: {integrity: sha512-DRSlB9DKVW04c4SUdGvKK5FR6be45lTU9M76JnngqPeeGDqPwYc0zdUErtsNVMtxPXgUWV4HbXbnC4sNyBxkYg==}
+  linkifyjs@4.3.2:
+    resolution: {integrity: sha512-NT1CJtq3hHIreOianA8aSXn6Cw0JzYOuDQbOrSPe7gqFnCpKP++MQe3ODgO3oh2GJFORkAAdqredOa60z63GbA==}
 
   locate-path@5.0.0:
     resolution: {integrity: sha512-t7hw9pI+WvuwNJXwk5zVHpyhIqzg2qTlklJOf0mVxGSbe3Fp2VieZcduNYjaLDoy6p9uGpQEGWG87WpMKlNq8g==}
@@ -3882,8 +3882,8 @@ packages:
   lodash.startcase@4.4.0:
     resolution: {integrity: sha512-+WKqsK294HMSc2jEbNgpHpd0JfIBhp7rEV4aqXWqFr6AlXov+SlcgB1Fv01y2kGe3Gc8nMW7VA0SrGuSkRfIEg==}
 
-  lodash.trimend@4.5.0:
-    resolution: {integrity: sha512-WMUGsBszKxrJjuE43HB52prdtrhRkzOJv6IlwTYUXUNWV7QXGWvoD/NH7iQZLjCIMC4fbHdByEApCtnsd+WUjg==}
+  lodash.trimend@4.5.1:
+    resolution: {integrity: sha512-lsD+k73XztDsMBKPKvzHXRKFNMohTjoTKIIo4ADLn5dA65LZ1BqlAvSXhR2rPEC3BgAUQnzMnorqDtqn2z4IHA==}
 
   lodash.uniq@4.5.0:
     resolution: {integrity: sha512-xfBaXQd9ryd9dlSDvnvI0lvxfLJlYAZzXomUYzLKtUeOQvOP5piqAWuGtrhWeqaXK9hhoM/iyJc5AV+XfsX3HQ==}
@@ -10020,7 +10020,7 @@ snapshots:
 
   lines-and-columns@1.2.4: {}
 
-  linkifyjs@4.3.1: {}
+  linkifyjs@4.3.2: {}
 
   locate-path@5.0.0:
     dependencies:
@@ -10051,7 +10051,7 @@ snapshots:
 
   lodash.startcase@4.4.0: {}
 
-  lodash.trimend@4.5.0: {}
+  lodash.trimend@4.5.1: {}
 
   lodash.uniq@4.5.0: {}
 

@@ -36,7 +36,7 @@ jobs:
       - name: Setup pnpm
         run: npm install -g pnpm
       - name: Install Dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
       - name: Build
         run: pnpm build
       - name: Run unit tests
