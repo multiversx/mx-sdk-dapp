@@ -34,34 +34,34 @@ describe('getIsInIframe', () => {
     expect(getIsInIframe()).toBe(true);
   });
 
-  // it('should return false when window is not in iframe', () => {
-  //   mockGetWindowParentOrigin.mockReturnValue('');
-  //   const mockWindow = {
-  //     self: {},
-  //     top: {}
-  //   };
-  //   windowSpy.mockImplementation(() => mockWindow);
-  //   mockWindow.self = mockWindow;
-  //   mockWindow.top = mockWindow;
+  it('should return false when window is not in iframe', () => {
+    mockGetWindowParentOrigin.mockReturnValue('');
+    const mockWindow = {
+      self: {},
+      top: {}
+    };
+    windowSpy.mockImplementation(() => mockWindow);
+    mockWindow.self = mockWindow;
+    mockWindow.top = mockWindow;
 
-  //   expect(getIsInIframe()).toBe(false);
-  // });
+    expect(getIsInIframe()).toBe(false);
+  });
 
-  // it('should return false when no parent origin is found', () => {
-  //   mockGetWindowParentOrigin.mockReturnValue('');
+  it('should return false when no parent origin is found', () => {
+    mockGetWindowParentOrigin.mockReturnValue('');
 
-  //   expect(getIsInIframe()).toBe(false);
-  // });
+    expect(getIsInIframe()).toBe(false);
+  });
 
-  // it('should return true when security error occurs (cross-origin iframe)', () => {
-  //   mockGetWindowParentOrigin.mockReturnValue('https://parent.com');
-  //   windowSpy.mockImplementation(() => ({
-  //     self: {},
-  //     get top() {
-  //       throw new Error('Security Error');
-  //     }
-  //   }));
+  it('should return true when security error occurs (cross-origin iframe)', () => {
+    mockGetWindowParentOrigin.mockReturnValue('https://parent.com');
+    windowSpy.mockImplementation(() => ({
+      self: {},
+      get top() {
+        throw new Error('Security Error');
+      }
+    }));
 
-  //   expect(getIsInIframe()).toBe(true);
-  // });
+    expect(getIsInIframe()).toBe(true);
+  });
 });
