@@ -20,7 +20,7 @@ import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { clearInitiatedLogins } from './helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseCrossWindowLoginReturnType = [
@@ -87,19 +87,20 @@ export const useCrossWindowLogin = ({
         `${origin}${callbackRoute ?? pathname}`
       );
 
-      if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-
-        // Fetching block failed
-        if (!token) {
+      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: () => {
           console.warn('Fetching block failed. Login cancelled.');
-          return;
         }
+      });
+
+      if (tokenError) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken;
 
       const providerLoginData = {
         callbackUrl,

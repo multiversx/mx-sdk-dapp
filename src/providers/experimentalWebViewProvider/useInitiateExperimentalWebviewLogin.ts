@@ -1,6 +1,6 @@
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { version } from 'constants/index';
-import { clearInitiatedLogins } from 'hooks/login/helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from 'hooks/login/helpers';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { setExternalProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -49,8 +49,6 @@ export function useInitiateExperimentalWebviewLogin() {
     }
 
     try {
-      const token = await loginService.getNativeAuthLoginToken();
-
       const isSuccessfullyInitialized: boolean = await provider.init(version);
 
       if (!isSuccessfullyInitialized) {
@@ -60,12 +58,14 @@ export function useInitiateExperimentalWebviewLogin() {
         return;
       }
 
-      // Fetching block failed
-      if (!token) {
-        console.warn('Fetching block failed. Login cancelled.');
+      const { token, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth: true,
+        token: undefined,
+        loginService,
+      });
+
+      if (tokenError) {
         return;
-      } else {
-        loginService.setLoginToken(token);
       }
 
       const { signature, address } = await provider.login({

@@ -36,7 +36,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types/login.types';
-import { clearInitiatedLogins } from './helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export enum WalletConnectV2Error {
@@ -237,21 +237,18 @@ export const useWalletConnectV2Login = ({
       setIsLoading(true);
       await cancelLogin();
 
-      if (hasNativeAuth && !token) {
-        try {
-          token = await loginService.getNativeAuthLoginToken();
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          console.error('Native auth token generation failed:', errorMessage);
-          setError(`Native auth error: ${errorMessage}`);
-          return;
-        }
+      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: setError
+      });
+
+      if (tokenError) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken;
 
       await initiateLogin(false);
 
@@ -401,21 +398,18 @@ export const useWalletConnectV2Login = ({
         console.log('WalletConnect uri: ', uri);
       }
 
-      if (hasNativeAuth && !token) {
-        try {
-          token = await loginService.getNativeAuthLoginToken();
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          console.error('Native auth token generation failed:', errorMessage);
-          setError(`Native auth error: ${errorMessage}`);
-          return;
-        }
+      const { token: validatedToken2, error: tokenError2 } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: setError
+      });
+
+      if (tokenError2) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken2;
 
       const providerType = providerRef.current
         ? getProviderType(providerRef.current)

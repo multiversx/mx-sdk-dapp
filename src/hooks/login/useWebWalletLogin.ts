@@ -19,6 +19,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { sanitizeCallbackUrl } from '../../utils/sanitizeCallbackUrl';
+import { initAndValidateNativeAuthToken } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export interface UseWebWalletLoginPropsType
@@ -82,18 +83,17 @@ export const useWebWalletLogin = ({
         expires: expires
       };
 
-      if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
-        if (!token) {
-          console.warn('Login cancelled.');
-          return;
-        }
+      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+      });
+
+      if (tokenError) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken;
 
       const { origin } = getWindowLocation();
       const targetUrl = window?.location

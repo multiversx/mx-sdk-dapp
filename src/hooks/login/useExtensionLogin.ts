@@ -17,7 +17,7 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { addOriginToLocationPath } from 'utils/window';
 import { getDefaultCallbackUrl } from 'utils/window';
-import { clearInitiatedLogins } from './helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseExtensionLoginReturnType = [
@@ -67,21 +67,18 @@ export const useExtensionLogin = ({
         addOriginToLocationPath(callbackRoute ?? defaultCallbackUrl)
       );
 
-      if (hasNativeAuth && !token) {
-        try {
-          token = await loginService.getNativeAuthLoginToken();
-        } catch (error) {
-          const errorMessage =
-            error instanceof Error ? error.message : String(error);
-          console.error('Native auth token generation failed:', errorMessage);
-          setError(`Native auth error: ${errorMessage}`);
-          return;
-        }
+      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: setError
+      });
+
+      if (tokenError) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken;
 
       const providerLoginData = {
         callbackUrl,

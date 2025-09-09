@@ -33,7 +33,7 @@ jobs:
         run: |
           rm -rf node_modules build
       - name: Install Dependencies
-        run: yarn install
+        run: yarn install --frozen-lockfile
       - name: Build
         run: yarn build
       - name: Run unit tests
