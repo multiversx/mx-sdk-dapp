@@ -1,4 +1,4 @@
-interface InitAndValidateNativeAuthTokenParams {
+interface InitAndValidateNativeAuthTokenParamsType {
   hasNativeAuth: boolean;
   token: string | undefined;
   loginService: {
@@ -8,7 +8,7 @@ interface InitAndValidateNativeAuthTokenParams {
   onError?: (errorMessage: string) => void;
 }
 
-interface InitAndValidateNativeAuthTokenResult {
+interface InitAndValidateNativeAuthTokenReturnType {
   token?: string;
   error?: string;
 }
@@ -18,7 +18,7 @@ export const initAndValidateNativeAuthToken = async ({
   token,
   loginService,
   onError
-}: InitAndValidateNativeAuthTokenParams): Promise<InitAndValidateNativeAuthTokenResult> => {
+}: InitAndValidateNativeAuthTokenParamsType): Promise<InitAndValidateNativeAuthTokenReturnType> => {
   let resultToken = token;
 
   if (!hasNativeAuth && !token) {
