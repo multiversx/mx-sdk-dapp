@@ -91,9 +91,6 @@ export const useCrossWindowLogin = ({
         hasNativeAuth,
         token,
         loginService,
-        onError: () => {
-          console.warn('Fetching block failed. Login cancelled.');
-        }
       });
 
       if (tokenError) {
