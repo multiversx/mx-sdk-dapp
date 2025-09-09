@@ -50,6 +50,7 @@ or
 ```bash
 yarn add @multiversx/sdk-dapp
 ```
+
 > **Note:** Make sure you run your app on `https`, not `http`, otherwise some providers will not work.
 
 If you're transitioning from `@multiversx/sdk-dapp@4.x`, you can check out the [Migration guide](https://github.com/multiversx/mx-template-dapp/blob/main/MIGRATION_GUIDE.md) and the [migration PR](https://github.com/multiversx/mx-template-dapp/pull/343) of Template Dapp
@@ -118,6 +119,7 @@ initApp(config).then(() => {
 Once your dApp has loaded, the first user action is logging in with a chosen provider. There are two ways to perform a login: using the `UnlockPanelManager` and programmatic login using the `ProviderFactory`.
 
 #### 2.1 Using the `UnlockPanelManager`
+
 By using the provided UI, you get the benefit of having all supported providers ready for login in a side panel. You simply need to link the `unlockPanelManager.openUnlockPanel` to a user action.
 
 ```typescript
@@ -141,17 +143,18 @@ export const ConnectButton = () => {
 };
 
 ```
+
 Once the user has logged in, if `nativeAuth` is configured in the `initApp` method, an automatic logout will be performed upon native auth expiration. Before the actual logout is performed, the `LogoutManager` will show a warning toast to the user. This toast can be customized by passing a `tokenExpirationToastWarningSeconds` to the `nativeAuth` config.
 
 ```typescript
 // in initApp config
 const config: InitAppType = {
- // ...
- nativeAuth: {
+  // ...
+  nativeAuth: {
     expirySeconds: 30, // test auto logout after 30 seconds
     tokenExpirationToastWarningSeconds: 10 // show warning toast 10 seconds before auto logout
- },
-}
+  }
+};
 ```
 
 You have the option to stop this behavior by calling `LogoutManager.getInstance().stop()` after the user has logged in.
@@ -162,11 +165,11 @@ import { LogoutManager } from '@multiversx/sdk-dapp/out/managers/LogoutManager/L
   loginHandler: () => {
     navigate('/dashboard');
     // optional, to stop the automatic logout upon native auth expiration
-    LogoutManager.getInstance().stop(); 
+    LogoutManager.getInstance().stop();
   },
 ```
 
-If you want to perform some actions as soon as the user has logged in, you will need to call `ProviderFactory.create` inside a handler accepting arguments. 
+If you want to perform some actions as soon as the user has logged in, you will need to call `ProviderFactory.create` inside a handler accepting arguments.
 
 ```typescript
 export const AdvancedConnectButton = () => {
@@ -189,6 +192,7 @@ export const AdvancedConnectButton = () => {
 ```
 
 #### 2.2 Programatic login using the `ProviderFactory`
+
 If you want to login using your custom UI, you can link user actions to specific providers by calling the `ProviderFactory`.
 
 ```typescript
@@ -308,7 +312,6 @@ Then, to send the transactions, you need to use the `TransactionManager` class a
 import { TransactionManager } from '@multiversx/sdk-dapp/out/managers/TransactionManager';
 import type { TransactionsDisplayInfoType } from '@multiversx/sdk-dapp/out/types/transactions.types';
 
-
 const txManager = TransactionManager.getInstance();
 
 const sentTransactions = await txManager.send(signedTransactions);
@@ -317,16 +320,16 @@ const toastInformation: TransactionsDisplayInfoType = {
   processingMessage: 'Processing transactions',
   errorMessage: 'An error has occurred during transaction execution',
   successMessage: 'Transactions executed'
-}
+};
 
 const sessionId = await txManager.track(sentTransactions, {
-  transactionsDisplayInfo: toastInformation,
+  transactionsDisplayInfo: toastInformation
 });
 ```
 
 #### 4.3 Using the Notifications Feed
 
-The Notifications Feed is a component that displays **session transactions** in a list. Internally it gets initialized in the `initApp` method. It can be accessed via the `NotificationManager.getInstance()` method. 
+The Notifications Feed is a component that displays **session transactions** in a list. Internally it gets initialized in the `initApp` method. It can be accessed via the `NotificationManager.getInstance()` method.
 Once the user logs out of the dApp, all transactions displayed by the Notifications Feed are removed from the store. Note that you can switch between toast notifications and Notifications Feed by pressing the View All button above the current pending transaction toast in the UI.
 
 ```typescript
@@ -363,8 +366,7 @@ const store = getStore(); // or use useStore hook for reactivity
 const pendingSessions = pendingTransactionsSessionsSelector(store.getState());
 const allTransactionSessions = transactionsSliceSelector(store.getState());
 
-const isSessionIdPending =
-  Object.keys(pendingSessions).includes(sessionId);
+const isSessionIdPending = Object.keys(pendingSessions).includes(sessionId);
 const currentSession = allTransactionSessions[sessionId];
 const currentSessionStatus = currentSession?.status;
 const currentTransaction = currentSession?.transactions?.[0];
@@ -372,6 +374,7 @@ const currentTransactionStatus = currentTransaction?.status;
 ```
 
 #### 4.5 Logging out
+
 The user journey ends with calling the `provider.logout()` method.
 
 ```typescript
@@ -395,7 +398,6 @@ We have seen in the previous chapter what are the minimal steps to get up and ru
 
 Since these are mixtures of business logic and UI components, the library is split into several folders to make it easier to navigate.
 When inspecting the package, there is more content under `src`, but the folders of interest are:
-
 
 ```bash
 src/
@@ -513,7 +515,7 @@ The transaction lifecycle consists of the following steps:
 | 7 | `getSuccessfulTransactions()` | returns an array of successful transactions | `useGetSuccessfulTransactions()`|
 
 5. **User feedback** is provided through toast notifications, which are triggered to inform about transactions' progress. Additional tracking details can be optionally displayed in the toast UI.
-There is an option to add custom toast messages by using the `createCustomToast` helper.
+   There is an option to add custom toast messages by using the `createCustomToast` helper.
 
 ```ts
 import { createRoot } from 'react-dom/client';
@@ -538,14 +540,19 @@ createCustomToast({
   message: 'This is a custom toast',
   title: 'My custom toast'
 });
-      
+
+
+// closing a custom toast
+const toastManager = ToastManager.getInstance();
+toastManager.closeToast('custom-toast') // toastId
 
 ```
 
 6. **Error Handling & Recovery** is done through a custom toast that prompts the user to take appropriate action.
 
 #### Methods
-___
+
+---
 
 #### 1. Sending Transactions
 
@@ -579,12 +586,14 @@ import { TransactionManagerTrackOptionsType } from '@multiversx/sdk-dapp/out/man
 
 const options: TransactionManagerTrackOptionsType = {
   disableToasts: false, // `false` by default
-  transactionsDisplayInfo: { // `undefined` by default
+  transactionsDisplayInfo: {
+    // `undefined` by default
     errorMessage: 'Failed adding stake',
     successMessage: 'Stake successfully added',
     processingMessage: 'Staking in progress'
   },
-  sessionInformation: { // `undefined` by default. Use to perform additional actions based on the session information
+  sessionInformation: {
+    // `undefined` by default. Use to perform additional actions based on the session information
     stakeAmount: '1000000000000000000000000'
   }
 };
@@ -670,21 +679,20 @@ The business logic for these components is served by a controller. The component
 ```tsx
 import { TransactionsTableController } from '@multiversx/sdk-dapp/out/controllers/TransactionsTableController';
 import { MvxTransactionsTable } from '@multiversx/sdk-dapp-ui/react';
- 
-const processedTransactions = await TransactionsTableController.processTransactions({
-        address,
-        egldLabel: network.egldLabel,
-        explorerAddress: network.explorerAddress,
-        transactions
-      });
+
+const processedTransactions =
+  await TransactionsTableController.processTransactions({
+    address,
+    egldLabel: network.egldLabel,
+    explorerAddress: network.explorerAddress,
+    transactions
+  });
 
 // and use like this:
 <MvxTransactionsTable transactions={processedTransaction} />;
-
 ```
 
 - `MvxFormatAmount` - used to format the amount of the user's balance
-
 
 ```tsx
 import { MvxFormatAmount } from '@multiversx/sdk-dapp-ui/react';
@@ -693,9 +701,7 @@ export { DECIMALS, DIGITS } from '@multiversx/sdk-dapp-utils/out/constants';
 import { FormatAmountController } from '@multiversx/sdk-dapp/out/controllers/FormatAmountController';
 export { useGetNetworkConfig } from '@multiversx/sdk-dapp/out/react/network/useGetNetworkConfig';
 
-
-interface IFormatAmountProps
-  extends Partial<MvxFormatAmountPropsType> {
+interface IFormatAmountProps extends Partial<MvxFormatAmountPropsType> {
   value: string;
   className?: string;
 }
@@ -727,7 +733,6 @@ export const FormatAmount = (props: IFormatAmountProps) => {
   );
 };
 ```
-
 
 #### 5.2 Internal components (advanced usage)
 
