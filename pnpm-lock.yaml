@@ -174,7 +174,7 @@ importers:
         specifier: ^10.0.0
         version: 10.3.14
       globals:
-        specifier: ^16.3.0
+        specifier: 16.3.0
         version: 16.3.0
       isomorphic-fetch:
         specifier: 3.0.0
@@ -183,7 +183,7 @@ importers:
         specifier: 30.1.3
         version: 30.1.3(@types/node@20.12.8)(esbuild-register@3.6.0(esbuild@0.21.1))
       jest-environment-jsdom:
-        specifier: ^29.7.0
+        specifier: 29.7.0
         version: 29.7.0
       msw:
         specifier: 1.3.1
@@ -217,8 +217,8 @@ importers:
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.24'
-        version: 0.0.25(@testing-library/dom@10.4.1)(@types/react@18.2.0)(esbuild@0.21.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(preact@10.27.0)(prettier@3.2.5)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+        specifier: '>=0.0.27'
+        version: 0.0.27(@testing-library/dom@10.4.1)(@types/react@18.2.0)(esbuild@0.21.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(preact@10.27.0)(prettier@3.2.5)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
 
 packages:
 
@@ -1034,8 +1034,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-ui@0.0.25':
-    resolution: {integrity: sha512-vsNjJ1XPD5wPPhI4jj3iVFxjd4T9rKovluMpwnMj4OwTjsVddrgIdC7t43mdp9q85sQekqtq98k7f9C75ruYBQ==}
+  '@multiversx/sdk-dapp-ui@0.0.27':
+    resolution: {integrity: sha512-OAQLEvu7P0UHmoyimvx7iS0xn9hUfxLKvL537S8602h+zNZGfrICVX9u0MB+YfLxRisb9TIlzwQjWOVZmI59Ig==}
 
   '@multiversx/sdk-dapp-utils@3.0.1':
     resolution: {integrity: sha512-njaULbnYYS+VmHvBUx2EEIccFibmwSYABYSSLSxevhXSUtteKeK5RK9joDiNSJdG82BR3ZDTGm3eJLT54249Kw==}
@@ -1500,11 +1500,11 @@ packages:
   '@storybook/addon-actions@9.0.8':
     resolution: {integrity: sha512-LFePu7PPnWN0Il/uoUpmA5T0J0C7d6haJIbg0pXrjxW2MQVSYXE4S4LSUz8fOImltBDV3xAl6tLPYHFj6VcrOA==}
 
-  '@storybook/addon-links@9.1.1':
-    resolution: {integrity: sha512-fYv0cmUzZluEKFP8iuhqu8Wqlf3demRgES7un1C6T7GilzhnMwLFcFjX40qvTC9WsIJ2Uw1G/SPjwTNXJOO5Ng==}
+  '@storybook/addon-links@9.1.3':
+    resolution: {integrity: sha512-zLpOf9UYtxEaCQgbpOqOAW0f/puumwzTNA/AHDkqwe/BAOtBXyS/bocQIO6Oxj8z4kp+bYqxW6c2OA0/EyII0Q==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0-beta
-      storybook: ^9.1.1
+      storybook: ^9.1.3
     peerDependenciesMeta:
       react:
         optional: true
@@ -4800,8 +4800,8 @@ packages:
     resolution: {integrity: sha512-eLoXW/DHyl62zxY4SCaIgnRhuMr6ri4juEYARS8E6sCEqzKpOiE521Ucofdx+KnDZl5xmvGYaaKCk5FEOxJCoQ==}
     engines: {node: '>= 0.4'}
 
-  storybook@9.1.2:
-    resolution: {integrity: sha512-TYcq7WmgfVCAQge/KueGkVlM/+g33sQcmbATlC3X6y/g2FEeSSLGrb6E6d3iemht8oio+aY6ld3YOdAnMwx45Q==}
+  storybook@9.1.5:
+    resolution: {integrity: sha512-cGwJ2AE6nxlwqQlOiI+HKX5qa7+FOV7Ha7Qa+GoASBIQSSnLfbY6UldgAxHCJGJOFtgW/wuqfDtNvni6sj1/OQ==}
     hasBin: true
     peerDependencies:
       prettier: ^2 || ^3
@@ -6419,22 +6419,22 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-ui@0.0.25(@testing-library/dom@10.4.1)(@types/react@18.2.0)(esbuild@0.21.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(preact@10.27.0)(prettier@3.2.5)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))':
+  '@multiversx/sdk-dapp-ui@0.0.27(@testing-library/dom@10.4.1)(@types/react@18.2.0)(esbuild@0.21.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(preact@10.27.0)(prettier@3.2.5)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.0
       '@fortawesome/free-solid-svg-icons': 7.0.0
       '@rollup/plugin-image': 3.0.3
       '@stencil/core': 4.36.2
       '@stencil/react-output-target': 1.2.0(@stencil/core@4.36.2)(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
-      '@stencil/storybook-plugin': 0.4.2(@stencil/core@4.36.2)(esbuild@0.21.1)(preact@10.27.0)(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
-      '@storybook/addon-links': 9.1.1(react@18.2.0)(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))
+      '@stencil/storybook-plugin': 0.4.2(@stencil/core@4.36.2)(esbuild@0.21.1)(preact@10.27.0)(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      '@storybook/addon-links': 9.1.3(react@18.2.0)(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))
       classnames: 2.5.1
       lodash.capitalize: 4.2.1
       lodash.inrange: 3.3.6
       lodash.range: 3.2.0
       qrcode: 1.5.4
       sass-embedded: 1.90.0
-      storybook: 9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      storybook: 9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
     transitivePeerDependencies:
       - '@nuxt/kit'
       - '@nuxt/schema'
@@ -6870,16 +6870,16 @@ snapshots:
       - '@types/react'
     optional: true
 
-  '@stencil/storybook-plugin@0.4.2(@stencil/core@4.36.2)(esbuild@0.21.1)(preact@10.27.0)(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))':
+  '@stencil/storybook-plugin@0.4.2(@stencil/core@4.36.2)(esbuild@0.21.1)(preact@10.27.0)(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(typescript@5.4.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))':
     dependencies:
       '@stencil/core': 4.36.2
       '@storybook/addon-actions': 9.0.8
-      '@storybook/builder-vite': 9.1.2(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      '@storybook/builder-vite': 9.1.2(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
       '@storybook/global': 5.0.0
-      '@storybook/html': 9.1.2(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))
+      '@storybook/html': 9.1.2(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))
       preact-render-to-string: 6.5.13(preact@10.27.0)
       react-docgen-typescript: 2.4.0(typescript@5.4.5)
-      storybook: 9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      storybook: 9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
       unplugin-stencil: 0.3.5(@stencil/core@4.36.2)(esbuild@0.21.1)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
     transitivePeerDependencies:
       - '@nuxt/kit'
@@ -6895,35 +6895,35 @@ snapshots:
   '@storybook/addon-actions@9.0.8':
     optional: true
 
-  '@storybook/addon-links@9.1.1(react@18.2.0)(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))':
+  '@storybook/addon-links@9.1.3(react@18.2.0)(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      storybook: 9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
     optionalDependencies:
       react: 18.2.0
     optional: true
 
-  '@storybook/builder-vite@9.1.2(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))':
+  '@storybook/builder-vite@9.1.2(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))':
     dependencies:
-      '@storybook/csf-plugin': 9.1.2(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))
-      storybook: 9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      '@storybook/csf-plugin': 9.1.2(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))
+      storybook: 9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
       ts-dedent: 2.2.0
       vite: 7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)
     optional: true
 
-  '@storybook/csf-plugin@9.1.2(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))':
+  '@storybook/csf-plugin@9.1.2(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))':
     dependencies:
-      storybook: 9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      storybook: 9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
       unplugin: 1.16.1
     optional: true
 
   '@storybook/global@5.0.0':
     optional: true
 
-  '@storybook/html@9.1.2(storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))':
+  '@storybook/html@9.1.2(storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)))':
     dependencies:
       '@storybook/global': 5.0.0
-      storybook: 9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
+      storybook: 9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0))
       ts-dedent: 2.2.0
     optional: true
 
@@ -11071,7 +11071,7 @@ snapshots:
       es-errors: 1.3.0
       internal-slot: 1.1.0
 
-  storybook@9.1.2(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)):
+  storybook@9.1.5(@testing-library/dom@10.4.1)(msw@1.3.1(@types/node@20.12.8)(typescript@5.4.5))(prettier@3.2.5)(vite@7.1.2(@types/node@20.12.8)(sass-embedded@1.90.0)(sass@1.90.0)):
     dependencies:
       '@storybook/global': 5.0.0
       '@testing-library/jest-dom': 6.6.4
