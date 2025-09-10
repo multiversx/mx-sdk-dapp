@@ -26,6 +26,7 @@ export const clearInitiatedLogins = (props?: {
         }
         break;
       }
+
       default:
         break;
     }

@@ -54,12 +54,24 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     );
   };
 
-  const getNativeAuthLoginToken = () => {
+  const getNativeAuthLoginToken = async () => {
     try {
-      return client.initialize();
+      const token = await client.initialize();
+
+      if (!token) {
+        throw new Error(
+          'Failed to generate login token: Empty token received from native auth service'
+        );
+      }
+
+      return token;
     } catch (error) {
-      console.error('Unable to get block. Login failed.', error);
-      return;
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
+      console.error('Native auth login token generation failed:', errorMessage);
+      throw new Error(
+        `Native auth login token generation failed: ${errorMessage}`
+      );
     }
   };
 
@@ -83,25 +95,44 @@ export const useLoginService = (config?: OnProviderLoginType['nativeAuth']) => {
     }
 
     if (!loginToken) {
-      throw 'Token not found. Call `setLoginToken` first.';
+      throw new Error(
+        'Native auth login token not found. Ensure getNativeAuthLoginToken was called and completed successfully before setTokenLoginInfo.'
+      );
     }
 
-    const nativeAuthToken = client.getToken({
-      address,
-      token: loginToken,
-      signature
-    });
+    try {
+      const nativeAuthToken = client.getToken({
+        address,
+        token: loginToken,
+        signature
+      });
 
-    dispatch(
-      setTokenLogin({
-        loginToken,
-        signature,
-        nativeAuthToken,
-        ...(apiAddress ? { nativeAuthConfig: configuration } : {})
-      })
-    );
+      dispatch(
+        setTokenLogin({
+          loginToken,
+          signature,
+          nativeAuthToken,
+          ...(apiAddress ? { nativeAuthConfig: configuration } : {})
+        })
+      );
 
-    return nativeAuthToken;
+      return nativeAuthToken;
+    } catch (error) {
+      console.error(
+        'SDK setTokenLoginInfo - Error generating nativeAuthToken:',
+        error
+      );
+
+      dispatch(
+        setTokenLogin({
+          loginToken,
+          signature,
+          ...(apiAddress ? { nativeAuthConfig: configuration } : {})
+        })
+      );
+
+      return null;
+    }
   };
 
   // TODO: @StanislavSava verify and maybe refactor to separate function

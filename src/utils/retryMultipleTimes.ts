@@ -22,7 +22,8 @@ const executeAsyncCall = async (
       return await executeAsyncCall(cb, options, args, retries + 1);
     }
 
-    return null;
+    console.error(`Failed after ${options.retries} retries:`, error);
+    throw error;
   }
 };
 

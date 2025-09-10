@@ -18,7 +18,7 @@ cd mx-sdk-dapp
 git checkout development
 
 echo "Installing dependencies for mx-sdk-dapp..."
-yarn install
+yarn install --frozen-lockfile
 
 echo "Building mx-sdk-dapp..."
 yarn build
@@ -36,7 +36,7 @@ echo "cd mx-template-dapp..."
 cd mx-template-dapp
 
 echo "Installing dependencies mx-template-dapp..."
-yarn install
+yarn install --frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp
@@ -52,7 +52,7 @@ echo "cd mx-template-dapp-nextjs..."
 cd mx-template-dapp-nextjs
 
 echo "Installing dependencies mx-template-dapp-nextjs..."
-yarn install
+yarn install --frozen-lockfile
 
 echo "Linking mx-sdk-dapp..."
 yalc add @multiversx/sdk-dapp

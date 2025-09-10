@@ -36,7 +36,7 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types/login.types';
-import { clearInitiatedLogins } from './helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export enum WalletConnectV2Error {
@@ -237,18 +237,18 @@ export const useWalletConnectV2Login = ({
       setIsLoading(true);
       await cancelLogin();
 
-      if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
-        if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
-          return;
-        }
+      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: setError
+      });
+
+      if (tokenError) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken;
 
       await initiateLogin(false);
 
@@ -398,18 +398,18 @@ export const useWalletConnectV2Login = ({
         console.log('WalletConnect uri: ', uri);
       }
 
-      if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
-        // Fetching block failed
-        if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
-          return;
-        }
+      const { token: validatedToken2, error: tokenError2 } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: setError
+      });
+
+      if (tokenError2) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken2;
 
       const providerType = providerRef.current
         ? getProviderType(providerRef.current)

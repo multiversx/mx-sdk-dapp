@@ -48,7 +48,7 @@ const TransactionDataDecodeComponent = ({
   useEffect(() => {
     const { displayValue, validationWarnings } = decodeForDisplay({
       input: data,
-      decodeMethod: DecodeMethodEnum[method.value]
+      decodeMethod: method.value.toLowerCase() as DecodeMethodEnum
     });
 
     onDecode(displayValue);

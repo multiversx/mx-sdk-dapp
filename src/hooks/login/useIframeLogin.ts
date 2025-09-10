@@ -19,7 +19,7 @@ import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { clearInitiatedLogins } from './helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseIframeLoginReturnType = [
@@ -85,19 +85,17 @@ export const useIframeLogin = ({
         `${origin}${callbackRoute ?? pathname}`
       );
 
-      if (hasNativeAuth && !token) {
-        token = await loginService.getNativeAuthLoginToken();
+      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService
+      });
 
-        // Fetching block failed
-        if (!token) {
-          console.warn('Fetching block failed. Login cancelled.');
-          return;
-        }
+      if (tokenError) {
+        return;
       }
 
-      if (token) {
-        loginService.setLoginToken(token);
-      }
+      token = validatedToken;
 
       const providerLoginData = {
         callbackUrl,

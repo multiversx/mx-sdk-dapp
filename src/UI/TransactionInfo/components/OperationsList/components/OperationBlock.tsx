@@ -15,7 +15,7 @@ export interface OperationBlockPropsType extends WithTransactionType {
   address: string;
   action?: string;
   isFullSize?: boolean;
-  direction?: string;
+  direction?: TransactionDirectionEnum;
 }
 
 const OperationBlockComponent = ({
@@ -58,10 +58,10 @@ const OperationBlockComponent = ({
         <div
           className={classNames(
             styles?.direction,
-            styles?.[directions[direction]]
+            direction && styles?.[directions[direction]]
           )}
         >
-          {directions[direction]}
+          {direction && directions[direction]}
         </div>
       )}
 

@@ -22,7 +22,7 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getHasNativeAuth, getIsLoggedIn } from '../../utils';
-import { clearInitiatedLogins } from './helpers';
+import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
 const failInitializeErrorText = 'Check if the MultiversX App is open on Ledger';
@@ -178,17 +178,20 @@ export const useLedgerLogin = ({
 
     const { index } = selectedAddress;
 
-    if (hasNativeAuth && !token) {
-      token = await loginService.getNativeAuthLoginToken();
-      // Fetching block failed
-      if (!token) {
-        console.warn('Fetching block failed. Login cancelled.');
-        return;
-      }
+    const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
+      hasNativeAuth,
+      token,
+      loginService,
+      onError: (message) => onLoginFailed(message)
+    });
+
+    if (tokenError) {
+      return;
     }
 
+    token = validatedToken;
+
     if (token) {
-      loginService.setLoginToken(token);
 
       try {
         const loginInfo = await hwProvider.tokenLogin({

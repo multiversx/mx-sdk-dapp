@@ -11,7 +11,7 @@ export const getOperationDirection = ({
   const directionSelf = directionOut && directionIn;
   const directionInternal = !directionSelf;
 
-  let direction = '';
+  let direction: TransactionDirectionEnum | undefined;
   switch (true) {
     case directionOut:
       direction = TransactionDirectionEnum.OUT;
