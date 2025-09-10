@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added RN reference to README](https://github.com/multiversx/mx-sdk-dapp/pull/1575)
 - [Update security advisory packages](https://github.com/multiversx/mx-sdk-dapp/pull/1574)
 - [Revert jsdom to v.29 where window can be mocked](https://github.com/multiversx/mx-sdk-dapp/pull/1568)
 
