@@ -21,10 +21,6 @@ export const initAndValidateNativeAuthToken = async ({
 }: InitAndValidateNativeAuthTokenParamsType): Promise<InitAndValidateNativeAuthTokenReturnType> => {
   let resultToken = token;
 
-  if (!hasNativeAuth) {
-    return { token: resultToken };
-  }
-
   if (hasNativeAuth && !token) {
     const errorPrefix = 'Native auth token generation failed';
 
