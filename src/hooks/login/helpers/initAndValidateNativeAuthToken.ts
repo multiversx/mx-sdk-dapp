@@ -21,8 +21,8 @@ export const initAndValidateNativeAuthToken = async ({
 }: InitAndValidateNativeAuthTokenParamsType): Promise<InitAndValidateNativeAuthTokenReturnType> => {
   let resultToken = token;
 
-  if (!hasNativeAuth && !token) {
-    return { error: 'Native auth is not enabled' };
+  if (!hasNativeAuth) {
+    return { token: resultToken };
   }
 
   if (hasNativeAuth && !token) {
