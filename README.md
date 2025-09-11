@@ -17,7 +17,7 @@ It is built for applications that use any of the following technologies:
 - Angular (example: [Angular Template Dapp](https://github.com/multiversx/mx-template-dapp-angular))
 - Vue (example: [Vue Template Dapp](https://github.com/multiversx/mx-template-dapp-vue))
 - Any other JavaScript framework (e.g. Solid.js etc.) (example: [Solid.js Dapp](https://github.com/multiversx/mx-solidjs-template-dapp))
-- React Native
+- React Native (example: [React Native Dapp](https://github.com/multiversx/mx-template-dapp-react-native))
 - Next.js (example: [Next.js Dapp](https://github.com/multiversx/mx-template-dapp-nextjs))
 
 ## GitHub project
@@ -74,7 +74,7 @@ Having this knowledge, we can consider several steps needed to put a dApp togeth
 | 1 | Configuration | - storage configuration (e.g. sessionStorage, localStorage etc.)<br>- chain configuration<br>- custom provider configuration (adding / disabling / changing providers) |
 | 2 | Provider interaction | - logging in and out<br>- signing transactions / messages |
 | 3 | Presenting data | - get store data (e.g. account balance, account address etc.)<br>- use components to display data (e.g. balance, address, transactions list) |
-| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- displayingtransactions history |
+| 4 | Transactions | - sending transactions<br>- tracking transactions<br>- displaying transactions history |
 
 Each of these steps will be explained in more detail in the following sections.
 
@@ -191,7 +191,7 @@ export const AdvancedConnectButton = () => {
 
 ```
 
-#### 2.2 Programatic login using the `ProviderFactory`
+#### 2.2 Programmatic login using the `ProviderFactory`
 
 If you want to login using your custom UI, you can link user actions to specific providers by calling the `ProviderFactory`.
 
@@ -391,7 +391,7 @@ We have seen in the previous chapter what are the minimal steps to get up and ru
 | # | Type | Description |
 |---|------|-------------|
 | 1 | Network | Chain configuration |
-| 2 | Provider | The signing provider for logging in and singing transactions |
+| 2 | Provider | The signing provider for logging in and signing transactions |
 | 3 | Account | Inspecting user address and balance |
 | 4 | Transactions Manager | Sending and tracking transactions |
 | 5 | UI Components | Displaying UI information like balance, public keys etc. |
@@ -415,13 +415,13 @@ Conceptually, these can be split into 3 main parts:
 
 - First is the business logic in `apiCalls`, `constants`, `providers` and `methods`
 - Then comes the persistence layer hosted in the `store` folder, using [Zustand](https://zustand.docs.pmnd.rs/) under the hood.
-- Last are the UI components hosted in [@multiversx/sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controlles` and `managers`
+- Last are the UI components hosted in [@multiversx/sdk-dapp-ui](https://github.com/multiversx/mx-sdk-dapp-ui) with some components controlled on demand by classes defined in `controllers` and `managers`
 
 Next, we will take the elements from Table 3 and detail them in the following sections.
 
 ### 1. Network
 
-The network configuration is done in the `initApp` method, where you can make several confgurations like:
+The network configuration is done in the `initApp` method, where you can make several configurations like:
 
 - specifying the environment (`devnet`, `testnet`, `mainnet`)
 - overriding certain network parameters like wallet address, explorer address etc.
@@ -449,9 +449,9 @@ const provider = await ProviderFactory.create({
 await provider?.login();
 ```
 
-#### Accessing provier methods
+#### Accessing provider methods
 
-Once the provider is initialized, you can get a reference to it using the `getAccountProvider` method. Then you can call the `login`, `logout`, `signTransactions`, `signMessage` methods, or other custom methods depending on the intialized provider (see ledger for example).
+Once the provider is initialized, you can get a reference to it using the `getAccountProvider` method. Then you can call the `login`, `logout`, `signTransactions`, `signMessage` methods, or other custom methods depending on the initialized provider (see ledger for example).
 
 ### 3. Account
 
@@ -507,7 +507,7 @@ The transaction lifecycle consists of the following steps:
 |---|------|-------------|----|
 | | `methods/transactions` | path | `react/transactions` |
 | 1 | `getTransactionSessions()` | returns all transaction sessions |`useGetTransactionSessions()` |
-| 2 | `getPendingTransactionsSessions()` | returns an record of pending sessions | `useGetPendingTransactionsSessions()`|
+| 2 | `getPendingTransactionsSessions()` | returns a record of pending sessions | `useGetPendingTransactionsSessions()`|
 | 3 | `getPendingTransactions()` | returns an array of signed transactions | `useGetPendingTransactions()` |
 | 4 | `getFailedTransactionsSessions()` | returns a record of failed sessions | `useGetFailedTransactionsSessions()`|
 | 5 | `getFailedTransactions()` | returns an array of failed transactions | `useGetFailedTransactions()`|
@@ -560,7 +560,7 @@ In this way, all transactions are sent simultaneously. There is no limit to the 
 
 ```typescript
 const transactionManager = TransactionManager.getInstance();
-const parallelTransactions: SigendTransactionType[] = [tx1, tx2, tx3, tx4];
+const parallelTransactions: SignedTransactionType[] = [tx1, tx2, tx3, tx4];
 const sentTransactions = await transactionManager.send(parallelTransactions);
 ```
 
@@ -652,7 +652,7 @@ await tManager.track([plainTransaction]);
 
 #### 3.2 Advanced Usage
 
-If you need to check the status of the signed transactions, you can query the store direclty using the `sessionId` returned by the `track()` method.
+If you need to check the status of the signed transactions, you can query the store directly using the `sessionId` returned by the `track()` method.
 
 ```typescript
 import { getStore } from '@multiversx/sdk-dapp/out/store/store';
@@ -668,7 +668,7 @@ Object.entries(state).forEach(([sessionKey, data]) => {
 
 ### 5. UI Components
 
-`sdk-dapp` needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consitst of webcomponents hosted in the `@multiversx/sdk-dapp-ui` package. Thus, `sdk-dapp` does not hold any UI elements, just business logic that controls external components. We can consider two types of UI components: internal and public. They are differentiated by the way they are controlled: internal components are controlled by `sdk-dapp`'s signing or logging in flows, while public components should be controlled by the dApp.
+`sdk-dapp` needs to make use of visual elements for allowing the user to interact with some providers (like the ledger), or to display messages to the user (like idle states or toasts). These visual elements consist of webcomponents hosted in the `@multiversx/sdk-dapp-ui` package. Thus, `sdk-dapp` does not hold any UI elements, just business logic that controls external components. We can consider two types of UI components: internal and public. They are differentiated by the way they are controlled: internal components are controlled by `sdk-dapp`'s signing or logging in flows, while public components should be controlled by the dApp.
 
 #### 5.1 Public components
 
@@ -761,7 +761,7 @@ If you want to override private components and create your own, you can implemen
 
 The recommended way to debug your application is by using [lerna](https://lerna.js.org/). Make sure you have the same package version in sdk-dapp's package.json and in your project's package.json.
 
-If you preffer to use [npm link](https://docs.npmjs.com/cli/v11/commands/npm-link), make sure to use the `preserveSymlinks` option in the server configuration:
+If you prefer to use [npm link](https://docs.npmjs.com/cli/v11/commands/npm-link), make sure to use the `preserveSymlinks` option in the server configuration:
 
 ```js
   resolve: {
@@ -772,7 +772,7 @@ If you preffer to use [npm link](https://docs.npmjs.com/cli/v11/commands/npm-lin
   },
 ```
 
-Crome Redux DevTools are by default enabled to help you debug your application. You can find the extension in the Chrome Extensions store.
+Chrome Redux DevTools are by default enabled to help you debug your application. You can find the extension in the Chrome Extensions store.
 
 To build the library, run:
 
