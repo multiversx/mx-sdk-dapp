@@ -14,7 +14,7 @@ export const fallbackNetworkConfigurations: Record<
     digits: '4',
     gasPerDataByte: '1500',
     walletAddress: 'https://devnet-wallet.multiversx.com',
-    iframeWalletAddress: 'https://devnet-iframe-wallet.multiversx.com',
+    iframeWalletAddress: 'https://localhost.multiversx.com',
     xAliasAddress: 'https://devnet.xalias.com',
     apiAddress: 'https://devnet-api.multiversx.com',
     explorerAddress: 'http://devnet-explorer.multiversx.com',

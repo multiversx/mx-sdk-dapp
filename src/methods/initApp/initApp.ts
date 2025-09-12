@@ -94,7 +94,9 @@ export async function initApp({
       });
     } catch (error: any) {
       console.warn(
-        `Store rehydration timed out after ${REHYDRATE_STORE_TIMEOUT / 1000} seconds. Continuing initialization...`,
+        `Store rehydration timed out after ${
+          REHYDRATE_STORE_TIMEOUT / 1000
+        } seconds. Continuing initialization...`,
         error.message
       );
     }

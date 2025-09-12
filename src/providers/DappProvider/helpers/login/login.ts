@@ -122,5 +122,5 @@ export async function login(provider: IProvider, options?: { token?: string }) {
   await registerWebsocketListener(address);
   trackTransactions();
 
-  return { address };
+  return { address, signature: '' };
 }

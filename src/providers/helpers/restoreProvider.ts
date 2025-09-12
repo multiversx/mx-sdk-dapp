@@ -10,10 +10,15 @@ export async function restoreProvider() {
   const isMobile = isMobileWebview();
   const isInIframe = getIsInIframe();
 
-  const type =
-    isInIframe || isMobile
-      ? ProviderTypeEnum.webview
-      : providerTypeSelector(getState());
+  console.log({ type: providerTypeSelector(getState()) });
+  const innerType = providerTypeSelector(getState());
+
+  const isCustom = !Object.values(ProviderTypeEnum).includes(innerType as any);
+  let type = isInIframe || isMobile ? ProviderTypeEnum.webview : innerType;
+
+  if (isCustom) {
+    type = innerType;
+  }
 
   if (!type) {
     return;
@@ -22,6 +27,8 @@ export async function restoreProvider() {
   const provider = await ProviderFactory.create({
     type
   });
+
+  console.log({ type, provider });
 
   if (!provider) {
     throw new Error('Provider not found');
