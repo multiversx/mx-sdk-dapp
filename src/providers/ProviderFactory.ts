@@ -23,7 +23,6 @@ import {
   ICustomProvider,
   IProvider,
   IProviderFactory,
-  ProviderType,
   ProviderTypeEnum
 } from './types/providerFactory.types';
 
@@ -124,9 +123,7 @@ export class ProviderFactory {
     const dappProvider = new DappProvider(createdProvider);
     setAccountProvider(dappProvider);
 
-    const shouldClearInitiatedLogins = (
-      [ProviderTypeEnum.crossWindow] as readonly ProviderType[]
-    ).includes(type);
+    const shouldClearInitiatedLogins = ProviderTypeEnum.crossWindow === type;
 
     // Clear initiated logins and skip the login method if it's crossWindow or metamask
     clearInitiatedLogins(
