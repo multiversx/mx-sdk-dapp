@@ -85,7 +85,8 @@ export const mockGetCommonDataInput = {
     apiTimeout: '4000',
     roundDuration: 6000,
     iframeWalletAddress: 'https://devnet-iframe-wallet.multiversx.com',
-    xAliasAddress: 'https://devnet.xalias.com'
+    xAliasAddress: 'https://devnet.xalias.com',
+    extrasApi: 'https://devnet-extras-api.multiversx.com'
   },
   gasPriceData: {
     ppu: 0,

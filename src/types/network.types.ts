@@ -14,6 +14,7 @@ export interface NetworkType {
   roundDuration: number;
   iframeWalletAddress?: string;
   websocketUrl?: string;
+  extrasApi: string;
   gasStationMetadata?: Record<
     number,
     { lastBlock?: number; fast: number; faster: number }
