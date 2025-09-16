@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added extrasApi field to network](https://github.com/multiversx/mx-sdk-dapp/pull/1578)
 - [Inside iframes, customProvider is now prioritized over default providers](https://github.com/multiversx/mx-sdk-dapp/pull/1577)
 
 ## [[5.1.5](https://github.com/multiversx/mx-sdk-dapp/pull/1576)] - 2025-09-11
