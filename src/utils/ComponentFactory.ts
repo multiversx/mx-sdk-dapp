@@ -6,6 +6,28 @@ export interface CreateEventBusUIElementType extends HTMLElement {
   getEventBus: () => Promise<IEventBus | null>;
 }
 
+const loaders: Record<
+  UITagsEnum,
+  () => Promise<{
+    defineCustomElement: () => void;
+  }>
+> = {
+  [UITagsEnum.NOTIFICATIONS_FEED]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-notifications-feed'),
+  [UITagsEnum.LEDGER_CONNECT]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-ledger-connect'),
+  [UITagsEnum.UNLOCK_PANEL]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-unlock-panel'),
+  [UITagsEnum.WALLET_CONNECT]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-wallet-connect'),
+  [UITagsEnum.TOAST_LIST]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-toast-list'),
+  [UITagsEnum.PENDING_TRANSACTIONS_PANEL]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-pending-transactions-panel'),
+  [UITagsEnum.SIGN_TRANSACTIONS_PANEL]: () =>
+    import('@multiversx/sdk-dapp-ui/mvx-sign-transactions-panel')
+};
+
 export type CreateComponentType = <T = CreateEventBusUIElementType>({
   name,
   anchor
@@ -24,6 +46,11 @@ export class ComponentFactory {
     name: `${UITagsEnum}`;
     anchor?: HTMLElement;
   }) => {
+    const loadElement = loaders[name];
+
+    const componentClass = await loadElement?.();
+    componentClass?.defineCustomElement();
+
     const webComponent = safeWindow?.customElements?.get(name);
 
     if (!webComponent) {

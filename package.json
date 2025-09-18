@@ -82,14 +82,14 @@
     "zustand": "4.4.7"
   },
   "peerDependencies": {
-    "@multiversx/sdk-core": "^14.x || ^15.x",
+    "@multiversx/sdk-core": "15.1.1",
     "@multiversx/sdk-dapp-utils": "^3.x",
     "axios": ">=1.10.0",
     "bignumber.js": "^9.x",
     "protobufjs": "^7.2.6"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.27"
+    "@multiversx/sdk-dapp-ui": "0.0.28"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
