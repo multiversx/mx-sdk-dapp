@@ -25,6 +25,8 @@ import { trackTransactions } from '../trackTransactions/trackTransactions';
 import { setGasStationMetadata } from './gastStationMetadata/setGasStationMetadata';
 import { getAccount } from '../account/getAccount';
 
+const REHYDRATE_TIMEOUT_SECONDS = REHYDRATE_STORE_TIMEOUT / 1000;
+
 const defaultInitAppProps = {
   storage: {
     getStorageCallback: defaultStorageCallback
@@ -87,14 +89,12 @@ export async function initApp({
         });
 
         setTimeout(() => {
-          reject();
+          reject(new Error('Unable to hydrate store'));
         }, REHYDRATE_STORE_TIMEOUT);
       });
     } catch (error: any) {
       console.warn(
-        `Store rehydration timed out after ${
-          REHYDRATE_STORE_TIMEOUT / 1000
-        } seconds. Continuing initialization...`,
+        `Store rehydration timed out after ${REHYDRATE_TIMEOUT_SECONDS} seconds. Continuing initialization...`,
         error.message
       );
     }
