@@ -37,7 +37,7 @@ export async function restoreProvider() {
     throw new Error('Provider not found');
   }
 
-  /*k
+  /*
     Check if the app is running in webview and the provider is already initialized.
     - true: the app is embedded within another dApp (e.g., inside an iframe) and perform login using the provider.
     - false: the parent is not a dApp and proceed with initializing the current app as a standalone iframe.
