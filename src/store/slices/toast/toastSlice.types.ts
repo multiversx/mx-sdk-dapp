@@ -11,6 +11,7 @@ interface ISharedCustomToast {
    * Duration in miliseconds
    */
   duration?: number;
+  hasCloseButton?: boolean;
   onClose?: () => void;
 }
 
