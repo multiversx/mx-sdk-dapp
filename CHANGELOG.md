@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.1.6](https://github.com/multiversx/mx-sdk-dapp/pull/1580)] - 2025-09-22
+
+- [Added customToast `hasCloseButton` option](https://github.com/multiversx/mx-sdk-dapp/pull/1579)
 - [Update sdk-web-wallet-iframe-provider to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1578)
 - [Inside iframes, customProvider is now prioritized over default providers](https://github.com/multiversx/mx-sdk-dapp/pull/1577)
 

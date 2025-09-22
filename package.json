@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.1.5",
+  "version": "5.1.6",
   "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -29,7 +29,8 @@
     "unpublish-verdaccio": "npm unpublish @multiversx/sdk-dapp --force --registry http://localhost:4873",
     "publish-verdaccio": "npm run unpublish-verdaccio && npm run build && npm publish --registry http://localhost:4873/",
     "compile": "tsc && tsc-alias",
-    "build-esbuild": "rimraf out && node esbuild.js",
+    "clean-out": "node -e \"require('fs').rmSync('out',{recursive:true,force:true})\"",
+    "build-esbuild": "npm run clean-out && node esbuild.js",
     "build": "npm run build-esbuild && npm run compile",
     "test": "jest",
     "lint": "eslint src",
@@ -89,7 +90,7 @@
     "protobufjs": "^7.2.6"
   },
   "optionalDependencies": {
-    "@multiversx/sdk-dapp-ui": ">=0.0.27"
+    "@multiversx/sdk-dapp-ui": ">=0.0.29"
   },
   "resolutions": {
     "strip-ansi": "6.0.1",
@@ -138,7 +139,6 @@
     "node-stdlib-browser": "1.3.1",
     "prettier": "3.2.5",
     "react": "18.2.0",
-    "rimraf": "5.0.6",
     "ts-jest": "29.1.2",
     "tsc-alias": "1.8.9",
     "typescript": "5.4.5",
