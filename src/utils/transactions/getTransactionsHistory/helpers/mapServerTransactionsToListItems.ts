@@ -45,7 +45,7 @@ export const mapServerTransactionsToListItems = async ({
 
   const newTransactions: ServerTransactionType[] = skipFetchingTransactions
     ? transactions.map((tx) => ({
-        // casting is correct since store transaction was replaced with fetchedserver transaction
+        // casting is correct since store transaction was replaced with fetched server transaction
         ...(tx as unknown as ServerTransactionType),
         txHash: tx.hash
       }))
