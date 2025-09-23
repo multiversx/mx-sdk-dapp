@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.1.7](https://github.com/multiversx/mx-sdk-dapp/pull/1582)] - 2025-09-23
+
+- [Added providerType check for customProvider](https://github.com/multiversx/mx-sdk-dapp/pull/1581)
+
 ## [[5.1.6](https://github.com/multiversx/mx-sdk-dapp/pull/1580)] - 2025-09-22
 
 - [Added customToast `hasCloseButton` option](https://github.com/multiversx/mx-sdk-dapp/pull/1579)
