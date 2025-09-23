@@ -17,10 +17,11 @@ export async function restoreProvider() {
   let type =
     isInIframe || isMobileView ? ProviderTypeEnum.webview : providerType;
 
-  // Check if provider exist and is not one of the base providers
-  const isCustomProvider =
-    providerType &&
-    !Object.values(ProviderTypeEnum).includes(providerType as ProviderBaseType);
+  const isBaseProvider = Object.values(ProviderTypeEnum).includes(
+    providerType as ProviderBaseType
+  );
+  // Check if provider exist and is not base
+  const isCustomProvider = providerType && !isBaseProvider;
 
   // Prioritize customProvider if it serves as a provider inside an iframe
   if (isCustomProvider) {
