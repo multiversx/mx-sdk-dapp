@@ -1,7 +1,7 @@
-import { sessionCallbacksMap } from 'managers/TransactionManager/helpers/sessionCallbacks';
+import { getCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { TransactionBatchStatusesEnum } from 'types/enums.types';
 
-interface runSessionCallbacksPropsType {
+interface RunSessionCallbacksPropsType {
   sessionId: string;
   status?: TransactionBatchStatusesEnum | null;
 }
@@ -9,22 +9,22 @@ interface runSessionCallbacksPropsType {
 export async function runSessionCallbacks({
   sessionId,
   status
-}: runSessionCallbacksPropsType) {
-  const { onSuccess, onFail } = sessionCallbacksMap;
+}: RunSessionCallbacksPropsType) {
+  const callbacks = getCallbacks(sessionId);
 
-  if (!onSuccess || !onFail || status == null) {
+  if (!callbacks.onSuccess || !callbacks.onFail || status == null) {
     return;
   }
 
   switch (status) {
     case TransactionBatchStatusesEnum.success:
-      await onSuccess?.(sessionId);
+      await callbacks?.onSuccess?.(sessionId);
       break;
     case TransactionBatchStatusesEnum.fail:
     case TransactionBatchStatusesEnum.cancelled:
     case TransactionBatchStatusesEnum.timedOut:
     case TransactionBatchStatusesEnum.invalid:
-      await onFail?.(sessionId);
+      await callbacks?.onFail?.(sessionId);
       break;
   }
 }

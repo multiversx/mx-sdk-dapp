@@ -17,7 +17,7 @@ import { isGuardianTx } from 'utils/transactions/isGuardianTx';
 import { getToastDuration } from './helpers/getToastDuration';
 import { getTransactionsSessionStatus } from './helpers/getTransactionsStatus';
 import { isBatchTransaction } from './helpers/isBatchTransaction';
-import { registerSessionCallbacks } from './helpers/sessionCallbacks';
+import { registerCallbacks } from './helpers/sessionCallbacks';
 import { TransactionManagerTrackOptionsType } from './TransactionManager.types';
 
 export class TransactionManager {
@@ -32,6 +32,8 @@ export class TransactionManager {
 
   /**
    * Set callbacks to be executed when the transaction session is successful or fails.
+   * It is analogous to the `onSuccess` and `onFail` callbacks set in the `initApp` method,
+   * as a way to override the global callbacks
    * @param onSuccess - The callback to run when the transaction session is successful.
    * @param onFail - The callback to run when the transaction session fails.
    * @example
@@ -46,7 +48,7 @@ export class TransactionManager {
     onSuccess,
     onFail
   }: TransactionTrackingConfigType) => {
-    registerSessionCallbacks({ onSuccess, onFail });
+    registerCallbacks({ onSuccess, onFail });
   };
 
   public send = async (
@@ -84,6 +86,31 @@ export class TransactionManager {
     }
   };
 
+  /**
+   * Track the status of a transaction session.
+   * @param sentTransactions - The transactions to track.
+   * @param options - The options for the transaction session.
+   * @returns The session id.
+   * @example
+   * ```ts
+   * const sessionId = await txManager.track(sentTransactions, {
+   *   transactionsDisplayInfo: {
+   *     errorMessage: 'Failed adding stake',
+   *     successMessage: 'Stake successfully added',
+   *     processingMessage: 'Staking in progress'
+   *   },
+   *   onSuccess: async(sessionId) => {
+   *     console.log('Session successful', sessionId);
+   *   },
+   *   onFail: async(sessionId) => {
+   *     console.log('Session failed', sessionId);
+   *   }
+   *   sessionInformation: {
+   *     stakeAmount: '1000000000000000000000000'
+   *   }
+   * });
+   * ```
+   */
   public track = async (
     sentTransactions: SignedTransactionType[] | SignedTransactionType[][],
     options: TransactionManagerTrackOptionsType = { disableToasts: false }
@@ -106,6 +133,14 @@ export class TransactionManager {
 
     if (options.disableToasts === true) {
       return sessionId;
+    }
+
+    if (options.onSuccess) {
+      registerCallbacks({ onSuccess: options.onSuccess, sessionId });
+    }
+
+    if (options.onFail) {
+      registerCallbacks({ onFail: options.onFail, sessionId });
     }
 
     const totalDuration = getToastDuration(sentTransactions);
