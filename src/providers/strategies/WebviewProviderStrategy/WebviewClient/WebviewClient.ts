@@ -98,9 +98,11 @@ export class WebviewClient {
       const { address } = accountSelector(this.store.getState());
       const provider = getAccountProvider();
 
+      // Message format needed for token generation
+      const message = `${address}${loginToken}`;
       const messageToSign = new Message({
         address: new Address(address),
-        data: new Uint8Array(Buffer.from(loginToken))
+        data: new Uint8Array(Buffer.from(message))
       });
 
       const signedMessage = await provider.signMessage(messageToSign);

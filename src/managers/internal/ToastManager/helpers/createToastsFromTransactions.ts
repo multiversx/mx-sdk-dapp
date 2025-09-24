@@ -23,13 +23,15 @@ interface CreateToastsFromTransactionsParamsType {
   transactionsSessions: Record<string, SessionTransactionType>;
   account: AccountSliceType;
   existingCompletedTransactions?: ITransactionToast[];
+  skipFetchingTransactions?: boolean;
 }
 
 export const createToastsFromTransactions = async ({
   toastList,
   transactionsSessions,
   account,
-  existingCompletedTransactions = []
+  existingCompletedTransactions = [],
+  skipFetchingTransactions = false
 }: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> => {
   const pendingTransactionToasts: ITransactionToast[] = [];
   const completedTransactionToasts: ITransactionToast[] = [
@@ -51,7 +53,8 @@ export const createToastsFromTransactions = async ({
       transactions,
       address: account.address,
       explorerAddress,
-      egldLabel
+      egldLabel,
+      skipFetchingTransactions
     });
 
     const isTimedOut = getIsTransactionTimedOut(status);
