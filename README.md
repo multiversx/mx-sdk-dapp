@@ -597,8 +597,7 @@ const options: TransactionManagerTrackOptionsType = {
     stakeAmount: '1000000000000000000000000'
   },
   onSuccess: async(sessionId) => { // optional
-    // will be executed when the current session is successful
-    // does not override the global onSuccess callback set in the initApp method
+    // overrides the the global `onSuccess` callback set in the `initApp` method for the current session only
     console.log('Session successful', sessionId);
   },
   onFail: async(sessionId) => { // optional
