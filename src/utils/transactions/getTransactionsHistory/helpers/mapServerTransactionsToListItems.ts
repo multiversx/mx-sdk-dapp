@@ -12,6 +12,7 @@ interface IMapServerTransactionsToListItemsParams {
   address: string;
   explorerAddress: string;
   egldLabel: string;
+  skipFetchingTransactions?: boolean;
 }
 
 const sortTransactionsByTimestamp = (transactions: ITransactionListItem[]) =>
@@ -21,7 +22,8 @@ export const mapServerTransactionsToListItems = async ({
   transactions,
   address,
   explorerAddress,
-  egldLabel
+  egldLabel,
+  skipFetchingTransactions = false
 }: IMapServerTransactionsToListItemsParams): Promise<
   ITransactionListItem[]
 > => {
@@ -41,7 +43,13 @@ export const mapServerTransactionsToListItems = async ({
     return sortTransactionsByTimestamp(cachedTransactions);
   }
 
-  const newTransactions = await getServerTransactionsByHashes(hashesToFetch);
+  const newTransactions: ServerTransactionType[] = skipFetchingTransactions
+    ? transactions.map((tx) => ({
+        // casting is correct since store transaction was replaced with fetched server transaction
+        ...(tx as unknown as ServerTransactionType),
+        txHash: tx.hash
+      }))
+    : await getServerTransactionsByHashes(hashesToFetch);
 
   const retrievedHashes = newTransactions.map((tx) => tx.txHash);
   const missingHashes = hashesToFetch.filter(
@@ -74,6 +82,16 @@ export const mapServerTransactionsToListItems = async ({
     newTransactions.push(...pendingDummyTransactions);
   }
 
+  const uniqueTransactionsMap = new Map<string, ITransactionListItem>();
+
+  cachedTransactions.forEach((item) => {
+    const key = item.hash;
+    if (!key) {
+      return;
+    }
+    uniqueTransactionsMap.set(String(key), item);
+  });
+
   newTransactions.forEach((transaction) => {
     const transactionListItem = mapTransactionToListItem({
       transaction,
@@ -89,8 +107,10 @@ export const mapServerTransactionsToListItems = async ({
       });
     }
 
-    cachedTransactions.push(transactionListItem);
+    uniqueTransactionsMap.set(transaction.txHash, transactionListItem);
   });
 
-  return sortTransactionsByTimestamp(cachedTransactions);
+  return sortTransactionsByTimestamp(
+    Array.from(uniqueTransactionsMap.values())
+  );
 };

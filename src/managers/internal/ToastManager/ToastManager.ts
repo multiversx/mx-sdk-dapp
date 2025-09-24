@@ -72,14 +72,24 @@ export class ToastManager {
         { toasts, transactions },
         { toasts: prevToasts, transactions: prevTransactions }
       ) => {
-        if (
-          !isEqual(prevToasts.transactionToasts, toasts.transactionToasts) ||
-          !isEqual(prevTransactions, transactions)
-        ) {
-          await this.updateTransactionToastsList();
+        const newToastsWereCreated = !isEqual(
+          prevToasts.transactionToasts,
+          toasts.transactionToasts
+        );
+        const checkBatchHasNewData = !isEqual(prevTransactions, transactions);
+
+        if (newToastsWereCreated || checkBatchHasNewData) {
+          await this.updateTransactionToastsList({
+            skipFetchingTransactions: checkBatchHasNewData // transactions were already fetched by `checkBatch`
+          });
         }
 
-        if (!isEqual(prevToasts.customToasts, toasts.customToasts)) {
+        const newCustomToastsWereCreated = !isEqual(
+          prevToasts.customToasts,
+          toasts.customToasts
+        );
+
+        if (newCustomToastsWereCreated) {
           await this.updateCustomToastList();
         }
       }
@@ -138,7 +148,9 @@ export class ToastManager {
     return toastId;
   }
 
-  private async updateTransactionToastsList() {
+  private async updateTransactionToastsList(props?: {
+    skipFetchingTransactions?: boolean;
+  }) {
     const {
       toasts: toastList,
       transactions: transactionsSessions,
@@ -149,7 +161,8 @@ export class ToastManager {
       await createToastsFromTransactions({
         toastList,
         transactionsSessions,
-        account
+        account,
+        skipFetchingTransactions: props?.skipFetchingTransactions
       });
 
     this.transactionToasts = [

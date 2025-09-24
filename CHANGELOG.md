@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - [Fixed issue with invalid signature in WebviewClient login](https://github.com/multiversx/mx-sdk-dapp/pull/1584)
+- [Fixed multiple calls to /transactions endpoint on tracking transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1583)
 
 ## [[5.1.7](https://github.com/multiversx/mx-sdk-dapp/pull/1582)] - 2025-09-23
 
