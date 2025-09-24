@@ -12,7 +12,7 @@ export async function runSessionCallbacks({
 }: RunSessionCallbacksPropsType) {
   const callbacks = getCallbacks(sessionId);
 
-  if (!callbacks.onSuccess || !callbacks.onFail || status == null) {
+  if (status == null) {
     return;
   }
 
