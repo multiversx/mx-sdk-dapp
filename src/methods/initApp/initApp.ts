@@ -2,7 +2,7 @@ import { safeWindow } from 'constants/window.constants';
 import { defineCustomElements } from 'lib/sdkDappUi';
 import { ToastManager } from 'managers/internal/ToastManager/ToastManager';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
-import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
+import { registerSessionCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
 import { ICustomProvider } from 'providers/types/providerFactory.types';
@@ -149,7 +149,7 @@ export async function initApp({
       await registerWebsocketListener(account.address);
       trackTransactions();
       LogoutManager.getInstance().init();
-      registerCallbacks({
+      registerSessionCallbacks({
         onSuccess: dAppConfig.transactionTracking?.onSuccess,
         onFail: dAppConfig.transactionTracking?.onFail
       });

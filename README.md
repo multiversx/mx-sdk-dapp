@@ -595,14 +595,6 @@ const options: TransactionManagerTrackOptionsType = {
   sessionInformation: {
     // `undefined` by default. Use to perform additional actions based on the session information
     stakeAmount: '1000000000000000000000000'
-  },
-  onSuccess: async(sessionId) => { // optional
-    // will be executed when the currentsession is successful
-    // does not override the global onSuccess callback set in the initApp method
-    console.log('Session successful', sessionId);
-  },
-  onFail: async(sessionId) => { // optional
-    console.log('Session failed', sessionId);
   }
 };
 
