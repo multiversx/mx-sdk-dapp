@@ -590,6 +590,7 @@ const options: TransactionManagerTrackOptionsType = {
     // `undefined` by default
     errorMessage: 'Failed adding stake',
     successMessage: 'Stake successfully added',
+    receivedMessage: 'Stake successfully added', // optional, add it in case of multiple transactions
     processingMessage: 'Staking in progress'
   },
   sessionInformation: {
