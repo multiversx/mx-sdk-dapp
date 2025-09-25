@@ -76,10 +76,6 @@ importers:
       zustand:
         specifier: 4.4.7
         version: 4.4.7(@types/react@18.2.0)(immer@10.1.1)(react@18.2.0)
-    optionalDependencies:
-      '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.30'
-        version: 0.0.30(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@eslint/js':
         specifier: 9.15.0
@@ -216,6 +212,10 @@ importers:
       typescript-eslint:
         specifier: 8.15.0
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
+    optionalDependencies:
+      '@multiversx/sdk-dapp-ui':
+        specifier: '>=0.0.31'
+        version: 0.0.31(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -865,8 +865,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-ui@0.0.30':
-    resolution: {integrity: sha512-H2N+UEYQHBrbouGvqmlnBpHuqscgvzF9bkP+G3OrfBuMRDW/STxM0dvMygOdjvRAdI77Oh1YSjOp09G1Ctdr7w==}
+  '@multiversx/sdk-dapp-ui@0.0.31':
+    resolution: {integrity: sha512-sy/OQo2ldq4IjzDt/lZ+8zdkM3N3MsZR6t8tYs8IhfDb4QlBt/Wmmgd4NHQjfNsjl2eQkYEhfI07xtC/J0tgXg==}
     engines: {node: '>=20.19.0'}
 
   '@multiversx/sdk-dapp-utils@3.0.1':
@@ -5461,7 +5461,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-ui@0.0.30(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)':
+  '@multiversx/sdk-dapp-ui@0.0.31(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.0
       '@fortawesome/free-solid-svg-icons': 7.0.0

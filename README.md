@@ -586,19 +586,21 @@ import { TransactionManagerTrackOptionsType } from '@multiversx/sdk-dapp/out/man
 
 const options: TransactionManagerTrackOptionsType = {
   disableToasts: false, // `false` by default
-  transactionsDisplayInfo: {
-    // `undefined` by default
+  transactionsDisplayInfo: { // optional. If left `undefined`, it will use the default messages
     errorMessage: 'Failed adding stake',
     successMessage: 'Stake successfully added',
-    processingMessage: 'Staking in progress'
+    receivedMessage: 'Stake successfully added', // optional, add it in case of multiple transactions
+    processingMessage: 'Staking in progress',
+    // submittedMessage: 'Stake submitted',
+    // timedOutMessage: 'Transaction timed out', 
+    // invalidMessage: 'Invalid transaction',
   },
   sessionInformation: {
     // `undefined` by default. Use to perform additional actions based on the session information
     stakeAmount: '1000000000000000000000000'
   },
   onSuccess: async(sessionId) => { // optional
-    // will be executed when the current session is successful
-    // does not override the global onSuccess callback set in the initApp method
+    // overrides the the global `onSuccess` callback set in the `initApp` method for the current session only
     console.log('Session successful', sessionId);
   },
   onFail: async(sessionId) => { // optional

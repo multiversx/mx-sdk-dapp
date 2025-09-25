@@ -37,6 +37,7 @@ export const getToastDataStateByStatus = ({
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.receivedMessage ??
+      transactionsDisplayInfo?.successMessage ??
       txActionName ??
       TransactionsDefaultTitles.received,
     iconClassName: 'success'
