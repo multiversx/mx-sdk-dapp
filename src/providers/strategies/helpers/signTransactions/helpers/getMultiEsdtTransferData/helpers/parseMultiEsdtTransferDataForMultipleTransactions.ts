@@ -51,12 +51,10 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
         allTransactions.push(newTx);
       });
     } else {
-      const transactionData = decodeBase64(plainTransaction?.data ?? '');
-
-      const { tokenId, amount } = getTokenFromData(transactionData);
+      const { tokenId, amount } = getTokenFromData(txData);
 
       if (tokenId) {
-        parsedTransactionsByDataField[transactionData] = {
+        parsedTransactionsByDataField[txData] = {
           tokenId,
           amount,
           receiver: transaction.receiver.toBech32()
@@ -65,7 +63,7 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
       allTransactions.push({
         transaction,
         transactionIndex,
-        multiTxData: transactionData,
+        multiTxData: txData,
         needsSigning: true
       });
     }
