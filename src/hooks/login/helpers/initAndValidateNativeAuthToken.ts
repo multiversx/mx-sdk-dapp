@@ -33,7 +33,8 @@ export const initAndValidateNativeAuthToken = async ({
         return { error: errorPrefix };
       }
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : String(error);
+      const errorMessage =
+        error instanceof Error ? error.message : String(error);
       const fullErrorMessage = `${errorPrefix}: ${errorMessage}`;
       console.error(fullErrorMessage);
       onError?.(fullErrorMessage);

@@ -17,7 +17,10 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { addOriginToLocationPath } from 'utils/window';
 import { getDefaultCallbackUrl } from 'utils/window';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from './helpers';
 import { useLoginService } from './useLoginService';
 
 type CreateAccountFunctionType = (
@@ -77,11 +80,12 @@ export const usePasskeyLogin = ({
         addOriginToLocationPath(callbackRoute ?? defaultCallbackUrl)
       );
 
-      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService,
-      });
+      const { token: validatedToken, error: tokenError } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService
+        });
 
       if (tokenError) {
         return;

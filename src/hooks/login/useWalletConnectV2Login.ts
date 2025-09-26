@@ -36,7 +36,10 @@ import {
   LoginHookGenericStateType,
   OnProviderLoginType
 } from '../../types/login.types';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from './helpers';
 import { useLoginService } from './useLoginService';
 
 export enum WalletConnectV2Error {
@@ -237,12 +240,13 @@ export const useWalletConnectV2Login = ({
       setIsLoading(true);
       await cancelLogin();
 
-      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService,
-        onError: setError
-      });
+      const { token: validatedToken, error: tokenError } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService,
+          onError: setError
+        });
 
       if (tokenError) {
         return;
@@ -398,12 +402,13 @@ export const useWalletConnectV2Login = ({
         console.log('WalletConnect uri: ', uri);
       }
 
-      const { token: validatedToken2, error: tokenError2 } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService,
-        onError: setError
-      });
+      const { token: validatedToken2, error: tokenError2 } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService,
+          onError: setError
+        });
 
       if (tokenError2) {
         return;

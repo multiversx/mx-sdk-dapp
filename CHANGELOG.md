@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.3.2](https://github.com/multiversx/mx-sdk-dapp/pull/1590)] - 2025-09-26
+
+- [Removed login session expiry and moved guardian storage to session](https://github.com/multiversx/mx-sdk-dapp/pull/1590)
 - [Improvements to error handling on login failures](https://github.com/multiversx/mx-sdk-dapp/pull/1570)
 
 ## [[v4.3.0](https://github.com/multiversx/mx-sdk-dapp/pull/1571)] - 2025-09-08

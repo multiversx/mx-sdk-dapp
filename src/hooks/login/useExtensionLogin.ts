@@ -17,7 +17,10 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { addOriginToLocationPath } from 'utils/window';
 import { getDefaultCallbackUrl } from 'utils/window';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseExtensionLoginReturnType = [
@@ -67,12 +70,13 @@ export const useExtensionLogin = ({
         addOriginToLocationPath(callbackRoute ?? defaultCallbackUrl)
       );
 
-      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService,
-        onError: setError
-      });
+      const { token: validatedToken, error: tokenError } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService,
+          onError: setError
+        });
 
       if (tokenError) {
         return;

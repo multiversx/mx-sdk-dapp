@@ -1,10 +1,17 @@
-export type SessionKeyType = 'address' | 'shard' | 'toasts' | 'toastProgress';
-type ExpiresType = number | false;
+export const sessionStorageKeys = {
+  address: 'address',
+  shard: 'shard',
+  toasts: 'toasts',
+  toastProgress: 'toastProgress'
+} as const;
+
+export type SessionKeyType = keyof typeof sessionStorageKeys;
+export type SessionValueType = typeof sessionStorageKeys[SessionKeyType];
 
 export interface SetItemType {
-  key: SessionKeyType;
+  key: SessionValueType;
   data: any;
-  expires: ExpiresType;
+  expires?: number;
 }
 
 export const setItem = ({ key, data, expires }: SetItemType) => {
@@ -17,7 +24,7 @@ export const setItem = ({ key, data, expires }: SetItemType) => {
   );
 };
 
-export const getItem = (key: SessionKeyType): any => {
+export const getItem = (key: SessionValueType): any => {
   const item = sessionStorage.getItem(String(key));
   if (!item) {
     return null;
@@ -44,7 +51,7 @@ export const getItem = (key: SessionKeyType): any => {
   return deserializedItem.data;
 };
 
-export const removeItem = (key: SessionKeyType) =>
+export const removeItem = (key: SessionValueType) =>
   sessionStorage.removeItem(String(key));
 
 export const clear = () => sessionStorage.clear();

@@ -12,13 +12,15 @@ const SECONDS_IN_A_DAY = 24 * 60 * 60;
 
 export const handleGuardianWarning = (userAccount: AccountType) => {
   const handleToastDismissal = () => {
-    const daysAsSeconds = SECONDS_IN_A_DAY * DAYS_TO_SHOW_AGAIN_AFTER_DISMISSAL;
-    const currentTimestamp = Math.floor(Date.now() / 1000);
+    const daysAsMilliseconds =
+      SECONDS_IN_A_DAY * DAYS_TO_SHOW_AGAIN_AFTER_DISMISSAL * 1000;
+
+    const currentTimestamp = Date.now();
 
     storage.local.setItem({
       key: localStorageKeys.guardianBreachToastDismissTimestamp,
       data: currentTimestamp,
-      expires: currentTimestamp + daysAsSeconds
+      expires: currentTimestamp + daysAsMilliseconds
     });
   };
 

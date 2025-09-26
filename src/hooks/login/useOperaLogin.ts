@@ -17,7 +17,10 @@ import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { optionalRedirect } from 'utils/internal';
 import { getDefaultCallbackUrl } from 'utils/window';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseOperaLoginReturnType = [
@@ -68,11 +71,12 @@ export const useOperaLogin = ({
         `${origin}${callbackRoute ?? defaulCallbackUrl}`
       );
 
-      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService,
-      });
+      const { token: validatedToken, error: tokenError } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService
+        });
 
       if (tokenError) {
         return;
