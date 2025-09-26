@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.1](https://github.com/multiversx/mx-sdk-dapp/pull/1594)] - 2025-09-25
+
+- [Added index file for ToastManager](https://github.com/multiversx/mx-sdk-dapp/pull/1594)
+
 ## [[5.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1593)] - 2025-09-25
 
 - [Moved ToastManager to the top level of managers folder](https://github.com/multiversx/mx-sdk-dapp/pull/1592)
