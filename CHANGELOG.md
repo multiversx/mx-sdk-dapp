@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Fixed display issue with data from common data](https://github.com/multiversx/mx-sdk-dapp/pull/1595)
+
 ## [[5.2.1](https://github.com/multiversx/mx-sdk-dapp/pull/1594)] - 2025-09-25
 
 - [Added index file for ToastManager](https://github.com/multiversx/mx-sdk-dapp/pull/1594)

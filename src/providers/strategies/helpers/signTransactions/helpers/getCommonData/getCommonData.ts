@@ -62,6 +62,7 @@ export async function getCommonData({
   const currentTransaction = allTransactions[currentScreenIndex];
   const sender = currentTransaction?.transaction?.sender.toString();
   const transaction = currentTransaction?.transaction;
+  const plainTransaction = transaction.toPlainObject();
 
   let tokenTransaction: {
     identifier?: string;
@@ -83,7 +84,6 @@ export async function getCommonData({
     parsedTransactionsByDataField
   });
 
-  const plainTransaction = currentTransaction.transaction.toPlainObject();
   const txInfo = await extractTransactionsInfo(currentTransaction);
 
   const isEgld = !txInfo?.transactionTokenInfo?.tokenId;
@@ -113,9 +113,7 @@ export async function getCommonData({
   } else {
     const getFormattedAmount = ({ addCommas }: { addCommas: boolean }) =>
       formatAmount({
-        input: isEgld
-          ? currentTransaction.transaction.value.toString()
-          : amount,
+        input: isEgld ? transaction.value.toString() : amount,
         decimals: isEgld ? Number(network.decimals) : tokenDecimals,
         digits: Number(network.digits),
         showLastNonZeroDecimal: false,
@@ -165,10 +163,7 @@ export async function getCommonData({
   const currentIndexToSign =
     signedIndexes.length > 0 ? signedIndexes[signedIndexes.length - 1] + 1 : 0;
 
-  const data = decodeBase64(
-    currentTransaction.transaction.data.toString() ?? ''
-  );
-
+  const data = decodeBase64(plainTransaction?.data ?? '');
   const highlight = getHighlight(txInfo?.transactionTokenInfo);
   const decodedData = getAllDecodedFormats({ data, identifier, highlight });
   const explorerAddress = getExplorerAddress();
@@ -196,7 +191,7 @@ export async function getCommonData({
 
   const commonData: ISignTransactionsPanelCommonData = {
     receiver: plainTransaction.receiver.toString(),
-    data: decodeBase64(currentTransaction.transaction.data.toString() ?? ''),
+    data,
     decodedData,
     gasPrice: formattedGasPrice,
     gasLimit: formattedGasLimit,
