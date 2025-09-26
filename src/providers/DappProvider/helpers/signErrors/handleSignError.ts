@@ -3,7 +3,7 @@ import {
   CANCEL_TRANSACTION_TOAST_ID,
   ERROR_SIGNING_TOAST_ID
 } from 'constants/transactions.constants';
-import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
+import { ToastIconsEnum } from 'managers/ToastManager/helpers/getToastDataStateByStatus';
 import { createCustomToast } from 'store/actions';
 import { SigningErrorsEnum, SigningWarningsEnum } from 'types/enums.types';
 

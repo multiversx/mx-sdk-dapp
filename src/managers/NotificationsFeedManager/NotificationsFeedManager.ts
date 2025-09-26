@@ -5,10 +5,10 @@ import { ITransactionListItem, MvxNotificationsFeed } from 'lib/sdkDappUi';
 import { clearCompletedTransactions } from 'store/actions/transactions/transactionsActions';
 import { getStore } from 'store/store';
 import { NotificationsFeedEventsEnum } from './types';
-import { ToastManager } from '../internal';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager/SidePanelBaseManager';
-import { createToastsFromTransactions } from '../internal/ToastManager/helpers/createToastsFromTransactions';
-import { ITransactionToast } from '../internal/ToastManager/types';
+import { createToastsFromTransactions } from '../ToastManager/helpers/createToastsFromTransactions';
+import { ToastManager } from '../ToastManager/ToastManager';
+import { ITransactionToast } from '../ToastManager/types';
 
 interface INotificationsFeedManagerData {
   pendingTransactions: ITransactionToast[];
