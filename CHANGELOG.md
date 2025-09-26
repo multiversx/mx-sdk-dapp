@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1591)] - 2025-09-25
+
+- [Moved ToastManager to the top level of managers folder](https://github.com/multiversx/mx-sdk-dapp/pull/1590)
+
 ## [[5.1.10](https://github.com/multiversx/mx-sdk-dapp/pull/1589)] - 2025-09-25
 
 - [Fixed toast titles](https://github.com/multiversx/mx-sdk-dapp/pull/1588)
