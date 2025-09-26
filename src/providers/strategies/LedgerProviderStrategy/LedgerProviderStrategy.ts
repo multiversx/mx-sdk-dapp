@@ -4,7 +4,7 @@ import { CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION } from 'constants/transaction
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
 import { LedgerConnectStateManager } from 'managers/internal/LedgerConnectStateManager/LedgerConnectStateManager';
-import { ToastIconsEnum } from 'managers/internal/ToastManager/helpers/getToastDataStateByStatus';
+import { ToastIconsEnum } from 'managers/ToastManager/helpers/getToastDataStateByStatus';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
 import {
   ProviderTypeEnum,

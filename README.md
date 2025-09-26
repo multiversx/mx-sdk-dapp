@@ -520,6 +520,7 @@ The transaction lifecycle consists of the following steps:
 ```ts
 import { createRoot } from 'react-dom/client';
 import { createCustomToast } from '@multiversx/sdk-dapp/out/store/actions/toasts/toastsActions';
+import { ToastManager } from '@multiversx/sdk-dapp/out/managers/ToastManager/ToastManager';
 
 // by creating a custom toast element containing a component
 createCustomToast({
