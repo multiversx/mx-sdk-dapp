@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[5.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1591)] - 2025-09-25
+## [[5.2.0](https://github.com/multiversx/mx-sdk-dapp/pull/1593)] - 2025-09-25
 
-- [Moved ToastManager to the top level of managers folder](https://github.com/multiversx/mx-sdk-dapp/pull/1590)
+- [Moved ToastManager to the top level of managers folder](https://github.com/multiversx/mx-sdk-dapp/pull/1592)
+- [Fixed issue with data field decoding](https://github.com/multiversx/mx-sdk-dapp/pull/1591)
 
 ## [[5.1.10](https://github.com/multiversx/mx-sdk-dapp/pull/1589)] - 2025-09-25
 
