@@ -1,7 +1,7 @@
 import { safeWindow } from 'constants/window.constants';
 import { defineCustomElements } from 'lib/sdkDappUi';
 import { LogoutManager } from 'managers/LogoutManager/LogoutManager';
-import { ToastManager } from 'managers/ToastManager/ToastManager';
+import { ToastManager } from 'managers/ToastManager';
 import { registerCallbacks } from 'managers/TransactionManager/helpers/sessionCallbacks';
 import { restoreProvider } from 'providers/helpers/restoreProvider';
 import { ProviderFactory } from 'providers/ProviderFactory';
