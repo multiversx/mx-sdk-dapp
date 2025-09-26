@@ -6,8 +6,8 @@ import { clearCompletedTransactions } from 'store/actions/transactions/transacti
 import { getStore } from 'store/store';
 import { NotificationsFeedEventsEnum } from './types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager/SidePanelBaseManager';
+import { ToastManager } from '../ToastManager';
 import { createToastsFromTransactions } from '../ToastManager/helpers/createToastsFromTransactions';
-import { ToastManager } from '../ToastManager/ToastManager';
 import { ITransactionToast } from '../ToastManager/types';
 
 interface INotificationsFeedManagerData {

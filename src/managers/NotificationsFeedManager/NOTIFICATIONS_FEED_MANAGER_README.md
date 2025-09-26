@@ -78,6 +78,6 @@ These are updated in real-time as the store changes.
 - To clear the transaction history, trigger the `CLEAR_NOTIFICATIONS_FEED_HISTORY` event or use the UI's clear button if available.
 
 ## Related
-- [ToastManager](../internal/ToastManager/ToastManager.ts): Manages toast notifications and coordinates with the feed.
+- [ToastManager](../ToastManager): Manages toast notifications and coordinates with the feed.
 - [TransactionsHistoryController](../../controllers/TransactionsHistoryController/TransactionsHistoryController.ts): Used to fetch historical transaction data.
 - [MvxNotificationsFeed](https://github.com/multiversx/mx-sdk-dapp-ui): The UI component rendered by the manager.

@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js';
+import { ToastManager } from 'managers/ToastManager';
 import { ToastIconsEnum } from 'managers/ToastManager/helpers/getToastDataStateByStatus';
-import { ToastManager } from 'managers/ToastManager/ToastManager';
 import { getAccountProvider } from 'providers/helpers/accountProvider';
 import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { getTokenExpiration } from 'services/nativeAuth/methods/getTokenExpiration';
