@@ -1,6 +1,9 @@
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { version } from 'constants/index';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from 'hooks/login/helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from 'hooks/login/helpers';
 import { useLoginService } from 'hooks/login/useLoginService';
 import { setExternalProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -58,11 +61,13 @@ export function useInitiateExperimentalWebviewLogin() {
         return;
       }
 
-      const { token, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth: true,
-        token: undefined,
-        loginService,
-      });
+      const { token, error: tokenError } = await initAndValidateNativeAuthToken(
+        {
+          hasNativeAuth: true,
+          token: undefined,
+          loginService
+        }
+      );
 
       if (tokenError) {
         return;

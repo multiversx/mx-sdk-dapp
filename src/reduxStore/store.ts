@@ -1,7 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { createSubscription } from 'react-redux/lib/utils/Subscription';
 import { setAccount, setAccountNonce } from 'reduxStore/slices';
-import { loginSessionMiddleware } from './middlewares/loginSessionMiddleware';
 import { persistIgnoredActions, persistStore, reducers } from './persistConfig';
 import rootReducer from './reducers';
 
@@ -22,7 +21,7 @@ export const store = configureStore({
           'providers.accountProvider'
         ]
       }
-    }).concat(loginSessionMiddleware)
+    })
 });
 
 export const subscription = createSubscription(store);

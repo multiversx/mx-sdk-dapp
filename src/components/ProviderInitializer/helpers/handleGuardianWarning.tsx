@@ -4,7 +4,7 @@ import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { AccountType } from 'types';
 import { GuardianWarningToast } from 'UI/GuardianWarningToast';
 import { storage } from 'utils/storage';
-import { localStorageKeys } from 'utils/storage/local';
+import { sessionStorageKeys } from 'utils/storage/session';
 import { addNewCustomToast } from 'utils/toasts';
 
 const DAYS_TO_SHOW_AGAIN_AFTER_DISMISSAL = 3;
@@ -15,15 +15,15 @@ export const handleGuardianWarning = (userAccount: AccountType) => {
     const daysAsSeconds = SECONDS_IN_A_DAY * DAYS_TO_SHOW_AGAIN_AFTER_DISMISSAL;
     const currentTimestamp = Math.floor(Date.now() / 1000);
 
-    storage.local.setItem({
-      key: localStorageKeys.guardianBreachToastDismissTimestamp,
+    storage.session.setItem({
+      key: sessionStorageKeys.guardianBreachToastDismissTimestamp,
       data: currentTimestamp,
       expires: currentTimestamp + daysAsSeconds
     });
   };
 
-  const guardianBreachToastDismissTimestamp = storage?.local.getItem(
-    localStorageKeys.guardianBreachToastDismissTimestamp
+  const guardianBreachToastDismissTimestamp = storage?.session.getItem(
+    sessionStorageKeys.guardianBreachToastDismissTimestamp
   );
 
   const isGuardedAccountPendingChange =

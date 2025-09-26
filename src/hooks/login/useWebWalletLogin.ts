@@ -83,11 +83,12 @@ export const useWebWalletLogin = ({
         expires: expires
       };
 
-      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService,
-      });
+      const { token: validatedToken, error: tokenError } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService
+        });
 
       if (tokenError) {
         return;

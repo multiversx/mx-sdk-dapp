@@ -22,7 +22,10 @@ import {
   OnProviderLoginType
 } from '../../types';
 import { getHasNativeAuth, getIsLoggedIn } from '../../utils';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from './helpers';
 import { useAddressScreens } from './useAddressScreens';
 import { useLoginService } from './useLoginService';
 const failInitializeErrorText = 'Check if the MultiversX App is open on Ledger';
@@ -178,12 +181,13 @@ export const useLedgerLogin = ({
 
     const { index } = selectedAddress;
 
-    const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-      hasNativeAuth,
-      token,
-      loginService,
-      onError: (message) => onLoginFailed(message)
-    });
+    const { token: validatedToken, error: tokenError } =
+      await initAndValidateNativeAuthToken({
+        hasNativeAuth,
+        token,
+        loginService,
+        onError: (message) => onLoginFailed(message)
+      });
 
     if (tokenError) {
       return;
@@ -192,7 +196,6 @@ export const useLedgerLogin = ({
     token = validatedToken;
 
     if (token) {
-
       try {
         const loginInfo = await hwProvider.tokenLogin({
           token: Buffer.from(`${token}{}`),

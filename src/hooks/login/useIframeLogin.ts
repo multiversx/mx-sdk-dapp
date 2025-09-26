@@ -19,7 +19,10 @@ import { getLatestNonce } from 'utils/account/getLatestNonce';
 import { getHasNativeAuth } from 'utils/getHasNativeAuth';
 import { getIsLoggedIn } from 'utils/getIsLoggedIn';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
-import { clearInitiatedLogins, initAndValidateNativeAuthToken } from './helpers';
+import {
+  clearInitiatedLogins,
+  initAndValidateNativeAuthToken
+} from './helpers';
 import { useLoginService } from './useLoginService';
 
 export type UseIframeLoginReturnType = [
@@ -85,11 +88,12 @@ export const useIframeLogin = ({
         `${origin}${callbackRoute ?? pathname}`
       );
 
-      const { token: validatedToken, error: tokenError } = await initAndValidateNativeAuthToken({
-        hasNativeAuth,
-        token,
-        loginService
-      });
+      const { token: validatedToken, error: tokenError } =
+        await initAndValidateNativeAuthToken({
+          hasNativeAuth,
+          token,
+          loginService
+        });
 
       if (tokenError) {
         return;
