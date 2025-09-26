@@ -50,8 +50,15 @@ export const updateSessionStatus = ({
 }) => {
   getStore().setState(
     ({ transactions: state }) => {
+      if (!state[sessionId]) {
+        return;
+      }
       state[sessionId].status = status;
       state[sessionId].errorMessage = errorMessage;
+      state[sessionId].transactionsDisplayInfo = {
+        ...state[sessionId].transactionsDisplayInfo,
+        errorMessage
+      };
     },
     false,
     'updateTransactionsSession'

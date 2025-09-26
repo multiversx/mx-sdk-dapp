@@ -24,7 +24,8 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
   }
 
   transactions.forEach((transaction, transactionIndex) => {
-    const txData = decodeBase64(transaction.data.toString() ?? '');
+    const plainTransaction = transaction.toPlainObject();
+    const txData = decodeBase64(plainTransaction?.data ?? '');
     const multiTxs = parseMultiEsdtTransferData(txData);
 
     if (multiTxs.length > 0) {
@@ -50,12 +51,10 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
         allTransactions.push(newTx);
       });
     } else {
-      const transactionData = decodeBase64(transaction.data.toString() ?? '');
-
-      const { tokenId, amount } = getTokenFromData(transactionData);
+      const { tokenId, amount } = getTokenFromData(txData);
 
       if (tokenId) {
-        parsedTransactionsByDataField[transactionData] = {
+        parsedTransactionsByDataField[txData] = {
           tokenId,
           amount,
           receiver: transaction.receiver.toBech32()
@@ -64,7 +63,7 @@ export function parseMultiEsdtTransferDataForMultipleTransactions({
       allTransactions.push({
         transaction,
         transactionIndex,
-        multiTxData: transactionData,
+        multiTxData: txData,
         needsSigning: true
       });
     }
