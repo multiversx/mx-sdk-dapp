@@ -1,7 +1,9 @@
 import { getUnixTimestamp } from 'utils/dateTime';
 
 export const localStorageKeys = {
-  logoutEvent: 'sdk-dapp-logout-event'
+  logoutEvent: 'sdk-dapp-logout-event',
+  guardianBreachToastDismissTimestamp:
+    'sdk-dapp-guardian-breach-toast-dismiss-timestamp'
 } as const;
 
 type LocalValueType = keyof typeof localStorageKeys;

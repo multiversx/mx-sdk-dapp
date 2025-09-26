@@ -1,6 +1,4 @@
 export const sessionStorageKeys = {
-  guardianBreachToastDismissTimestamp:
-    'guardian-breach-toast-dismiss-timestamp',
   address: 'address',
   shard: 'shard',
   toasts: 'toasts',
