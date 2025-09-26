@@ -8,8 +8,8 @@ import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { isLoggedInSelector, loginInfoSelector } from 'store/selectors';
 import { isSidePanelOpenSelector } from 'store/selectors/uiSelectors';
 import { getState, getStore } from 'store/store';
-import { ToastIconsEnum } from '../ToastManager/helpers/getToastDataStateByStatus';
-import { ToastManager } from '../ToastManager/ToastManager';
+import { ToastIconsEnum } from '../../ToastManager/helpers/getToastDataStateByStatus';
+import { ToastManager } from '../../ToastManager/ToastManager';
 
 const LEDGER_IDLE_STATE_CHECK_INTERVAL = 30_000;
 const LEDGER_IDLE_STATE_RECONNECT_INTERVAL = 5_000;
