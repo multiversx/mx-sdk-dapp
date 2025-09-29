@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "5.2.2-alpha.1",
+  "version": "5.2.1",
   "main": "out/index.cjs",
   "module": "out/index.mjs",
   "types": "out/index.d.ts",
@@ -68,7 +68,7 @@
     "@multiversx/sdk-wallet": "4.6.0",
     "@multiversx/sdk-wallet-connect-provider": "6.1.2",
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.2.1",
-    "@multiversx/sdk-web-wallet-iframe-provider": "4.0.0-alpha.2",
+    "@multiversx/sdk-web-wallet-iframe-provider": "4.0.0",
     "@multiversx/sdk-web-wallet-provider": "5.1.1",
     "@multiversx/sdk-webview-provider": "3.2.1",
     "immer": "10.1.1",
