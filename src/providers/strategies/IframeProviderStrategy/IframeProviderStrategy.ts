@@ -1,5 +1,3 @@
-import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
-
 import { providerLabels } from 'constants/providerFactory.constants';
 import { Message, Transaction } from 'lib/sdkCore';
 import { IDAppProviderAccount } from 'lib/sdkDappUtils';
@@ -14,27 +12,14 @@ import { ProviderErrorsEnum } from 'types/provider.types';
 import { IframeProviderType } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
-
-type IframeProviderStrategyType =
-  | typeof ProviderTypeEnum.passkey
-  | typeof ProviderTypeEnum.metamask;
-
-const IFRAME_PROVIDER_MAP: Record<
-  IframeLoginTypes,
-  IframeProviderStrategyType
-> = {
-  passkey: ProviderTypeEnum.passkey,
-  metamask: ProviderTypeEnum.metamask
-};
+import { signTransactions } from '../helpers/signTransactions/signTransactions';
 
 export class IframeProviderStrategy extends BaseProviderStrategy {
   private readonly provider: IframeProvider;
-  private readonly type: IframeLoginTypes;
   private walletUrl: string;
 
-  constructor({ type, address, walletUrl }: IframeProviderType) {
+  constructor({ address, walletUrl }: IframeProviderType = {}) {
     super(address);
-    this.type = type;
     this.walletUrl = walletUrl ?? '';
     this.provider = IframeProvider.getInstance();
     this._login = this.provider.login.bind(this.provider);
@@ -67,7 +52,6 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       this.setAccount({ address: this.address });
     }
 
-    this.provider.setLoginType(this.type);
     this.provider.setWalletUrl(this.walletUrl);
 
     return true;
@@ -78,7 +62,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
   }
 
   getType(): ProviderType {
-    return IFRAME_PROVIDER_MAP[this.type];
+    return ProviderTypeEnum.metamask;
   }
 
   getAddress(): Promise<string | undefined> {
@@ -109,8 +93,10 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     const { manager, onClose } = await this.initSignState();
 
     try {
-      const signedTransactions: Transaction[] =
-        await this.provider.signTransactions(transactions);
+      const signedTransactions = await signTransactions({
+        transactions,
+        handleSign: this.provider.signTransactions.bind(this.provider)
+      });
 
       return signedTransactions;
     } catch (error) {
@@ -122,7 +108,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
   };
 
   signMessage = async (message: Message) => {
-    if (!this.provider || !this.type) {
+    if (!this.provider) {
       throw new Error(ProviderErrorsEnum.notInitialized);
     }
 
@@ -130,7 +116,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
       message,
       handleSignMessage: this.provider.signMessage.bind(this.provider),
       cancelAction: this.cancelAction,
-      providerType: providerLabels[this.type]
+      providerType: providerLabels[ProviderTypeEnum.metamask]
     });
 
     return signedMessage;
