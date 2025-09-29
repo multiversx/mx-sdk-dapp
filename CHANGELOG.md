@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Removed passkey and updated iframe to LTS](https://github.com/multiversx/mx-sdk-dapp/pull/1597)
 - [Fixed display issue with data from common data](https://github.com/multiversx/mx-sdk-dapp/pull/1595)
 
 ## [[5.2.1](https://github.com/multiversx/mx-sdk-dapp/pull/1594)] - 2025-09-25
