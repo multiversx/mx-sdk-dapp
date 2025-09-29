@@ -53,11 +53,12 @@ export const updateSessionStatus = ({
       if (!state[sessionId]) {
         return;
       }
+      const newErrorMessage = errorMessage || state[sessionId].errorMessage;
       state[sessionId].status = status;
-      state[sessionId].errorMessage = errorMessage;
+      state[sessionId].errorMessage = newErrorMessage;
       state[sessionId].transactionsDisplayInfo = {
         ...state[sessionId].transactionsDisplayInfo,
-        errorMessage
+        errorMessage: newErrorMessage
       };
     },
     false,
