@@ -38,8 +38,8 @@ importers:
         specifier: 3.2.1
         version: 3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))
       '@multiversx/sdk-web-wallet-iframe-provider':
-        specifier: 3.1.2
-        version: 3.1.2(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))
+        specifier: 4.0.0
+        version: 4.0.0(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))
       '@multiversx/sdk-web-wallet-provider':
         specifier: 5.1.1
         version: 5.1.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))
@@ -214,8 +214,8 @@ importers:
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.32'
-        version: 0.0.32(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
+        specifier: '>=0.0.33'
+        version: 0.0.33(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -865,8 +865,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-ui@0.0.32':
-    resolution: {integrity: sha512-zh5yalJZcs9eXnrqo3FvdVanZ/iE24E9BLwNqpVSKqmi5SOuXdg/M6TEb/epCAut1sTKMnJ+DkdrdLzDhZPQpA==}
+  '@multiversx/sdk-dapp-ui@0.0.33':
+    resolution: {integrity: sha512-mqmh9d3TjQ/yAjXr0sgbjTvGJTzyrz8IqGO4eoCPRYTw/IP2w8cNrnMxyKhnMZDTjhMjqKd+tPTxWTv8/yB8HQ==}
     engines: {node: '>=20.19.0'}
 
   '@multiversx/sdk-dapp-utils@3.0.1':
@@ -912,8 +912,8 @@ packages:
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
 
-  '@multiversx/sdk-web-wallet-iframe-provider@3.1.2':
-    resolution: {integrity: sha512-2n//06tnqfnV6FIKxmAQ2855HlNcClsxxHyiCpCInHV5oyUZ28FzStVKMakg66aL+eARHlaSXvu9j0R+I0eF4Q==}
+  '@multiversx/sdk-web-wallet-iframe-provider@4.0.0':
+    resolution: {integrity: sha512-V9eDWSublrau6yXASzQwCkdwr9ATxfQ8C8Ok27wSmx9Ok/JrSK1eCgN2XcrehFonn8nYnTHehYR1Qe0QZ6q+iw==}
     engines: {node: '>=18'}
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
@@ -5461,7 +5461,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-ui@0.0.32(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)':
+  '@multiversx/sdk-dapp-ui@0.0.33(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.0
       '@fortawesome/free-solid-svg-icons': 7.0.0
@@ -5565,7 +5565,7 @@ snapshots:
       '@multiversx/sdk-core': 15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)
       qs: 6.11.2
 
-  '@multiversx/sdk-web-wallet-iframe-provider@3.1.2(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))':
+  '@multiversx/sdk-web-wallet-iframe-provider@4.0.0(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))':
     dependencies:
       '@multiversx/sdk-core': 15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)
       '@multiversx/sdk-web-wallet-cross-window-provider': 3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))
