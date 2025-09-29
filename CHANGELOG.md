@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.3](https://github.com/multiversx/mx-sdk-dapp/pull/1601)] - 2025-09-29
+
+- [Fixed reading from state with immer current](https://github.com/multiversx/mx-sdk-dapp/pull/1600)
+
 ## [[5.2.2](https://github.com/multiversx/mx-sdk-dapp/pull/1599)] - 2025-09-29
 
 - [Fixed custom error messages set with `updateSessionStatus`](https://github.com/multiversx/mx-sdk-dapp/pull/1598)
