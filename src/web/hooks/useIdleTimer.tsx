@@ -23,6 +23,7 @@ export const useIdleTimer = ({ minutes = 10, onLogout }: IdleTimerType) => {
 
   const onIdle = () => {
     if (isLoggedInRef.current) {
+      console.log('Logging out from Idle timer');
       logout(logoutRoute);
     }
   };

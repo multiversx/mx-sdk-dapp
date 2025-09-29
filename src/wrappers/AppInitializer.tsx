@@ -115,6 +115,7 @@ export const useAppInitializer = ({
     if (address) {
       const pubKey = new Address(address).hex();
       if (pubKey !== publicKey) {
+        console.log('Logging out from app init');
         logout(logoutRoute);
       }
     }
@@ -126,6 +127,7 @@ export const useAppInitializer = ({
 
   useEffect(() => {
     if (account.address && isLoginSessionInvalid) {
+      console.log('Logging out from App init');
       logout(logoutRoute);
     }
   }, [isLoginSessionInvalid, account.address, logoutRoute]);

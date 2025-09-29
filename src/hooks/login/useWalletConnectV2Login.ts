@@ -130,6 +130,7 @@ export const useWalletConnectV2Login = ({
   const isLoggedIn = getIsLoggedIn();
 
   const handleOnLogout = () => {
+    console.log('Logging out from wallet connect');
     logout(logoutRoute);
   };
 
