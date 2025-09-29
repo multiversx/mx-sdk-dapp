@@ -4,6 +4,8 @@ import { REHYDRATE } from 'redux-persist';
 import { ZERO } from 'constants/index';
 import { BatchTransactionsWSResponseType } from 'types';
 import { AccountType } from 'types/account.types';
+import { storage } from 'utils/storage';
+import { localStorageKeys } from 'utils/storage/local';
 
 import {
   loginAction,
@@ -160,6 +162,7 @@ export const accountInfoSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(logoutAction, () => {
+      storage.local.removeItem(localStorageKeys.loginExpiresAt);
       return initialState;
     });
     builder.addCase(

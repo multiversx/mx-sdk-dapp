@@ -29,14 +29,12 @@ export const getTokenExpiration = (
 
   const timestamp = extraInfo?.timestamp;
 
-  if (!timestamp) {
+  if (!timestamp || !ttl) {
     return notFound;
   }
 
   const expiresAt = timestamp + ttl;
-
   const isExpired = unixNow > expiresAt;
-
   const secondsUntilExpires = expiresAt - unixNow;
 
   return { isExpired, expiresAt, secondsUntilExpires };

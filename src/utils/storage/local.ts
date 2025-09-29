@@ -1,6 +1,7 @@
 import { getUnixTimestamp } from 'utils/dateTime';
 
 export const localStorageKeys = {
+  loginExpiresAt: 'sdk-dapp-login-expires-at',
   logoutEvent: 'sdk-dapp-logout-event',
   guardianBreachToastDismissTimestamp:
     'sdk-dapp-guardian-breach-toast-dismiss-timestamp'

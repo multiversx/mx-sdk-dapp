@@ -34,6 +34,8 @@ export const useNativeAuthLogout = () => {
 
     // prevent unexpected logout if webview login
     if (!address || isWebviewLogin) {
+      clearTimeout(logoutTimeoutRef.current);
+      plannedLogoutRef.current = '';
       return;
     }
 
@@ -43,25 +45,27 @@ export const useNativeAuthLogout = () => {
     const plannedLogoutSet = plannedLogoutRef.current === plannedLogoutKey;
 
     const isValidInterval =
-      secondsUntilExpires && secondsUntilExpiresBN.isGreaterThan(0);
+      secondsUntilExpires && secondsUntilExpiresBN.isGreaterThan(1);
 
     if (!isValidInterval || plannedLogoutSet) {
       return;
     }
 
+    clearTimeout(logoutTimeoutRef.current);
     plannedLogoutRef.current = plannedLogoutKey;
 
-    clearTimeout(logoutTimeoutRef.current);
     const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     logoutTimeoutRef.current = setTimeout(() => {
-      logout(logoutRoute);
+      if (plannedLogoutRef.current === plannedLogoutKey) {
+        logout(logoutRoute);
+      }
     }, millisecondsUntilLogout.toNumber());
 
     return () => {
       clearTimeout(logoutTimeoutRef.current);
     };
-  }, [expiresAt, address, logoutRoute]);
+  }, [expiresAt, address, logoutRoute, secondsUntilExpires]);
 
   return null;
 };

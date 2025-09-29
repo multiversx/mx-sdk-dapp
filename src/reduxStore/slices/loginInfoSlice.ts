@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IframeLoginTypes } from 'lib/sdkWebWalletIframeProvider';
+import { setLoginExpiresAt, getNewLoginExpiresTimestamp } from 'storage/local';
 import { LoginMethodsEnum } from 'types/enums.types';
 import { TokenLoginType } from '../../types';
 import {
@@ -21,6 +22,7 @@ export interface LedgerLoginType {
 
 export interface LoginInfoType {
   data: any;
+  expires?: number;
 }
 
 export interface LoginInfoStateType {
@@ -133,6 +135,7 @@ export const loginInfoSlice = createSlice({
         state.isLoginSessionInvalid = false;
         state.loginMethod = action.payload.loginMethod;
         state.iframeLoginType = action.payload.iframeLoginType;
+        setLoginExpiresAt(getNewLoginExpiresTimestamp());
       }
     );
   }
