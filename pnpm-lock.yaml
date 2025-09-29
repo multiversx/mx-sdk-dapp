@@ -214,8 +214,8 @@ importers:
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
     optionalDependencies:
       '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.32'
-        version: 0.0.32(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
+        specifier: '>=0.0.33'
+        version: 0.0.33(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -865,8 +865,8 @@ packages:
       bignumber.js: ^9.0.1
       protobufjs: ^7.2.6
 
-  '@multiversx/sdk-dapp-ui@0.0.32':
-    resolution: {integrity: sha512-zh5yalJZcs9eXnrqo3FvdVanZ/iE24E9BLwNqpVSKqmi5SOuXdg/M6TEb/epCAut1sTKMnJ+DkdrdLzDhZPQpA==}
+  '@multiversx/sdk-dapp-ui@0.0.33':
+    resolution: {integrity: sha512-mqmh9d3TjQ/yAjXr0sgbjTvGJTzyrz8IqGO4eoCPRYTw/IP2w8cNrnMxyKhnMZDTjhMjqKd+tPTxWTv8/yB8HQ==}
     engines: {node: '>=20.19.0'}
 
   '@multiversx/sdk-dapp-utils@3.0.1':
@@ -5461,7 +5461,7 @@ snapshots:
     transitivePeerDependencies:
       - debug
 
-  '@multiversx/sdk-dapp-ui@0.0.32(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)':
+  '@multiversx/sdk-dapp-ui@0.0.33(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)':
     dependencies:
       '@fortawesome/fontawesome-svg-core': 7.0.0
       '@fortawesome/free-solid-svg-icons': 7.0.0
