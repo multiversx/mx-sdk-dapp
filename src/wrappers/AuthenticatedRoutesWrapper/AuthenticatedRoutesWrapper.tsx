@@ -35,6 +35,10 @@ export const AuthenticatedRoutesWrapper = ({
   const walletLogin = useSelector(walletLoginSelector);
   const isWebviewLogin = Boolean(getWebviewToken());
 
+  console.log('isLoggedIn', isLoggedIn);
+  console.log('walletLogin', walletLogin);
+  console.log('account', account);
+
   const getLocationPathname = () => {
     if (isWindowAvailable()) {
       return window.location.pathname;
@@ -49,7 +53,7 @@ export const AuthenticatedRoutesWrapper = ({
 
   const shouldRedirect =
     isOnAuthenticatedRoute &&
-    !isLoggedIn &&
+    !account.address &&
     walletLogin == null &&
     !isWebviewLogin;
 
