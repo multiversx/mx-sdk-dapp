@@ -1,3 +1,4 @@
+import { current } from 'immer';
 import { getTransactionsSessionStatus } from 'managers/TransactionManager/helpers/getTransactionsStatus';
 import { getStore } from 'store/store';
 import {
@@ -53,11 +54,17 @@ export const updateSessionStatus = ({
       if (!state[sessionId]) {
         return;
       }
-      const newErrorMessage = errorMessage || state[sessionId].errorMessage;
+      const transactionsDisplayInfo = current(
+        state[sessionId]
+      ).transactionsDisplayInfo;
+
+      const newErrorMessage =
+        errorMessage || transactionsDisplayInfo?.errorMessage;
+
       state[sessionId].status = status;
       state[sessionId].errorMessage = newErrorMessage;
       state[sessionId].transactionsDisplayInfo = {
-        ...state[sessionId].transactionsDisplayInfo,
+        ...transactionsDisplayInfo,
         errorMessage: newErrorMessage
       };
     },
