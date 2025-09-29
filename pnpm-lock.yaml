@@ -38,8 +38,8 @@ importers:
         specifier: 3.2.1
         version: 3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))
       '@multiversx/sdk-web-wallet-iframe-provider':
-        specifier: 3.1.2
-        version: 3.1.2(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))
+        specifier: 4.0.0-alpha.1
+        version: 4.0.0-alpha.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))
       '@multiversx/sdk-web-wallet-provider':
         specifier: 5.1.1
         version: 5.1.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))
@@ -76,6 +76,10 @@ importers:
       zustand:
         specifier: 4.4.7
         version: 4.4.7(@types/react@18.2.0)(immer@10.1.1)(react@18.2.0)
+    optionalDependencies:
+      '@multiversx/sdk-dapp-ui':
+        specifier: '>=0.0.32'
+        version: 0.0.32(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@eslint/js':
         specifier: 9.15.0
@@ -212,10 +216,6 @@ importers:
       typescript-eslint:
         specifier: 8.15.0
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
-    optionalDependencies:
-      '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.32'
-        version: 0.0.32(@types/react@18.2.0)(react-dom@19.1.1(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -912,8 +912,8 @@ packages:
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
 
-  '@multiversx/sdk-web-wallet-iframe-provider@3.1.2':
-    resolution: {integrity: sha512-2n//06tnqfnV6FIKxmAQ2855HlNcClsxxHyiCpCInHV5oyUZ28FzStVKMakg66aL+eARHlaSXvu9j0R+I0eF4Q==}
+  '@multiversx/sdk-web-wallet-iframe-provider@4.0.0-alpha.1':
+    resolution: {integrity: sha512-3SP0WB4GL0KPZeRfynsWNqXjLlsh/t6oFhurbMfqh/gjCyIvMpERDoaZoYkp3eRh7j0lXgspBk2XITZpNtzqSA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
@@ -5565,7 +5565,7 @@ snapshots:
       '@multiversx/sdk-core': 15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)
       qs: 6.11.2
 
-  '@multiversx/sdk-web-wallet-iframe-provider@3.1.2(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))':
+  '@multiversx/sdk-web-wallet-iframe-provider@4.0.0-alpha.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)))':
     dependencies:
       '@multiversx/sdk-core': 15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0)
       '@multiversx/sdk-web-wallet-cross-window-provider': 3.2.1(@multiversx/sdk-core@15.0.0(bignumber.js@9.3.1)(protobufjs@7.4.0))

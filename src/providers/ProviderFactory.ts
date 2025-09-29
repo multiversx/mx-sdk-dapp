@@ -73,13 +73,6 @@ export class ProviderFactory {
         break;
       }
 
-      case ProviderTypeEnum.passkey: {
-        createdProvider = new IframeProviderStrategy({
-          type: IframeLoginTypes.passkey
-        });
-
-        break;
-      }
       case ProviderTypeEnum.walletConnect: {
         const walletConnectConfig = walletConnectConfigSelector(getState());
 
