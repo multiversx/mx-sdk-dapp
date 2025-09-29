@@ -93,8 +93,6 @@ export const updateTransactionStatus = ({
         ]);
 
         if (status) {
-          console.log('updateTransactionStatus', status);
-
           updateSessionStatus({
             sessionId,
             status
