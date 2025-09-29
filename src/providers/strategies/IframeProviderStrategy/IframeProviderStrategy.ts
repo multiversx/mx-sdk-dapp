@@ -12,6 +12,7 @@ import { ProviderErrorsEnum } from 'types/provider.types';
 import { IframeProviderType } from './types';
 import { BaseProviderStrategy } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signMessage } from '../helpers/signMessage/signMessage';
+import { signTransactions } from '../helpers/signTransactions/signTransactions';
 
 export class IframeProviderStrategy extends BaseProviderStrategy {
   private readonly provider: IframeProvider;
@@ -92,8 +93,10 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
     const { manager, onClose } = await this.initSignState();
 
     try {
-      const signedTransactions: Transaction[] =
-        await this.provider.signTransactions(transactions);
+      const signedTransactions = await signTransactions({
+        transactions,
+        handleSign: this.provider.signTransactions.bind(this.provider)
+      });
 
       return signedTransactions;
     } catch (error) {
