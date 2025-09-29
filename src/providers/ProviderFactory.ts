@@ -1,4 +1,3 @@
-import { IframeLoginTypes } from '@multiversx/sdk-web-wallet-iframe-provider/out/constants';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
 import {
@@ -66,9 +65,7 @@ export class ProviderFactory {
       }
 
       case ProviderTypeEnum.metamask: {
-        createdProvider = new IframeProviderStrategy({
-          type: IframeLoginTypes.metamask
-        });
+        createdProvider = new IframeProviderStrategy();
 
         break;
       }

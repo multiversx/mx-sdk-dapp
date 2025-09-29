@@ -17,7 +17,7 @@ export class IframeProviderStrategy extends BaseProviderStrategy {
   private readonly provider: IframeProvider;
   private walletUrl: string;
 
-  constructor({ address, walletUrl }: IframeProviderType) {
+  constructor({ address, walletUrl }: IframeProviderType = {}) {
     super(address);
     this.walletUrl = walletUrl ?? '';
     this.provider = IframeProvider.getInstance();

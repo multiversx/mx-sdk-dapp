@@ -26,7 +26,6 @@ export interface IProviderConfig {
 export const ProviderTypeEnum = {
   extension: 'extension',
   metamask: 'metamask',
-  passkey: 'passkey',
   walletConnect: 'walletConnect',
   ledger: 'ledger',
   crossWindow: 'crossWindow',
