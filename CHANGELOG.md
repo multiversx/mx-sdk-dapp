@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.2](https://github.com/multiversx/mx-sdk-dapp/pull/1596)] - 2025-09-29
+
+- [Fixed custom error messages set with `updateSessionStatus`](https://github.com/multiversx/mx-sdk-dapp/pull/1596)
 - [Fixed display issue with data from common data](https://github.com/multiversx/mx-sdk-dapp/pull/1595)
 
 ## [[5.2.1](https://github.com/multiversx/mx-sdk-dapp/pull/1594)] - 2025-09-25
