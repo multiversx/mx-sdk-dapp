@@ -295,7 +295,6 @@ export function ProviderInitializer() {
         })
       );
     } else if (!isLoggedIn) {
-      console.log('Clearing address');
       // Clear the address and publicKey if account is not found
       dispatch(setAddress(''));
     }

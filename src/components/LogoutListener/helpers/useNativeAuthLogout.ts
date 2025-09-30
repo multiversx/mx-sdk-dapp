@@ -12,57 +12,49 @@ export const useNativeAuthLogout = () => {
   const { tokenLogin } = useSelector(loginInfoSelector);
   const logoutRoute = useSelector(logoutRouteSelector);
 
-  const nativeAuthToken = tokenLogin?.nativeAuthToken;
   const {
     isExpired: isNativeAuthTokenExpired,
     secondsUntilExpires,
     expiresAt
-  } = getTokenExpiration(nativeAuthToken);
+  } = getTokenExpiration(tokenLogin?.nativeAuthToken);
 
   const plannedLogoutRef = useRef('');
   const logoutTimeoutRef = useRef<NodeJS.Timeout>();
 
   // logout if token is expired
   useEffect(() => {
-    if (
-      address &&
-      nativeAuthToken &&
-      !getWebviewToken() &&
-      isNativeAuthTokenExpired
-    ) {
+    if (address && isNativeAuthTokenExpired) {
       logout(logoutRoute);
     }
-  }, [address, nativeAuthToken, isNativeAuthTokenExpired, logoutRoute]);
+  }, [isNativeAuthTokenExpired, address, logoutRoute]);
 
   // plan logout for existing token
   useEffect(() => {
-    // Reset on every new token
-    plannedLogoutRef.current = '';
-    clearTimeout(logoutTimeoutRef.current);
-
     const isWebviewLogin = Boolean(getWebviewToken());
 
     // prevent unexpected logout if webview login
-    if (!address || isWebviewLogin || !nativeAuthToken) {
+    if (!address || isWebviewLogin) {
+      clearTimeout(logoutTimeoutRef.current);
+      plannedLogoutRef.current = '';
       return;
     }
 
     // Handle the actual logout functionality.
-    const secondsUntilExpiresBN = new BigNumber(
-      String(secondsUntilExpires || 0)
-    );
-
+    const secondsUntilExpiresBN = new BigNumber(String(secondsUntilExpires));
     const plannedLogoutKey = `${address}_${expiresAt}`;
-    const isValidInterval = secondsUntilExpiresBN.isGreaterThan(1);
+    const plannedLogoutSet = plannedLogoutRef.current === plannedLogoutKey;
 
-    if (!isValidInterval) {
+    const isValidInterval =
+      secondsUntilExpires && secondsUntilExpiresBN.isGreaterThan(1);
+
+    if (!isValidInterval || plannedLogoutSet) {
       return;
     }
 
+    clearTimeout(logoutTimeoutRef.current);
     plannedLogoutRef.current = plannedLogoutKey;
-    const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
-    console.log('millisecondsUntilLogout', millisecondsUntilLogout.toNumber());
+    const millisecondsUntilLogout = secondsUntilExpiresBN.times(1000);
 
     logoutTimeoutRef.current = setTimeout(() => {
       if (plannedLogoutRef.current === plannedLogoutKey) {
@@ -73,7 +65,7 @@ export const useNativeAuthLogout = () => {
     return () => {
       clearTimeout(logoutTimeoutRef.current);
     };
-  }, [address, logoutRoute, nativeAuthToken]);
+  }, [expiresAt, address, logoutRoute, secondsUntilExpires]);
 
   return null;
 };
