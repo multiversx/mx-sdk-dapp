@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.3.4](https://github.com/multiversx/mx-sdk-dapp/pull/1593)] - 2025-09-27
+## [[v4.3.4](https://github.com/multiversx/mx-sdk-dapp/pull/1600)] - 2025-09-27
 
-- [Fixed `useWalletConnectV2Login` logs out on `initiateLogin` when is logged in](https://github.com/multiversx/mx-sdk-dapp/pull/1593)
+- [Fixed `useWalletConnectV2Login` logs out on `initiateLogin` when is logged in](https://github.com/multiversx/mx-sdk-dapp/pull/1600)
 
 ## [[v4.3.3](https://github.com/multiversx/mx-sdk-dapp/pull/1592)] - 2025-09-27
 
