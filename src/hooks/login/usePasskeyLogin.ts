@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PasskeyProvider } from '@multiversx/sdk-passkey-provider/out';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useGetNetworkConfig } from 'hooks/useGetNetworkConfig';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -43,15 +44,17 @@ export const usePasskeyLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
-  let token = tokenToSign;
   const {
     network: { extrasApiAddress }
   } = useGetNetworkConfig();
 
   const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
+  const account = useGetAccount();
+  let token = tokenToSign;
 
   async function initiateLogin() {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -60,6 +63,7 @@ export const usePasskeyLogin = ({
     dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
     setIsLoading(true);
+
     const provider: PasskeyProvider =
       PasskeyProvider.getInstance().setPasskeyServiceUrl(
         extrasApiAddress ?? ''
@@ -146,6 +150,7 @@ export const usePasskeyLogin = ({
   };
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = Boolean(account.address);
 
   return [
     initiateLogin,

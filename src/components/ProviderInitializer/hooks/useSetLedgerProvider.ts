@@ -69,8 +69,6 @@ export const useSetLedgerProvider = () => {
       hwWalletP = await initHWProvider();
 
       if (!hwWalletP) {
-        console.warn('Could not initialise ledger app');
-
         if (shouldLogout) {
           logout(logoutRoute);
         }

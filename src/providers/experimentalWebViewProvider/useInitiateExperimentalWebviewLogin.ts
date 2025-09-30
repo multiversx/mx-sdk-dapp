@@ -23,11 +23,12 @@ import { ExperimentalWebviewProvider } from './ExperimentalWebviewProvider';
 
 export function useInitiateExperimentalWebviewLogin() {
   const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
   const nativeAuth = true;
   const loginService = useLoginService(nativeAuth);
 
   return async () => {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn && !isInIframe) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
