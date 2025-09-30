@@ -133,7 +133,6 @@ export const useWalletConnectV2Login = ({
   let token = tokenToSign;
 
   const handleOnLogout = () => {
-    console.log('Logging out from wallet connect');
     logout(logoutRoute);
   };
 

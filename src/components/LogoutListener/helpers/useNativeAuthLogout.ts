@@ -30,7 +30,6 @@ export const useNativeAuthLogout = () => {
       !getWebviewToken() &&
       isNativeAuthTokenExpired
     ) {
-      console.log('Loggin out. Native auth token expired.');
       logout(logoutRoute);
     }
   }, [address, nativeAuthToken, isNativeAuthTokenExpired, logoutRoute]);
@@ -67,7 +66,6 @@ export const useNativeAuthLogout = () => {
 
     logoutTimeoutRef.current = setTimeout(() => {
       if (plannedLogoutRef.current === plannedLogoutKey) {
-        console.log('Loggin out from timeout');
         logout(logoutRoute);
       }
     }, millisecondsUntilLogout.toNumber());

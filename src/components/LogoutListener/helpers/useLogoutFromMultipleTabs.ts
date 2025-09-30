@@ -22,7 +22,6 @@ export const useLogoutFromMultipleTabs = () => {
         const { data } = JSON.parse(ev.newValue);
 
         if (data === address) {
-          console.log('Logging out from multiple tabs');
           logout(logoutRoute);
         }
       } catch (err) {
