@@ -115,6 +115,8 @@ export class TransactionManager {
     sentTransactions: SignedTransactionType[] | SignedTransactionType[][],
     options: TransactionManagerTrackOptionsType = { disableToasts: false }
   ): Promise<string> => {
+    console.log('props', { sentTransactions, options });
+
     const flatTransactions = this.sequentialToFlatArray(sentTransactions).map(
       (transaction) => ({
         ...transaction,
