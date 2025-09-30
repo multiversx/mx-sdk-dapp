@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react';
-
-import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useGetAccountProvider } from 'hooks/account';
 import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
