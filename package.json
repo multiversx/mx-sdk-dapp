@@ -1,6 +1,6 @@
 {
   "name": "@multiversx/sdk-dapp",
-  "version": "4.3.4-alpha.5",
+  "version": "4.3.4",
   "description": "A library to hold the main logic for a dapp on the MultiversX blockchain",
   "author": "MultiversX",
   "license": "GPL-3.0-or-later",
@@ -18,7 +18,7 @@
     "build": "rimraf dist && node esbuild.js && npm run build:esm-types && npm run build:cjs-types && cp package.json dist && cp README.md dist",
     "publish-package": "npm run test && npm run build && cd dist && npm publish",
     "publish-package-next": "npm run test && npm run build && cd dist && npm publish --tag next",
-    "unpublish-verdaccio": "npm unpublish @multiversx/sdk-dapp@4.3.4-alpha.4 --registry http://localhost:4873",
+    "unpublish-verdaccio": "npm unpublish @multiversx/sdk-dapp@4.3.4 --registry http://localhost:4873",
     "publish-verdaccio": "npm run unpublish-verdaccio && npm run build && cd dist && npm publish --registry http://localhost:4873",
     "publish-yalc": "npm run build && cd dist && yalc publish --push",
     "watch": "npm run node esbuild-watch.js && npm run build:esm-types && npm run build:cjs-types -- --watch",
