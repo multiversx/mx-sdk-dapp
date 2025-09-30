@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { OperaProvider } from '@multiversx/sdk-opera-provider';
 
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
 import { useDispatch } from 'reduxStore/DappProviderContext';
@@ -38,12 +39,13 @@ export const useOperaLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
+  const dispatch = useDispatch();
+  const account = useGetAccount();
   let token = tokenToSign;
 
-  const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
-
   async function initiateLogin() {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -51,7 +53,6 @@ export const useOperaLogin = ({
     clearInitiatedLogins();
     dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
-
     setIsLoading(true);
     const provider: OperaProvider = OperaProvider.getInstance();
 
@@ -125,6 +126,7 @@ export const useOperaLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = Boolean(account.address);
 
   return [
     initiateLogin,

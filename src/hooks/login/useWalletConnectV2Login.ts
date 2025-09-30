@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
 import { useGetAccountProvider } from 'hooks/account';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
 import { setAccountProvider } from 'providers/accountProvider';
 import { emptyProvider, getProviderType } from 'providers/utils';
@@ -85,16 +87,17 @@ export const useWalletConnectV2Login = ({
   const dispatch = useDispatch();
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
-  let token = tokenToSign;
-
+  const account = useGetAccount();
   const [error, setError] = useState<string>('');
   const [wcUri, setWcUri] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [wcPairings, setWcPairings] = useState<
     PairingTypes.Struct[] | undefined
   >([]);
+
   const [sessionProvider, setSessionProvider] =
     useState<WalletConnectV2Provider | null>(null);
+
   const { provider } = useGetAccountProvider();
   const walletConnectV2RelayAddress = useSelector(walletConnectV2RelaySelector);
   const walletConnectV2ProjectId = useSelector(
@@ -127,7 +130,7 @@ export const useWalletConnectV2Login = ({
     : '';
 
   const loginFailed = Boolean(error);
-  const isLoggedIn = getIsLoggedIn();
+  let token = tokenToSign;
 
   const handleOnLogout = () => {
     console.log('Logging out from wallet connect');
@@ -295,6 +298,12 @@ export const useWalletConnectV2Login = ({
   };
 
   async function initiateLogin(loginProvider = true) {
+    const isLoggedIn = getIsLoggedIn();
+
+    if (isLoggedIn) {
+      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
+    }
+
     clearInitiatedLogins();
 
     if (loginProvider) {
@@ -316,7 +325,6 @@ export const useWalletConnectV2Login = ({
       return;
     }
 
-    const isLoggedIn = getIsLoggedIn();
     const cannotLogin = mounted.current === false && !isLoggedIn;
     const isWalletConnectProvider =
       getProviderType(providerRef.current) === LoginMethodsEnum.walletconnectv2;
@@ -455,6 +463,8 @@ export const useWalletConnectV2Login = ({
   useEffect(() => {
     setIsLoading(!wcUri);
   }, [wcUri]);
+
+  const isLoggedIn = Boolean(account.address);
 
   useEffect(() => {
     if (!sessionProvider) {

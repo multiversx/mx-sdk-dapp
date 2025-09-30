@@ -82,6 +82,7 @@ export const accountInfoSlice = createSlice({
       state: AccountInfoSliceType,
       action: PayloadAction<AccountType>
     ) => {
+      console.trace('setAccount', action.payload);
       // account fetching always comes after address is populated
       const isSameAddress = state.address === action.payload.address;
 

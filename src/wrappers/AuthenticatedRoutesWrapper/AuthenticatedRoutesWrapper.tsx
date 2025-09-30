@@ -1,13 +1,14 @@
 import React, { ReactNode, useEffect } from 'react';
 import BigNumber from 'bignumber.js';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useSelector } from 'reduxStore/DappProviderContext';
 import {
-  accountSelector,
   isAccountLoadingSelector,
-  isLoggedInSelector,
   walletLoginSelector
 } from 'reduxStore/selectors';
 
+import { addressSelector } from 'reduxStore/selectors/accountInfoSelectors';
+import { store } from 'reduxStore/store';
 import { RouteType } from 'types';
 import { getSearchParamAddress } from 'utils/account/getSearchParamAddress';
 import { getWebviewToken } from 'utils/account/getWebviewToken';
@@ -29,15 +30,10 @@ export const AuthenticatedRoutesWrapper = ({
   onRedirect?: (unlockRoute?: string) => void;
 }) => {
   const searchParamAddress = getSearchParamAddress();
-  const isLoggedIn = useSelector(isLoggedInSelector);
   const isAccountLoading = useSelector(isAccountLoadingSelector);
-  const account = useSelector(accountSelector);
+  const account = useGetAccount();
   const walletLogin = useSelector(walletLoginSelector);
   const isWebviewLogin = Boolean(getWebviewToken());
-
-  console.log('isLoggedIn', isLoggedIn);
-  console.log('walletLogin', walletLogin);
-  console.log('account', account);
 
   const getLocationPathname = () => {
     if (isWindowAvailable()) {
@@ -51,13 +47,23 @@ export const AuthenticatedRoutesWrapper = ({
     pathName ?? getLocationPathname()
   );
 
-  const shouldRedirect =
-    isOnAuthenticatedRoute &&
-    !account.address &&
-    walletLogin == null &&
-    !isWebviewLogin;
-
   useEffect(() => {
+    const storeAddress = addressSelector(store.getState());
+    const hasAddress = Boolean(storeAddress && account.address);
+
+    console.log({
+      hasAddress,
+      isOnAuthenticatedRoute,
+      address: account.address,
+      storeAddress
+    });
+
+    const shouldRedirect =
+      isOnAuthenticatedRoute &&
+      !hasAddress &&
+      walletLogin == null &&
+      !isWebviewLogin;
+
     if (!shouldRedirect) {
       return;
     }
@@ -67,7 +73,14 @@ export const AuthenticatedRoutesWrapper = ({
     }
 
     safeRedirect({ url: unlockRoute });
-  }, [shouldRedirect, unlockRoute]);
+  }, [
+    isOnAuthenticatedRoute,
+    account.address,
+    walletLogin,
+    isWebviewLogin,
+    unlockRoute,
+    account.address
+  ]);
 
   const isValidWalletLoginAttempt = walletLogin != null && searchParamAddress;
   const isBalanceReady = !new BigNumber(account.balance).isNaN();

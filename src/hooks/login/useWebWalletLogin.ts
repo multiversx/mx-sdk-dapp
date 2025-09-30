@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useDispatch, useSelector } from 'reduxStore/DappProviderContext';
 import { networkSelector } from 'reduxStore/selectors';
 import {
@@ -9,8 +10,7 @@ import {
   emptyAccount,
   setAddress
 } from 'reduxStore/slices';
-import { getHasNativeAuth, newWalletProvider } from 'utils';
-import { getIsLoggedIn } from 'utils/getIsLoggedIn';
+import { getHasNativeAuth, getIsLoggedIn, newWalletProvider } from 'utils';
 import { getWindowLocation } from 'utils/window/getWindowLocation';
 import {
   AccountInfoSliceNetworkType,
@@ -56,12 +56,14 @@ export const useWebWalletLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const network = useSelector(networkSelector);
   const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
+  const account = useGetAccount();
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
   let token = tokenToSign;
 
   async function initiateLogin() {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -128,6 +130,7 @@ export const useWebWalletLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = Boolean(account.address);
 
   return [
     initiateLogin,

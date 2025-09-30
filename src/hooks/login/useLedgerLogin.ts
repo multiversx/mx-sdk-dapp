@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { HWProvider } from '@multiversx/sdk-hw-provider';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { getAccountProvider, getLedgerConfiguration } from 'providers';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -69,7 +70,7 @@ export const useLedgerLogin = ({
   const ledgerAccount = useSelector(ledgerAccountSelector);
   const hwProvider = getAccountProvider() as unknown as HWProvider;
   const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
+  const account = useGetAccount();
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(hasNativeAuth ? nativeAuth : false);
   let token = tokenToSign;
@@ -285,6 +286,8 @@ export const useLedgerLogin = ({
   };
 
   const onStartLogin = async () => {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -370,6 +373,7 @@ export const useLedgerLogin = ({
   }, [accounts]);
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = Boolean(account.address);
 
   return [
     onStartLogin,

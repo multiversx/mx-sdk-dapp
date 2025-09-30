@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { isBrowserWithPopupConfirmation } from 'constants/browser';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { setAccountProvider } from 'providers/accountProvider';
 import { loginAction } from 'reduxStore/commonActions';
@@ -46,13 +47,14 @@ export const useCrossWindowLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
-  let token = tokenToSign;
   const network = useSelector(networkSelector);
-
   const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
+  const account = useGetAccount();
+  let token = tokenToSign;
 
   async function initiateLogin() {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -63,7 +65,6 @@ export const useCrossWindowLogin = ({
 
     dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
-
     setIsLoading(true);
     const isSuccessfullyInitialized: boolean =
       await CrossWindowProvider.getInstance().init();
@@ -170,6 +171,7 @@ export const useCrossWindowLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = Boolean(account.address);
 
   return [
     initiateLogin,

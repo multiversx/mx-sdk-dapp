@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { processModifiedAccount } from 'components/ProviderInitializer/helpers/processModifiedAccount';
 import { SECOND_LOGIN_ATTEMPT_ERROR } from 'constants/errorsMessages';
+import { useGetAccount } from 'hooks/account/useGetAccount';
 import {
   IframeLoginTypes,
   IframeProvider
@@ -42,13 +43,14 @@ export const useIframeLogin = ({
   const [isLoading, setIsLoading] = useState(false);
   const hasNativeAuth = getHasNativeAuth(nativeAuth);
   const loginService = useLoginService(nativeAuth);
-  let token = tokenToSign;
   const network = useSelector(networkSelector);
-
   const dispatch = useDispatch();
-  const isLoggedIn = getIsLoggedIn();
+  const account = useGetAccount();
+  let token = tokenToSign;
 
   async function initiateLogin(loginType = IframeLoginTypes.metamask) {
+    const isLoggedIn = getIsLoggedIn();
+
     if (isLoggedIn) {
       throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
     }
@@ -59,10 +61,8 @@ export const useIframeLogin = ({
 
     dispatch(setAddress(emptyAccount.address));
     dispatch(setAccount(emptyAccount));
-
     setIsLoading(true);
     const provider = IframeProvider.getInstance();
-
     const walletUrl = walletAddress ?? network.metamaskSnapWalletAddress;
 
     if (!walletUrl) {
@@ -153,6 +153,7 @@ export const useIframeLogin = ({
   }
 
   const loginFailed = Boolean(error);
+  const isLoggedIn = Boolean(account.address);
 
   return [
     initiateLogin,
