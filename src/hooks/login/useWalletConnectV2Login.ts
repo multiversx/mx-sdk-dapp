@@ -300,7 +300,8 @@ export const useWalletConnectV2Login = ({
     const isLoggedIn = getIsLoggedIn();
 
     if (isLoggedIn) {
-      throw new Error(SECOND_LOGIN_ATTEMPT_ERROR);
+      console.warn('Already logged in. Skipping wallet connect v2 login');
+      return;
     }
 
     clearInitiatedLogins();
