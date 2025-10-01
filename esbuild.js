@@ -35,7 +35,7 @@ async function build() {
       format: 'esm',
       outdir: 'out',
       bundle: true,
-      minify: true,
+      minify: false,
       sourcemap: true,
       chunkNames: '__chunks__/[name]-[hash]',
       target: ['es2021'],
