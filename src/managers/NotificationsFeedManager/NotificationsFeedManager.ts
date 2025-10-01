@@ -23,25 +23,28 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   NotificationsFeedEventsEnum | typeof NOTIFICATIONS_FEED_STORE_SUBSCRIBE
 > {
   private static instance: NotificationsFeedManager;
-  private readonly store = getStore();
+  private readonly store: ReturnType<typeof getStore>;
 
   protected initialData: INotificationsFeedManagerData = {
     pendingTransactions: [],
     historicTransactions: []
   };
 
-  public static getInstance(): NotificationsFeedManager {
+  public static getInstance(
+    store?: ReturnType<typeof getStore>
+  ): NotificationsFeedManager {
     if (!NotificationsFeedManager.instance) {
-      NotificationsFeedManager.instance = new NotificationsFeedManager();
+      NotificationsFeedManager.instance = new NotificationsFeedManager(store);
     }
     return NotificationsFeedManager.instance;
   }
 
-  constructor() {
+  constructor(store?: ReturnType<typeof getStore>) {
     super({
       uiDataUpdateEvent: NotificationsFeedEventsEnum.OPEN,
       uiTag: UITagsEnum.NOTIFICATIONS_FEED
     });
+    this.store = store || getStore();
     this.data = { ...this.initialData };
   }
 

@@ -33,26 +33,31 @@ interface IToastManager {
 
 export class ToastManager {
   private readonly lifetimeManager: LifetimeManager;
+  private store: ReturnType<typeof getStore>;
   private isCreatingElement = false;
   private static instance: ToastManager;
   private toastsElement: MvxToastList | null = null;
   private transactionToasts: ITransactionToast[] = [];
   private customToasts: CustomToastType[] = [];
   private successfulToastLifetime?: number;
-  private storeToastsSubscription: () => void = () => null;
+  private unsubscribeFromStore: () => void = () => null;
   private readonly notificationsFeedManager: NotificationsFeedManager;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
   private eventBus: IEventBus<
     ITransactionToast[] | CustomToastType[] | null
   > | null = null;
 
-  store = getStore();
-
-  constructor() {
+  constructor(props?: {
+    store?: ReturnType<typeof getStore>;
+    lifetimeManager?: LifetimeManager;
+    notificationsFeedManager?: NotificationsFeedManager;
+  }) {
     this.destroy();
-    this.lifetimeManager = new LifetimeManager();
-
-    this.notificationsFeedManager = NotificationsFeedManager.getInstance();
+    this.store = props?.store || getStore();
+    this.lifetimeManager = props?.lifetimeManager ?? new LifetimeManager();
+    this.notificationsFeedManager =
+      props?.notificationsFeedManager ??
+      NotificationsFeedManager.getInstance(this.store);
   }
 
   public async init({
@@ -67,7 +72,7 @@ export class ToastManager {
 
     await this.subscribeToEventBusNotifications();
 
-    this.storeToastsSubscription = this.store.subscribe(
+    this.unsubscribeFromStore = this.store.subscribe(
       async (
         { toasts, transactions },
         { toasts: prevToasts, transactions: prevTransactions }
@@ -328,7 +333,7 @@ export class ToastManager {
   }
 
   public destroy() {
-    this.storeToastsSubscription();
+    this.unsubscribeFromStore();
     this.lifetimeManager?.destroy();
     this.notificationsFeedManager?.destroy();
     removeAllCustomToasts();
