@@ -109,7 +109,9 @@ describe('createToastsFromTransactions', () => {
     const result = await createToastsFromTransactions({
       toastList: { transactionToasts: [], customToasts: [] },
       transactionsSessions: {},
-      account: mockAccount
+      account: mockAccount,
+      explorerAddress: 'https://explorer.example.com',
+      egldLabel: 'EGLD'
     });
 
     expect(result).toEqual({
@@ -149,7 +151,9 @@ describe('createToastsFromTransactions', () => {
     const result = await createToastsFromTransactions({
       toastList,
       transactionsSessions,
-      account: mockAccount
+      account: mockAccount,
+      explorerAddress: 'https://explorer.example.com',
+      egldLabel: 'EGLD'
     });
 
     expect(result.pendingTransactionToasts).toHaveLength(1);
@@ -194,7 +198,9 @@ describe('createToastsFromTransactions', () => {
       toastList,
       transactionsSessions,
       account: mockAccount,
-      existingCompletedTransactions: existingCompleted
+      existingCompletedTransactions: existingCompleted,
+      explorerAddress: 'https://explorer.example.com',
+      egldLabel: 'EGLD'
     });
 
     expect(result.completedTransactionToasts).toHaveLength(1);
@@ -210,7 +216,9 @@ describe('createToastsFromTransactions', () => {
     const result = await createToastsFromTransactions({
       toastList,
       transactionsSessions: {},
-      account: mockAccount
+      account: mockAccount,
+      explorerAddress: 'https://explorer.example.com',
+      egldLabel: 'EGLD'
     });
 
     expect(result.pendingTransactionToasts).toHaveLength(0);

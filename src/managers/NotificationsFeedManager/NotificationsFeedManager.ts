@@ -108,12 +108,21 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   }
 
   protected async updateDataAndNotifications() {
-    const { transactions, account, toasts, network } = this.store.getState();
+    const {
+      transactions,
+      account,
+      toasts,
+      network: {
+        network: { explorerAddress, egldLabel }
+      }
+    } = this.store.getState();
 
     const { pendingTransactionToasts } = await createToastsFromTransactions({
       toastList: toasts,
       transactionsSessions: transactions,
-      account
+      account,
+      explorerAddress,
+      egldLabel
     });
 
     this.data.pendingTransactions = pendingTransactionToasts;
@@ -122,8 +131,8 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
       await TransactionsHistoryController.getTransactionsHistory({
         transactionsSessions: transactions,
         address: account.address,
-        explorerAddress: network.network.explorerAddress,
-        egldLabel: network.network.egldLabel
+        explorerAddress,
+        egldLabel
       });
 
     await this.updateNotificationsFeed();

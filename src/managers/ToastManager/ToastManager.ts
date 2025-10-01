@@ -1,6 +1,5 @@
 import isEqual from 'lodash.isequal';
 import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
-import { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
 import {
   customToastCloseHandlersDictionary,
   customToastComponentDictionary,
@@ -40,15 +39,16 @@ export class ToastManager {
   constructor(props?: {
     store?: ReturnType<typeof getStore>;
     lifetimeManager?: LifetimeManager;
+    uiCoordinator?: ToastUICoordinator;
   }) {
     this.destroy();
     this.store = props?.store || getStore();
     this.lifetimeManager = props?.lifetimeManager ?? new LifetimeManager();
-    this.uiCoordinator = new ToastUICoordinator({
-      onCloseToast: this.closeToast.bind(this),
-      store: this.store,
-      notificationsFeedManager: NotificationsFeedManager.getInstance(this.store)
-    });
+    this.uiCoordinator =
+      props?.uiCoordinator ??
+      new ToastUICoordinator({
+        onCloseToast: this.closeToast.bind(this)
+      });
   }
 
   public async init({
@@ -150,7 +150,10 @@ export class ToastManager {
     const {
       toasts: toastList,
       transactions: transactionsSessions,
-      account
+      account,
+      network: {
+        network: { explorerAddress, egldLabel }
+      }
     } = this.store.getState();
 
     const { pendingTransactionToasts, completedTransactionToasts } =
@@ -158,7 +161,9 @@ export class ToastManager {
         toastList,
         transactionsSessions,
         account,
-        skipFetchingTransactions: props?.skipFetchingTransactions
+        skipFetchingTransactions: props?.skipFetchingTransactions,
+        explorerAddress,
+        egldLabel
       });
 
     this.transactionToasts = [
@@ -199,12 +204,15 @@ export class ToastManager {
     await this.uiCoordinator?.publishCustomToasts(this.customToasts);
   }
 
-  private handleTransactionToastClose(toastId: string) {
+  private handleTransactionToastClose(toastId: string): boolean {
     const isCompleted = this.handleCompletedTransaction(toastId);
 
     if (isCompleted) {
       removeTransactionToast(toastId);
+      return true;
     }
+
+    return false;
   }
 
   public async showToasts() {
@@ -217,7 +225,7 @@ export class ToastManager {
     this.uiCoordinator?.hideToasts();
   }
 
-  public closeToast(toastId: string) {
+  public closeToast(toastId: string): boolean {
     const customToast = this.customToasts.find(
       (toast) => toast.toastId === toastId
     );
@@ -227,10 +235,10 @@ export class ToastManager {
       const handleClose = customToastCloseHandlersDictionary[toastId];
       handleClose?.();
       removeCustomToast(toastId);
-      return;
+      return true;
     }
 
-    this.handleTransactionToastClose(toastId);
+    return this.handleTransactionToastClose(toastId);
   }
 
   private async publishTransactionToasts() {

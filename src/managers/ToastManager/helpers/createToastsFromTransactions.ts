@@ -1,5 +1,3 @@
-import { getEgldLabel } from 'methods/network/getEgldLabel';
-import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,
@@ -24,6 +22,8 @@ interface CreateToastsFromTransactionsParamsType {
   account: AccountSliceType;
   existingCompletedTransactions?: ITransactionToast[];
   skipFetchingTransactions?: boolean;
+  explorerAddress: string;
+  egldLabel: string;
 }
 
 export const createToastsFromTransactions = async ({
@@ -31,14 +31,14 @@ export const createToastsFromTransactions = async ({
   transactionsSessions,
   account,
   existingCompletedTransactions = [],
-  skipFetchingTransactions = false
+  skipFetchingTransactions = false,
+  explorerAddress,
+  egldLabel
 }: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> => {
   const pendingTransactionToasts: ITransactionToast[] = [];
   const completedTransactionToasts: ITransactionToast[] = [
     ...existingCompletedTransactions
   ];
-  const explorerAddress = getExplorerAddress();
-  const egldLabel = getEgldLabel();
 
   for (const toast of toastList.transactionToasts) {
     const transactionSession = transactionsSessions[toast.toastId];

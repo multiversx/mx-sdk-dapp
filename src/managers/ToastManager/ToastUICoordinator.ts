@@ -9,6 +9,9 @@ import { ComponentFactory } from 'utils/ComponentFactory';
 import { ToastEventsEnum } from './types';
 import type { ITransactionToast } from './types';
 
+type OnCloseToastType = (toastId: string) => boolean;
+type StoreObjectType = ReturnType<typeof getStore>;
+
 export class ToastUICoordinator {
   private toastsElement: MvxToastList | null = null;
   private eventBus: IEventBus<
@@ -17,12 +20,12 @@ export class ToastUICoordinator {
   private isCreatingElement = false;
   private eventBusUnsubscribeFunctions: (() => void)[] = [];
   private readonly notificationsFeedManager: NotificationsFeedManager;
-  private readonly store: ReturnType<typeof getStore>;
-  private readonly onCloseToast: (toastId: string) => void;
+  private readonly store: StoreObjectType;
+  private readonly onCloseToast: OnCloseToastType;
 
   constructor(props: {
-    onCloseToast: (toastId: string) => void;
-    store?: ReturnType<typeof getStore>;
+    onCloseToast: OnCloseToastType;
+    store?: StoreObjectType;
     notificationsFeedManager?: NotificationsFeedManager;
   }) {
     this.onCloseToast = props.onCloseToast;
