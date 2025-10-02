@@ -1,6 +1,9 @@
 import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { saveToCache } from 'store/actions/cache/cacheActions';
+import { apiAddressSelector } from 'store/selectors/networkSelectors';
+import { getState } from 'store/store';
+import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
@@ -9,10 +12,8 @@ import { mapTransactionToListItem } from './mapTransactionToListItem';
 
 interface IMapServerTransactionsToListItemsParams {
   transactions: SignedTransactionType[];
-  address: string;
-  explorerAddress: string;
-  egldLabel: string;
   skipFetchingTransactions?: boolean;
+  store?: StoreType;
 }
 
 const sortTransactionsByTimestamp = (transactions: ITransactionListItem[]) =>
@@ -20,10 +21,8 @@ const sortTransactionsByTimestamp = (transactions: ITransactionListItem[]) =>
 
 export const mapServerTransactionsToListItems = async ({
   transactions,
-  address,
-  explorerAddress,
-  egldLabel,
-  skipFetchingTransactions = false
+  skipFetchingTransactions = false,
+  store = getState()
 }: IMapServerTransactionsToListItemsParams): Promise<
   ITransactionListItem[]
 > => {
@@ -31,7 +30,10 @@ export const mapServerTransactionsToListItems = async ({
   const hashesToFetch: string[] = [];
 
   transactions.forEach((transaction) => {
-    const cachedTransaction = getCachedTransactionListItem(transaction.hash);
+    const cachedTransaction = getCachedTransactionListItem(
+      transaction.hash,
+      store
+    );
     if (cachedTransaction) {
       cachedTransactions.push(cachedTransaction);
     } else {
@@ -49,7 +51,9 @@ export const mapServerTransactionsToListItems = async ({
         ...(tx as unknown as ServerTransactionType),
         txHash: tx.hash
       }))
-    : await getServerTransactionsByHashes(hashesToFetch);
+    : await getServerTransactionsByHashes(hashesToFetch, {
+        apiAddress: apiAddressSelector(store)
+      });
 
   const retrievedHashes = newTransactions.map((tx) => tx.txHash);
   const missingHashes = hashesToFetch.filter(
@@ -94,10 +98,7 @@ export const mapServerTransactionsToListItems = async ({
 
   newTransactions.forEach((transaction) => {
     const transactionListItem = mapTransactionToListItem({
-      transaction,
-      address,
-      explorerAddress,
-      egldLabel
+      transaction
     });
 
     if (transactionListItem.status !== TransactionServerStatusesEnum.pending) {

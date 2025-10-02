@@ -14,7 +14,6 @@ interface CreateTransactionToastParamsType {
   status: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
   transactions: ITransactionListItem[];
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
-  explorerAddress: string;
   startTime: number;
   endTime: number;
 }

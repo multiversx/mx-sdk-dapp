@@ -147,23 +147,15 @@ export class ToastManager {
   private async updateTransactionToastsList(props?: {
     skipFetchingTransactions?: boolean;
   }) {
-    const {
-      toasts: toastList,
-      transactions: transactionsSessions,
-      account,
-      network: {
-        network: { explorerAddress, egldLabel }
-      }
-    } = this.store.getState();
+    const store = this.store.getState();
+    const { toasts: toastList } = store;
+
+    console.log('store', store);
 
     const { pendingTransactionToasts, completedTransactionToasts } =
       await createToastsFromTransactions({
-        toastList,
-        transactionsSessions,
-        account,
         skipFetchingTransactions: props?.skipFetchingTransactions,
-        explorerAddress,
-        egldLabel
+        store
       });
 
     this.transactionToasts = [

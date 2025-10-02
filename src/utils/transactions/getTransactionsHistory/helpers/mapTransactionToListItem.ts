@@ -1,7 +1,13 @@
 import { ITransactionListItem } from 'lib/sdkDappUi';
+import { addressSelector } from 'store/selectors/accountSelectors';
+import {
+  egldLabelSelector,
+  explorerAddressSelector
+} from 'store/selectors/networkSelectors';
+import { getStore } from 'store/store';
+import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { IBaseTransactionParams } from 'types/transaction-list-item.types';
 import { explorerUrlBuilder } from 'utils/transactions/explorerUrlBuilder';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 import { getReceiverData } from 'utils/transactions/getTransactionsHistory/helpers/getReceiverData';
@@ -10,21 +16,23 @@ import { getTransactionAmount } from './getTransactionAmount';
 import { getTransactionAsset } from './getTransactionAsset';
 import { getTransactionAssets } from './getTransactionAssets';
 
-interface IMapTransactionToListItemParamsType extends IBaseTransactionParams {
+interface IMapTransactionToListItemParamsType {
   transaction: ServerTransactionType;
   isPending?: boolean;
   profileImages?: Record<string, string>;
+  store?: StoreType;
 }
 
 export const mapTransactionToListItem = ({
   transaction,
-  address,
-  explorerAddress,
-  egldLabel,
-  isPending = false
+  isPending = false,
+  store = getStore().getState()
 }: IMapTransactionToListItemParamsType): ITransactionListItem => {
   const { receiver, receiverAssets } = getReceiverData(transaction);
+  const address = addressSelector(store);
   const isIncomingTransaction = address === receiver;
+  const egldLabel = egldLabelSelector(store);
+  const explorerAddress = explorerAddressSelector(store);
 
   const action = getTransactionAction({
     transaction,

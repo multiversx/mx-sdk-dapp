@@ -3,11 +3,12 @@ import { getCachedItemSelector } from 'store/selectors/cacheSelector';
 import { getStore } from 'store/store';
 
 export const getCachedTransactionListItem = (
-  hash: string
+  hash: string,
+  store = getStore().getState()
 ): ITransactionListItem | null => {
   const cachedTransaction = getCachedItemSelector<ITransactionListItem>(
     `transaction-${hash}`
-  )(getStore().getState());
+  )(store);
 
   return cachedTransaction ?? null;
 };

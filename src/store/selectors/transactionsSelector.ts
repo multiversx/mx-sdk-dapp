@@ -35,7 +35,7 @@ export const successfulTransactionsSessionsSelector = ({
 
   Object.entries(state).forEach(([sessionId, data]) => {
     const hasSuccessfulTransactions = data.transactions.some(
-      ({ status }) => status === TransactionServerStatusesEnum.success
+      ({ status }) => status === `${TransactionServerStatusesEnum.success}`
     );
     if (hasSuccessfulTransactions && data.status === 'sent') {
       successfulSessions[sessionId] = data;
@@ -55,7 +55,7 @@ export const failedTransactionsSessionsSelector = ({
       ({ status }) =>
         status &&
         [
-          TransactionServerStatusesEnum.fail,
+          `${TransactionServerStatusesEnum.fail}`,
           TransactionServerStatusesEnum.invalid,
           TransactionBatchStatusesEnum.cancelled,
           TransactionBatchStatusesEnum.timedOut
@@ -79,7 +79,7 @@ export const pendingTransactionsSelector = ({
       if (
         transaction.status &&
         [
-          TransactionServerStatusesEnum.pending,
+          `${TransactionServerStatusesEnum.pending}`,
           TransactionBatchStatusesEnum.sent
         ].includes(transaction.status)
       ) {
@@ -117,10 +117,10 @@ export const failedTransactionsSelector = ({
       if (
         transaction.status &&
         [
-          TransactionServerStatusesEnum.fail,
-          TransactionServerStatusesEnum.invalid,
-          TransactionBatchStatusesEnum.cancelled,
-          TransactionBatchStatusesEnum.timedOut
+          `${TransactionServerStatusesEnum.fail}`,
+          `${TransactionServerStatusesEnum.invalid}`,
+          `${TransactionBatchStatusesEnum.cancelled}`,
+          `${TransactionBatchStatusesEnum.timedOut}`
         ].includes(transaction.status)
       ) {
         failedTransactions.push(transaction);

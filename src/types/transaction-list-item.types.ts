@@ -9,14 +9,8 @@ export enum TransactionIconTypeEnum {
   CONTRACT = 'contract',
   SYMBOL = 'symbol'
 }
-export interface IBaseTransactionParams {
-  address: string;
-  explorerAddress: string;
-  egldLabel: string;
-}
 
-export interface IGetHistoricalTransactionsParams
-  extends IBaseTransactionParams {
+export interface IGetHistoricalTransactionsParams {
   transactionsSessions: Record<string, SessionTransactionType>;
 }
 

@@ -9,7 +9,9 @@ import { ResultType } from './serverTransactions.types';
 
 export interface SignedTransactionType extends IPlainTransactionObject {
   hash: string;
-  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
+  status?:
+    | `${TransactionServerStatusesEnum}`
+    | `${TransactionBatchStatusesEnum}`;
   inTransit?: boolean;
 }
 
@@ -116,7 +118,9 @@ export interface TransactionsDisplayInfoType {
 
 export type SessionTransactionType = {
   transactions: SignedTransactionType[];
-  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
+  status?:
+    | `${TransactionBatchStatusesEnum}`
+    | `${TransactionServerStatusesEnum}`;
   errorMessage?: string;
   /**
    * Optional custom information to be displayed in the toast notification.

@@ -5,3 +5,4 @@ export * from './dappConfig';
 export * from './socketResponse';
 export * from './websocketConfig';
 export * from './blocks';
+export * from './store';
