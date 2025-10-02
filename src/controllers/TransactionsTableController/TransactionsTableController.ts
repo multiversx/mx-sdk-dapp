@@ -39,13 +39,9 @@ export class TransactionsTableController {
       })
     );
 
-    const getExplorerUrl = (relativePath?: string) => {
-      if (!relativePath) {
-        return;
-      }
-
-      return getExplorerLink({ explorerAddress, to: relativePath })
-    }
+    const getExplorerUrl = (relativePath?: string) => (
+      getExplorerLink({ explorerAddress, to: relativePath ?? '' })
+    );
 
     const transactionRows = await Promise.all(
       interpretedTransactions.map(async (transaction) => {
