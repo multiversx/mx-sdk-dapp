@@ -17,7 +17,9 @@ export enum TransactionsDefaultTitles {
 export interface GetToastsOptionsDataPropsType {
   address: string;
   sender: string;
-  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
+  status?:
+    | `${TransactionBatchStatusesEnum}`
+    | `${TransactionServerStatusesEnum}`;
   toastId: string;
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
   txActionName?: string;

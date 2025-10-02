@@ -1,9 +1,8 @@
 import { testAddress, testNetwork } from '__mocks__';
 import { server, rest } from '__mocks__';
-import { store } from '__mocks__/data/store';
+import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
-// import { TransactionsDisplayInfoType } from 'types/transactions.types';
 import { createToastsFromTransactions } from '../createToastsFromTransactions';
 import { mockTransaction, mockTransactionSession } from './mocks/transactions';
 
@@ -26,6 +25,12 @@ describe('createToastsFromTransactions', () => {
     EXISTING: (fixedNow + 2 * 60 * 1000).toString(), // 2 minutes later
     MISSING: (fixedNow + 3 * 60 * 1000).toString() // 3 minutes later
   } as const;
+
+  const successTransactionHash =
+    'txSuccess§§§7cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay';
+
+  // const existingTransactionHash =
+  //   'txExisting§§§7cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay';
 
   // const mockAccount: AccountSliceType = {
   //   address: testAddress,
@@ -96,28 +101,28 @@ describe('createToastsFromTransactions', () => {
       )
     );
 
-    const result = await createToastsFromTransactions({
-      store: {
-        ...store,
-        transactions: {
-          [SESSION_IDS.PENDING]: createMockSession(
-            TransactionServerStatusesEnum.pending,
-            mockTransaction.hash
-          ),
-          [SESSION_IDS.SUCCESS]: createMockSession(
-            TransactionServerStatusesEnum.success,
-            'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay'
-          )
-        },
-        toasts: {
-          transactionToasts: [
-            createMockToast(SESSION_IDS.PENDING),
-            createMockToast(SESSION_IDS.SUCCESS)
-          ],
-          customToasts: []
-        }
+    const store = {
+      ...mockStore,
+      transactions: {
+        [SESSION_IDS.PENDING]: createMockSession(
+          TransactionServerStatusesEnum.pending,
+          mockTransaction.hash
+        ),
+        [SESSION_IDS.SUCCESS]: createMockSession(
+          TransactionServerStatusesEnum.success,
+          successTransactionHash
+        )
+      },
+      toasts: {
+        transactionToasts: [
+          createMockToast(SESSION_IDS.PENDING),
+          createMockToast(SESSION_IDS.SUCCESS)
+        ],
+        customToasts: []
       }
-    });
+    };
+
+    const result = await createToastsFromTransactions({ store });
 
     const commonData = {
       asset: { icon: 'faHourglass' },
@@ -125,6 +130,7 @@ describe('createToastsFromTransactions', () => {
       directionLabel: 'To',
       action: { name: 'Self Sent ', description: undefined },
       amount: '0 ',
+      hash: mockTransaction.hash,
       status: 'pending',
       timestamp: undefined,
       interactorAsset: undefined
@@ -149,8 +155,7 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData,
-              hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
-              link: '/transactions/bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x'
+              link: `/transactions/${mockTransaction.hash}`
             }
           ]
         }
@@ -173,14 +178,13 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData, // status is still pending because the toasts were not shown yet
-              hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
-              link: '/transactions/bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x'
+              link: `/transactions/${mockTransaction.hash}`
             },
             {
               ...commonData, // see next test for the status change
-              hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay',
+              hash: successTransactionHash,
               timestamp: fixedNow,
-              link: '/transactions/bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay'
+              link: `/transactions/${successTransactionHash}`
             }
           ]
         }
@@ -212,12 +216,19 @@ describe('createToastsFromTransactions', () => {
   //   const transactionsSessions = {
   //     [SESSION_IDS.EXISTING]: createMockSession(
   //       TransactionServerStatusesEnum.success,
-  //       'tx-existing'
+  //       existingTransactionHash
   //     )
   //   };
 
+  //   const store: StoreType = {
+  //     ...mockStore,
+  //     toasts: toastList,
+  //     transactions: transactionsSessions
+  //   };
+
   //   const result = await createToastsFromTransactions({
-  //     existingCompletedTransactions: existingCompleted
+  //     existingCompletedTransactions: existingCompleted,
+  //     store
   //   });
 
   //   expect(result.completedTransactionToasts).toHaveLength(1);

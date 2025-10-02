@@ -9,7 +9,6 @@ import { toastsSliceSelector } from 'store/selectors/toastsSelectors';
 import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
 import { getStore } from 'store/store';
 import { StoreType } from 'store/store.types';
-import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { mapServerTransactionsToListItems } from 'utils/transactions/getTransactionsHistory/helpers';
 import { createTransactionToast } from './createTransactionToast';
 import { ITransactionToast } from '../types/toast.types';
@@ -69,7 +68,7 @@ export const createToastsFromTransactions = async ({
     const transactionToast = createTransactionToast({
       toastId: toast.toastId,
       address,
-      status: status as TransactionServerStatusesEnum,
+      status,
       transactions: interprettedTransactions,
       transactionsDisplayInfo,
       startTime,

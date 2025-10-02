@@ -4,7 +4,7 @@ import { config } from './storeData/config';
 import { loginInfo } from './storeData/loginInfo';
 import { network } from './storeData/network';
 
-export const store: StoreType = {
+export const mockStore: StoreType = {
   network: {
     network
   },

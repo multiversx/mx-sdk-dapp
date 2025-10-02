@@ -11,7 +11,9 @@ import { ITransactionToast } from '../types/toast.types';
 interface CreateTransactionToastParamsType {
   toastId: string;
   address: string;
-  status: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
+  status:
+    | `${TransactionServerStatusesEnum}`
+    | `${TransactionBatchStatusesEnum}`;
   transactions: ITransactionListItem[];
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
   startTime: number;

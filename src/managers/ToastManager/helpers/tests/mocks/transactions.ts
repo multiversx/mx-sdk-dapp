@@ -16,11 +16,11 @@ export const mockTransaction = {
   version: 1,
   signature:
     'e8e12f2c5432361b640068f8046819c02511e94cc139257dd1bf557368f4dafe7f446d0df2fe02e7f09358f84b0b2fce88b801a4eb3643ba85c989340bf7820a',
-  txHash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
+  txHash: 'txPending§§§7cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
   receiverShard: 0,
   senderShard: 0,
   status: 'success',
-  hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
+  hash: 'txPending§§§7cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
   invalidTransaction: false,
   results: [],
   previousStatus: 'pending',
