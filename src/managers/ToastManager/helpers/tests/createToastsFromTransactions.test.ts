@@ -1,4 +1,4 @@
-import { testNetwork } from '__mocks__';
+import { testAddress, testNetwork } from '__mocks__';
 import { server, rest } from '__mocks__';
 import { store } from '__mocks__/data/store';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
@@ -119,11 +119,22 @@ describe('createToastsFromTransactions', () => {
       }
     });
 
+    const commonData = {
+      asset: { icon: 'faHourglass' },
+      interactor: testAddress,
+      directionLabel: 'To',
+      action: { name: 'Self Sent ', description: undefined },
+      amount: '0 ',
+      status: 'pending',
+      timestamp: undefined,
+      interactorAsset: undefined
+    };
+
     expect(result).toEqual({
       pendingTransactionToasts: [
         {
           toastDataState: {
-            id: '1753995600000',
+            id: SESSION_IDS.PENDING,
             icon: 'hourglass',
             hasCloseButton: false,
             title: 'Processing Self transaction',
@@ -134,19 +145,11 @@ describe('createToastsFromTransactions', () => {
             endTime: 1753995601000,
             startTime: 1753995600000
           },
-          toastId: '1753995600000',
+          toastId: SESSION_IDS.PENDING,
           transactions: [
             {
-              asset: { icon: 'faHourglass' },
-              interactor:
-                'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
-              directionLabel: 'To',
-              action: { name: 'Self Sent ', description: undefined },
-              amount: '0 ',
+              ...commonData,
               hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
-              status: 'pending',
-              timestamp: undefined,
-              interactorAsset: undefined,
               link: '/transactions/bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x'
             }
           ]
@@ -155,7 +158,7 @@ describe('createToastsFromTransactions', () => {
       completedTransactionToasts: [
         {
           toastDataState: {
-            id: '1753995660000',
+            id: SESSION_IDS.SUCCESS,
             icon: 'check',
             hasCloseButton: true,
             title: 'Self transaction successful',
@@ -166,32 +169,17 @@ describe('createToastsFromTransactions', () => {
             endTime: 1753995601000,
             startTime: 1753995600000
           },
-          toastId: '1753995660000',
+          toastId: SESSION_IDS.SUCCESS,
           transactions: [
             {
-              asset: { icon: 'faHourglass' },
-              interactor:
-                'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
-              directionLabel: 'To',
-              action: { name: 'Self Sent ', description: undefined },
-              amount: '0 ',
+              ...commonData, // status is still pending because the toasts were not shown yet
               hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x',
-              status: 'pending',
-              timestamp: undefined,
-              interactorAsset: undefined,
               link: '/transactions/bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6a6x'
             },
             {
-              asset: { icon: 'faHourglass' },
-              interactor:
-                'erd1dm9uxpf5awkn7uhju7zjn9lde0dhahy0qaxqqlu26xcuuw27qqrsqfmej3',
-              directionLabel: 'To',
-              action: { name: 'Self Sent ', description: undefined },
-              amount: '0 ',
+              ...commonData, // see next test for the status change
               hash: 'bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay',
-              status: 'pending',
               timestamp: fixedNow,
-              interactorAsset: undefined,
               link: '/transactions/bf1ee4d78ccc57cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay'
             }
           ]
