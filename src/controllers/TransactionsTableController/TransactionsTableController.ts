@@ -4,7 +4,7 @@ import {
   TransactionDirectionEnum
 } from 'types/serverTransactions.types';
 import { NftEnumType } from 'types/tokens.types';
-import { getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction';
+import { getExplorerLink, getInterpretedTransaction } from 'utils/transactions/getInterpretedTransaction';
 import { getTransactionValue } from 'utils/transactions/getInterpretedTransaction/getTransactionValue/getTransactionValue';
 import { getLockedAccountName } from 'utils/transactions/getInterpretedTransaction/helpers/getLockedAccountName';
 import { getShardText } from 'utils/transactions/getInterpretedTransaction/helpers/getShardText';
@@ -38,6 +38,14 @@ export class TransactionsTableController {
         transaction
       })
     );
+
+    const getExplorerUrl = (relativePath?: string) => {
+      if (!relativePath) {
+        return;
+      }
+
+      return getExplorerLink({ explorerAddress, to: relativePath })
+    }
 
     const transactionRows = await Promise.all(
       interpretedTransactions.map(async (transaction) => {
@@ -90,15 +98,15 @@ export class TransactionsTableController {
             tokenValueData?.token.collection ?? nftValueData?.token.collection,
           egldLabel: egldValueData ? egldLabel : '',
           link:
-            tokenValueData?.tokenExplorerLink ??
-            nftValueData?.tokenExplorerLink,
+            getExplorerUrl(tokenValueData?.tokenExplorerLink ??
+              nftValueData?.tokenExplorerLink),
           linkText:
             tokenValueData?.tokenLinkText ?? nftValueData?.tokenLinkText,
           name: tokenValueData?.token.name ?? nftValueData?.token.name,
           showFormattedAmount: Boolean(
             egldValueData ||
-              tokenValueData?.tokenFormattedAmount ||
-              nftValueData?.tokenFormattedAmount
+            tokenValueData?.tokenFormattedAmount ||
+            nftValueData?.tokenFormattedAmount
           ),
           svgUrl: tokenValueData?.token.svgUrl ?? nftValueData?.token.svgUrl,
           ticker: tokenValueData?.token.ticker ?? nftValueData?.token.ticker,
@@ -120,14 +128,13 @@ export class TransactionsTableController {
           receiver: {
             address: transaction.receiver,
             name: receiverName ?? '',
-            description: `${receiverName ?? transaction.receiver} (${
-              transaction.receiver
-            })`,
+            description: `${receiverName ?? transaction.receiver} (${transaction.receiver
+              })`,
             isContract: isContract(transaction.receiver),
             isTokenLocked: Boolean(receiverLockedAccount),
             link: transaction.links.receiverLink ?? '',
             shard: receiverShard,
-            shardLink: transaction.links.receiverLink,
+            shardLink: transaction.links.receiverShardLink,
             showLink:
               transaction.transactionDetails.direction !==
               TransactionDirectionEnum.IN
@@ -135,9 +142,8 @@ export class TransactionsTableController {
           sender: {
             address: transaction.sender,
             name: senderName ?? '',
-            description: `${senderName ?? transaction.sender} (${
-              transaction.sender
-            })`,
+            description: `${senderName ?? transaction.sender} (${transaction.sender
+              })`,
             isContract: isContract(transaction.sender),
             isTokenLocked: Boolean(senderLockedAccount),
             link: transaction.links.senderLink ?? '',
