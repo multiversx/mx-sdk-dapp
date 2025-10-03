@@ -55,11 +55,13 @@ export const failedTransactionsSessionsSelector = ({
       ({ status }) =>
         status &&
         [
-          `${TransactionServerStatusesEnum.fail}`,
+          TransactionServerStatusesEnum.fail,
           TransactionServerStatusesEnum.invalid,
           TransactionBatchStatusesEnum.cancelled,
           TransactionBatchStatusesEnum.timedOut
-        ].includes(status)
+        ]
+          .map((el) => String(el))
+          .includes(status)
     );
     if (hasFailedTransactions && data.status === 'sent') {
       failedSessions[sessionId] = data;
@@ -117,11 +119,13 @@ export const failedTransactionsSelector = ({
       if (
         transaction.status &&
         [
-          `${TransactionServerStatusesEnum.fail}`,
-          `${TransactionServerStatusesEnum.invalid}`,
-          `${TransactionBatchStatusesEnum.cancelled}`,
-          `${TransactionBatchStatusesEnum.timedOut}`
-        ].includes(transaction.status)
+          TransactionServerStatusesEnum.fail,
+          TransactionServerStatusesEnum.invalid,
+          TransactionBatchStatusesEnum.cancelled,
+          TransactionBatchStatusesEnum.timedOut
+        ]
+          .map((el) => String(el))
+          .includes(transaction.status)
       ) {
         failedTransactions.push(transaction);
       }
