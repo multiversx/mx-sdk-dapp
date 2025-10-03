@@ -150,8 +150,6 @@ export class ToastManager {
     const store = this.store.getState();
     const { toasts: toastList } = store;
 
-    console.log('store', store);
-
     const { pendingTransactionToasts, completedTransactionToasts } =
       await createToastsFromTransactions({
         skipFetchingTransactions: props?.skipFetchingTransactions,
