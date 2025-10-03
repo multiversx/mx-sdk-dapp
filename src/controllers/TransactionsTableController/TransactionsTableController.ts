@@ -39,10 +39,6 @@ export class TransactionsTableController {
       })
     );
 
-    const getExplorerUrl = (relativePath?: string) => (
-      getExplorerLink({ explorerAddress, to: relativePath ?? '' })
-    );
-
     const transactionRows = await Promise.all(
       interpretedTransactions.map(async (transaction) => {
         const receiverName = transaction.receiverAssets?.name.replace(
@@ -94,8 +90,10 @@ export class TransactionsTableController {
             tokenValueData?.token.collection ?? nftValueData?.token.collection,
           egldLabel: egldValueData ? egldLabel : '',
           link:
-            getExplorerUrl(tokenValueData?.tokenExplorerLink ??
-              nftValueData?.tokenExplorerLink),
+            getExplorerLink({
+              explorerAddress, to: tokenValueData?.tokenExplorerLink ??
+                nftValueData?.tokenExplorerLink ?? ''
+            }),
           linkText:
             tokenValueData?.tokenLinkText ?? nftValueData?.tokenLinkText,
           name: tokenValueData?.token.name ?? nftValueData?.token.name,
