@@ -16,7 +16,6 @@ export interface AccountType {
   code?: string;
   username?: string;
   shard?: number;
-  timestamp?: number;
   ownerAddress?: string;
   developerReward?: string;
   deployedAt?: number;
