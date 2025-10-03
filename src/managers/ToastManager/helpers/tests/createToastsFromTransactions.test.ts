@@ -126,8 +126,8 @@ describe('createToastsFromTransactions', () => {
           },
           processedTransactionsStatus: '0 / 1 transactions processed',
           transactionProgressState: {
-            endTime: 1753995601000,
-            startTime: 1753995600000
+            endTime: fixedNow + 1000,
+            startTime: fixedNow
           },
           toastId: SESSION_IDS.PENDING,
           transactions: [
@@ -149,8 +149,8 @@ describe('createToastsFromTransactions', () => {
           },
           processedTransactionsStatus: '0 / 2 transactions processed',
           transactionProgressState: {
-            endTime: 1753995601000,
-            startTime: 1753995600000
+            endTime: fixedNow + 1000,
+            startTime: fixedNow
           },
           toastId: SESSION_IDS.SUCCESS,
           transactions: [
