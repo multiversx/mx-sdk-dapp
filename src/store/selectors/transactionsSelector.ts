@@ -81,9 +81,11 @@ export const pendingTransactionsSelector = ({
       if (
         transaction.status &&
         [
-          `${TransactionServerStatusesEnum.pending}`,
+          TransactionServerStatusesEnum.pending,
           TransactionBatchStatusesEnum.sent
-        ].includes(transaction.status)
+        ]
+          .map((el) => String(el))
+          .includes(transaction.status)
       ) {
         pendingTransactions.push(transaction);
       }
