@@ -5,7 +5,6 @@ import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { createToastsFromTransactions } from '../createToastsFromTransactions';
-import { createTransactionToast } from '../createTransactionToast';
 import { mockTransaction, mockTransactionSession } from './mocks/transactions';
 
 const successTransactionHash =
@@ -22,6 +21,14 @@ const createMockToast = (toastId: string, fixedNow: number) => {
   };
 };
 
+const getSessionIds = (fixedNow: number) =>
+  ({
+    PENDING: fixedNow.toString(), // August 1, 2025 midnight
+    SUCCESS: (fixedNow + 1 * 60 * 1000).toString(), // 1 minute later
+    EXISTING: (fixedNow + 2 * 60 * 1000).toString(), // 2 minutes later
+    MISSING: (fixedNow + 3 * 60 * 1000).toString() // 3 minutes later
+  }) as const;
+
 const createMockSession = (
   status: TransactionServerStatusesEnum,
   transactionHash: string
@@ -35,6 +42,8 @@ describe('createToastsFromTransactions', () => {
   const fixedNowDate = new Date('2025-08-01T00:00:00'); // fixed date at August 1, 2025
   const fixedNow = fixedNowDate.getTime();
 
+  const SESSION_IDS = getSessionIds(fixedNow);
+
   beforeEach(() => {
     // mock Date.now()
     jest.spyOn(Date, 'now').mockReturnValue(fixedNow);
@@ -43,13 +52,6 @@ describe('createToastsFromTransactions', () => {
   afterEach(() => {
     jest.spyOn(Date, 'now').mockRestore();
   });
-
-  const SESSION_IDS = {
-    PENDING: fixedNow.toString(), // August 1, 2025 midnight
-    SUCCESS: (fixedNow + 1 * 60 * 1000).toString(), // 1 minute later
-    EXISTING: (fixedNow + 2 * 60 * 1000).toString(), // 2 minutes later
-    MISSING: (fixedNow + 3 * 60 * 1000).toString() // 3 minutes later
-  } as const;
 
   // const mockAccount: AccountSliceType = {
   //   address: testAddress,
@@ -193,19 +195,6 @@ describe('createToastsFromTransactions', () => {
       ]
     });
   });
-
-  // it('should safely handle transactions with missing session data without creating toasts', async () => {
-  // const toastList = {
-  //   transactionToasts: [createMockToast(TOAST_IDS.MISSING)],
-  //   customToasts: []
-  // };
-
-  //   const result = await createToastsFromTransactions({});
-
-  //   expect(result.pendingTransactionToasts).toHaveLength(0);
-  //   expect(result.completedTransactionToasts).toHaveLength(0);
-  //   expect(createTransactionToast).not.toHaveBeenCalled();
-  // });
 });
 
 describe('createToastsFromTransactions existing completed transactions', () => {
@@ -258,11 +247,37 @@ describe('createToastsFromTransactions existing completed transactions', () => {
       transactions: transactionsSessions
     };
 
+    const { createTransactionToast } = require('../createTransactionToast');
+
     const result = await createToastsFromTransactions({
-      store
+      store,
+      skipFetchingTransactions: true
     });
 
     expect(result.completedTransactionToasts).toHaveLength(1);
+    expect(createTransactionToast).not.toHaveBeenCalled();
+  });
+
+  it('should safely handle transactions with missing session data without creating toasts', async () => {
+    const { createTransactionToast } = require('../createTransactionToast');
+    const fixedNow = new Date('2025-08-01T00:00:00').getTime();
+    const SESSION_IDS = getSessionIds(fixedNow);
+
+    const toastList = {
+      transactionToasts: [createMockToast(SESSION_IDS.MISSING, fixedNow)],
+      customToasts: []
+    };
+
+    const store: StoreType = {
+      ...mockStore,
+      toasts: toastList,
+      transactions: {}
+    };
+
+    const result = await createToastsFromTransactions({ store });
+
+    expect(result.pendingTransactionToasts).toHaveLength(0);
+    expect(result.completedTransactionToasts).toHaveLength(0);
     expect(createTransactionToast).not.toHaveBeenCalled();
   });
 });
