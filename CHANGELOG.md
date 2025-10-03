@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1605)] - 2025-10-03
+
+- [Fixed clearing cross-window initiated logins](https://github.com/multiversx/mx-sdk-dapp/pull/1606)
+- [Fixed explorer links not working in transactions table](https://github.com/multiversx/mx-sdk-dapp/pull/1604)
+
 ## [[5.2.3](https://github.com/multiversx/mx-sdk-dapp/pull/1601)] - 2025-09-29
 
 - [Fixed reading from state with immer current](https://github.com/multiversx/mx-sdk-dapp/pull/1600)
