@@ -4,7 +4,7 @@ import {
   egldLabelSelector,
   explorerAddressSelector
 } from 'store/selectors/networkSelectors';
-import { getStore } from 'store/store';
+import { getState } from 'store/store';
 import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
@@ -26,7 +26,7 @@ interface IMapTransactionToListItemParamsType {
 export const mapTransactionToListItem = ({
   transaction,
   isPending = false,
-  store = getStore().getState()
+  store = getState()
 }: IMapTransactionToListItemParamsType): ITransactionListItem => {
   const { receiver, receiverAssets } = getReceiverData(transaction);
   const address = addressSelector(store);

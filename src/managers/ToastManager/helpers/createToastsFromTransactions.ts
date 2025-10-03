@@ -7,7 +7,7 @@ import {
 import { addressSelector } from 'store/selectors/accountSelectors';
 import { toastsSliceSelector } from 'store/selectors/toastsSelectors';
 import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
-import { getStore } from 'store/store';
+import { getState } from 'store/store';
 import { StoreType } from 'store/store.types';
 import { mapServerTransactionsToListItems } from 'utils/transactions/getTransactionsHistory/helpers';
 import { createTransactionToast } from './createTransactionToast';
@@ -26,7 +26,7 @@ interface CreateToastsFromTransactionsParamsType {
 export const createToastsFromTransactions = async ({
   existingCompletedTransactions = [],
   skipFetchingTransactions = false,
-  store = getStore().getState()
+  store = getState()
 }: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> => {
   const pendingTransactionToasts: ITransactionToast[] = [];
   const completedTransactionToasts: ITransactionToast[] = [
