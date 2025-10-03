@@ -211,21 +211,6 @@ describe('createToastsFromTransactions existing completed transactions', () => {
   });
 
   it('should preserve existing completed transactions and not create duplicates when same transaction is processed again', async () => {
-    // const existingCompleted: ITransactionToast[] = [
-    //   {
-    //     toastId: SESSION_IDS.EXISTING,
-    //     processedTransactionsStatus: TransactionServerStatusesEnum.success,
-    //     transactions: [],
-    //     toastDataState: {
-    //       id: SESSION_IDS.EXISTING,
-    //       icon: 'check',
-    //       hasCloseButton: true,
-    //       title: 'Transaction successful',
-    //       iconClassName: TransactionServerStatusesEnum.success
-    //     }
-    //   }
-    // ];
-
     const EXISTING_SESSION_ID = 'existing-session-id';
     const fixedNow = new Date('2025-08-01T00:00:00').getTime();
 

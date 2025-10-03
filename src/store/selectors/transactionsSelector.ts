@@ -35,7 +35,7 @@ export const successfulTransactionsSessionsSelector = ({
 
   Object.entries(state).forEach(([sessionId, data]) => {
     const hasSuccessfulTransactions = data.transactions.some(
-      ({ status }) => status === `${TransactionServerStatusesEnum.success}`
+      ({ status }) => status === TransactionServerStatusesEnum.success
     );
     if (hasSuccessfulTransactions && data.status === 'sent') {
       successfulSessions[sessionId] = data;

@@ -1,7 +1,12 @@
 import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { saveToCache } from 'store/actions/cache/cacheActions';
-import { apiAddressSelector } from 'store/selectors/networkSelectors';
+import { addressSelector } from 'store/selectors/accountSelectors';
+import {
+  apiAddressSelector,
+  egldLabelSelector,
+  explorerAddressSelector
+} from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { StoreType } from 'store/store.types';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
@@ -98,7 +103,10 @@ export const mapServerTransactionsToListItems = async ({
 
   newTransactions.forEach((transaction) => {
     const transactionListItem = mapTransactionToListItem({
-      transaction
+      transaction,
+      address: addressSelector(store),
+      explorerAddress: explorerAddressSelector(store),
+      egldLabel: egldLabelSelector(store)
     });
 
     if (transactionListItem.status !== TransactionServerStatusesEnum.pending) {

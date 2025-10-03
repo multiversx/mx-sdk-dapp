@@ -8,7 +8,7 @@ jest.mock('store/actions/transactions/transactionStateByStatus', () => ({
   isServerTransactionPending: jest.fn()
 }));
 
-describe('getToastProceededStatus', () => {
+describe('getToastTransactionsStatus', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

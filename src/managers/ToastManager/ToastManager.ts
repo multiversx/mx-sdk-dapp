@@ -1,5 +1,5 @@
 import isEqual from 'lodash.isequal';
-import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
+import { DEFAULT_TOAST_LIFETIME } from 'constants/transactions.constants';
 import {
   customToastCloseHandlersDictionary,
   customToastComponentDictionary,
@@ -52,7 +52,7 @@ export class ToastManager {
   }
 
   public async init({
-    successfulToastLifetime = DEFAULT_TOAST_LIEFTIME
+    successfulToastLifetime = DEFAULT_TOAST_LIFETIME
   }: IToastManager = {}) {
     this.successfulToastLifetime = successfulToastLifetime;
 
@@ -138,9 +138,9 @@ export class ToastManager {
     return newToastId;
   }
 
-  public createCustomToast(toast: CustomToastType): string {
+  public async createCustomToast(toast: CustomToastType): Promise<string> {
     const toastId = createCustomToast(toast);
-    this.updateCustomToastList();
+    await this.updateCustomToastList();
     return toastId;
   }
 

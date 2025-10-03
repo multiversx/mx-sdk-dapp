@@ -62,7 +62,7 @@ export async function getCommonData({
   const currentTransaction = allTransactions[currentScreenIndex];
   const sender = currentTransaction?.transaction?.sender.toString();
   const transaction = currentTransaction?.transaction;
-  const plainTransaction = transaction.toPlainObject();
+  const plainTransaction = transaction?.toPlainObject();
 
   let tokenTransaction: {
     identifier?: string;

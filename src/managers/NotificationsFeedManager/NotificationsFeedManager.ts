@@ -30,11 +30,9 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     historicTransactions: []
   };
 
-  public static getInstance(
-    store?: ReturnType<typeof getStore>
-  ): NotificationsFeedManager {
+  public static getInstance(): NotificationsFeedManager {
     if (!NotificationsFeedManager.instance) {
-      NotificationsFeedManager.instance = new NotificationsFeedManager(store);
+      NotificationsFeedManager.instance = new NotificationsFeedManager();
     }
     return NotificationsFeedManager.instance;
   }

@@ -7,11 +7,11 @@ import { ServerTransactionType } from 'types/serverTransactions.types';
 export const getServerTransactionsByHashes = async (
   hashes: string[],
   options = {
-    apiAddress: apiAddressSelector(getState())
+    apiAddress: ''
   }
 ): Promise<ServerTransactionType[]> => {
   const { data } = await axios.get<ServerTransactionType[]>(
-    `${options.apiAddress}/${TRANSACTIONS_ENDPOINT}`,
+    `${options.apiAddress || apiAddressSelector(getState())}/${TRANSACTIONS_ENDPOINT}`,
     {
       params: {
         hashes: hashes.join(','),

@@ -80,15 +80,15 @@ export function isBatchTransactionPending(status?: string) {
   return status != null && pendingBatchTransactionsStates.includes(status);
 }
 
-export function isBatchTransactionSuccessful(status: string) {
+export function isBatchTransactionSuccessful(status?: string) {
   return status != null && successBatchTransactionsStates.includes(status);
 }
 
-export function isBatchTransactionFailed(status: string) {
+export function isBatchTransactionFailed(status?: string) {
   return status != null && failBatchTransactionsStates.includes(status);
 }
 
-export function isBatchTransactionInvalid(status: string) {
+export function isBatchTransactionInvalid(status?: string) {
   return status != null && invalidBatchTransactionsStates.includes(status);
 }
 
@@ -99,14 +99,14 @@ export function isBatchTransactionTimedOut(status?: string) {
 export function isServerTransactionPending(status?: string) {
   return status != null && pendingServerTransactionsStatuses.includes(status);
 }
-export function isServerTransactionSuccessful(status: string) {
+export function isServerTransactionSuccessful(status?: string) {
   return status != null && successServerTransactionsStates.includes(status);
 }
 
-export function isServerTransactionFailed(status: string) {
+export function isServerTransactionFailed(status?: string) {
   return status != null && failServerTransactionsStates.includes(status);
 }
 
-export function isServerTransactionNotExecuted(status: string) {
+export function isServerTransactionNotExecuted(status?: string) {
   return status != null && notExecutedServerTransactionsStates.includes(status);
 }

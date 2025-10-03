@@ -32,11 +32,11 @@ export const mockTransactionSession = {
   status: TransactionServerStatusesEnum.success,
   transactionsDisplayInfo: {
     processingMessage: 'Processing Self transaction',
-    errorMessage: 'An error has occured during Self',
+    errorMessage: 'An error has occurred during Self',
     successMessage: 'Self transaction successful'
   },
   interpretedTransactions: {},
-  errorMessage: 'An error has occured during Self'
+  errorMessage: 'An error has occurred during Self'
 };
 
 export const mockTransactionSlice: Record<string, SessionTransactionType> = {
