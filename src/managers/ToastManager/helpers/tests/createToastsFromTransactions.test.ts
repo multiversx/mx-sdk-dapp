@@ -131,9 +131,9 @@ describe('createToastsFromTransactions', () => {
     const commonData = {
       asset: { icon: 'faHourglass' },
       interactor: testAddress,
-      directionLabel: 'To',
-      action: { name: 'Self Sent ', description: undefined },
-      amount: '0 ',
+      directionLabel: 'From',
+      action: { name: 'Received xEGLD', description: undefined },
+      amount: '0 xEGLD',
       hash: mockTransaction.hash,
       status: 'pending',
       timestamp: undefined,
@@ -159,7 +159,7 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData,
-              link: `/transactions/${mockTransaction.hash}`
+              link: `${testNetwork.explorerAddress}/transactions/${mockTransaction.hash}`
             }
           ]
         }
@@ -182,13 +182,13 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData, // status is still pending because the toasts were not shown yet
-              link: `/transactions/${mockTransaction.hash}`
+              link: `${testNetwork.explorerAddress}/transactions/${mockTransaction.hash}`
             },
             {
               ...commonData, // see next test for the status change
               hash: successTransactionHash,
               timestamp: fixedNow,
-              link: `/transactions/${successTransactionHash}`
+              link: `${testNetwork.explorerAddress}/transactions/${successTransactionHash}`
             }
           ]
         }
