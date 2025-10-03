@@ -1,15 +1,14 @@
-import { getEgldLabel } from 'methods/network/getEgldLabel';
-import { getExplorerAddress } from 'methods/network/getExplorerAddress';
 import {
   getIsTransactionFailed,
   getIsTransactionPending,
   getIsTransactionSuccessful,
   getIsTransactionTimedOut
 } from 'store/actions/transactions/transactionStateByStatus';
-import { AccountSliceType } from 'store/slices/account/account.types';
-import { ToastsSliceType } from 'store/slices/toast/toastSlice.types';
-import { TransactionServerStatusesEnum } from 'types/enums.types';
-import { SessionTransactionType } from 'types/transactions.types';
+import { addressSelector } from 'store/selectors/accountSelectors';
+import { toastsSliceSelector } from 'store/selectors/toastsSelectors';
+import { transactionsSliceSelector } from 'store/selectors/transactionsSelector';
+import { getState } from 'store/store';
+import { StoreType } from 'store/store.types';
 import { mapServerTransactionsToListItems } from 'utils/transactions/getTransactionsHistory/helpers';
 import { createTransactionToast } from './createTransactionToast';
 import { ITransactionToast } from '../types/toast.types';
@@ -19,26 +18,23 @@ interface CreateToastsFromTransactionsReturnType {
 }
 
 interface CreateToastsFromTransactionsParamsType {
-  toastList: ToastsSliceType;
-  transactionsSessions: Record<string, SessionTransactionType>;
-  account: AccountSliceType;
   existingCompletedTransactions?: ITransactionToast[];
   skipFetchingTransactions?: boolean;
+  store?: StoreType;
 }
 
 export const createToastsFromTransactions = async ({
-  toastList,
-  transactionsSessions,
-  account,
   existingCompletedTransactions = [],
-  skipFetchingTransactions = false
+  skipFetchingTransactions = false,
+  store = getState()
 }: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> => {
   const pendingTransactionToasts: ITransactionToast[] = [];
   const completedTransactionToasts: ITransactionToast[] = [
     ...existingCompletedTransactions
   ];
-  const explorerAddress = getExplorerAddress();
-  const egldLabel = getEgldLabel();
+  const toastList = toastsSliceSelector(store);
+  const transactionsSessions = transactionsSliceSelector(store);
+  const address = addressSelector(store);
 
   for (const toast of toastList.transactionToasts) {
     const transactionSession = transactionsSessions[toast.toastId];
@@ -51,10 +47,8 @@ export const createToastsFromTransactions = async ({
 
     const interprettedTransactions = await mapServerTransactionsToListItems({
       transactions,
-      address: account.address,
-      explorerAddress,
-      egldLabel,
-      skipFetchingTransactions
+      skipFetchingTransactions,
+      store
     });
 
     const isTimedOut = getIsTransactionTimedOut(status);
@@ -73,11 +67,10 @@ export const createToastsFromTransactions = async ({
 
     const transactionToast = createTransactionToast({
       toastId: toast.toastId,
-      address: account.address,
-      status: status as TransactionServerStatusesEnum,
+      address,
+      status,
       transactions: interprettedTransactions,
       transactionsDisplayInfo,
-      explorerAddress,
       startTime,
       endTime
     });

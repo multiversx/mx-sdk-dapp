@@ -243,7 +243,9 @@ export interface ServerTransactionType {
   sender: string;
   senderShard: number;
   signature: string;
-  status: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
+  status:
+    | `${TransactionServerStatusesEnum}`
+    | `${TransactionBatchStatusesEnum}`;
   inTransit?: boolean;
   timestamp: number;
   value: string;

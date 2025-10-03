@@ -59,7 +59,9 @@ export const failedTransactionsSessionsSelector = ({
           TransactionServerStatusesEnum.invalid,
           TransactionBatchStatusesEnum.cancelled,
           TransactionBatchStatusesEnum.timedOut
-        ].includes(status)
+        ]
+          .map((el) => String(el))
+          .includes(status)
     );
     if (hasFailedTransactions && data.status === 'sent') {
       failedSessions[sessionId] = data;
@@ -81,7 +83,9 @@ export const pendingTransactionsSelector = ({
         [
           TransactionServerStatusesEnum.pending,
           TransactionBatchStatusesEnum.sent
-        ].includes(transaction.status)
+        ]
+          .map((el) => String(el))
+          .includes(transaction.status)
       ) {
         pendingTransactions.push(transaction);
       }
@@ -121,7 +125,9 @@ export const failedTransactionsSelector = ({
           TransactionServerStatusesEnum.invalid,
           TransactionBatchStatusesEnum.cancelled,
           TransactionBatchStatusesEnum.timedOut
-        ].includes(transaction.status)
+        ]
+          .map((el) => String(el))
+          .includes(transaction.status)
       ) {
         failedTransactions.push(transaction);
       }

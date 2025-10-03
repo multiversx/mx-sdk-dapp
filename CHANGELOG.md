@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Refactor ToastManager and simplify state usage](https://github.com/multiversx/mx-sdk-dapp/pull/1603)
+
 ## [[5.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1605)] - 2025-10-03
 
 - [Fixed clearing cross-window initiated logins](https://github.com/multiversx/mx-sdk-dapp/pull/1606)

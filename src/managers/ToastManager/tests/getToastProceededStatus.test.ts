@@ -6,7 +6,7 @@ import { getToastTransactionsStatus } from '../helpers/getToastTransactionsStatu
 
 jest.mock('store/actions/transactions/transactionStateByStatus');
 
-describe('getToastProceededStatus', () => {
+describe('getToastTransactionsStatus', () => {
   const baseTransaction: ITransactionListItem = {
     status: TransactionServerStatusesEnum.success,
     asset: null,

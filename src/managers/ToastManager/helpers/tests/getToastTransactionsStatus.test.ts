@@ -3,11 +3,12 @@ import { isServerTransactionPending } from 'store/actions/transactions/transacti
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { getToastTransactionsStatus } from '../getToastTransactionsStatus';
 import { baseTransactionMock } from './baseTransactionMock';
+
 jest.mock('store/actions/transactions/transactionStateByStatus', () => ({
   isServerTransactionPending: jest.fn()
 }));
 
-describe('getToastProceededStatus', () => {
+describe('getToastTransactionsStatus', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

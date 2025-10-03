@@ -54,9 +54,8 @@ export const updateSessionStatus = ({
       if (!state[sessionId]) {
         return;
       }
-      const transactionsDisplayInfo = current(
-        state[sessionId]
-      ).transactionsDisplayInfo;
+      const transactionsDisplayInfo =
+        current(state[sessionId]).transactionsDisplayInfo ?? {};
 
       const newErrorMessage =
         errorMessage || transactionsDisplayInfo?.errorMessage;

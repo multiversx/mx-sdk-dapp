@@ -1,8 +1,6 @@
 import { ITransactionListItem } from 'lib/sdkDappUi';
-import {
-  TransactionBatchStatusesEnum,
-  TransactionServerStatusesEnum
-} from 'types/enums.types';
+
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TransactionsDisplayInfoType } from 'types/transactions.types';
 
 export enum TransactionsDefaultTitles {
@@ -17,7 +15,7 @@ export enum TransactionsDefaultTitles {
 export interface GetToastsOptionsDataPropsType {
   address: string;
   sender: string;
-  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
+  status?: ServerTransactionType['status'];
   toastId: string;
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
   txActionName?: string;
