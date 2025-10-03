@@ -31,8 +31,7 @@ export class ToastUICoordinator {
     this.onCloseToast = props.onCloseToast;
     this.store = props.store || getStore();
     this.notificationsFeedManager =
-      props.notificationsFeedManager ||
-      NotificationsFeedManager.getInstance(this.store);
+      props.notificationsFeedManager || NotificationsFeedManager.getInstance();
   }
 
   public async init() {
