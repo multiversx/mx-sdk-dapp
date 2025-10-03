@@ -53,32 +53,6 @@ describe('createToastsFromTransactions', () => {
     jest.spyOn(Date, 'now').mockRestore();
   });
 
-  // const mockAccount: AccountSliceType = {
-  //   address: testAddress,
-  //   accounts: {},
-  //   publicKey: '',
-  //   ledgerAccount: null,
-  //   walletConnectAccount: null,
-  //   websocketEvent: null,
-  //   websocketBatchEvent: null
-  // };
-
-  // const defaultData = {
-  //   transactionsSessions: {},
-  //   account: mockAccount,
-  //   egldLabel: 'EGLD',
-  //   explorerAddress: 'https://explorer.multiversx.com'
-  // };
-
-  // const mockDisplayInfo: TransactionsDisplayInfoType = {
-  //   processingMessage: 'Processing',
-  //   successMessage: 'Success',
-  //   errorMessage: 'Error',
-  //   receivedMessage: 'Received',
-  //   timedOutMessage: 'Timed Out',
-  //   invalidMessage: 'Invalid'
-  // };
-
   const mockTransactionsEndpoint = (
     hashes: string[],
     mockData: Array<typeof mockTransaction>
