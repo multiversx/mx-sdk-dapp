@@ -1,3 +1,4 @@
+import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
 import {
@@ -113,11 +114,15 @@ export class ProviderFactory {
     const dappProvider = new DappProvider(createdProvider);
     setAccountProvider(dappProvider);
 
-    const shouldClearInitiatedLogins = ProviderTypeEnum.crossWindow === type;
+    const shouldClearInitiatedLogins =
+      'provider' in createdProvider &&
+      createdProvider.provider instanceof CrossWindowProvider;
 
     // Clear initiated logins and skip the login method if it's crossWindow or metamask
     clearInitiatedLogins(
-      shouldClearInitiatedLogins ? { skipLoginMethod: type } : null
+      shouldClearInitiatedLogins
+        ? { skipLoginMethod: ProviderTypeEnum.crossWindow }
+        : null
     );
 
     return dappProvider;
