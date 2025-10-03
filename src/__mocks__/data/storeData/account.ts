@@ -13,7 +13,6 @@ export const account: AccountSliceType = {
       address: testAddress,
       balance: '18998263560000000000',
       nonce: 18,
-      timestamp: 0,
       shard: 0,
       developerReward: '0',
       isGuarded: false,
