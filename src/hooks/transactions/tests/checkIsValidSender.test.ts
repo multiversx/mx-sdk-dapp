@@ -1,6 +1,13 @@
 import { checkIsValidSender } from '../helpers/checkIsValidSender';
 
 describe('checkIsValidSender tests', () => {
+  beforeEach(() => {
+    Object.defineProperty(window, 'location', {
+      value: { origin: 'https://test.com' },
+      writable: true
+    });
+  });
+
   test('should return true if senderAccount is null', () => {
     expect(
       checkIsValidSender(
@@ -51,39 +58,51 @@ describe('checkIsValidSender tests', () => {
     ).toBe(false);
   });
 
-  describe('originWhiteList functionality', () => {
+  describe('wallet.multiversx.com origin functionality', () => {
     const mockAccount = {
       address: 'erd1l5xzvt9qwykn900jyxx7rueywy8nwm5sppeh4de4qukucacr2e6s2n5pk5',
       activeGuardianAddress:
         'erd1pu4ru4qu8jt2qmk8vh9xdp8wj234t3mhfwp4zu2fmkmvg8j4hqfqqzw7ud'
     };
 
-    test('should return true if originWhiteList ends with multiversx.com', () => {
+    test('should return true if origin ends with wallet.multiversx.com', () => {
+      Object.defineProperty(window, 'location', {
+        value: { origin: 'https://wallet.multiversx.com' },
+        writable: true
+      });
+
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          'https://app.multiversx.com'
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(true);
     });
 
     test('should return true if originWhiteList is exactly multiversx.com', () => {
+      Object.defineProperty(window, 'location', {
+        value: { origin: 'https://wallet.multiversx.com' },
+        writable: true
+      });
+
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          'multiversx.com'
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(true);
     });
 
     test('should return true if originWhiteList ends with multiversx.com with subdomain', () => {
+      Object.defineProperty(window, 'location', {
+        value: { origin: 'https://wallet.multiversx.com' },
+        writable: true
+      });
+
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          'test.multiversx.com'
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(true);
     });
@@ -92,8 +111,7 @@ describe('checkIsValidSender tests', () => {
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          'malicious.com'
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(false);
     });
@@ -102,8 +120,7 @@ describe('checkIsValidSender tests', () => {
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          'multiversx.com.malicious.com'
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(false);
     });
@@ -112,8 +129,7 @@ describe('checkIsValidSender tests', () => {
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          ''
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(false);
     });
@@ -122,16 +138,14 @@ describe('checkIsValidSender tests', () => {
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1l5xzvt9qwykn900jyxx7rueywy8nwm5sppeh4de4qukucacr2e6s2n5pk5',
-          'malicious.com'
+          'erd1l5xzvt9qwykn900jyxx7rueywy8nwm5sppeh4de4qukucacr2e6s2n5pk5'
         )
       ).toBe(true);
 
       expect(
         checkIsValidSender(
           mockAccount,
-          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv',
-          'malicious.com'
+          'erd1axhx4kenjlae6sknq7zjg2g4fvzavv979r2fg425p62wkl84avtqsf7vvv'
         )
       ).toBe(false);
     });
