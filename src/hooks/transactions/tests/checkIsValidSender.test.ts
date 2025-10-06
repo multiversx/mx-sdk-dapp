@@ -8,6 +8,10 @@ describe('checkIsValidSender tests', () => {
     });
   });
 
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
+
   test('should return true if senderAccount is null', () => {
     expect(
       checkIsValidSender(
