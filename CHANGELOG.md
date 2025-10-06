@@ -7,9 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[v4.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/1601)] - 2025-10-06
+## [[v4.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/1607)] - 2025-10-06
 
-- [Added ability to bypass sender validation for specific origins in `checkIsValidSender`](https://github.com/multiversx/mx-sdk-dapp/pull/1601)
+- [Added ability to bypass sender validation for specific origins in `checkIsValidSender`](https://github.com/multiversx/mx-sdk-dapp/pull/1607)
 
 ## [[v4.3.4](https://github.com/multiversx/mx-sdk-dapp/pull/1600)] - 2025-09-27
 
