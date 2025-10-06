@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [[5.2.4](https://github.com/multiversx/mx-sdk-dapp/pull/1606)] - 2025-10-06
+## [[5.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1606)] - 2025-10-06
 
 - [Update `iframeWalletAddress` in `network.constants`](https://github.com/multiversx/mx-sdk-dapp/pull/1606)
 
