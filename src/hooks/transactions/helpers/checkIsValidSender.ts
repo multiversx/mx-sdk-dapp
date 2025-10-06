@@ -1,3 +1,4 @@
+import { safeWindow } from 'lib/sdkDappUtils';
 import { AccountType } from 'types/account.types';
 
 // Don't allow signing if the logged in account's address
@@ -7,6 +8,11 @@ export const checkIsValidSender = (
   address: string | string[]
 ) => {
   if (!senderAccount) {
+    return true;
+  }
+
+  // Allow sender to be different than the logged in address if the origin is multiversx.com
+  if (safeWindow?.location?.origin?.endsWith('wallet.multiversx.com')) {
     return true;
   }
 
