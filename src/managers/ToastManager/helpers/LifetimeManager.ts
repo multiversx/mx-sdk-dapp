@@ -19,7 +19,7 @@ export class LifetimeManager {
 
   public init({ successfulToastLifetime }: IToastProgressManagerParams) {
     this.successfulToastLifetime =
-      successfulToastLifetime || DEFAULT_SUCCESSFUL_TOAST_LIFETIME;
+      successfulToastLifetime ?? DEFAULT_SUCCESSFUL_TOAST_LIFETIME;
   }
 
   public start = (toastId: string) => {

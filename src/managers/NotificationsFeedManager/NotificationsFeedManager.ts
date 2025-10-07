@@ -23,7 +23,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   NotificationsFeedEventsEnum | typeof NOTIFICATIONS_FEED_STORE_SUBSCRIBE
 > {
   private static instance: NotificationsFeedManager;
-  private readonly store = getStore();
+  private readonly store: ReturnType<typeof getStore>;
 
   protected initialData: INotificationsFeedManagerData = {
     pendingTransactions: [],
@@ -37,11 +37,12 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
     return NotificationsFeedManager.instance;
   }
 
-  constructor() {
+  constructor(store?: ReturnType<typeof getStore>) {
     super({
       uiDataUpdateEvent: NotificationsFeedEventsEnum.OPEN,
       uiTag: UITagsEnum.NOTIFICATIONS_FEED
     });
+    this.store = store || getStore();
     this.data = { ...this.initialData };
   }
 
@@ -105,22 +106,15 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   }
 
   protected async updateDataAndNotifications() {
-    const { transactions, account, toasts, network } = this.store.getState();
+    const { transactions } = this.store.getState();
 
-    const { pendingTransactionToasts } = await createToastsFromTransactions({
-      toastList: toasts,
-      transactionsSessions: transactions,
-      account
-    });
+    const { pendingTransactionToasts } = await createToastsFromTransactions({});
 
     this.data.pendingTransactions = pendingTransactionToasts;
 
     this.data.historicTransactions =
       await TransactionsHistoryController.getTransactionsHistory({
-        transactionsSessions: transactions,
-        address: account.address,
-        explorerAddress: network.network.explorerAddress,
-        egldLabel: network.network.egldLabel
+        transactionsSessions: transactions
       });
 
     await this.updateNotificationsFeed();

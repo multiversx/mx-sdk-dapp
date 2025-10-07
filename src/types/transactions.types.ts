@@ -1,15 +1,11 @@
 import { IPlainTransactionObject, Transaction } from 'lib/sdkCore';
 import type { ITransactionListItem } from 'lib/sdkDappUi';
-import {
-  TransactionBatchStatusesEnum,
-  TransactionServerStatusesEnum,
-  TransactionTypesEnum
-} from 'types/enums.types';
-import { ResultType } from './serverTransactions.types';
+import { TransactionTypesEnum } from 'types/enums.types';
+import { ResultType, ServerTransactionType } from './serverTransactions.types';
 
 export interface SignedTransactionType extends IPlainTransactionObject {
   hash: string;
-  status?: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
+  status?: ServerTransactionType['status'];
   inTransit?: boolean;
 }
 
@@ -116,7 +112,7 @@ export interface TransactionsDisplayInfoType {
 
 export type SessionTransactionType = {
   transactions: SignedTransactionType[];
-  status?: TransactionBatchStatusesEnum | TransactionServerStatusesEnum;
+  status?: ServerTransactionType['status'];
   errorMessage?: string;
   /**
    * Optional custom information to be displayed in the toast notification.

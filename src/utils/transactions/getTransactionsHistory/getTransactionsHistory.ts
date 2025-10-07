@@ -7,10 +7,7 @@ import {
 } from './helpers';
 
 export const getTransactionsHistory = async ({
-  transactionsSessions,
-  address,
-  explorerAddress,
-  egldLabel
+  transactionsSessions
 }: IGetHistoricalTransactionsParams): Promise<ITransactionListItem[]> => {
   if (isEmpty(transactionsSessions)) {
     return [];
@@ -20,9 +17,6 @@ export const getTransactionsHistory = async ({
     createTransactionsHistoryFromSessions(transactionsSessions);
 
   return mapServerTransactionsToListItems({
-    transactions: signedTransactions,
-    address,
-    explorerAddress,
-    egldLabel
+    transactions: signedTransactions
   });
 };

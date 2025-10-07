@@ -4,6 +4,7 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
+import { ServerTransactionType } from 'types/serverTransactions.types';
 import { TransactionsDisplayInfoType } from 'types/transactions.types';
 import { getToastDataStateByStatus } from './getToastDataStateByStatus';
 import { getToastTransactionsStatus } from './getToastTransactionsStatus';
@@ -11,10 +12,9 @@ import { ITransactionToast } from '../types/toast.types';
 interface CreateTransactionToastParamsType {
   toastId: string;
   address: string;
-  status: TransactionServerStatusesEnum | TransactionBatchStatusesEnum;
+  status: ServerTransactionType['status'];
   transactions: ITransactionListItem[];
   transactionsDisplayInfo?: TransactionsDisplayInfoType;
-  explorerAddress: string;
   startTime: number;
   endTime: number;
 }

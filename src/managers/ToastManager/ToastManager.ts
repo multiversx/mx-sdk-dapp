@@ -1,8 +1,5 @@
 import isEqual from 'lodash.isequal';
-import { DEFAULT_TOAST_LIEFTIME } from 'constants/transactions.constants';
-import { UITagsEnum } from 'constants/UITags.enum';
-import { MvxToastList } from 'lib/sdkDappUi';
-import { NotificationsFeedManager } from 'managers/NotificationsFeedManager/NotificationsFeedManager';
+import { DEFAULT_TOAST_LIFETIME } from 'constants/transactions.constants';
 import {
   customToastCloseHandlersDictionary,
   customToastComponentDictionary,
@@ -20,12 +17,10 @@ import {
 
 import { CustomToastType } from 'store/slices/toast/toastSlice.types';
 import { getStore } from 'store/store';
-import { IEventBus } from 'types/manager.types';
-import { ProviderErrorsEnum } from 'types/provider.types';
-import { ComponentFactory } from 'utils/ComponentFactory';
 import { createToastsFromTransactions } from './helpers/createToastsFromTransactions';
 import { LifetimeManager } from './helpers/LifetimeManager';
-import { ITransactionToast, ToastEventsEnum } from './types';
+import { ToastUICoordinator } from './ToastUICoordinator';
+import { ITransactionToast } from './types';
 
 interface IToastManager {
   successfulToastLifetime?: number;
@@ -33,30 +28,31 @@ interface IToastManager {
 
 export class ToastManager {
   private readonly lifetimeManager: LifetimeManager;
-  private isCreatingElement = false;
+  private store: ReturnType<typeof getStore>;
   private static instance: ToastManager;
-  private toastsElement: MvxToastList | null = null;
   private transactionToasts: ITransactionToast[] = [];
   private customToasts: CustomToastType[] = [];
   private successfulToastLifetime?: number;
-  private storeToastsSubscription: () => void = () => null;
-  private readonly notificationsFeedManager: NotificationsFeedManager;
-  private eventBusUnsubscribeFunctions: (() => void)[] = [];
-  private eventBus: IEventBus<
-    ITransactionToast[] | CustomToastType[] | null
-  > | null = null;
+  private unsubscribeFromStore: () => void = () => null;
+  private uiCoordinator: ToastUICoordinator | null = null;
 
-  store = getStore();
-
-  constructor() {
+  constructor(props?: {
+    store?: ReturnType<typeof getStore>;
+    lifetimeManager?: LifetimeManager;
+    uiCoordinator?: ToastUICoordinator;
+  }) {
     this.destroy();
-    this.lifetimeManager = new LifetimeManager();
-
-    this.notificationsFeedManager = NotificationsFeedManager.getInstance();
+    this.store = props?.store || getStore();
+    this.lifetimeManager = props?.lifetimeManager ?? new LifetimeManager();
+    this.uiCoordinator =
+      props?.uiCoordinator ??
+      new ToastUICoordinator({
+        onCloseToast: this.closeToast.bind(this)
+      });
   }
 
   public async init({
-    successfulToastLifetime = DEFAULT_TOAST_LIEFTIME
+    successfulToastLifetime = DEFAULT_TOAST_LIFETIME
   }: IToastManager = {}) {
     this.successfulToastLifetime = successfulToastLifetime;
 
@@ -65,9 +61,9 @@ export class ToastManager {
     await this.updateTransactionToastsList();
     await this.updateCustomToastList();
 
-    await this.subscribeToEventBusNotifications();
+    await this.uiCoordinator?.init();
 
-    this.storeToastsSubscription = this.store.subscribe(
+    this.unsubscribeFromStore = this.store.subscribe(
       async (
         { toasts, transactions },
         { toasts: prevToasts, transactions: prevTransactions }
@@ -142,27 +138,22 @@ export class ToastManager {
     return newToastId;
   }
 
-  public createCustomToast(toast: CustomToastType): string {
+  public async createCustomToast(toast: CustomToastType): Promise<string> {
     const toastId = createCustomToast(toast);
-    this.updateCustomToastList();
+    await this.updateCustomToastList();
     return toastId;
   }
 
   private async updateTransactionToastsList(props?: {
     skipFetchingTransactions?: boolean;
   }) {
-    const {
-      toasts: toastList,
-      transactions: transactionsSessions,
-      account
-    } = this.store.getState();
+    const store = this.store.getState();
+    const { toasts: toastList } = store;
 
     const { pendingTransactionToasts, completedTransactionToasts } =
       await createToastsFromTransactions({
-        toastList,
-        transactionsSessions,
-        account,
-        skipFetchingTransactions: props?.skipFetchingTransactions
+        skipFetchingTransactions: props?.skipFetchingTransactions,
+        store
       });
 
     this.transactionToasts = [
@@ -200,88 +191,31 @@ export class ToastManager {
         );
       }
     }
-    this.eventBus?.publish(
-      ToastEventsEnum.CUSTOM_TOAST_DATA_UPDATE,
-      this.customToasts
-    );
+    await this.uiCoordinator?.publishCustomToasts(this.customToasts);
   }
 
-  private async createToastListElement(): Promise<MvxToastList | null> {
-    if (this.toastsElement) {
-      return this.toastsElement;
-    }
-
-    if (!this.isCreatingElement) {
-      this.isCreatingElement = true;
-
-      this.toastsElement = await ComponentFactory.create<MvxToastList>({
-        name: UITagsEnum.TOAST_LIST
-      });
-
-      this.isCreatingElement = false;
-    }
-
-    return this.toastsElement;
-  }
-
-  private handleTransactionToastClose(toastId: string) {
+  private handleTransactionToastClose(toastId: string): boolean {
     const isCompleted = this.handleCompletedTransaction(toastId);
 
     if (isCompleted) {
       removeTransactionToast(toastId);
-    }
-  }
-
-  private async subscribeToEventBusNotifications() {
-    const toastsElement = await this.createToastListElement();
-
-    if (!toastsElement) {
-      return;
+      return true;
     }
 
-    this.eventBus = await toastsElement.getEventBus();
-    if (!this.eventBus) {
-      throw new Error(ProviderErrorsEnum.eventBusError);
-    }
-
-    this.eventBus.subscribe(ToastEventsEnum.CLOSE, this.closeToast.bind(this));
-
-    this.eventBusUnsubscribeFunctions.push(() => {
-      this.eventBus?.unsubscribe(
-        ToastEventsEnum.CLOSE,
-        this.closeToast.bind(this)
-      );
-    });
-
-    this.eventBus.subscribe(
-      ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
-      this.handleOpenNotificationsFeed.bind(this)
-    );
-
-    this.eventBusUnsubscribeFunctions.push(() => {
-      this.eventBus?.unsubscribe(
-        ToastEventsEnum.OPEN_NOTIFICATIONS_FEED,
-        this.handleOpenNotificationsFeed.bind(this)
-      );
-    });
+    return false;
   }
 
   public async showToasts() {
-    this.eventBus?.publish(ToastEventsEnum.SHOW, null);
-
+    this.uiCoordinator?.showToasts();
     await this.updateCustomToastList();
     await this.updateTransactionToastsList();
   }
 
   public hideToasts() {
-    this.eventBus?.publish(ToastEventsEnum.HIDE, null);
+    this.uiCoordinator?.hideToasts();
   }
 
-  private async handleOpenNotificationsFeed() {
-    this.notificationsFeedManager.openNotificationsFeed();
-  }
-
-  public closeToast(toastId: string) {
+  public closeToast(toastId: string): boolean {
     const customToast = this.customToasts.find(
       (toast) => toast.toastId === toastId
     );
@@ -291,48 +225,20 @@ export class ToastManager {
       const handleClose = customToastCloseHandlersDictionary[toastId];
       handleClose?.();
       removeCustomToast(toastId);
-      return;
+      return true;
     }
 
-    this.handleTransactionToastClose(toastId);
+    return this.handleTransactionToastClose(toastId);
   }
 
   private async publishTransactionToasts() {
-    if (
-      this.notificationsFeedManager.isNotificationsFeedOpen() &&
-      this.eventBus
-    ) {
-      this.eventBus.publish(
-        ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
-        this.transactionToasts
-      );
-
-      this.hideToasts();
-      return;
-    }
-
-    if (!this.eventBus) {
-      const toastsElement = await this.createToastListElement();
-
-      if (!toastsElement) {
-        return;
-      }
-
-      this.eventBus = await toastsElement.getEventBus();
-    }
-
-    this.eventBus.publish(
-      ToastEventsEnum.TRANSACTION_TOAST_DATA_UPDATE,
-      this.transactionToasts
-    );
+    await this.uiCoordinator?.publishTransactionToasts(this.transactionToasts);
   }
 
   public destroy() {
-    this.storeToastsSubscription();
+    this.unsubscribeFromStore();
     this.lifetimeManager?.destroy();
-    this.notificationsFeedManager?.destroy();
+    this.uiCoordinator?.destroy();
     removeAllCustomToasts();
-    this.eventBusUnsubscribeFunctions.forEach((unsubscribe) => unsubscribe());
-    this.eventBusUnsubscribeFunctions = [];
   }
 }
