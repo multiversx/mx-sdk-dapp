@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[v4.3.6](https://github.com/multiversx/mx-sdk-dapp/pull/1609)] - 2025-10-08
+
+- [Fixed walletconnect login and sign transactions](https://github.com/multiversx/mx-sdk-dapp/pull/1609)
+
 ## [[v4.3.5](https://github.com/multiversx/mx-sdk-dapp/pull/1607)] - 2025-10-06
 
 - [Added ability to bypass sender validation for specific origins in `checkIsValidSender`](https://github.com/multiversx/mx-sdk-dapp/pull/1607)

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useGetAccountProvider } from 'hooks/account';
 import { useGetAccount } from 'hooks/account/useGetAccount';
 import { useUpdateEffect } from 'hooks/useUpdateEffect';
@@ -130,6 +130,13 @@ export const useWalletConnectV2Login = ({
   const loginFailed = Boolean(error);
   let token = tokenToSign;
 
+  const isWalletConnectV2Login = useCallback(
+    () =>
+      loginMethod === LoginMethodsEnum.walletconnectv2 ||
+      getProviderType(providerRef.current) === LoginMethodsEnum.walletconnectv2,
+    [loginMethod]
+  );
+
   const handleOnLogout = () => {
     logout(logoutRoute);
   };
@@ -192,9 +199,7 @@ export const useWalletConnectV2Login = ({
   };
 
   const cancelLogin = async () => {
-    const providerType = getProviderType(providerRef.current);
-
-    if (providerType !== LoginMethodsEnum.walletconnectv2) {
+    if (!isWalletConnectV2Login()) {
       return;
     }
 
@@ -227,11 +232,7 @@ export const useWalletConnectV2Login = ({
     }
 
     try {
-      const providerType = providerRef.current
-        ? getProviderType(providerRef.current)
-        : false;
-
-      if (providerType !== LoginMethodsEnum.walletconnectv2) {
+      if (!isWalletConnectV2Login()) {
         // Prevent redirecting to wallet login hook
         await initiateLogin();
 
@@ -297,14 +298,9 @@ export const useWalletConnectV2Login = ({
   async function initiateLogin(loginProvider = true) {
     const isLoggedIn = getIsLoggedIn();
 
-    if (isLoggedIn) {
-      console.warn('Already logged in. Skipping wallet connect v2 login');
-      return;
-    }
-
     clearInitiatedLogins();
 
-    if (loginProvider) {
+    if (loginProvider && !isLoggedIn) {
       dispatch(setAddress(emptyAccount.address));
       dispatch(setAccount(emptyAccount));
     }
@@ -324,11 +320,9 @@ export const useWalletConnectV2Login = ({
     }
 
     const cannotLogin = mounted.current === false && !isLoggedIn;
-    const isWalletConnectProvider =
-      getProviderType(providerRef.current) === LoginMethodsEnum.walletconnectv2;
 
     const isInitialized =
-      providerRef.current?.isInitialized?.() && isWalletConnectProvider;
+      providerRef.current?.isInitialized?.() && isWalletConnectV2Login();
 
     if (isInitialisingRef.current || cannotLogin || isInitialized) {
       return;
@@ -423,11 +417,7 @@ export const useWalletConnectV2Login = ({
 
       token = validatedToken2;
 
-      const providerType = providerRef.current
-        ? getProviderType(providerRef.current)
-        : false;
-
-      if (providerType !== LoginMethodsEnum.walletconnectv2) {
+      if (!isWalletConnectV2Login()) {
         // Prevent redirecting to wallet login hook
         setIsLoading(true);
         await initiateLogin();
@@ -471,8 +461,7 @@ export const useWalletConnectV2Login = ({
 
     // Check if a new session has been created is already connected
     const isConnected =
-      Boolean(sessionProvider.session) ||
-      loginMethod === LoginMethodsEnum.walletconnectv2;
+      Boolean(sessionProvider.session) || isWalletConnectV2Login();
 
     // Set new provider only if account is logged in and if walletConnect session is available
     if (isConnected && isLoggedIn) {
