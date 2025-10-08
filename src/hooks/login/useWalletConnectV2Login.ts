@@ -134,7 +134,7 @@ export const useWalletConnectV2Login = ({
     () =>
       loginMethod === LoginMethodsEnum.walletconnectv2 ||
       getProviderType(providerRef.current) === LoginMethodsEnum.walletconnectv2,
-    [loginMethod, providerRef.current]
+    [loginMethod]
   );
 
   const handleOnLogout = () => {
