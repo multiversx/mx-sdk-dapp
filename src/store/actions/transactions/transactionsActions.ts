@@ -35,7 +35,18 @@ export const createTransactionsSession = ({
       };
     },
     false,
-    'createTransactionsSession'
+    {
+      type: 'createTransactionsSession',
+      // @ts-ignore
+      payload: {
+        value: {
+          transactions,
+          status,
+          transactionsDisplayInfo,
+          sessionInformation
+        }
+      }
+    }
   );
   return sessionId;
 };
@@ -68,7 +79,13 @@ export const updateSessionStatus = ({
       };
     },
     false,
-    'updateTransactionsSession'
+    {
+      type: 'updateTransactionsSession',
+      // @ts-ignore
+      payload: {
+        value: { sessionId, status, errorMessage }
+      }
+    }
   );
 };
 
@@ -108,7 +125,13 @@ export const updateTransactionStatus = ({
       }
     },
     false,
-    'updateTransactionStatus'
+    {
+      type: 'updateTransactionStatus',
+      // @ts-ignore
+      payload: {
+        value: { sessionId, transaction: updatedTransaction }
+      }
+    }
   );
 
   return newStatus;
@@ -146,6 +169,12 @@ export const clearCompletedTransactions = () => {
       toastsState.transactionToasts = filteredTransactionToasts;
     },
     false,
-    'clearCompletedTransactions'
+    {
+      type: 'clearCompletedTransactions',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    }
   );
 };
