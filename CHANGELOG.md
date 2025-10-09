@@ -7,7 +7,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
 - [Added action payload for redux inspector](https://github.com/multiversx/mx-sdk-dapp/pull/1611)
 - [Refactor ToastManager and simplify state usage](https://github.com/multiversx/mx-sdk-dapp/pull/1603)
 
