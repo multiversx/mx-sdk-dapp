@@ -13,3 +13,5 @@ export const providerLabels: Record<ProviderType, string> = {
   [ProviderTypeEnum.webview]: 'Webview',
   [ProviderTypeEnum.none]: ''
 };
+
+export const PROVIDER_SEARCH_PARAM = 'provider';

@@ -1,3 +1,4 @@
+import { PROVIDER_SEARCH_PARAM } from 'constants/providerFactory.constants';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
@@ -76,7 +77,7 @@ export class ProviderFactory {
         const network = networkSelector(getState());
 
         createdProvider = new CrossWindowProviderStrategy({
-          walletAddress: `${network.walletAddress}?provider=${ProviderTypeEnum.passkey}`
+          walletAddress: `${network.walletAddress}?${PROVIDER_SEARCH_PARAM}=${ProviderTypeEnum.passkey}`
         });
 
         break;
