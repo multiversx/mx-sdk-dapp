@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1613)] - 2025-10-10
+
+- [Remove unused packages](https://github.com/multiversx/mx-sdk-dapp/pull/1612)
+- [Added passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1610)
+- [Refactor ToastManager and simplify state usage](https://github.com/multiversx/mx-sdk-dapp/pull/1603)
+
 ## [[5.2.5](https://github.com/multiversx/mx-sdk-dapp/pull/1608)] - 2025-10-06
 
 - [Update `iframeWalletAddress` in `network.constants`](https://github.com/multiversx/mx-sdk-dapp/pull/1608)

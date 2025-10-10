@@ -1,7 +1,6 @@
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { TransactionServerStatusesEnum } from 'types/enums.types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
-import { IBaseTransactionParams } from 'types/transaction-list-item.types';
 import { explorerUrlBuilder } from 'utils/transactions/explorerUrlBuilder';
 import { getExplorerLink } from 'utils/transactions/getExplorerLink';
 import { getReceiverData } from 'utils/transactions/getTransactionsHistory/helpers/getReceiverData';
@@ -10,18 +9,21 @@ import { getTransactionAmount } from './getTransactionAmount';
 import { getTransactionAsset } from './getTransactionAsset';
 import { getTransactionAssets } from './getTransactionAssets';
 
-interface IMapTransactionToListItemParamsType extends IBaseTransactionParams {
+interface IMapTransactionToListItemParamsType {
   transaction: ServerTransactionType;
   isPending?: boolean;
   profileImages?: Record<string, string>;
+  address: string;
+  explorerAddress: string;
+  egldLabel: string;
 }
 
 export const mapTransactionToListItem = ({
   transaction,
+  isPending = false,
   address,
   explorerAddress,
-  egldLabel,
-  isPending = false
+  egldLabel
 }: IMapTransactionToListItemParamsType): ITransactionListItem => {
   const { receiver, receiverAssets } = getReceiverData(transaction);
   const isIncomingTransaction = address === receiver;

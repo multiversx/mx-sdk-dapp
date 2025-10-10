@@ -1,13 +1,15 @@
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { getCachedItemSelector } from 'store/selectors/cacheSelector';
-import { getStore } from 'store/store';
+import { getState } from 'store/store';
+import { StoreType } from 'store/store.types';
 
 export const getCachedTransactionListItem = (
-  hash: string
+  hash: string,
+  store?: StoreType
 ): ITransactionListItem | null => {
   const cachedTransaction = getCachedItemSelector<ITransactionListItem>(
     `transaction-${hash}`
-  )(getStore().getState());
+  )(store ?? getState());
 
   return cachedTransaction ?? null;
 };
