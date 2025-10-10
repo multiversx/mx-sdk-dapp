@@ -9,6 +9,9 @@ export const providerLabels: Record<ProviderType, string> = {
   [ProviderTypeEnum.walletConnect]: 'xPortal App',
   [ProviderTypeEnum.ledger]: 'Ledger',
   [ProviderTypeEnum.metamask]: 'MetaMask Snap',
+  [ProviderTypeEnum.passkey]: 'Passkey',
   [ProviderTypeEnum.webview]: 'Webview',
   [ProviderTypeEnum.none]: ''
 };
+
+export const PROVIDER_SEARCH_PARAM = 'provider';
