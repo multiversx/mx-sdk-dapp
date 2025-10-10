@@ -1,3 +1,4 @@
+import { PROVIDER_SEARCH_PARAM } from 'constants/providerFactory.constants';
 import { CrossWindowProvider } from 'lib/sdkWebWalletCrossWindowProvider';
 import { LedgerIdleStateManager } from 'managers/internal/LedgerIdleStateManager/LedgerIdleStateManager';
 import { getAddress } from 'methods/account/getAddress';
@@ -11,6 +12,7 @@ import {
 } from 'providers/strategies';
 import { setProviderType } from 'store/actions/loginInfo/loginInfoActions';
 import { walletConnectConfigSelector } from 'store/selectors/configSelectors';
+import { networkSelector } from 'store/selectors/networkSelectors';
 import { getState } from 'store/store';
 import { DappProvider } from './DappProvider/DappProvider';
 import {
@@ -67,6 +69,16 @@ export class ProviderFactory {
 
       case ProviderTypeEnum.metamask: {
         createdProvider = new IframeProviderStrategy();
+
+        break;
+      }
+
+      case ProviderTypeEnum.passkey: {
+        const network = networkSelector(getState());
+
+        createdProvider = new CrossWindowProviderStrategy({
+          walletAddress: `${network.walletAddress}?${PROVIDER_SEARCH_PARAM}=${ProviderTypeEnum.passkey}`
+        });
 
         break;
       }
