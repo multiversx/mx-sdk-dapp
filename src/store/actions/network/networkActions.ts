@@ -10,7 +10,13 @@ export const initializeNetworkConfig = (newNetwork: NetworkType) =>
       };
     },
     false,
-    'initializeNetworkConfig'
+    {
+      type: 'initializeNetworkConfig',
+      // @ts-ignore
+      payload: {
+        value: newNetwork
+      }
+    }
   );
 
 export { initializeNetwork } from './initializeNetwork';

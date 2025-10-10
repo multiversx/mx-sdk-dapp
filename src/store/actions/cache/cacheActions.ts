@@ -6,7 +6,13 @@ export const saveToCache = <T>({ key, value }: { key: string; value: T }) => {
       state[key] = value;
     },
     false,
-    'saveToCache'
+    {
+      type: 'saveToCache',
+      // @ts-ignore
+      payload: {
+        value
+      }
+    }
   );
 };
 
@@ -16,7 +22,13 @@ export const removeFromCache = (key: string) => {
       delete state[key];
     },
     false,
-    'removeFromCache'
+    {
+      type: 'removeFromCache',
+      // @ts-ignore
+      payload: {
+        value: key
+      }
+    }
   );
 };
 

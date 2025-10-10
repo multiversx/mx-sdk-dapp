@@ -13,7 +13,13 @@ export const setAccount = (account: AccountType) => {
       };
     },
     false,
-    'setAccount'
+    {
+      type: 'setAccount',
+      // @ts-ignore
+      payload: {
+        value: account
+      }
+    }
   );
 };
 
@@ -23,7 +29,13 @@ export const setLedgerAccount = (ledgerAccount: LedgerAccountType | null) =>
       state.ledgerAccount = ledgerAccount;
     },
     false,
-    'setLedgerAccount'
+    {
+      type: 'setLedgerAccount',
+      // @ts-ignore
+      payload: {
+        value: ledgerAccount
+      }
+    }
   );
 
 export const setWalletConnectAccount = (walletConnectAccount: string | null) =>
@@ -32,7 +44,13 @@ export const setWalletConnectAccount = (walletConnectAccount: string | null) =>
       state.walletConnectAccount = walletConnectAccount;
     },
     false,
-    'setWalletConnectAccount'
+    {
+      type: 'setWalletConnectAccount',
+      // @ts-ignore
+      payload: {
+        value: walletConnectAccount
+      }
+    }
   );
 
 export const setWebsocketEvent = (message: string) =>
@@ -44,7 +62,13 @@ export const setWebsocketEvent = (message: string) =>
       };
     },
     false,
-    'setWebsocketEvent'
+    {
+      type: 'setWebsocketEvent',
+      // @ts-ignore
+      payload: {
+        value: message
+      }
+    }
   );
 
 export const setWebsocketBatchEvent = (data: BatchTransactionsWSResponseType) =>
@@ -56,7 +80,13 @@ export const setWebsocketBatchEvent = (data: BatchTransactionsWSResponseType) =>
       };
     },
     false,
-    'setWebsocketBatchEvent'
+    {
+      type: 'setWebsocketBatchEvent',
+      // @ts-ignore
+      payload: {
+        value: data
+      }
+    }
   );
 
 export const setAccountNonce = (nonce: number) => {
@@ -65,6 +95,12 @@ export const setAccountNonce = (nonce: number) => {
       state.accounts[state.address].nonce = nonce;
     },
     false,
-    'setAccountNonce'
+    {
+      type: 'setAccountNonce',
+      // @ts-ignore
+      payload: {
+        value: nonce
+      }
+    }
   );
 };

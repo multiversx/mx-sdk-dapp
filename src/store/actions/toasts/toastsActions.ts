@@ -50,7 +50,13 @@ export const addCustomToast = (
       });
     },
     false,
-    'addCustomToast'
+    {
+      type: 'addCustomToast',
+      // @ts-ignore
+      payload: {
+        value: { customToast, currentToastId }
+      }
+    }
   );
 };
 
@@ -62,7 +68,13 @@ export const removeCustomToast = (toastId: string) => {
       );
     },
     false,
-    'removeCustomToast'
+    {
+      type: 'removeCustomToast',
+      // @ts-ignore
+      payload: {
+        value: toastId
+      }
+    }
   );
 };
 
@@ -72,7 +84,13 @@ export const removeAllCustomToasts = () => {
       state.customToasts = [];
     },
     false,
-    'removeAllCustomToasts'
+    {
+      type: 'removeAllCustomToasts',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    }
   );
 };
 
