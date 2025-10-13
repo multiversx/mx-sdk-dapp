@@ -278,7 +278,7 @@ export enum TransferTypeEnum {
 
 //#endregion
 
-//#region interpreted trasactions
+//#region interpreted transactions
 
 export enum TransactionDirectionEnum {
   SELF = 'Self',
