@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added action payload for redux inspector](https://github.com/multiversx/mx-sdk-dapp/pull/1611)
+
 ## [[5.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1616)] - 2025-10-13
 
 - [Upgrade @multiversx/sdk-webview-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1615)

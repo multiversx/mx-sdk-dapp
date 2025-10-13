@@ -6,5 +6,11 @@ export const setIsSidePanelOpen = (isOpen: boolean) =>
       state.isSidePanelOpen = isOpen;
     },
     false,
-    'setIsSidePanelOpen'
+    {
+      type: 'setIsSidePanelOpen',
+      // @ts-ignore
+      payload: {
+        value: isOpen
+      }
+    }
   );

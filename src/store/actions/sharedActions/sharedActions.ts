@@ -23,6 +23,12 @@ export const loginAction = ({
       }
     },
     false,
-    'loginAction'
+    {
+      type: 'loginAction',
+      // @ts-ignore
+      payload: {
+        value: { address, providerType }
+      }
+    }
   );
 };
