@@ -1,7 +1,4 @@
-import {
-  updateTransactionStatus,
-  updateSessionStatus
-} from 'store/actions/transactions/transactionsActions';
+import { updateSessionStatus } from 'store/actions/transactions/transactionsActions';
 import { getIsTransactionPending } from 'store/actions/transactions/transactionStateByStatus';
 import { getStore } from 'store/store';
 import {
@@ -11,6 +8,7 @@ import {
 import { ResultType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
 import { runSessionCallbacks } from './runSessionCallbacks';
+import { updateTransactionAndSessionStatus } from './updateTransactionAndSessionStatus';
 
 export async function manageFailedTransactions({
   results,
@@ -25,7 +23,7 @@ export async function manageFailedTransactions({
     (scResult) => scResult?.returnMessage !== ''
   );
 
-  updateTransactionStatus({
+  updateTransactionAndSessionStatus({
     sessionId,
     transaction: {
       ...(resultWithError as unknown as SignedTransactionType),
