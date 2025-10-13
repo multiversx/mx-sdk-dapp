@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Added action payload for redux inspector](https://github.com/multiversx/mx-sdk-dapp/pull/1611)
 
 ## [[5.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1616)] - 2025-10-13
 
@@ -15,7 +16,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [[5.2.6](https://github.com/multiversx/mx-sdk-dapp/pull/1613)] - 2025-10-10
 
 - [Remove unused packages](https://github.com/multiversx/mx-sdk-dapp/pull/1612)
-- [Added action payload for redux inspector](https://github.com/multiversx/mx-sdk-dapp/pull/1611)
 - [Added passkey provider](https://github.com/multiversx/mx-sdk-dapp/pull/1610)
 - [Refactor ToastManager and simplify state usage](https://github.com/multiversx/mx-sdk-dapp/pull/1603)
 
