@@ -1,27 +1,22 @@
 import { server, rest, testNetwork } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
-import { mockTransaction } from 'managers/ToastManager/helpers/tests/mocks/transactions';
-import type { StoreApi } from 'store/store';
+import {
+  mockTransaction,
+  mockTransactionSession
+} from 'managers/ToastManager/helpers/tests/mocks/transactions';
 import { ToastManager } from '../ToastManager';
-// Build pending REST payload based on shared mockTransaction
+import {
+  createStoreStub,
+  FakeLifetimeManager,
+  FakeUICoordinator
+} from './helpers/fakes';
+
+// Build pending REST payload based directly on shared mockTransaction
 const pendingTransaction = [
   {
-    txHash: mockTransaction.hash,
-    gasLimit: mockTransaction.gasLimit,
-    gasPrice: mockTransaction.gasPrice,
-    gasUsed: 50000,
-    nonce: mockTransaction.nonce,
-    receiver: mockTransaction.receiver,
-    receiverShard: 1,
-    round: 0,
-    sender: mockTransaction.sender,
-    senderShard: 1,
-    signature: mockTransaction.signature,
-    status: 'pending',
-    value: mockTransaction.value,
-    fee: '50000000000000',
-    timestampMs: 0
+    ...mockTransaction,
+    status: 'pending'
   }
 ];
 
@@ -39,58 +34,39 @@ jest.mock('store/actions/toasts/toastsActions', () => ({
 const SESSION_ID = '1760451058752';
 // Use real createToastsFromTransactions pathway (no mock) and wire MSW
 
-// Fakes for collaborators
-class FakeLifetimeManager {
-  init = jest.fn();
-  start = jest.fn();
-  startWithCustomDuration = jest.fn();
-  stop = jest.fn();
-  destroy = jest.fn();
+// Test helpers for readability
+function setInitialPendingRestResponse() {
+  server.use(
+    rest.get(
+      `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}`,
+      (req, res, ctx) => {
+        return res(ctx.status(200), ctx.json(pendingTransaction));
+      }
+    )
+  );
 }
 
-class FakeUICoordinator {
-  init = jest.fn().mockResolvedValue(undefined);
-  publishTransactionToasts = jest.fn().mockResolvedValue(undefined);
-  publishCustomToasts = jest.fn().mockResolvedValue(undefined);
-  showToasts = jest.fn();
-  hideToasts = jest.fn();
-  destroy = jest.fn();
+function getPublishArgsAt(ui: FakeUICoordinator, index: number) {
+  return (
+    (ui.publishTransactionToasts as jest.Mock).mock.calls[index]?.[0] ?? []
+  );
 }
 
-// Minimal zustand-like store stub sufficient for ToastManager
-function createStoreStub(initialState: any): StoreApi {
-  let state = initialState;
-  const subscribers = new Set<(s: any, prev: any) => void>();
+function getLastPublishArgs(ui: FakeUICoordinator) {
+  const calls = (ui.publishTransactionToasts as jest.Mock).mock.calls;
+  return calls[calls.length - 1]?.[0] ?? [];
+}
 
-  return {
-    getState: () => state,
-    setState: (partial: any) => {
-      const prev = state;
-      state =
-        typeof partial === 'function'
-          ? { ...state, ...partial(state) }
-          : { ...state, ...partial };
-      subscribers.forEach((fn) => fn(state, prev));
-    },
-    subscribe: (fn: any) => {
-      subscribers.add(fn);
-      return () => subscribers.delete(fn);
-    }
-  } as unknown as StoreApi;
+function expectArgsContainToastId(args: any[], toastId: string) {
+  expect(args).toEqual(
+    expect.arrayContaining([expect.objectContaining({ toastId })])
+  );
 }
 
 describe('ToastManager subscription reacts to transaction completion', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    // Initial network response: pending transaction
-    server.use(
-      rest.get(
-        `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}`,
-        (req, res, ctx) => {
-          return res(ctx.status(200), ctx.json(pendingTransaction));
-        }
-      )
-    );
+    setInitialPendingRestResponse();
   });
 
   it('moves toast from pending to completed when status changes to success and starts lifetime', async () => {
@@ -113,11 +89,8 @@ describe('ToastManager subscription reacts to transaction completion', () => {
         [SESSION_ID]: {
           status: 'sent',
           transactions: [{ ...mockTransaction, status: 'pending' }],
-          transactionsDisplayInfo: {
-            processingMessage: 'Processing Self transaction',
-            errorMessage: 'An error has occured during Self',
-            successMessage: 'Self transaction successful'
-          },
+          transactionsDisplayInfo:
+            mockTransactionSession.transactionsDisplayInfo,
           interpretedTransactions: {}
         }
       }
@@ -136,46 +109,31 @@ describe('ToastManager subscription reacts to transaction completion', () => {
 
     // Initial publish should contain a pending toast for this session id
     expect(ui.publishTransactionToasts).toHaveBeenCalled();
-    const firstCallArg = (ui.publishTransactionToasts as jest.Mock).mock
-      .calls[0][0];
-    expect(firstCallArg).toEqual(
-      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
-    );
+    const firstArgs = getPublishArgsAt(ui, 0);
+    expectArgsContainToastId(firstArgs as any[], SESSION_ID);
 
     // Change transaction session to success (as provided by user scenario)
     store.setState({
       transactions: {
         [SESSION_ID]: {
           status: 'success',
-          transactions: [
-            {
-              ...mockTransaction,
-              status: 'success'
-            } as any
-          ],
-          transactionsDisplayInfo: {
-            processingMessage: 'Processing Self transaction',
-            errorMessage: 'An error has occured during Self',
-            successMessage: 'Self transaction successful'
-          },
+          transactions: [{ ...mockTransaction, status: 'success' } as any],
+          transactionsDisplayInfo:
+            mockTransactionSession.transactionsDisplayInfo,
           interpretedTransactions: {},
-          errorMessage: 'An error has occured during Self'
+          errorMessage: mockTransactionSession.errorMessage
         }
       }
     });
 
     // Allow async subscriber and async computations to complete
-    await Promise.resolve();
     await new Promise((r) => setTimeout(r, 0));
 
     // On completion, lifetime should start for this toast id
     expect(lifetime.start).toHaveBeenCalledWith(SESSION_ID);
 
     // And UI should publish the completed toast state for this session id
-    const calls = (ui.publishTransactionToasts as jest.Mock).mock.calls;
-    const lastArg = calls[calls.length - 1][0];
-    expect(lastArg).toEqual(
-      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
-    );
+    const lastArgs = getLastPublishArgs(ui);
+    expectArgsContainToastId(lastArgs as any[], SESSION_ID);
   });
 });
