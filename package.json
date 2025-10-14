@@ -68,7 +68,7 @@
     "@multiversx/sdk-web-wallet-cross-window-provider": "3.2.1",
     "@multiversx/sdk-web-wallet-iframe-provider": "4.0.0",
     "@multiversx/sdk-web-wallet-provider": "5.1.1",
-    "@multiversx/sdk-webview-provider": "3.2.2",
+    "@multiversx/sdk-webview-provider": "3.2.3-alpha.1",
     "immer": "10.1.1",
     "linkifyjs": "4.3.2",
     "lodash.isempty": "4.4.0",

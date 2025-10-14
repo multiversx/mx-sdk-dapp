@@ -38,8 +38,8 @@ importers:
         specifier: 5.1.1
         version: 5.1.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))
       '@multiversx/sdk-webview-provider':
-        specifier: 3.2.2
-        version: 3.2.2(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))
+        specifier: 3.2.3-alpha.1
+        version: 3.2.3-alpha.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))
       immer:
         specifier: 10.1.1
         version: 10.1.1
@@ -70,6 +70,10 @@ importers:
       zustand:
         specifier: 4.4.7
         version: 4.4.7(@types/react@18.2.0)(immer@10.1.1)(react@18.2.0)
+    optionalDependencies:
+      '@multiversx/sdk-dapp-ui':
+        specifier: '>=0.0.35'
+        version: 0.0.35(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
     devDependencies:
       '@eslint/js':
         specifier: 9.15.0
@@ -206,10 +210,6 @@ importers:
       typescript-eslint:
         specifier: 8.15.0
         version: 8.15.0(eslint@9.15.0)(typescript@5.4.5)
-    optionalDependencies:
-      '@multiversx/sdk-dapp-ui':
-        specifier: '>=0.0.35'
-        version: 0.0.35(@types/react@18.2.0)(react-dom@19.2.0(react@18.2.0))(react@18.2.0)
 
 packages:
 
@@ -840,8 +840,8 @@ packages:
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0  || ^15.0.0
 
-  '@multiversx/sdk-webview-provider@3.2.2':
-    resolution: {integrity: sha512-gVL3nTcMRQRrrkFFxpw6ErEbZr8PIrsG9ZjTCy+14DH/inJIMWxXbqeD3BN974ghpsTBvBFt9HIaNUUNWHoDmw==}
+  '@multiversx/sdk-webview-provider@3.2.3-alpha.1':
+    resolution: {integrity: sha512-QPwK2D6pzsUmnInu8HIvRmrptcYk5GzPW8QX9t6WFExRRm+MDJsWFFgOEo5MTGAC9l/EpgAeVUDGgxuxjRc3SQ==}
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
       '@multiversx/sdk-web-wallet-cross-window-provider': ^3.x
@@ -5253,7 +5253,7 @@ snapshots:
       '@multiversx/sdk-core': 15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)
       qs: 6.10.3
 
-  '@multiversx/sdk-webview-provider@3.2.2(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))':
+  '@multiversx/sdk-webview-provider@3.2.3-alpha.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))':
     dependencies:
       '@multiversx/sdk-core': 15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)
       '@multiversx/sdk-web-wallet-cross-window-provider': 3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))
