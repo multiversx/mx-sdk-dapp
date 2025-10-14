@@ -45,11 +45,16 @@ export async function restoreProvider() {
     - true: the app is embedded within another dApp (e.g., inside an iframe) and perform login using the provider.
     - false: the parent is not a dApp and proceed with initializing the current app as a standalone iframe.
   */
-  if (
+  const shouldStartWebviewLogin =
     isMobileView ||
-    (type === ProviderTypeEnum.webview && provider.isInitialized())
-  ) {
-    await provider.login();
+    (type === ProviderTypeEnum.webview && provider.isInitialized());
+
+  if (shouldStartWebviewLogin) {
+    try {
+      await provider.login();
+    } catch (error) {
+      console.warn('Failed to login with provider', provider.getType(), error);
+    }
   }
 
   setAccountProvider(provider);

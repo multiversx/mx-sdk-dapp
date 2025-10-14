@@ -49,7 +49,7 @@ async function build() {
       ...commonConfig,
       format: 'cjs',
       outdir: 'out',
-      minify: false,
+      minify: true,
       sourcemap: true,
       target: ['es2021'],
       outExtension: { '.js': '.cjs' },
