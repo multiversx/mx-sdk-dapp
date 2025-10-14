@@ -1,7 +1,10 @@
-import { testAddress } from '__mocks__';
+import { testAddress, server, rest, testNetwork } from '__mocks__';
+import { mockStore } from '__mocks__/data/mockStore';
+import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { mockTransaction } from 'managers/ToastManager/helpers/tests/mocks/transactions';
 import type { StoreApi } from 'store/store';
 import { ToastManager } from '../ToastManager';
+import { pendingTransaction } from './mocks/pendingTransaction';
 
 // Mock toast actions used by ToastManager (track side-effects only)
 jest.mock('store/actions/toasts/toastsActions', () => ({
@@ -14,16 +17,8 @@ jest.mock('store/actions/toasts/toastsActions', () => ({
   customToastComponentDictionary: {}
 }));
 
-// Mock createToastsFromTransactions as a pure stub (no logic)
 const SESSION_ID = '1760451058752';
-
-jest.mock('../helpers/createToastsFromTransactions', () => ({
-  createToastsFromTransactions: jest.fn()
-}));
-
-const {
-  createToastsFromTransactions
-} = require('../helpers/createToastsFromTransactions');
+// Use real createToastsFromTransactions pathway (no mock) and wire MSW
 
 // Fakes for collaborators
 class FakeLifetimeManager {
@@ -68,23 +63,23 @@ function createStoreStub(initialState: any): StoreApi {
 describe('ToastManager subscription reacts to transaction completion', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    // Initial network response: pending transaction
+    server.use(
+      rest.get(
+        `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}`,
+        (req, res, ctx) => {
+          return res(ctx.status(200), ctx.json(pendingTransaction));
+        }
+      )
+    );
   });
 
   it('moves toast from pending to completed when status changes to success and starts lifetime', async () => {
-    // Control helper outputs explicitly per invocation: pending on init, completed after state change
-    (createToastsFromTransactions as jest.Mock)
-      .mockResolvedValueOnce({
-        pendingTransactionToasts: [{ toastId: SESSION_ID }],
-        completedTransactionToasts: []
-      })
-      .mockResolvedValueOnce({
-        pendingTransactionToasts: [],
-        completedTransactionToasts: [{ toastId: SESSION_ID }]
-      });
     const startTime = 1_700_000_000_000; // arbitrary
     const endTime = startTime + 10_000;
 
     const initialStore = {
+      ...mockStore,
       toasts: {
         transactionToasts: [
           {
@@ -138,10 +133,13 @@ describe('ToastManager subscription reacts to transaction completion', () => {
     });
     await manager.init();
 
-    // Initial publish should contain pending toast (from first mocked return)
-    expect(ui.publishTransactionToasts).toHaveBeenCalledWith([
-      { toastId: SESSION_ID }
-    ]);
+    // Initial publish should contain a pending toast for this session id
+    expect(ui.publishTransactionToasts).toHaveBeenCalled();
+    const firstCallArg = (ui.publishTransactionToasts as jest.Mock).mock
+      .calls[0][0];
+    expect(firstCallArg).toEqual(
+      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
+    );
 
     // Change transaction session to success (as provided by user scenario)
     store.setState({
@@ -182,14 +180,18 @@ describe('ToastManager subscription reacts to transaction completion', () => {
       }
     });
 
-    // Allow async subscriber to complete
+    // Allow async subscriber and async computations to complete
     await Promise.resolve();
+    await new Promise((r) => setTimeout(r, 0));
 
     // On completion, lifetime should start for this toast id
     expect(lifetime.start).toHaveBeenCalledWith(SESSION_ID);
 
-    // And UI should publish the completed toast state (second mocked return)
+    // And UI should publish the completed toast state for this session id
     const calls = (ui.publishTransactionToasts as jest.Mock).mock.calls;
-    expect(calls[calls.length - 1][0]).toEqual([{ toastId: SESSION_ID }]);
+    const lastArg = calls[calls.length - 1][0];
+    expect(lastArg).toEqual(
+      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
+    );
   });
 });

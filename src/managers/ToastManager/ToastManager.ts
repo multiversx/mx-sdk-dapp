@@ -74,9 +74,6 @@ export class ToastManager {
         );
         const checkBatchHasNewData = !isEqual(prevTransactions, transactions);
 
-        console.log('transactions', transactions);
-        console.log('toasts', toasts);
-
         if (newToastsWereCreated || checkBatchHasNewData) {
           await this.updateTransactionToastsList({
             skipFetchingTransactions: checkBatchHasNewData // transactions were already fetched by `checkBatch`
