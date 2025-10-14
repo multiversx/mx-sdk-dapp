@@ -1,5 +1,4 @@
 import { current } from 'immer';
-import { getTransactionsSessionStatus } from 'managers/TransactionManager/helpers/getTransactionsStatus';
 import { getStore } from 'store/store';
 import {
   TransactionBatchStatusesEnum,
@@ -17,12 +16,12 @@ export type CreateTransactionsSessionType = {
   sessionInformation?: any;
 };
 
-export const createTransactionsSession = ({
+export function createTransactionsSession({
   transactions,
   transactionsDisplayInfo,
   status,
   sessionInformation
-}: CreateTransactionsSessionType) => {
+}: CreateTransactionsSessionType) {
   const sessionId = Date.now().toString();
   getStore().setState(
     ({ transactions: state }) => {
@@ -35,12 +34,23 @@ export const createTransactionsSession = ({
       };
     },
     false,
-    'createTransactionsSession'
+    {
+      type: 'createTransactionsSession',
+      // @ts-ignore
+      payload: {
+        value: {
+          transactions,
+          status,
+          transactionsDisplayInfo,
+          sessionInformation
+        }
+      }
+    }
   );
   return sessionId;
-};
+}
 
-export const updateSessionStatus = ({
+export function updateSessionStatus({
   sessionId,
   status,
   errorMessage
@@ -48,7 +58,7 @@ export const updateSessionStatus = ({
   sessionId: string;
   status: TransactionBatchStatusesEnum;
   errorMessage?: string;
-}) => {
+}) {
   getStore().setState(
     ({ transactions: state }) => {
       if (!state[sessionId]) {
@@ -68,18 +78,25 @@ export const updateSessionStatus = ({
       };
     },
     false,
-    'updateTransactionsSession'
+    {
+      type: 'updateSessionStatus',
+      // @ts-ignore
+      payload: {
+        value: { sessionId, status, errorMessage }
+      }
+    }
   );
-};
+}
 
-export const updateTransactionStatus = ({
-  sessionId,
-  transaction: updatedTransaction
-}: {
+export type UpdateTransactionStatusPropsType = {
   sessionId: string;
   transaction: SignedTransactionType;
-}): TransactionBatchStatusesEnum | null => {
-  let newStatus: TransactionBatchStatusesEnum | null = null;
+};
+
+export function updateTransactionStatus({
+  sessionId,
+  transaction: updatedTransaction
+}: UpdateTransactionStatusPropsType) {
   getStore().setState(
     ({ transactions: state }) => {
       const transactions = state[sessionId]?.transactions;
@@ -93,26 +110,18 @@ export const updateTransactionStatus = ({
           }
           return transaction;
         });
-
-        const status = getTransactionsSessionStatus([
-          ...state[sessionId].transactions // Create a copy of the transactions array to avoid Proxy issues
-        ]);
-
-        if (status) {
-          updateSessionStatus({
-            sessionId,
-            status
-          });
-          newStatus = status;
-        }
       }
     },
     false,
-    'updateTransactionStatus'
+    {
+      type: 'updateTransactionStatus',
+      // @ts-ignore
+      payload: {
+        value: { sessionId, transaction: updatedTransaction }
+      }
+    }
   );
-
-  return newStatus;
-};
+}
 
 export const clearCompletedTransactions = () => {
   getStore().setState(
@@ -146,6 +155,12 @@ export const clearCompletedTransactions = () => {
       toastsState.transactionToasts = filteredTransactionToasts;
     },
     false,
-    'clearCompletedTransactions'
+    {
+      type: 'clearCompletedTransactions',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    }
   );
 };

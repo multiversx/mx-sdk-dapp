@@ -23,11 +23,12 @@ interface CreateToastsFromTransactionsParamsType {
   store?: StoreType;
 }
 
-export const createToastsFromTransactions = async ({
+export async function createToastsFromTransactions({
   existingCompletedTransactions = [],
   skipFetchingTransactions = false,
-  store = getState()
-}: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> => {
+  ...props
+}: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> {
+  const store = props.store ?? getState();
   const pendingTransactionToasts: ITransactionToast[] = [];
   const completedTransactionToasts: ITransactionToast[] = [
     ...existingCompletedTransactions
@@ -88,4 +89,4 @@ export const createToastsFromTransactions = async ({
     pendingTransactionToasts,
     completedTransactionToasts
   };
-};
+}

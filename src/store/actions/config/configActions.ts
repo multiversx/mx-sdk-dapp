@@ -10,7 +10,13 @@ export const setNativeAuthConfig = (config: NativeAuthConfigType) =>
       state.nativeAuthConfig = config;
     },
     false,
-    'setNativeAuthConfig'
+    {
+      type: 'setNativeAuthConfig',
+      // @ts-ignore
+      payload: {
+        value: config
+      }
+    }
   );
 
 export const setWebsocketStatus = (status: WebsocketConnectionStatusEnum) =>
@@ -19,7 +25,13 @@ export const setWebsocketStatus = (status: WebsocketConnectionStatusEnum) =>
       state.websocketStatus = status;
     },
     false,
-    'setWebsocketStatus'
+    {
+      type: 'setWebsocketStatus',
+      // @ts-ignore
+      payload: {
+        value: status
+      }
+    }
   );
 
 export const setWalletConnectConfig = (config: WalletConnectConfig) =>
@@ -39,5 +51,11 @@ export const setWalletConnectConfig = (config: WalletConnectConfig) =>
       };
     },
     false,
-    'setWalletConnectConfig'
+    {
+      type: 'setWalletConnectConfig',
+      // @ts-ignore
+      payload: {
+        value: config
+      }
+    }
   );

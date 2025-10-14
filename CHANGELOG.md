@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.8](https://github.com/multiversx/mx-sdk-dapp/pull/1618)] - 2025-10-14
+
+- [Fixed cancelling login in webview provider](https://github.com/multiversx/mx-sdk-dapp/pull/1617)
+- [Added action payload for redux inspector](https://github.com/multiversx/mx-sdk-dapp/pull/1611)
+
 ## [[5.2.7](https://github.com/multiversx/mx-sdk-dapp/pull/1616)] - 2025-10-13
 
 - [Upgrade @multiversx/sdk-webview-provider](https://github.com/multiversx/mx-sdk-dapp/pull/1615)

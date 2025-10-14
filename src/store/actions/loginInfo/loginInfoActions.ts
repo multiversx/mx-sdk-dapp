@@ -14,7 +14,13 @@ export const setProviderType = <T extends ProviderType = ProviderType>(
       state.providerType = providerType;
     },
     false,
-    'setProviderType'
+    {
+      type: 'setProviderType',
+      // @ts-ignore
+      payload: {
+        value: providerType
+      }
+    }
   );
 
 export const setTokenLogin = (tokenLogin: TokenLoginType) =>
@@ -23,7 +29,13 @@ export const setTokenLogin = (tokenLogin: TokenLoginType) =>
       state.tokenLogin = tokenLogin;
     },
     false,
-    'setTokenLogin'
+    {
+      type: 'setTokenLogin',
+      // @ts-ignore
+      payload: {
+        value: tokenLogin
+      }
+    }
   );
 
 export const setLoginToken = (loginToken: string) =>
@@ -38,7 +50,13 @@ export const setLoginToken = (loginToken: string) =>
       };
     },
     false,
-    'setLoginToken'
+    {
+      type: 'setLoginToken',
+      // @ts-ignore
+      payload: {
+        value: loginToken
+      }
+    }
   );
 
 export const setTokenLoginSignature = (signature: string) =>
@@ -49,7 +67,13 @@ export const setTokenLoginSignature = (signature: string) =>
       }
     },
     false,
-    'setTokenLoginSignature'
+    {
+      type: 'setTokenLoginSignature',
+      // @ts-ignore
+      payload: {
+        value: signature
+      }
+    }
   );
 
 export const setWalletConnectLogin = (
@@ -60,7 +84,13 @@ export const setWalletConnectLogin = (
       state.walletConnectLogin = walletConnectLogin;
     },
     false,
-    'setWalletConnectLogin'
+    {
+      type: 'setWalletConnectLogin',
+      // @ts-ignore
+      payload: {
+        value: walletConnectLogin
+      }
+    }
   );
 
 export const setLedgerLogin = (ledgerLogin: LedgerLoginType | null) =>
@@ -69,7 +99,13 @@ export const setLedgerLogin = (ledgerLogin: LedgerLoginType | null) =>
       state.ledgerLogin = ledgerLogin;
     },
     false,
-    'setLedgerLogin'
+    {
+      type: 'setLedgerLogin',
+      // @ts-ignore
+      payload: {
+        value: ledgerLogin
+      }
+    }
   );
 
 export const setIsWalletConnectV2Initialized = (isInitialized: boolean) =>
@@ -78,7 +114,13 @@ export const setIsWalletConnectV2Initialized = (isInitialized: boolean) =>
       state.isWalletConnectV2Initialized = isInitialized;
     },
     false,
-    'setIsWalletConnectV2Initialized'
+    {
+      type: 'setIsWalletConnectV2Initialized',
+      // @ts-ignore
+      payload: {
+        value: isInitialized
+      }
+    }
   );
 
 export const removeLoginExpiresAt = () =>
@@ -87,7 +129,13 @@ export const removeLoginExpiresAt = () =>
       state.loginExpiresAt = null;
     },
     false,
-    'removeLoginExpiresAt'
+    {
+      type: 'removeLoginExpiresAt',
+      // @ts-ignore
+      payload: {
+        value: null
+      }
+    }
   );
 
 export const addLoginExpiresAt = (expiresAt: number) =>
@@ -96,5 +144,11 @@ export const addLoginExpiresAt = (expiresAt: number) =>
       state.loginExpiresAt = expiresAt;
     },
     false,
-    'addLoginExpiresAt'
+    {
+      type: 'addLoginExpiresAt',
+      // @ts-ignore
+      payload: {
+        value: expiresAt
+      }
+    }
   );

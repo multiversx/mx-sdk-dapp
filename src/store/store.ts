@@ -49,7 +49,10 @@ export const createDAppStore = (getStorageCallback: StorageCallback) => {
           name: 'sdk-dapp-store',
           storage: createJSONStorage(getStorageCallback)
         }
-      )
+      ),
+      {
+        name: 'sdk-dapp'
+      }
     )
   );
   store.subscribe(applyMiddlewares);

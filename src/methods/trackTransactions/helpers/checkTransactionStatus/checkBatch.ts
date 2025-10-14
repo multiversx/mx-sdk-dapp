@@ -1,11 +1,8 @@
 import { getTransactionsByHashes } from 'apiCalls/transactions/getTransactionsByHashes';
 import { getIsLoggedIn } from 'methods/account/getIsLoggedIn';
-import {
-  updateTransactionStatus,
-  updateSessionStatus
-} from 'store/actions/transactions/transactionsActions';
+import { updateSessionStatus } from 'store/actions/transactions/transactionsActions';
 import { getIsTransactionFailed } from 'store/actions/transactions/transactionStateByStatus';
-import { getStore } from 'store/store';
+import { getState } from 'store/store';
 import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
@@ -19,6 +16,7 @@ import { refreshAccount } from 'utils';
 import { getPendingTransactions } from './getPendingTransactions';
 import { manageFailedTransactions } from './manageFailedTransactions';
 import { runSessionCallbacks } from './runSessionCallbacks';
+import { updateTransactionAndSessionStatus } from './updateTransactionAndSessionStatus';
 
 export interface TransactionStatusTrackerPropsType {
   sessionId: string;
@@ -73,7 +71,7 @@ async function manageTransaction({
     // The tx is from a sequential batch.
     // If the transactions before this are not successful then it means that no other tx will be processed
     if (isSequential && !status) {
-      const newStatus = updateTransactionStatus({
+      const newStatus = updateTransactionAndSessionStatus({
         sessionId,
         transaction
       });
@@ -85,7 +83,7 @@ async function manageTransaction({
     }
 
     if (hasStatusChanged) {
-      const newStatus = updateTransactionStatus({
+      const newStatus = updateTransactionAndSessionStatus({
         sessionId,
         transaction
       });
@@ -152,7 +150,7 @@ export async function checkBatch({
     // Call the onSuccess or onFail callback only if the transactions are sent normally (not using batch transactions mechanism).
     // The batch transactions mechanism will call the callbacks separately.
 
-    const { transactions: sessions } = getStore().getState();
+    const { transactions: sessions } = getState();
     const session = sessions[sessionId];
 
     const isSuccessful = session.transactions.every(
