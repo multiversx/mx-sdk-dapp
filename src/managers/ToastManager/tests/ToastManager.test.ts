@@ -14,21 +14,16 @@ jest.mock('store/actions/toasts/toastsActions', () => ({
   customToastComponentDictionary: {}
 }));
 
-// Mock createToastsFromTransactions to reflect completion based on store state
+// Mock createToastsFromTransactions as a pure stub (no logic)
 const SESSION_ID = '1760451058752';
 
 jest.mock('../helpers/createToastsFromTransactions', () => ({
-  createToastsFromTransactions: jest.fn(async ({ store }: any) => {
-    const session = store.transactions?.[SESSION_ID];
-    const status = session?.status;
-    const isCompleted =
-      status === 'success' || status === 'fail' || status === 'timedOut';
-    return {
-      pendingTransactionToasts: isCompleted ? [] : [{ toastId: SESSION_ID }],
-      completedTransactionToasts: isCompleted ? [{ toastId: SESSION_ID }] : []
-    };
-  })
+  createToastsFromTransactions: jest.fn()
 }));
+
+const {
+  createToastsFromTransactions
+} = require('../helpers/createToastsFromTransactions');
 
 // Fakes for collaborators
 class FakeLifetimeManager {
@@ -76,6 +71,16 @@ describe('ToastManager subscription reacts to transaction completion', () => {
   });
 
   it('moves toast from pending to completed when status changes to success and starts lifetime', async () => {
+    // Control helper outputs explicitly per invocation: pending on init, completed after state change
+    (createToastsFromTransactions as jest.Mock)
+      .mockResolvedValueOnce({
+        pendingTransactionToasts: [{ toastId: SESSION_ID }],
+        completedTransactionToasts: []
+      })
+      .mockResolvedValueOnce({
+        pendingTransactionToasts: [],
+        completedTransactionToasts: [{ toastId: SESSION_ID }]
+      });
     const startTime = 1_700_000_000_000; // arbitrary
     const endTime = startTime + 10_000;
 
@@ -133,7 +138,7 @@ describe('ToastManager subscription reacts to transaction completion', () => {
     });
     await manager.init();
 
-    // Initial publish should contain pending toast (from mocked helper)
+    // Initial publish should contain pending toast (from first mocked return)
     expect(ui.publishTransactionToasts).toHaveBeenCalledWith([
       { toastId: SESSION_ID }
     ]);
@@ -183,7 +188,7 @@ describe('ToastManager subscription reacts to transaction completion', () => {
     // On completion, lifetime should start for this toast id
     expect(lifetime.start).toHaveBeenCalledWith(SESSION_ID);
 
-    // And UI should publish the completed toast state (mocked helper returns completed)
+    // And UI should publish the completed toast state (second mocked return)
     const calls = (ui.publishTransactionToasts as jest.Mock).mock.calls;
     expect(calls[calls.length - 1][0]).toEqual([{ toastId: SESSION_ID }]);
   });
