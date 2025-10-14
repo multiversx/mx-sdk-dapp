@@ -1,10 +1,29 @@
-import { testAddress, server, rest, testNetwork } from '__mocks__';
+import { server, rest, testNetwork } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { mockTransaction } from 'managers/ToastManager/helpers/tests/mocks/transactions';
 import type { StoreApi } from 'store/store';
 import { ToastManager } from '../ToastManager';
-import { pendingTransaction } from './mocks/pendingTransaction';
+// Build pending REST payload based on shared mockTransaction
+const pendingTransaction = [
+  {
+    txHash: mockTransaction.hash,
+    gasLimit: mockTransaction.gasLimit,
+    gasPrice: mockTransaction.gasPrice,
+    gasUsed: 50000,
+    nonce: mockTransaction.nonce,
+    receiver: mockTransaction.receiver,
+    receiverShard: 1,
+    round: 0,
+    sender: mockTransaction.sender,
+    senderShard: 1,
+    signature: mockTransaction.signature,
+    status: 'pending',
+    value: mockTransaction.value,
+    fee: '50000000000000',
+    timestampMs: 0
+  }
+];
 
 // Mock toast actions used by ToastManager (track side-effects only)
 jest.mock('store/actions/toasts/toastsActions', () => ({
@@ -93,25 +112,7 @@ describe('ToastManager subscription reacts to transaction completion', () => {
       transactions: {
         [SESSION_ID]: {
           status: 'sent',
-          transactions: [
-            {
-              nonce: 1214,
-              value: '0',
-              receiver: testAddress,
-              sender: testAddress,
-              gasPrice: 1000000000,
-              gasLimit: 6000000,
-              chainID: 'D',
-              version: 1,
-              signature:
-                '6e9851b889b7cdd31f4f8bf2a1a75be5d5c486f4e52139510939ac87b5073ab8080882dd54bb848214a918a46d0faf0883eb8b3a1227779bcd7176da95f0840d',
-              txHash: mockTransaction.hash,
-              receiverShard: 1,
-              senderShard: 1,
-              status: 'pending',
-              hash: mockTransaction.hash
-            }
-          ],
+          transactions: [{ ...mockTransaction, status: 'pending' }],
           transactionsDisplayInfo: {
             processingMessage: 'Processing Self transaction',
             errorMessage: 'An error has occured during Self',
@@ -148,25 +149,8 @@ describe('ToastManager subscription reacts to transaction completion', () => {
           status: 'success',
           transactions: [
             {
-              nonce: 1214,
-              value: '0',
-              receiver: testAddress,
-              sender: testAddress,
-              gasPrice: 1000000000,
-              gasLimit: 6000000,
-              chainID: 'D',
-              version: 1,
-              signature:
-                '6e9851b889b7cdd31f4f8bf2a1a75be5d5c486f4e52139510939ac87b5073ab8080882dd54bb848214a918a46d0faf0883eb8b3a1227779bcd7176da95f0840d',
-              txHash: mockTransaction.hash,
-              receiverShard: 1,
-              senderShard: 1,
-              status: 'success',
-              hash: mockTransaction.hash,
-              invalidTransaction: false,
-              results: [],
-              previousStatus: 'pending',
-              hasStatusChanged: true
+              ...mockTransaction,
+              status: 'success'
             } as any
           ],
           transactionsDisplayInfo: {
