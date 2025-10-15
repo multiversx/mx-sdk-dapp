@@ -10,7 +10,7 @@ import {
 import { WalletConnectV2Provider } from '@multiversx/sdk-wallet-connect-provider/out/walletConnectV2Provider';
 
 /**
- * These members are ingnored when compiling to commonJS
+ * These members are ignored when compiling to commonJS
  */
 export type { EngineTypes, PairingTypes, SessionEventTypes };
 export {
