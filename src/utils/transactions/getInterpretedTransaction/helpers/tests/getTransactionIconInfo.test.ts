@@ -121,7 +121,7 @@ describe('getTransactionIconInfo', () => {
 
     const result = getTransactionIconInfo(mockTransaction);
 
-    expect(result.icon).toBe(null);
+    expect(result.icon).toBe(undefined);
     expect(result.tooltip).toBe('Pending ');
   });
 });
