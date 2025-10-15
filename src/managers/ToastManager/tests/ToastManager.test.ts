@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { server, rest, testNetwork } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
@@ -6,11 +7,8 @@ import {
   mockTransactionSession
 } from 'managers/ToastManager/helpers/tests/mocks/transactions';
 import { ToastManager } from '../ToastManager';
-import {
-  createStoreStub,
-  FakeLifetimeManager,
-  FakeUICoordinator
-} from './helpers/fakes';
+import { createStoreStub, FakeUICoordinator } from './helpers/fakes';
+import { LifetimeManager } from '../helpers/LifetimeManager';
 
 // Build pending REST payload based directly on shared mockTransaction
 const pendingTransaction = [
@@ -22,7 +20,7 @@ const pendingTransaction = [
 
 // Mock toast actions used by ToastManager (track side-effects only)
 jest.mock('store/actions/toasts/toastsActions', () => ({
-  addTransactionToast: jest.fn().mockImplementation(({ toastId }) => toastId),
+  addTransactionToast: jest.fn().mockImplementation((_payload: any) => null),
   removeTransactionToast: jest.fn(),
   createCustomToast: jest.fn().mockReturnValue('custom-toast-1'),
   removeCustomToast: jest.fn(),
@@ -43,23 +41,6 @@ function setInitialPendingRestResponse() {
         return res(ctx.status(200), ctx.json(pendingTransaction));
       }
     )
-  );
-}
-
-function getPublishArgsAt(ui: FakeUICoordinator, index: number) {
-  return (
-    (ui.publishTransactionToasts as jest.Mock).mock.calls[index]?.[0] ?? []
-  );
-}
-
-function getLastPublishArgs(ui: FakeUICoordinator) {
-  const calls = (ui.publishTransactionToasts as jest.Mock).mock.calls;
-  return calls[calls.length - 1]?.[0] ?? [];
-}
-
-function expectArgsContainToastId(args: any[], toastId: string) {
-  expect(args).toEqual(
-    expect.arrayContaining([expect.objectContaining({ toastId })])
   );
 }
 
@@ -97,20 +78,25 @@ describe('ToastManager subscription reacts to transaction completion', () => {
     };
 
     const store = createStoreStub(initialStore);
-    const lifetime = new FakeLifetimeManager();
+    const lifetimeManager = new LifetimeManager();
+    jest.spyOn(lifetimeManager, 'start').mockImplementation(jest.fn() as any);
+
     const ui = new FakeUICoordinator();
+    const mockPublishTransactionToasts = jest.mocked(
+      ui.publishTransactionToasts
+    );
 
     const manager = new ToastManager({
       store,
-      lifetimeManager: lifetime as any,
+      lifetimeManager,
       uiCoordinator: ui as any
     });
     await manager.init();
 
     // Initial publish should contain a pending toast for this session id
-    expect(ui.publishTransactionToasts).toHaveBeenCalled();
-    const firstArgs = getPublishArgsAt(ui, 0);
-    expectArgsContainToastId(firstArgs as any[], SESSION_ID);
+    expect(mockPublishTransactionToasts).toHaveBeenCalledWith(
+      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
+    );
 
     // Change transaction session to success (as provided by user scenario)
     store.setState({
@@ -130,10 +116,11 @@ describe('ToastManager subscription reacts to transaction completion', () => {
     await new Promise((r) => setTimeout(r, 0));
 
     // On completion, lifetime should start for this toast id
-    expect(lifetime.start).toHaveBeenCalledWith(SESSION_ID);
+    expect(lifetimeManager.start).toHaveBeenCalledWith(SESSION_ID);
 
     // And UI should publish the completed toast state for this session id
-    const lastArgs = getLastPublishArgs(ui);
-    expectArgsContainToastId(lastArgs as any[], SESSION_ID);
+    expect(mockPublishTransactionToasts).toHaveBeenLastCalledWith(
+      expect.arrayContaining([expect.objectContaining({ toastId: SESSION_ID })])
+    );
   });
 });

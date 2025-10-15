@@ -22,15 +22,6 @@ export function createStoreStub(initialState: any): StoreApi {
   } as unknown as StoreApi;
 }
 
-// Fakes for collaborators
-export class FakeLifetimeManager {
-  init = jest.fn();
-  start = jest.fn();
-  startWithCustomDuration = jest.fn();
-  stop = jest.fn();
-  destroy = jest.fn();
-}
-
 export class FakeUICoordinator {
   init = jest.fn().mockResolvedValue(undefined);
   publishTransactionToasts = jest.fn().mockResolvedValue(undefined);
