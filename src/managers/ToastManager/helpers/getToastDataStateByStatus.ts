@@ -1,16 +1,9 @@
-import { TransactionBatchStatusesEnum } from 'types';
+import { IconNameEnum, TransactionBatchStatusesEnum } from 'types';
 import {
   GetToastsOptionsDataPropsType,
   IToastDataState,
   TransactionsDefaultTitles
 } from '../types';
-
-export enum ToastIconsEnum {
-  check = 'check',
-  hourglass = 'hourglass',
-  times = 'times',
-  ban = 'ban'
-}
 
 export const getToastDataStateByStatus = ({
   address,
@@ -22,7 +15,7 @@ export const getToastDataStateByStatus = ({
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: IToastDataState = {
     id: toastId,
-    icon: ToastIconsEnum.check,
+    icon: IconNameEnum.check,
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.successMessage ??
@@ -33,7 +26,7 @@ export const getToastDataStateByStatus = ({
 
   const receivedToastData: IToastDataState = {
     id: toastId,
-    icon: ToastIconsEnum.check,
+    icon: IconNameEnum.check,
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.receivedMessage ??
@@ -45,7 +38,7 @@ export const getToastDataStateByStatus = ({
 
   const pendingToastData: IToastDataState = {
     id: toastId,
-    icon: ToastIconsEnum.hourglass,
+    icon: IconNameEnum.hourglass,
     hasCloseButton: false,
     title:
       transactionsDisplayInfo?.processingMessage ??
@@ -56,7 +49,7 @@ export const getToastDataStateByStatus = ({
 
   const failToastData: IToastDataState = {
     id: toastId,
-    icon: ToastIconsEnum.times,
+    icon: IconNameEnum.close,
     title:
       transactionsDisplayInfo?.errorMessage ??
       txActionName ??
@@ -67,7 +60,7 @@ export const getToastDataStateByStatus = ({
 
   const invalidToastData: IToastDataState = {
     id: toastId,
-    icon: ToastIconsEnum.ban,
+    icon: IconNameEnum.ban,
     title:
       transactionsDisplayInfo?.invalidMessage ??
       txActionName ??
@@ -78,7 +71,7 @@ export const getToastDataStateByStatus = ({
 
   const timedOutToastData = {
     id: toastId,
-    icon: ToastIconsEnum.times,
+    icon: IconNameEnum.close,
     title:
       transactionsDisplayInfo?.timedOutMessage ??
       txActionName ??
