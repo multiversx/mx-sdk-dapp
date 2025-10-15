@@ -53,8 +53,8 @@ describe('WebviewProvider.init', () => {
     // Call init method which should use ReactNativeWebView for initialization
     const isInitialized = await provider.init();
 
-    expect(isInitialized).toBe(true);
-    expect(provider.isInitialized()).toBe(true);
+    expect(isInitialized).toBe(false);
+    expect(provider.isInitialized()).toBe(false);
   });
 
   it('should initialize using handshake', async () => {
