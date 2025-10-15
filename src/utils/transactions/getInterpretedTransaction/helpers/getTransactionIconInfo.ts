@@ -4,7 +4,7 @@ import { getTransactionMessages } from './getTransactionMessages';
 import { getTransactionStatus } from './getTransactionStatus';
 import { IconNamesEnum } from 'types';
 
-export const getTransactionIconInfo = (transaction: ServerTransactionType) => {
+export const getTransactionIconInfo = (transaction: ServerTransactionType): { icon?: `${IconNamesEnum}`, tooltip: string } => {
   const transactionMessages = getTransactionMessages(transaction);
 
   const { failed, invalid, pending } = getTransactionStatus(transaction);
@@ -25,5 +25,5 @@ export const getTransactionIconInfo = (transaction: ServerTransactionType) => {
     return { icon: IconNamesEnum.hourglass, tooltip };
   }
 
-  return { icon: null, tooltip };
+  return { tooltip };
 };

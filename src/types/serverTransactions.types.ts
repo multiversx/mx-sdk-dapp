@@ -299,7 +299,7 @@ export type TransactionMethodType = {
 };
 
 export type TransactionIconInfoType = {
-  icon?: `${IconNamesEnum}` | null;
+  icon?: `${IconNamesEnum}`;
   tooltip: string;
 };
 
