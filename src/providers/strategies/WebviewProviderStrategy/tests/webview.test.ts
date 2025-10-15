@@ -20,8 +20,21 @@ const HANDSHAKE_TIMEOUT_RESPONSE = 1000;
 
 const mockSendPostMessage = jest.fn();
 
+interface FakeWindow {
+  ReactNativeWebView?: { postMessage: jest.Mock };
+  parent?: { postMessage: jest.Mock };
+  addEventListener: (
+    event: string,
+    handler: (evt: MessageEvent) => void
+  ) => void;
+  removeEventListener: (evt: string) => void;
+}
+
 describe('WebviewProvider.init', () => {
   let provider: WebviewProvider;
+  let handlers: Record<string, (event: MessageEvent) => void>;
+  let mockPostMessage: jest.Mock;
+  let fakeWindow: FakeWindow;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -35,23 +48,65 @@ describe('WebviewProvider.init', () => {
       value: false,
       writable: true
     });
+
+    // Reset handlers and fake window per test
+    handlers = {};
+    mockPostMessage = jest.fn();
+    fakeWindow = {
+      ReactNativeWebView: { postMessage: mockPostMessage },
+      parent: { postMessage: jest.fn() },
+      addEventListener: jest.fn((event, handler) => {
+        handlers[event] = handler;
+      }),
+      removeEventListener: jest.fn((event) => {
+        delete handlers[event];
+      })
+    };
   });
 
-  it('should initialize using ReactNativeWebView', async () => {
-    // Mock the window object to simulate ReactNativeWebView
-    const mockPostMessage = jest.fn();
+  it('should pass initialize using ReactNativeWebView', async () => {
     const getSafeWindow =
       require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
 
-    // Mocking `ReactNativeWebView`
-    getSafeWindow.mockReturnValue({
-      ReactNativeWebView: {
-        postMessage: mockPostMessage
-      }
-    });
+    getSafeWindow.mockReturnValue(fakeWindow);
 
-    // Call init method which should use ReactNativeWebView for initialization
-    const isInitialized = await provider.init();
+    const initPromise = provider.init();
+
+    if (handlers['message']) {
+      handlers['message']({
+        data: {
+          type: WindowProviderResponseEnums.finalizeHandshakeResponse,
+          payload: { data: Date.now() }
+        },
+        origin: 'http://localhost'
+      } as MessageEvent);
+    }
+
+    const isInitialized = await initPromise;
+
+    expect(isInitialized).toBe(true);
+    expect(provider.isInitialized()).toBe(true);
+  });
+
+  it('should fail initialize using ReactNativeWebView (timeout)', async () => {
+    const getSafeWindow =
+      require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
+    getSafeWindow.mockReturnValue(fakeWindow);
+
+    const initPromise = provider.init();
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    if (handlers['message']) {
+      handlers['message']({
+        data: {
+          type: WindowProviderResponseEnums.finalizeHandshakeResponse,
+          payload: { data: Date.now() }
+        },
+        origin: 'http://localhost'
+      } as MessageEvent);
+    }
+
+    const isInitialized = await initPromise;
 
     expect(isInitialized).toBe(false);
     expect(provider.isInitialized()).toBe(false);
@@ -64,20 +119,6 @@ describe('WebviewProvider.init', () => {
     const getSafeWindow =
       require('@multiversx/sdk-webview-provider/out/helpers/getSafeWindow').getSafeWindow;
 
-    const handlerMap: Record<string, (event: MessageEvent) => void> = {};
-
-    const fakeWindow = {
-      parent: {
-        postMessage: jest.fn()
-      },
-      addEventListener: jest.fn((event, handler) => {
-        handlerMap[event] = handler;
-      }),
-      removeEventListener: jest.fn((event) => {
-        delete handlerMap[event];
-      })
-    };
-
     getSafeWindow.mockReturnValue(fakeWindow);
 
     const mockMessageEvent = {
@@ -89,7 +130,7 @@ describe('WebviewProvider.init', () => {
     };
 
     setTimeout(() => {
-      handlerMap['message'](mockMessageEvent as MessageEvent);
+      handlers['message'](mockMessageEvent as MessageEvent);
     });
 
     const isInitialized = await provider.init();
