@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- [Updated icons type](https://github.com/multiversx/mx-sdk-dapp/pull/1620)
+
 ## [[5.2.8](https://github.com/multiversx/mx-sdk-dapp/pull/1618)] - 2025-10-14
 
 - [Fixed cancelling login in webview provider](https://github.com/multiversx/mx-sdk-dapp/pull/1617)

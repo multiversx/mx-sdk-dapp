@@ -1,5 +1,6 @@
 import { AssetType, ScamInfoType } from './account.types';
 import {
+  IconNamesEnum,
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from './enums.types';
@@ -244,8 +245,8 @@ export interface ServerTransactionType {
   senderShard: number;
   signature: string;
   status:
-    | `${TransactionServerStatusesEnum}`
-    | `${TransactionBatchStatusesEnum}`;
+  | `${TransactionServerStatusesEnum}`
+  | `${TransactionBatchStatusesEnum}`;
   inTransit?: boolean;
   timestamp: number;
   value: string;
@@ -298,7 +299,7 @@ export type TransactionMethodType = {
 };
 
 export type TransactionIconInfoType = {
-  icon?: string;
+  icon?: `${IconNamesEnum}`;
   tooltip: string;
 };
 
