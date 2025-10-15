@@ -21,7 +21,7 @@ import {
   LoginOptionsTypes
 } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
-import { IconNameEnum } from 'types';
+import { IconNamesEnum } from 'types';
 
 type LedgerProviderStrategyOptionsType = {
   anchor?: HTMLElement;
@@ -197,7 +197,7 @@ export class LedgerProviderStrategy extends BaseProviderStrategy {
         createCustomToast({
           toastId: 'ledger-provider-rebuild-error',
           duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-          icon: IconNameEnum.close,
+          icon: IconNamesEnum.close,
           iconClassName: 'warning',
           message: 'Unlock your device & open the MultiversX App',
           title: 'Ledger unavailable'

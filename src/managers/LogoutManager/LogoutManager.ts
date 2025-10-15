@@ -11,7 +11,7 @@ import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getStore } from 'store/store';
 import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
-import { IconNameEnum } from 'types';
+import { IconNamesEnum } from 'types';
 
 export class LogoutManager {
   private static instance: LogoutManager;
@@ -108,7 +108,7 @@ export class LogoutManager {
         toastId: 'native-auth-logout',
         iconClassName: 'warning',
         title: 'Logging out',
-        icon: IconNameEnum.close,
+        icon: IconNamesEnum.close,
         message: 'Your session has expired!'
       });
       this.actualLogoutTimeoutRef = null;
@@ -171,7 +171,7 @@ export class LogoutManager {
         toastId: 'native-auth-expired',
         iconClassName: 'warning',
         title: 'Session Expiration Warning',
-        icon: IconNameEnum.hourglass,
+        icon: IconNamesEnum.hourglass,
         message: `Your session will expire in ${readableMinutesUntilLogout}!`
       });
       this.warningLogoutTimeoutRef = null;

@@ -3,7 +3,7 @@ import { server, rest } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { StoreType } from 'store/store.types';
-import { IconNameEnum, TransactionServerStatusesEnum } from 'types/enums.types';
+import { IconNamesEnum, TransactionServerStatusesEnum } from 'types/enums.types';
 import { createToastsFromTransactions } from '../createToastsFromTransactions';
 import { mockTransaction, mockTransactionSession } from './mocks/transactions';
 
@@ -103,7 +103,7 @@ describe('createToastsFromTransactions', () => {
     const result = await createToastsFromTransactions({ store });
 
     const commonData = {
-      asset: { icon: IconNameEnum.hourglass },
+      asset: { icon: IconNamesEnum.hourglass },
       interactor: testAddress,
       directionLabel: 'From',
       action: { name: 'Received xEGLD', description: undefined },
@@ -119,7 +119,7 @@ describe('createToastsFromTransactions', () => {
         {
           toastDataState: {
             id: SESSION_IDS.PENDING,
-            icon: IconNameEnum.hourglass,
+            icon: IconNamesEnum.hourglass,
             hasCloseButton: false,
             title: 'Processing Self transaction',
             iconClassName: 'warning'
@@ -142,7 +142,7 @@ describe('createToastsFromTransactions', () => {
         {
           toastDataState: {
             id: SESSION_IDS.SUCCESS,
-            icon: IconNameEnum.check,
+            icon: IconNamesEnum.check,
             hasCloseButton: true,
             title: 'Self transaction successful',
             iconClassName: 'success'

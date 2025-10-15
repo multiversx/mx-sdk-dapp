@@ -4,7 +4,7 @@ import {
   ERROR_SIGNING_TOAST_ID
 } from 'constants/transactions.constants';
 import { createCustomToast } from 'store/actions';
-import { IconNameEnum, SigningErrorsEnum, SigningWarningsEnum } from 'types/enums.types';
+import { IconNamesEnum, SigningErrorsEnum, SigningWarningsEnum } from 'types/enums.types';
 
 const states = {
   error: {
@@ -55,7 +55,7 @@ export function handleSignError(
   createCustomToast({
     toastId,
     duration: CANCEL_TRANSACTION_TOAST_DEFAULT_DURATION,
-    icon: IconNameEnum.close,
+    icon: IconNamesEnum.close,
     iconClassName,
     message: errorMessage,
     title

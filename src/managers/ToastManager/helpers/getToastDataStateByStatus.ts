@@ -1,4 +1,4 @@
-import { IconNameEnum, TransactionBatchStatusesEnum } from 'types';
+import { IconNamesEnum, TransactionBatchStatusesEnum } from 'types';
 import {
   GetToastsOptionsDataPropsType,
   IToastDataState,
@@ -15,7 +15,7 @@ export const getToastDataStateByStatus = ({
 }: GetToastsOptionsDataPropsType) => {
   const successToastData: IToastDataState = {
     id: toastId,
-    icon: IconNameEnum.check,
+    icon: IconNamesEnum.check,
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.successMessage ??
@@ -26,7 +26,7 @@ export const getToastDataStateByStatus = ({
 
   const receivedToastData: IToastDataState = {
     id: toastId,
-    icon: IconNameEnum.check,
+    icon: IconNamesEnum.check,
     hasCloseButton: true,
     title:
       transactionsDisplayInfo?.receivedMessage ??
@@ -38,7 +38,7 @@ export const getToastDataStateByStatus = ({
 
   const pendingToastData: IToastDataState = {
     id: toastId,
-    icon: IconNameEnum.hourglass,
+    icon: IconNamesEnum.hourglass,
     hasCloseButton: false,
     title:
       transactionsDisplayInfo?.processingMessage ??
@@ -49,7 +49,7 @@ export const getToastDataStateByStatus = ({
 
   const failToastData: IToastDataState = {
     id: toastId,
-    icon: IconNameEnum.close,
+    icon: IconNamesEnum.close,
     title:
       transactionsDisplayInfo?.errorMessage ??
       txActionName ??
@@ -60,7 +60,7 @@ export const getToastDataStateByStatus = ({
 
   const invalidToastData: IToastDataState = {
     id: toastId,
-    icon: IconNameEnum.ban,
+    icon: IconNamesEnum.ban,
     title:
       transactionsDisplayInfo?.invalidMessage ??
       txActionName ??
@@ -71,7 +71,7 @@ export const getToastDataStateByStatus = ({
 
   const timedOutToastData = {
     id: toastId,
-    icon: IconNameEnum.close,
+    icon: IconNamesEnum.close,
     title:
       transactionsDisplayInfo?.timedOutMessage ??
       txActionName ??

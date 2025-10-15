@@ -1,6 +1,6 @@
 import { AssetType, ScamInfoType } from './account.types';
 import {
-  IconNameEnum,
+  IconNamesEnum,
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from './enums.types';
@@ -299,7 +299,7 @@ export type TransactionMethodType = {
 };
 
 export type TransactionIconInfoType = {
-  icon?: IconNameEnum | null;
+  icon?: `${IconNamesEnum}` | null;
   tooltip: string;
 };
 

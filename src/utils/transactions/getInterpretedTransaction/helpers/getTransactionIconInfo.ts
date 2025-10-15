@@ -2,7 +2,7 @@ import { ServerTransactionType } from 'types/serverTransactions.types';
 import { capitalize } from 'utils/operations/capitalize';
 import { getTransactionMessages } from './getTransactionMessages';
 import { getTransactionStatus } from './getTransactionStatus';
-import { IconNameEnum } from 'types';
+import { IconNamesEnum } from 'types';
 
 export const getTransactionIconInfo = (transaction: ServerTransactionType) => {
   const transactionMessages = getTransactionMessages(transaction);
@@ -14,15 +14,15 @@ export const getTransactionIconInfo = (transaction: ServerTransactionType) => {
   const tooltip = `${capitalize(transaction.status)} ${errorText}`;
 
   if (failed) {
-    return { icon: IconNameEnum.close, tooltip };
+    return { icon: IconNamesEnum.close, tooltip };
   }
 
   if (invalid) {
-    return { icon: IconNameEnum.ban, tooltip };
+    return { icon: IconNamesEnum.ban, tooltip };
   }
 
   if (pending) {
-    return { icon: IconNameEnum.hourglass, tooltip };
+    return { icon: IconNamesEnum.hourglass, tooltip };
   }
 
   return { icon: null, tooltip };

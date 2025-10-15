@@ -73,7 +73,7 @@ export enum SigningWarningsEnum {
   transactionCancelled = 'Transaction canceled'
 }
 
-export enum IconNameEnum {
+export enum IconNamesEnum {
   close = "close",
   hourglass = "hourglass",
   ban = "ban",
