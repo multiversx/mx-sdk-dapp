@@ -21,12 +21,3 @@ export function createStoreStub(initialState: any): StoreApi {
     }
   } as unknown as StoreApi;
 }
-
-export class FakeUICoordinator {
-  init = jest.fn().mockResolvedValue(undefined);
-  publishTransactionToasts = jest.fn().mockResolvedValue(undefined);
-  publishCustomToasts = jest.fn().mockResolvedValue(undefined);
-  showToasts = jest.fn();
-  hideToasts = jest.fn();
-  destroy = jest.fn();
-}
