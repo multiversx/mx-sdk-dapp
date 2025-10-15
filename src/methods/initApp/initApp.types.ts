@@ -15,7 +15,7 @@ type BaseDappConfigType = {
    */
   nativeAuth?: boolean | NativeAuthConfigType;
   /**
-   * Customize exising providers
+   * Customize existing providers
    */
   providers?: {
     walletConnect?: WalletConnectConfig;

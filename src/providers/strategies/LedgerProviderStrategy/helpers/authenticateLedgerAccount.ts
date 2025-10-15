@@ -57,7 +57,7 @@ export async function authenticateLedgerAccount({
   // refresh account list
   await updateAccountsList(accountsListProps);
 
-  // cycle trough accounts until user makes a choice
+  // cycle through accounts until user makes a choice
   const selectedAccount = await new Promise<ISelectedAccount>(async function (
     resolve,
     reject
