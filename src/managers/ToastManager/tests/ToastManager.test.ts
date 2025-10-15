@@ -1,4 +1,3 @@
-import { jest } from '@jest/globals';
 import { server, rest, testNetwork } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
