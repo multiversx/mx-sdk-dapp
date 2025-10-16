@@ -72,3 +72,11 @@ export enum SigningWarningsEnum {
   cancelled = 'Signing canceled',
   transactionCancelled = 'Transaction canceled'
 }
+
+export enum IconNamesEnum {
+  close = "close",
+  hourglass = "hourglass",
+  ban = "ban",
+  coins = "coins",
+  check = "check"
+}

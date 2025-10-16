@@ -1,3 +1,4 @@
+import { IconNamesEnum } from 'types';
 import { getTransactionIconInfo } from '../getTransactionIconInfo';
 import * as getTransactionMessagesModule from '../getTransactionMessages';
 import * as getTransactionStatusModule from '../getTransactionStatus';
@@ -27,7 +28,7 @@ describe('getTransactionIconInfo', () => {
 
     const result = getTransactionIconInfo(mockTransaction);
 
-    expect(result.icon).toEqual('faHourglass');
+    expect(result.icon).toEqual(IconNamesEnum.hourglass);
     expect(result.tooltip).toBe('Pending ');
   });
 
@@ -46,7 +47,7 @@ describe('getTransactionIconInfo', () => {
 
     const result = getTransactionIconInfo(mockTransaction);
 
-    expect(result.icon).toEqual('faTimes');
+    expect(result.icon).toEqual(IconNamesEnum.close);
     expect(result.tooltip).toBe('Pending Error message');
   });
 
@@ -65,7 +66,7 @@ describe('getTransactionIconInfo', () => {
 
     const result = getTransactionIconInfo(mockTransaction);
 
-    expect(result.icon).toEqual('faBan');
+    expect(result.icon).toEqual(IconNamesEnum.ban);
     expect(result.tooltip).toBe('Pending Invalid message');
   });
 
@@ -120,7 +121,7 @@ describe('getTransactionIconInfo', () => {
 
     const result = getTransactionIconInfo(mockTransaction);
 
-    expect(result.icon).toBe('');
+    expect(result.icon).toBe(undefined);
     expect(result.tooltip).toBe('Pending ');
   });
 });
