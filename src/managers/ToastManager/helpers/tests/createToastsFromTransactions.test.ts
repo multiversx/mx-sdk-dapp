@@ -3,7 +3,10 @@ import { server, rest } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { StoreType } from 'store/store.types';
-import { IconNamesEnum, TransactionServerStatusesEnum } from 'types/enums.types';
+import {
+  IconNamesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
 import { createToastsFromTransactions } from '../createToastsFromTransactions';
 import { mockTransaction, mockTransactionSession } from './mocks/transactions';
 
@@ -147,22 +150,21 @@ describe('createToastsFromTransactions', () => {
             title: 'Self transaction successful',
             iconClassName: 'success'
           },
-          processedTransactionsStatus: '0 / 2 transactions processed',
-          transactionProgressState: {
-            endTime: fixedNow + 1000,
-            startTime: fixedNow
-          },
+          processedTransactionsStatus: 'Transaction processed',
+          transactionProgressState: null,
           toastId: SESSION_IDS.SUCCESS,
           transactions: [
             {
-              ...commonData, // status is still pending because the toasts were not shown yet
-              link: `${testNetwork.explorerAddress}/transactions/${mockTransaction.hash}`
-            },
-            {
-              ...commonData, // see next test for the status change
+              action: { name: 'Received xEGLD', description: undefined },
+              amount: '0 xEGLD',
+              asset: null,
+              directionLabel: 'From',
               hash: successTransactionHash,
-              timestamp: fixedNow,
-              link: `${testNetwork.explorerAddress}/transactions/${successTransactionHash}`
+              interactor: testAddress,
+              interactorAsset: undefined,
+              link: `${testNetwork.explorerAddress}/transactions/${successTransactionHash}`,
+              status: TransactionServerStatusesEnum.success,
+              timestamp: undefined
             }
           ]
         }

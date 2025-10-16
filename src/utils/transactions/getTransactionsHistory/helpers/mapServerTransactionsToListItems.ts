@@ -1,9 +1,7 @@
-// import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { saveToCache } from 'store/actions/cache/cacheActions';
 import { addressSelector } from 'store/selectors/accountSelectors';
 import {
-  // apiAddressSelector,
   egldLabelSelector,
   explorerAddressSelector
 } from 'store/selectors/networkSelectors';
