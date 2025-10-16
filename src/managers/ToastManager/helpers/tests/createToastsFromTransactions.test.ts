@@ -209,8 +209,7 @@ describe('createToastsFromTransactions existing completed transactions', () => {
     const { createTransactionToast } = require('../createTransactionToast');
 
     const result = await createToastsFromTransactions({
-      store,
-      skipFetchingTransactions: true
+      store
     });
 
     expect(result.completedTransactionToasts).toHaveLength(1);

@@ -13,10 +13,10 @@ import { networkSelector } from 'store/selectors';
 import { getStore } from 'store/store';
 import { BatchTransactionsWSResponseType } from 'types/websocket.types';
 
-const TIMEOUT = 3000;
+const TIMEOUT = 3_000;
 const RECONNECTION_ATTEMPTS = 3;
 const RETRY_INTERVAL = 500;
-const MESSAGE_DELAY = 1000;
+const MESSAGE_DELAY = 500;
 const BATCH_UPDATED_EVENT = 'batchUpdated';
 const CONNECT = 'connect';
 const CONNECT_ERROR = 'connect_error';

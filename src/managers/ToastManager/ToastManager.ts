@@ -75,9 +75,7 @@ export class ToastManager {
         const checkBatchHasNewData = !isEqual(prevTransactions, transactions);
 
         if (newToastsWereCreated || checkBatchHasNewData) {
-          await this.updateTransactionToastsList({
-            skipFetchingTransactions: checkBatchHasNewData // transactions were already fetched by `checkBatch`
-          });
+          await this.updateTransactionToastsList();
         }
 
         const newCustomToastsWereCreated = !isEqual(
@@ -144,15 +142,12 @@ export class ToastManager {
     return toastId;
   }
 
-  private async updateTransactionToastsList(props?: {
-    skipFetchingTransactions?: boolean;
-  }) {
+  private async updateTransactionToastsList() {
     const store = this.store.getState();
     const { toasts: toastList } = store;
 
     const { pendingTransactionToasts, completedTransactionToasts } =
       await createToastsFromTransactions({
-        skipFetchingTransactions: props?.skipFetchingTransactions,
         store
       });
 
