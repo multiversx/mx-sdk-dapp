@@ -1,9 +1,7 @@
-import { getServerTransactionsByHashes } from 'apiCalls/transactions/getServerTransactionsByHashes';
 import { ITransactionListItem } from 'lib/sdkDappUi';
 import { saveToCache } from 'store/actions/cache/cacheActions';
 import { addressSelector } from 'store/selectors/accountSelectors';
 import {
-  apiAddressSelector,
   egldLabelSelector,
   explorerAddressSelector
 } from 'store/selectors/networkSelectors';
@@ -17,7 +15,6 @@ import { mapTransactionToListItem } from './mapTransactionToListItem';
 
 interface IMapServerTransactionsToListItemsParams {
   transactions: SignedTransactionType[];
-  skipFetchingTransactions?: boolean;
   store?: StoreType;
 }
 
@@ -26,11 +23,11 @@ const sortTransactionsByTimestamp = (transactions: ITransactionListItem[]) =>
 
 export const mapServerTransactionsToListItems = async ({
   transactions,
-  skipFetchingTransactions = false,
-  store = getState()
+  ...props
 }: IMapServerTransactionsToListItemsParams): Promise<
   ITransactionListItem[]
 > => {
+  const store = props.store ?? getState();
   const cachedTransactions: ITransactionListItem[] = [];
   const hashesToFetch: string[] = [];
 
@@ -50,15 +47,11 @@ export const mapServerTransactionsToListItems = async ({
     return sortTransactionsByTimestamp(cachedTransactions);
   }
 
-  const newTransactions: ServerTransactionType[] = skipFetchingTransactions
-    ? transactions.map((tx) => ({
-        // casting is correct since store transaction was replaced with fetched server transaction
-        ...(tx as unknown as ServerTransactionType),
-        txHash: tx.hash
-      }))
-    : await getServerTransactionsByHashes(hashesToFetch, {
-        apiAddress: apiAddressSelector(store)
-      });
+  let newTransactions: ServerTransactionType[] = transactions.map((tx) => ({
+    // casting is correct since store transaction was replaced with fetched server transaction
+    ...(tx as unknown as ServerTransactionType),
+    txHash: tx.hash
+  }));
 
   const retrievedHashes = newTransactions.map((tx) => tx.txHash);
   const missingHashes = hashesToFetch.filter(
