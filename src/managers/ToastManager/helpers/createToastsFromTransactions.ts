@@ -19,13 +19,11 @@ interface CreateToastsFromTransactionsReturnType {
 
 interface CreateToastsFromTransactionsParamsType {
   existingCompletedTransactions?: ITransactionToast[];
-  skipFetchingTransactions?: boolean;
   store?: StoreType;
 }
 
 export async function createToastsFromTransactions({
   existingCompletedTransactions = [],
-  skipFetchingTransactions = false,
   ...props
 }: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> {
   const store = props.store ?? getState();
@@ -48,7 +46,6 @@ export async function createToastsFromTransactions({
 
     const interprettedTransactions = await mapServerTransactionsToListItems({
       transactions,
-      skipFetchingTransactions,
       store
     });
 
