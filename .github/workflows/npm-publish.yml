@@ -39,7 +39,7 @@ jobs:
         id: package
         uses: andreigiura/action-nodejs-package-info@v1.0.2
 
-      - name: Publish to npmjs next version
+      - name: Publish to npmjs legacy
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
         if: ${{ steps.package.outputs.is-prerelease == 'true'}}
