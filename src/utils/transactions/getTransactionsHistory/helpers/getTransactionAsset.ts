@@ -1,6 +1,9 @@
 import { ITransactionListItemAsset } from 'lib/sdkDappUi';
 import { AssetType } from 'types/account.types';
-import { TransactionServerStatusesEnum } from 'types/enums.types';
+import {
+  IconNamesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
 import { TransactionIconTypeEnum } from 'types/transaction-list-item.types';
 import { isContract } from 'utils/validation/isContract';
 import { getIsTransactionInvalidOrFailed } from './getIsTransactionInvalidOrFailed';
@@ -60,13 +63,13 @@ export const getTransactionAsset = ({
 
   if (showDefaultTransactionIcon && !showDefaultState) {
     return {
-      icon: isTransactionPending ? 'hourglass' : 'close'
+      icon: isTransactionPending ? IconNamesEnum.hourglass : IconNamesEnum.close
     };
   }
 
   if (isMultipleAssets && !areMultipleAssetsSameType) {
     return {
-      icon: 'coins'
+      icon: IconNamesEnum.coins
     };
   }
 
