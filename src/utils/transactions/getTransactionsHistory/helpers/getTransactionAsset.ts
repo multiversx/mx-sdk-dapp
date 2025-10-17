@@ -60,13 +60,13 @@ export const getTransactionAsset = ({
 
   if (showDefaultTransactionIcon && !showDefaultState) {
     return {
-      icon: isTransactionPending ? 'faHourglass' : 'faTimes'
+      icon: isTransactionPending ? 'hourglass' : 'close'
     };
   }
 
   if (isMultipleAssets && !areMultipleAssetsSameType) {
     return {
-      icon: 'faCoins'
+      icon: 'coins'
     };
   }
 
