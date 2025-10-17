@@ -4,7 +4,6 @@ import { createStoreStub } from 'managers/ToastManager/tests/helpers/createStore
 import { NotificationsFeedManager } from '../NotificationsFeedManager';
 import { NotificationsFeedEventsEnum } from '../types/notifications.types';
 
-// Reusable pending toasts fixture shared across tests
 const pendingTransactionToasts = [
   {
     toastDataState: {
@@ -35,7 +34,6 @@ const pendingTransactionToasts = [
   }
 ];
 
-// Reusable success transactions history fixture
 const successTransactions = [
   {
     asset: null,
@@ -53,32 +51,17 @@ type PublishArgs = [NotificationsFeedEventsEnum, any];
 
 const createMockEventBus = () => {
   const publishes: PublishArgs[] = [];
-  const subscriptions: Array<{
-    event: NotificationsFeedEventsEnum | string;
-    callback: Function;
-  }> = [];
 
   return {
     bus: {
       publish: (event: NotificationsFeedEventsEnum, data: any) => {
         publishes.push([event, data]);
       },
-      subscribe: (
-        event: NotificationsFeedEventsEnum | string,
-        callback: Function
-      ) => {
-        subscriptions.push({ event, callback });
-        return () => void 0;
-      }
+      subscribe: () => () => null
     },
     getPublishes: () => publishes
   };
 };
-
-const createMockElement = (bus: any) => ({
-  getEventBus: async () => bus,
-  closeWithAnimation: undefined
-});
 
 // Helper to derive a pending toast from the reusable fixture with a custom session id
 const createPendingToastForSession = (sessionId: string) => ({
@@ -100,7 +83,7 @@ jest.mock('managers/ToastManager/helpers/createToastsFromTransactions', () => {
   };
 });
 
-describe('NotificationsFeedManager', () => {
+describe('NotificationsFeedManager tests', () => {
   const createToastsModule = require('managers/ToastManager/helpers/createToastsFromTransactions');
   const {
     TransactionsHistoryController
@@ -112,9 +95,9 @@ describe('NotificationsFeedManager', () => {
     jest.restoreAllMocks();
     jest.clearAllMocks();
     testBus = createMockEventBus();
-    jest
-      .spyOn(ComponentFactory, 'create')
-      .mockResolvedValue(createMockElement(testBus.bus));
+    jest.spyOn(ComponentFactory, 'create').mockResolvedValue({
+      getEventBus: async () => testBus.bus
+    });
   });
 
   it('publishes pending toasts and empty history', async () => {
