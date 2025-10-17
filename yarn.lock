@@ -2436,10 +2436,10 @@
     buffer "6.0.3"
     platform "1.3.6"
 
-"@multiversx/sdk-metamask-provider@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-3.0.3.tgz#fb71a8a7e65dec73cbcbce3a3f01cff00ae0df3d"
-  integrity sha512-dBS2t/eAWYIo3fKlSz5cj0aFiFEEJ+YN7YI/EmAx7/Z0JbpJAnJoGTOcKAr0M/2+nbUsA6JV9GU47tti1sSCkg==
+"@multiversx/sdk-metamask-provider@3.0.2":
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/@multiversx/sdk-metamask-provider/-/sdk-metamask-provider-3.0.2.tgz#302c525bd9363238a63b74ce4bbe681613568e18"
+  integrity sha512-Oqnd56bg4GvXsjF10uuNf3JoDDF+F0y6z4gzt963GfPiD7IweRQpVM3E6cKntoNoraxFOg4X8nlnTB05i8JChA==
   dependencies:
     "@metamask/providers" "16.0.0"
     protobufjs "7.4.0"
