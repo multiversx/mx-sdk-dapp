@@ -54,6 +54,7 @@ export class WebviewClient {
   private async handleMessage(event: MessageEvent<MessageType>) {
     const type = event.data?.type;
 
+    console.log('WebviewClient', type);
     if (typeof type === 'string' && this.handlers.has(type)) {
       const handler = this.handlers.get(type);
       return handler?.(event);
@@ -132,6 +133,7 @@ export class WebviewClient {
   private handshake({ event }: MessageEventType) {
     const handshakeSession = Date.now().toString();
 
+    console.log({ handshakeSession });
     event.source?.postMessage(
       {
         type: WindowProviderResponseEnums.finalizeHandshakeResponse,
