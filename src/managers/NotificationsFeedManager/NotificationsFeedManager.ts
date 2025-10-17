@@ -111,7 +111,7 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   protected async updateDataAndNotifications() {
     const { transactions } = this.store.getState();
 
-    const { pendingTransactionToasts } = await createToastsFromTransactions({});
+    const { pendingTransactionToasts } = await createToastsFromTransactions();
 
     this.data.pendingTransactions = pendingTransactionToasts;
 
