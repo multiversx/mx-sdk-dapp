@@ -18,19 +18,15 @@ interface CreateToastsFromTransactionsReturnType {
 }
 
 interface CreateToastsFromTransactionsParamsType {
-  existingCompletedTransactions?: ITransactionToast[];
   store?: StoreType;
 }
 
-export async function createToastsFromTransactions({
-  existingCompletedTransactions = [],
-  ...props
-}: CreateToastsFromTransactionsParamsType): Promise<CreateToastsFromTransactionsReturnType> {
-  const store = props.store ?? getState();
+export async function createToastsFromTransactions(
+  props?: CreateToastsFromTransactionsParamsType
+): Promise<CreateToastsFromTransactionsReturnType> {
+  const store = props?.store ?? getState();
   const pendingTransactionToasts: ITransactionToast[] = [];
-  const completedTransactionToasts: ITransactionToast[] = [
-    ...existingCompletedTransactions
-  ];
+  const completedTransactionToasts: ITransactionToast[] = [];
   const toastList = toastsSliceSelector(store);
   const transactionsSessions = transactionsSliceSelector(store);
   const address = addressSelector(store);
