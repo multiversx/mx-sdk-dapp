@@ -38,8 +38,8 @@ importers:
         specifier: 5.1.1
         version: 5.1.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))
       '@multiversx/sdk-webview-provider':
-        specifier: 3.2.3-alpha.6
-        version: 3.2.3-alpha.6(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))
+        specifier: 3.2.3-alpha.8
+        version: 3.2.3-alpha.8(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))
       immer:
         specifier: 10.1.1
         version: 10.1.1
@@ -840,8 +840,8 @@ packages:
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0  || ^15.0.0
 
-  '@multiversx/sdk-webview-provider@3.2.3-alpha.6':
-    resolution: {integrity: sha512-5EhyPr86MgofyjjOxlThXWh9JjmmmoPowUcuoaCOvfQCxuTiAmAZKePAJlolcMoM+8KNzHY2a7jhAqMNHsFFVw==}
+  '@multiversx/sdk-webview-provider@3.2.3-alpha.8':
+    resolution: {integrity: sha512-uU59gkB1wDU05zLOPDoCaE0BVQh7Euon1TXkjVwvak/DrYPzsqnhOGaxHGaABehTUq5WahpHRbgwch41/a8LRQ==}
     peerDependencies:
       '@multiversx/sdk-core': ^14.0.0 || ^15.0.0
       '@multiversx/sdk-web-wallet-cross-window-provider': ^3.x
@@ -5253,7 +5253,7 @@ snapshots:
       '@multiversx/sdk-core': 15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)
       qs: 6.10.3
 
-  '@multiversx/sdk-webview-provider@3.2.3-alpha.6(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))':
+  '@multiversx/sdk-webview-provider@3.2.3-alpha.8(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))(@multiversx/sdk-web-wallet-cross-window-provider@3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)))':
     dependencies:
       '@multiversx/sdk-core': 15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4)
       '@multiversx/sdk-web-wallet-cross-window-provider': 3.2.1(@multiversx/sdk-core@15.2.0(bignumber.js@9.3.1)(protobufjs@7.5.4))
