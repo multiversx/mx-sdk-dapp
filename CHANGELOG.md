@@ -7,8 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-
-- [Added NotificationsFeedManager basic tests](https://github.com/multiversx/mx-sdk-dapp/pull/1623)
+- [Added NotificationsFeedManager basic tests](https://github.com/multiversx/mx-sdk-dapp/pull/1625)
 - [Fixed NotificationsFeedManager hanging toasts](https://github.com/multiversx/mx-sdk-dapp/pull/1622)
 - [Added basic ToastManager test](https://github.com/multiversx/mx-sdk-dapp/pull/1619)
 
