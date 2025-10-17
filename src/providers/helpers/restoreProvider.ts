@@ -17,7 +17,6 @@ export async function restoreProvider() {
   let type =
     isInIframe || isMobileView ? ProviderTypeEnum.webview : providerType;
 
-  console.log({ type });
   const isBaseProvider = Object.values(ProviderTypeEnum).includes(
     providerType as ProviderBaseType
   );

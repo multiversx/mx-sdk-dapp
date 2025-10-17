@@ -133,7 +133,6 @@ export class WebviewClient {
   private handshake({ event }: MessageEventType) {
     const handshakeSession = Date.now().toString();
 
-    console.log({ handshakeSession });
     event.source?.postMessage(
       {
         type: WindowProviderResponseEnums.finalizeHandshakeResponse,
