@@ -16,7 +16,7 @@ export const getTransactionsByHashes = async (
 
   const responseData = await getServerTransactionsByHashes(hashes);
 
-  return pendingTransactions.map((transaction) => {
+  const pendingTxs = pendingTransactions.map((transaction) => {
     const txOnNetwork = responseData.find(
       (txResponse: ServerTransactionType) =>
         txResponse?.txHash === transaction.hash
@@ -35,4 +35,8 @@ export const getTransactionsByHashes = async (
       )
     };
   });
+
+  console.log(12, pendingTxs);
+
+  return pendingTxs;
 };
