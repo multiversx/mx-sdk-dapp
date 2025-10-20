@@ -19,7 +19,7 @@ export function getExplorerLink({
     const url = new URL(to);
     return url.href;
   } catch {
-    if (!to.startsWith('/')) {
+    if (to && !to.startsWith('/')) {
       logError(`Link not prepended by / : ${to}`);
       to = `/${to}`;
     }
