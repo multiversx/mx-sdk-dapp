@@ -10,7 +10,7 @@ import { SignedTransactionType } from 'types/transactions.types';
 
 import { refreshAccount } from 'utils';
 import { getPendingTransactions } from '../getPendingTransactions';
-import { manageTransaction } from './helpers/manageTransaction';
+import { runTransactionStatusUpdate } from './helpers/runTransactionStatusUpdate';
 
 export interface TransactionStatusTrackerPropsType {
   sessionId: string;
@@ -36,7 +36,7 @@ export async function checkBatch({
       await getTransactionsByHashes(pendingTransactions);
 
     for (const serverTransaction of serverTransactions) {
-      await manageTransaction({
+      await runTransactionStatusUpdate({
         serverTransaction,
         sessionId,
         isSequential

@@ -5,8 +5,8 @@ import {
   TrackedTransactionResultType,
   SignedTransactionType
 } from 'types/transactions.types';
-import { manageFailedTransactions } from './manageFailedTransactions';
 import { runSessionCallbacks } from './runSessionCallbacks';
+import { manageFailedTransactions } from './runTransactionFailure';
 import { updateTransactionAndSessionStatus } from './updateTransactionAndSessionStatus';
 
 export interface TransactionStatusTrackerPropsType {
@@ -21,19 +21,26 @@ interface RetriesType {
 
 const retries: RetriesType = {};
 
-interface ManageTransactionType {
+interface RunTransactionStatusUpdateType {
   serverTransaction: TrackedTransactionResultType;
   sessionId: string;
   isSequential?: boolean;
 }
 
-export async function manageTransaction({
+export async function runTransactionStatusUpdate({
   serverTransaction: transaction,
   sessionId,
   isSequential
-}: ManageTransactionType) {
+}: RunTransactionStatusUpdateType) {
   const { hash, status, results, invalidTransaction, hasStatusChanged } =
     transaction;
+
+  console.log({
+    serverTransaction: transaction,
+    sessionId,
+    isSequential
+  });
+
   try {
     const retriesForThisHash = retries[hash];
     if (retriesForThisHash > 30) {
