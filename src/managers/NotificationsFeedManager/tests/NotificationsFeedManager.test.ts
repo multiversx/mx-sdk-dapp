@@ -1,5 +1,8 @@
-import { testAddress, testNetwork } from '__mocks__';
-import { mockTransaction } from 'managers/ToastManager/helpers/tests/mocks/transactions';
+import {
+  testAddress,
+  testNetwork,
+  mockPendingTransaction as mockTransaction
+} from '__mocks__';
 import { createStoreStub } from 'managers/ToastManager/tests/helpers/createStoreStub';
 import { NotificationsFeedManager } from '../NotificationsFeedManager';
 import { NotificationsFeedEventsEnum } from '../types/notifications.types';

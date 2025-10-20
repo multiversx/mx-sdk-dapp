@@ -5,3 +5,4 @@ export * from './socketResponse';
 export * from './websocketConfig';
 export * from './blocks';
 export * from './mockStore';
+export * from './mockPendingTransaction';

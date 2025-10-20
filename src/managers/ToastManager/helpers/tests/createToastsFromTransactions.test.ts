@@ -1,6 +1,11 @@
-import { testAddress, testNetwork } from '__mocks__';
-import { server, rest } from '__mocks__';
-import { mockStore } from '__mocks__/data/mockStore';
+import {
+  testAddress,
+  testNetwork,
+  mockPendingTransaction,
+  server,
+  rest,
+  mockStore
+} from '__mocks__';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { StoreType } from 'store/store.types';
 import {
@@ -8,7 +13,7 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { createToastsFromTransactions } from '../createToastsFromTransactions';
-import { mockTransaction, mockTransactionSession } from './mocks/transactions';
+import { mockTransactionSession } from './mocks/transactions';
 
 const successTransactionHash =
   'txSuccess§§§7cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay';
@@ -38,7 +43,7 @@ const createMockSession = (
 ) => ({
   ...mockTransactionSession,
   status,
-  transactions: [{ ...mockTransaction, hash: transactionHash, status }]
+  transactions: [{ ...mockPendingTransaction, hash: transactionHash, status }]
 });
 
 describe('createToastsFromTransactions', () => {
@@ -58,7 +63,7 @@ describe('createToastsFromTransactions', () => {
 
   const mockTransactionsEndpoint = (
     hashes: string[],
-    mockData: Array<typeof mockTransaction>
+    mockData: Array<typeof mockPendingTransaction>
   ) => {
     const endpoint = `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}`;
     return rest.get(endpoint, (req, res, ctx) => {
@@ -77,8 +82,8 @@ describe('createToastsFromTransactions', () => {
   it('should correctly classify transactions as processing or completed based on their status', async () => {
     server.use(
       mockTransactionsEndpoint(
-        [mockTransaction.hash],
-        [{ ...mockTransaction, status: 'pending' }]
+        [mockPendingTransaction.hash],
+        [{ ...mockPendingTransaction, status: 'pending' }]
       )
     );
 
@@ -87,7 +92,7 @@ describe('createToastsFromTransactions', () => {
       transactions: {
         [SESSION_IDS.PENDING]: createMockSession(
           TransactionServerStatusesEnum.pending,
-          mockTransaction.hash
+          mockPendingTransaction.hash
         ),
         [SESSION_IDS.SUCCESS]: createMockSession(
           TransactionServerStatusesEnum.success,
@@ -111,7 +116,7 @@ describe('createToastsFromTransactions', () => {
       directionLabel: 'From',
       action: { name: 'Received xEGLD', description: undefined },
       amount: '0 xEGLD',
-      hash: mockTransaction.hash,
+      hash: mockPendingTransaction.hash,
       status: 'pending',
       timestamp: undefined,
       interactorAsset: undefined
@@ -136,7 +141,7 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData,
-              link: `${testNetwork.explorerAddress}/transactions/${mockTransaction.hash}`
+              link: `${testNetwork.explorerAddress}/transactions/${mockPendingTransaction.hash}`
             }
           ]
         }
