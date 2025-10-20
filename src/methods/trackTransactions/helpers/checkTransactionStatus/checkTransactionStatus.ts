@@ -1,6 +1,6 @@
 import { pendingTransactionsSessionsSelector } from 'store/selectors/transactionsSelector';
 import { getState } from 'store/store';
-import { checkBatch } from './checkBatch';
+import { checkBatch } from './helpers/checkBatch';
 
 export async function checkTransactionStatus() {
   const pendingSessions = pendingTransactionsSessionsSelector(getState());
