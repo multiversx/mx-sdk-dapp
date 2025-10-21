@@ -10,6 +10,7 @@ import {
   ProviderType
 } from 'providers/types/providerFactory.types';
 import { createCustomToast } from 'store/actions/toasts/toastsActions';
+import { IconNamesEnum } from 'types';
 import { ProviderErrorsEnum } from 'types/provider.types';
 import { getLedgerProvider } from './helpers';
 import { authenticateLedgerAccount } from './helpers/authenticateLedgerAccount';
@@ -21,7 +22,6 @@ import {
   LoginOptionsTypes
 } from '../BaseProviderStrategy/BaseProviderStrategy';
 import { signTransactions } from '../helpers/signTransactions/signTransactions';
-import { IconNamesEnum } from 'types';
 
 type LedgerProviderStrategyOptionsType = {
   anchor?: HTMLElement;

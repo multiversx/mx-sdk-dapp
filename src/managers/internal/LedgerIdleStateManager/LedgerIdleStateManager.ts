@@ -8,8 +8,8 @@ import { ProviderTypeEnum } from 'providers/types/providerFactory.types';
 import { isLoggedInSelector, loginInfoSelector } from 'store/selectors';
 import { isSidePanelOpenSelector } from 'store/selectors/uiSelectors';
 import { getState, getStore } from 'store/store';
-import { ToastManager } from '../../ToastManager';
 import { IconNamesEnum } from 'types';
+import { ToastManager } from '../../ToastManager';
 
 const LEDGER_IDLE_STATE_CHECK_INTERVAL = 30_000;
 const LEDGER_IDLE_STATE_RECONNECT_INTERVAL = 5_000;
@@ -29,7 +29,7 @@ export class LedgerIdleStateManager {
     return LedgerIdleStateManager.instance;
   }
 
-  private constructor() { }
+  private constructor() {}
 
   public init = async () => {
     this.startCheckConnectionLoop();

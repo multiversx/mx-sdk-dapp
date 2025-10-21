@@ -74,9 +74,9 @@ export enum SigningWarningsEnum {
 }
 
 export enum IconNamesEnum {
-  close = "close",
-  hourglass = "hourglass",
-  ban = "ban",
-  coins = "coins",
-  check = "check"
+  close = 'close',
+  hourglass = 'hourglass',
+  ban = 'ban',
+  coins = 'coins',
+  check = 'check'
 }

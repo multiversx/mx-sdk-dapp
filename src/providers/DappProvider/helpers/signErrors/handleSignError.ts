@@ -4,7 +4,11 @@ import {
   ERROR_SIGNING_TOAST_ID
 } from 'constants/transactions.constants';
 import { createCustomToast } from 'store/actions';
-import { IconNamesEnum, SigningErrorsEnum, SigningWarningsEnum } from 'types/enums.types';
+import {
+  IconNamesEnum,
+  SigningErrorsEnum,
+  SigningWarningsEnum
+} from 'types/enums.types';
 
 const states = {
   error: {

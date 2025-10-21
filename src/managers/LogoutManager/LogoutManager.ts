@@ -10,8 +10,8 @@ import {
 import { nativeAuthConfigSelector } from 'store/selectors/configSelectors';
 import { tokenLoginSelector } from 'store/selectors/loginInfoSelectors';
 import { getStore } from 'store/store';
-import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
 import { IconNamesEnum } from 'types';
+import { getHumanReadableTokenExpirationTime } from './helpers/getHumanReadableTokenExpirationTime';
 
 export class LogoutManager {
   private static instance: LogoutManager;
@@ -28,7 +28,7 @@ export class LogoutManager {
     return LogoutManager.instance;
   }
 
-  private constructor() { }
+  private constructor() {}
 
   public init = async () => {
     if (!this.shouldStart()) {
