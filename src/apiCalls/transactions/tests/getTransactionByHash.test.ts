@@ -2,7 +2,7 @@ import { server, rest, mockPendingTransaction } from '__mocks__';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { getTransactionByHash } from '../getTransactionByHash';
 
-const hash = '2b513313f36d1ece4ce8225bb2fe5eff365f5af6db2aaf1a3e5b60541c650fd8';
+const hash = mockPendingTransaction.hash;
 
 const tx = {
   ...mockPendingTransaction,
