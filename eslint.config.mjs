@@ -93,6 +93,7 @@ export default [
         'error',
         {
           argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
           caughtErrorsIgnorePattern: '^_'
         }
       ],
@@ -113,7 +114,8 @@ export default [
       'operator-linebreak': 'off',
       'function-paren-newline': 'off',
       'no-shadow': 'warn',
-      '@typescript-eslint/no-shadow': 'warn'
+      '@typescript-eslint/no-shadow': 'warn',
+      'prefer-const': 'error'
     }
   }
 ];
