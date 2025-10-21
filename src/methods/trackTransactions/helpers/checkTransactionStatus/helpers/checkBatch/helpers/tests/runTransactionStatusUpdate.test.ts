@@ -34,18 +34,22 @@ describe('runTransactionStatusUpdate', () => {
     results: []
   };
 
-  it('updates transaction and runs session callbacks when status changed to success', async () => {
-    const { getIsTransactionFailed } = jest.requireMock(
-      'store/actions/transactions/transactionStateByStatus'
-    );
-    const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
-    const { manageFailedTransactions } = jest.requireMock(
-      '../runTransactionFailure'
-    );
-    const { updateTransactionAndSessionStatus } = jest.requireMock(
-      '../updateTransactionAndSessionStatus'
-    );
+  const { getIsTransactionFailed } = jest.requireMock(
+    'store/actions/transactions/transactionStateByStatus'
+  );
+  const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
+  const { manageFailedTransactions } = jest.requireMock(
+    '../runTransactionFailure'
+  );
+  const { updateTransactionAndSessionStatus } = jest.requireMock(
+    '../updateTransactionAndSessionStatus'
+  );
 
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('updates transaction and runs session callbacks when status changed to success', async () => {
     (getIsTransactionFailed as jest.Mock).mockReturnValue(false);
     (updateTransactionAndSessionStatus as jest.Mock).mockReturnValue(
       TransactionBatchStatusesEnum.success

@@ -3,8 +3,8 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
-import { manageFailedTransactions } from '../runTransactionFailure';
 import { ResultType } from 'types/serverTransactions.types';
+import { manageFailedTransactions } from '../runTransactionFailure';
 
 jest.mock('store/actions/transactions/transactionsActions', () => ({
   updateSessionStatus: jest.fn()
@@ -37,6 +37,14 @@ describe('manageFailedTransactions', () => {
 
   const errorMessage = 'some error';
   const results = [{ returnMessage: '' }, { returnMessage: errorMessage }];
+  const { getState } = jest.requireMock('store/store');
+  const { updateSessionStatus } = jest.requireMock(
+    'store/actions/transactions/transactionsActions'
+  );
+  const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
+  const { getIsTransactionPending } = jest.requireMock(
+    'store/actions/transactions/transactionStateByStatus'
+  );
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -45,14 +53,6 @@ describe('manageFailedTransactions', () => {
   it('updates transaction to fail and updates session + runs callbacks when no pending remain', async () => {
     const { updateTransactionAndSessionStatus } = jest.requireMock(
       '../updateTransactionAndSessionStatus'
-    );
-    const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
-    const { updateSessionStatus } = jest.requireMock(
-      'store/actions/transactions/transactionsActions'
-    );
-    const { getState } = jest.requireMock('store/store');
-    const { getIsTransactionPending } = jest.requireMock(
-      'store/actions/transactions/transactionStateByStatus'
     );
 
     getState.mockReturnValue({
@@ -99,15 +99,6 @@ describe('manageFailedTransactions', () => {
   });
 
   it('does not update session or run callbacks when pending transactions remain', async () => {
-    const { updateSessionStatus } = jest.requireMock(
-      'store/actions/transactions/transactionsActions'
-    );
-    const { runSessionCallbacks } = jest.requireMock('../runSessionCallbacks');
-    const { getState } = jest.requireMock('store/store');
-    const { getIsTransactionPending } = jest.requireMock(
-      'store/actions/transactions/transactionStateByStatus'
-    );
-
     getState.mockReturnValue({
       transactions: {
         [sessionId]: {
