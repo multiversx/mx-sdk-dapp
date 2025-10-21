@@ -47,7 +47,7 @@ export const mapServerTransactionsToListItems = async ({
     return sortTransactionsByTimestamp(cachedTransactions);
   }
 
-  let newTransactions: ServerTransactionType[] = transactions.map((tx) => ({
+  const newTransactions: ServerTransactionType[] = transactions.map((tx) => ({
     // casting is correct since store transaction was replaced with fetched server transaction
     ...(tx as unknown as ServerTransactionType),
     txHash: tx.hash
