@@ -1,6 +1,6 @@
 import { UITagsEnum } from 'constants/UITags.enum';
 
-import { MvxLedgerConnect } from 'lib/sdkDappUi';
+import { MvxLedgerConnect } from 'lib/sdkDappUI.components';
 import { UnlockPanelEventsEnum } from 'managers/UnlockPanelManager/UnlockPanelManager.types';
 import {
   IAccountScreenData,
