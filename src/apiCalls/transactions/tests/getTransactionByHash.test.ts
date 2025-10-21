@@ -1,6 +1,15 @@
-import { server, rest, mockPendingTransaction } from '__mocks__';
+import { server, rest, mockPendingTransaction, testNetwork } from '__mocks__';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
+import { networkSelector } from 'store/selectors';
 import { getTransactionByHash } from '../getTransactionByHash';
+
+jest.mock('store/store', () => ({
+  getState: jest.fn()
+}));
+
+jest.mock('store/selectors', () => ({
+  networkSelector: jest.fn()
+}));
 
 const hash = mockPendingTransaction.hash;
 
@@ -21,11 +30,19 @@ const tx = {
 };
 
 describe('getTransactionByHash', () => {
+  beforeEach(() => {
+    (networkSelector as jest.Mock).mockReturnValue(testNetwork);
+  });
+
   it('returns a transaction for the provided hash', async () => {
+    // Use MSW to intercept the request to testNetwork.apiAddress
     server.use(
-      rest.get(`*/${TRANSACTIONS_ENDPOINT}/${hash}`, (req, res, ctx) => {
-        return res(ctx.status(200), ctx.json(tx));
-      })
+      rest.get(
+        `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}/${encodeURIComponent(hash)}`,
+        (req, res, ctx) => {
+          return res(ctx.status(200), ctx.json(tx));
+        }
+      )
     );
 
     const response = await getTransactionByHash(hash);
