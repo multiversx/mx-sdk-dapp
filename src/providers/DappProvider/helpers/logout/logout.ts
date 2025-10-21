@@ -37,7 +37,7 @@ export async function logout({
     shouldBroadcastLogoutAcrossTabs: true
   }
 }: IProviderLogout): Promise<boolean> {
-  let address = getAddress();
+  const address = getAddress();
 
   if (options.shouldBroadcastLogoutAcrossTabs && safeWindow.localStorage) {
     broadcastLogoutAcrossTabs(address, safeWindow.localStorage);

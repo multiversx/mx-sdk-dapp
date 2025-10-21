@@ -10,6 +10,7 @@ import { nativeAuthConfigSelector } from 'store/selectors';
 import { getState } from 'store/store';
 import { accountLogin } from './helpers/accountLogin';
 import { extractAddressFromToken } from './helpers/extractAddressFromToken';
+import { getMultisigLoginToken } from './helpers/getMultisigLoginToken';
 
 async function loginWithoutNativeToken(provider: IProvider) {
   const {
@@ -53,9 +54,11 @@ async function loginWithNativeToken({
     });
   }
 
-  const { address, signature, ...loginResult } = await provider.login({
+  const loginData = await provider.login({
     token: loginToken
   });
+
+  const { address, signature, ...loginResult } = loginData;
 
   if (!address) {
     console.warn('Login cancelled.');
@@ -70,11 +73,17 @@ async function loginWithNativeToken({
   // nativeAuthToken received from hub login
   const decodedToken = decodeNativeAuthToken(loginResult?.accessToken);
 
+  const usedLoginToken = await getMultisigLoginToken({
+    loginData,
+    nativeAuthConfig,
+    loginToken
+  });
+
   const nativeAuthToken = decodedToken
     ? loginResult.accessToken
     : nativeAuthClient.getToken({
         address,
-        token: loginToken,
+        token: usedLoginToken,
         signature
       });
 

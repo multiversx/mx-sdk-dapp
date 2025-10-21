@@ -33,7 +33,7 @@ export const getLockedAccountName = async ({
       };
     }
 
-    for (let account in lockedAccounts) {
+    for (const account in lockedAccounts) {
       if (addressIsValid(account)) {
         if (sender === account) {
           senderLockedAccount = account;

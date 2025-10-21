@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.11](https://github.com/multiversx/mx-sdk-dapp/pull/1632)] - 2025-10-21
+
+- [Fixed multisig login token](https://github.com/multiversx/mx-sdk-dapp/pull/1631)
+
 ## [[5.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/1630)] - 2025-10-21
 
 - [Added transaction tracker tests](https://github.com/multiversx/mx-sdk-dapp/pull/1629)
