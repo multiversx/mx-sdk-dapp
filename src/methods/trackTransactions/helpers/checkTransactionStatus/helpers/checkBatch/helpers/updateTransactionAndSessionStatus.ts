@@ -17,7 +17,7 @@ export function updateTransactionAndSessionStatus({
   });
 
   const state = getState();
-  const transactions = state.transactions[sessionId].transactions;
+  const transactions = state.transactions?.[sessionId].transactions;
 
   const status = getTransactionsSessionStatus(transactions);
 

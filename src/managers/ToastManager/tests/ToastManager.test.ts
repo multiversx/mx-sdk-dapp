@@ -1,21 +1,13 @@
-import { server, rest, testNetwork } from '__mocks__';
+import { server, rest, testNetwork, mockPendingTransaction } from '__mocks__';
 import { mockStore } from '__mocks__/data/mockStore';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
-import {
-  mockTransaction,
-  mockTransactionSession
-} from 'managers/ToastManager/helpers/tests/mocks/transactions';
+import { mockTransactionSession } from 'managers/ToastManager/helpers/tests/mocks/transactions';
 import { ToastManager } from '../ToastManager';
 import { createStoreStub } from './helpers/createStoreStub';
 import { LifetimeManager } from '../helpers/LifetimeManager';
 import { ToastUICoordinator } from '../ToastUICoordinator';
 
-const pendingTransaction = [
-  {
-    ...mockTransaction,
-    status: 'pending'
-  }
-];
+const pendingTransaction = [mockPendingTransaction];
 
 const SESSION_ID = '1760451058752';
 
@@ -51,7 +43,7 @@ describe('ToastManager subscription reacts to transaction completion', () => {
       transactions: {
         [SESSION_ID]: {
           status: 'sent',
-          transactions: [{ ...mockTransaction, status: 'pending' }],
+          transactions: [mockPendingTransaction],
           transactionsDisplayInfo:
             mockTransactionSession.transactionsDisplayInfo,
           interpretedTransactions: {}
@@ -93,7 +85,9 @@ describe('ToastManager subscription reacts to transaction completion', () => {
       transactions: {
         [SESSION_ID]: {
           status: 'success',
-          transactions: [{ ...mockTransaction, status: 'success' } as any],
+          transactions: [
+            { ...mockPendingTransaction, status: 'success' } as any
+          ],
           transactionsDisplayInfo:
             mockTransactionSession.transactionsDisplayInfo,
           interpretedTransactions: {},
