@@ -35,12 +35,6 @@ export async function runTransactionStatusUpdate({
   const { hash, status, results, invalidTransaction, hasStatusChanged } =
     transaction;
 
-  console.log({
-    serverTransaction: transaction,
-    sessionId,
-    isSequential
-  });
-
   try {
     const retriesForThisHash = retries[hash];
     if (retriesForThisHash > 30) {

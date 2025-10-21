@@ -36,7 +36,5 @@ export const getTransactionsByHashes = async (
     };
   });
 
-  console.log(12, pendingTxs);
-
   return pendingTxs;
 };
