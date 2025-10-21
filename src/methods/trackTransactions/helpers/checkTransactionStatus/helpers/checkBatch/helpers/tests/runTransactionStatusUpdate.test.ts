@@ -31,7 +31,7 @@ describe('runTransactionStatusUpdate', () => {
     hasStatusChanged: true,
     previousStatus: 'pending' as const,
     invalidTransaction: false,
-    results: [] as any[]
+    results: []
   };
 
   it('updates transaction and runs session callbacks when status changed to success', async () => {

@@ -4,6 +4,7 @@ import {
   TransactionServerStatusesEnum
 } from 'types/enums.types';
 import { manageFailedTransactions } from '../runTransactionFailure';
+import { ResultType } from 'types/serverTransactions.types';
 
 jest.mock('store/actions/transactions/transactionsActions', () => ({
   updateSessionStatus: jest.fn()
@@ -32,13 +33,10 @@ describe('manageFailedTransactions', () => {
   const baseTx = {
     ...mockPendingTransaction,
     hash
-  } as any;
+  };
 
   const errorMessage = 'some error';
-  const results = [
-    { returnMessage: '' },
-    { returnMessage: errorMessage }
-  ] as any[];
+  const results = [{ returnMessage: '' }, { returnMessage: errorMessage }];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -71,7 +69,13 @@ describe('manageFailedTransactions', () => {
       (status: string) => status === TransactionServerStatusesEnum.pending
     );
 
-    await manageFailedTransactions({ results, hash, sessionId });
+    await manageFailedTransactions({
+      transaction: {
+        ...baseTx,
+        results: results as ResultType[]
+      },
+      sessionId
+    });
 
     expect(updateTransactionAndSessionStatus).toHaveBeenCalledWith({
       sessionId,
@@ -116,7 +120,13 @@ describe('manageFailedTransactions', () => {
 
     getIsTransactionPending.mockReturnValue(true);
 
-    await manageFailedTransactions({ results, hash, sessionId });
+    await manageFailedTransactions({
+      transaction: {
+        ...baseTx,
+        results: results as ResultType[]
+      },
+      sessionId
+    });
 
     expect(updateSessionStatus).not.toHaveBeenCalled();
     expect(runSessionCallbacks).not.toHaveBeenCalled();

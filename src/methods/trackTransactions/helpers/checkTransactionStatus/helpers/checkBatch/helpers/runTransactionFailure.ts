@@ -5,38 +5,34 @@ import {
   TransactionBatchStatusesEnum,
   TransactionServerStatusesEnum
 } from 'types/enums.types';
-import { ResultType } from 'types/serverTransactions.types';
 import { SignedTransactionType } from 'types/transactions.types';
 import { runSessionCallbacks } from './runSessionCallbacks';
 import { updateTransactionAndSessionStatus } from './updateTransactionAndSessionStatus';
 
 export async function manageFailedTransactions({
-  results,
-  hash,
+  transaction,
   sessionId
 }: {
-  results: ResultType[];
-  hash: string;
+  transaction: SignedTransactionType;
   sessionId: string;
 }) {
-  const resultWithError = results?.find(
-    (scResult) => scResult?.returnMessage !== ''
+  const resultWithError = transaction.results?.find(
+    (result) => result?.returnMessage !== ''
   );
 
   updateTransactionAndSessionStatus({
     sessionId,
     transaction: {
-      ...(resultWithError as unknown as SignedTransactionType),
-      hash,
+      ...transaction,
       status: TransactionServerStatusesEnum.fail,
       inTransit: false
     }
   });
 
   const { transactions: sessions } = getState();
-  const session = sessions[sessionId];
+  const session = sessions?.[sessionId];
 
-  const hasPendingTransactions = session.transactions.some((tx) =>
+  const hasPendingTransactions = session.transactions?.some((tx) =>
     getIsTransactionPending(tx.status)
   );
 

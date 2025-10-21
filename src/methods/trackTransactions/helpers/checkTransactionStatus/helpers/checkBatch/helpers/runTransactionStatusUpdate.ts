@@ -32,8 +32,7 @@ export async function runTransactionStatusUpdate({
   sessionId,
   isSequential
 }: RunTransactionStatusUpdateType) {
-  const { hash, status, results, invalidTransaction, hasStatusChanged } =
-    transaction;
+  const { hash, status, invalidTransaction, hasStatusChanged } = transaction;
 
   try {
     const retriesForThisHash = retries[hash];
@@ -87,7 +86,7 @@ export async function runTransactionStatusUpdate({
     }
 
     if (getIsTransactionFailed(status)) {
-      await manageFailedTransactions({ sessionId, hash, results });
+      await manageFailedTransactions({ sessionId, transaction });
     }
   } catch (error) {
     console.error(error);

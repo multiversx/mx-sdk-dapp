@@ -59,7 +59,7 @@ export async function checkBatch({
     // The batch transactions mechanism will call the callbacks separately.
 
     const { transactions: sessions } = getState();
-    const session = sessions[sessionId];
+    const session = sessions?.[sessionId];
 
     const isSuccessful = session.transactions.every(
       (tx) => tx.status === TransactionServerStatusesEnum.success
