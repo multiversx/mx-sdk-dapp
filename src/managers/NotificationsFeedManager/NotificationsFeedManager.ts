@@ -3,7 +3,10 @@ import { UITagsEnum } from 'constants/UITags.enum';
 import { TransactionsHistoryController } from 'controllers/TransactionsHistoryController';
 import { ITransactionListItem, MvxNotificationsFeed } from 'lib/sdkDappUi';
 import { clearCompletedTransactions } from 'store/actions/transactions/transactionsActions';
+import { TransactionsSliceType } from 'store/slices/transactions/transactionsSlice.types';
 import { getStore } from 'store/store';
+import { TransactionServerStatusesEnum } from 'types/enums.types';
+import { TransactionBatchStatusesEnum } from 'types/enums.types';
 import { NotificationsFeedEventsEnum } from './types';
 import { SidePanelBaseManager } from '../internal/SidePanelBaseManager/SidePanelBaseManager';
 import { ToastManager } from '../ToastManager';
@@ -108,13 +111,28 @@ export class NotificationsFeedManager extends SidePanelBaseManager<
   protected async updateDataAndNotifications() {
     const { transactions } = this.store.getState();
 
-    const { pendingTransactionToasts } = await createToastsFromTransactions({});
+    const { pendingTransactionToasts } = await createToastsFromTransactions();
 
     this.data.pendingTransactions = pendingTransactionToasts;
 
+    const transactionsSessions = Object.keys(transactions).reduce(
+      (acc, key) => {
+        const isPendingStatus = [
+          TransactionBatchStatusesEnum.sent,
+          `${TransactionServerStatusesEnum.pending}`
+        ].includes(String(transactions[key].status));
+
+        if (!isPendingStatus) {
+          acc[key] = transactions[key];
+        }
+        return acc;
+      },
+      {} as TransactionsSliceType
+    );
+
     this.data.historicTransactions =
       await TransactionsHistoryController.getTransactionsHistory({
-        transactionsSessions: transactions
+        transactionsSessions
       });
 
     await this.updateNotificationsFeed();

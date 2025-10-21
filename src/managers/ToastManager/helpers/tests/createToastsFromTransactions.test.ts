@@ -1,11 +1,19 @@
-import { testAddress, testNetwork } from '__mocks__';
-import { server, rest } from '__mocks__';
-import { mockStore } from '__mocks__/data/mockStore';
+import {
+  testAddress,
+  testNetwork,
+  mockPendingTransaction,
+  server,
+  rest,
+  mockStore
+} from '__mocks__';
 import { TRANSACTIONS_ENDPOINT } from 'apiCalls/endpoints';
 import { StoreType } from 'store/store.types';
-import { IconNamesEnum, TransactionServerStatusesEnum } from 'types/enums.types';
+import {
+  IconNamesEnum,
+  TransactionServerStatusesEnum
+} from 'types/enums.types';
 import { createToastsFromTransactions } from '../createToastsFromTransactions';
-import { mockTransaction, mockTransactionSession } from './mocks/transactions';
+import { mockTransactionSession } from './mocks/transactions';
 
 const successTransactionHash =
   'txSuccess§§§7cb81c945decd70678cebc5b8b919f8e3c8411f2b19ebdd6ay';
@@ -35,7 +43,7 @@ const createMockSession = (
 ) => ({
   ...mockTransactionSession,
   status,
-  transactions: [{ ...mockTransaction, hash: transactionHash, status }]
+  transactions: [{ ...mockPendingTransaction, hash: transactionHash, status }]
 });
 
 describe('createToastsFromTransactions', () => {
@@ -55,7 +63,7 @@ describe('createToastsFromTransactions', () => {
 
   const mockTransactionsEndpoint = (
     hashes: string[],
-    mockData: Array<typeof mockTransaction>
+    mockData: Array<typeof mockPendingTransaction>
   ) => {
     const endpoint = `${testNetwork.apiAddress}/${TRANSACTIONS_ENDPOINT}`;
     return rest.get(endpoint, (req, res, ctx) => {
@@ -74,8 +82,8 @@ describe('createToastsFromTransactions', () => {
   it('should correctly classify transactions as processing or completed based on their status', async () => {
     server.use(
       mockTransactionsEndpoint(
-        [mockTransaction.hash],
-        [{ ...mockTransaction, status: 'pending' }]
+        [mockPendingTransaction.hash],
+        [{ ...mockPendingTransaction, status: 'pending' }]
       )
     );
 
@@ -84,7 +92,7 @@ describe('createToastsFromTransactions', () => {
       transactions: {
         [SESSION_IDS.PENDING]: createMockSession(
           TransactionServerStatusesEnum.pending,
-          mockTransaction.hash
+          mockPendingTransaction.hash
         ),
         [SESSION_IDS.SUCCESS]: createMockSession(
           TransactionServerStatusesEnum.success,
@@ -108,7 +116,7 @@ describe('createToastsFromTransactions', () => {
       directionLabel: 'From',
       action: { name: 'Received xEGLD', description: undefined },
       amount: '0 xEGLD',
-      hash: mockTransaction.hash,
+      hash: mockPendingTransaction.hash,
       status: 'pending',
       timestamp: undefined,
       interactorAsset: undefined
@@ -133,7 +141,7 @@ describe('createToastsFromTransactions', () => {
           transactions: [
             {
               ...commonData,
-              link: `${testNetwork.explorerAddress}/transactions/${mockTransaction.hash}`
+              link: `${testNetwork.explorerAddress}/transactions/${mockPendingTransaction.hash}`
             }
           ]
         }
@@ -147,22 +155,21 @@ describe('createToastsFromTransactions', () => {
             title: 'Self transaction successful',
             iconClassName: 'success'
           },
-          processedTransactionsStatus: '0 / 2 transactions processed',
-          transactionProgressState: {
-            endTime: fixedNow + 1000,
-            startTime: fixedNow
-          },
+          processedTransactionsStatus: 'Transaction processed',
+          transactionProgressState: null,
           toastId: SESSION_IDS.SUCCESS,
           transactions: [
             {
-              ...commonData, // status is still pending because the toasts were not shown yet
-              link: `${testNetwork.explorerAddress}/transactions/${mockTransaction.hash}`
-            },
-            {
-              ...commonData, // see next test for the status change
+              action: { name: 'Received xEGLD', description: undefined },
+              amount: '0 xEGLD',
+              asset: null,
+              directionLabel: 'From',
               hash: successTransactionHash,
-              timestamp: fixedNow,
-              link: `${testNetwork.explorerAddress}/transactions/${successTransactionHash}`
+              interactor: testAddress,
+              interactorAsset: undefined,
+              link: `${testNetwork.explorerAddress}/transactions/${successTransactionHash}`,
+              status: TransactionServerStatusesEnum.success,
+              timestamp: undefined
             }
           ]
         }
@@ -209,8 +216,7 @@ describe('createToastsFromTransactions existing completed transactions', () => {
     const { createTransactionToast } = require('../createTransactionToast');
 
     const result = await createToastsFromTransactions({
-      store,
-      skipFetchingTransactions: true
+      store
     });
 
     expect(result.completedTransactionToasts).toHaveLength(1);

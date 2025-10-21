@@ -1,10 +1,12 @@
+import { IconNamesEnum } from 'types';
 import { ServerTransactionType } from 'types/serverTransactions.types';
 import { capitalize } from 'utils/operations/capitalize';
 import { getTransactionMessages } from './getTransactionMessages';
 import { getTransactionStatus } from './getTransactionStatus';
-import { IconNamesEnum } from 'types';
 
-export const getTransactionIconInfo = (transaction: ServerTransactionType): { icon?: `${IconNamesEnum}`, tooltip: string } => {
+export const getTransactionIconInfo = (
+  transaction: ServerTransactionType
+): { icon?: `${IconNamesEnum}`; tooltip: string } => {
   const transactionMessages = getTransactionMessages(transaction);
 
   const { failed, invalid, pending } = getTransactionStatus(transaction);
