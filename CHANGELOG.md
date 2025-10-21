@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [[5.2.10](https://github.com/multiversx/mx-sdk-dapp/pull/1630)] - 2025-10-21
+
 - [Added transaction tracker tests](https://github.com/multiversx/mx-sdk-dapp/pull/1629)
+- [Fixed jest breaks because of sdk-dapp-ui imports](https://github.com/multiversx/mx-sdk-dapp/pull/1628)
 - [Added transaction tracker helpers tests](https://github.com/multiversx/mx-sdk-dapp/pull/1627)
 - [Fixed explorer link console error](https://github.com/multiversx/mx-sdk-dapp/pull/1626)
 - [Added NotificationsFeedManager basic tests](https://github.com/multiversx/mx-sdk-dapp/pull/1625)
