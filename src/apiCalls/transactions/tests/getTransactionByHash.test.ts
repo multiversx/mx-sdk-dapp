@@ -31,6 +31,7 @@ const tx = {
 
 describe('getTransactionByHash', () => {
   beforeEach(() => {
+    jest.resetAllMocks();
     (networkSelector as jest.Mock).mockReturnValue(testNetwork);
   });
 
